@@ -16,10 +16,10 @@ limitations under the License.
 
 
 #pragma once
-#include "..\pch.h"
+#include "pch.h"
 #include "CarenHMONITOR.h"
 #include "CarenGuids.h"
-#include "..\SDK_Caren.h" //Interfaces Base de Caren.
+#include "SDK_Caren.h" //Interfaces Base de Caren.
 #include "SDK_Windows.h" //Interfaces Windows.
 
 //Importa o namespace base

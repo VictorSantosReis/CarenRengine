@@ -16,7 +16,7 @@ limitations under the License.
 
 
 #pragma once
-#include "..\SDK_Base.h"
+#include "SDK_Base.h"
 
 //Importa os namespaces do SDK BASE do sistema.
 using namespace CarenRengine::SDKBase;

@@ -16,8 +16,8 @@ limitations under the License.
 
 
 #pragma once
-#include "..\pch.h"
-#include "..\SDK_Caren.h"
+#include "pch.h"
+#include "SDK_Caren.h"
 
 //Abre o namespace principal
 namespace CarenRengine

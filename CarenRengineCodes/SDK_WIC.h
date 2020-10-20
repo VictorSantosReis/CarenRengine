@@ -16,7 +16,7 @@ limitations under the License.
 
 
 #pragma once
-#include "..\SDK_Base.h"
+#include "SDK_Base.h"
 
 ///////////////////////////////////
 //WIC - WINDOWS IMAGING COMPONENT//

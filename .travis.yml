@@ -1,3 +1,5 @@
 language: c++
 rvm:
  - 17
+ stages:
+  - compile

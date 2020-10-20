@@ -1,0 +1,1612 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Arquivos de Origem">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Arquivos de Recurso">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Caren Guids">
+      <UniqueIdentifier>{2323fd75-b254-4d73-bcf8-4689f89ffb7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Classe de Testes">
+      <UniqueIdentifier>{d6fcc3e1-71ec-436c-839a-ab591056dcc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Classes">
+      <UniqueIdentifier>{e0e9e98e-0bd5-4b4a-9121-5443f4298a76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Classes de Funções">
+      <UniqueIdentifier>{ccc9d9d6-988c-4d62-a38b-cad8ee8f216d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Classes em desenvolvimento">
+      <UniqueIdentifier>{f444ebd5-7122-4bbe-b57d-725457a99eba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Classes Nativas">
+      <UniqueIdentifier>{208edeac-5c06-47f2-950d-e2a87018864c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Header">
+      <UniqueIdentifier>{b8083c5b-b674-451a-8e9c-d2a696341dc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho\SDKs">
+      <UniqueIdentifier>{987012d2-80b4-481e-a4f2-07b1bb784298}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Sistema">
+      <UniqueIdentifier>{2c6b857a-547c-49a4-be8c-e84aa8a69575}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Classes\Caren">
+      <UniqueIdentifier>{e81f8702-3212-499b-8d18-af7fe17bf7d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Classes\CoreAudio_MMDevice">
+      <UniqueIdentifier>{24b2b313-d205-40b9-b5a3-60e4bfe913cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Classes\CoreAudio_WASAPI">
+      <UniqueIdentifier>{7ef5dd96-384d-40af-9d6a-99acab2f5f55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Classes\Direct3D11">
+      <UniqueIdentifier>{c327fc64-6590-4167-8185-555597853430}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Classes\DXGI">
+      <UniqueIdentifier>{404a2011-d736-48c2-85e1-62c280990a10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Classes\MediaFoundation">
+      <UniqueIdentifier>{f25e5060-194f-455e-b761-588af7feba07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Classes\Windows">
+      <UniqueIdentifier>{8f3783db-7ae5-43ff-9ca2-7292b3a97fee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Classes\WIC">
+      <UniqueIdentifier>{a8ca861e-abb0-43a4-9696-330b4db7b06b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Classes">
+      <UniqueIdentifier>{0b614a57-4f14-4885-b44e-2cffe9e1dc1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Classes de Funções">
+      <UniqueIdentifier>{7ef96de7-f350-4aee-994b-b3894744d713}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Classes em desenvolvimento">
+      <UniqueIdentifier>{d2bf2b77-924e-444d-bbbc-aa5e9e6bfc46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Classes Nativas">
+      <UniqueIdentifier>{ab9c1df8-7914-48eb-9f58-c799852a000c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Sistema">
+      <UniqueIdentifier>{45339384-6c3c-4a4b-8274-a2c865e48149}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Classes\Caren">
+      <UniqueIdentifier>{d439e8a1-4f07-472f-8a26-6eb0f7331843}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Classes\Direct3D11">
+      <UniqueIdentifier>{e23a53ee-c288-42d9-999d-2cae615c7df8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Classes\DXGI">
+      <UniqueIdentifier>{ca187337-1347-494a-ab9a-f1d4c31949e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Classes\MediaFoundation">
+      <UniqueIdentifier>{52561c2e-80ef-4103-9fae-c6777b756c01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Classes\MMDevice">
+      <UniqueIdentifier>{5d66e605-ca50-4594-8476-769ce5c492ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Classes\WASAPI">
+      <UniqueIdentifier>{a69ff967-95da-4bc1-b105-ac97638250b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Classes\WIC">
+      <UniqueIdentifier>{b293400b-27dc-4402-8fad-9bd4821a7ed5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Classes\Windows">
+      <UniqueIdentifier>{e3b387a4-16c1-4e8d-b6cd-dc5def1e7326}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Classe de Teste">
+      <UniqueIdentifier>{422a37f1-8716-47be-a872-227c0a188478}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho\CarenResult">
+      <UniqueIdentifier>{ce4bc3b0-c23e-428d-8518-2b29a64b957e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Classes\Direct2D">
+      <UniqueIdentifier>{7d2f51eb-30fb-47b4-9638-ebb4cf1fea8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Classes\Direct2D">
+      <UniqueIdentifier>{4a7a1599-7179-494a-b86b-250b9c0acc05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Funcoes Globais">
+      <UniqueIdentifier>{6e74b9f2-2af7-4e0b-af26-8b802869f9db}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CarenRengineCodes\pch.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Resource.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\SDK_WIC.h">
+      <Filter>Arquivos de Cabeçalho\SDKs</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\SDK_Base.h">
+      <Filter>Arquivos de Cabeçalho\SDKs</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\SDK_Caren.h">
+      <Filter>Arquivos de Cabeçalho\SDKs</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\SDK_CoreAudio.h">
+      <Filter>Arquivos de Cabeçalho\SDKs</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\SDK_Direct2D.h">
+      <Filter>Arquivos de Cabeçalho\SDKs</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\SDK_Direct3D11.h">
+      <Filter>Arquivos de Cabeçalho\SDKs</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\SDK_DXGI.h">
+      <Filter>Arquivos de Cabeçalho\SDKs</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\SDK_MediaFoundation.h">
+      <Filter>Arquivos de Cabeçalho\SDKs</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\SDK_Utilidades.h">
+      <Filter>Arquivos de Cabeçalho\SDKs</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\CarenGuids.h">
+      <Filter>Arquivos de Cabeçalho\Caren Guids</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\CodeResults.h">
+      <Filter>Arquivos de Cabeçalho\CarenResult</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Header.h">
+      <Filter>Arquivos de Cabeçalho\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\SDK_Windows.h">
+      <Filter>Arquivos de Cabeçalho\SDKs</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Bitmap.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Bitmap1.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1BitmapBrush.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1BitmapBrush1.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1BitmapRenderTarget.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1BlendTransform.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1BorderTransform.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1BoundsAdjustmentTransform.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Brush.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1ColorContext.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1ColorContext1.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1CommandList.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink1.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink2.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink3.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink4.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink5.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1ConcreteTransform.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DCRenderTarget.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DrawingStateBlock.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DrawingStateBlock1.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1EllipseGeometry.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Geometry.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1GeometryGroup.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1GeometryRealization.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1GeometrySink.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1GradientMesh.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1GradientStopCollection.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1GradientStopCollection1.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1HwndRenderTarget.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Image.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1ImageBrush.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1ImageSource.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1ImageSourceFromWic.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Ink.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1InkStyle.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Layer.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1LinearGradientBrush.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Mesh.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1RadialGradientBrush.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1RectangleGeometry.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1RenderInfo.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1RenderTarget.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Resource.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1RoundedRectangleGeometry.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SimplifiedGeometrySink.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SolidColorBrush.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SourceTransform.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SpriteBatch.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1StrokeStyle.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1StrokeStyle1.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1TessellationSink.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Transform.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1TransformedGeometry.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1TransformedImageSource.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1TransformNode.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D10Multithread.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11Asynchronous.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11BlendState.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11BlendState1.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11Buffer.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11ClassInstance.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11ClassLinkage.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11CommandList.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11ComputeShader.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11Counter.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11DepthStencilState.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11DepthStencilView.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11Device.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11Device1.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11Device2.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11Device3.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11Device4.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11Device5.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11DeviceChild.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11DeviceContext.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11DeviceContext1.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11DeviceContext2.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11DeviceContext3.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11DeviceContext4.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11DomainShader.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11Fence.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11GeometryShader.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11HullShader.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11InputLayout.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11Multithread.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11PixelShader.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11Predicate.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11Query.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11Query1.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11RasterizerState.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11RasterizerState1.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11RasterizerState2.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11RenderTargetView.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11RenderTargetView1.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11Resource.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11SamplerState.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11ShaderResourceView.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11ShaderResourceView1.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11Texture1D.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11Texture2D.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11Texture2D1.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11Texture3D.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11Texture3D1.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11UnorderedAccessView.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11UnorderedAccessView1.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11VertexShader.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11View.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3DDeviceContextState.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenDirect3DDeviceManager9.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIAdapter.h">
+      <Filter>Arquivos de Cabeçalho\Classes\DXGI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIAdapter1.h">
+      <Filter>Arquivos de Cabeçalho\Classes\DXGI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIAdapter2.h">
+      <Filter>Arquivos de Cabeçalho\Classes\DXGI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIAdapter3.h">
+      <Filter>Arquivos de Cabeçalho\Classes\DXGI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIAdapter4.h">
+      <Filter>Arquivos de Cabeçalho\Classes\DXGI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIDevice.h">
+      <Filter>Arquivos de Cabeçalho\Classes\DXGI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIDevice1.h">
+      <Filter>Arquivos de Cabeçalho\Classes\DXGI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIDevice2.h">
+      <Filter>Arquivos de Cabeçalho\Classes\DXGI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIDevice3.h">
+      <Filter>Arquivos de Cabeçalho\Classes\DXGI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIDevice4.h">
+      <Filter>Arquivos de Cabeçalho\Classes\DXGI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIDeviceSubObject.h">
+      <Filter>Arquivos de Cabeçalho\Classes\DXGI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIFactory.h">
+      <Filter>Arquivos de Cabeçalho\Classes\DXGI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIFactory1.h">
+      <Filter>Arquivos de Cabeçalho\Classes\DXGI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIFactory2.h">
+      <Filter>Arquivos de Cabeçalho\Classes\DXGI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIFactory3.h">
+      <Filter>Arquivos de Cabeçalho\Classes\DXGI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIFactory4.h">
+      <Filter>Arquivos de Cabeçalho\Classes\DXGI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIFactory5.h">
+      <Filter>Arquivos de Cabeçalho\Classes\DXGI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIFactory6.h">
+      <Filter>Arquivos de Cabeçalho\Classes\DXGI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIFactory7.h">
+      <Filter>Arquivos de Cabeçalho\Classes\DXGI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIObject.h">
+      <Filter>Arquivos de Cabeçalho\Classes\DXGI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIOutput.h">
+      <Filter>Arquivos de Cabeçalho\Classes\DXGI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIOutput1.h">
+      <Filter>Arquivos de Cabeçalho\Classes\DXGI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIOutput2.h">
+      <Filter>Arquivos de Cabeçalho\Classes\DXGI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIOutput3.h">
+      <Filter>Arquivos de Cabeçalho\Classes\DXGI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIOutput4.h">
+      <Filter>Arquivos de Cabeçalho\Classes\DXGI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIOutput5.h">
+      <Filter>Arquivos de Cabeçalho\Classes\DXGI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIOutput6.h">
+      <Filter>Arquivos de Cabeçalho\Classes\DXGI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIOutputDuplication.h">
+      <Filter>Arquivos de Cabeçalho\Classes\DXGI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIResource.h">
+      <Filter>Arquivos de Cabeçalho\Classes\DXGI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIResource1.h">
+      <Filter>Arquivos de Cabeçalho\Classes\DXGI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGISurface.h">
+      <Filter>Arquivos de Cabeçalho\Classes\DXGI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGISurface1.h">
+      <Filter>Arquivos de Cabeçalho\Classes\DXGI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGISurface2.h">
+      <Filter>Arquivos de Cabeçalho\Classes\DXGI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGISwapChain.h">
+      <Filter>Arquivos de Cabeçalho\Classes\DXGI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGISwapChain1.h">
+      <Filter>Arquivos de Cabeçalho\Classes\DXGI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGISwapChain2.h">
+      <Filter>Arquivos de Cabeçalho\Classes\DXGI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGISwapChain3.h">
+      <Filter>Arquivos de Cabeçalho\Classes\DXGI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGISwapChain4.h">
+      <Filter>Arquivos de Cabeçalho\Classes\DXGI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Core Audio\CarenAudioSimplesVolume.h">
+      <Filter>Arquivos de Cabeçalho\Classes\CoreAudio_WASAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFActivate.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFAsyncCallback.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFAsyncResult.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFAttributes.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFAudioStreamVolume.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFByteStream.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFClock.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFClockStateSink.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFCollection.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFDXGIBuffer.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFDXGIDeviceManager.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFGetService.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMedia2DBuffer.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMedia2DBuffer2.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaBuffer.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaEvent.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaEventGenerator.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaSession.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaSink.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaSinkPreroll.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaSinkWriterCallback.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaSource.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaSourceEx.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaStream.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaStreamSink.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaType.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaTypeHandler.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFPresentationClock.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFPresentationDescriptor.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFPresentationTimeSource.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFRateControl.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFRateSupport.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFSample.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFSimpleAudioVolume.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFSinkWriter.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFSourceReader.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFSourceReaderCallback.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFSourceResolver.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFStreamDescriptor.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFTopoLoader.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFTopology.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFTopologyNode.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFTopologyNodeAttributeEditor.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFTopologyServiceLookup.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFTopologyServiceLookupClient.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFTransform.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFVideoDisplayControl.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFVideoMediaType.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFVideoPresenter.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFVideoRenderer.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFVideoSampleAllocator.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMMNotificationClient.h">
+      <Filter>Arquivos de Cabeçalho\Classes Nativas</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IAudioSessionEvents.h">
+      <Filter>Arquivos de Cabeçalho\Classes Nativas</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink.h">
+      <Filter>Arquivos de Cabeçalho\Classes Nativas</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink1.h">
+      <Filter>Arquivos de Cabeçalho\Classes Nativas</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink2.h">
+      <Filter>Arquivos de Cabeçalho\Classes Nativas</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink3.h">
+      <Filter>Arquivos de Cabeçalho\Classes Nativas</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink4.h">
+      <Filter>Arquivos de Cabeçalho\Classes Nativas</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink5.h">
+      <Filter>Arquivos de Cabeçalho\Classes Nativas</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFAsyncCallback.h">
+      <Filter>Arquivos de Cabeçalho\Classes Nativas</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFClockStateSink.h">
+      <Filter>Arquivos de Cabeçalho\Classes Nativas</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFSinkWriterCallback.h">
+      <Filter>Arquivos de Cabeçalho\Classes Nativas</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFSourceReaderCallback.h">
+      <Filter>Arquivos de Cabeçalho\Classes Nativas</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Core Audio\CarenMMDevice.h">
+      <Filter>Arquivos de Cabeçalho\Classes\CoreAudio_MMDevice</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Core Audio\CarenMMDeviceCollection.h">
+      <Filter>Arquivos de Cabeçalho\Classes\CoreAudio_MMDevice</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Core Audio\CarenMMDeviceEnumerator.h">
+      <Filter>Arquivos de Cabeçalho\Classes\CoreAudio_MMDevice</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Core Audio\CarenMMNotificationClient.h">
+      <Filter>Arquivos de Cabeçalho\Classes\CoreAudio_MMDevice</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Caren\Caren.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Caren</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Caren\CarenBuffer.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Caren</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Caren\CarenHMONITOR.h">
+      <Filter>Arquivos de Cabeçalho\Sistema</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Caren\CarenWindowsEvent.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Caren</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Caren\CastInterface.h">
+      <Filter>Arquivos de Cabeçalho\Sistema</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Windows\CarenPropertyStore.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Caren\CarenTeste.h">
+      <Filter>Arquivos de Cabeçalho\Classe de Testes</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\FunctionClass\Direct2DFunctions.h">
+      <Filter>Arquivos de Cabeçalho\Classes de Funções</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\FunctionClass\DirectxFunctions.h">
+      <Filter>Arquivos de Cabeçalho\Classes de Funções</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\FunctionClass\GlobalFuncs.h">
+      <Filter>Arquivos de Cabeçalho\Funcoes Globais</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\FunctionClass\MediaFoundationFunctions.h">
+      <Filter>Arquivos de Cabeçalho\Classes de Funções</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\FunctionClass\WindowsFunctions.h">
+      <Filter>Arquivos de Cabeçalho\Classes de Funções</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\FunctionClass\PropVariantManager.h">
+      <Filter>Arquivos de Cabeçalho\Sistema</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Core Audio\CarenChannelAudioVolume.h">
+      <Filter>Arquivos de Cabeçalho\Classes\CoreAudio_WASAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Core Audio\CarenAudioCaptureClient.h">
+      <Filter>Arquivos de Cabeçalho\Classes\CoreAudio_WASAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Core Audio\CarenAudioClient.h">
+      <Filter>Arquivos de Cabeçalho\Classes\CoreAudio_WASAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Core Audio\CarenAudioSessionControl.h">
+      <Filter>Arquivos de Cabeçalho\Classes\CoreAudio_WASAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Core Audio\CarenAudioSessionEvents.h">
+      <Filter>Arquivos de Cabeçalho\Classes\CoreAudio_WASAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Core Audio\CarenAudioSessionManager.h">
+      <Filter>Arquivos de Cabeçalho\Classes\CoreAudio_WASAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Core Audio\CarenAudioRenderClient.h">
+      <Filter>Arquivos de Cabeçalho\Classes\CoreAudio_WASAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Core Audio\CarenAudioClock.h">
+      <Filter>Arquivos de Cabeçalho\Classes\CoreAudio_WASAPI</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CarenRengineCodes\AssemblyInfo.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\pch.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Bitmap.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Bitmap1.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1BitmapBrush.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1BitmapBrush1.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1BitmapRenderTarget.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1BlendTransform.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1BorderTransform.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1BoundsAdjustmentTransform.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Brush.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1ColorContext.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1ColorContext1.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1CommandList.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink1.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink2.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink3.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink4.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink5.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1ConcreteTransform.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DCRenderTarget.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DrawingStateBlock.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DrawingStateBlock1.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1EllipseGeometry.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Geometry.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1GeometryGroup.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1GeometryRealization.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1GeometrySink.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1GradientMesh.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1GradientStopCollection.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1GradientStopCollection1.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1HwndRenderTarget.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Image.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1ImageBrush.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1ImageSource.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1ImageSourceFromWic.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Ink.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1InkStyle.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Layer.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1LinearGradientBrush.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Mesh.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1RadialGradientBrush.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1RectangleGeometry.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1RenderInfo.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1RenderTarget.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Resource.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1RoundedRectangleGeometry.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SimplifiedGeometrySink.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SolidColorBrush.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SourceTransform.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SpriteBatch.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1StrokeStyle.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1StrokeStyle1.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1TessellationSink.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Transform.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1TransformedGeometry.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1TransformedImageSource.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1TransformNode.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D10Multithread.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11Asynchronous.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11BlendState.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11BlendState1.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11Buffer.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11ClassInstance.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11ClassLinkage.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11CommandList.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11ComputeShader.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11Counter.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11DepthStencilState.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11DepthStencilView.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11Device.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11Device1.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11Device2.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11Device3.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11Device4.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11Device5.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11DeviceChild.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11DeviceContext.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11DeviceContext1.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11DeviceContext2.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11DeviceContext3.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11DeviceContext4.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11DomainShader.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11Fence.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11GeometryShader.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11HullShader.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11InputLayout.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11Multithread.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11PixelShader.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11Predicate.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11Query.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11Query1.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11RasterizerState.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11RasterizerState1.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11RasterizerState2.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11RenderTargetView.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11RenderTargetView1.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11Resource.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11SamplerState.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11ShaderResourceView.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11ShaderResourceView1.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11Texture1D.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11Texture2D.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11Texture2D1.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11Texture3D.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11Texture3D1.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11UnorderedAccessView.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11UnorderedAccessView1.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11VertexShader.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11View.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3DDeviceContextState.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenDirect3DDeviceManager9.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIAdapter.cpp">
+      <Filter>Arquivos de Origem\Classes\DXGI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIAdapter1.cpp">
+      <Filter>Arquivos de Origem\Classes\DXGI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIAdapter2.cpp">
+      <Filter>Arquivos de Origem\Classes\DXGI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIAdapter3.cpp">
+      <Filter>Arquivos de Origem\Classes\DXGI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIAdapter4.cpp">
+      <Filter>Arquivos de Origem\Classes\DXGI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIDevice.cpp">
+      <Filter>Arquivos de Origem\Classes\DXGI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIDevice1.cpp">
+      <Filter>Arquivos de Origem\Classes\DXGI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIDevice2.cpp">
+      <Filter>Arquivos de Origem\Classes\DXGI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIDevice3.cpp">
+      <Filter>Arquivos de Origem\Classes\DXGI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIDevice4.cpp">
+      <Filter>Arquivos de Origem\Classes\DXGI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIDeviceSubObject.cpp">
+      <Filter>Arquivos de Origem\Classes\DXGI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIFactory.cpp">
+      <Filter>Arquivos de Origem\Classes\DXGI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIFactory1.cpp">
+      <Filter>Arquivos de Origem\Classes\DXGI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIFactory2.cpp">
+      <Filter>Arquivos de Origem\Classes\DXGI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIFactory3.cpp">
+      <Filter>Arquivos de Origem\Classes\DXGI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIFactory4.cpp">
+      <Filter>Arquivos de Origem\Classes\DXGI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIFactory5.cpp">
+      <Filter>Arquivos de Origem\Classes\DXGI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIFactory6.cpp">
+      <Filter>Arquivos de Origem\Classes\DXGI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIFactory7.cpp">
+      <Filter>Arquivos de Origem\Classes\DXGI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIObject.cpp">
+      <Filter>Arquivos de Origem\Classes\DXGI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIOutput.cpp">
+      <Filter>Arquivos de Origem\Classes\DXGI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIOutput1.cpp">
+      <Filter>Arquivos de Origem\Classes\DXGI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIOutput2.cpp">
+      <Filter>Arquivos de Origem\Classes\DXGI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIOutput3 .cpp">
+      <Filter>Arquivos de Origem\Classes\DXGI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIOutput4.cpp">
+      <Filter>Arquivos de Origem\Classes\DXGI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIOutput5.cpp">
+      <Filter>Arquivos de Origem\Classes\DXGI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIOutput6.cpp">
+      <Filter>Arquivos de Origem\Classes\DXGI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIOutputDuplication.cpp">
+      <Filter>Arquivos de Origem\Classes\DXGI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIResource.cpp">
+      <Filter>Arquivos de Origem\Classes\DXGI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIResource1.cpp">
+      <Filter>Arquivos de Origem\Classes\DXGI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGISurface.cpp">
+      <Filter>Arquivos de Origem\Classes\DXGI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGISurface1.cpp">
+      <Filter>Arquivos de Origem\Classes\DXGI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGISurface2.cpp">
+      <Filter>Arquivos de Origem\Classes\DXGI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGISwapChain.cpp">
+      <Filter>Arquivos de Origem\Classes\DXGI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGISwapChain1.cpp">
+      <Filter>Arquivos de Origem\Classes\DXGI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGISwapChain2.cpp">
+      <Filter>Arquivos de Origem\Classes\DXGI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGISwapChain3.cpp">
+      <Filter>Arquivos de Origem\Classes\DXGI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGISwapChain4.cpp">
+      <Filter>Arquivos de Origem\Classes\DXGI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Core Audio\CarenAudioSimplesVolume.cpp">
+      <Filter>Arquivos de Origem\Classes\WASAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFActivate.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFAsyncCallback.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFAsyncResult.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFAttributes.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFAudioStreamVolume.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFByteStream.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFClock.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFClockStateSink.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFCollection.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFDXGIBuffer.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFDXGIDeviceManager.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFGetService.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMedia2DBuffer.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMedia2DBuffer2.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaBuffer.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaEvent.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaEventGenerator.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaSession.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaSink.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaSinkPreroll.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaSinkWriterCallback.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaSource.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaSourceEx.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaStream.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaStreamSink.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaType.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaTypeHandler.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFPresentationClock.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFPresentationDescriptor.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFPresentationTimeSource.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFRateControl.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFRateSupport.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFSample.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFSimpleAudioVolume.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFSinkWriter.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFSourceReader.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFSourceReaderCallback.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFSourceResolver.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFStreamDescriptor.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFTopoLoader.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFTopology.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFTopologyNode.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFTopologyNodeAttributeEditor.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFTopologyServiceLookup.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFTopologyServiceLookupClient.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFTransform.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFVideoDisplayControl.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFVideoMediaType.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFVideoPresenter.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFVideoRenderer.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFVideoSampleAllocator.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IAudioSessionEvents.cpp">
+      <Filter>Arquivos de Origem\Classes Nativas</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink.cpp">
+      <Filter>Arquivos de Origem\Classes Nativas</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink1.cpp">
+      <Filter>Arquivos de Origem\Classes Nativas</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink2.cpp">
+      <Filter>Arquivos de Origem\Classes Nativas</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink3.cpp">
+      <Filter>Arquivos de Origem\Classes Nativas</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink4.cpp">
+      <Filter>Arquivos de Origem\Classes Nativas</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink5.cpp">
+      <Filter>Arquivos de Origem\Classes Nativas</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFAsyncCallback.cpp">
+      <Filter>Arquivos de Origem\Classes Nativas</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFClockStateSink.cpp">
+      <Filter>Arquivos de Origem\Classes Nativas</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFSinkWriterCallback.cpp">
+      <Filter>Arquivos de Origem\Classes Nativas</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMMNotificationClient.cpp">
+      <Filter>Arquivos de Origem\Classes Nativas</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Core Audio\CarenMMDevice.cpp">
+      <Filter>Arquivos de Origem\Classes\MMDevice</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Core Audio\CarenMMDeviceCollection.cpp">
+      <Filter>Arquivos de Origem\Classes\MMDevice</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Core Audio\CarenMMDeviceEnumerator.cpp">
+      <Filter>Arquivos de Origem\Classes\MMDevice</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Core Audio\CarenMMNotificationClient.cpp">
+      <Filter>Arquivos de Origem\Classes\MMDevice</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Caren\Caren.cpp">
+      <Filter>Arquivos de Origem\Classes\Caren</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Caren\CarenBuffer.cpp">
+      <Filter>Arquivos de Origem\Classes\Caren</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Caren\CarenHMONITOR.cpp">
+      <Filter>Arquivos de Origem\Sistema</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Caren\CarenWindowsEvent.cpp">
+      <Filter>Arquivos de Origem\Classes\Caren</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Caren\CastInterface.cpp">
+      <Filter>Arquivos de Origem\Sistema</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Windows\CarenPropertyStore.cpp">
+      <Filter>Arquivos de Origem\Classes\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Caren\CarenTeste.cpp">
+      <Filter>Arquivos de Origem\Classe de Teste</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\FunctionClass\Direct2DFunctions.cpp">
+      <Filter>Arquivos de Origem\Classes de Funções</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\FunctionClass\DirectxFunctions.cpp">
+      <Filter>Arquivos de Origem\Classes de Funções</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\FunctionClass\GlobalFuncs.cpp">
+      <Filter>Arquivos de Cabeçalho\Funcoes Globais</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\FunctionClass\MediaFoundationFunctions.cpp">
+      <Filter>Arquivos de Origem\Classes de Funções</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\FunctionClass\WindowsFunctions.cpp">
+      <Filter>Arquivos de Origem\Classes de Funções</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Core Audio\CarenChannelAudioVolume.cpp">
+      <Filter>Arquivos de Origem\Classes\WASAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Core Audio\CarenAudioCaptureClient.cpp">
+      <Filter>Arquivos de Origem\Classes\WASAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Core Audio\CarenAudioClient.cpp">
+      <Filter>Arquivos de Origem\Classes\WASAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Core Audio\CarenAudioSessionControl.cpp">
+      <Filter>Arquivos de Origem\Classes\WASAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Core Audio\CarenAudioSessionEvents.cpp">
+      <Filter>Arquivos de Origem\Classes\WASAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Core Audio\CarenAudioSessionManager.cpp">
+      <Filter>Arquivos de Origem\Classes\WASAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Core Audio\CarenAudioClock.cpp">
+      <Filter>Arquivos de Origem\Classes\WASAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Core Audio\CarenAudioRenderClient.cpp">
+      <Filter>Arquivos de Origem\Classes\WASAPI</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="CarenRengineCodes\app.rc">
+      <Filter>Arquivos de Recurso</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="app.ico">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="CarenRengineCodes\app.ico">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+  </ItemGroup>
+</Project>

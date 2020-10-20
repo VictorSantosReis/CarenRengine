@@ -1,0 +1,652 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <ProjectGuid>{5DE1E68E-5520-4E59-AC10-6AA86DE7AAF9}</ProjectGuid>
+    <Keyword>NetCoreCProj</Keyword>
+    <RootNamespace>CarenMultimedia</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RepositoryUrl>https://github.com/VictorSantosReis/CarenMultimedia</RepositoryUrl>
+    <ProjectName>CarenRengine</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CLRSupport>NetCore</CLRSupport>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CLRSupport>NetCore</CLRSupport>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CLRSupport>NetCore</CLRSupport>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CLRSupport>NetCore</CLRSupport>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(ProjectDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName).$(Configuration).$(Platform)</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <TargetName>$(ProjectName).$(Configuration).$(Platform)</TargetName>
+    <OutDir>$(ProjectDir)$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies />
+      <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies />
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies />
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies />
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="CarenRengineCodes\Caren\CarenBuffer.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Bitmap.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Bitmap1.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1BitmapBrush.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1BitmapBrush1.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1BitmapRenderTarget.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1BlendTransform.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1BorderTransform.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1BoundsAdjustmentTransform.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Brush.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1ColorContext.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1ColorContext1.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1CommandList.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink1.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink2.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink3.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink4.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink5.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1ConcreteTransform.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DCRenderTarget.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DrawingStateBlock.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DrawingStateBlock1.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1EllipseGeometry.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Geometry.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1GeometryGroup.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1GeometryRealization.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1GeometrySink.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1GradientMesh.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1GradientStopCollection.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1GradientStopCollection1.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1HwndRenderTarget.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Image.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1ImageBrush.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1ImageSource.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1ImageSourceFromWic.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Ink.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1InkStyle.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Layer.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1LinearGradientBrush.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Mesh.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1RadialGradientBrush.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1RectangleGeometry.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1RenderInfo.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1RenderTarget.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Resource.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1RoundedRectangleGeometry.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SimplifiedGeometrySink.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SolidColorBrush.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SourceTransform.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SpriteBatch.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1StrokeStyle.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1StrokeStyle1.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1TessellationSink.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Transform.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1TransformedGeometry.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1TransformedImageSource.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1TransformNode.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFAsyncCallback.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFAsyncResult.h" />
+    <ClInclude Include="CarenRengineCodes\Core Audio\CarenChannelAudioVolume.h" />
+    <ClInclude Include="CarenRengineCodes\Core Audio\CarenAudioCaptureClient.h" />
+    <ClInclude Include="CarenRengineCodes\Core Audio\CarenAudioClient.h" />
+    <ClInclude Include="CarenRengineCodes\Core Audio\CarenAudioSessionControl.h" />
+    <ClInclude Include="CarenRengineCodes\Core Audio\CarenAudioSessionEvents.h" />
+    <ClInclude Include="CarenRengineCodes\Core Audio\CarenAudioSessionManager.h" />
+    <ClInclude Include="CarenRengineCodes\Core Audio\CarenAudioClock.h" />
+    <ClInclude Include="CarenRengineCodes\Core Audio\CarenAudioRenderClient.h" />
+    <ClInclude Include="CarenRengineCodes\Core Audio\CarenAudioSimplesVolume.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFByteStream.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFAudioStreamVolume.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFSimpleAudioVolume.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D10Multithread.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11Asynchronous.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11BlendState.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11BlendState1.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11Buffer.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11ClassInstance.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11ClassLinkage.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11CommandList.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11ComputeShader.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11Counter.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11DepthStencilState.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11DepthStencilView.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11Device.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11Device1.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11Device2.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11Device3.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11Device4.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11Device5.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11DeviceChild.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11DeviceContext.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11DeviceContext1.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11DeviceContext2.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11DeviceContext3.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11DeviceContext4.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11DomainShader.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11Fence.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11GeometryShader.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11HullShader.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11InputLayout.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11Multithread.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11PixelShader.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11Predicate.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11Query.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11Query1.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11RasterizerState.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11RasterizerState1.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11RasterizerState2.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11RenderTargetView.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11RenderTargetView1.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11Resource.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11SamplerState.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11ShaderResourceView.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11ShaderResourceView1.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11Texture1D.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11Texture2D.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11Texture2D1.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11Texture3D.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11Texture3D1.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11UnorderedAccessView.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11UnorderedAccessView1.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11VertexShader.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11View.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3DDeviceContextState.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFPresentationDescriptor.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFStreamDescriptor.h" />
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIAdapter.h" />
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIAdapter1.h" />
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIAdapter2.h" />
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIAdapter3.h" />
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIAdapter4.h" />
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIDevice.h" />
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIDevice1.h" />
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIDevice2.h" />
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIDevice3.h" />
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIDevice4.h" />
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIDeviceSubObject.h" />
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIFactory.h" />
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIFactory1.h" />
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIFactory2.h" />
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIFactory3.h" />
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIFactory4.h" />
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIFactory5.h" />
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIFactory6.h" />
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIFactory7.h" />
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIObject.h" />
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIOutput.h" />
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIOutput1.h" />
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIOutput2.h" />
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIOutput3.h" />
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIOutput4.h" />
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIOutput5.h" />
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIOutput6.h" />
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIOutputDuplication.h" />
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIResource.h" />
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIResource1.h" />
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGISurface.h" />
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGISurface1.h" />
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGISurface2.h" />
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGISwapChain1.h" />
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGISwapChain2.h" />
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGISwapChain3.h" />
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGISwapChain4.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFTransform.h" />
+    <ClInclude Include="CarenRengineCodes\Caren\Caren.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFVideoMediaType.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFVideoPresenter.h" />
+    <ClInclude Include="CarenRengineCodes\Caren\CarenWindowsEvent.h" />
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink2.h" />
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink3.h" />
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink5.h" />
+    <ClInclude Include="CarenRengineCodes\FunctionClass\DirectxFunctions.h" />
+    <ClInclude Include="CarenRengineCodes\Caren\CarenHMONITOR.h" />
+    <ClInclude Include="CarenRengineCodes\SDK_Base.h" />
+    <ClInclude Include="CarenRengineCodes\SDK_Caren.h" />
+    <ClInclude Include="CarenRengineCodes\SDK_Direct2D.h" />
+    <ClInclude Include="CarenRengineCodes\SDK_Direct3D11.h" />
+    <ClInclude Include="CarenRengineCodes\SDK_DXGI.h" />
+    <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGISwapChain.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaSource.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaSourceEx.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaEventGenerator.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFSourceReaderCallback.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaSession.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFCollection.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFDXGIBuffer.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFDXGIDeviceManager.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMedia2DBuffer.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFVideoSampleAllocator.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFSample.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFActivate.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFVideoDisplayControl.h" />
+    <ClInclude Include="CarenRengineCodes\Direct3D\CarenDirect3DDeviceManager9.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFPresentationTimeSource.h" />
+    <ClInclude Include="CarenRengineCodes\CarenGuids.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFSourceReader.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFAttributes.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMedia2DBuffer2.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaEvent.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaSink.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaBuffer.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaSinkPreroll.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFSinkWriter.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaSinkWriterCallback.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaStream.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaStreamSink.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaType.h" />
+    <ClInclude Include="CarenRengineCodes\Core Audio\CarenMMDeviceCollection.h" />
+    <ClInclude Include="CarenRengineCodes\Core Audio\CarenMMDevice.h" />
+    <ClInclude Include="CarenRengineCodes\Core Audio\CarenMMDeviceEnumerator.h" />
+    <ClInclude Include="CarenRengineCodes\Core Audio\CarenMMNotificationClient.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFGetService.h" />
+    <ClInclude Include="CarenRengineCodes\Windows\CarenPropertyStore.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaTypeHandler.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFRateControl.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFRateSupport.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFClock.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFPresentationClock.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFClockStateSink.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFVideoRenderer.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFSourceResolver.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFTopoLoader.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFTopology.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFTopologyNode.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFTopologyNodeAttributeEditor.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFTopologyServiceLookup.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFTopologyServiceLookupClient.h" />
+    <ClInclude Include="CarenRengineCodes\Caren\CastInterface.h" />
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IAudioSessionEvents.h" />
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFAsyncCallback.h" />
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFSinkWriterCallback.h" />
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFSourceReaderCallback.h" />
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFClockStateSink.h" />
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMMNotificationClient.h" />
+    <ClInclude Include="CarenRengineCodes\CodeResults.h" />
+    <ClInclude Include="CarenRengineCodes\Header.h" />
+    <ClInclude Include="CarenRengineCodes\FunctionClass\MediaFoundationFunctions.h" />
+    <ClInclude Include="CarenRengineCodes\pch.h" />
+    <ClInclude Include="CarenRengineCodes\FunctionClass\PropVariantManager.h" />
+    <ClInclude Include="CarenRengineCodes\Resource.h" />
+    <ClInclude Include="CarenRengineCodes\SDK_MediaFoundation.h" />
+    <ClInclude Include="CarenRengineCodes\SDK_Utilidades.h" />
+    <ClInclude Include="CarenRengineCodes\SDK_CoreAudio.h" />
+    <ClInclude Include="CarenRengineCodes\SDK_WIC.h" />
+    <ClInclude Include="CarenRengineCodes\SDK_Windows.h" />
+    <ClInclude Include="CarenRengineCodes\FunctionClass\WindowsFunctions.h" />
+    <ClInclude Include="CarenRengineCodes\Caren\CarenTeste.h" />
+    <ClInclude Include="CarenRengineCodes\FunctionClass\Direct2DFunctions.h" />
+    <ClInclude Include="CarenRengineCodes\FunctionClass\GlobalFuncs.h" />
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink.h" />
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink1.h" />
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink4.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CarenRengineCodes\AssemblyInfo.cpp" />
+    <ClCompile Include="CarenRengineCodes\Caren\Caren.cpp" />
+    <ClCompile Include="CarenRengineCodes\Caren\CarenBuffer.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Bitmap.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Bitmap1.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1BitmapBrush.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1BitmapBrush1.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1BitmapRenderTarget.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1BlendTransform.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1BorderTransform.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1BoundsAdjustmentTransform.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Brush.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1ColorContext.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1ColorContext1.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1CommandList.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink1.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink2.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink3.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink4.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink5.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1ConcreteTransform.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DCRenderTarget.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DrawingStateBlock.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DrawingStateBlock1.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1EllipseGeometry.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Geometry.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1GeometryGroup.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1GeometryRealization.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1GeometrySink.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1GradientMesh.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1GradientStopCollection.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1GradientStopCollection1.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1HwndRenderTarget.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Image.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1ImageBrush.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1ImageSource.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1ImageSourceFromWic.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Ink.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1InkStyle.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Layer.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1LinearGradientBrush.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Mesh.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1RadialGradientBrush.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1RectangleGeometry.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1RenderInfo.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1RenderTarget.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Resource.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1RoundedRectangleGeometry.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SimplifiedGeometrySink.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SolidColorBrush.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SourceTransform.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SpriteBatch.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1StrokeStyle.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1StrokeStyle1.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1TessellationSink.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Transform.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1TransformedGeometry.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1TransformedImageSource.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1TransformNode.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFAsyncCallback.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFAsyncResult.cpp" />
+    <ClCompile Include="CarenRengineCodes\Core Audio\CarenChannelAudioVolume.cpp" />
+    <ClCompile Include="CarenRengineCodes\Core Audio\CarenAudioCaptureClient.cpp" />
+    <ClCompile Include="CarenRengineCodes\Core Audio\CarenAudioClient.cpp" />
+    <ClCompile Include="CarenRengineCodes\Core Audio\CarenAudioSessionControl.cpp" />
+    <ClCompile Include="CarenRengineCodes\Core Audio\CarenAudioSessionEvents.cpp" />
+    <ClCompile Include="CarenRengineCodes\Core Audio\CarenAudioSessionManager.cpp" />
+    <ClCompile Include="CarenRengineCodes\Core Audio\CarenAudioClock.cpp" />
+    <ClCompile Include="CarenRengineCodes\Core Audio\CarenAudioRenderClient.cpp" />
+    <ClCompile Include="CarenRengineCodes\Core Audio\CarenAudioSimplesVolume.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFByteStream.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFAudioStreamVolume.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFSimpleAudioVolume.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D10Multithread.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11Asynchronous.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11BlendState.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11BlendState1.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11Buffer.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11ClassInstance.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11ClassLinkage.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11CommandList.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11ComputeShader.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11Counter.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11DepthStencilState.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11DepthStencilView.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11Device.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11Device1.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11Device2.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11Device3.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11Device4.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11Device5.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11DeviceChild.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11DeviceContext.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11DeviceContext1.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11DeviceContext2.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11DeviceContext3.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11DeviceContext4.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11DomainShader.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11Fence.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11GeometryShader.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11HullShader.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11InputLayout.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11Multithread.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11PixelShader.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11Predicate.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11Query.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11Query1.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11RasterizerState.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11RasterizerState1.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11RasterizerState2.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11RenderTargetView.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11RenderTargetView1.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11Resource.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11SamplerState.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11ShaderResourceView.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11ShaderResourceView1.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11Texture1D.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11Texture2D.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11Texture2D1.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11Texture3D.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11Texture3D1.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11UnorderedAccessView.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11UnorderedAccessView1.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11VertexShader.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11View.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3DDeviceContextState.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFPresentationDescriptor.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFStreamDescriptor.cpp" />
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIAdapter.cpp" />
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIAdapter1.cpp" />
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIAdapter2.cpp" />
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIAdapter3.cpp" />
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIAdapter4.cpp" />
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIDevice.cpp" />
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIDevice1.cpp" />
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIDevice2.cpp" />
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIDevice3.cpp" />
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIDevice4.cpp" />
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIDeviceSubObject.cpp" />
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIFactory.cpp" />
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIFactory1.cpp" />
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIFactory2.cpp" />
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIFactory3.cpp" />
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIFactory4.cpp" />
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIFactory5.cpp" />
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIFactory6.cpp" />
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIFactory7.cpp" />
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIObject.cpp" />
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIOutput.cpp" />
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIOutput1.cpp" />
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIOutput2.cpp" />
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIOutput3 .cpp" />
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIOutput4.cpp" />
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIOutput5.cpp" />
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIOutput6.cpp" />
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIOutputDuplication.cpp" />
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIResource.cpp" />
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIResource1.cpp" />
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGISurface.cpp" />
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGISurface1.cpp" />
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGISurface2.cpp" />
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGISwapChain.cpp" />
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGISwapChain1.cpp" />
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGISwapChain2.cpp" />
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGISwapChain3.cpp" />
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGISwapChain4.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaSource.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaSourceEx.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaEventGenerator.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFSourceReaderCallback.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaSession.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFCollection.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFDXGIBuffer.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFDXGIDeviceManager.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFTransform.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMedia2DBuffer.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFVideoMediaType.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFVideoPresenter.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFVideoSampleAllocator.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFSample.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFActivate.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFVideoDisplayControl.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct3D\CarenDirect3DDeviceManager9.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFPresentationTimeSource.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFSourceReader.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFAttributes.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMedia2DBuffer2.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaEvent.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaSink.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaBuffer.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaSinkPreroll.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFSinkWriter.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaSinkWriterCallback.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaStream.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaStreamSink.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaType.cpp" />
+    <ClCompile Include="CarenRengineCodes\Core Audio\CarenMMDeviceCollection.cpp" />
+    <ClCompile Include="CarenRengineCodes\Core Audio\CarenMMDevice.cpp" />
+    <ClCompile Include="CarenRengineCodes\Core Audio\CarenMMDeviceEnumerator.cpp" />
+    <ClCompile Include="CarenRengineCodes\Core Audio\CarenMMNotificationClient.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFGetService.cpp" />
+    <ClCompile Include="CarenRengineCodes\Windows\CarenPropertyStore.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaTypeHandler.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFRateControl.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFRateSupport.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFClock.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFPresentationClock.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFClockStateSink.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFVideoRenderer.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFSourceResolver.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFTopoLoader.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFTopology.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFTopologyNode.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFTopologyNodeAttributeEditor.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFTopologyServiceLookup.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFTopologyServiceLookupClient.cpp" />
+    <ClCompile Include="CarenRengineCodes\Caren\CarenWindowsEvent.cpp" />
+    <ClCompile Include="CarenRengineCodes\Caren\CastInterface.cpp" />
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IAudioSessionEvents.cpp" />
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink2.cpp" />
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink3.cpp" />
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink5.cpp" />
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFAsyncCallback.cpp" />
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFClockStateSink.cpp" />
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFSinkWriterCallback.cpp" />
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMMNotificationClient.cpp" />
+    <ClCompile Include="CarenRengineCodes\FunctionClass\DirectxFunctions.cpp" />
+    <ClCompile Include="CarenRengineCodes\Caren\CarenHMONITOR.cpp" />
+    <ClCompile Include="CarenRengineCodes\FunctionClass\GlobalFuncs.cpp" />
+    <ClCompile Include="CarenRengineCodes\FunctionClass\MediaFoundationFunctions.cpp" />
+    <ClCompile Include="CarenRengineCodes\pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\FunctionClass\WindowsFunctions.cpp" />
+    <ClCompile Include="CarenRengineCodes\Caren\CarenTeste.cpp" />
+    <ClCompile Include="CarenRengineCodes\FunctionClass\Direct2DFunctions.cpp" />
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink.cpp" />
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink1.cpp" />
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink4.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="CarenRengineCodes\app.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="app.ico" />
+    <Image Include="CarenRengineCodes\app.ico" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

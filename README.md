@@ -26,7 +26,7 @@ No momento, não tenho interesse e nem motivo em suportar a plataforma NetFramew
 foi melhorado e muito, algo que não se pode ignorar. A utilização das intruções disponíveis pelo processador na biblioteca do **.NET** foi um ponto muito
 importante para seu desempenho. Você pode dar um Google para encontrar essas informações de forma bem fácil.
 
-![NetCore](https://github.com/VictorSantosReis/CarenRengine/blob/main/NetCoreLogoNovo100x100.jpg)
+![NetCore](https://github.com/VictorSantosReis/CarenRengine/blob/master/Imagens/NetCoreLogoNovo100x100.jpg)
 
 
 # Arquitetura
@@ -37,7 +37,7 @@ da API **Microsoft Media Foundation** que permite o usuário criar um decodifica
 
 * **A seguinte imagem demonstra a arquitetura básica do projeto e suas APIs:**
 
-![Arquitetura](https://github.com/VictorSantosReis/CarenRengine/blob/main/CarenRengineAPIs.jpg)
+![Arquitetura](https://github.com/VictorSantosReis/CarenRengine/blob/master/Imagens/CarenRengineAPIs.jpg)
 
 '*' **Pode ou não ser incluido futuramente!**
 
@@ -48,7 +48,7 @@ segue a regra de manter a ordem original dos parametros nos métodos da interfac
 
 * **Aqui está um exemplo simples de uma chamada para o método nativo (**BeginDraw**) presente na interface (**ID2D1RenderTarget**) da API Direct2D:**
 
-![FuncChamada](https://github.com/VictorSantosReis/CarenRengine/blob/main/CarenRengine_ChamadaDeMetodo.jpg)
+![FuncChamada](https://github.com/VictorSantosReis/CarenRengine/blob/master/Imagens/CarenRengine_ChamadaDeMetodo.jpg)
 
 Todos os tipos(**Enum**, **Estrutura**, **GUIDs**) tem sua correspondência gerenciada pela biblioteca. O **namespace SDKBase** contém todas as **estruturas**, **enumeraçôes**, **GUIDs** que podem ser utilizado pelas APIs e que você ira utilizar nos métodos. Seguindo um padrão comum, todos os tipos gerenciados tem um **CA_** no inicio de seu nome. Então, se um parametro nativo exige a seguinte estrutura (**D2D1_COLOR_F**), sua represenção gerenciada seria **CA_D2D1_COLOR_F**.
 

@@ -58,7 +58,7 @@ Todos os tipos(**Enum**, **Estrutura**, **GUIDs**) tem sua correspondência gere
 
 # APIs
 As **Urls** a seguir levam diretamente para o site de desenvolvedor da Microsoft para a API especificada. Devo mencionar, nem todas as
-interfaces podem está disponível atualmente, mais tardar estarei desenvolvendo um **Roadmap** completo para o projeto.
+interfaces podem está disponível atualmente, mais tardar estarei desenvolvendo um [Roadmap](https://github.com/VictorSantosReis/CarenRengine/blob/master/Roadmap/Roadmap.md) completo para o projeto.
 
 * [Media Foundation](https://docs.microsoft.com/en-us/windows/win32/medfound/microsoft-media-foundation-sdk) - Principal API para Leitura/Reprodução/Gravação de Áudio e Vídeo.
 * [Core Audio](https://docs.microsoft.com/en-us/windows/win32/CoreAudio/core-audio-apis-in-windows-vista) - Este Core é responsável por 4 APIs: MMDevice, WASAPI, EndpointVolume e DeviceTopology API.
@@ -87,7 +87,7 @@ Como o Nuget Packge não suporta de forma oficial as montagens em **C++/CLI**, d
 
 
 # O que esperar do Futuro?
-Inicio do proximo ano pretendo lançar a primeira versão da biblioteca com todas as APIs do **Roadmap** e mais tardar para o meio do ano estarei já iniciando a grande migração da bibliteca para o WinRT C++(**Windows Runtime Component**) que já está suportando em versão Preview, a possibilidade de usar o componente tanto em aplicativos Win32 Desktop como o UWP graças aos projetos [WinUI3.0](https://github.com/microsoft/microsoft-ui-xaml) e o [CsWinRT](https://github.com/microsoft/CsWinRT) em versão preview ainda.
+Inicio do proximo ano pretendo lançar a primeira versão da biblioteca com todas as APIs do [Roadmap](https://github.com/VictorSantosReis/CarenRengine/blob/master/Roadmap/Roadmap.md) e mais tardar para o meio do ano estarei já iniciando a grande migração da bibliteca para o WinRT C++(**Windows Runtime Component**) que já está suportando em versão Preview, a possibilidade de usar o componente tanto em aplicativos Win32 Desktop como o UWP graças aos projetos [WinUI3.0](https://github.com/microsoft/microsoft-ui-xaml) e o [CsWinRT](https://github.com/microsoft/CsWinRT) em versão preview ainda.
 
 Não recomendo utilizar a biblioteca neste momento para produção. Muitas coisas seram modificadas até o lançamento da primeira versão estável. Algumas coisas criticas que logo seram modificadas é a forma de criação atual das classes seram modificadas para usar o (**new NomeClasse**) em vez de **NomeClass.CriarInstancia([Out] NomeClasse)**
 

@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 
-#include "..\pch.h"
+#include "../pch.h"
 #include "CarenHMONITOR.h"
 
 bool CarenHMONITOR::ConstruirFromHandle(IntPtr Param_Handle, UInt32 Param_Flags)

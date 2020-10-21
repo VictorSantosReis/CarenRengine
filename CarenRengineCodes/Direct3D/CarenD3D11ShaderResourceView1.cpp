@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 
-#include "..\pch.h"
+#include "../pch.h"
 #include "CarenD3D11ShaderResourceView1.h"
 
 //Destruidor.

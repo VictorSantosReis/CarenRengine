@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 
-#include "..\pch.h"
-#include "..\Nativas\CLN_IMMNotificationClient.h"
+#include "../pch.h"
+#include "../Nativas/CLN_IMMNotificationClient.h"
 
 
 //

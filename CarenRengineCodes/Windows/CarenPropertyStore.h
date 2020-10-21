@@ -16,10 +16,10 @@ limitations under the License.
 
 
 #pragma once
-#include "..\SDK_Base.h"
-#include "..\Caren\Caren.h"
-#include "..\FunctionClass\PropVariantManager.h"
-#include "..\SDK_Utilidades.h"
+#include "../SDK_Base.h"
+#include "../Caren/Caren.h"
+#include "../FunctionClass/PropVariantManager.h"
+#include "../SDK_Utilidades.h"
 
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;

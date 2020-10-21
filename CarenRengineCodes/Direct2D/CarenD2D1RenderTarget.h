@@ -15,9 +15,9 @@ limitations under the License.
 */
 
 #pragma once
-#include "..\SDK_Direct2D.h"
-#include "..\SDK_Caren.h"
-#include "..\SDK_Utilidades.h"
+#include "../SDK_Direct2D.h"
+#include "../SDK_Caren.h"
+#include "../SDK_Utilidades.h"
 #include "CarenD2D1Bitmap.h"
 #include "CarenD2D1BitmapBrush.h"
 #include "CarenD2D1GradientStopCollection.h"
@@ -26,7 +26,7 @@ limitations under the License.
 #include "CarenD2D1RadialGradientBrush.h"
 #include "CarenD2D1Mesh.h"
 #include "CarenD2D1SolidColorBrush.h"
-#include "GlobalFuncs.h"
+#include "../FunctionClass/GlobalFuncs.h"
 
 //Importa o namespace que contém as interfaces da API primária.
 using namespace CarenRengine::Direct2D;

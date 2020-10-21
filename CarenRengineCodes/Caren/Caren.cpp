@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 
-#include "..\pch.h"
-#include "..\Caren\Caren.h"
+#include "../pch.h"
+#include "Caren.h"
 
 //Destruidor.
 Caren::~Caren()

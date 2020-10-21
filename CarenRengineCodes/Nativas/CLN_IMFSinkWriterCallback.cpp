@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 
-#include "..\pch.h"
-#include "..\Nativas\CLN_IMFSinkWriterCallback.h"
+#include "../pch.h"
+#include "../Nativas/CLN_IMFSinkWriterCallback.h"
 
 HRESULT __stdcall CLN_IMFSinkWriterCallback::OnFinalize(HRESULT hrStatus)
 {

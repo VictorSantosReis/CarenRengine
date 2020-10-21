@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 #pragma once
-#include "..\SDK_Base.h"
-#include "..\SDK_Caren.h"
+#include "../SDK_Base.h"
+#include "../SDK_Caren.h"
 
 //Importa os namespaces base.
 using namespace CarenRengine;
@@ -196,7 +196,7 @@ public:
 		virtual void set(int p_Index, Byte p_Valor)
 	    {
 			//Verifica o index informado.
-			if (p_Index >= Tamanho)
+			if (p_Index >= static_cast<int>(Tamanho))
 				throw gcnew IndexOutOfRangeException("O index informado ultrapassava os limites da matriz.");
 
 			//Define o valor na matriz.

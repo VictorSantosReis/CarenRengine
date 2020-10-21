@@ -16,10 +16,10 @@ limitations under the License.
 
 
 #pragma once
-#include "..\SDK_Direct3D11.h"
-#include "..\Caren\Caren.h"
-#include "..\SDK_Utilidades.h"
-#include "..\Caren\CarenBuffer.h"
+#include "../SDK_Direct3D11.h"
+#include "../Caren/Caren.h"
+#include "../SDK_Utilidades.h"
+#include "../Caren/CarenBuffer.h"
 #include "CarenD3D11Buffer.h"
 #include "CarenD3D11SamplerState.h"
 #include "CarenD3D11ComputeShader.h"

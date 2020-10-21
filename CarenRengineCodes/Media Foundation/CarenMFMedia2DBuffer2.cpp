@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 
-#include "..\pch.h"
+#include "../pch.h"
 #include "CarenMFMedia2DBuffer2.h"
 
 //Destruidor.

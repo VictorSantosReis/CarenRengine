@@ -15,10 +15,10 @@ limitations under the License.
 */
 
 #pragma once
-#include "..\SDK_Direct2D.h"
-#include "..\SDK_Caren.h"
-#include "..\SDK_Utilidades.h"
-#include "..\Nativas\CLN_ID2D1CommandSink.h"
+#include "../SDK_Direct2D.h"
+#include "../SDK_Caren.h"
+#include "../SDK_Utilidades.h"
+#include "../Nativas/CLN_ID2D1CommandSink.h"
 #include "CarenD2D1Bitmap.h"
 #include "CarenD2D1Geometry.h"
 #include "CarenD2D1Brush.h"

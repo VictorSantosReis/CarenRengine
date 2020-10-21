@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 
-#include "..\pch.h"
-#include "..\Nativas\CLN_IAudioSessionEvents.h"
+#include "../pch.h"
+#include "../Nativas/CLN_IAudioSessionEvents.h"
 
 //SEGUNDO A DOCUMENTACAO - OS MÉTODOS NAO DEVEM USAR SECÕES CRITICAS DE CÓDIGOS OU QUALQUER FUNCAO QUE PRENDA(THREAD-SAFE) OS MÉTODOS.
 

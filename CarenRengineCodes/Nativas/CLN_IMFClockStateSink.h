@@ -16,7 +16,7 @@ limitations under the License.
 
 
 #pragma once
-#include "..\SDK_Base.h"
+#include "../SDK_Base.h"
 
 
 //Typedefs dos delegates que seram expostos por essa classe para a notificação.

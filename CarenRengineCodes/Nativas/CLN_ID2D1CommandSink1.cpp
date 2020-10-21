@@ -1,5 +1,5 @@
-#include "..\pch.h"
-#include "..\Nativas\CLN_ID2D1CommandSink1.h"
+#include "../pch.h"
+#include "../Nativas/CLN_ID2D1CommandSink1.h"
 
 //Métodos da interface ID2D1CommandSink1
 METODODELC CLN_ID2D1CommandSink1::SetPrimitiveBlend1(D2D1_PRIMITIVE_BLEND primitiveBlend)

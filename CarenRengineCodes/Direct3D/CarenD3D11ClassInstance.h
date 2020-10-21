@@ -16,11 +16,11 @@ limitations under the License.
 
 
 #pragma once
-#include "..\SDK_Direct3D11.h"
-#include "..\Caren\Caren.h"
-#include "..\Caren\CarenBuffer.h"
+#include "../SDK_Direct3D11.h"
+#include "../Caren/Caren.h"
+#include "../Caren/CarenBuffer.h"
 #include "CarenD3D11ClassLinkage.h"
-#include "..\SDK_Utilidades.h"
+#include "../SDK_Utilidades.h"
 
 //Importa o namespace que contém as interfaces do Microsoft Direct 3D.
 using namespace CarenRengine::Direct3D11;

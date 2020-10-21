@@ -16,7 +16,7 @@ limitations under the License.
 
 
 #pragma once
-#include "..\SDK_Base.h"
+#include "../SDK_Base.h"
 
 //Typedefs que definem os delegates de eventos que seram chamados para notificar o usuario.
 typedef void(__stdcall* CLN_IMFAsyncCallback_EventoNativo_Invoke)(__RPC__in_opt IMFAsyncResult*);

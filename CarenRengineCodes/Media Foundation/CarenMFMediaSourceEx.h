@@ -16,12 +16,12 @@ limitations under the License.
 
 
 #pragma once
-#include "..\SDK_MediaFoundation.h"
-#include "..\Caren\Caren.h"
+#include "../SDK_MediaFoundation.h"
+#include "../Caren/Caren.h"
 #include "CarenMFPresentationDescriptor.h"
 #include "CarenMFMediaEvent.h" //Inclui PropVariantManager
 #include "CarenMFAttributes.h"
-#include "..\SDK_Utilidades.h"
+#include "../SDK_Utilidades.h"
 
 //Importa o namespace que contém as interfaces da Media Foundation.
 using namespace CarenRengine::MediaFoundation;

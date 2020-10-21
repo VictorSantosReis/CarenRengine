@@ -1,5 +1,5 @@
-#include "..\pch.h"
-#include "GlobalFuncs.h"
+#include "../pch.h"
+#include "../FunctionClass/GlobalFuncs.h"
 
 
 #pragma region FUNÇÕES GLOBAIS

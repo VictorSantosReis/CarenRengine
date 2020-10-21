@@ -16,9 +16,9 @@ limitations under the License.
 
 
 #pragma once
-#include "..\SDK_Direct3D11.h"
-#include "..\SDK_Caren.h"
-#include "..\SDK_Utilidades.h"
+#include "../SDK_Direct3D11.h"
+#include "../SDK_Caren.h"
+#include "../SDK_Utilidades.h"
 #include "CarenD3D11Resource.h"
 
 //Importa o namespace que contém as interfaces da API primária.

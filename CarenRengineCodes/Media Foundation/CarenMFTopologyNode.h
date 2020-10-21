@@ -16,9 +16,9 @@ limitations under the License.
 
 
 #pragma once
-#include "..\SDK_MediaFoundation.h"
-#include "..\Caren\Caren.h"
-#include "..\SDK_Utilidades.h"
+#include "../SDK_MediaFoundation.h"
+#include "../Caren/Caren.h"
+#include "../SDK_Utilidades.h"
 #include "CarenMFMediaType.h"
 
 //Importa o namespace que contém as interfaces da Media Foundation.

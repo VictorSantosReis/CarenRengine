@@ -1,5 +1,5 @@
-﻿#include "..\pch.h"
-#include "..\Caren\CarenBuffer.h"
+﻿#include "../pch.h"
+#include "CarenBuffer.h"
 
 //
 // Métodos da interface ICarenBuffer
@@ -738,7 +738,7 @@ CarenResult CarenBuffer::EscreverDados(MatrizBytes Param_BufferOrigem, UInt32 Pa
 		//Chama uma exceção e informado o motivo.
 		throw gcnew IndexOutOfRangeException("A posicão do buffer atual não suportava escrever a quantidade de dados definida no parâmetro (Param_Tamanho).");
 	}
-	else if ((Param_Start + Param_Tamanho) > Param_BufferOrigem->Length)
+	else if ((Param_Start + Param_Tamanho) > static_cast<unsigned int>(Param_BufferOrigem->Length))
 	{
 		//Chama uma exceção e informado o motivo.
 		throw gcnew IndexOutOfRangeException("A posicão do buffer de origem mais o tamanho dos dados a serem escritos ultrapassava os limites do mesmo.");
@@ -849,7 +849,7 @@ CarenResult CarenBuffer::EscreverDados(Span<Byte> Param_BufferOrigem, UInt32 Par
 		//Chama uma exceção e informado o motivo.
 		throw gcnew IndexOutOfRangeException("A posicão do buffer atual não suportava escrever a quantidade de dados definida no parâmetro (Param_Tamanho).");
 	}
-	else if ((Param_Start + Param_Tamanho) > Param_BufferOrigem.Length)
+	else if ((Param_Start + Param_Tamanho) > static_cast<unsigned int>(Param_BufferOrigem.Length))
 	{
 		//Chama uma exceção e informado o motivo.
 		throw gcnew IndexOutOfRangeException("A posicão do buffer de origem mais o tamanho dos dados a serem escritos ultrapassava os limites do mesmo.");
@@ -918,7 +918,7 @@ CarenResult CarenBuffer::EscreverDados(Memory<Byte> Param_BufferOrigem, UInt32 P
 		//Chama uma exceção e informado o motivo.
 		throw gcnew IndexOutOfRangeException("A posicão do buffer atual não suportava escrever a quantidade de dados definida no parâmetro (Param_Tamanho).");
 	}
-	else if ((Param_Start + Param_Tamanho) > Param_BufferOrigem.Length)
+	else if ((Param_Start + Param_Tamanho) > static_cast<unsigned int>(Param_BufferOrigem.Length))
 	{
 		//Chama uma exceção e informado o motivo.
 		throw gcnew IndexOutOfRangeException("A posicão do buffer de origem mais o tamanho dos dados a serem escritos ultrapassava os limites do mesmo.");
@@ -987,7 +987,7 @@ CarenResult CarenBuffer::EscreverDados(ReadOnlySpan<Byte> Param_BufferOrigem, UI
 		//Chama uma exceção e informado o motivo.
 		throw gcnew IndexOutOfRangeException("A posicão do buffer atual não suportava escrever a quantidade de dados definida no parâmetro (Param_Tamanho).");
 	}
-	else if ((Param_Start + Param_Tamanho) > Param_BufferOrigem.Length)
+	else if ((Param_Start + Param_Tamanho) > static_cast<unsigned int>(Param_BufferOrigem.Length))
 	{
 		//Chama uma exceção e informado o motivo.
 		throw gcnew IndexOutOfRangeException("A posicão do buffer de origem mais o tamanho dos dados a serem escritos ultrapassava os limites do mesmo.");
@@ -1057,7 +1057,7 @@ CarenResult CarenBuffer::EscreverDados(ReadOnlyMemory<Byte> Param_BufferOrigem, 
 		//Chama uma exceção e informado o motivo.
 		throw gcnew IndexOutOfRangeException("A posicão do buffer atual não suportava escrever a quantidade de dados definida no parâmetro (Param_Tamanho).");
 	}
-	else if ((Param_Start + Param_Tamanho) > Param_BufferOrigem.Length)
+	else if ((Param_Start + Param_Tamanho) > static_cast<unsigned int>(Param_BufferOrigem.Length))
 	{
 		//Chama uma exceção e informado o motivo.
 		throw gcnew IndexOutOfRangeException("A posicão do buffer de origem mais o tamanho dos dados a serem escritos ultrapassava os limites do mesmo.");

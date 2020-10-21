@@ -15,9 +15,9 @@ limitations under the License.
 */
 
 #pragma once
-#include "..\SDK_Direct2D.h"
-#include "..\SDK_Caren.h"
-#include "..\SDK_Utilidades.h"
+#include "../SDK_Direct2D.h"
+#include "../SDK_Caren.h"
+#include "../SDK_Utilidades.h"
 
 //Importa o namespace que contém as interfaces da API primária.
 using namespace CarenRengine::Direct2D;
@@ -34,7 +34,7 @@ using namespace CarenRengine::SDKUtilidades;
 /// <summary>
 /// (Em desenvolvimento) - 
 /// </summary>
-public ref class CarenD2D1CommandSink5 : public ICarenD2D1CommandSink5
+public ref class CarenD2D1CommandSink5 
 {
 	/////////////////////////////////////////
 	//Objeto gerenciado por essa interface.//
@@ -88,7 +88,7 @@ public:
 		CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
 
 		//Cria a interface
-		Param_Out_CarenD2D1CommandSink5 = gcnew CarenD2D1CommandSink5();
+		Param_Out_CarenD2D1CommandSink5 = nullptr;
 
 		//Define sucesso
 		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);

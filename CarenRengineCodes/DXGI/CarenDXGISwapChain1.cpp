@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 
-#include "..\pch.h"
-#include "..\DXGI\CarenDXGISwapChain1.h"
+#include "../pch.h"
+#include "../DXGI\CarenDXGISwapChain1.h"
 
 //Destruidor.
 CarenDXGISwapChain1::~CarenDXGISwapChain1()

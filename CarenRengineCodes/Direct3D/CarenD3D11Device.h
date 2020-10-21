@@ -16,11 +16,11 @@ limitations under the License.
 
 
 #pragma once
-#include "..\SDK_Direct3D11.h"
-#include "..\SDK_DXGI.h"
-#include "..\SDK_Utilidades.h"
-#include "..\Caren\Caren.h"
-#include "..\Caren\CarenBuffer.h"
+#include "../SDK_Direct3D11.h"
+#include "../SDK_DXGI.h"
+#include "../SDK_Utilidades.h"
+#include "../Caren/Caren.h"
+#include "../Caren/CarenBuffer.h"
 #include "CarenD3D11DeviceContext.h"
 #include "CarenD3D11Texture1D.h"
 #include "CarenD3D11Texture2D.h"
@@ -46,7 +46,7 @@ limitations under the License.
 #include "CarenD3D11InputLayout.h"
 #include "CarenD3D11DepthStencilState.h"
 #include "CarenD3D11DepthStencilView.h"
-#include "..\DXGI\CarenDXGISwapChain.h"
+#include "../DXGI\CarenDXGISwapChain.h"
 
 //Importa o namespace que contém as interfaces do Microsoft Direct 3D.
 using namespace CarenRengine::Direct3D11;

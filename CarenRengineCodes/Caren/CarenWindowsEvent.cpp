@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 
-#include "..\pch.h"
-#include "..\Caren\CarenWindowsEvent.h"
+#include "../pch.h"
+#include "../Caren/CarenWindowsEvent.h"
 
 
 //Construtor

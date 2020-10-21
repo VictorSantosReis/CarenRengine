@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 
-#include "..\pch.h"
+#include "../pch.h"
 #include "CarenDirect3DDeviceManager9.h"
 
 //Destruidor.

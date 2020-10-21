@@ -17,8 +17,8 @@ limitations under the License.
 
 #pragma once
 #include "SDK_Base.h"
-#include "..\Caren\Caren.h"
-#include "..\Caren\CarenBuffer.h"
+#include "../Caren/Caren.h"
+#include "../Caren/CarenBuffer.h"
 
 //Importa o namespace base
 using namespace CarenRengine;
@@ -4044,9 +4044,9 @@ namespace CarenRengine
 				
 				//Cria o array
 				EstruturaRetorno->clusterMap = CriarMatrizUnidimensional<UINT16>(Param_Estrutura->stringLength); //VERIFIQUE A QUANTIDADE DE DADOS REAIS NO ARRAY.
-
+				
 				//Define os dados no array
-				CopiarItensTo_ArrayNativo(&EstruturaRetorno->clusterMap, Param_Estrutura->clusterMap, Param_Estrutura->clusterMap->Length);
+				CopiarItensTo_ArrayNativo(const_cast<UINT16**>(&EstruturaRetorno->clusterMap), Param_Estrutura->clusterMap, Param_Estrutura->clusterMap->Length);
 
 				//Retorna o resultado
 				return EstruturaRetorno;

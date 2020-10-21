@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#include "..\pch.h"
+#include "../pch.h"
 #include "CarenD2D1Geometry.h"
 
 //Destruidor.

@@ -1,5 +1,5 @@
-#include "..\pch.h"
-#include "..\Nativas\CLN_ID2D1CommandSink4.h"
+#include "../pch.h"
+#include "../Nativas/CLN_ID2D1CommandSink4.h"
 
 
 //Métodos da interface ID2D1CommandSink4

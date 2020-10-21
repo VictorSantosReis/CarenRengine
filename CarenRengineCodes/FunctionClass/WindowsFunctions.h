@@ -16,10 +16,10 @@ limitations under the License.
 
 
 #pragma once
-#include "..\pch.h"
-#include "..\SDK_Base.h"
-#include "..\Caren\Caren.h"
-#include "..\SDK_Utilidades.h"
+#include "../pch.h"
+#include "../SDK_Base.h"
+#include "../Caren/Caren.h"
+#include "../SDK_Utilidades.h"
 #include <chrono>
 #include <thread>
 

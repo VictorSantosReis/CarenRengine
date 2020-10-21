@@ -16,8 +16,8 @@ limitations under the License.
 
 
 #pragma once
-#include "..\SDK_Base.h"
-#include "..\Caren\Caren.h"
+#include "../SDK_Base.h"
+#include "../Caren/Caren.h"
 
 //CLN -> Classe Nativa.
 

@@ -132,3 +132,4 @@ limitations under the License.
 #include "Direct3D/CarenD3D11VertexShader.h"
 #include "Direct3D/CarenD3D11View.h"
 #include "Direct3D/CarenD3DDeviceContextState.h"
+#endif//PCH_H

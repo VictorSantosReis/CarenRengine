@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 
-#include "..\pch.h"
+#include "../pch.h"
 #include "CarenTeste.h"
 
 void CarenTeste::TesteMatrizIrregular(cli::array<cli::array<float>^>^ Param_MatrizJagged)

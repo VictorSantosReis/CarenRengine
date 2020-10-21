@@ -16,10 +16,10 @@ limitations under the License.
 
 
 #pragma once
-#include "..\SDK_DXGI.h"
-#include "..\Caren\Caren.h"
+#include "../SDK_DXGI.h"
+#include "../Caren/Caren.h"
 #include "CarenDXGIOutput.h"
-#include "..\SDK_Utilidades.h"
+#include "../SDK_Utilidades.h"
 
 //Importa o namespace que contém as interfaces do Microsoft DirectX Graphics Infrastructure(DXGI).
 using namespace CarenRengine::DXGI;

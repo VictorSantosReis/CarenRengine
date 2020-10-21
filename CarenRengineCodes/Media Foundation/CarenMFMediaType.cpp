@@ -16,7 +16,7 @@ limitations under the License.
 
 
 #pragma once
-#include "..\pch.h"
+#include "../pch.h"
 #include "CarenMFMediaType.h"
 
 

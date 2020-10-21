@@ -16,11 +16,11 @@ limitations under the License.
 
 
 #pragma once
-#include "..\SDK_DXGI.h"
-#include "..\SDK_Caren.h"
-#include "..\SDK_Utilidades.h"
-#include "..\DXGI\CarenDXGISwapChain.h"
-#include "..\DXGI\CarenDXGISwapChain1.h"
+#include "../SDK_DXGI.h"
+#include "../SDK_Caren.h"
+#include "../SDK_Utilidades.h"
+#include "../DXGI\CarenDXGISwapChain.h"
+#include "../DXGI\CarenDXGISwapChain1.h"
 #include "CarenDXGIAdapter.h"
 #include "CarenDXGIAdapter1.h"
 

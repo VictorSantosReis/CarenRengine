@@ -15,9 +15,9 @@ limitations under the License.
 */
 
 #pragma once
-#include "..\SDK_Direct2D.h"
-#include "..\SDK_Caren.h"
-#include "..\SDK_Utilidades.h"
+#include "../SDK_Direct2D.h"
+#include "../SDK_Caren.h"
+#include "../SDK_Utilidades.h"
 
 //Importa o namespace que contém as interfaces da API primária.
 using namespace CarenRengine::Direct2D;

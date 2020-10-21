@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 
-#include "..\pch.h"
+#include "../pch.h"
 #include "WindowsFunctions.h"
 
 String^ WindowsFunctions::HResultMensagem(UInt32 Param_HResultCode)

@@ -617,6 +617,16 @@ void CarenD2D1CommandSink3::UnRegisterCallback()
 	//Libera os ponteiro da classe nativa
 	CLN_ID2D1CommandSink3* pVarPointer = (CLN_ID2D1CommandSink3*)PonteiroTrabalho;
 
+
+	//Libera os ponteiros da CarenD2D1CommandSink3
+
+	if (ObjetoValido(pVarPointer->Evento_DrawSpriteBatch))
+	{
+		//Descarta o delegate.
+		pVarPointer->Evento_DrawSpriteBatch = NULL;
+	}
+
+
 	//Libera os ponteiros da CarenD2D1CommandSink2
 
 	//Verifica se é valido e deleta o ponteiro.

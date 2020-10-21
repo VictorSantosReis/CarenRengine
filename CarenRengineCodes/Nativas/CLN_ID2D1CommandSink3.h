@@ -107,7 +107,7 @@ public:
 
     //Eventos nativos da interface ID2D1CommandSink3
 
-    CLN_ID2D1CommandSink3_EventoNativo_OnDrawSpriteBatch Evento_DrawSpriteBatch = NULL;
+    CLN_ID2D1CommandSink3_EventoNativo_DrawSpriteBatch Evento_DrawSpriteBatch = NULL;
 
 
 

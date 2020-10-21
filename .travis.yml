@@ -1,6 +1,1 @@
 language: c++
-rvm:
- - 17
-os:
- stages:
-  - compile

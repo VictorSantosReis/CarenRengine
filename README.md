@@ -1,7 +1,5 @@
 # CarenRengine
 
-[![Build Status](https://travis-ci.org/VictorSantosReis/CarenRengine.svg?branch=master)](https://travis-ci.org/VictorSantosReis/CarenRengine)
-
 Projeto tem como objetivo implementar algumas APIs nativas do Windows relacionadas a Mídia e Gráficos tanto 2D como 3D.
 CarenRengine vai permitir o desenvolvimento de aplicativos **3D**, **2D**, **Mídia(Áudio e Vídeo)** em linguagens gerenciadas como 
 o **C#(CSharp)**, com quase **TODAS** as **interfaces nativas** disponiveis no **C++** com a menor penalidade de desempenho possível que eu conseguir. 

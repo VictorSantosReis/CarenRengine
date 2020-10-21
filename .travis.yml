@@ -1,5 +1,6 @@
 language: cpp
 os: windows
+
 before_install:
 - |-
     case $TRAVIS_OS_NAME in
@@ -17,6 +18,17 @@ before_install:
         taskkill //IM gpg-agent.exe //F  # https://travis-ci.community/t/4967
         export PATH=/C/tools/msys64/mingw64/bin:$PATH
         export MAKE=mingw32-make  # so that Autotools can find it
+          - cd gtest-1.7.0/
+  ./configure --prefix=$TRAVIS_BUILD_DIR --with-pthreads=no
+  make
+  mkdir $TRAVIS_BUILD_DIR/include/
+   cp -r include/gtest $TRAVIS_BUILD_DIR/include
+   mkdir $TRAVIS_BUILD_DIR/lib/
+  cp lib/.libs/* $TRAVIS_BUILD_DIR/lib/
+   cd ..
+   export CPLUS_INCLUDE_PATH=$TRAVIS_BUILD_DIR/include:$CPLUS_INCLUDE_PATH
+ export LIBRARY_PATH=$TRAVIS_BUILD_DIR/lib:$LIBRARY_PATH
+   export LD_LIBRARY_PATH=$TRAVIS_BUILD_DIR/lib:$LD_LIBRARY_PATH
         ;;
     esac
 
@@ -33,3 +45,6 @@ cache:
     directories:
     - $HOME/AppData/Local/Temp/chocolatey
     - /C/tools/msys64
+    
+script:
+  - make cppdados

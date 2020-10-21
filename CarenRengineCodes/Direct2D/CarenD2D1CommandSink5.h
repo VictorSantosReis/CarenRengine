@@ -32,7 +32,7 @@ using namespace CarenRengine::SDKUtilidades;
 
 
 /// <summary>
-/// (Em desenvolvimento) - 
+/// (Concluido - Fase) - 
 /// </summary>
 public ref class CarenD2D1CommandSink5 
 {

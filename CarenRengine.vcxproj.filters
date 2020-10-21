@@ -881,12 +881,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CarenRengineCodes\AssemblyInfo.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\pch.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Bitmap.cpp">
       <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
     </ClCompile>
@@ -1594,6 +1588,12 @@
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Core Audio\CarenAudioRenderClient.cpp">
       <Filter>Arquivos de Origem\Classes\WASAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\CppResources\pch.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\CppResources\AssemblyInfo.cpp">
+      <Filter>Arquivos de Origem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

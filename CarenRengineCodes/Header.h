@@ -331,7 +331,7 @@ template<class T> void DeletarMatrizPonteirosSafe(T*** Param_PointToMatriz)
 }
 
 //Método responsável por criar uma matriz unidimensional.
-//Chama o método (DeletarMatrizUnidimensional) quando nA£o for mais utilizar.
+//Chama o método (DeletarMatrizUnidimensional) quando não for mais utilizar.
 template<class T> T* CriarMatrizUnidimensional(DWORD Param_Quantidade)
 {
 	//Cria e retorna uma matriz unidimensional dinamica.

@@ -56,7 +56,10 @@ public ref class CarenD2D1CommandSink : public ICarenD2D1CommandSink
 	//Contrutor e destruidor da classe.
 public:
 	~CarenD2D1CommandSink();
-
+	/// <summary>
+	/// Inicializa a classe com um manipulador de eventos default da CarenRengine.
+	/// </summary>
+	CarenD2D1CommandSink();
 
 	//Variaveis Internas.
 internal:
@@ -568,34 +571,6 @@ public:
 
 		//Cria a interface
 		Param_Out_CarenD2D1CommandSink = gcnew CarenD2D1CommandSink();
-
-		//Define sucesso
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-		//Retorna o resultado
-		return Resultado;
-	}
-
-	/// <summary>
-	/// Método responsável por criar uma instância da classe. A proprória classe var implementar uma nativa para poder receber os comandos e reproduzir para o usuário.
-	/// </summary>
-	/// <param name="Param_Out_CarenD2D1CommandSink">Recebe um ponteiro para a interface (Vazia).</param>
-	static CarenResult CriarInstancia([Out] ICarenD2D1CommandSink^% Param_Out_CarenD2D1CommandSink)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
-
-		//Variaveis
-		CLN_ID2D1CommandSink* pImplemented = NULL;
-
-		//Cria a interface
-		Param_Out_CarenD2D1CommandSink = gcnew CarenD2D1CommandSink();
-
-		//Cria a classe que implementa a interface nativa.
-		pImplemented = new CLN_ID2D1CommandSink();
-
-		//Define o ponteiro na interface.
-		Resultado = Param_Out_CarenD2D1CommandSink->AdicionarPonteiro(pImplemented);
 
 		//Define sucesso
 		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);

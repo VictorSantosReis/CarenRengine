@@ -18,6 +18,18 @@ limitations under the License.
 #include "../SDK_Direct2D.h"
 #include "../SDK_Caren.h"
 #include "../SDK_Utilidades.h"
+#include "CarenD2D1Bitmap.h"
+#include "CarenD2D1Geometry.h"
+#include "CarenD2D1Brush.h"
+#include "CarenD2D1StrokeStyle.h"
+#include "CarenD2D1Image.h"
+#include "CarenD2D1Mesh.h"
+#include "CarenD2D1Layer.h"
+#include "CarenD2D1GradientMesh.h"
+#include "CarenD2D1Ink.h"
+#include "CarenD2D1InkStyle.h"
+#include "CarenD2D1SpriteBatch.h"
+#include "../Nativas/CLN_ID2D1CommandSink5.h"
 
 //Importa o namespace que contém as interfaces da API primária.
 using namespace CarenRengine::Direct2D;
@@ -32,9 +44,9 @@ using namespace CarenRengine::SDKUtilidades;
 
 
 /// <summary>
-/// (Em Desenvolvimento) - 
+/// (Concluido - Fase de Testes) - Classe responsável por representar uma sequência de comandos que podem ser gravados e reproduzidos.
 /// </summary>
-public ref class CarenD2D1CommandSink5 
+public ref class CarenD2D1CommandSink5 : ICarenD2D1CommandSink5
 {
 	/////////////////////////////////////////
 	//Objeto gerenciado por essa interface.//
@@ -47,6 +59,10 @@ public ref class CarenD2D1CommandSink5
 	//Contrutor e destruidor da classe.
 public:
 	~CarenD2D1CommandSink5();
+	/// <summary>
+	/// Inicializa a classe com um manipulador de eventos default da CarenRengine.
+	/// </summary>
+	CarenD2D1CommandSink5();
 
 
 	//Variaveis Internas.
@@ -73,7 +89,662 @@ public:
 		}
 	}
 
+	//Eventos
+public:
+	/////////////////////////////////////////////
+	//EVENTOS CHAMADOS PARA NOTIFICAR O USUÁRIO//
+	/////////////////////////////////////////////
 
+	//Eventos da inteface ICarenD2D1CommandSink5
+
+	/// <summary>
+	/// Evento chamado para notificar a reprodução do comando (BlendImage).
+	/// </summary>
+	virtual event ICarenD2D1CommandSink5::DelegateOnBlendImage^ OnBlendImage;
+
+
+
+	//Eventos da interface ICarenD2D1CommandSink4.
+
+	/// <summary>
+	/// Evento chamado para notificar a reprodução do comando (SetPrimitiveBlend2).
+	/// </summary>
+	virtual event ICarenD2D1CommandSink5::DelegateOnSetPrimitiveBlend2^ OnSetPrimitiveBlend2;
+
+
+
+	//Eventos da interface ICarenD2D1CommandSink3.
+
+	/// <summary>
+	/// Evento chamado para notificar a reprodução do comando (DrawSpriteBatch).
+	/// </summary>
+	virtual event ICarenD2D1CommandSink5::DelegateOnDrawSpriteBatch^ OnDrawSpriteBatch;
+
+
+
+	//Eventos da interface ICarenD2D1CommandSink2.
+
+	/// <summary>
+	/// Evento chamado para notificar a reprodução do comando (DrawGdiMetafile1).
+	/// </summary>
+	virtual event ICarenD2D1CommandSink5::DelegateOnDrawGdiMetafile1^ OnDrawGdiMetafile1;
+
+	/// <summary>
+	/// Evento chamado para notificar a reprodução do comando (DrawGradientMesh).
+	/// </summary>
+	virtual event ICarenD2D1CommandSink5::DelegateOnDrawGradientMesh^ OnDrawGradientMesh;
+
+	/// <summary>
+	/// Evento chamado para notificar a reprodução do comando (DrawInk).
+	/// </summary>
+	virtual event ICarenD2D1CommandSink5::DelegateOnDrawInk^ OnDrawInk;
+
+
+
+	//Eventos da interface ICarenD2D1CommandSink1.
+
+	/// <summary>
+	/// Evento chamado para notificar a reprodução do comando (SetPrimitiveBlend1).
+	/// </summary>
+	virtual event ICarenD2D1CommandSink5::DelegateOnSetPrimitiveBlend1^ OnSetPrimitiveBlend1;
+
+
+
+	//Eventos da interface (ICarenD2D1CommandSink)
+
+	/// <summary>
+	/// Evento chamado para notificar a reprodução do comando (BeginDraw).
+	/// </summary>
+	virtual event ICarenD2D1CommandSink5::DelegateOnBeginDraw^ OnBeginDraw;
+
+	/// <summary>
+	/// Evento chamado para notificar a reprodução do comando (Clear).
+	/// </summary>
+	virtual event ICarenD2D1CommandSink5::DelegateOnClear^ OnClear;
+
+	/// <summary>
+	/// Evento chamado para notificar a reprodução do comando (DrawBitmap).
+	/// </summary>
+	virtual event ICarenD2D1CommandSink5::DelegateOnDrawBitmap^ OnDrawBitmap;
+
+	/// <summary>
+	/// Evento chamado para notificar a reprodução do comando (DrawGdiMetafile).
+	/// </summary>
+	virtual event ICarenD2D1CommandSink5::DelegateOnDrawGdiMetafile^ OnDrawGdiMetafile;
+
+	/// <summary>
+	/// Evento chamado para notificar a reprodução do comando (DrawGeometry).
+	/// </summary>
+	virtual event ICarenD2D1CommandSink5::DelegateOnDrawGeometry^ OnDrawGeometry;
+
+	/// <summary>
+	/// Evento chamado para notificar a reprodução do comando (DrawGlyphRun).
+	/// </summary>
+	virtual event ICarenD2D1CommandSink5::DelegateOnDrawGlyphRun^ OnDrawGlyphRun;
+
+	/// <summary>
+	/// Evento chamado para notificar a reprodução do comando (DrawImage).
+	/// </summary>
+	virtual event ICarenD2D1CommandSink5::DelegateOnDrawImage^ OnDrawImage;
+
+	/// <summary>
+	/// Evento chamado para notificar a reprodução do comando (DrawLine).
+	/// </summary>
+	virtual event ICarenD2D1CommandSink5::DelegateOnDrawLine^ OnDrawLine;
+
+	/// <summary>
+	/// Evento chamado para notificar a reprodução do comando (DrawRectangle).
+	/// </summary>
+	virtual event ICarenD2D1CommandSink5::DelegateOnDrawRectangle^ OnDrawRectangle;
+
+	/// <summary>
+	/// Evento chamado para notificar a reprodução do comando (EndDraw).
+	/// </summary>
+	virtual event ICarenD2D1CommandSink5::DelegateOnEndDraw^ OnEndDraw;
+
+	/// <summary>
+	/// Evento chamado para notificar a reprodução do comando (FillGeometry).
+	/// </summary>
+	virtual event ICarenD2D1CommandSink5::DelegateOnFillGeometry^ OnFillGeometry;
+
+	/// <summary>
+	/// Evento chamado para notificar a reprodução do comando (FillMesh).
+	/// </summary>
+	virtual event ICarenD2D1CommandSink5::DelegateOnFillMesh^ OnFillMesh;
+
+	/// <summary>
+	/// Evento chamado para notificar a reprodução do comando (FillOpacityMask).
+	/// </summary>
+	virtual event ICarenD2D1CommandSink5::DelegateOnFillOpacityMask^ OnFillOpacityMask;
+
+	/// <summary>
+	/// Evento chamado para notificar a reprodução do comando (FillRectangle).
+	/// </summary>
+	virtual event ICarenD2D1CommandSink5::DelegateOnFillRectangle^ OnFillRectangle;
+
+	/// <summary>
+	/// Evento chamado para notificar a reprodução do comando (PopAxisAlignedClip).
+	/// </summary>
+	virtual event ICarenD2D1CommandSink5::DelegateOnPopAxisAlignedClip^ OnPopAxisAlignedClip;
+
+	/// <summary>
+	/// Evento chamado para notificar a reprodução do comando (PopLayer).
+	/// </summary>
+	virtual event ICarenD2D1CommandSink5::DelegateOnPopLayer^ OnPopLayer;
+
+	/// <summary>
+	/// Evento chamado para notificar a reprodução do comando (PushAxisAlignedClip).
+	/// </summary>
+	virtual event ICarenD2D1CommandSink5::DelegateOnPushAxisAlignedClip^ OnPushAxisAlignedClip;
+
+	/// <summary>
+	/// Evento chamado para notificar a reprodução do comando (PushLayer).
+	/// </summary>
+	virtual event ICarenD2D1CommandSink5::DelegateOnPushLayer^ OnPushLayer;
+
+	/// <summary>
+	/// Evento chamado para notificar a reprodução do comando (SetAntialiasMode).
+	/// </summary>
+	virtual event ICarenD2D1CommandSink5::DelegateOnSetAntialiasMode^ OnSetAntialiasMode;
+
+	/// <summary>
+	/// Evento chamado para notificar a reprodução do comando (SetPrimitiveBlend).
+	/// </summary>
+	virtual event ICarenD2D1CommandSink5::DelegateOnSetPrimitiveBlend^ OnSetPrimitiveBlend;
+
+	/// <summary>
+	/// Evento chamado para notificar a reprodução do comando (SetTags).
+	/// </summary>
+	virtual event ICarenD2D1CommandSink5::DelegateOnSetTags^ OnSetTags;
+
+	/// <summary>
+	/// Evento chamado para notificar a reprodução do comando (SetTextAntialiasMode).
+	/// </summary>
+	virtual event ICarenD2D1CommandSink5::DelegateOnSetTextAntialiasMode^ OnSetTextAntialiasMode;
+
+	/// <summary>
+	/// Evento chamado para notificar a reprodução do comando (SetTextRenderingParams).
+	/// </summary>
+	virtual event ICarenD2D1CommandSink5::DelegateOnSetTextRenderingParams^ OnSetTextRenderingParams;
+
+	/// <summary>
+	/// Evento chamado para notificar a reprodução do comando (SetTransform).
+	/// </summary>
+	virtual event ICarenD2D1CommandSink5::DelegateOnSetTransform^ OnSetTransform;
+
+	/// <summary>
+	/// Evento chamado para notificar a reprodução do comando (SetUnitMode).
+	/// </summary>
+	virtual event ICarenD2D1CommandSink5::DelegateOnSetUnitMode^ OnSetUnitMode;
+
+
+
+	//Delegates para uso nativo.
+private:
+
+	/////////////////////////////////////////////////////////////////////////////////////
+	//DELEGATES UTILIZADOS PARA RECEBER O EVENTO NATIVO DA CLASSE (CLN_D2D1CommandSink)//
+	/////////////////////////////////////////////////////////////////////////////////////
+
+	//Delegates da interface ICarenD2D1CommandSink4.
+
+	/// <summary>
+	/// Delegate nativo que vai conter o método que vai receber o evento(OnBlendImage) nativo da classe (CLN_D2D1CommandSink5) para ser enviado ao usuário.
+	/// </summary>
+	delegate void DelegateNativo_Evento_OnBlendImage(
+		_In_ ID2D1Image* image,
+		D2D1_BLEND_MODE blendMode,
+		_In_opt_ CONST D2D1_POINT_2F* targetOffset,
+		_In_opt_ CONST D2D1_RECT_F* imageRectangle,
+		D2D1_INTERPOLATION_MODE interpolationMode);
+	DelegateNativo_Evento_OnBlendImage^ Callback_OnBlendImage = nullptr;
+
+
+	//Delegates da interface ICarenD2D1CommandSink4.
+
+	/// <summary>
+	/// Delegate nativo que vai conter o método que vai receber o evento(OnDrawSpriteBatch) nativo da classe (CLN_D2D1CommandSink4) para ser enviado ao usuário.
+	/// </summary>
+	delegate void DelegateNativo_Evento_OnSetPrimitiveBlend2(D2D1_PRIMITIVE_BLEND primitiveBlend);
+	DelegateNativo_Evento_OnSetPrimitiveBlend2^ Callback_OnSetPrimitiveBlend2 = nullptr;
+
+
+	//Delegates da interface ICarenD2D1CommandSink3.
+
+	/// <summary>
+	/// Delegate nativo que vai conter o método que vai receber o evento(OnDrawSpriteBatch) nativo da classe (CLN_D2D1CommandSink3) para ser enviado ao usuário.
+	/// </summary>
+	delegate void DelegateNativo_Evento_OnDrawSpriteBatch(
+		_In_ ID2D1SpriteBatch* spriteBatch,
+		UINT32 startIndex,
+		UINT32 spriteCount,
+		_In_ ID2D1Bitmap* bitmap,
+		D2D1_BITMAP_INTERPOLATION_MODE interpolationMode,
+		D2D1_SPRITE_OPTIONS spriteOptions);
+	DelegateNativo_Evento_OnDrawSpriteBatch^ Callback_OnDrawSpriteBatch = nullptr;
+
+
+	//Delegates da interface ICarenD2D1CommandSink2.
+
+	/// <summary>
+	/// Delegate nativo que vai conter o método que vai receber o evento(OnDrawGdiMetafile) nativo da classe (CLN_D2D1CommandSink2) para ser enviado ao usuário.
+	/// </summary>
+	delegate void DelegateNativo_Evento_OnDrawGdiMetafile1(
+		_In_ ID2D1GdiMetafile* gdiMetafile,
+		_In_opt_ CONST D2D1_RECT_F* destinationRectangle,
+		_In_opt_ CONST D2D1_RECT_F* sourceRectangle);
+	DelegateNativo_Evento_OnDrawGdiMetafile1^ Callback_OnDrawGdiMetafile1 = nullptr;
+
+	/// <summary>
+	/// Delegate nativo que vai conter o método que vai receber o evento(OnDrawGradientMesh) nativo da classe (CLN_D2D1CommandSink2) para ser enviado ao usuário.
+	/// </summary>
+	delegate void DelegateNativo_Evento_OnDrawGradientMesh(_In_ ID2D1GradientMesh* gradientMesh);
+	DelegateNativo_Evento_OnDrawGradientMesh^ Callback_OnDrawGradientMesh = nullptr;
+
+	/// <summary>
+	/// Delegate nativo que vai conter o método que vai receber o evento(OnDrawInk) nativo da classe (CLN_D2D1CommandSink2) para ser enviado ao usuário.
+	/// </summary>
+	delegate void DelegateNativo_Evento_OnDrawInk(
+		_In_ ID2D1Ink* ink,
+		_In_ ID2D1Brush* brush,
+		_In_opt_ ID2D1InkStyle* inkStyle);
+	DelegateNativo_Evento_OnDrawInk^ Callback_OnDrawInk = nullptr;
+
+
+
+	//Delegates da interface ICarenD2D1CommandSink1.
+
+	/// <summary>
+	/// Delegate nativo que vai conter o método que vai receber o evento(OnSetPrimitiveBlend1) nativo da classe (CLN_D2D1CommandSink1) para ser enviado ao usuário.
+	/// </summary>
+	delegate void DelegateNativo_Evento_OnSetPrimitiveBlend1(D2D1_PRIMITIVE_BLEND primitiveBlend);
+	DelegateNativo_Evento_OnSetPrimitiveBlend1^ Callback_OnSetPrimitiveBlend1 = nullptr;
+
+
+
+	//Delegates da interface ICarenD2D1CommandSink
+
+	/// <summary>
+	/// Delegate nativo que vai conter o método que vai receber o evento(OnBeginDraw) nativo da classe (CLN_D2D1CommandSink) para ser enviado ao usuário.
+	/// </summary>
+	delegate void DelegateNativo_Evento_OnBeginDraw();
+	DelegateNativo_Evento_OnBeginDraw^ Callback_OnBeginDraw = nullptr;
+
+	/// <summary>
+	/// Delegate nativo que vai conter o método que vai receber o evento(OnClear) nativo da classe (CLN_D2D1CommandSink) para ser enviado ao usuário.
+	/// </summary>
+	delegate void DelegateNativo_Evento_OnClear(_In_opt_ CONST D2D1_COLOR_F* color);
+	DelegateNativo_Evento_OnClear^ Callback_OnClear = nullptr;
+
+	/// <summary>
+	/// Delegate nativo que vai conter o método que vai receber o evento(OnDrawBitmap) nativo da classe (CLN_D2D1CommandSink) para ser enviado ao usuário.
+	/// </summary>
+	delegate void DelegateNativo_Evento_OnDrawBitmap(_In_ ID2D1Bitmap* bitmap,
+		_In_opt_ CONST D2D1_RECT_F* destinationRectangle,
+		FLOAT opacity,
+		D2D1_INTERPOLATION_MODE interpolationMode,
+		_In_opt_ CONST D2D1_RECT_F* sourceRectangle,
+		_In_opt_ CONST D2D1_MATRIX_4X4_F* perspectiveTransform);
+	DelegateNativo_Evento_OnDrawBitmap^ Callback_OnDrawBitmap = nullptr;
+
+	/// <summary>
+	/// Delegate nativo que vai conter o método que vai receber o evento(OnDrawGdiMetafile) nativo da classe (CLN_D2D1CommandSink) para ser enviado ao usuário.
+	/// </summary>
+	delegate void DelegateNativo_Evento_OnDrawGdiMetafile(
+		_In_ ID2D1GdiMetafile* gdiMetafile,
+		_In_opt_ CONST D2D1_POINT_2F* targetOffset);
+	DelegateNativo_Evento_OnDrawGdiMetafile^ Callback_OnDrawGdiMetafile = nullptr;
+
+	/// <summary>
+	/// Delegate nativo que vai conter o método que vai receber o evento(OnDrawGeometry) nativo da classe (CLN_D2D1CommandSink) para ser enviado ao usuário.
+	/// </summary>
+	delegate void DelegateNativo_Evento_OnDrawGeometry(
+		_In_ ID2D1Geometry* geometry,
+		_In_ ID2D1Brush* brush,
+		FLOAT strokeWidth,
+		_In_opt_ ID2D1StrokeStyle* strokeStyle);
+	DelegateNativo_Evento_OnDrawGeometry^ Callback_OnDrawGeometry = nullptr;
+
+	/// <summary>
+	/// Delegate nativo que vai conter o método que vai receber o evento(OnDrawGlyphRun) nativo da classe (CLN_D2D1CommandSink) para ser enviado ao usuário.
+	/// </summary>
+	delegate void DelegateNativo_Evento_OnDrawGlyphRun(
+		D2D1_POINT_2F baselineOrigin,
+		_In_ CONST DWRITE_GLYPH_RUN* glyphRun,
+		_In_opt_ CONST DWRITE_GLYPH_RUN_DESCRIPTION* glyphRunDescription,
+		_In_ ID2D1Brush* foregroundBrush,
+		DWRITE_MEASURING_MODE measuringMode);
+	DelegateNativo_Evento_OnDrawGlyphRun^ Callback_OnDrawGlyphRun = nullptr;
+
+	/// <summary>
+	/// Delegate nativo que vai conter o método que vai receber o evento(OnDrawImage) nativo da classe (CLN_D2D1CommandSink) para ser enviado ao usuário.
+	/// </summary>
+	delegate void DelegateNativo_Evento_OnDrawImage(
+		_In_ ID2D1Image* image,
+		_In_opt_ CONST D2D1_POINT_2F* targetOffset,
+		_In_opt_ CONST D2D1_RECT_F* imageRectangle,
+		D2D1_INTERPOLATION_MODE interpolationMode,
+		D2D1_COMPOSITE_MODE compositeMode);
+	DelegateNativo_Evento_OnDrawImage^ Callback_OnDrawImage = nullptr;
+
+	/// <summary>
+	/// Delegate nativo que vai conter o método que vai receber o evento(OnDrawLine) nativo da classe (CLN_D2D1CommandSink) para ser enviado ao usuário.
+	/// </summary>
+	delegate void DelegateNativo_Evento_OnDrawLine(
+		D2D1_POINT_2F point0,
+		D2D1_POINT_2F point1,
+		_In_ ID2D1Brush* brush,
+		FLOAT strokeWidth,
+		_In_opt_ ID2D1StrokeStyle* strokeStyle);
+	DelegateNativo_Evento_OnDrawLine^ Callback_OnDrawLine = nullptr;
+
+	/// <summary>
+	/// Delegate nativo que vai conter o método que vai receber o evento(OnDrawRectangle) nativo da classe (CLN_D2D1CommandSink) para ser enviado ao usuário.
+	/// </summary>
+	delegate void DelegateNativo_Evento_OnDrawRectangle(
+		_In_ CONST D2D1_RECT_F* rect,
+		_In_ ID2D1Brush* brush,
+		FLOAT strokeWidth,
+		_In_opt_ ID2D1StrokeStyle* strokeStyle);
+	DelegateNativo_Evento_OnDrawRectangle^ Callback_OnDrawRectangle = nullptr;
+
+	/// <summary>
+	/// Delegate nativo que vai conter o método que vai receber o evento(OnEndDraw) nativo da classe (CLN_D2D1CommandSink) para ser enviado ao usuário.
+	/// </summary>
+	delegate void DelegateNativo_Evento_OnEndDraw();
+	DelegateNativo_Evento_OnEndDraw^ Callback_OnEndDraw = nullptr;
+
+	/// <summary>
+	/// Delegate nativo que vai conter o método que vai receber o evento(OnFillGeometry) nativo da classe (CLN_D2D1CommandSink) para ser enviado ao usuário.
+	/// </summary>
+	delegate void DelegateNativo_Evento_OnFillGeometry(
+		_In_ ID2D1Geometry* geometry,
+		_In_ ID2D1Brush* brush,
+		_In_opt_ ID2D1Brush* opacityBrush);
+	DelegateNativo_Evento_OnFillGeometry^ Callback_OnFillGeometry = nullptr;
+
+	/// <summary>
+	/// Delegate nativo que vai conter o método que vai receber o evento(OnFillMesh) nativo da classe (CLN_D2D1CommandSink) para ser enviado ao usuário.
+	/// </summary>
+	delegate void DelegateNativo_Evento_OnFillMesh(
+		_In_ ID2D1Mesh* mesh,
+		_In_ ID2D1Brush* brush);
+	DelegateNativo_Evento_OnFillMesh^ Callback_OnFillMesh = nullptr;
+
+	/// <summary>
+	/// Delegate nativo que vai conter o método que vai receber o evento(OnFillOpacityMask) nativo da classe (CLN_D2D1CommandSink) para ser enviado ao usuário.
+	/// </summary>
+	delegate void DelegateNativo_Evento_OnFillOpacityMask(
+		_In_ ID2D1Bitmap* opacityMask,
+		_In_ ID2D1Brush* brush,
+		_In_opt_ CONST D2D1_RECT_F* destinationRectangle,
+		_In_opt_ CONST D2D1_RECT_F* sourceRectangle);
+	DelegateNativo_Evento_OnFillOpacityMask^ Callback_OnFillOpacityMask = nullptr;
+
+	/// <summary>
+	/// Delegate nativo que vai conter o método que vai receber o evento(OnFillRectangle) nativo da classe (CLN_D2D1CommandSink) para ser enviado ao usuário.
+	/// </summary>
+	delegate void DelegateNativo_Evento_OnFillRectangle(
+		_In_ CONST D2D1_RECT_F* rect,
+		_In_ ID2D1Brush* brush);
+	DelegateNativo_Evento_OnFillRectangle^ Callback_OnFillRectangle = nullptr;
+
+	/// <summary>
+	/// Delegate nativo que vai conter o método que vai receber o evento(OnPopAxisAlignedClip) nativo da classe (CLN_D2D1CommandSink) para ser enviado ao usuário.
+	/// </summary>
+	delegate void DelegateNativo_Evento_OnPopAxisAlignedClip();
+	DelegateNativo_Evento_OnPopAxisAlignedClip^ Callback_OnPopAxisAlignedClip = nullptr;
+
+	/// <summary>
+	/// Delegate nativo que vai conter o método que vai receber o evento(OnPopLayer) nativo da classe (CLN_D2D1CommandSink) para ser enviado ao usuário.
+	/// </summary>
+	delegate void DelegateNativo_Evento_OnPopLayer();
+	DelegateNativo_Evento_OnPopLayer^ Callback_OnPopLayer = nullptr;
+
+	/// <summary>
+	/// Delegate nativo que vai conter o método que vai receber o evento(OnPushAxisAlignedClip) nativo da classe (CLN_D2D1CommandSink) para ser enviado ao usuário.
+	/// </summary>
+	delegate void DelegateNativo_Evento_OnPushAxisAlignedClip(
+		_In_ CONST D2D1_RECT_F* clipRect,
+		D2D1_ANTIALIAS_MODE antialiasMode);
+	DelegateNativo_Evento_OnPushAxisAlignedClip^ Callback_OnPushAxisAlignedClip = nullptr;
+
+	/// <summary>
+	/// Delegate nativo que vai conter o método que vai receber o evento(OnPushLayer) nativo da classe (CLN_D2D1CommandSink) para ser enviado ao usuário.
+	/// </summary>
+	delegate void DelegateNativo_Evento_OnPushLayer(
+		_In_ CONST D2D1_LAYER_PARAMETERS1* layerParameters1,
+		_In_opt_ ID2D1Layer* layer);
+	DelegateNativo_Evento_OnPushLayer^ Callback_OnPushLayer = nullptr;
+
+	/// <summary>
+	/// Delegate nativo que vai conter o método que vai receber o evento(OnSetAntialiasMode) nativo da classe (CLN_D2D1CommandSink) para ser enviado ao usuário.
+	/// </summary>
+	delegate void DelegateNativo_Evento_OnSetAntialiasMode(D2D1_ANTIALIAS_MODE antialiasMode);
+	DelegateNativo_Evento_OnSetAntialiasMode^ Callback_OnSetAntialiasMode = nullptr;
+
+	/// <summary>
+	/// Delegate nativo que vai conter o método que vai receber o evento(OnSetPrimitiveBlend) nativo da classe (CLN_D2D1CommandSink) para ser enviado ao usuário.
+	/// </summary>
+	delegate void DelegateNativo_Evento_OnSetPrimitiveBlend(D2D1_PRIMITIVE_BLEND primitiveBlend);
+	DelegateNativo_Evento_OnSetPrimitiveBlend^ Callback_OnSetPrimitiveBlend = nullptr;
+
+	/// <summary>
+	/// Delegate nativo que vai conter o método que vai receber o evento(OnSetTags) nativo da classe (CLN_D2D1CommandSink) para ser enviado ao usuário.
+	/// </summary>
+	delegate void DelegateNativo_Evento_OnSetTags(
+		D2D1_TAG tag1,
+		D2D1_TAG tag2);
+	DelegateNativo_Evento_OnSetTags^ Callback_OnSetTags = nullptr;
+
+	/// <summary>
+	/// Delegate nativo que vai conter o método que vai receber o evento(OnSetTextAntialiasMode) nativo da classe (CLN_D2D1CommandSink) para ser enviado ao usuário.
+	/// </summary>
+	delegate void DelegateNativo_Evento_OnSetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE textAntialiasMode);
+	DelegateNativo_Evento_OnSetTextAntialiasMode^ Callback_OnSetTextAntialiasMode = nullptr;
+
+	/// <summary>
+	/// Delegate nativo que vai conter o método que vai receber o evento(OnSetTextRenderingParams) nativo da classe (CLN_D2D1CommandSink) para ser enviado ao usuário.
+	/// </summary>
+	delegate void DelegateNativo_Evento_OnSetTextRenderingParams(_In_opt_ IDWriteRenderingParams* textRenderingParams);
+	DelegateNativo_Evento_OnSetTextRenderingParams^ Callback_OnSetTextRenderingParams = nullptr;
+
+	/// <summary>
+	/// Delegate nativo que vai conter o método que vai receber o evento(OnSetTransform) nativo da classe (CLN_D2D1CommandSink) para ser enviado ao usuário.
+	/// </summary>
+	delegate void DelegateNativo_Evento_OnSetTransform(_In_ CONST D2D1_MATRIX_3X2_F* transform);
+	DelegateNativo_Evento_OnSetTransform^ Callback_OnSetTransform = nullptr;
+
+	/// <summary>
+	/// Delegate nativo que vai conter o método que vai receber o evento(OnBeginDraw) nativo da classe (CLN_D2D1CommandSink) para ser enviado ao usuário.
+	/// </summary>
+	delegate void DelegateNativo_Evento_OnSetUnitMode(D2D1_UNIT_MODE unitMode);
+	DelegateNativo_Evento_OnSetUnitMode^ Callback_OnSetUnitMode = nullptr;
+
+
+	//Handles alocadas de cada Delegate.
+private:
+
+	//Handles da interface 
+
+	/// <summary>
+	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnBlendImage).
+	/// </summary>
+	GCHandle gHandle_Delegate_OnBlendImage;
+
+
+	//Handles da interface ICarenD2D1CommandSink4.
+
+	/// <summary>
+	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnSetPrimitiveBlend2).
+	/// </summary>
+	GCHandle gHandle_Delegate_OnSetPrimitiveBlend2;
+
+
+
+	//Handles da interface ICarenD2D1CommandSink3.
+
+	/// <summary>
+	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnDrawSpriteBatch).
+	/// </summary>
+	GCHandle gHandle_Delegate_OnDrawSpriteBatch;
+
+
+
+	//Handles da interface ICarenD2D1CommandSink2.
+
+	/// <summary>
+	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnDrawGdiMetafile1).
+	/// </summary>
+	GCHandle gHandle_Delegate_OnDrawGdiMetafile1;
+
+	/// <summary>
+	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnDrawGradientMesh).
+	/// </summary>
+	GCHandle gHandle_Delegate_OnDrawGradientMesh;
+
+	/// <summary>
+	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnDrawInk).
+	/// </summary>
+	GCHandle gHandle_Delegate_OnDrawInk;
+
+
+
+	//Handles da interface ICarenD2D1CommandSink1.
+
+	/// <summary>
+	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnSetPrimitiveBlend1).
+	/// </summary>
+	GCHandle gHandle_Delegate_OnSetPrimitiveBlend1;
+
+
+
+	//Handles da interface ICarenD2D1CommandSink
+
+	/// <summary>
+	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnBeginDraw).
+	/// </summary>
+	GCHandle gHandle_Delegate_OnBeginDraw;
+
+	/// <summary>
+	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnClear).
+	/// </summary>
+	GCHandle gHandle_Delegate_OnClear;
+
+	/// <summary>
+	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnDrawBitmap).
+	/// </summary>
+	GCHandle gHandle_Delegate_OnDrawBitmap;
+
+	/// <summary>
+	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnDrawGdiMetafile).
+	/// </summary>
+	GCHandle gHandle_Delegate_OnDrawGdiMetafile;
+
+	/// <summary>
+	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnDrawGeometry).
+	/// </summary>
+	GCHandle gHandle_Delegate_OnDrawGeometry;
+
+	/// <summary>
+	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnDrawGlyphRun).
+	/// </summary>
+	GCHandle gHandle_Delegate_OnDrawGlyphRun;
+
+	/// <summary>
+	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnDrawImage).
+	/// </summary>
+	GCHandle gHandle_Delegate_OnDrawImage;
+
+	/// <summary>
+	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnDrawLine).
+	/// </summary>
+	GCHandle gHandle_Delegate_OnDrawLine;
+
+	/// <summary>
+	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnDrawRectangle).
+	/// </summary>
+	GCHandle gHandle_Delegate_OnDrawRectangle;
+
+	/// <summary>
+	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnEndDraw).
+	/// </summary>
+	GCHandle gHandle_Delegate_OnEndDraw;
+
+	/// <summary>
+	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnFillGeometry).
+	/// </summary>
+	GCHandle gHandle_Delegate_OnFillGeometry;
+
+	/// <summary>
+	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnFillMesh).
+	/// </summary>
+	GCHandle gHandle_Delegate_OnFillMesh;
+
+	/// <summary>
+	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnFillOpacityMask).
+	/// </summary>
+	GCHandle gHandle_Delegate_OnFillOpacityMask;
+
+	/// <summary>
+	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnFillRectangle).
+	/// </summary>
+	GCHandle gHandle_Delegate_OnFillRectangle;
+
+	/// <summary>
+	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnPopAxisAlignedClip).
+	/// </summary>
+	GCHandle gHandle_Delegate_OnPopAxisAlignedClip;
+
+	/// <summary>
+	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnPopLayer).
+	/// </summary>
+	GCHandle gHandle_Delegate_OnPopLayer;
+
+	/// <summary>
+	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnPushAxisAlignedClip).
+	/// </summary>
+	GCHandle gHandle_Delegate_OnPushAxisAlignedClip;
+
+	/// <summary>
+	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnPushLayer).
+	/// </summary>
+	GCHandle gHandle_Delegate_OnPushLayer;
+
+	/// <summary>
+	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnSetAntialiasMode).
+	/// </summary>
+	GCHandle gHandle_Delegate_OnSetAntialiasMode;
+
+	/// <summary>
+	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnSetPrimitiveBlend).
+	/// </summary>
+	GCHandle gHandle_Delegate_OnSetPrimitiveBlend;
+
+	/// <summary>
+	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnSetTags).
+	/// </summary>
+	GCHandle gHandle_Delegate_OnSetTags;
+
+	/// <summary>
+	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnSetTextAntialiasMode).
+	/// </summary>
+	GCHandle gHandle_Delegate_OnSetTextAntialiasMode;
+
+	/// <summary>
+	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnSetTextRenderingParams).
+	/// </summary>
+	GCHandle gHandle_Delegate_OnSetTextRenderingParams;
+
+	/// <summary>
+	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnSetTransform).
+	/// </summary>
+	GCHandle gHandle_Delegate_OnSetTransform;
+
+	/// <summary>
+	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnSetUnitMode).
+	/// </summary>
+	GCHandle gHandle_Delegate_OnSetUnitMode;
 
 	//Cria uma instância dessa classe (Estático)
 public:
@@ -88,7 +759,7 @@ public:
 		CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
 
 		//Cria a interface
-		Param_Out_CarenD2D1CommandSink5 = nullptr;
+		Param_Out_CarenD2D1CommandSink5 = gcnew CarenD2D1CommandSink5();
 
 		//Define sucesso
 		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
@@ -194,4 +865,242 @@ public:
 	/// Método responsável por liberar todos os registros de eventos resgistrados anteriormente. Chame esse método após uma chamada para (RegistrarCallback).
 	/// </summary>
 	virtual void UnRegisterCallback();
+
+
+	//Métodos que recebem os eventos da classe nativa (CLN_D2D1CommandSink5)
+public:
+	virtual void EncaminharEvento_OnBlendImage(
+		_In_ ID2D1Image* image,
+		D2D1_BLEND_MODE blendMode,
+		_In_opt_ CONST D2D1_POINT_2F* targetOffset,
+		_In_opt_ CONST D2D1_RECT_F* imageRectangle,
+		D2D1_INTERPOLATION_MODE interpolationMode);
+
+
+
+	//Métodos que recebem os eventos da classe nativa (CLN_D2D1CommandSink4)
+public:
+	virtual void EncaminharEvento_OnSetPrimitiveBlend2(D2D1_PRIMITIVE_BLEND primitiveBlend);
+
+
+
+	//Métodos que recebem os eventos da classe nativa (CLN_D2D1CommandSink3)
+public:
+	/// <summary>
+	/// Método responsável por encaminhar o (Evento) nativo (OnDrawSpriteBatch) da classe (ID2D1CommandSink3) para o usuário em classe gerenciada.
+	/// </summary>
+	virtual void EncaminharEvento_OnDrawSpriteBatch(
+		_In_ ID2D1SpriteBatch* spriteBatch,
+		UINT32 startIndex,
+		UINT32 spriteCount,
+		_In_ ID2D1Bitmap* bitmap,
+		D2D1_BITMAP_INTERPOLATION_MODE interpolationMode,
+		D2D1_SPRITE_OPTIONS spriteOptions);
+
+
+
+	//Métodos que recebem os eventos da classe nativa (CLN_D2D1CommandSink2)
+public:
+	/// <summary>
+	/// Método responsável por encaminhar o (Evento) nativo (OnDrawGdiMetafile1) da classe (ID2D1CommandSink2) para o usuário em classe gerenciada.
+	/// </summary>
+	virtual void EncaminharEvento_OnDrawGdiMetafile1(
+		_In_ ID2D1GdiMetafile* gdiMetafile,
+		_In_opt_ CONST D2D1_RECT_F* destinationRectangle,
+		_In_opt_ CONST D2D1_RECT_F* sourceRectangle);
+
+	/// <summary>
+	/// Método responsável por encaminhar o (Evento) nativo (OnDrawGradientMesh) da classe (ID2D1CommandSink2) para o usuário em classe gerenciada.
+	/// </summary>
+	virtual void EncaminharEvento_OnDrawGradientMesh(_In_ ID2D1GradientMesh* gradientMesh);
+
+	/// <summary>
+	/// Método responsável por encaminhar o (Evento) nativo (OnDrawInk) da classe (ID2D1CommandSink2) para o usuário em classe gerenciada.
+	/// </summary>
+	virtual void EncaminharEvento_OnDrawInk(
+		_In_ ID2D1Ink* ink,
+		_In_ ID2D1Brush* brush,
+		_In_opt_ ID2D1InkStyle* inkStyle);
+
+
+	//Métodos que recebem os eventos da classe nativa (CLN_D2D1CommandSink1)
+public:
+	virtual void EncaminharEvento_OnSetPrimitiveBlend1(D2D1_PRIMITIVE_BLEND primitiveBlend);
+
+
+
+	//Métodos que recebem os eventos da classe nativa (CLN_D2D1CommandSink)
+public:
+	/// <summary>
+	/// Método responsável por encaminhar o (Evento) nativo (OnBeginDraw) da classe (ID2D1CommandSink) para o usuário em classe gerenciada.
+	/// </summary>
+	virtual void EncaminharEvento_OnBeginDraw();
+
+	/// <summary>
+	/// Método responsável por encaminhar o (Evento) nativo (OnClear) da classe (ID2D1CommandSink) para o usuário em classe gerenciada.
+	/// </summary>
+	virtual void EncaminharEvento_OnClear(_In_opt_ CONST D2D1_COLOR_F* color);
+
+	/// <summary>
+	/// Método responsável por encaminhar o (Evento) nativo (OnDrawBitmap) da classe (ID2D1CommandSink) para o usuário em classe gerenciada.
+	/// </summary>
+	virtual void EncaminharEvento_OnDrawBitmap(
+		_In_ ID2D1Bitmap* bitmap,
+		_In_opt_ CONST D2D1_RECT_F* destinationRectangle,
+		FLOAT opacity,
+		D2D1_INTERPOLATION_MODE interpolationMode,
+		_In_opt_ CONST D2D1_RECT_F* sourceRectangle,
+		_In_opt_ CONST D2D1_MATRIX_4X4_F* perspectiveTransform);
+
+	/// <summary>
+	/// Método responsável por encaminhar o (Evento) nativo (OnDrawGdiMetafile) da classe (ID2D1CommandSink) para o usuário em classe gerenciada.
+	/// </summary>
+	virtual void EncaminharEvento_OnDrawGdiMetafile(
+		_In_ ID2D1GdiMetafile* gdiMetafile,
+		_In_opt_ CONST D2D1_POINT_2F* targetOffset);
+
+	/// <summary>
+	/// Método responsável por encaminhar o (Evento) nativo (OnDrawGeometry) da classe (ID2D1CommandSink) para o usuário em classe gerenciada.
+	/// </summary>
+	virtual void EncaminharEvento_OnDrawGeometry(
+		_In_ ID2D1Geometry* geometry,
+		_In_ ID2D1Brush* brush,
+		FLOAT strokeWidth,
+		_In_opt_ ID2D1StrokeStyle* strokeStyle);
+
+	/// <summary>
+	/// Método responsável por encaminhar o (Evento) nativo (OnDrawGlyphRun) da classe (ID2D1CommandSink) para o usuário em classe gerenciada.
+	/// </summary>
+	virtual void EncaminharEvento_OnDrawGlyphRun(
+		D2D1_POINT_2F baselineOrigin,
+		_In_ CONST DWRITE_GLYPH_RUN* glyphRun,
+		_In_opt_ CONST DWRITE_GLYPH_RUN_DESCRIPTION* glyphRunDescription,
+		_In_ ID2D1Brush* foregroundBrush,
+		DWRITE_MEASURING_MODE measuringMode);
+
+	/// <summary>
+	/// Método responsável por encaminhar o (Evento) nativo (OnDrawImage) da classe (ID2D1CommandSink) para o usuário em classe gerenciada.
+	/// </summary>
+	virtual void EncaminharEvento_OnDrawImage(
+		_In_ ID2D1Image* image,
+		_In_opt_ CONST D2D1_POINT_2F* targetOffset,
+		_In_opt_ CONST D2D1_RECT_F* imageRectangle,
+		D2D1_INTERPOLATION_MODE interpolationMode,
+		D2D1_COMPOSITE_MODE compositeMode);
+
+	/// <summary>
+	/// Método responsável por encaminhar o (Evento) nativo (OnDrawLine) da classe (ID2D1CommandSink) para o usuário em classe gerenciada.
+	/// </summary>
+	virtual void EncaminharEvento_OnDrawLine(
+		D2D1_POINT_2F point0,
+		D2D1_POINT_2F point1,
+		_In_ ID2D1Brush* brush,
+		FLOAT strokeWidth,
+		_In_opt_ ID2D1StrokeStyle* strokeStyle);
+
+	/// <summary>
+	/// Método responsável por encaminhar o (Evento) nativo (OnDrawRectangle) da classe (ID2D1CommandSink) para o usuário em classe gerenciada.
+	/// </summary>
+	virtual void EncaminharEvento_OnDrawRectangle(
+		_In_ CONST D2D1_RECT_F* rect,
+		_In_ ID2D1Brush* brush,
+		FLOAT strokeWidth,
+		_In_opt_ ID2D1StrokeStyle* strokeStyle);
+
+	/// <summary>
+	/// Método responsável por encaminhar o (Evento) nativo (OnEndDraw) da classe (ID2D1CommandSink) para o usuário em classe gerenciada.
+	/// </summary>
+	virtual void EncaminharEvento_OnEndDraw();
+
+	/// <summary>
+	/// Método responsável por encaminhar o (Evento) nativo (OnFillGeometry) da classe (ID2D1CommandSink) para o usuário em classe gerenciada.
+	/// </summary>
+	virtual void EncaminharEvento_OnFillGeometry(
+		_In_ ID2D1Geometry* geometry,
+		_In_ ID2D1Brush* brush,
+		_In_opt_ ID2D1Brush* opacityBrush);
+
+	/// <summary>
+	/// Método responsável por encaminhar o (Evento) nativo (OnFillMesh) da classe (ID2D1CommandSink) para o usuário em classe gerenciada.
+	/// </summary>
+	virtual void EncaminharEvento_OnFillMesh(
+		_In_ ID2D1Mesh* mesh,
+		_In_ ID2D1Brush* brush);
+
+	/// <summary>
+	/// Método responsável por encaminhar o (Evento) nativo (OnFillOpacityMask) da classe (ID2D1CommandSink) para o usuário em classe gerenciada.
+	/// </summary>
+	virtual void EncaminharEvento_OnFillOpacityMask(
+		_In_ ID2D1Bitmap* opacityMask,
+		_In_ ID2D1Brush* brush,
+		_In_opt_ CONST D2D1_RECT_F* destinationRectangle,
+		_In_opt_ CONST D2D1_RECT_F* sourceRectangle);
+
+	/// <summary>
+	/// Método responsável por encaminhar o (Evento) nativo (OnFillRectangle) da classe (ID2D1CommandSink) para o usuário em classe gerenciada.
+	/// </summary>
+	virtual void EncaminharEvento_OnFillRectangle(
+		_In_ CONST D2D1_RECT_F* rect,
+		_In_ ID2D1Brush* brush);
+
+	/// <summary>
+	/// Método responsável por encaminhar o (Evento) nativo (OnPopAxisAlignedClip) da classe (ID2D1CommandSink) para o usuário em classe gerenciada.
+	/// </summary>
+	virtual void EncaminharEvento_OnPopAxisAlignedClip();
+
+	/// <summary>
+	/// Método responsável por encaminhar o (Evento) nativo (OnPopLayer) da classe (ID2D1CommandSink) para o usuário em classe gerenciada.
+	/// </summary>
+	virtual void EncaminharEvento_OnPopLayer();
+
+	/// <summary>
+	/// Método responsável por encaminhar o (Evento) nativo (OnPushAxisAlignedClip) da classe (ID2D1CommandSink) para o usuário em classe gerenciada.
+	/// </summary>
+	virtual void EncaminharEvento_OnPushAxisAlignedClip(
+		_In_ CONST D2D1_RECT_F* clipRect,
+		D2D1_ANTIALIAS_MODE antialiasMode);
+
+	/// <summary>
+	/// Método responsável por encaminhar o (Evento) nativo (OnPushLayer) da classe (ID2D1CommandSink) para o usuário em classe gerenciada.
+	/// </summary>
+	virtual void EncaminharEvento_OnPushLayer(
+		_In_ CONST D2D1_LAYER_PARAMETERS1* layerParameters1,
+		_In_opt_ ID2D1Layer* layer);
+
+	/// <summary>
+	/// Método responsável por encaminhar o (Evento) nativo (OnSetAntialiasMode) da classe (ID2D1CommandSink) para o usuário em classe gerenciada.
+	/// </summary>
+	virtual void EncaminharEvento_OnSetAntialiasMode(D2D1_ANTIALIAS_MODE antialiasMode);
+
+	/// <summary>
+	/// Método responsável por encaminhar o (Evento) nativo (OnSetPrimitiveBlend) da classe (ID2D1CommandSink) para o usuário em classe gerenciada.
+	/// </summary>
+	virtual void EncaminharEvento_OnSetPrimitiveBlend(D2D1_PRIMITIVE_BLEND primitiveBlend);
+
+	/// <summary>
+	/// Método responsável por encaminhar o (Evento) nativo (OnSetTags) da classe (ID2D1CommandSink) para o usuário em classe gerenciada.
+	/// </summary>
+	virtual void EncaminharEvento_OnSetTags(
+		D2D1_TAG tag1,
+		D2D1_TAG tag2);
+
+	/// <summary>
+	/// Método responsável por encaminhar o (Evento) nativo (OnSetTextAntialiasMode) da classe (ID2D1CommandSink) para o usuário em classe gerenciada.
+	/// </summary>
+	virtual void EncaminharEvento_OnSetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE textAntialiasMode);
+
+	/// <summary>
+	/// Método responsável por encaminhar o (Evento) nativo (OnSetTextRenderingParams) da classe (ID2D1CommandSink) para o usuário em classe gerenciada.
+	/// </summary>
+	virtual void EncaminharEvento_OnSetTextRenderingParams(_In_opt_ IDWriteRenderingParams* textRenderingParams);
+
+	/// <summary>
+	/// Método responsável por encaminhar o (Evento) nativo (OnSetTransform) da classe (ID2D1CommandSink) para o usuário em classe gerenciada.
+	/// </summary>
+	virtual void EncaminharEvento_OnSetTransform(_In_ CONST D2D1_MATRIX_3X2_F* transform);
+
+	/// <summary>
+	/// Método responsável por encaminhar o (Evento) nativo (OnSetUnitMode) da classe (ID2D1CommandSink) para o usuário em classe gerenciada.
+	/// </summary>
+	virtual void EncaminharEvento_OnSetUnitMode(D2D1_UNIT_MODE unitMode);
 };

@@ -142,6 +142,8 @@
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink3.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink4.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink5.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1ComputeInfo.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1ComputeTransform.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1ConcreteTransform.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DCRenderTarget.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DrawingStateBlock.h" />
@@ -169,6 +171,7 @@
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1RenderInfo.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1RenderTarget.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Resource.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1ResourceTexture.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1RoundedRectangleGeometry.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SimplifiedGeometrySink.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SolidColorBrush.h" />
@@ -399,6 +402,8 @@
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink3.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink4.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink5.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1ComputeInfo.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1ComputeTransform.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1ConcreteTransform.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DCRenderTarget.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DrawingStateBlock.cpp" />
@@ -426,6 +431,7 @@
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1RenderInfo.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1RenderTarget.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Resource.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1ResourceTexture.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1RoundedRectangleGeometry.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SimplifiedGeometrySink.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SolidColorBrush.cpp" />

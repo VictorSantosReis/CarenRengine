@@ -4067,7 +4067,7 @@ namespace CarenRengine
 		/// </summary>
 		[CategoryAttribute("Interface D2D")]
 		[Guid("F0A63088-A4C2-4C32-A280-F7E281ED3F27")]
-		public interface class ICarenD2D1ComputeInfo : ICaren
+		public interface class ICarenD2D1ComputeInfo : ICarenD2D1RenderInfo
 		{
 			/// <summary>
 			/// Propriedade que define se a classe foi descartada.

@@ -879,6 +879,15 @@
     <ClInclude Include="CarenRengineCodes\Core Audio\CarenAudioClock.h">
       <Filter>Arquivos de Cabeçalho\Classes\CoreAudio_WASAPI</Filter>
     </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1ResourceTexture.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1ComputeTransform.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1ComputeInfo.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Bitmap.cpp">
@@ -1594,6 +1603,15 @@
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\CppResources\AssemblyInfo.cpp">
       <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1ResourceTexture.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1ComputeInfo.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1ComputeTransform.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

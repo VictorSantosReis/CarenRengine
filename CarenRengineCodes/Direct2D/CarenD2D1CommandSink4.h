@@ -44,7 +44,7 @@ using namespace CarenRengine::SDKUtilidades;
 
 
 /// <summary>
-/// (Em desenvolvimento) - 
+/// (Concluido - Fase de Testes) - Classe responsável por representar uma sequência de comandos que podem ser gravados e reproduzidos.
 /// </summary>
 public ref class CarenD2D1CommandSink4 : public ICarenD2D1CommandSink4
 {
@@ -59,6 +59,10 @@ public ref class CarenD2D1CommandSink4 : public ICarenD2D1CommandSink4
 	//Contrutor e destruidor da classe.
 public:
 	~CarenD2D1CommandSink4();
+	/// <summary>
+	/// Inicializa a classe com um manipulador de eventos default da CarenRengine.
+	/// </summary>
+	CarenD2D1CommandSink4();
 
 
 	//Variaveis Internas.

@@ -23,6 +23,12 @@ CarenD2D1CommandSink::~CarenD2D1CommandSink()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor
+CarenD2D1CommandSink::CarenD2D1CommandSink()
+{
+	//Cria a interface que gerencia os eventos.
+	PonteiroTrabalho = new CLN_ID2D1CommandSink();
+}
 
 
 // Métodos da interface ICaren

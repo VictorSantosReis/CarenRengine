@@ -179,10 +179,10 @@ public:
             AddRef();
             return S_OK;
         }
-        else if (__uuidof(ID2D1CommandSink1) == guid)
+        else if (__uuidof(ID2D1CommandSink4) == guid)
         {
             AddRef();
-            *pObj = (ID2D1CommandSink1*)this;
+            *pObj = (ID2D1CommandSink4*)this;
             return S_OK;
         }
         else

@@ -68,6 +68,7 @@ public:
 			
 		}
 
+
 	generic<typename T, typename U>
 		virtual	void TestarMetodo(T Param_Index, U% Param_Ref_valor)
 		{

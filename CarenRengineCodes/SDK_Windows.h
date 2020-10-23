@@ -27,7 +27,6 @@ namespace CarenRengine
 	/// Está interface da suporte a métodos que necessitam de um fluxo para um arquivo ou memória local.
 	/// </summary>
 	[CategoryAttribute("Caren Interface")]
-	[DescriptionAttribute("Interface que representa um fluxo para um arquivo ou memória local.")]
 	[Guid("66BE0CDF-F0F1-4260-B64B-CBBAC152B4A4")]
 	public interface class ICarenStream : ICaren
 	{

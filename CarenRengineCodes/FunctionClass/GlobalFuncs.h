@@ -50,3 +50,15 @@ template<class OutTypePointer> CarenResult RecuperarPonteiroCaren(ICaren^ Param_
 	//Retorna
 	return Resultado;
 }
+
+/// <summary>
+/// Método responsávelpor verificar se um objeto generico é valido para um determinado tipo de destino.
+/// </summary>
+/// <typeparam name="T">O tipo do objeto de destino esperado.</typeparam>
+/// <param name="Param_Objeto">O objeto a ser verificado.</param>
+/// <returns></returns>
+template<class T> BOOL VerificarGenericoValido(System::Object^ Param_Objeto)
+{
+	//Retorna se o objeto generico é valido para o tipo.
+	return dynamic_cast<T>(Param_Objeto) != nullptr;
+}

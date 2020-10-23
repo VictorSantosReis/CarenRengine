@@ -75,6 +75,11 @@ namespace CarenRengine
 			ER_CONVERSAO_ESTRUTURA,
 
 			/// <summary>
+			/// Indica que o tipo informado não pode ser convertido para uma representação nativa ou não há suporte para o tipo.
+			/// </summary>
+			ER_CONVERSAO_TIPO_NAO_SUPORTADO,
+
+			/// <summary>
 			/// Indica que a largura(Total) a ser escrito em um buffer é invalida. O valor deve ser diferente de 0 e menor ou igual ao tamanho maximo do buffer.
 			/// </summary>
 			ER_CARENBUFFER_LARGURA_ESCRITA_INVALIDA,
@@ -8109,7 +8114,10 @@ namespace CarenRengine
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = E_FAIL;
 					break;
-
+				case CarenRengine::CarenCodesStatus::ResultCode::ER_CONVERSAO_TIPO_NAO_SUPORTADO:
+					//Define o código HRESULT referente ao ResultCode informado.
+					Resultado = E_FAIL;
+					break;
 
 
 

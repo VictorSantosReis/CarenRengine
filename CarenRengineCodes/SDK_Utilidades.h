@@ -2443,6 +2443,37 @@ namespace CarenRengine
 			}
 
 
+			//Converte uma estrutura gerenciada(CA_D2D1_POINT_2L) para sua correspondencia não gerenciada(D2D1_POINT_2L).
+			D2D1_POINT_2L* ConverterD2D1_POINT_2LManagedToUnmanaged(CA_D2D1_POINT_2L^ Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				D2D1_POINT_2L* EstruturaRetorno = CriarEstrutura<D2D1_POINT_2L>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(D2D1_POINT_2L));
+
+				//Define os dados.
+				EstruturaRetorno->x = static_cast<LONG>(Param_Estrutura->x);
+				EstruturaRetorno->y = static_cast<LONG>(Param_Estrutura->y);
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+			//Converte uma estrutura não gerenciada(D2D1_POINT_2L) para sua correspondencia gerenciada(CA_D2D1_POINT_2L).
+			CA_D2D1_POINT_2L^ ConverterD2D1_POINT_2LUnmanagedToManaged(D2D1_POINT_2L* Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				CA_D2D1_POINT_2L^ EstruturaRetorno = gcnew CA_D2D1_POINT_2L();
+
+				//Define os dados.
+				EstruturaRetorno->x = static_cast<int>(Param_Estrutura->x);
+				EstruturaRetorno->y = static_cast<int>(Param_Estrutura->y);
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+
 			//Converte uma estrutura gerenciada(CA_D2D1_SIZE_U) para sua correspondencia não gerenciada(D2D1_SIZE_U).
 			D2D1_SIZE_U* ConverterD2D1_SIZE_UManagedToUnmanaged(CA_D2D1_SIZE_U^ Param_Estrutura)
 			{
@@ -3922,6 +3953,36 @@ namespace CarenRengine
 			}
 
 
+
+			//Converte uma estrutura gerenciada(CA_D2D1_VERTEX_RANGE) para sua correspondencia não gerenciada(D2D1_VERTEX_RANGE).
+			D2D1_VERTEX_RANGE* ConverterD2D1_VERTEX_RANGEManagedToUnmanaged(CA_D2D1_VERTEX_RANGE^ Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				D2D1_VERTEX_RANGE* EstruturaRetorno = CriarEstrutura<D2D1_VERTEX_RANGE>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(D2D1_VERTEX_RANGE));
+
+				//Define os dados.
+				EstruturaRetorno->startVertex = Param_Estrutura->startVertex;
+				EstruturaRetorno->vertexCount = Param_Estrutura->vertexCount;
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+			//Converte uma estrutura não gerenciada(D2D1_VERTEX_RANGE) para sua correspondencia gerenciada(CA_D2D1_VERTEX_RANGE).
+			CA_D2D1_VERTEX_RANGE^ ConverterD2D1_VERTEX_RANGEUnmanagedToManaged(D2D1_VERTEX_RANGE* Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				CA_D2D1_VERTEX_RANGE^ EstruturaRetorno = gcnew CA_D2D1_VERTEX_RANGE();
+
+				//Define os dados.
+				EstruturaRetorno->startVertex = Param_Estrutura->startVertex;
+				EstruturaRetorno->vertexCount = Param_Estrutura->vertexCount;
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
 
 
 

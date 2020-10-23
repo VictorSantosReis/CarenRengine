@@ -4179,7 +4179,7 @@ namespace CarenRengine
 			CarenResult AddPage(
 				ICarenD2D1CommandList^ Param_ListaComandos,
 				CA_D2D1_SIZE_F^ Param_SizePagina,
-				ICaren^ Param_PagePrintTicketStream,
+				ICarenStream^ Param_PagePrintTicketStream,
 				[Out] UInt64% Param_Out_Tag1,
 				[Out] UInt64% Param_Out_Tag2);
 
@@ -4235,43 +4235,19 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_Index">O índice da propriedade para a qual o nome está sendo devolvido.</param>
 			/// <param name="Param_Out_Nome">Quando este método retorna, contém o nome que está sendo recuperado.</param>
-			/// <param name="Param_Out_SizeNome">O número de caracteres no (Param_Out_Nome).</param>
+			/// <param name="Param_SizeNome">O número de caracteres no (Param_Out_Nome).</param>
 			CarenResult GetPropertyName(
 				UInt32 Param_Index,
 				[Out] String^% Param_Out_Nome,
-				[Out] UInt32% Param_Out_SizeNome);
-
-
-			generic<typename U>
-			/// <summary>
-			/// (Templete - GetPropertyName(U,PWSTR,UINT32)) -  Obtém o nome da propriedade que corresponde ao índice dado. Esta é uma sobrecarga de modelo.
-			/// Este método retorna uma sequência vazia se o índice for inválido. Se o método retornar RESULT_FROM_WIN32(ERROR_INSUFFICIENT_BUFFER),o nome ainda será preenchido e truncado.
-			/// </summary>
-			/// <param name="Param_Index">O índice da propriedade para a qual o nome está sendo devolvido.</param>
-			/// <param name="Param_Out_Nome">Quando este método retorna, contém o nome que está sendo recuperado.</param>
-			/// <param name="Param_Out_SizeNome">O número de caracteres no (Param_Out_Nome).</param>
-			CarenResult GetPropertyName(
-				U Param_Index,
-				[Out] String^% Param_Out_Nome,
-				[Out] UInt32% Param_Out_SizeNome);
+				UInt32 Param_SizeNome);
 
 			/// <summary>
 			/// Obtém o número de caracteres para o nome da propriedade dado. 
 			/// </summary>
 			/// <param name="Param_Index">O índice do nome da propriedade para recuperar.</param>
 			/// <param name="Param_Out_SizeNome">Retorna o tamanho em caracteres do nome correspondente ao índice de propriedade dado, ou zero se o índice de propriedade não existir.</param>
-			CarenResult GetPropertyNameLength(
+			void GetPropertyNameLength(
 				UInt32 Param_Index,
-				[Out] UInt32% Param_Out_SizeNome);
-
-			generic<typename U>
-			/// <summary>
-			/// (Templete - UINT32 GetPropertyNameLength(U)) - Obtém o número de caracteres para o nome da propriedade dado. Esta é uma sobrecarga de modelo. 
-			/// </summary>
-			/// <param name="Param_Index">O índice do nome da propriedade para recuperar.</param>
-			/// <param name="Param_Out_SizeNome">Retorna o tamanho em caracteres do nome correspondente ao índice de propriedade dado, ou zero se o índice de propriedade não existir.</param>
-			CarenResult GetPropertyNameLength(
-				U Param_Index,
 				[Out] UInt32% Param_Out_SizeNome);
 
 			/// <summary>
@@ -4283,16 +4259,6 @@ namespace CarenRengine
 				UInt32 Param_Index,
 				[Out] ICarenD2D1Properties^% Param_Out_SubPropriedades);
 
-			generic<typename U>
-			/// <summary>
-			/// (Templete - GetSubProperties(U,**ID2D1Properties)) - Obtém a D2D1_PROPERTY_TYPE da propriedade selecionada. Esta é uma sobrecarga de modelo. 
-			/// </summary>
-			/// <param name="Param_Index">O índice das sub propriedades a serem recuperadas.</param>
-			/// <param name="Param_Out_SubPropriedades">Quando este método retorna, contém um ponteiro para as subpropriedades na interface (ICarenD2D1Properties)</param>
-			CarenResult GetSubProperties(
-				U Param_Index,
-				[Out] ICarenD2D1Properties^% Param_Out_SubPropriedades);
-
 			/// <summary>
 			/// Obtém a D2D1_PROPERTY_TYPE da propriedade selecionada. 
 			/// </summary>
@@ -4300,16 +4266,6 @@ namespace CarenRengine
 			/// <param name="Param_Out_Tipo">Retorna um enum(CA_D2D1_PROPERTY_TYPE) para o tipo da propriedade.</param>
 			void GetType(
 				UInt32 Param_Index,
-				[Out] CA_D2D1_PROPERTY_TYPE% Param_Out_Tipo);
-
-			generic<typename U>
-			/// <summary>
-			/// Obtém o valor da propriedade por índice. Esta é uma sobrecarga de modelo. 
-			/// </summary>
-			/// <param name="Param_Index">O índice da propriedade para o qual o tipo será recuperado.</param>
-			/// <param name="Param_Out_Tipo">Retorna um enum(CA_D2D1_PROPERTY_TYPE) para o tipo da propriedade.</param>
-			void GetType(
-				U Param_Index,
 				[Out] CA_D2D1_PROPERTY_TYPE% Param_Out_Tipo);
 
 			/// <summary>
@@ -4336,28 +4292,6 @@ namespace CarenRengine
 				[Out] ICarenBuffer^% Param_Out_Buffer,
 				UInt32 Param_BufferSize);
 
-			generic<typename U>
-			/// <summary>
-			/// (Templete - GetValue(U,BYTE*,UINT32)) - Obtém o valor da propriedade especificada por índice. Esta é uma sobrecarga de modelo.  
-			/// </summary>
-			/// <param name="Param_Index">O índice da propriedade a partir do qual os dados devem ser obtidos.</param>
-			/// <param name="Param_Out_Buffer">Quando este método retorna, contém um ponteiro aos dados solicitados.</param>
-			/// <param name="Param_BufferSize">O número de bytes nos dados a serem recuperados.</param>
-			CarenResult GetValue(
-				U Param_Index,
-				[Out] ICarenBuffer^% Param_Out_Buffer,
-				UInt32 Param_BufferSize);
-
-			generic<typename U, typename T>
-			/// <summary>
-			/// (Templete - GetValue(U,T*)) - Obtém o valor da propriedade por índice. Esta é uma sobrecarga de modelo.
-			/// </summary>
-			/// <param name="Param_Index">O índice da propriedade a partir do qual o valor deve ser obtido.</param>
-			/// <param name="Param_Ref_Valor">Devolve o valor solicitado. Se T for um (ICaren), o método vai apenas encapsular o real valor dentro do ponteiro gerenciado pela interface.</param>
-			CarenResult GetValue(
-				U Param_Index,
-				T% Param_Ref_Valor);
-
 			/// <summary>
 			/// Obtém o valor da propriedade pelo nome.
 			/// </summary>
@@ -4367,7 +4301,7 @@ namespace CarenRengine
 			/// <param name="Param_BufferSize">O número de bytes nos dados a serem recuperados.</param>
 			CarenResult GetValueByName(
 				String^ Param_NomePropriedade,
-				CA_D2D1_PROPERTY_TYPE^ Param_Tipo,
+				CA_D2D1_PROPERTY_TYPE Param_Tipo,
 				[Out] ICarenBuffer^% Param_Out_Buffer,
 				UInt32 Param_BufferSize);
 
@@ -4381,16 +4315,6 @@ namespace CarenRengine
 				String^ Param_NomePropriedade,
 				[Out] ICarenBuffer^% Param_Out_Buffer,
 				UInt32 Param_BufferSize);
-
-			generic<typename T>
-			/// <summary>
-			/// (Templete - GetValueByName(PCWSTR,T*)) - Obtém o valor da propriedade pelo nome. Esta é uma sobrecarga de modelo.
-			/// </summary>
-			/// <param name="Param_NomePropriedade">O nome da propriedade para conseguir.</param>
-			/// <param name="Param_Ref_Valor">Retorna o valor da propriedade. Se T for um (ICaren), o método vai apenas encapsular o real valor dentro do ponteiro gerenciado pela interface.</param>
-			void GetValueByName(
-				String^ Param_NomePropriedade,
-				T% Param_Ref_Valor);
 
 			/// <summary>
 			/// Obtém o tamanho do valor da propriedade em bytes, usando o índice de propriedade. 
@@ -4401,16 +4325,6 @@ namespace CarenRengine
 				UInt32 Param_Index,
 				[Out] UInt32% Param_Out_Size);
 
-			generic<typename U>
-			/// <summary>
-			/// (Templete - UINT32 GetValueSize(U)) - Obtém o tamanho do valor da propriedade em bytes, usando o índice de propriedade. Esta é uma sobrecarga de modelo.
-			/// </summary>
-			/// <param name="Param_Index">O índice da propriedade.</param>
-			/// <param name="Param_Out_Size">Retorna o tamanho do valor em bytes, usando o índice de propriedade.</param>
-			void GetValueSize(
-				U Param_Index,
-				[Out] UInt32% Param_Out_Size);
-
 			/// <summary>
 			/// Define a propriedade correspondente por índice. Se a propriedade não existir, o pedido é ignorado e D2DERR_INVALID_PROPERTY é devolvido.
 			/// Qualquer erro que não esteja no conjunto padrão retornado por uma implementação de propriedade será mapeado na faixa de erro padrão.
@@ -4421,7 +4335,7 @@ namespace CarenRengine
 			/// <param name="Param_BufferSize">O número de bytes nos dados a serem definidos.</param>
 			CarenResult SetValue(
 				UInt32 Param_Index,
-				CA_D2D1_PROPERTY_TYPE^ Param_Tipo,
+				CA_D2D1_PROPERTY_TYPE Param_Tipo,
 				ICarenBuffer^ Param_Buffer,
 				UInt32 Param_BufferSize);
 
@@ -4436,32 +4350,6 @@ namespace CarenRengine
 				UInt32 Param_Index,
 				ICarenBuffer^ Param_Buffer,
 				UInt32 Param_BufferSize);
-
-			generic<typename U>
-			/// <summary>
-			/// (Templete - SetValue(U,BYTE*,UINT32)) - Define a propriedade correspondente por índice. Esta é uma sobrecarga de modelo.  Se a propriedade não existir, o pedido 
-			/// é ignorado e D2DERR_INVALID_PROPERTY é devolvido.
-			/// Qualquer erro que não esteja no conjunto padrão retornado por uma implementação de propriedade será mapeado na faixa de erro padrão.
-			/// </summary>
-			/// <param name="Param_Index">>O índice da propriedade para definir.</param>
-			/// <param name="Param_Buffer">Os dados a serem definidos.</param>
-			/// <param name="Param_BufferSize">O número de bytes nos dados a serem definidos.</param>
-			CarenResult SetValue(
-				U Param_Index,
-				ICarenBuffer^ Param_Buffer,
-				UInt32 Param_BufferSize);
-
-			generic<typename U, typename T>
-			/// <summary>
-			/// (Templete - SetValue(U,T)) - Define a propriedade correspondente por índice. Esta é uma sobrecarga de modelo. Se a propriedade não existir, o pedido é
-			/// ignorado e D2DERR_INVALID_PROPERTY é devolvido.
-			/// Qualquer erro que não esteja no conjunto padrão retornado por uma implementação de propriedade será mapeado na faixa de erro padrão.
-			/// </summary>
-			/// <param name="Param_Index">O índice da propriedade para definir.</param>
-			/// <param name="Param_Value">Os dados a serem definidos.</param>
-			CarenResult SetValue(
-				U Param_Index,
-				T Param_Value);
 
 			/// <summary>
 			/// Define a propriedade nomeada ao valor dado. 
@@ -4474,7 +4362,7 @@ namespace CarenRengine
 				String^ Param_NomePropriedade,
 				CA_D2D1_PROPERTY_TYPE Param_Tipo,
 				ICarenBuffer^ Param_Buffer,
-				UInt32^ Param_BufferSize);
+				UInt32 Param_BufferSize);
 
 			/// <summary>
 			/// Define a propriedade nomeada ao valor dado. 
@@ -4485,8 +4373,7 @@ namespace CarenRengine
 			CarenResult SetValueByName(
 				String^ Param_NomePropriedade,
 				ICarenBuffer^ Param_Buffer,
-				UInt32^ Param_BufferSize);
-
+				UInt32 Param_BufferSize);
 			
 			/// <summary>
 			/// (Templete - SetValueByName(PCWSTR,T)) - Define a propriedade nomeada ao valor dado. Esta é uma sobrecarga de modelo. 
@@ -4574,7 +4461,7 @@ namespace CarenRengine
 				ICarenD2D1Effect^ Param_EfeitoEntrada,
 				Boolean Param_Invalidar);
 		};
-
+		
 		/// <summary>
 		/// (ID2D1VertexBuffer) - Interface responsável por definir um buffer de vértice unidimensional mapeável.
 		/// </summary>
@@ -4614,7 +4501,7 @@ namespace CarenRengine
 		/// </summary>
 		[CategoryAttribute("Interface D2D")]
 		[Guid("4F2C7757-1B04-4175-8EA5-2D60E4BBC8E1")]
-		public interface class ICarenD2D1DrawInfo : ICaren
+		public interface class ICarenD2D1DrawInfo : ICarenD2D1RenderInfo
 		{
 			/// <summary>
 			/// Propriedade que define se a classe foi descartada.
@@ -4688,7 +4575,7 @@ namespace CarenRengine
 		/// </summary>
 		[CategoryAttribute("Interface D2D")]
 		[Guid("554A7480-9AD5-4F16-AE5F-AD4487EDC0F3")]
-		public interface class ICarenD2D1DrawTransform : ICaren
+		public interface class ICarenD2D1DrawTransform : ICarenD2D1Transform
 		{
 			/// <summary>
 			/// Propriedade que define se a classe foi descartada.
@@ -4735,13 +4622,13 @@ namespace CarenRengine
 			/// Obtém o deslocamento atualmente na transformação de deslocamento. 
 			/// </summary>
 			/// <param name="Param_Out_Offset">Retorna o deslocamento da transformação atual.</param>
-			CarenResult GetOffset([Out] CA_D2D1_POINT_2L^% Param_Out_Offset);
+			void GetOffset([Out] CA_D2D1_POINT_2L^% Param_Out_Offset);
 
 			/// <summary>
 			/// Define o deslocamento na transformação de deslocamento atual. 
 			/// </summary>
 			/// <param name="Param_Offset">A estrutura para definir o deslocamento da transformação atual.</param>
-			CarenResult SetOffset(CA_D2D1_POINT_2L^ Param_Offset);
+			void SetOffset(CA_D2D1_POINT_2L^ Param_Offset);
 		};
 
 		/// <summary>
@@ -4833,8 +4720,6 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_Node">O nó a ser definido.</param>
 			CarenResult SetSingleTransformNode(ICarenD2D1TransformNode^ Param_Node);
-
-
 		};
 
 		/// <summary>
@@ -4855,7 +4740,7 @@ namespace CarenRengine
 
 			//Essa interface não possui métodos proprios.
 		};
-
+		
 		/// <summary>
 		/// (ID2D1EffectContext) - Interface responsável por fornecer métodos de fábrica e outro gerenciamento de estado para efetuar e transformar autores.
 		/// Essa interface é passada para uma implementação de efeito por meio do método ICarenD2D1EffectImpl::Initialize. Para impedir que os aplicativos obtenham acesso casual a essa

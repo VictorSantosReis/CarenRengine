@@ -90,14 +90,15 @@ Inicio do proximo ano pretendo lançar a primeira versão da biblioteca com toda
 
 **Não recomendo utilizar a biblioteca neste momento para produção. Muitas coisas seram modificadas até o lançamento da primeira versão estável.**
 
+
 # Contribuição
-Note, eu trabalho atualmente sozinho neste projeto a cerca de uns 3 anos, atualmente estou focado em terminar todas as bibliotecas para depois realizar testes, verificar bugs e percas de desempenho. Tenho alguns projetos de testes já em andamento, mais não estou muito focado nesta questão.
-Fique a vontade mesmo assim para clicar em **Criar um novo erro** e eu estarei adicionando a um marrco para poder está sanando o bug e realizando os devidos testes eventualmente.
+Até então tenho trabalhado sozinho neste projeto a cerca de uns 3 anos, atualmente, estou focado em terminar todas as bibliotecas para depois realizar testes, verificar bugs e percas de desempenho. Tenho alguns projetos de testes já em andamento, mais não estou muito focado nesta questão.
+Fique a vontade mesmo assim para clicar em **Criar um novo erro** e eu estarei adicionando a um marco para poder está sanando o bug e realizando os devidos testes eventualmente.
 
 
 # Codificação
 Eu não possuo um conhecimento necessário para criar uma grande codificação, sou programador apenas como **Hobby**, curto bastante programar em meu tempo livre.
-Com o tempo o código pode ser melhorado quando apenas focar no desempenho e na limpeza, mais sinta-se a vontade para expor uma melhor maneira de criar a codificação
+Com o tempo o código pode ser melhorado, quando tiver que focar apenas no desempenho e na limpeza, mais sinta-se a vontade para expor uma melhor maneira de criar a codificação
 de alguma parte do projeto.
 
 

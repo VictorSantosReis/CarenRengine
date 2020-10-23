@@ -1,5 +1,7 @@
 # CarenRengine
 
+![BuildStatus](https://o8vbcg.bn.files.1drv.com/y4m4KJ8lb8IV74Wv96vJ0k5LS-qrrf7T1j0YofXqLF2P26xlC9-V0pEzdgmNpgi-ga7AjI5r3PD4VCAdIRxgG--WnZK2IalWfoEdyH5ZMrXd2EwLJ9Ho0HnM4un5tkoJ69RC4TUdSyId_q8rYuQuCZ2ZxnEyW9FMWKr9Ait3Q8PStnmpw28ag3ITDgZu9pe0zbLe9P4tT9xMwoUxGbGrla8IfAr_XumEuVklcBzIspXHjM/BuildStatus.png?psid=1)
+
 Projeto tem como objetivo implementar algumas APIs nativas do Windows relacionadas a Mídia e Gráficos tanto 2D como 3D.
 CarenRengine vai permitir o desenvolvimento de aplicativos **3D**, **2D**, **Mídia(Áudio e Vídeo)** em linguagens gerenciadas como 
 o **C#(CSharp)**, com quase **TODAS** as **interfaces nativas** disponiveis no **C++** com a menor penalidade de desempenho possível que eu conseguir. 

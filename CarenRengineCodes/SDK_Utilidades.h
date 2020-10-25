@@ -4004,8 +4004,8 @@ namespace CarenRengine
 				EstruturaRetorno->extendModes = CriarMatrizUnidimensional<D2D1_EXTEND_MODE>(static_cast<DWORD>(Param_Estrutura->dimensions));
 
 				//Copia os dados para os arrays.
-				CopiarItensTo_ArrayNativo(&EstruturaRetorno->extents, Param_Estrutura->extents, EstruturaRetorno->dimensions);
-				CopiarItensTo_ArrayNativo(&EstruturaRetorno->extendModes, Param_Estrutura->extendModes, EstruturaRetorno->dimensions);
+				CopiarItensTo_ArrayNativo(const_cast<UINT32**>(&EstruturaRetorno->extents), Param_Estrutura->extents, EstruturaRetorno->dimensions);
+				CopiarItensTo_ArrayNativo(const_cast<D2D1_EXTEND_MODE**>(&EstruturaRetorno->extendModes), Param_Estrutura->extendModes, EstruturaRetorno->dimensions);
 
 				//Retorna o resultado
 				return EstruturaRetorno;
@@ -4025,8 +4025,8 @@ namespace CarenRengine
 				EstruturaRetorno->extendModes = gcnew cli::array<CA_D2D1_EXTEND_MODE>(Param_Estrutura->dimensions);
 				
 				//Copia os dados para os arrays.
-				CopiarItensTo_ArrayGerenciado(EstruturaRetorno->extents, &Param_Estrutura->extents, EstruturaRetorno->dimensions);
-				CopiarItensTo_ArrayGerenciado(EstruturaRetorno->extendModes, &Param_Estrutura->extendModes, EstruturaRetorno->dimensions);
+				CopiarItensTo_ArrayGerenciado(EstruturaRetorno->extents, const_cast<UINT32*>(Param_Estrutura->extents), EstruturaRetorno->dimensions);
+				CopiarItensTo_ArrayGerenciado(EstruturaRetorno->extendModes, const_cast<D2D1_EXTEND_MODE*>(Param_Estrutura->extendModes), EstruturaRetorno->dimensions);
 
 				//Retorna o resultado
 				return EstruturaRetorno;
@@ -4139,7 +4139,7 @@ namespace CarenRengine
 				EstruturaRetorno->elementCount = Param_Estrutura->elementCount;
 
 				//Copia os dados para a matriz de shader
-				CopiarItensTo_ArrayNativo(&EstruturaRetorno->shaderBufferWithInputSignature, Param_Estrutura->shaderBufferWithInputSignature, Param_Estrutura->shaderBufferSize);
+				CopiarItensTo_ArrayNativo(const_cast<BYTE**>(&EstruturaRetorno->shaderBufferWithInputSignature), Param_Estrutura->shaderBufferWithInputSignature, Param_Estrutura->shaderBufferSize);
 
 				//Copia os dados para a matriz de descrição de elemento.
 				for (UINT32 i = 0; i < Param_Estrutura->elementCount; i++)
@@ -4170,7 +4170,7 @@ namespace CarenRengine
 				EstruturaRetorno->elementCount = Param_Estrutura->elementCount;
 
 				//Copia os dados para a matriz do shader.
-				CopiarItensTo_ArrayGerenciado(EstruturaRetorno->shaderBufferWithInputSignature, Param_Estrutura->shaderBufferWithInputSignature, Param_Estrutura->shaderBufferSize);
+				CopiarItensTo_ArrayGerenciado(EstruturaRetorno->shaderBufferWithInputSignature, const_cast<BYTE*>(Param_Estrutura->shaderBufferWithInputSignature), Param_Estrutura->shaderBufferSize);
 
 				//Copia os dados para a matriz de descrição de elementos.
 				for (UINT32 i = 0; i < Param_Estrutura->elementCount; i++)

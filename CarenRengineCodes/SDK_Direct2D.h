@@ -4744,8 +4744,7 @@ namespace CarenRengine
 		/// <summary>
 		/// (ID2D1EffectContext) - Interface responsável por fornecer métodos de fábrica e outro gerenciamento de estado para efetuar e transformar autores.
 		/// Essa interface é passada para uma implementação de efeito por meio do método ICarenD2D1EffectImpl::Initialize. Para impedir que os aplicativos obtenham acesso casual a essa
-		/// interface e separar as contagens de referência entre as interfaces pública 
-		/// e privada, não é possível chamar (ConsultarInterface) entre o ICarenD2D1DeviceContext e o ICarenD2D1EffectContext.
+		/// interface e separar as contagens de referência entre as interfaces pública e privada, não é possível chamar (ConsultarInterface) entre o ICarenD2D1DeviceContext e o ICarenD2D1EffectContext.
 		/// Cada chamada para ICarenD2D1Effect::Initialize receberá uma interface ICarenD2D1EffectContext diferente. Essa interface controla alocações de recursos para o efeito. Quando o 
 		/// efeito é liberado, as alocações correspondentes também serão liberadas.
 		/// </summary>
@@ -5042,13 +5041,13 @@ namespace CarenRengine
 				CA_D2D1_BUFFER_PRECISION Param_BufferPrecision,
 				cli::array<UInt32>^ Param_Extents,
 				ICarenBuffer^ Param_Data,
-				UInt32^ Param_DataSize,
+				UInt32 Param_DataSize,
 				cli::array<UInt32>^ Param_Strides,
 				[Out] ICarenD2D1LookupTable3D^% Param_Out_LookupTable3D);
 		};
 
 		/// <summary>
-		/// (ID2D1EffectImpl) - Interface responsável por pernutur que a interface e o comportamento de um efeito personalizado sejam especificados pelo autor do efeito.
+		/// (ID2D1EffectImpl) - Interface responsável por permitir que a interface e o comportamento de um efeito personalizado sejam especificados pelo autor do efeito.
 		/// </summary>
 		[CategoryAttribute("Interface D2D")]
 		[Guid("39FB7253-B646-4CA1-980A-215DB622D15C")]

@@ -915,6 +915,15 @@
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1LookupTable3D.h">
       <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
     </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1EffectContext1.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1EffectContext.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1EffectImpl.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Bitmap.cpp">
@@ -1665,6 +1674,15 @@
       <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1LookupTable3D.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1EffectContext.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1EffectContext1.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1EffectImpl.cpp">
       <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
     </ClCompile>
   </ItemGroup>

@@ -3986,6 +3986,207 @@ namespace CarenRengine
 
 
 
+			//Converte uma estrutura gerenciada(CA_D2D1_RESOURCE_TEXTURE_PROPERTIES) para sua correspondencia não gerenciada(D2D1_RESOURCE_TEXTURE_PROPERTIES).
+			D2D1_RESOURCE_TEXTURE_PROPERTIES* ConverterD2D1_RESOURCE_TEXTURE_PROPERTIESManagedToUnmanaged(CA_D2D1_RESOURCE_TEXTURE_PROPERTIES^ Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				D2D1_RESOURCE_TEXTURE_PROPERTIES* EstruturaRetorno = CriarEstrutura<D2D1_RESOURCE_TEXTURE_PROPERTIES>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(D2D1_RESOURCE_TEXTURE_PROPERTIES));
+
+				//Define os dados.
+				EstruturaRetorno->extents = CriarMatrizUnidimensional<UINT32>(static_cast<DWORD>(Param_Estrutura->dimensions));
+				EstruturaRetorno->dimensions = Param_Estrutura->dimensions;
+				EstruturaRetorno->bufferPrecision = static_cast<D2D1_BUFFER_PRECISION>(Param_Estrutura->bufferPrecision);
+				EstruturaRetorno->channelDepth = static_cast<D2D1_CHANNEL_DEPTH>(Param_Estrutura->channelDepth);
+				EstruturaRetorno->filter = static_cast<D2D1_FILTER>(Param_Estrutura->filter);
+				EstruturaRetorno->extendModes = CriarMatrizUnidimensional<D2D1_EXTEND_MODE>(static_cast<DWORD>(Param_Estrutura->dimensions));
+
+				//Copia os dados para os arrays.
+				CopiarItensTo_ArrayNativo(&EstruturaRetorno->extents, Param_Estrutura->extents, EstruturaRetorno->dimensions);
+				CopiarItensTo_ArrayNativo(&EstruturaRetorno->extendModes, Param_Estrutura->extendModes, EstruturaRetorno->dimensions);
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+			//Converte uma estrutura não gerenciada(D2D1_RESOURCE_TEXTURE_PROPERTIES) para sua correspondencia gerenciada(CA_D2D1_RESOURCE_TEXTURE_PROPERTIES).
+			CA_D2D1_RESOURCE_TEXTURE_PROPERTIES^ ConverterD2D1_RESOURCE_TEXTURE_PROPERTIESUnmanagedToManaged(D2D1_RESOURCE_TEXTURE_PROPERTIES* Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				CA_D2D1_RESOURCE_TEXTURE_PROPERTIES^ EstruturaRetorno = gcnew CA_D2D1_RESOURCE_TEXTURE_PROPERTIES();
+
+				//Define os dados.
+				EstruturaRetorno->extents = gcnew cli::array<UInt32>(Param_Estrutura->dimensions);
+				EstruturaRetorno->dimensions = Param_Estrutura->dimensions;
+				EstruturaRetorno->bufferPrecision = static_cast<CA_D2D1_BUFFER_PRECISION>(Param_Estrutura->bufferPrecision);
+				EstruturaRetorno->channelDepth = static_cast<CA_D2D1_CHANNEL_DEPTH>(Param_Estrutura->channelDepth);
+				EstruturaRetorno->filter = static_cast<CA_D2D1_FILTER>(Param_Estrutura->filter);
+				EstruturaRetorno->extendModes = gcnew cli::array<CA_D2D1_EXTEND_MODE>(Param_Estrutura->dimensions);
+				
+				//Copia os dados para os arrays.
+				CopiarItensTo_ArrayGerenciado(EstruturaRetorno->extents, &Param_Estrutura->extents, EstruturaRetorno->dimensions);
+				CopiarItensTo_ArrayGerenciado(EstruturaRetorno->extendModes, &Param_Estrutura->extendModes, EstruturaRetorno->dimensions);
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+
+
+			//Converte uma estrutura gerenciada(CA_D2D1_INPUT_ELEMENT_DESC) para sua correspondencia não gerenciada(D2D1_INPUT_ELEMENT_DESC).
+			D2D1_INPUT_ELEMENT_DESC* ConverterD2D1_INPUT_ELEMENT_DESCManagedToUnmanaged(CA_D2D1_INPUT_ELEMENT_DESC^ Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				D2D1_INPUT_ELEMENT_DESC* EstruturaRetorno = CriarEstrutura<D2D1_INPUT_ELEMENT_DESC>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(D2D1_INPUT_ELEMENT_DESC));
+
+				//Define os dados.
+				EstruturaRetorno->semanticName = ConverterStringToChar(Param_Estrutura->semanticName);
+				EstruturaRetorno->semanticIndex = Param_Estrutura->semanticIndex;
+				EstruturaRetorno->format = static_cast<DXGI_FORMAT>(Param_Estrutura->format);
+				EstruturaRetorno->inputSlot = Param_Estrutura->inputSlot;
+				EstruturaRetorno->alignedByteOffset = Param_Estrutura->alignedByteOffset;
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+			//Converte uma estrutura não gerenciada(D2D1_INPUT_ELEMENT_DESC) para sua correspondencia gerenciada(CA_D2D1_INPUT_ELEMENT_DESC).
+			CA_D2D1_INPUT_ELEMENT_DESC^ ConverterD2D1_INPUT_ELEMENT_DESCUnmanagedToManaged(D2D1_INPUT_ELEMENT_DESC* Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				CA_D2D1_INPUT_ELEMENT_DESC^ EstruturaRetorno = gcnew CA_D2D1_INPUT_ELEMENT_DESC();
+
+				//Define os dados.
+				EstruturaRetorno->semanticName = gcnew String(Param_Estrutura->semanticName);
+				EstruturaRetorno->semanticIndex = Param_Estrutura->semanticIndex;
+				EstruturaRetorno->format = static_cast<CA_DXGI_FORMATO>(Param_Estrutura->format);
+				EstruturaRetorno->inputSlot = Param_Estrutura->inputSlot;
+				EstruturaRetorno->alignedByteOffset = Param_Estrutura->alignedByteOffset;
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+
+
+			//Converte uma estrutura gerenciada(CA_D2D1_VERTEX_BUFFER_PROPERTIES) para sua correspondencia não gerenciada(D2D1_VERTEX_BUFFER_PROPERTIES).
+			D2D1_VERTEX_BUFFER_PROPERTIES* ConverterD2D1_VERTEX_BUFFER_PROPERTIESManagedToUnmanaged(CA_D2D1_VERTEX_BUFFER_PROPERTIES^ Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				D2D1_VERTEX_BUFFER_PROPERTIES* EstruturaRetorno = CriarEstrutura<D2D1_VERTEX_BUFFER_PROPERTIES>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(D2D1_VERTEX_BUFFER_PROPERTIES));
+
+				//Variaveis
+				IntPtr pBufferDados = IntPtr::Zero;
+
+				//Define os dados.
+				EstruturaRetorno->inputCount = Param_Estrutura->inputCount;
+				EstruturaRetorno->usage = static_cast<D2D1_VERTEX_USAGE>(Param_Estrutura->usage);
+				EstruturaRetorno->byteWidth = Param_Estrutura->byteWidth;
+
+				//Recupera o ponteiro para o buffer.
+				Param_Estrutura->data->ObterPonteiroInterno(pBufferDados);
+
+				//Define o ponteiro na estrutura.
+				EstruturaRetorno->data = ConverterIntPtrTo<PBYTE>(pBufferDados);
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+			//Converte uma estrutura não gerenciada(D2D1_VERTEX_BUFFER_PROPERTIES) para sua correspondencia gerenciada(CA_D2D1_VERTEX_BUFFER_PROPERTIES).
+			CA_D2D1_VERTEX_BUFFER_PROPERTIES^ ConverterD2D1_VERTEX_BUFFER_PROPERTIESUnmanagedToManaged(D2D1_VERTEX_BUFFER_PROPERTIES* Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				CA_D2D1_VERTEX_BUFFER_PROPERTIES^ EstruturaRetorno = gcnew CA_D2D1_VERTEX_BUFFER_PROPERTIES();
+
+				//Define os dados.
+				EstruturaRetorno->inputCount = Param_Estrutura->inputCount;
+				EstruturaRetorno->usage = static_cast<CA_D2D1_VERTEX_USAGE>(Param_Estrutura->usage);
+				EstruturaRetorno->byteWidth = Param_Estrutura->byteWidth;
+				EstruturaRetorno->data = gcnew CarenBuffer();
+
+				//Define os dados no buffer.
+				EstruturaRetorno->data->CriarBuffer(IntPtr(const_cast<PBYTE>(Param_Estrutura->data)), false, EstruturaRetorno->byteWidth, EstruturaRetorno->byteWidth);
+				
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+
+
+			//Converte uma estrutura gerenciada(CA_D2D1_CUSTOM_VERTEX_BUFFER_PROPERTIES) para sua correspondencia não gerenciada(D2D1_CUSTOM_VERTEX_BUFFER_PROPERTIES).
+			D2D1_CUSTOM_VERTEX_BUFFER_PROPERTIES* ConverterD2D1_CUSTOM_VERTEX_BUFFER_PROPERTIESManagedToUnmanaged(CA_D2D1_CUSTOM_VERTEX_BUFFER_PROPERTIES^ Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				D2D1_CUSTOM_VERTEX_BUFFER_PROPERTIES* EstruturaRetorno = CriarEstrutura<D2D1_CUSTOM_VERTEX_BUFFER_PROPERTIES>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(D2D1_CUSTOM_VERTEX_BUFFER_PROPERTIES));
+
+				//Variaveis
+				D2D1_INPUT_ELEMENT_DESC* pMatrizElementos = CriarMatrizEstruturas<D2D1_INPUT_ELEMENT_DESC>(Param_Estrutura->elementCount);
+				D2D1_INPUT_ELEMENT_DESC* pInputDescAuxiliar = NULL;
+
+				//Define os dados.
+				EstruturaRetorno->shaderBufferWithInputSignature = CriarMatrizUnidimensional<const BYTE>(static_cast<DWORD>(Param_Estrutura->shaderBufferSize));
+				EstruturaRetorno->shaderBufferSize = Param_Estrutura->shaderBufferSize;
+				EstruturaRetorno->inputElements = pMatrizElementos;
+				EstruturaRetorno->elementCount = Param_Estrutura->elementCount;
+
+				//Copia os dados para a matriz de shader
+				CopiarItensTo_ArrayNativo(&EstruturaRetorno->shaderBufferWithInputSignature, Param_Estrutura->shaderBufferWithInputSignature, Param_Estrutura->shaderBufferSize);
+
+				//Copia os dados para a matriz de descrição de elemento.
+				for (UINT32 i = 0; i < Param_Estrutura->elementCount; i++)
+				{
+					//Converte a estrutura.
+					pInputDescAuxiliar = ConverterD2D1_INPUT_ELEMENT_DESCManagedToUnmanaged(Param_Estrutura->inputElements[i]);
+
+					//Define os dados na matriz nativa.
+					pMatrizElementos[i] = *pInputDescAuxiliar;
+					
+					//Libera a memória.
+					DeletarEstruturaSafe(&pInputDescAuxiliar);
+				}
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+			//Converte uma estrutura não gerenciada(D2D1_CUSTOM_VERTEX_BUFFER_PROPERTIES) para sua correspondencia gerenciada(CA_D2D1_CUSTOM_VERTEX_BUFFER_PROPERTIES).
+			CA_D2D1_CUSTOM_VERTEX_BUFFER_PROPERTIES^ ConverterD2D1_CUSTOM_VERTEX_BUFFER_PROPERTIESUnmanagedToManaged(D2D1_CUSTOM_VERTEX_BUFFER_PROPERTIES* Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				CA_D2D1_CUSTOM_VERTEX_BUFFER_PROPERTIES^ EstruturaRetorno = gcnew CA_D2D1_CUSTOM_VERTEX_BUFFER_PROPERTIES();
+
+				//Define os dados.
+				EstruturaRetorno->shaderBufferWithInputSignature = gcnew cli::array<Byte>(Param_Estrutura->shaderBufferSize);
+				EstruturaRetorno->shaderBufferSize = Param_Estrutura->shaderBufferSize;
+				EstruturaRetorno->inputElements = gcnew cli::array<CA_D2D1_INPUT_ELEMENT_DESC^>(Param_Estrutura->elementCount);
+				EstruturaRetorno->elementCount = Param_Estrutura->elementCount;
+
+				//Copia os dados para a matriz do shader.
+				CopiarItensTo_ArrayGerenciado(EstruturaRetorno->shaderBufferWithInputSignature, Param_Estrutura->shaderBufferWithInputSignature, Param_Estrutura->shaderBufferSize);
+
+				//Copia os dados para a matriz de descrição de elementos.
+				for (UINT32 i = 0; i < Param_Estrutura->elementCount; i++)
+				{
+					//Converte e define no id especificado.
+					EstruturaRetorno->inputElements[i] = ConverterD2D1_INPUT_ELEMENT_DESCUnmanagedToManaged(const_cast<D2D1_INPUT_ELEMENT_DESC*>(&Param_Estrutura->inputElements[i]));
+				}
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+
+
+
+
 
 
 

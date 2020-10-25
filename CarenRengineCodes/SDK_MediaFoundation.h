@@ -6239,7 +6239,7 @@ namespace CarenRengine
 			/// <param name="Param_MuxStreamIndex">O índice do subfluxo para o qual os atributos são recuperados.</param>
 			/// <param name="Param_Out_Atributos">Retorna os atributos para o subfluxo especificado.</param>
 			CarenResult ObterAtributos(
-				UInt32^ Param_MuxStreamIndex, 
+				UInt32 Param_MuxStreamIndex, 
 				[Out] ICarenMFAttributes^% Param_Out_Atributos);
 
 			/// <summary>
@@ -6324,7 +6324,7 @@ namespace CarenRengine
 			/// <param name="Param_MuxStreamIndex">O índice do subfluxo para o qual o tipo de mídia é recuperado.</param>
 			/// <param name="Param_Out_MediaType">Retorna o tipo de mídia do subfluxo com o índice especificado.</param>
 			CarenResult ObterMediaType(
-				UInt32^ Param_MuxStreamIndex,
+				UInt32 Param_MuxStreamIndex,
 				[Out] ICarenMFMediaType^% Param_Out_MediaType);
 
 			/// <summary>

@@ -151,6 +151,9 @@
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DrawingStateBlock1.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DrawTransform.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Effect.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1EffectContext.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1EffectContext1.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1EffectImpl.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1EllipseGeometry.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Geometry.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1GeometryGroup.h" />
@@ -420,6 +423,9 @@
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DrawingStateBlock1.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DrawTransform.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Effect.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1EffectContext.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1EffectContext1.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1EffectImpl.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1EllipseGeometry.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Geometry.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1GeometryGroup.cpp" />

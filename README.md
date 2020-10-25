@@ -1,5 +1,7 @@
 # CarenRengine
 
+![BuildStatus](https://o8vbcg.bn.files.1drv.com/y4m4KJ8lb8IV74Wv96vJ0k5LS-qrrf7T1j0YofXqLF2P26xlC9-V0pEzdgmNpgi-ga7AjI5r3PD4VCAdIRxgG--WnZK2IalWfoEdyH5ZMrXd2EwLJ9Ho0HnM4un5tkoJ69RC4TUdSyId_q8rYuQuCZ2ZxnEyW9FMWKr9Ait3Q8PStnmpw28ag3ITDgZu9pe0zbLe9P4tT9xMwoUxGbGrla8IfAr_XumEuVklcBzIspXHjM/BuildStatus.png?psid=1)
+
 Projeto tem como objetivo implementar algumas APIs nativas do Windows relacionadas a Mídia e Gráficos tanto 2D como 3D.
 CarenRengine vai permitir o desenvolvimento de aplicativos **3D**, **2D**, **Mídia(Áudio e Vídeo)** em linguagens gerenciadas como 
 o **C#(CSharp)**, com quase **TODAS** as **interfaces nativas** disponiveis no **C++** com a menor penalidade de desempenho possível que eu conseguir. 
@@ -81,23 +83,24 @@ Para começar a desenvolver com está biblioteca você vai precisar:
 # Pacotes Nuget
 Como o Nuget Packge não suporta de forma oficial as montagens em **C++/CLI**, decidir não fazer neste momento porque precisaria criar um pacote para cada montagem(x86 e x64) e isso seria bastante irritante. Essa é um questão que vou pensar em uma solução mais para frente já que a biblioteca será portada com o tempo para o **WInRT**.
 
-**Neste caso então, baixe o projeto ou faça um fork, compile para a arquitetura de destino de sua preferência e comece a utilizar fazendo uma referência a seu DLL gerado.**
+* **No momento, você pode baixar a .dll da pasta [Build](https://github.com/VictorSantosReis/CarenRengine/tree/master/Build)**
+* **Você pode está fazendo também um fork do projeto e depois compilando para arquiterura de destino de sua preferência.**
 
 
 # O que esperar do Futuro?
 Inicio do proximo ano pretendo lançar a primeira versão da biblioteca com todas as APIs do [Roadmap](https://github.com/VictorSantosReis/CarenRengine/blob/master/Roadmap/Roadmap.md) e mais tardar para o meio do ano estarei já iniciando a grande migração da bibliteca para o WinRT C++(**Windows Runtime Component**) que já está suportando em versão Preview, a possibilidade de usar o componente tanto em aplicativos Win32 Desktop como o UWP graças aos projetos [WinUI3.0](https://github.com/microsoft/microsoft-ui-xaml) e o [CsWinRT](https://github.com/microsoft/CsWinRT) em versão preview ainda.
 
-Não recomendo utilizar a biblioteca neste momento para produção. Muitas coisas seram modificadas até o lançamento da primeira versão estável. Algumas coisas criticas que logo seram modificadas é a forma de criação atual das classes seram modificadas para usar o (**new NomeClasse**) em vez de **NomeClass.CriarInstancia([Out] NomeClasse)**
+**Não recomendo utilizar a biblioteca neste momento para produção. Muitas coisas seram modificadas até o lançamento da primeira versão estável.**
 
 
 # Contribuição
-Note, eu trabalho atualmente sozinho neste projeto a cerca de uns 3 anos, atualmente estou focado em terminar todas as bibliotecas para depois realizar testes, verificar bugs e percas de desempenho. Tenho alguns projetos de testes já em andamento, mais não estou muito focado nesta questão.
-Fique a vontade mesmo assim para clicar em **Criar um novo erro** e eu estarei adicionando a um marrco para poder está sanando o bug e realizando os devidos testes eventualmente.
+Até então tenho trabalhado sozinho neste projeto a cerca de uns 3 anos, atualmente, estou focado em terminar todas as bibliotecas para depois realizar testes, verificar bugs e percas de desempenho. Tenho alguns projetos de testes já em andamento, mais não estou muito focado nesta questão.
+Fique a vontade mesmo assim para clicar em **Criar um novo erro** e eu estarei adicionando a um marco para poder está sanando o bug e realizando os devidos testes eventualmente.
 
 
 # Codificação
 Eu não possuo um conhecimento necessário para criar uma grande codificação, sou programador apenas como **Hobby**, curto bastante programar em meu tempo livre.
-Com o tempo o código pode ser melhorado quando apenas focar no desempenho e na limpeza, mais sinta-se a vontade para expor uma melhor maneira de criar a codificação
+Com o tempo o código pode ser melhorado, quando tiver que focar apenas no desempenho e na limpeza, mais sinta-se a vontade para expor uma melhor maneira de criar a codificação
 de alguma parte do projeto.
 
 

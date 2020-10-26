@@ -515,8 +515,6 @@ namespace CarenRengine
 			/// <param name="Param_Out_FormatoMidia">Recebe o subtipo(Formato) da mídia principal.</param>
 			/// <param name="Param_Out_GuidFormato">Recebe o Guid do subtipo(Formato).</param>
 			CarenResult ObterFormatoMidia([Out] Enumeracoes::CA_Midia_SubTipo% Param_Out_FormatoMidia, [Out] String^% Param_Out_GuidFormato);
-
-
 		};
 
 		/// <summary>
@@ -3753,7 +3751,6 @@ namespace CarenRengine
 		/// de contêiner especificadas pelo chamador.
 		/// </summary>
 		[CategoryAttribute("Interface MediaFoundation")]
-		
 		[Guid("557D90D9-698C-4975-82A0-357B84E72E6E")]
 		public interface class ICarenMFTranscodeProfile : ICaren
 		{
@@ -3817,7 +3814,6 @@ namespace CarenRengine
 		/// O objeto de ativação do dissipador de transcódigo pode ser usado para criar qualquer um dos seguintes dissipadores de arquivos: File Sink - 3GP, MP3, MP4.
 		/// </summary>
 		[CategoryAttribute("Interface MediaFoundation")]
-		
 		[Guid("C40896FA-AB88-49C9-9F19-31026AC9AD7F")]
 		public interface class ICarenMFTranscodeSinkInfoProvider : ICaren
 		{
@@ -3866,7 +3862,6 @@ namespace CarenRengine
 		/// consiste em propriedades individuais, onde cada propriedade contém um nome descritivo e um valor. Uma propriedade pode estar associada a uma linguagem específica.
 		/// </summary>
 		[CategoryAttribute("Interface MediaFoundation")]
-		
 		[Guid("A80C7DDA-8BCF-466F-BCC3-171061C9453A")]
 		public interface class ICarenMFMetadata : ICaren
 		{
@@ -3934,7 +3929,6 @@ namespace CarenRengine
 		/// ICarenMFMetadata.
 		/// </summary>
 		[CategoryAttribute("Interface MediaFoundation")]
-		
 		[Guid("A322D244-76A0-424C-A9CA-777A50206533")]
 		public interface class ICarenMFMetadataProvider : ICaren
 		{
@@ -3965,7 +3959,6 @@ namespace CarenRengine
 		/// (IMFNetCredential) - Interface responsável por definir e recuperar informações sobre o nome de usuário e senha para fins de autenticação.
 		/// </summary>
 		[CategoryAttribute("Interface MediaFoundation")]
-		
 		[Guid("CA319950-D1A2-40A1-A0B1-A459AC38A028")]
 		public interface class ICarenMFNetCredential : ICaren
 		{
@@ -4044,7 +4037,6 @@ namespace CarenRengine
 		/// Os aplicativos que implementam a interface IMFNetCredentialManager podem usar esse objeto para armazenar as credenciais do usuário.
 		/// </summary>
 		[CategoryAttribute("Interface MediaFoundation")]
-		
 		[Guid("F00C8EC5-266C-41A6-BBDC-5C5388D1B839")]
 		public interface class ICarenMFNetCredentialCache : ICaren
 		{
@@ -4101,7 +4093,6 @@ namespace CarenRengine
 		/// do resolvedor de origem, como ICarenMFSourceResolver::CriarObjetoFromUrl, no parâmetro (Param_Propriedades).
 		/// </summary>
 		[CategoryAttribute("Interface MediaFoundation")]
-		
 		[Guid("3D85FF23-E468-4710-89E5-C6A0C78F1BFC")]
 		public interface class ICarenMFNetCredentialManager : ICaren
 		{
@@ -4153,7 +4144,6 @@ namespace CarenRengine
 		/// (IMFNetResourceFilter) - Interface responsável por notificar o aplicativo quando um fluxo de byte solicita uma URL e permite que o aplicativo bloqueie o redirecionamento da URL.
 		/// </summary>
 		[CategoryAttribute("Interface MediaFoundation")]
-		
 		[Guid("21802177-3677-4A72-82C8-F893E6D5AC5E")]
 		public interface class ICarenMFNetResourceFilter : ICaren
 		{
@@ -4212,7 +4202,6 @@ namespace CarenRengine
 		/// (IMFSourceOpenMonitor) - Interface responsável por receber notificações de uma fonte de rede sobre o progresso de uma operação aberta assíncrona.
 		/// </summary>
 		[CategoryAttribute("Interface MediaFoundation")]
-		
 		[Guid("848282D1-2754-4943-A617-8FBCBAA909F0")]
 		public interface class ICarenMFSourceOpenMonitor : ICaren
 		{
@@ -4330,7 +4319,6 @@ namespace CarenRengine
 		/// propriedade no resolver de origem. Caso contrário, a fonte da rede usa a implementação padrão da Media Foundation.
 		/// </summary>
 		[CategoryAttribute("Interface MediaFoundation")]
-		
 		[Guid("9810692C-9427-4071-9820-9A6C9DC58EC5")]
 		public interface class ICarenMFNetProxyLocator : ICaren
 		{
@@ -4391,7 +4379,6 @@ namespace CarenRengine
 		/// Media Foundation.
 		/// </summary>
 		[CategoryAttribute("Interface MediaFoundation")]
-		
 		[Guid("70B523A0-B948-4B29-9939-6A88A2708846")]
 		public interface class ICarenMFNetProxyLocatorFactory : ICaren
 		{
@@ -4443,7 +4430,6 @@ namespace CarenRengine
 		/// O dissipador de mídia DLNA expõe essa interface. Para obter um ponteiro para esta interface, chame CoCreateInstance ou CoCreateInstanceEx. O CLSID é CLSID_MPEG2DLNASink.
 		/// </summary>
 		[CategoryAttribute("Interface MediaFoundation")]
-		
 		[Guid("B72AE7E7-A8B3-4088-A98A-8C6456F896E8")]
 		public interface class ICarenMFDLNASinkInit : ICaren
 		{
@@ -4473,7 +4459,6 @@ namespace CarenRengine
 		/// o identificador de serviço MF_LOCAL_MFT_REGISTRATION_SERVICE.
 		/// </summary>
 		[CategoryAttribute("Interface MediaFoundation")]
-		
 		[Guid("916B8078-1E54-4F44-9F0B-735E7C4C99AC")]
 		public interface class ICarenMFLocalMFTRegistration : ICaren
 		{
@@ -4502,7 +4487,6 @@ namespace CarenRengine
 		/// A interface ICarenMFMediaEngineSrcElements representa uma lista ordenada de recursos de mídia.
 		/// </summary>
 		[CategoryAttribute("Interface MediaFoundation")]
-		
 		[Guid("3563E87E-3F57-45B2-BA9F-E57DB688B173")]
 		public interface class ICarenMFMediaEngineSrcElements : ICaren
 		{
@@ -4571,7 +4555,6 @@ namespace CarenRengine
 		/// (IMFMediaEngineSrcElementsEx) - Interface responsável por ampliar a interface ICarenMFMediaEngineSrcElements para fornecer recursos adicionais.
 		/// </summary>
 		[CategoryAttribute("Interface MediaFoundation")]
-		
 		[Guid("4C5363A2-2B26-4A91-BAC8-78E67759EE85")]
 		public interface class ICarenMFMediaEngineSrcElementsEx : ICarenMFMediaEngineSrcElements
 		{
@@ -4614,7 +4597,6 @@ namespace CarenRengine
 		/// (IMFMediaTimeRange) - Interface responsável por representar uma lista de intervalos de tempo, onde cada intervalo é definido por um tempo de início e fim.
 		/// </summary>
 		[CategoryAttribute("Interface MediaFoundation")]
-		
 		[Guid("8C70AB1B-B446-47E5-B119-48FB0456A6C0")]
 		public interface class ICarenMFMediaTimeRange : ICaren
 		{
@@ -4681,7 +4663,6 @@ namespace CarenRengine
 		/// (IMFMediaError) - Interface responsável por fornecer o status de erro atual para o Media Engine.
 		/// </summary>
 		[CategoryAttribute("Interface MediaFoundation")]
-		
 		[Guid("120E6123-BB57-4B5E-817F-656AED1731E9")]
 		public interface class ICarenMFMediaError : ICaren
 		{
@@ -4725,8 +4706,7 @@ namespace CarenRengine
 		/// <summary>
 		/// (IMFMediaKeySessionNotify) - Interface responsável por fornecer um mecanismo para notificar o aplicativo sobre informações sobre a sessão-chave de mídia.
 		/// </summary>
-		[CategoryAttribute("Interface MediaFoundation")]
-		
+		[CategoryAttribute("Interface MediaFoundation")]	
 		[Guid("CA97F67D-3657-46E8-957B-054D85A88131")]
 		public interface class ICarenMFMediaKeySessionNotify : ICaren
 		{
@@ -4770,8 +4750,7 @@ namespace CarenRengine
 		/// (IMFCdmSuspendNotify) -Interface responsável para permitir que o cliente notifique o Content Decryption Module (CDM) quando os recursos globais devem ser 
 		/// colocados em um estado consistente antes da suspensão.
 		/// </summary>
-		[CategoryAttribute("Interface MediaFoundation")]
-		
+		[CategoryAttribute("Interface MediaFoundation")]	
 		[Guid("4F487323-28F9-4E7E-84F3-87F3AAE4CE5A")]
 		public interface class ICarenMFCdmSuspendNotify : ICaren
 		{
@@ -4801,8 +4780,7 @@ namespace CarenRengine
 		/// <summary>
 		/// (IMFMediaKeySession) - Interface responsável representar uma sessão com o sistema-chave de Gestão de Direitos Digitais(DRM).
 		/// </summary>
-		[CategoryAttribute("Interface MediaFoundation")]
-		
+		[CategoryAttribute("Interface MediaFoundation")]	
 		[Guid("34B13645-A356-475A-8475-48201D3EE361")]
 		public interface class ICarenMFMediaKeySession : ICaren
 		{
@@ -4854,8 +4832,7 @@ namespace CarenRengine
 		/// (IMFMediaKeys) - Interface responsável por representar uma tecla de mídia usada para descriptografar dados de mídia usando um sistema-chave de 
 		/// Gestão de Direitos Digitais (DRM).
 		/// </summary>
-		[CategoryAttribute("Interface MediaFoundation")]
-		
+		[CategoryAttribute("Interface MediaFoundation")]	
 		[Guid("97D22BD6-3F80-4672-A95C-AF0EB37A63ED")]
 		public interface class ICarenMFMediaKeys : ICaren
 		{
@@ -4913,8 +4890,7 @@ namespace CarenRengine
 		/// (IMFMediaEngine) - Interface responsável por habilitarque um aplicativo para reprodução de arquivos de áudio ou vídeo.
 		/// Esta interface é estendida com a ICarenMFMediaEngineEx.
 		/// </summary>
-		[CategoryAttribute("Interface MediaFoundation")]
-		
+		[CategoryAttribute("Interface MediaFoundation")]	
 		[Guid("4C05A0DF-FB34-402F-ACE0-9C1DDA5A5459")]
 		public interface class ICarenMFMediaEngine : ICaren
 		{
@@ -5205,8 +5181,7 @@ namespace CarenRengine
 		/// A interface ICarenMFMediaEngine contém métodos que mapeiam os elementos de mídia HTML5. A ICarenMFMediaEngineEx fornece funcionalidades adicionais que não correspondem
 		/// diretamente ao HTML5.
 		/// </summary>
-		[CategoryAttribute("Interface MediaFoundation")]
-		
+		[CategoryAttribute("Interface MediaFoundation")]	
 		[Guid("993C52B5-8A18-46BF-8D52-04599D869D0F")]
 		public interface class ICarenMFMediaEngineEx : ICarenMFMediaEngine
 		{
@@ -5487,8 +5462,7 @@ namespace CarenRengine
 		/// <summary>
 		/// (IMFSourceBuffer) - Interface responsável por representar um buffer que contém dados de mídia para um ICarenMFMediaSourceExtension.
 		/// </summary>
-		[CategoryAttribute("Interface MediaFoundation")]
-		
+		[CategoryAttribute("Interface MediaFoundation")]		
 		[Guid("E328CE45-96E2-4DB0-866E-80EDC4F99BDD")]
 		public interface class ICarenMFSourceBuffer : ICaren
 		{
@@ -5586,8 +5560,7 @@ namespace CarenRengine
 		/// <summary>
 		/// (IMFSourceBufferNotify) - Interface responsável por fornecer funcionalidades para chamar eventos associados ao ICarenMFSourceBuffer.
 		/// </summary>
-		[CategoryAttribute("Interface MediaFoundation")]
-		
+		[CategoryAttribute("Interface MediaFoundation")]	
 		[Guid("04DC4EFB-60D2-4ACE-8A27-6396DDB18F14")]
 		public interface class ICarenMFSourceBufferNotify : ICaren
 		{
@@ -5675,8 +5648,7 @@ namespace CarenRengine
 		/// <summary>
 		/// (IMFSourceBufferList) - Interface responsável por representar uma coleção de objetos ICarenMFSourceBuffer.
 		/// </summary>
-		[CategoryAttribute("Interface MediaFoundation")]
-		
+		[CategoryAttribute("Interface MediaFoundation")]	
 		[Guid("1D5058C9-2B97-4C08-987C-D27200BE5A21")]
 		public interface class ICarenMFSourceBufferList : ICaren
 		{
@@ -5710,8 +5682,7 @@ namespace CarenRengine
 		/// <summary>
 		/// (IMFMediaSourceExtension) - Interface responsável por fornecer funcionalidade para o Media Source Extension (MSE).
 		/// </summary>
-		[CategoryAttribute("Interface MediaFoundation")]
-		
+		[CategoryAttribute("Interface MediaFoundation")]	
 		[Guid("2201752E-460F-47FC-9E90-D88DA9CFBD73")]
 		public interface class ICarenMFMediaSourceExtension : ICaren
 		{
@@ -5871,8 +5842,7 @@ namespace CarenRengine
 		/// <summary>
 		/// (IMFMediaengineClassFactory) - Interface responsável por criar uma instância do Media Engine.
 		/// </summary>
-		[CategoryAttribute("Interface MediaFoundation")]
-		
+		[CategoryAttribute("Interface MediaFoundation")]	
 		[Guid("642392D3-EA4D-4A18-9F83-9AC601536796")]
 		public interface class ICarenMFMediaEngineClassFactory : ICaren
 		{
@@ -5916,8 +5886,7 @@ namespace CarenRengine
 		/// <summary>
 		/// (IMFMediaengineClassFactory2) - Interface responsável por criar uma instância do objeto ICarenMFMediaKeys.
 		/// </summary>
-		[CategoryAttribute("Interface MediaFoundation")]
-		
+		[CategoryAttribute("Interface MediaFoundation")]	
 		[Guid("26A33BEB-0536-4052-8382-9166670A5971")]
 		public interface class ICarenMFMediaEngineClassFactory2 : ICaren
 		{
@@ -5951,8 +5920,7 @@ namespace CarenRengine
 		/// <summary>
 		/// (IMFMediaengineClassFactoryEx) - Interface responsável por estender a interface ICarenMFMediaEngineClassFactory.
 		/// </summary>
-		[CategoryAttribute("Interface MediaFoundation")]
-		
+		[CategoryAttribute("Interface MediaFoundation")]	
 		[Guid("A9354340-1BD2-47E1-BB60-0215D451BC9D")]
 		public interface class ICarenMFMediaEngineClassFactoryEx : ICarenMFMediaEngineClassFactory
 		{
@@ -6006,8 +5974,7 @@ namespace CarenRengine
 		/// <summary>
 		/// (IMFMediaEngineNeedKeyNotify) - Interface responsável por representar um retorno de chamada ao mecanismo de mídia para notificar os dados de solicitação de chave.
 		/// </summary>
-		[CategoryAttribute("Interface MediaFoundation")]
-		
+		[CategoryAttribute("Interface MediaFoundation")]	
 		[Guid("B860682F-E26E-4C44-970C-57DDC61BB272")]
 		public interface class ICarenMFMediaEngineNeedKeyNotify : ICaren
 		{
@@ -6055,8 +6022,7 @@ namespace CarenRengine
 		/// <summary>
 		/// (IMFMediaEngineNotify) - Interface responsável por notificar o aplicativo quando ocorre um evento de reprodução.
 		/// </summary>
-		[CategoryAttribute("Interface MediaFoundation")]
-		
+		[CategoryAttribute("Interface MediaFoundation")]	
 		[Guid("C6A87536-01A2-4013-877D-D88255953091")]
 		public interface class ICarenMFMediaEngineNotify : ICaren
 		{
@@ -6103,8 +6069,7 @@ namespace CarenRengine
 		/// (IMFContentProtectionManager) - Interface responsável por habilitar a reprodução de conteúdo protegido fornecendo ao aplicativo um ponteiro para um objeto 
 		/// ativador de conteúdo. Aplicativos que reproduzam conteúdo protegido devem implementar essa interface.
 		/// </summary>
-		[CategoryAttribute("Interface MediaFoundation")]
-		
+		[CategoryAttribute("Interface MediaFoundation")]		
 		[Guid("3CF2E59F-67BB-4D52-8EFA-76F82E2D23A7")]
 		public interface class ICarenMFContentProtectionManager : ICaren
 		{
@@ -6146,8 +6111,7 @@ namespace CarenRengine
 		/// <summary>
 		/// (IMFMediaEngineProtectedContent) - Interface responsável por permitir que o Media Engine reproduzam conteúdo de vídeo protegido.
 		/// </summary>
-		[CategoryAttribute("Interface MediaFoundation")]
-		
+		[CategoryAttribute("Interface MediaFoundation")]	
 		[Guid("4F1F1E15-DB13-4FB7-9C89-79A41CB0DB35")]
 		public interface class ICarenMFMediaEngineProtectedContent : ICaren
 		{
@@ -6216,8 +6180,7 @@ namespace CarenRengine
 		/// <summary>
 		/// (IMFMuxStreamAttributesManager) - Interface responsável por fornecer acesso aos atributos(ICarenMFAttributes) dos subfluxos de uma fonte de mídia multiplexada.
 		/// </summary>
-		[CategoryAttribute("Interface MediaFoundation")]
-		
+		[CategoryAttribute("Interface MediaFoundation")]		
 		[Guid("B8A913DA-395A-41AD-BACD-3BF56EABBB54")]
 		public interface class ICarenMFMuxStreamAttributesManager : ICaren
 		{
@@ -6252,8 +6215,7 @@ namespace CarenRengine
 		/// <summary>
 		/// (IMFMuxStreamSampleManager) - Interface responsável por fornecer a capacidade de recuperar objetos ICarenMFSample para subfluxos individuais dentro da saída de uma fonte de mídia multiplexada.
 		/// </summary>
-		[CategoryAttribute("Interface MediaFoundation")]
-		
+		[CategoryAttribute("Interface MediaFoundation")]	
 		[Guid("189EE827-3F9A-419D-A8CF-4BF9A57C9887")]
 		public interface class ICarenMFMuxStreamSampleManager : ICaren
 		{
@@ -6295,8 +6257,7 @@ namespace CarenRengine
 		/// (IMFMuxStreamMediaTypeManager) - Interface responsável permitir o gerenciamento de configurações de fluxo para uma fonte de mídia multiplexada. Uma configuração de fluxo define um conjunto de 
 		/// subfluxos que podem ser incluídos na saída multiplexada.
 		/// </summary>
-		[CategoryAttribute("Interface MediaFoundation")]
-		
+		[CategoryAttribute("Interface MediaFoundation")]		
 		[Guid("4032E631-C97A-4472-8ACF-A840205A347F")]
 		public interface class ICarenMFMuxStreamMediaTypeManager : ICaren
 		{

@@ -118,6 +118,15 @@
     <Filter Include="Arquivos de Cabeçalho\Funcoes Globais">
       <UniqueIdentifier>{6e74b9f2-2af7-4e0b-af26-8b802869f9db}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Classes Nativas\Media Foundation">
+      <UniqueIdentifier>{426cb267-c71e-4896-91e1-0dc43a96fb37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Classes Nativas\CoreAudio">
+      <UniqueIdentifier>{95dc1aa6-5694-4e9f-9766-e21b00fcb0f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Classes Nativas\Direct2D">
+      <UniqueIdentifier>{1bbe7c0d-4c4a-4a2b-a931-30d5fcdb8460}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CarenRengineCodes\pch.h">
@@ -768,42 +777,6 @@
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFVideoSampleAllocator.h">
       <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
     </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMMNotificationClient.h">
-      <Filter>Arquivos de Cabeçalho\Classes Nativas</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IAudioSessionEvents.h">
-      <Filter>Arquivos de Cabeçalho\Classes Nativas</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink.h">
-      <Filter>Arquivos de Cabeçalho\Classes Nativas</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink1.h">
-      <Filter>Arquivos de Cabeçalho\Classes Nativas</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink2.h">
-      <Filter>Arquivos de Cabeçalho\Classes Nativas</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink3.h">
-      <Filter>Arquivos de Cabeçalho\Classes Nativas</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink4.h">
-      <Filter>Arquivos de Cabeçalho\Classes Nativas</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink5.h">
-      <Filter>Arquivos de Cabeçalho\Classes Nativas</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFAsyncCallback.h">
-      <Filter>Arquivos de Cabeçalho\Classes Nativas</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFClockStateSink.h">
-      <Filter>Arquivos de Cabeçalho\Classes Nativas</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFSinkWriterCallback.h">
-      <Filter>Arquivos de Cabeçalho\Classes Nativas</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFSourceReaderCallback.h">
-      <Filter>Arquivos de Cabeçalho\Classes Nativas</Filter>
-    </ClInclude>
     <ClInclude Include="CarenRengineCodes\Core Audio\CarenMMDevice.h">
       <Filter>Arquivos de Cabeçalho\Classes\CoreAudio_MMDevice</Filter>
     </ClInclude>
@@ -941,6 +914,42 @@
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SvgGlyphStyle.h">
       <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink.h">
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink1.h">
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink2.h">
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink3.h">
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink4.h">
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink5.h">
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IAudioSessionEvents.h">
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\CoreAudio</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFSourceReaderCallback.h">
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\Media Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFAsyncCallback.h">
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\Media Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFClockStateSink.h">
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\Media Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFSinkWriterCallback.h">
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\Media Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMMNotificationClient.h">
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\CoreAudio</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

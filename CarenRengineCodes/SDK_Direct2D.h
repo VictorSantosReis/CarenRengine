@@ -5332,7 +5332,7 @@ namespace CarenRengine
 		};
 
 		/// <summary>
-		/// (ID2D1SvgPaint) - Interface responsável por 
+		/// (ID2D1SvgPaint) - Interface responsável por descrever um valor de Fill(Preenchimento) ou Stroke(Traçado) SVG.
 		/// </summary>
 		[CategoryAttribute("Interface D2D")]
 		[Guid("0E43644D-C6A2-4D6A-84AD-6934713E2E03")]

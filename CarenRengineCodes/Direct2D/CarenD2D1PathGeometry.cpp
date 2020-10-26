@@ -15,15 +15,19 @@ limitations under the License.
 */
 
 #include "../pch.h"
-#include "CarenD2D1Geometry.h"
+#include "CarenD2D1PathGeometry.h"
 
 //Destruidor.
-CarenD2D1PathGeometry::~CarenD2D1Geometry()
+CarenD2D1PathGeometry::~CarenD2D1PathGeometry()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
-
+//Construtores
+CarenD2D1PathGeometry::CarenD2D1PathGeometry()
+{
+	//CÓDIGO DE CRIAÇÃO.
+}
 
 // Métodos da interface ICaren
 
@@ -159,7 +163,7 @@ CarenResult CarenD2D1PathGeometry::AdicionarPonteiro(IntPtr Param_PonteiroNativo
 	}
 
 	//Converte o ponteiro para o tipo especifico da classe.
-	PonteiroTrabalho = reinterpret_cast<ID2D1Geometry*>(Param_PonteiroNativo.ToPointer());
+	PonteiroTrabalho = reinterpret_cast<ID2D1PathGeometry*>(Param_PonteiroNativo.ToPointer());
 
 	//Verifica o ponteiro
 	if (ObjetoValido(PonteiroTrabalho))
@@ -200,7 +204,7 @@ CarenResult CarenD2D1PathGeometry::AdicionarPonteiro(LPVOID Param_PonteiroNativo
 	}
 
 	//Converte o ponteiro para o tipo especifico da classe.
-	PonteiroTrabalho = reinterpret_cast<ID2D1Geometry*>(Param_PonteiroNativo);
+	PonteiroTrabalho = reinterpret_cast<ID2D1PathGeometry*>(Param_PonteiroNativo);
 
 	//Verifica se o ponteiro é valido
 	if (ObjetoValido(PonteiroTrabalho))
@@ -398,12 +402,191 @@ void CarenD2D1PathGeometry::Finalizar()
 	GC::SuppressFinalize(this);
 
 	//Chama o finalizador da classe
-	this->~CarenD2D1Geometry();
+	this->~CarenD2D1PathGeometry();
 }
 
 
 
-// Métodos da interface proprietária(ICarenD2D1Geometry)
+// Métodos da interface proprietária(ICarenD2D1PathGeometry)
+
+
+/// <summary>
+/// Recupera o número de figuras na Geometry Path. 
+/// </summary>
+/// <param name="Param_Out_Quantidade">Retorna o número de figuras na Geometry Path.</param>
+CarenResult CarenD2D1PathGeometry::GetFigureCount([Out] UInt32% Param_Out_Quantidade)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Resultado COM.
+	ResultadoCOM Hr = E_FAIL;
+
+	//Variaveis a serem utilizadas.
+	UINT32 OutCount = 0;
+
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetFigureCount(&OutCount);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Define o código na classe.
+		Var_Glob_LAST_HRESULT = Hr;
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o valor no parametro de saida.
+	Param_Out_Quantidade = OutCount;
+
+Done:;
+	//Retorna o resultado.
+	return Resultado;
+}
+
+/// <summary>
+/// Recupera o número de segmentos na Geometry Path. 
+/// </summary>
+/// <param name="Param_Out_Quantidade">Retorna o número de segmentos na Geometry Path.</param>
+CarenResult CarenD2D1PathGeometry::GetSegmentCount([Out] UInt32% Param_Out_Quantidade)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Resultado COM.
+	ResultadoCOM Hr = E_FAIL;
+
+	//Variaveis a serem utilizadas.
+	UINT32 OutSegmentCount = 0;
+
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetSegmentCount(&OutSegmentCount);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Define o código na classe.
+		Var_Glob_LAST_HRESULT = Hr;
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define no parametro de saida o valor.
+	Param_Out_Quantidade = OutSegmentCount;
+
+Done:;
+	//Retorna o resultado.
+	return Resultado;
+}
+
+/// <summary>
+/// Recupera o Sink de geometria que é usada para preencher a Geometry Path com figuras e segmentos. 
+/// Como as Geometry Path são imutáveis e só podem ser povoadas uma vez, é um erro chamar o método Open em uma Geometry Path mais de uma vez.
+/// Observe que o modo de preenchimento é padrão para D2D1_FILL_MODE_ALTERNATE. Para definir o modo de preenchimento, ligue para SetFillMode antes da primeira chamada para 
+/// BeginFigure. Se não o fizer, colocará o Geometry Sink em um estado de erro.
+/// </summary>
+/// <param name="Param_Out_GeometrySink">Retorna uma interface(ICarenD2D1GeometrySink) que contém o ponteiro para o GeometrySink que é usada para preencher o Geometry Path 
+/// com figuras e segmentos.</param>
+CarenResult CarenD2D1PathGeometry::Open([Out] ICarenD2D1GeometrySink^% Param_Out_GeometrySink)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Resultado COM.
+	ResultadoCOM Hr = E_FAIL;
+
+	//Variaveis a serem utilizadas.
+	ID2D1GeometrySink* pOutGeometrySink = NULL;
+
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->Open(&pOutGeometrySink);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Define o código na classe.
+		Var_Glob_LAST_HRESULT = Hr;
+
+		//Sai do método
+		Sair;
+	}
+
+	//Cria a interface que vai ser retornada.
+	Param_Out_GeometrySink = gcnew CarenD2D1GeometrySink();
+
+	//Define o ponteiro na interface de saida.
+	Resultado = DefinirPonteiroInterface(pOutGeometrySink, Param_Out_GeometrySink, true);
+
+Done:;
+	//Retorna o resultado.
+	return Resultado;
+}
+
+/// <summary>
+/// Copie o conteúdo da Geometry Path para o Geometry Sink especificado. 
+/// </summary>
+/// <param name="Param_GeometrySink">O Sink para a qual o conteúdo da Geometry Path é copiado. Modificar este Sink não altera o conteúdo desta Geometry Path.</param>
+CarenResult CarenD2D1PathGeometry::Stream(ICarenD2D1GeometrySink^ Param_GeometrySink)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Resultado COM.
+	ResultadoCOM Hr = E_FAIL;
+
+	//Variaveis a serem utilizadas.
+	ID2D1GeometrySink* pGeometrySink = NULL;
+
+	//Recupera o ponteiro para a interface.
+	Resultado = RecuperarPonteiroCaren(Param_GeometrySink, &pGeometrySink);
+
+	//Sai do método em caso de erro.
+	SairOnError(Resultado);
+
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->Stream(pGeometrySink);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Define o código na classe.
+		Var_Glob_LAST_HRESULT = Hr;
+
+		//Sai do método
+		Sair;
+	}
+
+Done:;
+	//Retorna o resultado.
+	return Resultado;
+}
+
+
+
+// Métodos da interface (ICarenD2D1Geometry)
 
 
 /// <summary>
@@ -416,11 +599,11 @@ void CarenD2D1PathGeometry::Finalizar()
 /// que a tolerância ao achatamento. Valores menores produzem resultados mais precisos, mas causam uma execução mais lenta.</param>
 /// <param name="Param_GeomtrySink">A interface que vai armazena o resultado da combinação das geometrias.</param>
 CarenResult CarenD2D1PathGeometry::CombineWithGeometry(
-ICarenD2D1Geometry^ Param_GeometriaEntrada,
-CA_D2D1_COMBINE_MODE Param_ModoCombinacao,
-CA_D2D1_MATRIX_3X2_F^ Param_InputGeometryTransform,
-float Param_FlatteningTolerance,
-ICarenD2D1SimplifiedGeometrySink^ Param_GeomtrySink)
+	ICarenD2D1Geometry^ Param_GeometriaEntrada,
+	CA_D2D1_COMBINE_MODE Param_ModoCombinacao,
+	CA_D2D1_MATRIX_3X2_F^ Param_InputGeometryTransform,
+	float Param_FlatteningTolerance,
+	ICarenD2D1SimplifiedGeometrySink^ Param_GeomtrySink)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -496,10 +679,10 @@ Done:;
 /// <param name="Param_InputGeometryTransform">A transformação para aplicar à (Param_GeometriaEntrada) antes de combinar.</param>
 /// <param name="Param_GeomtrySink">A interface que vai armazena o resultado da combinação das geometrias.</param>
 CarenResult CarenD2D1PathGeometry::CombineWithGeometry(
-ICarenD2D1Geometry^ Param_GeometriaEntrada,
-CA_D2D1_COMBINE_MODE Param_ModoCombinacao,
-CA_D2D1_MATRIX_3X2_F^ Param_InputGeometryTransform,
-ICarenD2D1SimplifiedGeometrySink^ Param_GeomtrySink
+	ICarenD2D1Geometry^ Param_GeometriaEntrada,
+	CA_D2D1_COMBINE_MODE Param_ModoCombinacao,
+	CA_D2D1_MATRIX_3X2_F^ Param_InputGeometryTransform,
+	ICarenD2D1SimplifiedGeometrySink^ Param_GeomtrySink
 )
 {
 	//Variavel a ser retornada.
@@ -579,10 +762,10 @@ Done:;
 /// do que a tolerância ao achatamento. Valores menores produzem resultados mais precisos, mas causam uma execução mais lenta.</param>
 /// <param name="Param_Out_Relacao">Retorna um valor que descreve como essa geometria está relacionada à (Param_GeometriaEntrada).</param>
 CarenResult CarenD2D1PathGeometry::CompareWithGeometry(
-ICarenD2D1Geometry^ Param_GeometriaEntrada,
-CA_D2D1_MATRIX_3X2_F^ Param_InputGeometryTransform,
-float Param_FlatteningTolerance,
-[Out] CA_D2D1_GEOMETRY_RELATION% Param_Out_Relacao)
+	ICarenD2D1Geometry^ Param_GeometriaEntrada,
+	CA_D2D1_MATRIX_3X2_F^ Param_InputGeometryTransform,
+	float Param_FlatteningTolerance,
+	[Out] CA_D2D1_GEOMETRY_RELATION% Param_Out_Relacao)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -647,9 +830,9 @@ Done:;
 /// <param name="Param_InputGeometryTransform">A transformação para aplicar à (Param_GeometriaEntrada).</param>
 /// <param name="Param_Out_Relacao">Retorna um valor que descreve como essa geometria está relacionada à (Param_GeometriaEntrada).</param>
 CarenResult CarenD2D1PathGeometry::CompareWithGeometry(
-ICarenD2D1Geometry^ Param_GeometriaEntrada,
-CA_D2D1_MATRIX_3X2_F^ Param_InputGeometryTransform,
-[Out] CA_D2D1_GEOMETRY_RELATION% Param_Out_Relacao)
+	ICarenD2D1Geometry^ Param_GeometriaEntrada,
+	CA_D2D1_MATRIX_3X2_F^ Param_InputGeometryTransform,
+	[Out] CA_D2D1_GEOMETRY_RELATION% Param_Out_Relacao)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -715,9 +898,9 @@ Done:;
 /// do que a tolerância ao achatamento. Valores menores produzem resultados mais precisos, mas causam uma execução mais lenta.</param>
 /// <param name="Param_Out_Area">Retorna a área da versão achatada e transformada desta geometria.</param>
 CarenResult CarenD2D1PathGeometry::ComputeArea(
-CA_D2D1_MATRIX_3X2_F^ Param_WorldTransform,
-float Param_FlatteningTolerance,
-[Out] float% Param_Out_Area)
+	CA_D2D1_MATRIX_3X2_F^ Param_WorldTransform,
+	float Param_FlatteningTolerance,
+	[Out] float% Param_Out_Area)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -768,8 +951,8 @@ Done:;
 /// <param name="Param_WorldTransform">A transformação a ser aplicada a essa geometria antes de calcular sua área.</param>
 /// <param name="Param_Out_Area">Retorna a área da versão achatada e transformada desta geometria.</param>
 CarenResult CarenD2D1PathGeometry::ComputeArea(
-CA_D2D1_MATRIX_3X2_F^ Param_WorldTransform,
-[Out] float% Param_Out_Area)
+	CA_D2D1_MATRIX_3X2_F^ Param_WorldTransform,
+	[Out] float% Param_Out_Area)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -822,9 +1005,9 @@ Done:;
 /// que a tolerância ao achatamento. Valores menores produzem resultados mais precisos, mas causam uma execução mais lenta.</param>
 /// <param name="Param_Out_Length">Retorna o comprimento da geometria. Para geometrias fechadas, o comprimento inclui um segmento de fechamento implícito.</param>
 CarenResult CarenD2D1PathGeometry::ComputeLength(
-CA_D2D1_MATRIX_3X2_F^ Param_WorldTransform,
-float Param_FlatteningTolerance,
-[Out] float% Param_Out_Length)
+	CA_D2D1_MATRIX_3X2_F^ Param_WorldTransform,
+	float Param_FlatteningTolerance,
+	[Out] float% Param_Out_Length)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -875,8 +1058,8 @@ Done:;
 /// <param name="Param_WorldTransform">A transformação para aplicar à geometria antes de calcular seu comprimento.</param>
 /// <param name="Param_Out_Length">Retorna o comprimento da geometria. Para geometrias fechadas, o comprimento inclui um segmento de fechamento implícito.</param>
 CarenResult CarenD2D1PathGeometry::ComputeLength(
-CA_D2D1_MATRIX_3X2_F^ Param_WorldTransform,
-[Out] float% Param_Out_Length)
+	CA_D2D1_MATRIX_3X2_F^ Param_WorldTransform,
+	[Out] float% Param_Out_Length)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -932,11 +1115,11 @@ Done:;
 /// <param name="Param_Ref_Opcional_Point">Retorna a localização na distância especificada ao longo da geometria. Se a geometria estiver vazia, este ponto contém NaN como seus valores x e y.</param>
 /// <param name="Param_Ref_Opcional_UnitTangentVector">Retorna o vetor tangente na distância especificada ao longo da geometria. Se a geometria estiver vazia, este vetor contém NaN como seus valores x e y.</param>
 CarenResult CarenD2D1PathGeometry::ComputePointAtLength(
-float Param_Length,
-CA_D2D1_MATRIX_3X2_F^ Param_WorldTransform,
-float Param_FlatteningTolerance,
-CA_D2D1_POINT_2F^% Param_Ref_Opcional_Point,
-CA_D2D1_POINT_2F^% Param_Ref_Opcional_UnitTangentVector)
+	float Param_Length,
+	CA_D2D1_MATRIX_3X2_F^ Param_WorldTransform,
+	float Param_FlatteningTolerance,
+	CA_D2D1_POINT_2F^% Param_Ref_Opcional_Point,
+	CA_D2D1_POINT_2F^% Param_Ref_Opcional_UnitTangentVector)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -961,8 +1144,8 @@ CA_D2D1_POINT_2F^% Param_Ref_Opcional_UnitTangentVector)
 	//Chama o método para realizar a operação.
 	Hr = PonteiroTrabalho->ComputePointAtLength(
 		Param_Length,
-		pMatrixTransformacao, 
-		Param_FlatteningTolerance, 
+		pMatrixTransformacao,
+		Param_FlatteningTolerance,
 		RequestPoint0 ? &OutOpcionalPoint : NULL,
 		RequestPoint1 ? &OutOpcionalPoint : NULL);
 
@@ -1002,10 +1185,10 @@ Done:;
 /// <param name="Param_Ref_Opcional_Point">Retorna a localização na distância especificada ao longo da geometria. Se a geometria estiver vazia, este ponto contém NaN como seus valores x e y.</param>
 /// <param name="Param_Ref_Opcional_UnitTangentVector">Retorna o vetor tangente na distância especificada ao longo da geometria. Se a geometria estiver vazia, este vetor contém NaN como seus valores x e y.</param>
 CarenResult CarenD2D1PathGeometry::ComputePointAtLength(
-float Param_Length,
-CA_D2D1_MATRIX_3X2_F^ Param_WorldTransform,
-CA_D2D1_POINT_2F^% Param_Ref_Opcional_Point,
-CA_D2D1_POINT_2F^% Param_Ref_Opcional_UnitTangentVector)
+	float Param_Length,
+	CA_D2D1_MATRIX_3X2_F^ Param_WorldTransform,
+	CA_D2D1_POINT_2F^% Param_Ref_Opcional_Point,
+	CA_D2D1_POINT_2F^% Param_Ref_Opcional_UnitTangentVector)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -1070,10 +1253,10 @@ Done:;
 /// que a tolerância ainda são considerados dentro. Valores menores produzem resultados mais precisos, mas causam uma execução mais lenta.</param>
 /// <param name="Param_Out_Contem">Retorna um valor Boleano que é verdadeiro se a área preenchida pela geometria contiver ponto; caso contrário, falso.</param>
 CarenResult CarenD2D1PathGeometry::FillContainsPoint(
-CA_D2D1_POINT_2F^ Param_Point,
-CA_D2D1_MATRIX_3X2_F^ Param_WorldTransform,
-float Param_FlatteningTolerance,
-[Out] Boolean% Param_Out_Contem)
+	CA_D2D1_POINT_2F^ Param_Point,
+	CA_D2D1_MATRIX_3X2_F^ Param_WorldTransform,
+	float Param_FlatteningTolerance,
+	[Out] Boolean% Param_Out_Contem)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -1129,9 +1312,9 @@ Done:;
 /// <param name="Param_WorldTransform">A transformação para aplicar à geometria antes do teste para contenção.</param>
 /// <param name="Param_Out_Contem">Retorna um valor Boleano que é verdadeiro se a área preenchida pela geometria contiver ponto; caso contrário, falso.</param>
 CarenResult CarenD2D1PathGeometry::FillContainsPoint(
-CA_D2D1_POINT_2F^ Param_Point,
-CA_D2D1_MATRIX_3X2_F^ Param_WorldTransform,
-[Out] Boolean% Param_Out_Contem)
+	CA_D2D1_POINT_2F^ Param_Point,
+	CA_D2D1_MATRIX_3X2_F^ Param_WorldTransform,
+	[Out] Boolean% Param_Out_Contem)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -1186,8 +1369,8 @@ Done:;
 /// <param name="Param_WorldTransform">A transformação para aplicar a esta geometria antes de calcular seus limites.</param>
 /// <param name="Param_Out_Bounds">Retorna os limites desta geometria. Se os limites estiverem vazios, este parâmetro será um recamto onde os Bounds.Left > Bounds.Right.</param>
 CarenResult CarenD2D1PathGeometry::GetBounds(
-CA_D2D1_MATRIX_3X2_F^ Param_WorldTransform,
-[Out] CA_D2D1_RECT_F^% Param_Out_Bounds)
+	CA_D2D1_MATRIX_3X2_F^ Param_WorldTransform,
+	[Out] CA_D2D1_RECT_F^% Param_Out_Bounds)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -1241,11 +1424,11 @@ Done:;
 /// do que a tolerância ao achatamento. Valores menores produzem resultados mais precisos, mas causam uma execução mais lenta.</param>
 /// <param name="Param_Out_Bounds">Retorna os limites da geometria ampliada.</param>
 CarenResult CarenD2D1PathGeometry::GetWidenedBounds(
-float Param_StrokeWidth,
-ICarenD2D1StrokeStyle^ Param_StrokeStyle,
-CA_D2D1_MATRIX_3X2_F^ Param_WorldTransform,
-float Param_FlatteningTolerance,
-[Out] CA_D2D1_RECT_F^% Param_Out_Bounds)
+	float Param_StrokeWidth,
+	ICarenD2D1StrokeStyle^ Param_StrokeStyle,
+	CA_D2D1_MATRIX_3X2_F^ Param_WorldTransform,
+	float Param_FlatteningTolerance,
+	[Out] CA_D2D1_RECT_F^% Param_Out_Bounds)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -1263,7 +1446,7 @@ float Param_FlatteningTolerance,
 	Resultado = Param_StrokeStyle->RecuperarPonteiro((void**)&pStrokeStyle);
 
 	//Verifica se obteve sucesso
-	if(!CarenSucesso(Resultado))
+	if (!CarenSucesso(Resultado))
 	{
 		//Falhou ao recupera a interface do Stroke
 
@@ -1311,10 +1494,10 @@ Done:;
 /// <param name="Param_WorldTransform">Uma transformação para aplicar à geometria após a geometria é transformada e depois que a geometria foi acariciada.</param>
 /// <param name="Param_Out_Bounds">Retorna os limites da geometria ampliada.</param>
 CarenResult CarenD2D1PathGeometry::GetWidenedBounds(
-float Param_StrokeWidth,
-ICarenD2D1StrokeStyle^ Param_StrokeStyle,
-CA_D2D1_MATRIX_3X2_F^ Param_WorldTransform,
-[Out] CA_D2D1_RECT_F^% Param_Out_Bounds)
+	float Param_StrokeWidth,
+	ICarenD2D1StrokeStyle^ Param_StrokeStyle,
+	CA_D2D1_MATRIX_3X2_F^ Param_WorldTransform,
+	[Out] CA_D2D1_RECT_F^% Param_Out_Bounds)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -1383,9 +1566,9 @@ Done:;
 /// mais do que a tolerância ao achatamento. Valores menores produzem resultados mais precisos, mas causam uma execução mais lenta.</param>
 /// <param name="Param_GeometrySink">Uma interface (ICarenD2D1SimplifiedGeometrySink) ao qual o contorno transformado em geometria é anexado.</param>
 CarenResult CarenD2D1PathGeometry::Outline(
-CA_D2D1_MATRIX_3X2_F^ Param_WorldTransform,
-float Param_FlatteningTolerance,
-ICarenD2D1SimplifiedGeometrySink^ Param_GeometrySink)
+	CA_D2D1_MATRIX_3X2_F^ Param_WorldTransform,
+	float Param_FlatteningTolerance,
+	ICarenD2D1SimplifiedGeometrySink^ Param_GeometrySink)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -1448,8 +1631,8 @@ Done:;
 /// <param name="Param_WorldTransform">A transformação para aplicar ao contorno de geometria.</param>
 /// <param name="Param_GeometrySink">Uma interface (ICarenD2D1SimplifiedGeometrySink) ao qual o contorno transformado em geometria é anexado.</param>
 CarenResult CarenD2D1PathGeometry::Outline(
-CA_D2D1_MATRIX_3X2_F^ Param_WorldTransform,
-ICarenD2D1SimplifiedGeometrySink^ Param_GeometrySink)
+	CA_D2D1_MATRIX_3X2_F^ Param_WorldTransform,
+	ICarenD2D1SimplifiedGeometrySink^ Param_GeometrySink)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -1512,10 +1695,10 @@ Done:;
 /// que a tolerância ao achatamento. Valores menores produzem resultados mais precisos, mas causam uma execução mais lenta.</param>
 /// <param name="Param_GeometrySink">Uma interface (ICarenD2D1SimplifiedGeometrySink) ao qual a geometria simplificada é anexada.</param>
 CarenResult CarenD2D1PathGeometry::Simplify(
-CA_D2D1_GEOMETRY_SIMPLIFICATION_OPTION Param_OpcaoSimplificacao,
-CA_D2D1_MATRIX_3X2_F^ Param_WorldTransform,
-float Param_FlatteningTolerance,
-ICarenD2D1SimplifiedGeometrySink^ Param_GeometrySink)
+	CA_D2D1_GEOMETRY_SIMPLIFICATION_OPTION Param_OpcaoSimplificacao,
+	CA_D2D1_MATRIX_3X2_F^ Param_WorldTransform,
+	float Param_FlatteningTolerance,
+	ICarenD2D1SimplifiedGeometrySink^ Param_GeometrySink)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -1577,9 +1760,9 @@ Done:;
 /// <param name="Param_WorldTransform">A transformação para aplicar à geometria simplificada.</param>
 /// <param name="Param_GeometrySink">Uma interface (ICarenD2D1SimplifiedGeometrySink) ao qual a geometria simplificada é anexada.</param>
 CarenResult CarenD2D1PathGeometry::Simplify(
-CA_D2D1_GEOMETRY_SIMPLIFICATION_OPTION Param_OpcaoSimplificacao,
-CA_D2D1_MATRIX_3X2_F^ Param_WorldTransform,
-ICarenD2D1SimplifiedGeometrySink^ Param_GeometrySink)
+	CA_D2D1_GEOMETRY_SIMPLIFICATION_OPTION Param_OpcaoSimplificacao,
+	CA_D2D1_MATRIX_3X2_F^ Param_WorldTransform,
+	ICarenD2D1SimplifiedGeometrySink^ Param_GeometrySink)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -1645,12 +1828,12 @@ Done:;
 /// que a tolerância ainda são considerados dentro. Valores menores produzem resultados mais precisos, mas causam uma execução mais lenta.</param>
 /// <param name="Param_Out_Contem">Retorna um valor booleano definido como verdadeiro se o traçado da geometria contiver o ponto especificado; caso contrário, falso.</param>
 CarenResult CarenD2D1PathGeometry::StrokeContainsPoint(
-CA_D2D1_POINT_2F^ Param_Point,
-float Param_StrokeWidth,
-ICarenD2D1StrokeStyle^ Param_StrokeStyle,
-CA_D2D1_MATRIX_3X2_F^ Param_WorldTransform,
-float Param_FlatteningTolerance,
-[Out] Boolean% Param_Out_Contem)
+	CA_D2D1_POINT_2F^ Param_Point,
+	float Param_StrokeWidth,
+	ICarenD2D1StrokeStyle^ Param_StrokeStyle,
+	CA_D2D1_MATRIX_3X2_F^ Param_WorldTransform,
+	float Param_FlatteningTolerance,
+	[Out] Boolean% Param_Out_Contem)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -1720,11 +1903,11 @@ Done:;
 /// <param name="Param_WorldTransform">A transformação para aplicar à geometria acariciada.</param>
 /// <param name="Param_Out_Contem">Retorna um valor booleano definido como verdadeiro se o traçado da geometria contiver o ponto especificado; caso contrário, falso.</param>
 CarenResult CarenD2D1PathGeometry::StrokeContainsPoint(
-CA_D2D1_POINT_2F^ Param_Point,
-float Param_StrokeWidth,
-ICarenD2D1StrokeStyle^ Param_StrokeStyle,
-CA_D2D1_MATRIX_3X2_F^ Param_WorldTransform,
-[Out] Boolean% Param_Out_Contem)
+	CA_D2D1_POINT_2F^ Param_Point,
+	float Param_StrokeWidth,
+	ICarenD2D1StrokeStyle^ Param_StrokeStyle,
+	CA_D2D1_MATRIX_3X2_F^ Param_WorldTransform,
+	[Out] Boolean% Param_Out_Contem)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -1793,9 +1976,9 @@ Done:;
 /// que a tolerância ao achatamento. Valores menores produzem resultados mais precisos, mas causam uma execução mais lenta.</param>
 /// <param name="Param_TelassellationSink">Uma interface (ICarenD2D1TessellationSink) ao qual o Tessellated é anexado.</param>
 CarenResult CarenD2D1PathGeometry::Tessellate(
-CA_D2D1_MATRIX_3X2_F^ Param_WorldTransform,
-float Param_FlatteningTolerance,
-ICarenD2D1TessellationSink^ Param_TelassellationSink)
+	CA_D2D1_MATRIX_3X2_F^ Param_WorldTransform,
+	float Param_FlatteningTolerance,
+	ICarenD2D1TessellationSink^ Param_TelassellationSink)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -1855,8 +2038,8 @@ Done:;
 /// <param name="Param_WorldTransform">A transformação para aplicar a esta geometria.</param>
 /// <param name="Param_TelassellationSink">Uma interface (ICarenD2D1TessellationSink) ao qual o Tessellated é anexado.</param>
 CarenResult CarenD2D1PathGeometry::Tessellate(
-CA_D2D1_MATRIX_3X2_F^ Param_WorldTransform,
-ICarenD2D1TessellationSink^ Param_TelassellationSink)
+	CA_D2D1_MATRIX_3X2_F^ Param_WorldTransform,
+	ICarenD2D1TessellationSink^ Param_TelassellationSink)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -1920,11 +2103,11 @@ Done:;
 /// que a tolerância ao achatamento. Valores menores produzem resultados mais precisos, mas causam uma execução mais lenta.</param>
 /// <param name="Param_GeometrySink">Uma interface (ID2D1SimplifiedGeometrySink) ao qual a geometria ampliada é anexada.</param>
 CarenResult CarenD2D1PathGeometry::Widen(
-float Param_StrokeWidth,
-ICarenD2D1StrokeStyle^ Param_StrokeStyle,
-CA_D2D1_MATRIX_3X2_F^ Param_WorldTransform,
-float Param_FlatteningTolerance,
-ICarenD2D1SimplifiedGeometrySink^ Param_GeometrySink)
+	float Param_StrokeWidth,
+	ICarenD2D1StrokeStyle^ Param_StrokeStyle,
+	CA_D2D1_MATRIX_3X2_F^ Param_WorldTransform,
+	float Param_FlatteningTolerance,
+	ICarenD2D1SimplifiedGeometrySink^ Param_GeometrySink)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -1999,10 +2182,10 @@ Done:;
 /// <param name="Param_WorldTransform">A transformação para aplicar à geometria depois de ampliá-la.</param>
 /// <param name="Param_GeometrySink">Uma interface (ID2D1SimplifiedGeometrySink) ao qual a geometria ampliada é anexada.</param>
 CarenResult CarenD2D1PathGeometry::Widen(
-float Param_StrokeWidth,
-ICarenD2D1StrokeStyle^ Param_StrokeStyle,
-CA_D2D1_MATRIX_3X2_F^ Param_WorldTransform,
-ICarenD2D1SimplifiedGeometrySink^ Param_GeometrySink)
+	float Param_StrokeWidth,
+	ICarenD2D1StrokeStyle^ Param_StrokeStyle,
+	CA_D2D1_MATRIX_3X2_F^ Param_WorldTransform,
+	ICarenD2D1SimplifiedGeometrySink^ Param_GeometrySink)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -2044,7 +2227,7 @@ ICarenD2D1SimplifiedGeometrySink^ Param_GeometrySink)
 	}
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->Widen(Param_StrokeWidth, pStrokeStyle, pMatrixTransformacao , pSimplifiedGeometry);
+	Hr = PonteiroTrabalho->Widen(Param_StrokeWidth, pStrokeStyle, pMatrixTransformacao, pSimplifiedGeometry);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);

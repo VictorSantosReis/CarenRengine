@@ -173,7 +173,10 @@
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1LinearGradientBrush.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1LookupTable3D.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Mesh.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Multithread.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1OffsetTransform.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1PathGeometry.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1PathGeometry1.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1PrintControl.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Properties.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1RadialGradientBrush.h" />
@@ -189,6 +192,9 @@
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SpriteBatch.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1StrokeStyle.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1StrokeStyle1.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SvgAttribute.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SvgGlyphStyle.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SvgPaint.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1TessellationSink.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Transform.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1TransformedGeometry.h" />
@@ -445,7 +451,10 @@
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1LinearGradientBrush.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1LookupTable3D.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Mesh.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Multithread.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1OffsetTransform.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1PathGeometry.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1PathGeometry1.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1PrintControl.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Properties.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1RadialGradientBrush.cpp" />
@@ -461,6 +470,9 @@
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SpriteBatch.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1StrokeStyle.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1StrokeStyle1.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SvgAttribute.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SvgGlyphStyle.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SvgPaint.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1TessellationSink.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Transform.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1TransformedGeometry.cpp" />

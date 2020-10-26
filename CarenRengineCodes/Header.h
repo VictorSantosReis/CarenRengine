@@ -240,7 +240,22 @@ template <class T> void DeletarTextoAlocadoSafe(T** Param_Texto)
 	//Verifica se o ponteiro é valido.
 	if (*Param_Texto)
 	{
-		delete Param_Texto;
+		//Libera a memória.
+		delete* Param_Texto;
+	}
+}
+
+//Libera a memória alocada por (CoTaskMemAlloc) para uma string.
+template <class T> void DeletarStringCoTaskSafe(T** Param_Texto)
+{
+	//Verifica se o ponteiro é valido.
+	if (*Param_Texto)
+	{
+		//Libera a memória.
+		CoTaskMemFree(*Param_Texto);
+
+		//Limpa
+		*Param_Texto = NULL;
 	}
 }
 

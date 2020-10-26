@@ -2474,6 +2474,54 @@ namespace CarenRengine
 			}
 
 
+			//Converte uma estrutura gerenciada(CA_D2D1_POINT_DESCRIPTION) para sua correspondencia não gerenciada(D2D1_POINT_DESCRIPTION).
+			D2D1_POINT_DESCRIPTION* ConverterD2D1_POINT_DESCRIPTIONManagedToUnmanaged(CA_D2D1_POINT_DESCRIPTION^ Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				D2D1_POINT_DESCRIPTION* EstruturaRetorno = CriarEstrutura<D2D1_POINT_DESCRIPTION>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(D2D1_POINT_DESCRIPTION));
+
+				//Variaveis
+				D2D1_POINT_2F* pPoint = NULL;
+				D2D1_POINT_2F* pUnitTangentVector = NULL;
+
+				//Converte as estruturas
+				pPoint = ConverterD2D1_POINT_2FManagedToUnmanaged(Param_Estrutura->point);
+				pUnitTangentVector = ConverterD2D1_POINT_2FManagedToUnmanaged(Param_Estrutura->unitTangentVector);
+
+				//Define os dados.
+				EstruturaRetorno->point = *pPoint;
+				EstruturaRetorno->unitTangentVector = *pUnitTangentVector;
+				EstruturaRetorno->endSegment = Param_Estrutura->endSegment;
+				EstruturaRetorno->endFigure = Param_Estrutura->endFigure;
+				EstruturaRetorno->lengthToEndSegment = Param_Estrutura->lengthToEndSegment;
+				
+				//Libera a memória para as estruturas
+				DeletarEstruturaSafe(&pPoint);
+				DeletarEstruturaSafe(&pUnitTangentVector);
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+			//Converte uma estrutura não gerenciada(D2D1_POINT_DESCRIPTION) para sua correspondencia gerenciada(CA_D2D1_POINT_DESCRIPTION).
+			CA_D2D1_POINT_DESCRIPTION^ ConverterD2D1_POINT_DESCRIPTIONUnmanagedToManaged(D2D1_POINT_DESCRIPTION* Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				CA_D2D1_POINT_DESCRIPTION^ EstruturaRetorno = gcnew CA_D2D1_POINT_DESCRIPTION();
+
+				//Define os dados.
+				EstruturaRetorno->point = ConverterD2D1_POINT_2FUnmanagedToManaged(&Param_Estrutura->point);
+				EstruturaRetorno->unitTangentVector = ConverterD2D1_POINT_2FUnmanagedToManaged(&Param_Estrutura->unitTangentVector);
+				EstruturaRetorno->endSegment = Param_Estrutura->endSegment;
+				EstruturaRetorno->endFigure = Param_Estrutura->endFigure;
+				EstruturaRetorno->lengthToEndSegment = Param_Estrutura->lengthToEndSegment;
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
 			//Converte uma estrutura gerenciada(CA_D2D1_SIZE_U) para sua correspondencia não gerenciada(D2D1_SIZE_U).
 			D2D1_SIZE_U* ConverterD2D1_SIZE_UManagedToUnmanaged(CA_D2D1_SIZE_U^ Param_Estrutura)
 			{

@@ -578,7 +578,7 @@ float Param_DashOffset)
 	}
 
 	//Copia os dados para a matriz nativa.
-	Util.CopiarItensTo_ArrayNativo(&pBrush, Param_Dashes, Param_QuantidadeDashes);
+	Util.CopiarItensTo_ArrayNativo(&pMatrizDashes, Param_Dashes, Param_QuantidadeDashes);
 
 	//Chama o método para realizar a operação.
 	Hr = PonteiroTrabalho->SetStroke(pBrush, Param_StrokeWidth, pMatrizDashes, Param_QuantidadeDashes, Param_DashOffset);

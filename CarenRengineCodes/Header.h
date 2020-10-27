@@ -259,6 +259,13 @@ template <class T> void DeletarStringCoTaskSafe(T** Param_Texto)
 	}
 }
 
+//Aloca memória para um tipo de string usando o CoTaskMemAlloc. Utilize o método DeletarStringCoTaskSafe para liberar a memória.
+template <class T> T* CriarStringCoTask(UInt32 Param_LarguraString)
+{
+	//Aloca e retorna o ponteiro para o usuário.
+	return (T*)CoTaskMemAlloc(static_cast<SIZE_T>(Param_LarguraString));
+}
+
 //Cria e inicializa uma estrutura corretamente.
 template <class T> T* CriarEstrutura()
 {

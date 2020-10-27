@@ -5767,14 +5767,14 @@ namespace CarenRengine
 			/// Anexa um elemento à lista de childs. Se o elemento já tiver um pai, ele será removido deste pai como parte da operação de anexação.
 			/// </summary>
 			/// <param name="Param_NewChild">O elemento para anexar.</param>
-			void AppendChild(ICarenD2D1SvgElement^ Param_NewChild);
+			CarenResult AppendChild(ICarenD2D1SvgElement^ Param_NewChild);
 
 			/// <summary>
 			/// Cria um elemento a partir de um nome de etiqueta. O elemento é anexado à lista de childs. 
 			/// </summary>
 			/// <param name="Param_TagName">O nome da novo child. Uma sequência vazia é interpretada como um elemento de conteúdo de texto.</param>
 			/// <param name="Param_Out_NewChild">Retorna uma interface(ICarenD2D1SvgElement) com um ponteiro para o novo child.</param>
-			void CreateChild(
+			CarenResult CreateChild(
 				String^ Param_TagName,
 				[Out] ICarenD2D1SvgElement^% Param_Out_NewChild);
 
@@ -5787,7 +5787,7 @@ namespace CarenRengine
 			/// <param name="Param_SizeValor">O tamanho do valor em bytes.</param>
 			CarenResult GetAttributeValue(
 				String^ Param_NomeAtributo,
-				D2D1_SVG_ATTRIBUTE_STRING_TYPE  Param_Tipo,
+				CA_D2D1_SVG_ATTRIBUTE_STRING_TYPE  Param_Tipo,
 				[Out] String^% Param_Out_Valor,
 				UInt32 Param_SizeValor);
 
@@ -6021,7 +6021,7 @@ namespace CarenRengine
 			/// Obtém o elemento pai. 
 			/// </summary>
 			/// <param name="Param_Out_Parent">Retorna uma interface(ICarenD2D1SvgElement) com um ponteiro para o elemento pai.</param>
-			CarenResult GetParent([Out] ICarenD2D1SvgElement^% Param_Out_Parent);
+			void GetParent([Out] ICarenD2D1SvgElement^% Param_Out_Parent);
 
 			/// <summary>
 			/// Recebe o child anterior do elemento (Param_ReferenciaChild). 
@@ -6116,7 +6116,7 @@ namespace CarenRengine
 			/// <param name="Param_NomeAtributo">O nome do atributo.</param>
 			/// <param name="Param_Out_Herdado">Retorna um valor booleano que indica se o atributo está definido para o valor herdado.</param>
 			/// <param name="Param_Out_Especificado">Retorna TRUE se o atributo é explicitamente definido no elemento ou se ele está presente dentro de um estilo inline. Retorna FALSE se o atributo não for um atributo válido neste elemento.</param>
-			CarenResult IsAttributeSpecified(
+			void IsAttributeSpecified(
 				String^ Param_NomeAtributo,
 				[Out] Boolean% Param_Out_Herdado,
 				[Out] Boolean% Param_Out_Especificado);
@@ -6156,7 +6156,7 @@ namespace CarenRengine
 			/// <param name="Param_Valor">O novo valor do atributo.</param>
 			CarenResult SetAttributeValue(
 				String^ Param_NomeAtributo,
-				D2D1_SVG_ATTRIBUTE_STRING_TYPE Param_Tipo,
+				CA_D2D1_SVG_ATTRIBUTE_STRING_TYPE Param_Tipo,
 				String^ Param_Valor);
 
 			/// <summary>

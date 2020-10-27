@@ -4233,6 +4233,70 @@ namespace CarenRengine
 
 
 
+			//Converte uma estrutura gerenciada(CA_D2D1_SVG_LENGTH) para sua correspondencia não gerenciada(D2D1_SVG_LENGTH).
+			D2D1_SVG_LENGTH* ConverterD2D1_SVG_LENGTHManagedToUnmanaged(CA_D2D1_SVG_LENGTH^ Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				D2D1_SVG_LENGTH* EstruturaRetorno = CriarEstrutura<D2D1_SVG_LENGTH>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(D2D1_SVG_LENGTH));
+
+				//Define os dados.
+				EstruturaRetorno->units = static_cast<D2D1_SVG_LENGTH_UNITS>(Param_Estrutura->units);
+				EstruturaRetorno->value = Param_Estrutura->value;
+				
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+			//Converte uma estrutura não gerenciada(D2D1_SVG_LENGTH) para sua correspondencia gerenciada(CA_D2D1_SVG_LENGTH).
+			CA_D2D1_SVG_LENGTH^ ConverterD2D1_SVG_LENGTHUnmanagedToManaged(D2D1_SVG_LENGTH* Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				CA_D2D1_SVG_LENGTH^ EstruturaRetorno = gcnew CA_D2D1_SVG_LENGTH();
+
+				//Define os dados.
+				EstruturaRetorno->units = static_cast<CA_D2D1_SVG_LENGTH_UNITS>(Param_Estrutura->units);
+				EstruturaRetorno->value = Param_Estrutura->value;
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+
+
+			//Converte uma estrutura gerenciada(CA_D2D1_SVG_PRESERVE_ASPECT_RATIO) para sua correspondencia não gerenciada(D2D1_SVG_PRESERVE_ASPECT_RATIO).
+			D2D1_SVG_PRESERVE_ASPECT_RATIO* ConverterD2D1_SVG_PRESERVE_ASPECT_RATIOManagedToUnmanaged(CA_D2D1_SVG_PRESERVE_ASPECT_RATIO^ Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				D2D1_SVG_PRESERVE_ASPECT_RATIO* EstruturaRetorno = CriarEstrutura<D2D1_SVG_PRESERVE_ASPECT_RATIO>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(D2D1_SVG_PRESERVE_ASPECT_RATIO));
+
+				//Define os dados.
+				EstruturaRetorno->defer = Param_Estrutura->defer ? TRUE : FALSE;
+				EstruturaRetorno->align = static_cast<D2D1_SVG_ASPECT_ALIGN>(Param_Estrutura->align);
+				EstruturaRetorno->meetOrSlice = static_cast<D2D1_SVG_ASPECT_SCALING>(Param_Estrutura->meetOrSlice);
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+			//Converte uma estrutura não gerenciada(D2D1_SVG_PRESERVE_ASPECT_RATIO) para sua correspondencia gerenciada(CA_D2D1_SVG_PRESERVE_ASPECT_RATIO).
+			CA_D2D1_SVG_PRESERVE_ASPECT_RATIO^ ConverterD2D1_SVG_PRESERVE_ASPECT_RATIOUnmanagedToManaged(D2D1_SVG_PRESERVE_ASPECT_RATIO* Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				CA_D2D1_SVG_PRESERVE_ASPECT_RATIO^ EstruturaRetorno = gcnew CA_D2D1_SVG_PRESERVE_ASPECT_RATIO();
+
+				//Define os dados.
+				EstruturaRetorno->defer = Param_Estrutura->defer ? true : false;
+				EstruturaRetorno->align = static_cast<CA_D2D1_SVG_ASPECT_ALIGN>(Param_Estrutura->align);
+				EstruturaRetorno->meetOrSlice = static_cast<CA_D2D1_SVG_ASPECT_SCALING>(Param_Estrutura->meetOrSlice);
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
 
 
 

@@ -193,8 +193,13 @@
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1StrokeStyle.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1StrokeStyle1.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SvgAttribute.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SvgDocument.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SvgElement.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SvgGlyphStyle.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SvgPaint.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SvgPathData.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SvgPointCollection.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SvgStrokeDashArray.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1TessellationSink.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Transform.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1TransformedGeometry.h" />
@@ -471,8 +476,13 @@
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1StrokeStyle.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1StrokeStyle1.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SvgAttribute.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SvgDocument.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SvgElement.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SvgGlyphStyle.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SvgPaint.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SvgPathData.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SvgPointCollection.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SvgStrokeDashArray.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1TessellationSink.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Transform.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1TransformedGeometry.cpp" />

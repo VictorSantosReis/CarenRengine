@@ -218,7 +218,7 @@ public:
 	/// <param name="Param_RecuperaQuantidadeModos">Defina para TRUE para obter o número de modos de exibição. Se TRUE, Param_Out_MatrizDescModos retorna NULO e (Param_QuantidadeModos) retorna a quantidade total de modos.</param>
 	/// <param name="Param_Out_MatrizDescModos">Retorna uma lista de modos de exibição.</param>
 	virtual CarenResult ObterListaModosExibicao(
-		CA_DXGI_FORMATO Param_Formato, 
+		CA_DXGI_FORMAT Param_Formato, 
 		CA_DXGI_ENUM_MODES Param_Flags,
 		Boolean Param_RecuperaQuantidadeModos,
 		UInt32% Param_Ref_QuantidadeModos,

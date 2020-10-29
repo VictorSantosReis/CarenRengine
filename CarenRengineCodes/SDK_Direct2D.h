@@ -6538,7 +6538,7 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_GdiMetafile">Uma interface(ID2D1GdiMetafile)[NAO IMPLEMENTADA PELA DLL] metafile para desenhar.</param>
 			/// <param name="Param_TargetOffset">O deslocamento do canto superior esquerdo do alvo render.</param>
-			CarenResult DrawGdiMetafile(
+			void DrawGdiMetafile(
 				ICaren^ Param_GdiMetafile,
 				CA_D2D1_POINT_2F^ Param_TargetOffset);
 
@@ -6551,7 +6551,7 @@ namespace CarenRengine
 			/// <param name="Param_GlyphRunDesc">Informações da série glifo suplementar.</param>
 			/// <param name="Param_ForegroundBrush">O pincel que define a cor do texto.</param>
 			/// <param name="Param_ModoMedicao">O modo de medição da série glifo, usado para determinar os avanços e deslocamentos. O valor padrão é DWRITE_MEASURING_MODE_NATURAL.</param>
-			CarenResult DrawGlyphRun(
+			void DrawGlyphRun(
 				CA_D2D1_POINT_2F^ Param_BaseLineOrigin,
 				CA_DWRITE_GLYPH_RUN^ Param_GlyphRun,
 				CA_DWRITE_GLYPH_RUN_DESCRIPTION^ Param_GlyphRunDesc,
@@ -6566,7 +6566,7 @@ namespace CarenRengine
 			/// <param name="Param_RetanguloImagem">O retângulo correspondente no espaço da imagem será mapeado para as origens dadas ao processar a imagem. Este valor padrão é NULO.</param>
 			/// <param name="Param_InterpolationMode">O modo de interpolação que será usado para dimensionar a imagem, se necessário.</param>
 			/// <param name="Param_ModoComposicao">O modo composto que será aplicado aos limites do clipe selecionado atualmente. O valor padrão é D2D1_COMPOSITE_MODE_SOURCE_OVER</param>
-			CarenResult DrawImage(
+			void DrawImage(
 				ICarenD2D1Image^ Param_Image,
 				CA_D2D1_POINT_2F^ Param_TargetOffset,
 				CA_D2D1_RECT_F^ Param_RetanguloImagem,
@@ -6582,7 +6582,7 @@ namespace CarenRengine
 			/// <param name="Param_RetanguloImagem">O retângulo correspondente no espaço da imagem será mapeado para as origens dadas ao processar a imagem. Este valor padrão é NULO.</param>
 			/// <param name="Param_InterpolationMode">O modo de interpolação que será usado para dimensionar a imagem, se necessário.</param>
 			/// <param name="Param_ModoComposicao">O modo composto que será aplicado aos limites do clipe selecionado atualmente. O valor padrão é D2D1_COMPOSITE_MODE_SOURCE_OVER</param>
-			CarenResult DrawImage(
+			void DrawImage(
 				ICarenD2D1Effect^ Param_Efeito,
 				CA_D2D1_POINT_2F^ Param_TargetOffset,
 				CA_D2D1_RECT_F^ Param_RetanguloImagem,
@@ -6598,7 +6598,7 @@ namespace CarenRengine
 			/// <param name="Param_Image">A imagem a ser desenhada para o contexto do dispositivo.</param>
 			/// <param name="Param_InterpolationMode">O modo de interpolação que será usado para dimensionar a imagem, se necessário.</param>
 			/// <param name="Param_ModoComposicao">O modo composto que será aplicado aos limites do clipe selecionado atualmente. O valor padrão é D2D1_COMPOSITE_MODE_SOURCE_OVER</param>
-			CarenResult DrawImage(
+			void DrawImage(
 				ICarenD2D1Image^ Param_Image,
 				CA_D2D1_INTERPOLATION_MODE Param_InterpolationMode,
 				CA_D2D1_COMPOSITE_MODE Param_ModoComposicao
@@ -6613,7 +6613,7 @@ namespace CarenRengine
 			/// <param name="Param_Efeito">O efeito a ser desenhado para o contexto do dispositivo.</param>
 			/// <param name="Param_InterpolationMode">O modo de interpolação que será usado para dimensionar a imagem, se necessário.</param>
 			/// <param name="Param_ModoComposicao">O modo composto que será aplicado aos limites do clipe selecionado atualmente. O valor padrão é D2D1_COMPOSITE_MODE_SOURCE_OVER</param>
-			CarenResult DrawImage(
+			void DrawImage(
 				ICarenD2D1Effect^ Param_Efeito,
 				CA_D2D1_INTERPOLATION_MODE Param_InterpolationMode,
 				CA_D2D1_COMPOSITE_MODE Param_ModoComposicao);
@@ -6628,7 +6628,7 @@ namespace CarenRengine
 			/// <param name="Param_TargetOffset">O deslocamento no espaço de destino ao que a imagem será renderizada. Toda a extensão lógica da imagem será entregue ao destino correspondente. Se não for especificado, a origem do destino será (0,0). O canto superior esquerdo da imagem será mapeado para o deslocamento do alvo. Esta não será necessariamente a origem. Este valor padrão é NULO.</param>
 			/// <param name="Param_InterpolationMode">O modo de interpolação que será usado para dimensionar a imagem, se necessário.</param>
 			/// <param name="Param_ModoComposicao">O modo composto que será aplicado aos limites do clipe selecionado atualmente. O valor padrão é D2D1_COMPOSITE_MODE_SOURCE_OVER.</param>
-			CarenResult DrawImage(
+			void DrawImage(
 				ICarenD2D1Image^ Param_Image,
 				CA_D2D1_POINT_2F^ Param_TargetOffset,
 				CA_D2D1_INTERPOLATION_MODE Param_InterpolationMode,
@@ -6644,7 +6644,7 @@ namespace CarenRengine
 			/// <param name="Param_TargetOffset">O deslocamento no espaço de destino ao que a imagem será renderizada. Toda a extensão lógica da imagem será entregue ao destino correspondente. Se não for especificado, a origem do destino será (0,0). O canto superior esquerdo da imagem será mapeado para o deslocamento do alvo. Esta não será necessariamente a origem. Este valor padrão é NULO.</param>
 			/// <param name="Param_InterpolationMode">O modo de interpolação que será usado para dimensionar a imagem, se necessário.</param>
 			/// <param name="Param_ModoComposicao">O modo composto que será aplicado aos limites do clipe selecionado atualmente. O valor padrão é D2D1_COMPOSITE_MODE_SOURCE_OVER.</param>
-			CarenResult DrawImage(
+			void DrawImage(
 				ICarenD2D1Effect^ Param_Efeito,
 				CA_D2D1_POINT_2F^ Param_TargetOffset,
 				CA_D2D1_INTERPOLATION_MODE Param_InterpolationMode,
@@ -6657,7 +6657,7 @@ namespace CarenRengine
 			/// <param name="Param_Brush">O pincel a ser usado para preencher o primitivo.</param>
 			/// <param name="Param_RetanguloDestino">O retângulo de destino para saída para dentro do alvo renderização</param>
 			/// <param name="Param_RetanguloOrigem">O retângulo de origem do bitmap da máscara de opacidade.</param>
-			CarenResult FillOpacityMask(
+			void FillOpacityMask(
 				ICarenD2D1Bitmap^ Param_MascaraOpacidade,
 				ICarenD2D1Brush^ Param_Brush,
 				CA_D2D1_RECT_F^ Param_RetanguloDestino,
@@ -6668,7 +6668,7 @@ namespace CarenRengine
 			/// O aplicativo pode recuperar o dispositivo mesmo que ele seja criado a partir de um caminho de código de destino de renderização anterior. O aplicativo deve usar uma interface ICarenD2D1DeviceContext e, em seguida, chamar GetDevice. Algumas funcionalidades para controlar todos os recursos para um conjunto de contextos de dispositivos são mantidas apenas em um objeto ICarenD2D1Device.
 			/// </summary>
 			/// <param name="Param_Out_Dispositivo">Retorna uma interface(ICarenD2D1Device) que contém um ponteiro para um dispositivo Direct2D associado a este contexto do dispositivo.  O usuário deve inicializar a interface antes de chamar o método.</param>
-			CarenResult GetDevice(ICaren^ Param_Out_Dispositivo);
+			void GetDevice(ICaren^ Param_Out_Dispositivo);
 
 			/// <summary>
 			/// Obtém o número de retângulos de saída inválidos que se acumularam sobre o efeito.
@@ -6696,7 +6696,7 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_Efeito">A imagem cuja saída está sendo renderizada.</param>
 			/// <param name="Param_RenderImageRectangle">A porção da imagem de saída cujos inputs estão sendo inspecionados.</param>
-			/// <param name="Param_DescInputs">Uma lista dos insumos que estão retângulos estão sendo consultados.</param>
+			/// <param name="Param_DescInputs">Uma lista dos insumos que os retângulos estão sendo consultados.</param>
 			/// <param name="Param_Out_InputRects">Retorna uma matriz com os retângulos de entrada.</param>
 			/// <param name="Param_QuantidadeInput">O número de entradas.</param>
 			CarenResult GetEffectRequiredInputRectangles(
@@ -6751,7 +6751,7 @@ namespace CarenRengine
 			/// Retorna a mistura primitiva(PrimitiveBlend) atualmente definida usada pelo contexto do dispositivo.
 			/// </summary>
 			/// <param name="Param_Out_PrimitiveBlend">Retorna A mistura primitiva atual. O valor padrão é D2D1_PRIMITIVE_BLEND_SOURCE_OVER.</param>
-			CarenResult GetPrimitiveBlend(
+			void GetPrimitiveBlend(
 				[Out] CA_D2D1_PRIMITIVE_BLEND% Param_Out_PrimitiveBlend
 			);
 
@@ -6759,7 +6759,7 @@ namespace CarenRengine
 			/// Obtém os controles de renderização que foram aplicados ao contexto.
 			/// </summary>
 			/// <param name="Param_Out_ControlesRenderizacao">Retorna os controles de renderização para este contexto.</param>
-			CarenResult GetRenderingControls(
+			void GetRenderingControls(
 				[Out] CA_D2D1_RENDERING_CONTROLS^% Param_Out_ControlesRenderizacao
 			);
 
@@ -6777,7 +6777,7 @@ namespace CarenRengine
 			/// Obtém o modo que está sendo usado para interpretar valores pelo contexto do dispositivo.
 			/// </summary>
 			/// <param name="Param_Out_Unit">Retorna O modo unitário.</param>
-			CarenResult GetUnitMode([Out] CA_D2D1_UNIT_MODE Param_Out_Unit);
+			void GetUnitMode([Out] CA_D2D1_UNIT_MODE Param_Out_Unit);
 
 			/// <summary>
 			/// Define que uma parte da entrada de um efeito é inválida. Este método pode ser chamado muitas vezes.
@@ -6810,8 +6810,8 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_DxgiFormato">O formato DXGI para verificar.</param>
 			/// <param name="Param_Out_Suporte">Retorna TRUE se o formato for suportado. Retorna FALSE se o formato não for suportado.</param>
-			CarenResult IsDxgiFormatSupported(
-				CA_DXGI_FORMATO  Param_DxgiFormato,
+			void IsDxgiFormatSupported(
+				CA_DXGI_FORMAT  Param_DxgiFormato,
 				[Out] Boolean% Param_Out_Suporte
 			);
 
@@ -6858,7 +6858,7 @@ namespace CarenRengine
 		};
 
 		/// <summary>
-		/// (ID2D1DeviceContext1) - Interface responsável por permitir a criação e o desenho de objetos de realização de geometria.
+		/// (ID2D1DeviceContext1) - Interface responsável por permitir a criação e o desenho de objetos de Relization de geometria.
 		/// </summary>
 		[CategoryAttribute("Interface D2D")]
 		[Guid("4B28F5B8-D77D-48B4-804E-A77857CA337F")]
@@ -6935,7 +6935,7 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_Patches">Uma matriz contendo as manchas a serem usadas nesta malha.</param>
 			/// <param name="Param_QuantidadePatches">O número de patches nos patches argumenta para ler.</param>
-			/// <param name="Param_Out_GradientMesh">Retorna uma intterface(ICarenD2D1GradientMesh) que contém um ponteiro para a nova malha de gradiente.</param>
+			/// <param name="Param_Out_GradientMesh">Retorna uma interface(ICarenD2D1GradientMesh) que contém um ponteiro para a nova malha de gradiente.</param>
 			CarenResult CreateGradientMesh(
 				cli::array<CA_D2D1_GRADIENT_MESH_PATCH^>^ Param_Patches,
 				UInt32 Param_QuantidadePatches,
@@ -7094,7 +7094,7 @@ namespace CarenRengine
 		};
 
 		/// <summary>
-		/// (ID2D1DeviceContext3) - Interface responsável por executar todas as mesmas funções da interface ID2D1DeviceContext2, além de permitir a funcionalidade para criar e desenhar lotes sprite.
+		/// (ID2D1DeviceContext3) - Interface responsável por executar todas as mesmas funções da interface ID2D1DeviceContext2, além de permitir a funcionalidade para criar e desenhar lotes de sprites.
 		/// </summary>
 		[CategoryAttribute("Interface D2D")]
 		[Guid("8403E13C-8C57-48D7-8756-8B9CB084B51B")]

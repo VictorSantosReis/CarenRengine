@@ -1734,7 +1734,7 @@ namespace CarenRengine
 			/// <param name="Param_Out_Deslocamento">Retorna o Deslocamento(Offset) (em bytes) desde o início do buffer de índice, o primeiro índice para usar.</param>
 			CarenResult IAObterIndexBuffer(
 				[Out] ICarenD3D11Buffer^% Param_Out_Buffer,
-				[Out] Enumeracoes::CA_DXGI_FORMATO% Param_Out_Formato,
+				[Out] Enumeracoes::CA_DXGI_FORMAT% Param_Out_Formato,
 				[Out] UInt32% Param_Out_Deslocamento);
 
 			/// <summary>
@@ -1778,7 +1778,7 @@ namespace CarenRengine
 			/// <param name="Param_Deslocamento">Offset (em bytes) do início do buffer de índice para o primeiro índice para usar.</param>
 			CarenResult IADefinirIndexBuffer(
 				ICarenD3D11Buffer^ Param_Buffer,
-				Enumeracoes::CA_DXGI_FORMATO Param_Formato,
+				Enumeracoes::CA_DXGI_FORMAT Param_Formato,
 				UInt32 Param_Deslocamento);
 
 			/// <summary>
@@ -2063,13 +2063,13 @@ namespace CarenRengine
 			/// <param name="Param_IndiceSubRecursoDestino">Um índice baseado em zero, que identifica o sub-recurso de destino. Use D3D11CalcSubresource para calcular o índice.</param>
 			/// <param name="Param_RecursoOrigem">Fonte de recursos. Deve ser multisampled.</param>
 			/// <param name="Param_IndiceSubRecursoOrigem">O sub-recurso fonte de fonte de recursos.</param>
-			/// <param name="Param_DXGIFormato">Um CA_DXGI_FORMATO que indica como o recurso multisampled será resolvido para um recurso único-amostrados.</param>
+			/// <param name="Param_DXGIFormato">Um CA_DXGI_FORMAT que indica como o recurso multisampled será resolvido para um recurso único-amostrados.</param>
 			CarenResult ResolverSubRecurso(
 				ICarenD3D11Resource^ Param_RecursoDestino,
 				UInt32 Param_IndiceSubRecursoDestino,
 				ICarenD3D11Resource^ Param_RecursoOrigem,
 				UInt32 Param_IndiceSubRecursoOrigem,
-				Enumeracoes::CA_DXGI_FORMATO Param_DXGIFormato);
+				Enumeracoes::CA_DXGI_FORMAT Param_DXGIFormato);
 
 			/// <summary>
 			/// (RSGetScissorRects) - Obtém a matriz de scissor retângulos vinculado à fase rasterizer.
@@ -3070,11 +3070,11 @@ namespace CarenRengine
 			/// <summary>
 			/// (CheckFormatSupport) - Obter o apoio de um determinado formato do dispositivo de vídeo instalado.
 			/// </summary>
-			/// <param name="Param_Formato">Uma enumeração de CA_DXGI_FORMATO que descreve um formato para o qual deseja verificar se há suporte.</param>
+			/// <param name="Param_Formato">Uma enumeração de CA_DXGI_FORMAT que descreve um formato para o qual deseja verificar se há suporte.</param>
 			/// <param name="Param_Out_RecursosSuportados">Um campo de bits de D3D11_FORMAT_SUPPORT valores de enumeração que descreve como o formato especificado 
 			/// é suportado no dispositivo instalado. Os valores são ORed juntos.</param>
 			CarenResult VerificarFormatoSuportado(
-				Enumeracoes::CA_DXGI_FORMATO Param_Formato,
+				Enumeracoes::CA_DXGI_FORMAT Param_Formato,
 				[Out] Enumeracoes::CA_D3D11_FORMATO_SUPORTE% Param_Out_RecursosSuportados);
 
 			/// <summary>
@@ -3083,11 +3083,11 @@ namespace CarenRengine
 			/// solicitadas. O número máximo de níveis de qualidade é definido pelo D3D11_MAX_MULTISAMPLE_SAMPLE_COUNT em D3D11.h. Se esse método retorna 0, a combinação de 
 			/// contagem de formato e amostra não tem suporte para o adaptador instalado.
 			/// </summary>
-			/// <param name="Param_Formato">O formato de textura. Consulte CA_DXGI_FORMATO.</param>
+			/// <param name="Param_Formato">O formato de textura. Consulte CA_DXGI_FORMAT.</param>
 			/// <param name="Param_NumeroAmostras">O número de amostras durante multisampling completo.</param>
 			/// <param name="Param_Out_NumeroNiveisQualidade">Recebe o número de níveis de qualidade suportada pelo adaptador.</param>
 			CarenResult ObterNiveisQualidadeDisponiveis(
-				Enumeracoes::CA_DXGI_FORMATO Param_Formato,
+				Enumeracoes::CA_DXGI_FORMAT Param_Formato,
 				UInt32 Param_NumeroAmostras, [Out] UInt32% Param_Out_NumeroNiveisQualidade);
 
 			/// <summary>
@@ -3643,7 +3643,7 @@ namespace CarenRengine
 			/// Atualmente, apenas D3D11_CHECK_MULTISAMPLE_QUALITY_LEVELS_TILED_RESOURCE é suportado.</param>
 			/// <param name="Param_Out_NiveisQualidade">Recebe o número de níveis de qualidade suportados pelo adaptador</param>
 			CarenResult ObterNiveisQualidadeDisponiveis1(
-				CA_DXGI_FORMATO Param_Formato,
+				CA_DXGI_FORMAT Param_Formato,
 				UInt32 Param_QuantidadeSample,
 				CA_D3D11_CHECK_MULTISAMPLE_QUALITY_LEVELS_FLAG Param_Flags,
 				[Out] UInt32% Param_Out_NiveisQualidade);

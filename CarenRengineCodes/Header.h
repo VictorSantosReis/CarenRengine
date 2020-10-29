@@ -167,6 +167,7 @@ using namespace std;
 //Typedefs
 typedef HRESULT ResultadoCOM;
 typedef cli::array<Byte>^ MatrizBytes;
+typedef System::IntPtr GenPointer;
 
 
 

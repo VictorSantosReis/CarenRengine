@@ -952,11 +952,11 @@ Done:;
 /// <summary>
 /// (CheckFormatSupport) - Obter o apoio de um determinado formato do dispositivo de vídeo instalado.
 /// </summary>
-/// <param name="Param_Formato">Uma enumeração de CA_DXGI_FORMATO que descreve um formato para o qual deseja verificar se há suporte.</param>
+/// <param name="Param_Formato">Uma enumeração de CA_DXGI_FORMAT que descreve um formato para o qual deseja verificar se há suporte.</param>
 /// <param name="Param_Out_RecursosSuportados">Um campo de bits de D3D11_FORMAT_SUPPORT valores de enumeração que descreve como o formato especificado 
 /// é suportado no dispositivo instalado. Os valores são ORed juntos.</param>
 CarenResult CarenD3D11Device1::VerificarFormatoSuportado(
-	Enumeracoes::CA_DXGI_FORMATO Param_Formato,
+	Enumeracoes::CA_DXGI_FORMAT Param_Formato,
 	[Out] Enumeracoes::CA_D3D11_FORMATO_SUPORTE% Param_Out_RecursosSuportados)
 {
 	//Variavel a ser retornada.
@@ -1002,11 +1002,11 @@ Done:;
 /// solicitadas. O número máximo de níveis de qualidade é definido pelo D3D11_MAX_MULTISAMPLE_SAMPLE_COUNT em D3D11.h. Se esse método retorna 0, a combinação de 
 /// contagem de formato e amostra não tem suporte para o adaptador instalado.
 /// </summary>
-/// <param name="Param_Formato">O formato de textura. Consulte CA_DXGI_FORMATO.</param>
+/// <param name="Param_Formato">O formato de textura. Consulte CA_DXGI_FORMAT.</param>
 /// <param name="Param_NumeroAmostras">O número de amostras durante multisampling completo.</param>
 /// <param name="Param_Out_NumeroNiveisQualidade">Recebe o número de níveis de qualidade suportada pelo adaptador.</param>
 CarenResult CarenD3D11Device1::ObterNiveisQualidadeDisponiveis(
-	Enumeracoes::CA_DXGI_FORMATO Param_Formato,
+	Enumeracoes::CA_DXGI_FORMAT Param_Formato,
 	UInt32 Param_NumeroAmostras,
 	[Out] UInt32% Param_Out_NumeroNiveisQualidade)
 {

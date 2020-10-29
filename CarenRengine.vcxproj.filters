@@ -966,6 +966,27 @@
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SvgPointCollection.h">
       <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
     </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext1.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext2.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext3.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext4.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext5.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext6.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Bitmap.cpp">
@@ -1758,6 +1779,27 @@
       <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SvgPointCollection.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext1.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext2.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext3.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext4.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext5.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext6.cpp">
       <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
     </ClCompile>
   </ItemGroup>

@@ -146,6 +146,13 @@
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1ComputeTransform.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1ConcreteTransform.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DCRenderTarget.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext1.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext2.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext3.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext4.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext5.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext6.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DrawInfo.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DrawingStateBlock.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DrawingStateBlock1.h" />
@@ -429,6 +436,13 @@
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1ComputeTransform.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1ConcreteTransform.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DCRenderTarget.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext1.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext2.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext3.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext4.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext5.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext6.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DrawInfo.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DrawingStateBlock.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DrawingStateBlock1.cpp" />

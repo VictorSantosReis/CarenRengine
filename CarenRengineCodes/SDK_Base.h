@@ -7862,7 +7862,7 @@ MEReservedMax = 10000
 			/// <summary>
 			/// (DXGI_FORMAT)(FALTA DOCUMENTAR) - Enumera formatos de dados de recursos, incluindo totalmente tipado e formatos sem especificação de tipo.
 			/// </summary>
-			public enum class CA_DXGI_FORMATO
+			public enum class CA_DXGI_FORMAT
 			{
 				/// <summary>
 				/// 
@@ -18496,7 +18496,7 @@ MEReservedMax = 10000
 			/// </summary>
 			public ref struct CA_D3D11_DEPTH_STENCIL_VIEW_DESC
 			{
-				Enumeracoes::CA_DXGI_FORMATO Formato;
+				Enumeracoes::CA_DXGI_FORMAT Formato;
 				Enumeracoes::CA_D3D11_DSV_DIMENSION ViewDimensao;
 				Enumeracoes::CA_D3D11_DSV_FLAG Flags;
 
@@ -18528,7 +18528,7 @@ MEReservedMax = 10000
 			{
 				String^ SemanticName;
 				UInt32                                            SemanticIndex;
-				Enumeracoes::CA_DXGI_FORMATO                      Format;
+				Enumeracoes::CA_DXGI_FORMAT                      Format;
 				UInt32                                            InputSlot;
 				UInt32                                            AlignedByteOffset;
 				Enumeracoes::CA_D3D11_INPUT_CLASSIFICATION        InputSlotClass;
@@ -18712,7 +18712,7 @@ MEReservedMax = 10000
 			/// </summary>
 			public ref struct CA_D3D11_RENDER_TARGET_VIEW_DESC
 			{
-				Enumeracoes::CA_DXGI_FORMATO         Formato;
+				Enumeracoes::CA_DXGI_FORMAT         Formato;
 				Enumeracoes::CA_D3D11_RTV_DIMENSION  ViewDimensao;
 				CA_D3D11_BUFFER_RTV^ Buffer;
 				CA_D3D11_TEX1D_RTV^ Textura1D;
@@ -18729,7 +18729,7 @@ MEReservedMax = 10000
 			/// </summary>
 			public ref struct CA_D3D11_RENDER_TARGET_VIEW_DESC1
 			{
-				Enumeracoes::CA_DXGI_FORMATO         Formato;
+				Enumeracoes::CA_DXGI_FORMAT         Formato;
 				Enumeracoes::CA_D3D11_RTV_DIMENSION  ViewDimensao;
 				CA_D3D11_BUFFER_RTV^ Buffer;
 				CA_D3D11_TEX1D_RTV^ Textura1D;
@@ -18894,7 +18894,7 @@ MEReservedMax = 10000
 			/// </summary>
 			public ref struct CA_D3D11_SHADER_RESOURCE_VIEW_DESC
 			{
-				Enumeracoes::CA_DXGI_FORMATO        Formato;
+				Enumeracoes::CA_DXGI_FORMAT        Formato;
 				Enumeracoes::CA_D3D11_SRV_DIMENSION ViewDimensao;
 
 				CA_D3D11_BUFFER_SRV^ Buffer;
@@ -18915,7 +18915,7 @@ MEReservedMax = 10000
 			/// </summary>
 			public ref struct CA_D3D11_SHADER_RESOURCE_VIEW_DESC1
 			{
-				Enumeracoes::CA_DXGI_FORMATO        Formato;
+				Enumeracoes::CA_DXGI_FORMAT        Formato;
 				Enumeracoes::CA_D3D11_SRV_DIMENSION ViewDimensao;
 
 				CA_D3D11_BUFFER_SRV^ Buffer;
@@ -18979,9 +18979,9 @@ MEReservedMax = 10000
 				UInt32                           Altura;
 
 				/// <summary>
-				/// (Format) - Um membro da enumeração CA_DXGI_FORMATO que descreve o formato de superfície.
+				/// (Format) - Um membro da enumeração CA_DXGI_FORMAT que descreve o formato de superfície.
 				///</summary>
-				Enumeracoes::CA_DXGI_FORMATO     Formato;
+				Enumeracoes::CA_DXGI_FORMAT     Formato;
 
 				/// <summary>
 				/// (SampleDesc) - Um membro da estrutura CA_DXGI_SAMPLE_DESC que descreve parâmetros de multiamostragem para a 
@@ -19060,7 +19060,7 @@ MEReservedMax = 10000
 				UInt32                                 Width;
 				UInt32                                 MipLevels;
 				UInt32                                 ArraySize;
-				Enumeracoes::CA_DXGI_FORMATO           Formato;
+				Enumeracoes::CA_DXGI_FORMAT           Formato;
 				Enumeracoes::CA_D3D11_USAGE            Usage;
 				Enumeracoes::CA_D3D11_BIND_FLAG        BindFlags;
 				Enumeracoes::CA_D3D11_CPU_ACCESS_FLAG  CPUAccessFlags;
@@ -19076,7 +19076,7 @@ MEReservedMax = 10000
 				UInt32                                 Height;
 				UInt32                                 MipLevels;
 				UInt32                                 ArraySize;
-				Enumeracoes::CA_DXGI_FORMATO           Formato;
+				Enumeracoes::CA_DXGI_FORMAT           Formato;
 				CA_DXGI_SAMPLE_DESC^ SampleDesc;
 				Enumeracoes::CA_D3D11_USAGE            Usage;
 				Enumeracoes::CA_D3D11_BIND_FLAG        BindFlags;
@@ -19093,7 +19093,7 @@ MEReservedMax = 10000
 				UInt32                                 Height;
 				UInt32                                 MipLevels;
 				UInt32                                 ArraySize;
-				Enumeracoes::CA_DXGI_FORMATO           Formato;
+				Enumeracoes::CA_DXGI_FORMAT           Formato;
 				CA_DXGI_SAMPLE_DESC^ SampleDesc;
 				Enumeracoes::CA_D3D11_USAGE            Usage;
 				Enumeracoes::CA_D3D11_BIND_FLAG        BindFlags;
@@ -19111,7 +19111,7 @@ MEReservedMax = 10000
 				UInt32                                       Height;
 				UInt32                                       Depth;
 				UInt32                                       MipLevels;
-				Enumeracoes::CA_DXGI_FORMATO                 Formato;
+				Enumeracoes::CA_DXGI_FORMAT                 Formato;
 				Enumeracoes::CA_D3D11_USAGE                  Usage;
 				Enumeracoes::CA_D3D11_BIND_FLAG              BindFlags;
 				Enumeracoes::CA_D3D11_CPU_ACCESS_FLAG        CPUAccessFlags;
@@ -19127,7 +19127,7 @@ MEReservedMax = 10000
 				UInt32                                       Height;
 				UInt32                                       Depth;
 				UInt32                                       MipLevels;
-				Enumeracoes::CA_DXGI_FORMATO                 Formato;
+				Enumeracoes::CA_DXGI_FORMAT                 Formato;
 				Enumeracoes::CA_D3D11_USAGE                  Usage;
 				Enumeracoes::CA_D3D11_BIND_FLAG              BindFlags;
 				Enumeracoes::CA_D3D11_CPU_ACCESS_FLAG        CPUAccessFlags;
@@ -19216,7 +19216,7 @@ MEReservedMax = 10000
 			/// </summary>
 			public ref struct CA_D3D11_UNORDERED_ACCESS_VIEW_DESC
 			{
-				Enumeracoes::CA_DXGI_FORMATO         Formato;
+				Enumeracoes::CA_DXGI_FORMAT         Formato;
 				Enumeracoes::CA_D3D11_UAV_DIMENSION  ViewDimensao;
 
 				CA_D3D11_BUFFER_UAV^ Buffer;
@@ -19232,7 +19232,7 @@ MEReservedMax = 10000
 			/// </summary>
 			public ref struct CA_D3D11_UNORDERED_ACCESS_VIEW_DESC1
 			{
-				Enumeracoes::CA_DXGI_FORMATO         Formato;
+				Enumeracoes::CA_DXGI_FORMAT         Formato;
 				Enumeracoes::CA_D3D11_UAV_DIMENSION  ViewDimensao;
 
 				CA_D3D11_BUFFER_UAV^ Buffer;
@@ -19557,7 +19557,7 @@ MEReservedMax = 10000
 
 				CA_DXGI_RATIONAL^ RefreshRate;
 
-				Enumeracoes::CA_DXGI_FORMATO Format;
+				Enumeracoes::CA_DXGI_FORMAT Format;
 
 				Enumeracoes::CA_DXGI_MODE_SCANLINE_ORDER ScanlineOrdering;
 
@@ -19575,7 +19575,7 @@ MEReservedMax = 10000
 
 				CA_DXGI_RATIONAL^ RefreshRate;
 
-				Enumeracoes::CA_DXGI_FORMATO Format;
+				Enumeracoes::CA_DXGI_FORMAT Format;
 
 				Enumeracoes::CA_DXGI_MODE_SCANLINE_ORDER ScanlineOrdering;
 
@@ -19613,7 +19613,7 @@ MEReservedMax = 10000
 			{
 				UInt32                               Width;
 				UInt32                               Height;
-				Enumeracoes::CA_DXGI_FORMATO         Format;
+				Enumeracoes::CA_DXGI_FORMAT         Format;
 				Boolean                              Stereo;
 				CA_DXGI_SAMPLE_DESC^ SampleDesc;
 				Enumeracoes::CA_DXGI_USAGE           BufferUsage;
@@ -20236,7 +20236,7 @@ MEReservedMax = 10000
 				// <summary>
 				// 
 				// </summary>
-				Enumeracoes::CA_DXGI_FORMATO format;
+				Enumeracoes::CA_DXGI_FORMAT format;
 
 				// <summary>
 				// 
@@ -20890,7 +20890,7 @@ MEReservedMax = 10000
 				// <summary>
 				// 
 				// </summary>
-				CA_D2D1_PIXEL_FORMAT   pixelFormat;
+				CA_D2D1_PIXEL_FORMAT^   pixelFormat;
 				// <summary>
 				// 
 				// </summary>
@@ -20906,7 +20906,7 @@ MEReservedMax = 10000
 				// <summary>
 				// 
 				// </summary>
-				ICaren^* colorContext;
+				ICaren^ colorContext;
 			};
 
 			/// <summary> 
@@ -21027,7 +21027,7 @@ MEReservedMax = 10000
 				// <summary>
 				// 
 				// </summary>
-				Enumeracoes::CA_DXGI_FORMATO format;
+				Enumeracoes::CA_DXGI_FORMAT format;
 
 				// <summary>
 				// 
@@ -22172,7 +22172,7 @@ MEReservedMax = 10000
 				/// <summary>
 				/// 
 				/// </summary>
-				Enumeracoes::CA_DXGI_FORMATO DxgiFormat;
+				Enumeracoes::CA_DXGI_FORMAT DxgiFormat;
 				/// <summary>
 				/// 
 				/// </summary>
@@ -22215,7 +22215,7 @@ MEReservedMax = 10000
 				/// <summary>
 				/// 
 				/// </summary>
-				Enumeracoes::CA_DXGI_FORMATO DxgiFormat;
+				Enumeracoes::CA_DXGI_FORMAT DxgiFormat;
 				/// <summary>
 				/// 
 				/// </summary>

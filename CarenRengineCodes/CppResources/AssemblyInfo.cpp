@@ -32,7 +32,7 @@ using namespace System::Security::Permissions;
 [assembly:AssemblyTrademarkAttribute(L"Victor Santos Reis")];
 [assembly:AssemblyCultureAttribute(L"")];
 
-[assembly:AssemblyVersionAttribute("1.0.0.0")];
+[assembly:AssemblyVersionAttribute("0.1.0.0")];
 
 [assembly:ComVisible(false)];
 

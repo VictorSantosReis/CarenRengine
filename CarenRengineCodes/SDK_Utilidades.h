@@ -2656,7 +2656,7 @@ namespace CarenRengine
 				CA_D2D1_PIXEL_FORMAT^ EstruturaRetorno = gcnew CA_D2D1_PIXEL_FORMAT();
 
 				//Define os dados.
-				EstruturaRetorno->format = ConverterPara<CA_DXGI_FORMATO>(Param_Estrutura->format);
+				EstruturaRetorno->format = ConverterPara<CA_DXGI_FORMAT>(Param_Estrutura->format);
 				EstruturaRetorno->alphaMode = ConverterPara<CA_D2D1_ALPHA_MODE>(Param_Estrutura->alphaMode);
 
 				//Retorna o resultado
@@ -3545,6 +3545,80 @@ namespace CarenRengine
 			}
 
 
+			//Converte uma estrutura gerenciada(CA_D2D1_BITMAP_PROPERTIES1) para sua correspondencia não gerenciada(D2D1_BITMAP_PROPERTIES1).
+			D2D1_BITMAP_PROPERTIES1* ConverterD2D1_BITMAP_PROPERTIES1ManagedToUnmanaged(CA_D2D1_BITMAP_PROPERTIES1^ Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				D2D1_BITMAP_PROPERTIES1* EstruturaRetorno = CriarEstrutura<D2D1_BITMAP_PROPERTIES1>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(D2D1_BITMAP_PROPERTIES1));
+
+				//Variaveis
+				D2D1_PIXEL_FORMAT* pPixelFormato = NULL;
+				ID2D1ColorContext* pColorContext = NULL;
+
+				//Converte a estrutura do formato de pixel para a nativa.
+				pPixelFormato = ConverterD2D1_PIXEL_FORMATManagedToUnmanaged(Param_Estrutura->pixelFormat);
+
+				//Recupera o ponteiro para a interface de cor do contexto se fornecido
+				if (ObjetoGerenciadoValido(Param_Estrutura->colorContext))
+				{
+					//Recupera o ponteiro para a interface.
+					Param_Estrutura->colorContext->RecuperarPonteiro((LPVOID*)&pColorContext);
+				}
+
+				//Define os dados.
+				EstruturaRetorno->dpiX = Param_Estrutura->dpiX;
+				EstruturaRetorno->dpiY = Param_Estrutura->dpiY;
+				EstruturaRetorno->pixelFormat = *pPixelFormato;
+				EstruturaRetorno->bitmapOptions = static_cast<D2D1_BITMAP_OPTIONS>(Param_Estrutura->bitmapOptions);
+				EstruturaRetorno->colorContext = pColorContext;
+
+				//Libera a memória para a estrutura.
+				DeletarEstruturaSafe(&pPixelFormato);
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+			//Converte uma estrutura não gerenciada(D2D1_BITMAP_PROPERTIES1) para sua correspondencia gerenciada(CA_D2D1_BITMAP_PROPERTIES1).
+			CA_D2D1_BITMAP_PROPERTIES1^ ConverterD2D1_BITMAP_PROPERTIES1UnmanagedToManaged(D2D1_BITMAP_PROPERTIES1* Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				CA_D2D1_BITMAP_PROPERTIES1^ EstruturaRetorno = gcnew CA_D2D1_BITMAP_PROPERTIES1();
+
+				//Variaveis
+				CA_D2D1_PIXEL_FORMAT^ PixelFormato = nullptr;
+				ICaren^ D2dColorContext = nullptr;
+
+				//Converte a estrutura do formato de pixel para a nativa.
+				PixelFormato = ConverterD2D1_PIXEL_FORMATUnmanagedToManaged(&Param_Estrutura->pixelFormat);
+
+				//Verifica se forneceu a interface de contexto de cor.
+				if (ObjetoValido(Param_Estrutura->colorContext))
+				{
+					//Cria a interface que vai segurar o ponteiro.
+					D2dColorContext = gcnew Caren();
+
+					//Adiciona o ponteiro.
+					D2dColorContext->AdicionarPonteiro(Param_Estrutura->colorContext);
+
+					//Adiciona uma Referencia
+					D2dColorContext->AdicionarReferencia();
+				}
+
+				//Define os dados.
+				EstruturaRetorno->dpiX = Param_Estrutura->dpiX;
+				EstruturaRetorno->dpiY = Param_Estrutura->dpiY;
+				EstruturaRetorno->pixelFormat = PixelFormato;
+				EstruturaRetorno->bitmapOptions = static_cast<CA_D2D1_BITMAP_OPTIONS>(Param_Estrutura->bitmapOptions);
+				EstruturaRetorno->colorContext = D2dColorContext;
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+
 			//Converte uma estrutura gerenciada(CA_D2D1_BITMAP_BRUSH_PROPERTIES) para sua correspondencia não gerenciada(D2D1_BITMAP_BRUSH_PROPERTIES).
 			D2D1_BITMAP_BRUSH_PROPERTIES* ConverterD2D1_BITMAP_BRUSH_PROPERTIESManagedToUnmanaged(CA_D2D1_BITMAP_BRUSH_PROPERTIES^ Param_Estrutura)
 			{
@@ -3577,6 +3651,38 @@ namespace CarenRengine
 				return EstruturaRetorno;
 			}
 
+
+			//Converte uma estrutura gerenciada(CA_D2D1_BITMAP_BRUSH_PROPERTIES1) para sua correspondencia não gerenciada(D2D1_BITMAP_BRUSH_PROPERTIES1).
+			D2D1_BITMAP_BRUSH_PROPERTIES1* ConverterD2D1_BITMAP_BRUSH_PROPERTIES1ManagedToUnmanaged(CA_D2D1_BITMAP_BRUSH_PROPERTIES1^ Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				D2D1_BITMAP_BRUSH_PROPERTIES1* EstruturaRetorno = CriarEstrutura<D2D1_BITMAP_BRUSH_PROPERTIES1>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(D2D1_BITMAP_BRUSH_PROPERTIES1));
+
+				//Define os dados.
+				EstruturaRetorno->extendModeX = static_cast<D2D1_EXTEND_MODE>(Param_Estrutura->extendModeX);
+				EstruturaRetorno->extendModeY = static_cast<D2D1_EXTEND_MODE>(Param_Estrutura->extendModeY);
+				EstruturaRetorno->interpolationMode = static_cast<D2D1_INTERPOLATION_MODE>(Param_Estrutura->interpolationMode);
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+			//Converte uma estrutura não gerenciada(D2D1_BITMAP_BRUSH_PROPERTIES1) para sua correspondencia gerenciada(CA_D2D1_BITMAP_BRUSH_PROPERTIES1).
+			CA_D2D1_BITMAP_BRUSH_PROPERTIES1^ ConverterD2D1_BITMAP_BRUSH_PROPERTIES1UnmanagedToManaged(D2D1_BITMAP_BRUSH_PROPERTIES1* Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				CA_D2D1_BITMAP_BRUSH_PROPERTIES1^ EstruturaRetorno = gcnew CA_D2D1_BITMAP_BRUSH_PROPERTIES1();
+
+				//Define os dados.
+				EstruturaRetorno->extendModeX = static_cast<CA_D2D1_EXTEND_MODE>(Param_Estrutura->extendModeX);
+				EstruturaRetorno->extendModeY = static_cast<CA_D2D1_EXTEND_MODE>(Param_Estrutura->extendModeY);
+				EstruturaRetorno->interpolationMode = static_cast<CA_D2D1_INTERPOLATION_MODE>(Param_Estrutura->interpolationMode);
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
 
 			//Converte uma estrutura gerenciada(CA_D2D1_BRUSH_PROPERTIES) para sua correspondencia não gerenciada(D2D1_BRUSH_PROPERTIES).
 			D2D1_BRUSH_PROPERTIES* ConverterD2D1_BRUSH_PROPERTIESManagedToUnmanaged(CA_D2D1_BRUSH_PROPERTIES^ Param_Estrutura)
@@ -3954,6 +4060,45 @@ namespace CarenRengine
 			}
 
 
+			//Converte uma estrutura gerenciada(CA_D2D1_INK_STYLE_PROPERTIES) para sua correspondencia não gerenciada(D2D1_INK_STYLE_PROPERTIES).
+			D2D1_INK_STYLE_PROPERTIES* ConverterD2D1_INK_STYLE_PROPERTIESManagedToUnmanaged(CA_D2D1_INK_STYLE_PROPERTIES^ Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				D2D1_INK_STYLE_PROPERTIES* EstruturaRetorno = CriarEstrutura<D2D1_INK_STYLE_PROPERTIES>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(D2D1_INK_STYLE_PROPERTIES));
+
+				//Variaveis
+				D2D1_MATRIX_3X2_F* pNibTransform = NULL;
+
+				//Converte a estrutura
+				pNibTransform = ConverterD2D1_MATRIX_3X2_FManagedToUnmanaged(Param_Estrutura->nibTransform);
+
+				//Define os dados.
+				EstruturaRetorno->nibShape = static_cast<D2D1_INK_NIB_SHAPE>(Param_Estrutura->nibShape);
+				EstruturaRetorno->nibTransform = *pNibTransform;
+
+				//libera a memória para a matrix.
+				DeletarEstruturaSafe(&pNibTransform);
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+			//Converte uma estrutura não gerenciada(D2D1_INK_STYLE_PROPERTIES) para sua correspondencia gerenciada(CA_D2D1_INK_STYLE_PROPERTIES).
+			CA_D2D1_INK_STYLE_PROPERTIES^ ConverterD2D1_INK_STYLE_PROPERTIESUnmanagedToManaged(D2D1_INK_STYLE_PROPERTIES* Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				CA_D2D1_INK_STYLE_PROPERTIES^ EstruturaRetorno = gcnew CA_D2D1_INK_STYLE_PROPERTIES();
+
+				//Define os dados.
+				EstruturaRetorno->nibShape = static_cast<CA_D2D1_INK_NIB_SHAPE>(Param_Estrutura->nibShape);
+				EstruturaRetorno->nibTransform = ConverterD2D1_MATRIX_3X2_FUnmanagedToManaged(&Param_Estrutura->nibTransform);
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
 
 			//Converte uma estrutura gerenciada(CA_D2D1_INK_BEZIER_SEGMENT) para sua correspondencia não gerenciada(D2D1_INK_BEZIER_SEGMENT).
 			D2D1_INK_BEZIER_SEGMENT* ConverterD2D1_INK_BEZIER_SEGMENTManagedToUnmanaged(CA_D2D1_INK_BEZIER_SEGMENT^ Param_Estrutura)
@@ -4110,7 +4255,7 @@ namespace CarenRengine
 				//Define os dados.
 				EstruturaRetorno->semanticName = gcnew String(Param_Estrutura->semanticName);
 				EstruturaRetorno->semanticIndex = Param_Estrutura->semanticIndex;
-				EstruturaRetorno->format = static_cast<CA_DXGI_FORMATO>(Param_Estrutura->format);
+				EstruturaRetorno->format = static_cast<CA_DXGI_FORMAT>(Param_Estrutura->format);
 				EstruturaRetorno->inputSlot = Param_Estrutura->inputSlot;
 				EstruturaRetorno->alignedByteOffset = Param_Estrutura->alignedByteOffset;
 
@@ -4296,6 +4441,190 @@ namespace CarenRengine
 				//Retorna o resultado
 				return EstruturaRetorno;
 			}
+
+
+
+			//Converte uma estrutura gerenciada(CA_D2D1_GRADIENT_STOP) para sua correspondencia não gerenciada(D2D1_GRADIENT_STOP).
+			D2D1_GRADIENT_STOP* ConverterD2D1_GRADIENT_STOPManagedToUnmanaged(CA_D2D1_GRADIENT_STOP^ Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				D2D1_GRADIENT_STOP* EstruturaRetorno = CriarEstrutura<D2D1_GRADIENT_STOP>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(D2D1_GRADIENT_STOP));
+
+				//Variaveis
+				D2D1_COLOR_F* pColor = NULL;
+
+				//Covnerte a estrutura de cor.
+				pColor = ConverterD2D1_COLOR_FManagedToUnmanaged(Param_Estrutura->color);
+
+				//Define os dados.
+				EstruturaRetorno->position = Param_Estrutura->position;
+				EstruturaRetorno->color = *pColor;
+
+				//Libera a memória para a estrutura
+				DeletarEstruturaSafe(&pColor);
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+			//Converte uma estrutura não gerenciada(D2D1_GRADIENT_STOP) para sua correspondencia gerenciada(CA_D2D1_GRADIENT_STOP).
+			CA_D2D1_GRADIENT_STOP^ ConverterD2D1_GRADIENT_STOPUnmanagedToManaged(D2D1_GRADIENT_STOP* Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				CA_D2D1_GRADIENT_STOP^ EstruturaRetorno = gcnew CA_D2D1_GRADIENT_STOP();
+
+				//Define os dados.
+				EstruturaRetorno->position = Param_Estrutura->position;
+				EstruturaRetorno->color = ConverterD2D1_COLOR_FUnmanagedToManaged(&Param_Estrutura->color);
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+
+
+			//Converte uma estrutura gerenciada(CA_D2D1_IMAGE_BRUSH_PROPERTIES) para sua correspondencia não gerenciada(D2D1_IMAGE_BRUSH_PROPERTIES).
+			D2D1_IMAGE_BRUSH_PROPERTIES* ConverterD2D1_IMAGE_BRUSH_PROPERTIESManagedToUnmanaged(CA_D2D1_IMAGE_BRUSH_PROPERTIES^ Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				D2D1_IMAGE_BRUSH_PROPERTIES* EstruturaRetorno = CriarEstrutura<D2D1_IMAGE_BRUSH_PROPERTIES>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(D2D1_IMAGE_BRUSH_PROPERTIES));
+
+				//Variaveis
+				D2D1_RECT_F* pRect = NULL;
+
+				//Covnerte a estrutura de cor.
+				pRect = ConverterD2D1_RECT_FManagedToUnmanaged(Param_Estrutura->sourceRectangle);
+
+				//Define os dados.
+				EstruturaRetorno->extendModeX = static_cast<D2D1_EXTEND_MODE>(Param_Estrutura->extendModeX);
+				EstruturaRetorno->extendModeY = static_cast<D2D1_EXTEND_MODE>(Param_Estrutura->extendModeY);
+				EstruturaRetorno->interpolationMode = static_cast<D2D1_INTERPOLATION_MODE>(Param_Estrutura->interpolationMode);
+				EstruturaRetorno->sourceRectangle = *pRect;
+				
+				//Libera a memória para a estrutura
+				DeletarEstruturaSafe(&pRect);
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+			//Converte uma estrutura não gerenciada(D2D1_IMAGE_BRUSH_PROPERTIES) para sua correspondencia gerenciada(CA_D2D1_IMAGE_BRUSH_PROPERTIES).
+			CA_D2D1_IMAGE_BRUSH_PROPERTIES^ ConverterD2D1_IMAGE_BRUSH_PROPERTIESUnmanagedToManaged(D2D1_IMAGE_BRUSH_PROPERTIES* Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				CA_D2D1_IMAGE_BRUSH_PROPERTIES^ EstruturaRetorno = gcnew CA_D2D1_IMAGE_BRUSH_PROPERTIES();
+
+				//Define os dados.
+				EstruturaRetorno->extendModeX = static_cast<CA_D2D1_EXTEND_MODE>(Param_Estrutura->extendModeX);
+				EstruturaRetorno->extendModeY = static_cast<CA_D2D1_EXTEND_MODE>(Param_Estrutura->extendModeY);
+				EstruturaRetorno->interpolationMode = static_cast<CA_D2D1_INTERPOLATION_MODE>(Param_Estrutura->interpolationMode);
+				EstruturaRetorno->sourceRectangle = ConverterD2D1_RECT_FUnmanagedToManaged(&Param_Estrutura->sourceRectangle);
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+
+
+			//Converte uma estrutura gerenciada(CA_D2D1_EFFECT_INPUT_DESCRIPTION) para sua correspondencia não gerenciada(D2D1_EFFECT_INPUT_DESCRIPTION).
+			D2D1_EFFECT_INPUT_DESCRIPTION* ConverterD2D1_EFFECT_INPUT_DESCRIPTIONManagedToUnmanaged(CA_D2D1_EFFECT_INPUT_DESCRIPTION^ Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				D2D1_EFFECT_INPUT_DESCRIPTION* EstruturaRetorno = CriarEstrutura<D2D1_EFFECT_INPUT_DESCRIPTION>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(D2D1_EFFECT_INPUT_DESCRIPTION));
+
+				//Variaveis
+				ID2D1Effect* pMyEfeito = NULL;
+				D2D1_RECT_F* pInputRect = NULL;
+
+				//Recupera o ponteiro para o efeito.
+				Param_Estrutura->effect->RecuperarPonteiro((LPVOID*)&pMyEfeito);
+
+				//Converte a estrutura.
+				pInputRect = ConverterD2D1_RECT_FManagedToUnmanaged(Param_Estrutura->inputRectangle);
+
+				//Define os dados.
+				EstruturaRetorno->effect = pMyEfeito;
+				EstruturaRetorno->inputIndex = Param_Estrutura->inputIndex;
+				EstruturaRetorno->inputRectangle = *pInputRect;
+
+				//Libera a memória para a estrurua
+				DeletarEstruturaSafe(&pInputRect);
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+			//Converte uma estrutura não gerenciada(D2D1_EFFECT_INPUT_DESCRIPTION) para sua correspondencia gerenciada(CA_D2D1_EFFECT_INPUT_DESCRIPTION).
+			CA_D2D1_EFFECT_INPUT_DESCRIPTION^ ConverterD2D1_EFFECT_INPUT_DESCRIPTIONUnmanagedToManaged(D2D1_EFFECT_INPUT_DESCRIPTION* Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				CA_D2D1_EFFECT_INPUT_DESCRIPTION^ EstruturaRetorno = gcnew CA_D2D1_EFFECT_INPUT_DESCRIPTION();
+
+				//Define os dados.
+				EstruturaRetorno->effect = gcnew Caren();
+				EstruturaRetorno->inputIndex = Param_Estrutura->inputIndex;
+				EstruturaRetorno->inputRectangle = ConverterD2D1_RECT_FUnmanagedToManaged(&Param_Estrutura->inputRectangle);
+
+				//Define o ponteiro do efeito na interface.
+				EstruturaRetorno->effect->AdicionarPonteiro(Param_Estrutura->effect);
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+
+
+			//Converte uma estrutura gerenciada(CA_D2D1_RENDERING_CONTROLS) para sua correspondencia não gerenciada(D2D1_RENDERING_CONTROLS).
+			D2D1_RENDERING_CONTROLS* ConverterD2D1_RENDERING_CONTROLSManagedToUnmanaged(CA_D2D1_RENDERING_CONTROLS^ Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				D2D1_RENDERING_CONTROLS* EstruturaRetorno = CriarEstrutura<D2D1_RENDERING_CONTROLS>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(D2D1_RENDERING_CONTROLS));
+
+				//Variaveis
+				D2D1_SIZE_U* pSizeTile = NULL;
+
+				//Converte a estrutura
+				pSizeTile = ConverterD2D1_SIZE_UManagedToUnmanaged(Param_Estrutura->tileSize);
+
+				//Define os dados.
+				EstruturaRetorno->bufferPrecision = static_cast<D2D1_BUFFER_PRECISION>(Param_Estrutura->bufferPrecision);
+				EstruturaRetorno->tileSize = *pSizeTile;
+				
+				//Libera a memória para a estrutura.
+				DeletarEstruturaSafe(&pSizeTile);
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+			//Converte uma estrutura não gerenciada(D2D1_RENDERING_CONTROLS) para sua correspondencia gerenciada(CA_D2D1_RENDERING_CONTROLS).
+			CA_D2D1_RENDERING_CONTROLS^ ConverterD2D1_RENDERING_CONTROLSUnmanagedToManaged(D2D1_RENDERING_CONTROLS* Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				CA_D2D1_RENDERING_CONTROLS^ EstruturaRetorno = gcnew CA_D2D1_RENDERING_CONTROLS();
+
+				//Define os dados.
+				EstruturaRetorno->bufferPrecision = static_cast<CA_D2D1_BUFFER_PRECISION>(Param_Estrutura->bufferPrecision);
+				EstruturaRetorno->tileSize = ConverterD2D1_SIZE_UUnmanagedToManaged(&Param_Estrutura->tileSize);
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+
+
+
+
+
+
 
 
 
@@ -4987,7 +5316,7 @@ namespace CarenRengine
 				//Define os dados da estrutura primaria.
 
 				//Preenche os dados da estrutura gerenciada.
-				ManagedDesc->Formato = static_cast<SDKBase::Enumeracoes::CA_DXGI_FORMATO>(Param_NativeDescStencilView->Format);
+				ManagedDesc->Formato = static_cast<SDKBase::Enumeracoes::CA_DXGI_FORMAT>(Param_NativeDescStencilView->Format);
 				ManagedDesc->ViewDimensao = static_cast<SDKBase::Enumeracoes::CA_D3D11_DSV_DIMENSION>(Param_NativeDescStencilView->ViewDimension);
 				ManagedDesc->Flags = static_cast<SDKBase::Enumeracoes::CA_D3D11_DSV_FLAG>(Param_NativeDescStencilView->Flags);
 
@@ -5084,7 +5413,7 @@ namespace CarenRengine
 				//Define os dados da estrutura primaria.
 
 				//Preenche os dados da estrutura gerenciada.
-				ManagedDesc->Formato = static_cast<SDKBase::Enumeracoes::CA_DXGI_FORMATO>(Param_NativeDescUnordered->Format);
+				ManagedDesc->Formato = static_cast<SDKBase::Enumeracoes::CA_DXGI_FORMAT>(Param_NativeDescUnordered->Format);
 				ManagedDesc->ViewDimensao = static_cast<SDKBase::Enumeracoes::CA_D3D11_UAV_DIMENSION>(Param_NativeDescUnordered->ViewDimension);
 
 				//Inicializa as estruturas secundarias
@@ -5186,7 +5515,7 @@ namespace CarenRengine
 				//Define os dados da estrutura primaria.
 
 				//Preenche os dados da estrutura gerenciada.
-				EstruturaRetorno->Formato = static_cast<SDKBase::Enumeracoes::CA_DXGI_FORMATO>(Param_Estrutura->Format);
+				EstruturaRetorno->Formato = static_cast<SDKBase::Enumeracoes::CA_DXGI_FORMAT>(Param_Estrutura->Format);
 				EstruturaRetorno->ViewDimensao = static_cast<SDKBase::Enumeracoes::CA_D3D11_UAV_DIMENSION>(Param_Estrutura->ViewDimension);
 
 				//Inicializa as estruturas secundarias
@@ -5384,7 +5713,7 @@ namespace CarenRengine
 				//Define os dados da estrutura primaria.
 
 				//Preenche os dados da estrutura gerenciada.
-				ManagedDesc->Formato = static_cast<SDKBase::Enumeracoes::CA_DXGI_FORMATO>(Param_NativeDescShader->Format);
+				ManagedDesc->Formato = static_cast<SDKBase::Enumeracoes::CA_DXGI_FORMAT>(Param_NativeDescShader->Format);
 				ManagedDesc->ViewDimensao = static_cast<SDKBase::Enumeracoes::CA_D3D11_SRV_DIMENSION>(Param_NativeDescShader->ViewDimension);
 
 				//Inicializa as estruturas secundarias
@@ -5538,7 +5867,7 @@ namespace CarenRengine
 				//Define os dados da estrutura primaria.
 
 				//Preenche os dados da estrutura gerenciada.
-				EstruturaRetorno->Formato = static_cast<SDKBase::Enumeracoes::CA_DXGI_FORMATO>(Param_Estrutura->Format);
+				EstruturaRetorno->Formato = static_cast<SDKBase::Enumeracoes::CA_DXGI_FORMAT>(Param_Estrutura->Format);
 				EstruturaRetorno->ViewDimensao = static_cast<SDKBase::Enumeracoes::CA_D3D11_SRV_DIMENSION>(Param_Estrutura->ViewDimension);
 
 				//Inicializa as estruturas secundarias
@@ -5819,7 +6148,7 @@ namespace CarenRengine
 				//Define os dados da estrutura primaria.
 
 				//Preenche os dados da estrutura gerenciada.
-				ManagedDesc->Formato = static_cast<SDKBase::Enumeracoes::CA_DXGI_FORMATO>(Param_NativeDescRender->Format);
+				ManagedDesc->Formato = static_cast<SDKBase::Enumeracoes::CA_DXGI_FORMAT>(Param_NativeDescRender->Format);
 				ManagedDesc->ViewDimensao = static_cast<SDKBase::Enumeracoes::CA_D3D11_RTV_DIMENSION>(Param_NativeDescRender->ViewDimension);
 
 				//Inicializa as estruturas secundarias
@@ -5931,7 +6260,7 @@ namespace CarenRengine
 				//Define os dados da estrutura primaria.
 
 				//Preenche os dados da estrutura gerenciada.
-				EstruturaRetorno->Formato = static_cast<SDKBase::Enumeracoes::CA_DXGI_FORMATO>(Param_Estrutura->Format);
+				EstruturaRetorno->Formato = static_cast<SDKBase::Enumeracoes::CA_DXGI_FORMAT>(Param_Estrutura->Format);
 				EstruturaRetorno->ViewDimensao = static_cast<SDKBase::Enumeracoes::CA_D3D11_RTV_DIMENSION>(Param_Estrutura->ViewDimension);
 
 				//Inicializa as estruturas secundarias
@@ -5998,7 +6327,7 @@ namespace CarenRengine
 				SDKBase::Estruturas::CA_D3D11_TEXTURE1D_DESC^ ManagedDesc = gcnew SDKBase::Estruturas::CA_D3D11_TEXTURE1D_DESC();
 
 				//Preenche os dados da estrutura gerenciada.
-				ManagedDesc->Formato = static_cast<SDKBase::Enumeracoes::CA_DXGI_FORMATO>(Param_NativeDescTex1D->Format);
+				ManagedDesc->Formato = static_cast<SDKBase::Enumeracoes::CA_DXGI_FORMAT>(Param_NativeDescTex1D->Format);
 				ManagedDesc->Width = Param_NativeDescTex1D->Width;
 				ManagedDesc->ArraySize = Param_NativeDescTex1D->ArraySize;
 				ManagedDesc->MipLevels = Param_NativeDescTex1D->MipLevels;
@@ -6052,7 +6381,7 @@ namespace CarenRengine
 				SDKBase::Estruturas::CA_D3D11_TEXTURE2D_DESC^ ManagedDesc = gcnew SDKBase::Estruturas::CA_D3D11_TEXTURE2D_DESC();
 
 				//Preenche os dados da estrutura gerenciada.
-				ManagedDesc->Formato = static_cast<SDKBase::Enumeracoes::CA_DXGI_FORMATO>(Param_NativeDescTex2D->Format);
+				ManagedDesc->Formato = static_cast<SDKBase::Enumeracoes::CA_DXGI_FORMAT>(Param_NativeDescTex2D->Format);
 				ManagedDesc->Width = Param_NativeDescTex2D->Width;
 				ManagedDesc->Height = Param_NativeDescTex2D->Height;
 				ManagedDesc->ArraySize = Param_NativeDescTex2D->ArraySize;
@@ -6116,7 +6445,7 @@ namespace CarenRengine
 				SDKBase::Estruturas::CA_D3D11_TEXTURE2D_DESC1^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_D3D11_TEXTURE2D_DESC1();
 
 				//Preenche os dados da estrutura gerenciada.
-				EstruturaRetorno->Formato = static_cast<SDKBase::Enumeracoes::CA_DXGI_FORMATO>(Param_Estrutura->Format);
+				EstruturaRetorno->Formato = static_cast<SDKBase::Enumeracoes::CA_DXGI_FORMAT>(Param_Estrutura->Format);
 				EstruturaRetorno->Width = Param_Estrutura->Width;
 				EstruturaRetorno->Height = Param_Estrutura->Height;
 				EstruturaRetorno->ArraySize = Param_Estrutura->ArraySize;
@@ -6170,7 +6499,7 @@ namespace CarenRengine
 				SDKBase::Estruturas::CA_D3D11_TEXTURE3D_DESC^ ManagedDesc = gcnew SDKBase::Estruturas::CA_D3D11_TEXTURE3D_DESC();
 
 				//Preenche os dados da estrutura gerenciada.
-				ManagedDesc->Formato = static_cast<SDKBase::Enumeracoes::CA_DXGI_FORMATO>(Param_NativeDescTex3D->Format);
+				ManagedDesc->Formato = static_cast<SDKBase::Enumeracoes::CA_DXGI_FORMAT>(Param_NativeDescTex3D->Format);
 				ManagedDesc->Width = Param_NativeDescTex3D->Width;
 				ManagedDesc->Height = Param_NativeDescTex3D->Height;
 				ManagedDesc->Depth = Param_NativeDescTex3D->Depth;
@@ -6216,7 +6545,7 @@ namespace CarenRengine
 				SDKBase::Estruturas::CA_D3D11_TEXTURE3D_DESC1^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_D3D11_TEXTURE3D_DESC1();
 
 				//Preenche os dados da estrutura gerenciada.
-				EstruturaRetorno->Formato = static_cast<SDKBase::Enumeracoes::CA_DXGI_FORMATO>(Param_Estrutura->Format);
+				EstruturaRetorno->Formato = static_cast<SDKBase::Enumeracoes::CA_DXGI_FORMAT>(Param_Estrutura->Format);
 				EstruturaRetorno->Width = Param_Estrutura->Width;
 				EstruturaRetorno->Height = Param_Estrutura->Height;
 				EstruturaRetorno->Depth = Param_Estrutura->Depth;
@@ -6363,7 +6692,7 @@ namespace CarenRengine
 
 				//Preenche os dados da estrutura.
 				pEstrutura->AlignedByteOffset = Param_Desc->AlignedByteOffset;
-				pEstrutura->Format = static_cast<SDKBase::Enumeracoes::CA_DXGI_FORMATO>(Param_Desc->Format);
+				pEstrutura->Format = static_cast<SDKBase::Enumeracoes::CA_DXGI_FORMAT>(Param_Desc->Format);
 				pEstrutura->InputSlot = Param_Desc->InputSlot;
 				pEstrutura->InputSlotClass = static_cast<SDKBase::Enumeracoes::CA_D3D11_INPUT_CLASSIFICATION>(Param_Desc->InputSlotClass);
 				pEstrutura->InstanceDataStepRate = Param_Desc->InstanceDataStepRate;
@@ -6784,7 +7113,7 @@ namespace CarenRengine
 				//Preenche os dados das estruturas secundarias
 				pEstrutura->SampleDesc->Count = Param_Desc->SampleDesc.Count;
 				pEstrutura->SampleDesc->Quality = Param_Desc->SampleDesc.Quality;
-				pEstrutura->BufferDesc->Format = static_cast<SDKBase::Enumeracoes::CA_DXGI_FORMATO>(Param_Desc->BufferDesc.Format);
+				pEstrutura->BufferDesc->Format = static_cast<SDKBase::Enumeracoes::CA_DXGI_FORMAT>(Param_Desc->BufferDesc.Format);
 				pEstrutura->BufferDesc->Height = Param_Desc->BufferDesc.Height;
 				pEstrutura->BufferDesc->Width = Param_Desc->BufferDesc.Width;
 				pEstrutura->BufferDesc->Scaling = static_cast<SDKBase::Enumeracoes::CA_DXGI_MODE_SCALING>(Param_Desc->BufferDesc.Scaling);
@@ -6837,7 +7166,7 @@ namespace CarenRengine
 				SDKBase::Estruturas::CA_DXGI_SWAP_CHAIN_DESC1^ pEstrutura = gcnew SDKBase::Estruturas::CA_DXGI_SWAP_CHAIN_DESC1();
 
 				//Preenche os dados da estrutura.
-				pEstrutura->Format = static_cast<CA_DXGI_FORMATO>(Param_Desc->Format);
+				pEstrutura->Format = static_cast<CA_DXGI_FORMAT>(Param_Desc->Format);
 				pEstrutura->Height = Param_Desc->Height;
 				pEstrutura->Width = Param_Desc->Width;
 				pEstrutura->Stereo = Param_Desc->Stereo ? TRUE : FALSE;
@@ -7129,7 +7458,7 @@ namespace CarenRengine
 				SDKBase::Estruturas::CA_DXGI_MODE_DESC^ pEstrutura = gcnew SDKBase::Estruturas::CA_DXGI_MODE_DESC();
 
 				//Preenche os dados da estrutura principal.
-				pEstrutura->Format = static_cast<SDKBase::Enumeracoes::CA_DXGI_FORMATO>(Param_Desc->Format);
+				pEstrutura->Format = static_cast<SDKBase::Enumeracoes::CA_DXGI_FORMAT>(Param_Desc->Format);
 				pEstrutura->Height = Param_Desc->Height;
 				pEstrutura->Width = Param_Desc->Width;
 				pEstrutura->RefreshRate->Denominador = Param_Desc->RefreshRate.Denominator;
@@ -7172,7 +7501,7 @@ namespace CarenRengine
 				SDKBase::Estruturas::CA_DXGI_MODE_DESC1^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_DXGI_MODE_DESC1();
 
 				//Preenche os dados da estrutura principal.
-				EstruturaRetorno->Format = static_cast<SDKBase::Enumeracoes::CA_DXGI_FORMATO>(Param_Estrutura->Format);
+				EstruturaRetorno->Format = static_cast<SDKBase::Enumeracoes::CA_DXGI_FORMAT>(Param_Estrutura->Format);
 				EstruturaRetorno->Height = Param_Estrutura->Height;
 				EstruturaRetorno->Width = Param_Estrutura->Width;
 				EstruturaRetorno->RefreshRate->Denominador = Param_Estrutura->RefreshRate.Denominator;
@@ -8062,7 +8391,7 @@ namespace CarenRengine
 				SDKBase::Estruturas::CA_DXGI_SURFACE_DESC^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_DXGI_SURFACE_DESC();
 
 				//Define os dados na estrutura principal.
-				EstruturaRetorno->Formato = static_cast<CA_DXGI_FORMATO>(Param_Estrutura->Format);
+				EstruturaRetorno->Formato = static_cast<CA_DXGI_FORMAT>(Param_Estrutura->Format);
 				EstruturaRetorno->Largura = Param_Estrutura->Width;
 				EstruturaRetorno->Altura = Param_Estrutura->Height;
 

@@ -245,7 +245,7 @@ public:
 		UInt32 Param_CountBuffer,
 		UInt32 Param_Largura,
 		UInt32 Param_Altura,
-		CA_DXGI_FORMATO Param_Formato,
+		CA_DXGI_FORMAT Param_Formato,
 		CA_DXGI_SWAP_CHAIN_FLAG Param_SwapChainFlags,
 		cli::array<UInt32>^ Param_ArrayNodeMask,
 		cli::array<ICaren^>^ Param_ArrayD3D12CommandQueue);
@@ -461,7 +461,7 @@ public:
 	/// <param name="Param_Altura">A nova altura do amortecedor traseiro. Se você especificar zero, DXGI usará a altura da área do cliente da janela do alvo. </param>
 	/// <param name="Param_NovoFormato">O novo formato do buffer traseiro. Defina esse valor para DXGI_FORMAT_UNKNOWN para preservar o formato existente do buffer traseiro.</param>
 	/// <param name="Param_SwapChainFlags">Uma combinação de CA_DXGI_SWAP_CHAIN_FLAG- digitado valores que são combinados usando um bitwise ou operação. O valor resultante especifica opções para o comportamento da cadeia de swaps</param>
-	virtual CarenResult AlterarTamanhoBuffers(UInt32 Param_NumeroBuffers, UInt32 Param_Largura, UInt32 Param_Altura, Enumeracoes::CA_DXGI_FORMATO Param_NovoFormato, Enumeracoes::CA_DXGI_SWAP_CHAIN_FLAG Param_SwapChainFlags);
+	virtual CarenResult AlterarTamanhoBuffers(UInt32 Param_NumeroBuffers, UInt32 Param_Largura, UInt32 Param_Altura, Enumeracoes::CA_DXGI_FORMAT Param_NovoFormato, Enumeracoes::CA_DXGI_SWAP_CHAIN_FLAG Param_SwapChainFlags);
 
 	/// <summary>
 	/// (ResizeTarget) - Redimensiona a meta de saída.

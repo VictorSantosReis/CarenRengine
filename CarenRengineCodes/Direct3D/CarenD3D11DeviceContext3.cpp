@@ -5869,7 +5869,7 @@ CarenResult CarenD3D11DeviceContext3::HSDefinirShaderResources(
 /// <param name="Param_Out_Deslocamento">Retorna o Deslocamento(Offset) (em bytes) desde o início do buffer de índice, o primeiro índice para usar.</param>
 CarenResult CarenD3D11DeviceContext3::IAObterIndexBuffer(
 	[Out] ICarenD3D11Buffer^% Param_Out_Buffer,
-	[Out] Enumeracoes::CA_DXGI_FORMATO% Param_Out_Formato,
+	[Out] Enumeracoes::CA_DXGI_FORMAT% Param_Out_Formato,
 	[Out] UInt32% Param_Out_Deslocamento)
 {
 	//Variavel a ser retornada.
@@ -5906,7 +5906,7 @@ CarenResult CarenD3D11DeviceContext3::IAObterIndexBuffer(
 	Param_Out_Buffer->AdicionarPonteiro(pBuffer);
 
 	//Define o parametro de formato
-	Param_Out_Formato = static_cast<CA_DXGI_FORMATO>(FormatoDadosBuffer);
+	Param_Out_Formato = static_cast<CA_DXGI_FORMAT>(FormatoDadosBuffer);
 
 	//Define o deslocamento do buffer.
 	Param_Out_Deslocamento = DeslocamentoBuffer;
@@ -6080,7 +6080,7 @@ Done:;
 /// <param name="Param_Deslocamento">Offset (em bytes) do início do buffer de índice para o primeiro índice para usar.</param>
 CarenResult CarenD3D11DeviceContext3::IADefinirIndexBuffer(
 	ICarenD3D11Buffer^ Param_Buffer,
-	Enumeracoes::CA_DXGI_FORMATO Param_Formato,
+	Enumeracoes::CA_DXGI_FORMAT Param_Formato,
 	UInt32 Param_Deslocamento)
 {
 	//Variavel a ser retornada.
@@ -7409,13 +7409,13 @@ CarenResult CarenD3D11DeviceContext3::PSDefinirShaderResources(
 /// <param name="Param_IndiceSubRecursoDestino">Um índice baseado em zero, que identifica o sub-recurso de destino. Use D3D11CalcSubresource para calcular o índice.</param>
 /// <param name="Param_RecursoOrigem">Fonte de recursos. Deve ser multisampled.</param>
 /// <param name="Param_IndiceSubRecursoOrigem">O sub-recurso fonte de fonte de recursos.</param>
-/// <param name="Param_DXGIFormato">Um CA_DXGI_FORMATO que indica como o recurso multisampled será resolvido para um recurso único-amostrados.</param>
+/// <param name="Param_DXGIFormato">Um CA_DXGI_FORMAT que indica como o recurso multisampled será resolvido para um recurso único-amostrados.</param>
 CarenResult CarenD3D11DeviceContext3::ResolverSubRecurso(
 	ICarenD3D11Resource^ Param_RecursoDestino,
 	UInt32 Param_IndiceSubRecursoDestino,
 	ICarenD3D11Resource^ Param_RecursoOrigem,
 	UInt32 Param_IndiceSubRecursoOrigem,
-	Enumeracoes::CA_DXGI_FORMATO Param_DXGIFormato)
+	Enumeracoes::CA_DXGI_FORMAT Param_DXGIFormato)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

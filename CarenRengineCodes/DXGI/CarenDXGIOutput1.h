@@ -220,7 +220,7 @@ public:
 	/// <summary>
 	/// (GetDisplayModeList1) - Obtém os modos de exibição que correspondem ao formato solicitado e outras opções de entrada.
 	/// </summary>
-	/// <param name="Param_Formato">Um valor CA_DXGI_FORMATO digitado para o formato de cor.</param>
+	/// <param name="Param_Formato">Um valor CA_DXGI_FORMAT digitado para o formato de cor.</param>
 	/// <param name="Param_Flags">Uma combinação de valores CA_DXGI_ENUM_MODES digitados que são combinados usando uma operação ou bitwise. O valor 
 	/// resultante especifica opções para modos de exibição para incluir. Você deve especificar CA_DXGI_ENUM_MODES_SCALING para expor os modos 
 	/// de exibição que requerem dimensionamento. Os modos centrados que não requerem escala e correspondem diretamente à saída do display são 
@@ -232,7 +232,7 @@ public:
 	/// número de modos de exibição devolvidos no (Param_Out_MatrizDecModos).</param>
 	/// <param name="Param_Out_MatrizDecModos">Recebe uma lista de modos de exibição.</param>
 	virtual CarenResult ObterListaModosExibicao1(
-		CA_DXGI_FORMATO Param_Formato,
+		CA_DXGI_FORMAT Param_Formato,
 		CA_DXGI_ENUM_MODES Param_Flags,
 		Boolean Param_RecuperaQuantidadeModos,
 		UInt32% Param_Ref_QuantidadeModos,
@@ -276,7 +276,7 @@ public:
 	/// <param name="Param_RecuperaQuantidadeModos">Defina para TRUE para obter o número de modos de exibição. Se TRUE, Param_Out_MatrizDescModos retorna NULO e (Param_QuantidadeModos) retorna a quantidade total de modos.</param>
 	/// <param name="Param_Out_MatrizDescModos">Retorna uma lista de modos de exibição.</param>
 	virtual CarenResult ObterListaModosExibicao(
-		CA_DXGI_FORMATO Param_Formato,
+		CA_DXGI_FORMAT Param_Formato,
 		CA_DXGI_ENUM_MODES Param_Flags,
 		Boolean Param_RecuperaQuantidadeModos,
 		UInt32% Param_Ref_QuantidadeModos,

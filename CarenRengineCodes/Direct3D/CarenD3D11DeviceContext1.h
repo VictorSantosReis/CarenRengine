@@ -1245,7 +1245,7 @@ public:
 	/// <param name="Param_Out_Deslocamento">Retorna o Deslocamento(Offset) (em bytes) desde o início do buffer de índice, o primeiro índice para usar.</param>
 	virtual CarenResult IAObterIndexBuffer(
 		[Out] ICarenD3D11Buffer^% Param_Out_Buffer,
-		[Out] Enumeracoes::CA_DXGI_FORMATO% Param_Out_Formato,
+		[Out] Enumeracoes::CA_DXGI_FORMAT% Param_Out_Formato,
 		[Out] UInt32% Param_Out_Deslocamento);
 
 	/// <summary>
@@ -1289,7 +1289,7 @@ public:
 	/// <param name="Param_Deslocamento">Offset (em bytes) do início do buffer de índice para o primeiro índice para usar.</param>
 	virtual CarenResult IADefinirIndexBuffer(
 		ICarenD3D11Buffer^ Param_Buffer,
-		Enumeracoes::CA_DXGI_FORMATO Param_Formato,
+		Enumeracoes::CA_DXGI_FORMAT Param_Formato,
 		UInt32 Param_Deslocamento);
 
 	/// <summary>
@@ -1574,13 +1574,13 @@ public:
 	/// <param name="Param_IndiceSubRecursoDestino">Um índice baseado em zero, que identifica o sub-recurso de destino. Use D3D11CalcSubresource para calcular o índice.</param>
 	/// <param name="Param_RecursoOrigem">Fonte de recursos. Deve ser multisampled.</param>
 	/// <param name="Param_IndiceSubRecursoOrigem">O sub-recurso fonte de fonte de recursos.</param>
-	/// <param name="Param_DXGIFormato">Um CA_DXGI_FORMATO que indica como o recurso multisampled será resolvido para um recurso único-amostrados.</param>
+	/// <param name="Param_DXGIFormato">Um CA_DXGI_FORMAT que indica como o recurso multisampled será resolvido para um recurso único-amostrados.</param>
 	virtual CarenResult ResolverSubRecurso(
 		ICarenD3D11Resource^ Param_RecursoDestino,
 		UInt32 Param_IndiceSubRecursoDestino,
 		ICarenD3D11Resource^ Param_RecursoOrigem,
 		UInt32 Param_IndiceSubRecursoOrigem,
-		Enumeracoes::CA_DXGI_FORMATO Param_DXGIFormato);
+		Enumeracoes::CA_DXGI_FORMAT Param_DXGIFormato);
 
 	/// <summary>
 	/// (RSGetScissorRects) - Obtém a matriz de scissor retângulos vinculado à fase rasterizer.

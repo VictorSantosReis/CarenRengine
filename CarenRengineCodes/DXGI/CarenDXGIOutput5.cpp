@@ -424,7 +424,7 @@ CarenResult CarenDXGIOutput5::DuplicarSaida1(
 				ICaren^ Param_Dispositivo3D, 
 				UInt32 Param_Flags,
 				UInt32 Param_QuantidadeFormatosSuportados,
-				cli::array<CA_DXGI_FORMATO>^ Param_ListaFormatosSuportados,
+				cli::array<CA_DXGI_FORMAT>^ Param_ListaFormatosSuportados,
 				[Out] ICarenDXGIOutputDuplication^% Param_Out_SaidaDuplicada)
 {
 	//Variavel a ser retornada.
@@ -499,7 +499,7 @@ Done:;
 /// <summary>
 /// (CheckOverlayColorSpaceSupport) - Verifica se há suporte ao espaço de cores.
 /// </summary>
-/// <param name="Param_Formato">Um valor CA_DXGI_FORMATO digitado para o formato de cor.</param>
+/// <param name="Param_Formato">Um valor CA_DXGI_FORMAT digitado para o formato de cor.</param>
 /// <param name="Param_ColorSpace">Um valor CA_DXGI_COLOR_SPACE_TYPE digitado que especifica o tipo de espaço de cor 
 /// para verificar o suporte de sobreposição.</param>
 /// <param name="Param_DispositivoD3D">Um ponteiro para a interface do dispositivo Direct3D. O 
@@ -508,7 +508,7 @@ Done:;
 /// CA_DXGI_OVERLAY_COLOR_SPACE_SUPPORT_FLAG que são combinados usando uma operação ou bitwise. O valor resultante 
 /// especifica opções para suporte ao espaço de cores sobreposição.</param>
 CarenResult CarenDXGIOutput5::VerificarSuporteOverlayColorSpace(
-	CA_DXGI_FORMATO Param_Formato,
+	CA_DXGI_FORMAT Param_Formato,
 	CA_DXGI_COLOR_SPACE_TYPE Param_ColorSpace,
 	ICaren^ Param_DispositivoD3D,
 	[Out] CA_DXGI_OVERLAY_COLOR_SPACE_SUPPORT_FLAG% Param_Out_Flags)
@@ -573,14 +573,14 @@ Done:;
 /// <summary>
 /// (CheckOverlaySupport) - Verifica o apoio ao Overlay(Sobrepor).
 /// </summary>
-/// <param name="Param_Formato">Um valor CA_DXGI_FORMATO digitado para o formato de cor.</param>
+/// <param name="Param_Formato">Um valor CA_DXGI_FORMAT digitado para o formato de cor.</param>
 /// <param name="Param_DispositivoD3D">Um ponteiro para a interface do dispositivo Direct3D. O (ChecarSuporteOverlay)
 /// retorna apenas informações de suporte sobre este dispositivo de varredura.</param>
 /// <param name="Param_Out_Flags">Recebe uma variável que recebe uma combinação de valores digitados 
 /// CA_DXGI_OVERLAY_SUPPORT_FLAGque são combinados usando uma operação ou bitwise. O valor resultante especifica 
 /// opções de suporte sobreposição.</param>
 CarenResult CarenDXGIOutput5::ChecarSuporteOverlay(
-	CA_DXGI_FORMATO Param_Formato,
+	CA_DXGI_FORMAT Param_Formato,
 	ICaren^ Param_DispositivoD3D,
 	[Out] CA_DXGI_OVERLAY_SUPPORT_FLAG% Param_Out_Flags)
 {
@@ -810,7 +810,7 @@ Done:;
 /// <summary>
 /// (GetDisplayModeList1) - Obtém os modos de exibição que correspondem ao formato solicitado e outras opções de entrada.
 /// </summary>
-/// <param name="Param_Formato">Um valor CA_DXGI_FORMATO digitado para o formato de cor.</param>
+/// <param name="Param_Formato">Um valor CA_DXGI_FORMAT digitado para o formato de cor.</param>
 /// <param name="Param_Flags">Uma combinação de valores CA_DXGI_ENUM_MODES digitados que são combinados usando uma operação ou bitwise. O valor 
 /// resultante especifica opções para modos de exibição para incluir. Você deve especificar CA_DXGI_ENUM_MODES_SCALING para expor os modos 
 /// de exibição que requerem dimensionamento. Os modos centrados que não requerem escala e correspondem diretamente à saída do display são 
@@ -822,7 +822,7 @@ Done:;
 /// número de modos de exibição devolvidos no (Param_Out_MatrizDecModos).</param>
 /// <param name="Param_Out_MatrizDecModos">Recebe uma lista de modos de exibição.</param>
 CarenResult CarenDXGIOutput5::ObterListaModosExibicao1(
-	CA_DXGI_FORMATO Param_Formato,
+	CA_DXGI_FORMAT Param_Formato,
 	CA_DXGI_ENUM_MODES Param_Flags,
 	Boolean Param_RecuperaQuantidadeModos,
 	UInt32% Param_Ref_QuantidadeModos,
@@ -1086,7 +1086,7 @@ Done:;
 /// <param name="Param_RecuperaQuantidadeModos">Defina para TRUE para obter o número de modos de exibição. Se TRUE, Param_Out_MatrizDescModos retorna NULO e (Param_QuantidadeModos) retorna a quantidade total de modos.</param>
 /// <param name="Param_Out_MatrizDescModos">Retorna uma lista de modos de exibição.</param>
 CarenResult CarenDXGIOutput5::ObterListaModosExibicao(
-	CA_DXGI_FORMATO Param_Formato,
+	CA_DXGI_FORMAT Param_Formato,
 	CA_DXGI_ENUM_MODES Param_Flags,
 	Boolean Param_RecuperaQuantidadeModos,
 	UInt32% Param_Ref_QuantidadeModos,

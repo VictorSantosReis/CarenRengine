@@ -460,7 +460,7 @@ namespace CarenRengine
 			/// <param name="Param_RecuperaQuantidadeModos">Defina para TRUE para obter o número de modos de exibição. Se TRUE, Param_Out_MatrizDescModos retorna NULO e (Param_QuantidadeModos) retorna a quantidade total de modos.</param>
 			/// <param name="Param_Out_MatrizDescModos">Retorna uma lista de modos de exibição.</param>
 			CarenResult ObterListaModosExibicao(
-				CA_DXGI_FORMATO Param_Formato, 
+				CA_DXGI_FORMAT Param_Formato, 
 				CA_DXGI_ENUM_MODES Param_Flags, 
 				Boolean Param_RecuperaQuantidadeModos,
 				UInt32% Param_Ref_QuantidadeModos,
@@ -570,7 +570,7 @@ namespace CarenRengine
 			/// <summary>
 			/// (GetDisplayModeList1) - Obtém os modos de exibição que correspondem ao formato solicitado e outras opções de entrada.
 			/// </summary>
-			/// <param name="Param_Formato">Um valor CA_DXGI_FORMATO digitado para o formato de cor.</param>
+			/// <param name="Param_Formato">Um valor CA_DXGI_FORMAT digitado para o formato de cor.</param>
 			/// <param name="Param_Flags">Uma combinação de valores CA_DXGI_ENUM_MODES digitados que são combinados usando uma operação ou bitwise. O valor 
 			/// resultante especifica opções para modos de exibição para incluir. Você deve especificar CA_DXGI_ENUM_MODES_SCALING para expor os modos 
 			/// de exibição que requerem dimensionamento. Os modos centrados que não requerem escala e correspondem diretamente à saída do display são 
@@ -582,7 +582,7 @@ namespace CarenRengine
 			/// número de modos de exibição devolvidos no (Param_Out_MatrizDecModos).</param>
 			/// <param name="Param_Out_MatrizDecModos">Recebe uma lista de modos de exibição.</param>
 			CarenResult ObterListaModosExibicao1(
-				CA_DXGI_FORMATO Param_Formato, 
+				CA_DXGI_FORMAT Param_Formato, 
 				CA_DXGI_ENUM_MODES Param_Flags, 
 				Boolean Param_RecuperaQuantidadeModos,
 				UInt32% Param_Ref_QuantidadeModos, 
@@ -645,14 +645,14 @@ namespace CarenRengine
 			/// <summary>
 			/// (CheckOverlaySupport) - Verifica o apoio ao Overlay(Sobrepor).
 			/// </summary>
-			/// <param name="Param_Formato">Um valor CA_DXGI_FORMATO digitado para o formato de cor.</param>
+			/// <param name="Param_Formato">Um valor CA_DXGI_FORMAT digitado para o formato de cor.</param>
 			/// <param name="Param_DispositivoD3D">Um ponteiro para a interface do dispositivo Direct3D. O (ChecarSuporteOverlay)
 			/// retorna apenas informações de suporte sobre este dispositivo de varredura.</param>
 			/// <param name="Param_Out_Flags">Recebe uma variável que recebe uma combinação de valores digitados 
 			/// CA_DXGI_OVERLAY_SUPPORT_FLAGque são combinados usando uma operação ou bitwise. O valor resultante especifica 
 			/// opções de suporte sobreposição.</param>
 			CarenResult ChecarSuporteOverlay(
-				CA_DXGI_FORMATO Param_Formato, 
+				CA_DXGI_FORMAT Param_Formato, 
 				ICaren^ Param_DispositivoD3D, 
 				[Out] CA_DXGI_OVERLAY_SUPPORT_FLAG% Param_Out_Flags);
 		};
@@ -679,7 +679,7 @@ namespace CarenRengine
 			/// <summary>
 			/// (CheckOverlayColorSpaceSupport) - Verifica se há suporte ao espaço de cores.
 			/// </summary>
-			/// <param name="Param_Formato">Um valor CA_DXGI_FORMATO digitado para o formato de cor.</param>
+			/// <param name="Param_Formato">Um valor CA_DXGI_FORMAT digitado para o formato de cor.</param>
 			/// <param name="Param_ColorSpace">Um valor CA_DXGI_COLOR_SPACE_TYPE digitado que especifica o tipo de espaço de cor 
 			/// para verificar o suporte de sobreposição.</param>
 			/// <param name="Param_DispositivoD3D">Um ponteiro para a interface do dispositivo Direct3D. O 
@@ -688,7 +688,7 @@ namespace CarenRengine
 			/// CA_DXGI_OVERLAY_COLOR_SPACE_SUPPORT_FLAG que são combinados usando uma operação ou bitwise. O valor resultante 
 			/// especifica opções para suporte ao espaço de cores sobreposição.</param>
 			CarenResult VerificarSuporteOverlayColorSpace(
-				CA_DXGI_FORMATO Param_Formato,
+				CA_DXGI_FORMAT Param_Formato,
 				CA_DXGI_COLOR_SPACE_TYPE Param_ColorSpace,
 				ICaren^ Param_DispositivoD3D, 
 				[Out] CA_DXGI_OVERLAY_COLOR_SPACE_SUPPORT_FLAG% Param_Out_Flags);
@@ -727,7 +727,7 @@ namespace CarenRengine
 				ICaren^ Param_Dispositivo3D, 
 				UInt32 Param_Flags,
 				UInt32 Param_QuantidadeFormatosSuportados,
-				cli::array<CA_DXGI_FORMATO>^ Param_ListaFormatosSuportados,
+				cli::array<CA_DXGI_FORMAT>^ Param_ListaFormatosSuportados,
 				[Out] ICarenDXGIOutputDuplication^% Param_Out_SaidaDuplicada);
 		};
 
@@ -1047,7 +1047,7 @@ namespace CarenRengine
 			/// <param name="Param_Altura">A nova altura do amortecedor traseiro. Se você especificar zero, DXGI usará a altura da área do cliente da janela do alvo. </param>
 			/// <param name="Param_NovoFormato">O novo formato do buffer traseiro. Defina esse valor para DXGI_FORMAT_UNKNOWN para preservar o formato existente do buffer traseiro.</param>
 			/// <param name="Param_SwapChainFlags">Uma combinação de CA_DXGI_SWAP_CHAIN_FLAG- digitado valores que são combinados usando um bitwise ou operação. O valor resultante especifica opções para o comportamento da cadeia de swaps</param>
-			CarenResult AlterarTamanhoBuffers(UInt32 Param_NumeroBuffers, UInt32 Param_Largura, UInt32 Param_Altura, Enumeracoes::CA_DXGI_FORMATO Param_NovoFormato, Enumeracoes::CA_DXGI_SWAP_CHAIN_FLAG Param_SwapChainFlags);
+			CarenResult AlterarTamanhoBuffers(UInt32 Param_NumeroBuffers, UInt32 Param_Largura, UInt32 Param_Altura, Enumeracoes::CA_DXGI_FORMAT Param_NovoFormato, Enumeracoes::CA_DXGI_SWAP_CHAIN_FLAG Param_SwapChainFlags);
 
 			/// <summary>
 			/// (ResizeTarget) - Redimensiona a meta de saída.
@@ -1301,7 +1301,7 @@ namespace CarenRengine
 				UInt32 Param_CountBuffer,
 				UInt32 Param_Largura,
 				UInt32 Param_Altura,
-				CA_DXGI_FORMATO Param_Formato,
+				CA_DXGI_FORMAT Param_Formato,
 				CA_DXGI_SWAP_CHAIN_FLAG Param_SwapChainFlags,
 				cli::array<UInt32>^ Param_ArrayNodeMask,
 				cli::array<ICaren^>^ Param_ArrayD3D12CommandQueue);

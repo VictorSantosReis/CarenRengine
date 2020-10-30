@@ -4,7 +4,7 @@
 
 Projeto tem como objetivo implementar algumas APIs nativas do Windows relacionadas a Mídia e Gráficos tanto 2D como 3D.
 CarenRengine vai permitir o desenvolvimento de aplicativos **3D**, **2D**, **Mídia(Áudio e Vídeo)** em linguagens gerenciadas como 
-o **C#(CSharp)**, com quase **TODAS** as **interfaces nativas** disponiveis no **C++** com a menor penalidade de desempenho possível que eu conseguir. 
+o **C#(CSharp)**, com quase **TODAS** as **interfaces nativas** disponíveis no **C++** com a menor penalidade de desempenho possível. 
 
 
 # Motivação

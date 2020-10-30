@@ -139,6 +139,9 @@ limitations under the License.
 //DWrite
 #include <dwrite.h>
 
+//PrintDocuments
+#include <DocumentTarget.h>
+
 
 //Namespaces
 using namespace System;

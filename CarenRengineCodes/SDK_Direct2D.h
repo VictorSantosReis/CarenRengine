@@ -7414,7 +7414,7 @@ namespace CarenRengine
 			/// Libera todos os recursos de renderização utilizados pelo Direct2D.
 			/// </summary>
 			/// <param name="Param_Miliseconds">Descarta apenas recursos que não foram usados por mais do que o tempo especificado em milissegundos. O padrão é de 0 milissegundos.</param>
-			CarenResult ClearResources(UInt32 Param_Miliseconds);
+			void ClearResources(UInt32 Param_Miliseconds);
 
 			/// <summary>
 			/// Cria um novo contexto de dispositivo a partir de um dispositivo Direct2D.
@@ -7444,14 +7444,14 @@ namespace CarenRengine
 			/// Define a quantidade máxima de memória de textura que o Direct2D acumula antes de purgar os caches de imagem e alocações de textura em cache.
 			/// </summary>
 			/// <param name="Param_Out_MaxSizeMemory">Retorna a quantidade máxima de memória de textura em bytes.</param>
-			CarenResult GetMaximumTextureMemory([Out] UInt64% Param_Out_MaxSizeMemory);
+			void GetMaximumTextureMemory([Out] UInt64% Param_Out_MaxSizeMemory);
 
 			/// <summary>
 			/// Define a quantidade máxima de memória de textura que o Direct2D acumula antes de purgar os caches de imagem e alocações de textura em cache.
 			///  O Direct2D pode exceder a memória de textura máxima que você define com este método para um único quadro, se necessário, para renderizar o quadro.
 			/// </summary>
 			/// <param name="Param_MaxSizeMemory">A nova quantidade máxima de memória em bytes para a textura.</param>
-			CarenResult SetMaximumTextureMemory(UInt64 Param_MaxSizeMemory);
+			void SetMaximumTextureMemory(UInt64 Param_MaxSizeMemory);
 		};
 
 		/// <summary>
@@ -7472,6 +7472,15 @@ namespace CarenRengine
 
 
 			//Métodos
+
+			/// <summary>
+			/// Cria um novo ICarenD2D1DeviceContext1 a partir de um dispositivo Direct2D.
+			/// </summary>
+			/// <param name="Param_Opcoes">As opções a serem aplicadas ao contexto do dispositivo criado.</param>
+			/// <param name="Param_Out_ContextoDispositivo1">Retorna uma interface(ICarenD2D1DeviceContext1) que contém um ponteiro para o novo contexto do dispositivo.</param>
+			CarenResult CreateDeviceContext(
+				CA_D2D1_DEVICE_CONTEXT_OPTIONS Param_Opcoes,
+				[Out] ICarenD2D1DeviceContext1^% Param_Out_ContextoDispositivo1);
 
 			/// <summary>
 			/// Recupera a prioridade de renderização atual do dispositivo.
@@ -7633,7 +7642,7 @@ namespace CarenRengine
 		};
 
 		/// <summary>
-		/// (ID2D1Device6) - Interface responsável por representar um domínio de recursos cujos objetos e contextos de dispositivos podem ser usados em conjunto. Esta interface executa todas as mesmas funções da interface ICarenD2D1Device5, 
+		/// (ID2D1Device6) - Interface responsável por representar um domínio de recursos cujos objetos e contextos de dispositivos podem ser usados em conjunto. Esta interface executa todas as mesmas funções da interface ICarenD2D1Device5.
 		/// além disso permite a criação de objetos ICarenD2D1DeviceContext6.
 		/// </summary>
 		[CategoryAttribute("Interface D2D")]
@@ -7652,7 +7661,7 @@ namespace CarenRengine
 			//Métodos
 
 			/// <summary>
-			/// 
+			/// Cria um novo contexto de dispositivo sem um alvo inicialmente atribuído.
 			/// </summary>
 			/// <param name="Param_Opcoes">As opções a serem aplicadas ao contexto do dispositivo criado.</param>
 			/// <param name="Param_Out_ContextoDispositivo6">Retorna uma interface(ICarenD2D1DeviceContext6) que contém um ponteiro para o novo contexto do dispositivo.</param>

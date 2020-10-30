@@ -146,6 +146,13 @@
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1ComputeTransform.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1ConcreteTransform.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DCRenderTarget.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Device.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Device1.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Device2.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Device3.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Device4.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Device5.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Device6.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext1.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext2.h" />
@@ -436,6 +443,13 @@
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1ComputeTransform.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1ConcreteTransform.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DCRenderTarget.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Device.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Device1.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Device2.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Device3.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Device4.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Device5.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Device6.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext1.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext2.cpp" />

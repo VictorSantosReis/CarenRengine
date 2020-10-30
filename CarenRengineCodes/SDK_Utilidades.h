@@ -4622,6 +4622,39 @@ namespace CarenRengine
 
 
 
+			//Converte uma estrutura gerenciada(CA_D2D1_PRINT_CONTROL_PROPERTIES) para sua correspondencia não gerenciada(D2D1_PRINT_CONTROL_PROPERTIES).
+			D2D1_PRINT_CONTROL_PROPERTIES* ConverterD2D1_PRINT_CONTROL_PROPERTIESManagedToUnmanaged(CA_D2D1_PRINT_CONTROL_PROPERTIES^ Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				D2D1_PRINT_CONTROL_PROPERTIES* EstruturaRetorno = CriarEstrutura<D2D1_PRINT_CONTROL_PROPERTIES>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(D2D1_PRINT_CONTROL_PROPERTIES));
+
+				//Define os dados.
+				EstruturaRetorno->colorSpace = static_cast<D2D1_COLOR_SPACE>(Param_Estrutura->colorSpace);
+				EstruturaRetorno->fontSubset = static_cast<D2D1_PRINT_FONT_SUBSET_MODE>(Param_Estrutura->fontSubset);
+				EstruturaRetorno->rasterDPI = Param_Estrutura->rasterDPI;
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+			//Converte uma estrutura não gerenciada(D2D1_PRINT_CONTROL_PROPERTIES) para sua correspondencia gerenciada(CA_D2D1_PRINT_CONTROL_PROPERTIES).
+			CA_D2D1_PRINT_CONTROL_PROPERTIES^ ConverterD2D1_PRINT_CONTROL_PROPERTIESUnmanagedToManaged(D2D1_PRINT_CONTROL_PROPERTIES* Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				CA_D2D1_PRINT_CONTROL_PROPERTIES^ EstruturaRetorno = gcnew CA_D2D1_PRINT_CONTROL_PROPERTIES();
+
+				//Define os dados.
+				EstruturaRetorno->colorSpace = static_cast<CA_D2D1_COLOR_SPACE>(Param_Estrutura->colorSpace);
+				EstruturaRetorno->fontSubset = static_cast<CA_D2D1_PRINT_FONT_SUBSET_MODE>(Param_Estrutura->fontSubset);
+				EstruturaRetorno->rasterDPI = Param_Estrutura->rasterDPI;
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+
 
 
 

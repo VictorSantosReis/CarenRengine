@@ -180,177 +180,6 @@
     <ClInclude Include="CarenRengineCodes\SDK_Windows.h">
       <Filter>Arquivos de Cabeçalho\SDKs</Filter>
     </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Bitmap.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Bitmap1.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1BitmapBrush.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1BitmapBrush1.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1BitmapRenderTarget.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1BlendTransform.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1BorderTransform.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1BoundsAdjustmentTransform.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Brush.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1ColorContext.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1ColorContext1.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1CommandList.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink1.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink2.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink3.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink4.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink5.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1ConcreteTransform.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DCRenderTarget.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DrawingStateBlock.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DrawingStateBlock1.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1EllipseGeometry.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Geometry.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1GeometryGroup.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1GeometryRealization.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1GeometrySink.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1GradientMesh.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1GradientStopCollection.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1GradientStopCollection1.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1HwndRenderTarget.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Image.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1ImageBrush.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1ImageSource.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1ImageSourceFromWic.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Ink.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1InkStyle.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Layer.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1LinearGradientBrush.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Mesh.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1RadialGradientBrush.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1RectangleGeometry.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1RenderInfo.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1RenderTarget.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Resource.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1RoundedRectangleGeometry.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SimplifiedGeometrySink.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SolidColorBrush.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SourceTransform.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SpriteBatch.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1StrokeStyle.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1StrokeStyle1.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1TessellationSink.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Transform.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1TransformedGeometry.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1TransformedImageSource.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1TransformNode.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
     <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D10Multithread.h">
       <Filter>Arquivos de Cabeçalho\Classes\Direct3D11</Filter>
     </ClInclude>
@@ -858,69 +687,6 @@
     <ClInclude Include="CarenRengineCodes\Core Audio\CarenAudioClock.h">
       <Filter>Arquivos de Cabeçalho\Classes\CoreAudio_WASAPI</Filter>
     </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1ResourceTexture.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1ComputeTransform.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1ComputeInfo.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DrawInfo.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Effect.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1VertexBuffer.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Properties.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1PrintControl.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DrawTransform.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1OffsetTransform.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1TransformGraph.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1LookupTable3D.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1EffectContext1.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1EffectContext.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1EffectImpl.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SvgPaint.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Multithread.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1PathGeometry.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1PathGeometry1.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SvgAttribute.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SvgGlyphStyle.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
     <ClInclude Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink.h">
       <Filter>Arquivos de Cabeçalho\Classes Nativas\Direct2D</Filter>
     </ClInclude>
@@ -957,263 +723,326 @@
     <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMMNotificationClient.h">
       <Filter>Arquivos de Cabeçalho\Classes Nativas\CoreAudio</Filter>
     </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SvgStrokeDashArray.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SvgDocument.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SvgElement.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SvgPathData.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SvgPointCollection.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext1.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext2.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext3.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext4.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext5.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext6.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Device6.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Device.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Device1.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Device2.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Device3.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Device4.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Device5.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Factory.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Factory1.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
     <ClInclude Include="CarenRengineCodes\Classes Auxiliares\CarenPD2D1_PROPERTY_FUNCTIONS.h">
       <Filter>Arquivos de Cabeçalho\Classes\Auxiliares</Filter>
     </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Bitmap.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Bitmap1.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1BitmapBrush.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1BitmapBrush1.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1BitmapRenderTarget.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1BlendTransform.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1BorderTransform.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1BoundsAdjustmentTransform.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Brush.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1ColorContext.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1ColorContext1.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1CommandList.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink1.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink2.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink3.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink4.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink5.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1ComputeInfo.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1ComputeTransform.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1ConcreteTransform.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DCRenderTarget.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Device.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Device1.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Device2.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Device3.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Device4.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Device5.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Device6.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext1.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext2.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext3.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext4.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext5.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext6.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DrawInfo.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DrawingStateBlock.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DrawingStateBlock1.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1DrawTransform.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Effect.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1EffectContext.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1EffectContext1.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1EffectImpl.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1EllipseGeometry.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Factory.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Factory1.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Factory2.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Factory3.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Factory4.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Factory5.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Factory6.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Factory7.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Geometry.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1GeometryGroup.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1GeometryRealization.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1GeometrySink.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1GradientMesh.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1GradientStopCollection.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1GradientStopCollection1.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1HwndRenderTarget.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Image.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1ImageBrush.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1ImageSource.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1ImageSourceFromWic.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Ink.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1InkStyle.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Layer.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1LinearGradientBrush.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1LookupTable3D.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Mesh.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Multithread.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1OffsetTransform.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1PathGeometry.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1PathGeometry1.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1PrintControl.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Properties.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1RadialGradientBrush.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1RectangleGeometry.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1RenderInfo.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1RenderTarget.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Resource.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1ResourceTexture.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1RoundedRectangleGeometry.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SimplifiedGeometrySink.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SolidColorBrush.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SourceTransform.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SpriteBatch.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1StrokeStyle.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1StrokeStyle1.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SvgAttribute.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SvgDocument.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SvgElement.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SvgGlyphStyle.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SvgPaint.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SvgPathData.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SvgPointCollection.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1SvgStrokeDashArray.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1TessellationSink.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Transform.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1TransformedGeometry.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1TransformedImageSource.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1TransformGraph.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1TransformNode.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1VertexBuffer.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Bitmap.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Bitmap1.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1BitmapBrush.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1BitmapBrush1.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1BitmapRenderTarget.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1BlendTransform.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1BorderTransform.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1BoundsAdjustmentTransform.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Brush.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1ColorContext.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1ColorContext1.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1CommandList.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink1.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink2.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink3.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink4.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink5.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1ConcreteTransform.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DCRenderTarget.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DrawingStateBlock.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DrawingStateBlock1.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1EllipseGeometry.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Geometry.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1GeometryGroup.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1GeometryRealization.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1GeometrySink.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1GradientMesh.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1GradientStopCollection.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1GradientStopCollection1.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1HwndRenderTarget.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Image.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1ImageBrush.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1ImageSource.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1ImageSourceFromWic.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Ink.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1InkStyle.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Layer.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1LinearGradientBrush.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Mesh.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1RadialGradientBrush.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1RectangleGeometry.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1RenderInfo.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1RenderTarget.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Resource.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1RoundedRectangleGeometry.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SimplifiedGeometrySink.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SolidColorBrush.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SourceTransform.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SpriteBatch.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1StrokeStyle.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1StrokeStyle1.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1TessellationSink.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Transform.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1TransformedGeometry.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1TransformedImageSource.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1TransformNode.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
     <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D10Multithread.cpp">
       <Filter>Arquivos de Origem\Classes\Direct3D11</Filter>
     </ClCompile>
@@ -1757,152 +1586,323 @@
     <ClCompile Include="CarenRengineCodes\CppResources\AssemblyInfo.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1ResourceTexture.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1ComputeInfo.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1ComputeTransform.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DrawInfo.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Effect.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1PrintControl.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Properties.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1VertexBuffer.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DrawTransform.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1OffsetTransform.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1TransformGraph.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1LookupTable3D.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1EffectContext.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1EffectContext1.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1EffectImpl.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SvgPaint.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Multithread.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1PathGeometry.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1PathGeometry1.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SvgAttribute.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SvgGlyphStyle.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SvgStrokeDashArray.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SvgDocument.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SvgElement.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SvgPathData.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SvgPointCollection.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext1.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext2.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext3.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext4.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext5.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext6.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Device6.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Device.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Device1.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Device2.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Device3.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Device4.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Device5.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Factory.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Factory1.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
     <ClCompile Include="CarenRengineCodes\Classes Auxiliares\CarenPD2D1_PROPERTY_FUNCTIONS.cpp">
       <Filter>Arquivos de Origem\Classes\Auxiliares</Filter>
     </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Bitmap.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Bitmap1.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1BitmapBrush.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1BitmapBrush1.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1BitmapRenderTarget.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1BlendTransform.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1BorderTransform.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1BoundsAdjustmentTransform.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Brush.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1ColorContext.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1ColorContext1.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1CommandList.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink1.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink2.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink3.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink4.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1CommandSink5.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1ComputeInfo.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1ComputeTransform.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1ConcreteTransform.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DCRenderTarget.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Device.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Device1.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Device2.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Device3.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Device4.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Device5.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Device6.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext1.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext2.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext3.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext4.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext5.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DeviceContext6.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DrawInfo.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DrawingStateBlock.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DrawingStateBlock1.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1DrawTransform.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Effect.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1EffectContext.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1EffectContext1.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1EffectImpl.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1EllipseGeometry.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Factory.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Factory1.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Factory2.cpp">
-      <Filter>Arquivos de Origem</Filter>
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Factory3.cpp">
-      <Filter>Arquivos de Origem</Filter>
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Factory4.cpp">
-      <Filter>Arquivos de Origem</Filter>
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Factory5.cpp">
-      <Filter>Arquivos de Origem</Filter>
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Factory6.cpp">
-      <Filter>Arquivos de Origem</Filter>
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Factory7.cpp">
-      <Filter>Arquivos de Origem</Filter>
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Geometry.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1GeometryGroup.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1GeometryRealization.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1GeometrySink.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1GradientMesh.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1GradientStopCollection.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1GradientStopCollection1.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1HwndRenderTarget.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Image.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1ImageBrush.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1ImageSource.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1ImageSourceFromWic.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Ink.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1InkStyle.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Layer.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1LinearGradientBrush.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1LookupTable3D.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Mesh.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Multithread.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1OffsetTransform.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1PathGeometry.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1PathGeometry1.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1PrintControl.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Properties.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1RadialGradientBrush.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1RectangleGeometry.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1RenderInfo.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1RenderTarget.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Resource.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1ResourceTexture.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1RoundedRectangleGeometry.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SimplifiedGeometrySink.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SolidColorBrush.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SourceTransform.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SpriteBatch.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1StrokeStyle.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1StrokeStyle1.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SvgAttribute.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SvgDocument.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SvgElement.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SvgGlyphStyle.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SvgPaint.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SvgPathData.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SvgPointCollection.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1SvgStrokeDashArray.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1TessellationSink.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Transform.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1TransformedGeometry.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1TransformedImageSource.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1TransformGraph.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1TransformNode.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1VertexBuffer.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

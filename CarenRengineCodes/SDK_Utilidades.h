@@ -4836,9 +4836,6 @@ namespace CarenRengine
 
 
 
-
-
-
 			//DWRITE ESTRUTURAS
 
 
@@ -8744,6 +8741,14 @@ namespace CarenRengine
 				//Retorna a variavel.
 				return EstruturaRetorno;
 			}
+
+
+
+
+
+
+			// WIC - ESTRUTURAS
+
 
 
 		};

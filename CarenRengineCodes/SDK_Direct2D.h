@@ -7855,9 +7855,8 @@ namespace CarenRengine
 		};
 
 		/// <summary>
-		/// (ID2D1Factory1) - Interface responsável por criar recursos Direct2D.
-		/// A interface ID2D1Factory1 é usada para criar dispositivos, registrar e não registrar efeitos e enumerar propriedades de efeitos. Os efeitos são registrados e não registrados globalmente. As APIs de registro são colocadas
-		/// nesta interface por conveniência.
+		/// (ID2D1Factory1) - Interface responsável por criar recursos Direct2D. A interface ID2D1Factory1 é usada para criar dispositivos, registrar e não registrar efeitos e 
+		/// enumerar propriedades de efeitos. Os efeitos são registrados e não registrados globalmente. As APIs de registro são colocadas nesta interface por conveniência.
 		/// </summary>
 		[CategoryAttribute("Interface D2D")]
 		[Guid("97850A9F-90B6-43CA-BED1-2836EA7925DD")]

@@ -299,6 +299,19 @@ namespace CarenRengine
 				std::copy(*Param_Buffer, (*Param_Buffer) + Param_TamanhoBuffer, pBufferDestino);
 			}
 
+
+			//(MÉTODO EXPERIMENTAL) Método responsável por obter o ponteiro nativo na interface gerenciada e definir em uma matriz de ponteiros do mesmo tipo nativo.
+			template<typename TipoInterfaceNativa, typename TipoInterfaceGerenciada>
+			void CopiarPonteirosGerenciado_ToNativo(TipoInterfaceNativa** Param_ArrayDestinoNativo, cli::array<TipoInterfaceGerenciada^>^% Param_ArrayInterfacesGerenciado, UINT32 Param_Quantidade)
+			{
+				//Faz um for para copiar os dados.
+				for (UINT32 i = 0; i < Param_Quantidade; i++)
+				{
+					//Recupera o ponteiro para a interface.
+					RecuperarPonteiroCaren(reinterpret_cast<ICaren^>(Param_ArrayInterfacesGerenciado[i]), &(Param_ArrayDestinoNativo[i]));
+				}
+			}
+
 			//Converte uma PropVariant Gerenciada para uma não gerenciada.
 			bool ConvertPropVariantManagedToUnamaged(SDKBase::Estruturas::CA_PropVariant^ Param_PropVariantManaged, PROPVARIANT& Param_PropVariant)
 			{
@@ -3846,6 +3859,48 @@ namespace CarenRengine
 			}
 
 
+			//Converte uma estrutura gerenciada(CA_D2D1_HWND_RENDER_TARGET_PROPERTIES) para sua correspondencia não gerenciada(D2D1_HWND_RENDER_TARGET_PROPERTIES).
+			D2D1_HWND_RENDER_TARGET_PROPERTIES* ConverterD2D1_HWND_RENDER_TARGET_PROPERTIESManagedToUnmanaged(CA_D2D1_HWND_RENDER_TARGET_PROPERTIES^ Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				D2D1_HWND_RENDER_TARGET_PROPERTIES* EstruturaRetorno = CriarEstrutura<D2D1_HWND_RENDER_TARGET_PROPERTIES>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(D2D1_HWND_RENDER_TARGET_PROPERTIES));
+
+				//Variaveis.
+				D2D1_SIZE_U* pPixelSize = NULL;
+
+				//Converte a estrutura.
+				pPixelSize = ConverterD2D1_SIZE_UManagedToUnmanaged(Param_Estrutura->pixelSize);
+
+				//Define os dados.
+				EstruturaRetorno->hwnd = ConverterIntPtrToHWND(Param_Estrutura->hwnd);
+				EstruturaRetorno->pixelSize = *pPixelSize;
+				EstruturaRetorno->presentOptions = static_cast<D2D1_PRESENT_OPTIONS>(Param_Estrutura->presentOptions);
+
+				//Libera a memória para a estrutura.
+				DeletarEstruturaSafe(&pPixelSize);
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+			//Converte uma estrutura não gerenciada(D2D1_HWND_RENDER_TARGET_PROPERTIES) para sua correspondencia gerenciada(CA_D2D1_HWND_RENDER_TARGET_PROPERTIES).
+			CA_D2D1_HWND_RENDER_TARGET_PROPERTIES^ ConverterD2D1_HWND_RENDER_TARGET_PROPERTIESUnmanagedToManaged(D2D1_HWND_RENDER_TARGET_PROPERTIES* Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				CA_D2D1_HWND_RENDER_TARGET_PROPERTIES^ EstruturaRetorno = gcnew CA_D2D1_HWND_RENDER_TARGET_PROPERTIES();
+
+				//Define os dados.
+				EstruturaRetorno->hwnd = ConverterHWNDToIntPtr(Param_Estrutura->hwnd);
+				EstruturaRetorno->pixelSize = ConverterD2D1_SIZE_UUnmanagedToManaged(&Param_Estrutura->pixelSize);
+				EstruturaRetorno->presentOptions = static_cast<CA_D2D1_PRESENT_OPTIONS>(Param_Estrutura->presentOptions);
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+
 			//Converte uma estrutura gerenciada(CA_D2D1_LAYER_PARAMETERS) para sua correspondencia não gerenciada(D2D1_LAYER_PARAMETERS).
 			D2D1_LAYER_PARAMETERS* ConverterD2D1_LAYER_PARAMETERSManagedToUnmanaged(CA_D2D1_LAYER_PARAMETERS^ Param_Estrutura)
 			{
@@ -4656,6 +4711,125 @@ namespace CarenRengine
 
 
 
+
+			//Converte uma estrutura gerenciada(CA_D2D1_STROKE_STYLE_PROPERTIES) para sua correspondencia não gerenciada(D2D1_STROKE_STYLE_PROPERTIES).
+			D2D1_STROKE_STYLE_PROPERTIES* ConverterD2D1_STROKE_STYLE_PROPERTIESManagedToUnmanaged(CA_D2D1_STROKE_STYLE_PROPERTIES^ Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				D2D1_STROKE_STYLE_PROPERTIES* EstruturaRetorno = CriarEstrutura<D2D1_STROKE_STYLE_PROPERTIES>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(D2D1_STROKE_STYLE_PROPERTIES));
+
+				//Define os dados.
+				EstruturaRetorno->startCap = static_cast<D2D1_CAP_STYLE>(Param_Estrutura->startCap);
+				EstruturaRetorno->endCap = static_cast<D2D1_CAP_STYLE>(Param_Estrutura->endCap);
+				EstruturaRetorno->dashCap = static_cast<D2D1_CAP_STYLE>(Param_Estrutura->dashCap);
+				EstruturaRetorno->lineJoin = static_cast<D2D1_LINE_JOIN>(Param_Estrutura->lineJoin);
+				EstruturaRetorno->miterLimit = Param_Estrutura->miterLimit;
+				EstruturaRetorno->dashStyle = static_cast<D2D1_DASH_STYLE>(Param_Estrutura->dashStyle);
+				EstruturaRetorno->dashOffset = Param_Estrutura->dashOffset;
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+			//Converte uma estrutura não gerenciada(D2D1_STROKE_STYLE_PROPERTIES) para sua correspondencia gerenciada(CA_D2D1_STROKE_STYLE_PROPERTIES).
+			CA_D2D1_STROKE_STYLE_PROPERTIES^ ConverterD2D1_STROKE_STYLE_PROPERTIESUnmanagedToManaged(D2D1_STROKE_STYLE_PROPERTIES* Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				CA_D2D1_STROKE_STYLE_PROPERTIES^ EstruturaRetorno = gcnew CA_D2D1_STROKE_STYLE_PROPERTIES();
+
+				//Define os dados.
+				EstruturaRetorno->startCap = static_cast<CA_D2D1_CAP_STYLE>(Param_Estrutura->startCap);
+				EstruturaRetorno->endCap = static_cast<CA_D2D1_CAP_STYLE>(Param_Estrutura->endCap);
+				EstruturaRetorno->dashCap = static_cast<CA_D2D1_CAP_STYLE>(Param_Estrutura->dashCap);
+				EstruturaRetorno->lineJoin = static_cast<CA_D2D1_LINE_JOIN>(Param_Estrutura->lineJoin);
+				EstruturaRetorno->miterLimit = Param_Estrutura->miterLimit;
+				EstruturaRetorno->dashStyle = static_cast<CA_D2D1_DASH_STYLE>(Param_Estrutura->dashStyle);
+				EstruturaRetorno->dashOffset = Param_Estrutura->dashOffset;
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+
+
+
+			//Converte uma estrutura gerenciada(CA_D2D1_STROKE_STYLE_PROPERTIES1) para sua correspondencia não gerenciada(D2D1_STROKE_STYLE_PROPERTIES1).
+			D2D1_STROKE_STYLE_PROPERTIES1* ConverterD2D1_STROKE_STYLE_PROPERTIES1ManagedToUnmanaged(CA_D2D1_STROKE_STYLE_PROPERTIES1^ Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				D2D1_STROKE_STYLE_PROPERTIES1* EstruturaRetorno = CriarEstrutura<D2D1_STROKE_STYLE_PROPERTIES1>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(D2D1_STROKE_STYLE_PROPERTIES1));
+
+				//Define os dados.
+				EstruturaRetorno->startCap = static_cast<D2D1_CAP_STYLE>(Param_Estrutura->startCap);
+				EstruturaRetorno->endCap = static_cast<D2D1_CAP_STYLE>(Param_Estrutura->endCap);
+				EstruturaRetorno->dashCap = static_cast<D2D1_CAP_STYLE>(Param_Estrutura->dashCap);
+				EstruturaRetorno->lineJoin = static_cast<D2D1_LINE_JOIN>(Param_Estrutura->lineJoin);
+				EstruturaRetorno->miterLimit = Param_Estrutura->miterLimit;
+				EstruturaRetorno->dashStyle = static_cast<D2D1_DASH_STYLE>(Param_Estrutura->dashStyle);
+				EstruturaRetorno->dashOffset = Param_Estrutura->dashOffset;
+				EstruturaRetorno->transformType = static_cast<D2D1_STROKE_TRANSFORM_TYPE>(Param_Estrutura->transformType);
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+			//Converte uma estrutura não gerenciada(D2D1_STROKE_STYLE_PROPERTIES1) para sua correspondencia gerenciada(CA_D2D1_STROKE_STYLE_PROPERTIES1).
+			CA_D2D1_STROKE_STYLE_PROPERTIES1^ ConverterD2D1_STROKE_STYLE_PROPERTIES1UnmanagedToManaged(D2D1_STROKE_STYLE_PROPERTIES1* Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				CA_D2D1_STROKE_STYLE_PROPERTIES1^ EstruturaRetorno = gcnew CA_D2D1_STROKE_STYLE_PROPERTIES1();
+
+				//Define os dados.
+				EstruturaRetorno->startCap = static_cast<CA_D2D1_CAP_STYLE>(Param_Estrutura->startCap);
+				EstruturaRetorno->endCap = static_cast<CA_D2D1_CAP_STYLE>(Param_Estrutura->endCap);
+				EstruturaRetorno->dashCap = static_cast<CA_D2D1_CAP_STYLE>(Param_Estrutura->dashCap);
+				EstruturaRetorno->lineJoin = static_cast<CA_D2D1_LINE_JOIN>(Param_Estrutura->lineJoin);
+				EstruturaRetorno->miterLimit = Param_Estrutura->miterLimit;
+				EstruturaRetorno->dashStyle = static_cast<CA_D2D1_DASH_STYLE>(Param_Estrutura->dashStyle);
+				EstruturaRetorno->dashOffset = Param_Estrutura->dashOffset;
+				EstruturaRetorno->transformType = static_cast<CA_D2D1_STROKE_TRANSFORM_TYPE>(Param_Estrutura->transformType);
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+
+
+
+			//Converte uma estrutura gerenciada(CA_D2D1_PROPERTY_BINDING) para sua correspondencia não gerenciada(D2D1_PROPERTY_BINDING).
+			D2D1_PROPERTY_BINDING* ConverterD2D1_PROPERTY_BINDINGManagedToUnmanaged(CA_D2D1_PROPERTY_BINDING^ Param_Estrutura, PD2D1_PROPERTY_SET_FUNCTION Param_SetFunc, PD2D1_PROPERTY_GET_FUNCTION Param_GetFunc)
+			{
+				//Estrutura a ser retornada.
+				D2D1_PROPERTY_BINDING* EstruturaRetorno = CriarEstrutura<D2D1_PROPERTY_BINDING>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(D2D1_PROPERTY_BINDING));
+
+				//Define os dados.
+				EstruturaRetorno->propertyName = ConverterStringToConstWCHAR(Param_Estrutura->propertyName);
+				EstruturaRetorno->setFunction = Param_SetFunc;
+				EstruturaRetorno->getFunction = Param_GetFunc;
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+			//Converte uma estrutura não gerenciada(D2D1_PROPERTY_BINDING) para sua correspondencia gerenciada(CA_D2D1_PROPERTY_BINDING).
+			CA_D2D1_PROPERTY_BINDING^ ConverterD2D1_PROPERTY_BINDINGUnmanagedToManaged(D2D1_PROPERTY_BINDING* Param_Estrutura, Object^ Param_PropertyFuncs)
+			{
+				//Estrutura a ser retornada.
+				CA_D2D1_PROPERTY_BINDING^ EstruturaRetorno = gcnew CA_D2D1_PROPERTY_BINDING();
+
+				//Define os dados.
+				EstruturaRetorno->propertyName = gcnew String(Param_Estrutura->propertyName);
+				EstruturaRetorno->setFunction_and_getFunction = Param_PropertyFuncs;
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
 
 
 

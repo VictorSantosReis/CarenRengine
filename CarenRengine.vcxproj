@@ -123,6 +123,7 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CarenRengineCodes\Classes Auxiliares\CarenPD2D1_PROPERTY_FUNCTIONS.h" />
     <ClInclude Include="CarenRengineCodes\Caren\CarenBuffer.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Bitmap.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Bitmap1.h" />
@@ -169,6 +170,14 @@
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1EffectContext1.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1EffectImpl.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1EllipseGeometry.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Factory.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Factory1.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Factory2.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Factory3.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Factory4.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Factory5.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Factory6.h" />
+    <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Factory7.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Geometry.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1GeometryGroup.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1GeometryRealization.h" />
@@ -418,6 +427,7 @@
     <ClInclude Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink4.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CarenRengineCodes\Classes Auxiliares\CarenPD2D1_PROPERTY_FUNCTIONS.cpp" />
     <ClCompile Include="CarenRengineCodes\CppResources\AssemblyInfo.cpp" />
     <ClCompile Include="CarenRengineCodes\Caren\Caren.cpp" />
     <ClCompile Include="CarenRengineCodes\Caren\CarenBuffer.cpp" />
@@ -466,6 +476,14 @@
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1EffectContext1.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1EffectImpl.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1EllipseGeometry.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Factory.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Factory1.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Factory2.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Factory3.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Factory4.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Factory5.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Factory6.cpp" />
+    <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Factory7.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1Geometry.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1GeometryGroup.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1GeometryRealization.cpp" />

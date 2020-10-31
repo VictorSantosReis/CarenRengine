@@ -21605,14 +21605,9 @@ MEReservedMax = 10000
 				String^ propertyName;
 
 				// <summary>
-				// 
+				// Este objeto representa a classe(CarenPD2D1_PROPERTY_FUNCTIONS) que armazena os ponteiros para as funções (setfunction & getfunction).
 				// </summary>
-				ICaren^ setFunction;
-
-				// <summary>
-				  // 
-				  // </summary>
-				ICaren^ getFunction;
+				Object^ setFunction_and_getFunction;
 			};
 
 			/// <summary> 
@@ -22913,8 +22908,6 @@ MEReservedMax = 10000
 				/// <param name="Param_QuantidadeSkip">O número de itens a serem ignorados.</param>
 				CarenResult Skip(UInt32 Param_QuantidadeSkip);
 			};
-
 		}
 	}
 }
-

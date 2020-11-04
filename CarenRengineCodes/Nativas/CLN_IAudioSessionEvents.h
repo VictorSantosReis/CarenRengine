@@ -44,6 +44,7 @@ public:
 	{
 	}
 
+
 	//Contém todos os Eventos que seram chamados para notificar o usuário.
 public:
 

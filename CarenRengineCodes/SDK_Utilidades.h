@@ -312,7 +312,7 @@ namespace CarenRengine
 				}
 			}
 
-			//Converte uma PropVariant Gerenciada para uma não gerenciada.
+			//Converte uma PropVariant Gerenciada para uma não gerenciada. O usuário é responsável por iniciar a PropVariant
 			bool ConvertPropVariantManagedToUnamaged(SDKBase::Estruturas::CA_PropVariant^ Param_PropVariantManaged, PROPVARIANT& Param_PropVariant)
 			{
 				//Variavel que vai retornar o resultado.
@@ -8750,7 +8750,91 @@ namespace CarenRengine
 			// WIC - ESTRUTURAS
 
 
+			//Converte uma estrutura gerenciada(CA_WICRect) para sua correspondencia não gerenciada(WICRect).
+			WICRect* ConverterWICRectManaged_ToUnManaged(SDKBase::Estruturas::CA_WICRect^ Param_Estrutura)
+			{
+				//Variavel a ser retornada.
+				WICRect* EstruturaRetorno = CriarEstrutura<WICRect>();
 
+				//Inicializa todos os itens da estrutura com NULL.
+				ZeroMemory(EstruturaRetorno, sizeof(WICRect));
+
+				//Define os dados na estrutura
+				EstruturaRetorno->X = Param_Estrutura->X;
+				EstruturaRetorno->Y = Param_Estrutura->Y;
+				EstruturaRetorno->Width = Param_Estrutura->Width;
+				EstruturaRetorno->Height = Param_Estrutura->Height;
+
+				//Retorna
+				return EstruturaRetorno;
+			}
+
+			//Converte uma estrutura não gerenciada(WICRect) para sua correspondencia gerenciada(CA_WICRect).
+			CA_WICRect^ ConverterWICBitmapPatternUnManaged_ToManaged(WICRect* Param_Estrutura)
+			{
+				//Variavel a ser retornada.
+				SDKBase::Estruturas::CA_WICRect^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_WICRect();
+
+				//Define os dados na estrutura
+				EstruturaRetorno->X = Param_Estrutura->X;
+				EstruturaRetorno->Y = Param_Estrutura->Y;
+				EstruturaRetorno->Width = Param_Estrutura->Width;
+				EstruturaRetorno->Height = Param_Estrutura->Height;
+
+				//Retorna a variavel.
+				return EstruturaRetorno;
+			}
+
+
+
+			//Converte uma estrutura gerenciada(CA_WICBitmapPattern) para sua correspondencia não gerenciada(WICBitmapPattern).
+			WICBitmapPattern* ConverterWICBitmapPatternManaged_ToUnManaged(CA_WICBitmapPattern^ Param_Estrutura)
+			{
+				//Variavel a ser retornada.
+				WICBitmapPattern* EstruturaRetorno = CriarEstrutura<WICBitmapPattern>();
+
+				//Inicializa todos os itens da estrutura com NULL.
+				ZeroMemory(EstruturaRetorno, sizeof(WICBitmapPattern));
+
+				//Variveis
+				GenPointer pBufferPattern = DefaultGenPointer;
+				GenPointer pBufferMask = DefaultGenPointer;
+
+				//Recupera o ponteiro dos buffers acima.
+				Param_Estrutura->Pattern->ObterPonteiroInterno(pBufferPattern);
+				Param_Estrutura->Mask->ObterPonteiroInterno(pBufferMask);
+
+				//Define os dados na estrutura
+				EstruturaRetorno->Length = static_cast<ULONG>(Param_Estrutura->Length);
+				EstruturaRetorno->Position.QuadPart = Param_Estrutura->Position;
+				EstruturaRetorno->Pattern = ConverterIntPtrTo<BYTE*>(pBufferPattern);
+				EstruturaRetorno->Mask = ConverterIntPtrTo<BYTE*>(pBufferMask);
+				EstruturaRetorno->EndOfStream = Param_Estrutura->EndOfStream ? TRUE : FALSE;
+
+				//Retorna
+				return EstruturaRetorno;
+			}
+
+			//Converte uma estrutura não gerenciada(WICBitmapPattern) para sua correspondencia gerenciada(CA_WICBitmapPattern).
+			CA_WICBitmapPattern^ ConverterWICBitmapPatternUnManaged_ToManaged(WICBitmapPattern* Param_Estrutura)
+			{
+				//Variavel a ser retornada.
+				CA_WICBitmapPattern^ EstruturaRetorno = gcnew CA_WICBitmapPattern();
+
+				//Define os dados na estrutura
+				EstruturaRetorno->Length = static_cast<UINT64>(Param_Estrutura->Length);
+				EstruturaRetorno->Position = Param_Estrutura->Position.QuadPart;
+				EstruturaRetorno->Pattern = gcnew CarenBuffer();
+				EstruturaRetorno->Mask = gcnew CarenBuffer();
+				EstruturaRetorno->EndOfStream = Param_Estrutura->EndOfStream ? TRUE : FALSE;
+				
+				//Define os dados no buffer.
+				EstruturaRetorno->Pattern->CriarBuffer(IntPtr(Param_Estrutura->Pattern), false, safe_cast<UInt32>(EstruturaRetorno->Length), safe_cast<UInt32>(EstruturaRetorno->Length));
+				EstruturaRetorno->Mask->CriarBuffer(IntPtr(Param_Estrutura->Mask), false, 0, 0);
+
+				//Retorna a variavel.
+				return EstruturaRetorno;
+			}
 		};
 	}
 }

@@ -22091,7 +22091,7 @@ MEReservedMax = 10000
 			};
 
 			/// <summary> 
-			/// ()(FALTA DOCUMENTAR) - 
+			/// (WICBitmapPlaneDescription)(FALTA DOCUMENTAR) - 
 			/// </summary>
 			public ref struct CA_WICBitmapPlaneDescription
 			{
@@ -22110,7 +22110,7 @@ MEReservedMax = 10000
 			};
 
 			/// <summary> 
-			/// ()(FALTA DOCUMENTAR) - 
+			/// (WICBitmapPattern)(FALTA DOCUMENTAR) - 
 			/// </summary>
 			public ref struct CA_WICBitmapPattern
 			{
@@ -22125,11 +22125,11 @@ MEReservedMax = 10000
 				/// <summary>
 				/// 
 				/// </summary>  
-				cli::array<Byte>^ Pattern;
+				ICarenBuffer^ Pattern;
 				/// <summary>
 				/// 
 				/// </summary>  
-				cli::array<Byte>^ Mask;
+				ICarenBuffer^ Mask;
 				/// <summary>
 				/// 
 				/// </summary>  
@@ -22137,7 +22137,7 @@ MEReservedMax = 10000
 			};
 
 			/// <summary> 
-			/// ()(FALTA DOCUMENTAR) - 
+			/// (WICBitmapPlane)(FALTA DOCUMENTAR) - 
 			/// </summary>
 			public ref struct CA_WICBitmapPlane
 			{
@@ -22148,7 +22148,7 @@ MEReservedMax = 10000
 				/// <summary>
 				/// 
 				/// </summary>  
-				cli::array<Byte>^ pbBuffer;
+				ICarenBuffer^ pbBuffer;
 				/// <summary>
 				/// 
 				/// </summary>  
@@ -22160,7 +22160,7 @@ MEReservedMax = 10000
 			};
 
 			/// <summary> 
-			/// ()(FALTA DOCUMENTAR) - 
+			/// (WICDdsFormatInfo)(FALTA DOCUMENTAR) - 
 			/// </summary>
 			public ref struct CA_WICDdsFormatInfo
 			{
@@ -22183,7 +22183,7 @@ MEReservedMax = 10000
 			};
 
 			/// <summary> 
-			/// ()(FALTA DOCUMENTAR) - 
+			/// (WICDdsParameters)(FALTA DOCUMENTAR) - 
 			/// </summary>
 			public ref struct CA_WICDdsParameters
 			{
@@ -22222,7 +22222,7 @@ MEReservedMax = 10000
 			};
 
 			/// <summary> 
-			/// ()(FALTA DOCUMENTAR) - 
+			/// (WICImageParameters)(FALTA DOCUMENTAR) - 
 			/// </summary>
 			public ref struct CA_WICImageParameters
 			{
@@ -22257,7 +22257,7 @@ MEReservedMax = 10000
 			};
 
 			/// <summary> 
-			/// ()(FALTA DOCUMENTAR) - 
+			/// (WICJpegFrameHeader)(FALTA DOCUMENTAR) - 
 			/// </summary>
 			public ref struct CA_WICJpegFrameHeader
 			{
@@ -22296,7 +22296,7 @@ MEReservedMax = 10000
 			};
 
 			/// <summary> 
-			/// ()(FALTA DOCUMENTAR) - 
+			/// (WICJpegScanHeader)(FALTA DOCUMENTAR) - 
 			/// </summary>
 			public ref struct CA_WICJpegScanHeader
 			{
@@ -22335,7 +22335,7 @@ MEReservedMax = 10000
 			};
 
 			/// <summary> 
-			/// ()(FALTA DOCUMENTAR) - 
+			/// (WICMetadataHeader)(FALTA DOCUMENTAR) - 
 			/// </summary>
 			public ref struct CA_WICMetadataHeader
 			{
@@ -22358,7 +22358,7 @@ MEReservedMax = 10000
 			};
 
 			/// <summary> 
-			/// ()(FALTA DOCUMENTAR) - 
+			/// (WICMetadataPattern)(FALTA DOCUMENTAR) - 
 			/// </summary>
 			public ref struct CA_WICMetadataPattern
 			{
@@ -22385,7 +22385,7 @@ MEReservedMax = 10000
 			};
 
 			/// <summary> 
-			/// ()(FALTA DOCUMENTAR) - 
+			/// (WICRawCapabilitiesInfo)(FALTA DOCUMENTAR) - 
 			/// </summary>
 			public ref struct CA_WICRawCapabilitiesInfo
 			{
@@ -22464,7 +22464,7 @@ MEReservedMax = 10000
 			};
 
 			/// <summary> 
-			/// ()(FALTA DOCUMENTAR) - 
+			/// (WICRawToneCurvePoint)(FALTA DOCUMENTAR) - 
 			/// </summary>
 			public ref struct CA_WICRawToneCurvePoint
 			{
@@ -22480,7 +22480,7 @@ MEReservedMax = 10000
 			};
 
 			/// <summary> 
-			/// ()(FALTA DOCUMENTAR) - 
+			/// (WICRawToneCurve)(FALTA DOCUMENTAR) - 
 			/// </summary>
 			public ref struct CA_WICRawToneCurve
 			{
@@ -22556,7 +22556,6 @@ MEReservedMax = 10000
 			/// Interface responsável por criar e gerenciar um evento nativo do Windows.
 			/// </summary>
 			[CategoryAttribute("Caren Interface")]
-			[DescriptionAttribute("Interface responsável por gerenciar um evento do Windows.")]
 			[Guid("CCC5A485-8664-474D-A88D-B9DE3512AE0D")]
 			public interface class ICarenWindowsEvent
 			{
@@ -22678,7 +22677,6 @@ MEReservedMax = 10000
 			/// (IPropertyStore) - Interface responsável por expor métodos utilizados para enumerar e manipular valores de propriedade.
 			/// </summary>
 			[CategoryAttribute("Windows Interface")]
-			[DescriptionAttribute("Interface responsável por expor os métodos do IPropertyStore.")]
 			[Guid("73C75E1E-92A5-483B-8EA2-89E7879E0176")]
 			public interface class ICarenPropertyStore : ICaren
 			{
@@ -22732,7 +22730,6 @@ MEReservedMax = 10000
 			/// (IPropertyBag2) - Interface responsável por fornecer um objeto com um saco de propriedade no qual o objeto pode salvar suas propriedades persistentemente.
 			/// </summary>
 			[CategoryAttribute("Windows Interface")]
-			[DescriptionAttribute("Interface responsável por gerenciar propriedades persistentes.")]
 			[Guid("D0E858B7-EFE8-4E6C-9EA5-536DD603A8AB")]
 			public interface class ICarenPropertyBag2 : ICaren
 			{
@@ -22806,107 +22803,6 @@ MEReservedMax = 10000
 					UInt32 Param_Quantidade,
 					cli::array<Estruturas::CA_PROPBAG2^>^ Param_ArrayPropBagsRequest,
 					cli::array<Estruturas::CA_VARIANT^>^% Param_VarValue);
-			};
-
-			/// <summary>
-			/// (IEnumString) - Interface responsável por enumerar strings. LPWSTR é o tipo que indica um ponteiro para uma sequência de caracteres wide, ou Unicode.
-			/// </summary>
-			[CategoryAttribute("Windows Interface")]
-			[DescriptionAttribute("Interface responsável por enumerar Strings de uma coleção.")]
-			[Guid("81EB331C-4725-464C-8A9A-E5B8F5A89EF6")]
-			public interface class ICarenEnumString : ICaren
-			{
-				/// <summary>
-				/// Propriedade que define se a classe foi descartada.
-				/// </summary>
-				property Boolean DisposedClasse
-				{
-					virtual Boolean get();
-				}
-
-
-
-				//Métodos
-
-
-				/// <summary>
-				/// Cria um novo enumerador que contém o mesmo estado de enumeração que o atual. Este método permite gravar um ponto na sequência de enumeração para retornar a esse ponto mais tarde.O interlocutor deve 
-				/// liberar este novo enumerador separadamente do primeiro enumerador.
-				/// </summary>
-				/// <param name="Param_Out_EnumString">Retorna um ponteiro clonado da interface atual.</param>
-				CarenResult Clone([Out] ICarenEnumString^% Param_Out_EnumString);
-
-				/// <summary>
-				/// Recupera o número especificado de itens na sequência de enumeração.
-				/// </summary>
-				/// <param name="Param_Quantidade">O número de itens a serem recuperados. Se houver menos do que o número solicitado de itens deixados na sequência, este método recupera os elementos restantes.</param>
-				/// <param name="Param_Out_Itens">Retorna uma variedade de itens enumerados.</param>
-				/// <param name="Param_Out_QuantidadeRetornada">Retorna o número de itens que foram recuperados. Este parâmetro é sempre menor ou igual ao número de itens solicitados.</param>
-				CarenResult Next(
-					UInt32 Param_Quantidade,
-					[Out] cli::array<String^>^% Param_Out_Itens,
-					[Out] UInt32% Param_Out_QuantidadeRetornada);
-
-				/// <summary>
-				/// Redefine a sequência de enumeração até o início.
-				/// Não há garantia de que o mesmo conjunto de objetos será enumerado após a conclusão da operação de reset. Uma coleção estática é redefinida para o início, mas pode ser muito cara para algumas coleções, 
-				/// como arquivos em um diretório, para garantir essa condição.
-				/// </summary>
-				CarenResult Reset();
-
-				/// <summary>
-				/// Ignora um número especificado de itens na sequência de enumeração.
-				/// </summary>
-				/// <param name="Param_CountSkip">O número de itens a serem ignorados.</param>
-				CarenResult Skip(UInt32 Param_CountSkip);
-			};
-
-			/// <summary>
-			/// (IEnumUnknown) - Interface responsável por 
-			/// </summary>
-			[CategoryAttribute("Windows Interface")]
-			[DescriptionAttribute("Interface responsável por enumerar Itens(IUnknown) de uma coleção.")]
-			[Guid("A9957309-C57A-4A73-BA40-F7862771BF4C")]
-			public interface class ICarenEnumUnknown : ICaren
-			{
-				/// <summary>
-				/// Propriedade que define se a classe foi descartada.
-				/// </summary>
-				property Boolean DisposedClasse
-				{
-					virtual Boolean get();
-				}
-
-				//Métodos
-
-				/// <summary>
-				/// Cria um novo enumerador que contém o mesmo estado de enumeração que o atual. Este método permite gravar um ponto na sequência de enumeração para retornar a esse ponto mais tarde. O interlocutor deve 
-				/// liberar este novo enumerador separadamente do primeiro enumerador.
-				/// </summary>
-				/// <param name="Param_Out_EnumClone">Retorna o ponteiro para o objeto enumerador clonado.</param>
-				CarenResult Clone([Out] ICarenEnumUnknown^% Param_Out_EnumClone);
-
-				/// <summary>
-				/// Recupera o número especificado de itens na sequência de enumeração.
-				/// </summary>
-				/// <param name="Param_Quantidade">O número de itens a serem recuperados. Se houver menos do que o número solicitado de itens deixados na sequência, este método recupera os elementos restantes.</param>
-				/// <param name="Param_Out_ItensEnumerados">Retorna uma variedade de itens enumerados. O chamador é responsável por liberar as interface depois de sua utilização.</param>
-				/// <param name="Param_Out_QuantidadeRetornada">O número de itens que foram recuperados. Este parâmetro é sempre menor ou igual ao número de itens solicitados.</param>
-				CarenResult Next(
-					UInt32 Param_Quantidade,
-					[Out] cli::array<ICaren^>^ Param_Out_ItensEnumerados,
-					[Out] UInt32% Param_Out_QuantidadeRetornada);
-
-				/// <summary>
-				/// Redefine a sequência de enumeração até o início.
-				/// </summary>
-				CarenResult Reset();
-
-				/// <summary>
-				/// Ignora o número especificado de itens na sequência de enumeração.
-				/// </summary>
-				/// <param name="Param_QuantidadeSkip">O número de itens a serem ignorados.</param>
-				CarenResult Skip(UInt32 Param_QuantidadeSkip);
 			};
 		}
 	}

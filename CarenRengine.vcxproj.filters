@@ -133,6 +133,21 @@
     <Filter Include="Arquivos de Origem\Classes\Auxiliares">
       <UniqueIdentifier>{ea56c565-4b07-4002-a67d-670b37460a87}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Classes Nativas\WIC">
+      <UniqueIdentifier>{ac30c3dd-013c-41b3-8521-bd00a554f141}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Classes Nativas\CoreAudio">
+      <UniqueIdentifier>{187b0aa0-9044-4cf6-b774-6672ac1435fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Classes Nativas\MediaFoundation">
+      <UniqueIdentifier>{243e97c0-3452-41cd-af01-915b619f5937}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Classes Nativas\Direct2D">
+      <UniqueIdentifier>{be51db61-d67b-4eaa-8398-9a9219dde4b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Classes Nativas\WIC">
+      <UniqueIdentifier>{0bbe8735-4632-4f26-9f00-12f3e4e47806}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CarenRengineCodes\pch.h">
@@ -1041,6 +1056,102 @@
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1VertexBuffer.h">
       <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
     </ClInclude>
+    <ClInclude Include="CarenRengineCodes\WIC\CarenWICBitmapLock.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\WIC\CarenWICBitmapSource.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\WIC\CarenWICPalette.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\WIC\CarenWICBitmap.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\WIC\CarenWICBitmapClipper.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\WIC\CarenWICBitmapCodecInfo.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\WIC\CarenWICComponentInfo.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_WicBitmapProgress.h">
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\WIC</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\WIC\CarenWICBitmapCodecProgressNotification.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\WIC\CarenWICColorContext.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\WIC\CarenWICBitmapDecoderInfo.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\WIC\CarenWICMetadataQueryReader.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\WIC\CarenWICMetadataQueryWriter.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Windows\CarenEnumString.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\WIC\CarenWICBitmapDecoder.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\WIC\CarenWICBitmapEncoderInfo.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\WIC\CarenWICBitmapFrameDecode.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\WIC\CarenWICBitmapEncoder.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\WIC\CarenWICBitmapFlipRotator.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\WIC\CarenWICBitmapFrameEncode.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\WIC\CarenWICBitmapScaler.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\WIC\CarenWICBitmapSourceTransform.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\WIC\CarenWICColorTransform.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Windows\CarenEnumUnknown.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\WIC\CarenWICMetadataWriter.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\WIC\CarenWICEnumMetadataItem.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\WIC\CarenWICMetadataBlockReader.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\WIC\CarenWICMetadataBlockWriter.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\WIC\CarenWICMetadataHandlerInfo.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\WIC\CarenWICMetadataReader.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\WIC\CarenWICFastMetadataEncoder.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\WIC\CarenWICFormatConverter.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D10Multithread.cpp">
@@ -1475,39 +1586,6 @@
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFVideoSampleAllocator.cpp">
       <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
     </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IAudioSessionEvents.cpp">
-      <Filter>Arquivos de Origem\Classes Nativas</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink.cpp">
-      <Filter>Arquivos de Origem\Classes Nativas</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink1.cpp">
-      <Filter>Arquivos de Origem\Classes Nativas</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink2.cpp">
-      <Filter>Arquivos de Origem\Classes Nativas</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink3.cpp">
-      <Filter>Arquivos de Origem\Classes Nativas</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink4.cpp">
-      <Filter>Arquivos de Origem\Classes Nativas</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink5.cpp">
-      <Filter>Arquivos de Origem\Classes Nativas</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFAsyncCallback.cpp">
-      <Filter>Arquivos de Origem\Classes Nativas</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFClockStateSink.cpp">
-      <Filter>Arquivos de Origem\Classes Nativas</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFSinkWriterCallback.cpp">
-      <Filter>Arquivos de Origem\Classes Nativas</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMMNotificationClient.cpp">
-      <Filter>Arquivos de Origem\Classes Nativas</Filter>
-    </ClCompile>
     <ClCompile Include="CarenRengineCodes\Core Audio\CarenMMDevice.cpp">
       <Filter>Arquivos de Origem\Classes\MMDevice</Filter>
     </ClCompile>
@@ -1903,6 +1981,135 @@
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1VertexBuffer.cpp">
       <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\WIC\CarenWICBitmapLock.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\WIC\CarenWICBitmapSource.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\WIC\CarenWICBitmap.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\WIC\CarenWICPalette.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\WIC\CarenWICBitmapClipper.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\WIC\CarenWICBitmapCodecInfo.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\WIC\CarenWICComponentInfo.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IAudioSessionEvents.cpp">
+      <Filter>Arquivos de Origem\Classes Nativas\CoreAudio</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink.cpp">
+      <Filter>Arquivos de Origem\Classes Nativas\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink1.cpp">
+      <Filter>Arquivos de Origem\Classes Nativas\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink2.cpp">
+      <Filter>Arquivos de Origem\Classes Nativas\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink3.cpp">
+      <Filter>Arquivos de Origem\Classes Nativas\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink4.cpp">
+      <Filter>Arquivos de Origem\Classes Nativas\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink5.cpp">
+      <Filter>Arquivos de Origem\Classes Nativas\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFAsyncCallback.cpp">
+      <Filter>Arquivos de Origem\Classes Nativas\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFClockStateSink.cpp">
+      <Filter>Arquivos de Origem\Classes Nativas\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFSinkWriterCallback.cpp">
+      <Filter>Arquivos de Origem\Classes Nativas\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMMNotificationClient.cpp">
+      <Filter>Arquivos de Origem\Classes Nativas\CoreAudio</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_WicBitmapProgress.cpp">
+      <Filter>Arquivos de Origem\Classes Nativas\WIC</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\WIC\CarenWICBitmapCodecProgressNotification.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Windows\CarenEnumString.cpp">
+      <Filter>Arquivos de Origem\Classes\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\WIC\CarenWICBitmapDecoderInfo.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\WIC\CarenWICColorContext.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\WIC\CarenWICMetadataQueryReader.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\WIC\CarenWICMetadataQueryWriter.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\WIC\CarenWICBitmapDecoder.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\WIC\CarenWICBitmapEncoderInfo.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\WIC\CarenWICBitmapFrameDecode.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\WIC\CarenWICColorTransform.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\WIC\CarenWICBitmapEncoder.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\WIC\CarenWICBitmapFlipRotator.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\WIC\CarenWICBitmapFrameEncode.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\WIC\CarenWICBitmapScaler.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\WIC\CarenWICBitmapSourceTransform.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Windows\CarenEnumUnknown.cpp">
+      <Filter>Arquivos de Origem\Classes\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\WIC\CarenWICMetadataWriter.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\WIC\CarenWICEnumMetadataItem.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\WIC\CarenWICMetadataBlockReader.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\WIC\CarenWICMetadataBlockWriter.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\WIC\CarenWICMetadataHandlerInfo.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\WIC\CarenWICMetadataReader.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\WIC\CarenWICFormatConverter.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\WIC\CarenWICFastMetadataEncoder.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

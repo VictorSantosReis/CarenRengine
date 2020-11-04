@@ -23,11 +23,13 @@ limitations under the License.
 ///////////////////////////////////
 
 //Importa os namespaces do SDK BASE do sistema.
+
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Constantes;
 using namespace CarenRengine::SDKBase::Enumeracoes;
 using namespace CarenRengine::SDKBase::Estruturas;
 using namespace CarenRengine::SDKBase::Interfaces;
+using namespace CarenRengine::Windows;
 
 //Namespace principal do sistema.
 namespace CarenRengine
@@ -116,7 +118,7 @@ namespace CarenRengine
 			/// Recupera a tabela de cores para formatos de pixel indexados. 
 			/// </summary>
 			/// <param name="Param_Palette">Uma ICarenWICPalette. Uma paleta pode ser criada usando o método ICarenWICImagingFactory::CreatePalette.</param>
-			CarenResult CopyPalette(ICarenWICPalette^ Param_Palette);
+			CarenResult CopyPalette(ICaren^ Param_Palette);
 
 			/// <summary>
 			/// Instrui o objeto a produzir pixels. CopyPixels é uma das duas principais rotinas de processamento de imagens(a outra é Lock), acionando o processamento real.Ele instrui o 
@@ -307,7 +309,7 @@ namespace CarenRengine
 			/// <param name="Param_Out_LockMem">Retorna uma interface(ICarenWICBitmapLock) que contém um ponteiro para o local da memória bloqueada.</param>
 			CarenResult Lock(
 				CA_WICRect^ Param_RetanguloLock,
-				CA_WICBitmapLockFlags^ Param_Flags,
+				CA_WICBitmapLockFlags Param_Flags,
 				[Out] ICarenWICBitmapLock^% Param_Out_LockMem);
 
 			/// <summary>
@@ -346,13 +348,118 @@ namespace CarenRengine
 			//Métodos
 
 			/// <summary>
-			///  
+			/// Inicializa o clipper de bitmap com os parâmetros fornecidos.
 			/// </summary>
 			/// <param name="Param_Source">A fonte de bitmap de entrada.</param>
 			/// <param name="Param_RectClip">O retângulo da fonte bitmap para cortar.</param>
 			CarenResult Initialize(
 				ICarenWICBitmapSource^ Param_Source,
 				CA_WICRect^ Param_RectClip);
+		};
+
+		/// <summary>
+		/// (IWICStream) - Interface responsável por representar um fluxo WIC para referenciar conteúdo de imagem e metadados.
+		/// Espera-se que os decodificados e os manipuladores de metadados criem sub-fluxos de qualquer fluxo que eles seguram ao entregar o controle de metadados incorporados para outro manipulador de metadados. 
+		/// Se o fluxo não estiver restrito, use MAXLONGLONG como o tamanho máximo e deslocamento 0.
+		/// Os métodos de interface ICarenWICStream não permitem que você forneça uma opção de compartilhamento de arquivos. Para criar um fluxo de arquivos para uma imagem, use a função SHCreateStreamOnFileEx. 
+		/// Esse fluxo pode então ser usado para criar um ICarenWICBitmapDecoder usando o método (ICarenWICImagingFactory::CreateDecoderFromStream ).
+		/// </summary>
+		[CategoryAttribute("WIC Interface")]
+		[Guid("0716152A-1EA2-4D90-A178-A1B952C73384")]
+		public interface class ICarenWICStream : ICarenStream
+		{
+
+			/// <summary>
+			/// Propriedade que define se a classe foi descartada.
+			/// </summary>
+			property Boolean DisposedClasse
+			{
+				virtual Boolean get();
+			}
+
+
+			//Métodos
+
+			/// <summary>
+			/// Inicializa um fluxo de um arquivo específico.
+			/// </summary>
+			/// <param name="Param_NomeArquivo">O arquivo usado para inicializar o fluxo.</param>
+			/// <param name="Param_TipoAcesso">O modo de acesso ao arquivo desejado. </param>
+			CarenResult InitializeFromFilename(
+				String^ Param_NomeArquivo,
+				CA_ACCESS_RIGHTS Param_TipoAcesso);
+
+			/// <summary>
+			/// Inicializa um fluxo de outro fluxo. Os direitos de acesso são herdados do fluxo subjacente.
+			/// </summary>
+			/// <param name="Param_Fluxo">O fluxo para inicializar este.</param>
+			CarenResult InitializeFromIStream(ICarenStream^ Param_Fluxo);
+
+			/// <summary>
+			/// Inicializa o fluxo como um subfluxo de outro fluxo. O fluxo funciona com sua própria posição de fluxo, independente do fluxo subjacente, mas restrito a uma região. Todas as posições 
+			/// de busca são relativas à sub-região. É permitido, embora não recomendado, ter vários sub streams graváveis ​​sobrepondo o mesmo intervalo.
+			/// </summary>
+			/// <param name="Param_Fluxo">O fluxo de entrada.</param>
+			/// <param name="Param_Offset">O offset do fluxo usado para criar o novo fluxo.</param>
+			/// <param name="Param_MaxSize">O tamanho máximo do fluxo.</param>
+			CarenResult InitializeFromIStreamRegion(
+				ICarenStream^ Param_Fluxo,
+				UInt64 Param_Offset,
+				UInt64 Param_MaxSize);
+
+			/// <summary>
+			/// Inicializa um fluxo para tratar um bloco de memória como um fluxo. O fluxo não pode crescer além do tamanho do buffer.
+			/// Este método deve ser evitado sempre que possível. O responsável pela chamada é responsável por garantir que o bloco de memória seja válido por toda a vida do fluxo ao usar InitializeFromMemory. 
+			/// Uma solução alternativa para esse comportamento é criar um ICarenStream e usar InitializeFromIStream para criar o ICarenWICStream.
+			/// </summary>
+			/// <param name="Param_MemoryBuffer">Uma interface(ICarenBuffer) que contém um ponteiro para o bloco de memória que será usado para iniciar o fluxo.</param>
+			/// <param name="Param_BufferSize">O tamanho do buffer.</param>
+			CarenResult InitializeFromMemory(
+				ICarenBuffer^ Param_MemoryBuffer,
+				UInt32 Param_BufferSize);
+		};
+
+		/// <summary>
+		/// (IWICStreamProvider) - Interface responsável por expor métodos para um provedor de fluxo.
+		/// </summary>
+		[CategoryAttribute("WIC Interface")]
+		[Guid("F462B484-FA6A-4681-B763-44BFA56503CA")]
+		public interface class ICarenWICStreamProvider : ICaren
+		{
+
+			/// <summary>
+			/// Propriedade que define se a classe foi descartada.
+			/// </summary>
+			property Boolean DisposedClasse
+			{
+				virtual Boolean get();
+			}
+
+
+			//Métodos
+
+			/// <summary>
+			/// Obtém as opções de persistência usadas ao inicializar o componente com um fluxo.
+			/// </summary>
+			/// <param name="Param_Out_PersistOptions">Retorna as opções de persistência usadas ao inicializar o componente com um fluxo. Se nenhum for fornecido, o WICPersistOptionDefault será devolvido.</param>
+			CarenResult GetPersistOptions([Out] CA_WICPersistOptions% Param_Out_PersistOptions);
+
+			/// <summary>
+			/// Recebe o GUID do fornecedor preferido.
+			/// </summary>
+			/// <param name="Param_Out_Guid">Retorna o GUID do fornecedor preferido.</param>
+			CarenResult GetPreferredVendorGUID([Out] String^% Param_Out_Guid);
+
+			/// <summary>
+			/// Obtém o fluxo mantido pelo componente.
+			/// </summary>
+			/// <param name="Param_Out_Fluxo">Retorna uma interface(ICarenStream) que contém um ponteiro para o fluxo mantido pelo componente.</param>
+			CarenResult GetStream([Out] ICarenStream^% Param_Out_Fluxo);
+
+			/// <summary>
+			/// Informa ao componente que o conteúdo do stream que ele está segurando pode ter mudado.O componente deve responder sujando qualquer informação em cache do fluxo.
+			/// </summary>
+			CarenResult RefreshStream();
 		};
 
 		/// <summary>
@@ -618,8 +725,9 @@ namespace CarenRengine
 
 
 			//Delegates
-			delegate Int32 Delegate_OnProgressNotification(
-				ICaren^ Param_ComponenteData,
+
+			delegate CarenResult Delegate_OnProgressNotification(
+				ICarenBuffer^ Param_ComponenteData,
 				UInt64 Param_NumeroFrame,
 				CA_WICProgressOperation Param_Operacao,
 				double Param_Progresso);
@@ -654,19 +762,6 @@ namespace CarenRengine
 				ICaren^ Param_ComponenteData,
 				UInt32 Param_FlagsProgresso);
 
-			/// <summary>
-			/// Registra uma função de retorno de chamada de notificação de progresso.
-			/// Os aplicativos só podem registrar um único retorno de chamada. As chamadas de registro subsequentes substituirão o retorno de chamada previamente registrado. Para não 
-			/// registrar um retorno de chamada, passe no NULO ou registre uma nova função de retorno de chamada. O progresso é relatado em uma ordem crescente entre 0,0 e 1.0. Se o 
-			/// (Param_FlagsProgresso) incluir o WICProgressNotificationBegin, o retorno de chamada é garantido para ser chamado com o progresso 0.0. Se o (Param_FlagsProgresso) incluir 
-			/// o WICProgressNotificationEnd, o retorno de chamada é garantido para ser chamado com o progresso 1.0. WICProgressNotificaçãoFrequent aumenta a frequência em que o retorno 
-			/// de chamada é chamado. Se uma operação for esperada para levar mais de 30 segundos, o WICProgressNotificationFrequent deve ser adicionado ao (Param_FlagsProgresso).
-			/// </summary>
-			/// <param name="Param_ComponenteData">Uma interface(ICaren) que contém um ponteiro para componente de dados para o método de retorno de chamada.</param>
-			/// <param name="Param_FlagsProgresso">As bandeiras CA_WICProgressOperation e CA_WICProgressNotification para uso para notificação de progresso.</param>
-			CarenResult RegisterProgressNotification(
-				ICaren^ Param_ComponenteData,
-				UInt32 Param_FlagsProgresso);
 
 			//Métodos que registram e deletam os dados dos eventos.
 
@@ -687,8 +782,7 @@ namespace CarenRengine
 		/// um buffer de memória ou pode ser definido por um espaço de cor EXIF. O diretório de perfil de cores do sistema pode ser obtido ligando para o GetColorDirectory do (Windows Color System).
 		/// Depois que um contexto de cores é inicializado, ele não pode ser reinicializado.
 		/// </summary>
-		[CategoryAttribute("WIC Interface")]
-		
+		[CategoryAttribute("WIC Interface")]	
 		[Guid("D3A24E8E-76E6-45AE-81AD-48B6C518915D")]
 		public interface class ICarenWICColorContext : ICaren
 		{
@@ -987,7 +1081,7 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_Palette">Retorna uma interface(ICarenWICPalette) que contém um ponteiro para a paleta global do decodificador. Use o 
 			/// ICarenWICImagingFactory::CreatePalette para criar a paleta de destino antes de chamar o CopyPalette.</param>
-			CarenResult CopyPalette(ICarenWICPalette^ Param_Palette);
+			CarenResult CopyPalette(ICaren^ Param_Palette);
 
 			/// <summary>
 			/// Recupera os objetos ICarenWICColorContext da imagem. 
@@ -1098,7 +1192,7 @@ namespace CarenRengine
 		};
 
 		/// <summary>
-		/// (IWICBitmapFrameEncode) - Interface responsável por representar os quadros de imagem individuais de um codificador.
+		/// (IWICBitmapFrameEncode) - Interface responsável por representar os quadros(frames) de imagem individuais de um codificador.
 		/// </summary>
 		[CategoryAttribute("WIC Interface")]	
 		[Guid("7C37F9D3-82D6-43F8-9151-5986F8129024")]
@@ -1139,8 +1233,9 @@ namespace CarenRengine
 			/// Se você não quiser opções de codificação, passe NULO para (Param_OpcoesEncodificacao). Caso contrário, passe o ICarenPropertyBag2 fornecido pelo 
 			/// ICarenWICBitmapEncoder::CreateNewFrame com valores atualizados. Voce pode acessar o GUIDs::GUIDs_WIC_CLSIDs_ENCODIFICADORES para obter uma lista de codificadores suportados.
 			/// </summary>
-			/// <param name="Param_OpcoesEncodificacao">Retorna uma interface(ICarenPropertyBag2) que contém um ponteiro para o conjunto de propriedades a serem usadas para inicialização 
-			/// da interface atual(ICarenWICBitmapFrameEncode).</param>
+			/// <param name="Param_OpcoesEncodificacao">O conjunto de propriedades a serem usados para inicialização do ICarenWICBitmapFrameEncode. e você não quiser opções de codificação, 
+	        /// passe NULO para (Param_OpcoesEncodificacao). Caso contrário, passe um ICarenPropertyBag2 fornecido pelo ICarenWICBitmapEncoder::CreateNewFrame com valores 
+	        /// atualizados.</param>
 			CarenResult Initialize(ICarenPropertyBag2^ Param_OpcoesEncodificacao);
 
 			/// <summary>
@@ -1268,7 +1363,7 @@ namespace CarenRengine
 			/// ligar para o IWICBitmapFrameEncode::Commit antes de chamar o CreateNewFrame novamente.
 			/// </summary>
 			/// <param name="Param_Out_FrameEncode">Retorna uma interface(ICarenWICBitmapFrameEncode) que contém um ponteiro para a nova instância do ICarenWICBitmapFrameEncode.</param>
-			/// <param name="Param_Ref_OpcoesEncodificacao">Recebe as propriedades nomeadas para usar para inicialização subsequente do frame. Opcional.</param>
+			/// <param name="Param_Ref_OpcoesEncodificacao">(Opcional) Recebe as propriedades nomeadas para usar para inicialização subsequente do frame. O usuário deve inicializar a interface se desejar receber um ponteiro para a interface.</param>
 			CarenResult CreateNewFrame(
 				[Out] ICarenWICBitmapFrameEncode^% Param_Out_FrameEncode,
 				ICarenPropertyBag2^% Param_Ref_OpcoesEncodificacao);
@@ -1472,7 +1567,7 @@ namespace CarenRengine
 			/// <summary>
 			/// Recupera o formato de pixel mais próximo ao qual a implementação do ICarenWICBitmapSourceTransform pode copiar nativamente pixels, dado o formato desejado. 
 			/// </summary>
-			/// <param name="Param_Ref_INOUT_DestinoGuidFormato">Retorna o GUID do formato pixel que é o formato pixel suportado mais próximo do formato desejado.</param>
+			/// <param name="Param_Ref_INOUT_DestinoGuidFormato">Na entrada, o formato do pixel desejado, na saida, retorna o formato do pixel suportado mais proximo do desejado.</param>
 			CarenResult GetClosestPixelFormat(String^% Param_Ref_INOUT_DestinoGuidFormato);
 
 			/// <summary>
@@ -1616,7 +1711,8 @@ namespace CarenRengine
 			/// Recupera os formatos de contêiner suportados pelo manipulador de metadados. 
 			/// </summary>
 			/// <param name="Param_TamanhoArray"><O tamanho da matriz (Param_Out_ArrayGuidsFormatosContainer)./param>
-			/// <param name="Param_Out_ArrayGuidsFormatosContainer">Retorna uma matriz que recebe os formatos de contêiner suportados pelo manipulador de metadados.</param>
+			/// <param name="Param_Out_ArrayGuidsFormatosContainer">Retorna uma matriz que recebe os formatos de contêiner suportados pelo manipulador de metadados. O usuário deve criar matriz com a capacidade
+            /// indicada no (Param_TamanhoArray).</param>
 			/// <param name="Param_Out_QuantidadeRetornada">Retorna o número real de GUIDs adicionados à matriz. Para obter o número de formatos de contêiner suportados, 
 			/// passe NULO para (Param_Out_ArrayGuidsFormatosContainer).</param>
 			CarenResult GetContainerFormats(
@@ -3660,111 +3756,6 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_Level">Especifica qual nível retornará em seguida. Se for maior do que o número total de níveis suportados, um erro será devolvido.</param>
 			CarenResult SetCurrentLevel(UInt32 Param_Level);
-		};
-		
-		/// <summary>
-		/// (IWICStream) - Interface responsável por representar um fluxo WIC para referenciar conteúdo de imagem e metadados.
-		/// Espera-se que os decodificados e os manipuladores de metadados criem sub-fluxos de qualquer fluxo que eles seguram ao entregar o controle de metadados incorporados para outro manipulador de metadados. 
-		/// Se o fluxo não estiver restrito, use MAXLONGLONG como o tamanho máximo e deslocamento 0.
-		/// Os métodos de interface ICarenWICStream não permitem que você forneça uma opção de compartilhamento de arquivos. Para criar um fluxo de arquivos para uma imagem, use a função SHCreateStreamOnFileEx. 
-		/// Esse fluxo pode então ser usado para criar um ICarenWICBitmapDecoder usando o método (ICarenWICImagingFactory::CreateDecoderFromStream ).
-		/// </summary>
-		[CategoryAttribute("WIC Interface")]	
-		[Guid("0716152A-1EA2-4D90-A178-A1B952C73384")]
-		public interface class ICarenWICStream : ICarenStream
-		{
-
-			/// <summary>
-			/// Propriedade que define se a classe foi descartada.
-			/// </summary>
-			property Boolean DisposedClasse
-			{
-				virtual Boolean get();
-			}
-
-
-			//Métodos
-
-			/// <summary>
-			/// Inicializa um fluxo de um arquivo específico.
-			/// </summary>
-			/// <param name="Param_NomeArquivo">O arquivo usado para inicializar o fluxo.</param>
-			/// <param name="Param_TipoAcesso">O modo de acesso ao arquivo desejado. </param>
-			CarenResult InitializeFromFilename(
-				String^ Param_NomeArquivo,
-				CA_ACCESS_RIGHTS Param_TipoAcesso);
-
-			/// <summary>
-			/// Inicializa um fluxo de outro fluxo. Os direitos de acesso são herdados do fluxo subjacente.
-			/// </summary>
-			/// <param name="Param_Fluxo">O fluxo para inicializar este.</param>
-			CarenResult InitializeFromIStream(ICarenStream^ Param_Fluxo);
-
-			/// <summary>
-			/// Inicializa o fluxo como um subfluxo de outro fluxo. O fluxo funciona com sua própria posição de fluxo, independente do fluxo subjacente, mas restrito a uma região. Todas as posições 
-			/// de busca são relativas à sub-região. É permitido, embora não recomendado, ter vários sub streams graváveis ​​sobrepondo o mesmo intervalo.
-			/// </summary>
-			/// <param name="Param_Fluxo">O fluxo de entrada.</param>
-			/// <param name="Param_Offset">O offset do fluxo usado para criar o novo fluxo.</param>
-			/// <param name="Param_MaxSize">O tamanho máximo do fluxo.</param>
-			CarenResult InitializeFromIStreamRegion(
-				ICarenStream^ Param_Fluxo,
-				UInt64 Param_Offset,
-				UInt64 Param_MaxSize);
-
-			/// <summary>
-			/// Inicializa um fluxo para tratar um bloco de memória como um fluxo. O fluxo não pode crescer além do tamanho do buffer.
-			/// Este método deve ser evitado sempre que possível. O responsável pela chamada é responsável por garantir que o bloco de memória seja válido por toda a vida do fluxo ao usar InitializeFromMemory. 
-			/// Uma solução alternativa para esse comportamento é criar um ICarenStream e usar InitializeFromIStream para criar o ICarenWICStream.
-			/// </summary>
-			/// <param name="Param_MemoryBuffer">Uma interface(ICarenBuffer) que contém um ponteiro para o bloco de memória que será usado para iniciar o fluxo.</param>
-			/// <param name="Param_BufferSize">O tamanho do buffer.</param>
-			CarenResult InitializeFromMemory(
-				ICarenBuffer^ Param_MemoryBuffer,
-				UInt32 Param_BufferSize);
-		};
-
-		/// <summary>
-		/// (IWICStreamProvider) - Interface responsável por expor métodos para um provedor de fluxo.
-		/// </summary>
-		[CategoryAttribute("WIC Interface")]		
-		[Guid("F462B484-FA6A-4681-B763-44BFA56503CA")]
-		public interface class ICarenWICStreamProvider : ICaren
-		{
-
-			/// <summary>
-			/// Propriedade que define se a classe foi descartada.
-			/// </summary>
-			property Boolean DisposedClasse
-			{
-				virtual Boolean get();
-			}
-
-
-			//Métodos
-
-			/// <summary>
-			/// Obtém as opções de persistência usadas ao inicializar o componente com um fluxo.
-			/// </summary>
-			/// <param name="Param_Out_PersistOptions">Retorna as opções de persistência usadas ao inicializar o componente com um fluxo. Se nenhum for fornecido, o WICPersistOptionDefault será devolvido.</param>
-			CarenResult GetPersistOptions([Out] CA_WICPersistOptions% Param_Out_PersistOptions);
-
-			/// <summary>
-			/// Recebe o GUID do fornecedor preferido.
-			/// </summary>
-			/// <param name="Param_Out_Guid">Retorna o GUID do fornecedor preferido.</param>
-			CarenResult GetPreferredVendorGUID([Out] String^% Param_Out_Guid);
-
-			/// <summary>
-			/// Obtém o fluxo mantido pelo componente.
-			/// </summary>
-			/// <param name="Param_Out_Fluxo">Retorna uma interface(ICarenStream) que contém um ponteiro para o fluxo mantido pelo componente.</param>
-			CarenResult GetStream([Out] ICarenStream^% Param_Out_Fluxo);
-
-			/// <summary>
-			/// Informa ao componente que o conteúdo do stream que ele está segurando pode ter mudado.O componente deve responder sujando qualquer informação em cache do fluxo.
-			/// </summary>
-			CarenResult RefreshStream();
 		};
 	}
 }

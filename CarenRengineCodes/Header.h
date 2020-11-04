@@ -173,6 +173,13 @@ typedef cli::array<Byte>^ MatrizBytes;
 typedef System::IntPtr GenPointer;
 #define DefaultGenPointer IntPtr::Zero;
 
+#ifndef Nulo
+#ifdef __cplusplus
+#define Nulo 0
+#else
+#define nulo ((void *)0)
+#endif
+#endif
 
 
 //Funções.

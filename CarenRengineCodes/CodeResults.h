@@ -105,14 +105,14 @@ namespace CarenRengine
 			ER_GUID_INVALIDO,
 
 			/// <summary>
-			/// Não foi possivel criar uma Propvariant nativa ou gerenciada.
+			/// Não foi possivel criar ou converter uma PropVariant nativa ou gerenciada.
 			/// </summary>
-			ER_PROPVARIANT_CRIAR,
+			ER_PROPVARIANT_CREATE_OR_CONVERSION,
 
 			/// <summary>
 			/// O tipo da PropVariant não é suportado por essa biblioteca.
 			/// </summary>
-			ER_PROPVARIANT_TIPO_NAO_SUPORTADO,
+			ER_PROPVARIANT_TYPE_NO_SUPPORTED,
 
 
 
@@ -3106,7 +3106,12 @@ namespace CarenRengine
 			/// <summary>
 			/// () - 
 			/// </summary>
-			ER_WINCODEC_ERR_INVALIDJPEGSCANINDEX
+			ER_WINCODEC_ERR_INVALIDJPEGSCANINDEX,
+
+			/// <summary>
+			/// (WINCODEC_ERR_ABORTED = E_ABORT) - 
+			/// </summary>
+			ER_WINCODEC_ERR_ABORTED = ER_E_ABORT
 		};
 
 		/// <summary>
@@ -4994,7 +4999,6 @@ namespace CarenRengine
 					//Define o ResultCode a ser retornado.
 					OutStatus = ResultCode::ER_WINCODEC_ERR_INVALIDJPEGSCANINDEX;
 					break;
-
 
 
 
@@ -8126,11 +8130,11 @@ namespace CarenRengine
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = E_FAIL;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_PROPVARIANT_CRIAR:
+				case CarenRengine::CarenCodesStatus::ResultCode::ER_PROPVARIANT_CREATE_OR_CONVERSION:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = E_FAIL;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_PROPVARIANT_TIPO_NAO_SUPORTADO:
+				case CarenRengine::CarenCodesStatus::ResultCode::ER_PROPVARIANT_TYPE_NO_SUPPORTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = E_FAIL;
 					break;

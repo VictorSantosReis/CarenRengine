@@ -1152,6 +1152,18 @@
     <ClInclude Include="CarenRengineCodes\WIC\CarenWICFormatConverter.h">
       <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
     </ClInclude>
+    <ClInclude Include="CarenRengineCodes\WIC\CarenWICImagingFactory.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\WIC\CarenWICImageEncoder.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Windows\CarenStream.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\WIC\CarenWICStream.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D10Multithread.cpp">
@@ -2110,6 +2122,18 @@
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\WIC\CarenWICFastMetadataEncoder.cpp">
       <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\WIC\CarenWICImageEncoder.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\WIC\CarenWICImagingFactory.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Windows\CarenStream.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\WIC\CarenWICStream.cpp">
+      <Filter>Arquivos de Origem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

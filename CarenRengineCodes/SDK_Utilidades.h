@@ -8835,6 +8835,141 @@ namespace CarenRengine
 				//Retorna a variavel.
 				return EstruturaRetorno;
 			}
+
+
+
+			//Converte uma estrutura gerenciada(CA_WICImageParameters) para sua correspondencia não gerenciada(WICImageParameters).
+			WICImageParameters* ConverterWICImageParametersManaged_ToUnManaged(CA_WICImageParameters^ Param_Estrutura)
+			{
+				//Variavel a ser retornada.
+				WICImageParameters* EstruturaRetorno = CriarEstrutura<WICImageParameters>();
+
+				//Inicializa todos os itens da estrutura com NULL.
+				ZeroMemory(EstruturaRetorno, sizeof(WICImageParameters));
+
+				//Variaveis
+				D2D1_PIXEL_FORMAT* vi_pPixelFormat = Nulo;
+
+				//Converte a estrutura
+				vi_pPixelFormat = ConverterD2D1_PIXEL_FORMATManagedToUnmanaged(Param_Estrutura->PixelFormat);
+
+				//Define os dados na estrutura
+				EstruturaRetorno->PixelFormat = *vi_pPixelFormat;
+				EstruturaRetorno->DpiX = Param_Estrutura->DpiX;
+				EstruturaRetorno->DpiY = Param_Estrutura->DpiY;
+				EstruturaRetorno->Left = Param_Estrutura->Left;
+				EstruturaRetorno->Top = Param_Estrutura->Top;
+				EstruturaRetorno->PixelHeight = Param_Estrutura->PixelHeight;
+				EstruturaRetorno->PixelWidth = Param_Estrutura->PixelWidth;
+
+				//Libera a memória utilizada pela estrutura
+				DeletarEstruturaSafe(&vi_pPixelFormat);
+
+				//Retorna
+				return EstruturaRetorno;
+			}
+
+			//Converte uma estrutura não gerenciada(WICImageParameters) para sua correspondencia gerenciada(CA_WICImageParameters).
+			CA_WICImageParameters^ ConverterWICImageParametersUnManaged_ToManaged(WICImageParameters* Param_Estrutura)
+			{
+				//Variavel a ser retornada.
+				CA_WICImageParameters^ EstruturaRetorno = gcnew CA_WICImageParameters();
+
+				//Define os dados na estrutura
+				EstruturaRetorno->PixelFormat = ConverterD2D1_PIXEL_FORMATUnmanagedToManaged(&Param_Estrutura->PixelFormat);
+				EstruturaRetorno->DpiX = Param_Estrutura->DpiX;
+				EstruturaRetorno->DpiY = Param_Estrutura->DpiY;
+				EstruturaRetorno->Left = Param_Estrutura->Left;
+				EstruturaRetorno->Top = Param_Estrutura->Top;
+				EstruturaRetorno->PixelHeight = Param_Estrutura->PixelHeight;
+				EstruturaRetorno->PixelWidth = Param_Estrutura->PixelWidth;
+
+				//Retorna a variavel.
+				return EstruturaRetorno;
+			}
+
+
+
+
+			// Windows Estruturas
+
+			//Converte uma estrutura gerenciada(CA_STATSTG) para sua correspondencia não gerenciada(STATSTG).
+			STATSTG* ConverterWindows_STATSTGManaged_ToUnManaged(CA_STATSTG^ Param_Estrutura)
+			{
+				//Variavel a ser retornada.
+				STATSTG* EstruturaRetorno = CriarEstrutura<STATSTG>();
+
+				//Inicializa todos os itens da estrutura com NULL.
+				ZeroMemory(EstruturaRetorno, sizeof(STATSTG));
+
+				//Variaveis
+				ULARGE_INTEGER SizeStream = { 0 };
+				_FILETIME FileTime_m = { 0 };
+				_FILETIME FileTime_c = { 0 };
+				_FILETIME FileTime_a = { 0 };
+
+				//Define os dados das variaveis
+				SizeStream.QuadPart = Param_Estrutura->cbSize;
+
+				//Define os dados dos times.
+				FileTime_m.dwLowDateTime = Param_Estrutura->mtime->dwLowDateTime;
+				FileTime_m.dwHighDateTime = Param_Estrutura->mtime->dwHighDateTime;
+
+				FileTime_c.dwLowDateTime = Param_Estrutura->ctime->dwLowDateTime;
+				FileTime_c.dwHighDateTime = Param_Estrutura->ctime->dwHighDateTime;
+
+				FileTime_a.dwLowDateTime = Param_Estrutura->atime->dwLowDateTime;
+				FileTime_a.dwHighDateTime = Param_Estrutura->atime->dwHighDateTime;
+
+				//Define os dados na estrutura
+				EstruturaRetorno->pwcsName = StringObjetoValido(Param_Estrutura->pwcsName) ? ConverterStringToWCHAR(Param_Estrutura->pwcsName) : Nulo;
+				EstruturaRetorno->type = static_cast<STGTY>(Param_Estrutura->type);
+				EstruturaRetorno->cbSize = SizeStream;
+				EstruturaRetorno->atime = FileTime_a;
+				EstruturaRetorno->ctime = FileTime_c;
+				EstruturaRetorno->mtime = FileTime_m;
+				EstruturaRetorno->grfMode = static_cast<DWORD>(Param_Estrutura->grfMode);
+				EstruturaRetorno->grfLocksSupported = static_cast<DWORD>(Param_Estrutura->grfLocksSupported);
+				EstruturaRetorno->grfStateBits = static_cast<DWORD>(Param_Estrutura->grfStateBits);
+				EstruturaRetorno->clsid = StringObjetoValido(Param_Estrutura->clsid) ? CreateGuidFromString(Param_Estrutura->clsid) : GUID_NULL;
+
+
+				//Retorna
+				return EstruturaRetorno;
+			}
+
+			//Converte uma estrutura não gerenciada(STATSTG) para sua correspondencia gerenciada(CA_STATSTG).
+			CA_STATSTG^ ConverterWindows_STATSTGUnManaged_ToManaged(STATSTG* Param_Estrutura)
+			{
+				//Variavel a ser retornada.
+				CA_STATSTG^ EstruturaRetorno = gcnew CA_STATSTG();
+
+				//Define os dados na estrutura
+				EstruturaRetorno->pwcsName = ObjetoValido(Param_Estrutura->pwcsName) ? gcnew String(Param_Estrutura->pwcsName) : nullptr;
+				EstruturaRetorno->type = static_cast<CA_STGTY>(Param_Estrutura->type);
+				EstruturaRetorno->cbSize = Param_Estrutura->cbSize.QuadPart;
+				EstruturaRetorno->atime = gcnew CA_FILETIME();
+				EstruturaRetorno->ctime = gcnew CA_FILETIME();
+				EstruturaRetorno->mtime = gcnew CA_FILETIME();
+				EstruturaRetorno->grfMode = static_cast<UInt32>(Param_Estrutura->grfMode);
+				EstruturaRetorno->grfLocksSupported = static_cast<CA_LOCKTYPE>(Param_Estrutura->grfLocksSupported);
+				EstruturaRetorno->grfStateBits = static_cast<UInt32>(Param_Estrutura->grfStateBits);
+				EstruturaRetorno->clsid = Param_Estrutura->clsid == GUID_NULL ? ConverterGuidToString(Param_Estrutura->clsid) : nullptr;
+
+				//Define os dados dos filetimes.
+				EstruturaRetorno->atime->dwLowDateTime = Param_Estrutura->atime.dwLowDateTime;
+				EstruturaRetorno->atime->dwHighDateTime = Param_Estrutura->atime.dwHighDateTime;
+
+				EstruturaRetorno->ctime->dwLowDateTime = Param_Estrutura->ctime.dwLowDateTime;
+				EstruturaRetorno->ctime->dwHighDateTime = Param_Estrutura->ctime.dwHighDateTime;
+
+				EstruturaRetorno->mtime->dwLowDateTime = Param_Estrutura->mtime.dwLowDateTime;
+				EstruturaRetorno->mtime->dwHighDateTime = Param_Estrutura->mtime.dwHighDateTime;
+				
+				//Retorna a variavel.
+				return EstruturaRetorno;
+			}
+
 		};
 	}
 }

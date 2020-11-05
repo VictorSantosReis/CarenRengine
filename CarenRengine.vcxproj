@@ -406,6 +406,8 @@
     <ClInclude Include="CarenRengineCodes\WIC\CarenWICEnumMetadataItem.h" />
     <ClInclude Include="CarenRengineCodes\WIC\CarenWICFastMetadataEncoder.h" />
     <ClInclude Include="CarenRengineCodes\WIC\CarenWICFormatConverter.h" />
+    <ClInclude Include="CarenRengineCodes\WIC\CarenWICImageEncoder.h" />
+    <ClInclude Include="CarenRengineCodes\WIC\CarenWICImagingFactory.h" />
     <ClInclude Include="CarenRengineCodes\WIC\CarenWICMetadataBlockReader.h" />
     <ClInclude Include="CarenRengineCodes\WIC\CarenWICMetadataBlockWriter.h" />
     <ClInclude Include="CarenRengineCodes\WIC\CarenWICMetadataHandlerInfo.h" />
@@ -414,6 +416,7 @@
     <ClInclude Include="CarenRengineCodes\WIC\CarenWICMetadataReader.h" />
     <ClInclude Include="CarenRengineCodes\WIC\CarenWICMetadataWriter.h" />
     <ClInclude Include="CarenRengineCodes\WIC\CarenWICPalette.h" />
+    <ClInclude Include="CarenRengineCodes\WIC\CarenWICStream.h" />
     <ClInclude Include="CarenRengineCodes\Windows\CarenEnumString.h" />
     <ClInclude Include="CarenRengineCodes\Windows\CarenEnumUnknown.h" />
     <ClInclude Include="CarenRengineCodes\Windows\CarenPropertyStore.h" />
@@ -457,6 +460,7 @@
     <ClInclude Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink1.h" />
     <ClInclude Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink4.h" />
     <ClInclude Include="CarenRengineCodes\Nativas\CLN_WicBitmapProgress.h" />
+    <ClInclude Include="CarenRengineCodes\Windows\CarenStream.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CarenRengineCodes\Classes Auxiliares\CarenPD2D1_PROPERTY_FUNCTIONS.cpp" />
@@ -731,6 +735,8 @@
     <ClCompile Include="CarenRengineCodes\WIC\CarenWICEnumMetadataItem.cpp" />
     <ClCompile Include="CarenRengineCodes\WIC\CarenWICFastMetadataEncoder.cpp" />
     <ClCompile Include="CarenRengineCodes\WIC\CarenWICFormatConverter.cpp" />
+    <ClCompile Include="CarenRengineCodes\WIC\CarenWICImageEncoder.cpp" />
+    <ClCompile Include="CarenRengineCodes\WIC\CarenWICImagingFactory.cpp" />
     <ClCompile Include="CarenRengineCodes\WIC\CarenWICMetadataBlockReader.cpp" />
     <ClCompile Include="CarenRengineCodes\WIC\CarenWICMetadataBlockWriter.cpp" />
     <ClCompile Include="CarenRengineCodes\WIC\CarenWICMetadataHandlerInfo.cpp" />
@@ -739,6 +745,7 @@
     <ClCompile Include="CarenRengineCodes\WIC\CarenWICMetadataReader.cpp" />
     <ClCompile Include="CarenRengineCodes\WIC\CarenWICMetadataWriter.cpp" />
     <ClCompile Include="CarenRengineCodes\WIC\CarenWICPalette.cpp" />
+    <ClCompile Include="CarenRengineCodes\WIC\CarenWICStream.cpp" />
     <ClCompile Include="CarenRengineCodes\Windows\CarenEnumString.cpp" />
     <ClCompile Include="CarenRengineCodes\Windows\CarenEnumUnknown.cpp" />
     <ClCompile Include="CarenRengineCodes\Windows\CarenPropertyStore.cpp" />
@@ -785,6 +792,7 @@
     <ClCompile Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink1.cpp" />
     <ClCompile Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink4.cpp" />
     <ClCompile Include="CarenRengineCodes\Nativas\CLN_WicBitmapProgress.cpp" />
+    <ClCompile Include="CarenRengineCodes\Windows\CarenStream.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CarenRengineCodes\app.rc" />

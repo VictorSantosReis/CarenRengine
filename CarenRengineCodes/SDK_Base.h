@@ -20,7 +20,6 @@ limitations under the License.
 #include "Caren/CarenHMONITOR.h"
 #include "CarenGuids.h"
 #include "SDK_Caren.h" //Interfaces Base de Caren.
-#include "SDK_Windows.h" //Interfaces Windows.
 
 //Importa o namespace base
 using namespace CarenRengine;
@@ -4717,6 +4716,85 @@ namespace CarenRengine
 				/// outro objeto e têm os mesmos dados.
 				/// </summary>
 				MF_ATTRIBUTES_MATCH_SMALLER
+			};
+
+
+			/// <summary>
+			/// (tagSTATFLAG) - Os valores de enumeração indicam se o método deve tentar retornar um nome no membro pwcsName da estrutura CA_STATSTG. Os valores são usados nos 
+			/// métodos ICarenStream::Stat métodos para salvar a memória quando o membro do nome pwcs não for necessário.
+			/// </summary>
+			[FlagsAttribute]
+			public enum class CA_STATFLAG
+			{
+				CA_STATFLAG_DEFAULT = 0,
+
+				CA_STATFLAG_NONAME = 1,
+
+				CA_STATFLAG_NOOPEN = 2
+			};
+
+			/// <summary>
+			/// (tagLOCKTYPE) - Enumera os tipos de bloqueio solicitado para a faixa especificada de bytes. Os valores são usados nos métodos ICarenStream::LockRegion.
+			/// </summary>
+			[FlagsAttribute]
+			public enum class CA_LOCKTYPE
+			{
+				Zero = 0,
+
+				CA_LOCK_WRITE = 1,
+
+				CA_LOCK_EXCLUSIVE = 2,
+
+				CA_LOCK_ONLYONCE = 4
+			};
+			
+			/// <summary>
+			/// (tagSTGC) - Enumera constantes que especificam as condições para realizar a operação de (Commit) no método ICarenStream::Commit.
+			/// </summary>
+			[FlagsAttribute]
+			public enum class CA_STGC
+			{
+				CA_STGC_DEFAULT = 0,
+
+				CA_STGC_OVERWRITE = 1,
+
+				CA_STGC_ONLYIFCURRENT = 2,
+
+				CA_STGC_DANGEROUSLYCOMMITMERELYTODISKCACHE = 4,
+
+				CA_STGC_CONSOLIDATE = 8
+			};
+
+			
+			/// <summary>
+			/// (tagSTREAM_SEEK) - Enumera valores que especificam a origem a partir da qual calcular o novo local de ponto de busca. Eles são usados para o parâmetro (Param_Origem) 
+			/// no método ICarenStream::Seek. A nova posição de busca é calculada usando esse valor e o parâmetro (Param_Deslocamento).
+			/// </summary>
+			[FlagsAttribute]
+			public enum class CA_STREAM_SEEK
+			{
+				CA_STREAM_SEEK_SET = 0,
+
+				CA_STREAM_SEEK_CUR = 1,
+
+				CA_STREAM_SEEK_END = 2
+			};
+			
+			/// <summary>
+			/// (tagSTGTY) - Enumera valoresque  são usados no tipo membro da estrutura CA_STATSTG para indicar o tipo do elemento de armazenamento. Um elemento de armazenamento 
+			/// é um objeto de armazenamento, um objeto de fluxo ou um objeto de byte-array (LOCKBYTES).
+			/// </summary>
+			public enum class CA_STGTY
+			{
+				Zero = 0,
+
+				CA_STGTY_STORAGE = 1,
+
+				CA_STGTY_STREAM = 2,
+
+				CA_STGTY_LOCKBYTES = 3,
+
+				CA_STGTY_PROPERTY = 4
 			};
 
 			/// <summary>
@@ -17577,6 +17655,68 @@ MEReservedMax = 10000
 			};
 
 			/// <summary>
+			/// (_FILETIME)(FALTA DOCUMENTAR) -  
+			/// </summary>
+			public ref struct CA_FILETIME
+			{
+				/// <summary>
+				/// 
+				/// </summary>
+				UInt32 dwLowDateTime;
+				/// <summary>
+				/// 
+				/// </summary>
+				UInt32 dwHighDateTime;
+			};
+
+			/// <summary>
+			/// (tagSTATSTG)(FALTA DOCUMENTAR) -  
+			/// </summary>
+			public ref struct CA_STATSTG
+			{
+				/// <summary>
+				/// 
+				/// </summary>
+				String^                   pwcsName;
+				/// <summary>
+				/// 
+				/// </summary>
+				Enumeracoes::CA_STGTY     type;
+				/// <summary>
+				/// 
+				/// </summary>
+				UInt64                    cbSize;
+				/// <summary>
+				/// 
+				/// </summary>
+				CA_FILETIME^              mtime;
+				/// <summary>
+				/// 
+				/// </summary>
+				CA_FILETIME^              ctime;
+				/// <summary>
+				/// 
+				/// </summary>
+				CA_FILETIME^              atime;
+				/// <summary>
+				/// 
+				/// </summary>
+				UInt32                    grfMode;
+				/// <summary>
+				/// 
+				/// </summary>
+				Enumeracoes::CA_LOCKTYPE  grfLocksSupported;
+				/// <summary>
+				/// 
+				/// </summary>
+				String^                   clsid;
+				/// <summary>
+				/// 
+				/// </summary>
+				UInt32                    grfStateBits;
+			};
+
+			/// <summary>
 			/// (tagBLOB) - Estrutura que contém um Blob(Byte Array) com os dados requisitados.
 			/// </summary>
 			public ref struct CA_BlobData
@@ -17674,9 +17814,9 @@ MEReservedMax = 10000
 			/// </summary>
 			public ref struct CA_CY
 			{
-				ULONG Lo;
-				LONG Hi;
-				LONGLONG int64;
+				UInt32 Lo;
+				Int32 Hi;
+				Int64 int64;
 			};
 		
 			/// <summary>
@@ -22229,7 +22369,7 @@ MEReservedMax = 10000
 				/// <summary>
 				/// 
 				/// </summary>
-				CA_D2D1_PIXEL_FORMAT PixelFormat;
+				CA_D2D1_PIXEL_FORMAT^ PixelFormat;
 				/// <summary>
 				/// 
 				/// </summary>

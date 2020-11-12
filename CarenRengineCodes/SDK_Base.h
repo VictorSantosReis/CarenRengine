@@ -4477,7 +4477,7 @@ namespace CarenRengine
 			/////////////////////////////////////////
 
 			/// <summary> 
-			/// (IWICJpegFrameDecod)(FALTA DOCUMENTAR) - 
+			/// (IWICJpegFrameDecode)(FALTA DOCUMENTAR) - 
 			/// </summary>
 			public enum class CA_WIC_IWICJpegFrameDecode
 			{
@@ -12348,7 +12348,7 @@ MEReservedMax = 10000
 			/// <summary> 
 			/// (WICMetadataCreationOptions)(FALTA DOCUMENTAR) - 
 			/// </summary>
-			public enum class CA_WICMetadataCreationOptions : Int64
+			public enum class CA_WICMetadataCreationOptions
 			{
 				/// <summary>
 				/// 
@@ -12362,10 +12362,6 @@ MEReservedMax = 10000
 				/// 
 				/// </summary>
 				WICMetadataCreationFailUnknown = 0x10000,
-				/// <summary>
-				/// 
-				/// </summary>
-				WICMetadataCreationMask = 0xffff0000
 			};
 
 			/// <summary> 
@@ -22513,7 +22509,7 @@ MEReservedMax = 10000
 				/// <summary>
 				/// 
 				/// </summary>
-				cli::array<Byte>^ Header;
+				cli::array<Byte>^ Pattern;
 				/// <summary>
 				/// 
 				/// </summary>
@@ -22864,85 +22860,6 @@ MEReservedMax = 10000
 				/// <param name="Param_PropValor">TBD.</param>
 				CarenResult DefinirValor(Estruturas::CA_PROPERTYKEY^% Param_PropKey, Estruturas::CA_PropVariant^ Param_PropValor);
 
-			};
-
-			/// <summary>
-			/// (IPropertyBag2) - Interface responsável por fornecer um objeto com um saco de propriedade no qual o objeto pode salvar suas propriedades persistentemente.
-			/// </summary>
-			[CategoryAttribute("Windows Interface")]
-			[Guid("D0E858B7-EFE8-4E6C-9EA5-536DD603A8AB")]
-			public interface class ICarenPropertyBag2 : ICaren
-			{
-				/// <summary>
-				/// Propriedade que define se a classe foi descartada.
-				/// </summary>
-				property Boolean DisposedClasse
-				{
-					virtual Boolean get();
-				}
-
-
-
-				//Métodos
-
-				/// <summary>
-				/// (CountProperties) - Obtém o número de propriedades no saco da propriedade.
-				/// </summary>
-				/// <param name="Param_Out_Quantidade"></param>
-				CarenResult ObterQuantidadePropriedades([Out] UInt32% Param_Out_Quantidade);
-
-				/// <summary>
-				/// (GetPropertyInfo) - Obtém informações para propriedades em um saco de propriedade sem realmente obter essas propriedades. 
-				/// </summary>
-				/// <param name="Param_ID"></param>
-				/// <param name="Param_Quantidade"></param>
-				/// <param name="Param_Out_ArrayPropBags"></param>
-				/// <param name="Param_Out_Quantiade"></param>
-				CarenResult ObterInfoPropriedades(
-					UInt32 Param_ID,
-					UInt32 Param_Quantidade,
-					[Out] cli::array<Estruturas::CA_PROPBAG2^>^% Param_Out_ArrayPropBags,
-					[Out] UInt32% Param_Out_Quantiade);
-
-
-				/// <summary>
-				/// (LoadObject) - Faz com que o saco de propriedade instrua um objeto de propriedade que foi criado anteriormente e inicializado para ler suas propriedades persistentes. 
-				/// </summary>
-				/// <param name="Param_EnderecoNome"></param>
-				/// <param name="Param_Hint"></param>
-				/// <param name="Param_UnkObjeto"></param>
-				/// <param name="Param_Ref_ErrorLog"></param>
-				CarenResult CarregarObjeto(
-					String^ Param_EnderecoNome,
-					UInt32 Param_Hint,
-					ICaren^ Param_UnkObjeto,
-					ICaren^% Param_Ref_ErrorLog);
-
-				/// <summary>
-				///  (Read) - Faz com que uma ou mais propriedades sejam lidas do saco de propriedade.
-				/// </summary>
-				/// <param name="Param_Quantidade"></param>
-				/// <param name="Param_ArrayPropBagsRequest"></param>
-				/// <param name="Param_InterfaceErro"></param>
-				/// <param name="Param_Out_VarValue"></param>
-				/// <param name="Param_Out_HRESULTArray"></param>
-				CarenResult Ler(
-					UInt32 Param_Quantidade,
-					cli::array<Estruturas::CA_PROPBAG2^>^ Param_ArrayPropBagsRequest,
-					ICaren^ Param_InterfaceErro,
-					[Out] cli::array<Estruturas::CA_VARIANT^>^% Param_Out_VarValue,
-					[Out] cli::array<Int32>^% Param_Out_HRESULTArray);
-				
-				/// <summary>
-				/// (Write) - Faz com que uma ou mais propriedades sejam salvas no saco da propriedade.
-				/// </summary>
-				/// <param name="Param_Quantidade"></param>
-				/// <param name="Param_ArrayPropBagsRequest"></param>
-				/// <param name="Param_VarValue"></param>
-				CarenResult Escrever(
-					UInt32 Param_Quantidade,
-					cli::array<Estruturas::CA_PROPBAG2^>^ Param_ArrayPropBagsRequest,
-					cli::array<Estruturas::CA_VARIANT^>^% Param_VarValue);
 			};
 		}
 	}

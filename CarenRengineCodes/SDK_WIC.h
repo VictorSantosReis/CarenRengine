@@ -2516,7 +2516,7 @@ namespace CarenRengine
 			CarenResult CreateMetadataReader(
 				String^ Param_GuidFormatoMetadata,
 				String^ Param_GuidVendor,
-				UInt64 Param_Opcoes,
+				UInt32 Param_Opcoes,
 				ICarenStream^ Param_Fluxo,
 				[Out] ICarenWICMetadataReader^% Param_Out_MetadataReader);
 
@@ -2531,7 +2531,7 @@ namespace CarenRengine
 			CarenResult CreateMetadataReaderFromContainer(
 				String^ Param_GuidFormatoContainer,
 				String^ Param_GuidVendor,
-				UInt64 Param_Opcoes,
+				UInt32 Param_Opcoes,
 				ICarenStream^ Param_Fluxo,
 				[Out] ICarenWICMetadataReader^% Param_Out_MetadataReader);
 
@@ -2545,7 +2545,7 @@ namespace CarenRengine
 			CarenResult CreateMetadataWriter(
 				String^ Param_GuidFormatoMetadata,
 				String^ Param_GuidVendor,
-				UInt64 Param_OpcoesMetadata,
+				UInt32 Param_OpcoesMetadata,
 				[Out] ICarenWICMetadataWriter^% Param_Out_MetadataWriter);
 
 			/// <summary>
@@ -2671,7 +2671,7 @@ namespace CarenRengine
 		};
 
 		/// <summary>
-		/// (IWICDevelopRawNotificationCallback) - Interface responsável por expor um método de retorno de chamada para notificações de alteração de imagem bruta.
+		/// (IWICDevelopRawNotificationCallback) - Interface responsável por expor um evento para notificações de alteração de imagem bruta.
 		/// </summary>
 		[CategoryAttribute("WIC Interface")]	
 		[Guid("69E79AA6-0306-4AC4-AC45-4E0709B9A016")]
@@ -2693,7 +2693,7 @@ namespace CarenRengine
 			/// <summary>
 			/// Delegate para o método nativo (IWICDevelopRawNotificaçãoCallback::Notify) da interface de rotorno de chamdas.
 			/// </summary>
-			delegate int Delegate_Notify(CA_WIC_IWICDevelopRawNotificationCallback Param_NotificationMask);
+			delegate CarenResult Delegate_Notify(CA_WIC_IWICDevelopRawNotificationCallback Param_NotificationMask);
 
 
 			//
@@ -2833,7 +2833,7 @@ namespace CarenRengine
 			/// Obtém a curva de tom da imagem bruta. 
 			/// </summary>
 			/// <param name="Param_ToneCurveBufferSize">O tamanho da estrutura (Param_Ref_ToneCurve).</param>
-			/// <param name="Param_Ref_ToneCurve">Retorna uma estrutura (CA_WICRawToneCurve) da imagem bruta.</param>
+			/// <param name="Param_Ref_ToneCurve">Retorna uma estrutura (CA_WICRawToneCurve) da imagem bruta. Define esse valor para NULO para obter o tamanho necessário para (Param_ToneCurveBufferSize).</param>
 			/// <param name="Param_Out_ToneCurveBufferSizeAtual">Retorna o tamanho necessário para retornar a estrutura (Param_Ref_ToneCurve).</param>
 			CarenResult GetToneCurve(
 				UInt32 Param_ToneCurveBufferSize,
@@ -3019,12 +3019,12 @@ namespace CarenRengine
 			/// <param name="Param_Stride">O Stride, em bytes, do Buffer de destino. Isso representa o número de bytes do Buffer para a próxima linha de dados. Se a textura usar uma DXGI_FORMAT
 			///  compactada por bloco, uma "linha de dados" será definida como uma linha de blocos que contém várias linhas de varredura de pixels.</param>
 			/// <param name="Param_BufferSize">O tamanho, em bytes, do buffer de destino.</param>
-			/// <param name="Param_Out_Buffer">Retorna uma interface(ICarenBuffer) que representa o buffer de destino.</param>
+			/// <param name="Param_BufferDestino">Uma interface (ICarenBuffer) para o buffer de destino.</param>
 			CarenResult CopyBlocks(
 				CA_WICRect^ Param_RetanguloCopy,
 				UInt32 Param_Stride,
 				UInt32 Param_BufferSize,
-				[Out] ICarenBuffer^% Param_Out_Buffer);
+				ICarenBuffer^ Param_BufferDestino);
 
 			/// <summary>
 			/// Obtém informações sobre o formato em que a imagem DDS é armazenada.
@@ -3109,7 +3109,7 @@ namespace CarenRengine
 			//Métodos
 
 			/// <summary>
-			/// Remove a indexação de um JPEG que foi indexado usando IWICJpegFrameDecode::SetIndexing. 
+			/// Remove a indexação de um JPEG que foi indexado usando ICarenWICJpegFrameDecode::SetIndexing. 
 			/// </summary>
 			CarenResult ClearIndexing();
 
@@ -3120,13 +3120,13 @@ namespace CarenRengine
 			/// <param name="Param_ScanOffset">A posição byte nos dados de varredura para começar a copiar. Use 0 na primeira chamada. Se o tamanho do buffer de saída for insuficiente para 
 			/// armazenar toda a varredura, este deslocamento permite que você retome a cópia do final da operação anterior da cópia.</param>
 			/// <param name="Param_ScanDataSize">O tamanho, em bytes, da matriz (Param_Out_ScanDataBuffer).</param>
-			/// <param name="Param_Ref_ScanDataBuffer">Retorna uma interface(ICarenBuffer) que contém um ponteiro para o buffer que recebe os dados da tabela. Esse parametro não pode ser nulo.</param>
-			/// <param name="Param_Out_BufferSizeAtual">Retorna o tamanho dos dados de varredura realmente copiados em (Param_Out_ScanDataBuffer). O tamanho devolvido pode ser menor que o tamanho do cbScanData.</param>
+			/// <param name="Param_ScanDataBufferDestino">Uma interface (ICarenBuffer) que contém o buffer que vai receber os dados da tabela.. Esse parametro não pode ser nulo.</param>
+			/// <param name="Param_Out_BufferSizeAtual">Retorna o tamanho dos dados de varredura realmente copiados em (Param_Out_ScanDataBuffer). O tamanho devolvido pode ser menor que o tamanho do (Param_ScanDataSize).</param>
 			CarenResult CopyScan(
 				UInt32 Param_ScanIndex,
 				UInt32 Param_ScanOffset,
 				UInt32 Param_ScanDataSize,
-				ICarenBuffer^% Param_Ref_ScanDataBuffer,
+				ICarenBuffer^ Param_ScanDataBufferDestino,
 				[Out] UInt32% Param_Out_BufferSizeAtual);
 
 			/// <summary>
@@ -3164,7 +3164,7 @@ namespace CarenRengine
 			/// como o modelo de cor dos dados comprimidos.
 			/// </summary>
 			/// <param name="Param_Out_FrameHeader">Retrona uma estrutura que contém os dados do cabeçalho do frame.</param>
-			CarenResult GetFrameHeader([Out] CA_WICJpegFrameHeader% Param_Out_FrameHeader);
+			CarenResult GetFrameHeader([Out] CA_WICJpegFrameHeader^% Param_Out_FrameHeader);
 
 			/// <summary>
 			/// Recupera uma cópia da tabela de quantização. 
@@ -3204,8 +3204,7 @@ namespace CarenRengine
 
 		/// <summary>
 		/// (IWICJpegFrameEncode) - Interface responsável por expor métodos para gravar dados de digitalização JPEG compactados diretamente no fluxo de saída do codificador WIC. Também fornece acesso 
-		/// às tabelas de Huffman e quantização.
-		/// Obtenha esta interface chamando ICaren::ConsultarInterface na interface ICarenWICBitmapFrameEncoder fornecida pelo Windows para o codificador JPEG.
+		/// as tabelas de Huffman e quantização. Obtenha esta interface chamando ICaren::ConsultarInterface na interface ICarenWICBitmapFrameEncoder fornecida pelo Windows para o codificador JPEG.
 		/// </summary>
 		[CategoryAttribute("WIC Interface")]		
 		[Guid("987CD1BB-532D-496C-91E3-C1BE79EC2CA5")]
@@ -3294,18 +3293,17 @@ namespace CarenRengine
 			CarenResult CreateInstance([Out] ICarenWICMetadataReader^% Param_Out_MetadataReader);
 
 			/// <summary>
-			/// Obtém os padrões de metadados associados ao leitor de metadados. 
+			/// [MÉTODO COM PROBLEMA]Obtém os padrões de metadados associados ao leitor de metadados. 
 			/// </summary>
 			/// <param name="Param_GuidContainerFormat">O GUID para o formato do cointainer.</param>
 			/// <param name="Param_SizeBytesPattern">O tamanho, em bytes, do buffer (Param_Out_Patterns).</param>
-			/// <param name="Param_Ref_Patterns">Retorna uma matriz de estrutura que recebem os padrões de metadados. Define como NULO para o método retornar em (Param_Out_SizeBytesAtual) o 
-			/// size necessário para o parametro (Param_SizeBytesPattern).</param>
-			/// <param name="Param_Out_QuantidadePatterns">Retorna o número de padrões de meetadados.</param>
+			/// <param name="Param_Out_Patterns">Retorna uma matriz de estrutura que recebem os padrões de metadados.</param>
+			/// <param name="Param_Out_QuantidadePatterns">Retorna o número de padrões de metadados.</param>
 			/// <param name="Param_Out_SizeBytesAtual">Retorna o tamanho, em bytes, necessário para obter os padrões de metadados.</param>
 			CarenResult GetPatterns(
 				String^ Param_GuidContainerFormat,
 				UInt32 Param_SizeBytesPattern,
-				cli::array<CA_WICMetadataPattern^>^% Param_Ref_Patterns,
+				[Out] cli::array<CA_WICMetadataPattern^>^% Param_Out_Patterns,
 				[Out] UInt32% Param_Out_QuantidadePatterns,
 				[Out] UInt32% Param_Out_SizeBytesAtual);
 
@@ -3362,7 +3360,7 @@ namespace CarenRengine
 		};
 		
 		/// <summary>
-		/// (IWICPersistStream) - Interface responsável por expor métodos que fornecem carga adicional e salvam métodos que usam WICPersistOptions.
+		/// (IWICPersistStream) - Interface responsável por expor métodos que fornecem carga adicional e salvam métodos que usam CA_WICPersistOptions.
 		/// </summary>
 		[CategoryAttribute("WIC Interface")]	
 		[Guid("69084153-701C-48FD-8FDD-BEA1ADF4BBEA")]
@@ -3595,7 +3593,7 @@ namespace CarenRengine
 				UInt32 Param_Height,
 				CA_WICBitmapTransformOptions Param_DestinoTransformacao,
 				CA_WICPlanarOptions Param_OpcoesPlanar,
-				CA_WICBitmapPlane^ Param_PlanosDestino,
+				cli::array<CA_WICBitmapPlane^>^ Param_PlanosDestino,
 				UInt32 Param_QuantidadePlanos);
 
 			/// <summary>
@@ -3625,7 +3623,7 @@ namespace CarenRengine
 
 		/// <summary>
 		/// (IWICPlanarFormatConverter) - Interface responsável por permitir que um conversor de formato seja inicializado com uma fonte planar. Você pode usar (ICaren::ConsultarInterface) para obter essa 
-		/// interface da implementação de IWICFormatConverter fornecida pelo Windows.
+		/// interface da implementação de ICarenWICFormatConverter fornecida pelo Windows.
 		/// </summary>
 		[CategoryAttribute("WIC Interface")]	
 		[Guid("5FBDB0B4-2E31-4B77-B0EF-DE2F57C16408")]
@@ -3676,38 +3674,6 @@ namespace CarenRengine
 				ICarenWICPalette^ Param_Paleta,
 				double Param_PorcentagemAlfa,
 				CA_WICBitmapPaletteType Param_PaletaConversao);
-		};
-
-		/// <summary>
-		/// (IWICProgressCallback)(ABSOLETA)[NÁO IMPLEMENTADA PELO BIBLIOTECA] - A interface IWICProgressCallback está documentada apenas para conformidade; seu uso não é recomendado e pode ser 
-		/// alterado ou indisponível no futuro. Em vez disso, use IWICRegisterProgressNotification.
-		/// </summary>
-		[CategoryAttribute("WIC Interface")]	
-		[Guid("5E3829FD-A8F6-4870-9439-0197DD18B3BD")]
-		public interface class ICarenWICProgressCallback : ICaren
-		{
-
-			/// <summary>
-			/// Propriedade que define se a classe foi descartada.
-			/// </summary>
-			property Boolean DisposedClasse
-			{
-				virtual Boolean get();
-			}
-
-
-			//Métodos
-
-			/// <summary>
-			/// [Preterido - Recomenda-se o uso da ICarenWICBitmapCodecProgressNotification] - 
-			/// </summary>
-			/// <param name="Param_NumFrame"></param>
-			/// <param name="Param_Operacao"></param>
-			/// <param name="Param_Progresso"></param>
-			CarenResult Notify(
-				UInt64 Param_NumFrame,
-				CA_WICProgressOperation Param_Operacao,
-				double Param_Progresso);
 		};
 
 		/// <summary>

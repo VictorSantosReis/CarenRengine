@@ -150,6 +150,16 @@ namespace CarenRengine
 			/// (STG_E_ACCESSDENIED) - O fluxo ou arquivo é somente leitura; o método não foi capaz de definir o valor.
 			/// </summary>
 			ER_STG_E_ACCESSDENIED,
+				
+			/// <summary>
+			/// (STG_E_CANTSAVE) - Não é possível salvar.
+			/// </summary>
+			ER_STG_E_CANTSAVE,
+
+			/// <summary>
+			/// (STG_E_MEDIUMFULL) - Não há espaço em disco suficiente para concluir a operação.
+			/// </summary>
+			ER_STG_E_MEDIUMFULL,
 
 			/// <summary>
 			/// (ERROR_INVALID_FUNCTION) - A chamada para a função é invalida no estado atual.
@@ -3648,6 +3658,22 @@ namespace CarenRengine
 					OutStatus = ResultCode::ER_STG_E_ACCESSDENIED;
 					break;
 
+				case STG_E_CANTSAVE:
+					//Define o status geral do método como ERRO.
+					Resultado = false;
+
+					//Define o ResultCode a ser retornado.
+					OutStatus = ResultCode::ER_STG_E_CANTSAVE;
+					break;
+
+				case STG_E_MEDIUMFULL:
+					//Define o status geral do método como ERRO.
+					Resultado = false;
+
+					//Define o ResultCode a ser retornado.
+					OutStatus = ResultCode::ER_STG_E_MEDIUMFULL;
+					break;
+
 				case ERROR_ALREADY_EXISTS:
 					//Define o status geral do método como ERRO.
 					Resultado = false;
@@ -3682,12 +3708,12 @@ namespace CarenRengine
 
 
 
-
+					
 
 					////////////////////////////////////
 					//VERIFICA OS HRESULTS DA WAIT API//
 					////////////////////////////////////
-				case WAIT_FAILED:
+				case HRESULT_FROM_WIN32(WAIT_FAILED):
 					//Define o status geral do método como ERRO.
 					Resultado = false;
 
@@ -8161,6 +8187,14 @@ namespace CarenRengine
 				case CarenRengine::CarenCodesStatus::ResultCode::ER_STG_E_ACCESSDENIED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = STG_E_ACCESSDENIED;
+					break;
+				case CarenRengine::CarenCodesStatus::ResultCode::ER_STG_E_CANTSAVE:
+					//Define o código HRESULT referente ao ResultCode informado.
+					Resultado = STG_E_CANTSAVE;
+					break;
+				case CarenRengine::CarenCodesStatus::ResultCode::ER_STG_E_MEDIUMFULL:
+					//Define o código HRESULT referente ao ResultCode informado.
+					Resultado = STG_E_MEDIUMFULL;
 					break;
 				case CarenRengine::CarenCodesStatus::ResultCode::ER_ERROR_INVALID_FUNCTION:
 					//Define o código HRESULT referente ao ResultCode informado.

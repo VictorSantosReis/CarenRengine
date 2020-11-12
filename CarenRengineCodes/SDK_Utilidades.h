@@ -28,6 +28,7 @@ using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
 using namespace CarenRengine::SDKBase::Estruturas;
 using namespace CarenRengine::SDKBase::Interfaces;
+using namespace CarenRengine::SDKBase::Constantes;
       
 //Namespace principal do sistema.
 namespace CarenRengine
@@ -1774,6 +1775,42 @@ namespace CarenRengine
 				return FormatoTipoPrincipal;
 			}
 
+
+			//Converte a estrutura não gerenciada(PROPBAG2) para sua correspondencia gerenciada(CA_PROPBAG2).
+			SDKBase::Estruturas::CA_PROPBAG2^ ConverterPROPBAG2UnmanagedToManaged(PROPBAG2* Param_Estrutura)
+			{
+				//Cria a estrutura a ser retornada.
+				SDKBase::Estruturas::CA_PROPBAG2^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_PROPBAG2();
+
+				//Define o restante dos dados.
+				EstruturaRetorno->dwType = Param_Estrutura->dwType;
+				EstruturaRetorno->vt = Param_Estrutura->vt;
+				EstruturaRetorno->dwHint = Param_Estrutura->dwHint;
+				EstruturaRetorno->cfType = Param_Estrutura->cfType;
+				EstruturaRetorno->pstrName = ObjetoValido(Param_Estrutura->pstrName) ? gcnew String(Param_Estrutura->pstrName) : nullptr;
+				EstruturaRetorno->clsid = Param_Estrutura->clsid == GUID_NULL ? ConverterGuidToString(Param_Estrutura->clsid) : nullptr;
+
+				//Retorna a estrutura
+				return EstruturaRetorno;
+			}
+
+			//Covnerte uma estrutura gerenciada(CA_PROPBAG2) para sua correspondencia não gerenciada(PROPBAG2).
+			PROPBAG2* ConverterPROPBAG2ManagedToUnamaged(SDKBase::Estruturas::CA_PROPBAG2^ Param_Estrutura)
+			{
+				//Estrutura que será retornada ao usuário.
+				PROPBAG2* EstruturaRetorno = CriarEstrutura<PROPBAG2>();
+
+				//Define o restante dos dados.
+				EstruturaRetorno->dwType = Param_Estrutura->dwType;
+				EstruturaRetorno->vt = Param_Estrutura->vt;
+				EstruturaRetorno->dwHint = Param_Estrutura->dwHint;
+				EstruturaRetorno->cfType = Param_Estrutura->cfType;
+				EstruturaRetorno->pstrName = StringObjetoValido(Param_Estrutura->pstrName) ? ConverterStringToWCHAR(Param_Estrutura->pstrName) : NULL;
+				EstruturaRetorno->clsid = StringObjetoValido(Param_Estrutura->clsid) ? CreateGuidFromString(Param_Estrutura->clsid) : GUID_NULL;
+
+				//Retorna a estrutura não gerenciada
+				return EstruturaRetorno;
+			}
 
 
 
@@ -4830,7 +4867,6 @@ namespace CarenRengine
 				//Retorna o resultado
 				return EstruturaRetorno;
 			}
-
 
 
 
@@ -8743,6 +8779,158 @@ namespace CarenRengine
 			}
 
 
+			//Converte uma estrutura gerenciada(CA_DXGI_JPEG_AC_HUFFMAN_TABLE) para sua correspondencia não gerenciada(DXGI_JPEG_AC_HUFFMAN_TABLE).
+			DXGI_JPEG_AC_HUFFMAN_TABLE* ConverterDXGI_JPEG_AC_HUFFMAN_TABLEManaged_ToUnmanaged(CA_DXGI_JPEG_AC_HUFFMAN_TABLE^ Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				DXGI_JPEG_AC_HUFFMAN_TABLE* EstruturaRetorno = CriarEstrutura<DXGI_JPEG_AC_HUFFMAN_TABLE>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(DXGI_JPEG_AC_HUFFMAN_TABLE));
+
+				//Define os dados.
+				
+				//Faz um for para definir os dados no array de Code Counts.
+				for (UINT32 i = 0; i < 16; i++)
+				{
+					//Define os dados na matriz.
+					EstruturaRetorno->CodeCounts[i] = Param_Estrutura->ArrayCodeCounts[i];
+				}
+				
+				//Faz um for para definir os dados no array de Code Values.
+				for (UINT32 i = 0; i < 162; i++)
+				{
+					//Define os dados na matriz.
+					EstruturaRetorno->CodeValues[i] = Param_Estrutura->ArrayCodeValues[i];
+				}
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+			//Converte uma estrutura não gerenciada(DXGI_JPEG_AC_HUFFMAN_TABLE) para sua correspondencia gerenciada(CA_DXGI_JPEG_AC_HUFFMAN_TABLE).
+			CA_DXGI_JPEG_AC_HUFFMAN_TABLE^ ConverterDXGI_JPEG_AC_HUFFMAN_TABLEUnmanaged_ToManaged(DXGI_JPEG_AC_HUFFMAN_TABLE* Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				CA_DXGI_JPEG_AC_HUFFMAN_TABLE^ EstruturaRetorno = gcnew CA_DXGI_JPEG_AC_HUFFMAN_TABLE();
+
+				//Define os dados.
+
+				//Cria as matrizes.
+				EstruturaRetorno->ArrayCodeCounts = gcnew cli::array<Byte>(16);
+				EstruturaRetorno->ArrayCodeValues = gcnew cli::array<Byte>(162);
+
+				//Faz um for para definir os dados no array de Code Counts.
+				for (UINT32 i = 0; i < 16; i++)
+				{
+					//Define os dados na matriz.
+					EstruturaRetorno->ArrayCodeCounts[i] = Param_Estrutura->CodeCounts[i];
+				}
+
+				//Faz um for para definir os dados no array de Code Values.
+				for (UINT32 i = 0; i < 162; i++)
+				{
+					//Define os dados na matriz.
+					EstruturaRetorno->ArrayCodeValues[i] = Param_Estrutura->CodeValues[i];
+				}
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+
+			//Converte uma estrutura gerenciada(CA_DXGI_JPEG_DC_HUFFMAN_TABLE) para sua correspondencia não gerenciada(DXGI_JPEG_DC_HUFFMAN_TABLE).
+			DXGI_JPEG_DC_HUFFMAN_TABLE* ConverterDXGI_JPEG_DC_HUFFMAN_TABLEManaged_ToUnmanaged(CA_DXGI_JPEG_DC_HUFFMAN_TABLE^ Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				DXGI_JPEG_DC_HUFFMAN_TABLE* EstruturaRetorno = CriarEstrutura<DXGI_JPEG_DC_HUFFMAN_TABLE>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(DXGI_JPEG_DC_HUFFMAN_TABLE));
+
+				//Define os dados.
+
+				//Faz um for para definir os dados no array de Code Counts.
+				for (UINT32 i = 0; i < 12; i++)
+				{
+					//Define os dados na matriz.
+					EstruturaRetorno->CodeCounts[i] = Param_Estrutura->ArrayCodeCounts[i];
+					EstruturaRetorno->CodeValues[i] = Param_Estrutura->ArrayCodeValues[i];
+				}
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+			//Converte uma estrutura não gerenciada(DXGI_JPEG_DC_HUFFMAN_TABLE) para sua correspondencia gerenciada(CA_DXGI_JPEG_DC_HUFFMAN_TABLE).
+			CA_DXGI_JPEG_DC_HUFFMAN_TABLE^ ConverterDXGI_JPEG_DC_HUFFMAN_TABLEUnmanaged_ToManaged(DXGI_JPEG_DC_HUFFMAN_TABLE* Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				CA_DXGI_JPEG_DC_HUFFMAN_TABLE^ EstruturaRetorno = gcnew CA_DXGI_JPEG_DC_HUFFMAN_TABLE();
+
+				//Define os dados.
+
+				//Cria as matrizes.
+				EstruturaRetorno->ArrayCodeCounts = gcnew cli::array<Byte>(12);
+				EstruturaRetorno->ArrayCodeValues = gcnew cli::array<Byte>(12);
+
+				//Faz um for para definir os dados no array de Code Counts.
+				for (UINT32 i = 0; i < 12; i++)
+				{
+					//Define os dados na matriz.
+					EstruturaRetorno->ArrayCodeCounts[i] = Param_Estrutura->CodeCounts[i];
+					EstruturaRetorno->ArrayCodeValues[i] = Param_Estrutura->CodeValues[i];
+				}
+
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+
+			//Converte uma estrutura gerenciada(CA_DXGI_JPEG_QUANTIZATION_TABLE) para sua correspondencia não gerenciada(DXGI_JPEG_QUANTIZATION_TABLE).
+			DXGI_JPEG_QUANTIZATION_TABLE* ConverterDXGI_JPEG_QUANTIZATION_TABLEManaged_ToUnmanaged(CA_DXGI_JPEG_QUANTIZATION_TABLE^ Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				DXGI_JPEG_QUANTIZATION_TABLE* EstruturaRetorno = CriarEstrutura<DXGI_JPEG_QUANTIZATION_TABLE>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(DXGI_JPEG_QUANTIZATION_TABLE));
+
+				//Define os dados.
+
+				//Faz um for para definir os dados no array de elementos.
+				for (UINT32 i = 0; i < 64; i++)
+				{
+					//Define os dados na matriz.
+					EstruturaRetorno->Elements[i] = Param_Estrutura->ArrayElementos[i];
+				}
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+			//Converte uma estrutura não gerenciada(DXGI_JPEG_QUANTIZATION_TABLE) para sua correspondencia gerenciada(CA_DXGI_JPEG_QUANTIZATION_TABLE).
+			CA_DXGI_JPEG_QUANTIZATION_TABLE^ ConverterDXGI_JPEG_QUANTIZATION_TABLEUnmanaged_ToManaged(DXGI_JPEG_QUANTIZATION_TABLE* Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				CA_DXGI_JPEG_QUANTIZATION_TABLE^ EstruturaRetorno = gcnew CA_DXGI_JPEG_QUANTIZATION_TABLE();
+
+				//Define os dados.
+
+				//Cria a matriz
+				EstruturaRetorno->ArrayElementos = gcnew cli::array<Byte>(64);
+
+				//Faz um for para definir os dados no array de elementos.
+				for (UINT32 i = 0; i < 64; i++)
+				{
+					//Define os dados na matriz.
+					EstruturaRetorno->ArrayElementos[i] = Param_Estrutura->Elements[i];
+				}
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
 
 
 
@@ -8887,6 +9075,490 @@ namespace CarenRengine
 				//Retorna a variavel.
 				return EstruturaRetorno;
 			}
+
+
+			//Converte uma estrutura gerenciada(CA_WICDdsParameters) para sua correspondencia não gerenciada(WICDdsParameters).
+			WICDdsParameters* ConverterWICDdsParametersManaged_ToUnmanaged(CA_WICDdsParameters^ Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				WICDdsParameters* EstruturaRetorno = CriarEstrutura<WICDdsParameters>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(WICDdsParameters));
+
+				//Define os dados.
+				EstruturaRetorno->Width = Param_Estrutura->Width;
+				EstruturaRetorno->Height = Param_Estrutura->Height;
+				EstruturaRetorno->Depth = Param_Estrutura->Depth;
+				EstruturaRetorno->MipLevels = Param_Estrutura->MipLevels;
+				EstruturaRetorno->ArraySize = Param_Estrutura->ArraySize;
+				EstruturaRetorno->DxgiFormat = static_cast<DXGI_FORMAT>(Param_Estrutura->DxgiFormat);
+				EstruturaRetorno->Dimension = static_cast<WICDdsDimension>(Param_Estrutura->Dimension);
+				EstruturaRetorno->AlphaMode = static_cast<WICDdsAlphaMode>(Param_Estrutura->AlphaMode);
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+			//Converte uma estrutura não gerenciada(WICDdsParameters) para sua correspondencia gerenciada(CA_WICDdsParameters).
+			CA_WICDdsParameters^ ConverterWICDdsParametersUnmanaged_ToManaged(WICDdsParameters* Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				CA_WICDdsParameters^ EstruturaRetorno = gcnew CA_WICDdsParameters();
+
+				//Define os dados.
+				EstruturaRetorno->Width = Param_Estrutura->Width;
+				EstruturaRetorno->Height = Param_Estrutura->Height;
+				EstruturaRetorno->Depth = Param_Estrutura->Depth;
+				EstruturaRetorno->MipLevels = Param_Estrutura->MipLevels;
+				EstruturaRetorno->ArraySize = Param_Estrutura->ArraySize;
+				EstruturaRetorno->DxgiFormat = static_cast<CA_DXGI_FORMAT>(Param_Estrutura->DxgiFormat);
+				EstruturaRetorno->Dimension = static_cast<CA_WICDdsDimension>(Param_Estrutura->Dimension);
+				EstruturaRetorno->AlphaMode = static_cast<CA_WICDdsAlphaMode>(Param_Estrutura->AlphaMode);
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+
+			//Converte uma estrutura gerenciada(CA_WICRawToneCurve) para sua correspondencia não gerenciada(WICRawToneCurvePoint).
+			WICRawToneCurvePoint* ConverterWICRawToneCurvePointManaged_ToUnmanaged(CA_WICRawToneCurvePoint^ Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				WICRawToneCurvePoint* EstruturaRetorno = CriarEstrutura<WICRawToneCurvePoint>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(WICRawToneCurvePoint));
+
+				//Define os dados.
+				EstruturaRetorno->Input = Param_Estrutura->Input;
+				EstruturaRetorno->Output = Param_Estrutura->Output;
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+			//Converte uma estrutura não gerenciada(WICRawToneCurvePoint) para sua correspondencia gerenciada(CA_WICRawToneCurve).
+			CA_WICRawToneCurvePoint^ ConverterWICRawToneCurvePointUnmanaged_ToManaged(WICRawToneCurvePoint* Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				CA_WICRawToneCurvePoint^ EstruturaRetorno = gcnew CA_WICRawToneCurvePoint();
+
+				//Define os dados.
+				EstruturaRetorno->Input = Param_Estrutura->Input;
+				EstruturaRetorno->Output = Param_Estrutura->Output;
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+
+			//Converte uma estrutura gerenciada(CA_WICRawToneCurve) para sua correspondencia não gerenciada(WICRawToneCurve).
+			WICRawToneCurve* ConverterWICRawToneCurveManaged_ToUnmanaged(CA_WICRawToneCurve^ Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				WICRawToneCurve* EstruturaRetorno = CriarEstrutura<WICRawToneCurve>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(WICRawToneCurve));
+
+				//Define os dados.
+				EstruturaRetorno->cPoints = Param_Estrutura->cPoints;
+				EstruturaRetorno->aPoints[0] = {};
+				EstruturaRetorno->aPoints[0].Input = Param_Estrutura->aPoints[0]->Input;
+				EstruturaRetorno->aPoints[0].Output = Param_Estrutura->aPoints[0]->Output;
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+			//Converte uma estrutura não gerenciada(WICRawToneCurve) para sua correspondencia gerenciada(CA_WICRawToneCurve).
+			CA_WICRawToneCurve^ ConverterWICRawToneCurveUnmanaged_ToManaged(WICRawToneCurve* Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				CA_WICRawToneCurve^ EstruturaRetorno = gcnew CA_WICRawToneCurve();
+
+				//Define os dados.
+				EstruturaRetorno->cPoints = Param_Estrutura->cPoints;
+				EstruturaRetorno->aPoints = gcnew cli::array<CA_WICRawToneCurvePoint^>(1);
+				EstruturaRetorno->aPoints[0] = ConverterWICRawToneCurvePointUnmanaged_ToManaged(&Param_Estrutura->aPoints[0]);
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+
+			//Converte uma estrutura gerenciada(CA_WICRawCapabilitiesInfo) para sua correspondencia não gerenciada(WICRawCapabilitiesInfo).
+			WICRawCapabilitiesInfo* ConverterWICRawCapabilitiesInfoManaged_ToUnmanaged(CA_WICRawCapabilitiesInfo^ Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				WICRawCapabilitiesInfo* EstruturaRetorno = CriarEstrutura<WICRawCapabilitiesInfo>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(WICRawCapabilitiesInfo));
+
+				//Define os dados.
+				EstruturaRetorno->cbSize = Param_Estrutura->cbSize;
+				EstruturaRetorno->CodecMinorVersion = Param_Estrutura->CodecMinorVersion;
+				EstruturaRetorno->CodecMajorVersion = Param_Estrutura->CodecMajorVersion;
+				EstruturaRetorno->ExposureCompensationSupport = static_cast<WICRawCapabilities>(Param_Estrutura->CodecMajorVersion);
+				EstruturaRetorno->ContrastSupport = static_cast<WICRawCapabilities>(Param_Estrutura->ContrastSupport);
+				EstruturaRetorno->RGBWhitePointSupport = static_cast<WICRawCapabilities>(Param_Estrutura->RGBWhitePointSupport);
+				EstruturaRetorno->NamedWhitePointSupport = static_cast<WICRawCapabilities>(Param_Estrutura->NamedWhitePointSupport);
+				EstruturaRetorno->NamedWhitePointSupportMask = Param_Estrutura->NamedWhitePointSupportMask;
+				EstruturaRetorno->KelvinWhitePointSupport = static_cast<WICRawCapabilities>(Param_Estrutura->KelvinWhitePointSupport);
+				EstruturaRetorno->GammaSupport = static_cast<WICRawCapabilities>(Param_Estrutura->GammaSupport);
+				EstruturaRetorno->TintSupport = static_cast<WICRawCapabilities>(Param_Estrutura->TintSupport);
+				EstruturaRetorno->SaturationSupport = static_cast<WICRawCapabilities>(Param_Estrutura->SaturationSupport);
+				EstruturaRetorno->SharpnessSupport = static_cast<WICRawCapabilities>(Param_Estrutura->SharpnessSupport);
+				EstruturaRetorno->NoiseReductionSupport = static_cast<WICRawCapabilities>(Param_Estrutura->NoiseReductionSupport);
+				EstruturaRetorno->DestinationColorProfileSupport = static_cast<WICRawCapabilities>(Param_Estrutura->DestinationColorProfileSupport);
+				EstruturaRetorno->ToneCurveSupport = static_cast<WICRawCapabilities>(Param_Estrutura->ToneCurveSupport);
+				EstruturaRetorno->RotationSupport = static_cast<WICRawRotationCapabilities>(Param_Estrutura->RotationSupport);
+				EstruturaRetorno->RenderModeSupport = static_cast<WICRawCapabilities>(Param_Estrutura->RenderModeSupport);
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+			//Converte uma estrutura não gerenciada(WICRawCapabilitiesInfo) para sua correspondencia gerenciada(CA_WICRawCapabilitiesInfo).
+			CA_WICRawCapabilitiesInfo^ ConverterWICRawCapabilitiesInfoUnmanaged_ToManaged(WICRawCapabilitiesInfo* Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				CA_WICRawCapabilitiesInfo^ EstruturaRetorno = gcnew CA_WICRawCapabilitiesInfo();
+
+				//Define os dados.
+				EstruturaRetorno->cbSize = Param_Estrutura->cbSize;
+				EstruturaRetorno->CodecMinorVersion = Param_Estrutura->CodecMinorVersion;
+				EstruturaRetorno->CodecMajorVersion = Param_Estrutura->CodecMajorVersion;
+				EstruturaRetorno->ExposureCompensationSupport = static_cast<CA_WICRawCapabilities>(Param_Estrutura->CodecMajorVersion);
+				EstruturaRetorno->ContrastSupport = static_cast<CA_WICRawCapabilities>(Param_Estrutura->ContrastSupport);
+				EstruturaRetorno->RGBWhitePointSupport = static_cast<CA_WICRawCapabilities>(Param_Estrutura->RGBWhitePointSupport);
+				EstruturaRetorno->NamedWhitePointSupport = static_cast<CA_WICRawCapabilities>(Param_Estrutura->NamedWhitePointSupport);
+				EstruturaRetorno->NamedWhitePointSupportMask = Param_Estrutura->NamedWhitePointSupportMask;
+				EstruturaRetorno->KelvinWhitePointSupport = static_cast<CA_WICRawCapabilities>(Param_Estrutura->KelvinWhitePointSupport);
+				EstruturaRetorno->GammaSupport = static_cast<CA_WICRawCapabilities>(Param_Estrutura->GammaSupport);
+				EstruturaRetorno->TintSupport = static_cast<CA_WICRawCapabilities>(Param_Estrutura->TintSupport);
+				EstruturaRetorno->SaturationSupport = static_cast<CA_WICRawCapabilities>(Param_Estrutura->SaturationSupport);
+				EstruturaRetorno->SharpnessSupport = static_cast<CA_WICRawCapabilities>(Param_Estrutura->SharpnessSupport);
+				EstruturaRetorno->NoiseReductionSupport = static_cast<CA_WICRawCapabilities>(Param_Estrutura->NoiseReductionSupport);
+				EstruturaRetorno->DestinationColorProfileSupport = static_cast<CA_WICRawCapabilities>(Param_Estrutura->DestinationColorProfileSupport);
+				EstruturaRetorno->ToneCurveSupport = static_cast<CA_WICRawCapabilities>(Param_Estrutura->ToneCurveSupport);
+				EstruturaRetorno->RotationSupport = static_cast<CA_WICRawRotationCapabilities>(Param_Estrutura->RotationSupport);
+				EstruturaRetorno->RenderModeSupport = static_cast<CA_WICRawCapabilities>(Param_Estrutura->RenderModeSupport);
+
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+
+			//Converte uma estrutura gerenciada(CA_WICDdsFormatInfo) para sua correspondencia não gerenciada(WICDdsFormatInfo).
+			WICDdsFormatInfo* ConverterWICDdsFormatInfoManaged_ToUnmanaged(CA_WICDdsFormatInfo^ Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				WICDdsFormatInfo* EstruturaRetorno = CriarEstrutura<WICDdsFormatInfo>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(WICDdsFormatInfo));
+
+				//Define os dados.
+				EstruturaRetorno->DxgiFormat = static_cast<DXGI_FORMAT>(Param_Estrutura->DxgiFormat);
+				EstruturaRetorno->BlockWidth = Param_Estrutura->BlockWidth;
+				EstruturaRetorno->BlockHeight = Param_Estrutura->BlockHeight;
+				EstruturaRetorno->BytesPerBlock = Param_Estrutura->BytesPerBlock;
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+			//Converte uma estrutura não gerenciada(WICDdsFormatInfo) para sua correspondencia gerenciada(CA_WICDdsFormatInfo).
+			CA_WICDdsFormatInfo^ ConverterWICDdsFormatInfoUnmanaged_ToManaged(WICDdsFormatInfo* Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				CA_WICDdsFormatInfo^ EstruturaRetorno = gcnew CA_WICDdsFormatInfo();
+
+				//Define os dados.
+				EstruturaRetorno->DxgiFormat = static_cast<CA_DXGI_FORMAT>(Param_Estrutura->DxgiFormat);
+				EstruturaRetorno->BlockWidth = Param_Estrutura->BlockWidth;
+				EstruturaRetorno->BlockHeight = Param_Estrutura->BlockHeight;
+				EstruturaRetorno->BytesPerBlock = Param_Estrutura->BytesPerBlock;
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+
+			//Converte uma estrutura gerenciada(CA_WICJpegFrameHeader) para sua correspondencia não gerenciada(WICJpegFrameHeader).
+			WICJpegFrameHeader* ConverterWICJpegFrameHeaderManaged_ToUnmanaged(CA_WICJpegFrameHeader^ Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				WICJpegFrameHeader* EstruturaRetorno = CriarEstrutura<WICJpegFrameHeader>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(WICJpegFrameHeader));
+
+				//Define os dados.
+				EstruturaRetorno->Width = Param_Estrutura->Width;
+				EstruturaRetorno->Height = Param_Estrutura->Height;
+				EstruturaRetorno->TransferMatrix = static_cast<WICJpegTransferMatrix>(Param_Estrutura->TransferMatrix);
+				EstruturaRetorno->ScanType = static_cast<WICJpegScanType>(Param_Estrutura->ScanType);
+				EstruturaRetorno->cComponents = Param_Estrutura->cComponents;
+				EstruturaRetorno->ComponentIdentifiers = Param_Estrutura->ComponentIdentifiers;
+				EstruturaRetorno->SampleFactors = static_cast<DWORD>(Param_Estrutura->SampleFactors);
+				EstruturaRetorno->QuantizationTableIndices = static_cast<DWORD>(Param_Estrutura->QuantizationTableIndices);
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+			//Converte uma estrutura não gerenciada(WICJpegFrameHeader) para sua correspondencia gerenciada(CA_WICJpegFrameHeader).
+			CA_WICJpegFrameHeader^ ConverterWICJpegFrameHeaderUnmanaged_ToManaged(WICJpegFrameHeader* Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				CA_WICJpegFrameHeader^ EstruturaRetorno = gcnew CA_WICJpegFrameHeader();
+
+				//Define os dados.
+				EstruturaRetorno->Width = Param_Estrutura->Width;
+				EstruturaRetorno->Height = Param_Estrutura->Height;
+				EstruturaRetorno->TransferMatrix = static_cast<CA_WICJpegTransferMatrix>(Param_Estrutura->TransferMatrix);
+				EstruturaRetorno->ScanType = static_cast<CA_WICJpegScanType>(Param_Estrutura->ScanType);
+				EstruturaRetorno->cComponents = Param_Estrutura->cComponents;
+				EstruturaRetorno->ComponentIdentifiers = Param_Estrutura->ComponentIdentifiers;
+				EstruturaRetorno->SampleFactors = static_cast<CA_WIC_IWICJpegFrameDecode>(Param_Estrutura->SampleFactors);
+				EstruturaRetorno->QuantizationTableIndices = static_cast<CA_WIC_IWICJpegFrameDecode>(Param_Estrutura->QuantizationTableIndices);
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+
+			//Converte uma estrutura gerenciada(CA_WICJpegScanHeader) para sua correspondencia não gerenciada(WICJpegScanHeader).
+			WICJpegScanHeader* ConverterWICJpegScanHeaderManaged_ToUnmanaged(CA_WICJpegScanHeader^ Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				WICJpegScanHeader* EstruturaRetorno = CriarEstrutura<WICJpegScanHeader>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(WICJpegScanHeader));
+
+				//Define os dados.
+				EstruturaRetorno->cComponents = Param_Estrutura->cComponents;
+				EstruturaRetorno->RestartInterval = Param_Estrutura->RestartInterval;
+				EstruturaRetorno->ComponentSelectors = Param_Estrutura->ComponentSelectors;
+				EstruturaRetorno->HuffmanTableIndices = static_cast<DWORD>(Param_Estrutura->HuffmanTableIndices);
+				EstruturaRetorno->StartSpectralSelection = Param_Estrutura->StartSpectralSelection;
+				EstruturaRetorno->EndSpectralSelection = Param_Estrutura->EndSpectralSelection;
+				EstruturaRetorno->SuccessiveApproximationHigh = Param_Estrutura->SuccessiveApproximationHigh;
+				EstruturaRetorno->SuccessiveApproximationLow = Param_Estrutura->SuccessiveApproximationLow;
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+			//Converte uma estrutura não gerenciada(WICJpegScanHeader) para sua correspondencia gerenciada(CA_WICJpegScanHeader).
+			CA_WICJpegScanHeader^ ConverterWICJpegScanHeaderUnmanaged_ToManaged(WICJpegScanHeader* Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				CA_WICJpegScanHeader^ EstruturaRetorno = gcnew CA_WICJpegScanHeader();
+
+				//Define os dados.
+				EstruturaRetorno->cComponents = Param_Estrutura->cComponents;
+				EstruturaRetorno->RestartInterval = Param_Estrutura->RestartInterval;
+				EstruturaRetorno->ComponentSelectors = Param_Estrutura->ComponentSelectors;
+				EstruturaRetorno->HuffmanTableIndices =  static_cast<CA_WIC_IWICJpegFrameDecode>(Param_Estrutura->HuffmanTableIndices);
+				EstruturaRetorno->StartSpectralSelection = Param_Estrutura->StartSpectralSelection;
+				EstruturaRetorno->EndSpectralSelection = Param_Estrutura->EndSpectralSelection;
+				EstruturaRetorno->SuccessiveApproximationHigh = Param_Estrutura->SuccessiveApproximationHigh;
+				EstruturaRetorno->SuccessiveApproximationLow = Param_Estrutura->SuccessiveApproximationLow;
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+
+			//Converte uma estrutura gerenciada(CA_WICMetadataPattern) para sua correspondencia não gerenciada(WICMetadataPattern).
+			//Libere a memória dos buffers nativos(Pattern & Mask) antes de liberar a estrutura.
+			WICMetadataPattern* ConverterWICMetadataPatternManaged_ToUnmanaged(CA_WICMetadataPattern^ Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				WICMetadataPattern* EstruturaRetorno = CriarEstrutura<WICMetadataPattern>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(WICMetadataPattern));
+
+				//Define os dados.
+				EstruturaRetorno->Position.QuadPart = Param_Estrutura->Position;
+				EstruturaRetorno->DataOffset.QuadPart = Param_Estrutura->DataOffset;
+				EstruturaRetorno->Length = static_cast<ULONG>(Param_Estrutura->Length);
+
+				//Aloca memória para os Bytes.
+				//(ATENÇÃO) Parece que segundo a documentação a largua do (EstruturaRetorno->Mask) é igual ao do (EstruturaRetorno->Pattern) 
+				EstruturaRetorno->Pattern = CriarMatrizUnidimensional<BYTE>(static_cast<DWORD>(Param_Estrutura->Length));
+				EstruturaRetorno->Mask = CriarMatrizUnidimensional<BYTE>(static_cast<DWORD>(Param_Estrutura->Length));
+
+				//Copia os dados para o array nativo.
+				CopiarItensTo_ArrayNativo(&EstruturaRetorno->Pattern, Param_Estrutura->Pattern, static_cast<UINT32>(Param_Estrutura->Length));
+				CopiarItensTo_ArrayNativo(&EstruturaRetorno->Mask, Param_Estrutura->Mask, static_cast<UINT32>(Param_Estrutura->Length));
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+			//Converte uma estrutura não gerenciada(WICMetadataPattern) para sua correspondencia gerenciada(CA_WICMetadataPattern).
+			CA_WICMetadataPattern^ ConverterWICMetadataPatternUnmanaged_ToManaged(WICMetadataPattern* Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				CA_WICMetadataPattern^ EstruturaRetorno = gcnew CA_WICMetadataPattern();
+
+				//Define os dados.
+				EstruturaRetorno->Position = Param_Estrutura->Position.QuadPart;
+				EstruturaRetorno->DataOffset = Param_Estrutura->DataOffset.QuadPart;
+				EstruturaRetorno->Length = static_cast<UInt64>(Param_Estrutura->Length);
+
+				//Cria as matrizes
+				//(ATENÇÃO) Parece que segundo a documentação a largua do (EstruturaRetorno->Mask) é igual ao do (EstruturaRetorno->Pattern) 
+				EstruturaRetorno->Pattern = gcnew cli::array<Byte>(static_cast<int>(EstruturaRetorno->Length));
+				EstruturaRetorno->Mask = gcnew cli::array<Byte>(static_cast<int>(EstruturaRetorno->Length));
+
+				//Copia os dados para as matrizes.
+				CopiarItensTo_ArrayGerenciado(EstruturaRetorno->Pattern, Param_Estrutura->Pattern, static_cast<UINT32>(EstruturaRetorno->Length));
+				CopiarItensTo_ArrayGerenciado(EstruturaRetorno->Mask, Param_Estrutura->Mask, static_cast<UINT32>(EstruturaRetorno->Length));
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+
+			//Converte uma estrutura gerenciada(CA_WICJpegScanHeader) para sua correspondencia não gerenciada(WICMetadataHeader).
+			WICMetadataHeader* ConverterWICMetadataHeaderManaged_ToUnmanaged(CA_WICMetadataHeader^ Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				WICMetadataHeader* EstruturaRetorno = CriarEstrutura<WICMetadataHeader>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(WICMetadataHeader));
+
+				//Define os dados.
+				EstruturaRetorno->Length = static_cast<ULONG>(Param_Estrutura->Length);
+				EstruturaRetorno->Position.QuadPart = Param_Estrutura->Position;
+				EstruturaRetorno->DataOffset.QuadPart = Param_Estrutura->DataOffset;
+
+				//Aloca memória para o buffer.
+				EstruturaRetorno->Header = CriarMatrizUnidimensional<BYTE>(static_cast<DWORD>(Param_Estrutura->Length));
+
+				//Copia os dados par ao buffer nativo.
+				CopiarItensTo_ArrayNativo(&EstruturaRetorno->Header, Param_Estrutura->Header, static_cast<UINT32>(Param_Estrutura->Length));
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+			//Converte uma estrutura não gerenciada(WICMetadataHeader) para sua correspondencia gerenciada(CA_WICJpegScanHeader).
+			CA_WICMetadataHeader^ ConverterWICMetadataHeaderUnmanaged_ToManaged(WICMetadataHeader* Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				CA_WICMetadataHeader^ EstruturaRetorno = gcnew CA_WICMetadataHeader();
+
+				//Define os dados.
+				EstruturaRetorno->Length = Param_Estrutura->Length;
+				EstruturaRetorno->Position = Param_Estrutura->Position.QuadPart;
+				EstruturaRetorno->DataOffset = Param_Estrutura->DataOffset.QuadPart;
+
+				//Cria a matriz de bytes.
+				EstruturaRetorno->Header = gcnew cli::array<Byte>(static_cast<int>(EstruturaRetorno->Length));
+
+				//Copia os dados para a matriz gerenciada.
+				CopiarItensTo_ArrayGerenciado(EstruturaRetorno->Header, Param_Estrutura->Header, static_cast<UINT32>(EstruturaRetorno->Length));
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+
+			//Converte uma estrutura gerenciada(CA_WICBitmapPlane) para sua correspondencia não gerenciada(WICBitmapPlane).
+			WICBitmapPlane* ConverterWICBitmapPlaneManaged_ToUnmanaged(CA_WICBitmapPlane^ Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				WICBitmapPlane* EstruturaRetorno = CriarEstrutura<WICBitmapPlane>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(WICBitmapPlane));
+
+				//Variaveis.
+				GenPointer pBuffer = DefaultGenPointer;
+
+				//Recupera o ponteiro para o buffer.
+				Param_Estrutura->pbBuffer->ObterPonteiroInterno(pBuffer);
+
+				//Define os dados.
+				EstruturaRetorno->Format = CreateGuidFromString(Param_Estrutura->Format);
+				EstruturaRetorno->cbBufferSize = Param_Estrutura->cbBufferSize;
+				EstruturaRetorno->cbStride = Param_Estrutura->cbStride;
+				EstruturaRetorno->pbBuffer = ConverterIntPtrTo<PBYTE>(pBuffer);
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+			//Converte uma estrutura não gerenciada(WICBitmapPlane) para sua correspondencia gerenciada(CA_WICBitmapPlane).
+			CA_WICBitmapPlane^ ConverterWICBitmapPlaneUnmanaged_ToManaged(WICBitmapPlane* Param_Estrutura, bool Param_CopyBuffer = false)
+			{
+				//Estrutura a ser retornada.
+				CA_WICBitmapPlane^ EstruturaRetorno = gcnew CA_WICBitmapPlane();
+
+				//Define os dados.
+				EstruturaRetorno->Format = ConverterGuidToString(Param_Estrutura->Format);
+				EstruturaRetorno->cbBufferSize = Param_Estrutura->cbBufferSize;
+				EstruturaRetorno->cbStride = Param_Estrutura->cbStride;
+
+				//Cria a interface que vai conter o buffer.
+				EstruturaRetorno->pbBuffer = gcnew CarenBuffer();
+
+				//Define o ponteiro na interface.
+				EstruturaRetorno->pbBuffer->CriarBuffer(IntPtr(Param_Estrutura->pbBuffer), Param_CopyBuffer, EstruturaRetorno->cbBufferSize, EstruturaRetorno->cbBufferSize);
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+
+			//Converte uma estrutura gerenciada(CA_WICBitmapPlaneDescription) para sua correspondencia não gerenciada(WICBitmapPlaneDescription).
+			WICBitmapPlaneDescription* ConverterWICBitmapPlaneDescriptionManaged_ToUnmanaged(CA_WICBitmapPlaneDescription^ Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				WICBitmapPlaneDescription* EstruturaRetorno = CriarEstrutura<WICBitmapPlaneDescription>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(WICBitmapPlaneDescription));
+
+				//Define os dados.
+				EstruturaRetorno->Format = CreateGuidFromString(Param_Estrutura->Format);
+				EstruturaRetorno->Height = Param_Estrutura->Height;
+				EstruturaRetorno->Width = Param_Estrutura->Width;
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+			//Converte uma estrutura não gerenciada(WICBitmapPlaneDescription) para sua correspondencia gerenciada(CA_WICBitmapPlaneDescription).
+			CA_WICBitmapPlaneDescription^ ConverterWICBitmapPlaneDescriptionUnmanaged_ToManaged(WICBitmapPlaneDescription* Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				CA_WICBitmapPlaneDescription^ EstruturaRetorno = gcnew CA_WICBitmapPlaneDescription();
+
+				//Define os dados.
+				EstruturaRetorno->Format = ConverterGuidToString(Param_Estrutura->Format);
+				EstruturaRetorno->Height = Param_Estrutura->Height;
+				EstruturaRetorno->Width = Param_Estrutura->Width;
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+
+
+
 
 
 

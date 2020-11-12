@@ -149,14 +149,85 @@ namespace CarenRengine
 				CA_LOCKTYPE Param_LockType);
 		};
 
-		public interface class ICarenPersist
+		/// <summary>
+	    /// (IPersist) Interface base responsável por fornecer o CLSID(Guid) de um objeto que pode ser armazenado persistentemente no sistema.
+	    /// ICarenPersist é a interface base para três outras interfaces: IPersistStorage, ICarenPersistStream e IPersistFile. Cada uma dessas interfaces, portanto, 
+	    /// inclui o método GetClassID, e a única dessas três interfaces é implementada em objetos que podem ser serializados em um armazenamento, um fluxo ou um arquivo.
+	    /// </summary>
+		[CategoryAttribute("Windows Interface")]
+		[Guid("634FCBB7-38C4-461B-8333-CBEE80636D36")]
+		public interface class ICarenPersist : ICaren
 		{
+			/// <summary>
+			/// Propriedade que define se a classe foi descartada.
+			/// </summary>
+			property Boolean DisposedClasse
+			{
+				virtual Boolean get();
+			}
 
+
+			//Métodos
+
+			/// <summary>
+			/// Recupera o identificador de classe (CLSID) do objeto.
+			/// </summary>
+			/// <param name="Param_Out_ClassID">Retorna o CLSID do objeto atual.</param>
+			/// <returns></returns>
+			CarenResult GetClassID([Out] String^% Param_Out_ClassID);
 		};
 
+		/// <summary>
+		/// (IPersistStream) Interface responsável permitir a economia e o carregamento de objetos que usam um fluxo serial simples para suas necessidades de armazenamento.
+		/// </summary>
+		[CategoryAttribute("Windows Interface")]
+		[Guid("FFA1A27A-F29B-41B2-A220-E44DA5931F5D")]
 		public interface class ICarenPersistStream : ICarenPersist
 		{
+			/// <summary>
+			/// Propriedade que define se a classe foi descartada.
+			/// </summary>
+			property Boolean DisposedClasse
+			{
+				virtual Boolean get();
+			}
 
+
+			//Métodos
+
+			/// <summary>
+			/// Recupera o tamanho do fluxo necessário para salvar o objeto.
+			/// Este método retorna o tamanho necessário para salvar um objeto. Você pode chamar este método para determinar o tamanho e definir os 
+			/// buffers necessários antes de chamar o método ICarenPersistStream::Save.
+			/// </summary>
+			/// <param name="Param_Out_Size">Retorna o tamanho em bytes do fluxo necessário para salvar este objeto, em bytes.</param>
+			/// <returns></returns>
+			CarenResult GetSizeMax(UInt64% Param_Out_Size);
+
+			/// <summary>
+			/// Determina se um objeto mudou desde que foi salvo pela última vez em seu fluxo.
+			/// Este método retorna SS_OK para indicar que o objeto foi alterado. Caso contrário, ele retorna SS_FALSE.
+			/// Você deve tratar quaisquer códigos de retorno de erro como uma indicação de que o objeto foi alterado. A menos que este método retorne 
+			/// explicitamente SS_FALSE, assuma que o objeto deve ser salvo.
+			/// </summary>
+			/// <returns></returns>
+			CarenResult IsDirty();
+
+			/// <summary>
+			/// Inicializa um objeto do fluxo onde ele foi salvo anteriormente.
+			/// </summary>
+			/// <param name="Param_Fluxo">Um ICarenStream para o fluxo a partir do qual o objeto deve ser carregado.</param>
+			/// <returns></returns>
+			CarenResult Load(ICarenStream^ Param_Fluxo);
+
+			/// <summary>
+			/// Salva um objeto para o fluxo especificado.
+			/// </summary>
+			/// <param name="Param_Fluxo">Um ICarenStream para o fluxo no qual o objeto deve ser salvo.</param>
+			/// <param name="Param_ClearDirty">Indica se o sinalizador sujo deve ser limpo após a conclusão do salvamento.Se TRUE, o sinalizador deve ser apagado. Se FALSE, o 
+			/// sinalizador deve ser deixado inalterado.</param>
+			/// <returns></returns>
+			CarenResult Save(ICarenStream^ Param_Fluxo, Boolean Param_ClearDirty);
 		};
 
 		public interface class ICarenInspectable : ICaren
@@ -267,6 +338,85 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_QuantidadeSkip">O número de itens a serem ignorados.</param>
 			CarenResult Skip(UInt32 Param_QuantidadeSkip);
+		};
+
+		/// <summary>
+		/// (IPropertyBag2) - Interface responsável por fornecer um objeto com um saco de propriedade no qual o objeto pode salvar suas propriedades persistentemente.
+		/// </summary>
+		[CategoryAttribute("Windows Interface")]
+		[Guid("D0E858B7-EFE8-4E6C-9EA5-536DD603A8AB")]
+		public interface class ICarenPropertyBag2 : ICaren
+		{
+			/// <summary>
+			/// Propriedade que define se a classe foi descartada.
+			/// </summary>
+			property Boolean DisposedClasse
+			{
+				virtual Boolean get();
+			}
+
+
+
+			//Métodos
+
+			/// <summary>
+			/// (CountProperties) - Obtém o número de propriedades no saco da propriedade.
+			/// </summary>
+			/// <param name="Param_Out_Quantidade"></param>
+			CarenResult ObterQuantidadePropriedades([Out] UInt32% Param_Out_Quantidade);
+
+			/// <summary>
+			/// (GetPropertyInfo) - Obtém informações para propriedades em um saco de propriedade sem realmente obter essas propriedades. 
+			/// </summary>
+			/// <param name="Param_ID"></param>
+			/// <param name="Param_Quantidade"></param>
+			/// <param name="Param_Out_ArrayPropBags"></param>
+			/// <param name="Param_Out_Quantiade"></param>
+			CarenResult ObterInfoPropriedades(
+				UInt32 Param_ID,
+				UInt32 Param_Quantidade,
+				[Out] cli::array<Estruturas::CA_PROPBAG2^>^% Param_Out_ArrayPropBags,
+				[Out] UInt32% Param_Out_Quantiade);
+
+
+			/// <summary>
+			/// (LoadObject) - Faz com que o saco de propriedade instrua um objeto de propriedade que foi criado anteriormente e inicializado para ler suas propriedades persistentes. 
+			/// </summary>
+			/// <param name="Param_EnderecoNome"></param>
+			/// <param name="Param_Hint"></param>
+			/// <param name="Param_UnkObjeto"></param>
+			/// <param name="Param_Ref_ErrorLog"></param>
+			CarenResult CarregarObjeto(
+				String^ Param_EnderecoNome,
+				UInt32 Param_Hint,
+				ICaren^ Param_UnkObjeto,
+				ICaren^% Param_Ref_ErrorLog);
+
+			/// <summary>
+			///  (Read) - Faz com que uma ou mais propriedades sejam lidas do saco de propriedade.
+			/// </summary>
+			/// <param name="Param_Quantidade"></param>
+			/// <param name="Param_ArrayPropBagsRequest"></param>
+			/// <param name="Param_InterfaceErro"></param>
+			/// <param name="Param_Out_VarValue"></param>
+			/// <param name="Param_Out_HRESULTArray"></param>
+			CarenResult Ler(
+				UInt32 Param_Quantidade,
+				cli::array<Estruturas::CA_PROPBAG2^>^ Param_ArrayPropBagsRequest,
+				ICaren^ Param_InterfaceErro,
+				[Out] cli::array<Estruturas::CA_VARIANT^>^% Param_Out_VarValue,
+				[Out] cli::array<Int32>^% Param_Out_HRESULTArray);
+
+			/// <summary>
+			/// (Write) - Faz com que uma ou mais propriedades sejam salvas no saco da propriedade.
+			/// </summary>
+			/// <param name="Param_Quantidade"></param>
+			/// <param name="Param_ArrayPropBagsRequest"></param>
+			/// <param name="Param_VarValue"></param>
+			CarenResult Escrever(
+				UInt32 Param_Quantidade,
+				cli::array<Estruturas::CA_PROPBAG2^>^ Param_ArrayPropBagsRequest,
+				cli::array<Estruturas::CA_VARIANT^>^% Param_VarValue);
 		};
 	}
 }

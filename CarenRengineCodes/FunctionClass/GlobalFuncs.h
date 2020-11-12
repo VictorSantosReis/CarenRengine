@@ -18,7 +18,14 @@ using namespace CarenRengine::SDKBase::Interfaces;
 //Typedef que verifica se a função falhou e pula para o label(Done:). Em caso de falha, define a variavel (Resultado) como ER_E_POINTER, caso contrario, não edita nada e deixa o método continuar.
 #define SairOnError(ResultObj) if(ResultObj.StatusCode != ResultCode::SS_OK){ Resultado = CarenResult(ResultCode::ER_E_POINTER, false); goto Done; }
 
+//Typedef que tenta recuperar um ponteiro nativo de uma interface que implementa ICaren. Pula para o label 'Done' se a interface não for valida ou ocorrer um erro na recuperação do ponteiro.
+#define CarenGetPointerFromICarenSafe(CarenInterface, OutPointer) Resultado = RecuperarPonteiroCaren(CarenInterface, &OutPointer); SairOnError(Resultado); 
 
+//Typedef que define de forma segura um ponteiro nativo em uma interface que implementa ICaren. O método pode liberar o ponteiro em caso de erro.
+#define CarenSetPointerToICarenSafe(Pointer, CarenInterface, ReleasePointerOnError) Resultado = DefinirPonteiroInterface(Pointer, CarenInterface, ReleasePointerOnError);
+
+//Typedef que tenta recuperar o ponteiro nativo para o buffer na interface (ICarenBufer). Pula para o label 'Done' se o buffer não for valido ou ocorrer um erro na recuperação do ponteiro.
+#define CarenGetPointerFromICarenBufferSafe(CarenInterfaceBuffer, OutIntPtrBuffer) if(CarenInterfaceBuffer != nullptr){Resultado = CarenInterfaceBuffer->ObterPonteiroInterno(OutIntPtrBuffer); SairOnError(Resultado);}
 
 //FUNCÕES GLOBAIS.
 

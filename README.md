@@ -94,8 +94,8 @@ Inicio do proximo ano pretendo lançar a primeira versão da biblioteca com toda
 
 
 # Contribuição
-Até então tenho trabalhado sozinho neste projeto a cerca de uns 3 anos, atualmente, estou focado em terminar todas as bibliotecas para depois realizar testes, verificar bugs e percas de desempenho. Tenho alguns projetos de testes já em andamento, mais não estou muito focado nesta questão.
-Fique a vontade mesmo assim para clicar em **Criar um novo erro** e eu estarei adicionando a um marco para poder está sanando o bug e realizando os devidos testes eventualmente.
+Até então tenho trabalhado sozinho neste projeto a cerca de uns 3 anos, atualmente, estou focado em terminar todas as bibliotecas para depois realizar testes, verificar bugs e perdas de desempenho. Tenho alguns projetos de testes já em andamento, mais não estou muito focado nesta questão.
+Fique a vontade mesmo assim para clicar em **Criar um novo erro** e eu estarei adicionando a um marco para poder está realizando os devidos testes eventualmente.
 
 
 # Codificação

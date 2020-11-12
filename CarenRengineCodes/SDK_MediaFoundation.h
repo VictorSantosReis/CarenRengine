@@ -25,9 +25,9 @@ using namespace CarenRengine::SDKBase::Estruturas;
 using namespace CarenRengine::SDKBase::Interfaces;
 
 
-//////////////////////////////////////
-// MFT - MICROSOFT MEDIA FOUNDATION //
-//////////////////////////////////////
+/////////////////////////////////////
+// MF - MICROSOFT MEDIA FOUNDATION //
+/////////////////////////////////////
 
 //Namespace principal do sistema.
 namespace CarenRengine
@@ -41,8 +41,7 @@ namespace CarenRengine
 		/// com a seguinte diferença: quando (ConsultarInterface) recupera um ponteiro para uma interface, é garantido que você pode consultar a interface e voltar a interface original. 
 		/// O método GetService não faz esta garantia, porque a interface obtida pode ser implementada por um objeto separado.
 		/// </summary>
-		[CategoryAttribute("IMFGetService - Consultar objetos em interfaces")]
-		[DescriptionAttribute("Interface responsável por expor os métodos da IMFGetService.")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("7BF636C4-5B5C-4304-BAA1-86B712DEE90A")]
 		public interface class ICarenMFGetService : ICaren
 		{
@@ -68,7 +67,6 @@ namespace CarenRengine
 		/// (IMFCollection) - Classe responsável por representar uma coleção genérica de ponteiros desconhecidos.
 		/// </summary>
 		[CategoryAttribute("Coleção - Armazena uma coleção de ponteiros.")]
-		[DescriptionAttribute("Interface responsável por expor métodos da IMFCollection.")]
 		[Guid("4C627299-4D4A-4948-BF0D-DA88D7A81AC0")]
 		public interface class ICarenMFCollection : ICaren
 		{
@@ -128,7 +126,6 @@ namespace CarenRengine
 		/// (IMFMediaSinkPreroll) -  Falta documentar.
 		/// </summary>
 		[CategoryAttribute("IMFMediaSinkPreroll - Notifica o coletor para armazenar amostras de midia antes do relogio de apresentação começar.")]
-		[DescriptionAttribute("Interface responsável por expor os métodos da IMFMediaSinkPreroll.")]
 		[Guid("CE735A9F-4B0C-4725-AD46-B0AEC9FD1172")]
 		public interface class ICarenMFMediaSinkPreroll : ICaren
 		{
@@ -153,7 +150,6 @@ namespace CarenRengine
 		/// (IMFDXGIBuffer) - Interface responsável por representar um buffer que contém uma superfície DXGI(Microsoft DirectX Graphics Infrastructure).
 		/// </summary>
 		[CategoryAttribute("MF Interface")]
-		[DescriptionAttribute("Interface responsável por expor os métodos da IMFDXGIBuffer")]
 		[Guid("056177DE-2F4B-44BD-AA80-FEAA66638B37")]
 		public interface class ICarenMFDXGIBuffer : ICaren
 		{
@@ -276,7 +272,6 @@ namespace CarenRengine
 		/// (IMFClock) - Fornece informações de temporização de um relógio no Microsoft Media Foundation.
 		/// </summary>
 		[CategoryAttribute("IMFClock - Informações de temporização.")]
-		[DescriptionAttribute("Interface responsável por expor os métodos da IMFClock.")]
 		[Guid("8CE7A5EE-9C2F-40C3-A394-CE0C542696FC")]
 		public interface class ICarenMFClock : ICaren
 		{
@@ -330,7 +325,6 @@ namespace CarenRengine
 		/// O relógio real é dado pela interface IMFClock -> ICarenMFClock.
 		/// </summary>
 		[CategoryAttribute("IMFPresentationTimeSource  - Fornece o tempo real do relógio.")]
-		[DescriptionAttribute("Interface responsável por expor os métodos da IMFPresentationTimeSource.")]
 		[Guid("93D71DA6-8431-4F8C-91E5-B323A165BA70")]
 		public interface class ICarenMFPresentationTimeSource : ICarenMFClock
 		{
@@ -357,7 +351,6 @@ namespace CarenRengine
 		/// chame o método (ICarenMFPresentationClock.RegistarObjetoNotificação) no relógio de apresentação.
 		/// </summary>
 		[CategoryAttribute("IMFClockStateSink - Interface que recebe eventos do Relógio.")]
-		[DescriptionAttribute("Interface responsável por expor os eventos da interface IMFClockStateSink.")]
 		[Guid("A9FAE071-9C80-413F-AD9B-E71386810EA6")]
 		public interface class ICarenMFClockStateSink : ICaren
 		{
@@ -427,7 +420,6 @@ namespace CarenRengine
 		/// quando as amostras de mídia devem ser processadas e para sincronizar vários fluxos.
 		/// </summary>
 		[CategoryAttribute("IMFPresentationClock  - Relógio da apresentação para agendamento de amostras.")]
-		[DescriptionAttribute("Interface responsável por expor os métodos da IMFPresentationClock.")]
 		[Guid("5D331E43-DA1F-44DE-81ED-DF5A7F61CA4D")]
 		public interface class ICarenMFPresentationClock : ICarenMFClock
 		{
@@ -543,7 +535,6 @@ namespace CarenRengine
 		/// UINT32, UINT64, Double, GUID, Cadeia de caracteres largos, Matriz de Byte.
 		/// </summary>
 		[CategoryAttribute("IMFAttributes - Armazenador de pares Chave/Valor em um objeto")]
-		[DescriptionAttribute("Interface responsável por expor os métodos da IMFAttributes")]
 		[Guid("FA2D7457-E082-410A-A38D-9FBE47F62AC2")]
 		public interface class ICarenMFAttributes : ICaren
 		{
@@ -832,7 +823,6 @@ namespace CarenRengine
 		/// (IMFAsyncResult) - Fornece informações sobre o resultado de uma operação assíncrona.
 		/// </summary>
 		[CategoryAttribute("IMFAsyncResult - Contém o resultado de uma operação assincrona.")]
-		[DescriptionAttribute("Interface responsável por expor os métodos da IMFAsyncResult.")]
 		[Guid("CAC9CAC9-B241-43DC-8DA8-94EB8A08EB78")]
 		public interface class ICarenMFAsyncResult : ICaren
 		{
@@ -886,7 +876,6 @@ namespace CarenRengine
 		/// (IMFAsyncCallback) - Interface de retorno de chamada para notificar o aplicativo quando um método assíncrono for concluído.
 		/// </summary>
 		[CategoryAttribute("IMFAsyncCallback - Interface de retorna de chamada para métodos assincronos.")]
-		[DescriptionAttribute("Interface responsável por expor os eventos de IMFAsyncCallback.")]
 		[Guid("A9EE4C92-7062-4D1A-8468-A9FCD269DDA1")]
 		public interface class ICarenMFAsyncCallback : ICaren
 		{
@@ -957,7 +946,6 @@ namespace CarenRengine
 		/// (IMFMediaEvent) - Representa um evento gerado por um objeto do Media Foundation. Use essa interface para obter informações sobre o evento.
 		/// </summary>
 		[CategoryAttribute("IMFMediaEvent - Representa um evento gerado por um objeto do Media Event.")]
-		[DescriptionAttribute("Interface responsável por expor os métodos da IMFMediaEvent.")]
 		[Guid("0EDC6D22-20F5-44D7-B6B9-EA8A2A321D49")]
 		public interface class ICarenMFMediaEvent : ICaren, ICarenMFAttributes
 		{
@@ -1004,7 +992,6 @@ namespace CarenRengine
 		/// Os métodos assíncronos são SolicitarProximoEvento e ConcluirSolicitaçãoEvento.
 		/// </summary>
 		[CategoryAttribute("IMFMediaEventGenerator - Gerenciador de eventos de objetos do Media Foundation.")]
-		[DescriptionAttribute("Interface responsável por expor os métodos da interface IMFMediaEventGenerator.")]
 		[Guid("266CD5F0-C874-4BCA-8CE4-1440A35CB816")]
 		public interface class ICarenMFMediaEventGenerator : ICaren
 		{
@@ -1061,7 +1048,6 @@ namespace CarenRengine
 		/// o formato de um arquivo de mídia ou fluxo.
 		/// </summary>
 		[CategoryAttribute("IMFMediaType - Representa uma descrição de midia.")]
-		[DescriptionAttribute("Interface responsável por expor os métodos da IMFMediaType.")]
 		[Guid("B3D4DF6C-271E-4509-9E11-627518A65ED9")]
 		public interface class ICarenMFMediaType : ICarenMFAttributes, ICarenMidiaExtensões
 		{
@@ -1101,7 +1087,6 @@ namespace CarenRengine
 		/// Essa interface é a responsável por definir um (ICarenMFMediaType) para Leituras, Gravações em fluxos de midia.
 		/// </summary>
 		[CategoryAttribute("IMFMediaTypeHandler - Manipula os tipos de midia")]
-		[DescriptionAttribute("Interface responsável por expor os métodos da IMFMediaTypeHandler")]
 		[Guid("4F53961B-71F3-4190-9530-63060FDBE567")]
 		public interface class ICarenMFMediaTypeHandler : ICaren
 		{
@@ -1170,7 +1155,6 @@ namespace CarenRengine
 		/// Chamadas para Lock, sendo que o Buffer contém (Imagems 2D), pode gerar um aumento de memória interna desnecessária.
 		/// </summary>
 		[CategoryAttribute("IMFMediaBuffer - Contém buffers de dados de midia.")]
-		[DescriptionAttribute("Interface responsável por expor os métodos da IMFMediaBuffer.")]
 		[Guid("124E1685-0A18-442A-A0C7-6EA86C274F4D")]
 		public interface class ICarenMFMediaBuffer : ICaren
 		{
@@ -1237,7 +1221,6 @@ namespace CarenRengine
 		/// (Stride) também pode ser (Negativo), se os pixels são orientados (bottom-up) na memória
 		/// </summary>
 		[CategoryAttribute("IMF2DBuffer - Contém buffers 2D exclusivamente de Video.")]
-		[DescriptionAttribute("Interface responsável por expor os métodos da IMF2DBuffer.")]
 		[Guid("B3902CBD-7049-4A7E-AA78-3E66CE9AA524")]
 		public interface class ICarenMFMedia2DBuffer : ICaren
 		{
@@ -1312,7 +1295,6 @@ namespace CarenRengine
 		/// Essa interface extende os métodos da interface base (ICarenMFMedia2DBuffer) e adiciona uma versão mais segura do método (Lock2D).
 		/// </summary>
 		[CategoryAttribute("IMF2DBuffer2 - Extende a interface IMF2DBuffer.")]
-		[DescriptionAttribute("Interface responsável por expor os métodos da IMF2DBuffer2.")]
 		[Guid("5E6AA0AA-0E58-42E7-9FC3-EF516E52C134")]
 		public interface class ICarenMFMedia2DBuffer2 : ICarenMFMedia2DBuffer
 		{
@@ -1354,7 +1336,6 @@ namespace CarenRengine
 		/// ter seus Buffers de midia (Consultados) para interfaces 2D ou Superfices do DirectX, antes de fazer chamadas para (Lock) na interface (ICarenMFMediaBuffer) .
 		/// </summary>
 		[CategoryAttribute("IMFSample - Contém amostras de dados de midia.")]
-		[DescriptionAttribute("Interface responsável por expor os métodos da IMFSample.")]
 		[Guid("06BFA703-3BFF-4878-A2E9-C45EDCF4EB20")]
 		public interface class ICarenMFSample : ICarenMFAttributes, ICarenMidiaExtensões
 		{
@@ -2507,7 +2488,6 @@ namespace CarenRengine
 		/// por outra interface.
 		/// </summary>
 		[CategoryAttribute("IMFActivate - Ativador de Objetos do Media Foundation")]
-		[DescriptionAttribute("Interface responsável por expor os métodos da IMFActivate.")]
 		[Guid("A86D1E72-CD70-4602-B35C-DD3A0D5B57C3")]
 		public interface class ICarenMFActivate : ICaren, ICarenMFAttributes
 		{
@@ -2553,7 +2533,6 @@ namespace CarenRengine
 		/// (IMFStreamDescriptor) - Interface responsável por obter informações sobre um fluxo em uma fonte de mídia.
 		/// </summary>
 		[CategoryAttribute("IMFStreamDescriptor - Obtém informações de um fluxo.")]
-		[DescriptionAttribute("Interface responsável por expor os métodos do .")]
 		[Guid("AACE49BC-AF53-4AE9-A2BC-D0A58A33401F")]
 		public interface class ICarenMFStreamDescriptor : ICarenMFAttributes
 		{
@@ -2589,7 +2568,6 @@ namespace CarenRengine
 		/// Descritores de apresentação são usados para configurar fontes de mídia e afunda-se alguns meios de comunicação.
 		/// </summary>
 		[CategoryAttribute("IMFPresentationDescriptor - Descreve detalhes de uma apresentação.")]
-		[DescriptionAttribute("Interface responsável por expor os métodos do IMFPresentationDescriptor.")]
 		[Guid("D6085D8F-2AB7-4513-B464-68EF19270CE4")]
 		public interface class ICarenMFPresentationDescriptor : ICarenMFAttributes
 		{
@@ -2645,7 +2623,6 @@ namespace CarenRengine
 		/// A interface ICarenMFByteStream suporta as operações de fluxo típicas, como leitura, gravação e busca.
 		/// </summary>
 		[CategoryAttribute("IMFByteStream - Representa um fluxo de bytes de alguma fonte de dados.")]
-		[DescriptionAttribute("Interface responsável por expor os métodos do IMFByteStream.")]
 		[Guid("6B3BB243-D012-4703-9C6E-4C7EE4B68C77")]
 		public interface class ICarenMFByteStream :ICaren
 		{
@@ -2796,7 +2773,6 @@ namespace CarenRengine
 		/// Cada fonte de mídia contém um ou mais fluxos e cada fluxo fornece dados de um tipo, como áudio ou vídeo.
 		/// </summary>
 		[CategoryAttribute("IMFMediaSource - Representa uma fonte de midia.")]
-		[DescriptionAttribute("Interface responsável por expor os métodos do IMFMediaSource.")]
 		[Guid("380D3681-BFE5-4408-BADC-D952A88EB52F")]
 		public interface class ICarenMFMediaSource : ICaren, ICarenMFMediaEventGenerator
 		{
@@ -2856,7 +2832,6 @@ namespace CarenRengine
 		/// Para obter essa interface, Chame o método (ConsultarInterface) na interface ICarenMFMediaSource.
 		/// </summary>
 		[CategoryAttribute("IMFMediaSourceEx - Representa uma extensão para a fonte de midia.")]
-		[DescriptionAttribute("Interface responsável por expor os métodos do IMFMediaSourceEx.")]
 		[Guid("B6073936-21AF-402C-96EE-FA56BB7E6BF8")]
 		public interface class ICarenMFMediaSourceEx : ICarenMFMediaSource
 		{
@@ -2897,7 +2872,6 @@ namespace CarenRengine
 		/// um evento MENewStream com um ponteiro para esta interface.
 		/// </summary>
 		[CategoryAttribute("IMFMediaStream - Representa uma fluxo em uma fonte de mídia.")]
-		[DescriptionAttribute("Interface responsável por expor os métodos do IMFMediaStream.")]
 		[Guid("1B7C719B-C391-4C38-91C4-7D47E0BC669C")]
 		public interface class ICarenMFMediaStream : ICarenMFMediaEventGenerator
 		{
@@ -2937,7 +2911,6 @@ namespace CarenRengine
 		/// com o identificador de serviço MR_STREAM_VOLUME_SERVICE. Você pode chamar GetService diretamente sobre o SAR ou chamá-lo sobre a sessão de mídia.
 		/// </summary>
 		[CategoryAttribute("IMFAudioStreamVolume - Interface que controla o volume de audio em cada canal de audio.")]
-		[DescriptionAttribute("Interface responsável por expor os métodos do IMFAudioStreamVolume.")]
 		[Guid("CE0A8168-5D19-4A9B-A558-9F356C36EC51")]
 		public interface class ICarenMFAudioStreamVolume : ICaren
 		{
@@ -2996,7 +2969,6 @@ namespace CarenRengine
 		/// (MR_POLICY_VOLUME_SERVICE) e para o sistema de captura o (MR_CAPTURE_POLICY_VOLUME_SERVICE).
 		/// </summary>
 		[CategoryAttribute("IMFSimpleAudioVolume - Interface que controla o nivel de audio principal.")]
-		[DescriptionAttribute("Interface responsável por expor os métodos do IMFSimpleAudioVolume.")]
 		[Guid("87D01DE6-1E2F-446E-B734-9B0FE5CAF540")]
 		public interface class ICarenMFSimpleAudioVolume : ICaren
 		{
@@ -3040,7 +3012,6 @@ namespace CarenRengine
 		/// (IMFSourceResolver) - Interface responsável por criar uma fonte de mídia a parti de uma URL ou um fluxo de bytes.
 		/// </summary>
 		[CategoryAttribute("IMFSourceResolver - Criação de fontes de mídia.")]
-		[DescriptionAttribute("Interface responsável por expor os métodos do IMFSourceResolver.")]
 		[Guid("94A89CF7-7DE7-46B6-A9B6-4F74B9D7C02C")]
 		public interface class ICarenMFSourceResolver : ICaren
 		{
@@ -3177,7 +3148,6 @@ namespace CarenRengine
 		/// (IMFTopologyNode) - Interface responsável por representar um nó de topologia. Os tipos de nó suportado por essa interface são: Saida, Origem, Transformação(MFT), Tee.
 		/// </summary>
 		[CategoryAttribute("IMFTopologyNode - Nó de topologia.")]
-		[DescriptionAttribute("Interface responsável por expor os métodos do IMFTopologyNode.")]
 		[Guid("313763D6-9C55-4879-8BC0-55B052436249")]
 		public interface class ICarenMFTopologyNode : ICarenMFAttributes
 		{
@@ -3308,7 +3278,6 @@ namespace CarenRengine
 		/// topologia, que expõem a interface ICarenMFTopologyNode. Uma topologia descreve o caminho dos dados multimídia por meio desses nós.
 		/// </summary>
 		[CategoryAttribute("IMFTopology - Topoloigia de Midia")]
-		[DescriptionAttribute("Interface responsável por expor os métodos do IMFTopology.")]
 		[Guid("4A272C13-FDE3-489E-9FB2-9C1D2981E3F7")]
 		public interface class ICarenMFTopology : ICarenMFAttributes
 		{
@@ -3393,7 +3362,6 @@ namespace CarenRengine
 		/// (IMFTopoLoader) - Interface responsável por converte uma topologia parcial em uma topologia completa. O carregador de topologia expõe essa interface.
 		/// </summary>
 		[CategoryAttribute("IMFTopoLoader - Conversor de Topologia")]
-		[DescriptionAttribute("Interface responsável por expor os métodos do IMFTopoLoader.")]
 		[Guid("FA3945D6-0F34-4EA4-AE63-567436B0B3E3")]
 		public interface class ICarenMFTopoLoader : ICaren
 		{
@@ -3425,7 +3393,6 @@ namespace CarenRengine
 		/// um serviço. Para obter um ponteiro para a interface, chame ICaren::ConsultarServiço.O identificador de serviço é MF_TOPONODE_ATTRIBUTE_EDITOR_SERVICE.
 		/// </summary>
 		[CategoryAttribute("IMFTopologyNodeAttributeEditor - ")]
-		[DescriptionAttribute("Interface responsável por expor os métodos da IMFTopologyNodeAttributeEditor.")]
 		[Guid("2E5FC788-616F-4D4F-BC4F-CACBE26071E0")]
 		public interface class ICarenMFTopologyNodeAttributeEditor : ICaren
 		{
@@ -3452,7 +3419,6 @@ namespace CarenRengine
 		/// (IMFTopologyServiceLookup) - Interface responsável por recuperar uma interface do renderizador de vídeo aprimorado (EVR) ou do mixer de vídeo ou do apresentador de vídeo.
 		/// </summary>
 		[CategoryAttribute("IMFTopologyServiceLookup - Recupera interfaces de serviços do EVR.")]
-		[DescriptionAttribute("Interface responsável por expor os métodos da IMFTopologyServiceLookup.")]
 		[Guid("C81258EB-DA90-49DF-B965-956F17AD3E15")]
 		public interface class ICarenMFTopologyServiceLookup : ICaren
 		{
@@ -3491,7 +3457,6 @@ namespace CarenRengine
 		/// que eles consultem o renderizador de vídeo aprimorado (EVR) para ponteiros de interface.
 		/// </summary>
 		[CategoryAttribute("IMFTopologyServiceLookupClient - ")]
-		[DescriptionAttribute("Interface responsável por expor os métodos da IMFTopologyServiceLookupClient.")]
 		[Guid("5717881A-5013-4EB0-86A3-7354728AA877")]
 		public interface class ICarenMFTopologyServiceLookupClient : ICaren
 		{
@@ -3525,7 +3490,6 @@ namespace CarenRengine
 		/// Para obter um ponteiro para essa interface, chame ICaren::ObterServiço com o identificador de serviço MF_RATE_CONTROL_SERVICE ou utilize o método nativo.
 		/// </summary>
 		[CategoryAttribute("IMFRateSupport - Consulta taxas de reprodução e suporte.")]
-		[DescriptionAttribute("Interface responsável por expor os métodos da IMFRateSupport.")]
 		[Guid("8B12498B-5B50-4151-B550-B18CD0E0C6E2")]
 		public interface class ICarenMFRateSupport : ICaren
 		{
@@ -3575,7 +3539,6 @@ namespace CarenRengine
 		/// (IMFRateControl) - Interface responsável por obter ou definir a taxa de reprodução.
 		/// </summary>
 		[CategoryAttribute("IMFRateControl - Controla taxas de reprodução.")]
-		[DescriptionAttribute("Interface responsável por expor os métodos da IMFRateControl.")]
 		[Guid("1BC89272-01B3-4342-B04D-057BE0EED163")]
 		public interface class ICarenMFRateControl : ICaren
 		{
@@ -3613,7 +3576,6 @@ namespace CarenRengine
 		/// protegida(PMP) expõem essa interface. Essa interface é a interface principal que os aplicativos usam para controlar o pipeline do Media Foundation.
 		/// </summary>
 		[CategoryAttribute("IMFMediaSession - Controles de reprodução de conteúdo.")]
-		[DescriptionAttribute("Interface responsável por expor os métodos da IMFMediaSession.")]
 		[Guid("6B506B17-C575-4D0E-AE80-C490199B3984")]
 		public interface class ICarenMFMediaSession : ICarenMFMediaEventGenerator
 		{
@@ -3730,19 +3692,19 @@ namespace CarenRengine
 			//Métodos
 
 			/// <summary>
-			/// (BeginFinalize) - Notifica a mídia para tomar as medidas assíncronas que precisa para terminar suas tarefas.
+			/// Notifica a mídia para tomar as medidas assíncronas que precisa para terminar suas tarefas.
 			/// </summary>
 			/// <param name="Param_Callback">Ponteiro para a interface ICarenMFAsyncCallback de um objeto assíncrono. O chamador deve implementar esta interface.</param>
 			/// <param name="Param_ObjetoEstado">Um objeto de estado, definido pelo chamador. Este parâmetro pode ser NULO. Você pode usar este objeto para conter informações do estado. 
 			/// O objeto é devolvido ao chamador quando o retorno de chamada é invocado.</param>
-			CarenResult FinalizarAsync(ICarenMFAsyncCallback^ Param_Callback, ICaren^ Param_ObjetoEstado);
+			CarenResult BeginFinalize(ICarenMFAsyncCallback^ Param_Callback, ICaren^ Param_ObjetoEstado);
 
 			/// <summary>
-			/// (EndFinalize) - Completa uma operação de finalização assíncrona.
+			/// Completa uma operação de finalização assíncrona.
 			/// </summary>
 			/// <param name="Param_Resultado">Ponteiro para a interface ICarenMFAsyncResult. Passe no mesmo ponteiro que o objeto de retorno de chamada recebeu no método 
 			/// ICarenMFAsyncCallback::Invoke.</param>
-			CarenResult CompletarFinalizarAsync(ICarenMFAsyncResult^ Param_Resultado);
+			CarenResult EndFinalize(ICarenMFAsyncResult^ Param_Resultado);
 		};
 	
 		/// <summary>
@@ -3771,42 +3733,42 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_Out_Atributos">Recebe um ponteiro para a interface ICarenMFAttributes do armazenamento de atributos que contém as configurações atuais do fluxo de Áudio. 
 			/// O chamador deve liberar o ponteiro da interface.</param>
-			CarenResult ObterAtributosAudio([Out] ICarenMFAttributes^% Param_Out_Atributos);
+			CarenResult GetAudioAttributes([Out] ICarenMFAttributes^% Param_Out_Atributos);
 
 			/// <summary>
 			/// (GetContainerAttributes) - Obtém as configurações do contêiner definidas no (Perfil Transcode).
 			/// </summary>
 			/// <param name="Param_Out_Atributos">Recebe um ponteiro para a interface ICarenMFAttributes do armazenamento de atributos que contém o tipo de contêiner atual para o arquivo 
 			/// de saída. O chamador deve liberar o ponteiro da interface.</param>
-			CarenResult ObterContainerAtributos([Out] ICarenMFAttributes^% Param_Out_Atributos);
+			CarenResult GetContainerAttributes([Out] ICarenMFAttributes^% Param_Out_Atributos);
 
 			/// <summary>
 			/// (GetVideoAttributes) - Obtém as configurações de fluxo de vídeo que estão atualmente definidas no (Perfil Transcode).
 			/// </summary>
 			/// <param name="Param_Out_Atributos">Recebe um ponteiro para a interface ICarenMFAttributes do armazenamento de atributos que contém as configurações atuais do fluxo de Vídeo. 
 			/// O chamador deve liberar o ponteiro da interface.</param>
-			CarenResult ObterAtributosVideo([Out] ICarenMFAttributes^% Param_Out_Atributos);
+			CarenResult GetVideoAttributes([Out] ICarenMFAttributes^% Param_Out_Atributos);
 
 			/// <summary>
 			/// (SetAudioAttributes) - Define as configurações de configuração do fluxo de áudio no (Perfil Transcode).
 			/// </summary>
 			/// <param name="Param_Atributos">Ponteiro para a interface ICarenMFAttributes de um armazenamento de atributos que contém as configurações do fluxo de Áudio. Os valores de atributo 
 			/// especificados sobreescrevem quaisquer valores existentes armazenados no perfil transcódigo(Transcode).</param>
-			CarenResult DefinirAtributosAudio(ICarenMFAttributes^ Param_Atributos);
+			CarenResult SetAudioAttributes(ICarenMFAttributes^ Param_Atributos);
 
 			/// <summary>
 			/// (SetContainerAttributes) - Define as configurações de configuração do contêiner no (Perfil Transcode).
 			/// </summary>
 			/// <param name="Param_Atributos">Ponteiro para a interface ICarenMFAttributes de um armazenamento de atributos que contém as configurações do contêiner no qual o arquivo 
 			/// transcodificado será armazenado. Os valores de atributo especificados sobreescrevem quaisquer valores existentes armazenados no perfil transcódigo(Transcode).</param>
-			CarenResult DefinirAtributosContainer(ICarenMFAttributes^ Param_Atributos);
+			CarenResult SetContainerAttributes(ICarenMFAttributes^ Param_Atributos);
 
 			/// <summary>
 			/// (SetVideoAttributes) - Define as configurações de configuração do fluxo de vídeo no (Perfil Transcode).
 			/// </summary>
 			/// <param name="Param_Atributos">Ponteiro para a interface ICarenMFAttributes de um armazenamento de atributos que contém as configurações do fluxo de Vídeo. Os valores de atributo 
 			/// especificados sobreescrevem quaisquer valores existentes armazenados no perfil transcódigo(Transcode).</param>
-			CarenResult DefinirAtributosVideo(ICarenMFAttributes^ Param_Atributos);
+			CarenResult SetVideoAttributes(ICarenMFAttributes^ Param_Atributos);
 		};
 
 		/// <summary>
@@ -3835,25 +3797,25 @@ namespace CarenRengine
 			/// <param name="Param_Out_SinkInfo">Recebe uma estrutura CA_MF_TRANSCODE_SINK_INFO. Se o método for bem-sucedido, o método atribui ponteiros do ICarenMFMediaType aos membros 
 			/// pAudioMediaType e pVideoMediaType desta estrutura. O método pode definir qualquer membro como NULO. Se um dos membros não for NULO após o retorno do método, o chamador deve 
 			/// liberar os ponteiros das interfaces.</param>
-			CarenResult ObterSinkInfo([Out] CA_MF_TRANSCODE_SINK_INFO^% Param_Out_SinkInfo);
+			CarenResult GetSinkInfo([Out] CA_MF_TRANSCODE_SINK_INFO^% Param_Out_SinkInfo);
 
 			/// <summary>
 			/// (SetOutputByteStream) - Define um fluxo de byte de saída para o dissipador de mídia transcodificado.
 			/// </summary>
 			/// <param name="Param_ByteStream">Um ponteiro para a interface ICarenMFActivate de um objeto de ativação de fluxo de bytes(Byte-Stream).</param>
-			CarenResult DefinirFluxoBytesSaida(ICarenMFActivate^ Param_ByteStream);
+			CarenResult SetOutputByteStream(ICarenMFActivate^ Param_ByteStream);
 
 			/// <summary>
 			/// (SetOutputFile) - Define o nome do arquivo de saída codificado.
 			/// </summary>
 			/// <param name="Param_NomeArquivo">Uma string que contém o nome do arquivo de saida.</param>
-			CarenResult DefinirArquivoSaida(String^ Param_NomeArquivo);
+			CarenResult SetOutputFile(String^ Param_NomeArquivo);
 
 			/// <summary>
 			/// (SetProfile) - Define o perfil de transcodificação no objeto de ativação do dissipador de transcódigo.
 			/// </summary>
 			/// <param name="Param_Profile">Um ponteiro para a interface ICarenMFTranscodeProfile.</param> 
-			CarenResult DefinirProfile(ICarenMFTranscodeProfile^ Param_Profile);
+			CarenResult SetProfile(ICarenMFTranscodeProfile^ Param_Profile);
 
 		};
 
@@ -3878,48 +3840,48 @@ namespace CarenRengine
 			//Métodos
 
 			/// <summary>
-			/// (DeleteProperty) - Exclui uma propriedade de metadados.
+			/// Exclui uma propriedade de metadados.
 			/// </summary>
 			/// <param name="Param_NomePropriedade">Uma string contendo o nome da propriedade a ser deletada.</param>
-			CarenResult DeletarPropriedade(String^ Param_NomePropriedade);
+			CarenResult DeleteProperty(String^ Param_NomePropriedade);
 
 			/// <summary>
-			/// (GetAllLanguages) - Obtém uma lista dos idiomas em que os metadados estão disponíveis.
+			/// Obtém uma lista dos idiomas em que os metadados estão disponíveis.
 			/// </summary>
 			/// <param name="Param_Out_ListaIdiomas">Retorna uma CA_PropVariant com uma lista de idiomas. A lista é devolvida como uma matriz de seqüência de sequências de caracteres amplos. Cada string na matriz é uma tag de idioma compatível com RFC 1766.</param>
-			CarenResult ObterListaIdiomas([Out] CA_PropVariant^% Param_Out_ListaIdiomas);
+			CarenResult GetAllLanguages([Out] CA_PropVariant^% Param_Out_ListaIdiomas);
 
 			/// <summary>
-			/// (GetAllPropertyNames) - Obtém uma lista de todos os nomes de propriedade de metadados neste objeto.
+			/// Obtém uma lista de todos os nomes de propriedade de metadados neste objeto.
 			/// </summary>
 			/// <param name="Param_Out_ListaNomesProps">Retorna uma CA_PropVariant com os nomes de todas as propriedades. Se não houver propriedades disponíveis, o tipo CA_PropVariant será VT_EMPTY. Caso contrário, o tipo CA_PropVariant é VT_VECTOR | VT_LPWSTR. </param>
-			CarenResult ObterTodosNomesPropriedade([Out] CA_PropVariant^% Param_Out_ListaNomesProps);
+			CarenResult GetAllPropertyNames([Out] CA_PropVariant^% Param_Out_ListaNomesProps);
 
 			/// <summary>
-			/// (GetLanguage) - Obtém a configuração atual do idioma.
+			/// (Obtém a configuração atual do idioma.
 			/// </summary>
 			/// <param name="Param_Out_IdiomaRFC1766">Recebe uma string contendo uma tag do idioma compatível com a RFC 1766.</param>
-			CarenResult ObterIdioma([Out] String^% Param_Out_IdiomaRFC1766);
+			CarenResult GetLanguage([Out] String^% Param_Out_IdiomaRFC1766);
 
 			/// <summary>
-			/// (GetProperty) - Obtém o valor de uma propriedade de metadados.
+			/// Obtém o valor de uma propriedade de metadados.
 			/// </summary>
 			/// <param name="Param_NomePropriedade">Uma string que contém o nome da propriedade a ser recuperada o valor.</param>
 			/// <param name="Param_Out_Valor">Recebe uma estrutura CA_PropVariant contendo o valor. O tipo CA_PropVariant depende da propriedade. Para propriedades multivalorizadas, o CA_PropVariant é um tipo VT_VECTOR.</param>
-			CarenResult ObterPropriedade(String^ Param_NomePropriedade, [Out] CA_PropVariant^% Param_Out_Valor);
+			CarenResult GetProperty(String^ Param_NomePropriedade, [Out] CA_PropVariant^% Param_Out_Valor);
 
 			/// <summary>
-			/// (SetLanguage) - Define o idioma para definir e recuperar metadados.
+			/// Define o idioma para definir e recuperar metadados.
 			/// </summary>
 			/// <param name="Param_IdiomaRFC1766">Uma string contendo uma tag de idioma compatível com o RFC 1766.</param>
-			CarenResult DefinirIdioma(String^ Param_IdiomaRFC1766);
+			CarenResult SetLanguage(String^ Param_IdiomaRFC1766);
 
 			/// <summary>
-			/// (SetProperty) - Define o valor de uma propriedade de metadados.
+			/// Define o valor de uma propriedade de metadados.
 			/// </summary>
 			/// <param name="Param_NomePropriedade">Uma string com o nome da propriedade.</param>
 			/// <param name="Param_Valor">Uma CA_PropVariant que contém o valor da propriedade. Para propriedades multivalorizadas, use um CA_PropVariant com um tipo de VT_VECTOR.</param>
-			CarenResult DefinirPropriedade(String^ Param_NomePropriedade, CA_PropVariant^ Param_Valor);
+			CarenResult SetProperty(String^ Param_NomePropriedade, CA_PropVariant^ Param_Valor);
 		};
 
 		/// <summary>
@@ -3945,14 +3907,14 @@ namespace CarenRengine
 			//Métodos
 
 			/// <summary>
-			/// (GetMFMetadata) - Obtém uma coleção de metadados, seja para uma apresentação inteira, ou para um fluxo na apresentação.
+			/// Obtém uma coleção de metadados, seja para uma apresentação inteira, ou para um fluxo na apresentação.
 			/// </summary>
 			/// <param name="Param_Descritor">Ponteiro para a interface do descritor de apresentação(ICarenMFPresentationDescriptor) da fonte de mídia.</param>
 			/// <param name="Param_IdenticaoFluxo">Se esse parâmetro for zero, o método recuperará metadados que se aplicam a toda a apresentação. Caso contrário, este parâmetro especifica 
 			/// um identificador de fluxo e o método recupera metadados para esse fluxo. Para obter o identificador de fluxo de um fluxo, ligue para o ICarenMFStreamDescriptor::ObterIdentificadorFluxo.</param>
 			/// <param name="Param_Flags">Reservado. Deixe como ZERO.</param>
 			/// <param name="Param_Out_Metadata">Recebe um ponteiro para a interface ICarenMFMetadata. Use esta interface para acessar os metadados. O chamador deve liberar a interface.</param>
-			CarenResult ObterMFMetadados(ICarenMFPresentationDescriptor^ Param_Descritor, UInt32 Param_IdenticaoFluxo, UInt32 Param_Flags, [Out] ICarenMFMetadata^% Param_Out_Metadata);
+			CarenResult GetMFMetadata(ICarenMFPresentationDescriptor^ Param_Descritor, UInt32 Param_IdenticaoFluxo, UInt32 Param_Flags, [Out] ICarenMFMetadata^% Param_Out_Metadata);
 		};
 
 		/// <summary>
@@ -3975,65 +3937,64 @@ namespace CarenRengine
 			//Métodos
 
 			/// <summary>
-			/// (GetPassword) - Recupera a senha.
+			/// Recupera a senha.
 			/// </summary>
 			/// <param name="Param_Ref_Senha">Um buffer de bytes que recebe a (SENHA). Para encontrar o tamanho de buffer necessário, defina este parâmetro como NULO. Se Param_Criptografada 
 			/// for FALSE, o buffer contém uma sequência de caracteres amplos. Caso contrário, o buffer contém dados criptografados.</param>
 			/// <param name="Param_Ref_LarguraDados">Na entrada, especifica o tamanho do buffer (Param_Ref_Senha), em bytes. Na saída, recebe o tamanho de buffer necessário. Se 
 			/// Param_Criptografada for FALSE, o tamanho inclui o caractere nulo de terminação.</param>
 			/// <param name="Param_Criptografada">Se TRUE, o método retorna uma sequência criptografada. Caso contrário, o método retorna uma sequência não criptografada.</param>
-			CarenResult ObterPassword(
+			CarenResult GetPassword(
 				cli::array<Byte>^% Param_Ref_Senha,
 				UInt32% Param_Ref_LarguraDados,
 				Boolean Param_Criptografada);
 
 			/// <summary>
-			/// (GetUser) - Recupera o nome de usuário.
+			/// Recupera o nome de usuário.
 			/// </summary>
 			/// <param name="Param_Ref_Usuario">Um buffer de bytes que recebe o (USUÁRIO). Para encontrar o tamanho de buffer necessário, defina este parâmetro como NULO. Se Param_Criptografada 
 			/// for FALSE, o buffer contém uma sequência de caracteres amplos. Caso contrário, o buffer contém dados criptografados.</param>
 			/// <param name="Param_Ref_LarguraDados">Na entrada, especifica o tamanho do buffer (Param_Ref_Usuario), em bytes. Na saída, recebe o tamanho de buffer necessário. Se 
 			/// Param_Criptografada for FALSE, o tamanho inclui o caractere nulo de terminação.</param>
 			/// <param name="Param_Criptografada">Se TRUE,o método retorna uma seqüência criptografada. Caso contrário, o método retorna uma seqüência não criptografada.</param>
-			CarenResult ObterUsuario(
+			CarenResult GetUser(
 				cli::array<Byte>^% Param_Ref_Usuario,	
 				UInt32% Param_Ref_LarguraDados,
 				Boolean Param_Criptografada);
 
 			/// <summary>
-			/// (LoggedOnUser) - Verifica se as credenciais registradas devem ser usadas.
+			/// Verifica se as credenciais registradas devem ser usadas.
 			/// </summary>
 			/// <param name="Param_Out_Resultado">Recebe um valor booleano. Se as credenciais registradas devem ser usadas, o valor é TRUE. Caso contrário, o valor é FALSO.</param>
-			CarenResult CredencialNecessaria([Out] Boolean% Param_Out_Resultado);
+			CarenResult LoggedOnUser([Out] Boolean% Param_Out_Resultado);
 
 			/// <summary>
-			/// (SetPassword) - Define a senha.
+			/// Define a senha.
 			/// </summary>
 			/// <param name="Param_Senha">Um buffer de bytes que contém a (SENHA). Se Param_Criptografar for FALSE, o buffer será uma sequência de caracteres amplos. Caso contrário, o 
 			/// buffer contém dados criptografados.</param>
 			/// <param name="Param_Ref_LarguraDados">Tamanho de Param_Senha, em bytes. Se Param_Criptografar for FALSE, o tamanho inclui o caractere nulo de terminação.</param>
 			/// <param name="Param_Criptografar">Se TRUE, a senha será criptografada. Caso contrário, a senha não é criptografada.</param>
-			CarenResult DefinirPassword(
+			CarenResult SetPassword(
 				cli::array<Byte>^ Param_Senha,
 				UInt32% Param_Ref_LarguraDados,
 				Boolean Param_Criptografar);
 
 			/// <summary>
-			/// (SetUser) - Define o nome de usuário.
+			/// Define o nome de usuário.
 			/// </summary>
 			/// <param name="Param_Usuario">Um buffer de bytes que contém o (USUÁRIO). Se Param_Criptografar for FALSE, o buffer será uma sequência de caracteres amplos. Caso contrário, o 
 			/// buffer contém dados criptografados.</param>
 			/// <param name="Param_Ref_LarguraDados">Tamanho de Param_Senha, em bytes. Se Param_Criptografar for FALSE, o tamanho inclui o caractere nulo de terminação.</param>
 			/// <param name="Param_Criptografar">Se TRUE, o usuário será criptografado. Caso contrário, o usuário não é criptografado.</param>
-			CarenResult DefinirUsuario(
+			CarenResult SetUser(
 				cli::array<Byte>^ Param_Usuario,
 				UInt32% Param_Ref_LarguraDados,
 				Boolean Param_Criptografar);
 		};
 
 		/// <summary>
-		/// (IMFNetCredentialCache) - Interface responsável por obter credenciais do cache de credenciais.
-		/// Esta interface é implementada pelo objeto de cache credencial.
+		/// (IMFNetCredentialCache) - Interface responsável por obter credenciais do cache de credenciais. Esta interface é implementada pelo objeto de cache credencial.
 		/// Os aplicativos que implementam a interface IMFNetCredentialManager podem usar esse objeto para armazenar as credenciais do usuário.
 		/// </summary>
 		[CategoryAttribute("Interface MediaFoundation")]
@@ -4053,14 +4014,14 @@ namespace CarenRengine
 			//Métodos
 
 			/// <summary>
-			/// (GetCredential) - Recupera o objeto de credencial para a URL especificada.
+			/// Recupera o objeto de credencial para a URL especificada.
 			/// </summary>
 			/// <param name="Param_Url">Uma string contendo a URL para a qual a credencial é necessária.</param>
 			/// <param name="Param_Realm">Uma string contendo o Realm(Define o espaço de proteção do servidor, é um dominio protegido que pode ser compartilhado) para a autenticação.</param>
 			/// <param name="Param_FlagsAutenticacao">Bitwise OU de zero ou mais bandeiras da enumeração CA_MFNetAuthenticationFlags.</param>
 			/// <param name="Param_Out_Credencial">Recebe um ponteiro para a interface ICarenMFNetCredential. O chamador deve liberar a interface.</param>
 			/// <param name="Param_Out_FlagsRequerimento">Recebe bitwise OU de zero ou mais bandeiras da enumeração CA_MFNetCredentialRequirements.</param>
-			CarenResult ObterCredencial(
+			CarenResult GetCredential(
 				String^ Param_Url, 
 				String^ Param_Realm, 
 				CA_MFNetAuthenticationFlags Param_FlagsAutenticacao, 
@@ -4068,29 +4029,29 @@ namespace CarenRengine
 				[Out] CA_MFNetCredentialRequirements% Param_Out_FlagsRequerimento);
 
 			/// <summary>
-			/// (SetGood) - Relata se o objeto de credencial fornecido passou com sucesso no desafio de autenticação.
+			/// Relata se o objeto de credencial fornecido passou com sucesso no desafio de autenticação.
 			/// </summary>
 			/// <param name="Param_Credencial">Ponteiro para a interface ICarenMFNetCredential.</param>
 			/// <param name="Param_Resultado">TRUE se o objeto de credencial teve sucesso no desafio de autenticação; caso contrário, FALSE.</param>
-			CarenResult DefinirResultadoCredencial(
+			CarenResult SetGood(
 				ICarenMFNetCredential^ Param_Credencial, 
 				Boolean Param_Resultado);
 
 			/// <summary>
-			/// (SetUserOptions) - Especifica como as credenciais do usuário são armazenadas.
+			/// Especifica como as credenciais do usuário são armazenadas.
 			/// </summary>
 			/// <param name="Param_Credencial">Ponteiro para a interface ICarenMFNetCredential. Obtenha este ponteiro ligando para ICarenMFNetCredentialCache::ObterCredencial.</param>
 			/// <param name="Param_Opcoes">Bitwise OU de zero ou mais bandeiras da enumeração CA_MFNetCredentialOptions.</param>
-			CarenResult DefinirOpcoesArmazenamentoUsuario(
+			CarenResult SetUserOptions(
 				ICarenMFNetCredential^ Param_Credencial, 
 				CA_MFNetCredentialOptions Param_Opcoes);
 		};
 
 		/// <summary>
-		/// (IMFNetCredentialManager) - Interface implementada por aplicativos para fornecer credenciais de usuário para uma fonte de rede.
-		/// Para usar esta interface, implemente-a em seu aplicativo. Em seguida, crie um objeto de armazenamento de propriedades e defina a propriedade MFNETSOURCE_CREDENTIAL_MANAGER. 
-		/// O valor da propriedade é um ponteiro para a interface ICarenMFNetCredentialManager do seu aplicativo. Em seguida, passe a loja de propriedades para uma das funções de criação 
-		/// do resolvedor de origem, como ICarenMFSourceResolver::CriarObjetoFromUrl, no parâmetro (Param_Propriedades).
+		/// (IMFNetCredentialManager) - Interface implementada por aplicativos para fornecer credenciais de usuário para uma fonte de rede. Para usar esta interface, implemente-a em
+		/// seu aplicativo. Em seguida, crie um objeto de armazenamento de propriedades e defina a propriedade MFNETSOURCE_CREDENTIAL_MANAGER. O valor da propriedade é um ponteiro 
+		/// para a interface ICarenMFNetCredentialManager do seu aplicativo. Em seguida, passe a loja de propriedades para uma das funções de criação do resolvedor de origem, como 
+		/// ICarenMFSourceResolver::CriarObjetoFromUrl, no parâmetro (Param_Propriedades).
 		/// </summary>
 		[CategoryAttribute("Interface MediaFoundation")]
 		[Guid("3D85FF23-E468-4710-89E5-C6A0C78F1BFC")]
@@ -4109,39 +4070,40 @@ namespace CarenRengine
 			//Métodos
 
 			/// <summary>
-			/// (BeginGetCredentials) - Começa uma solicitação assíncrona para recuperar as credenciais do usuário.
+			/// Começa uma solicitação assíncrona para recuperar as credenciais do usuário.
 			/// </summary>
 			/// <param name="Param_GetParam">Uma estrutura MFNetCredentialManagerGetParam.</param>
 			/// <param name="Param_Callback">Ponteiro para a interface ICarenMFAsyncCallback de um objeto de retorno de chamada. O chamador deve implementar esta interface.</param>
 			/// <param name="Param_ObjetoEstado">Um ponteiro para um objeto de estado, definido pelo chamador. Este parâmetro pode ser NULO. O objeto é devolvido ao chamador quando o retorno de 
 			/// chamada é invocado.</param>
-			CarenResult ObterCredenciaisAsync(
+			CarenResult BeginGetCredentials(
 				CA_MFNetCredentialManagerGetParam^ Param_GetParam, 
 				ICarenMFAsyncCallback^ Param_Callback, 
 				ICaren^ Param_ObjetoEstado);
 
 			/// <summary>
-			/// (EndGetCredentials) - Completa uma solicitação assíncrona para recuperar as credenciais do usuário.
+			/// Completa uma solicitação assíncrona para recuperar as credenciais do usuário.
 			/// </summary>
 			/// <param name="Param_Resultado">Ponteiro para uma interface ICarenMFAsyncResult que contém o resultado assíncrono.</param>
 			/// <param name="Param_Out_Credencial">Recebe um ponteiro para a interface ICarenMFNetCredential, que é usada para recuperar as credenciais. O chamador deve liberar a interface.</param>
-			CarenResult FinalizarCredenciaisAsync(
+			CarenResult EndGetCredentials(
 				ICarenMFAsyncResult^ Param_Resultado, 
 				[Out] ICarenMFNetCredential^% Param_Out_Credencial);
 
 			/// <summary>
-			/// (SetGood) - Especifica se as credenciais do usuário tiveram sucesso no desafio de autenticação. A fonte da rede chama esse método para informar o aplicativo se as 
-			/// credenciais do usuário foram autenticadas.
+			/// Especifica se as credenciais do usuário tiveram sucesso no desafio de autenticação. A fonte da rede chama esse método para informar o aplicativo se as credenciais do 
+			/// usuário foram autenticadas.
 			/// </summary>
 			//// <param name="Param_Credencial">Ponteiro para a interface ICarenMFNetCredential.</param>
 			/// <param name="Param_Resultado">Valor booleano. O valor é TRUE se as credenciais tiverem êxito no desafio de autenticação. Caso contrário, o valor é FALSE.</param>
-			CarenResult DefinirResultadoCredencial(
+			CarenResult SetGood(
 				ICarenMFNetCredential^ Param_Credencial,
 				Boolean Param_Resultado);
 		};
 		
 		/// <summary>
-		/// (IMFNetResourceFilter) - Interface responsável por notificar o aplicativo quando um fluxo de byte solicita uma URL e permite que o aplicativo bloqueie o redirecionamento da URL.
+		/// (IMFNetResourceFilter) - Interface responsável por notificar o aplicativo quando um fluxo de byte solicita uma URL e permite que o aplicativo bloqueie o redirecionamento 
+		/// da URL.
 		/// </summary>
 		[CategoryAttribute("Interface MediaFoundation")]
 		[Guid("21802177-3677-4A72-82C8-F893E6D5AC5E")]

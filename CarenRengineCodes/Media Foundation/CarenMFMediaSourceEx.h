@@ -19,7 +19,7 @@ limitations under the License.
 #include "../SDK_MediaFoundation.h"
 #include "../Caren/Caren.h"
 #include "CarenMFPresentationDescriptor.h"
-#include "CarenMFMediaEvent.h" //Inclui PropVariantManager
+#include "CarenMFMediaEvent.h"
 #include "CarenMFAttributes.h"
 #include "../SDK_Utilidades.h"
 
@@ -39,7 +39,7 @@ using namespace CarenRengine::SDKBase::Interfaces;
 using namespace CarenRengine::SDKUtilidades;
 
 /// <summary>
-/// [Concluido - Fase de testes] - Estende a interface IMFMediaSource para fornecer recursos adicionais para uma fonte de mídia.
+/// Estende a interface IMFMediaSource para fornecer recursos adicionais para uma fonte de mídia.
 /// </summary>
 public ref class CarenMFMediaSourceEx :public ICarenMFMediaSourceEx
 {
@@ -229,12 +229,7 @@ public:
 	virtual CarenResult Desligar();
 
 
-
-	//
-	// ICarenMFGeradorEventosMidia
-	//
-
-	//Métodos da interface (ICarenMFGeradorEventosMidia)
+	//Métodos da interface (CarenMFMediaEventGenerator)
 public:
 	/// <summary>
 	/// (GetEvent) - Recupera o próximo evento na fila. Este método é (Síncrono).

@@ -1233,6 +1233,30 @@
     <ClInclude Include="CarenRengineCodes\WIC\CarenWICProgressiveLevelControl.h">
       <Filter>Arquivos de Cabeçalho\Classes\WIC</Filter>
     </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFTranscodeProfile.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFFinalizableMediaSink.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFTranscodeSinkInfoProvider.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMetadata.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMetadataProvider .h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFNetCredential.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFNetCredentialCache.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFNetCredentialManager.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D10Multithread.cpp">
@@ -2272,6 +2296,30 @@
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\WIC\CarenWICProgressiveLevelControl.cpp">
       <Filter>Arquivos de Origem\Classes\WIC</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFTranscodeProfile.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFFinalizableMediaSink.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFTranscodeSinkInfoProvider.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMetadata.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMetadataProvider .cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFNetCredential.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFNetCredentialCache.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFNetCredentialManager.cpp">
+      <Filter>Arquivos de Origem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

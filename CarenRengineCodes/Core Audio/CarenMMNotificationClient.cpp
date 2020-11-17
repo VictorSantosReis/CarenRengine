@@ -512,7 +512,7 @@ void CarenMMNotificationClient::EncaminharEvento_OnDefaultDeviceChanged(_In_ EDa
 
 	//Variaveis
 	CA_EDataFlow DirecaoFluxo = static_cast<CA_EDataFlow>(flow);
-	CA_FUNCAO_DISPOSITIVO_AUDIO FunctionDevice = static_cast<CA_FUNCAO_DISPOSITIVO_AUDIO>(role);
+	CA_ERole FunctionDevice = static_cast<CA_ERole>(role);
 	String^ IDDispositivo = nullptr;
 
 	//Verifica se a String enviada pelo método é valida
@@ -631,7 +631,7 @@ void CarenMMNotificationClient::EncaminharEvento_OnDeviceStateChanged(_In_ LPCWS
 
 	//Variaveis
 	String^ IDDispositivo = nullptr;
-	CA_ESTADO_DISPOSITIVO_AUDIO StateDeviceAudio = static_cast<CA_ESTADO_DISPOSITIVO_AUDIO>(dwNewState);
+	CA_DEVICE_STATE_XXX StateDeviceAudio = static_cast<CA_DEVICE_STATE_XXX>(dwNewState);
 
 	//Verifica se a String enviada pelo método é valida
 	if (ObjetoValido(pwstrDeviceId))

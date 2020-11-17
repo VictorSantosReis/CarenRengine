@@ -179,8 +179,8 @@ public:
 	/// <summary>
 	/// (GetCharacteristics) - Recupera as características da fonte de mídia.
 	/// </summary>
-	/// <param name="Param_Out_Caracteristicas">Recebe um OR de bit a bit de zero ou mais sinalizadores da enumeração (CA_CARACTERISTICAS_FONTE_MIDIA).</param>
-	virtual CarenResult ObterCaracteristicas([Out] Enumeracoes::CA_CARACTERISTICAS_FONTE_MIDIA% Param_Out_Caracteristicas);
+	/// <param name="Param_Out_Caracteristicas">Recebe um OR de bit a bit de zero ou mais sinalizadores da enumeração (CA_MFMEDIASOURCE_CHARACTERISTICS).</param>
+	virtual CarenResult ObterCaracteristicas([Out] Enumeracoes::CA_MFMEDIASOURCE_CHARACTERISTICS% Param_Out_Caracteristicas);
 	
 	/// <summary>
 	/// (Start) - Inicia, procura ou reinicia a fonte de mídia especificando onde iniciar a reprodução.

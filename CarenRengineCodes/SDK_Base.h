@@ -4872,7 +4872,7 @@ namespace CarenRengine
 			};
 
 			/// <summary>
-			/// Especifica o tipo de dados que está armazenado na PropVariant.
+			/// (PRECISA SER ATUALIZADA COM MAIS TIPOS SUPORTADOS E ADICIONAR OS RESTANDO NÃO SUPORTADO)Especifica o tipo de dados que está armazenado na PropVariant.
 			/// </summary>
 			public enum class CA_PropVariant_TYPE
 			{
@@ -5932,7 +5932,7 @@ namespace CarenRengine
 			{
 				/// <summary>
 				/// O coletor de mídia tem um número fixo de fluxos. Ele não oferece suporte aos métodos: 
-				/// AdicionarStreamSink e RemoverStreamSink no Coletor de mídia.
+				/// AddStreamSink e RemoveStreamSink no Coletor de mídia.
 				/// </summary>
 				COLETOR_FLUXOS_FIXOS = 0x00000001,
 
@@ -9275,11 +9275,16 @@ MEReservedMax = 10000
 			};
 
 			/// <summary>
-			/// (DEVICE_STATE_XXX ) - Enumera as constantes que indicam o estado atual de um dispositivo de áudio de ponto de extremidade.
+			/// (DEVICE_STATE_XXX) - Enumera as constantes que indicam o estado atual de um dispositivo de áudio de ponto de extremidade.
 			/// </summary>
 			[FlagsAttribute]
-			public enum class CA_ESTADO_DISPOSITIVO_AUDIO
+			public enum class CA_DEVICE_STATE_XXX
 			{
+				/// <summary>
+				/// Utilizado para suporte, não faz parte da enumeração original.
+				/// </summary>
+				Zero = 0,
+
 				/// <summary>
 				/// O dispositivo de ponto de extremidade de áudio está ativo. Ou seja, o adaptador de áudio que se conecta ao dispositivo de ponto de extremidade está presente e habilitado. Além disso, se o dispositivo 
 				/// de ponto de extremidade se conecta a uma tomada no adaptador, o dispositivo de ponto de extremidade é conectado.
@@ -9302,8 +9307,8 @@ MEReservedMax = 10000
 				/// extremidade não está conectado à tomada. Somente um dispositivo com detecção de presença de Jack pode estar nesse estado. Para obter mais informações sobre detecção de presença de Jack, consulte 
 				/// dispositivos de ponto de extremidade de áudio.
 				/// </summary>
-
 				CA_DEVICE_STATE_UNPLUGGED = 0x00000008,
+
 				/// <summary>
 				/// Inclui dispositivos de ponto de extremidade de áudio em todos os Estados ativos, desabilitados, não presentes e desconectados.
 				/// </summary>
@@ -9315,7 +9320,7 @@ MEReservedMax = 10000
 			/// (ERole) - Enumera constantes que indicam a função que o sistema atribuiu a um dispositivo de ponto de extremidade de áudio.
 			/// </summary>
 			[FlagsAttribute]
-			public enum class CA_FUNCAO_DISPOSITIVO_AUDIO
+			public enum class CA_ERole
 			{
 				/// <summary>
 				/// Jogos, sons de notificação do sistema e comandos de voz.
@@ -9374,7 +9379,7 @@ MEReservedMax = 10000
 			/// (_MFMEDIASOURCE_CHARACTERISTICS) - Enumera as características de uma fonte de mídia.
 			/// </summary>
 			[FlagsAttribute]
-			public enum class CA_CARACTERISTICAS_FONTE_MIDIA
+			public enum class CA_MFMEDIASOURCE_CHARACTERISTICS
 			{
 				/// <summary>
 				/// Utilizado para suporte, não faz parte da enumeração original.
@@ -20247,9 +20252,21 @@ MEReservedMax = 10000
 			/// </summary>
 			public ref struct CA_MF_TRANSCODE_SINK_INFO
 			{
+				/// <summary>
+				/// 
+				/// </summary>
 				UInt32  dwVideoStreamID;
+				/// <summary>
+				/// Uma interface ICarenMFMediaType que contém o tipo de mídia para a fluxo de vídeo. Este membro pode ser NULO.
+				/// </summary>
 				ICaren^ pVideoMediaType;
+				/// <summary>
+				/// 
+				/// </summary>
 				UInt32  dwAudioStreamID;
+				/// <summary>
+				/// Uma interface ICarenMFMediaType que contém o tipo de mídia para a fluxo de áudio. Este membro pode ser NULO.
+				/// </summary>
 				ICaren^ pAudioMediaType;
 			};
 

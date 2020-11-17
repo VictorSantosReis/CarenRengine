@@ -243,6 +243,12 @@
     <ClInclude Include="CarenRengineCodes\Core Audio\CarenAudioSimplesVolume.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFByteStream.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFAudioStreamVolume.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFFinalizableMediaSink.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMetadata.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMetadataProvider .h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFNetCredential.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFNetCredentialCache.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFNetCredentialManager.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFSimpleAudioVolume.h" />
     <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D10Multithread.h" />
     <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11Asynchronous.h" />
@@ -336,6 +342,8 @@
     <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGISwapChain2.h" />
     <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGISwapChain3.h" />
     <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGISwapChain4.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFTranscodeProfile.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFTranscodeSinkInfoProvider.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFTransform.h" />
     <ClInclude Include="CarenRengineCodes\Caren\Caren.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFVideoMediaType.h" />
@@ -608,6 +616,12 @@
     <ClCompile Include="CarenRengineCodes\Core Audio\CarenAudioSimplesVolume.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFByteStream.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFAudioStreamVolume.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFFinalizableMediaSink.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMetadata.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMetadataProvider .cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFNetCredential.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFNetCredentialCache.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFNetCredentialManager.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFSimpleAudioVolume.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D10Multithread.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11Asynchronous.cpp" />
@@ -710,6 +724,8 @@
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFCollection.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFDXGIBuffer.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFDXGIDeviceManager.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFTranscodeProfile.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFTranscodeSinkInfoProvider.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFTransform.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMedia2DBuffer.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFVideoMediaType.cpp" />

@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-
 #pragma once
 #include "../SDK_MediaFoundation.h"
 #include "../SDK_Caren.h"
@@ -24,12 +23,11 @@ limitations under the License.
 #include "CarenMFPresentationClock.h"
 #include "CarenMFActivate.h"
 
-//Importa o namespace que contém as interfaces da Media Foundation.
+//Importa o namespace que contém as interfaces da API primária.
 using namespace CarenRengine::MediaFoundation;
 
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
-using namespace CarenRengine::SDKBase::Enumeracoes;
 using namespace CarenRengine::SDKBase::Estruturas;
 using namespace CarenRengine::SDKBase::Interfaces;
 
@@ -38,20 +36,26 @@ using namespace CarenRengine::SDKUtilidades;
 
 
 /// <summary>
-/// Classe responsável por representar a base para todos os Coletores de Mídia do Media Foundation. 
+/// (Concluido - Fase de Testes) - Classe opcionalmente suportada por sinks de mídia para executar tarefas necessárias antes do desligamento.
 /// </summary>
-public ref class CarenMFMediaSink : ICarenMFMediaSink
+public ref class CarenMFFinalizableMediaSink : public ICarenMFFinalizableMediaSink
 {
 	/////////////////////////////////////////
 	//Objeto gerenciado por essa interface.//
 	/////////////////////////////////////////
 
-	//Ponteiro para a interface (IMFMediaSink).
-	IMFMediaSink* PonteiroTrabalho = NULL;
+	//Ponteiro para a interface (IMFFinalizableMediaSink).
+	IMFFinalizableMediaSink* PonteiroTrabalho = NULL;
 
-	//Destruidor.
+
+	//Contrutores e destuidor da classe.
 public:
-	~CarenMFMediaSink();
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMFFinalizableMediaSink();
+	
+	~CarenMFFinalizableMediaSink();
 
 	//Variaveis Internas.
 internal:
@@ -76,120 +80,6 @@ public:
 			return Prop_DisposedClasse;
 		}
 	}
-
-	//Cria uma instância dessa classe (Estático)
-public:
-
-	/// <summary>
-	/// Método responsável por criar uma instância do Renderizador de Áudio.
-	/// </summary>
-	/// <param name="Param_Atributos">Uma interface com os atributos para criação do Renderizador de Áudio. Esse parametro pode ser NULO.</param>
-	/// <param name="Param_Out_AudioRender">Recebe a interface com o coletor de mídia do Renderiazador de Audio.</param>
-	static CarenResult CriarInstanciaAudioRender(ICarenMFAttributes^ Param_Atributos, [Out] ICarenMFMediaSink^% Param_Out_AudioRender)
-	{
-		//Variavel que vai retornar o resultado.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Variavel COM
-		ResultadoCOM Hr = E_FAIL;
-
-		//Variaveis utilizadas pelo método
-		IMFAttributes *pAtributoCreate = NULL;
-		IMFMediaSink *pAudioRender = NULL;
-		ICarenMFMediaSink^ InterfaceAudioRender = nullptr;
-
-		//Chama o método para obter o ponteiro de trabalho para os atributos.
-		if (Param_Atributos != nullptr)
-		{
-			//Recupera o ponteiro de trabalho.
-			Param_Atributos->RecuperarPonteiro((LPVOID*)&pAtributoCreate);
-		}
-
-		//Chama o método que vai criar o renderizador de Áudio.
-		Hr = MFCreateAudioRenderer(pAtributoCreate ? pAtributoCreate : NULL, &pAudioRender);
-
-		//Verifica o resultado do método
-		if (Sucesso(Hr))
-		{
-			//Deixa o método continuar.
-		}
-		else
-		{
-			//Define que houve falha.
-			Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-			//Sai do método
-			goto Done;
-		}
-
-		//Cria a interface que vai conter o ponteiro.
-		InterfaceAudioRender = gcnew CarenMFMediaSink();
-
-		//Chama o método para definir o ponteiro de trablho.
-		InterfaceAudioRender->AdicionarPonteiro(pAudioRender);
-
-		//Define a interface criada no parametro de saida.
-		Param_Out_AudioRender = InterfaceAudioRender;
-
-		//Define sucesso na operação
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	Done:;
-		//Retorna o resultado.
-		return Resultado;
-	}
-
-	/// <summary>
-	/// Método responsável por criar um objeto de ativação do Renderizador de Áudio.
-	/// </summary>
-	/// <param name="Param_Out_AudioRenderActivate">Recebe o ativador de objeto do Renderiazador de Áudio.</param>
-	static CarenResult CriarInstanciaAudioRenderActivate([Out] ICarenMFActivate^% Param_Out_AudioRenderActivate)
-	{
-		//Variavel que vai retornar o resultado.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Variavel COM
-		ResultadoCOM Hr = E_FAIL;
-
-		//Variaveis utilizadas pelo método
-		IMFActivate* pAudioRenderActivate = NULL;
-		ICarenMFActivate^ InterfaceAudioRenderActivate = nullptr;
-
-		//Chama o método que vai criar o ativador do renderizador de audio.
-		Hr = MFCreateAudioRendererActivate(&pAudioRenderActivate);
-
-		//Verifica o resultado do método
-		if (Sucesso(Hr))
-		{
-			//Deixa o método continuar.
-		}
-		else
-		{
-			//Define que houve falha.
-			Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-			//Sai do método
-			goto Done;
-		}
-
-		//Cria a interface que vai conter o ponteiro.
-		InterfaceAudioRenderActivate = gcnew CarenMFActivate();
-
-		//Chama o método para definir o ponteiro de trablho.
-		InterfaceAudioRenderActivate->AdicionarPonteiro(pAudioRenderActivate);
-
-		//Define a interface criada no parametro de saida.
-		Param_Out_AudioRenderActivate = InterfaceAudioRenderActivate;
-
-		//Define sucesso na operação
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	Done:;
-		//Retorna o resultado.
-		return Resultado;
-	}
-
-
 
 
 	///////////////////////////////////////////////////////
@@ -277,7 +167,22 @@ public:
 	virtual void Finalizar();
 
 
+	//Métodos da interface(ICarenMFFinalizableMediaSink)
+public:
+	/// <summary>
+	/// Notifica a mídia para tomar as medidas assíncronas que precisa para terminar suas tarefas.
+	/// </summary>
+	/// <param name="Param_Callback">Ponteiro para a interface ICarenMFAsyncCallback de um objeto assíncrono. O chamador deve implementar esta interface.</param>
+	/// <param name="Param_ObjetoEstado">Um objeto de estado, definido pelo chamador. Este parâmetro pode ser NULO. Você pode usar este objeto para conter informações do estado. 
+	/// O objeto é devolvido ao chamador quando o retorno de chamada é invocado.</param>
+	virtual CarenResult BeginFinalize(ICarenMFAsyncCallback^ Param_Callback, ICaren^ Param_ObjetoEstado);
 
+	/// <summary>
+	/// Completa uma operação de finalização assíncrona.
+	/// </summary>
+	/// <param name="Param_Resultado">Ponteiro para a interface ICarenMFAsyncResult. Passe no mesmo ponteiro que o objeto de retorno de chamada recebeu no método 
+	/// ICarenMFAsyncCallback::Invoke.</param>
+	virtual CarenResult EndFinalize(ICarenMFAsyncResult^ Param_Resultado);
 
 
 	//Métodos da interface (ICarenMFMediaSink)
@@ -342,4 +247,3 @@ public:
 	/// </summary>
 	virtual CarenResult Shutdown();
 };
-

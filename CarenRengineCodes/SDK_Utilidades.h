@@ -284,10 +284,10 @@ namespace CarenRengine
 
 			//(MÉTODO EXPERIMENTAL)
 			template<typename TipoArrayNativo, typename TipoArrayGerenciado>
-			void CopiarBufferNativo_ToGerenciado(TipoArrayNativo** Param_Buffer, cli::array<TipoArrayGerenciado>^% Param_BufferNativo, UINT32 Param_TamanhoBuffer)
+			void CopiarBufferNativo_ToGerenciado(TipoArrayNativo** Param_Buffer, cli::array<TipoArrayGerenciado>^% Param_BufferGerenciado, UINT32 Param_TamanhoBuffer)
 			{
 				//Cria um pin para o buffer gerenciado.
-				pin_ptr<TipoArrayGerenciado> PinToIndexZeroBuffer = &Param_BufferNativo[0];
+				pin_ptr<TipoArrayGerenciado> PinToIndexZeroBuffer = &Param_BufferGerenciado[0];
 
 				//Converte o pinptr para um buffer do tipo de destino.
 				TipoArrayNativo* pBufferDestino = static_cast<TipoArrayNativo*>(PinToIndexZeroBuffer);
@@ -298,6 +298,23 @@ namespace CarenRengine
 
 				//Copia os dados do nativo para o gerenciado.
 				std::copy(*Param_Buffer, (*Param_Buffer) + Param_TamanhoBuffer, pBufferDestino);
+			}
+			//(MÉTODO EXPERIMENTAL)
+			template<typename TipoArrayNativo, typename TipoArrayGerenciado>
+			void CopiarBufferGerenciado_ToNativo(cli::array<TipoArrayGerenciado>^% Param_BufferGerenciado, TipoArrayNativo* Param_BufferDestino, UINT32 Param_TamanhoBuffer)
+			{
+				//Cria um pin para o buffer gerenciado.
+				pin_ptr<TipoArrayGerenciado> PinToIndexZeroBuffer = &Param_BufferGerenciado[0];
+
+				//Converte o pinptr para o buffer de origem.
+				TipoArrayNativo* pBufferOrigem = static_cast<TipoArrayNativo*>(PinToIndexZeroBuffer);
+
+				//Verifica se é valido
+				if (!ObjetoValido(pBufferDestino))
+					throw gcnew NullReferenceException("(CopiarBufferGerenciado_ToNativo) - Houve uma falha ao criar uma ligação para o buffer de destino gerenciado através do (pin_ptr).");
+
+				//Copia os dados do nativo para o gerenciado.
+				std::copy(pBufferOrigem, (pBufferOrigem) + Param_TamanhoBuffer, Param_BufferDestino);
 			}
 
 
@@ -852,7 +869,6 @@ namespace CarenRengine
 
 					//Copia os dados para o buffer
 					Marshal::Copy(IntPtr((void*)Param_PropVariant.blob.pBlobData), BlobBuffer->BufferDados, 0, BlobBuffer->SizeData);
-
 					break;
 				case VT_STREAM:
 					break;
@@ -967,6 +983,9 @@ namespace CarenRengine
 			}
 
 
+
+
+			// CONVERSÕES DE ESTRUTURAS AUXILIARES.
 
 
 			//Converte uma estrutura gerenciada(CA_DXGI_RGBA) para um ponteiro que contém um array dos 4 componentes da cor RGBA.
@@ -1814,139 +1833,6 @@ namespace CarenRengine
 
 
 
-			//Converte a estrutura não gerenciada(_MFT_INPUT_STREAM_INFO) para sua correspondencia gerenciada(CA_MFT_INPUT_STREAM_INFO).
-			SDKBase::Estruturas::CA_MFT_INPUT_STREAM_INFO^ ConverterMFT_INPUT_STREAM_INFOUnmanagedToManaged(_MFT_INPUT_STREAM_INFO* Param_Estrutura)
-			{
-				//Cria a estrutura a ser retornada.
-				SDKBase::Estruturas::CA_MFT_INPUT_STREAM_INFO^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_MFT_INPUT_STREAM_INFO();
-
-				//Define os dados na estrutura.
-				EstruturaRetorno->Alinhamento = Param_Estrutura->cbAlignment;
-				EstruturaRetorno->MaxLookahead = Param_Estrutura->cbMaxLookahead;
-				EstruturaRetorno->Size = Param_Estrutura->cbSize;
-				EstruturaRetorno->Flags = Param_Estrutura->dwFlags;
-				EstruturaRetorno->LatenciaMaxima = Param_Estrutura->hnsMaxLatency;
-
-				//Retorna a estrutura
-				return EstruturaRetorno;
-			}
-
-			//Covnerte uma estrutura gerenciada(CA_MFT_INPUT_STREAM_INFO) para sua correspondencia não gerenciada(_MFT_INPUT_STREAM_INFO).
-			_MFT_INPUT_STREAM_INFO* ConverterMFT_INPUT_STREAM_INFOManagedToUnamaged(SDKBase::Estruturas::CA_MFT_INPUT_STREAM_INFO^ Param_Estrutura)
-			{
-				//Estrutura que será retornada ao usuário.
-				_MFT_INPUT_STREAM_INFO* EstruturaRetorno = CriarEstrutura<_MFT_INPUT_STREAM_INFO>();
-
-				//Define os dados na estrutura.
-				EstruturaRetorno->cbAlignment = Param_Estrutura->Alinhamento;
-				EstruturaRetorno->cbMaxLookahead = Param_Estrutura->MaxLookahead;
-				EstruturaRetorno->cbSize = Param_Estrutura->Size;
-				EstruturaRetorno->dwFlags = Param_Estrutura->Flags;
-				EstruturaRetorno->hnsMaxLatency = Param_Estrutura->LatenciaMaxima;
-
-				//Retorna a estrutura não gerenciada
-				return EstruturaRetorno;
-			}
-
-
-			//Converte a estrutura não gerenciada(_MFT_OUTPUT_STREAM_INFO) para sua correspondencia gerenciada(CA_MFT_OUTPUT_STREAM_INFO).
-			SDKBase::Estruturas::CA_MFT_OUTPUT_STREAM_INFO^ ConverterMFT_OUTPUT_STREAM_INFOUnmanagedToManaged(_MFT_OUTPUT_STREAM_INFO* Param_Estrutura)
-			{
-				//Cria a estrutura a ser retornada.
-				SDKBase::Estruturas::CA_MFT_OUTPUT_STREAM_INFO^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_MFT_OUTPUT_STREAM_INFO();
-
-				//Define os dados na estrutura.
-				EstruturaRetorno->Alinhamento = Param_Estrutura->cbAlignment;
-				EstruturaRetorno->Size = Param_Estrutura->cbSize;
-				EstruturaRetorno->Flags = Param_Estrutura->dwFlags;
-
-				//Retorna a estrutura
-				return EstruturaRetorno;
-			}
-
-			//Covnerte uma estrutura gerenciada(CA_MFT_OUTPUT_STREAM_INFO) para sua correspondencia não gerenciada(_MFT_OUTPUT_STREAM_INFO).
-			_MFT_OUTPUT_STREAM_INFO* ConverterMFT_OUTPUT_STREAM_INFOManagedToUnamaged(SDKBase::Estruturas::CA_MFT_OUTPUT_STREAM_INFO^ Param_Estrutura)
-			{
-				//Estrutura que será retornada ao usuário.
-				_MFT_OUTPUT_STREAM_INFO* EstruturaRetorno = CriarEstrutura<_MFT_OUTPUT_STREAM_INFO>();
-
-				//Define os dados na estrutura.
-				EstruturaRetorno->cbAlignment = Param_Estrutura->Alinhamento;
-				EstruturaRetorno->cbSize = Param_Estrutura->Size;
-				EstruturaRetorno->dwFlags = Param_Estrutura->Flags;
-
-				//Retorna a estrutura não gerenciada
-				return EstruturaRetorno;
-			}
-
-
-			//Converte a estrutura não gerenciada(_MFT_OUTPUT_DATA_BUFFER) para sua correspondencia gerenciada(CA_MFT_OUTPUT_DATA_BUFFER).
-			SDKBase::Estruturas::CA_MFT_OUTPUT_DATA_BUFFER^ ConverterMFT_OUTPUT_DATA_BUFFERUnmanagedToManaged(_MFT_OUTPUT_DATA_BUFFER* Param_Estrutura)
-			{
-				//Cria a estrutura a ser retornada.
-				SDKBase::Estruturas::CA_MFT_OUTPUT_DATA_BUFFER^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_MFT_OUTPUT_DATA_BUFFER();
-
-				//Define os dados na estrutura.
-				EstruturaRetorno->Status = static_cast<CA_MFT_OUTPUT_DATA_BUFFER_FLAGS>(Param_Estrutura->dwStatus);
-				EstruturaRetorno->FluxoID = Param_Estrutura->dwStreamID;
-				if (ObjetoValido(Param_Estrutura->pSample))
-				{
-					//Variavel que vai conter o ponteiro para a amostra.
-					ICaren^ AmostraMidia = gcnew Caren();
-
-					//Define o ponteiro da amostra
-					AmostraMidia->AdicionarPonteiro(Param_Estrutura->pSample);
-				}
-				if (ObjetoValido(Param_Estrutura->pEvents))
-				{
-					//Variavel que vai conter o ponteiro para a IMFCollection.
-					ICaren^ Collection = gcnew Caren();
-
-					//Define o ponteiro da coleção.
-					Collection->AdicionarPonteiro(Param_Estrutura->pEvents);
-				}
-
-				//Retorna a estrutura
-				return EstruturaRetorno;
-			}
-
-			//Covnerte uma estrutura gerenciada(CA_MFT_OUTPUT_DATA_BUFFER) para sua correspondencia não gerenciada(_MFT_OUTPUT_DATA_BUFFER).
-			_MFT_OUTPUT_DATA_BUFFER* ConverterMFT_OUTPUT_DATA_BUFFERManagedToUnamaged(SDKBase::Estruturas::CA_MFT_OUTPUT_DATA_BUFFER^ Param_Estrutura)
-			{
-				//Estrutura que será retornada ao usuário.
-				_MFT_OUTPUT_DATA_BUFFER* EstruturaRetorno = CriarEstrutura<_MFT_OUTPUT_DATA_BUFFER>();
-
-				//Define os dados na estrutura.
-				EstruturaRetorno->dwStatus = static_cast<DWORD>(Param_Estrutura->Status);
-				EstruturaRetorno->dwStreamID = Param_Estrutura->FluxoID;
-				if (ObjetoGerenciadoValido(Param_Estrutura->AmostraMidia))
-				{
-					//Ponteiro para a amostra.
-					IMFSample* pAmostra = NULL;
-
-					//Recupera o ponteiro
-					Param_Estrutura->AmostraMidia->RecuperarPonteiro((LPVOID*)&pAmostra);
-
-					//Define na estrutura.
-					EstruturaRetorno->pSample = pAmostra;
-				}
-				if (ObjetoGerenciadoValido(Param_Estrutura->ColecaoEventos))
-				{
-					//Ponteiro para coleção.
-					IMFCollection* pCollection = NULL;
-
-					//Recupera o ponteiro
-					Param_Estrutura->ColecaoEventos->RecuperarPonteiro((LPVOID*)&pCollection);
-
-					//Define na estrutura.
-					EstruturaRetorno->pEvents = pCollection;
-				}
-
-				//Retorna a estrutura não gerenciada
-				return EstruturaRetorno;
-			}
-
-
 			//Converte a estrutura não gerenciada(SECURITY_ATTRIBUTES) para sua correspondencia gerenciada(CA_ATRIBUTOS_SEGURANCA).
 			SDKBase::Estruturas::CA_ATRIBUTOS_SEGURANCA^ ConverterSECURITY_ATTRIBUTESUnmanagedToManaged(SECURITY_ATTRIBUTES* Param_AttrSeguranca)
 			{
@@ -2090,6 +1976,145 @@ namespace CarenRengine
 			}
 
 
+
+
+
+			// MEDIA FOUNDATION ESTRUTURAS
+
+
+			//Converte a estrutura não gerenciada(_MFT_INPUT_STREAM_INFO) para sua correspondencia gerenciada(CA_MFT_INPUT_STREAM_INFO).
+			SDKBase::Estruturas::CA_MFT_INPUT_STREAM_INFO^ ConverterMFT_INPUT_STREAM_INFOUnmanagedToManaged(_MFT_INPUT_STREAM_INFO* Param_Estrutura)
+			{
+				//Cria a estrutura a ser retornada.
+				SDKBase::Estruturas::CA_MFT_INPUT_STREAM_INFO^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_MFT_INPUT_STREAM_INFO();
+
+				//Define os dados na estrutura.
+				EstruturaRetorno->Alinhamento = Param_Estrutura->cbAlignment;
+				EstruturaRetorno->MaxLookahead = Param_Estrutura->cbMaxLookahead;
+				EstruturaRetorno->Size = Param_Estrutura->cbSize;
+				EstruturaRetorno->Flags = Param_Estrutura->dwFlags;
+				EstruturaRetorno->LatenciaMaxima = Param_Estrutura->hnsMaxLatency;
+
+				//Retorna a estrutura
+				return EstruturaRetorno;
+			}
+
+			//Covnerte uma estrutura gerenciada(CA_MFT_INPUT_STREAM_INFO) para sua correspondencia não gerenciada(_MFT_INPUT_STREAM_INFO).
+			_MFT_INPUT_STREAM_INFO* ConverterMFT_INPUT_STREAM_INFOManagedToUnamaged(SDKBase::Estruturas::CA_MFT_INPUT_STREAM_INFO^ Param_Estrutura)
+			{
+				//Estrutura que será retornada ao usuário.
+				_MFT_INPUT_STREAM_INFO* EstruturaRetorno = CriarEstrutura<_MFT_INPUT_STREAM_INFO>();
+
+				//Define os dados na estrutura.
+				EstruturaRetorno->cbAlignment = Param_Estrutura->Alinhamento;
+				EstruturaRetorno->cbMaxLookahead = Param_Estrutura->MaxLookahead;
+				EstruturaRetorno->cbSize = Param_Estrutura->Size;
+				EstruturaRetorno->dwFlags = Param_Estrutura->Flags;
+				EstruturaRetorno->hnsMaxLatency = Param_Estrutura->LatenciaMaxima;
+
+				//Retorna a estrutura não gerenciada
+				return EstruturaRetorno;
+			}
+
+
+			//Converte a estrutura não gerenciada(_MFT_OUTPUT_STREAM_INFO) para sua correspondencia gerenciada(CA_MFT_OUTPUT_STREAM_INFO).
+			SDKBase::Estruturas::CA_MFT_OUTPUT_STREAM_INFO^ ConverterMFT_OUTPUT_STREAM_INFOUnmanagedToManaged(_MFT_OUTPUT_STREAM_INFO* Param_Estrutura)
+			{
+				//Cria a estrutura a ser retornada.
+				SDKBase::Estruturas::CA_MFT_OUTPUT_STREAM_INFO^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_MFT_OUTPUT_STREAM_INFO();
+
+				//Define os dados na estrutura.
+				EstruturaRetorno->Alinhamento = Param_Estrutura->cbAlignment;
+				EstruturaRetorno->Size = Param_Estrutura->cbSize;
+				EstruturaRetorno->Flags = Param_Estrutura->dwFlags;
+
+				//Retorna a estrutura
+				return EstruturaRetorno;
+			}
+
+			//Covnerte uma estrutura gerenciada(CA_MFT_OUTPUT_STREAM_INFO) para sua correspondencia não gerenciada(_MFT_OUTPUT_STREAM_INFO).
+			_MFT_OUTPUT_STREAM_INFO* ConverterMFT_OUTPUT_STREAM_INFOManagedToUnamaged(SDKBase::Estruturas::CA_MFT_OUTPUT_STREAM_INFO^ Param_Estrutura)
+			{
+				//Estrutura que será retornada ao usuário.
+				_MFT_OUTPUT_STREAM_INFO* EstruturaRetorno = CriarEstrutura<_MFT_OUTPUT_STREAM_INFO>();
+
+				//Define os dados na estrutura.
+				EstruturaRetorno->cbAlignment = Param_Estrutura->Alinhamento;
+				EstruturaRetorno->cbSize = Param_Estrutura->Size;
+				EstruturaRetorno->dwFlags = Param_Estrutura->Flags;
+
+				//Retorna a estrutura não gerenciada
+				return EstruturaRetorno;
+			}
+
+
+			//Converte a estrutura não gerenciada(_MFT_OUTPUT_DATA_BUFFER) para sua correspondencia gerenciada(CA_MFT_OUTPUT_DATA_BUFFER).
+			SDKBase::Estruturas::CA_MFT_OUTPUT_DATA_BUFFER^ ConverterMFT_OUTPUT_DATA_BUFFERUnmanagedToManaged(_MFT_OUTPUT_DATA_BUFFER* Param_Estrutura)
+			{
+				//Cria a estrutura a ser retornada.
+				SDKBase::Estruturas::CA_MFT_OUTPUT_DATA_BUFFER^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_MFT_OUTPUT_DATA_BUFFER();
+
+				//Define os dados na estrutura.
+				EstruturaRetorno->Status = static_cast<CA_MFT_OUTPUT_DATA_BUFFER_FLAGS>(Param_Estrutura->dwStatus);
+				EstruturaRetorno->FluxoID = Param_Estrutura->dwStreamID;
+				if (ObjetoValido(Param_Estrutura->pSample))
+				{
+					//Variavel que vai conter o ponteiro para a amostra.
+					ICaren^ AmostraMidia = gcnew Caren();
+
+					//Define o ponteiro da amostra
+					AmostraMidia->AdicionarPonteiro(Param_Estrutura->pSample);
+				}
+				if (ObjetoValido(Param_Estrutura->pEvents))
+				{
+					//Variavel que vai conter o ponteiro para a IMFCollection.
+					ICaren^ Collection = gcnew Caren();
+
+					//Define o ponteiro da coleção.
+					Collection->AdicionarPonteiro(Param_Estrutura->pEvents);
+				}
+
+				//Retorna a estrutura
+				return EstruturaRetorno;
+			}
+
+			//Covnerte uma estrutura gerenciada(CA_MFT_OUTPUT_DATA_BUFFER) para sua correspondencia não gerenciada(_MFT_OUTPUT_DATA_BUFFER).
+			_MFT_OUTPUT_DATA_BUFFER* ConverterMFT_OUTPUT_DATA_BUFFERManagedToUnamaged(SDKBase::Estruturas::CA_MFT_OUTPUT_DATA_BUFFER^ Param_Estrutura)
+			{
+				//Estrutura que será retornada ao usuário.
+				_MFT_OUTPUT_DATA_BUFFER* EstruturaRetorno = CriarEstrutura<_MFT_OUTPUT_DATA_BUFFER>();
+
+				//Define os dados na estrutura.
+				EstruturaRetorno->dwStatus = static_cast<DWORD>(Param_Estrutura->Status);
+				EstruturaRetorno->dwStreamID = Param_Estrutura->FluxoID;
+				if (ObjetoGerenciadoValido(Param_Estrutura->AmostraMidia))
+				{
+					//Ponteiro para a amostra.
+					IMFSample* pAmostra = NULL;
+
+					//Recupera o ponteiro
+					Param_Estrutura->AmostraMidia->RecuperarPonteiro((LPVOID*)&pAmostra);
+
+					//Define na estrutura.
+					EstruturaRetorno->pSample = pAmostra;
+				}
+				if (ObjetoGerenciadoValido(Param_Estrutura->ColecaoEventos))
+				{
+					//Ponteiro para coleção.
+					IMFCollection* pCollection = NULL;
+
+					//Recupera o ponteiro
+					Param_Estrutura->ColecaoEventos->RecuperarPonteiro((LPVOID*)&pCollection);
+
+					//Define na estrutura.
+					EstruturaRetorno->pEvents = pCollection;
+				}
+
+				//Retorna a estrutura não gerenciada
+				return EstruturaRetorno;
+			}
+
+
 			//Converte uma estrutura gerenciada(CA_MFTOPONODE_ATTRIBUTE_UPDATE) para sua correspondencia não gerenciada(MFTOPONODE_ATTRIBUTE_UPDATE).
 			MFTOPONODE_ATTRIBUTE_UPDATE* ConverterTopoNodeAttributesToUnamaged(SDKBase::Estruturas::CA_MFTOPONODE_ATTRIBUTE_UPDATE^ Param_ManagedStruct)
 			{
@@ -2127,69 +2152,6 @@ namespace CarenRengine
 			}
 
 
-			//Converte uma estrutura gerenciada(CA_DXGI_OUTDUPL_FRAME_INFO) para sua correspondencia não gerenciada(DXGI_OUTDUPL_FRAME_INFO).
-			DXGI_OUTDUPL_FRAME_INFO* ConverterDXGI_OUTDUPL_FRAME_INFOManaged_ToUnamaged(SDKBase::Estruturas::CA_DXGI_OUTDUPL_FRAME_INFO^ Param_Estrutura)
-			{
-				//Variavel que vai ser retornada.
-				DXGI_OUTDUPL_FRAME_INFO* EstruturaRetorno = CriarEstrutura<DXGI_OUTDUPL_FRAME_INFO>();
-
-				//Define os valores
-				EstruturaRetorno->AccumulatedFrames = Param_Estrutura->AccumulatedFrames;
-				EstruturaRetorno->LastMouseUpdateTime = { 0 };
-				EstruturaRetorno->LastMouseUpdateTime.QuadPart = static_cast<LONGLONG>(Param_Estrutura->LastMouseUpdateTime);
-				EstruturaRetorno->LastPresentTime = { 0 };
-				EstruturaRetorno->LastPresentTime.QuadPart = static_cast<LONGLONG>(Param_Estrutura->LastPresentTime);
-				EstruturaRetorno->PointerShapeBufferSize = Param_Estrutura->PointerShapeBufferSize;
-				EstruturaRetorno->ProtectedContentMaskedOut = Param_Estrutura->ProtectedContentMaskedOut ? TRUE : FALSE;
-				EstruturaRetorno->RectsCoalesced = Param_Estrutura->RectsCoalesced ? TRUE : FALSE;
-				EstruturaRetorno->TotalMetadataBufferSize = Param_Estrutura->TotalMetadataBufferSize;
-
-				//Define as estruturas secundarias
-				if (ObjetoGerenciadoValido(Param_Estrutura->PointerPosition))
-				{
-					//Inicia a estrutura.
-					EstruturaRetorno->PointerPosition = { 0 };
-					EstruturaRetorno->PointerPosition.Position = { 0 };
-
-					//Define os dados.
-					EstruturaRetorno->PointerPosition.Visible = Param_Estrutura->PointerPosition->Visible ? TRUE : FALSE;
-					EstruturaRetorno->PointerPosition.Position.x = Param_Estrutura->PointerPosition->Position->X;
-					EstruturaRetorno->PointerPosition.Position.y = Param_Estrutura->PointerPosition->Position->Y;
-				}
-
-				//Retorna a estrutura.
-				return EstruturaRetorno;
-			}
-
-			//Converte uma estrutura não gerenciada(DXGI_OUTDUPL_FRAME_INFO) para sua correspondencia gerenciada(CA_DXGI_OUTDUPL_FRAME_INFO).
-			SDKBase::Estruturas::CA_DXGI_OUTDUPL_FRAME_INFO^ ConverterDXGI_OUTDUPL_FRAME_INFOUnamaged_ToManaged(DXGI_OUTDUPL_FRAME_INFO* Param_Estrutura)
-			{
-				//Variavel que vai ser retornada.
-				SDKBase::Estruturas::CA_DXGI_OUTDUPL_FRAME_INFO^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_DXGI_OUTDUPL_FRAME_INFO();
-
-				//Define os valores base.
-				EstruturaRetorno->AccumulatedFrames = Param_Estrutura->AccumulatedFrames;
-				EstruturaRetorno->LastMouseUpdateTime = static_cast<long long>(Param_Estrutura->LastMouseUpdateTime.QuadPart);
-				EstruturaRetorno->LastPresentTime = static_cast<long long>(Param_Estrutura->LastPresentTime.QuadPart);	
-				EstruturaRetorno->PointerShapeBufferSize = Param_Estrutura->PointerShapeBufferSize;
-				EstruturaRetorno->ProtectedContentMaskedOut = Param_Estrutura->ProtectedContentMaskedOut ? true : false;
-				EstruturaRetorno->RectsCoalesced = Param_Estrutura->RectsCoalesced ? true : false;
-				EstruturaRetorno->TotalMetadataBufferSize = Param_Estrutura->TotalMetadataBufferSize;
-
-				//Cria a estrutura secundaria
-				EstruturaRetorno->PointerPosition = gcnew CA_DXGI_OUTDUPL_POINTER_POSITION();
-				EstruturaRetorno->PointerPosition->Position = gcnew CA_POINT();
-
-				//Define os dados.
-				EstruturaRetorno->PointerPosition->Visible = Param_Estrutura->PointerPosition.Visible ? true : false;
-				EstruturaRetorno->PointerPosition->Position->X = Param_Estrutura->PointerPosition.Position.x;
-				EstruturaRetorno->PointerPosition->Position->Y = Param_Estrutura->PointerPosition.Position.y;
-
-				//Retorna a estrutura.
-				return EstruturaRetorno;
-			}
-
-
 			//Converte uma estrutura gerenciada(CA_MIDIA_SINK_WRITER_ESTATISTICAS) para sua correspondencia não gerenciada(MF_SINK_WRITER_STATISTICS).
 			MF_SINK_WRITER_STATISTICS* ConverterMF_SINK_WRITER_STATISTICSManagedToUnamaged(SDKBase::Estruturas::CA_MIDIA_SINK_WRITER_ESTATISTICAS^ Param_Estrutura)
 			{
@@ -2217,7 +2179,8 @@ namespace CarenRengine
 				//Retorna a estrutura.
 				return EstruturaRetorno;
 			}
-			//Converte uma estrutura não gerenciada(MFTOPONODE_ATTRIBUTE_UPDATE) para sua correspondencia gerenciada(CA_MFTOPONODE_ATTRIBUTE_UPDATE).
+
+			//Converte uma estrutura não gerenciada(MF_SINK_WRITER_STATISTICS) para sua correspondencia gerenciada(CA_MIDIA_SINK_WRITER_ESTATISTICAS).
 			SDKBase::Estruturas::CA_MIDIA_SINK_WRITER_ESTATISTICAS^ ConverterMF_SINK_WRITER_STATISTICSUnamagedToManaged(MF_SINK_WRITER_STATISTICS* Param_Estrutura)
 			{
 				//Variavel que vai ser retornada.
@@ -2246,6 +2209,115 @@ namespace CarenRengine
 			}
 
 
+			//Converte uma estrutura gerenciada(CA_MF_TRANSCODE_SINK_INFO) para sua correspondencia não gerenciada(MF_TRANSCODE_SINK_INFO).
+			MF_TRANSCODE_SINK_INFO* ConverterMF_TRANSCODE_SINK_INFOManaged_ToUnamaged(SDKBase::Estruturas::CA_MF_TRANSCODE_SINK_INFO^ Param_Estrutura)
+			{
+				//Variavel que vai ser retornada.
+				MF_TRANSCODE_SINK_INFO* EstruturaRetorno = CriarEstrutura<MF_TRANSCODE_SINK_INFO>();
+			
+				//Define os valores
+				EstruturaRetorno->dwAudioStreamID = Param_Estrutura->dwAudioStreamID;
+				EstruturaRetorno->dwVideoStreamID = Param_Estrutura->dwVideoStreamID;
+
+				//Recupera os ponteiros para da interface de atributos para audio e vídeo se validas.
+				if (ObjetoGerenciadoValido(Param_Estrutura->pVideoMediaType))
+				{
+					//Recupera o ponteiro dos atributos para o video.
+					Param_Estrutura->pVideoMediaType->RecuperarPonteiro((LPVOID*)&EstruturaRetorno->pVideoMediaType);
+				}
+				if (ObjetoGerenciadoValido(Param_Estrutura->pAudioMediaType))
+				{
+					//Recupera o ponteiro dos atributos para o video.
+					Param_Estrutura->pAudioMediaType->RecuperarPonteiro((LPVOID*)&EstruturaRetorno->pAudioMediaType);
+				}
+
+				//Retorna a estrutura.
+				return EstruturaRetorno;
+			}
+
+			//Converte uma estrutura não gerenciada(MF_TRANSCODE_SINK_INFO) para sua correspondencia gerenciada(CA_MF_TRANSCODE_SINK_INFO).
+			SDKBase::Estruturas::CA_MF_TRANSCODE_SINK_INFO^ ConverterMF_TRANSCODE_SINK_INFOUnamaged_ToManaged(MF_TRANSCODE_SINK_INFO* Param_Estrutura)
+			{
+				//Variavel que vai ser retornada.
+				SDKBase::Estruturas::CA_MF_TRANSCODE_SINK_INFO^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_MF_TRANSCODE_SINK_INFO();
+
+				//Define os valores
+				EstruturaRetorno->dwAudioStreamID = Param_Estrutura->dwAudioStreamID;
+				EstruturaRetorno->dwVideoStreamID = Param_Estrutura->dwVideoStreamID;
+				
+				//Verifica se as intefaces de atributos são validas e define seu ponteiro nas gerenciadas.
+				if (ObjetoValido(Param_Estrutura->pVideoMediaType))
+				{
+					//Cria a interface
+					EstruturaRetorno->pVideoMediaType = gcnew CarenMFAttributes();
+
+					//Define o ponteiro na interface
+					EstruturaRetorno->pVideoMediaType->AdicionarPonteiro(Param_Estrutura->pVideoMediaType);
+				}
+				if (ObjetoValido(Param_Estrutura->pAudioMediaType))
+				{
+					//Cria a interface
+					EstruturaRetorno->pAudioMediaType = gcnew CarenMFAttributes();
+
+					//Define o ponteiro na interface
+					EstruturaRetorno->pAudioMediaType->AdicionarPonteiro(Param_Estrutura->pAudioMediaType);
+				}
+
+				//Retorna a estrutura.
+				return EstruturaRetorno;
+			}
+
+
+			//Converte uma estrutura gerenciada(CA_MFNetCredentialManagerGetParam) para sua correspondencia não gerenciada(MFNetCredentialManagerGetParam).
+			MFNetCredentialManagerGetParam* ConverterMFNetCredentialManagerGetParamManaged_ToUnamaged(SDKBase::Estruturas::CA_MFNetCredentialManagerGetParam^ Param_Estrutura)
+			{
+				//Variavel que vai ser retornada.
+				MFNetCredentialManagerGetParam* EstruturaRetorno = CriarEstrutura<MFNetCredentialManagerGetParam>();
+
+				//Define os valores
+				EstruturaRetorno->hrOp = static_cast<HRESULT>(Param_Estrutura->hrOp);
+				EstruturaRetorno->fAllowLoggedOnUser = static_cast<BOOL>(Param_Estrutura->fAllowLoggedOnUser);
+				EstruturaRetorno->fClearTextPackage = static_cast<BOOL>(Param_Estrutura->fClearTextPackage);
+
+				//Define possiveis valores.
+				if (ObjetoGerenciadoValido(Param_Estrutura->pszUrl))
+					EstruturaRetorno->pszUrl = ConverterStringToWCHAR(Param_Estrutura->pszUrl);
+				if (ObjetoGerenciadoValido(Param_Estrutura->pszRealm))
+					EstruturaRetorno->pszRealm = ConverterStringToWCHAR(Param_Estrutura->pszRealm);
+				if (ObjetoGerenciadoValido(Param_Estrutura->pszPackage))
+					EstruturaRetorno->pszPackage = ConverterStringToWCHAR(Param_Estrutura->pszPackage);
+				if (ObjetoGerenciadoValido(Param_Estrutura->pszSite))
+					EstruturaRetorno->pszSite = ConverterStringToWCHAR(Param_Estrutura->pszSite);
+
+				//Retorna a estrutura.
+				return EstruturaRetorno;
+			}
+
+			//Converte uma estrutura não gerenciada(MFNetCredentialManagerGetParam) para sua correspondencia gerenciada(CA_MFNetCredentialManagerGetParam).
+			CA_MFNetCredentialManagerGetParam^ ConverterMFNetCredentialManagerGetParamUnamaged_ToManaged(MFNetCredentialManagerGetParam* Param_Estrutura)
+			{
+				//Variavel que vai ser retornada.
+				CA_MFNetCredentialManagerGetParam^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_MFNetCredentialManagerGetParam();
+
+				//Define os valores
+				EstruturaRetorno->hrOp = static_cast<long>(Param_Estrutura->hrOp);
+				EstruturaRetorno->fAllowLoggedOnUser = static_cast<bool>(Param_Estrutura->fAllowLoggedOnUser);
+				EstruturaRetorno->fClearTextPackage = static_cast<bool>(Param_Estrutura->fClearTextPackage);
+
+				//Define possiveis valores.
+				if (ObjetoValido(Param_Estrutura->pszUrl))
+					EstruturaRetorno->pszUrl = gcnew String(Param_Estrutura->pszUrl);
+				if (ObjetoValido(Param_Estrutura->pszRealm))
+					EstruturaRetorno->pszRealm = gcnew String(Param_Estrutura->pszRealm);
+				if (ObjetoValido(Param_Estrutura->pszPackage))
+					EstruturaRetorno->pszPackage = gcnew String(Param_Estrutura->pszPackage);
+				if (ObjetoValido(Param_Estrutura->pszSite))
+					EstruturaRetorno->pszSite = gcnew String(Param_Estrutura->pszSite);
+
+
+				//Retorna a estrutura.
+				return EstruturaRetorno;
+			}
 
 
 
@@ -7297,6 +7369,68 @@ namespace CarenRengine
 
 			
 			///DXGI ESTRUTURAS
+
+			//Converte uma estrutura gerenciada(CA_DXGI_OUTDUPL_FRAME_INFO) para sua correspondencia não gerenciada(DXGI_OUTDUPL_FRAME_INFO).
+			DXGI_OUTDUPL_FRAME_INFO* ConverterDXGI_OUTDUPL_FRAME_INFOManaged_ToUnamaged(SDKBase::Estruturas::CA_DXGI_OUTDUPL_FRAME_INFO^ Param_Estrutura)
+			{
+				//Variavel que vai ser retornada.
+				DXGI_OUTDUPL_FRAME_INFO* EstruturaRetorno = CriarEstrutura<DXGI_OUTDUPL_FRAME_INFO>();
+
+				//Define os valores
+				EstruturaRetorno->AccumulatedFrames = Param_Estrutura->AccumulatedFrames;
+				EstruturaRetorno->LastMouseUpdateTime = { 0 };
+				EstruturaRetorno->LastMouseUpdateTime.QuadPart = static_cast<LONGLONG>(Param_Estrutura->LastMouseUpdateTime);
+				EstruturaRetorno->LastPresentTime = { 0 };
+				EstruturaRetorno->LastPresentTime.QuadPart = static_cast<LONGLONG>(Param_Estrutura->LastPresentTime);
+				EstruturaRetorno->PointerShapeBufferSize = Param_Estrutura->PointerShapeBufferSize;
+				EstruturaRetorno->ProtectedContentMaskedOut = Param_Estrutura->ProtectedContentMaskedOut ? TRUE : FALSE;
+				EstruturaRetorno->RectsCoalesced = Param_Estrutura->RectsCoalesced ? TRUE : FALSE;
+				EstruturaRetorno->TotalMetadataBufferSize = Param_Estrutura->TotalMetadataBufferSize;
+
+				//Define as estruturas secundarias
+				if (ObjetoGerenciadoValido(Param_Estrutura->PointerPosition))
+				{
+					//Inicia a estrutura.
+					EstruturaRetorno->PointerPosition = { 0 };
+					EstruturaRetorno->PointerPosition.Position = { 0 };
+
+					//Define os dados.
+					EstruturaRetorno->PointerPosition.Visible = Param_Estrutura->PointerPosition->Visible ? TRUE : FALSE;
+					EstruturaRetorno->PointerPosition.Position.x = Param_Estrutura->PointerPosition->Position->X;
+					EstruturaRetorno->PointerPosition.Position.y = Param_Estrutura->PointerPosition->Position->Y;
+				}
+
+				//Retorna a estrutura.
+				return EstruturaRetorno;
+			}
+
+			//Converte uma estrutura não gerenciada(DXGI_OUTDUPL_FRAME_INFO) para sua correspondencia gerenciada(CA_DXGI_OUTDUPL_FRAME_INFO).
+			SDKBase::Estruturas::CA_DXGI_OUTDUPL_FRAME_INFO^ ConverterDXGI_OUTDUPL_FRAME_INFOUnamaged_ToManaged(DXGI_OUTDUPL_FRAME_INFO* Param_Estrutura)
+			{
+				//Variavel que vai ser retornada.
+				SDKBase::Estruturas::CA_DXGI_OUTDUPL_FRAME_INFO^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_DXGI_OUTDUPL_FRAME_INFO();
+
+				//Define os valores base.
+				EstruturaRetorno->AccumulatedFrames = Param_Estrutura->AccumulatedFrames;
+				EstruturaRetorno->LastMouseUpdateTime = static_cast<long long>(Param_Estrutura->LastMouseUpdateTime.QuadPart);
+				EstruturaRetorno->LastPresentTime = static_cast<long long>(Param_Estrutura->LastPresentTime.QuadPart);
+				EstruturaRetorno->PointerShapeBufferSize = Param_Estrutura->PointerShapeBufferSize;
+				EstruturaRetorno->ProtectedContentMaskedOut = Param_Estrutura->ProtectedContentMaskedOut ? true : false;
+				EstruturaRetorno->RectsCoalesced = Param_Estrutura->RectsCoalesced ? true : false;
+				EstruturaRetorno->TotalMetadataBufferSize = Param_Estrutura->TotalMetadataBufferSize;
+
+				//Cria a estrutura secundaria
+				EstruturaRetorno->PointerPosition = gcnew CA_DXGI_OUTDUPL_POINTER_POSITION();
+				EstruturaRetorno->PointerPosition->Position = gcnew CA_POINT();
+
+				//Define os dados.
+				EstruturaRetorno->PointerPosition->Visible = Param_Estrutura->PointerPosition.Visible ? true : false;
+				EstruturaRetorno->PointerPosition->Position->X = Param_Estrutura->PointerPosition.Position.x;
+				EstruturaRetorno->PointerPosition->Position->Y = Param_Estrutura->PointerPosition.Position.y;
+
+				//Retorna a estrutura.
+				return EstruturaRetorno;
+			}
 			
 
 			//Converte uma estrutura gerenciada(CA_DXGI_SWAP_CHAIN_DESC) para sua correspondencia não gerenciada(DXGI_SWAP_CHAIN_DESC).

@@ -896,7 +896,7 @@ namespace CarenRengine
 			/// (GetState) - O método recupera o estado atual do dispositivo.
 			/// </summary>
 			/// <param name="Param_Out_EstadoDispositivo">Retorna o estado do dispositivo atual.</param>
-			CarenResult ObterEstado([Out] Enumeracoes::CA_ESTADO_DISPOSITIVO_AUDIO% Param_Out_EstadoDispositivo);
+			CarenResult ObterEstado([Out] Enumeracoes::CA_DEVICE_STATE_XXX% Param_Out_EstadoDispositivo);
 
 			/// <summary>
 			/// (OpenPropertyStore) - O método recupera uma interface para o armazenamento de Propriedade do dispositivo.
@@ -967,7 +967,7 @@ namespace CarenRengine
 			/// <summary>
 			/// 
 			/// </summary>
-			delegate void Delegate_OnDefaultDeviceChanged(Enumeracoes::CA_EDataFlow Param_DirecaoFluxo, Enumeracoes::CA_FUNCAO_DISPOSITIVO_AUDIO Param_FuncaoDispositivo, String^ Param_IdDispositivo);
+			delegate void Delegate_OnDefaultDeviceChanged(Enumeracoes::CA_EDataFlow Param_DirecaoFluxo, Enumeracoes::CA_ERole Param_FuncaoDispositivo, String^ Param_IdDispositivo);
 
 			/// <summary>
 			/// 
@@ -982,7 +982,7 @@ namespace CarenRengine
 			/// <summary>
 			/// 
 			/// </summary>
-			delegate void Delegate_OnDeviceStateChanged(String^ Param_IdDispositivo, Enumeracoes::CA_ESTADO_DISPOSITIVO_AUDIO Param_EstadoDispositivoAtual);
+			delegate void Delegate_OnDeviceStateChanged(String^ Param_IdDispositivo, Enumeracoes::CA_DEVICE_STATE_XXX Param_EstadoDispositivoAtual);
 
 			/// <summary>
 			/// 
@@ -1065,7 +1065,7 @@ namespace CarenRengine
 			/// liberar a interface, quando ele não é mais necessário, chamando o método de Release da interface.</param>
 			CarenResult ObterColeçãoDispositivosAudio(
 				Enumeracoes::CA_EDataFlow Param_DireçãoFluxo,
-				Enumeracoes::CA_ESTADO_DISPOSITIVO_AUDIO Param_EstadosPontoExtremidade,
+				Enumeracoes::CA_DEVICE_STATE_XXX Param_EstadosPontoExtremidade,
 				[Out] ICarenMMDeviceCollection^% Param_Out_ColeçãoDispotivios);
 
 			/// <summary>
@@ -1076,7 +1076,7 @@ namespace CarenRengine
 			/// <param name="Param_Out_DispositivoDefault">Retorna o dispositivo de Audio padrão do sistema de acordo com sua função e direção.</param>
 			CarenResult ObterDispositivoAudioDefault(
 				Enumeracoes::CA_EDataFlow Param_DireçãoFluxo,
-				Enumeracoes::CA_FUNCAO_DISPOSITIVO_AUDIO Param_FunçãoDispositivo,
+				Enumeracoes::CA_ERole Param_FunçãoDispositivo,
 				[Out] ICarenMMDevice^% Param_Out_DispositivoDefault);
 
 			/// <summary>

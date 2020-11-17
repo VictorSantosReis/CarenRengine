@@ -14,20 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-
 #include "../pch.h"
-#include "CarenMMDeviceEnumerator.h"
+#include "CarenMFNetCredentialCache.h"
 
 //Destruidor.
-CarenMMDeviceEnumerator::~CarenMMDeviceEnumerator()
+CarenMFNetCredentialCache::~CarenMFNetCredentialCache()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtores
+CarenMFNetCredentialCache::CarenMFNetCredentialCache()
+{
+	//CÓDIGO DE CRIAÇÃO.
+}
 
-//
 // Métodos da interface ICaren
-//
+
 
 /// <summary>
 /// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 
@@ -36,10 +39,10 @@ CarenMMDeviceEnumerator::~CarenMMDeviceEnumerator()
 /// </summary>
 /// <param name="Param_Guid">O IID(Identificador de Interface) ou GUID para a interface desejada.</param>
 /// <param name="Param_InterfaceSolicitada">A interface que vai receber o ponteiro nativo. O usuário deve inicializar a interface antes de chamar o método. Libere a interface quando não for mais usá-la.</param>
-CarenResult CarenMMDeviceEnumerator::ConsultarInterface(String^ Param_Guid, ICaren^ Param_InterfaceSolicitada)
+CarenResult CarenMFNetCredentialCache::ConsultarInterface(String^ Param_Guid, ICaren^ Param_InterfaceSolicitada)
 {
 	//Variavel que vai retornar o resultado.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
 
 	//Resultado COM
 	HRESULT Hr = E_FAIL;
@@ -122,9 +125,6 @@ CarenResult CarenMMDeviceEnumerator::ConsultarInterface(String^ Param_Guid, ICar
 	//Verifica o resultado da operação.
 	if (Resultado.StatusCode != ResultCode::SS_OK)
 	{
-		//A operação falhou.
-		
-
 		//Libera a referência obtida a parti do QueryInterface.
 		((IUnknown*)pInterfaceSolcitada)->Release();
 		pInterfaceSolcitada = NULL;
@@ -138,19 +138,19 @@ Done:;
 		delete[] DadosGuid;
 	}
 
-
 	//Retorna o resultado
-	return Resultado;}
+	return Resultado;
+}
 
 /// <summary>
 /// Método responsável por adicionar um novo ponteiro nativo a classe atual.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
 /// </summary>
 /// <param name="Param_PonteiroNativo">Variável (GERENCIADA) para o ponteiro nativo a ser adicionado.</param>
-CarenResult CarenMMDeviceEnumerator::AdicionarPonteiro(IntPtr Param_PonteiroNativo)
+CarenResult CarenMFNetCredentialCache::AdicionarPonteiro(IntPtr Param_PonteiroNativo)
 {
 	//Variavel que vai retornar o resultado.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
 
 	//Verifica se o objeto é valido
 	if (Param_PonteiroNativo == IntPtr::Zero)
@@ -163,7 +163,7 @@ CarenResult CarenMMDeviceEnumerator::AdicionarPonteiro(IntPtr Param_PonteiroNati
 	}
 
 	//Converte o ponteiro para o tipo especifico da classe.
-	PonteiroTrabalho = reinterpret_cast<IMMDeviceEnumerator*>(Param_PonteiroNativo.ToPointer());
+	PonteiroTrabalho = reinterpret_cast<IMFNetCredentialCache*>(Param_PonteiroNativo.ToPointer());
 
 	//Verifica o ponteiro
 	if (ObjetoValido(PonteiroTrabalho))
@@ -188,10 +188,10 @@ Done:;
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
 /// </summary>
 /// <param name="Param_PonteiroNativo">Variável (NATIVA) para o ponteiro nativo a ser adicionado.</param>
-CarenResult CarenMMDeviceEnumerator::AdicionarPonteiro(LPVOID Param_PonteiroNativo)
+CarenResult CarenMFNetCredentialCache::AdicionarPonteiro(LPVOID Param_PonteiroNativo)
 {
 	//Variavel que vai retornar o resultado.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
 
 	//Verifica se o objeto é valido
 	if (!ObjetoValido(Param_PonteiroNativo))
@@ -204,7 +204,7 @@ CarenResult CarenMMDeviceEnumerator::AdicionarPonteiro(LPVOID Param_PonteiroNati
 	}
 
 	//Converte o ponteiro para o tipo especifico da classe.
-	PonteiroTrabalho = reinterpret_cast<IMMDeviceEnumerator*>(Param_PonteiroNativo);
+	PonteiroTrabalho = reinterpret_cast<IMFNetCredentialCache*>(Param_PonteiroNativo);
 
 	//Verifica se o ponteiro é valido
 	if (ObjetoValido(PonteiroTrabalho))
@@ -232,10 +232,10 @@ Done:;
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
 /// </summary>
 /// <param name="Param_Out_PonteiroNativo">Variável (GERENCIADA) que vai receber o ponteiro nativo.</param>
-CarenResult CarenMMDeviceEnumerator::RecuperarPonteiro([Out] IntPtr% Param_Out_PonteiroNativo)
+CarenResult CarenMFNetCredentialCache::RecuperarPonteiro([Out] IntPtr% Param_Out_PonteiroNativo)
 {
 	//Variavel que vai retornar o resultado.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
 
 	//Verifica se o ponteiro é valido
 	if (!ObjetoValido(PonteiroTrabalho))
@@ -263,10 +263,10 @@ Done:;
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
 /// </summary>
 /// <param name="Param_Out_PonteiroNativo">Variável (NATIVA) que vai receber o ponteiro nativo.</param>
-CarenResult CarenMMDeviceEnumerator::RecuperarPonteiro(LPVOID* Param_Out_PonteiroNativo)
+CarenResult CarenMFNetCredentialCache::RecuperarPonteiro(LPVOID* Param_Out_PonteiroNativo)
 {
 	//Variavel que vai retornar o resultado.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
 
 	//Verifica se o ponteiro é valido
 	if (!ObjetoValido(PonteiroTrabalho))
@@ -294,10 +294,10 @@ Done:;
 /// Método responsável por retornar a quantidade de referências do objeto COM atual.
 /// </summary>
 /// <param name="Param_Out_Referencias">Variável que vai receber a quantidade de referências do objeto.</param>
-CarenResult CarenMMDeviceEnumerator::RecuperarReferencias([Out] UInt64% Param_Out_Referencias)
+CarenResult CarenMFNetCredentialCache::RecuperarReferencias([Out] UInt64% Param_Out_Referencias)
 {
 	//Variavel que vai retornar o resultado.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
 
 	//Verifica se o ponteiro é valido
 	if (!ObjetoValido(PonteiroTrabalho))
@@ -319,9 +319,10 @@ CarenResult CarenMMDeviceEnumerator::RecuperarReferencias([Out] UInt64% Param_Ou
 	Param_Out_Referencias = static_cast<UInt64>(CountRefs - 1);
 
 	//Define o resultado
-	Resultado.AdicionarCodigo(ResultCode::SS_OK,true);
+	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
 
 Done:;
+
 	//Retorna o resultado
 	return Resultado;
 }
@@ -329,7 +330,7 @@ Done:;
 /// <summary>
 /// Método responsável por indicar se o ponteiro COM atual é válido.
 /// </summary>
-CarenResult CarenMMDeviceEnumerator::StatusPonteiro()
+CarenResult CarenMFNetCredentialCache::StatusPonteiro()
 {
 	return (ObjetoValido(PonteiroTrabalho) ? CarenResult(ResultCode::SS_OK, true) : CarenResult(ResultCode::ER_E_POINTER, false));
 }
@@ -338,7 +339,7 @@ CarenResult CarenMMDeviceEnumerator::StatusPonteiro()
 /// Método responsável por retornar a variável que armazena o último código de erro desconhecido ou não documentado gerado pela classe.
 /// Esse método não chama o método nativo (GetLastError), apenas retorna o código de erro que foi armazenado na classe.
 /// </summary>
-Int32 CarenMMDeviceEnumerator::ObterCodigoErro()
+Int32 CarenMFNetCredentialCache::ObterCodigoErro()
 {
 	return Var_Glob_LAST_HRESULT;
 }
@@ -347,7 +348,7 @@ Int32 CarenMMDeviceEnumerator::ObterCodigoErro()
 /// (AddRef) - Incrementa a contagem de referência para o ponteiro do objeto COM atual. Você deve chamar este método sempre que 
 /// você fazer uma cópia de um ponteiro de interface.
 /// </summary>
-void CarenMMDeviceEnumerator::AdicionarReferencia()
+void CarenMFNetCredentialCache::AdicionarReferencia()
 {
 	//Adiciona uma referência ao ponteiro
 	PonteiroTrabalho->AddRef();
@@ -356,7 +357,7 @@ void CarenMMDeviceEnumerator::AdicionarReferencia()
 /// <summary>
 /// (Release) - 'Decrementa' a contagem de referência do objeto COM atual.
 /// </summary>
-void CarenMMDeviceEnumerator::LiberarReferencia()
+void CarenMFNetCredentialCache::LiberarReferencia()
 {
 	//Libera a referência e obtém a quantidade atual.
 	ULONG RefCount = PonteiroTrabalho->Release();
@@ -374,7 +375,7 @@ void CarenMMDeviceEnumerator::LiberarReferencia()
 /// Método responsável por limpar os dados do objeto COM e códigos de erros gerados pelos métodos da classe.
 /// Este método não libera a referência do objeto COM atual, vai apenas anular o ponteiro.
 /// </summary>
-void CarenMMDeviceEnumerator::LimparDados()
+void CarenMFNetCredentialCache::LimparDados()
 {
 	//Verifica se o ponteiro é um objeto valido e limpa.
 	if (ObjetoValido(PonteiroTrabalho))
@@ -391,7 +392,7 @@ void CarenMMDeviceEnumerator::LimparDados()
 /// Método responsável por chamar o finalizador da interface para realizar a limpeza e descarte de dados pendentes.
 /// Este método pode ser escrito de forma diferente para cada interface.
 /// </summary>
-void CarenMMDeviceEnumerator::Finalizar()
+void CarenMFNetCredentialCache::Finalizar()
 {
 	//////////////////////
 	//Código de descarte//
@@ -401,145 +402,49 @@ void CarenMMDeviceEnumerator::Finalizar()
 	GC::SuppressFinalize(this);
 
 	//Chama o finalizador da classe
-	this->~CarenMMDeviceEnumerator();
+	this->~CarenMFNetCredentialCache();
 }
 
 
 
-
-//Métodos da interface proprietaria
-
+// Métodos da interface proprietária(ICarenMFNetCredentialCache)
 
 
 /// <summary>
-/// (EnumAudioEndpoints) - O método gera uma coleção de dispositivos de ponto de extremidade de áudio que atendem aos critérios especificados.
+/// Recupera o objeto de credencial para a URL especificada.
 /// </summary>
-/// <param name="Param_DireçãoFluxo">A direção do fluxo de dados para os dispositivos de ponto de extremidade na coleção. Se o chamador especifica eAll, o método inclui os pontos de extremidade de 
-/// renderização e captura na coleção.</param>
-/// <param name="Param_EstadosPontoExtremidade">O estado ou Estados dos pontos de extremidade que devem ser incluídos na coleção. O chamador deve definir esse parâmetro para o bit a OR de um ou mais da
-/// enumeração.</param>
-/// <param name="Param_Out_ColeçãoDispotivios">Recebe a coleção de dispositivos solicitados. Por meio desse método, o chamador obtém uma referência contada para a interface. O chamador é responsável por 
-/// liberar a interface, quando ele não é mais necessário, chamando o método de Release da interface.</param>
-CarenResult CarenMMDeviceEnumerator::ObterColeçãoDispositivosAudio(
-	Enumeracoes::CA_EDataFlow Param_DireçãoFluxo,
-	Enumeracoes::CA_DEVICE_STATE_XXX Param_EstadosPontoExtremidade,
-	[Out] ICarenMMDeviceCollection^% Param_Out_ColeçãoDispotivios)
+/// <param name="Param_Url">Uma string contendo a URL para a qual a credencial é necessária.</param>
+/// <param name="Param_Realm">Uma string contendo o Realm(Define o espaço de proteção do servidor, é um dominio protegido que pode ser compartilhado) para a autenticação.</param>
+/// <param name="Param_FlagsAutenticacao">Bitwise OU de zero ou mais bandeiras da enumeração CA_MFNetAuthenticationFlags.</param>
+/// <param name="Param_Out_Credencial">Recebe um ponteiro para a interface ICarenMFNetCredential. O chamador deve liberar a interface.</param>
+/// <param name="Param_Out_FlagsRequerimento">Recebe bitwise OU de zero ou mais bandeiras da enumeração CA_MFNetCredentialRequirements.</param>
+CarenResult CarenMFNetCredentialCache::GetCredential(
+String^ Param_Url, 
+String^ Param_Realm, 
+CA_MFNetAuthenticationFlags Param_FlagsAutenticacao, 
+[Out] ICarenMFNetCredential^% Param_Out_Credencial, 
+[Out] CA_MFNetCredentialRequirements% Param_Out_FlagsRequerimento)
 {
 	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
 
 	//Resultado COM.
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	IMMDeviceCollection* pColecaoDispositivos = NULL;
-	EDataFlow DirecaoFluxo = static_cast<EDataFlow>(Param_DireçãoFluxo);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->EnumAudioEndpoints(DirecaoFluxo, (DWORD)Param_EstadosPontoExtremidade, &pColecaoDispositivos);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria a interface que vai ser retornada ao usuário.
-	Param_Out_ColeçãoDispotivios = gcnew CarenMMDeviceCollection();
-
-	//Chama o método que vai definir o ponteiro de trabalho
-	Param_Out_ColeçãoDispotivios->AdicionarPonteiro(pColecaoDispositivos);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
-}
-
-/// <summary>
-/// (GetDefaultAudioEndpoint) - O método recupera o ponto de extremidade de áudio padrão para a direção de fluxo de dados especificado e a função.
-/// </summary>
-/// <param name="Param_DireçãoFluxo">A direção de fluxo de dados para o dispositivo de ponto de extremidade.</param>
-/// <param name="Param_FunçãoDispositivo">A direção do fluxo de dados para um dispositivo de renderização é eRender. A direção do fluxo de dados para um dispositivo de captura é eCapture.</param>
-/// <param name="Param_Out_DispositivoDefault">Retorna o dispositivo de Audio padrão do sistema de acordo com sua função e direção.</param>
-CarenResult CarenMMDeviceEnumerator::ObterDispositivoAudioDefault(
-	Enumeracoes::CA_EDataFlow Param_DireçãoFluxo,
-	Enumeracoes::CA_ERole Param_FunçãoDispositivo,
-	[Out] ICarenMMDevice^% Param_Out_DispositivoDefault)
-{
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	IMMDevice* pDispositivo = NULL;
-	EDataFlow DirecaoFluxo = static_cast<EDataFlow>(Param_DireçãoFluxo);
-	ERole FunctionDevice = static_cast<ERole>(Param_FunçãoDispositivo);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetDefaultAudioEndpoint(DirecaoFluxo, FunctionDevice, &pDispositivo);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria a interface que será retornada ao usuário
-	Param_Out_DispositivoDefault = gcnew CarenMMDevice();
-
-	//Chama o método para definir o ponteiro de trabalho.
-	Param_Out_DispositivoDefault->AdicionarPonteiro(pDispositivo);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
-}
-
-/// <summary>
-/// (GetDevice) - O método recupera um dispositivo de ponto de extremidade de áudio que é identificado por uma cadeia de caracteres de ID de ponto de extremidade.
-/// </summary>
-/// <param name="Param_IDPontoExtremidade">Ponteiro para uma seqüência de caracteres que contém o ID de ponto de extremidade. O chamador normalmente obtém essa seqüência de caracteres a partir de 
-/// ICarenMMDevice::ObterId método ou de um dos métodos na ICarenMMNotificationClient interface.</param>
-/// <param name="Param_Out_DispositivoSolicitado">Recebe um ponteiro para a interface do dispositivo solicitado. Por meio desse método, o chamador obtém uma referência contada para a interface. 
-/// O chamador é responsável por liberar a interface, quando ele não é mais necessário, chamando o método de Release da interface.</param>
-CarenResult CarenMMDeviceEnumerator::ObterDispositivo(String^ Param_IDPontoExtremidade, [Out] ICarenMMDevice^% Param_Out_DispositivoSolicitado)
-{
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	IMMDevice* pDispositivo = NULL;
-	LPCWSTR pIdEndpoint = NULL;
 	Utilidades Util;
+	PWSTR vi_pUrl = Nulo;
+	PWSTR vi_pRealm = Nulo;
+	DWORD vi_FlagsAuth = static_cast<DWORD>(Param_FlagsAutenticacao);
+	IMFNetCredential* vi_pOutCredential = Nulo;
+	DWORD vi_OutCredentialRequires;
 
-	//Converte a String para o LPCWSTR
-	pIdEndpoint = Util.ConverterStringToConstWCHAR(Param_IDPontoExtremidade);
+	//Converte as strings para representações nativas.
+	vi_pUrl = Util.ConverterStringToWCHAR(Param_Url);
+	vi_pRealm = Util.ConverterStringToWCHAR(Param_Realm);
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetDevice(pIdEndpoint, &pDispositivo);
+	Hr = PonteiroTrabalho->GetCredential(vi_pUrl, vi_pRealm, vi_FlagsAuth, &vi_pOutCredential, &vi_OutCredentialRequires);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -556,53 +461,47 @@ CarenResult CarenMMDeviceEnumerator::ObterDispositivo(String^ Param_IDPontoExtre
 		Sair;
 	}
 
-	//Cria a interface que será retornada ao usuário
-	Param_Out_DispositivoSolicitado = gcnew CarenMMDevice();
+	//Cria a interface a ser retornada.
+	Param_Out_Credencial = gcnew CarenMFNetCredential();
 
-	//Chama o método para definir o ponteiro de trabalho.
-	Param_Out_DispositivoSolicitado->AdicionarPonteiro(pDispositivo);
+	//Define o ponteiro na interface
+	CarenSetPointerToICarenSafe(vi_pOutCredential, Param_Out_Credencial, true);
+
+	//Define os flags no parametro de saida.
+	Param_Out_FlagsRequerimento = static_cast<CA_MFNetCredentialRequirements>(vi_OutCredentialRequires);
 
 Done:;
-	//Exclui os dados alocados para a string se eles forem validos.
-	if (ObjetoValido(pIdEndpoint))
-	{
-		//Deleta os dados da memoria
-		delete pIdEndpoint;
-	}
+	//Libera a memória utilizada pelas strings.
+	DeletarTextoAlocadoSafe(&vi_pUrl);
+	DeletarTextoAlocadoSafe(&vi_pRealm);
 
 	//Retorna o resultado.
 	return Resultado;
 }
 
 /// <summary>
-/// (RegisterEndpointNotificationCallback) - O método registra a interface de retorno de chamada de notificação do cliente.
+/// Relata se o objeto de credencial fornecido passou com sucesso no desafio de autenticação.
 /// </summary>
-/// <param name="Param_Cliente">A interface que será registrada para receber as notificações.</param>
-CarenResult CarenMMDeviceEnumerator::RegistrarInterfaceNotificação(ICarenMMNotificationClient^ Param_Cliente)
+/// <param name="Param_Credencial">Ponteiro para a interface ICarenMFNetCredential.</param>
+/// <param name="Param_Resultado">TRUE se o objeto de credencial teve sucesso no desafio de autenticação; caso contrário, FALSE.</param>
+CarenResult CarenMFNetCredentialCache::SetGood(
+ICarenMFNetCredential^ Param_Credencial, 
+Boolean Param_Resultado)
 {
 	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
 
 	//Resultado COM.
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	IMMNotificationClient* pNotifyCliente = NULL;
+	IMFNetCredential* vi_pCredential = Nulo;
 
-	//Chama o método para recuperar o ponteiro para a interface.
-	Resultado = Param_Cliente->RecuperarPonteiro((LPVOID*)&pNotifyCliente);
-
-	//Verifica o resultado da recuperação do ponteiro.
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//A interface não existe.
-
-		//Sai do método
-		goto Done;
-	}
+	//Recupera o ponteiro para a interface de credencial.
+	CarenGetPointerFromICarenSafe(Param_Credencial, vi_pCredential);
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->RegisterEndpointNotificationCallback(pNotifyCliente);
+	Hr = PonteiroTrabalho->SetGood(vi_pCredential, Param_Resultado ? TRUE : FALSE);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -625,34 +524,28 @@ Done:;
 }
 
 /// <summary>
-/// (UnregisterEndpointNotificationCallback) - O método exclui o registro de uma interface de notificação que o cliente registrado em uma chamada anterior para o IMMDeviceEnumerator::RegisterEndpointNotificationCallback método.
+/// Especifica como as credenciais do usuário são armazenadas.
 /// </summary>
-/// <param name="Param_Cliente">A interface que será removida para não receber mais notificações.</param>
-CarenResult CarenMMDeviceEnumerator::RemoverRegistroInterfaceNotificação(ICarenMMNotificationClient^ Param_Cliente)
+/// <param name="Param_Credencial">Ponteiro para a interface ICarenMFNetCredential. Obtenha este ponteiro ligando para ICarenMFNetCredentialCache::ObterCredencial.</param>
+/// <param name="Param_Opcoes">Bitwise OU de zero ou mais bandeiras da enumeração CA_MFNetCredentialOptions.</param>
+CarenResult CarenMFNetCredentialCache::SetUserOptions(
+ICarenMFNetCredential^ Param_Credencial, 
+CA_MFNetCredentialOptions Param_Opcoes)
 {
 	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
 
 	//Resultado COM.
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	IMMNotificationClient* pNotifyCliente = NULL;
+	IMFNetCredential* vi_pCredential = Nulo;
 
-	//Chama o método para recuperar o ponteiro para a interface.
-	Resultado = Param_Cliente->RecuperarPonteiro((LPVOID*)&pNotifyCliente);
-
-	//Verifica o resultado da recuperação do ponteiro.
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//A interface não existe.
-
-		//Sai do método
-		goto Done;
-	}
+	//Recupera o ponteiro para a interface de credencial.
+	CarenGetPointerFromICarenSafe(Param_Credencial, vi_pCredential);
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->UnregisterEndpointNotificationCallback(pNotifyCliente);
+	Hr = PonteiroTrabalho->SetUserOptions(vi_pCredential, static_cast<DWORD>(Param_Opcoes));
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);

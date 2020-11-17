@@ -407,10 +407,8 @@ void CarenMFMediaSink::Finalizar()
 
 
 
-//
-// Métodos da interface Proprietaria
-//
 
+// Métodos da interface proprietária(ICarenMFMediaSink)
 
 
 /// <summary>
@@ -420,7 +418,7 @@ void CarenMFMediaSink::Finalizar()
 /// <param name="Param_IdentificadorFluxo">Um (Identificador) para o fluxo. O valor é (Arbitrário), mas deve ser exclusivo.</param>
 /// <param name="Param_TipoMidia">Uma interface com o tipo de mídia do Stream a ser adicionado. Esse valor pode ser (NULO).</param>
 /// <param name="Param_Out_FluxoSink">Retorna uma interface para o fluxo adicionado.</param>
-CarenResult CarenMFMediaSink::AdicionarStreamSink(UInt32 Param_IdentificadorFluxo, ICarenMFMediaType^ Param_TipoMidia, [Out] ICarenMFMediaStreamSink^% Param_Out_FluxoSink)
+CarenResult CarenMFMediaSink::AddStreamSink(UInt32 Param_IdentificadorFluxo, ICarenMFMediaType^ Param_TipoMidia, [Out] ICarenMFMediaStreamSink^% Param_Out_FluxoSink)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -429,22 +427,14 @@ CarenResult CarenMFMediaSink::AdicionarStreamSink(UInt32 Param_IdentificadorFlux
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
-	IMFMediaType *pTipoMidiaForStreamSink = NULL;
-	IMFStreamSink *pOutStreamSink = NULL;
-	ICarenMFMediaStreamSink^ InterfaceOutStreamSink = nullptr;
+	IMFMediaType *vi_pTipoMidiaForStreamSink = NULL;
+	IMFStreamSink *vi_pOutStreamSink = NULL;
 
 	//Chama o método para recuperar o ponteiro para o tipo de midia
-	Resultado = Param_TipoMidia->RecuperarPonteiro((LPVOID*)&pTipoMidiaForStreamSink);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Sai do método
-		goto Done;
-	}
+	CarenGetPointerFromICarenSafe(Param_TipoMidia, vi_pTipoMidiaForStreamSink);
 
 	//Chama o método para criar um novo StreamSink para o tipo da midia definida.
-	Hr = PonteiroTrabalho->AddStreamSink(Param_IdentificadorFluxo, pTipoMidiaForStreamSink, &pOutStreamSink);
+	Hr = PonteiroTrabalho->AddStreamSink(Param_IdentificadorFluxo, vi_pTipoMidiaForStreamSink, &vi_pOutStreamSink);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -461,17 +451,11 @@ CarenResult CarenMFMediaSink::AdicionarStreamSink(UInt32 Param_IdentificadorFlux
 		Sair;
 	}
 
-	//Cria a interface que vai conter o StreamSink
-	InterfaceOutStreamSink = gcnew CarenMFMediaStreamSink();
+	//Cria a interface a ser retornada.
+	Param_Out_FluxoSink = gcnew CarenMFMediaStreamSink();
 
-	//Chama o método para determinado o ponteiro
-	InterfaceOutStreamSink->AdicionarPonteiro(pOutStreamSink);
-
-	//Define a interface no parametro de retorno.
-	Param_Out_FluxoSink = InterfaceOutStreamSink;
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	//Define o ponteiro na interface
+	CarenSetPointerToICarenSafe(vi_pOutStreamSink, Param_Out_FluxoSink, true);
 
 Done:;
 	//Retorna o resultado
@@ -482,7 +466,7 @@ Done:;
 /// Obtém as características do coletor de mídia.
 /// </summary>
 /// <param name="Param_Out_Caracteristicas">Retorna as características desse (Coletor de mídia).</param>
-CarenResult CarenMFMediaSink::ObterCaracteristicas([Out] Enumeracoes::CA_MIDIA_SINK_CARACTERISTCAS% Param_Out_Caracteristicas)
+CarenResult CarenMFMediaSink::GetCharacteristics([Out] Enumeracoes::CA_MIDIA_SINK_CARACTERISTCAS% Param_Out_Caracteristicas)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -491,10 +475,10 @@ CarenResult CarenMFMediaSink::ObterCaracteristicas([Out] Enumeracoes::CA_MIDIA_S
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
-	DWORD CaracteristicasColetorCode = 0;
+	DWORD vi_OutCaracteristicasColetorCode = 0;
 
 	//Chama o método para recuperar as caracteristicas do coletor.
-	Hr = PonteiroTrabalho->GetCharacteristics(&CaracteristicasColetorCode);
+	Hr = PonteiroTrabalho->GetCharacteristics(&vi_OutCaracteristicasColetorCode);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -512,10 +496,7 @@ CarenResult CarenMFMediaSink::ObterCaracteristicas([Out] Enumeracoes::CA_MIDIA_S
 	}
 
 	//Converter as caracteristicas para a enumerção
-	Param_Out_Caracteristicas = (CA_MIDIA_SINK_CARACTERISTCAS)CaracteristicasColetorCode;
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	Param_Out_Caracteristicas = static_cast<CA_MIDIA_SINK_CARACTERISTCAS>(vi_OutCaracteristicasColetorCode);
 
 Done:;
 	//Retorna o resultado
@@ -526,7 +507,7 @@ Done:;
 /// Obtém o relógio de apresentação que foi definido no coletor de mídia.
 /// </summary>
 /// <param name="Param_Out_RelogioApresentação">Recebe a interface que contém o Relogio de Apresentação(IMFPresentationClock)</param>
-CarenResult CarenMFMediaSink::ObterRelogioApresentação([Out] ICarenMFPresentationClock^% Param_Out_RelogioApresentação)
+CarenResult CarenMFMediaSink::GetPresentationClock([Out] ICarenMFPresentationClock^% Param_Out_RelogioApresentação)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -535,11 +516,10 @@ CarenResult CarenMFMediaSink::ObterRelogioApresentação([Out] ICarenMFPresentat
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas pelo método
-	IMFPresentationClock *pPresentationClock = NULL;
-	ICarenMFPresentationClock^ InterfaceRelogioApresentação = nullptr;
+	IMFPresentationClock *vi_pOutPresentationClock = NULL;
 
 	//Chama o método que vai obter o ponteiro para o Relogio de apresentação
-	Hr = PonteiroTrabalho->GetPresentationClock(&pPresentationClock);
+	Hr = PonteiroTrabalho->GetPresentationClock(&vi_pOutPresentationClock);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -559,11 +539,8 @@ CarenResult CarenMFMediaSink::ObterRelogioApresentação([Out] ICarenMFPresentat
 	//Cria a interface que vai armazenar o relogio.
 	Param_Out_RelogioApresentação = gcnew CarenMFPresentationClock();
 
-	//Define a interface no parametro de retorno
-	Param_Out_RelogioApresentação = InterfaceRelogioApresentação;
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	//Define o ponteiro na interface
+	CarenSetPointerToICarenSafe(vi_pOutPresentationClock, Param_Out_RelogioApresentação, true);
 
 Done:;
 	//Retorna o resultado
@@ -575,7 +552,7 @@ Done:;
 /// </summary>
 /// <param name="Param_IdentificadorFluxo">O Identificador para o fluxo a ser obtido.</param>
 /// <param name="Param_Out_FluxoSink">Recebe a interface que contém o Stream Sink requisitado pelo seu (Identificador)</param>
-CarenResult CarenMFMediaSink::ObterStreamSinkPorIdentificador(UInt32 Param_IdentificadorFluxo, [Out] ICarenMFMediaStreamSink^% Param_Out_FluxoSink)
+CarenResult CarenMFMediaSink::GetStreamSinkById(UInt32 Param_IdentificadorFluxo, [Out] ICarenMFMediaStreamSink^% Param_Out_FluxoSink)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -584,11 +561,10 @@ CarenResult CarenMFMediaSink::ObterStreamSinkPorIdentificador(UInt32 Param_Ident
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
-	IMFStreamSink *pOutStreamSink = NULL;
-	ICarenMFMediaStreamSink^ InterfaceOutStreamSink = nullptr;
+	IMFStreamSink *vi_pOutStreamSink = NULL;
 
 	//Chama o método para obter o StreamSink no identificador especificado.
-	Hr = PonteiroTrabalho->GetStreamSinkById(Param_IdentificadorFluxo, &pOutStreamSink);
+	Hr = PonteiroTrabalho->GetStreamSinkById(Param_IdentificadorFluxo, &vi_pOutStreamSink);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -605,17 +581,11 @@ CarenResult CarenMFMediaSink::ObterStreamSinkPorIdentificador(UInt32 Param_Ident
 		Sair;
 	}
 
-	//Cria a interface que vai conter o StreamSink
-	InterfaceOutStreamSink = gcnew CarenMFMediaStreamSink();
+	//Cria a interface a ser retornada.
+	Param_Out_FluxoSink = gcnew CarenMFMediaStreamSink();
 
-	//Chama o método para determinar o ponteiro
-	InterfaceOutStreamSink->AdicionarPonteiro(pOutStreamSink);
-
-	//Define a interface no parametro de retorno.
-	Param_Out_FluxoSink = InterfaceOutStreamSink;
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	//Define o ponteiro na interface
+	CarenSetPointerToICarenSafe(vi_pOutStreamSink, Param_Out_FluxoSink, true);
 
 Done:;
 	//Retorna o resultado
@@ -627,7 +597,7 @@ Done:;
 /// </summary>
 /// <param name="Param_IdFluxo">O Id para o coletor de fluxo a ser obtido.</param>
 /// <param name="Param_Out_FluxoSink">Recebe a interface que contém o coletor de fluxo requisitado.</param>
-CarenResult CarenMFMediaSink::ObterStreamSinkPorIndex(UInt32 Param_IdFluxo, [Out] ICarenMFMediaStreamSink^% Param_Out_FluxoSink)
+CarenResult CarenMFMediaSink::GetStreamSinkByIndex(UInt32 Param_IdFluxo, [Out] ICarenMFMediaStreamSink^% Param_Out_FluxoSink)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -636,11 +606,10 @@ CarenResult CarenMFMediaSink::ObterStreamSinkPorIndex(UInt32 Param_IdFluxo, [Out
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
-	IMFStreamSink *pOutStreamSink = NULL;	
-	ICarenMFMediaStreamSink^ InterfaceOutStreamSink = nullptr;
+	IMFStreamSink *vi_pOutStreamSink = NULL;	
 
 	//Chama o método para obter o StreamSink no index especificado.
-	Hr = PonteiroTrabalho->GetStreamSinkByIndex(Param_IdFluxo, &pOutStreamSink);
+	Hr = PonteiroTrabalho->GetStreamSinkByIndex(Param_IdFluxo, &vi_pOutStreamSink);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -657,17 +626,11 @@ CarenResult CarenMFMediaSink::ObterStreamSinkPorIndex(UInt32 Param_IdFluxo, [Out
 		Sair;
 	}
 
-	//Cria a interface que vai conter o StreamSink
-	InterfaceOutStreamSink = gcnew CarenMFMediaStreamSink();
+	//Cria a interface a ser retornada.
+	Param_Out_FluxoSink = gcnew CarenMFMediaStreamSink();
 
-	//Chama o método para determinar o ponteiro
-	InterfaceOutStreamSink->AdicionarPonteiro(pOutStreamSink);
-
-	//Define a interface no parametro de retorno.
-	Param_Out_FluxoSink = InterfaceOutStreamSink;
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	//Define o ponteiro na interface
+	CarenSetPointerToICarenSafe(vi_pOutStreamSink, Param_Out_FluxoSink, true);
 
 Done:;
 	//Retorna o resultado
@@ -678,7 +641,7 @@ Done:;
 /// Obtém o número de coletores de fluxo neste coletor de mídia.
 /// </summary>
 /// <param name="Param_Out_QuantidadeSinks">Retorna a quantidade de (Coletores de Fluxos) presente nesse (Coletor de mídia)</param>
-CarenResult CarenMFMediaSink::ObterCountStreamSinks([Out] UInt32% Param_Out_QuantidadeSinks)
+CarenResult CarenMFMediaSink::GetStreamSinkCount([Out] UInt32% Param_Out_QuantidadeSinks)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -708,10 +671,7 @@ CarenResult CarenMFMediaSink::ObterCountStreamSinks([Out] UInt32% Param_Out_Quan
 	}
 
 	//Define o valor no parametro de saida.
-	Param_Out_QuantidadeSinks = safe_cast<UInt32>(CountStreams);
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	Param_Out_QuantidadeSinks = static_cast<UInt32>(CountStreams);
 
 Done:;
 	//Retorna o resultado
@@ -722,7 +682,7 @@ Done:;
 /// Remove um coletor de fluxo do coletor de mídia.
 /// </summary>
 /// <param name="Param_IdentificadorFluxo">O Identificador do fluxo a ser removido.</param>
-CarenResult CarenMFMediaSink::RemoverStreamSink(UInt32 Param_IdentificadorFluxo)
+CarenResult CarenMFMediaSink::RemoveStreamSink(UInt32 Param_IdentificadorFluxo)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -731,7 +691,7 @@ CarenResult CarenMFMediaSink::RemoverStreamSink(UInt32 Param_IdentificadorFluxo)
 	ResultadoCOM Hr = E_FAIL;
 
 	//Chama o método para obter a quantidade de Streams
-	Hr = PonteiroTrabalho->RemoveStreamSink(Param_IdentificadorFluxo);
+	Hr = PonteiroTrabalho->RemoveStreamSink(static_cast<DWORD>(Param_IdentificadorFluxo));
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -759,7 +719,7 @@ Done:;
 /// <param name="Param_RelogioApresentação">A interface que contém o relógio de apresentação a ser definido.
 /// O valor pode ser (NULO). Se NULL, o (Coletor de Mídia) para de escutar o relógio de apresentação
 /// que foi definido anteriormente, se houver.</param>
-CarenResult CarenMFMediaSink::DefinirRelogioApresentação(ICarenMFPresentationClock^ Param_RelogioApresentação)
+CarenResult CarenMFMediaSink::SetPresentationClock(ICarenMFPresentationClock^ Param_RelogioApresentação)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -768,20 +728,13 @@ CarenResult CarenMFMediaSink::DefinirRelogioApresentação(ICarenMFPresentationC
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variavies utilizadas no método
-	IMFPresentationClock *pRelogio = NULL;
+	IMFPresentationClock *vi_pRelogio = NULL;
 
-	//Chama o método que vai tentar obter o relogio de apresentação
-	Resultado = Param_RelogioApresentação->RecuperarPonteiro((LPVOID*)&pRelogio);
-	
-	//Verifica se não houve erro
-	if(Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Nenhum clock na interface está disponivel
-		goto Done;
-	}
+	//Recupera o ponteiro para o relogio.
+	CarenGetPointerFromICarenSafe(Param_RelogioApresentação, vi_pRelogio);
 
 	//Chama o método para definir o relogio de apresentação
-	Hr = PonteiroTrabalho->SetPresentationClock(pRelogio);
+	Hr = PonteiroTrabalho->SetPresentationClock(vi_pRelogio);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -806,7 +759,7 @@ Done:;
 /// <summary>
 /// Desliga o coletor de mídia e libera os recursos que ele está usando.
 /// </summary>
-CarenResult CarenMFMediaSink::DesligarColetor()
+CarenResult CarenMFMediaSink::Shutdown()
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -817,25 +770,20 @@ CarenResult CarenMFMediaSink::DesligarColetor()
 	//Chama o método para que vai desligar o coletor
 	Hr = PonteiroTrabalho->Shutdown();
 
-	//Verifica o resultado
-	if (Sucesso(Hr))
-	{
-		//Deixa o método continuar.
-	}
-	else
-	{
-		//Define falha.
-		Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
 
-		//Define o código
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Define o código na classe.
 		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
-		goto Done;
+		Sair;
 	}
-
-	//Define sucesso
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
 
 Done:;
 	//Retorna o resultado

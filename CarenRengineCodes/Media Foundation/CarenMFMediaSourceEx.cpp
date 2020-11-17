@@ -620,8 +620,8 @@ Done:;
 /// <summary>
 /// (GetCharacteristics) - Recupera as características da fonte de mídia.
 /// </summary>
-/// <param name="Param_Out_Caracteristicas">Recebe um OR de bit a bit de zero ou mais sinalizadores da enumeração (CA_CARACTERISTICAS_FONTE_MIDIA).</param>
-CarenResult CarenMFMediaSourceEx::ObterCaracteristicas([Out] Enumeracoes::CA_CARACTERISTICAS_FONTE_MIDIA% Param_Out_Caracteristicas)
+/// <param name="Param_Out_Caracteristicas">Recebe um OR de bit a bit de zero ou mais sinalizadores da enumeração (CA_MFMEDIASOURCE_CHARACTERISTICS).</param>
+CarenResult CarenMFMediaSourceEx::ObterCaracteristicas([Out] Enumeracoes::CA_MFMEDIASOURCE_CHARACTERISTICS% Param_Out_Caracteristicas)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -651,7 +651,7 @@ CarenResult CarenMFMediaSourceEx::ObterCaracteristicas([Out] Enumeracoes::CA_CAR
 	}
 
 	//Define as caracteristicas no parametro de saida
-	Param_Out_Caracteristicas = static_cast<CA_CARACTERISTICAS_FONTE_MIDIA>(CaracteristicasMediaSource);
+	Param_Out_Caracteristicas = static_cast<CA_MFMEDIASOURCE_CHARACTERISTICS>(CaracteristicasMediaSource);
 
 	//Define sucesso na operação
 	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);

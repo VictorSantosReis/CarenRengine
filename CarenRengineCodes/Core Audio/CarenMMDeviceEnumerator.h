@@ -248,7 +248,7 @@ public:
 	/// liberar a interface, quando ele não é mais necessário, chamando o método de Release da interface.</param>
 	virtual CarenResult ObterColeçãoDispositivosAudio(
 		Enumeracoes::CA_EDataFlow Param_DireçãoFluxo,
-		Enumeracoes::CA_ESTADO_DISPOSITIVO_AUDIO Param_EstadosPontoExtremidade,
+		Enumeracoes::CA_DEVICE_STATE_XXX Param_EstadosPontoExtremidade,
 		[Out] ICarenMMDeviceCollection^% Param_Out_ColeçãoDispotivios);
 
 	/// <summary>
@@ -259,7 +259,7 @@ public:
 	/// <param name="Param_Out_DispositivoDefault">Retorna o dispositivo de Audio padrão do sistema de acordo com sua função e direção.</param>
 	virtual CarenResult ObterDispositivoAudioDefault(
 		Enumeracoes::CA_EDataFlow Param_DireçãoFluxo,
-		Enumeracoes::CA_FUNCAO_DISPOSITIVO_AUDIO Param_FunçãoDispositivo,
+		Enumeracoes::CA_ERole Param_FunçãoDispositivo,
 		[Out] ICarenMMDevice^% Param_Out_DispositivoDefault);
 
 	/// <summary>

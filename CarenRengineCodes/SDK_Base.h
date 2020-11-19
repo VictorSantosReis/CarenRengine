@@ -6861,11 +6861,11 @@ namespace CarenRengine
 				/// </summary>
 				MFVideoTransferMatrix_ForceDWORD = 0x7fffffff
 			};
-
+			
 			/// <summary>
 			/// (MediaEventType) - [Falta documentar os eventos] Enumera todos os tipos de eventos do Media Foundation. Alguns eventos podem não ter suporte.
 			/// </summary>
-			public enum class CA_TIPO_MIDIA_EVENT
+			public enum class CA_MediaEventType
 			{
 				/// <summary>
 				/// Tipo do valor no evento: 
@@ -7586,7 +7586,7 @@ MEReservedMax = 10000
 			/// <summary>
 			/// (MF_OBJECT_TYPE) - Enumera todos os tipos de objeto que o resolvedor de mídia(ICarenMFSourceResolver) pode criar.
 			/// </summary>
-			public enum class CA_TIPO_OBJETO_CRIADO
+			public enum class CA_MF_OBJECT_TYPE
 			{
 				/// <summary>
 				/// Fonte de mídia. Você pode consultar o objeto para a interface (ICarenMFMediaSource).
@@ -9161,6 +9161,7 @@ MEReservedMax = 10000
 			/// (CLSCTX)(FALTA DOCUMENTAR) - Valores que são usados em chamadas de ativação para indicar os contextos de execução em que um objeto está a ser executado. Estes valores também são usados em chamadas
 			/// para CoRegisterClassObject para indicar o conjunto de contextos de execução em que um objeto de classe é para ser feito disponível para solicitações construir instâncias.
 			/// </summary>
+			[FlagsAttribute]
 			public enum class CA_CLSCTX : Int64
 			{
 				/// <summary>

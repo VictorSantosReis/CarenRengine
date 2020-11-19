@@ -14,47 +14,45 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-
 #pragma once
 #include "../SDK_MediaFoundation.h"
-#include "../Caren/Caren.h"
-#include "CarenMFMediaEvent.h"
-#include "../FunctionClass/PropVariantManager.h"
+#include "../SDK_Caren.h"
 #include "../SDK_Utilidades.h"
+#include "../FunctionClass/GlobalFuncs.h"
 
-//Importa o namespace que contém as interfaces da Media Foundation.
+//Importa o namespace que contém as interfaces da API primária.
 using namespace CarenRengine::MediaFoundation;
-
-//Enumeração de retorno de função.
-
 
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
-using namespace CarenRengine::SDKBase::Enumeracoes;
 using namespace CarenRengine::SDKBase::Estruturas;
 using namespace CarenRengine::SDKBase::Interfaces;
 
 //Importa o namespace de utilidades utilizado pelas classes
 using namespace CarenRengine::SDKUtilidades;
 
+
 /// <summary>
-/// [Concluido - Fase de Testes]
+/// (Concluido - Fase de Testes) - Classe responsável por registrar um Media Foundation Transforms(MFTs) no processo do chamador.
 /// </summary>
-public ref class CarenMFMediaEventGenerator : public ICarenMFMediaEventGenerator
+public ref class CarenMFLocalMFTRegistration : public ICarenMFLocalMFTRegistration
 {
 	/////////////////////////////////////////
 	//Objeto gerenciado por essa interface.//
 	/////////////////////////////////////////
 
-	//Ponteiro para a interface (IMFMediaEventGenerator).
-	IMFMediaEventGenerator* PonteiroTrabalho = NULL;
+	//Ponteiro para a interface (IMFLocalMFTRegistration).
+	IMFLocalMFTRegistration* PonteiroTrabalho = NULL;
 
 
-
-	//Contrutor e destruidor da classe.
+	//Contrutores e destuidor da classe.
 public:
-	~CarenMFMediaEventGenerator();
-
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMFLocalMFTRegistration();
+	
+	~CarenMFLocalMFTRegistration();
 
 	//Variaveis Internas.
 internal:
@@ -85,10 +83,6 @@ public:
 	//A parti daqui vai conter os métodos das interfaces.//
 	///////////////////////////////////////////////////////
 
-
-	//
-	// ICaren
-	//
 
 	//Métodos da interface (ICaren)
 public:
@@ -170,49 +164,12 @@ public:
 	virtual void Finalizar();
 
 
-
-
-
-
-
-	//
-	// ICarenMFGeradorEventosMidia
-	//
-
-	//Métodos da interface (ICarenMFGeradorEventosMidia)
+	//Métodos da interface(ICarenMFLocalMFTRegistration)
 public:
 	/// <summary>
-	/// (GetEvent) - Recupera o próximo evento na fila. Este método é (Síncrono).
-	/// Se a fila já contiver um evento, o método retornará S_OK imediatamente. Se a fila não contiver um evento, o comportamento 
-	/// dependerá do valor de Param_Flags.
+	/// Registra uma ou mais transformações da Media Foundation (MFTs) no processo do chamador.
 	/// </summary>
-	/// <param name="Param_Flags">Especifica como deve obter o evento.</param>
-	/// <param name="Param_Out_MidiaEvent">Recebe a interface que contém as informações da operação assincrona para o evento notificado. O chamador deve liberar a interface.</param>
-	virtual CarenResult ObterEvento(Enumeracoes::CA_FLAGS_OBTER_EVENTO Param_Flags, [Out] ICarenMFMediaEvent^% Param_Out_MidiaEvent);
-
-	/// <summary>
-	/// (BeginGetEvent) - Inicia uma solicitação assíncrona para o próximo evento na fila.
-	/// Este método é responsável por solicitar o proximo evento na fila, passando o Callback responsável por receber a conclusão da chamada Assincrona.
-	/// </summary>
-	/// <param name="Param_Callback">A interface que vai receber os eventos que seram gerados pelas interfaces que derivam desta.</param>
-	/// <param name="Param_ObjetoDesconhecido">Uma interface ICaren de um objeto de estado, definido pelo chamador. Este parâmetro pode ser NULO. Você pode usar esse objeto para armazenar 
-	/// informações de estado. O objeto é retornado ao responsável pela chamada quando o retorno de chamada é invocado.</param>
-	virtual CarenResult SolicitarProximoEvento(ICarenMFAsyncCallback^ Param_Callback, ICaren^ Param_ObjetoDesconhecido);
-
-	/// <summary>
-	/// (EndGetEvent) - Conclui uma solicitação (Assíncrona) para o próximo evento na fila.
-	/// </summary>
-	/// <param name="Param_ResultAsync">A interface ICarenMFAsyncResult. Essa interface deve ser a retornada pelo Evento (OnInvoke).</param>
-	/// <param name="Param_Out_MidiaEvent">Recebe a interface que contém as informações da operação assincrona para o evento notificado. O chamador deve liberar a interface.</param>
-	virtual CarenResult ConcluirSolicitaçãoEvento(ICarenMFAsyncResult^ Param_ResultAsync, [Out] ICarenMFMediaEvent^% Param_Out_MidiaEvent);
-
-	/// <summary>
-	/// (QueueEvent) - Coloca um novo evento na fila do objeto.
-	/// </summary>
-	/// <param name="Param_TipoEvento">Especifica o tipo do evento. O tipo do evento é retornado pelo método (ICarenMFMediaEvent.ObterTipo).</param>
-	/// <param name="Param_GuidExtendedType">O tipo estendido. Se o evento não tiver um tipo estendido, defina como NULO. O tipo estendido é retornado pelo método (ICarenMFMediaEvent.ObterTipoExtendido) do evento.</param>
-	/// <param name="Param_HResultCode">Um código de sucesso ou falha indicando o status do evento. Esse valor é retornado pelo método (ICarenMFMediaEvent.ObterStatus) do evento.</param>
-	/// <param name="Param_Dados">uma CA_PropVariant que contém o valor do evento. Este parâmetro pode ser NULO. Esse valor é retornado pelo método (ICarenMFMediaEvent.ObterValor) do evento.</param>
-	virtual CarenResult InserirEventoFila(Enumeracoes::CA_MediaEventType Param_TipoEvento, String^ Param_GuidExtendedType, Int32 Param_HResultCode, Estruturas::CA_PropVariant^ Param_Dados);
+	/// <param name="Param_MatrizMFTs">Uma matriz de estruturas MFT_REGISTRATION_INFO.</param>
+	/// <param name="Param_CountElementos">O número de elementos na matriz (Param_MatrizMFTs).</param>
+	virtual CarenResult RegisterMFTs(cli::array<CA_MFT_REGISTRATION_INFO^>^ Param_MatrizMFTs, UInt32 Param_CountElementos);
 };
-

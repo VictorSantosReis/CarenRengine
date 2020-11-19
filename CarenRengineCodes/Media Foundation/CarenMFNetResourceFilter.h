@@ -14,47 +14,47 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-
 #pragma once
 #include "../SDK_MediaFoundation.h"
-#include "../Caren/Caren.h"
-#include "CarenMFMediaEvent.h"
-#include "../FunctionClass/PropVariantManager.h"
+#include "../SDK_Caren.h"
 #include "../SDK_Utilidades.h"
+#include "../FunctionClass/GlobalFuncs.h"
+#include "../Nativas/CLN_IMFNetResourceFilter.h"
 
-//Importa o namespace que contém as interfaces da Media Foundation.
+//Importa o namespace que contém as interfaces da API primária.
 using namespace CarenRengine::MediaFoundation;
-
-//Enumeração de retorno de função.
-
 
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
-using namespace CarenRengine::SDKBase::Enumeracoes;
 using namespace CarenRengine::SDKBase::Estruturas;
 using namespace CarenRengine::SDKBase::Interfaces;
 
 //Importa o namespace de utilidades utilizado pelas classes
 using namespace CarenRengine::SDKUtilidades;
 
+
 /// <summary>
-/// [Concluido - Fase de Testes]
+/// (Concluido - Fase de Testes) - Classe responsável por notificar o aplicativo quando um fluxo de byte solicita uma URL e permite que o aplicativo bloqueie o redirecionamento 
+/// da URL.
 /// </summary>
-public ref class CarenMFMediaEventGenerator : public ICarenMFMediaEventGenerator
+public ref class CarenMFNetResourceFilter : public ICarenMFNetResourceFilter
 {
 	/////////////////////////////////////////
 	//Objeto gerenciado por essa interface.//
 	/////////////////////////////////////////
 
-	//Ponteiro para a interface (IMFMediaEventGenerator).
-	IMFMediaEventGenerator* PonteiroTrabalho = NULL;
+	//Ponteiro para a interface (IMFNetResourceFilter).
+	IMFNetResourceFilter* PonteiroTrabalho = NULL;
 
 
-
-	//Contrutor e destruidor da classe.
+	//Contrutores e destuidor da classe.
 public:
-	~CarenMFMediaEventGenerator();
-
+	/// <summary>
+	/// Inicializa a classe com uma implementação da interface nativa (IMFNetResourceFilter) criada internamente.
+	/// </summary>
+	CarenMFNetResourceFilter();
+	
+	~CarenMFNetResourceFilter();
 
 	//Variaveis Internas.
 internal:
@@ -81,14 +81,63 @@ public:
 	}
 
 
+
+	//(EVENTOS)
+public:
+
+	/////////////////////////////////////////////
+	//EVENTOS CHAMADOS PARA NOTIFICAR O USUÁRIO//
+	/////////////////////////////////////////////
+
+	/// <summary>
+	/// vento chamado quando o fluxo de byte redireciona para uma URL.
+	/// </summary>
+	virtual event ICarenMFNetResourceFilter::Delegate_OnRedirect^ OnRedirect;
+
+	/// <summary>
+	/// Evento chamado quando o fluxo de byte solicita uma URL.
+	/// </summary>
+	virtual event ICarenMFNetResourceFilter::Delegate_OnSendingRequest^ OnSendingRequest;
+
+	//(DELEGATES).
+private:
+
+	/////////////////////////////////////////////////////////////////////////////////////////////
+	//DELEGATES UTILIZADOS PARA RECEBER OS EVENTOS NATIVOS DA CLASSE (CLN_IMFNetResourceFilter)//
+	/////////////////////////////////////////////////////////////////////////////////////////////
+
+	/// <summary>
+	/// Delegate nativo que vai conter o método que vai receber o evento(OnRedirect) nativo da classe (CLN_IMFNetResourceFilter) para ser enviado ao usuário.
+	/// </summary>
+	delegate HRESULT DelegateNativo_Evento_OnRedirect(
+		_In_  LPCWSTR,
+		_Out_  VARIANT_BOOL*);
+	DelegateNativo_Evento_OnRedirect^ Callback_OnRedirect = nullptr;
+
+	/// <summary>
+	/// Delegate nativo que vai conter o método que vai receber o evento(OnSendingRequest) nativo da classe (CLN_IMFNetResourceFilter) para ser enviado ao usuário.
+	/// </summary>
+	delegate HRESULT DelegateNativo_Evento_OnSendingRequest(_In_ LPCWSTR);
+	DelegateNativo_Evento_OnSendingRequest^ Callback_OnSendingRequest = nullptr;
+
+	//(HANDLES ALOCADAS DOS EVENTOS)
+private:
+	/// <summary>
+	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnRedirect).
+	/// </summary>
+	GCHandle gHandle_Delegate_OnRedirect;
+
+	/// <summary>
+	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnSendingRequest).
+	/// </summary>
+	GCHandle gHandle_Delegate_OnSendingRequest;
+
+
+
 	///////////////////////////////////////////////////////
 	//A parti daqui vai conter os métodos das interfaces.//
 	///////////////////////////////////////////////////////
 
-
-	//
-	// ICaren
-	//
 
 	//Métodos da interface (ICaren)
 public:
@@ -170,49 +219,27 @@ public:
 	virtual void Finalizar();
 
 
-
-
-
-
-
-	//
-	// ICarenMFGeradorEventosMidia
-	//
-
-	//Métodos da interface (ICarenMFGeradorEventosMidia)
+	//Métodos da interface(ICarenMFNetResourceFilter)
 public:
 	/// <summary>
-	/// (GetEvent) - Recupera o próximo evento na fila. Este método é (Síncrono).
-	/// Se a fila já contiver um evento, o método retornará S_OK imediatamente. Se a fila não contiver um evento, o comportamento 
-	/// dependerá do valor de Param_Flags.
+	/// Método responsável por registrar os eventos da interface.
 	/// </summary>
-	/// <param name="Param_Flags">Especifica como deve obter o evento.</param>
-	/// <param name="Param_Out_MidiaEvent">Recebe a interface que contém as informações da operação assincrona para o evento notificado. O chamador deve liberar a interface.</param>
-	virtual CarenResult ObterEvento(Enumeracoes::CA_FLAGS_OBTER_EVENTO Param_Flags, [Out] ICarenMFMediaEvent^% Param_Out_MidiaEvent);
+	virtual void RegistrarCallback();
 
 	/// <summary>
-	/// (BeginGetEvent) - Inicia uma solicitação assíncrona para o próximo evento na fila.
-	/// Este método é responsável por solicitar o proximo evento na fila, passando o Callback responsável por receber a conclusão da chamada Assincrona.
+	/// Método responsável por liberar todos os registros de eventos resgistrados anteriormente. Chame esse método após uma chamada para (RegistrarCallback).
 	/// </summary>
-	/// <param name="Param_Callback">A interface que vai receber os eventos que seram gerados pelas interfaces que derivam desta.</param>
-	/// <param name="Param_ObjetoDesconhecido">Uma interface ICaren de um objeto de estado, definido pelo chamador. Este parâmetro pode ser NULO. Você pode usar esse objeto para armazenar 
-	/// informações de estado. O objeto é retornado ao responsável pela chamada quando o retorno de chamada é invocado.</param>
-	virtual CarenResult SolicitarProximoEvento(ICarenMFAsyncCallback^ Param_Callback, ICaren^ Param_ObjetoDesconhecido);
+	virtual void UnRegisterCallback();
+
+	//Métodos que são utilizados para receberem os eventos da classe nativa (CLN_IMFNetResourceFilter).
+public:
+	/// <summary>
+	/// Método responsável por chamar o evento gerenciado para notificar o usuário sobre uma chamada para o método (OnRedirect) na classe nativa.
+	/// </summary>
+	virtual HRESULT EncaminharEvento_OnRedirect(_In_ LPCWSTR pszUrl, _Out_ VARIANT_BOOL* pvbCancel);
 
 	/// <summary>
-	/// (EndGetEvent) - Conclui uma solicitação (Assíncrona) para o próximo evento na fila.
+	/// Método responsável por chamar o evento gerenciado para notificar o usuário sobre uma chamada para o método (OnSendingRequest) na classe nativa.
 	/// </summary>
-	/// <param name="Param_ResultAsync">A interface ICarenMFAsyncResult. Essa interface deve ser a retornada pelo Evento (OnInvoke).</param>
-	/// <param name="Param_Out_MidiaEvent">Recebe a interface que contém as informações da operação assincrona para o evento notificado. O chamador deve liberar a interface.</param>
-	virtual CarenResult ConcluirSolicitaçãoEvento(ICarenMFAsyncResult^ Param_ResultAsync, [Out] ICarenMFMediaEvent^% Param_Out_MidiaEvent);
-
-	/// <summary>
-	/// (QueueEvent) - Coloca um novo evento na fila do objeto.
-	/// </summary>
-	/// <param name="Param_TipoEvento">Especifica o tipo do evento. O tipo do evento é retornado pelo método (ICarenMFMediaEvent.ObterTipo).</param>
-	/// <param name="Param_GuidExtendedType">O tipo estendido. Se o evento não tiver um tipo estendido, defina como NULO. O tipo estendido é retornado pelo método (ICarenMFMediaEvent.ObterTipoExtendido) do evento.</param>
-	/// <param name="Param_HResultCode">Um código de sucesso ou falha indicando o status do evento. Esse valor é retornado pelo método (ICarenMFMediaEvent.ObterStatus) do evento.</param>
-	/// <param name="Param_Dados">uma CA_PropVariant que contém o valor do evento. Este parâmetro pode ser NULO. Esse valor é retornado pelo método (ICarenMFMediaEvent.ObterValor) do evento.</param>
-	virtual CarenResult InserirEventoFila(Enumeracoes::CA_MediaEventType Param_TipoEvento, String^ Param_GuidExtendedType, Int32 Param_HResultCode, Estruturas::CA_PropVariant^ Param_Dados);
+	virtual HRESULT EncaminharEvento_OnSendingRequest(_In_ LPCWSTR pszUrl);
 };
-

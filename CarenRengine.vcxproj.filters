@@ -1242,20 +1242,56 @@
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFTranscodeSinkInfoProvider.h">
       <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
     </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFNetCredentialManager.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMetadata.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMetadataProvider .h">
-      <Filter>Arquivos de Cabeçalho</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFNetCredential.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFNetCredentialCache.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
     </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFNetCredentialManager.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFSourceOpenMonitor.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFByteStreamHandler.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFDLNASinkInit.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFLocalMFTRegistration.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaEngineSrcElements.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaEngineSrcElementsEx.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFNetProxyLocator.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFNetProxyLocatorFactory.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFNetResourceFilter.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFSourceOpenMonitor.h">
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\Media Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFNetProxyLocatorFactory.h">
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\Media Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFNetResourceFilter.h">
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\Media Foundation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2306,20 +2342,56 @@
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFTranscodeSinkInfoProvider.cpp">
       <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
     </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFNetCredentialManager.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMetadata.cpp">
-      <Filter>Arquivos de Origem</Filter>
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMetadataProvider .cpp">
-      <Filter>Arquivos de Origem</Filter>
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFNetCredential.cpp">
-      <Filter>Arquivos de Origem</Filter>
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFNetCredentialCache.cpp">
-      <Filter>Arquivos de Origem</Filter>
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
     </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFNetCredentialManager.cpp">
-      <Filter>Arquivos de Origem</Filter>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFSourceOpenMonitor.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFByteStreamHandler.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFDLNASinkInit.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFLocalMFTRegistration.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaEngineSrcElements.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaEngineSrcElementsEx.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFNetProxyLocator.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFNetProxyLocatorFactory.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFNetResourceFilter.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFSourceOpenMonitor.cpp">
+      <Filter>Arquivos de Origem\Classes Nativas\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFNetProxyLocatorFactory.cpp">
+      <Filter>Arquivos de Origem\Classes Nativas\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFNetResourceFilter.cpp">
+      <Filter>Arquivos de Origem\Classes Nativas\MediaFoundation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -456,7 +456,7 @@ Done:;
 /// (GetType) - Recupera o tipo de evento. O tipo de evento indica o que aconteceu para acionar o evento. Também define o significado do valor do evento.
 /// </summary>
 /// <param name="Param_Out_TipoEvento">Recebe a enumeração que define o tipo do evento gerado.</param>
-CarenResult CarenMFMediaEvent::ObterTipo([Out] Enumeracoes::CA_TIPO_MIDIA_EVENT% Param_Out_TipoEvento)
+CarenResult CarenMFMediaEvent::ObterTipo([Out] Enumeracoes::CA_MediaEventType% Param_Out_TipoEvento)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -486,7 +486,7 @@ CarenResult CarenMFMediaEvent::ObterTipo([Out] Enumeracoes::CA_TIPO_MIDIA_EVENT%
 	}
 
 	//Converte e define o tipo do evento no parametro.
-	Param_Out_TipoEvento = static_cast<CA_TIPO_MIDIA_EVENT>(pTipoEvento);
+	Param_Out_TipoEvento = static_cast<CA_MediaEventType>(pTipoEvento);
 
 Done:;
 	//Retorna o resultado.

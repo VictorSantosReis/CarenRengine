@@ -14,47 +14,45 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-
 #pragma once
 #include "../SDK_MediaFoundation.h"
-#include "../Caren/Caren.h"
-#include "CarenMFMediaEvent.h"
-#include "../FunctionClass/PropVariantManager.h"
+#include "../SDK_Caren.h"
 #include "../SDK_Utilidades.h"
+#include "../FunctionClass/GlobalFuncs.h"
 
-//Importa o namespace que contém as interfaces da Media Foundation.
+//Importa o namespace que contém as interfaces da API primária.
 using namespace CarenRengine::MediaFoundation;
-
-//Enumeração de retorno de função.
-
 
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
-using namespace CarenRengine::SDKBase::Enumeracoes;
 using namespace CarenRengine::SDKBase::Estruturas;
 using namespace CarenRengine::SDKBase::Interfaces;
 
 //Importa o namespace de utilidades utilizado pelas classes
 using namespace CarenRengine::SDKUtilidades;
 
+
 /// <summary>
-/// [Concluido - Fase de Testes]
+/// (Concluido - Fase de Testes) - Classe responsável por criar uma fonte de mídia a partir de um fluxo de bytes.
 /// </summary>
-public ref class CarenMFMediaEventGenerator : public ICarenMFMediaEventGenerator
+public ref class CarenMFByteStreamHandler : public ICarenMFByteStreamHandler
 {
 	/////////////////////////////////////////
 	//Objeto gerenciado por essa interface.//
 	/////////////////////////////////////////
 
-	//Ponteiro para a interface (IMFMediaEventGenerator).
-	IMFMediaEventGenerator* PonteiroTrabalho = NULL;
+	//Ponteiro para a interface (IMFByteStreamHandler).
+	IMFByteStreamHandler* PonteiroTrabalho = NULL;
 
 
-
-	//Contrutor e destruidor da classe.
+	//Contrutores e destuidor da classe.
 public:
-	~CarenMFMediaEventGenerator();
-
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMFByteStreamHandler();
+	
+	~CarenMFByteStreamHandler();
 
 	//Variaveis Internas.
 internal:
@@ -85,10 +83,6 @@ public:
 	//A parti daqui vai conter os métodos das interfaces.//
 	///////////////////////////////////////////////////////
 
-
-	//
-	// ICaren
-	//
 
 	//Métodos da interface (ICaren)
 public:
@@ -170,49 +164,53 @@ public:
 	virtual void Finalizar();
 
 
-
-
-
-
-
-	//
-	// ICarenMFGeradorEventosMidia
-	//
-
-	//Métodos da interface (ICarenMFGeradorEventosMidia)
+	//Métodos da interface(ICarenMFByteStreamHandler)
 public:
 	/// <summary>
-	/// (GetEvent) - Recupera o próximo evento na fila. Este método é (Síncrono).
-	/// Se a fila já contiver um evento, o método retornará S_OK imediatamente. Se a fila não contiver um evento, o comportamento 
-	/// dependerá do valor de Param_Flags.
+	/// Começa uma solicitação assíncrona para criar uma fonte de mídia a partir de um fluxo de bytes.
 	/// </summary>
-	/// <param name="Param_Flags">Especifica como deve obter o evento.</param>
-	/// <param name="Param_Out_MidiaEvent">Recebe a interface que contém as informações da operação assincrona para o evento notificado. O chamador deve liberar a interface.</param>
-	virtual CarenResult ObterEvento(Enumeracoes::CA_FLAGS_OBTER_EVENTO Param_Flags, [Out] ICarenMFMediaEvent^% Param_Out_MidiaEvent);
+	/// <param name="Param_FluxoBytes">Ponteiro para a interface ICarenMFByteStream do fluxo de byte.</param>
+	/// <param name="Param_Url">String que contém a URL original do fluxo de bytes. Este parâmetro pode ser NULO.</param>
+	/// <param name="Param_Flags">Bitwise OR de zero ou mais bandeiras da enumeração CA_SOURCE_RESOLVER_FLAGS.</param>
+	/// <param name="Param_Props">Ponteiro para a interface ICarenPropertyStore de uma loja de propriedades. O manipulador de fluxo de bytes pode usar esta loja de propriedades 
+	/// para configurar o objeto. Este parâmetro pode ser NULO.</param>
+	/// <param name="Param_Out_CookieCancelamento">Recebe um ponteiro IUnknown na interface ICaren ou o valor NULO. Se o valor não for NULO, você pode cancelar a operação assíncrona 
+	/// passando este ponteiro para o método ICarenMFByteStreamHandler::CancelObjectCreation. O chamador deve liberar a interface. Este parâmetro pode ser NULO.</param>
+	/// <param name="Param_Callback">Ponteiro para a interface ICarenMFAsyncCallback de um objeto de retorno de chamada. O chamador deve implementar esta interface.</param>
+	/// <param name="Param_ObjetoEstado">Um objeto de estado, definido pelo chamador. Este parâmetro pode ser NULO. Você pode usar este objeto para conter informações do estado.
+	/// O objeto é devolvido ao chamador quando o retorno de chamada é invocado.</param>
+	virtual CarenResult BeginCreateObject(
+	ICarenMFByteStream^ Param_FluxoBytes,
+	String^ Param_Url,
+	CA_SOURCE_RESOLVER_FLAGS Param_Flags,
+	ICarenPropertyStore^ Param_Props,
+	[Out] ICaren^% Param_Out_CookieCancelamento,
+	ICarenMFAsyncCallback^ Param_Callback,
+	ICaren^ Param_ObjetoEstado);
 
 	/// <summary>
-	/// (BeginGetEvent) - Inicia uma solicitação assíncrona para o próximo evento na fila.
-	/// Este método é responsável por solicitar o proximo evento na fila, passando o Callback responsável por receber a conclusão da chamada Assincrona.
+	/// Cancela o pedido atual para criar uma fonte de mídia.
 	/// </summary>
-	/// <param name="Param_Callback">A interface que vai receber os eventos que seram gerados pelas interfaces que derivam desta.</param>
-	/// <param name="Param_ObjetoDesconhecido">Uma interface ICaren de um objeto de estado, definido pelo chamador. Este parâmetro pode ser NULO. Você pode usar esse objeto para armazenar 
-	/// informações de estado. O objeto é retornado ao responsável pela chamada quando o retorno de chamada é invocado.</param>
-	virtual CarenResult SolicitarProximoEvento(ICarenMFAsyncCallback^ Param_Callback, ICaren^ Param_ObjetoDesconhecido);
+	/// <param name="Param_CookieCancelamento">Ponteiro para a interface ICaren que foi retornada no parâmetro (Param_Out_CookieCancelamento) do método 
+	/// ICarenMFByteStreamHandler::BeginCreateObject.</param>
+	virtual CarenResult CancelObjectCreation(ICaren^ Param_CookieCancelamento);
 
 	/// <summary>
-	/// (EndGetEvent) - Conclui uma solicitação (Assíncrona) para o próximo evento na fila.
+	/// Completa um pedido assíncrono para criar uma fonte de mídia.
 	/// </summary>
-	/// <param name="Param_ResultAsync">A interface ICarenMFAsyncResult. Essa interface deve ser a retornada pelo Evento (OnInvoke).</param>
-	/// <param name="Param_Out_MidiaEvent">Recebe a interface que contém as informações da operação assincrona para o evento notificado. O chamador deve liberar a interface.</param>
-	virtual CarenResult ConcluirSolicitaçãoEvento(ICarenMFAsyncResult^ Param_ResultAsync, [Out] ICarenMFMediaEvent^% Param_Out_MidiaEvent);
+	/// <param name="Param_Resultado">Ponteiro para a interface ICarenMFAsyncResult. Passe no mesmo ponteiro que seu objeto de retorno de chamada recebeu no método Invocar.</param>
+	/// <param name="Param_Out_TipoObjeto">Recebe um membro da enumeração CA_MF_OBJECT_TYPE, especificando o tipo de objeto que foi criado.</param>
+	/// <param name="Param_Ref_InterfaceObjeto">Recebe um ponteiro para a interface da fonte de mídia. O chamador deve criar a interface que vai receber o ponteiro.
+	/// O chamador deve liberar a interface quando não for mais utilizar.</param>
+	virtual CarenResult EndCreateObject(
+	ICarenMFAsyncResult^ Param_Resultado,
+	[Out] CA_MF_OBJECT_TYPE% Param_Out_TipoObjeto,
+	ICaren^% Param_Ref_InterfaceObjeto);
 
 	/// <summary>
-	/// (QueueEvent) - Coloca um novo evento na fila do objeto.
+	/// Recupera o número máximo de bytes necessários para criar a fonte de mídia ou determinar que o manipulador de fluxo de bytes não 
+	/// pode analisar este fluxo.
 	/// </summary>
-	/// <param name="Param_TipoEvento">Especifica o tipo do evento. O tipo do evento é retornado pelo método (ICarenMFMediaEvent.ObterTipo).</param>
-	/// <param name="Param_GuidExtendedType">O tipo estendido. Se o evento não tiver um tipo estendido, defina como NULO. O tipo estendido é retornado pelo método (ICarenMFMediaEvent.ObterTipoExtendido) do evento.</param>
-	/// <param name="Param_HResultCode">Um código de sucesso ou falha indicando o status do evento. Esse valor é retornado pelo método (ICarenMFMediaEvent.ObterStatus) do evento.</param>
-	/// <param name="Param_Dados">uma CA_PropVariant que contém o valor do evento. Este parâmetro pode ser NULO. Esse valor é retornado pelo método (ICarenMFMediaEvent.ObterValor) do evento.</param>
-	virtual CarenResult InserirEventoFila(Enumeracoes::CA_MediaEventType Param_TipoEvento, String^ Param_GuidExtendedType, Int32 Param_HResultCode, Estruturas::CA_PropVariant^ Param_Dados);
+	/// <param name="Param_Ref_MaximoNumeroBytes">Recebe o número máximo de bytes necessários.</param>
+	virtual CarenResult GetMaxNumberOfBytesRequiredForResolution(UInt64% Param_Ref_MaximoNumeroBytes);
 };
-

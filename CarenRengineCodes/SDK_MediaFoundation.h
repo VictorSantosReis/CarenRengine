@@ -970,7 +970,7 @@ namespace CarenRengine
 			/// (GetType) - Recupera o tipo de evento. O tipo de evento indica o que aconteceu para acionar o evento. Também define o significado do valor do evento.
 			/// </summary>
 			/// <param name="Param_Out_TipoEvento">Recebe a enumeração que define o tipo do evento gerado.</param>
-			CarenResult ObterTipo([Out] Enumeracoes::CA_TIPO_MIDIA_EVENT% Param_Out_TipoEvento);
+			CarenResult ObterTipo([Out] Enumeracoes::CA_MediaEventType% Param_Out_TipoEvento);
 
 			/// <summary>
 			/// (GetExtendedType) - Recupera o tipo estendido do evento. Utilizado para da suporte a eventos personalizados.
@@ -1040,7 +1040,7 @@ namespace CarenRengine
 			/// <param name="Param_GuidExtendedType">O tipo estendido. Se o evento não tiver um tipo estendido, defina como NULO. O tipo estendido é retornado pelo método (ICarenMFMediaEvent.ObterTipoExtendido) do evento.</param>
 			/// <param name="Param_HResultCode">Um código de sucesso ou falha indicando o status do evento. Esse valor é retornado pelo método (ICarenMFMediaEvent.ObterStatus) do evento.</param>
 			/// <param name="Param_Dados">uma CA_PropVariant que contém o valor do evento. Este parâmetro pode ser NULO. Esse valor é retornado pelo método (ICarenMFMediaEvent.ObterValor) do evento.</param>
-			CarenResult InserirEventoFila(Enumeracoes::CA_TIPO_MIDIA_EVENT Param_TipoEvento, String^ Param_GuidExtendedType, Int32 Param_HResultCode, Estruturas::CA_PropVariant^ Param_Dados);
+			CarenResult InserirEventoFila(Enumeracoes::CA_MediaEventType Param_TipoEvento, String^ Param_GuidExtendedType, Int32 Param_HResultCode, Estruturas::CA_PropVariant^ Param_Dados);
 		};
 
 		/// <summary>
@@ -3086,7 +3086,7 @@ namespace CarenRengine
 			/// <param name="Param_Flags">Um bit a bit ou de uma ou mais bandeiras.</param>
 			/// <param name="Param_Propriedades">Um ponteiro para a interface de ICarenPropertyStore de uma loja de propriedade. O método passa a loja de propriedade para o manipulador de fluxo de bytes.
 			/// O manipulador de fluxo de bytes pode usar o armazenamento de propriedade para configurar a fonte de mídia. Este parâmetro pode ser nulo.</param>
-			/// <param name="Param_Out_TipoObjeto">Recebe um membro da enumeração CA_TIPO_OBJETO_CRIADO, especificando o tipo de objeto que foi criado.</param>
+			/// <param name="Param_Out_TipoObjeto">Recebe um membro da enumeração CA_MF_OBJECT_TYPE, especificando o tipo de objeto que foi criado.</param>
 			/// <param name="Param_Out_FonteMidia">Recebe a interface para a fonte de mídia criada. O chamador deve liberar a interface. O usuário deve criar a interface antes de chamar este método.</param>
 			CarenResult CriarObjetoFromByteStream
 			(
@@ -3094,7 +3094,7 @@ namespace CarenRengine
 				String^ Param_Url,
 				Enumeracoes::CA_SOURCE_RESOLVER_FLAGS Param_Flags,
 				ICarenPropertyStore^ Param_Propriedades,
-				[Out] Enumeracoes::CA_TIPO_OBJETO_CRIADO% Param_Out_TipoObjeto,
+				[Out] Enumeracoes::CA_MF_OBJECT_TYPE% Param_Out_TipoObjeto,
 				ICaren^ Param_Out_FonteMidia
 			);
 
@@ -3105,14 +3105,14 @@ namespace CarenRengine
 			/// <param name="Param_Flags">OR bit a bit de um ou mais bandeiras.</param>
 			/// <param name="Param_Propriedades">Um ponteiro para a interface de ICarenPropertyStore de uma loja de propriedade. O método passa a loja de propriedade para o manipulador de fluxo de bytes.
 			/// O manipulador de fluxo de bytes pode usar o armazenamento de propriedade para configurar a fonte de mídia. Este parâmetro pode ser nulo.</param>
-			/// <param name="Param_Out_TipoObjeto">Recebe um membro da enumeração CA_TIPO_OBJETO_CRIADO, especificando o tipo de objeto que foi criado.</param>
+			/// <param name="Param_Out_TipoObjeto">Recebe um membro da enumeração CA_MF_OBJECT_TYPE, especificando o tipo de objeto que foi criado.</param>
 			/// <param name="Param_Out_FonteMidia">Recebe a interface para a fonte de mídia criada. O chamador deve liberar a interface. O usuário deve criar a interface antes de chamar este método.</param>
 			CarenResult CriarObjetoFromUrl
 			(
 				String^ Param_Url,
 				Enumeracoes::CA_SOURCE_RESOLVER_FLAGS Param_Flags,
 				ICarenPropertyStore^ Param_Propriedades,
-				[Out] Enumeracoes::CA_TIPO_OBJETO_CRIADO% Param_Out_TipoObjeto,
+				[Out] Enumeracoes::CA_MF_OBJECT_TYPE% Param_Out_TipoObjeto,
 				ICaren^ Param_Out_FonteMidia
 			);
 
@@ -3120,12 +3120,12 @@ namespace CarenRengine
 			/// (EndCreateObjectFromByteStream) - Conclui uma solicitação assíncrona para criar uma fonte de mídia a partir de um fluxo de bytes.
 			/// </summary>
 			/// <param name="Param_Resultado">Ponteiro para a interface ICarenMFAsyncResult. Passar o mesmo ponteiro que recebeu de seu objeto de retorno de chamada no método Invoke.</param>
-			/// <param name="Param_Out_TipoObjeto">Recebe um membro da enumeração CA_TIPO_OBJETO_CRIADO, especificando o tipo de objeto que foi criado.</param>
+			/// <param name="Param_Out_TipoObjeto">Recebe um membro da enumeração CA_MF_OBJECT_TYPE, especificando o tipo de objeto que foi criado.</param>
 			/// <param name="Param_Out_FonteMidia">Recebe a interface para a fonte de mídia criada. O chamador deve liberar a interface. O usuário deve criar a interface antes de chamar este método.</param>
 			CarenResult ConcluirCriaçãoObjetoFromByteStream
 			(
 				ICarenMFAsyncResult^ Param_Resultado,
-				[Out] Enumeracoes::CA_TIPO_OBJETO_CRIADO% Param_Out_TipoObjeto,
+				[Out] Enumeracoes::CA_MF_OBJECT_TYPE% Param_Out_TipoObjeto,
 				ICaren^ Param_Out_FonteMidia
 			);
 
@@ -3133,12 +3133,12 @@ namespace CarenRengine
 			/// (EndCreateObjectFromURL) - Conclui uma solicitação assíncrona para criar um objeto a partir de um URL.
 			/// </summary>
 			/// <param name="Param_Resultado">Ponteiro para a interface ICarenMFAsyncResult. Passar o mesmo ponteiro que recebeu de seu objeto de retorno de chamada no método Invoke.</param>
-			/// <param name="Param_Out_TipoObjeto">Recebe um membro da enumeração CA_TIPO_OBJETO_CRIADO, especificando o tipo de objeto que foi criado.</param>
+			/// <param name="Param_Out_TipoObjeto">Recebe um membro da enumeração CA_MF_OBJECT_TYPE, especificando o tipo de objeto que foi criado.</param>
 			/// <param name="Param_Out_FonteMidia">Recebe a interface para a fonte de mídia criada. O chamador deve liberar a interface. O usuário deve criar a interface antes de chamar este método.</param>
 			CarenResult ConcluirCriaçãoObjetoFromUrl
 			(
 				ICarenMFAsyncResult^ Param_Resultado,
-				[Out] Enumeracoes::CA_TIPO_OBJETO_CRIADO% Param_Out_TipoObjeto,
+				[Out] Enumeracoes::CA_MF_OBJECT_TYPE% Param_Out_TipoObjeto,
 				ICaren^ Param_Out_FonteMidia
 			);
 		};
@@ -4128,12 +4128,12 @@ namespace CarenRengine
 			/// <summary>
 			/// Delegate do evento OnRedirect.
 			/// </summary>
-			delegate void Delegate_OnRedirect(String^ Param_Url, Boolean Param_Cancelar);
+			delegate CarenResult Delegate_OnRedirect(String^ Param_Url, Boolean% Param_InOut_Cancelar);
 
 			/// <summary>
 			/// Delegate do evento OnSendingRequest.
 			/// </summary>
-			delegate void Delegate_OnSendingRequest(String^ Param_Url);
+			delegate CarenResult Delegate_OnSendingRequest(String^ Param_Url);
 
 
 
@@ -4239,7 +4239,7 @@ namespace CarenRengine
 			/// <param name="Param_Props">Ponteiro para a interface ICarenPropertyStore de uma loja de propriedades. O manipulador de fluxo de bytes pode usar esta loja de propriedades 
 			/// para configurar o objeto. Este parâmetro pode ser NULO.</param>
 			/// <param name="Param_Out_CookieCancelamento">Recebe um ponteiro IUnknown na interface ICaren ou o valor NULO. Se o valor não for NULO, você pode cancelar a operação assíncrona 
-			/// passando este ponteiro para o método ICarenMFByteStreamHandler::CancelarCriacaoObjeto. O chamador deve liberar a interface. Este parâmetro pode ser NULO.</param>
+			/// passando este ponteiro para o método ICarenMFByteStreamHandler::CancelObjectCreation. O chamador deve liberar a interface. Este parâmetro pode ser NULO.</param>
 			/// <param name="Param_Callback">Ponteiro para a interface ICarenMFAsyncCallback de um objeto de retorno de chamada. O chamador deve implementar esta interface.</param>
 			/// <param name="Param_ObjetoEstado">Um objeto de estado, definido pelo chamador. Este parâmetro pode ser NULO. Você pode usar este objeto para conter informações do estado.
 			/// O objeto é devolvido ao chamador quando o retorno de chamada é invocado.</param>
@@ -4256,19 +4256,19 @@ namespace CarenRengine
 			/// Cancela o pedido atual para criar uma fonte de mídia.
 			/// </summary>
 			/// <param name="Param_CookieCancelamento">Ponteiro para a interface ICaren que foi retornada no parâmetro (Param_Out_CookieCancelamento) do método 
-			/// ICarenMFByteStreamHandler::CriarObjetoAsync.</param>
+			/// ICarenMFByteStreamHandler::BeginCreateObject.</param>
 			CarenResult CancelObjectCreation(ICaren^ Param_CookieCancelamento);
 
 			/// <summary>
 			/// Completa um pedido assíncrono para criar uma fonte de mídia.
 			/// </summary>
 			/// <param name="Param_Resultado">Ponteiro para a interface ICarenMFAsyncResult. Passe no mesmo ponteiro que seu objeto de retorno de chamada recebeu no método Invocar.</param>
-			/// <param name="Param_Out_TipoObjeto">Recebe um membro da enumeração CA_TIPO_OBJETO_CRIADO, especificando o tipo de objeto que foi criado.</param>
+			/// <param name="Param_Out_TipoObjeto">Recebe um membro da enumeração CA_MF_OBJECT_TYPE, especificando o tipo de objeto que foi criado.</param>
 			/// <param name="Param_Ref_InterfaceObjeto">Recebe um ponteiro para a interface da fonte de mídia. O chamador deve criar a interface que vai receber o ponteiro.
 			/// O chamador deve liberar a interface quando não for mais utilizar.</param>
 			CarenResult EndCreateObject(
 				ICarenMFAsyncResult^ Param_Resultado,
-				[Out] CA_TIPO_OBJETO_CRIADO% Param_Out_TipoObjeto,
+				[Out] CA_MF_OBJECT_TYPE% Param_Out_TipoObjeto,
 				ICaren^% Param_Ref_InterfaceObjeto);
 			
 			/// <summary>
@@ -4341,7 +4341,7 @@ namespace CarenRengine
 		/// <summary>
 		/// (IMFNetProxyLocatorFactory) - Interface responsável por criar um objeto localizador proxy, que determina o proxy a ser usado.
 		/// A fonte de rede usa essa interface para criar o objeto localizador proxy. Os aplicativos podem fornecer sua própria implementação desta interface definindo a propriedade 
-		/// MFNETSOURCE_PROXYLOCATORFACTORY. sobre o resolvedor de fonte. Se o aplicativo não definir essa propriedade, a fonte da rede usará o localizador proxy padrão fornecido pela 
+		/// MFNETSOURCE_PROXYLOCATORFACTORY sobre o resolvedor de fonte. Se o aplicativo não definir essa propriedade, a fonte da rede usará o localizador proxy padrão fornecido pela 
 		/// Media Foundation.
 		/// </summary>
 		[CategoryAttribute("MF Interface")]
@@ -4357,21 +4357,18 @@ namespace CarenRengine
 			}
 
 
-			//Está classe serve de fabrica para o resolvedor de midia criar um proxy personalizado.
-			//IMFNetProxyLocatorFactory não tem um inicializaodr default, a biblioteca de Caren que cria uma implmenetação essa interface.
-
 			//Define os delegates
 
 			/// <summary>
 			/// Delegate do evento OnCreateProxyLocator.
 			/// </summary>
-			delegate void Delegate_OnCreateProxyLocator(String^ Param_Protocolo, ICarenMFNetProxyLocator^ Param_ProxyLocator);
+			delegate CarenResult Delegate_OnCreateProxyLocator(String^ Param_Protocolo, ICarenMFNetProxyLocator^% Param_Ref_ProxyLocator);
 
 
 			//Define os eventos
 
 			/// <summary>
-			/// Evento chamado quando a fonte de midia chama o método ICarenMFNetProxyLocatorFactory::CreateProxyLocator. Este evento é chamado para permitir o usuário configurar 
+			/// Evento chamado quando a fonte de midia chama o método nativo IMFNetProxyLocatorFactory::CreateProxyLocator. Este evento é chamado para permitir o usuário criar e configurar
 			/// o proxy locator.
 			/// </summary>
 			event Delegate_OnCreateProxyLocator^ OnCreateProxyLocator;
@@ -4420,7 +4417,7 @@ namespace CarenRengine
 		};
 
 		/// <summary>
-		/// (IMFLocalMFTRegistration ) - Interface responsável por registrar um Media Foundation Transforms(MFTs) no processo do chamador.
+		/// (IMFLocalMFTRegistration) - Interface responsável por registrar um Media Foundation Transforms(MFTs) no processo do chamador.
 		/// A Sessão de Mídia expõe essa interface como um serviço. Para obter um ponteiro para esta interface, chame o método ICarenMFGetService::ObterServico na Sessão de Mídia com 
 		/// o identificador de serviço MF_LOCAL_MFT_REGISTRATION_SERVICE.
 		/// </summary>
@@ -4449,8 +4446,8 @@ namespace CarenRengine
 		};
 
 		/// <summary>
-		/// (IMFMediaEngineSrcElements) - Interface responsável por fornecer ao Media Engine uma lista de recursos de mídia.
-		/// A interface ICarenMFMediaEngineSrcElements representa uma lista ordenada de recursos de mídia.
+		/// (IMFMediaEngineSrcElements) - Interface responsável por fornecer ao Media Engine uma lista de recursos de mídia. A interface ICarenMFMediaEngineSrcElements representa uma lista ordenada de 
+		/// recursos de mídia.
 		/// </summary>
 		[CategoryAttribute("MF Interface")]
 		[Guid("3563E87E-3F57-45B2-BA9F-E57DB688B173")]
@@ -4484,32 +4481,34 @@ namespace CarenRengine
 			/// Obtém o número de elementos de origem na lista.
 			/// </summary>
 			/// <param name="Param_Out_Quantidade">Recebe o numero de elementos presente na lista.</param>
-			CarenResult GetLength([Out] UInt32% Param_Out_Quantidade);
+			void GetLength([Out] UInt32% Param_Out_Quantidade);
 
 			/// <summary>
 			/// Obtém o tipo de mídia pretendido de um elemento na lista.
 			/// </summary>
-			/// <param name="Param_Index">O índice baseado em zero do elemento fonte. Para obter o número de elementos de origem, ligue para o ICarenMFMediaEngineSrcElements::ObterQuantidade.</param>
-			/// <param name="Param_Ref_Midia">Recebe uma string que contém uma sequência de consulta de mídia. Se nenhum tipo de mídia for definido, este parâmetro receberá o valor NULO.</param>
+			/// <param name="Param_Index">O índice baseado em zero do elemento fonte. Para obter o número de elementos de origem, ligue para o ICarenMFMediaEngineSrcElements::GetLength.</param>
+			/// <param name="Param_Out_Midia">Recebe uma string que contém uma sequência de consulta de mídia. Se nenhum tipo de mídia for definido, este parâmetro receberá o valor NULO.</param>
 			CarenResult GetMedia(
 				UInt32 Param_Index, 
-				String^% Param_Ref_Midia);
+				[Out] String^% Param_Out_Midia);
 
 			/// <summary>
 			/// Obtém o tipo MIME de um elemento na lista.
 			/// </summary>
-			/// <param name="Param_Index">O índice baseado em zero do elemento fonte. Para obter o número de elementos de origem, ligue para o ICarenMFMediaEngineSrcElements::ObterQuantidade.</param>
-			/// <param name="Param_Ref_MimeType">Recebe uma string que contém o MIME Type. Se nenhum tipo de MIME for definido, este parâmetro receberá o valor NULO.</param>
+			/// <param name="Param_Index">O índice baseado em zero do elemento fonte. Para obter o número de elementos de origem, ligue para o ICarenMFMediaEngineSrcElements::GetLength.</param>
+			/// <param name="Param_Out_MimeType">Recebe uma string que contém o MIME Type. Se nenhum tipo de MIME for definido, este parâmetro receberá o valor NULO.</param>
 			CarenResult GetType(
 				UInt32 Param_Index, 
-				String^% Param_Ref_MimeType);
+				[Out] String^% Param_Out_MimeType);
 
 			/// <summary>
 			/// Obtém a URL de um elemento na lista.
 			/// </summary>
-			/// <param name="Param_Index">>O índice baseado em zero do elemento fonte. Para obter o número de elementos de origem, ligue para o ICarenMFMediaEngineSrcElements::ObterQuantidade.</param>
-			/// <param name="Param_Ref_Url">Recebe uma string que contém a URL do elemento de origem. Se nenhuma URL for definida, este parâmetro receberá o valor NULO</param>
-			CarenResult GetURL(UInt32 Param_Index, String^% Param_Ref_Url);
+			/// <param name="Param_Index">O índice baseado em zero do elemento fonte. Para obter o número de elementos de origem, ligue para o ICarenMFMediaEngineSrcElements::GetLength.</param>
+			/// <param name="Param_Out_Url">Recebe uma string que contém a URL do elemento de origem. Se nenhuma URL for definida, este parâmetro receberá o valor NULO</param>
+			CarenResult GetURL(
+				UInt32 Param_Index, 
+				[Out] String^% Param_Out_Url);
 
 			/// <summary>
 			/// Remove todos os elementos de origem da lista.
@@ -4537,7 +4536,7 @@ namespace CarenRengine
 			//Métodos
 
 			/// <summary>
-			/// Fornece uma versão aprimorada do ICarenMFMediaEngineSrcElements::AdicionarElemento para adicionar o sistema-chave destinado a ser usado com conteúdo a um elemento.
+			/// Fornece uma versão aprimorada do  ICarenMFMediaEngineSrcElements::AddElement para adicionar o sistema-chave destinado a ser usado com conteúdo a um elemento.
 			/// </summary>
 			/// <param name="Param_Url">A URL do elemento de origem, ou NULO.</param>
 			/// <param name="Param_Tipo">O tipo MIME do elemento de origem, ou NULO.</param>
@@ -4553,10 +4552,10 @@ namespace CarenRengine
 			/// Obtém o sistema-chave para o índice de elemento de origem dado.
 			/// </summary>
 			/// <param name="Param_Index">O índice de elementos de origem.</param>
-			/// <param name="Param_Ref_MimeType">Recebe o tipo MIME do elemento fonte.</param>
+			/// <param name="Param_Out_MimeType">Recebe o tipo MIME do elemento fonte.</param>
 			CarenResult GetKeySystem(
 				UInt32 Param_Index, 
-				String^% Param_Ref_MimeType);
+				[Out] String^% Param_Out_MimeType);
 		};
 
 		/// <summary>
@@ -5761,7 +5760,7 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_Url">A URL do recurso de mídia.</param>
 			/// <param name="Param_FluxpBytes">Um ponteiro para a interface ICarenMFByteStream.</param>
-			/// <param name="Param_Tipo">Um membro da enumeração CA_TIPO_OBJETO_CRIADO que especifica qual tipo de objeto criar.</param>
+			/// <param name="Param_Tipo">Um membro da enumeração CA_MF_OBJECT_TYPE que especifica qual tipo de objeto criar.</param>
 			/// <param name="Param_Out_CookieCancelamento">Recebe um ponteiro para a interface IUnknown. Este ponteiro pode ser usado para cancelar a operação assíncrona, 
 			/// passando o ponteiro para o método ICarenMFMediaEngineExtension::CancelarCriacaoObjeto.</param>
 			/// <param name="Param_Callback">Um ponteiro para a interface ICarenMFAsyncCallback. Esta interface é usada para sinalizar a conclusão da operação assíncrona.</param>
@@ -5770,7 +5769,7 @@ namespace CarenRengine
 			CarenResult BeginCreateObject(
 				String^ Param_Url,
 				ICarenMFByteStream^ Param_FluxpBytes,
-				CA_TIPO_OBJETO_CRIADO Param_Tipo,
+				CA_MF_OBJECT_TYPE Param_Tipo,
 				[Out] ICaren^% Param_Out_CookieCancelamento,
 				ICarenMFAsyncCallback^ Param_Callback,
 				ICaren^ Param_ObjetoEstado);

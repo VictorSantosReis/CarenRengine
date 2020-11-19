@@ -88,7 +88,7 @@ public:
 	/// <param name="Param_GuidExtended">O Guid que extende o tipo para eventos personalizados. O valor pode ser NULO.</param>
 	/// <param name="Param_ValorAssociado">Uma CA_PropVariant que contém dados que devem ser anexados ao evento. O valor pode ser NULO.</param>
 	/// <param name="Param_Out_MidiaEvent">Recebe a interface que contém o evento criado.</param>
-	static CarenResult CriarInstancia(Int32 Param_HResultCode, CA_TIPO_MIDIA_EVENT Param_TipoEvento, String^ Param_GuidExtended, CA_PropVariant^ Param_ValorAssociado, [Out] ICarenMFMediaEvent^% Param_Out_MidiaEvent)
+	static CarenResult CriarInstancia(Int32 Param_HResultCode, CA_MediaEventType Param_TipoEvento, String^ Param_GuidExtended, CA_PropVariant^ Param_ValorAssociado, [Out] ICarenMFMediaEvent^% Param_Out_MidiaEvent)
 	{
 		//Variavel que vai retornar o resultado do método.
 		CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -260,7 +260,7 @@ public:
 	/// (GetType) - Recupera o tipo de evento. O tipo de evento indica o que aconteceu para acionar o evento. Também define o significado do valor do evento.
 	/// </summary>
 	/// <param name="Param_Out_TipoEvento">Recebe a enumeração que define o tipo do evento gerado.</param>
-	virtual CarenResult ObterTipo([Out] Enumeracoes::CA_TIPO_MIDIA_EVENT% Param_Out_TipoEvento);
+	virtual CarenResult ObterTipo([Out] Enumeracoes::CA_MediaEventType% Param_Out_TipoEvento);
 
 	/// <summary>
 	/// (GetExtendedType) - Recupera o tipo estendido do evento. Utilizado para da suporte a eventos personalizados.

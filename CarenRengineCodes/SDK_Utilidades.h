@@ -290,7 +290,7 @@ namespace CarenRengine
 				pin_ptr<TipoArrayGerenciado> PinToIndexZeroBuffer = &Param_BufferGerenciado[0];
 
 				//Converte o pinptr para um buffer do tipo de destino.
-				TipoArrayNativo* pBufferDestino = static_cast<TipoArrayNativo*>(PinToIndexZeroBuffer);
+				TipoArrayNativo* pBufferDestino = reinterpret_cast<TipoArrayNativo*>(PinToIndexZeroBuffer);
 
 				//Verifica se é valido
 				if (!ObjetoValido(pBufferDestino))
@@ -307,11 +307,11 @@ namespace CarenRengine
 				pin_ptr<TipoArrayGerenciado> PinToIndexZeroBuffer = &Param_BufferGerenciado[0];
 
 				//Converte o pinptr para o buffer de origem.
-				TipoArrayNativo* pBufferOrigem = static_cast<TipoArrayNativo*>(PinToIndexZeroBuffer);
+				TipoArrayNativo* pBufferOrigem = reinterpret_cast<TipoArrayNativo*>(PinToIndexZeroBuffer);
 
 				//Verifica se é valido
-				if (!ObjetoValido(pBufferDestino))
-					throw gcnew NullReferenceException("(CopiarBufferGerenciado_ToNativo) - Houve uma falha ao criar uma ligação para o buffer de destino gerenciado através do (pin_ptr).");
+				if (!ObjetoValido(pBufferOrigem))
+					throw gcnew NullReferenceException("(CopiarBufferGerenciado_ToNativo) - Houve uma falha ao criar uma ligação para o buffer de origem gerenciado através do (pin_ptr).");
 
 				//Copia os dados do nativo para o gerenciado.
 				std::copy(pBufferOrigem, (pBufferOrigem) + Param_TamanhoBuffer, Param_BufferDestino);
@@ -2249,7 +2249,7 @@ namespace CarenRengine
 				if (ObjetoValido(Param_Estrutura->pVideoMediaType))
 				{
 					//Cria a interface
-					EstruturaRetorno->pVideoMediaType = gcnew CarenMFAttributes();
+					EstruturaRetorno->pVideoMediaType = gcnew Caren();
 
 					//Define o ponteiro na interface
 					EstruturaRetorno->pVideoMediaType->AdicionarPonteiro(Param_Estrutura->pVideoMediaType);
@@ -2257,7 +2257,7 @@ namespace CarenRengine
 				if (ObjetoValido(Param_Estrutura->pAudioMediaType))
 				{
 					//Cria a interface
-					EstruturaRetorno->pAudioMediaType = gcnew CarenMFAttributes();
+					EstruturaRetorno->pAudioMediaType = gcnew Caren();
 
 					//Define o ponteiro na interface
 					EstruturaRetorno->pAudioMediaType->AdicionarPonteiro(Param_Estrutura->pAudioMediaType);
@@ -2269,7 +2269,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_MFNetCredentialManagerGetParam) para sua correspondencia não gerenciada(MFNetCredentialManagerGetParam).
-			MFNetCredentialManagerGetParam* ConverterMFNetCredentialManagerGetParamManaged_ToUnamaged(SDKBase::Estruturas::CA_MFNetCredentialManagerGetParam^ Param_Estrutura)
+			MFNetCredentialManagerGetParam* ConverterMFNetCredentialManagerGetParamManaged_ToUnamaged(CA_MFNetCredentialManagerGetParam^ Param_Estrutura)
 			{
 				//Variavel que vai ser retornada.
 				MFNetCredentialManagerGetParam* EstruturaRetorno = CriarEstrutura<MFNetCredentialManagerGetParam>();
@@ -2297,7 +2297,7 @@ namespace CarenRengine
 			CA_MFNetCredentialManagerGetParam^ ConverterMFNetCredentialManagerGetParamUnamaged_ToManaged(MFNetCredentialManagerGetParam* Param_Estrutura)
 			{
 				//Variavel que vai ser retornada.
-				CA_MFNetCredentialManagerGetParam^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_MFNetCredentialManagerGetParam();
+				CA_MFNetCredentialManagerGetParam^ EstruturaRetorno = gcnew CA_MFNetCredentialManagerGetParam();
 
 				//Define os valores
 				EstruturaRetorno->hrOp = static_cast<long>(Param_Estrutura->hrOp);
@@ -2319,6 +2319,149 @@ namespace CarenRengine
 				return EstruturaRetorno;
 			}
 
+
+			//Converte uma estrutura gerenciada(CA_MFT_REGISTER_TYPE_INFO) para sua correspondencia não gerenciada(MFT_REGISTER_TYPE_INFO).
+			MFT_REGISTER_TYPE_INFO* ConverterMFT_REGISTER_TYPE_INFOManaged_ToUnamaged(CA_MFT_REGISTER_TYPE_INFO^ Param_Estrutura)
+			{
+				//Variavel que vai ser retornada.
+				MFT_REGISTER_TYPE_INFO* EstruturaRetorno = CriarEstrutura<MFT_REGISTER_TYPE_INFO>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(EstruturaRetorno));
+
+				//Define os valores
+				EstruturaRetorno->guidMajorType = CreateGuidFromString(Param_Estrutura->guidMajorType);
+				EstruturaRetorno->guidSubtype = CreateGuidFromString(Param_Estrutura->guidSubtype);
+
+				//Retorna a estrutura.
+				return EstruturaRetorno;
+			}
+
+			//Converte uma estrutura não gerenciada(MFT_REGISTER_TYPE_INFO) para sua correspondencia gerenciada(CA_MFT_REGISTER_TYPE_INFO).
+			CA_MFT_REGISTER_TYPE_INFO^ ConverterMFT_REGISTER_TYPE_INFOUnamaged_ToManaged(MFT_REGISTER_TYPE_INFO* Param_Estrutura)
+			{
+				//Variavel que vai ser retornada.
+				CA_MFT_REGISTER_TYPE_INFO^ EstruturaRetorno = gcnew CA_MFT_REGISTER_TYPE_INFO();
+
+				//Define os valores
+				EstruturaRetorno->guidMajorType = ConverterGuidToString(Param_Estrutura->guidMajorType);
+				EstruturaRetorno->guidSubtype = ConverterGuidToString(Param_Estrutura->guidSubtype);
+
+				//Retorna a estrutura.
+				return EstruturaRetorno;
+			}
+
+
+			//Converte uma estrutura gerenciada(CA_MFT_REGISTRATION_INFO) para sua correspondencia não gerenciada(MFT_REGISTRATION_INFO).
+			MFT_REGISTRATION_INFO* ConverterMFT_REGISTRATION_INFOManaged_ToUnamaged(CA_MFT_REGISTRATION_INFO^ Param_Estrutura)
+			{
+				//Variavel que vai ser retornada.
+				MFT_REGISTRATION_INFO* EstruturaRetorno = CriarEstrutura<MFT_REGISTRATION_INFO>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(EstruturaRetorno));
+
+				//Variaveis.
+				MFT_REGISTER_TYPE_INFO* vi_MatrizInTypes = Nulo;
+				MFT_REGISTER_TYPE_INFO* vi_MatrizOutTypes = Nulo;
+
+				//Define os valores
+				EstruturaRetorno->clsid = CreateGuidFromString(Param_Estrutura->clsid);
+				EstruturaRetorno->guidCategory = CreateGuidFromString(Param_Estrutura->guidCategory);
+				EstruturaRetorno->uiFlags = static_cast<UINT32>(Param_Estrutura->uiFlags);
+				EstruturaRetorno->pszName = ConverterStringToWCHAR(Param_Estrutura->pszName);
+				EstruturaRetorno->cInTypes = static_cast<DWORD>(Param_Estrutura->cInTypes);
+				EstruturaRetorno->cOutTypes = static_cast<DWORD>(Param_Estrutura->cOutTypes);
+
+				//Verifica se foi forneceida as matrizes. Se sim, vai criar e definir os dados.
+				if (ObjetoGerenciadoValido(Param_Estrutura->pInTypes))
+				{
+					//Cria a matriz que vai conter as informações do tipo de entrada.
+					vi_MatrizInTypes = CriarMatrizEstruturas<MFT_REGISTER_TYPE_INFO>(Param_Estrutura->cInTypes);
+
+					//Abre um for para preeencher as matriz com os dados
+					for (UINT32 i = 0; i < Param_Estrutura->cInTypes; i++)
+					{
+						//Inicializa a estrutura no index.
+						vi_MatrizInTypes[i] = {};
+
+						//Converte as string no index para um GUID na matriz nativa.
+						vi_MatrizInTypes[i].guidMajorType = CreateGuidFromString(Param_Estrutura->pInTypes[i]->guidMajorType);
+						vi_MatrizInTypes[i].guidSubtype = CreateGuidFromString(Param_Estrutura->pInTypes[i]->guidSubtype);
+					}
+				}
+				if (ObjetoGerenciadoValido(Param_Estrutura->pOutTypes))
+				{
+					//Cria a matriz que vai conter as informações do tipo de entrada.
+					vi_MatrizOutTypes = CriarMatrizEstruturas<MFT_REGISTER_TYPE_INFO>(Param_Estrutura->cOutTypes);
+
+					//Abre um for para preeencher as matriz com os dados
+					for (UINT32 i = 0; i < Param_Estrutura->cOutTypes; i++)
+					{
+						//Inicializa a estrutura no index.
+						vi_MatrizOutTypes[i] = {};
+
+						//Converte as string no index para um GUID na matriz nativa.
+						vi_MatrizOutTypes[i].guidMajorType = CreateGuidFromString(Param_Estrutura->pOutTypes[i]->guidMajorType);
+						vi_MatrizOutTypes[i].guidSubtype = CreateGuidFromString(Param_Estrutura->pOutTypes[i]->guidSubtype);
+					}
+				}
+				
+				//Retorna a estrutura.
+				return EstruturaRetorno;
+			}
+
+			//Converte uma estrutura não gerenciada(MFT_REGISTRATION_INFO) para sua correspondencia gerenciada(CA_MFT_REGISTRATION_INFO).
+			CA_MFT_REGISTRATION_INFO^ ConverterMFT_REGISTRATION_INFOUnamaged_ToManaged(MFT_REGISTRATION_INFO* Param_Estrutura)
+			{
+				//Variavel que vai ser retornada.
+				CA_MFT_REGISTRATION_INFO^ EstruturaRetorno = gcnew CA_MFT_REGISTRATION_INFO();
+
+				//Define os valores
+				EstruturaRetorno->clsid = ConverterGuidToString(Param_Estrutura->clsid);
+				EstruturaRetorno->guidCategory = ConverterGuidToString(Param_Estrutura->guidCategory);
+				EstruturaRetorno->uiFlags = static_cast<CA_MFT_ENUM_FLAG>(Param_Estrutura->uiFlags);
+				EstruturaRetorno->pszName = gcnew String(Param_Estrutura->pszName);
+				EstruturaRetorno->cInTypes = static_cast<UInt32>(Param_Estrutura->cInTypes);
+				EstruturaRetorno->cOutTypes = static_cast<UInt32>(Param_Estrutura->cOutTypes);
+
+				//Verifica se foi forneceida as matrizes. Se sim, vai criar e definir os dados.
+				if (ObjetoGerenciadoValido(Param_Estrutura->pInTypes))
+				{
+					//Cria a matriz que vai conter as informações do tipo de entrada.
+					EstruturaRetorno->pInTypes = gcnew cli::array<CA_MFT_REGISTER_TYPE_INFO^>(EstruturaRetorno->cInTypes);
+
+					//Abre um for para preeencher as matriz com os dados
+					for (UINT32 i = 0; i < EstruturaRetorno->cInTypes; i++)
+					{
+						//Inicializa a estrutura no index.
+						EstruturaRetorno->pInTypes[i] = gcnew CA_MFT_REGISTER_TYPE_INFO();
+
+						//Converte as string no index para um GUID na matriz nativa.
+						EstruturaRetorno->pInTypes[i]->guidMajorType = ConverterGuidToString(Param_Estrutura->pInTypes[i].guidMajorType);
+						EstruturaRetorno->pInTypes[i]->guidSubtype = ConverterGuidToString(Param_Estrutura->pInTypes[i].guidSubtype);
+					}
+				}
+				if (ObjetoGerenciadoValido(Param_Estrutura->pOutTypes))
+				{
+					//Cria a matriz que vai conter as informações do tipo de entrada.
+					EstruturaRetorno->pOutTypes = gcnew cli::array<CA_MFT_REGISTER_TYPE_INFO^>(EstruturaRetorno->cOutTypes);
+
+					//Abre um for para preeencher as matriz com os dados
+					for (UINT32 i = 0; i < EstruturaRetorno->cOutTypes; i++)
+					{
+						//Inicializa a estrutura no index.
+						EstruturaRetorno->pOutTypes[i] = gcnew CA_MFT_REGISTER_TYPE_INFO();
+
+						//Converte as string no index para um GUID na matriz nativa.
+						EstruturaRetorno->pOutTypes[i]->guidMajorType = ConverterGuidToString(Param_Estrutura->pOutTypes[i].guidMajorType);
+						EstruturaRetorno->pOutTypes[i]->guidSubtype = ConverterGuidToString(Param_Estrutura->pOutTypes[i].guidSubtype);
+					}
+				}
+
+				//Retorna a estrutura.
+				return EstruturaRetorno;
+			}
 
 
 

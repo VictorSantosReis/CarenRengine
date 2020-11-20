@@ -100,8 +100,8 @@ Fique a vontade mesmo assim para clicar em **Criar um novo erro** e eu estarei a
 
 
 # Codificação
-Eu não possuo um conhecimento necessário para criar uma grande codificação, sou programador apenas como **Hobby**, curto bastante programar em meu tempo livre.
-Com o tempo o código pode ser melhorado, quando tiver que focar apenas no desempenho e na limpeza, mais sinta-se a vontade para expor uma melhor maneira de criar a codificação
+Sou programador apenas como **Hobby**, curto bastante programar em meu tempo livre.
+Com o tempo o código será melhorado quando tiver que focar apenas no desempenho e na limpeza, mais sinta-se a vontade para expor uma melhor maneira de criar a codificação
 de alguma parte do projeto.
 
 

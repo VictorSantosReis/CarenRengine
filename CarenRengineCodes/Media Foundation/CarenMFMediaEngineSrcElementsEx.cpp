@@ -411,7 +411,7 @@ void CarenMFMediaEngineSrcElementsEx::Finalizar()
 
 
 /// <summary>
-/// Fornece uma versão aprimorada do  ICarenMFMediaEngineSrcElements::AddElement para adicionar o sistema-chave destinado a ser usado com conteúdo a um elemento.
+/// Fornece uma versão aprimorada do ICarenMFMediaEngineSrcElements::AddElement para adicionar o sistema-chave destinado a ser usado com conteúdo a um elemento.
 /// </summary>
 /// <param name="Param_Url">A URL do elemento de origem, ou NULO.</param>
 /// <param name="Param_Tipo">O tipo MIME do elemento de origem, ou NULO.</param>

@@ -825,7 +825,7 @@ CarenResult CarenD2D1EffectContext1::CreateColorContextFromFilename(
 
 Done:;
 	//Libera a memória para a string
-	DeletarTextoAlocadoSafe(&pUrlArquivo);
+	DeletarStringAllocatedSafe(&pUrlArquivo);
 
 	//Retorna o resultado.
 	return Resultado;

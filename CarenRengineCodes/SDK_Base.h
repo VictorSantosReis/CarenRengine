@@ -6008,7 +6008,7 @@ namespace CarenRengine
 				/// <summary>
 				/// Os tempos de relógio retornados pelo método (ICarenMFClock.ObterHoraCorrelacionada) estão em unidades de 100 nanoseconds. Se este sinalizador estiver 
 				/// ausente, chame o método (ICarenMFClock.ObterPropriedades) para obter a freqüência de clock. A freqüência de Clock é fornecida na (RL_FREQUENCIA_RELOGIO)
-				/// membro da estrutura CA_RELOGIO_PROPRIEDADES.
+				/// membro da estrutura CA_MFCLOCK_PROPERTIES.
 				/// </summary>
 				CH_CLOCK_FREQUENCIA_10MHZ = 0x2,
 				/// <summary>
@@ -11226,7 +11226,7 @@ MEReservedMax = 10000
 			};
 			
 			/// <summary>
-			/// (MF_MEDIA_ENGINE_CREATEFLAGS)(FALTA DOCUMENTAR) - Enumera bandeiras para o método ICarenMFMediaEngineClassFactory::CriarInstancia.
+			/// (MF_MEDIA_ENGINE_CREATEFLAGS)(FALTA DOCUMENTAR) - Enumera bandeiras para o método ICarenMFMediaEngineClassFactory::CreateInstance.
 			/// </summary>
 			[FlagsAttribute]
 			public enum class CA_MF_MEDIA_ENGINE_CREATEFLAGS
@@ -17731,7 +17731,7 @@ MEReservedMax = 10000
 				/// <summary>
 				/// O buffer com os dados.
 				/// </summary>
-				cli::array<Byte>^ BufferDados;
+				ICarenBuffer^ BufferDados;
 			};
 
 			/// <summary>
@@ -17844,20 +17844,20 @@ MEReservedMax = 10000
 				double date;
 				String^ bstrVal;
 				ICaren^ punkVal;
-				IDispatch* pdispVal;
-				SAFEARRAY* parray;
-				BYTE* pbVal;
-				SHORT* piVal;
-				LONG* plVal;
-				LONGLONG* pllVal;
-				FLOAT* pfltVal;
-				DOUBLE* pdblVal;
-				VARIANT_BOOL* pboolVal;
-				VARIANT_BOOL* __OBSOLETE__VARIANT_PBOOL;
-				SCODE* pscode;
+				ICaren^ pdispVal;
+				ICaren^ parray;
+				ICarenBuffer^ pbVal;
+				cli::array<short>^ piVal;
+				cli::array<long>^ plVal;
+				cli::array<long long>^ pllVal;
+				cli::array<float>^ pfltVal;
+				cli::array<double>^ pdblVal;
+				cli::array<short>^ pboolVal;
+				cli::array<short>^ __OBSOLETE__VARIANT_PBOOL;
+				cli::array<long>^ pscode;
 				CA_CY^ pcyVal;
-				DATE* pdate;
-				BSTR* pbstrVal;
+				cli::array<double>^ pdate;
+				String^ pbstrVal;
 				ICaren^ ppunkVal;
 				ICaren^ ppdispVal;
 				ICaren^ pparray;
@@ -17870,21 +17870,21 @@ MEReservedMax = 10000
 				Int32 intVal;
 				UInt32 uintVal;
 				DECIMAL* pdecVal;
-				CHAR* pcVal;
-				USHORT* puiVal;
-				ULONG* pulVal;
-				ULONGLONG* pullVal;
-				INT* pintVal;
-				UINT* puintVal;
+				cli::array<char>^ pcVal;
+				cli::array<unsigned short>^ puiVal;
+				cli::array<unsigned long>^ pulVal;
+				cli::array<unsigned long long>^ pullVal;
+				cli::array<int>^ pintVal;
+				cli::array<unsigned int>^ puintVal;
 
 				ICaren^ pvRecord;
 				ICaren^ pRecInfo;
 			};
 
 			/// <summary>
-			/// Contém as estátisticas sobre o desempenho do do Gravador de Coletor.
+			/// (MF_SINK_WRITER_STATISTICS) - Contém as estátisticas sobre o desempenho do do Gravador de Coletor.
 			/// </summary>
-			public ref struct CA_MIDIA_SINK_WRITER_ESTATISTICAS
+			public ref struct CA_MF_SINK_WRITER_STATISTICS
 			{
 				/// <summary>
 				/// (cb) O dimensionar da estrutura, em bytes. o valor da estrutura na memória não gerenciada.
@@ -17976,9 +17976,9 @@ MEReservedMax = 10000
 			};
 
 			/// <summary>
-			/// Contém as propriedades de um Relógio.
+			/// (MFCLOCK_PROPERTIES) - Contém as propriedades de um Relógio.
 			/// </summary>
-			public ref struct CA_RELOGIO_PROPRIEDADES
+			public ref struct CA_MFCLOCK_PROPERTIES
 			{
 				/// <summary>
 				/// O intervalo no qual o relógio correlaciona seu tempo de clock com a hora do sistema, em unidades de 100-nanosecond. 
@@ -18026,9 +18026,9 @@ MEReservedMax = 10000
 			};
 
 			/// <summary>
-			/// Estrtura que deriva da (BITMAPINFOHEADER).
+			/// (BITMAPINFOHEADER) - A estrtura contém informações sobre as dimensões e o formato de cores de um bitmap (DIB) independente do dispositivo.
 			/// </summary>
-			public ref struct CA_BITMAP_INFO_HEADER
+			public ref struct CA_BITMAPINFOHEADER
 			{
 				/// <summary>
 				/// (biSize) - O número de bytes requeridos pela estrutura.
@@ -18123,33 +18123,7 @@ MEReservedMax = 10000
 			};
 
 			/// <summary>
-			/// Obtém os retângulos de origem e destino para o vídeo.
-			/// </summary>
-			public ref struct CA_Retangulo
-			{
-				/// <summary>
-				/// A coordenada X do canto (Superior Esquerdo) do retângulo.
-				///</summary>
-				Int32 Esquerda;
-
-				/// <summary>
-				/// A coordenada X do canto (Inferior Direito) do retângulo.
-				///</summary>
-				Int32 Direita;
-
-				/// <summary>
-				/// A coordenada Y do canto (Superior Esquerdo) do retângulo.
-				///</summary>
-				Int32 Topo;
-
-				/// <summary>
-				/// A coordenada Y do canto (Inferior Direito) do retângulo.
-				///</summary>
-				Int32 Inferior;
-			};
-
-			/// <summary>
-			/// Define um retângulo normalizado, que é usado para especificar subretângulos em um retângulo de vídeo. Quando um retângulo N 
+			/// (MFVideoNormalizedRect) - Define um retângulo normalizado, que é usado para especificar subretângulos em um retângulo de vídeo. Quando um retângulo N 
 			/// é normalizado em relação a algum outro retângulo R, isso significa o seguinte:
 			/// 1) A coordenada (0,0, 0,0) em N é mapeada para o canto superior esquerdo de R.
 			/// 2) A coordenada (1,0, 1,0) em N é mapeada para o canto inferior direito de R.
@@ -18157,27 +18131,27 @@ MEReservedMax = 10000
 			/// pode ser usado para especificar uma região dentro de um retângulo de vídeo sem saber a resolução ou até mesmo a taxa de proporção do vídeo
 			///  Por exemplo, o quadrante superior esquerdo é definido como {0,0, 0,0, 0,5, 0,5}.
 			/// </summary>
-			public ref struct CA_Retangulo_Normalizado
+			public ref struct CA_MFVideoNormalizedRect
 			{
 				/// <summary>
 				/// A coordenada X do canto (Superior Esquerdo) do retângulo.
 				///</summary>
-				float Esquerda;
+				float left;
 
 				/// <summary>
 				/// A coordenada X do canto (Inferior Direito) do retângulo.
 				///</summary>
-				float Direita;
+				float right;
 
 				/// <summary>
 				/// A coordenada Y do canto (Superior Esquerdo) do retângulo.
 				///</summary>
-				float Topo;
+				float top;
 
 				/// <summary>
 				/// A coordenada Y do canto (Inferior Direito) do retângulo.
 				///</summary>
-				float Inferior;
+				float bottom;
 			};
 
 			/// <summary>
@@ -19515,7 +19489,7 @@ MEReservedMax = 10000
 			/// <summary>
 			/// (WAVEFORMATEX)(FALTA DOCUMENTAR) - A estrutura define o formato de dados de áudio de forma de onda. Somente as informações de formato comuns a todos os formatos de dados de forma de onda-áudio estão 
 			/// incluídas nessa estrutura. Para formatos que exigem informações adicionais, essa estrutura é incluída como o primeiro membro em outra estrutura, juntamente com as informações adicionais.
-			/// Os formatos que oferecem suporte a mais de dois canais ou tamanhos de amostra de mais de 16 bits podem ser descritos em uma estrutura CA_WAVEFORMATEXEXTENSIBLE , que inclui a estrutura CA_WAVEFORMATEX.
+			/// Os formatos que oferecem suporte a mais de dois canais ou tamanhos de amostra de mais de 16 bits podem ser descritos em uma estrutura CA_WAVEFORMATEXEXTENSIBLE, que inclui a estrutura CA_WAVEFORMATEX.
 			/// </summary>
 			public ref struct CA_WAVEFORMATEX
 			{

@@ -466,10 +466,10 @@ String^ Param_KeySystem)
 
 Done:;
 	//Libera a memória utilizada pelas strings.
-	DeletarTextoAlocadoSafe(&vi_pUrl);
-	DeletarTextoAlocadoSafe(&vi_pTipo);
-	DeletarTextoAlocadoSafe(&vi_pMidia);
-	DeletarTextoAlocadoSafe(&vi_pKeySystem);
+	DeletarStringAllocatedSafe(&vi_pUrl);
+	DeletarStringAllocatedSafe(&vi_pTipo);
+	DeletarStringAllocatedSafe(&vi_pMidia);
+	DeletarStringAllocatedSafe(&vi_pKeySystem);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -550,17 +550,17 @@ CarenResult CarenMFMediaEngineSrcElementsEx::AddElement(
 
 	//Variaveis a serem utilizadas.
 	Utilidades Util;
-	PWSTR vi_pUrl = Nulo;
-	PWSTR vi_pTipo = Nulo;
-	PWSTR vi_pMidia = Nulo;
+	BSTR vi_pUrl = Nulo;
+	BSTR vi_pTipo = Nulo;
+	BSTR vi_pMidia = Nulo;
 
 	//Converte as strings se tiverem sido informadas
 	if (ObjetoGerenciadoValido(Param_Url))
-		vi_pUrl = Util.ConverterStringToWCHAR(Param_Url);
+		vi_pUrl = Util.ConverterStringToBSTR(Param_Url);
 	if (ObjetoGerenciadoValido(Param_Tipo))
-		vi_pTipo = Util.ConverterStringToWCHAR(Param_Tipo);
+		vi_pTipo = Util.ConverterStringToBSTR(Param_Tipo);
 	if (ObjetoGerenciadoValido(Param_Midia))
-		vi_pMidia = Util.ConverterStringToWCHAR(Param_Midia);
+		vi_pMidia = Util.ConverterStringToBSTR(Param_Midia);
 
 	//Chama o método para realizar a operação.
 	Hr = PonteiroTrabalho->AddElement(vi_pUrl, vi_pTipo, vi_pMidia);
@@ -582,9 +582,9 @@ CarenResult CarenMFMediaEngineSrcElementsEx::AddElement(
 
 Done:;
 	//Libera a memória utilizada pelas strings.
-	DeletarTextoAlocadoSafe(&vi_pUrl);
-	DeletarTextoAlocadoSafe(&vi_pTipo);
-	DeletarTextoAlocadoSafe(&vi_pMidia);
+	DeletarStringBSTRSafe(&vi_pUrl);
+	DeletarStringBSTRSafe(&vi_pTipo);
+	DeletarStringBSTRSafe(&vi_pMidia);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -616,7 +616,7 @@ CarenResult CarenMFMediaEngineSrcElementsEx::GetMedia(
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	PWSTR vi_pOutMedia = Nulo;
+	BSTR vi_pOutMedia = Nulo;
 
 	//Chama o método para realizar a operação.
 	Hr = PonteiroTrabalho->GetMedia(static_cast<DWORD>(Param_Index), &vi_pOutMedia);
@@ -641,9 +641,8 @@ CarenResult CarenMFMediaEngineSrcElementsEx::GetMedia(
 		Param_Out_Midia = gcnew String(vi_pOutMedia);
 
 Done:;
-	//Libera a memória utilizada pela string
-	if (ObjetoValido(vi_pOutMedia))
-		SysFreeString(vi_pOutMedia);
+	//Libera a memória utilizada pela string BSTR
+	DeletarStringBSTRSafe(&vi_pOutMedia);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -665,7 +664,7 @@ CarenResult CarenMFMediaEngineSrcElementsEx::GetType(
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	PWSTR vi_pOutMimeType = Nulo;
+	BSTR vi_pOutMimeType = Nulo;
 
 	//Chama o método para realizar a operação.
 	Hr = PonteiroTrabalho->GetType(static_cast<DWORD>(Param_Index), &vi_pOutMimeType);
@@ -690,9 +689,8 @@ CarenResult CarenMFMediaEngineSrcElementsEx::GetType(
 		Param_Out_MimeType = gcnew String(vi_pOutMimeType);
 
 Done:;
-	//Libera a memória utilizada pela string
-	if (ObjetoValido(vi_pOutMimeType))
-		SysFreeString(vi_pOutMimeType);
+	//Libera a memória utilizada pela string BSTR
+	DeletarStringBSTRSafe(&vi_pOutMimeType);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -714,7 +712,7 @@ CarenResult CarenMFMediaEngineSrcElementsEx::GetURL(
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	PWSTR vi_pOutUrl = Nulo;
+	BSTR vi_pOutUrl = Nulo;
 
 	//Chama o método para realizar a operação.
 	Hr = PonteiroTrabalho->GetURL(static_cast<DWORD>(Param_Index), &vi_pOutUrl);
@@ -739,9 +737,8 @@ CarenResult CarenMFMediaEngineSrcElementsEx::GetURL(
 		Param_Out_Url = gcnew String(vi_pOutUrl);
 
 Done:;
-	//Libera a memória utilizada pela string
-	if (ObjetoValido(vi_pOutUrl))
-		SysFreeString(vi_pOutUrl);
+	//Libera a memória utilizada pela string BSTR
+	DeletarStringBSTRSafe(&vi_pOutUrl);
 
 	//Retorna o resultado.
 	return Resultado;

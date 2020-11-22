@@ -432,7 +432,7 @@ CarenResult CarenMMDevice::AtivarObjeto(String^ Param_GuidInterface, Enumeracoes
 	GUID GuidInterface = GUID_NULL;
 	DWORD clsctxvalue = (DWORD)Param_ContextoEx;
 	PROPVARIANT pPropVar = { 0 };
-	PropVariantManager PropVarManager;
+	
 	Utilidades Util;
 	
 	//Cria o guid da interface solicitada.
@@ -445,7 +445,7 @@ CarenResult CarenMMDevice::AtivarObjeto(String^ Param_GuidInterface, Enumeracoes
 		PropVariantInit(&pPropVar);
 
 		//Chama o método que vai converter a estrutura gerenciada em um ponteiro para a PropertyStore.
-		bool CreatePropVar = PropVarManager.ConvertPropVariantManagedToUnamaged(Param_ParmetrosActive, pPropVar);
+		bool CreatePropVar = Util.ConvertPropVariantManagedToUnamaged(Param_ParmetrosActive, pPropVar);
 
 		//Verifica se não houve erro ao preencher os dados da propvariant.
 		if(!CreatePropVar)

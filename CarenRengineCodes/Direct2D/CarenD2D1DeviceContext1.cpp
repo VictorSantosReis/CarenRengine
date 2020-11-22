@@ -1124,7 +1124,7 @@ CarenResult CarenD2D1DeviceContext1::CreateColorContextFromFilename(
 
 Done:;
 	//Libera a memória para a string
-	DeletarTextoAlocadoSafe(&pUrlArquivo);
+	DeletarStringAllocatedSafe(&pUrlArquivo);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -4625,7 +4625,7 @@ CarenResult CarenD2D1DeviceContext1::DrawText(
 
 Done:;
 	//Libera a memória para os dados.
-	DeletarTextoAlocadoSafe(&pTexto);
+	DeletarStringAllocatedSafe(&pTexto);
 	DeletarEstruturaSafe(&pLayoutRectF);
 
 	//Retorna o resultado.

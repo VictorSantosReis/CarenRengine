@@ -752,7 +752,7 @@ CarenResult CarenMFMediaStream::InserirEventoFila(Enumeracoes::CA_MediaEventType
 
 	//Variaveis utilizadas pelo método
 	Utilidades Util;
-	PropVariantManager PropManager;
+	
 	MediaEventType MTypeEvento = static_cast<MediaEventType>(Param_TipoEvento);
 	PROPVARIANT PropVar;
 	bool PropVarConverted = false;
@@ -773,7 +773,7 @@ CarenResult CarenMFMediaStream::InserirEventoFila(Enumeracoes::CA_MediaEventType
 		PropVariantInit(&PropVar);
 
 		//Converte os dados da propvariant gerenciada para a não gerenciada.
-		PropVarConverted = PropManager.ConvertPropVariantManagedToUnamaged(Param_Dados, PropVar);
+		PropVarConverted = Util.ConvertPropVariantManagedToUnamaged(Param_Dados, PropVar);
 
 		//Verifica o resultado
 		if (!PropVarConverted)

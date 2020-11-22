@@ -153,6 +153,19 @@ namespace CarenRengine
 				return DadosConvertidos;
 			}
 
+			//Converte uma String gerenciada para BSTR. Libere a string utilizando o método SysFreeString.
+			BSTR ConverterStringToBSTR(String^ Param_Valor)
+			{
+				//Variavel que vai retornar o resultado.
+				BSTR vi_BstrString = Nulo;
+
+				//Converte a string para BSTR.
+				vi_BstrString = reinterpret_cast<BSTR>(Marshal::StringToBSTR(Param_Valor).ToPointer());
+
+				//Retorna o resultado.
+				return vi_BstrString;
+			}
+
 			//Cria um Guid a parti de uma determinada String.
 			_GUID CreateGuidFromString(String^ Param_DadosGuid)
 			{
@@ -331,7 +344,7 @@ namespace CarenRengine
 			}
 
 			//Converte uma PropVariant Gerenciada para uma não gerenciada. O usuário é responsável por iniciar a PropVariant
-			bool ConvertPropVariantManagedToUnamaged(SDKBase::Estruturas::CA_PropVariant^ Param_PropVariantManaged, PROPVARIANT& Param_PropVariant)
+			bool ConvertPropVariantManagedToUnamaged(CA_PropVariant^ Param_PropVariantManaged, PROPVARIANT& Param_PropVariant)
 			{
 				//Variavel que vai retornar o resultado.
 				bool EstruturaRetorno = false;
@@ -341,6 +354,7 @@ namespace CarenRengine
 				BLOB BlobData = {};
 				IUnknown* pInterfaceDesconhecida = NULL;
 				char* StringData = NULL;
+				GenPointer vi_pBufferBlob = DefaultGenPointer;
 				CarenResult EstruturaRetornoCode = CarenResult(ResultCode::ER_FAIL, false);
 
 				//Abre um switch para definir na PropVariant o valor adicional.
@@ -518,10 +532,17 @@ namespace CarenRengine
 					BlobData.cbSize = Param_PropVariantManaged->Var_Blob->SizeData;
 
 					//Cria o array que vai conter os dados
-					BlobData.pBlobData = new BYTE[BlobData.cbSize];
+					BlobData.pBlobData = CriarMatrizUnidimensional<BYTE>(static_cast<DWORD>(Param_PropVariantManaged->Var_Blob->SizeData));
+			
+					//Verifica se o buffer é valido
+					if (!ObjetoGerenciadoValido(Param_PropVariantManaged->Var_Blob->BufferDados))
+						throw gcnew NullReferenceException("O membro (BufferDados) em (Var_Blob) na PropVariant deve ser valido e conter dados.");
 
-					//Copia os dados para o buffer não gerenciado.
-					Marshal::Copy(Param_PropVariantManaged->Var_Blob->BufferDados, 0, IntPtr(BlobData.pBlobData), BlobData.cbSize);
+					//Obtém o ponteiro para os dados.
+					Param_PropVariantManaged->Var_Blob->BufferDados->ObterPonteiroInterno(vi_pBufferBlob);
+				
+					//Copia os dados para o buffer da estrutura do blob.
+					std::copy(ConverterIntPtrTo<PBYTE>(vi_pBufferBlob), BlobData.pBlobData + BlobData.cbSize, BlobData.pBlobData);
 
 					//Define o valor da PropVariant.
 					Param_PropVariant.blob = BlobData;
@@ -865,10 +886,10 @@ namespace CarenRengine
 					BlobBuffer->SizeData = Param_PropVariant.blob.cbSize;
 
 					//Cria o array que vai conter o buffer.
-					BlobBuffer->BufferDados = gcnew cli::array<Byte>(BlobBuffer->SizeData);
+					BlobBuffer->BufferDados = gcnew CarenBuffer();
 
 					//Copia os dados para o buffer
-					Marshal::Copy(IntPtr((void*)Param_PropVariant.blob.pBlobData), BlobBuffer->BufferDados, 0, BlobBuffer->SizeData);
+					BlobBuffer->BufferDados->CriarBuffer(IntPtr(Param_PropVariant.blob.pBlobData), true, BlobBuffer->SizeData, BlobBuffer->SizeData);
 					break;
 				case VT_STREAM:
 					break;
@@ -990,7 +1011,7 @@ namespace CarenRengine
 
 			//Converte uma estrutura gerenciada(CA_DXGI_RGBA) para um ponteiro que contém um array dos 4 componentes da cor RGBA.
 			//Chame um (delete[]) quando não precisar mais do ponteiro.
-			FLOAT* Converter_DXGIRGBATo_FloatColor(SDKBase::Estruturas::CA_DXGI_RGBA^ Param_RGBA)
+			FLOAT* Converter_DXGIRGBATo_FloatColor(CA_DXGI_RGBA^ Param_RGBA)
 			{
 				//Variavel que vai retornar os dados.
 				FLOAT* pRGBAColor = new FLOAT[4];
@@ -1006,10 +1027,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura gerenciada(CA_DXGI_RGBA) para um ponteiro que contém um array dos 4 componentes da cor RGBA.
-			SDKBase::Estruturas::CA_DXGI_RGBA^ Converter_FloatColorTo_DXGIRGBA(FLOAT* pRGBAColor)
+			CA_DXGI_RGBA^ Converter_FloatColorTo_DXGIRGBA(FLOAT* pRGBAColor)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_DXGI_RGBA^ ColorRGBA = gcnew SDKBase::Estruturas::CA_DXGI_RGBA();
+				CA_DXGI_RGBA^ ColorRGBA = gcnew CA_DXGI_RGBA();
 
 				//Preenche os dados da estrutura.
 				ColorRGBA->Vermelho = pRGBAColor[0]; //R
@@ -1023,10 +1044,10 @@ namespace CarenRengine
 
 
 			//Converte a estrutura não gerenciada(RECT) para sua correspondencia gerenciada(CA_RECT).
-			SDKBase::Estruturas::CA_RECT^ ConverterRECTUnmanagedToManaged(PRECT Param_Estrutura)
+			CA_RECT^ ConverterRECTUnmanagedToManaged(PRECT Param_Estrutura)
 			{
 				//Cria a estrutura a ser retornada.
-				SDKBase::Estruturas::CA_RECT^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_RECT();
+				CA_RECT^ EstruturaRetorno = gcnew CA_RECT();
 
 				//Define os dados da estrutura.
 				EstruturaRetorno->Direita = Param_Estrutura->right;
@@ -1039,7 +1060,7 @@ namespace CarenRengine
 			}
 
 			//Covnerte uma estrutura gerenciada(CA_RECT) para sua correspondencia não gerenciada(RECT).
-			PRECT ConverterRECTManagedToUnmanaged(SDKBase::Estruturas::CA_RECT^ Param_Estrutura)
+			PRECT ConverterRECTManagedToUnmanaged(CA_RECT^ Param_Estrutura)
 			{
 				//Estrutura que será retornada ao usuário.
 				PRECT EstruturaRetorno = CriarEstrutura<RECT>();
@@ -1056,10 +1077,10 @@ namespace CarenRengine
 
 
 			//Converte a estrutura não gerenciada(LUID) para sua correspondencia gerenciada(CA_LUID).
-			SDKBase::Estruturas::CA_LUID^ ConverterLUIDUnmanagedToManaged(PLUID Param_Estrutura)
+			CA_LUID^ ConverterLUIDUnmanagedToManaged(PLUID Param_Estrutura)
 			{
 				//Cria a estrutura a ser retornada.
-				SDKBase::Estruturas::CA_LUID^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_LUID();
+				CA_LUID^ EstruturaRetorno = gcnew CA_LUID();
 
 				//Define os dados da estrutura.
 				EstruturaRetorno->HighPart = Param_Estrutura->HighPart;
@@ -1070,7 +1091,7 @@ namespace CarenRengine
 			}
 
 			//Covnerte uma estrutura gerenciada(CA_LUID) para sua correspondencia não gerenciada(LUID).
-			PLUID ConverterLUIDManagedToUnmanaged(SDKBase::Estruturas::CA_LUID^ Param_Estrutura)
+			PLUID ConverterLUIDManagedToUnmanaged(CA_LUID^ Param_Estrutura)
 			{
 				//Estrutura que será retornada ao usuário.
 				PLUID EstruturaRetorno = CriarEstrutura<LUID>();
@@ -1085,10 +1106,10 @@ namespace CarenRengine
 
 
 			//Converte a estrutura não gerenciada(WAVEFORMATEX) para sua correspondencia gerenciada(CA_WAVEFORMATEX).
-			SDKBase::Estruturas::CA_WAVEFORMATEX^ ConverterWaveFormatexUnmanagedToManaged(WAVEFORMATEX* pWaveFormat)
+			CA_WAVEFORMATEX^ ConverterWaveFormatexUnmanagedToManaged(WAVEFORMATEX* pWaveFormat)
 			{
 				//Cria a estrutura a ser retornada.
-				SDKBase::Estruturas::CA_WAVEFORMATEX^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_WAVEFORMATEX();
+				CA_WAVEFORMATEX^ EstruturaRetorno = gcnew CA_WAVEFORMATEX();
 
 				//Define os dados na estrutura
 				EstruturaRetorno->AlinhamentoBloco = static_cast<UInt16>(pWaveFormat->nBlockAlign);
@@ -1105,7 +1126,7 @@ namespace CarenRengine
 			}
 
 			//Covnerte uma estrutura gerenciada(CA_WAVEFORMATEX) para sua correspondencia não gerenciada(WAVEFORMATEX).
-			WAVEFORMATEX* ConverterWaveFormatexManagedToUnamaged(SDKBase::Estruturas::CA_WAVEFORMATEX^ Param_WaveFormatex)
+			WAVEFORMATEX* ConverterWaveFormatexManagedToUnamaged(CA_WAVEFORMATEX^ Param_WaveFormatex)
 			{
 				//Estrutura que será retornada ao usuário.
 				WAVEFORMATEX* pWaveFormato = CriarEstrutura<WAVEFORMATEX>();
@@ -1125,10 +1146,10 @@ namespace CarenRengine
 
 
 			//Converte a estrutura não gerenciada(WAVEFORMATEXTENSIBLE) para sua correspondencia gerenciada(CA_WAVEFORMATEXEXTENSIBLE).
-			SDKBase::Estruturas::CA_WAVEFORMATEXEXTENSIBLE^ ConverterWaveformatExtensibleUnmanagedToManaged(WAVEFORMATEXTENSIBLE* pWaveFormatExtensible)
+			CA_WAVEFORMATEXEXTENSIBLE^ ConverterWaveformatExtensibleUnmanagedToManaged(WAVEFORMATEXTENSIBLE* pWaveFormatExtensible)
 			{
 				//Cria a estrutura a ser retornada.
-				SDKBase::Estruturas::CA_WAVEFORMATEXEXTENSIBLE^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_WAVEFORMATEXEXTENSIBLE();
+				CA_WAVEFORMATEXEXTENSIBLE^ EstruturaRetorno = gcnew CA_WAVEFORMATEXEXTENSIBLE();
 
 				//Define os dados da estrutura WaveFormatex.
 				EstruturaRetorno->Formato = ConverterWaveFormatexUnmanagedToManaged(&pWaveFormatExtensible->Format);
@@ -1146,7 +1167,7 @@ namespace CarenRengine
 			}
 
 			//Covnerte uma estrutura gerenciada(CA_WAVEFORMATEXEXTENSIBLE) para sua correspondencia não gerenciada(WAVEFORMATEXTENSIBLE).
-			WAVEFORMATEXTENSIBLE* ConverterWaveformatExtensibleManagedToUnamaged(SDKBase::Estruturas::CA_WAVEFORMATEXEXTENSIBLE^ Param_WaveFormatex)
+			WAVEFORMATEXTENSIBLE* ConverterWaveformatExtensibleManagedToUnamaged(CA_WAVEFORMATEXEXTENSIBLE^ Param_WaveFormatex)
 			{
 				//Estrutura que será retornada ao usuário.
 				WAVEFORMATEXTENSIBLE* pWaveFormatoEx = CriarEstrutura<WAVEFORMATEXTENSIBLE>();
@@ -1796,10 +1817,10 @@ namespace CarenRengine
 
 
 			//Converte a estrutura não gerenciada(PROPBAG2) para sua correspondencia gerenciada(CA_PROPBAG2).
-			SDKBase::Estruturas::CA_PROPBAG2^ ConverterPROPBAG2UnmanagedToManaged(PROPBAG2* Param_Estrutura)
+			CA_PROPBAG2^ ConverterPROPBAG2UnmanagedToManaged(PROPBAG2* Param_Estrutura)
 			{
 				//Cria a estrutura a ser retornada.
-				SDKBase::Estruturas::CA_PROPBAG2^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_PROPBAG2();
+				CA_PROPBAG2^ EstruturaRetorno = gcnew CA_PROPBAG2();
 
 				//Define o restante dos dados.
 				EstruturaRetorno->dwType = Param_Estrutura->dwType;
@@ -1814,7 +1835,7 @@ namespace CarenRengine
 			}
 
 			//Covnerte uma estrutura gerenciada(CA_PROPBAG2) para sua correspondencia não gerenciada(PROPBAG2).
-			PROPBAG2* ConverterPROPBAG2ManagedToUnamaged(SDKBase::Estruturas::CA_PROPBAG2^ Param_Estrutura)
+			PROPBAG2* ConverterPROPBAG2ManagedToUnamaged(CA_PROPBAG2^ Param_Estrutura)
 			{
 				//Estrutura que será retornada ao usuário.
 				PROPBAG2* EstruturaRetorno = CriarEstrutura<PROPBAG2>();
@@ -1834,11 +1855,11 @@ namespace CarenRengine
 
 
 			//Converte a estrutura não gerenciada(SECURITY_ATTRIBUTES) para sua correspondencia gerenciada(CA_ATRIBUTOS_SEGURANCA).
-			SDKBase::Estruturas::CA_ATRIBUTOS_SEGURANCA^ ConverterSECURITY_ATTRIBUTESUnmanagedToManaged(SECURITY_ATTRIBUTES* Param_AttrSeguranca)
+			CA_ATRIBUTOS_SEGURANCA^ ConverterSECURITY_ATTRIBUTESUnmanagedToManaged(SECURITY_ATTRIBUTES* Param_AttrSeguranca)
 			{
 				//Cria a estrutura a ser retornada.
-				SDKBase::Estruturas::CA_ATRIBUTOS_SEGURANCA^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_ATRIBUTOS_SEGURANCA();
-				SDKBase::Estruturas::CA_DESCRITOR_SEGURANCA^ DescritorSegurança = nullptr;
+				CA_ATRIBUTOS_SEGURANCA^ EstruturaRetorno = gcnew CA_ATRIBUTOS_SEGURANCA();
+				CA_DESCRITOR_SEGURANCA^ DescritorSegurança = nullptr;
 
 				//Preenche os dados da estrutura principal
 				EstruturaRetorno->bInheritHandle = Param_AttrSeguranca->bInheritHandle;
@@ -1848,7 +1869,7 @@ namespace CarenRengine
 				if (ObjetoValido(Param_AttrSeguranca->lpSecurityDescriptor))
 				{
 					//Cria a estrutura do descritor de segurança
-					DescritorSegurança = gcnew SDKBase::Estruturas::CA_DESCRITOR_SEGURANCA();
+					DescritorSegurança = gcnew CA_DESCRITOR_SEGURANCA();
 
 					//Prenche os dados base
 					DescritorSegurança->Control = ((SECURITY_DESCRIPTOR*)Param_AttrSeguranca->lpSecurityDescriptor)->Control;
@@ -1859,7 +1880,7 @@ namespace CarenRengine
 					if (ObjetoValido(((SECURITY_DESCRIPTOR*)Param_AttrSeguranca->lpSecurityDescriptor)->Dacl))
 					{
 						//Cria a estrutura
-						DescritorSegurança->Dacl = gcnew SDKBase::Estruturas::CA_ACL();
+						DescritorSegurança->Dacl = gcnew CA_ACL();
 
 						//Preenche os dados.
 						DescritorSegurança->Dacl->AceCount = ((SECURITY_DESCRIPTOR*)Param_AttrSeguranca->lpSecurityDescriptor)->Dacl->AceCount;
@@ -1871,7 +1892,7 @@ namespace CarenRengine
 					if (ObjetoValido(((SECURITY_DESCRIPTOR*)Param_AttrSeguranca->lpSecurityDescriptor)->Sacl))
 					{
 						//Cria a estrutura
-						DescritorSegurança->Dacl = gcnew SDKBase::Estruturas::CA_ACL();
+						DescritorSegurança->Dacl = gcnew CA_ACL();
 
 						//Preenche os dados.
 						DescritorSegurança->Sacl->AceCount = ((SECURITY_DESCRIPTOR*)Param_AttrSeguranca->lpSecurityDescriptor)->Sacl->AceCount;
@@ -1902,7 +1923,7 @@ namespace CarenRengine
 			}
 
 			//Covnerte uma estrutura gerenciada(CA_ATRIBUTOS_SEGURANCA) para sua correspondencia não gerenciada(SECURITY_ATTRIBUTES).
-			SECURITY_ATTRIBUTES* ConverterSECURITY_ATTRIBUTESManagedToUnamaged(SDKBase::Estruturas::CA_ATRIBUTOS_SEGURANCA^ Param_AttrSeguranca)
+			SECURITY_ATTRIBUTES* ConverterSECURITY_ATTRIBUTESManagedToUnamaged(CA_ATRIBUTOS_SEGURANCA^ Param_AttrSeguranca)
 			{
 				//Estrutura que será retornada ao usuário.
 				SECURITY_ATTRIBUTES* pAtributosSeguranca = CriarEstrutura<SECURITY_ATTRIBUTES>();
@@ -1983,10 +2004,10 @@ namespace CarenRengine
 
 
 			//Converte a estrutura não gerenciada(_MFT_INPUT_STREAM_INFO) para sua correspondencia gerenciada(CA_MFT_INPUT_STREAM_INFO).
-			SDKBase::Estruturas::CA_MFT_INPUT_STREAM_INFO^ ConverterMFT_INPUT_STREAM_INFOUnmanagedToManaged(_MFT_INPUT_STREAM_INFO* Param_Estrutura)
+			CA_MFT_INPUT_STREAM_INFO^ ConverterMFT_INPUT_STREAM_INFOUnmanagedToManaged(_MFT_INPUT_STREAM_INFO* Param_Estrutura)
 			{
 				//Cria a estrutura a ser retornada.
-				SDKBase::Estruturas::CA_MFT_INPUT_STREAM_INFO^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_MFT_INPUT_STREAM_INFO();
+				CA_MFT_INPUT_STREAM_INFO^ EstruturaRetorno = gcnew CA_MFT_INPUT_STREAM_INFO();
 
 				//Define os dados na estrutura.
 				EstruturaRetorno->Alinhamento = Param_Estrutura->cbAlignment;
@@ -2000,7 +2021,7 @@ namespace CarenRengine
 			}
 
 			//Covnerte uma estrutura gerenciada(CA_MFT_INPUT_STREAM_INFO) para sua correspondencia não gerenciada(_MFT_INPUT_STREAM_INFO).
-			_MFT_INPUT_STREAM_INFO* ConverterMFT_INPUT_STREAM_INFOManagedToUnamaged(SDKBase::Estruturas::CA_MFT_INPUT_STREAM_INFO^ Param_Estrutura)
+			_MFT_INPUT_STREAM_INFO* ConverterMFT_INPUT_STREAM_INFOManagedToUnamaged(CA_MFT_INPUT_STREAM_INFO^ Param_Estrutura)
 			{
 				//Estrutura que será retornada ao usuário.
 				_MFT_INPUT_STREAM_INFO* EstruturaRetorno = CriarEstrutura<_MFT_INPUT_STREAM_INFO>();
@@ -2018,10 +2039,10 @@ namespace CarenRengine
 
 
 			//Converte a estrutura não gerenciada(_MFT_OUTPUT_STREAM_INFO) para sua correspondencia gerenciada(CA_MFT_OUTPUT_STREAM_INFO).
-			SDKBase::Estruturas::CA_MFT_OUTPUT_STREAM_INFO^ ConverterMFT_OUTPUT_STREAM_INFOUnmanagedToManaged(_MFT_OUTPUT_STREAM_INFO* Param_Estrutura)
+			CA_MFT_OUTPUT_STREAM_INFO^ ConverterMFT_OUTPUT_STREAM_INFOUnmanagedToManaged(_MFT_OUTPUT_STREAM_INFO* Param_Estrutura)
 			{
 				//Cria a estrutura a ser retornada.
-				SDKBase::Estruturas::CA_MFT_OUTPUT_STREAM_INFO^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_MFT_OUTPUT_STREAM_INFO();
+				CA_MFT_OUTPUT_STREAM_INFO^ EstruturaRetorno = gcnew CA_MFT_OUTPUT_STREAM_INFO();
 
 				//Define os dados na estrutura.
 				EstruturaRetorno->Alinhamento = Param_Estrutura->cbAlignment;
@@ -2033,7 +2054,7 @@ namespace CarenRengine
 			}
 
 			//Covnerte uma estrutura gerenciada(CA_MFT_OUTPUT_STREAM_INFO) para sua correspondencia não gerenciada(_MFT_OUTPUT_STREAM_INFO).
-			_MFT_OUTPUT_STREAM_INFO* ConverterMFT_OUTPUT_STREAM_INFOManagedToUnamaged(SDKBase::Estruturas::CA_MFT_OUTPUT_STREAM_INFO^ Param_Estrutura)
+			_MFT_OUTPUT_STREAM_INFO* ConverterMFT_OUTPUT_STREAM_INFOManagedToUnamaged(CA_MFT_OUTPUT_STREAM_INFO^ Param_Estrutura)
 			{
 				//Estrutura que será retornada ao usuário.
 				_MFT_OUTPUT_STREAM_INFO* EstruturaRetorno = CriarEstrutura<_MFT_OUTPUT_STREAM_INFO>();
@@ -2049,10 +2070,10 @@ namespace CarenRengine
 
 
 			//Converte a estrutura não gerenciada(_MFT_OUTPUT_DATA_BUFFER) para sua correspondencia gerenciada(CA_MFT_OUTPUT_DATA_BUFFER).
-			SDKBase::Estruturas::CA_MFT_OUTPUT_DATA_BUFFER^ ConverterMFT_OUTPUT_DATA_BUFFERUnmanagedToManaged(_MFT_OUTPUT_DATA_BUFFER* Param_Estrutura)
+			CA_MFT_OUTPUT_DATA_BUFFER^ ConverterMFT_OUTPUT_DATA_BUFFERUnmanagedToManaged(_MFT_OUTPUT_DATA_BUFFER* Param_Estrutura)
 			{
 				//Cria a estrutura a ser retornada.
-				SDKBase::Estruturas::CA_MFT_OUTPUT_DATA_BUFFER^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_MFT_OUTPUT_DATA_BUFFER();
+				CA_MFT_OUTPUT_DATA_BUFFER^ EstruturaRetorno = gcnew CA_MFT_OUTPUT_DATA_BUFFER();
 
 				//Define os dados na estrutura.
 				EstruturaRetorno->Status = static_cast<CA_MFT_OUTPUT_DATA_BUFFER_FLAGS>(Param_Estrutura->dwStatus);
@@ -2079,7 +2100,7 @@ namespace CarenRengine
 			}
 
 			//Covnerte uma estrutura gerenciada(CA_MFT_OUTPUT_DATA_BUFFER) para sua correspondencia não gerenciada(_MFT_OUTPUT_DATA_BUFFER).
-			_MFT_OUTPUT_DATA_BUFFER* ConverterMFT_OUTPUT_DATA_BUFFERManagedToUnamaged(SDKBase::Estruturas::CA_MFT_OUTPUT_DATA_BUFFER^ Param_Estrutura)
+			_MFT_OUTPUT_DATA_BUFFER* ConverterMFT_OUTPUT_DATA_BUFFERManagedToUnamaged(CA_MFT_OUTPUT_DATA_BUFFER^ Param_Estrutura)
 			{
 				//Estrutura que será retornada ao usuário.
 				_MFT_OUTPUT_DATA_BUFFER* EstruturaRetorno = CriarEstrutura<_MFT_OUTPUT_DATA_BUFFER>();
@@ -2116,7 +2137,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_MFTOPONODE_ATTRIBUTE_UPDATE) para sua correspondencia não gerenciada(MFTOPONODE_ATTRIBUTE_UPDATE).
-			MFTOPONODE_ATTRIBUTE_UPDATE* ConverterTopoNodeAttributesToUnamaged(SDKBase::Estruturas::CA_MFTOPONODE_ATTRIBUTE_UPDATE^ Param_ManagedStruct)
+			MFTOPONODE_ATTRIBUTE_UPDATE* ConverterTopoNodeAttributesToUnamaged(CA_MFTOPONODE_ATTRIBUTE_UPDATE^ Param_ManagedStruct)
 			{
 				//Variavel que vai ser retornada.
 				MFTOPONODE_ATTRIBUTE_UPDATE* pConvertedStruct = CriarEstrutura<MFTOPONODE_ATTRIBUTE_UPDATE>();
@@ -2134,10 +2155,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(MFTOPONODE_ATTRIBUTE_UPDATE) para sua correspondencia gerenciada(CA_MFTOPONODE_ATTRIBUTE_UPDATE).
-			SDKBase::Estruturas::CA_MFTOPONODE_ATTRIBUTE_UPDATE^ ConverterTopoNodeAttributesToManaged(MFTOPONODE_ATTRIBUTE_UPDATE* Param_EstruturaNativa)
+			CA_MFTOPONODE_ATTRIBUTE_UPDATE^ ConverterTopoNodeAttributesToManaged(MFTOPONODE_ATTRIBUTE_UPDATE* Param_EstruturaNativa)
 			{
 				//Variavel que vai ser retornada.
-				SDKBase::Estruturas::CA_MFTOPONODE_ATTRIBUTE_UPDATE^ EstruturaConvertida = gcnew SDKBase::Estruturas::CA_MFTOPONODE_ATTRIBUTE_UPDATE();
+				CA_MFTOPONODE_ATTRIBUTE_UPDATE^ EstruturaConvertida = gcnew CA_MFTOPONODE_ATTRIBUTE_UPDATE();
 
 				//Define os valores
 				EstruturaConvertida->TipoAtributo = static_cast<SDKBase::Enumeracoes::CA_ATTRIBUTE_TYPE>(Param_EstruturaNativa->attrType);
@@ -2152,8 +2173,8 @@ namespace CarenRengine
 			}
 
 
-			//Converte uma estrutura gerenciada(CA_MIDIA_SINK_WRITER_ESTATISTICAS) para sua correspondencia não gerenciada(MF_SINK_WRITER_STATISTICS).
-			MF_SINK_WRITER_STATISTICS* ConverterMF_SINK_WRITER_STATISTICSManagedToUnamaged(SDKBase::Estruturas::CA_MIDIA_SINK_WRITER_ESTATISTICAS^ Param_Estrutura)
+			//Converte uma estrutura gerenciada(CA_MF_SINK_WRITER_STATISTICS) para sua correspondencia não gerenciada(MF_SINK_WRITER_STATISTICS).
+			MF_SINK_WRITER_STATISTICS* ConverterMF_SINK_WRITER_STATISTICSManagedToUnamaged(CA_MF_SINK_WRITER_STATISTICS^ Param_Estrutura)
 			{
 				//Variavel que vai ser retornada.
 				MF_SINK_WRITER_STATISTICS* EstruturaRetorno = CriarEstrutura<MF_SINK_WRITER_STATISTICS>();
@@ -2180,11 +2201,11 @@ namespace CarenRengine
 				return EstruturaRetorno;
 			}
 
-			//Converte uma estrutura não gerenciada(MF_SINK_WRITER_STATISTICS) para sua correspondencia gerenciada(CA_MIDIA_SINK_WRITER_ESTATISTICAS).
-			SDKBase::Estruturas::CA_MIDIA_SINK_WRITER_ESTATISTICAS^ ConverterMF_SINK_WRITER_STATISTICSUnamagedToManaged(MF_SINK_WRITER_STATISTICS* Param_Estrutura)
+			//Converte uma estrutura não gerenciada(MF_SINK_WRITER_STATISTICS) para sua correspondencia gerenciada(CA_MF_SINK_WRITER_STATISTICS).
+			CA_MF_SINK_WRITER_STATISTICS^ ConverterMF_SINK_WRITER_STATISTICSUnamagedToManaged(MF_SINK_WRITER_STATISTICS* Param_Estrutura)
 			{
 				//Variavel que vai ser retornada.
-				SDKBase::Estruturas::CA_MIDIA_SINK_WRITER_ESTATISTICAS^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_MIDIA_SINK_WRITER_ESTATISTICAS();
+				CA_MF_SINK_WRITER_STATISTICS^ EstruturaRetorno = gcnew CA_MF_SINK_WRITER_STATISTICS();
 
 				//Define os valores
 				EstruturaRetorno->ES_DIMENSIONAR = Param_Estrutura->cb;
@@ -2210,7 +2231,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_MF_TRANSCODE_SINK_INFO) para sua correspondencia não gerenciada(MF_TRANSCODE_SINK_INFO).
-			MF_TRANSCODE_SINK_INFO* ConverterMF_TRANSCODE_SINK_INFOManaged_ToUnamaged(SDKBase::Estruturas::CA_MF_TRANSCODE_SINK_INFO^ Param_Estrutura)
+			MF_TRANSCODE_SINK_INFO* ConverterMF_TRANSCODE_SINK_INFOManaged_ToUnamaged(CA_MF_TRANSCODE_SINK_INFO^ Param_Estrutura)
 			{
 				//Variavel que vai ser retornada.
 				MF_TRANSCODE_SINK_INFO* EstruturaRetorno = CriarEstrutura<MF_TRANSCODE_SINK_INFO>();
@@ -2236,10 +2257,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(MF_TRANSCODE_SINK_INFO) para sua correspondencia gerenciada(CA_MF_TRANSCODE_SINK_INFO).
-			SDKBase::Estruturas::CA_MF_TRANSCODE_SINK_INFO^ ConverterMF_TRANSCODE_SINK_INFOUnamaged_ToManaged(MF_TRANSCODE_SINK_INFO* Param_Estrutura)
+			CA_MF_TRANSCODE_SINK_INFO^ ConverterMF_TRANSCODE_SINK_INFOUnamaged_ToManaged(MF_TRANSCODE_SINK_INFO* Param_Estrutura)
 			{
 				//Variavel que vai ser retornada.
-				SDKBase::Estruturas::CA_MF_TRANSCODE_SINK_INFO^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_MF_TRANSCODE_SINK_INFO();
+				CA_MF_TRANSCODE_SINK_INFO^ EstruturaRetorno = gcnew CA_MF_TRANSCODE_SINK_INFO();
 
 				//Define os valores
 				EstruturaRetorno->dwAudioStreamID = Param_Estrutura->dwAudioStreamID;
@@ -2458,6 +2479,78 @@ namespace CarenRengine
 						EstruturaRetorno->pOutTypes[i]->guidSubtype = ConverterGuidToString(Param_Estrutura->pOutTypes[i].guidSubtype);
 					}
 				}
+
+				//Retorna a estrutura.
+				return EstruturaRetorno;
+			}
+
+
+			//Converte uma estrutura gerenciada(CA_MFARGB) para sua correspondencia não gerenciada(MFARGB).
+			MFARGB* ConverterMFARGBManaged_ToUnamaged(CA_MFARGB^ Param_Estrutura)
+			{
+				//Variavel que vai ser retornada.
+				MFARGB* EstruturaRetorno = CriarEstrutura<MFARGB>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(MFARGB));
+
+				//Define os valores
+				EstruturaRetorno->rgbAlpha = Param_Estrutura->rgbAlpha;
+				EstruturaRetorno->rgbBlue = Param_Estrutura->rgbBlue;
+				EstruturaRetorno->rgbGreen = Param_Estrutura->rgbGreen;
+				EstruturaRetorno->rgbRed = Param_Estrutura->rgbRed;
+
+				//Retorna a estrutura.
+				return EstruturaRetorno;
+			}
+
+			//Converte uma estrutura não gerenciada(MFARGB) para sua correspondencia gerenciada(CA_MFARGB).
+			CA_MFARGB^ ConverterMFARGBUnamaged_ToManaged(MFARGB* Param_Estrutura)
+			{
+				//Variavel que vai ser retornada.
+				CA_MFARGB^ EstruturaRetorno = gcnew CA_MFARGB();
+
+				//Define os valores
+				EstruturaRetorno->rgbAlpha = Param_Estrutura->rgbAlpha;
+				EstruturaRetorno->rgbBlue = Param_Estrutura->rgbBlue;
+				EstruturaRetorno->rgbGreen = Param_Estrutura->rgbGreen;
+				EstruturaRetorno->rgbRed = Param_Estrutura->rgbRed;
+
+				//Retorna a estrutura.
+				return EstruturaRetorno;
+			}
+
+
+			//Converte uma estrutura gerenciada(CA_MFVideoNormalizedRect) para sua correspondencia não gerenciada(MFVideoNormalizedRect).
+			MFVideoNormalizedRect* ConverterMFVideoNormalizedRectManaged_ToUnamaged(CA_MFVideoNormalizedRect^ Param_Estrutura)
+			{
+				//Variavel que vai ser retornada.
+				MFVideoNormalizedRect* EstruturaRetorno = CriarEstrutura<MFVideoNormalizedRect>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(MFVideoNormalizedRect));
+
+				//Define os valores
+				EstruturaRetorno->left = Param_Estrutura->left;
+				EstruturaRetorno->right = Param_Estrutura->right;
+				EstruturaRetorno->top = Param_Estrutura->top;
+				EstruturaRetorno->bottom = Param_Estrutura->bottom;
+
+				//Retorna a estrutura.
+				return EstruturaRetorno;
+			}
+
+			//Converte uma estrutura não gerenciada(MFVideoNormalizedRect) para sua correspondencia gerenciada(CA_MFVideoNormalizedRect).
+			CA_MFVideoNormalizedRect^ ConverterMFVideoNormalizedRectUnamaged_ToManaged(MFVideoNormalizedRect* Param_Estrutura)
+			{
+				//Variavel que vai ser retornada.
+				CA_MFVideoNormalizedRect^ EstruturaRetorno = gcnew CA_MFVideoNormalizedRect();
+
+				//Define os valores
+				EstruturaRetorno->left = Param_Estrutura->left;
+				EstruturaRetorno->right = Param_Estrutura->right;
+				EstruturaRetorno->top = Param_Estrutura->top;
+				EstruturaRetorno->bottom = Param_Estrutura->bottom;
 
 				//Retorna a estrutura.
 				return EstruturaRetorno;
@@ -5240,10 +5333,10 @@ namespace CarenRengine
 			
 
 			//Converte uma estrutura não gerenciada(D3D11_BUFFER_DESC) para sua correspondencia gerenciada(CA_D3D11_BUFFER_DESC).
-			SDKBase::Estruturas::CA_D3D11_BUFFER_DESC^ ConverterD3D11_BUFFER_DESCUnamaged_ToManaged(D3D11_BUFFER_DESC* Param_pBufferDesc)
+			CA_D3D11_BUFFER_DESC^ ConverterD3D11_BUFFER_DESCUnamaged_ToManaged(D3D11_BUFFER_DESC* Param_pBufferDesc)
 			{
 				//Variavel que vai ser retornada.
-				SDKBase::Estruturas::CA_D3D11_BUFFER_DESC^ BufferDescManaged = gcnew SDKBase::Estruturas::CA_D3D11_BUFFER_DESC();
+				CA_D3D11_BUFFER_DESC^ BufferDescManaged = gcnew CA_D3D11_BUFFER_DESC();
 
 				//Define os valores na estrutura gerenciada.
 				BufferDescManaged->TamanhoElementosEstruturaBufferStride = Param_pBufferDesc->StructureByteStride;
@@ -5258,7 +5351,7 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura gerenciada(CA_D3D11_BUFFER_DESC) para sua correspondencia não gerenciada(D3D11_BUFFER_DESC).
-			D3D11_BUFFER_DESC* ConverterD3D11_BUFFER_DESCManaged_ToUnmanaged(SDKBase::Estruturas::CA_D3D11_BUFFER_DESC^ Param_BufferDesc)
+			D3D11_BUFFER_DESC* ConverterD3D11_BUFFER_DESCManaged_ToUnmanaged(CA_D3D11_BUFFER_DESC^ Param_BufferDesc)
 			{
 				//Variavel que vai ser retornada.
 				D3D11_BUFFER_DESC* EstruturaRetorno = new D3D11_BUFFER_DESC();
@@ -5280,10 +5373,10 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura não gerenciada(D3D11_SUBRESOURCE_DATA) para sua correspondencia gerenciada(CA_D3D11_SUBRESOURCE_DATA).
-			SDKBase::Estruturas::CA_D3D11_SUBRESOURCE_DATA^ ConverterD3D11_SUBRESOURCE_DATAUnamaged_ToManaged(D3D11_SUBRESOURCE_DATA* Param_Estrutura, ICaren^% Param_ArmazemInitData)
+			CA_D3D11_SUBRESOURCE_DATA^ ConverterD3D11_SUBRESOURCE_DATAUnamaged_ToManaged(D3D11_SUBRESOURCE_DATA* Param_Estrutura, ICaren^% Param_ArmazemInitData)
 			{
 				//Variavel que vai ser retornada.
-				SDKBase::Estruturas::CA_D3D11_SUBRESOURCE_DATA^ EstruturaDestino = gcnew SDKBase::Estruturas::CA_D3D11_SUBRESOURCE_DATA();
+				CA_D3D11_SUBRESOURCE_DATA^ EstruturaDestino = gcnew CA_D3D11_SUBRESOURCE_DATA();
 
 				//Ponteiro para os dados iniciais.
 				PVOID InitData = NULL;
@@ -5309,7 +5402,7 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura gerenciada(CA_D3D11_SUBRESOURCE_DATA) para sua correspondencia não gerenciada(D3D11_SUBRESOURCE_DATA).
-			D3D11_SUBRESOURCE_DATA* ConverterD3D11_SUBRESOURCE_DATAManaged_ToUnmanaged(SDKBase::Estruturas::CA_D3D11_SUBRESOURCE_DATA^ Param_Estrutura)
+			D3D11_SUBRESOURCE_DATA* ConverterD3D11_SUBRESOURCE_DATAManaged_ToUnmanaged(CA_D3D11_SUBRESOURCE_DATA^ Param_Estrutura)
 			{
 				//Variavel que vai ser retornada.
 				D3D11_SUBRESOURCE_DATA* EstruturaDestino = new D3D11_SUBRESOURCE_DATA();
@@ -5339,7 +5432,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_D3D11_BLEND_DESC) para sua correspondencia não gerenciada(D3D11_BLEND_DESC).
-			D3D11_BLEND_DESC* ConverterD3D11_BLEND_DESCManaged_ToUnManaged(SDKBase::Estruturas::CA_D3D11_BLEND_DESC^ Param_BlendDesc)
+			D3D11_BLEND_DESC* ConverterD3D11_BLEND_DESCManaged_ToUnManaged(CA_D3D11_BLEND_DESC^ Param_BlendDesc)
 			{
 				//Variavel a ser retornada.
 				D3D11_BLEND_DESC* pNativeBlendDesc = CriarEstrutura<D3D11_BLEND_DESC>();
@@ -5384,13 +5477,13 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(D3D11_BLEND_DESC) para sua correspondencia gerenciada(CA_D3D11_BLEND_DESC).
-			SDKBase::Estruturas::CA_D3D11_BLEND_DESC^ ConverterD3D11_BLEND_DESCUnManaged_ToManaged(D3D11_BLEND_DESC* Param_pBlendDescNative)
+			CA_D3D11_BLEND_DESC^ ConverterD3D11_BLEND_DESCUnManaged_ToManaged(D3D11_BLEND_DESC* Param_pBlendDescNative)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_D3D11_BLEND_DESC^ BlendDescManaged = gcnew SDKBase::Estruturas::CA_D3D11_BLEND_DESC();
+				CA_D3D11_BLEND_DESC^ BlendDescManaged = gcnew CA_D3D11_BLEND_DESC();
 
 				//Cria a estrutura Secundaria com um maximo de 8 entradas(0 - 7) validas.
-				BlendDescManaged->RenderTarget = gcnew cli::array<SDKBase::Estruturas::CA_D3D11_RENDER_TARGET_BLEND_DESC^>(8);
+				BlendDescManaged->RenderTarget = gcnew cli::array<CA_D3D11_RENDER_TARGET_BLEND_DESC^>(8);
 
 
 				//Preenche os dados da estrutura principal
@@ -5404,7 +5497,7 @@ namespace CarenRengine
 				for (int i = 0; i < 8; i++)
 				{
 					//Cria a estrutura no id especificado.
-					BlendDescManaged->RenderTarget[i] = gcnew SDKBase::Estruturas::CA_D3D11_RENDER_TARGET_BLEND_DESC();
+					BlendDescManaged->RenderTarget[i] = gcnew CA_D3D11_RENDER_TARGET_BLEND_DESC();
 
 
 					//Define os dados na estrutura.
@@ -5425,7 +5518,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_D3D11_BLEND_DESC1) para sua correspondencia não gerenciada(D3D11_BLEND_DESC1).
-			D3D11_BLEND_DESC1* ConverterD3D11_BLEND_DESC1Managed_ToUnManaged(SDKBase::Estruturas::CA_D3D11_BLEND_DESC1^ Param_Estrutura)
+			D3D11_BLEND_DESC1* ConverterD3D11_BLEND_DESC1Managed_ToUnManaged(CA_D3D11_BLEND_DESC1^ Param_Estrutura)
 			{
 				//Variavel a ser retornada.
 				D3D11_BLEND_DESC1* EstruturaRetornada = CriarEstrutura<D3D11_BLEND_DESC1>();
@@ -5472,13 +5565,13 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(D3D11_BLEND_DESC1) para sua correspondencia gerenciada(CA_D3D11_BLEND_DESC1).
-			SDKBase::Estruturas::CA_D3D11_BLEND_DESC1^ ConverterD3D11_BLEND_DESC1UnManaged_ToManaged(D3D11_BLEND_DESC1* Param_Estrutura)
+			CA_D3D11_BLEND_DESC1^ ConverterD3D11_BLEND_DESC1UnManaged_ToManaged(D3D11_BLEND_DESC1* Param_Estrutura)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_D3D11_BLEND_DESC1^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_D3D11_BLEND_DESC1();
+				CA_D3D11_BLEND_DESC1^ EstruturaRetorno = gcnew CA_D3D11_BLEND_DESC1();
 
 				//Cria a estrutura Secundaria com um maximo de 8 entradas(0 - 7) validas.
-				EstruturaRetorno->RenderTarget = gcnew cli::array<SDKBase::Estruturas::CA_D3D11_RENDER_TARGET_BLEND_DESC1^>(8);
+				EstruturaRetorno->RenderTarget = gcnew cli::array<CA_D3D11_RENDER_TARGET_BLEND_DESC1^>(8);
 
 
 				//Preenche os dados da estrutura principal
@@ -5492,7 +5585,7 @@ namespace CarenRengine
 				for (int i = 0; i < 8; i++)
 				{
 					//Cria a estrutura no id especificado.
-					EstruturaRetorno->RenderTarget[i] = gcnew SDKBase::Estruturas::CA_D3D11_RENDER_TARGET_BLEND_DESC1();
+					EstruturaRetorno->RenderTarget[i] = gcnew CA_D3D11_RENDER_TARGET_BLEND_DESC1();
 
 
 					//Define os dados na estrutura.
@@ -5515,7 +5608,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_D3D11_CLASS_INSTANCE_DESC) para sua correspondencia não gerenciada(D3D11_CLASS_INSTANCE_DESC).
-			D3D11_CLASS_INSTANCE_DESC* ConverterD3D11_CLASS_INSTANCE_DESCManaged_ToUnManaged(SDKBase::Estruturas::CA_D3D11_CLASS_INSTANCE_DESC^ Param_DescInstanceClasse)
+			D3D11_CLASS_INSTANCE_DESC* ConverterD3D11_CLASS_INSTANCE_DESCManaged_ToUnManaged(CA_D3D11_CLASS_INSTANCE_DESC^ Param_DescInstanceClasse)
 			{
 				//Varivel que vai ser retornada.
 				D3D11_CLASS_INSTANCE_DESC* pNativeDescInstance = CriarEstrutura<D3D11_CLASS_INSTANCE_DESC>();
@@ -5538,10 +5631,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(D3D11_CLASS_INSTANCE_DESC) para sua correspondencia gerenciada(CA_D3D11_CLASS_INSTANCE_DESC).
-			SDKBase::Estruturas::CA_D3D11_CLASS_INSTANCE_DESC^ ConverterD3D11_CLASS_INSTANCE_DESCUnManaged_ToManaged(D3D11_CLASS_INSTANCE_DESC* Param_pNativeDescInstance)
+			CA_D3D11_CLASS_INSTANCE_DESC^ ConverterD3D11_CLASS_INSTANCE_DESCUnManaged_ToManaged(D3D11_CLASS_INSTANCE_DESC* Param_pNativeDescInstance)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_D3D11_CLASS_INSTANCE_DESC^ DesInstanciaClasse = gcnew SDKBase::Estruturas::CA_D3D11_CLASS_INSTANCE_DESC();
+				CA_D3D11_CLASS_INSTANCE_DESC^ DesInstanciaClasse = gcnew CA_D3D11_CLASS_INSTANCE_DESC();
 
 				//Preenche os dados da estrutura.
 				DesInstanciaClasse->DeslocamentoBaseBufferConstante = Param_pNativeDescInstance->BaseConstantBufferOffset;
@@ -5559,7 +5652,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_D3D11_QUERY_DESC) para sua correspondencia não gerenciada(D3D11_QUERY_DESC).
-			D3D11_QUERY_DESC* ConverterD3D11_QUERY_DESCManaged_ToUnManaged(SDKBase::Estruturas::CA_D3D11_QUERY_DESC^ Param_DescQuery)
+			D3D11_QUERY_DESC* ConverterD3D11_QUERY_DESCManaged_ToUnManaged(CA_D3D11_QUERY_DESC^ Param_DescQuery)
 			{
 				//Variavel a ser retornada.
 				D3D11_QUERY_DESC* EstruturaRetorno = CriarEstrutura<D3D11_QUERY_DESC>();
@@ -5576,10 +5669,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(D3D11_QUERY_DESC) para sua correspondencia gerenciada(CA_D3D11_QUERY_DESC).
-			SDKBase::Estruturas::CA_D3D11_QUERY_DESC^ ConverterD3D11_QUERY_DESCUnManaged_ToManaged(D3D11_QUERY_DESC* Param_NativeDescQuery)
+			CA_D3D11_QUERY_DESC^ ConverterD3D11_QUERY_DESCUnManaged_ToManaged(D3D11_QUERY_DESC* Param_NativeDescQuery)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_D3D11_QUERY_DESC^ ManagedDesc = gcnew SDKBase::Estruturas::CA_D3D11_QUERY_DESC();
+				CA_D3D11_QUERY_DESC^ ManagedDesc = gcnew CA_D3D11_QUERY_DESC();
 
 				//Preenche os dados da estrutura.
 				ManagedDesc->MiscFlags = Param_NativeDescQuery->MiscFlags;
@@ -5591,7 +5684,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_D3D11_QUERY_DESC1) para sua correspondencia não gerenciada(D3D11_QUERY_DESC1).
-			D3D11_QUERY_DESC1* ConverterD3D11_QUERY_DESC1Managed_ToUnManaged(SDKBase::Estruturas::CA_D3D11_QUERY_DESC1^ Param_Estrutura)
+			D3D11_QUERY_DESC1* ConverterD3D11_QUERY_DESC1Managed_ToUnManaged(CA_D3D11_QUERY_DESC1^ Param_Estrutura)
 			{
 				//Variavel a ser retornada.
 				D3D11_QUERY_DESC1* EstruturaRetorno = CriarEstrutura<D3D11_QUERY_DESC1>();
@@ -5609,10 +5702,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(D3D11_QUERY_DESC1) para sua correspondencia gerenciada(CA_D3D11_QUERY_DESC1).
-			SDKBase::Estruturas::CA_D3D11_QUERY_DESC1^ ConverterD3D11_QUERY_DESC1UnManaged_ToManaged(D3D11_QUERY_DESC1* Param_Estrutura)
+			CA_D3D11_QUERY_DESC1^ ConverterD3D11_QUERY_DESC1UnManaged_ToManaged(D3D11_QUERY_DESC1* Param_Estrutura)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_D3D11_QUERY_DESC1^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_D3D11_QUERY_DESC1();
+				CA_D3D11_QUERY_DESC1^ EstruturaRetorno = gcnew CA_D3D11_QUERY_DESC1();
 
 				//Preenche os dados da estrutura.
 				EstruturaRetorno->MiscFlags = Param_Estrutura->MiscFlags;
@@ -5625,7 +5718,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_D3D11_DEPTH_STENCIL_DESC) para sua correspondencia não gerenciada(D3D11_DEPTH_STENCIL_DESC).
-			D3D11_DEPTH_STENCIL_DESC* ConverterD3D11_DEPTH_STENCIL_DESCManaged_ToUnManaged(SDKBase::Estruturas::CA_D3D11_DEPTH_STENCIL_DESC^ Param_DescStencil)
+			D3D11_DEPTH_STENCIL_DESC* ConverterD3D11_DEPTH_STENCIL_DESCManaged_ToUnManaged(CA_D3D11_DEPTH_STENCIL_DESC^ Param_DescStencil)
 			{
 				//Variavel a ser retornada.
 				D3D11_DEPTH_STENCIL_DESC* pNativeDesc = CriarEstrutura<D3D11_DEPTH_STENCIL_DESC>();
@@ -5667,10 +5760,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(CA_D3D11_DEPTH_STENCIL_DESC) para sua correspondencia gerenciada(CA_D3D11_DEPTH_STENCIL_DESC).
-			SDKBase::Estruturas::CA_D3D11_DEPTH_STENCIL_DESC^ ConverterD3D11_DEPTH_STENCIL_DESCUnManaged_ToManaged(D3D11_DEPTH_STENCIL_DESC* Param_NativeDescStencil)
+			CA_D3D11_DEPTH_STENCIL_DESC^ ConverterD3D11_DEPTH_STENCIL_DESCUnManaged_ToManaged(D3D11_DEPTH_STENCIL_DESC* Param_NativeDescStencil)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_D3D11_DEPTH_STENCIL_DESC^ ManagedDesc = gcnew SDKBase::Estruturas::CA_D3D11_DEPTH_STENCIL_DESC();
+				CA_D3D11_DEPTH_STENCIL_DESC^ ManagedDesc = gcnew CA_D3D11_DEPTH_STENCIL_DESC();
 
 				//Define os dados da estrutura primaria.
 
@@ -5685,8 +5778,8 @@ namespace CarenRengine
 				//Define os dados das estrutura secundarias.
 
 				//Inicializa as estruturas.
-				ManagedDesc->FrontFace = gcnew SDKBase::Estruturas::CA_D3D11_DEPTH_STENCILOP_DESC();
-				ManagedDesc->BackFace = gcnew SDKBase::Estruturas::CA_D3D11_DEPTH_STENCILOP_DESC();
+				ManagedDesc->FrontFace = gcnew CA_D3D11_DEPTH_STENCILOP_DESC();
+				ManagedDesc->BackFace = gcnew CA_D3D11_DEPTH_STENCILOP_DESC();
 
 				//Preenche os dados de cada estrutura.
 				ManagedDesc->FrontFace->StencilDepthFailOp = static_cast<SDKBase::Enumeracoes::CA_D3D11_STENCIL_OP>(Param_NativeDescStencil->FrontFace.StencilDepthFailOp);
@@ -5706,7 +5799,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_D3D11_DEPTH_STENCIL_VIEW_DESC) para sua correspondencia não gerenciada(D3D11_DEPTH_STENCIL_VIEW_DESC).
-			D3D11_DEPTH_STENCIL_VIEW_DESC* ConverterD3D11_DEPTH_STENCIL_VIEW_DESCManaged_ToUnManaged(SDKBase::Estruturas::CA_D3D11_DEPTH_STENCIL_VIEW_DESC^ Param_DescStencilView)
+			D3D11_DEPTH_STENCIL_VIEW_DESC* ConverterD3D11_DEPTH_STENCIL_VIEW_DESCManaged_ToUnManaged(CA_D3D11_DEPTH_STENCIL_VIEW_DESC^ Param_DescStencilView)
 			{
 				//Variavel a ser retornada.
 				D3D11_DEPTH_STENCIL_VIEW_DESC* pNativeDesc = CriarEstrutura<D3D11_DEPTH_STENCIL_VIEW_DESC>();
@@ -5763,10 +5856,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(D3D11_DEPTH_STENCIL_VIEW_DESC) para sua correspondencia gerenciada(CA_D3D11_DEPTH_STENCIL_VIEW_DESC).
-			SDKBase::Estruturas::CA_D3D11_DEPTH_STENCIL_VIEW_DESC^ ConverterD3D11_DEPTH_STENCIL_VIEW_DESCUnManaged_ToManaged(D3D11_DEPTH_STENCIL_VIEW_DESC* Param_NativeDescStencilView)
+			CA_D3D11_DEPTH_STENCIL_VIEW_DESC^ ConverterD3D11_DEPTH_STENCIL_VIEW_DESCUnManaged_ToManaged(D3D11_DEPTH_STENCIL_VIEW_DESC* Param_NativeDescStencilView)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_D3D11_DEPTH_STENCIL_VIEW_DESC^ ManagedDesc = gcnew SDKBase::Estruturas::CA_D3D11_DEPTH_STENCIL_VIEW_DESC();
+				CA_D3D11_DEPTH_STENCIL_VIEW_DESC^ ManagedDesc = gcnew CA_D3D11_DEPTH_STENCIL_VIEW_DESC();
 
 				//Define os dados da estrutura primaria.
 
@@ -5776,12 +5869,12 @@ namespace CarenRengine
 				ManagedDesc->Flags = static_cast<SDKBase::Enumeracoes::CA_D3D11_DSV_FLAG>(Param_NativeDescStencilView->Flags);
 
 				//Inicializa as estruturas secundarias
-				ManagedDesc->Textura1D = gcnew SDKBase::Estruturas::CA_D3D11_TEX1D_DSV();
-				ManagedDesc->Textura1DArray = gcnew SDKBase::Estruturas::CA_D3D11_TEX1D_ARRAY_DSV();
-				ManagedDesc->Textura2D = gcnew SDKBase::Estruturas::CA_D3D11_TEX2D_DSV();
-				ManagedDesc->Textura2DArray = gcnew SDKBase::Estruturas::CA_D3D11_TEX2D_ARRAY_DSV();
+				ManagedDesc->Textura1D = gcnew CA_D3D11_TEX1D_DSV();
+				ManagedDesc->Textura1DArray = gcnew CA_D3D11_TEX1D_ARRAY_DSV();
+				ManagedDesc->Textura2D = gcnew CA_D3D11_TEX2D_DSV();
+				ManagedDesc->Textura2DArray = gcnew CA_D3D11_TEX2D_ARRAY_DSV();
 				//EstruturaRetorno->Textura2DMS -> Essa estrutura não precisa ser criada porque não contém membros e não define nada.
-				ManagedDesc->Textura2DMSArray = gcnew SDKBase::Estruturas::CA_D3D11_TEX2DMS_ARRAY_DSV();
+				ManagedDesc->Textura2DMSArray = gcnew CA_D3D11_TEX2DMS_ARRAY_DSV();
 
 				//Preenche as estruturas.
 				ManagedDesc->Textura1D->MipSlice = Param_NativeDescStencilView->Texture1D.MipSlice;
@@ -5801,7 +5894,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_D3D11_UNORDERED_ACCESS_VIEW_DESC) para sua correspondencia não gerenciada(D3D11_UNORDERED_ACCESS_VIEW_DESC).
-			D3D11_UNORDERED_ACCESS_VIEW_DESC* ConverterD3D11_UNORDERED_ACCESS_VIEW_DESCManaged_ToUnManaged(SDKBase::Estruturas::CA_D3D11_UNORDERED_ACCESS_VIEW_DESC^ Param_DescUnordered)
+			D3D11_UNORDERED_ACCESS_VIEW_DESC* ConverterD3D11_UNORDERED_ACCESS_VIEW_DESCManaged_ToUnManaged(CA_D3D11_UNORDERED_ACCESS_VIEW_DESC^ Param_DescUnordered)
 			{
 				//Variavel a ser retornada.
 				D3D11_UNORDERED_ACCESS_VIEW_DESC* pNativeDesc = CriarEstrutura<D3D11_UNORDERED_ACCESS_VIEW_DESC>();
@@ -5860,10 +5953,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(D3D11_UNORDERED_ACCESS_VIEW_DESC) para sua correspondencia gerenciada(CA_D3D11_UNORDERED_ACCESS_VIEW_DESC).
-			SDKBase::Estruturas::CA_D3D11_UNORDERED_ACCESS_VIEW_DESC^ ConverterD3D11_UNORDERED_ACCESS_VIEW_DESCUnManaged_ToManaged(D3D11_UNORDERED_ACCESS_VIEW_DESC* Param_NativeDescUnordered)
+			CA_D3D11_UNORDERED_ACCESS_VIEW_DESC^ ConverterD3D11_UNORDERED_ACCESS_VIEW_DESCUnManaged_ToManaged(D3D11_UNORDERED_ACCESS_VIEW_DESC* Param_NativeDescUnordered)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_D3D11_UNORDERED_ACCESS_VIEW_DESC^ ManagedDesc = gcnew SDKBase::Estruturas::CA_D3D11_UNORDERED_ACCESS_VIEW_DESC();
+				CA_D3D11_UNORDERED_ACCESS_VIEW_DESC^ ManagedDesc = gcnew CA_D3D11_UNORDERED_ACCESS_VIEW_DESC();
 
 				//Define os dados da estrutura primaria.
 
@@ -5872,12 +5965,12 @@ namespace CarenRengine
 				ManagedDesc->ViewDimensao = static_cast<SDKBase::Enumeracoes::CA_D3D11_UAV_DIMENSION>(Param_NativeDescUnordered->ViewDimension);
 
 				//Inicializa as estruturas secundarias
-				ManagedDesc->Buffer = gcnew SDKBase::Estruturas::CA_D3D11_BUFFER_UAV();
-				ManagedDesc->Textura1D = gcnew SDKBase::Estruturas::CA_D3D11_TEX1D_UAV();
-				ManagedDesc->Textura1DArray = gcnew SDKBase::Estruturas::CA_D3D11_TEX1D_ARRAY_UAV();
-				ManagedDesc->Textura2D = gcnew SDKBase::Estruturas::CA_D3D11_TEX2D_UAV();
-				ManagedDesc->Textura2DArray = gcnew SDKBase::Estruturas::CA_D3D11_TEX2D_ARRAY_UAV();
-				ManagedDesc->Textura3D = gcnew SDKBase::Estruturas::CA_D3D11_TEX3D_UAV();
+				ManagedDesc->Buffer = gcnew CA_D3D11_BUFFER_UAV();
+				ManagedDesc->Textura1D = gcnew CA_D3D11_TEX1D_UAV();
+				ManagedDesc->Textura1DArray = gcnew CA_D3D11_TEX1D_ARRAY_UAV();
+				ManagedDesc->Textura2D = gcnew CA_D3D11_TEX2D_UAV();
+				ManagedDesc->Textura2DArray = gcnew CA_D3D11_TEX2D_ARRAY_UAV();
+				ManagedDesc->Textura3D = gcnew CA_D3D11_TEX3D_UAV();
 
 				//Preenche as estruturas.
 				ManagedDesc->Buffer->FirstElement = Param_NativeDescUnordered->Buffer.FirstElement;
@@ -5901,7 +5994,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_D3D11_UNORDERED_ACCESS_VIEW_DESC1) para sua correspondencia não gerenciada(D3D11_UNORDERED_ACCESS_VIEW_DESC1).
-			D3D11_UNORDERED_ACCESS_VIEW_DESC1* ConverterD3D11_UNORDERED_ACCESS_VIEW_DESC1Managed_ToUnManaged(SDKBase::Estruturas::CA_D3D11_UNORDERED_ACCESS_VIEW_DESC1^ Param_Estrutura)
+			D3D11_UNORDERED_ACCESS_VIEW_DESC1* ConverterD3D11_UNORDERED_ACCESS_VIEW_DESC1Managed_ToUnManaged(CA_D3D11_UNORDERED_ACCESS_VIEW_DESC1^ Param_Estrutura)
 			{
 				//Variavel a ser retornada.
 				D3D11_UNORDERED_ACCESS_VIEW_DESC1* EstruturaRetorno = CriarEstrutura<D3D11_UNORDERED_ACCESS_VIEW_DESC1>();
@@ -5962,10 +6055,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(D3D11_UNORDERED_ACCESS_VIEW_DESC1) para sua correspondencia gerenciada(CA_D3D11_UNORDERED_ACCESS_VIEW_DESC1).
-			SDKBase::Estruturas::CA_D3D11_UNORDERED_ACCESS_VIEW_DESC1^ ConverterD3D11_UNORDERED_ACCESS_VIEW_DESC1UnManaged_ToManaged(D3D11_UNORDERED_ACCESS_VIEW_DESC1* Param_Estrutura)
+			CA_D3D11_UNORDERED_ACCESS_VIEW_DESC1^ ConverterD3D11_UNORDERED_ACCESS_VIEW_DESC1UnManaged_ToManaged(D3D11_UNORDERED_ACCESS_VIEW_DESC1* Param_Estrutura)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_D3D11_UNORDERED_ACCESS_VIEW_DESC1^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_D3D11_UNORDERED_ACCESS_VIEW_DESC1();
+				CA_D3D11_UNORDERED_ACCESS_VIEW_DESC1^ EstruturaRetorno = gcnew CA_D3D11_UNORDERED_ACCESS_VIEW_DESC1();
 
 				//Define os dados da estrutura primaria.
 
@@ -5974,12 +6067,12 @@ namespace CarenRengine
 				EstruturaRetorno->ViewDimensao = static_cast<SDKBase::Enumeracoes::CA_D3D11_UAV_DIMENSION>(Param_Estrutura->ViewDimension);
 
 				//Inicializa as estruturas secundarias
-				EstruturaRetorno->Buffer = gcnew SDKBase::Estruturas::CA_D3D11_BUFFER_UAV();
-				EstruturaRetorno->Textura1D = gcnew SDKBase::Estruturas::CA_D3D11_TEX1D_UAV();
-				EstruturaRetorno->Textura1DArray = gcnew SDKBase::Estruturas::CA_D3D11_TEX1D_ARRAY_UAV();
-				EstruturaRetorno->Textura2D = gcnew SDKBase::Estruturas::CA_D3D11_TEX2D_UAV1();
-				EstruturaRetorno->Textura2DArray = gcnew SDKBase::Estruturas::CA_D3D11_TEX2D_ARRAY_UAV1();
-				EstruturaRetorno->Textura3D = gcnew SDKBase::Estruturas::CA_D3D11_TEX3D_UAV();
+				EstruturaRetorno->Buffer = gcnew CA_D3D11_BUFFER_UAV();
+				EstruturaRetorno->Textura1D = gcnew CA_D3D11_TEX1D_UAV();
+				EstruturaRetorno->Textura1DArray = gcnew CA_D3D11_TEX1D_ARRAY_UAV();
+				EstruturaRetorno->Textura2D = gcnew CA_D3D11_TEX2D_UAV1();
+				EstruturaRetorno->Textura2DArray = gcnew CA_D3D11_TEX2D_ARRAY_UAV1();
+				EstruturaRetorno->Textura3D = gcnew CA_D3D11_TEX3D_UAV();
 
 				//Preenche as estruturas.
 				EstruturaRetorno->Buffer->FirstElement = Param_Estrutura->Buffer.FirstElement;
@@ -6005,7 +6098,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_D3D11_SAMPLER_DESC) para sua correspondencia não gerenciada(D3D11_SAMPLER_DESC).
-			D3D11_SAMPLER_DESC* ConverterD3D11_SAMPLER_DESCManaged_ToUnManaged(SDKBase::Estruturas::CA_D3D11_SAMPLER_DESC^ Param_DescSampler)
+			D3D11_SAMPLER_DESC* ConverterD3D11_SAMPLER_DESCManaged_ToUnManaged(CA_D3D11_SAMPLER_DESC^ Param_DescSampler)
 			{
 				//Variavel a ser retornada.
 				D3D11_SAMPLER_DESC* pNativeDesc = CriarEstrutura<D3D11_SAMPLER_DESC>();
@@ -6036,10 +6129,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(D3D11_SAMPLER_DESC) para sua correspondencia gerenciada(CA_D3D11_SAMPLER_DESC).
-			SDKBase::Estruturas::CA_D3D11_SAMPLER_DESC^ ConverterD3D11_SAMPLER_DESCUnManaged_ToManaged(D3D11_SAMPLER_DESC* Param_NativeDescSampler)
+			CA_D3D11_SAMPLER_DESC^ ConverterD3D11_SAMPLER_DESCUnManaged_ToManaged(D3D11_SAMPLER_DESC* Param_NativeDescSampler)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_D3D11_SAMPLER_DESC^ ManagedDesc = gcnew SDKBase::Estruturas::CA_D3D11_SAMPLER_DESC();
+				CA_D3D11_SAMPLER_DESC^ ManagedDesc = gcnew CA_D3D11_SAMPLER_DESC();
 
 				//Preenche os dados da estrutura
 				ManagedDesc->Filter = static_cast<SDKBase::Enumeracoes::CA_D3D11_FILTER>(Param_NativeDescSampler->Filter);
@@ -6069,7 +6162,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_D3D11_SHADER_RESOURCE_VIEW_DESC) para sua correspondencia não gerenciada(D3D11_SHADER_RESOURCE_VIEW_DESC).
-			D3D11_SHADER_RESOURCE_VIEW_DESC* ConverterD3D11_SHADER_RESOURCE_VIEW_DESCManaged_ToUnManaged(SDKBase::Estruturas::CA_D3D11_SHADER_RESOURCE_VIEW_DESC^ Param_DescShader)
+			D3D11_SHADER_RESOURCE_VIEW_DESC* ConverterD3D11_SHADER_RESOURCE_VIEW_DESCManaged_ToUnManaged(CA_D3D11_SHADER_RESOURCE_VIEW_DESC^ Param_DescShader)
 			{
 				//Variavel a ser retornada.
 				D3D11_SHADER_RESOURCE_VIEW_DESC* pNativeDesc = CriarEstrutura<D3D11_SHADER_RESOURCE_VIEW_DESC>();
@@ -6160,10 +6253,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(D3D11_SHADER_RESOURCE_VIEW_DESC) para sua correspondencia gerenciada(CA_D3D11_SHADER_RESOURCE_VIEW_DESC).
-			SDKBase::Estruturas::CA_D3D11_SHADER_RESOURCE_VIEW_DESC^ ConverterD3D11_SHADER_RESOURCE_VIEW_DESCUnManaged_ToManaged(D3D11_SHADER_RESOURCE_VIEW_DESC* Param_NativeDescShader)
+			CA_D3D11_SHADER_RESOURCE_VIEW_DESC^ ConverterD3D11_SHADER_RESOURCE_VIEW_DESCUnManaged_ToManaged(D3D11_SHADER_RESOURCE_VIEW_DESC* Param_NativeDescShader)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_D3D11_SHADER_RESOURCE_VIEW_DESC^ ManagedDesc = gcnew SDKBase::Estruturas::CA_D3D11_SHADER_RESOURCE_VIEW_DESC();
+				CA_D3D11_SHADER_RESOURCE_VIEW_DESC^ ManagedDesc = gcnew CA_D3D11_SHADER_RESOURCE_VIEW_DESC();
 
 				//Define os dados da estrutura primaria.
 
@@ -6172,17 +6265,17 @@ namespace CarenRengine
 				ManagedDesc->ViewDimensao = static_cast<SDKBase::Enumeracoes::CA_D3D11_SRV_DIMENSION>(Param_NativeDescShader->ViewDimension);
 
 				//Inicializa as estruturas secundarias
-				ManagedDesc->Buffer = gcnew SDKBase::Estruturas::CA_D3D11_BUFFER_SRV();
-				ManagedDesc->Textura1D = gcnew SDKBase::Estruturas::CA_D3D11_TEX1D_SRV();
-				ManagedDesc->Textura1DArray = gcnew SDKBase::Estruturas::CA_D3D11_TEX1D_ARRAY_SRV();
-				ManagedDesc->Textura2D = gcnew SDKBase::Estruturas::CA_D3D11_TEX2D_SRV();
-				ManagedDesc->Textura2DArray = gcnew SDKBase::Estruturas::CA_D3D11_TEX2D_ARRAY_SRV();
+				ManagedDesc->Buffer = gcnew CA_D3D11_BUFFER_SRV();
+				ManagedDesc->Textura1D = gcnew CA_D3D11_TEX1D_SRV();
+				ManagedDesc->Textura1DArray = gcnew CA_D3D11_TEX1D_ARRAY_SRV();
+				ManagedDesc->Textura2D = gcnew CA_D3D11_TEX2D_SRV();
+				ManagedDesc->Textura2DArray = gcnew CA_D3D11_TEX2D_ARRAY_SRV();
 				// Texture2DMS -> D3D11_TEX2DMS_SRV - Não há necessidade de criar.
-				ManagedDesc->Textura2DMSArray = gcnew SDKBase::Estruturas::CA_D3D11_TEX2DMS_ARRAY_SRV();
-				ManagedDesc->Textura3D = gcnew SDKBase::Estruturas::CA_D3D11_TEX3D_SRV();
-				ManagedDesc->TexturaCube = gcnew  SDKBase::Estruturas::CA_D3D11_TEXCUBE_SRV();
-				ManagedDesc->TexturaCubeArray = gcnew SDKBase::Estruturas::CA_D3D11_TEXCUBE_ARRAY_SRV();
-				ManagedDesc->BufferEx = gcnew SDKBase::Estruturas::CA_D3D11_BUFFEREX_SRV();
+				ManagedDesc->Textura2DMSArray = gcnew CA_D3D11_TEX2DMS_ARRAY_SRV();
+				ManagedDesc->Textura3D = gcnew CA_D3D11_TEX3D_SRV();
+				ManagedDesc->TexturaCube = gcnew  CA_D3D11_TEXCUBE_SRV();
+				ManagedDesc->TexturaCubeArray = gcnew CA_D3D11_TEXCUBE_ARRAY_SRV();
+				ManagedDesc->BufferEx = gcnew CA_D3D11_BUFFEREX_SRV();
 
 				//Preenche as estruturas com as informações da nativa.
 				ManagedDesc->Buffer->FirstElement = Param_NativeDescShader->Buffer.FirstElement;
@@ -6221,7 +6314,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_D3D11_SHADER_RESOURCE_VIEW_DESC1) para sua correspondencia não gerenciada(D3D11_SHADER_RESOURCE_VIEW_DESC1).
-			D3D11_SHADER_RESOURCE_VIEW_DESC1* ConverterD3D11_SHADER_RESOURCE_VIEW_DESC1Managed_ToUnManaged(SDKBase::Estruturas::CA_D3D11_SHADER_RESOURCE_VIEW_DESC1^ Param_Estrutura)
+			D3D11_SHADER_RESOURCE_VIEW_DESC1* ConverterD3D11_SHADER_RESOURCE_VIEW_DESC1Managed_ToUnManaged(CA_D3D11_SHADER_RESOURCE_VIEW_DESC1^ Param_Estrutura)
 			{
 				//Variavel a ser retornada.
 				D3D11_SHADER_RESOURCE_VIEW_DESC1* EstruturaRetorno = CriarEstrutura<D3D11_SHADER_RESOURCE_VIEW_DESC1>();
@@ -6314,10 +6407,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(D3D11_SHADER_RESOURCE_VIEW_DESC1) para sua correspondencia gerenciada(CA_D3D11_SHADER_RESOURCE_VIEW_DESC1).
-			SDKBase::Estruturas::CA_D3D11_SHADER_RESOURCE_VIEW_DESC1^ ConverterD3D11_SHADER_RESOURCE_VIEW_DESC1UnManaged_ToManaged(D3D11_SHADER_RESOURCE_VIEW_DESC1* Param_Estrutura)
+			CA_D3D11_SHADER_RESOURCE_VIEW_DESC1^ ConverterD3D11_SHADER_RESOURCE_VIEW_DESC1UnManaged_ToManaged(D3D11_SHADER_RESOURCE_VIEW_DESC1* Param_Estrutura)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_D3D11_SHADER_RESOURCE_VIEW_DESC1^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_D3D11_SHADER_RESOURCE_VIEW_DESC1();
+				CA_D3D11_SHADER_RESOURCE_VIEW_DESC1^ EstruturaRetorno = gcnew CA_D3D11_SHADER_RESOURCE_VIEW_DESC1();
 
 				//Define os dados da estrutura primaria.
 
@@ -6326,18 +6419,18 @@ namespace CarenRengine
 				EstruturaRetorno->ViewDimensao = static_cast<SDKBase::Enumeracoes::CA_D3D11_SRV_DIMENSION>(Param_Estrutura->ViewDimension);
 
 				//Inicializa as estruturas secundarias
-				EstruturaRetorno->Buffer = gcnew SDKBase::Estruturas::CA_D3D11_BUFFER_SRV();
-				EstruturaRetorno->Textura1D = gcnew SDKBase::Estruturas::CA_D3D11_TEX1D_SRV();
-				EstruturaRetorno->Textura1DArray = gcnew SDKBase::Estruturas::CA_D3D11_TEX1D_ARRAY_SRV();
-				EstruturaRetorno->Textura2D = gcnew SDKBase::Estruturas::CA_D3D11_TEX2D_SRV1();
-				EstruturaRetorno->Textura2DArray = gcnew SDKBase::Estruturas::CA_D3D11_TEX2D_ARRAY_SRV1();
+				EstruturaRetorno->Buffer = gcnew CA_D3D11_BUFFER_SRV();
+				EstruturaRetorno->Textura1D = gcnew CA_D3D11_TEX1D_SRV();
+				EstruturaRetorno->Textura1DArray = gcnew CA_D3D11_TEX1D_ARRAY_SRV();
+				EstruturaRetorno->Textura2D = gcnew CA_D3D11_TEX2D_SRV1();
+				EstruturaRetorno->Textura2DArray = gcnew CA_D3D11_TEX2D_ARRAY_SRV1();
 
 				// Texture2DMS -> D3D11_TEX2DMS_SRV - Não há necessidade de criar.
-				EstruturaRetorno->Textura2DMSArray = gcnew SDKBase::Estruturas::CA_D3D11_TEX2DMS_ARRAY_SRV();
-				EstruturaRetorno->Textura3D = gcnew SDKBase::Estruturas::CA_D3D11_TEX3D_SRV();
-				EstruturaRetorno->TexturaCube = gcnew  SDKBase::Estruturas::CA_D3D11_TEXCUBE_SRV();
-				EstruturaRetorno->TexturaCubeArray = gcnew SDKBase::Estruturas::CA_D3D11_TEXCUBE_ARRAY_SRV();
-				EstruturaRetorno->BufferEx = gcnew SDKBase::Estruturas::CA_D3D11_BUFFEREX_SRV();
+				EstruturaRetorno->Textura2DMSArray = gcnew CA_D3D11_TEX2DMS_ARRAY_SRV();
+				EstruturaRetorno->Textura3D = gcnew CA_D3D11_TEX3D_SRV();
+				EstruturaRetorno->TexturaCube = gcnew  CA_D3D11_TEXCUBE_SRV();
+				EstruturaRetorno->TexturaCubeArray = gcnew CA_D3D11_TEXCUBE_ARRAY_SRV();
+				EstruturaRetorno->BufferEx = gcnew CA_D3D11_BUFFEREX_SRV();
 
 				//Preenche as estruturas com as informações da nativa.
 				EstruturaRetorno->Buffer->FirstElement = Param_Estrutura->Buffer.FirstElement;
@@ -6378,7 +6471,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_D3D11_RASTERIZER_DESC) para sua correspondencia não gerenciada(D3D11_RASTERIZER_DESC).
-			D3D11_RASTERIZER_DESC* ConverterD3D11_RASTERIZER_DESCManaged_ToUnManaged(SDKBase::Estruturas::CA_D3D11_RASTERIZER_DESC^ Param_DescRasterizer)
+			D3D11_RASTERIZER_DESC* ConverterD3D11_RASTERIZER_DESCManaged_ToUnManaged(CA_D3D11_RASTERIZER_DESC^ Param_DescRasterizer)
 			{
 				//Variavel a ser retornada.
 				D3D11_RASTERIZER_DESC* pNativeDesc = CriarEstrutura<D3D11_RASTERIZER_DESC>();
@@ -6403,10 +6496,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(D3D11_RASTERIZER_DESC) para sua correspondencia gerenciada(CA_D3D11_RASTERIZER_DESC).
-			SDKBase::Estruturas::CA_D3D11_RASTERIZER_DESC^ ConverterD3D11_RASTERIZER_DESCUnManaged_ToManaged(D3D11_RASTERIZER_DESC* Param_NativeDescRasterizer)
+			CA_D3D11_RASTERIZER_DESC^ ConverterD3D11_RASTERIZER_DESCUnManaged_ToManaged(D3D11_RASTERIZER_DESC* Param_NativeDescRasterizer)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_D3D11_RASTERIZER_DESC^ ManagedDesc = gcnew SDKBase::Estruturas::CA_D3D11_RASTERIZER_DESC();
+				CA_D3D11_RASTERIZER_DESC^ ManagedDesc = gcnew CA_D3D11_RASTERIZER_DESC();
 
 				//Preenche os dados da estrutura.
 				ManagedDesc->AntialiasedLineEnable = Param_NativeDescRasterizer->AntialiasedLineEnable ? true : false;
@@ -6426,7 +6519,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_D3D11_RASTERIZER_DESC1) para sua correspondencia não gerenciada(D3D11_RASTERIZER_DESC1).
-			D3D11_RASTERIZER_DESC1* ConverterD3D11_RASTERIZER_DESC1Managed_ToUnManaged(SDKBase::Estruturas::CA_D3D11_RASTERIZER_DESC1^ Param_Estrutura)
+			D3D11_RASTERIZER_DESC1* ConverterD3D11_RASTERIZER_DESC1Managed_ToUnManaged(CA_D3D11_RASTERIZER_DESC1^ Param_Estrutura)
 			{
 				//Variavel a ser retornada.
 				D3D11_RASTERIZER_DESC1* EstruturaRetorno = CriarEstrutura<D3D11_RASTERIZER_DESC1>();
@@ -6452,10 +6545,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(D3D11_RASTERIZER_DESC1) para sua correspondencia gerenciada(CA_D3D11_RASTERIZER_DESC1).
-			SDKBase::Estruturas::CA_D3D11_RASTERIZER_DESC1^ ConverterD3D11_RASTERIZER_DESC1UnManaged_ToManaged(D3D11_RASTERIZER_DESC1* Param_Estrutura)
+			CA_D3D11_RASTERIZER_DESC1^ ConverterD3D11_RASTERIZER_DESC1UnManaged_ToManaged(D3D11_RASTERIZER_DESC1* Param_Estrutura)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_D3D11_RASTERIZER_DESC1^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_D3D11_RASTERIZER_DESC1();
+				CA_D3D11_RASTERIZER_DESC1^ EstruturaRetorno = gcnew CA_D3D11_RASTERIZER_DESC1();
 
 				//Preenche os dados da estrutura.
 				EstruturaRetorno->AntialiasedLineEnable = Param_Estrutura->AntialiasedLineEnable ? true : false;
@@ -6476,7 +6569,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_D3D11_RASTERIZER_DESC2) para sua correspondencia não gerenciada(D3D11_RASTERIZER_DESC2).
-			D3D11_RASTERIZER_DESC2* ConverterD3D11_RASTERIZER_DESC2Managed_ToUnManaged(SDKBase::Estruturas::CA_D3D11_RASTERIZER_DESC2^ Param_Estrutura)
+			D3D11_RASTERIZER_DESC2* ConverterD3D11_RASTERIZER_DESC2Managed_ToUnManaged(CA_D3D11_RASTERIZER_DESC2^ Param_Estrutura)
 			{
 				//Variavel a ser retornada.
 				D3D11_RASTERIZER_DESC2* EstruturaRetorno = CriarEstrutura<D3D11_RASTERIZER_DESC2>();
@@ -6503,10 +6596,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(D3D11_RASTERIZER_DESC2) para sua correspondencia gerenciada(CA_D3D11_RASTERIZER_DESC2).
-			SDKBase::Estruturas::CA_D3D11_RASTERIZER_DESC2^ ConverterD3D11_RASTERIZER_DESC2UnManaged_ToManaged(D3D11_RASTERIZER_DESC2* Param_Estrutura)
+			CA_D3D11_RASTERIZER_DESC2^ ConverterD3D11_RASTERIZER_DESC2UnManaged_ToManaged(D3D11_RASTERIZER_DESC2* Param_Estrutura)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_D3D11_RASTERIZER_DESC2^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_D3D11_RASTERIZER_DESC2();
+				CA_D3D11_RASTERIZER_DESC2^ EstruturaRetorno = gcnew CA_D3D11_RASTERIZER_DESC2();
 
 				//Preenche os dados da estrutura.
 				EstruturaRetorno->AntialiasedLineEnable = Param_Estrutura->AntialiasedLineEnable ? true : false;
@@ -6528,7 +6621,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_D3D11_RENDER_TARGET_VIEW_DESC) para sua correspondencia não gerenciada(D3D11_RENDER_TARGET_VIEW_DESC).
-			D3D11_RENDER_TARGET_VIEW_DESC* ConverterD3D11_RENDER_TARGET_VIEW_DESCManaged_ToUnManaged(SDKBase::Estruturas::CA_D3D11_RENDER_TARGET_VIEW_DESC^ Param_DescRender)
+			D3D11_RENDER_TARGET_VIEW_DESC* ConverterD3D11_RENDER_TARGET_VIEW_DESCManaged_ToUnManaged(CA_D3D11_RENDER_TARGET_VIEW_DESC^ Param_DescRender)
 			{
 				//Variavel a ser retornada.
 				D3D11_RENDER_TARGET_VIEW_DESC* pNativeDesc = CriarEstrutura<D3D11_RENDER_TARGET_VIEW_DESC>();
@@ -6594,10 +6687,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(D3D11_RENDER_TARGET_VIEW_DESC) para sua correspondencia gerenciada(CA_D3D11_RENDER_TARGET_VIEW_DESC).
-			SDKBase::Estruturas::CA_D3D11_RENDER_TARGET_VIEW_DESC^ ConverterD3D11_RENDER_TARGET_VIEW_DESCUnManaged_ToManaged(D3D11_RENDER_TARGET_VIEW_DESC* Param_NativeDescRender)
+			CA_D3D11_RENDER_TARGET_VIEW_DESC^ ConverterD3D11_RENDER_TARGET_VIEW_DESCUnManaged_ToManaged(D3D11_RENDER_TARGET_VIEW_DESC* Param_NativeDescRender)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_D3D11_RENDER_TARGET_VIEW_DESC^ ManagedDesc = gcnew SDKBase::Estruturas::CA_D3D11_RENDER_TARGET_VIEW_DESC();
+				CA_D3D11_RENDER_TARGET_VIEW_DESC^ ManagedDesc = gcnew CA_D3D11_RENDER_TARGET_VIEW_DESC();
 
 
 				//Define os dados da estrutura primaria.
@@ -6607,14 +6700,14 @@ namespace CarenRengine
 				ManagedDesc->ViewDimensao = static_cast<SDKBase::Enumeracoes::CA_D3D11_RTV_DIMENSION>(Param_NativeDescRender->ViewDimension);
 
 				//Inicializa as estruturas secundarias
-				ManagedDesc->Buffer = gcnew SDKBase::Estruturas::CA_D3D11_BUFFER_RTV();
-				ManagedDesc->Textura1D = gcnew SDKBase::Estruturas::CA_D3D11_TEX1D_RTV();
-				ManagedDesc->Textura1DArray = gcnew SDKBase::Estruturas::CA_D3D11_TEX1D_ARRAY_RTV();
-				ManagedDesc->Textura2D = gcnew SDKBase::Estruturas::CA_D3D11_TEX2D_RTV();
-				ManagedDesc->Textura2DArray = gcnew SDKBase::Estruturas::CA_D3D11_TEX2D_ARRAY_RTV();
+				ManagedDesc->Buffer = gcnew CA_D3D11_BUFFER_RTV();
+				ManagedDesc->Textura1D = gcnew CA_D3D11_TEX1D_RTV();
+				ManagedDesc->Textura1DArray = gcnew CA_D3D11_TEX1D_ARRAY_RTV();
+				ManagedDesc->Textura2D = gcnew CA_D3D11_TEX2D_RTV();
+				ManagedDesc->Textura2DArray = gcnew CA_D3D11_TEX2D_ARRAY_RTV();
 				//EstruturaRetorno->Textura2DMS -> Essa estrutura não precisa ser criada porque não contém membros e não define nada.
-				ManagedDesc->Textura2DMSArray = gcnew SDKBase::Estruturas::CA_D3D11_TEX2DMS_ARRAY_RTV();
-				ManagedDesc->Textura3D = gcnew SDKBase::Estruturas::CA_D3D11_TEX3D_RTV();
+				ManagedDesc->Textura2DMSArray = gcnew CA_D3D11_TEX2DMS_ARRAY_RTV();
+				ManagedDesc->Textura3D = gcnew CA_D3D11_TEX3D_RTV();
 
 				//Preenche as estruturas.
 				ManagedDesc->Buffer->FirstElement = Param_NativeDescRender->Buffer.FirstElement;
@@ -6638,7 +6731,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_D3D11_RENDER_TARGET_VIEW_DESC) para sua correspondencia não gerenciada(D3D11_RENDER_TARGET_VIEW_DESC1).
-			D3D11_RENDER_TARGET_VIEW_DESC1* ConverterD3D11_RENDER_TARGET_VIEW_DESC1Managed_ToUnManaged(SDKBase::Estruturas::CA_D3D11_RENDER_TARGET_VIEW_DESC1^ Param_Estrutura)
+			D3D11_RENDER_TARGET_VIEW_DESC1* ConverterD3D11_RENDER_TARGET_VIEW_DESC1Managed_ToUnManaged(CA_D3D11_RENDER_TARGET_VIEW_DESC1^ Param_Estrutura)
 			{
 				//Variavel a ser retornada.
 				D3D11_RENDER_TARGET_VIEW_DESC1* EstruturaRetorno = CriarEstrutura<D3D11_RENDER_TARGET_VIEW_DESC1>();
@@ -6706,10 +6799,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(D3D11_RENDER_TARGET_VIEW_DESC1) para sua correspondencia gerenciada(CA_D3D11_RENDER_TARGET_VIEW_DESC).
-			SDKBase::Estruturas::CA_D3D11_RENDER_TARGET_VIEW_DESC1^ ConverterD3D11_RENDER_TARGET_VIEW_DESC1UnManaged_ToManaged(D3D11_RENDER_TARGET_VIEW_DESC1* Param_Estrutura)
+			CA_D3D11_RENDER_TARGET_VIEW_DESC1^ ConverterD3D11_RENDER_TARGET_VIEW_DESC1UnManaged_ToManaged(D3D11_RENDER_TARGET_VIEW_DESC1* Param_Estrutura)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_D3D11_RENDER_TARGET_VIEW_DESC1^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_D3D11_RENDER_TARGET_VIEW_DESC1();
+				CA_D3D11_RENDER_TARGET_VIEW_DESC1^ EstruturaRetorno = gcnew CA_D3D11_RENDER_TARGET_VIEW_DESC1();
 
 
 				//Define os dados da estrutura primaria.
@@ -6719,15 +6812,15 @@ namespace CarenRengine
 				EstruturaRetorno->ViewDimensao = static_cast<SDKBase::Enumeracoes::CA_D3D11_RTV_DIMENSION>(Param_Estrutura->ViewDimension);
 
 				//Inicializa as estruturas secundarias
-				EstruturaRetorno->Buffer = gcnew SDKBase::Estruturas::CA_D3D11_BUFFER_RTV();
-				EstruturaRetorno->Textura1D = gcnew SDKBase::Estruturas::CA_D3D11_TEX1D_RTV();
-				EstruturaRetorno->Textura1DArray = gcnew SDKBase::Estruturas::CA_D3D11_TEX1D_ARRAY_RTV();
-				EstruturaRetorno->Textura2D = gcnew SDKBase::Estruturas::CA_D3D11_TEX2D_RTV1();
-				EstruturaRetorno->Textura2DArray = gcnew SDKBase::Estruturas::CA_D3D11_TEX2D_ARRAY_RTV1();
+				EstruturaRetorno->Buffer = gcnew CA_D3D11_BUFFER_RTV();
+				EstruturaRetorno->Textura1D = gcnew CA_D3D11_TEX1D_RTV();
+				EstruturaRetorno->Textura1DArray = gcnew CA_D3D11_TEX1D_ARRAY_RTV();
+				EstruturaRetorno->Textura2D = gcnew CA_D3D11_TEX2D_RTV1();
+				EstruturaRetorno->Textura2DArray = gcnew CA_D3D11_TEX2D_ARRAY_RTV1();
 
 				//EstruturaRetorno->Textura2DMS -> Essa estrutura não precisa ser criada porque não contém membros e não define nada.
-				EstruturaRetorno->Textura2DMSArray = gcnew SDKBase::Estruturas::CA_D3D11_TEX2DMS_ARRAY_RTV();
-				EstruturaRetorno->Textura3D = gcnew SDKBase::Estruturas::CA_D3D11_TEX3D_RTV();
+				EstruturaRetorno->Textura2DMSArray = gcnew CA_D3D11_TEX2DMS_ARRAY_RTV();
+				EstruturaRetorno->Textura3D = gcnew CA_D3D11_TEX3D_RTV();
 
 				//Preenche as estruturas.
 				EstruturaRetorno->Buffer->FirstElement = Param_Estrutura->Buffer.FirstElement;
@@ -6753,7 +6846,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_D3D11_TEXTURE1D_DESC) para sua correspondencia não gerenciada(D3D11_TEXTURE1D_DESC).
-			D3D11_TEXTURE1D_DESC* ConverterD3D11_TEXTURE1D_DESCManaged_ToUnManaged(SDKBase::Estruturas::CA_D3D11_TEXTURE1D_DESC^ Param_DescTex1D)
+			D3D11_TEXTURE1D_DESC* ConverterD3D11_TEXTURE1D_DESCManaged_ToUnManaged(CA_D3D11_TEXTURE1D_DESC^ Param_DescTex1D)
 			{
 				//Variavel a ser retornada.
 				D3D11_TEXTURE1D_DESC* pNativeDesc = CriarEstrutura<D3D11_TEXTURE1D_DESC>();
@@ -6776,10 +6869,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(D3D11_TEXTURE1D_DESC) para sua correspondencia gerenciada(CA_D3D11_TEXTURE1D_DESC).
-			SDKBase::Estruturas::CA_D3D11_TEXTURE1D_DESC^ ConverterD3D11_TEXTURE1D_DESCUnManaged_ToManaged(D3D11_TEXTURE1D_DESC* Param_NativeDescTex1D)
+			CA_D3D11_TEXTURE1D_DESC^ ConverterD3D11_TEXTURE1D_DESCUnManaged_ToManaged(D3D11_TEXTURE1D_DESC* Param_NativeDescTex1D)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_D3D11_TEXTURE1D_DESC^ ManagedDesc = gcnew SDKBase::Estruturas::CA_D3D11_TEXTURE1D_DESC();
+				CA_D3D11_TEXTURE1D_DESC^ ManagedDesc = gcnew CA_D3D11_TEXTURE1D_DESC();
 
 				//Preenche os dados da estrutura gerenciada.
 				ManagedDesc->Formato = static_cast<SDKBase::Enumeracoes::CA_DXGI_FORMAT>(Param_NativeDescTex1D->Format);
@@ -6797,7 +6890,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_D3D11_TEXTURE2D_DESC) para sua correspondencia não gerenciada(D3D11_TEXTURE2D_DESC).
-			D3D11_TEXTURE2D_DESC* ConverterD3D11_TEXTURE2D_DESCManaged_ToUnManaged(SDKBase::Estruturas::CA_D3D11_TEXTURE2D_DESC^ Param_DescTex2D)
+			D3D11_TEXTURE2D_DESC* ConverterD3D11_TEXTURE2D_DESCManaged_ToUnManaged(CA_D3D11_TEXTURE2D_DESC^ Param_DescTex2D)
 			{
 				//Variavel a ser retornada.
 				D3D11_TEXTURE2D_DESC* pNativeDesc = CriarEstrutura<D3D11_TEXTURE2D_DESC>();
@@ -6830,10 +6923,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(D3D11_TEXTURE2D_DESC) para sua correspondencia gerenciada(CA_D3D11_TEXTURE2D_DESC).
-			SDKBase::Estruturas::CA_D3D11_TEXTURE2D_DESC^ ConverterD3D11_TEXTURE2D_DESCUnManaged_ToManaged(D3D11_TEXTURE2D_DESC* Param_NativeDescTex2D)
+			CA_D3D11_TEXTURE2D_DESC^ ConverterD3D11_TEXTURE2D_DESCUnManaged_ToManaged(D3D11_TEXTURE2D_DESC* Param_NativeDescTex2D)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_D3D11_TEXTURE2D_DESC^ ManagedDesc = gcnew SDKBase::Estruturas::CA_D3D11_TEXTURE2D_DESC();
+				CA_D3D11_TEXTURE2D_DESC^ ManagedDesc = gcnew CA_D3D11_TEXTURE2D_DESC();
 
 				//Preenche os dados da estrutura gerenciada.
 				ManagedDesc->Formato = static_cast<SDKBase::Enumeracoes::CA_DXGI_FORMAT>(Param_NativeDescTex2D->Format);
@@ -6849,7 +6942,7 @@ namespace CarenRengine
 				//Define os dados da estrutura secundaria
 
 				//Inicializa a estrutura.
-				ManagedDesc->SampleDesc = gcnew SDKBase::Estruturas::CA_DXGI_SAMPLE_DESC();
+				ManagedDesc->SampleDesc = gcnew CA_DXGI_SAMPLE_DESC();
 
 				ManagedDesc->SampleDesc->Count = Param_NativeDescTex2D->SampleDesc.Count;
 				ManagedDesc->SampleDesc->Quality = Param_NativeDescTex2D->SampleDesc.Quality;
@@ -6860,7 +6953,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_D3D11_TEXTURE2D_DESC1) para sua correspondencia não gerenciada(D3D11_TEXTURE2D_DESC1).
-			D3D11_TEXTURE2D_DESC1* ConverterD3D11_TEXTURE2D_DESC1Managed_ToUnManaged(SDKBase::Estruturas::CA_D3D11_TEXTURE2D_DESC1^ Param_Estrutura)
+			D3D11_TEXTURE2D_DESC1* ConverterD3D11_TEXTURE2D_DESC1Managed_ToUnManaged(CA_D3D11_TEXTURE2D_DESC1^ Param_Estrutura)
 			{
 				//Variavel a ser retornada.
 				D3D11_TEXTURE2D_DESC1* EstruturaRetorno = CriarEstrutura<D3D11_TEXTURE2D_DESC1>();
@@ -6894,10 +6987,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(D3D11_TEXTURE2D_DESC1) para sua correspondencia gerenciada(CA_D3D11_TEXTURE2D_DESC1).
-			SDKBase::Estruturas::CA_D3D11_TEXTURE2D_DESC1^ ConverterD3D11_TEXTURE2D_DESC1UnManaged_ToManaged(D3D11_TEXTURE2D_DESC1* Param_Estrutura)
+			CA_D3D11_TEXTURE2D_DESC1^ ConverterD3D11_TEXTURE2D_DESC1UnManaged_ToManaged(D3D11_TEXTURE2D_DESC1* Param_Estrutura)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_D3D11_TEXTURE2D_DESC1^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_D3D11_TEXTURE2D_DESC1();
+				CA_D3D11_TEXTURE2D_DESC1^ EstruturaRetorno = gcnew CA_D3D11_TEXTURE2D_DESC1();
 
 				//Preenche os dados da estrutura gerenciada.
 				EstruturaRetorno->Formato = static_cast<SDKBase::Enumeracoes::CA_DXGI_FORMAT>(Param_Estrutura->Format);
@@ -6914,7 +7007,7 @@ namespace CarenRengine
 				//Define os dados da estrutura secundaria
 
 				//Inicializa a estrutura.
-				EstruturaRetorno->SampleDesc = gcnew SDKBase::Estruturas::CA_DXGI_SAMPLE_DESC();
+				EstruturaRetorno->SampleDesc = gcnew CA_DXGI_SAMPLE_DESC();
 				EstruturaRetorno->SampleDesc->Count = Param_Estrutura->SampleDesc.Count;
 				EstruturaRetorno->SampleDesc->Quality = Param_Estrutura->SampleDesc.Quality;
 
@@ -6924,7 +7017,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_D3D11_TEXTURE3D_DESC) para sua correspondencia não gerenciada(D3D11_TEXTURE3D_DESC).
-			D3D11_TEXTURE3D_DESC* ConverterD3D11_TEXTURE3D_DESCManaged_ToUnManaged(SDKBase::Estruturas::CA_D3D11_TEXTURE3D_DESC^ Param_DescTex3D)
+			D3D11_TEXTURE3D_DESC* ConverterD3D11_TEXTURE3D_DESCManaged_ToUnManaged(CA_D3D11_TEXTURE3D_DESC^ Param_DescTex3D)
 			{
 				//Variavel a ser retornada.
 				D3D11_TEXTURE3D_DESC* pNativeDesc = CriarEstrutura<D3D11_TEXTURE3D_DESC>();
@@ -6948,10 +7041,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(D3D11_TEXTURE3D_DESC) para sua correspondencia gerenciada(CA_D3D11_TEXTURE3D_DESC).
-			SDKBase::Estruturas::CA_D3D11_TEXTURE3D_DESC^ ConverterD3D11_TEXTURE3D_DESCUnManaged_ToManaged(D3D11_TEXTURE3D_DESC* Param_NativeDescTex3D)
+			CA_D3D11_TEXTURE3D_DESC^ ConverterD3D11_TEXTURE3D_DESCUnManaged_ToManaged(D3D11_TEXTURE3D_DESC* Param_NativeDescTex3D)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_D3D11_TEXTURE3D_DESC^ ManagedDesc = gcnew SDKBase::Estruturas::CA_D3D11_TEXTURE3D_DESC();
+				CA_D3D11_TEXTURE3D_DESC^ ManagedDesc = gcnew CA_D3D11_TEXTURE3D_DESC();
 
 				//Preenche os dados da estrutura gerenciada.
 				ManagedDesc->Formato = static_cast<SDKBase::Enumeracoes::CA_DXGI_FORMAT>(Param_NativeDescTex3D->Format);
@@ -6969,7 +7062,7 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura gerenciada(CA_D3D11_TEXTURE3D_DESC1) para sua correspondencia não gerenciada(D3D11_TEXTURE3D_DESC1).
-			D3D11_TEXTURE3D_DESC1* ConverterD3D11_TEXTURE3D_DESC1Managed_ToUnManaged(SDKBase::Estruturas::CA_D3D11_TEXTURE3D_DESC1^ Param_Estrutura)
+			D3D11_TEXTURE3D_DESC1* ConverterD3D11_TEXTURE3D_DESC1Managed_ToUnManaged(CA_D3D11_TEXTURE3D_DESC1^ Param_Estrutura)
 			{
 				//Variavel a ser retornada.
 				D3D11_TEXTURE3D_DESC1* EstruturaRetorno = CriarEstrutura<D3D11_TEXTURE3D_DESC1>();
@@ -6994,10 +7087,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(D3D11_TEXTURE3D_DESC1) para sua correspondencia gerenciada(CA_D3D11_TEXTURE3D_DESC1).
-			SDKBase::Estruturas::CA_D3D11_TEXTURE3D_DESC1^ ConverterD3D11_TEXTURE3D_DESC1UnManaged_ToManaged(D3D11_TEXTURE3D_DESC1* Param_Estrutura)
+			CA_D3D11_TEXTURE3D_DESC1^ ConverterD3D11_TEXTURE3D_DESC1UnManaged_ToManaged(D3D11_TEXTURE3D_DESC1* Param_Estrutura)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_D3D11_TEXTURE3D_DESC1^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_D3D11_TEXTURE3D_DESC1();
+				CA_D3D11_TEXTURE3D_DESC1^ EstruturaRetorno = gcnew CA_D3D11_TEXTURE3D_DESC1();
 
 				//Preenche os dados da estrutura gerenciada.
 				EstruturaRetorno->Formato = static_cast<SDKBase::Enumeracoes::CA_DXGI_FORMAT>(Param_Estrutura->Format);
@@ -7017,7 +7110,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_D3D11_DESC_CONTADOR) para sua correspondencia não gerenciada(D3D11_COUNTER_DESC).
-			D3D11_COUNTER_DESC* ConverterD3D11_COUNTER_DESCManaged_ToUnManaged(SDKBase::Estruturas::CA_D3D11_DESC_CONTADOR^ Param_Desc)
+			D3D11_COUNTER_DESC* ConverterD3D11_COUNTER_DESCManaged_ToUnManaged(CA_D3D11_DESC_CONTADOR^ Param_Desc)
 			{
 				//Variavel a ser retornada.
 				D3D11_COUNTER_DESC* pNativeDesc = CriarEstrutura<D3D11_COUNTER_DESC>();
@@ -7034,10 +7127,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(D3D11_COUNTER_DESC) para sua correspondencia gerenciada(CA_D3D11_DESC_CONTADOR).
-			SDKBase::Estruturas::CA_D3D11_DESC_CONTADOR^ ConverterD3D11_COUNTER_DESCUnManaged_ToManaged(D3D11_COUNTER_DESC* Param_NativeDesc)
+			CA_D3D11_DESC_CONTADOR^ ConverterD3D11_COUNTER_DESCUnManaged_ToManaged(D3D11_COUNTER_DESC* Param_NativeDesc)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_D3D11_DESC_CONTADOR^ ManagedDesc = gcnew SDKBase::Estruturas::CA_D3D11_DESC_CONTADOR();
+				CA_D3D11_DESC_CONTADOR^ ManagedDesc = gcnew CA_D3D11_DESC_CONTADOR();
 
 				//Preenche os dados da estrutura.
 				ManagedDesc->ContadorType = static_cast<SDKBase::Enumeracoes::CA_D3D11_CONTADOR>(Param_NativeDesc->Counter);
@@ -7049,7 +7142,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_D3D11_INFO_CONTADOR) para sua correspondencia não gerenciada(D3D11_COUNTER_INFO).
-			D3D11_COUNTER_INFO* ConverterD3D11_COUNTER_INFOManaged_ToUnManaged(SDKBase::Estruturas::CA_D3D11_INFO_CONTADOR^ Param_Desc)
+			D3D11_COUNTER_INFO* ConverterD3D11_COUNTER_INFOManaged_ToUnManaged(CA_D3D11_INFO_CONTADOR^ Param_Desc)
 			{
 				//Variavel a ser retornada.
 				D3D11_COUNTER_INFO* pNativeDesc = CriarEstrutura<D3D11_COUNTER_INFO>();
@@ -7067,10 +7160,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(D3D11_COUNTER_INFO) para sua correspondencia gerenciada(CA_D3D11_INFO_CONTADOR).
-			SDKBase::Estruturas::CA_D3D11_INFO_CONTADOR^ ConverterD3D11_COUNTER_INFOUnManaged_ToManaged(D3D11_COUNTER_INFO* Param_Desc)
+			CA_D3D11_INFO_CONTADOR^ ConverterD3D11_COUNTER_INFOUnManaged_ToManaged(D3D11_COUNTER_INFO* Param_Desc)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_D3D11_INFO_CONTADOR^ ManagedDesc = gcnew SDKBase::Estruturas::CA_D3D11_INFO_CONTADOR();
+				CA_D3D11_INFO_CONTADOR^ ManagedDesc = gcnew CA_D3D11_INFO_CONTADOR();
 
 				//Preenche os dados da estrutura.
 				ManagedDesc->IDMaiorContadorDependente = static_cast<SDKBase::Enumeracoes::CA_D3D11_CONTADOR>(Param_Desc->LastDeviceDependentCounter);
@@ -7084,7 +7177,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_D3D11_FEATURE_DATA_THREADING) para sua correspondencia não gerenciada(D3D11_FEATURE_DATA_THREADING).
-			D3D11_FEATURE_DATA_THREADING* ConverterD3D11_FEATURE_DATA_THREADINGManaged_ToUnManaged(SDKBase::Estruturas::CA_D3D11_FEATURE_DATA_THREADING^ Param_Estrutura)
+			D3D11_FEATURE_DATA_THREADING* ConverterD3D11_FEATURE_DATA_THREADINGManaged_ToUnManaged(CA_D3D11_FEATURE_DATA_THREADING^ Param_Estrutura)
 			{
 				//Variavel a ser retornada.
 				D3D11_FEATURE_DATA_THREADING* pNativeDesc = CriarEstrutura<D3D11_FEATURE_DATA_THREADING>();
@@ -7101,10 +7194,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(D3D11_FEATURE_DATA_THREADING) para sua correspondencia gerenciada(CA_D3D11_FEATURE_DATA_THREADING).
-			SDKBase::Estruturas::CA_D3D11_FEATURE_DATA_THREADING^ ConverterD3D11_FEATURE_DATA_THREADINGUnManaged_ToManaged(D3D11_FEATURE_DATA_THREADING* Param_Estrutura)
+			CA_D3D11_FEATURE_DATA_THREADING^ ConverterD3D11_FEATURE_DATA_THREADINGUnManaged_ToManaged(D3D11_FEATURE_DATA_THREADING* Param_Estrutura)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_D3D11_FEATURE_DATA_THREADING^ ManagedDesc = gcnew SDKBase::Estruturas::CA_D3D11_FEATURE_DATA_THREADING();
+				CA_D3D11_FEATURE_DATA_THREADING^ ManagedDesc = gcnew CA_D3D11_FEATURE_DATA_THREADING();
 
 				//Preenche os dados da estrutura.
 				ManagedDesc->DriverCommandLists = Param_Estrutura->DriverCommandLists;
@@ -7118,7 +7211,7 @@ namespace CarenRengine
 
 			//Converte uma estrutura gerenciada(CA_D3D11_INPUT_ELEMENT_DESC) para sua correspondencia não gerenciada(D3D11_INPUT_ELEMENT_DESC).
 			//Chame um (delete) no membro(SemanticName) para liberar a memoria para ele e depois libera a memoria da estrutura completa.
-			D3D11_INPUT_ELEMENT_DESC* ConverterD3D11_INPUT_ELEMENT_DESCManaged_ToUnManaged(SDKBase::Estruturas::CA_D3D11_INPUT_ELEMENT_DESC^ Param_Desc)
+			D3D11_INPUT_ELEMENT_DESC* ConverterD3D11_INPUT_ELEMENT_DESCManaged_ToUnManaged(CA_D3D11_INPUT_ELEMENT_DESC^ Param_Desc)
 			{
 				//Variavel a ser retornada.
 				D3D11_INPUT_ELEMENT_DESC* pEstrutura = CriarEstrutura<D3D11_INPUT_ELEMENT_DESC>();
@@ -7140,10 +7233,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(D3D11_INPUT_ELEMENT_DESC) para sua correspondencia gerenciada(CA_D3D11_INPUT_ELEMENT_DESC).
-			SDKBase::Estruturas::CA_D3D11_INPUT_ELEMENT_DESC^ ConverterD3D11_INPUT_ELEMENT_DESCUnManaged_ToManaged(D3D11_INPUT_ELEMENT_DESC* Param_Desc)
+			CA_D3D11_INPUT_ELEMENT_DESC^ ConverterD3D11_INPUT_ELEMENT_DESCUnManaged_ToManaged(D3D11_INPUT_ELEMENT_DESC* Param_Desc)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_D3D11_INPUT_ELEMENT_DESC^ pEstrutura = gcnew SDKBase::Estruturas::CA_D3D11_INPUT_ELEMENT_DESC();
+				CA_D3D11_INPUT_ELEMENT_DESC^ pEstrutura = gcnew CA_D3D11_INPUT_ELEMENT_DESC();
 
 				//Preenche os dados da estrutura.
 				pEstrutura->AlignedByteOffset = Param_Desc->AlignedByteOffset;
@@ -7161,7 +7254,7 @@ namespace CarenRengine
 
 			//Converte uma estrutura gerenciada(CA_D3D11_SO_DECLARATION_ENTRY) para sua correspondencia não gerenciada(D3D11_SO_DECLARATION_ENTRY).
 			//Chame um (delete) no membro(SemanticName) para liberar a memoria para ele e depois libera a memoria da estrutura completa.
-			D3D11_SO_DECLARATION_ENTRY* ConverterD3D11_SO_DECLARATION_ENTRYManaged_ToUnManaged(SDKBase::Estruturas::CA_D3D11_SO_DECLARATION_ENTRY^ Param_Desc)
+			D3D11_SO_DECLARATION_ENTRY* ConverterD3D11_SO_DECLARATION_ENTRYManaged_ToUnManaged(CA_D3D11_SO_DECLARATION_ENTRY^ Param_Desc)
 			{
 				//Variavel a ser retornada.
 				D3D11_SO_DECLARATION_ENTRY* pEstrutura = CriarEstrutura<D3D11_SO_DECLARATION_ENTRY>();
@@ -7182,10 +7275,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(D3D11_SO_DECLARATION_ENTRY) para sua correspondencia gerenciada(CA_D3D11_SO_DECLARATION_ENTRY).
-			SDKBase::Estruturas::CA_D3D11_SO_DECLARATION_ENTRY^ ConverterD3D11_SO_DECLARATION_ENTRYUnManaged_ToManaged(D3D11_SO_DECLARATION_ENTRY* Param_Desc)
+			CA_D3D11_SO_DECLARATION_ENTRY^ ConverterD3D11_SO_DECLARATION_ENTRYUnManaged_ToManaged(D3D11_SO_DECLARATION_ENTRY* Param_Desc)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_D3D11_SO_DECLARATION_ENTRY^ pEstrutura = gcnew SDKBase::Estruturas::CA_D3D11_SO_DECLARATION_ENTRY();
+				CA_D3D11_SO_DECLARATION_ENTRY^ pEstrutura = gcnew CA_D3D11_SO_DECLARATION_ENTRY();
 
 				//Preenche os dados da estrutura.
 				pEstrutura->ComponentCount = Param_Desc->ComponentCount;
@@ -7201,7 +7294,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_D3D11_VIEWPORT) para sua correspondencia não gerenciada(D3D11_VIEWPORT).
-			D3D11_VIEWPORT* ConverterD3D11_VIEWPORTManaged_ToUnManaged(SDKBase::Estruturas::CA_D3D11_VIEWPORT^ Param_Estrutura)
+			D3D11_VIEWPORT* ConverterD3D11_VIEWPORTManaged_ToUnManaged(CA_D3D11_VIEWPORT^ Param_Estrutura)
 			{
 				//Variavel a ser retornada.
 				D3D11_VIEWPORT* EstruturaRetorno = CriarEstrutura<D3D11_VIEWPORT>();
@@ -7222,10 +7315,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(D3D11_VIEWPORT) para sua correspondencia gerenciada(CA_D3D11_VIEWPORT).
-			SDKBase::Estruturas::CA_D3D11_VIEWPORT^ ConverterD3D11_VIEWPORTUnManaged_ToManaged(D3D11_VIEWPORT* Param_Estrutura)
+			CA_D3D11_VIEWPORT^ ConverterD3D11_VIEWPORTUnManaged_ToManaged(D3D11_VIEWPORT* Param_Estrutura)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_D3D11_VIEWPORT^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_D3D11_VIEWPORT();
+				CA_D3D11_VIEWPORT^ EstruturaRetorno = gcnew CA_D3D11_VIEWPORT();
 
 				//Preenche os dados da estrutura.
 				EstruturaRetorno->Altura = Param_Estrutura->Height;
@@ -7241,7 +7334,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_D3D11_BOX) para sua correspondencia não gerenciada(D3D11_BOX).
-			D3D11_BOX* ConverterD3D11_BOXManaged_ToUnManaged(SDKBase::Estruturas::CA_D3D11_BOX^ Param_Estrutura)
+			D3D11_BOX* ConverterD3D11_BOXManaged_ToUnManaged(CA_D3D11_BOX^ Param_Estrutura)
 			{
 				//Variavel a ser retornada.
 				D3D11_BOX* EstruturaRetorno = CriarEstrutura<D3D11_BOX>();
@@ -7262,10 +7355,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(D3D11_BOX) para sua correspondencia gerenciada(CA_D3D11_BOX).
-			SDKBase::Estruturas::CA_D3D11_BOX^ ConverterD3D11_BOXUnManaged_ToManaged(D3D11_BOX* Param_Estrutura)
+			CA_D3D11_BOX^ ConverterD3D11_BOXUnManaged_ToManaged(D3D11_BOX* Param_Estrutura)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_D3D11_BOX^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_D3D11_BOX();
+				CA_D3D11_BOX^ EstruturaRetorno = gcnew CA_D3D11_BOX();
 
 				//Preenche os dados da estrutura.
 				EstruturaRetorno->back = Param_Estrutura->back;
@@ -7307,7 +7400,7 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(D3D11_MAPPED_SUBRESOURCE) para sua correspondencia gerenciada(CA_D3D11_MAPPED_SUBRESOURCE).
-			SDKBase::Estruturas::CA_D3D11_MAPPED_SUBRESOURCE^ ConverterD3D11_MAPPED_SUBRESOURCEUnManaged_ToManaged(D3D11_MAPPED_SUBRESOURCE* Param_Estrutura, ICarenBuffer^% Param_BuffInterface)
+			CA_D3D11_MAPPED_SUBRESOURCE^ ConverterD3D11_MAPPED_SUBRESOURCEUnManaged_ToManaged(D3D11_MAPPED_SUBRESOURCE* Param_Estrutura, ICarenBuffer^% Param_BuffInterface)
 			{
 				//Variavel a ser retornada.
 				CA_D3D11_MAPPED_SUBRESOURCE^ EstruturaRetorno = gcnew CA_D3D11_MAPPED_SUBRESOURCE();
@@ -7328,7 +7421,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_D3D11_TILED_RESOURCE_COORDINATE) para sua correspondencia não gerenciada(D3D11_TILED_RESOURCE_COORDINATE).
-			D3D11_TILED_RESOURCE_COORDINATE* ConverterD3D11_TILED_RESOURCE_COORDINATEManaged_ToUnManaged(SDKBase::Estruturas::CA_D3D11_TILED_RESOURCE_COORDINATE^ Param_Estrutura)
+			D3D11_TILED_RESOURCE_COORDINATE* ConverterD3D11_TILED_RESOURCE_COORDINATEManaged_ToUnManaged(CA_D3D11_TILED_RESOURCE_COORDINATE^ Param_Estrutura)
 			{
 				//Variavel a ser retornada.
 				D3D11_TILED_RESOURCE_COORDINATE* EstruturaRetorno = CriarEstrutura<D3D11_TILED_RESOURCE_COORDINATE>();
@@ -7347,10 +7440,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(D3D11_TILED_RESOURCE_COORDINATE) para sua correspondencia gerenciada(CA_D3D11_TILED_RESOURCE_COORDINATE).
-			SDKBase::Estruturas::CA_D3D11_TILED_RESOURCE_COORDINATE^ ConverterD3D11_TILED_RESOURCE_COORDINATEUnManaged_ToManaged(D3D11_TILED_RESOURCE_COORDINATE* Param_Estrutura)
+			CA_D3D11_TILED_RESOURCE_COORDINATE^ ConverterD3D11_TILED_RESOURCE_COORDINATEUnManaged_ToManaged(D3D11_TILED_RESOURCE_COORDINATE* Param_Estrutura)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_D3D11_TILED_RESOURCE_COORDINATE^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_D3D11_TILED_RESOURCE_COORDINATE();
+				CA_D3D11_TILED_RESOURCE_COORDINATE^ EstruturaRetorno = gcnew CA_D3D11_TILED_RESOURCE_COORDINATE();
 
 				//Preenche os dados da estrutura.
 				EstruturaRetorno->X = Param_Estrutura->X;
@@ -7364,7 +7457,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_D3D11_TILE_REGION_SIZE) para sua correspondencia não gerenciada(D3D11_TILE_REGION_SIZE).
-			D3D11_TILE_REGION_SIZE* ConverterD3D11_TILE_REGION_SIZEManaged_ToUnManaged(SDKBase::Estruturas::CA_D3D11_TILE_REGION_SIZE^ Param_Estrutura)
+			D3D11_TILE_REGION_SIZE* ConverterD3D11_TILE_REGION_SIZEManaged_ToUnManaged(CA_D3D11_TILE_REGION_SIZE^ Param_Estrutura)
 			{
 				//Variavel a ser retornada.
 				D3D11_TILE_REGION_SIZE* EstruturaRetorno = CriarEstrutura<D3D11_TILE_REGION_SIZE>();
@@ -7384,10 +7477,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(D3D11_TILE_REGION_SIZE) para sua correspondencia gerenciada(CA_D3D11_TILE_REGION_SIZE).
-			SDKBase::Estruturas::CA_D3D11_TILE_REGION_SIZE^ ConverterD3D11_TILE_REGION_SIZEUnManaged_ToManaged(D3D11_TILE_REGION_SIZE* Param_Estrutura)
+			CA_D3D11_TILE_REGION_SIZE^ ConverterD3D11_TILE_REGION_SIZEUnManaged_ToManaged(D3D11_TILE_REGION_SIZE* Param_Estrutura)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_D3D11_TILE_REGION_SIZE^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_D3D11_TILE_REGION_SIZE();
+				CA_D3D11_TILE_REGION_SIZE^ EstruturaRetorno = gcnew CA_D3D11_TILE_REGION_SIZE();
 
 				//Preenche os dados da estrutura.
 				EstruturaRetorno->bUseBox = Param_Estrutura->bUseBox ? true : false;
@@ -7402,7 +7495,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_D3D11_PACKED_MIP_DESC) para sua correspondencia não gerenciada(D3D11_PACKED_MIP_DESC).
-			D3D11_PACKED_MIP_DESC* ConverterD3D11_PACKED_MIP_DESCManaged_ToUnManaged(SDKBase::Estruturas::CA_D3D11_PACKED_MIP_DESC^ Param_Estrutura)
+			D3D11_PACKED_MIP_DESC* ConverterD3D11_PACKED_MIP_DESCManaged_ToUnManaged(CA_D3D11_PACKED_MIP_DESC^ Param_Estrutura)
 			{
 				//Variavel a ser retornada.
 				D3D11_PACKED_MIP_DESC* EstruturaRetorno = CriarEstrutura<D3D11_PACKED_MIP_DESC>();
@@ -7421,10 +7514,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(D3D11_PACKED_MIP_DESC) para sua correspondencia gerenciada(CA_D3D11_PACKED_MIP_DESC).
-			SDKBase::Estruturas::CA_D3D11_PACKED_MIP_DESC^ ConverterD3D11_PACKED_MIP_DESCUnManaged_ToManaged(D3D11_PACKED_MIP_DESC* Param_Estrutura)
+			CA_D3D11_PACKED_MIP_DESC^ ConverterD3D11_PACKED_MIP_DESCUnManaged_ToManaged(D3D11_PACKED_MIP_DESC* Param_Estrutura)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_D3D11_PACKED_MIP_DESC^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_D3D11_PACKED_MIP_DESC();
+				CA_D3D11_PACKED_MIP_DESC^ EstruturaRetorno = gcnew CA_D3D11_PACKED_MIP_DESC();
 
 				//Preenche os dados da estrutura.
 				EstruturaRetorno->NumPackedMips = Param_Estrutura->NumPackedMips;
@@ -7438,7 +7531,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_D3D11_TILE_SHAPE) para sua correspondencia não gerenciada(D3D11_TILE_SHAPE).
-			D3D11_TILE_SHAPE* ConverterD3D11_TILE_SHAPEManaged_ToUnManaged(SDKBase::Estruturas::CA_D3D11_TILE_SHAPE^ Param_Estrutura)
+			D3D11_TILE_SHAPE* ConverterD3D11_TILE_SHAPEManaged_ToUnManaged(CA_D3D11_TILE_SHAPE^ Param_Estrutura)
 			{
 				//Variavel a ser retornada.
 				D3D11_TILE_SHAPE* EstruturaRetorno = CriarEstrutura<D3D11_TILE_SHAPE>();
@@ -7456,10 +7549,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(D3D11_TILE_SHAPE) para sua correspondencia gerenciada(CA_D3D11_TILE_SHAPE).
-			SDKBase::Estruturas::CA_D3D11_TILE_SHAPE^ ConverterD3D11_TILE_SHAPEUnManaged_ToManaged(D3D11_TILE_SHAPE* Param_Estrutura)
+			CA_D3D11_TILE_SHAPE^ ConverterD3D11_TILE_SHAPEUnManaged_ToManaged(D3D11_TILE_SHAPE* Param_Estrutura)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_D3D11_TILE_SHAPE^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_D3D11_TILE_SHAPE();
+				CA_D3D11_TILE_SHAPE^ EstruturaRetorno = gcnew CA_D3D11_TILE_SHAPE();
 
 				//Preenche os dados da estrutura.
 				EstruturaRetorno->DepthInTexels = Param_Estrutura->DepthInTexels;
@@ -7472,7 +7565,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_D3D11_SUBRESOURCE_TILING) para sua correspondencia não gerenciada(D3D11_SUBRESOURCE_TILING).
-			D3D11_SUBRESOURCE_TILING* ConverterD3D11_SUBRESOURCE_TILINGManaged_ToUnManaged(SDKBase::Estruturas::CA_D3D11_SUBRESOURCE_TILING^ Param_Estrutura)
+			D3D11_SUBRESOURCE_TILING* ConverterD3D11_SUBRESOURCE_TILINGManaged_ToUnManaged(CA_D3D11_SUBRESOURCE_TILING^ Param_Estrutura)
 			{
 				//Variavel a ser retornada.
 				D3D11_SUBRESOURCE_TILING* EstruturaRetorno = CriarEstrutura<D3D11_SUBRESOURCE_TILING>();
@@ -7491,10 +7584,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(D3D11_SUBRESOURCE_TILING) para sua correspondencia gerenciada(CA_D3D11_SUBRESOURCE_TILING).
-			SDKBase::Estruturas::CA_D3D11_SUBRESOURCE_TILING^ ConverterD3D11_SUBRESOURCE_TILINGUnManaged_ToManaged(D3D11_SUBRESOURCE_TILING* Param_Estrutura)
+			CA_D3D11_SUBRESOURCE_TILING^ ConverterD3D11_SUBRESOURCE_TILINGUnManaged_ToManaged(D3D11_SUBRESOURCE_TILING* Param_Estrutura)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_D3D11_SUBRESOURCE_TILING^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_D3D11_SUBRESOURCE_TILING();
+				CA_D3D11_SUBRESOURCE_TILING^ EstruturaRetorno = gcnew CA_D3D11_SUBRESOURCE_TILING();
 
 				//Preenche os dados da estrutura.
 				EstruturaRetorno->DepthInTiles = Param_Estrutura->DepthInTiles;
@@ -7514,7 +7607,7 @@ namespace CarenRengine
 			///DXGI ESTRUTURAS
 
 			//Converte uma estrutura gerenciada(CA_DXGI_OUTDUPL_FRAME_INFO) para sua correspondencia não gerenciada(DXGI_OUTDUPL_FRAME_INFO).
-			DXGI_OUTDUPL_FRAME_INFO* ConverterDXGI_OUTDUPL_FRAME_INFOManaged_ToUnamaged(SDKBase::Estruturas::CA_DXGI_OUTDUPL_FRAME_INFO^ Param_Estrutura)
+			DXGI_OUTDUPL_FRAME_INFO* ConverterDXGI_OUTDUPL_FRAME_INFOManaged_ToUnamaged(CA_DXGI_OUTDUPL_FRAME_INFO^ Param_Estrutura)
 			{
 				//Variavel que vai ser retornada.
 				DXGI_OUTDUPL_FRAME_INFO* EstruturaRetorno = CriarEstrutura<DXGI_OUTDUPL_FRAME_INFO>();
@@ -7548,10 +7641,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(DXGI_OUTDUPL_FRAME_INFO) para sua correspondencia gerenciada(CA_DXGI_OUTDUPL_FRAME_INFO).
-			SDKBase::Estruturas::CA_DXGI_OUTDUPL_FRAME_INFO^ ConverterDXGI_OUTDUPL_FRAME_INFOUnamaged_ToManaged(DXGI_OUTDUPL_FRAME_INFO* Param_Estrutura)
+			CA_DXGI_OUTDUPL_FRAME_INFO^ ConverterDXGI_OUTDUPL_FRAME_INFOUnamaged_ToManaged(DXGI_OUTDUPL_FRAME_INFO* Param_Estrutura)
 			{
 				//Variavel que vai ser retornada.
-				SDKBase::Estruturas::CA_DXGI_OUTDUPL_FRAME_INFO^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_DXGI_OUTDUPL_FRAME_INFO();
+				CA_DXGI_OUTDUPL_FRAME_INFO^ EstruturaRetorno = gcnew CA_DXGI_OUTDUPL_FRAME_INFO();
 
 				//Define os valores base.
 				EstruturaRetorno->AccumulatedFrames = Param_Estrutura->AccumulatedFrames;
@@ -7577,7 +7670,7 @@ namespace CarenRengine
 			
 
 			//Converte uma estrutura gerenciada(CA_DXGI_SWAP_CHAIN_DESC) para sua correspondencia não gerenciada(DXGI_SWAP_CHAIN_DESC).
-			DXGI_SWAP_CHAIN_DESC* ConverterDXGI_SWAP_CHAIN_DESCManaged_ToUnManaged(SDKBase::Estruturas::CA_DXGI_SWAP_CHAIN_DESC^ Param_Desc)
+			DXGI_SWAP_CHAIN_DESC* ConverterDXGI_SWAP_CHAIN_DESCManaged_ToUnManaged(CA_DXGI_SWAP_CHAIN_DESC^ Param_Desc)
 			{
 				//Variavel a ser retornada.
 				DXGI_SWAP_CHAIN_DESC* pEstrutura = CriarEstrutura<DXGI_SWAP_CHAIN_DESC>();
@@ -7609,10 +7702,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(DXGI_SWAP_CHAIN_DESC) para sua correspondencia gerenciada(CA_DXGI_SWAP_CHAIN_DESC).
-			SDKBase::Estruturas::CA_DXGI_SWAP_CHAIN_DESC^ ConverterDXGI_SWAP_CHAIN_DESCUnManaged_ToManaged(DXGI_SWAP_CHAIN_DESC* Param_Desc)
+			CA_DXGI_SWAP_CHAIN_DESC^ ConverterDXGI_SWAP_CHAIN_DESCUnManaged_ToManaged(DXGI_SWAP_CHAIN_DESC* Param_Desc)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_DXGI_SWAP_CHAIN_DESC^ pEstrutura = gcnew SDKBase::Estruturas::CA_DXGI_SWAP_CHAIN_DESC();
+				CA_DXGI_SWAP_CHAIN_DESC^ pEstrutura = gcnew CA_DXGI_SWAP_CHAIN_DESC();
 
 				//Preenche os dados da estrutura.
 				pEstrutura->BufferCount = Param_Desc->BufferCount;
@@ -7623,9 +7716,9 @@ namespace CarenRengine
 				pEstrutura->Windowed = Param_Desc->Windowed ? true : false;
 
 				//Cria as estruturas secundarias.
-				pEstrutura->SampleDesc = gcnew SDKBase::Estruturas::CA_DXGI_SAMPLE_DESC();
-				pEstrutura->BufferDesc = gcnew SDKBase::Estruturas::CA_DXGI_MODE_DESC();
-				pEstrutura->BufferDesc->RefreshRate = gcnew SDKBase::Estruturas::CA_DXGI_RATIONAL();
+				pEstrutura->SampleDesc = gcnew CA_DXGI_SAMPLE_DESC();
+				pEstrutura->BufferDesc = gcnew CA_DXGI_MODE_DESC();
+				pEstrutura->BufferDesc->RefreshRate = gcnew CA_DXGI_RATIONAL();
 
 				//Preenche os dados das estruturas secundarias
 				pEstrutura->SampleDesc->Count = Param_Desc->SampleDesc.Count;
@@ -7644,7 +7737,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_DXGI_SWAP_CHAIN_DESC1) para sua correspondencia não gerenciada(DXGI_SWAP_CHAIN_DESC1).
-			DXGI_SWAP_CHAIN_DESC1* ConverterDXGI_SWAP_CHAIN_DESC1Managed_ToUnManaged(SDKBase::Estruturas::CA_DXGI_SWAP_CHAIN_DESC1^ Param_Desc)
+			DXGI_SWAP_CHAIN_DESC1* ConverterDXGI_SWAP_CHAIN_DESC1Managed_ToUnManaged(CA_DXGI_SWAP_CHAIN_DESC1^ Param_Desc)
 			{
 				//Variavel a ser retornada.
 				DXGI_SWAP_CHAIN_DESC1* pEstrutura = CriarEstrutura<DXGI_SWAP_CHAIN_DESC1>();
@@ -7677,10 +7770,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(DXGI_SWAP_CHAIN_DESC1) para sua correspondencia gerenciada(CA_DXGI_SWAP_CHAIN_DESC1).
-			SDKBase::Estruturas::CA_DXGI_SWAP_CHAIN_DESC1^ ConverterDXGI_SWAP_CHAIN_DESC1UnManaged_ToManaged(DXGI_SWAP_CHAIN_DESC1* Param_Desc)
+			CA_DXGI_SWAP_CHAIN_DESC1^ ConverterDXGI_SWAP_CHAIN_DESC1UnManaged_ToManaged(DXGI_SWAP_CHAIN_DESC1* Param_Desc)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_DXGI_SWAP_CHAIN_DESC1^ pEstrutura = gcnew SDKBase::Estruturas::CA_DXGI_SWAP_CHAIN_DESC1();
+				CA_DXGI_SWAP_CHAIN_DESC1^ pEstrutura = gcnew CA_DXGI_SWAP_CHAIN_DESC1();
 
 				//Preenche os dados da estrutura.
 				pEstrutura->Format = static_cast<CA_DXGI_FORMAT>(Param_Desc->Format);
@@ -7736,7 +7829,7 @@ namespace CarenRengine
 			CA_DXGI_SWAP_CHAIN_FULLSCREEN_DESC^ ConverterDXGI_SWAP_CHAIN_FULLSCREEN_DESCUnManaged_ToManaged(DXGI_SWAP_CHAIN_FULLSCREEN_DESC* Param_Desc)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_DXGI_SWAP_CHAIN_FULLSCREEN_DESC^ pEstrutura = gcnew SDKBase::Estruturas::CA_DXGI_SWAP_CHAIN_FULLSCREEN_DESC();
+				CA_DXGI_SWAP_CHAIN_FULLSCREEN_DESC^ pEstrutura = gcnew CA_DXGI_SWAP_CHAIN_FULLSCREEN_DESC();
 
 				//Preenche os dados da estrutura.
 				pEstrutura->ScanlineOrdering = static_cast<CA_DXGI_MODE_SCANLINE_ORDER>(Param_Desc->ScanlineOrdering);
@@ -7756,7 +7849,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_DXGI_FRAME_STATISTICS) para sua correspondencia não gerenciada(DXGI_FRAME_STATISTICS).
-			DXGI_FRAME_STATISTICS* ConverterDXGI_FRAME_STATISTICSManaged_ToUnManaged(SDKBase::Estruturas::CA_DXGI_FRAME_STATISTICS^ Param_Desc)
+			DXGI_FRAME_STATISTICS* ConverterDXGI_FRAME_STATISTICSManaged_ToUnManaged(CA_DXGI_FRAME_STATISTICS^ Param_Desc)
 			{
 				//Variavel a ser retornada.
 				DXGI_FRAME_STATISTICS* pEstrutura = CriarEstrutura<DXGI_FRAME_STATISTICS>();
@@ -7776,10 +7869,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(DXGI_FRAME_STATISTICS) para sua correspondencia gerenciada(CA_DXGI_FRAME_STATISTICS).
-			SDKBase::Estruturas::CA_DXGI_FRAME_STATISTICS^ ConverterDXGI_FRAME_STATISTICSUnManaged_ToManaged(DXGI_FRAME_STATISTICS* Param_Desc)
+			CA_DXGI_FRAME_STATISTICS^ ConverterDXGI_FRAME_STATISTICSUnManaged_ToManaged(DXGI_FRAME_STATISTICS* Param_Desc)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_DXGI_FRAME_STATISTICS^ pEstrutura = gcnew SDKBase::Estruturas::CA_DXGI_FRAME_STATISTICS();
+				CA_DXGI_FRAME_STATISTICS^ pEstrutura = gcnew CA_DXGI_FRAME_STATISTICS();
 
 				//Preenche os dados da estrutura.
 				pEstrutura->PresentCount = Param_Desc->PresentCount;
@@ -7794,7 +7887,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_DXGI_OUTDUPL_DESC) para sua correspondencia não gerenciada(DXGI_OUTDUPL_DESC).
-			DXGI_OUTDUPL_DESC* ConverterDXGI_OUTDUPL_DESCManaged_ToUnManaged(SDKBase::Estruturas::CA_DXGI_OUTDUPL_DESC^ Param_Estrutura)
+			DXGI_OUTDUPL_DESC* ConverterDXGI_OUTDUPL_DESCManaged_ToUnManaged(CA_DXGI_OUTDUPL_DESC^ Param_Estrutura)
 			{
 				//Variavel a ser retornada.
 				DXGI_OUTDUPL_DESC* EstruturaRetorno = CriarEstrutura<DXGI_OUTDUPL_DESC>();
@@ -7827,10 +7920,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(DXGI_OUTDUPL_DESC) para sua correspondencia gerenciada(CA_DXGI_OUTDUPL_DESC).
-			SDKBase::Estruturas::CA_DXGI_OUTDUPL_DESC^ ConverterDXGI_OUTDUPL_DESCUnManaged_ToManaged(DXGI_OUTDUPL_DESC* Param_Estrutura)
+			CA_DXGI_OUTDUPL_DESC^ ConverterDXGI_OUTDUPL_DESCUnManaged_ToManaged(DXGI_OUTDUPL_DESC* Param_Estrutura)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_DXGI_OUTDUPL_DESC^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_DXGI_OUTDUPL_DESC();
+				CA_DXGI_OUTDUPL_DESC^ EstruturaRetorno = gcnew CA_DXGI_OUTDUPL_DESC();
 
 				//Preenche os dados da estrutura.
 				EstruturaRetorno->Rotation = static_cast<CA_DXGI_MODE_ROTATION>(Param_Estrutura->Rotation);
@@ -7845,7 +7938,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_DXGI_OUTDUPL_MOVE_RECT) para sua correspondencia não gerenciada(DXGI_OUTDUPL_MOVE_RECT).
-			DXGI_OUTDUPL_MOVE_RECT* ConverterDXGI_OUTDUPL_MOVE_RECTManaged_ToUnManaged(SDKBase::Estruturas::CA_DXGI_OUTDUPL_MOVE_RECT^ Param_Estrutura)
+			DXGI_OUTDUPL_MOVE_RECT* ConverterDXGI_OUTDUPL_MOVE_RECTManaged_ToUnManaged(CA_DXGI_OUTDUPL_MOVE_RECT^ Param_Estrutura)
 			{
 				//Variavel a ser retornada.
 				DXGI_OUTDUPL_MOVE_RECT* EstruturaRetorno = CriarEstrutura<DXGI_OUTDUPL_MOVE_RECT>();
@@ -7880,10 +7973,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(DXGI_OUTDUPL_MOVE_RECT) para sua correspondencia gerenciada(CA_DXGI_OUTDUPL_MOVE_RECT).
-			SDKBase::Estruturas::CA_DXGI_OUTDUPL_MOVE_RECT^ ConverterDXGI_OUTDUPL_MOVE_RECTUnManaged_ToManaged(DXGI_OUTDUPL_MOVE_RECT* Param_Estrutura)
+			CA_DXGI_OUTDUPL_MOVE_RECT^ ConverterDXGI_OUTDUPL_MOVE_RECTUnManaged_ToManaged(DXGI_OUTDUPL_MOVE_RECT* Param_Estrutura)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_DXGI_OUTDUPL_MOVE_RECT^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_DXGI_OUTDUPL_MOVE_RECT();
+				CA_DXGI_OUTDUPL_MOVE_RECT^ EstruturaRetorno = gcnew CA_DXGI_OUTDUPL_MOVE_RECT();
 
 				//Cria as estruturas secundarias
 				EstruturaRetorno->DestinationRect = gcnew CA_RECT();
@@ -7905,7 +7998,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_DXGI_OUTDUPL_POINTER_SHAPE_INFO) para sua correspondencia não gerenciada(DXGI_OUTDUPL_POINTER_SHAPE_INFO).
-			DXGI_OUTDUPL_POINTER_SHAPE_INFO* ConverterDXGI_OUTDUPL_POINTER_SHAPE_INFOManaged_ToUnManaged(SDKBase::Estruturas::CA_DXGI_OUTDUPL_POINTER_SHAPE_INFO^ Param_Estrutura)
+			DXGI_OUTDUPL_POINTER_SHAPE_INFO* ConverterDXGI_OUTDUPL_POINTER_SHAPE_INFOManaged_ToUnManaged(CA_DXGI_OUTDUPL_POINTER_SHAPE_INFO^ Param_Estrutura)
 			{
 				//Variavel a ser retornada.
 				DXGI_OUTDUPL_POINTER_SHAPE_INFO* EstruturaRetorno = CriarEstrutura<DXGI_OUTDUPL_POINTER_SHAPE_INFO>();
@@ -7934,10 +8027,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(DXGI_OUTDUPL_POINTER_SHAPE_INFO) para sua correspondencia gerenciada(CA_DXGI_OUTDUPL_POINTER_SHAPE_INFO).
-			SDKBase::Estruturas::CA_DXGI_OUTDUPL_POINTER_SHAPE_INFO^ ConverterDXGI_OUTDUPL_POINTER_SHAPE_INFOUnManaged_ToManaged(DXGI_OUTDUPL_POINTER_SHAPE_INFO* Param_Estrutura)
+			CA_DXGI_OUTDUPL_POINTER_SHAPE_INFO^ ConverterDXGI_OUTDUPL_POINTER_SHAPE_INFOUnManaged_ToManaged(DXGI_OUTDUPL_POINTER_SHAPE_INFO* Param_Estrutura)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_DXGI_OUTDUPL_POINTER_SHAPE_INFO^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_DXGI_OUTDUPL_POINTER_SHAPE_INFO();
+				CA_DXGI_OUTDUPL_POINTER_SHAPE_INFO^ EstruturaRetorno = gcnew CA_DXGI_OUTDUPL_POINTER_SHAPE_INFO();
 
 
 
@@ -7947,7 +8040,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_DXGI_MODE_DESC) para sua correspondencia não gerenciada(DXGI_MODE_DESC).
-			DXGI_MODE_DESC* ConverterDXGI_MODE_DESCManaged_ToUnManaged(SDKBase::Estruturas::CA_DXGI_MODE_DESC^ Param_Desc)
+			DXGI_MODE_DESC* ConverterDXGI_MODE_DESCManaged_ToUnManaged(CA_DXGI_MODE_DESC^ Param_Desc)
 			{
 				//Variavel a ser retornada.
 				DXGI_MODE_DESC* pEstrutura = CriarEstrutura<DXGI_MODE_DESC>();
@@ -7969,10 +8062,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(DXGI_MODE_DESC) para sua correspondencia gerenciada(CA_DXGI_MODE_DESC).
-			SDKBase::Estruturas::CA_DXGI_MODE_DESC^ ConverterDXGI_MODE_DESCUnManaged_ToManaged(DXGI_MODE_DESC* Param_Desc)
+			CA_DXGI_MODE_DESC^ ConverterDXGI_MODE_DESCUnManaged_ToManaged(DXGI_MODE_DESC* Param_Desc)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_DXGI_MODE_DESC^ pEstrutura = gcnew SDKBase::Estruturas::CA_DXGI_MODE_DESC();
+				CA_DXGI_MODE_DESC^ pEstrutura = gcnew CA_DXGI_MODE_DESC();
 
 				//Preenche os dados da estrutura principal.
 				pEstrutura->Format = static_cast<SDKBase::Enumeracoes::CA_DXGI_FORMAT>(Param_Desc->Format);
@@ -7989,7 +8082,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_DXGI_MODE_DESC1) para sua correspondencia não gerenciada(DXGI_MODE_DESC1).
-			DXGI_MODE_DESC1* ConverterDXGI_MODE_DESC1Managed_ToUnManaged(SDKBase::Estruturas::CA_DXGI_MODE_DESC1^ Param_Estrutura)
+			DXGI_MODE_DESC1* ConverterDXGI_MODE_DESC1Managed_ToUnManaged(CA_DXGI_MODE_DESC1^ Param_Estrutura)
 			{
 				//Variavel a ser retornada.
 				DXGI_MODE_DESC1* EstruturaRetorno = CriarEstrutura<DXGI_MODE_DESC1>();
@@ -8012,10 +8105,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(DXGI_MODE_DESC1) para sua correspondencia gerenciada(CA_DXGI_MODE_DESC1).
-			SDKBase::Estruturas::CA_DXGI_MODE_DESC1^ ConverterDXGI_MODE_DESC1UnManaged_ToManaged(DXGI_MODE_DESC1* Param_Estrutura)
+			CA_DXGI_MODE_DESC1^ ConverterDXGI_MODE_DESC1UnManaged_ToManaged(DXGI_MODE_DESC1* Param_Estrutura)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_DXGI_MODE_DESC1^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_DXGI_MODE_DESC1();
+				CA_DXGI_MODE_DESC1^ EstruturaRetorno = gcnew CA_DXGI_MODE_DESC1();
 
 				//Preenche os dados da estrutura principal.
 				EstruturaRetorno->Format = static_cast<SDKBase::Enumeracoes::CA_DXGI_FORMAT>(Param_Estrutura->Format);
@@ -8033,7 +8126,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_DXGI_RGB) para sua correspondencia não gerenciada(DXGI_RGB).
-			DXGI_RGB* ConverterDXGI_RGBManaged_ToUnManaged(SDKBase::Estruturas::CA_DXGI_RGB^ Param_Estrutura)
+			DXGI_RGB* ConverterDXGI_RGBManaged_ToUnManaged(CA_DXGI_RGB^ Param_Estrutura)
 			{
 				//Variavel a ser retornada.
 				DXGI_RGB* EstruturaRetorno = CriarEstrutura<DXGI_RGB>();
@@ -8048,10 +8141,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(DXGI_RGB) para sua correspondencia gerenciada(CA_DXGI_RGB).
-			SDKBase::Estruturas::CA_DXGI_RGB^ ConverterDXGI_RGBUnManaged_ToManaged(DXGI_RGB* Param_Estrutura)
+			CA_DXGI_RGB^ ConverterDXGI_RGBUnManaged_ToManaged(DXGI_RGB* Param_Estrutura)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_DXGI_RGB^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_DXGI_RGB();
+				CA_DXGI_RGB^ EstruturaRetorno = gcnew CA_DXGI_RGB();
 
 				//Preenche os dados da estrutura principal.
 				EstruturaRetorno->Vermelho = Param_Estrutura->Red;
@@ -8064,7 +8157,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_DXGI_RGBA) para sua correspondencia não gerenciada(DXGI_RGBA).
-			DXGI_RGBA* ConverterDXGI_RGBAManaged_ToUnManaged(SDKBase::Estruturas::CA_DXGI_RGBA^ Param_Estrutura)
+			DXGI_RGBA* ConverterDXGI_RGBAManaged_ToUnManaged(CA_DXGI_RGBA^ Param_Estrutura)
 			{
 				//Variavel a ser retornada.
 				DXGI_RGBA* EstruturaRetorno = CriarEstrutura<DXGI_RGBA>();
@@ -8080,10 +8173,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(DXGI_RGBA) para sua correspondencia gerenciada(CA_DXGI_RGBA).
-			SDKBase::Estruturas::CA_DXGI_RGBA^ ConverterDXGI_RGBAUnManaged_ToManaged(DXGI_RGBA* Param_Estrutura)
+			CA_DXGI_RGBA^ ConverterDXGI_RGBAUnManaged_ToManaged(DXGI_RGBA* Param_Estrutura)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_DXGI_RGBA^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_DXGI_RGBA();
+				CA_DXGI_RGBA^ EstruturaRetorno = gcnew CA_DXGI_RGBA();
 
 				//Preenche os dados da estrutura principal.
 				EstruturaRetorno->Vermelho = Param_Estrutura->r;
@@ -8097,7 +8190,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_DXGI_GAMMA_CONTROL) para sua correspondencia não gerenciada(DXGI_GAMMA_CONTROL).
-			DXGI_GAMMA_CONTROL* ConverterDXGI_GAMMA_CONTROLManaged_ToUnManaged(SDKBase::Estruturas::CA_DXGI_GAMMA_CONTROL^ Param_Estrutura)
+			DXGI_GAMMA_CONTROL* ConverterDXGI_GAMMA_CONTROLManaged_ToUnManaged(CA_DXGI_GAMMA_CONTROL^ Param_Estrutura)
 			{
 				//Variavel a ser retornada.
 				DXGI_GAMMA_CONTROL* EstruturaRetorno = CriarEstrutura<DXGI_GAMMA_CONTROL>();
@@ -8140,16 +8233,16 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(DXGI_GAMMA_CONTROL) para sua correspondencia gerenciada(CA_DXGI_GAMMA_CONTROL).
-			SDKBase::Estruturas::CA_DXGI_GAMMA_CONTROL^ ConverterDXGI_GAMMA_CONTROLUnManaged_ToManaged(DXGI_GAMMA_CONTROL* Param_Estrutura)
+			CA_DXGI_GAMMA_CONTROL^ ConverterDXGI_GAMMA_CONTROLUnManaged_ToManaged(DXGI_GAMMA_CONTROL* Param_Estrutura)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_DXGI_GAMMA_CONTROL^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_DXGI_GAMMA_CONTROL();
+				CA_DXGI_GAMMA_CONTROL^ EstruturaRetorno = gcnew CA_DXGI_GAMMA_CONTROL();
 
 				//Esse valor é fixo segundo a MSDN.
 				int LengCountGamma = 1025;
 
 				//Inicializa o array
-				EstruturaRetorno->GammaCurve = gcnew cli::array<SDKBase::Estruturas::CA_DXGI_RGB^>(LengCountGamma);
+				EstruturaRetorno->GammaCurve = gcnew cli::array<CA_DXGI_RGB^>(LengCountGamma);
 
 				//Copia os dados da estrutura principal.
 				for (int i = 0; i < LengCountGamma; i++)
@@ -8161,8 +8254,8 @@ namespace CarenRengine
 				}
 
 				//Cria as estruturas secundarias.
-				EstruturaRetorno->Offset = gcnew SDKBase::Estruturas::CA_DXGI_RGB();
-				EstruturaRetorno->Scale = gcnew SDKBase::Estruturas::CA_DXGI_RGB();
+				EstruturaRetorno->Offset = gcnew CA_DXGI_RGB();
+				EstruturaRetorno->Scale = gcnew CA_DXGI_RGB();
 
 				//Define os dados das estruturas secundarias.
 				EstruturaRetorno->Offset->Vermelho = Param_Estrutura->Offset.Red;
@@ -8179,7 +8272,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_DXGI_OUTPUT_DESC) para sua correspondencia não gerenciada(DXGI_OUTPUT_DESC).
-			DXGI_OUTPUT_DESC* ConverterDXGI_OUTPUT_DESCManaged_ToUnManaged(SDKBase::Estruturas::CA_DXGI_OUTPUT_DESC^ Param_Estrutura)
+			DXGI_OUTPUT_DESC* ConverterDXGI_OUTPUT_DESCManaged_ToUnManaged(CA_DXGI_OUTPUT_DESC^ Param_Estrutura)
 			{
 				//Variavel a ser retornada.
 				DXGI_OUTPUT_DESC* EstruturaRetorno = CriarEstrutura<DXGI_OUTPUT_DESC>();
@@ -8224,10 +8317,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(DXGI_OUTPUT_DESC) para sua correspondencia gerenciada(CA_DXGI_OUTPUT_DESC).
-			SDKBase::Estruturas::CA_DXGI_OUTPUT_DESC^ ConverterDXGI_OUTPUT_DESCUnManaged_ToManaged(DXGI_OUTPUT_DESC* Param_Estrutura)
+			CA_DXGI_OUTPUT_DESC^ ConverterDXGI_OUTPUT_DESCUnManaged_ToManaged(DXGI_OUTPUT_DESC* Param_Estrutura)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_DXGI_OUTPUT_DESC^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_DXGI_OUTPUT_DESC();
+				CA_DXGI_OUTPUT_DESC^ EstruturaRetorno = gcnew CA_DXGI_OUTPUT_DESC();
 
 				//Preenche os dados da estrutura principal.
 				EstruturaRetorno->AttachedToDesktop = Param_Estrutura->AttachedToDesktop ? true : false;
@@ -8245,7 +8338,7 @@ namespace CarenRengine
 				}
 
 				//Cria e preenche a estrutura secundaria.
-				EstruturaRetorno->DesktopCoordinates = gcnew SDKBase::Estruturas::CA_RECT();
+				EstruturaRetorno->DesktopCoordinates = gcnew CA_RECT();
 
 				//Define as coordenadas
 				EstruturaRetorno->DesktopCoordinates->Topo = Param_Estrutura->DesktopCoordinates.top;
@@ -8260,7 +8353,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_DXGI_OUTPUT_DESC1) para sua correspondencia não gerenciada(DXGI_OUTPUT_DESC1).
-			DXGI_OUTPUT_DESC1* ConverterDXGI_OUTPUT_DESC1Managed_ToUnManaged(SDKBase::Estruturas::CA_DXGI_OUTPUT_DESC1^ Param_Estrutura)
+			DXGI_OUTPUT_DESC1* ConverterDXGI_OUTPUT_DESC1Managed_ToUnManaged(CA_DXGI_OUTPUT_DESC1^ Param_Estrutura)
 			{
 				//Variavel a ser retornada.
 				DXGI_OUTPUT_DESC1* EstruturaRetorno = CriarEstrutura<DXGI_OUTPUT_DESC1>();
@@ -8344,10 +8437,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(DXGI_OUTPUT_DESC1) para sua correspondencia gerenciada(CA_DXGI_OUTPUT_DESC1).
-			SDKBase::Estruturas::CA_DXGI_OUTPUT_DESC1^ ConverterDXGI_OUTPUT_DESC1UnManaged_ToManaged(DXGI_OUTPUT_DESC1* Param_Estrutura)
+			CA_DXGI_OUTPUT_DESC1^ ConverterDXGI_OUTPUT_DESC1UnManaged_ToManaged(DXGI_OUTPUT_DESC1* Param_Estrutura)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_DXGI_OUTPUT_DESC1^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_DXGI_OUTPUT_DESC1();
+				CA_DXGI_OUTPUT_DESC1^ EstruturaRetorno = gcnew CA_DXGI_OUTPUT_DESC1();
 
 				//Preenche os dados da estrutura principal.
 				EstruturaRetorno->AttachedToDesktop = Param_Estrutura->AttachedToDesktop ? true : false;
@@ -8390,7 +8483,7 @@ namespace CarenRengine
 				EstruturaRetorno->WhitePoint[1] = Param_Estrutura->WhitePoint[1];
 
 				//Cria e preenche a estrutura secundaria.
-				EstruturaRetorno->DesktopCoordinates = gcnew SDKBase::Estruturas::CA_RECT();
+				EstruturaRetorno->DesktopCoordinates = gcnew CA_RECT();
 				
 				//Define as coordenadas
 				EstruturaRetorno->DesktopCoordinates->Topo = Param_Estrutura->DesktopCoordinates.top;
@@ -8405,7 +8498,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_DXGI_GAMMA_CONTROL_CAPABILITIES) para sua correspondencia não gerenciada(DXGI_GAMMA_CONTROL_CAPABILITIES).
-			DXGI_GAMMA_CONTROL_CAPABILITIES* ConverterDXGI_GAMMA_CONTROL_CAPABILITIESManaged_ToUnManaged(SDKBase::Estruturas::CA_DXGI_GAMMA_CONTROL_CAPABILITIES^ Param_Estrutura)
+			DXGI_GAMMA_CONTROL_CAPABILITIES* ConverterDXGI_GAMMA_CONTROL_CAPABILITIESManaged_ToUnManaged(CA_DXGI_GAMMA_CONTROL_CAPABILITIES^ Param_Estrutura)
 			{
 				//Variavel a ser retornada.
 				DXGI_GAMMA_CONTROL_CAPABILITIES* EstruturaRetorno = CriarEstrutura<DXGI_GAMMA_CONTROL_CAPABILITIES>();
@@ -8439,10 +8532,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(DXGI_GAMMA_CONTROL_CAPABILITIES) para sua correspondencia gerenciada(CA_DXGI_GAMMA_CONTROL_CAPABILITIES).
-			SDKBase::Estruturas::CA_DXGI_GAMMA_CONTROL_CAPABILITIES^ ConverterDXGI_GAMMA_CONTROL_CAPABILITIESUnManaged_ToManaged(DXGI_GAMMA_CONTROL_CAPABILITIES* Param_Estrutura)
+			CA_DXGI_GAMMA_CONTROL_CAPABILITIES^ ConverterDXGI_GAMMA_CONTROL_CAPABILITIESUnManaged_ToManaged(DXGI_GAMMA_CONTROL_CAPABILITIES* Param_Estrutura)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_DXGI_GAMMA_CONTROL_CAPABILITIES^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_DXGI_GAMMA_CONTROL_CAPABILITIES();
+				CA_DXGI_GAMMA_CONTROL_CAPABILITIES^ EstruturaRetorno = gcnew CA_DXGI_GAMMA_CONTROL_CAPABILITIES();
 
 				//Cria o array de gamma control points.
 				EstruturaRetorno->ControlPointPositions = gcnew cli::array<float>(Param_Estrutura->NumGammaControlPoints);
@@ -8532,10 +8625,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(DXGI_PRESENT_PARAMETERS) para sua correspondencia gerenciada(CA_DXGI_PRESENT_PARAMETERS).
-			SDKBase::Estruturas::CA_DXGI_PRESENT_PARAMETERS^ ConverterDXGI_PRESENT_PARAMETERSUnManaged_ToManaged(DXGI_PRESENT_PARAMETERS* Param_Estrutura)
+			CA_DXGI_PRESENT_PARAMETERS^ ConverterDXGI_PRESENT_PARAMETERSUnManaged_ToManaged(DXGI_PRESENT_PARAMETERS* Param_Estrutura)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_DXGI_PRESENT_PARAMETERS^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_DXGI_PRESENT_PARAMETERS();
+				CA_DXGI_PRESENT_PARAMETERS^ EstruturaRetorno = gcnew CA_DXGI_PRESENT_PARAMETERS();
 
 				//Preenche os dados da estrutura principal.
 				EstruturaRetorno->DirtyRectsCount = Param_Estrutura->DirtyRectsCount;
@@ -8596,7 +8689,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_DXGI_ADAPTER_DESC) para sua correspondencia não gerenciada(DXGI_ADAPTER_DESC).
-			DXGI_ADAPTER_DESC* ConverterDXGI_ADAPTER_DESCManaged_ToUnManaged(SDKBase::Estruturas::CA_DXGI_ADAPTER_DESC^ Param_Estrutura)
+			DXGI_ADAPTER_DESC* ConverterDXGI_ADAPTER_DESCManaged_ToUnManaged(CA_DXGI_ADAPTER_DESC^ Param_Estrutura)
 			{
 				//Variavel a ser retornada.
 				DXGI_ADAPTER_DESC* EstruturaRetorno = CriarEstrutura<DXGI_ADAPTER_DESC>();
@@ -8636,10 +8729,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(DXGI_ADAPTER_DESC) para sua correspondencia gerenciada(CA_DXGI_ADAPTER_DESC).
-			SDKBase::Estruturas::CA_DXGI_ADAPTER_DESC^ ConverterDXGI_ADAPTER_DESCUnManaged_ToManaged(DXGI_ADAPTER_DESC* Param_Estrutura)
+			CA_DXGI_ADAPTER_DESC^ ConverterDXGI_ADAPTER_DESCUnManaged_ToManaged(DXGI_ADAPTER_DESC* Param_Estrutura)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_DXGI_ADAPTER_DESC^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_DXGI_ADAPTER_DESC();
+				CA_DXGI_ADAPTER_DESC^ EstruturaRetorno = gcnew CA_DXGI_ADAPTER_DESC();
 
 				//Preenche os dados da estrutura principal.
 				EstruturaRetorno->DedicatedSystemMemory = static_cast<unsigned long long>(Param_Estrutura->DedicatedSystemMemory);
@@ -8662,7 +8755,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_DXGI_ADAPTER_DESC1) para sua correspondencia não gerenciada(DXGI_ADAPTER_DESC1).
-			DXGI_ADAPTER_DESC1* ConverterDXGI_ADAPTER_DESC1Managed_ToUnManaged(SDKBase::Estruturas::CA_DXGI_ADAPTER_DESC1^ Param_Estrutura)
+			DXGI_ADAPTER_DESC1* ConverterDXGI_ADAPTER_DESC1Managed_ToUnManaged(CA_DXGI_ADAPTER_DESC1^ Param_Estrutura)
 			{
 				//Variavel a ser retornada.
 				DXGI_ADAPTER_DESC1* EstruturaRetorno = CriarEstrutura<DXGI_ADAPTER_DESC1>();
@@ -8703,10 +8796,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(DXGI_ADAPTER_DESC1) para sua correspondencia gerenciada(CA_DXGI_ADAPTER_DESC1).
-			SDKBase::Estruturas::CA_DXGI_ADAPTER_DESC1^ ConverterDXGI_ADAPTER_DESC1UnManaged_ToManaged(DXGI_ADAPTER_DESC1* Param_Estrutura)
+			CA_DXGI_ADAPTER_DESC1^ ConverterDXGI_ADAPTER_DESC1UnManaged_ToManaged(DXGI_ADAPTER_DESC1* Param_Estrutura)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_DXGI_ADAPTER_DESC1^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_DXGI_ADAPTER_DESC1();
+				CA_DXGI_ADAPTER_DESC1^ EstruturaRetorno = gcnew CA_DXGI_ADAPTER_DESC1();
 
 				//Preenche os dados da estrutura principal.
 				EstruturaRetorno->DedicatedSystemMemory = static_cast<unsigned long long>(Param_Estrutura->DedicatedSystemMemory);
@@ -8730,7 +8823,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_DXGI_ADAPTER_DESC2) para sua correspondencia não gerenciada(DXGI_ADAPTER_DESC2).
-			DXGI_ADAPTER_DESC2* ConverterDXGI_ADAPTER_DESC2Managed_ToUnManaged(SDKBase::Estruturas::CA_DXGI_ADAPTER_DESC2^ Param_Estrutura)
+			DXGI_ADAPTER_DESC2* ConverterDXGI_ADAPTER_DESC2Managed_ToUnManaged(CA_DXGI_ADAPTER_DESC2^ Param_Estrutura)
 			{
 				//Variavel a ser retornada.
 				DXGI_ADAPTER_DESC2* EstruturaRetorno = CriarEstrutura<DXGI_ADAPTER_DESC2>();
@@ -8773,10 +8866,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(DXGI_ADAPTER_DESC2) para sua correspondencia gerenciada(CA_DXGI_ADAPTER_DESC2).
-			SDKBase::Estruturas::CA_DXGI_ADAPTER_DESC2^ ConverterDXGI_ADAPTER_DESC2UnManaged_ToManaged(DXGI_ADAPTER_DESC2* Param_Estrutura)
+			CA_DXGI_ADAPTER_DESC2^ ConverterDXGI_ADAPTER_DESC2UnManaged_ToManaged(DXGI_ADAPTER_DESC2* Param_Estrutura)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_DXGI_ADAPTER_DESC2^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_DXGI_ADAPTER_DESC2();
+				CA_DXGI_ADAPTER_DESC2^ EstruturaRetorno = gcnew CA_DXGI_ADAPTER_DESC2();
 
 				//Preenche os dados da estrutura principal.
 				EstruturaRetorno->DedicatedSystemMemory = static_cast<unsigned long long>(Param_Estrutura->DedicatedSystemMemory);
@@ -8803,7 +8896,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_DXGI_ADAPTER_DESC3) para sua correspondencia não gerenciada(DXGI_ADAPTER_DESC3).
-			DXGI_ADAPTER_DESC3* ConverterDXGI_ADAPTER_DESC3Managed_ToUnManaged(SDKBase::Estruturas::CA_DXGI_ADAPTER_DESC3^ Param_Estrutura)
+			DXGI_ADAPTER_DESC3* ConverterDXGI_ADAPTER_DESC3Managed_ToUnManaged(CA_DXGI_ADAPTER_DESC3^ Param_Estrutura)
 			{
 				//Variavel a ser retornada.
 				DXGI_ADAPTER_DESC3* EstruturaRetorno = CriarEstrutura<DXGI_ADAPTER_DESC3>();
@@ -8846,10 +8939,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(DXGI_ADAPTER_DESC3) para sua correspondencia gerenciada(CA_DXGI_ADAPTER_DESC3).
-			SDKBase::Estruturas::CA_DXGI_ADAPTER_DESC3^ ConverterDXGI_ADAPTER_DESC3UnManaged_ToManaged(DXGI_ADAPTER_DESC3* Param_Estrutura)
+			CA_DXGI_ADAPTER_DESC3^ ConverterDXGI_ADAPTER_DESC3UnManaged_ToManaged(DXGI_ADAPTER_DESC3* Param_Estrutura)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_DXGI_ADAPTER_DESC3^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_DXGI_ADAPTER_DESC3();
+				CA_DXGI_ADAPTER_DESC3^ EstruturaRetorno = gcnew CA_DXGI_ADAPTER_DESC3();
 
 				//Preenche os dados da estrutura principal.
 				EstruturaRetorno->DedicatedSystemMemory = static_cast<unsigned long long>(Param_Estrutura->DedicatedSystemMemory);
@@ -8876,7 +8969,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_DXGI_SURFACE_DESC) para sua correspondencia não gerenciada(DXGI_SURFACE_DESC).
-			DXGI_SURFACE_DESC* ConverterDXGI_SURFACE_DESCManaged_ToUnManaged(SDKBase::Estruturas::CA_DXGI_SURFACE_DESC^ Param_Estrutura)
+			DXGI_SURFACE_DESC* ConverterDXGI_SURFACE_DESCManaged_ToUnManaged(CA_DXGI_SURFACE_DESC^ Param_Estrutura)
 			{
 				//Variavel a ser retornada.
 				DXGI_SURFACE_DESC* EstruturaRetorno = CriarEstrutura<DXGI_SURFACE_DESC>();
@@ -8902,10 +8995,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(DXGI_SURFACE_DESC) para sua correspondencia gerenciada(CA_DXGI_SURFACE_DESC).
-			SDKBase::Estruturas::CA_DXGI_SURFACE_DESC^ ConverterDXGI_SURFACE_DESCUnManaged_ToManaged(DXGI_SURFACE_DESC* Param_Estrutura)
+			CA_DXGI_SURFACE_DESC^ ConverterDXGI_SURFACE_DESCUnManaged_ToManaged(DXGI_SURFACE_DESC* Param_Estrutura)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_DXGI_SURFACE_DESC^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_DXGI_SURFACE_DESC();
+				CA_DXGI_SURFACE_DESC^ EstruturaRetorno = gcnew CA_DXGI_SURFACE_DESC();
 
 				//Define os dados na estrutura principal.
 				EstruturaRetorno->Formato = static_cast<CA_DXGI_FORMAT>(Param_Estrutura->Format);
@@ -8925,7 +9018,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_DXGI_MAPPED_RECT) para sua correspondencia não gerenciada(DXGI_MAPPED_RECT).
-			DXGI_MAPPED_RECT* ConverterDXGI_MAPPED_RECTManaged_ToUnManaged(SDKBase::Estruturas::CA_DXGI_MAPPED_RECT^ Param_Estrutura)
+			DXGI_MAPPED_RECT* ConverterDXGI_MAPPED_RECTManaged_ToUnManaged(CA_DXGI_MAPPED_RECT^ Param_Estrutura)
 			{
 				//Variavel a ser retornada.
 				DXGI_MAPPED_RECT* EstruturaRetorno = CriarEstrutura<DXGI_MAPPED_RECT>();
@@ -8954,10 +9047,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(DXGI_MAPPED_RECT) para sua correspondencia gerenciada(CA_DXGI_MAPPED_RECT).
-			SDKBase::Estruturas::CA_DXGI_MAPPED_RECT^ ConverterDXGI_MAPPED_RECTUnManaged_ToManaged(DXGI_MAPPED_RECT* Param_Estrutura)
+			CA_DXGI_MAPPED_RECT^ ConverterDXGI_MAPPED_RECTUnManaged_ToManaged(DXGI_MAPPED_RECT* Param_Estrutura)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_DXGI_MAPPED_RECT^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_DXGI_MAPPED_RECT();
+				CA_DXGI_MAPPED_RECT^ EstruturaRetorno = gcnew CA_DXGI_MAPPED_RECT();
 
 				//Define os dados na estrutura
 				EstruturaRetorno->Largura = Param_Estrutura->Pitch;
@@ -8981,7 +9074,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_DXGI_QUERY_VIDEO_MEMORY_INFO) para sua correspondencia não gerenciada(DXGI_QUERY_VIDEO_MEMORY_INFO).
-			DXGI_QUERY_VIDEO_MEMORY_INFO* ConverterDXGI_QUERY_VIDEO_MEMORY_INFOManaged_ToUnManaged(SDKBase::Estruturas::CA_DXGI_QUERY_VIDEO_MEMORY_INFO^ Param_Estrutura)
+			DXGI_QUERY_VIDEO_MEMORY_INFO* ConverterDXGI_QUERY_VIDEO_MEMORY_INFOManaged_ToUnManaged(CA_DXGI_QUERY_VIDEO_MEMORY_INFO^ Param_Estrutura)
 			{
 				//Variavel a ser retornada.
 				DXGI_QUERY_VIDEO_MEMORY_INFO* EstruturaRetorno = CriarEstrutura<DXGI_QUERY_VIDEO_MEMORY_INFO>();
@@ -9000,10 +9093,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(DXGI_QUERY_VIDEO_MEMORY_INFO) para sua correspondencia gerenciada(CA_DXGI_QUERY_VIDEO_MEMORY_INFO).
-			SDKBase::Estruturas::CA_DXGI_QUERY_VIDEO_MEMORY_INFO^ ConverterDXGI_QUERY_VIDEO_MEMORY_INFOUnManaged_ToManaged(DXGI_QUERY_VIDEO_MEMORY_INFO* Param_Estrutura)
+			CA_DXGI_QUERY_VIDEO_MEMORY_INFO^ ConverterDXGI_QUERY_VIDEO_MEMORY_INFOUnManaged_ToManaged(DXGI_QUERY_VIDEO_MEMORY_INFO* Param_Estrutura)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_DXGI_QUERY_VIDEO_MEMORY_INFO^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_DXGI_QUERY_VIDEO_MEMORY_INFO();
+				CA_DXGI_QUERY_VIDEO_MEMORY_INFO^ EstruturaRetorno = gcnew CA_DXGI_QUERY_VIDEO_MEMORY_INFO();
 
 				//Define os dados na estrutura
 				EstruturaRetorno->AvailableForReservation = static_cast<UInt64>(Param_Estrutura->AvailableForReservation);
@@ -9017,7 +9110,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_DXGI_MATRIX_3X2_F) para sua correspondencia não gerenciada(DXGI_MATRIX_3X2_F).
-			DXGI_MATRIX_3X2_F* ConverterDXGI_MATRIX_3X2_FManaged_ToUnManaged(SDKBase::Estruturas::CA_DXGI_MATRIX_3X2_F^ Param_Estrutura)
+			DXGI_MATRIX_3X2_F* ConverterDXGI_MATRIX_3X2_FManaged_ToUnManaged(CA_DXGI_MATRIX_3X2_F^ Param_Estrutura)
 			{
 				//Variavel a ser retornada.
 				DXGI_MATRIX_3X2_F* EstruturaRetorno = CriarEstrutura<DXGI_MATRIX_3X2_F>();
@@ -9038,10 +9131,10 @@ namespace CarenRengine
 			}
 
 			//Converte uma estrutura não gerenciada(DXGI_MATRIX_3X2_F) para sua correspondencia gerenciada(CA_DXGI_MATRIX_3X2_F).
-			SDKBase::Estruturas::CA_DXGI_MATRIX_3X2_F^ ConverterDXGI_MATRIX_3X2_FUnManaged_ToManaged(DXGI_MATRIX_3X2_F* Param_Estrutura)
+			CA_DXGI_MATRIX_3X2_F^ ConverterDXGI_MATRIX_3X2_FUnManaged_ToManaged(DXGI_MATRIX_3X2_F* Param_Estrutura)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_DXGI_MATRIX_3X2_F^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_DXGI_MATRIX_3X2_F();
+				CA_DXGI_MATRIX_3X2_F^ EstruturaRetorno = gcnew CA_DXGI_MATRIX_3X2_F();
 
 				//Define os dados na estrutura
 				EstruturaRetorno->_11 = Param_Estrutura->_11;
@@ -9216,7 +9309,7 @@ namespace CarenRengine
 
 
 			//Converte uma estrutura gerenciada(CA_WICRect) para sua correspondencia não gerenciada(WICRect).
-			WICRect* ConverterWICRectManaged_ToUnManaged(SDKBase::Estruturas::CA_WICRect^ Param_Estrutura)
+			WICRect* ConverterWICRectManaged_ToUnManaged(CA_WICRect^ Param_Estrutura)
 			{
 				//Variavel a ser retornada.
 				WICRect* EstruturaRetorno = CriarEstrutura<WICRect>();
@@ -9238,7 +9331,7 @@ namespace CarenRengine
 			CA_WICRect^ ConverterWICBitmapPatternUnManaged_ToManaged(WICRect* Param_Estrutura)
 			{
 				//Variavel a ser retornada.
-				SDKBase::Estruturas::CA_WICRect^ EstruturaRetorno = gcnew SDKBase::Estruturas::CA_WICRect();
+				CA_WICRect^ EstruturaRetorno = gcnew CA_WICRect();
 
 				//Define os dados na estrutura
 				EstruturaRetorno->X = Param_Estrutura->X;

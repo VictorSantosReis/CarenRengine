@@ -589,7 +589,7 @@ CarenResult CarenD2D1SvgPaint::SetId(String^ Param_Id)
 
 Done:;
 	//Libera a memória para a string.
-	DeletarTextoAlocadoSafe(&pId);
+	DeletarStringAllocatedSafe(&pId);
 
 	//Retorna o resultado.
 	return Resultado;

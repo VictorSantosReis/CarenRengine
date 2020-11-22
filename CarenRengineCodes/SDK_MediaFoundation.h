@@ -309,7 +309,7 @@ namespace CarenRengine
 			/// Recupera as propriedades do relógio.
 			/// </summary>
 			/// <param name="Param_Out_PropriedadesRelogio">Retorna a estrutura que contém as propriedades do relógio atual.</param>
-			CarenResult ObterPropriedades([Out] Estruturas::CA_RELOGIO_PROPRIEDADES^% Param_Out_PropriedadesRelogio);
+			CarenResult ObterPropriedades([Out] CA_MFCLOCK_PROPERTIES^% Param_Out_PropriedadesRelogio);
 
 			/// <summary>
 			/// Recupera o estado atual do relógio.
@@ -563,7 +563,7 @@ namespace CarenRengine
 			/// <param name="Param_GuidChave">Define o Guid do atributo a ter seu valor comparado com o valor da PropVariant informada.</param>
 			/// <param name="Param_Valor">O valor a ser comparado com o Atributo especificado.</param>
 			/// <param name="Param_Out_Resultado">O resultado da comparação do atributo.</param>
-			CarenResult CompararItem(String^ Param_GuidChave, Estruturas::CA_PropVariant^ Param_Valor, [Out] Boolean% Param_Out_Resultado);
+			CarenResult CompararItem(String^ Param_GuidChave, CA_PropVariant^ Param_Valor, [Out] Boolean% Param_Out_Resultado);
 
 			/// <summary>
 			/// (CopyAllItems) - Copia todos os atributos deste objeto em outro armazenamento de atributo.
@@ -598,7 +598,7 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_GuidChave">O GUID para chave que contém o Blob a ser obtido.</param>
 			/// <param name="Param_Out_Buffer">O buffer que contém os dados da matriz bytes do valor da chave solicitada.</param>
-			CarenResult ObterAlocaçãoBlob(String^ Param_GuidChave, [Out] Estruturas::CA_BlobData^% Param_Out_Buffer);
+			CarenResult ObterAlocaçãoBlob(String^ Param_GuidChave, [Out] CA_BlobData^% Param_Out_Buffer);
 
 			/// <summary>
 			/// Obtém uma seqüência de caracteres largos associada a uma chave. 
@@ -616,7 +616,7 @@ namespace CarenRengine
 			/// <param name="Param_GuidChave">O GUID para chave que contém o Blob a ser obtido.</param>
 			/// <param name="Param_Out_Buffer">O buffer que contém os dados da matriz bytes do valor da chave solicitada.</param>
 			/// <param name="Param_TamanhoBuffer">Define o tamanho da matriz em bytes do valor da chave a ser obtido. Chame o método (ObterBlobSize) para obter o valor para esse parametro.</param>
-			CarenResult ObterBlob(String^ Param_GuidChave, UInt32 Param_TamanhoBuffer, [Out] Estruturas::CA_BlobData^% Param_Out_Buffer);
+			CarenResult ObterBlob(String^ Param_GuidChave, UInt32 Param_TamanhoBuffer, [Out] CA_BlobData^% Param_Out_Buffer);
 
 			/// <summary>
 			/// Recupera o comprimento de uma matriz de byte associado a uma chave.
@@ -650,7 +650,7 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (CA_PropVariant) obtido.</param>
 			/// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-			CarenResult ObterItem(String^ Param_GuidChave, [Out] Estruturas::CA_PropVariant^% Param_Out_Valor);
+			CarenResult ObterItem(String^ Param_GuidChave, [Out] CA_PropVariant^% Param_Out_Valor);
 
 			/// <summary>
 			/// Recupera um atributo no índice especificado.
@@ -658,7 +658,7 @@ namespace CarenRengine
 			/// <param name="Param_Out_GuidChave">Recebe o guid associado a chave obtida pelo id.</param>
 			/// <param name="Param_IdItem">O Id do item a ter o seu valor obtido.</param>
 			/// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-			CarenResult ObterItemPorIndex(UInt32 Param_IdItem, [Out] String^% Param_Out_GuidChave, [Out] Estruturas::CA_PropVariant^% Param_Out_Valor);
+			CarenResult ObterItemPorIndex(UInt32 Param_IdItem, [Out] String^% Param_Out_GuidChave, [Out] CA_PropVariant^% Param_Out_Valor);
 
 			/// <summary>
 			/// Recupera o tipo de dados do valor associado a uma chave.
@@ -762,7 +762,7 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 			/// <param name="Param_PropVariantValor">A PropVariant que contém o valor a ser definido na chave especificada.</param>
-			CarenResult DefinirItem(String^ Param_GuidChave, Estruturas::CA_PropVariant^ Param_PropVariantValor);
+			CarenResult DefinirItem(String^ Param_GuidChave, CA_PropVariant^ Param_PropVariantValor);
 
 			/// <summary>
 			/// Associa uma seqüência de caracteres largos com uma chave.
@@ -983,7 +983,7 @@ namespace CarenRengine
 			/// dependem do evento.
 			/// </summary>
 			/// <param name="Param_Out_ValorEvento">Recebe a PropVariant que contém o valor associado ao evento. Nem todos eventos possuem valores.</param>
-			CarenResult ObterValor([Out] Estruturas::CA_PropVariant^% Param_Out_ValorEvento);
+			CarenResult ObterValor([Out] CA_PropVariant^% Param_Out_ValorEvento);
 		};
 
 		/// <summary>
@@ -1040,7 +1040,7 @@ namespace CarenRengine
 			/// <param name="Param_GuidExtendedType">O tipo estendido. Se o evento não tiver um tipo estendido, defina como NULO. O tipo estendido é retornado pelo método (ICarenMFMediaEvent.ObterTipoExtendido) do evento.</param>
 			/// <param name="Param_HResultCode">Um código de sucesso ou falha indicando o status do evento. Esse valor é retornado pelo método (ICarenMFMediaEvent.ObterStatus) do evento.</param>
 			/// <param name="Param_Dados">uma CA_PropVariant que contém o valor do evento. Este parâmetro pode ser NULO. Esse valor é retornado pelo método (ICarenMFMediaEvent.ObterValor) do evento.</param>
-			CarenResult InserirEventoFila(Enumeracoes::CA_MediaEventType Param_TipoEvento, String^ Param_GuidExtendedType, Int32 Param_HResultCode, Estruturas::CA_PropVariant^ Param_Dados);
+			CarenResult InserirEventoFila(Enumeracoes::CA_MediaEventType Param_TipoEvento, String^ Param_GuidExtendedType, Int32 Param_HResultCode, CA_PropVariant^ Param_Dados);
 		};
 
 		/// <summary>
@@ -1556,7 +1556,7 @@ namespace CarenRengine
 			/// <param name="Param_ValorAdicional">Um valor que contém informações adicionais relacionadas ao marcador. Esse parâmetro pode ser (NULO).</param>
 			/// <param name="Param_DadosAnexoEvento">Valor que é anexado junto ao evento(MEStreamSinkMarker). Chame o método (ObterValor) na interface 
 			/// de evento para obter esse valor. Esse parâmetro pode ser (NULO).</param>
-			CarenResult AdicionarMarcador(Enumeracoes::CA_MIDIA_STREAM_SINK_MARCADORES Param_Marcador, Estruturas::CA_PropVariant^ Param_ValorAdicional, Estruturas::CA_PropVariant^ Param_DadosAnexoEvento);
+			CarenResult AdicionarMarcador(Enumeracoes::CA_MIDIA_STREAM_SINK_MARCADORES Param_Marcador, CA_PropVariant^ Param_ValorAdicional, CA_PropVariant^ Param_DadosAnexoEvento);
 
 			/// <summary>
 			/// Faz com que o coletor de fluxo para descartar todas as amostras que ele 
@@ -1771,7 +1771,7 @@ namespace CarenRengine
 			/// <param name="Param_IdFluxo">O Id para o fluxo de consulta. Se (Param_ConsularColetor) for True, desconsidere esse valor.</param>
 			/// <param name="Param_ConsultarColetor">Define se deve obter as estatísticas do (Coletor de Mídia) propriamente dito.</param>
 			/// <param name="Param_Out_StatusDesempenho">Retorna a estrutura que contém todas as informações de Desempenho </param>
-			CarenResult ObterEstatisticasGravador(UInt32 Param_IdFluxo, Boolean Param_ConsultarColetor, [Out] Estruturas::CA_MIDIA_SINK_WRITER_ESTATISTICAS^% Param_Out_StatusDesempenho);
+			CarenResult ObterEstatisticasGravador(UInt32 Param_IdFluxo, Boolean Param_ConsultarColetor, [Out] CA_MF_SINK_WRITER_STATISTICS^% Param_Out_StatusDesempenho);
 
 			/// <summary>
 			/// (NotifyEndOfSegment) - Notifica o coletor de mídia que um fluxo atingiu o final de um segmento.
@@ -1937,7 +1937,7 @@ namespace CarenRengine
 			/// Param_GuidAtributo pode especificar os atributos de: MFAtributos_DescritorApresentação, MF_SOURCE_READER_MEDIASOURCE_CHARACTERISTICS.
 			/// Se Param_IdFluxo espeficifica um Fluxo, Param_GuidAtributo deve especificar um atributo do Descritor de Fluxo(GUIDs_MFAtributos_DescritorFluxo) </param>
 			/// <param name="Param_Out_ValorAtributo">Retorna o valor do atributo solicitado</param>
-			CarenResult ObterAtributoApresentacao(UInt32 Param_IdFluxo, String^ Param_GuidAtributo, [Out] Estruturas::CA_PropVariant^% Param_Out_ValorAtributo);
+			CarenResult ObterAtributoApresentacao(UInt32 Param_IdFluxo, String^ Param_GuidAtributo, [Out] CA_PropVariant^% Param_Out_ValorAtributo);
 
 			/// <summary>
 			/// () - Consulta a fonte subjacente de mídia ou decodificador para uma interface.
@@ -2371,7 +2371,7 @@ namespace CarenRengine
 			/// <param name="Param_Out_BufferLargura">Contém a largura do buffer retornado em: Param_Out_BufferImagem.</param>
 			/// <param name="Param_Out_TimeStamp">Recebe o carimbo de data/hora da imagem capturada. O valor é em unidades de 100 nanosegundos.</param>
 			CarenResult ObterCopiaImagemAtual(
-				[Out] Estruturas::CA_BITMAP_INFO_HEADER^% Param_Out_BimapInfoHeader,
+				[Out] CA_BITMAPINFOHEADER^% Param_Out_BimapInfoHeader,
 				[Out] ICarenBuffer^% Param_Out_BufferImagem,
 				[Out] UInt32% Param_Out_BufferLargura,
 				[Out] Int64% Param_Out_TimeStamp);
@@ -2389,8 +2389,8 @@ namespace CarenRengine
 			/// <param name="Param_Out_Minimo_VideoSizeIdeal">Recebe a estrutura que contém os valores (Minimos) da Largura e Altura (Ideias) para o vídeo.</param>
 			/// <param name="Param_Out_Maximo_VideoSizeIdeal">Recebe a estrutura que contém os valores (Maximos) da Largura e Altura (Ideias) para o vídeo.</param>
 			CarenResult ObterSizeIdealVideo(
-				[Out] Estruturas::CA_SIZE^% Param_Out_Minimo_VideoSizeIdeal,
-				[Out] Estruturas::CA_SIZE^% Param_Out_Maximo_VideoSizeIdeal);
+				[Out] CA_SIZE^% Param_Out_Minimo_VideoSizeIdeal,
+				[Out] CA_SIZE^% Param_Out_Maximo_VideoSizeIdeal);
 
 			/// <summary>
 			/// (GetNativeVideoSize) - Obtém o tamanho e a taxa de proporção do vídeo, antes de qualquer alongamento pelo (Processador de Vídeo).
@@ -2398,8 +2398,8 @@ namespace CarenRengine
 			/// <param name="Param_Out_VideoSize">Recebe a estrutura que contém a Largura e Altura (Nativas) para o vídeo.</param>
 			/// <param name="Param_Out_TaxaProporcaoVideo">Recebe a estrutura que contém a (Taxa de proporção) do vídeo.</param>
 			CarenResult ObterSizeNativoVideo(
-				[Out] Estruturas::CA_SIZE^% Param_Out_VideoSize,
-				[Out] Estruturas::CA_SIZE^% Param_Out_TaxaProporcaoVideo);
+				[Out] CA_SIZE^% Param_Out_VideoSize,
+				[Out] CA_SIZE^% Param_Out_TaxaProporcaoVideo);
 
 			/// <summary>
 			/// (GetRenderingPrefs) - Obtém várias configurações de processamento de vídeo.
@@ -2413,8 +2413,8 @@ namespace CarenRengine
 			/// <param name="Param_Out_RetanguloNormalized">Recebe uma estrutura que contém o retângulo de origem.</param>
 			/// <param name="Param_Out_RetanguloDestino">Recebe uma estrutura com o retângulo de destino atual.</param>
 			CarenResult ObterPosiçãoVideo(
-				[Out] Estruturas::CA_Retangulo_Normalizado^% Param_Out_RetanguloNormalized,
-				[Out] Estruturas::CA_Retangulo^% Param_Out_RetanguloDestino);
+				[Out] CA_MFVideoNormalizedRect^% Param_Out_RetanguloNormalized,
+				[Out] CA_RECT^% Param_Out_RetanguloDestino);
 
 			/// <summary>
 			/// (GetVideoWindow) - Obtém a janela de recorte para o vídeo. A janela de recorte é a (Handle) do componente que está
@@ -2470,8 +2470,8 @@ namespace CarenRengine
 			/// <param name="Param_RetanguloDestino">Especifica o retângulo de destino. Este parâmetro pode ser NULL. Se este parâmetro é NULL, o retângulo 
 			/// de destino não é alterado.</param>
 			CarenResult DefinirPosiçãoVideo(
-				Estruturas::CA_Retangulo_Normalizado^ Param_RetanguloNormalized,
-				Estruturas::CA_Retangulo^ Param_RetanguloDestino);
+				CA_MFVideoNormalizedRect^ Param_RetanguloNormalized,
+				CA_RECT^ Param_RetanguloDestino);
 
 			/// <summary>
 			/// (SetVideoWindow) - Define a janela de recorte para o vídeo. Está é a janela que vai hospedar o vídeo que será
@@ -2808,7 +2808,7 @@ namespace CarenRengine
 			/// mídia podem oferecer suporte o formato de hora adicional. Este parâmetro pode ser nulo. Se o valor for nulo, é equivalente a GUID_NULL.</param>
 			/// <param name="Param_PosiçãoInicio">Especifica onde iniciar a reprodução. As unidades deste parâmetro são indicadas pelo formato tempo dado em Param_GuidTimeFormato. Se o formato de hora é GUID_NULL, o tipo de variante deve ser VT_I8 ou VT_EMPTY. Use VT_I8 
 			/// para especificar uma nova posição inicial, em unidades de 100 nanossegundos. Use VT_EMPTY para começar a partir da posição atual. Outros formatos de hora podem usar outros tipos CA_PropVariant.</param>
-			CarenResult Iniciar(ICarenMFPresentationDescriptor^ Param_DescritorApresentação, String^ Param_GuidTimeFormato, Estruturas::CA_PropVariant^ Param_PosiçãoInicio);
+			CarenResult Iniciar(ICarenMFPresentationDescriptor^ Param_DescritorApresentação, String^ Param_GuidTimeFormato, CA_PropVariant^ Param_PosiçãoInicio);
 
 			/// <summary>
 			/// (Pause) - Pausa todos os fluxos ativos na fonte de mídia.
@@ -3411,7 +3411,7 @@ namespace CarenRengine
 			/// <param name="Param_TopoId">Reservado.</param>
 			/// <param name="Param_CountArray">A quantidade de elementos no array que contém as atualizações dos atributos.</param>
 			/// <param name="Param_ArrayUpdates">Uma matriz que contém elementos que atualizam os atributos. Cada elemento atualiza (um) atributo no nó.</param>
-			CarenResult AtualizarAtributosNode(UInt64 Param_TopoId, UInt32 Param_CountArray, cli::array<Estruturas::CA_MFTOPONODE_ATTRIBUTE_UPDATE^>^ Param_ArrayUpdates);
+			CarenResult AtualizarAtributosNode(UInt64 Param_TopoId, UInt32 Param_CountArray, cli::array<CA_MFTOPONODE_ATTRIBUTE_UPDATE^>^ Param_ArrayUpdates);
 		};
 
 		/// <summary>
@@ -3650,7 +3650,7 @@ namespace CarenRengine
 			/// a passar em GUID_NULL.</param>
 			/// <param name="Param_PosicaoInicio">Uma CA_PropVariant que especifica a posição inicial para reprodução. O significado e o tipo de dados desse parâmetro são indicados pelo 
 			/// (Param_GuidFormatoTempo) parâmetro.</param>
-			CarenResult Iniciar(String^ Param_GuidFormatoTempo, Estruturas::CA_PropVariant^ Param_PosicaoInicio);
+			CarenResult Iniciar(String^ Param_GuidFormatoTempo, CA_PropVariant^ Param_PosicaoInicio);
 
 			/// <summary>
 			/// (Stop) - Interrompe a sessão de mídia.
@@ -3658,17 +3658,6 @@ namespace CarenRengine
 			/// </summary>
 			CarenResult Parar();
 		};
-
-
-
-
-
-
-
-
-
-
-		//NOVAS INTERFACES
 
 		/// <summary>
 		/// (IMFFinalizableMediaSink) - Interface opcionalmente suportada por sinks de mídia para executar tarefas necessárias antes do desligamento. Essa interface é normalmente exposta por 
@@ -4595,7 +4584,8 @@ namespace CarenRengine
 			/// Verifica se um tempo especificado está dentro de qualquer um dos intervalos de tempo.
 			/// </summary>
 			/// <param name="Param_Time">A hora, em segundos.</param>
-			CarenResult ContainsTime(double Param_Time);
+			/// <param name="Param_Out_Contem">Retorna um valor Booleano que indica se o tempo está contido em qualquer intervalos de tempo.</param>
+			void ContainsTime(double Param_Time, [Out] Boolean% Param_Out_Contem);
 
 			/// <summary>
 			/// Obtém o tempo final para um intervalo de tempo especificado.
@@ -4611,7 +4601,7 @@ namespace CarenRengine
 			/// Obtém o número de intervalos de tempo contidos no objeto.
 			/// </summary>
 			/// <param name="Param_Out_Quantidade">Recebe a quantidade de intervelos de tempo totais contidos no objeto.</param>
-			CarenResult GetLength([Out] UInt32% Param_Out_Quantidade);
+			void GetLength([Out] UInt32% Param_Out_Quantidade);
 
 			/// <summary>
 			/// Obtém a hora de início para um intervalo de tempo especificado.
@@ -4647,13 +4637,12 @@ namespace CarenRengine
 			/// Obtém o código de erro.
 			/// </summary>
 			/// <param name="Param_Out_CodigoErro">Retorna um bandeira da enumeração CA_MF_MEDIA_ENGINE_ERR que vai indicar o erro.</param>
-			CarenResult GetErrorCode([Out] CA_MF_MEDIA_ENGINE_ERR% Param_Out_CodigoErro);
+			void GetErrorCode([Out] CA_MF_MEDIA_ENGINE_ERR% Param_Out_CodigoErro);
 
 			/// <summary>
 			/// Obtém o código de erro estendido.
 			/// </summary>
-			/// <param name="Param_Out_CodigoErro">Retorna um inteiro de 32 bits assinado que corresponde a um código HRESULT.</param>
-			CarenResult GetExtendedErrorCode([Out] Int32% Param_Out_CodigoErro);
+			CarenResult GetExtendedErrorCode();
 
 			/// <summary>
 			/// Define o código de erro.
@@ -4669,7 +4658,7 @@ namespace CarenRengine
 		};
 
 		/// <summary>
-		/// (IMFMediaKeySessionNotify) - Interface responsável por fornecer um mecanismo para notificar o aplicativo sobre informações sobre a sessão-chave de mídia.
+		/// (IMFMediaKeySessionNotify) - Interface responsável por fornecer um mecanismo para notificar o aplicativo sobre informações da sessão-chave de mídia.
 		/// </summary>
 		[CategoryAttribute("MF Interface")]	
 		[Guid("CA97F67D-3657-46E8-957B-054D85A88131")]
@@ -4684,31 +4673,62 @@ namespace CarenRengine
 			}
 
 
-
-			//Métodos
+			//Define os delegates
 
 			/// <summary>
-			/// Notifica a aplicação de que a chave foi adicionada.
+			/// Delegate do evento OnKeyAdded.
 			/// </summary>
-			CarenResult KeyAdded();
+			delegate void Delegate_OnKeyAdded();
 
 			/// <summary>
-			/// Notifica o aplicativo de que ocorreu um erro durante o processamento da chave.
+			/// Delegate do evento OnKeyError.
 			/// </summary>
 			/// <param name="Param_ErroCode">O código de erro.</param>
-			/// <param name="Param_SystemCode">O código especifico de plataforma para maiores informações.</param>
-			CarenResult KeyError(UInt16 Param_ErroCode, UInt32 Param_SystemCode);
+			/// <param name="Param_SystemCode">O código especifico de plataforma para maiores informações.</param> 
+			delegate void Delegate_OnKeyError(UInt16 Param_ErroCode, UInt32 Param_SystemCode);
+
 
 			/// <summary>
-			/// Passa informações para o aplicativo para que ele possa iniciar uma aquisição chave.
+			/// Delegate do evento OnKeyMessage.
 			/// </summary>
 			/// <param name="Param_Url">A URL para enviar a mensagem.</param>
 			/// <param name="Param_Mensagem">A mensagem para enviar para o aplicativo.</param>
 			/// <param name="Param_CoutDataMensagem">O comprimento em bytes de Param_Mensagem.</param>
-			CarenResult KeyMessage(
-				String^ Param_Url, 
-				cli::array<Byte>^ Param_Mensagem, 
+			delegate void Delegate_OnKeyMessage(
+				String^ Param_Url,
+				cli::array<Byte>^ Param_Mensagem,
 				UInt32 Param_CoutDataMensagem);
+
+
+			//Define os eventos
+
+			/// <summary>
+			/// Evento chamado para notificar a aplicação de que a chave foi adicionada.
+			/// </summary>
+			event Delegate_OnKeyAdded^ OnKeyAdded;
+
+			/// <summary>
+			/// Evento chamado para notificar o aplicativo de que ocorreu um erro durante o processamento da chave.
+			/// </summary>
+			event Delegate_OnKeyError^ OnKeyError;
+
+			/// <summary>
+			/// Evento chamado para notificar o aplicativo para que ele possa iniciar uma aquisição chave.
+			/// </summary>
+			event Delegate_OnKeyMessage^ OnKeyMessage;
+
+
+			//Métodos que registram e deletam os dados dos eventos.
+
+			/// <summary>
+			/// Método responsável por registrar os eventos da interface.
+			/// </summary>
+			void RegistrarCallback();
+
+			/// <summary>
+			/// Método responsável por liberar todos os registros de eventos resgistrados anteriormente. Chame esse método após uma chamada para (RegistrarCallback).
+			/// </summary>
+			void UnRegisterCallback();
 		};
 
 		/// <summary>
@@ -4814,7 +4834,7 @@ namespace CarenRengine
 			//Métodos
 
 			/// <summary>
-			/// Cria um objeto de sessão de chave de mídia usando os dados de inicialização especificados e dados personalizados. .
+			/// Cria um objeto de sessão de chave de mídia usando os dados de inicialização especificados e dados personalizados.
 			/// </summary>
 			/// <param name="Param_MimeType">O tipo MIME do recipiente de mídia usado para o conteúdo.</param>
 			/// <param name="Param_DadosIniciais">Os dados de inicialização do sistema chave.</param>
@@ -4884,7 +4904,7 @@ namespace CarenRengine
 			///Pergunta se o Media Engine inicia automaticamente a reprodução.
 			/// </summary>
 			/// <param name="Param_Out_AutoPlay">Recebe um valor booleano que indica se a reprodução é iniciada automaticamente.</param>
-			CarenResult GetAutoPlay([Out] Boolean% Param_Out_AutoPlay);
+			void GetAutoPlay([Out] Boolean% Param_Out_AutoPlay);
 
 			/// <summary>
 			/// Consulta quantos dados de recursos o mecanismo de mídia bufferou.
@@ -4902,19 +4922,19 @@ namespace CarenRengine
 			/// Obtém a posição de reprodução atual.
 			/// </summary>
 			/// <param name="Param_Out_PosicaoAtual">Obtém o valor da posição atual da reprodução.</param>
-			CarenResult GetCurrentTime([Out] double% Param_Out_PosicaoAtual);
+			void GetCurrentTime([Out] double% Param_Out_PosicaoAtual);
 
 			/// <summary>
 			/// Obtém a taxa de reprodução padrão.
 			/// </summary>
 			/// <param name="Param_Out_DefaultRate">Obtém o valor que indica a taxa de reprodução padrão.</param>
-			CarenResult GetDefaultPlaybackRate([Out] double% Param_Out_DefaultRate);
+			void GetDefaultPlaybackRate([Out] double% Param_Out_DefaultRate);
 
 			/// <summary>
 			/// Obtém a duração do recurso de mídia.
 			/// </summary>
 			/// <param name="Param_Out_Duracao">Recupera o valor da duração do recurso de mídia.</param>
-			CarenResult GetDuration([Out] double% Param_Out_Duracao);
+			void GetDuration([Out] double% Param_Out_Duracao);
 
 			/// <summary>
 			/// Obtém o status de erro mais recente.
@@ -4926,13 +4946,13 @@ namespace CarenRengine
 			/// Pergunta se o Media Engine fará a reprodução em loop.
 			/// </summary>
 			/// <param name="Param_Out_Loop">Obtém o valor booleano que indica o status da reprodução em loop.</param>
-			CarenResult GetLoop([Out] Boolean% Param_Out_Loop);
+			void GetLoop([Out] Boolean% Param_Out_Loop);
 
 			/// <summary>
 			/// Pergunta se o áudio está silenciado.
 			/// </summary>
 			/// <param name="Param_Out_Muted">Obtém um valor booleano que indica se o áudio está silenciado.</param>
-			CarenResult GetMuted([Out] Boolean% Param_Out_Muted);
+			void GetMuted([Out] Boolean% Param_Out_Muted);
 
 			/// <summary>
 			/// Obtém o tamanho do quadro de vídeo, ajustado para proporção.
@@ -4947,13 +4967,13 @@ namespace CarenRengine
 			/// Obtém o estado atual da rede do mecanismo de mídia.
 			/// </summary>
 			/// <param name="Param_Out_StateNetwork">Retornar um valor da enumeração CA_MF_MEDIA_ENGINE_NETWORK que indica o status da rede.</param>
-			CarenResult GetNetworkState([Out] CA_MF_MEDIA_ENGINE_NETWORK% Param_Out_StateNetwork);
+			void GetNetworkState([Out] CA_MF_MEDIA_ENGINE_NETWORK% Param_Out_StateNetwork);
 
 			/// <summary>
 			/// Obtém a taxa de reprodução atual.
 			/// </summary>
 			/// <param name="Param_Out_PlaybackRate">Obtém um valor que indica a taxa de reprodução atual.</param>
-			CarenResult GetPlaybackRate([Out] double% Param_Out_PlaybackRate);
+			void GetPlaybackRate([Out] double% Param_Out_PlaybackRate);
 
 			/// <summary>
 			/// Obtém os intervalos de tempo que foram prestados.
@@ -4965,13 +4985,13 @@ namespace CarenRengine
 			/// Recebe a bandeira de pré-carga.
 			/// </summary>
 			/// <param name="Param_Out_Preload">Recebe um valor da enumeração CA_MF_MEDIA_ENGINE_PRELOAD.</param>
-			CarenResult GetPreload([Out] CA_MF_MEDIA_ENGINE_PRELOAD% Param_Out_Preload);
+			void GetPreload([Out] CA_MF_MEDIA_ENGINE_PRELOAD% Param_Out_Preload);
 
 			/// <summary>
 			/// Obtém o estado pronto, o que indica se o recurso de mídia atual pode ser renderizado.
 			/// </summary>
 			/// <param name="Param_Out_RadyState">Obtém uma ou mais bandeiras da enumeração CA_MF_MEDIA_ENGINE_READY que indica se o recurso pode ser renderizado.</param>
-			CarenResult GetReadyState([Out] CA_MF_MEDIA_ENGINE_READY% Param_Out_RadyState);
+			void GetReadyState([Out] CA_MF_MEDIA_ENGINE_READY% Param_Out_RadyState);
 
 			/// <summary>
 			/// Obtém os intervalos de tempo aos quais o Media Engine pode procurar atualmente.
@@ -4983,13 +5003,13 @@ namespace CarenRengine
 			/// Obtém a posição inicial de reprodução.
 			/// </summary>
 			/// <param name="Param_Out_PosicaoInicial">Obtém um valor que indica a posição inicial de reprodução.</param>
-			CarenResult GetStartTime([Out] double% Param_Out_PosicaoInicial);
+			void GetStartTime([Out] double% Param_Out_PosicaoInicial);
 
 			/// <summary>
 			/// Obtém a proporção de imagem do fluxo de vídeo.
 			/// </summary>
-			/// <param name="Param_Out_X">Retonar o valor da Largura(X) do fluxo de vídeo.</param>
-			/// <param name="Param_Out_Y">Retonar o valor da Altura(Y) do fluxo de vídeo.</param>
+			/// <param name="Param_Out_X">Retonar o valor (X) do Aspect Ratio do fluxo do vídeo.</param>
+			/// <param name="Param_Out_Y">Retonar o valor (Y) do Aspect Ratio do fluxo do vídeo.</param>
 			CarenResult GetVideoAspectRatio(
 				[Out] UInt32% Param_Out_X,
 				[Out] UInt32% Param_Out_Y);
@@ -4998,37 +5018,37 @@ namespace CarenRengine
 			/// Obtém o nível de volume de áudio.
 			/// </summary>
 			/// <param name="Param_Out_Volume">Obtém um valor que indica o nível de volume do áudio.</param>
-			CarenResult GetVolume([Out] double% Param_Out_Volume);
+			void GetVolume([Out] double% Param_Out_Volume);
 
 			/// <summary>
 			/// Pergunta se o recurso de mídia atual contém um fluxo de áudio.
 			/// </summary>
 			/// <param name="Param_Out_AudioPresente">Retornar um booleano TRUE se um fluxo de áudio estiver disponível na mídia. Caso contrario, FALSE.</param>
-			CarenResult HasAudio([Out] Boolean% Param_Out_AudioPresente);
+			void HasAudio([Out] Boolean% Param_Out_AudioPresente);
 
 			/// <summary>
 			/// Pergunta se o recurso de mídia atual contém um fluxo de vídeo.
 			/// </summary>
 			/// <param name="Param_Out_VideoPresente">Retornar um booleano TRUE se um fluxo de vídeo estiver disponível na mídia. Caso contrario, FALSE.</param>
-			CarenResult HasVideo([Out] Boolean% Param_Out_VideoPresente);
+			void HasVideo([Out] Boolean% Param_Out_VideoPresente);
 
 			/// <summary>
 			/// Verifica se a reprodução terminou.
 			/// </summary>
 			/// <param name="Param_Out_ReproducaoTerminada">Retornar um booleano TRUE se a reprodução tiver terminado. Caso contrario, FALSE.</param>
-			CarenResult IsEnded([Out] Boolean% Param_Out_ReproducaoTerminada);
+			void IsEnded([Out] Boolean% Param_Out_ReproducaoTerminada);
 
 			/// <summary>
 			/// Verifica se a reprodução está pausada no momento.
 			/// </summary>
 			/// <param name="Param_Out_PauseStatus">Retorna um valor booleano indicando se a reprodução está pausada.</param>
-			CarenResult IsPaused([Out] Boolean% Param_Out_PauseStatus);
+			void IsPaused([Out] Boolean% Param_Out_PauseStatus);
 
 			/// <summary>
 			/// Verifica se o Media Engine está atualmente buscando uma nova posição de reprodução.
 			/// </summary>
 			/// <param name="Param_Out_BuscandoPosicao">Retornar um valor booleano que indica se a Media Engine está buscando uma nova posição.</param>
-			CarenResult IsSeeking([Out] Boolean% Param_Out_BuscandoPosicao);
+			void IsSeeking([Out] Boolean% Param_Out_BuscandoPosicao);
 
 			/// <summary>
 			/// Carrega a fonte de mídia atual.
@@ -5127,15 +5147,15 @@ namespace CarenRengine
 			/// No modo frame-server, chame este método para colocar o quadro de vídeo em uma superfície DXGI ou WIC. O aplicativo pode chamar esse método a qualquer momento após o 
 			/// Media Engine carregar um recurso de vídeo. Normalmente, no entanto, o aplicativo chama O ICarenMFMediaEngine::OnVideoStreamTick primeiro, para determinar se um novo quadro 
 			/// está disponível. Se o OnVideoStreamTick retornar SS_OK, o aplicativo então chamará TransferirFrameVideo.
-			/// Para conteúdo protegido, ligue para o método ICarenMFMediaEngineProtectedContent::TransferirFrameVideo em vez deste método.
+			/// Para conteúdo protegido, ligue para o método ICarenMFMediaEngineProtectedContent::TransferVideoFrame em vez deste método.
 			/// </summary>
 			/// <param name="Param_SuperficeDestino">Um ponteiro para a interface da superfície de destino.</param>
-			/// <param name="Param_RetanguloOrigem">Uma estrutura MFVideoNormalizedRect(CA_RECT) que especifica o retângulo de origem</param>
+			/// <param name="Param_RetanguloOrigem">Uma estrutura CA_MFVideoNormalizedRect que especifica o retângulo de origem</param>
 			/// <param name="Param_RetanguloDestino">Uma estrutura CA_RECT que especifica o retângulo de destino.</param>
 			/// <param name="Param_CorBorda">Uma estrutura CA_MFARGB que especifica a cor da borda.</param>
 			CarenResult TransferVideoFrame(
 				ICaren^ Param_SuperficeDestino, 
-				CA_RECT^ Param_RetanguloOrigem,
+				CA_MFVideoNormalizedRect^ Param_RetanguloOrigem,
 				CA_RECT^ Param_RetanguloDestino,
 				CA_MFARGB^ Param_CorBorda);	
 		};
@@ -5212,7 +5232,7 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_Out_Balance">Devolve o equilíbrio de áudio. O valor pode ser qualquer número na faixa seguinte faixa(-1 a 1). Se o valor for zero, 
 			/// os canais esquerdo e direito estão em volumes iguais. O valor padrão é zero.</param>
-			CarenResult GetBalance([Out] double% Param_Out_Balance);
+			void GetBalance([Out] double% Param_Out_Balance);
 
 			/// <summary>
 			/// Obtém o número de fluxos no recurso de mídia.
@@ -5231,7 +5251,7 @@ namespace CarenRengine
 				[Out] CA_PropVariant^% Param_Out_ValorAtributo);
 
 			/// <summary>
-			/// Obtém o modo em tempo real usado para a próxima chamada para DefinirFonte ou Carregar.
+			/// Obtém o modo em tempo real usado para a próxima chamada para SetSource ou Load.
 			/// </summary>
 			/// <param name="Param_Out_Habilitado">Recebe o modo em tempo real.</param>
 			CarenResult GetRealTimeMode([Out] Boolean% Param_Out_Habilitado);
@@ -5318,7 +5338,7 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_Taxa">A taxa a ser verificado o suporte.</param>
 			/// <param name="Param_Out_Suporte">Retorna um valor Booleano para se a taxa é suportada pela Media Engine.</param>
-			CarenResult IsPlaybackRateSupported(
+			void IsPlaybackRateSupported(
 				double Param_Taxa, 
 				[Out] Boolean% Param_Out_Suporte);
 
@@ -5332,7 +5352,7 @@ namespace CarenRengine
 			/// (IsStereo3D) - Verifica se o recurso de mídia contém vídeo 3D estereoscópico.
 			/// </summary>
 			/// <param name="Param_Out_Resultado">Retorna um valor Booleano para se a mídia contém video 3D estereoscópico.</param>
-			CarenResult IsStereo3D([Out] Boolean% Param_Out_Resultado);
+			void IsStereo3D([Out] Boolean% Param_Out_Resultado);
 
 			/// <summary>
 			/// Remove todos os efeitos de áudio e vídeo.
@@ -5412,13 +5432,13 @@ namespace CarenRengine
 			/// <summary>
 			/// Atualiza o retângulo de origem, o retângulo de destino e a cor da borda do vídeo.
 			/// </summary>
-			/// <param name="Param_Origem">Uma estrutura CA_RECT que especifica o retângulo de origem. O retângulo de origem define a área do quadro de vídeo exibido. 
-			/// Se este parâmetro for NULO,todo o quadro de vídeo será exibido.</param>
+			/// <param name="Param_Origem">Uma estrutura CA_MFVideoNormalizedRect que especifica o retângulo de origem. O retângulo de origem define a área do quadro de vídeo exibido. 
+			/// Se este parâmetro for NULO, todo o quadro de vídeo será exibido.</param>
 			/// <param name="Param_Destino">Uma estrutura CA_RECT que especifica o retângulo de destino. O retângulo de destino define a área da janela ou o visual 
 			/// DirectComposition onde o vídeo é desenhado.</param>
 			/// <param name="Param_CorBorda">Uma estrutura CA_MFARGB que especifica a cor da borda.</param>
 			CarenResult UpdateVideoStream(
-				CA_RECT^ Param_Origem, 
+				CA_MFVideoNormalizedRect^ Param_Origem, 
 				CA_RECT^ Param_Destino, 
 				CA_MFARGB^ Param_CorBorda);
 		};
@@ -5469,13 +5489,13 @@ namespace CarenRengine
 			/// Obtém o carimbo de tempo para o fim da janela de acrescimo.
 			/// </summary>
 			/// <param name="Param_Out_Timestamp">Retorna o carimbo de tempo para o fim.</param>
-			CarenResult GetAppendWindowEnd([Out] double% Param_Out_Timestamp);
+			void GetAppendWindowEnd([Out] double% Param_Out_Timestamp);
 
 			/// <summary>
 			/// Obtém o carimbo de tempo para o início da janela de acrescimo.
 			/// </summary>
 			/// <param name="Param_Out_Timestamp">Retorna o carimbo de tempo para o inicio.</param>
-			CarenResult GetAppendWindowStart([Out] double% Param_Out_Timestamp);
+			void GetAppendWindowStart([Out] double% Param_Out_Timestamp);
 
 			/// <summary>
 			/// Obtém o intervalo de tempo em Buffer.
@@ -5487,13 +5507,13 @@ namespace CarenRengine
 			/// Obtém a compensação de carimbo de tempo para fluxos de mídia anexados ao ICarenMFSourceBuffer.
 			/// </summary>
 			/// <param name="Param_Out_Timestamp">Retorna o carimbo de tempo compesado para fluxos anexados.</param>
-			CarenResult GetTimeStampOffset([Out] double% Param_Out_Timestamp);
+			void GetTimeStampOffset([Out] double% Param_Out_Timestamp);
 
 			/// <summary>
 			/// Obtém um valor que indica se Append, AppendByteStream ou Remove está em processo.
 			/// </summary>
 			/// <param name="Param_Out_Valor">Retorna um valor booleano indicando se alguns dos métodos está em processo atualmente.</param>
-			CarenResult GetUpdating([Out] Boolean% Param_Out_Valor);
+			void GetUpdating([Out] Boolean% Param_Out_Valor);
 
 			/// <summary>
 			/// Remove os segmentos de mídia definidos pelo intervalo de tempo especificado do ICarenMFSourceBuffer.
@@ -5520,7 +5540,7 @@ namespace CarenRengine
 			/// <param name="Param_Offset">O valor offset para o timestamp dos fluxos de mídia anexados.</param>
 			CarenResult SetTimeStampOffset(double Param_Offset);
 		};
-
+		
 		/// <summary>
 		/// (IMFSourceBufferNotify) - Interface responsável por fornecer funcionalidades para chamar eventos associados ao ICarenMFSourceBuffer.
 		/// </summary>
@@ -5549,7 +5569,7 @@ namespace CarenRengine
 			/// <summary>
 			/// Delegate do evento OnError.
 			/// </summary>
-			delegate void Delegate_OnError();
+			delegate void Delegate_OnError(CarenResult Param_Error);
 
 			/// <summary>
 			/// Delegate do evento OnUpdate.
@@ -5632,7 +5652,7 @@ namespace CarenRengine
 			/// Obtém o número de objetos ICarenMFSourceBuffer na lista.
 			/// </summary>
 			/// <param name="Param_Out_Quantidade">Retorna a quantidade de objetos presentes na lista.</param>
-			CarenResult GetLength([Out] UInt32% Param_Out_Quantidade);
+			void GetLength([Out] UInt32% Param_Out_Quantidade);
 
 
 			/// <summary>
@@ -5640,7 +5660,7 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_Index">O Iidex do buffer fonte a ser obtido da lista.</param>
 			/// <param name="Param_Out_BufferFonte">Retorna um ponteiro para a interface(ICarenMFSourceBuffer) do index informado.</param>
-			CarenResult GetSourceBuffer(UInt32 Param_Index, [Out] ICarenMFSourceBuffer^% Param_Out_BufferFonte);
+			void GetSourceBuffer(UInt32 Param_Index, [Out] ICarenMFSourceBuffer^% Param_Out_BufferFonte);
 		};
 		
 		/// <summary>
@@ -5678,26 +5698,26 @@ namespace CarenRengine
 			/// Obtém os buffers de origem que estão fornecendo ativamente dados de mídia para a fonte de mídia.
 			/// </summary>
 			/// <param name="Param_Out_ListBuffers">Retorna um ponteiro para a interface(ICarenMFSourceBufferList) que contém uma lista dos buffers ativos.</param>
-			CarenResult GetActiveSourceBuffers([Out] ICarenMFSourceBufferList^% Param_Out_ListBuffers);
+			void GetActiveSourceBuffers([Out] ICarenMFSourceBufferList^% Param_Out_ListBuffers);
 
 			/// <summary>
 			/// Obtém a duração da fonte de mídia em unidades de 100 nanossegundos.
 			/// </summary>
 			/// <param name="Param_Out_Duracao">Retorna a duração da midia em unidades de 100 nanossegundos.</param>
-			CarenResult GetDuration([Out] double% Param_Out_Duracao);
+			void GetDuration([Out] double% Param_Out_Duracao);
 
 			/// <summary>
 			/// Obtém o estado pronto da fonte da mídia.
 			/// </summary>
 			/// <param name="Param_Out_ReadyState">Retorna uma bandeira da enumeração(CA_MF_MSE_READY) que indica o estado pronto da fonte de mídia.</param>
-			CarenResult GetReadyState([Out] CA_MF_MSE_READY% Param_Out_ReadyState);
+			void GetReadyState([Out] CA_MF_MSE_READY% Param_Out_ReadyState);
 
 			/// <summary>
 			/// Obtém o ICarenMFSourceBuffer no índice especificado na coleção de buffers.
 			/// </summary>
 			/// <param name="Param_Index">O Index para o buffer na coleção.</param>
 			/// <param name="Param_Out_BufferFonte">Retorna um ponteiro para a interface(ICarenMFSourceBuffer) da fonte do buffer no index especificado. </param>
-			CarenResult GetSourceBuffer(
+			void GetSourceBuffer(
 				UInt32 Param_Index, 
 				[Out] ICarenMFSourceBuffer^% Param_Out_BufferFonte);
 
@@ -5705,14 +5725,14 @@ namespace CarenRengine
 			/// Obtém a coleção de buffers de origem associados a esta fonte de mídia.
 			/// </summary>
 			/// <param name="Param_Out_ListaBuffers">Retorna um ponteiro para a interface(ICarenMFSourceBufferList) de coleção de buffers.</param>
-			CarenResult GetSourceBuffers([Out] ICarenMFSourceBufferList^% Param_Out_ListaBuffers);
+			void GetSourceBuffers([Out] ICarenMFSourceBufferList^% Param_Out_ListaBuffers);
 
 			/// <summary>
 			/// Obtém um valor que indica se o tipo MIME especificado é suportado pela fonte de mídia.
 			/// </summary>
 			/// <param name="Param_Type">O tipo de mídia para verificar o suporte.</param>
 			/// <param name="Param_Out_Resultado">TRUE se o tipo de mídia for suportado; caso contrário, FALSE.</param>
-			CarenResult IsTypeSupported(
+			void IsTypeSupported(
 				String^ Param_Type, 
 				[Out] Boolean% Param_Out_Resultado);
 
@@ -5726,7 +5746,7 @@ namespace CarenRengine
 			/// Define a duração da fonte de mídia em unidades de 100 nanossegundos.
 			/// </summary>
 			/// <param name="Param_Duracao">A duração da fonte de mídia em unidades de 100 nanossegundos</param>
-			CarenResult SetDuration(double^ Param_Duracao);
+			CarenResult SetDuration(double Param_Duracao);
 
 			/// <summary>
 			/// Indique que o fim da transmissão de mídia foi alcançado.
@@ -5737,7 +5757,7 @@ namespace CarenRengine
 
 		/// <summary>
 		/// (IMFMediaEngineExtension) - Interface responsável por habilitar um aplicativo para carregar recursos de mídia no Media Engine.
-		/// Para usar esta interface, defina o atributo MF_MEDIA_ENGINE_EXTENSION quando você chamar o método ICarenMFMediaEngineClassFactory::CriarInstancia.
+		/// Para usar esta interface, defina o atributo MF_MEDIA_ENGINE_EXTENSION quando você chamar o método ICarenMFMediaEngineClassFactory::CreateInstance.
 		/// </summary>
 		[CategoryAttribute("MF Interface")]	
 		[Guid("8A621BB9-67DA-491C-9A4E-ECA8B0B994FD")]
@@ -5759,7 +5779,7 @@ namespace CarenRengine
 			/// Começa uma solicitação assíncrona para criar um fluxo de byteou uma fonte de mídia.
 			/// </summary>
 			/// <param name="Param_Url">A URL do recurso de mídia.</param>
-			/// <param name="Param_FluxpBytes">Um ponteiro para a interface ICarenMFByteStream.</param>
+			/// <param name="Param_FluxoBytes">Um ponteiro para a interface ICarenMFByteStream.</param>
 			/// <param name="Param_Tipo">Um membro da enumeração CA_MF_OBJECT_TYPE que especifica qual tipo de objeto criar.</param>
 			/// <param name="Param_Out_CookieCancelamento">Recebe um ponteiro para a interface IUnknown. Este ponteiro pode ser usado para cancelar a operação assíncrona, 
 			/// passando o ponteiro para o método ICarenMFMediaEngineExtension::CancelarCriacaoObjeto.</param>
@@ -5768,7 +5788,7 @@ namespace CarenRengine
 			/// para o retorno de chamada. O objeto é devolvido ao chamador quando o retorno de chamada é invocado. Este parâmetro pode ser NULO.</param>
 			CarenResult BeginCreateObject(
 				String^ Param_Url,
-				ICarenMFByteStream^ Param_FluxpBytes,
+				ICarenMFByteStream^ Param_FluxoBytes,
 				CA_MF_OBJECT_TYPE Param_Tipo,
 				[Out] ICaren^% Param_Out_CookieCancelamento,
 				ICarenMFAsyncCallback^ Param_Callback,
@@ -5825,7 +5845,7 @@ namespace CarenRengine
 			/// <summary>
 			/// Cria um objeto de erro de mídia.
 			/// </summary>
-			/// <param name="Param_Out_MediaError"></param>
+			/// <param name="Param_Out_MediaError">Retorna uma interface (ICarenMFMediaError) que contém o potneiro para um novo objeto de erro.</param>
 			CarenResult CreateError([Out] ICarenMFMediaError^% Param_Out_MediaError);
 
 			/// <summary>
@@ -5841,7 +5861,7 @@ namespace CarenRengine
 				[Out] ICarenMFMediaEngine^% Param_Out_MediaEngine);
 
 			/// <summary>
-			/// (CreateTimeRange) - Cria um objeto de intervalo de tempo.
+			/// Cria um objeto de intervalo de tempo.
 			/// </summary>
 			/// <param name="Param_Out_TimeRange">Recebe um ponteiro para a interface ICarenMFMediaTimeRange. O chamador deve liberar a interface.</param>
 			CarenResult CreateTimeRange([Out] ICarenMFMediaTimeRange^% Param_Out_TimeRange);
@@ -5957,7 +5977,7 @@ namespace CarenRengine
 			/// <summary>
 			/// Delegate do evento OnNeedKeys.
 			/// </summary>
-			delegate void Delegate_OnNeedKeys(cli::array<Byte>^ Param_BufferInicial, UInt32 Param_Count);
+			delegate void Delegate_OnNeedKeys(ICarenBuffer^% Param_Ref_BufferInicial, UInt32% Param_Ref_Count);
 
 
 			//Define os eventos
@@ -5980,7 +6000,6 @@ namespace CarenRengine
 			/// Método responsável por liberar todos os registros de eventos resgistrados anteriormente. Chame esse método após uma chamada para (RegistrarCallback).
 			/// </summary>
 			void UnRegisterCallback();
-
 		};
 
 		/// <summary>
@@ -6003,7 +6022,7 @@ namespace CarenRengine
 			/// <summary>
 			/// Delegate do evento OnEventNotify.
 			/// </summary>
-			delegate void Delegate_OnEventNotify(CA_MF_MEDIA_ENGINE_EVENT Param_EventoMediaEngine, IntPtr Param_Parametro1, UInt32 Param_Parametro2);
+			delegate CarenResult Delegate_OnEventNotify(CA_MF_MEDIA_ENGINE_EVENT Param_EventoMediaEngine, UINT64 Param_Parametro1, UInt32 Param_Parametro2);
 
 
 			//Define os eventos
@@ -6030,8 +6049,8 @@ namespace CarenRengine
 		};
 
 		/// <summary>
-		/// (IMFContentProtectionManager) - Interface responsável por habilitar a reprodução de conteúdo protegido fornecendo ao aplicativo um ponteiro para um objeto 
-		/// ativador de conteúdo. Aplicativos que reproduzam conteúdo protegido devem implementar essa interface.
+		/// (IMFContentProtectionManager) - Interface responsável por habilitar a reprodução de conteúdo protegido fornecendo ao aplicativo um ponteiro para um objeto ativador de conteúdo. 
+		/// Aplicativos que reproduzam conteúdo protegido devem implementar essa interface.
 		/// </summary>
 		[CategoryAttribute("MF Interface")]		
 		[Guid("3CF2E59F-67BB-4D52-8EFA-76F82E2D23A7")]
@@ -6073,7 +6092,7 @@ namespace CarenRengine
 		};
 
 		/// <summary>
-		/// (IMFMediaEngineProtectedContent) - Interface responsável por permitir que o Media Engine reproduzam conteúdo de vídeo protegido.
+		/// (IMFMediaEngineProtectedContent) - Interface responsável por permitir que o Media Engine reproduza conteúdo de vídeo protegido.
 		/// </summary>
 		[CategoryAttribute("MF Interface")]	
 		[Guid("4F1F1E15-DB13-4FB7-9C89-79A41CB0DB35")]
@@ -6128,14 +6147,14 @@ namespace CarenRengine
 			/// Copia um quadro de vídeo protegido para uma superfície DXGI.
 			/// </summary>
 			/// <param name="Param_SuperficeDestino">Um ponteiro para a interface da superfície de destino.</param>
-			/// <param name="Param_RetanguloOrigem">Uma estrutura MFVideoNormalizedRect(CA_RECT) que especifica o retângulo de origem</param>
+			/// <param name="Param_RetanguloOrigem">Uma estrutura CA_MFVideoNormalizedRect) que especifica o retângulo de origem</param>
 			/// <param name="Param_RetanguloDestino">Uma estrutura CA_RECT que especifica o retângulo de destino.</param>
 			/// <param name="Param_CorBorda">Uma estrutura CA_MFARGB que especifica a cor da borda.</param>
 			/// <param name="Param_Out_FlagsProtecaoConteudo">Recebe um OR bit a bit de zero ou mais sinalizadores da enumeração CA_MF_MEDIA_ENGINE_FRAME_PROTECTION_FLAGS. 
 			/// Esses sinalizadores indicam quais proteções de conteúdo o aplicativo deve aplicar antes de apresentar a superfície.</param>
 			CarenResult TransferVideoFrame(
 				ICaren^ Param_SuperficeDestino,
-				CA_RECT^ Param_RetanguloOrigem,
+				CA_MFVideoNormalizedRect^ Param_RetanguloOrigem,
 				CA_RECT^ Param_RetanguloDestino,
 				CA_MFARGB^ Param_CorBorda,
 				[Out] CA_MF_MEDIA_ENGINE_FRAME_PROTECTION_FLAGS% Param_Out_FlagsProtecaoConteudo);
@@ -6209,7 +6228,7 @@ namespace CarenRengine
 			/// Obtém a configuração de fluxo ativo para a fonte de mídia, que define o conjunto de subfluxos que incluem a saída multiplexada.
 			/// </summary>
 			/// <param name="Param_Out_Config">Retorna a configuração do fluxo.</param>
-			CarenResult GetStreamConfiguration([Out] UInt64% Param_Out_Config);
+			void GetStreamConfiguration([Out] UInt64% Param_Out_Config);
 
 			/// <summary>
 			/// Obtém a contagem de subfluxos gerenciados pela fonte de mídia multiplexada.

@@ -19,7 +19,7 @@ limitations under the License.
 #include "../SDK_MediaFoundation.h"
 #include "../Caren/Caren.h"
 #include "../SDK_Utilidades.h"
-#include "../FunctionClass/PropVariantManager.h"
+
 
 //Importa o namespace que contém as interfaces da Media Foundation.
 using namespace CarenRengine::MediaFoundation;

@@ -2,7 +2,7 @@
 #include "../SDK_MediaFoundation.h"
 #include "../SDK_Caren.h"
 #include "../SDK_Utilidades.h"
-#include "../FunctionClass/PropVariantManager.h"
+
 
 //Importa o namespace que contém as interfaces da API primária.
 using namespace CarenRengine::MediaFoundation;

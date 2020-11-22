@@ -40,7 +40,7 @@ class CLN_IMFSourceReaderCallback : public IMFSourceReaderCallback
 
 public:
 	//Inicialização da classe.
-	CLN_IMFSourceReaderCallback()
+	CLN_IMFSourceReaderCallback(): RefCount(1)
 	{
 		//Inicia a sessão critica.
 		InitializeCriticalSectionAndSpinCount(&SessaoCritica, 0x00000400);

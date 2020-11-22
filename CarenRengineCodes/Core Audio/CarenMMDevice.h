@@ -19,7 +19,7 @@ limitations under the License.
 #include "../Caren/Caren.h"
 #include "../SDK_CoreAudio.h"
 #include "../Windows/CarenPropertyStore.h"
-#include "../FunctionClass/PropVariantManager.h"
+
 #include "../SDK_Utilidades.h"
 
 //Importa o namespace que contém as interfaces da Core Audio Api

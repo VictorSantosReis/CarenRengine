@@ -1336,7 +1336,7 @@ CarenResult CarenWICImagingFactory2::CreateDecoderFromFilename(
 
 Done:;
 	//Libera a memória utilizada pela string.
-	DeletarTextoAlocadoSafe(&vi_pUrlArquivo);
+	DeletarStringAllocatedSafe(&vi_pUrlArquivo);
 
 	//Retorna o resultado.
 	return Resultado;

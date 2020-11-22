@@ -244,13 +244,33 @@
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFByteStream.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFAudioStreamVolume.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFByteStreamHandler.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFCdmSuspendNotify.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFContentProtectionManager.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFDLNASinkInit.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFFinalizableMediaSink.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFLocalMFTRegistration.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaEngine.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaEngineClassFactory.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaEngineClassFactory2.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaEngineClassFactoryEx.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaEngineEx.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaEngineExtension.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaEngineNeedKeyNotify.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaEngineNotify.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaEngineProtectedContent.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaEngineSrcElements.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaEngineSrcElementsEx.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaError.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaKeys.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaKeySession.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaKeySessionNotify.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaSourceExtension.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaTimeRange.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMetadata.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMetadataProvider .h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMuxStreamAttributesManager.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMuxStreamMediaTypeManager.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMuxStreamSampleManager.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFNetCredential.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFNetCredentialCache.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFNetCredentialManager.h" />
@@ -312,6 +332,9 @@
     <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3D11View.h" />
     <ClInclude Include="CarenRengineCodes\Direct3D\CarenD3DDeviceContextState.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFPresentationDescriptor.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFSourceBuffer.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFSourceBufferList.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFSourceBufferNotify.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFSourceOpenMonitor.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFStreamDescriptor.h" />
     <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGIAdapter.h" />
@@ -363,6 +386,7 @@
     <ClInclude Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink5.h" />
     <ClInclude Include="CarenRengineCodes\FunctionClass\DirectxFunctions.h" />
     <ClInclude Include="CarenRengineCodes\Caren\CarenHMONITOR.h" />
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFMediaKeySessionNotify.h" />
     <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFSourceOpenMonitor.h" />
     <ClInclude Include="CarenRengineCodes\Nativas\CLN_IWICDevelopRawNotificationCallback.h" />
     <ClInclude Include="CarenRengineCodes\SDK_Base.h" />
@@ -486,7 +510,6 @@
     <ClInclude Include="CarenRengineCodes\Header.h" />
     <ClInclude Include="CarenRengineCodes\FunctionClass\MediaFoundationFunctions.h" />
     <ClInclude Include="CarenRengineCodes\pch.h" />
-    <ClInclude Include="CarenRengineCodes\FunctionClass\PropVariantManager.h" />
     <ClInclude Include="CarenRengineCodes\Resource.h" />
     <ClInclude Include="CarenRengineCodes\SDK_MediaFoundation.h" />
     <ClInclude Include="CarenRengineCodes\SDK_Utilidades.h" />
@@ -504,6 +527,9 @@
     <ClInclude Include="CarenRengineCodes\Windows\CarenStream.h" />
     <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFNetResourceFilter.h" />
     <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFNetProxyLocatorFactory.h" />
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFSourceBufferNotify.h" />
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFMediaEngineNeedKeyNotify.h" />
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFMediaEngineNotify.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CarenRengineCodes\Classes Auxiliares\CarenPD2D1_PROPERTY_FUNCTIONS.cpp" />
@@ -629,13 +655,33 @@
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFByteStream.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFAudioStreamVolume.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFByteStreamHandler.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFCdmSuspendNotify.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFContentProtectionManager.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFDLNASinkInit.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFFinalizableMediaSink.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFLocalMFTRegistration.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaEngine.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaEngineClassFactory.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaEngineClassFactory2.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaEngineClassFactoryEx.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaEngineEx.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaEngineExtension.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaEngineNeedKeyNotify.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaEngineNotify.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaEngineProtectedContent.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaEngineSrcElements.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaEngineSrcElementsEx.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaError.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaKeys.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaKeySession.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaKeySessionNotify.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaSourceExtension.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaTimeRange.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMetadata.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMetadataProvider .cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMuxStreamAttributesManager.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMuxStreamMediaTypeManager.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMuxStreamSampleManager.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFNetCredential.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFNetCredentialCache.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFNetCredentialManager.cpp" />
@@ -697,6 +743,9 @@
     <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D11View.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3DDeviceContextState.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFPresentationDescriptor.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFSourceBuffer.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFSourceBufferList.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFSourceBufferNotify.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFSourceOpenMonitor.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFStreamDescriptor.cpp" />
     <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIAdapter.cpp" />
@@ -774,6 +823,7 @@
     <ClCompile Include="CarenRengineCodes\Core Audio\CarenMMDeviceEnumerator.cpp" />
     <ClCompile Include="CarenRengineCodes\Core Audio\CarenMMNotificationClient.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFGetService.cpp" />
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFMediaKeySessionNotify.cpp" />
     <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFSourceOpenMonitor.cpp" />
     <ClCompile Include="CarenRengineCodes\Nativas\CLN_IWICDevelopRawNotificationCallback.cpp" />
     <ClCompile Include="CarenRengineCodes\WIC\CarenWICBitmap.cpp" />
@@ -879,6 +929,9 @@
     <ClCompile Include="CarenRengineCodes\Windows\CarenStream.cpp" />
     <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFNetResourceFilter.cpp" />
     <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFNetProxyLocatorFactory.cpp" />
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFSourceBufferNotify.cpp" />
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFMediaEngineNeedKeyNotify.cpp" />
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFMediaEngineNotify.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CarenRengineCodes\app.rc" />

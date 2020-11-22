@@ -469,7 +469,7 @@ String^ Param_Id,
 Done:;
 	//Libera a memória para os dados.
 	DeletarEstruturaSafe(&pCor);
-	DeletarTextoAlocadoSafe(&IdElemento);
+	DeletarStringAllocatedSafe(&IdElemento);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -774,7 +774,7 @@ ICaren^ Param_Out_SvgElement)
 
 Done:;
 	//Libera a memória para o id
-	DeletarTextoAlocadoSafe(&pId);
+	DeletarStringAllocatedSafe(&pId);
 
 	//Retorna o resultado.
 	return Resultado;

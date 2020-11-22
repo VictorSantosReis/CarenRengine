@@ -621,7 +621,7 @@ CarenResult CarenWICColorContext::InitializeFromFilename(String^ Param_NomeArqui
 
 Done:;
 	//Libera a memória urilizada pela url.
-	DeletarTextoAlocadoSafe(&pUrlArquivo);
+	DeletarStringAllocatedSafe(&pUrlArquivo);
 
 	//Retorna o resultado.
 	return Resultado;

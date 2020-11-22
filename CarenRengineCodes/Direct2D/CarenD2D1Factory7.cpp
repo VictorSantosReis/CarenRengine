@@ -1470,7 +1470,7 @@ Done:;
 	DeletarMatrizEstruturasSafe(&pArrayBindings);
 
 	//Libera a memória para a string.
-	DeletarTextoAlocadoSafe(&pStringPropertyXml);
+	DeletarStringAllocatedSafe(&pStringPropertyXml);
 
 	//Retorna o resultado.
 	return Resultado;

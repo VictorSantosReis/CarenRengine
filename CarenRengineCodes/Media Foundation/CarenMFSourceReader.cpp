@@ -534,7 +534,7 @@ CarenResult CarenMFSourceReader::ObterAtributoApresentacao(UInt32 Param_IdFluxo,
 	Utilidades Util;
 	GUID GuidChave = GUID_NULL;
 	PROPVARIANT PropVar;
-	PropVariantManager PropManager;
+	
 
 	//Chama o método para obter o guid.
 	GuidChave = Util.CreateGuidFromString(Param_GuidAtributo);
@@ -571,7 +571,7 @@ CarenResult CarenMFSourceReader::ObterAtributoApresentacao(UInt32 Param_IdFluxo,
 	}
 
 	//Converte a estrutura nativa para gerenciada e define na estrutura de saida.
-	Param_Out_ValorAtributo = PropManager.ConvertPropVariantUnmanagedToManaged(PropVar);
+	Param_Out_ValorAtributo = Util.ConvertPropVariantUnmanagedToManaged(PropVar);
 
 	//Define sucesso na operação
 	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);

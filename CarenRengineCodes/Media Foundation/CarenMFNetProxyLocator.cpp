@@ -500,8 +500,8 @@ Boolean Param_Reservado)
 
 Done:;
 	//Libera a memória utilizada pelas strings.
-	DeletarTextoAlocadoSafe(&vi_pHost);
-	DeletarTextoAlocadoSafe(&vi_pUrl);
+	DeletarStringAllocatedSafe(&vi_pHost);
+	DeletarStringAllocatedSafe(&vi_pUrl);
 
 	//Retorna o resultado.
 	return Resultado;

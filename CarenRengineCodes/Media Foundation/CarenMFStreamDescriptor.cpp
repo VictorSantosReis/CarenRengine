@@ -837,25 +837,14 @@ CarenResult CarenMFStreamDescriptor::ObterAlocaçãoBlob(String^ Param_GuidChave
 
 	//Variaveis utilizadas pelo método
 	Utilidades Util;
-	UINT8* pBuffDados = NULL;
+	UINT8 *pBuffDados = NULL;
 	UINT32 LarguraBuffer = 0;
 	GUID GuidChave = GUID_NULL;
-	CA_BlobData^ BlobBuffer;
 
-	//Chama o método para obter o guid.
+	//Converte a string para o GUID.
 	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
 
-	//Verifica se o guid foi criado com sucesso
-	if (GuidChave == GUID_NULL)
-	{
-		//O guid informado não é valido
-		Resultado.AdicionarCodigo(ResultCode::ER_GUID_INVALIDO, false);
-
-		//Sai do método.
-		goto Done;
-	}
-
-	//Chama o método para obter o blob alocado internamente.
+	//Chama o método para realizar a operação.
 	Hr = PonteiroTrabalho->GetAllocatedBlob(GuidChave, &pBuffDados, &LarguraBuffer);
 
 	//Processa o resultado da chamada.
@@ -873,28 +862,22 @@ CarenResult CarenMFStreamDescriptor::ObterAlocaçãoBlob(String^ Param_GuidChave
 		Sair;
 	}
 
-	//Cria a estrutura que vai conter os dados do buffer.
-	BlobBuffer = gcnew CA_BlobData();
+	//Cria a estrutura a ser retornada com os dados.
+	Param_Out_Buffer = gcnew CA_BlobData();
 
 	//Define a largura do buffer
-	BlobBuffer->SizeData = LarguraBuffer;
+	Param_Out_Buffer->SizeData = LarguraBuffer;
 
-	//Cria o array que vai conter o buffer.
-	BlobBuffer->BufferDados = gcnew cli::array<Byte>(BlobBuffer->SizeData);
+	//Cria a interface que vai conter os dados do buffer.
+	Param_Out_Buffer->BufferDados = gcnew CarenBuffer();
 
 	//Copia os dados para o buffer
-	Marshal::Copy(IntPtr((void*)pBuffDados), BlobBuffer->BufferDados, 0, BlobBuffer->SizeData);
-
-	//Define a estrutura para o retorno.
-	Param_Out_Buffer = BlobBuffer;
+	Param_Out_Buffer->BufferDados->CriarBuffer(IntPtr(pBuffDados), true, Param_Out_Buffer->SizeData, Param_Out_Buffer->SizeData);
 
 Done:;
-	//Verifica se o Buffer é valido e exclui
-	if (pBuffDados != NULL)
-	{
-		//Chama um CoTaskMemFree -> Método indicado pelo Microsoft.
+	//Libera a memória para o buffer se válido.
+	if (ObjetoValido(pBuffDados))
 		CoTaskMemFree(pBuffDados);
-	}
 
 	//Retorna o resultado.
 	return Resultado;
@@ -923,16 +906,6 @@ CarenResult CarenMFStreamDescriptor::ObterAlocaçãoString(String^ Param_GuidCha
 
 	//Chama o método para obter o guid.
 	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
-
-	//Verifica se o guid foi criado com sucesso
-	if (GuidChave == GUID_NULL)
-	{
-		//O guid informado não é valido
-		Resultado.AdicionarCodigo(ResultCode::ER_GUID_INVALIDO, false);
-
-		//Sai do método.
-		goto Done;
-	}
 
 	//Chama o método para obter a String alocada internamente.
 	Hr = PonteiroTrabalho->GetAllocatedString(GuidChave, &StringValorRetornado, &LarguraBuffer);
@@ -984,27 +957,16 @@ CarenResult CarenMFStreamDescriptor::ObterBlob(String^ Param_GuidChave, UInt32 P
 
 	//Variaveis utilizadas pelo método
 	Utilidades Util;
-	UINT8* pBuffDados = NULL;
+	UINT8 *pBuffDados = NULL;
 	GUID GuidChave = GUID_NULL;
-	CA_BlobData^ BlobBuffer;
 
 	//Chama o método para obter o guid.
 	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
 
-	//Verifica se o guid foi criado com sucesso
-	if (GuidChave == GUID_NULL)
-	{
-		//O guid informado não é valido
-		Resultado.AdicionarCodigo(ResultCode::ER_GUID_INVALIDO, false);
-
-		//Sai do método.
-		goto Done;
-	}
-
 	//Cria o buffer que vai conter os dados.
-	pBuffDados = new UINT8[Param_TamanhoBuffer];
+	pBuffDados = CriarMatrizUnidimensional<UINT8>(static_cast<DWORD>(Param_TamanhoBuffer));
 
-	//Chama o método para obter o blob
+	//Chama o método para realizar a operação.
 	Hr = PonteiroTrabalho->GetBlob(GuidChave, pBuffDados, Param_TamanhoBuffer, NULL);
 
 	//Processa o resultado da chamada.
@@ -1022,28 +984,21 @@ CarenResult CarenMFStreamDescriptor::ObterBlob(String^ Param_GuidChave, UInt32 P
 		Sair;
 	}
 
-	//Cria a estrutura que vai conter os dados do buffer.
-	BlobBuffer = gcnew CA_BlobData();
+	//Cria a estrutura que será retornada.
+	Param_Out_Buffer = gcnew CA_BlobData();
 
 	//Define a largura do buffer
-	BlobBuffer->SizeData = Param_TamanhoBuffer;
+	Param_Out_Buffer->SizeData = Param_TamanhoBuffer;
 
-	//Cria o array que vai conter o buffer.
-	BlobBuffer->BufferDados = gcnew cli::array<Byte>(BlobBuffer->SizeData);
-
-	//Copia os dados para o buffer
-	Marshal::Copy(IntPtr((void*)pBuffDados), BlobBuffer->BufferDados, 0, BlobBuffer->SizeData);
-
-	//Define a estrutura para o retorno.
-	Param_Out_Buffer = BlobBuffer;
+	//Cria a interface que vai conter os dados.
+	Param_Out_Buffer->BufferDados = gcnew CarenBuffer();
+	
+	//Copia os dados para a interface do buffer.
+	Param_Out_Buffer->BufferDados->CriarBuffer(IntPtr(pBuffDados), true, Param_Out_Buffer->SizeData, Param_Out_Buffer->SizeData);
 
 Done:;
-	//Verifica se o Buffer é valido e exclui
-	if (pBuffDados != NULL)
-	{
-		//Deleta o buffer criado.
-		delete[] pBuffDados;
-	}
+	//Libera a memória utilizada pela matriz.
+	DeletarMatrizUnidimensionalSafe(&pBuffDados);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1069,16 +1024,6 @@ CarenResult CarenMFStreamDescriptor::ObterBlobSize(String^ Param_GuidChave, [Out
 
 	//Chama o método para obter o guid.
 	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
-
-	//Verifica se o guid foi criado com sucesso
-	if (GuidChave == GUID_NULL)
-	{
-		//O guid informado não é valido
-		Resultado.AdicionarCodigo(ResultCode::ER_GUID_INVALIDO, false);
-
-		//Sai do método.
-		goto Done;
-	}
 
 	//Obtém o tamanho do blob no guid informado
 	Hr = PonteiroTrabalho->GetBlobSize(GuidChave, &ValorRequisitado);
@@ -1168,16 +1113,6 @@ CarenResult CarenMFStreamDescriptor::ObterDouble(String^ Param_GuidChave, [Out] 
 	//Chama o método para obter o guid.
 	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
 
-	//Verifica se o guid foi criado com sucesso
-	if (GuidChave == GUID_NULL)
-	{
-		//O guid informado não é valido
-		Resultado.AdicionarCodigo(ResultCode::ER_GUID_INVALIDO, false);
-
-		//Sai do método.
-		goto Done;
-	}
-
 	//Chama o método para obter o valor
 	Hr = PonteiroTrabalho->GetDouble(GuidChave, &ValorRequisitado);
 
@@ -1225,16 +1160,6 @@ CarenResult CarenMFStreamDescriptor::ObterGuid(String^ Param_GuidChave, [Out] St
 	//Chama o método para obter o guid.
 	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
 
-	//Verifica se o guid foi criado com sucesso
-	if (GuidChave == GUID_NULL)
-	{
-		//O guid informado não é valido
-		Resultado.AdicionarCodigo(ResultCode::ER_GUID_INVALIDO, false);
-
-		//Sai do método.
-		goto Done;
-	}
-
 	//Chama o método para obter o valor
 	Hr = PonteiroTrabalho->GetGUID(GuidChave, &ValorRequisitado);
 
@@ -1281,16 +1206,6 @@ CarenResult CarenMFStreamDescriptor::ObterItem(String^ Param_GuidChave, [Out] CA
 
 	//Chama o método para obter o guid.
 	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
-
-	//Verifica se o guid foi criado com sucesso
-	if (GuidChave == GUID_NULL)
-	{
-		//O guid informado não é valido
-		Resultado.AdicionarCodigo(ResultCode::ER_GUID_INVALIDO, false);
-
-		//Sai do método.
-		goto Done;
-	}
 
 	//Inicializa a PropVariant.
 	PropVariantInit(&PropVar);
@@ -1399,16 +1314,6 @@ CarenResult CarenMFStreamDescriptor::ObterTipoDadosItem(String^ Param_GuidChave,
 	//Chama o método para obter o guid.
 	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
 
-	//Verifica se o guid foi criado com sucesso
-	if (GuidChave == GUID_NULL)
-	{
-		//O guid informado não é valido
-		Resultado.AdicionarCodigo(ResultCode::ER_GUID_INVALIDO, false);
-
-		//Sai do método.
-		goto Done;
-	}
-
 	//Chama o método para obter o valor
 	Hr = PonteiroTrabalho->GetItemType(GuidChave, &ValorRequisitado);
 
@@ -1456,16 +1361,6 @@ CarenResult CarenMFStreamDescriptor::ObterString(String^ Param_GuidChave, UInt32
 
 	//Chama o método para obter o guid.
 	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
-
-	//Verifica se o guid foi criado com sucesso
-	if (GuidChave == GUID_NULL)
-	{
-		//O guid informado não é valido
-		Resultado.AdicionarCodigo(ResultCode::ER_GUID_INVALIDO, false);
-
-		//Sai do método.
-		goto Done;
-	}
 
 	//Inicializa a matriz que vai conter a string
 	ValorRequisitado = new wchar_t[Param_LarguraString];
@@ -1525,16 +1420,6 @@ CarenResult CarenMFStreamDescriptor::ObterLarguraString(String^ Param_GuidChave,
 	//Chama o método para obter o guid.
 	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
 
-	//Verifica se o guid foi criado com sucesso
-	if (GuidChave == GUID_NULL)
-	{
-		//O guid informado não é valido
-		Resultado.AdicionarCodigo(ResultCode::ER_GUID_INVALIDO, false);
-
-		//Sai do método.
-		goto Done;
-	}
-
 	//Chama o método para obter a largura da string.
 	Hr = PonteiroTrabalho->GetStringLength(GuidChave, &ValorRequisitado);
 
@@ -1582,16 +1467,6 @@ CarenResult CarenMFStreamDescriptor::ObterUINT32(String^ Param_GuidChave, [Out] 
 	//Chama o método para obter o guid.
 	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
 
-	//Verifica se o guid foi criado com sucesso
-	if (GuidChave == GUID_NULL)
-	{
-		//O guid informado não é valido
-		Resultado.AdicionarCodigo(ResultCode::ER_GUID_INVALIDO, false);
-
-		//Sai do método.
-		goto Done;
-	}
-
 	//Chama o método para obter o valor
 	Hr = PonteiroTrabalho->GetUINT32(GuidChave, &ValorRequisitado);
 
@@ -1638,16 +1513,6 @@ CarenResult CarenMFStreamDescriptor::ObterUINT64(String^ Param_GuidChave, [Out] 
 
 	//Chama o método para obter o guid.
 	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
-
-	//Verifica se o guid foi criado com sucesso
-	if (GuidChave == GUID_NULL)
-	{
-		//O guid informado não é valido
-		Resultado.AdicionarCodigo(ResultCode::ER_GUID_INVALIDO, false);
-
-		//Sai do método.
-		goto Done;
-	}
 
 	//Chama o método para obter o valor
 	Hr = PonteiroTrabalho->GetUINT64(GuidChave, &ValorRequisitado);
@@ -1700,16 +1565,6 @@ CarenResult CarenMFStreamDescriptor::ObterRatioAtribute(String^ Param_GuidChave,
 	//Chama o método para obter o guid.
 	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
 
-	//Verifica se o guid foi criado com sucesso
-	if (GuidChave == GUID_NULL)
-	{
-		//O guid informado não é valido
-		Resultado.AdicionarCodigo(ResultCode::ER_GUID_INVALIDO, false);
-
-		//Sai do método.
-		goto Done;
-	}
-
 	//Chama o método para obter os valores.
 	Hr = MFGetAttributeRatio(PonteiroTrabalho, GuidChave, &Valor_Numerador, &Valor_Denominador);
 
@@ -1759,16 +1614,6 @@ CarenResult CarenMFStreamDescriptor::ObterSizeAttribute(String^ Param_GuidChave,
 
 	//Chama o método para obter o guid.
 	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
-
-	//Verifica se o guid foi criado com sucesso
-	if (GuidChave == GUID_NULL)
-	{
-		//O guid informado não é valido
-		Resultado.AdicionarCodigo(ResultCode::ER_GUID_INVALIDO, false);
-
-		//Sai do método.
-		goto Done;
-	}
 
 	//Chama o método para obter os valores.
 	Hr = MFGetAttributeSize(PonteiroTrabalho, GuidChave, &Valor_Largura, &Valor_Altura);
@@ -1916,16 +1761,6 @@ CarenResult CarenMFStreamDescriptor::DefinirBlob(String^ Param_GuidChave, cli::a
 	//Chama o método para obter o guid.
 	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
 
-	//Verifica se o guid foi criado com sucesso
-	if (GuidChave == GUID_NULL)
-	{
-		//O guid informado não é valido
-		Resultado.AdicionarCodigo(ResultCode::ER_GUID_INVALIDO, false);
-
-		//Sai do método.
-		goto Done;
-	}
-
 	//Obtém a largura do buffer
 	ArraySize = Param_Buffer->Length;
 
@@ -1988,18 +1823,23 @@ CarenResult CarenMFStreamDescriptor::DefinirDouble(String^ Param_GuidChave, Doub
 	//Chama o método para obter o guid.
 	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
 
-	//Verifica se o guid foi criado com sucesso
-	if (GuidChave == GUID_NULL)
-	{
-		//O guid informado não é valido
-		Resultado.AdicionarCodigo(ResultCode::ER_GUID_INVALIDO, false);
-
-		//Sai do método.
-		goto Done;
-	}
-
 	//Chama o método para definir o valor
 	Hr = PonteiroTrabalho->SetDouble(GuidChave, Param_Valor);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Define o código na classe.
+		Var_Glob_LAST_HRESULT = Hr;
+
+		//Sai do método
+		Sair;
+	}
 
 Done:;
 	//Retorna o resultado.
@@ -2070,7 +1910,7 @@ CarenResult CarenMFStreamDescriptor::DefinirItem(String^ Param_GuidChave, Estrut
 	PROPVARIANT PropVar;
 	BLOB BlobData = {};
 	IUnknown* pInterfaceDesconhecida = NULL;
-	PropVariantManager PropVarManager;
+	
 	char* StringData = NULL;
 	bool ResultCreatePropVar = false;
 
@@ -2080,18 +1920,8 @@ CarenResult CarenMFStreamDescriptor::DefinirItem(String^ Param_GuidChave, Estrut
 	//Chama o método para obter o guid.
 	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
 
-	//Verifica se o guid foi criado com sucesso
-	if (GuidChave == GUID_NULL)
-	{
-		//O guid informado não é valido
-		Resultado.AdicionarCodigo(ResultCode::ER_GUID_INVALIDO, false);
-
-		//Sai do método.
-		goto Done;
-	}
-
 	//Converte a PropVariant gerenciada para a não gerenciada.
-	ResultCreatePropVar = PropVarManager.ConvertPropVariantManagedToUnamaged(Param_PropVariantValor, PropVar);
+	ResultCreatePropVar = Util.ConvertPropVariantManagedToUnamaged(Param_PropVariantValor, PropVar);
 
 	//Verifica o resultado
 	if (!ResultCreatePropVar)
@@ -2165,16 +1995,6 @@ CarenResult CarenMFStreamDescriptor::DefinirString(String^ Param_GuidChave, Stri
 	//Chama o método para obter o guid.
 	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
 
-	//Verifica se o guid foi criado com sucesso
-	if (GuidChave == GUID_NULL)
-	{
-		//O guid informado não é valido
-		Resultado.AdicionarCodigo(ResultCode::ER_GUID_INVALIDO, false);
-
-		//Sai do método.
-		goto Done;
-	}
-
 	//Converte a string
 	DadosConvertidos = Util.ConverterStringToChar(Param_Valor);
 
@@ -2237,16 +2057,6 @@ CarenResult CarenMFStreamDescriptor::DefinirUINT32(String^ Param_GuidChave, UInt
 	//Chama o método para obter o guid.
 	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
 
-	//Verifica se o guid foi criado com sucesso
-	if (GuidChave == GUID_NULL)
-	{
-		//O guid informado não é valido
-		Resultado.AdicionarCodigo(ResultCode::ER_GUID_INVALIDO, false);
-
-		//Sai do método.
-		goto Done;
-	}
-
 	//Chama o método para definir o valor
 	Hr = PonteiroTrabalho->SetUINT32(GuidChave, Param_Valor);
 
@@ -2289,16 +2099,6 @@ CarenResult CarenMFStreamDescriptor::DefinirUINT64(String^ Param_GuidChave, UInt
 
 	//Chama o método para obter o guid.
 	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
-
-	//Verifica se o guid foi criado com sucesso
-	if (GuidChave == GUID_NULL)
-	{
-		//O guid informado não é valido
-		Resultado.AdicionarCodigo(ResultCode::ER_GUID_INVALIDO, false);
-
-		//Sai do método.
-		goto Done;
-	}
 
 	//Chama o método para definir o valor
 	Hr = PonteiroTrabalho->SetUINT64(GuidChave, Param_Valor);
@@ -2346,16 +2146,6 @@ CarenResult CarenMFStreamDescriptor::DefinirRatioAtribute(String^ Param_GuidChav
 	//Chama o método para obter o guid.
 	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
 
-	//Verifica se o guid foi criado com sucesso
-	if (GuidChave == GUID_NULL)
-	{
-		//O guid informado não é valido
-		Resultado.AdicionarCodigo(ResultCode::ER_GUID_INVALIDO, false);
-
-		//Sai do método.
-		goto Done;
-	}
-
 	//Chama o método que vai definir os valores do Ratio.
 	Hr = MFSetAttributeRatio(PonteiroTrabalho, GuidChave, Param_Numerador, Param_Denominador);
 
@@ -2402,16 +2192,6 @@ CarenResult CarenMFStreamDescriptor::DefinirSizeAttribute(String^ Param_GuidChav
 	//Chama o método para obter o guid.
 	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
 
-	//Verifica se o guid foi criado com sucesso
-	if (GuidChave == GUID_NULL)
-	{
-		//O guid informado não é valido
-		Resultado.AdicionarCodigo(ResultCode::ER_GUID_INVALIDO, false);
-
-		//Sai do método.
-		goto Done;
-	}
-
 	//Chama o método que vai definir os valores de altura e largura.
 	Hr = MFSetAttributeSize(PonteiroTrabalho, GuidChave, Param_Largura, Param_Altura);
 
@@ -2455,16 +2235,6 @@ CarenResult CarenMFStreamDescriptor::DefinirPonteiroDesconhecido(String^ Param_G
 
 	//Chama o método para obter o guid.
 	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
-
-	//Verifica se o guid foi criado com sucesso
-	if (GuidChave == GUID_NULL)
-	{
-		//O guid informado não é valido
-		Resultado.AdicionarCodigo(ResultCode::ER_GUID_INVALIDO, false);
-
-		//Sai do método.
-		goto Done;
-	}
 
 	//Chama o método para obter a interface desconhecida a ser adicionada.
 	Resultado = Param_InterfaceDesconhecida->RecuperarPonteiro(&pNativeInterfaceDesconhecida);

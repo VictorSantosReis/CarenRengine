@@ -49,7 +49,7 @@ public ref class CarenMFNetProxyLocatorFactory : public ICarenMFNetProxyLocatorF
 	//Contrutores e destuidor da classe.
 public:
 	/// <summary>
-	/// Inicializa a classe com uma implementação da interface nativa (ICarenMFNetProxyLocatorFactory) criada internamente.
+	/// Inicializa a classe com uma implementação da interface nativa (IMFNetProxyLocatorFactory) criada internamente.
 	/// </summary>
 	CarenMFNetProxyLocatorFactory();
 	

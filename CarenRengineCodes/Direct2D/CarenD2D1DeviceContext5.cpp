@@ -793,7 +793,7 @@ void CarenD2D1DeviceContext5::DrawText(
 	//Libera a memória para a estrutura
 	DeletarEstruturaSafe(&pMyLayoutRect);
 	//Libera a memória para o texto
-	DeletarTextoAlocadoSafe(&pMyTexto);
+	DeletarStringAllocatedSafe(&pMyTexto);
 }
 
 /// <summary>
@@ -2609,7 +2609,7 @@ CarenResult CarenD2D1DeviceContext5::CreateColorContextFromFilename(
 
 Done:;
 	//Libera a memória para a string
-	DeletarTextoAlocadoSafe(&pUrlArquivo);
+	DeletarStringAllocatedSafe(&pUrlArquivo);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -6110,7 +6110,7 @@ CarenResult CarenD2D1DeviceContext5::DrawText(
 
 Done:;
 	//Libera a memória para os dados.
-	DeletarTextoAlocadoSafe(&pTexto);
+	DeletarStringAllocatedSafe(&pTexto);
 	DeletarEstruturaSafe(&pLayoutRectF);
 
 	//Retorna o resultado.

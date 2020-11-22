@@ -453,7 +453,7 @@ CA_ACCESS_RIGHTS Param_TipoAcesso)
 
 Done:;
 	//Libera a memória utilizada pela string
-	DeletarTextoAlocadoSafe(&vi_pUrlArquivo);
+	DeletarStringAllocatedSafe(&vi_pUrlArquivo);
 
 	//Retorna o resultado.
 	return Resultado;

@@ -763,7 +763,7 @@ Done:;
 
 	 //Variaveis a serem utilizadas.
 	 Utilidades Util;
-	 PropVariantManager PropManager;
+	 
 	 GUID GuidFormatoTempo = GUID_NULL;
 	 PROPVARIANT PropVar = {};
 	 bool PropVarConverted = false;
@@ -781,7 +781,7 @@ Done:;
 	 PropVariantInit(&PropVar);
 
 	 //Converte os dados da propvariant gerenciada para a não gerenciada.
-	 PropVarConverted = PropManager.ConvertPropVariantManagedToUnamaged(Param_PosicaoInicio, PropVar);
+	 PropVarConverted = Util.ConvertPropVariantManagedToUnamaged(Param_PosicaoInicio, PropVar);
 
 	 //Verifica o resultado
 	 if (!PropVarConverted)
@@ -1063,7 +1063,7 @@ Done:;
 
 	 //Variaveis utilizadas pelo método
 	 Utilidades Util;
-	 PropVariantManager PropManager;
+	 
 	 MediaEventType MTypeEvento = static_cast<MediaEventType>(Param_TipoEvento);
 	 PROPVARIANT PropVar;
 	 bool PropVarConverted = false;
@@ -1084,7 +1084,7 @@ Done:;
 		 PropVariantInit(&PropVar);
 
 		 //Converte os dados da propvariant gerenciada para a não gerenciada.
-		 PropVarConverted = PropManager.ConvertPropVariantManagedToUnamaged(Param_Dados, PropVar);
+		 PropVarConverted = Util.ConvertPropVariantManagedToUnamaged(Param_Dados, PropVar);
 
 		 //Verifica o resultado
 		 if (!PropVarConverted)

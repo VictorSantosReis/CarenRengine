@@ -683,13 +683,13 @@ CarenResult CarenMFMediaSourceEx::Iniciar(ICarenMFPresentationDescriptor^ Param_
 	IMFPresentationDescriptor* pDescritorApresentation = NULL;
 	GUID GuidFormatoHora = GUID_NULL;
 	Utilidades Util;
-	PropVariantManager PropManager;
+	
 
 	//Inicia a PropVariant
 	PropVariantInit(&PropVar);
 
 	//Converte a PropVariant gerenciada para uma não gerenciada.
-	PropManager.ConvertPropVariantManagedToUnamaged(Param_PosiçãoInicio, PropVar);
+	Util.ConvertPropVariantManagedToUnamaged(Param_PosiçãoInicio, PropVar);
 
 	//Verifica se foi especificado o guid
 	if (String::IsNullOrEmpty(Param_GuidTimeFormato))
@@ -1048,7 +1048,7 @@ CarenResult CarenMFMediaSourceEx::InserirEventoFila(Enumeracoes::CA_MediaEventTy
 
 	//Variaveis utilizadas pelo método
 	Utilidades Util;
-	PropVariantManager PropManager;
+	
 	MediaEventType MTypeEvento = static_cast<MediaEventType>(Param_TipoEvento);
 	PROPVARIANT PropVar;
 	bool PropVarConverted = false;
@@ -1069,7 +1069,7 @@ CarenResult CarenMFMediaSourceEx::InserirEventoFila(Enumeracoes::CA_MediaEventTy
 		PropVariantInit(&PropVar);
 
 		//Converte os dados da propvariant gerenciada para a não gerenciada.
-		PropVarConverted = PropManager.ConvertPropVariantManagedToUnamaged(Param_Dados, PropVar);
+		PropVarConverted = Util.ConvertPropVariantManagedToUnamaged(Param_Dados, PropVar);
 
 		//Verifica o resultado
 		if (!PropVarConverted)

@@ -619,7 +619,7 @@ String^ Param_Nome,
 
 Done:;
 	//Libera a memória utilizada pela string
-	DeletarTextoAlocadoSafe(&pNome);
+	DeletarStringAllocatedSafe(&pNome);
 
 	//Retorna o resultado.
 	return Resultado;

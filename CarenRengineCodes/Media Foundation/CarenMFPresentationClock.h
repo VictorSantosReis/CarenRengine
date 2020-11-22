@@ -298,7 +298,7 @@ public:
 	/// Recupera as propriedades do relógio.
 	/// </summary>
 	/// <param name="Param_Out_PropriedadesRelogio">Retorna a estrutura que contém as propriedades do relógio atual.</param>
-	virtual CarenResult ObterPropriedades([Out] Estruturas::CA_RELOGIO_PROPRIEDADES^% Param_Out_PropriedadesRelogio);
+	virtual CarenResult ObterPropriedades([Out] Estruturas::CA_MFCLOCK_PROPERTIES^% Param_Out_PropriedadesRelogio);
 
 	/// <summary>
 	/// Recupera o estado atual do relógio.

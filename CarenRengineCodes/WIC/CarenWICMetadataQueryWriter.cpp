@@ -450,7 +450,7 @@ CarenResult CarenWICMetadataQueryWriter::RemoveMetadataByName(String^ Param_Nome
 
 Done:;
 	//Libera a memória utilizada pela string
-	DeletarTextoAlocadoSafe(&pNome);
+	DeletarStringAllocatedSafe(&pNome);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -521,7 +521,7 @@ CA_PropVariant^ Param_Valor)
 
 Done:;
 	//Libera a memória utilizada pela string
-	DeletarTextoAlocadoSafe(&pNome);
+	DeletarStringAllocatedSafe(&pNome);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -742,7 +742,7 @@ CarenResult CarenWICMetadataQueryWriter::GetMetadataByName(
 
 Done:;
 	//Libera a memória utilizada pela string
-	DeletarTextoAlocadoSafe(&pNome);
+	DeletarStringAllocatedSafe(&pNome);
 
 	//Retorna o resultado.
 	return Resultado;

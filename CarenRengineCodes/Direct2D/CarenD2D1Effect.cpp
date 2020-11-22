@@ -594,7 +594,7 @@ void CarenD2D1Effect::GetPropertyIndex(
 	Param_Out_Index = OutIndex;
 
 	//Libera a memória para a  string
-	DeletarTextoAlocadoSafe(&pNomePropriedade);
+	DeletarStringAllocatedSafe(&pNomePropriedade);
 }
 
 /// <summary>
@@ -914,7 +914,7 @@ CarenResult CarenD2D1Effect::GetValueByName(
 
 Done:;
 	//Libera a memória para a string.
-	DeletarTextoAlocadoSafe(&pNomeProp);
+	DeletarStringAllocatedSafe(&pNomeProp);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -977,7 +977,7 @@ CarenResult CarenD2D1Effect::GetValueByName(
 
 Done:;
 	//Libera a memória para a string.
-	DeletarTextoAlocadoSafe(&pNomeProp);
+	DeletarStringAllocatedSafe(&pNomeProp);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1155,7 +1155,7 @@ CarenResult CarenD2D1Effect::SetValueByName(
 
 Done:;
 	//Libera a memória para a string.
-	DeletarTextoAlocadoSafe(&pNomeProp);
+	DeletarStringAllocatedSafe(&pNomeProp);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1212,7 +1212,7 @@ CarenResult CarenD2D1Effect::SetValueByName(
 
 Done:;
 	//Libera a memória para a string.
-	DeletarTextoAlocadoSafe(&pNomeProp);
+	DeletarStringAllocatedSafe(&pNomeProp);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1267,7 +1267,7 @@ CarenResult CarenD2D1Effect::SetValueByName(
 
 Done:;
 	//Libera a memória para a string.
-	DeletarTextoAlocadoSafe(&pNomeProp);
+	DeletarStringAllocatedSafe(&pNomeProp);
 
 	//Retorna o resultado.
 	return Resultado;

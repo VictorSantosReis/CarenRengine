@@ -19,7 +19,7 @@ limitations under the License.
 #include "../SDK_MediaFoundation.h"
 #include "../Caren/Caren.h"
 #include "../SDK_Utilidades.h"
-#include "../FunctionClass/PropVariantManager.h"
+
 
 //Importa o namespace que contém as interfaces da Media Foundation.
 using namespace CarenRengine::MediaFoundation;
@@ -38,7 +38,7 @@ using namespace CarenRengine::SDKUtilidades;
 
 
 /// <summary>
-/// [Concluido - Fase de testes] - Falta documentar.
+/// (Concluido - Fase de Testes) - Classe responsável por representar um tipo de mídia que descreve o formato de um fluxo de mídia. 
 /// </summary>
 public ref class CarenMFMediaType: public ICarenMFMediaType
 {

@@ -90,7 +90,7 @@ public:
 	/////////////////////////////////////////////
 
 	/// <summary>
-	/// vento chamado quando o fluxo de byte redireciona para uma URL.
+	/// Evento chamado quando o fluxo de byte redireciona para uma URL.
 	/// </summary>
 	virtual event ICarenMFNetResourceFilter::Delegate_OnRedirect^ OnRedirect;
 

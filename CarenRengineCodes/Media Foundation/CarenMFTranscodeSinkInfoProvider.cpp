@@ -534,7 +534,7 @@ CarenResult CarenMFTranscodeSinkInfoProvider::SetOutputFile(String^ Param_NomeAr
 
 Done:;
 	//Libera a memória utilizada pela string.
-	DeletarTextoAlocadoSafe(&vi_pUrlArquivoSaida);
+	DeletarStringAllocatedSafe(&vi_pUrlArquivoSaida);
 
 	//Retorna o resultado.
 	return Resultado;

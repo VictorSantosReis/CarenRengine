@@ -506,7 +506,7 @@ ICaren^ Param_ObjetoEstado)
 
 Done:;
 	//Libera a memória utilizada pela string.
-	DeletarTextoAlocadoSafe(&vi_pUrl);
+	DeletarStringAllocatedSafe(&vi_pUrl);
 
 	//Retorna o resultado.
 	return Resultado;

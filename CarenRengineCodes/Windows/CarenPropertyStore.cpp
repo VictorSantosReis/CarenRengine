@@ -548,11 +548,9 @@ CarenResult CarenPropertyStore::ObterValor(Estruturas::CA_PROPERTYKEY^% Param_Pr
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
+	Utilidades Util;
 	PROPERTYKEY KeyProp = {};
 	PROPVARIANT PropValor;
-	CA_PropVariant^ PropVariantValor = nullptr;
-	PropVariantManager PropVarManager;
-	Utilidades Util;
 
 	//Define os dados na PROPERTYKEY.
 	KeyProp.pid = Param_PropKey->PID;
@@ -579,11 +577,8 @@ CarenResult CarenPropertyStore::ObterValor(Estruturas::CA_PROPERTYKEY^% Param_Pr
 		Sair;
 	}
 
-	//Converte a propVariant e seus dados para a gerenciada.
-	PropVariantValor = PropVarManager.ConvertPropVariantUnmanagedToManaged(PropValor);
-
-	//Define a Variante no parametro de saida.
-	Param_Out_Valor = PropVariantValor;
+	//Converte a propVariant e define no parametro de saida.
+	Param_Out_Valor = Util.ConvertPropVariantUnmanagedToManaged(PropValor);
 
 Done:;
 	//Libera a PropVariant.
@@ -609,7 +604,7 @@ CarenResult CarenPropertyStore::DefinirValor(Estruturas::CA_PROPERTYKEY^% Param_
 	//Variaveis a serem utilizadas.
 	PROPERTYKEY KeyProp = {};
 	PROPVARIANT PropValor;
-	PropVariantManager PropVarManager;
+	
 	Utilidades Util;
 
 	//Define os dados na PROPERTYKEY.
@@ -620,7 +615,7 @@ CarenResult CarenPropertyStore::DefinirValor(Estruturas::CA_PROPERTYKEY^% Param_
 	PropVariantInit(&PropValor);
 
 	//Converte a PropVariant.
-	PropVarManager.ConvertPropVariantManagedToUnamaged(Param_PropValor, PropValor);
+	Util.ConvertPropVariantManagedToUnamaged(Param_PropValor, PropValor);
 
 	//Chama o método para definir o valor.
 	Hr = PonteiroTrabalho->SetValue(KeyProp, PropValor);

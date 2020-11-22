@@ -430,17 +430,17 @@ CarenResult CarenMFMediaEngineSrcElements::AddElement(
 
 	//Variaveis a serem utilizadas.
 	Utilidades Util;
-	PWSTR vi_pUrl = Nulo;
-	PWSTR vi_pTipo = Nulo;
-	PWSTR vi_pMidia = Nulo;
+	BSTR vi_pUrl = Nulo;
+	BSTR vi_pTipo = Nulo;
+	BSTR vi_pMidia = Nulo;
 
 	//Converte as strings se tiverem sido informadas
 	if (ObjetoGerenciadoValido(Param_Url))
-		vi_pUrl = Util.ConverterStringToWCHAR(Param_Url);
+		vi_pUrl = Util.ConverterStringToBSTR(Param_Url);
 	if (ObjetoGerenciadoValido(Param_Tipo))
-		vi_pTipo = Util.ConverterStringToWCHAR(Param_Tipo);
+		vi_pTipo = Util.ConverterStringToBSTR(Param_Tipo);
 	if (ObjetoGerenciadoValido(Param_Midia))
-		vi_pMidia = Util.ConverterStringToWCHAR(Param_Midia);
+		vi_pMidia = Util.ConverterStringToBSTR(Param_Midia);
 
 	//Chama o método para realizar a operação.
 	Hr = PonteiroTrabalho->AddElement(vi_pUrl, vi_pTipo, vi_pMidia);
@@ -462,9 +462,9 @@ CarenResult CarenMFMediaEngineSrcElements::AddElement(
 
 Done:;
 	//Libera a memória utilizada pelas strings.
-	DeletarTextoAlocadoSafe(&vi_pUrl);
-	DeletarTextoAlocadoSafe(&vi_pTipo);
-	DeletarTextoAlocadoSafe(&vi_pMidia);
+	DeletarStringBSTRSafe(&vi_pUrl);
+	DeletarStringBSTRSafe(&vi_pTipo);
+	DeletarStringBSTRSafe(&vi_pMidia);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -486,8 +486,8 @@ void CarenMFMediaEngineSrcElements::GetLength([Out] UInt32% Param_Out_Quantidade
 /// <param name="Param_Index">O índice baseado em zero do elemento fonte. Para obter o número de elementos de origem, ligue para o ICarenMFMediaEngineSrcElements::GetLength.</param>
 /// <param name="Param_Out_Midia">Recebe uma string que contém uma sequência de consulta de mídia. Se nenhum tipo de mídia for definido, este parâmetro receberá o valor NULO.</param>
 CarenResult CarenMFMediaEngineSrcElements::GetMedia(
-UInt32 Param_Index, 
-[Out] String^% Param_Out_Midia)
+	UInt32 Param_Index,
+	[Out] String^% Param_Out_Midia)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -496,7 +496,7 @@ UInt32 Param_Index,
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	PWSTR vi_pOutMedia = Nulo;
+	BSTR vi_pOutMedia = Nulo;
 
 	//Chama o método para realizar a operação.
 	Hr = PonteiroTrabalho->GetMedia(static_cast<DWORD>(Param_Index), &vi_pOutMedia);
@@ -521,9 +521,8 @@ UInt32 Param_Index,
 		Param_Out_Midia = gcnew String(vi_pOutMedia);
 
 Done:;
-	//Libera a memória utilizada pela string
-	if (ObjetoValido(vi_pOutMedia))
-		SysFreeString(vi_pOutMedia);
+	//Libera a memória utilizada pela string BSTR
+	DeletarStringBSTRSafe(&vi_pOutMedia);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -535,8 +534,8 @@ Done:;
 /// <param name="Param_Index">O índice baseado em zero do elemento fonte. Para obter o número de elementos de origem, ligue para o ICarenMFMediaEngineSrcElements::GetLength.</param>
 /// <param name="Param_Out_MimeType">Recebe uma string que contém o MIME Type. Se nenhum tipo de MIME for definido, este parâmetro receberá o valor NULO.</param>
 CarenResult CarenMFMediaEngineSrcElements::GetType(
-UInt32 Param_Index, 
-[Out] String^% Param_Out_MimeType)
+	UInt32 Param_Index,
+	[Out] String^% Param_Out_MimeType)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -545,7 +544,7 @@ UInt32 Param_Index,
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	PWSTR vi_pOutMimeType = Nulo;
+	BSTR vi_pOutMimeType = Nulo;
 
 	//Chama o método para realizar a operação.
 	Hr = PonteiroTrabalho->GetType(static_cast<DWORD>(Param_Index), &vi_pOutMimeType);
@@ -570,9 +569,8 @@ UInt32 Param_Index,
 		Param_Out_MimeType = gcnew String(vi_pOutMimeType);
 
 Done:;
-	//Libera a memória utilizada pela string
-	if (ObjetoValido(vi_pOutMimeType))
-		SysFreeString(vi_pOutMimeType);
+	//Libera a memória utilizada pela string BSTR
+	DeletarStringBSTRSafe(&vi_pOutMimeType);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -584,8 +582,8 @@ Done:;
 /// <param name="Param_Index">>O índice baseado em zero do elemento fonte. Para obter o número de elementos de origem, ligue para o ICarenMFMediaEngineSrcElements::GetLength.</param>
 /// <param name="Param_Out_Url">Recebe uma string que contém a URL do elemento de origem. Se nenhuma URL for definida, este parâmetro receberá o valor NULO</param>
 CarenResult CarenMFMediaEngineSrcElements::GetURL(
-UInt32 Param_Index, 
-[Out] String^% Param_Out_Url)
+	UInt32 Param_Index,
+	[Out] String^% Param_Out_Url)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -594,7 +592,7 @@ UInt32 Param_Index,
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	PWSTR vi_pOutUrl = Nulo;
+	BSTR vi_pOutUrl = Nulo;
 
 	//Chama o método para realizar a operação.
 	Hr = PonteiroTrabalho->GetURL(static_cast<DWORD>(Param_Index), &vi_pOutUrl);
@@ -619,9 +617,8 @@ UInt32 Param_Index,
 		Param_Out_Url = gcnew String(vi_pOutUrl);
 
 Done:;
-	//Libera a memória utilizada pela string
-	if (ObjetoValido(vi_pOutUrl))
-		SysFreeString(vi_pOutUrl);
+	//Libera a memória utilizada pela string BSTR
+	DeletarStringBSTRSafe(&vi_pOutUrl);
 
 	//Retorna o resultado.
 	return Resultado;

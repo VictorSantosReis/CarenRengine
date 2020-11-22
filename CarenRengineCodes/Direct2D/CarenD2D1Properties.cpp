@@ -453,7 +453,7 @@ String^ Param_NomePropriedade,
 	Param_Out_Index = OutIndex;
 
 	//Libera a memória para a  string
-	DeletarTextoAlocadoSafe(&pNomePropriedade);
+	DeletarStringAllocatedSafe(&pNomePropriedade);
 }
 
 /// <summary>
@@ -773,7 +773,7 @@ UInt32 Param_BufferSize)
 
 Done:;
 	//Libera a memória para a string.
-	DeletarTextoAlocadoSafe(&pNomeProp);
+	DeletarStringAllocatedSafe(&pNomeProp);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -836,7 +836,7 @@ UInt32 Param_BufferSize)
 
 Done:;
 	//Libera a memória para a string.
-	DeletarTextoAlocadoSafe(&pNomeProp);
+	DeletarStringAllocatedSafe(&pNomeProp);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1014,7 +1014,7 @@ UInt32 Param_BufferSize)
 
 Done:;
 	//Libera a memória para a string.
-	DeletarTextoAlocadoSafe(&pNomeProp);
+	DeletarStringAllocatedSafe(&pNomeProp);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1071,7 +1071,7 @@ UInt32 Param_BufferSize)
 
 Done:;
 	//Libera a memória para a string.
-	DeletarTextoAlocadoSafe(&pNomeProp);
+	DeletarStringAllocatedSafe(&pNomeProp);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1126,7 +1126,7 @@ ICarenBuffer^ Param_Valor)
 
 Done:;
 	//Libera a memória para a string.
-	DeletarTextoAlocadoSafe(&pNomeProp);
+	DeletarStringAllocatedSafe(&pNomeProp);
 
 	//Retorna o resultado.
 	return Resultado;

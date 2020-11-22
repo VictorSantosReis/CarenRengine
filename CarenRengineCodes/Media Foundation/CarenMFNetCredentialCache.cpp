@@ -472,8 +472,8 @@ CA_MFNetAuthenticationFlags Param_FlagsAutenticacao,
 
 Done:;
 	//Libera a memória utilizada pelas strings.
-	DeletarTextoAlocadoSafe(&vi_pUrl);
-	DeletarTextoAlocadoSafe(&vi_pRealm);
+	DeletarStringAllocatedSafe(&vi_pUrl);
+	DeletarStringAllocatedSafe(&vi_pRealm);
 
 	//Retorna o resultado.
 	return Resultado;

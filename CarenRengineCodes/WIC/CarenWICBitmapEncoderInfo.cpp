@@ -1092,7 +1092,7 @@ CarenResult CarenWICBitmapEncoderInfo::MatchesMimeType(
 
 Done:;
 	//Libera a memória utilizada pela string.
-	DeletarTextoAlocadoSafe(&pMimeType);
+	DeletarStringAllocatedSafe(&pMimeType);
 
 	//Retorna o resultado.
 	return Resultado;

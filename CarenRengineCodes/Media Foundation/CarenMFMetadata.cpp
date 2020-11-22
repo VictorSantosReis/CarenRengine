@@ -449,7 +449,7 @@ CarenResult CarenMFMetadata::DeleteProperty(String^ Param_NomePropriedade)
 
 Done:;
 	//Libera a memória para a string.
-	DeletarTextoAlocadoSafe(&vi_pNomePropriedade);
+	DeletarStringAllocatedSafe(&vi_pNomePropriedade);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -647,7 +647,7 @@ CarenResult CarenMFMetadata::GetProperty(String^ Param_NomePropriedade, [Out] CA
 
 Done:;
 	//Libera os dados.
-	DeletarTextoAlocadoSafe(&vi_NomeProp);
+	DeletarStringAllocatedSafe(&vi_NomeProp);
 	PropVariantClear(&vi_OutPropVar);
 
 	//Retorna o resultado.
@@ -693,7 +693,7 @@ CarenResult CarenMFMetadata::SetLanguage(String^ Param_IdiomaRFC1766)
 
 Done:;
 	//Libera a memória utilizada pela string.
-	DeletarTextoAlocadoSafe(&vi_pIdioma);
+	DeletarStringAllocatedSafe(&vi_pIdioma);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -756,7 +756,7 @@ CarenResult CarenMFMetadata::SetProperty(String^ Param_NomePropriedade, CA_PropV
 
 Done:;
 	//Libera os dados.
-	DeletarTextoAlocadoSafe(&vi_NomeProp);
+	DeletarStringAllocatedSafe(&vi_NomeProp);
 	PropVariantClear(&vi_PropVar);
 
 	//Retorna o resultado.

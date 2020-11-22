@@ -504,7 +504,7 @@ String^ Param_TagName,
 
 Done:;
 	//Libera a memória para a string.
-	DeletarTextoAlocadoSafe(&pTagName);
+	DeletarStringAllocatedSafe(&pTagName);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -561,7 +561,7 @@ UInt32 Param_SizeValor)
 
 Done:;
 	//Libera a memória alocada para as strings
-	DeletarTextoAlocadoSafe(&pNomeAtributo);
+	DeletarStringAllocatedSafe(&pNomeAtributo);
 	DeletarStringCoTaskSafe(&pOutValor);
 
 	//Retorna o resultado.
@@ -619,7 +619,7 @@ UInt32 Param_SizeValorEmBytes)
 	
 Done:;
 	//Libera a memória alocada para as strings
-	DeletarTextoAlocadoSafe(&pNomeAtributo);
+	DeletarStringAllocatedSafe(&pNomeAtributo);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -677,7 +677,7 @@ ICaren^ Param_Out_Valor)
 
 Done:;
 	//Libera a memória alocada para as strings
-	DeletarTextoAlocadoSafe(&pNomeAtributo);
+	DeletarStringAllocatedSafe(&pNomeAtributo);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -729,7 +729,7 @@ String^ Param_NomeAtributo,
 
 Done:;
 	//Libera a memória alocada para as strings
-	DeletarTextoAlocadoSafe(&pNomeAtributo);
+	DeletarStringAllocatedSafe(&pNomeAtributo);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -781,7 +781,7 @@ String^ Param_NomeAtributo,
 
 Done:;
 	//Libera a memória alocada para as strings
-	DeletarTextoAlocadoSafe(&pNomeAtributo);
+	DeletarStringAllocatedSafe(&pNomeAtributo);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -833,7 +833,7 @@ String^ Param_NomeAtributo,
 
 Done:;
 	//Libera a memória alocada para as strings
-	DeletarTextoAlocadoSafe(&pNomeAtributo);
+	DeletarStringAllocatedSafe(&pNomeAtributo);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -885,7 +885,7 @@ String^ Param_NomeAtributo,
 
 Done:;
 	//Libera a memória alocada para as strings
-	DeletarTextoAlocadoSafe(&pNomeAtributo);
+	DeletarStringAllocatedSafe(&pNomeAtributo);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -937,7 +937,7 @@ String^ Param_NomeAtributo,
 
 Done:;
 	//Libera a memória alocada para as strings
-	DeletarTextoAlocadoSafe(&pNomeAtributo);
+	DeletarStringAllocatedSafe(&pNomeAtributo);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -989,7 +989,7 @@ String^ Param_NomeAtributo,
 
 Done:;
 	//Libera a memória alocada para as strings
-	DeletarTextoAlocadoSafe(&pNomeAtributo);
+	DeletarStringAllocatedSafe(&pNomeAtributo);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1041,7 +1041,7 @@ String^ Param_NomeAtributo,
 
 Done:;
 	//Libera a memória alocada para as strings
-	DeletarTextoAlocadoSafe(&pNomeAtributo);
+	DeletarStringAllocatedSafe(&pNomeAtributo);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1093,7 +1093,7 @@ String^ Param_NomeAtributo,
 
 Done:;
 	//Libera a memória alocada para as strings
-	DeletarTextoAlocadoSafe(&pNomeAtributo);
+	DeletarStringAllocatedSafe(&pNomeAtributo);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1145,7 +1145,7 @@ String^ Param_NomeAtributo,
 
 Done:;
 	//Libera a memória alocada para as strings
-	DeletarTextoAlocadoSafe(&pNomeAtributo);
+	DeletarStringAllocatedSafe(&pNomeAtributo);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1197,7 +1197,7 @@ String^ Param_NomeAtributo,
 
 Done:;
 	//Libera a memória alocada para as strings
-	DeletarTextoAlocadoSafe(&pNomeAtributo);
+	DeletarStringAllocatedSafe(&pNomeAtributo);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1249,7 +1249,7 @@ String^ Param_NomeAtributo,
 
 Done:;
 	//Libera a memória alocada para as strings
-	DeletarTextoAlocadoSafe(&pNomeAtributo);
+	DeletarStringAllocatedSafe(&pNomeAtributo);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1301,7 +1301,7 @@ String^ Param_NomeAtributo,
 
 Done:;
 	//Libera a memória alocada para as strings
-	DeletarTextoAlocadoSafe(&pNomeAtributo);
+	DeletarStringAllocatedSafe(&pNomeAtributo);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1353,7 +1353,7 @@ String^ Param_NomeAtributo,
 
 Done:;
 	//Libera a memória alocada para as strings
-	DeletarTextoAlocadoSafe(&pNomeAtributo);
+	DeletarStringAllocatedSafe(&pNomeAtributo);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1408,7 +1408,7 @@ String^ Param_NomeAtributo,
 
 Done:;
 	//Libera a memória alocada para as strings
-	DeletarTextoAlocadoSafe(&pNomeAtributo);
+	DeletarStringAllocatedSafe(&pNomeAtributo);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1463,7 +1463,7 @@ String^ Param_NomeAtributo,
 
 Done:;
 	//Libera a memória alocada para as strings
-	DeletarTextoAlocadoSafe(&pNomeAtributo);
+	DeletarStringAllocatedSafe(&pNomeAtributo);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1518,7 +1518,7 @@ String^ Param_NomeAtributo,
 
 Done:;
 	//Libera a memória alocada para as strings
-	DeletarTextoAlocadoSafe(&pNomeAtributo);
+	DeletarStringAllocatedSafe(&pNomeAtributo);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1573,7 +1573,7 @@ String^ Param_NomeAtributo,
 
 Done:;
 	//Libera a memória alocada para as strings
-	DeletarTextoAlocadoSafe(&pNomeAtributo);
+	DeletarStringAllocatedSafe(&pNomeAtributo);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1628,7 +1628,7 @@ String^ Param_NomeAtributo,
 
 Done:;
 	//Libera a memória alocada para as strings
-	DeletarTextoAlocadoSafe(&pNomeAtributo);
+	DeletarStringAllocatedSafe(&pNomeAtributo);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1683,7 +1683,7 @@ CA_D2D1_SVG_ATTRIBUTE_STRING_TYPE Param_Tipo,
 
 Done:;
 	//Libera a memória alocada para as strings
-	DeletarTextoAlocadoSafe(&pNomeAtributo);
+	DeletarStringAllocatedSafe(&pNomeAtributo);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -2204,7 +2204,7 @@ String^ Param_NomeAtributo,
 	Param_Out_Especificado = OutEspecificado ? true : false;
 
 	//Libera a memória para a string.
-	DeletarTextoAlocadoSafe(&pNomeAtributo);
+	DeletarStringAllocatedSafe(&pNomeAtributo);
 }
 
 /// <summary>
@@ -2262,7 +2262,7 @@ CarenResult CarenD2D1SvgElement::RemoveAttribute(String^ Param_NomeAtributo)
 
 Done:;
 	//Libera a memória para a string.
-	DeletarTextoAlocadoSafe(&pNomeAtributo);
+	DeletarStringAllocatedSafe(&pNomeAtributo);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -2413,8 +2413,8 @@ String^ Param_Valor)
 
 Done:;
 	//Libera a memória para a string.
-	DeletarTextoAlocadoSafe(&pNomeAtributo);
-	DeletarTextoAlocadoSafe(&pValor);
+	DeletarStringAllocatedSafe(&pNomeAtributo);
+	DeletarStringAllocatedSafe(&pValor);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -2474,7 +2474,7 @@ UInt32 Param_Size)
 
 Done:;
 	//Libera a memória para a string.
-	DeletarTextoAlocadoSafe(&pNomeAtributo);
+	DeletarStringAllocatedSafe(&pNomeAtributo);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -2530,7 +2530,7 @@ ICarenD2D1SvgAttribute^ Param_Valor)
 
 Done:;
 	//Libera a memória para a string.
-	DeletarTextoAlocadoSafe(&pNomeAtributo);
+	DeletarStringAllocatedSafe(&pNomeAtributo);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -2578,7 +2578,7 @@ float Param_Valor)
 
 Done:;
 	//Libera a memória para a string.
-	DeletarTextoAlocadoSafe(&pNomeAtributo);
+	DeletarStringAllocatedSafe(&pNomeAtributo);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -2630,7 +2630,7 @@ CA_D2D1_COLOR_F^ Param_Valor)
 
 Done:;
 	//Libera a memória para a string.
-	DeletarTextoAlocadoSafe(&pNomeAtributo);
+	DeletarStringAllocatedSafe(&pNomeAtributo);
 
 	//Libera a memória para a estrutura.
 	DeletarEstruturaSafe(&pValor);
@@ -2681,7 +2681,7 @@ CA_D2D1_FILL_MODE Param_Valor)
 
 Done:;
 	//Libera a memória para a string.
-	DeletarTextoAlocadoSafe(&pNomeAtributo);
+	DeletarStringAllocatedSafe(&pNomeAtributo);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -2729,7 +2729,7 @@ CA_D2D1_SVG_DISPLAY Param_Valor)
 
 Done:;
 	//Libera a memória para a string.
-	DeletarTextoAlocadoSafe(&pNomeAtributo);
+	DeletarStringAllocatedSafe(&pNomeAtributo);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -2777,7 +2777,7 @@ CA_D2D1_SVG_OVERFLOW Param_Valor)
 
 Done:;
 	//Libera a memória para a string.
-	DeletarTextoAlocadoSafe(&pNomeAtributo);
+	DeletarStringAllocatedSafe(&pNomeAtributo);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -2825,7 +2825,7 @@ CA_D2D1_SVG_LINE_JOIN Param_Valor)
 
 Done:;
 	//Libera a memória para a string.
-	DeletarTextoAlocadoSafe(&pNomeAtributo);
+	DeletarStringAllocatedSafe(&pNomeAtributo);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -2873,7 +2873,7 @@ CA_D2D1_SVG_LINE_CAP Param_Valor)
 
 Done:;
 	//Libera a memória para a string.
-	DeletarTextoAlocadoSafe(&pNomeAtributo);
+	DeletarStringAllocatedSafe(&pNomeAtributo);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -2921,7 +2921,7 @@ CA_D2D1_SVG_VISIBILITY Param_Valor)
 
 Done:;
 	//Libera a memória para a string.
-	DeletarTextoAlocadoSafe(&pNomeAtributo);
+	DeletarStringAllocatedSafe(&pNomeAtributo);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -2973,7 +2973,7 @@ CA_D2D1_MATRIX_3X2_F^ Param_Valor)
 
 Done:;
 	//Libera a memória para a string.
-	DeletarTextoAlocadoSafe(&pNomeAtributo);
+	DeletarStringAllocatedSafe(&pNomeAtributo);
 
 	//Libera a memória para estrutura
 	DeletarEstruturaSafe(&pValor);
@@ -3024,7 +3024,7 @@ CA_D2D1_SVG_UNIT_TYPE Param_Valor)
 
 Done:;
 	//Libera a memória para a string.
-	DeletarTextoAlocadoSafe(&pNomeAtributo);
+	DeletarStringAllocatedSafe(&pNomeAtributo);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -3072,7 +3072,7 @@ CA_D2D1_EXTEND_MODE Param_Valor)
 
 Done:;
 	//Libera a memória para a string.
-	DeletarTextoAlocadoSafe(&pNomeAtributo);
+	DeletarStringAllocatedSafe(&pNomeAtributo);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -3125,7 +3125,7 @@ CA_D2D1_SVG_PRESERVE_ASPECT_RATIO^ Param_Valor)
 
 Done:;
 	//Libera a memória para a string.
-	DeletarTextoAlocadoSafe(&pNomeAtributo);
+	DeletarStringAllocatedSafe(&pNomeAtributo);
 
 	//Libera a memória para estrutura
 	DeletarEstruturaSafe(&pValor);
@@ -3180,7 +3180,7 @@ CA_D2D1_SVG_LENGTH^ Param_Valor)
 
 Done:;
 	//Libera a memória para a string.
-	DeletarTextoAlocadoSafe(&pNomeAtributo);
+	DeletarStringAllocatedSafe(&pNomeAtributo);
 
 	//Libera a memória para estrutura
 	DeletarEstruturaSafe(&pValor);
@@ -3231,7 +3231,7 @@ UInt32 Param_LarguraTexto)
 
 Done:;
 	//Libera a memória para a string.
-	DeletarTextoAlocadoSafe(&pTexto);
+	DeletarStringAllocatedSafe(&pTexto);
 
 	//Retorna o resultado.
 	return Resultado;

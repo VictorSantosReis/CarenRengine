@@ -507,7 +507,7 @@ Done:;
 /// <param name="Param_Out_BufferLargura">Contém a largura do buffer retornado em: Param_Out_BufferImagem.</param>
 /// <param name="Param_Out_TimeStamp">Recebe o carimbo de data/hora da imagem capturada. O valor é em unidades de 100 nanosegundos.</param>
 CarenResult CarenMFVideoDisplayControl::ObterCopiaImagemAtual(
-	[Out] Estruturas::CA_BITMAP_INFO_HEADER^% Param_Out_BimapInfoHeader,
+	[Out] Estruturas::CA_BITMAPINFOHEADER^% Param_Out_BimapInfoHeader,
 	[Out] ICarenBuffer^% Param_Out_BufferImagem,
 	[Out] UInt32% Param_Out_BufferLargura,
 	[Out] Int64% Param_Out_TimeStamp)
@@ -524,7 +524,7 @@ CarenResult CarenMFVideoDisplayControl::ObterCopiaImagemAtual(
 	MFTIME TimeSpamImagem = 0;
 	BITMAPINFOHEADER bmpHeader = {};
 	ICarenBuffer^ CarenBufferInterface = nullptr;
-	CA_BITMAP_INFO_HEADER^ BitmapHeader = nullptr;
+	CA_BITMAPINFOHEADER^ BitmapHeader = nullptr;
 
 	//Define a largura da estrutura do bitmapheader
 	bmpHeader.biSize = sizeof(BITMAPINFOHEADER);
@@ -550,7 +550,7 @@ CarenResult CarenMFVideoDisplayControl::ObterCopiaImagemAtual(
 	//Cria a interface que vai conter o buffer.
 	CarenBufferInterface = gcnew CarenBuffer();
 	//Cria a estrutura que vai conter os dados do bitmap.
-	BitmapHeader = gcnew CA_BITMAP_INFO_HEADER();
+	BitmapHeader = gcnew CA_BITMAPINFOHEADER();
 
 
 	//Define o ponteiro de buffer.
@@ -810,8 +810,8 @@ Done:;
 /// <param name="Param_Out_RetanguloNormalized">Recebe uma estrutura que contém o retângulo de origem.</param>
 /// <param name="Param_Out_RetanguloDestino">Recebe uma estrutura com o retângulo de destino atual.</param>
 CarenResult CarenMFVideoDisplayControl::ObterPosiçãoVideo(
-	[Out] Estruturas::CA_Retangulo_Normalizado^% Param_Out_RetanguloNormalized,
-	[Out] Estruturas::CA_Retangulo^% Param_Out_RetanguloDestino)
+	[Out] Estruturas::CA_MFVideoNormalizedRect^% Param_Out_RetanguloNormalized,
+	[Out] Estruturas::CA_RECT^% Param_Out_RetanguloDestino)
 {
 	//Variavel que vai retorna o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -820,13 +820,12 @@ CarenResult CarenMFVideoDisplayControl::ObterPosiçãoVideo(
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método.
-	MFVideoNormalizedRect NormVideoRect = {};
-	RECT RectDestino = {};
-	CA_Retangulo_Normalizado^ NormRetVideoOut = nullptr;
-	CA_Retangulo^ RetVideoOut = nullptr;
+	Utilidades Util;
+	MFVideoNormalizedRect vi_OutNormalizedRect = {};
+	RECT vi_OutRectDestino = {};
 
 	//Chama ó método que vai recuperar a posição do video.
-	Hr = PonteiroTrabalho->GetVideoPosition(&NormVideoRect, &RectDestino);
+	Hr = PonteiroTrabalho->GetVideoPosition(&vi_OutNormalizedRect, &vi_OutRectDestino);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -843,28 +842,9 @@ CarenResult CarenMFVideoDisplayControl::ObterPosiçãoVideo(
 		Sair;
 	}
 
-	//Cria as estruturas que vao receber o valor.
-	NormRetVideoOut = gcnew CA_Retangulo_Normalizado();
-	RetVideoOut = gcnew CA_Retangulo();
-
-	//Passa os dados da normalização do retangulo.
-	NormRetVideoOut->Inferior = NormVideoRect.bottom;
-	NormRetVideoOut->Esquerda = NormVideoRect.left;
-	NormRetVideoOut->Direita = NormVideoRect.right;
-	NormRetVideoOut->Topo = NormVideoRect.top;
-
-	//Passa os dados do retangulo de destino do video.
-	RetVideoOut->Inferior = RectDestino.bottom;
-	RetVideoOut->Esquerda = RectDestino.left;
-	RetVideoOut->Direita = RectDestino.right;
-	RetVideoOut->Topo = RectDestino.top;
-
-	//Define as estruturas nos parametros de saida.
-	Param_Out_RetanguloDestino = RetVideoOut;
-	Param_Out_RetanguloNormalized = NormRetVideoOut;
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	//Converte as estruturas e definem nos parametros de saida.
+	Param_Out_RetanguloNormalized = Util.ConverterMFVideoNormalizedRectUnamaged_ToManaged(&vi_OutNormalizedRect);
+	Param_Out_RetanguloDestino = Util.ConverterRECTUnmanagedToManaged(&vi_OutRectDestino);
 
 Done:;
 	//Retorna o resultado
@@ -1113,8 +1093,8 @@ Done:;
 /// <param name="Param_RetanguloDestino">Especifica o retângulo de destino. Este parâmetro pode ser NULL. Se este parâmetro é NULL, o retângulo 
 /// de destino não é alterado.</param>
 CarenResult CarenMFVideoDisplayControl::DefinirPosiçãoVideo(
-	Estruturas::CA_Retangulo_Normalizado^ Param_RetanguloNormalized,
-	Estruturas::CA_Retangulo^ Param_RetanguloDestino)
+	Estruturas::CA_MFVideoNormalizedRect^ Param_RetanguloNormalized,
+	Estruturas::CA_RECT^ Param_RetanguloDestino)
 {
 	//Variavel que vai retorna o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1123,41 +1103,20 @@ CarenResult CarenMFVideoDisplayControl::DefinirPosiçãoVideo(
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método.
-	MFVideoNormalizedRect NormVideoRect = {};
-	RECT RectDestino = {};
+	Utilidades Util;
+	MFVideoNormalizedRect* vi_pRectNormalized = Nulo;
+	PRECT vi_pRectDestino = Nulo;
 
-	//Passa os dados das variaveis do parametro para as estruturas não gerenciadas.
+	//Converte a estrutura do retangulo normalizado se valida.
+	if (ObjetoGerenciadoValido(Param_RetanguloNormalized))
+		vi_pRectNormalized = Util.ConverterMFVideoNormalizedRectManaged_ToUnamaged(Param_RetanguloNormalized);
 
-	//Verifica se o cliente vai passar o normalizador
-	if (Param_RetanguloNormalized != nullptr)
-	{
-		//Passa os dados da normalização do retangulo.
-		NormVideoRect.bottom = Param_RetanguloNormalized->Inferior;
-		NormVideoRect.left = Param_RetanguloNormalized->Esquerda;
-		NormVideoRect.right = Param_RetanguloNormalized->Direita;
-		NormVideoRect.top = Param_RetanguloNormalized->Topo;
-	}
-	else
-	{
-		//Deixa o método continuar porque o parametro pode ser NULO.
-	}
-
-	//Verifica se o cliente vai passar o retangulo de destino.
-	if (Param_RetanguloDestino != nullptr)
-	{
-		//Passa os dados do Retangulo de destino.
-		RectDestino.bottom = Param_RetanguloDestino->Inferior;
-		RectDestino.left = Param_RetanguloDestino->Esquerda;
-		RectDestino.right = Param_RetanguloDestino->Direita;
-		RectDestino.top = Param_RetanguloDestino->Topo;
-	}
-	else
-	{
-		//Deixa continuar porque o parametro pode ser NULO.
-	}
+	//Converte a estrutura do retangulo de destino se valida.
+	if (ObjetoGerenciadoValido(Param_RetanguloDestino))
+		vi_pRectDestino = Util.ConverterRECTManagedToUnmanaged(Param_RetanguloDestino);
 
 	//Chama o método que vai definir os valores
-	Hr = PonteiroTrabalho->SetVideoPosition(Param_RetanguloNormalized != nullptr ? &NormVideoRect : NULL, Param_RetanguloDestino != nullptr ? &RectDestino : NULL);
+	Hr = PonteiroTrabalho->SetVideoPosition(vi_pRectNormalized, vi_pRectDestino);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -1175,6 +1134,10 @@ CarenResult CarenMFVideoDisplayControl::DefinirPosiçãoVideo(
 	}
 
 Done:;
+	//Libera a memória utilizada pelas estruturas.
+	DeletarEstruturaSafe(&vi_pRectNormalized);
+	DeletarEstruturaSafe(&vi_pRectDestino);
+
 	//Retorna o resultado
 	return Resultado;
 }

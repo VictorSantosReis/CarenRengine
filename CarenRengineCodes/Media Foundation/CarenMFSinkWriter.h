@@ -360,7 +360,7 @@ public:
 	/// <param name="Param_IdFluxo">O Id para o fluxo de consulta. Se (Param_ConsularColetor) for True, desconsidere esse valor.</param>
 	/// <param name="Param_ConsultarColetor">Define se deve obter as estatísticas do (Coletor de Mídia) propriamente dito.</param>
 	/// <param name="Param_Out_StatusDesempenho">Retorna a estrutura que contém todas as informações de sempenho </param>
-	virtual CarenResult ObterEstatisticasGravador(UInt32 Param_IdFluxo, Boolean Param_ConsultarColetor, [Out] Estruturas::CA_MIDIA_SINK_WRITER_ESTATISTICAS^% Param_Out_StatusDesempenho);
+	virtual CarenResult ObterEstatisticasGravador(UInt32 Param_IdFluxo, Boolean Param_ConsultarColetor, [Out] Estruturas::CA_MF_SINK_WRITER_STATISTICS^% Param_Out_StatusDesempenho);
 
 	/// <summary>
 	/// (NotifyEndOfSegment) - Notifica o coletor de mídia que um fluxo atingiu o final de um segmento.

@@ -739,7 +739,7 @@ String^ Param_UrlFilename,
 
 Done:;
 	//Libera a memória para a string
-	DeletarTextoAlocadoSafe(&pUrlArquivo);
+	DeletarStringAllocatedSafe(&pUrlArquivo);
 
 	//Retorna o resultado.
 	return Resultado;

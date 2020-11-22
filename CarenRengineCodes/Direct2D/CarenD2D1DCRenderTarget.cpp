@@ -2557,7 +2557,7 @@ CarenResult CarenD2D1DCRenderTarget::DrawText(
 
 Done:;
 	//Libera a memória para os dados.
-	DeletarTextoAlocadoSafe(&pTexto);
+	DeletarStringAllocatedSafe(&pTexto);
 	DeletarEstruturaSafe(&pLayoutRectF);
 
 	//Retorna o resultado.

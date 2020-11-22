@@ -464,10 +464,10 @@ ICaren^ Param_ObjetoEstado)
 
 Done:;
 	//Libera a memória utilizada pela estrutura
-	DeletarTextoAlocadoSafe(&vi_pParams->pszUrl);
-	DeletarTextoAlocadoSafe(&vi_pParams->pszRealm);
-	DeletarTextoAlocadoSafe(&vi_pParams->pszPackage);
-	DeletarTextoAlocadoSafe(&vi_pParams->pszSite);
+	DeletarStringAllocatedSafe(&vi_pParams->pszUrl);
+	DeletarStringAllocatedSafe(&vi_pParams->pszRealm);
+	DeletarStringAllocatedSafe(&vi_pParams->pszPackage);
+	DeletarStringAllocatedSafe(&vi_pParams->pszSite);
 	DeletarEstruturaSafe(&vi_pParams);
 
 	//Retorna o resultado.

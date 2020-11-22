@@ -914,7 +914,7 @@ Done:;
 /// Recupera as propriedades do relógio.
 /// </summary>
 /// <param name="Param_Out_PropriedadesRelogio">Retorna a estrutura que contém as propriedades do relógio atual.</param>
-CarenResult CarenMFPresentationClock::ObterPropriedades([Out] Estruturas::CA_RELOGIO_PROPRIEDADES^% Param_Out_PropriedadesRelogio)
+CarenResult CarenMFPresentationClock::ObterPropriedades([Out] Estruturas::CA_MFCLOCK_PROPERTIES^% Param_Out_PropriedadesRelogio)
 {
 	//Variavel que vai retorna o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -924,7 +924,7 @@ CarenResult CarenMFPresentationClock::ObterPropriedades([Out] Estruturas::CA_REL
 
 	//Variaveis utilizadas no método
 	MFCLOCK_PROPERTIES PropsRelogio;
-	CA_RELOGIO_PROPRIEDADES^ PropriedadesRelogio;
+	CA_MFCLOCK_PROPERTIES^ PropriedadesRelogio;
 	Utilidades Util;
 
 	//Chama o método para obter as propriedades do relogio.
@@ -946,7 +946,7 @@ CarenResult CarenMFPresentationClock::ObterPropriedades([Out] Estruturas::CA_REL
 	}
 
 	//Cria a estrutura
-	PropriedadesRelogio = gcnew CA_RELOGIO_PROPRIEDADES();
+	PropriedadesRelogio = gcnew CA_MFCLOCK_PROPERTIES();
 
 	//Define os valores na propriedade gerenciada
 	PropriedadesRelogio->RL_CLOCK_FLAGS = PropsRelogio.dwClockFlags;

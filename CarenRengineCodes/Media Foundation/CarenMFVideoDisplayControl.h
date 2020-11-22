@@ -190,7 +190,7 @@ public:
 	/// <param name="Param_Out_BufferLargura">Contém a largura do buffer retornado em: Param_Out_BufferImagem.</param>
 	/// <param name="Param_Out_TimeStamp">Recebe o carimbo de data/hora da imagem capturada. O valor é em unidades de 100 nanosegundos.</param>
 	virtual CarenResult ObterCopiaImagemAtual(
-		[Out] Estruturas::CA_BITMAP_INFO_HEADER^% Param_Out_BimapInfoHeader,
+		[Out] Estruturas::CA_BITMAPINFOHEADER^% Param_Out_BimapInfoHeader,
 		[Out] ICarenBuffer^% Param_Out_BufferImagem,
 		[Out] UInt32% Param_Out_BufferLargura,
 		[Out] Int64% Param_Out_TimeStamp);
@@ -232,8 +232,8 @@ public:
 	/// <param name="Param_Out_RetanguloNormalized">Recebe uma estrutura que contém o retângulo de origem.</param>
 	/// <param name="Param_Out_RetanguloDestino">Recebe uma estrutura com o retângulo de destino atual.</param>
 	virtual CarenResult ObterPosiçãoVideo(
-		[Out] Estruturas::CA_Retangulo_Normalizado^% Param_Out_RetanguloNormalized,
-		[Out] Estruturas::CA_Retangulo^% Param_Out_RetanguloDestino);
+		[Out] Estruturas::CA_MFVideoNormalizedRect^% Param_Out_RetanguloNormalized,
+		[Out] Estruturas::CA_RECT^% Param_Out_RetanguloDestino);
 
 	/// <summary>
 	/// (GetVideoWindow) - Obtém a janela de recorte para o vídeo. A janela de recorte é a (Handle) do componente que está
@@ -289,8 +289,8 @@ public:
 	/// <param name="Param_RetanguloDestino">Especifica o retângulo de destino. Este parâmetro pode ser NULL. Se este parâmetro é NULL, o retângulo 
 	/// de destino não é alterado.</param>
 	virtual CarenResult DefinirPosiçãoVideo(
-		Estruturas::CA_Retangulo_Normalizado^ Param_RetanguloNormalized,
-		Estruturas::CA_Retangulo^ Param_RetanguloDestino);
+		Estruturas::CA_MFVideoNormalizedRect^ Param_RetanguloNormalized,
+		Estruturas::CA_RECT^ Param_RetanguloDestino);
 
 	/// <summary>
 	/// (SetVideoWindow) - Define a janela de recorte para o vídeo. Está é a janela que vai hospedar o vídeo que será

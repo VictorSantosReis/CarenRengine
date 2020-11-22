@@ -2497,7 +2497,7 @@ CA_DWRITE_MEASURING_MODE Param_MeasuringMode)
 	
 Done:;
 	//Libera a memória para os dados.
-	DeletarTextoAlocadoSafe(&pTexto);
+	DeletarStringAllocatedSafe(&pTexto);
 	DeletarEstruturaSafe(&pLayoutRectF);
 
 	//Retorna o resultado.

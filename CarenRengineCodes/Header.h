@@ -245,8 +245,8 @@ template <class T> void SafeDeleteMemory(T** ppT)
 	}
 }
 
-//Libera a memória alocada para um texto(Que foi convertido de String).
-template <class T> void DeletarTextoAlocadoSafe(T** Param_Texto)
+//Libera a memória alocada para uma String que foi convertida utilizando os métodos da classe Utilidades.
+template <class T> void DeletarStringAllocatedSafe(T** Param_Texto)
 {
 	//Verifica se o ponteiro é valido.
 	if (*Param_Texto)
@@ -275,6 +275,20 @@ template <class T> T* CriarStringCoTask(UInt32 Param_LarguraString)
 {
 	//Aloca e retorna o ponteiro para o usuário.
 	return (T*)CoTaskMemAlloc(static_cast<SIZE_T>(Param_LarguraString));
+}
+
+//Libera a memória alocada por (SysAllocString) para uma string BSTR.
+template <class T> void DeletarStringBSTRSafe(T** Param_Texto)
+{
+	//Verifica se o ponteiro é valido.
+	if (*Param_Texto)
+	{
+		//Libera a memória.
+		SysFreeString(*Param_Texto);
+
+		//Limpa
+		*Param_Texto = NULL;
+	}
 }
 
 //Cria e inicializa uma estrutura corretamente.

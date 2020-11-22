@@ -10,7 +10,8 @@ o **C#(CSharp)**, com quase **TODAS** as **interfaces nativas** disponíveis no 
 # Motivação
 O mundo de bibliotecas do .NET disponível atualmente, ao que se refere a aplicativos Win32 Desktop especificamente, não possui bibliotecas
 avançadas para **gráficos(2D, 3D) e mídia(Áudio, Vídeo)** que possibilitem o desenvolivmento de um aplicativo, digamos, Renderizador de Vídeo(Player de Video)
-de forma avançada(nas suas entranhas), o que temos é um componente de mídia(**MediaElement**) para renderizar com controles predefinidos.
+de forma avançada. O que podemos fazer é criar um componente em **C++** ou **C++/CLI** e invocar em C# ou utilizar componentes de terceiros.
+Com o adentro da **WinRTCS** e a possibilidade de chamar as APIs do **Windows Runtime** no **C#** muitas coisas melhoram em relação ao acesso as mais novas APIs, mais ainda carece disponibilizar as APIs nativas COM para o usuário gerenciado.
 
 Acredito que o Windows carece muito de uma biblioteca gerenciada para essas áreas que estão sendo muito mais exploradas hoje em dia.
 Desenvolver um aplicativo em **C++**, pelo menos para mim é muito chato e entendiante devido a sintaxe da linguagem. 
@@ -99,8 +100,8 @@ Fique a vontade mesmo assim para clicar em **Criar um novo erro** e eu estarei a
 
 
 # Codificação
-Eu não possuo um conhecimento necessário para criar uma grande codificação, sou programador apenas como **Hobby**, curto bastante programar em meu tempo livre.
-Com o tempo o código pode ser melhorado, quando tiver que focar apenas no desempenho e na limpeza, mais sinta-se a vontade para expor uma melhor maneira de criar a codificação
+Sou programador apenas como **Hobby**, curto bastante programar em meu tempo livre.
+Com o tempo o código será melhorado quando tiver que focar apenas no desempenho e na limpeza, mais sinta-se a vontade para expor uma melhor maneira de criar a codificação
 de alguma parte do projeto.
 
 

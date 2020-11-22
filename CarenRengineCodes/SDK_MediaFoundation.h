@@ -6299,5 +6299,430 @@ namespace CarenRengine
 			/// <param name="Param_ullStreamMask">Um valor de máscara de bits onde os bits que estão ligados representam os índices dos subfluxos incluídos na configuração do fluxo.</param>
 			CarenResult RemoveStreamConfiguration(UInt64 Param_ullStreamMask);
 		};
+
+
+
+		//NOVAS INTERFACES.
+	
+		/// <summary>
+		/// (IMFByteStreamBuffering ) - Interface responsável por controlar como um fluxo de bytes armazena dados de uma rede.
+		/// Para obter um ponteiro para esta interface, ligue para ICaren::ConsultarInterface no objeto de fluxo byte.
+		/// Se um fluxo de bytes implementa essa interface, uma fonte de mídia pode usá - lo para controlar como o fluxo de bytes armazena os dados.Essa interface é projetada para fluxos de bytes que leem dados de uma rede.
+		/// </summary>
+		[CategoryAttribute("MF Interface")]
+		[Guid("5A998B3C-D220-4E42-8C1E-EF4A96DD0A1C")]
+		public interface class ICarenMFByteStreamBuffering : ICaren
+		{
+			/// <summary>
+			/// Propriedade que define se a classe foi descartada.
+			/// </summary>
+			property Boolean DisposedClasse
+			{
+				virtual Boolean get();
+			}
+
+
+
+			//Métodos
+		};
+
+		/// <summary>
+		/// (IMFByteStreamCacheControl) - Interface responsável por controlar como um fluxo de byte de rede transfere dados para um cache local. Opcionalmente, essa interface é exposta por fluxos byte que leem dados de uma rede, por exemplo, através de HTTP.
+		/// Para obter um ponteiro para esta interface, ligue para ICaren::ConsultarInterface no objeto de fluxo byte.
+		/// </summary>
+		[CategoryAttribute("MF Interface")]
+		[Guid("4EE95AAA-304B-477C-9AA8-9BAD3B2E2857")]
+		public interface class ICarenMFByteStreamCacheControl : ICaren
+		{
+			/// <summary>
+			/// Propriedade que define se a classe foi descartada.
+			/// </summary>
+			property Boolean DisposedClasse
+			{
+				virtual Boolean get();
+			}
+
+
+
+			//Métodos
+		};
+
+		/// <summary>
+		/// (IMFByteStreamCacheControl2) - Interface responsável por controlar como um fluxo de byte de rede transfere dados para um cache local. Esta interface estende a interface ICarenMFByteStreamCacheControl.
+		/// </summary>
+		[CategoryAttribute("MF Interface")]
+		[Guid("B7D3BE85-7A6B-429E-B124-67F3C7A2E57E")]
+		public interface class ICarenMFByteStreamCacheControl2 : ICarenMFByteStreamCacheControl
+		{
+			/// <summary>
+			/// Propriedade que define se a classe foi descartada.
+			/// </summary>
+			property Boolean DisposedClasse
+			{
+				virtual Boolean get();
+			}
+
+
+
+			//Métodos
+		};
+
+		/// <summary>
+		/// (IMFByteStreamProxyClassFactory) - Interface responsável por criar um proxy para um fluxo byte.
+		/// Esta interface fornece um objeto de fábrica para criar um proxy para um fluxo de byte existente da Microsoft Media Foundation. O CLSID do objeto de fábrica é CLSID_MFByteStreamProxyClassFactory.
+		/// </summary>
+		[CategoryAttribute("MF Interface")]
+		[Guid("7388F33B-36ED-4C71-B50B-54CC5E8F2DB7")]
+		public interface class ICarenMFByteStreamProxyClassFactory : ICaren
+		{
+			/// <summary>
+			/// Propriedade que define se a classe foi descartada.
+			/// </summary>
+			property Boolean DisposedClasse
+			{
+				virtual Boolean get();
+			}
+
+
+
+			//Métodos
+		};
+
+		/// <summary>
+		/// (IMFByteStreamTimeSeek) - Interface responsável por buscar um fluxo de bytes por posição de tempo.
+		/// Um fluxo byte pode implementar essa interface se ela suportar a busca baseada no tempo. Por exemplo, um fluxo de byte que lê dados de um servidor pode implementar a interface. Normalmente, um fluxo de byte baseado em arquivos local não o implementaria.
+		/// Para obter um ponteiro para esta interface, ligue para ICaren::ConsultarInterface no objeto de fluxo byte.
+		/// </summary>
+		[CategoryAttribute("MF Interface")]
+		[Guid("3624690F-EAA7-4FAF-A5B9-66CE099CF764")]
+		public interface class ICarenMFByteStreamTimeSeek : ICaren
+		{
+			/// <summary>
+			/// Propriedade que define se a classe foi descartada.
+			/// </summary>
+			property Boolean DisposedClasse
+			{
+				virtual Boolean get();
+			}
+
+
+
+			//Métodos
+		};
+
+		/// <summary>
+		/// (IMFCaptureEngine) - Interface responsável por controlar um ou mais dispositivos de captura. O mecanismo de captura implementa esta interface.
+		/// ICarenMFCaptureEngine suporta apenas uma codificação CBR de passagem.
+		/// Para obter um ponteiro para esta interface, ligue para MFCreateCaptureEngine ou ICarenMFCaptureEngineClassFactory::CreateInstance. 
+		/// </summary>
+		[CategoryAttribute("MF Interface")]
+		[Guid("01465931-1950-4B50-B24C-754B577826DE")]
+		public interface class ICarenMFCaptureEngine : ICaren
+		{
+			/// <summary>
+			/// Propriedade que define se a classe foi descartada.
+			/// </summary>
+			property Boolean DisposedClasse
+			{
+				virtual Boolean get();
+			}
+
+
+
+			//Métodos
+		};
+
+		/// <summary>
+		/// (IMFCaptureEngineClassFactory) - Interface responsável por criar uma instância da ICarenMFCaptureEngine.
+		/// Chamar a função MFCreateCaptureEngine é equivalente a chamar IMFCaptureEngineClassFactory::CreateInstance.
+		/// </summary>
+		[CategoryAttribute("MF Interface")]
+		[Guid("41B3DBA4-3864-4F9E-BE78-F1B0700E3369")]
+		public interface class ICarenMFCaptureEngineClassFactory : ICaren
+		{
+			/// <summary>
+			/// Propriedade que define se a classe foi descartada.
+			/// </summary>
+			property Boolean DisposedClasse
+			{
+				virtual Boolean get();
+			}
+
+
+
+			//Métodos
+		};
+
+		/// <summary>
+		/// (IMFCaptureEngineOnEventCallback) - Interface responsável por representar um Callback que serve para receber eventos do mecanismo de captura(ICarenMFCaptureEngine).
+		/// Para definir a interface de retorno de chamada no mecanismo de captura, ligue para o método ICarenMFCaptureEngine::Initialize.
+		/// </summary>
+		[CategoryAttribute("MF Interface")]
+		[Guid("EA6F85D4-F55A-4D12-A4BC-DF48D55D05E0")]
+		public interface class ICarenMFCaptureEngineOnEventCallback : ICaren
+		{
+			/// <summary>
+			/// Propriedade que define se a classe foi descartada.
+			/// </summary>
+			property Boolean DisposedClasse
+			{
+				virtual Boolean get();
+			}
+
+
+
+			//Métodos
+		};
+
+		/// <summary>
+		/// (IMFCaptureEngineOnSampleCallback) - Interface responsável por representar um Callback que serve para receber dados do mecanismo de captura(ICarenMFCaptureEngine).
+		/// Para definir a interface de retorno de chamada, ligue para o método (SetSampleCallback) em qualquer uma das interfaces: ICarenMFCapturePhotoSink, ICarenMFCapturePreviewSink ou ICarenMFCaptureRecordSink
+		/// </summary>
+		[CategoryAttribute("MF Interface")]
+		[Guid("530AAA40-D292-40ED-8FBB-B9D7E6B7FD35")]
+		public interface class ICarenMFCaptureEngineOnSampleCallback : ICaren
+		{
+			/// <summary>
+			/// Propriedade que define se a classe foi descartada.
+			/// </summary>
+			property Boolean DisposedClasse
+			{
+				virtual Boolean get();
+			}
+
+
+
+			//Métodos
+		};
+
+		/// <summary>
+		/// (IMFCaptureEngineOnSampleCallback2) - Interface responsável por representar uma Callback que estende a interface (ICarenMFCaptureEngineOnSampleCallback) e é usado para receber dados do mecanismo de captura(ICarenMFCaptureEngine).
+		/// </summary>
+		[CategoryAttribute("MF Interface")]
+		[Guid("41EC8A7E-AAEA-4DD4-B168-100ACEB2D521")]
+		public interface class ICarenMFCaptureEngineOnSampleCallback2 : ICarenMFCaptureEngineOnSampleCallback
+		{
+			/// <summary>
+			/// Propriedade que define se a classe foi descartada.
+			/// </summary>
+			property Boolean DisposedClasse
+			{
+				virtual Boolean get();
+			}
+
+
+
+			//Métodos
+		};
+
+		/// <summary>
+		/// (IMFCaptureSink) - Interface responsável por controlar um Capture Sink, que é um objeto que recebe um ou mais fluxos de um dispositivo de captura.
+		/// Para obter um ponteiro para uma Capture Sink, ligue para o método ICarenMFCaptureEngine::GetSink. Cada dissipador de captura implementa uma interface derivada do ICarenMFCaptureSink. Ligue para ICaren::ConsultarInterface para obter um ponteiro para a interface derivada.
+		/// /// </summary>
+		[CategoryAttribute("MF Interface")]
+		[Guid("39887EE4-31AF-480D-9CA3-87217653E501")]
+		public interface class ICarenMFCaptureSink : ICaren
+		{
+			/// <summary>
+			/// Propriedade que define se a classe foi descartada.
+			/// </summary>
+			property Boolean DisposedClasse
+			{
+				virtual Boolean get();
+			}
+
+
+
+			//Métodos
+		};
+
+		/// <summary>
+		/// (IMFCaptureSink2) - Interface responsável por estender a (ICarenMFCaptureSink) para fornecer funcionalidade para definir dinamicamente o tipo de mídia de saída do (Record Sink) ou (Preview Sink).
+		/// </summary>
+		[CategoryAttribute("MF Interface")]
+		[Guid("758D5644-AD26-4B99-8DC8-07AE578489E2")]
+		public interface class ICarenMFCaptureSink2 : ICarenMFCaptureSink
+		{
+			/// <summary>
+			/// Propriedade que define se a classe foi descartada.
+			/// </summary>
+			property Boolean DisposedClasse
+			{
+				virtual Boolean get();
+			}
+
+
+
+			//Métodos
+		};
+
+		/// <summary>
+		/// (IMFCapturePhotoSink) - Interface responsável por controlar um Sink(Dissipador) de foto. O Photo Sink captura imagens paradas no fluxo de vídeo.
+		/// Essa interface  pode entregar amostras para um dos seguintes destinos: Byte Stream, Arquivo Saida ou por uma interface de Callback impelementada pelo usuário.
+		/// O aplicativo deve especificar um único destino. Vários destinos não são suportados. 
+		/// Para capturar uma imagem, ligue para o método ICarenMFCaptureEngine::TakePhoto.
+		/// </summary>
+		[CategoryAttribute("MF Interface")]
+		[Guid("44A3EA8B-4205-4165-A5CC-C0E8F48E3A42")]
+		public interface class ICarenMFCapturePhotoSink : ICarenMFCaptureSink
+		{
+			/// <summary>
+			/// Propriedade que define se a classe foi descartada.
+			/// </summary>
+			property Boolean DisposedClasse
+			{
+				virtual Boolean get();
+			}
+
+
+
+			//Métodos
+		};
+
+		/// <summary>
+		/// (IMFCapturePreviewSink ) - Interface responsável por controlar um Sink(Dissipador) de visualização. O Preview Sink permite que o aplicativo visualize áudio ou vídeo de uma câmera.
+		/// Para iniciar a pré-visualização, ligue para o método ICarenMFCaptureEngine::StartPreview.
+		/// </summary>
+		[CategoryAttribute("MF Interface")]
+		[Guid("E1AB0BA8-4DAD-4049-A42B-99A56072FA79")]
+		public interface class ICarenMFCapturePreviewSink : ICarenMFCaptureSink
+		{
+			/// <summary>
+			/// Propriedade que define se a classe foi descartada.
+			/// </summary>
+			property Boolean DisposedClasse
+			{
+				virtual Boolean get();
+			}
+
+
+
+			//Métodos
+		};
+
+		/// <summary>
+		/// (IMFCaptureRecordSink) -  Interface responsável por controlar um Sink(Dissipador) de gravação. O Record Sink cria arquivos compactados de áudio/vídeo ou fluxos de áudio/vídeo comprimidos.
+		/// </summary>
+		[CategoryAttribute("MF Interface")]
+		[Guid("86641B84-285B-4C04-87A6-B1CEEF811494")]
+		public interface class ICarenMFCaptureRecordSink : ICarenMFCaptureSink
+		{
+			/// <summary>
+			/// Propriedade que define se a classe foi descartada.
+			/// </summary>
+			property Boolean DisposedClasse
+			{
+				virtual Boolean get();
+			}
+
+
+
+			//Métodos
+		};
+
+		/// <summary>
+		/// (IMFCaptureSource) - Interface responsável por controlar o objeto de origem de captura. A fonte de captura gerencia os dispositivos de captura de áudio e vídeo.
+		/// Para obter um ponteiro para a fonte de captura, ligue para o método ICarenMFCaptureEngine::GetSource.
+		/// </summary>
+		[CategoryAttribute("MF Interface")]
+		[Guid("A5FB63BF-78E8-42B0-ABB4-974D82C5B8BC")]
+		public interface class ICarenMFCaptureSource : ICaren
+		{
+			/// <summary>
+			/// Propriedade que define se a classe foi descartada.
+			/// </summary>
+			property Boolean DisposedClasse
+			{
+				virtual Boolean get();
+			}
+
+
+
+			//Métodos
+		};
+
+		/// <summary>
+		/// (IMFQualityAdvise) - Interface responsável permitir que o gerenciador de qualidade ajuste a qualidade de áudio ou vídeo de um componente no pipeline.
+		/// Esta interface é exposta por componentes de pipeline que podem ajustar sua qualidade. Normalmente é exposto por decodificados e pias de córrego. Por exemplo, o EVR (Enhanced Video renderer, renderizador de vídeo aprimorado) implementa essa interface. No entanto, as fontes de mídia também podem implementar essa interface.
+		/// Para obter um ponteiro para esta interface a partir de uma fonte de mídia, ligue para o ICarenMFGetService::GetService com o identificador de serviço MF_QUALITY_SERVICES. Para todos os outros objetos de pipeline (transformações e pias de mídia), ligue para o QueryInterface.
+		/// </summary>
+		[CategoryAttribute("MF Interface")]
+		[Guid("F0A42960-A36F-4417-902A-905D2AB95697")]
+		public interface class ICarenMFQualityAdvise : ICaren
+		{
+			/// <summary>
+			/// Propriedade que define se a classe foi descartada.
+			/// </summary>
+			property Boolean DisposedClasse
+			{
+				virtual Boolean get();
+			}
+
+
+
+			//Métodos
+		};
+
+		/// <summary>
+		/// (IMFQualityAdvise2) - Interface responsável permitir que um objeto de pipeline ajuste sua própria qualidade de áudio ou vídeo, em resposta a mensagens de qualidade.
+		/// </summary>
+		[CategoryAttribute("MF Interface")]
+		[Guid("A8DF8357-DD63-48EE-95CF-CF1C343B64EC")]
+		public interface class ICarenMFQualityAdvise2 : ICarenMFQualityAdvise
+		{
+			/// <summary>
+			/// Propriedade que define se a classe foi descartada.
+			/// </summary>
+			property Boolean DisposedClasse
+			{
+				virtual Boolean get();
+			}
+
+
+
+			//Métodos
+		};
+
+		/// <summary>
+		/// (IMFQualityAdviseLimits) - Interface responsável por consultar um objeto para o número de modos de qualidade que suporta. Os modos de qualidade são usados para ajustar a troca entre qualidade e velocidade ao renderizar áudio ou vídeo.
+		/// O apresentador padrão do renderizador de vídeo aprimorado (EVR) implementa esta interface. O EVR usa a interface para responder a mensagens de qualidade do gerenciador de qualidade.
+		/// </summary>
+		[CategoryAttribute("MF Interface")]
+		[Guid("020A8DAA-60A5-46C1-AE7A-564D06177166")]
+		public interface class ICarenMFQualityAdviseLimits : ICaren
+		{
+			/// <summary>
+			/// Propriedade que define se a classe foi descartada.
+			/// </summary>
+			property Boolean DisposedClasse
+			{
+				virtual Boolean get();
+			}
+
+
+
+			//Métodos
+		};
+
+		/// <summary>
+		/// (IMFQualityManager) - Interface responsável por ajustar a qualidade de reprodução. Esta interface é exposta pelo gerenciador de qualidade.
+		/// A Media Foundation fornece um gerenciador de qualidade padrão que está sintonizado para reprodução. Os aplicativos podem fornecer um gerenciador de qualidade personalizado para a Sessão de Mídia, definindo o atributo MF_SESSION_QUALITY_MANAGER ao criar a Sessão de Mídia.
+		/// </summary>
+		[CategoryAttribute("MF Interface")]
+		[Guid("BD411392-BDA5-4AD1-959B-82A1E17E02C4")]
+		public interface class ICarenMFQualityManager : ICaren
+		{
+			/// <summary>
+			/// Propriedade que define se a classe foi descartada.
+			/// </summary>
+			property Boolean DisposedClasse
+			{
+				virtual Boolean get();
+			}
+
+
+
+			//Métodos
+		};
 	}
 }

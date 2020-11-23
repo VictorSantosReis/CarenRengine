@@ -17916,7 +17916,7 @@ MEReservedMax = 10000
 			};
 		
 			/// <summary>
-			/// (tagVARIANT) - Estrutura que 
+			/// (tagVARIANT)(FALTA A CONVERSÃO DESTA ESTRUTURA) - Estrutura que 
 			/// </summary>
 			public ref struct CA_VARIANT
 			{
@@ -18274,6 +18274,55 @@ MEReservedMax = 10000
 			{
 				UInt32  LowPart;
 				Int32   HighPart;
+			};
+
+			/// <summary>
+			/// (MF_BYTE_STREAM_CACHE_RANGE) - Especifica uma gama de bytes.
+			/// </summary>
+			public ref struct CA_MF_BYTE_STREAM_CACHE_RANGE
+			{
+				/// <summary>
+				/// O offset, em bytes, do início do intervalo.
+				/// </summary>
+				Int64 qwStartOffset;
+
+				/// <summary>
+				/// O offset, em bytes, do fim do intervalo.
+				/// </summary>
+				Int64 qwEndOffset;
+			};
+
+			/// <summary>
+			/// (MF_LEAKY_BUCKET_PAIR) - Especifica os requisitos de buffering de um arquivo.
+			/// Esta estrutura descreve os requisitos de buffering para conteúdo codificado na taxa de bits especificada no dwBitrate. O membro msBufferWindow indica quantos dados devem ser bufferados antes de iniciar a reprodução. 
+			/// O tamanho do buffer em bytes é msBufferWinow×dwBitrate / 8000.
+			/// </summary>
+			public ref struct CA_MF_LEAKY_BUCKET_PAIR
+			{
+				/// <summary>
+				/// Taxa de bits, em bits por segundo.
+				/// </summary>
+				UInt32 dwBitrate;
+
+				/// <summary>
+				/// Tamanho do buffer window, em milissegundos.
+				/// </summary>
+				UInt32 msBufferWindow;
+			};
+
+			/// <summary>
+			/// (MFBYTESTREAM_BUFFERING_PARAMS)(FALTA DOCUMENTAR) - Especifica os parâmetros de buffering para um fluxo de byte de rede.
+			/// </summary>
+			public ref struct CA_MFBYTESTREAM_BUFFERING_PARAMS
+			{
+				Int64                                 cbTotalFileSize;
+				Int64                                 cbPlayableDataSize;
+				cli::array<CA_MF_LEAKY_BUCKET_PAIR^>^ prgBuckets;
+				Int64                                 cBuckets;
+				Int64                                 qwNetBufferingTime;
+				Int64                                 qwExtraBufferingTimeDuringSeek;
+				Int64                                 qwPlayDuration;
+				float                                 dRate;
 			};
 
 			/// <summary>

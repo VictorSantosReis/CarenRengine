@@ -5925,6 +5925,48 @@ namespace CarenRengine
 			};
 
 			/// <summary>
+			/// (MF_CAPTURE_ENGINE_SINK_TYPE) - Enumera valores que especificam um tipo de coletor de captura.
+			/// </summary>
+			public enum class CA_MF_CAPTURE_ENGINE_SINK_TYPE
+			{
+				/// <summary>
+				/// Um sink de gravação, para capturar áudio e vídeo em um arquivo.
+				/// </summary>
+				MF_CAPTURE_ENGINE_SINK_TYPE_RECORD,
+
+				/// <summary>
+				/// Um sink de visualização, para visualização de áudio ou vídeo ao vivo.
+				/// </summary>
+				MF_CAPTURE_ENGINE_SINK_TYPE_PREVIEW,
+
+				/// <summary>
+				/// Um sink de fotos, para capturar imagens paradas.
+				/// </summary>
+				MF_CAPTURE_ENGINE_SINK_TYPE_PHOTO
+			};
+
+			/// <summary>
+			/// (ORIGINAL) - Enumera valores utilizados para definir um fluxo de captura. As Apis da Capture engine utilizam essa enumeração.
+			/// </summary>
+			public enum class CA_MF_CAPTURE_ENGINE_FIRST_SOURCE_INDEX : UInt32
+			{
+				/// <summary>
+				/// O primeiro fluxo de imagem.
+				/// </summary>
+				MF_CAPTURE_ENGINE_FIRST_SOURCE_PHOTO_STREAM = 0xFFFFFFFB,
+
+				/// <summary>
+				/// O primeiro vídeo stream.
+				/// </summary>
+				MF_CAPTURE_ENGINE_FIRST_SOURCE_VIDEO_STREAM = 0xFFFFFFFC,
+
+				/// <summary>
+				/// O primeiro fluxo de áudio.
+				/// </summary>
+				MF_CAPTURE_ENGINE_FIRST_SOURCE_AUDIO_STREAM = 0xFFFFFFFD
+			};
+			
+			/// <summary>
 			/// Enumera as possiveis características de um Coletor de Midia.
 			/// </summary>
 			[FlagsAttribute]

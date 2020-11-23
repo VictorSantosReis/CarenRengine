@@ -5932,17 +5932,17 @@ namespace CarenRengine
 				/// <summary>
 				/// Um sink de gravação, para capturar áudio e vídeo em um arquivo.
 				/// </summary>
-				MF_CAPTURE_ENGINE_SINK_TYPE_RECORD,
+				MF_CAPTURE_ENGINE_SINK_TYPE_RECORD = 0,
 
 				/// <summary>
 				/// Um sink de visualização, para visualização de áudio ou vídeo ao vivo.
 				/// </summary>
-				MF_CAPTURE_ENGINE_SINK_TYPE_PREVIEW,
+				MF_CAPTURE_ENGINE_SINK_TYPE_PREVIEW = 0x1,
 
 				/// <summary>
 				/// Um sink de fotos, para capturar imagens paradas.
 				/// </summary>
-				MF_CAPTURE_ENGINE_SINK_TYPE_PHOTO
+				MF_CAPTURE_ENGINE_SINK_TYPE_PHOTO = 0x2
 			};
 
 			/// <summary>

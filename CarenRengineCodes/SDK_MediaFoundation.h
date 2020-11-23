@@ -6524,10 +6524,10 @@ namespace CarenRengine
 			/// <summary>
 			///  
 			/// </summary>
-			/// <param name="Nome_Parametro"></param>
+			/// <param name="Param_SourceStreamIndex"></param>
 			/// <param name="Nome_Parametro"></param>
 			ResultCode AddEffect(
-				Type^ Param_Nome0,
+				UInt32 Param_SourceStreamIndex,
 				Type^ Param_Nome1);
 
 			/// <summary>

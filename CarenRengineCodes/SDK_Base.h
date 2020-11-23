@@ -5965,6 +5965,58 @@ namespace CarenRengine
 				/// </summary>
 				MF_CAPTURE_ENGINE_FIRST_SOURCE_AUDIO_STREAM = 0xFFFFFFFD
 			};
+
+			/// <summary>
+			/// (MF_CAPTURE_ENGINE_STREAM_CATEGORY) - Enumera os valores para a categoria de fluxo de origem.
+			/// </summary>
+			public enum class CA_MF_CAPTURE_ENGINE_STREAM_CATEGORY
+			{
+				/// <summary>
+				/// Especifica um fluxo de visualização de vídeo.
+				/// </summary>
+				MF_CAPTURE_ENGINE_STREAM_CATEGORY_VIDEO_PREVIEW = 0,
+
+				/// <summary>
+				/// Especifica um fluxo de captura de vídeo.
+				/// </summary>
+				MF_CAPTURE_ENGINE_STREAM_CATEGORY_VIDEO_CAPTURE = 0x1,
+
+				/// <summary>
+				/// Especifica um fluxo de fotos independente.
+				/// </summary>
+				MF_CAPTURE_ENGINE_STREAM_CATEGORY_PHOTO_INDEPENDENT = 0x2,
+
+				/// <summary>
+				/// Especifica um fluxo de fotos dependente.
+				/// </summary>
+				MF_CAPTURE_ENGINE_STREAM_CATEGORY_PHOTO_DEPENDENT = 0x3,
+
+				/// <summary>
+				/// Especifica um fluxo de áudio.
+				/// </summary>
+				MF_CAPTURE_ENGINE_STREAM_CATEGORY_AUDIO = 0x4,
+
+				/// <summary>
+				/// Especifica um fluxo sem suporte. 
+				/// </summary>
+				MF_CAPTURE_ENGINE_STREAM_CATEGORY_UNSUPPORTED = 0x5
+			};
+
+			/// <summary>
+			/// (MF_CAPTURE_ENGINE_DEVICE_TYPE) - Enumera valores para que especificam um tipo de dispositivo de captura.
+			/// </summary>
+			public enum class CA_MF_CAPTURE_ENGINE_DEVICE_TYPE
+			{
+				/// <summary>
+				/// Um dispositivo de captura de áudio, como um microfone.
+				/// </summary>
+				MF_CAPTURE_ENGINE_DEVICE_TYPE_AUDIO = 0,
+
+				/// <summary>
+				/// Um dispositivo de captura de vídeo, como uma webcam.
+				/// </summary>
+				MF_CAPTURE_ENGINE_DEVICE_TYPE_VIDEO = 0x1
+			};
 			
 			/// <summary>
 			/// Enumera as possiveis características de um Coletor de Midia.

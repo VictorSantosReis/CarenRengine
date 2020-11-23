@@ -5922,7 +5922,7 @@ namespace CarenRengine
 				/// (REQUER WINDOWS 8) O resolvedor de origem não usará plug-ins registrados localmente ou plug-ins de manipulador bytestream
 				/// </summary>
 				MF_RESOLUTION_DISABLE_LOCAL_PLUGINS = 0x00000040
-			};
+			};			
 
 			/// <summary>
 			/// Enumera as possiveis características de um Coletor de Midia.

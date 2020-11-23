@@ -6524,11 +6524,11 @@ namespace CarenRengine
 			/// <summary>
 			///  
 			/// </summary>
-			/// <param name="Param_SourceStreamIndex"></param>
 			/// <param name="Nome_Parametro"></param>
+			/// <param name="Param_Efeito">Uma interface que contém o ponteiro para o efeito. Essa interface pode ser uma ICarenMFTransform ou ICarenActivate.</param>
 			ResultCode AddEffect(
-				UInt32 Param_SourceStreamIndex,
-				Type^ Param_Nome1);
+				Type^ Param_Nome0,
+				ICaren^ Param_Efeito);
 
 			/// <summary>
 			///  

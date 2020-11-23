@@ -1192,7 +1192,7 @@ namespace CarenRengine
 			/// <summary>
 			/// () - 
 			/// </summary>
-			SS_MF_S_SEQUENCER_SEGMENT_AT_END_OF_STREAM,
+			SS_MF_S_SEQUENCER_SEGMENT_AT_END_OF_STREAM,		
 
 
 			// -> Erros
@@ -2910,6 +2910,11 @@ namespace CarenRengine
 			/// </summary>
 			ER_MF_E_MEDIA_EXTENSION_PACKAGE_LICENSE_INVALID,
 
+			/// <summary>
+			/// (MF_E_UNSUPPORTED_CAPTURE_DEVICE_PRESENT) - 
+			/// </summary>
+			ER_MF_E_UNSUPPORTED_CAPTURE_DEVICE_PRESENT,
+
 
 
 
@@ -3503,6 +3508,7 @@ namespace CarenRengine
 					//Pula para o final do método.
 					Sair;
 				}
+
 
 				//Verifica o caso especial do codigo de 'sucesso' WAIT_TIMEOUT
 				else if (Param_Resultado == WAIT_TIMEOUT)
@@ -7885,6 +7891,13 @@ namespace CarenRengine
 					OutStatus = ResultCode::ER_MF_E_MEDIA_EXTENSION_PACKAGE_LICENSE_INVALID;
 					break;
 
+				case MF_E_UNSUPPORTED_CAPTURE_DEVICE_PRESENT:
+					//Define o status geral do método como ERRO.
+					Resultado = false;
+
+					//Define o ResultCode a ser retornado.
+					OutStatus = ResultCode::ER_MF_E_UNSUPPORTED_CAPTURE_DEVICE_PRESENT;
+					break;
 
 
 				default:
@@ -10240,6 +10253,17 @@ namespace CarenRengine
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_MEDIA_EXTENSION_PACKAGE_LICENSE_INVALID;
 					break;
+				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_UNSUPPORTED_CAPTURE_DEVICE_PRESENT:
+					//Define o código HRESULT referente ao ResultCode informado.
+					Resultado = MF_E_UNSUPPORTED_CAPTURE_DEVICE_PRESENT;
+					break;
+
+					
+
+					//WIC ERROS
+
+
+
 				case CarenRengine::CarenCodesStatus::ResultCode::ER_WINCODEC_ERR_WRONGSTATE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WINCODEC_ERR_WRONGSTATE;

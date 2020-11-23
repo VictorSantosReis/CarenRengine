@@ -6302,6 +6302,15 @@ namespace CarenRengine
 
 
 
+
+
+
+
+
+
+
+
+
 		//NOVAS INTERFACES.
 	
 		/// <summary>
@@ -6324,6 +6333,23 @@ namespace CarenRengine
 
 
 			//Métodos
+
+			/// <summary>
+			/// Habilita ou desativa o buffering.
+			/// </summary>
+			/// <param name="Param_Habilitar">Especifica se o fluxo de bytes armazena dados em buffer.Se TRUE, o buffer está habilitado.Se FALSE, o buffer está desabilitado.</param>
+			ResultCode EnableBuffering(Boolean Param_Habilitar);
+
+			/// <summary>
+			/// Define os parâmetros de buffering.
+			/// </summary>
+			/// <param name="Param_Params">Uma estrutura (CA_MFBYTESTREAM_BUFFERING_PARAMS) que contenm os parâmetros de buffering.  fluxo byte usa essas informações para calcular quantos dados para buffer da rede.</param>
+			ResultCode SetBufferingParams(CA_MFBYTESTREAM_BUFFERING_PARAMS^ Param_Params);
+
+			/// <summary>
+			/// Para qualquer armazenamento em buffer em andamento.
+			/// </summary>
+			ResultCode StopBuffering();
 		};
 
 		/// <summary>
@@ -6345,6 +6371,11 @@ namespace CarenRengine
 
 
 			//Métodos
+
+			/// <summary>
+			///  Interrompe a transferência de dados em segundo plano para o cache local.
+			/// </summary>
+			ResultCode StopBackgroundTransfer();
 		};
 
 		/// <summary>
@@ -6365,8 +6396,30 @@ namespace CarenRengine
 
 
 			//Métodos
-		};
 
+			/// <summary>
+			/// Obtém as faixas de bytes que estão armazenadas no cache atualmente.
+			/// </summary>
+			/// <param name="Param_Out_QuantidadeRanges">Recebe o número de intervalos retornados na matriz (Param_Out_Ranges).</param>
+			/// <param name="Param_Out_Ranges">Recebe uma série de estruturas MF_BYTE_STREAM_CACHE_RANGE. Cada estrutura especifica uma gama de bytes armazenados no cache.</param>
+			ResultCode GetByteRanges(
+				[Out] UInt32% Param_Out_QuantidadeRanges,
+				[Out] cli::array<CA_MF_BYTE_STREAM_CACHE_RANGE^>^% Param_Out_Ranges);
+
+			/// <summary>
+			/// Consulta se a transferência em segundo plano está ativa.
+			/// A transferência em segundo plano pode ser interrompida porque o limite do cache foi atingido (consulte IMFByteStreamCacheControl2 :: SetCacheLimit) ou porque o método IMFByteStreamCacheControl :: StopBackgroundTransfer foi chamado.
+			/// </summary>
+			/// <param name="Param_Out_Ativo">Recebe o valor TRUE se a transferência em segundo plano estiver ativa no momento ou FALSE caso contrário.</param>
+			ResultCode IsBackgroundTransferActive([Out] Boolean% Param_Out_Ativo);
+
+			/// <summary>
+			/// Defeine o limite do cache.
+			/// </summary>
+			/// <param name="Param_MaximoBytes">O número máximo de bytes para armazenar no cache ou (18446744073709551615) para nenhum limite. O valor padrão é sem limite.</param>
+			ResultCode SetCacheLimit(Int64^ Param_MaximoBytes);
+		};
+		
 		/// <summary>
 		/// (IMFByteStreamProxyClassFactory) - Interface responsável por criar um proxy para um fluxo byte.
 		/// Esta interface fornece um objeto de fábrica para criar um proxy para um fluxo de byte existente da Microsoft Media Foundation. O CLSID do objeto de fábrica é CLSID_MFByteStreamProxyClassFactory.
@@ -6386,6 +6439,19 @@ namespace CarenRengine
 
 
 			//Métodos
+
+			/// <summary>
+			/// Cria um proxy para um fluxo de bytes. O proxy permite que uma fonte de mídia leia um fluxo de bytes em outro processo.
+			/// </summary>
+			/// <param name="Param_ByteStream">Uma interface ICarenMFByteStream do fluxo byte para o proxy.</param>
+			/// <param name="Param_Atributos">Reservado. Defina como NULO.</param>
+			/// <param name="Param_RIID">O identifer de interface (IID) da interface que está sendo solicitada.</param>
+			/// <param name="Param_Ref_InterfaceObjeto">A interface que vai receber o ponteiro. O usuário é responsável por criar e liberar a interface.</param>
+			ResultCode CreateByteStreamProxy(
+				ICarenMFByteStream^ Param_ByteStream,
+				ICarenMFAttributes^ Param_Atributos,
+				String^ Param_RIID,
+				ICaren^% Param_Ref_InterfaceObjeto);
 		};
 
 		/// <summary>
@@ -6408,7 +6474,197 @@ namespace CarenRengine
 
 
 			//Métodos
+
+			/// <summary>
+			/// Obtém o resultado de uma busca baseada no tempo. 
+			/// Este método normalmente não pode ser invocado até que alguns dados sejam lidos a partir do fluxo byte, porque o método ICarenMFByteStreamTimeSeek::TimeSeek não envia uma solicitação de servidor imediatamente.
+			/// </summary>
+			/// <param name="Param_Out_StartTime">Recebe a nova posição após a busca, em unidades de 100 nanossegundos.</param>
+			/// <param name="Param_Out_StopTime">Recebe o tempo de parada, em unidades de 100 nanossegundos. Se o tempo de parada for desconhecido, o valor é zero.</param>
+			/// <param name="Param_Out_Duracao">Recebe a duração total do arquivo, em unidades de 100 nanossegundos. Se a duração for desconhecida, o valor é de -1.</param>
+			ResultCode GetTimeSeekResult(
+				[Out] Int64% Param_Out_StartTime,
+				[Out] Int64% Param_Out_StopTime,
+				[Out] Int64% Param_Out_Duracao);
+
+			/// <summary>
+			/// Verifica se o fluxo byte suporta a busca baseada no tempo.
+			/// </summary>
+			/// <param name="Param_Out_TimeSeekSuportado">Recebe o valor TRUE se o fluxo byte suportar a busca baseada no tempo ou FALSO de outra forma.</param>
+			ResultCode IsTimeSeekSupported([Out] Boolean% Param_Out_TimeSeekSuportado);
+
+			/// <summary>
+			/// Busca uma nova posição no fluxo byte.
+			/// Se o fluxo de byte for lido a partir de um servidor, ele poderá armazenar a solicitação de solicitação até a próxima solicitação de leitura. Portanto, o fluxo byte pode não enviar uma solicitação ao servidor imediatamente.
+			/// </summary>
+			/// <param name="Param_NovaPosicao">A nova posição, em unidades de 100 nanossegundos.</param>
+			ResultCode TimeSeek(Int64 Param_NovaPosicao);
 		};
+
+		/// <summary>
+		/// (IMFCaptureSource) - Interface responsável por controlar o objeto de origem de captura. A fonte de captura gerencia os dispositivos de captura de áudio e vídeo.
+		/// Para obter um ponteiro para a fonte de captura, ligue para o método ICarenMFCaptureEngine::GetSource.
+		/// </summary>
+		[CategoryAttribute("MF Interface")]
+		[Guid("A5FB63BF-78E8-42B0-ABB4-974D82C5B8BC")]
+		public interface class ICarenMFCaptureSource : ICaren
+		{
+			/// <summary>
+			/// Propriedade que define se a classe foi descartada.
+			/// </summary>
+			property Boolean DisposedClasse
+			{
+				virtual Boolean get();
+			}
+
+
+
+			//Métodos
+
+			/// <summary>
+			///  
+			/// </summary>
+			/// <param name="Nome_Parametro"></param>
+			/// <param name="Nome_Parametro"></param>
+			ResultCode AddEffect(
+				Type^ Param_Nome0,
+				Type^ Param_Nome1);
+
+			/// <summary>
+			///  
+			/// </summary>
+			/// <param name="Nome_Parametro"></param>
+			/// <param name="Nome_Parametro"></param>
+			/// <param name="Nome_Parametro"></param>
+			ResultCode GetAvailableDeviceMediaType(
+				Type^ Param_Nome0,
+				Type^ Param_Nome1,
+				Type^ Param_Nome2);
+
+			/// <summary>
+			///  
+			/// </summary>
+			/// <param name="Nome_Parametro"></param>
+			/// <param name="Nome_Parametro"></param>
+			ResultCode GetCaptureDeviceActivate(
+				Type^ Param_Nome0,
+				Type^ Param_Nome1);
+
+			/// <summary>
+			///  
+			/// </summary>
+			/// <param name="Nome_Parametro"></param>
+			/// <param name="Nome_Parametro"></param>
+			ResultCode GetCaptureDeviceSource(
+				Type^ Param_Nome0,
+				Type^ Param_Nome1);
+
+			/// <summary>
+			///  
+			/// </summary>
+			/// <param name="Nome_Parametro"></param>
+			/// <param name="Nome_Parametro"></param>
+			ResultCode GetCurrentDeviceMediaType(
+				Type^ Param_Nome0,
+				Type^ Param_Nome1);
+
+			/// <summary>
+			///  
+			/// </summary>
+			/// <param name="Nome_Parametro"></param>
+			/// <param name="Nome_Parametro"></param>
+			ResultCode GetDeviceStreamCategory(
+				Type^ Param_Nome0,
+				Type^ Param_Nome1);
+
+			/// <summary>
+			///  
+			/// </summary>
+			/// <param name="Nome_Parametro"></param>
+			ResultCode GetDeviceStreamCount(Type^ Param_Nome0);
+
+			/// <summary>
+			///  
+			/// </summary>
+			/// <param name="Nome_Parametro"></param>
+			/// <param name="Nome_Parametro"></param>
+			ResultCode GetMirrorState(
+				Type^ Param_Nome0,
+				Type^ Param_Nome1);
+
+			/// <summary>
+			///  
+			/// </summary>
+			/// <param name="Nome_Parametro"></param>
+			/// <param name="Nome_Parametro"></param>
+			ResultCode GetService(
+				Type^ Param_Nome0,
+				Type^ Param_Nome1);
+
+			/// <summary>
+			///  
+			/// </summary>
+			/// <param name="Nome_Parametro"></param>
+			/// <param name="Nome_Parametro"></param>
+			ResultCode GetStreamIndexFromFriendlyName(
+				Type^ Param_Nome0,
+				Type^ Param_Nome1);
+
+			/// <summary>
+			///  
+			/// </summary>
+			/// <param name="Nome_Parametro"></param>
+			ResultCode RemoveAllEffects(Type^ Param_Nome0);
+
+			/// <summary>
+			///  
+			/// </summary>
+			/// <param name="Nome_Parametro"></param>
+			/// <param name="Nome_Parametro"></param>
+			ResultCode RemoveEffect(
+				Type^ Param_Nome0,
+				Type^ Param_Nome1);
+
+			/// <summary>
+			///  
+			/// </summary>
+			/// <param name="Nome_Parametro"></param>
+			/// <param name="Nome_Parametro"></param>
+			ResultCode SetCurrentDeviceMediaType(
+				Type^ Param_Nome0,
+				Type^ Param_Nome1);
+
+			/// <summary>
+			///  
+			/// </summary>
+			/// <param name="Nome_Parametro"></param>
+			/// <param name="Nome_Parametro"></param>
+			ResultCode SetMirrorState(
+				Type^ Param_Nome0,
+				Type^ Param_Nome1);
+		};
+
+		/// <summary>
+		/// (IMFCaptureEngineOnEventCallback) - Interface responsável por representar um Callback que serve para receber eventos do mecanismo de captura(ICarenMFCaptureEngine).
+		/// Para definir a interface de retorno de chamada no mecanismo de captura, ligue para o método ICarenMFCaptureEngine::Initialize.
+		/// </summary>
+		[CategoryAttribute("MF Interface")]
+		[Guid("EA6F85D4-F55A-4D12-A4BC-DF48D55D05E0")]
+		public interface class ICarenMFCaptureEngineOnEventCallback : ICaren
+		{
+			/// <summary>
+			/// Propriedade que define se a classe foi descartada.
+			/// </summary>
+			property Boolean DisposedClasse
+			{
+				virtual Boolean get();
+			}
+
+
+
+			//Métodos
+		};
+
 
 		/// <summary>
 		/// (IMFCaptureEngine) - Interface responsável por controlar um ou mais dispositivos de captura. O mecanismo de captura implementa esta interface.
@@ -6430,6 +6686,73 @@ namespace CarenRengine
 
 
 			//Métodos
+
+			/// <summary>
+			///  Obtém um ponteiro para um dos objetos do Sink de captura. Você pode usar os Sinks de captura para configurar a visualização, gravação ou captura de imagem parada.
+			/// </summary>
+			/// <param name="Param_CaptureSinkType">Um valor da enumeração CA_MF_CAPTURE_ENGINE_SINK_TYPE que especifica o sink de captura a ser recuperado.</param>
+			/// <param name="Param_Ref_Sink">A interface que vai receber o sink de captura especificado. O usuário deve criar e é responsável por liberar quando não foi mais usar.</param>
+			ResultCode GetSink(
+				CA_MF_CAPTURE_ENGINE_SINK_TYPE Param_CaptureSinkType,
+				ICaren^% Param_Ref_Sink);
+
+			/// <summary>
+			/// Obtém um ponteiro para o objeto de origem de captura. Use a fonte de captura para configurar os dispositivos de captura. 
+			/// </summary>
+			/// <param name="Param_Out_CaptureSource">Retorna um ponteiro para a interface ICarenMFCaptureSource. O usuário é responsável por liberar a interface.</param>
+			ResultCode GetSource([Out] ICarenMFCaptureSource^% Param_Out_CaptureSource);
+
+			/// <summary>
+			/// Inicializa o motor de captura.
+			/// Você deve chamar este método uma vez antes de usar o mecanismo de captura. Chamar o método de segunda vez retorna ER_MF_E_INVALIDREQUEST.
+			/// Este método é assíncrono. Se o método retornar um código de sucesso, o chamador receberá um MF_CAPTURE_ENGINE_INITIALIZED evento através do método ICarenMFCaptureEngineOnEventCallback::OnEvent. A operação pode falhar assincronicamente após o sucesso do método. Se assim for, o código de erro é transmitido através do método OnEvent.
+			/// </summary>
+			/// <param name="Param_Callback">Uma interface ICarenMFCaptureEngineOnEventCallback. O usuário deve implementar esta interface. O mecanismo de captura usa esta interface para enviar eventos assíncronos ao chamador.</param>
+			/// <param name="Param_Atributos">Você pode usar este parâmetro para configurar o mecanismo de captura. Este parâmetro pode ser Nulo.</param>
+			/// <param name="Param_AudioSource">Um ponteiro que especifica um dispositivo de captura de áudio. Este parâmetro pode ser Nulo.</param>
+			/// <param name="Param_VideoSource">Um ponteiro que especifica um dispositivo de captura de vídeo. Este parâmetro pode ser Nulo.</param>
+			ResultCode Initialize(
+				ICarenMFCaptureEngineOnEventCallback^ Param_Callback,
+				ICarenMFAttributes^ Param_Atributos,
+				ICaren^ Param_AudioSource,
+				ICaren^ Param_VideoSource);
+
+			/// <summary>
+			/// Inicializa a pré-visualização. 
+			/// Antes de chamar esse método, configure o Sink de visualização chamando ICarenMFCaptureSink::AddStream.
+			/// Para obter um ponteiro para o Sink de visualização, ligue para o ICarenMFCaptureEngine::GetSink.
+			/// Este método é assíncrono. Se o método retornar um código de sucesso, o chamador receberá um MF_CAPTURE_ENGINE_PREVIEW_STARTED evento através do método ICarenMFCaptureEngineOnEventCallback::OnEvent. A operação pode falhar assincronicamente após o sucesso do método. Se assim for, o código de erro é transmitido através do método OnEvent.
+			/// </summary>
+			ResultCode StartPreview();
+
+			/// <summary>
+			/// Começa a gravar áudio e/ou vídeo em um arquivo.
+			/// Antes de chamar esse método, configure o Sink de gravação chamando IMFCaptureSink::AddStream. Para obter um ponteiro para o Sink de gravação, ligue para o ICarenMFCaptureEngine::GetSink.
+			/// Este método é assíncrono. Se o método retornar um código de sucesso, o chamador receberá um MF_CAPTURE_ENGINE_RECORD_STARTED evento através do método ICarenMFCaptureEngineOnEventCallback::OnEvent. A operação pode falhar assincronicamente após o sucesso do método. Se assim for, o código de erro é transmitido através do método OnEvent.
+			/// </summary>
+			ResultCode StartRecord();
+
+			/// <summary>
+			/// Interrompe a visualização.
+			/// Este método é assíncrono. Se o método retornar um código de sucesso, o chamador receberá um MF_CAPTURE_ENGINE_PREVIEW_STOPPED evento através do método ICarenMFCaptureEngineOnEventCallback::OnEvent. A operação pode falhar assincronicamente após o sucesso do método. Se assim for, o código de erro é transmitido através do método OnEvent.
+			/// </summary>
+			ResultCode StopPreview();
+
+			/// <summary>
+			/// Para de gravar. 
+			/// Este método é assíncrono. Se o método retornar um código de sucesso, o chamador receberá um MF_CAPTURE_ENGINE_RECORD_STOPPED evento através do método ICarenMFCaptureEngineOnEventCallback::OnEvent. A operação pode falhar assincronicamente após o sucesso do método. Se assim for, o código de erro é transmitido através do método OnEvent.
+			/// </summary>
+			/// <param name="Param_Finalizar">Um valor booleano que especifica se deve finalizar o arquivo de saída. Para criar um arquivo de saída válido, especifique TRUE. Especifique FALSO somente se você quiser interromper a gravação e descartar o arquivo de saída. Se o valor for FALSO,a operação será concluída mais rapidamente, mas o arquivo não será jogável.</param>
+			/// <param name="Param_FlushUnprocessedSamples">Um valor booleano que especifica se as amostras não processadas que aguardam para serem codificadas devem ser lavadas.</param>
+			ResultCode StopRecord(
+				Boolean Param_Finalizar,
+				Boolean Param_FlushUnprocessedSamples);
+
+			/// <summary>
+			/// Captura uma imagem parada do fluxo de vídeo. 
+			/// Este método é assíncrono. Se o método retornar um código de sucesso, o chamador receberá um MF_CAPTURE_ENGINE_PHOTO_TAKEN evento através do método ICarenMFCaptureEngineOnEventCallback::OnEvent. A operação pode falhar assincronicamente após o sucesso do método. Se assim for, o código de erro é transmitido através do método OnEvent.
+			/// </summary>
+			ResultCode TakePhoto();
 		};
 
 		/// <summary>
@@ -6439,27 +6762,6 @@ namespace CarenRengine
 		[CategoryAttribute("MF Interface")]
 		[Guid("41B3DBA4-3864-4F9E-BE78-F1B0700E3369")]
 		public interface class ICarenMFCaptureEngineClassFactory : ICaren
-		{
-			/// <summary>
-			/// Propriedade que define se a classe foi descartada.
-			/// </summary>
-			property Boolean DisposedClasse
-			{
-				virtual Boolean get();
-			}
-
-
-
-			//Métodos
-		};
-
-		/// <summary>
-		/// (IMFCaptureEngineOnEventCallback) - Interface responsável por representar um Callback que serve para receber eventos do mecanismo de captura(ICarenMFCaptureEngine).
-		/// Para definir a interface de retorno de chamada no mecanismo de captura, ligue para o método ICarenMFCaptureEngine::Initialize.
-		/// </summary>
-		[CategoryAttribute("MF Interface")]
-		[Guid("EA6F85D4-F55A-4D12-A4BC-DF48D55D05E0")]
-		public interface class ICarenMFCaptureEngineOnEventCallback : ICaren
 		{
 			/// <summary>
 			/// Propriedade que define se a classe foi descartada.
@@ -6606,27 +6908,6 @@ namespace CarenRengine
 		[CategoryAttribute("MF Interface")]
 		[Guid("86641B84-285B-4C04-87A6-B1CEEF811494")]
 		public interface class ICarenMFCaptureRecordSink : ICarenMFCaptureSink
-		{
-			/// <summary>
-			/// Propriedade que define se a classe foi descartada.
-			/// </summary>
-			property Boolean DisposedClasse
-			{
-				virtual Boolean get();
-			}
-
-
-
-			//Métodos
-		};
-
-		/// <summary>
-		/// (IMFCaptureSource) - Interface responsável por controlar o objeto de origem de captura. A fonte de captura gerencia os dispositivos de captura de áudio e vídeo.
-		/// Para obter um ponteiro para a fonte de captura, ligue para o método ICarenMFCaptureEngine::GetSource.
-		/// </summary>
-		[CategoryAttribute("MF Interface")]
-		[Guid("A5FB63BF-78E8-42B0-ABB4-974D82C5B8BC")]
-		public interface class ICarenMFCaptureSource : ICaren
 		{
 			/// <summary>
 			/// Propriedade que define se a classe foi descartada.

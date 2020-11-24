@@ -6087,6 +6087,23 @@ namespace CarenRengine
 				/// </summary>
 				MF_NUM_QUALITY_LEVELS = 0x6
 			};
+
+			/// <summary>
+			/// (MF_QUALITY_ADVISE_FLAGS) - Enumerção que contém bandeiras para o método ICarenMFQualityAdvise2::NotifyQualityEvent.
+			/// </summary>
+			[FlagsAttribute]
+			public enum class CA_MF_QUALITY_ADVISE_FLAGS
+			{
+				/// <summary>
+				/// Utilizado para suporte, não faz parte da enumeração original.
+				/// </summary>
+				Zero = 0x0,
+
+				/// <summary>
+				/// O decodificador fez tudo o que pode para reduzir a latência amostral, e as amostras ainda estão atrasadas.
+				/// </summary>
+				MF_QUALITY_CANNOT_KEEP_UP = 0x1
+			};
 			
 			/// <summary>
 			/// Enumera as possiveis características de um Coletor de Midia.

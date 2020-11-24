@@ -7171,12 +7171,66 @@ namespace CarenRengine
 
 
 			//Métodos
+
+			/// <summary>
+			/// Obtém a rotação que está sendo aplicada ao fluxo de vídeo gravado.
+			/// </summary>
+			/// <param name="Param_StreamIndex">O índice baseado em zero do fluxo. Você deve especificar uma transmissão de vídeo.</param>
+			/// <param name="Param_Out_RotationValue">Recebe a rotação da imagem, em graus.</param>
+			ResultCode GetRotation(
+				UInt32 Param_StreamIndex,
+				[Out] UInt32% Param_Out_RotationValue);
+
+			/// <summary>
+			/// Define um sink de mídia personalizada para gravação.
+			/// Este método substitui a seleção padrão do sink de mídia para gravação.
+			/// </summary>
+			/// <param name="Param_MediaSink">Uma interface ICarenMFMediaSink para o sink da mídia.</param>
+			ResultCode SetCustomSink(ICarenMFMediaSink^ Param_MediaSink);
+
+			/// <summary>
+			/// Especifica um fluxo de byte que receberá os dados para a gravação.
+			/// Chamar este método substitui qualquer chamada anterior para ICarenMFCaptureRecordSink::SetOutputFileName ou ICarenMFCaptureRecordSink::SetSampleCallback.
+			/// </summary>
+			/// <param name="Param_ByteStream">Uma interface ICarenMFByteStream de um fluxo byte. O fluxo de byte deve suportar escrita.</param>
+			/// <param name="Param_GuidContainer">Um GUID que especifica o tipo de recipiente de arquivo. Os valores possíveis estão documentados no atributo MF_TRANSCODE_CONTAINERTYPE.</param>
+			ResultCode SetOutputByteStream(
+				ICarenMFByteStream^ Param_ByteStream,
+				String^ Param_GuidContainer);
+
+			/// <summary>
+			/// Especifica o nome do arquivo de saída para a gravação.
+			/// O mecanismo de captura usa a extensão do nome do arquivo para selecionar o tipo de contêiner para o arquivo de saída. Por exemplo, se a extensão do nome do arquivo for ." mp4", o mecanismo de captura cria um arquivo MP4.
+			/// Chamar este método substitui qualquer chamada anterior para ICarenMFCaptureRecordSink::SetOutputByteStream ou ICarenMFCaptureRecordSink::SetSampleCallback.
+			/// </summary>
+			/// <param name="Param_Url">Uma String que contém a URL do arquivo de saída.</param>
+			ResultCode SetOutputFileName(String^ Param_Url);
+
+			/// <summary>
+			/// Rotaciona o fluxo de vídeo gravado.
+			/// </summary>
+			/// <param name="Param_StreamIndex">O índice baseado em zero do fluxo para girar. Você deve especificar uma transmissão de vídeo.</param>
+			/// <param name="Param_RotationValue">A quantidade para girar o vídeo, em graus. Os valores válidos são 0, 90, 180 e 270. O valor zero restaura o vídeo à sua orientação original.</param>
+			ResultCode SetRotation(
+				UInt32 Param_StreamIndex,
+				UInt32 Param_RotationValue);
+
+			/// <summary>
+			/// Define um Callback para receber os dados de gravação de um fluxo.
+			/// Chamar este método substitui qualquer chamada anterior para ICarenMFCaptureRecordSink::SetOutputByteStream ou ICarenMFCaptureRecordSink::SetOutputFileName.
+			/// </summary>
+			/// <param name="Param_StreamSinkIndex">O índice baseado em zero do fluxo. O índice é devolvido no parâmetro (Param_Out_SinkStreamIndex) do método ICarenMFCaptureSink::AddStream.</param>
+			/// <param name="Param_Callback">Uma interface ICarenMFCaptureEngineOnSampleCallback. O usuário deve implementar esta interface.</param>
+			ResultCode SetSampleCallback(
+				UInt32 Param_StreamSinkIndex,
+				ICarenMFCaptureEngineOnSampleCallback^ Param_Callback);
 		};
 
 		/// <summary>
 		/// (IMFQualityAdvise) - Interface responsável permitir que o gerenciador de qualidade ajuste a qualidade de áudio ou vídeo de um componente no pipeline.
-		/// Esta interface é exposta por componentes de pipeline que podem ajustar sua qualidade. Normalmente é exposto por decodificados e pias de córrego. Por exemplo, o EVR (Enhanced Video renderer, renderizador de vídeo aprimorado) implementa essa interface. No entanto, as fontes de mídia também podem implementar essa interface.
-		/// Para obter um ponteiro para esta interface a partir de uma fonte de mídia, ligue para o ICarenMFGetService::GetService com o identificador de serviço MF_QUALITY_SERVICES. Para todos os outros objetos de pipeline (transformações e pias de mídia), ligue para o QueryInterface.
+		/// Esta interface é exposta por componentes de pipeline que podem ajustar sua qualidade. Normalmente é exposto por decodificados e sink de fluxos. Por exemplo, o EVR (Enhanced Video renderer, renderizador de vídeo aprimorado) 
+		/// implementa essa interface. No entanto, as fontes de mídia também podem implementar essa interface. Para obter um ponteiro para esta interface a partir de uma fonte de mídia, ligue para o ICarenMFGetService::GetService com o 
+		/// identificador de serviço MF_QUALITY_SERVICES. Para todos os outros objetos de pipeline (transformações e sinks de mídia), ligue para o ICaren::ConsultarInterface.
 		/// </summary>
 		[CategoryAttribute("MF Interface")]
 		[Guid("F0A42960-A36F-4417-902A-905D2AB95697")]
@@ -7193,6 +7247,37 @@ namespace CarenRengine
 
 
 			//Métodos
+
+			/// <summary>
+			/// Dropa as amostras em um intervalo de tempo especificado.
+			/// </summary>
+			/// <param name="Param_NsAmountToDrop">Quantidade de tempo para dropar, em unidades de 100 nanossegundos. Esse valor é sempre absoluto. Se o método for chamado várias vezes, não adicione os horários das chamadas anteriores.</param>
+			ResultCode DropTime(UInt64 Param_NsAmountToDrop);
+
+			/// <summary>
+			/// Recupera o modo de drop atual.
+			/// </summary>
+			/// <param name="Param_Out_DropMode">Recebe o modo de drop, especificado como membro da enumeração CA_MF_QUALITY_DROP_MODE.</param>
+			ResultCode GetDropMode([Out] CA_MF_QUALITY_DROP_MODE% Param_Out_DropMode);
+
+			/// <summary>
+			/// Recupera o nível de qualidade atual.
+			/// </summary>
+			/// <param name="Param_Out_NivelQualidade">Recebe o nível de qualidade, especificado como membro da enumeração CA_MF_QUALITY_LEVEL.</param>
+			ResultCode GetQualityLevel([Out] CA_MF_QUALITY_LEVEL% Param_Out_NivelQualidade);
+
+			/// <summary>
+			/// Define o modo de drop. No modo de drop, um componente dropa amostras, mais ou menos agressivamente dependendo do nível do modo de drop.
+			/// Se esse método for chamado a uma fonte de mídia, a fonte de mídia pode alternar entre saídas diluídas e não diluídas. Se isso ocorrer, os fluxos afetados enviarão um evento MEStreamThinMode para indicar a transição. A operação é assíncroda; após o retorno do SetDropMode, você pode receber amostras que estavam na fila antes da transição. O evento MEStreamThinMode marca o ponto exato no fluxo onde a transição ocorre.
+			/// </summary>
+			/// <param name="Param_DropMode">Modo de queda solicitado, especificado como membro da enumeração CA_MF_QUALITY_DROP_MODE.</param>
+			ResultCode SetDropMode(CA_MF_QUALITY_DROP_MODE Param_DropMode);
+
+			/// <summary>
+			/// Define o nível de qualidade. O nível de qualidade determina como o componente consome ou produz amostras.
+			/// </summary>
+			/// <param name="Param_NivelQualidade">Nível de qualidade solicitado, especificado como membro da enumeração CA_MF_QUALITY_LEVEL.</param>
+			ResultCode SetQualityLevel(CA_MF_QUALITY_LEVEL Param_NivelQualidade);
 		};
 
 		/// <summary>
@@ -7213,6 +7298,15 @@ namespace CarenRengine
 
 
 			//Métodos
+
+			/// <summary>
+			/// Encaminhe um evento MEQualityNotify do sink da mídia.
+			/// </summary>
+			/// <param name="Param_Evento">Uma interface ICarenMFMediaEvent para o evento.</param>
+			/// <param name="Param_Out_Flags">Recebe um Or bitwise de zero ou mais bandeiras da enumeração CA_MF_QUALITY_ADVISE_FLAGS.</param>
+			ResultCode NotifyQualityEvent(
+				ICarenMFMediaEvent^ Param_Evento,
+				OutParam CA_MF_QUALITY_ADVISE_FLAGS% Param_Out_Flags);
 		};
 
 		/// <summary>

@@ -6879,6 +6879,30 @@ namespace CarenRengine
 
 
 			//Métodos
+
+			/// <summary>
+			/// Especifica um fluxo de byte que receberá os dados de imagem still.
+			/// Chamar esse método substitui qualquer chamada anterior para ICarenMFCapturePhotoSink::SetOutputFileName ou ICarenMFCapturePhotoSink::SetSampleCallback.
+			/// </summary>
+			/// <param name="Param_ByteStream">Uma interface ICarenMFByteStream de um fluxo byte. O fluxo de byte deve ter permissão de escrita.</param>
+			/// <returns></returns>
+			CarenResult SetOutputByteStream(ICarenMFByteStream^ Param_ByteStream);
+
+			/// <summary>
+			/// Especifica o nome do arquivo de saída para a imagem parada.
+			/// Chamar esse método substitui qualquer chamada anterior para ICarenMFCapturePhotoSink::SetOutputByteStream ou ICarenMFCapturePhotoSink::SetSampleCallback.
+			/// </summary>
+			/// <param name="Param_Url">Uma string que contém a URL do arquivo de saída.</param>
+			/// <returns></returns>
+			CarenResult SetOutputFileName(String^ Param_Url);
+
+			/// <summary>
+			/// Define um retorno de chamada para receber os dados de imagem parada.
+			/// Chamar esse método substitui qualquer chamada anterior para ICarenMFCapturePhotoSink::SetOutputByteStream ou ICarenMFCapturePhotoSink::SetOutputFileName.
+			/// </summary>
+			/// <param name="Param_Callback">Uma interface ICarenMFCaptureEngineOnSampleCallback. O usuário deve implementar esta interface.</param>
+			/// <returns></returns>
+			CarenResult SetSampleCallback(ICarenMFCaptureEngineOnSampleCallback^ Param_Callback);
 		};
 
 		/// <summary>
@@ -6900,6 +6924,84 @@ namespace CarenRengine
 
 
 			//Métodos
+
+			/// <summary>
+			/// Obtém o estado de espelhamento atual da transmissão de visualização de vídeo.
+			/// </summary>
+			/// <param name="Param_Out_MirrorState">Recebe o valor TRUE se o espelhamento estiver ativado ou FALSE se o espelhamento for desativado.</param>
+			/// <returns></returns>
+			CarenResult GetMirrorState(OutParam Boolean% Param_Out_MirrorState);
+
+			/// <summary>
+			/// Obtém a rotação do fluxo de visualização de vídeo.
+			/// </summary>
+			/// <param name="Param_StreamIndex">O índice baseado em zero do fluxo. Você deve especificar uma transmissão de vídeo.</param>
+			/// <param name="Param_Out_RotacaoValue">Recebe a rotação da imagem, em graus.</param>
+			/// <returns></returns>
+			CarenResult GetRotation(
+				UInt32 Param_StreamIndex,
+				OutParam UInt32% Param_Out_RotacaoValue);
+
+			/// <summary>
+			/// Define um sink de mídia personalizada para visualização.
+			/// </summary>
+			/// <param name="Param_MediaSink">Uma interface ICarenMFMediaSink com o ponteiro para o sink de mídia</param>
+			/// <returns></returns>
+			CarenResult SetCustomSink(ICarenMFMediaSink^ Param_MediaSink);
+
+			/// <summary>
+			/// Habilita ou desativa o espelhamento da transmissão de visualização de vídeo.
+			/// </summary>
+			/// <param name="Param_MirrorState">Se TRUE, o espelhamento está ativado. Se FALSE, o espelho está desativado.</param>
+			/// <returns></returns>
+			CarenResult SetMirrorState(Boolean Param_MirrorState);
+
+			/// <summary>
+			/// Especifica uma Window(Handle) para visualização.
+			/// </summar
+			/// <param name="Param_HandleWindow">Uma Handle para a janela. O Sink de visualização desenha os quadros de vídeo dy>entro desta janela.</param>
+			/// <returns></returns>
+			CarenResult SetRenderHandle(IntPtr Param_HandleWindow);
+
+			/// <summary>
+			/// Especifica um visual Microsoft DirectComposition para visualização.
+			/// </summary>
+			/// <param name="Param_Surface">Uma interface ICaren que contém um ponteiro para um Visual DirectComposition que implementa a interface (IDCompositionVisual).</param>
+			/// <returns></returns>
+			CarenResult SetRenderSurface(ICaren^ Param_Surface);
+
+			/// <summary>
+			/// Rotaciona o fluxo de visualização de vídeo.
+			/// </summary>
+			/// <param name="Param_StreamIndex">O índice baseado em zero do fluxo para girar. Você deve especificar uma transmissão de vídeo.</param>
+			/// <param name="Param_RotacaoValue">O valor para girar o vídeo, em graus. Os valores válidos são 0, 90, 180 e 270. O valor zero restaura o vídeo à sua orientação original.</param>
+			/// <returns></returns>
+			CarenResult SetRotation(
+				UInt32 Param_StreamIndex,
+				UInt32 Param_RotacaoValue);
+
+			/// <summary>
+			/// Define um retorno de chamada para receber os dados de visualização de um fluxo.
+			/// Chamar este método substitui qualquer chamada anterior ao ICarenMFCapturePreviewSink::SetRenderHandle.
+			/// </summary>
+			/// <param name="Param_StreamSinkIndex">O índice baseado em zero do fluxo. O índice é devolvido no parâmetro (Param_Out_StreamSinkIndex) do método ICarenMFCaptureSink::AddStream.</param>
+			/// <param name="Param_Callback">Uma interface ICarenMFCaptureEngineOnSampleCallback que contém o ponteiro para o callback. O usuário deve implementar esta interface.</param>
+			/// <returns></returns>
+			CarenResult SetSampleCallback(
+				UInt32 Param_StreamSinkIndex,
+				ICarenMFCaptureEngineOnSampleCallback^ Param_Callback);
+
+			/// <summary>
+			/// Atualiza o quadro de vídeo. Ligue para este método quando a janela de visualização receber uma mensagem WM_PAINT ou WM_SIZE.
+			/// </summary>
+			/// <param name="Param_RectOrigem">Uma estrutura CA_MFVideoNormalizedRect que especifica o retângulo de origem. O retângulo de origem define a área do quadro de vídeo que é exibido. Se este parâmetro for Nulo, todo o quadro de vídeo será exibido.</param>
+			/// <param name="Param_RectDestino">Uma estrutura CA_RECT que especifica o retângulo de destino. O retângulo de destino define a área da janela ou visual directcomposition onde o vídeo é desenhado.</param>
+			/// <param name="Param_CorBorda">A cor da borda a ser definida. </param>
+			/// <returns></returns>
+			CarenResult UpdateVideo(
+			CA_MFVideoNormalizedRect^ Param_RectOrigem,
+				CA_RECT^ Param_RectDestino,
+				CA_MFARGB^ Param_CorBorda);
 		};
 
 		/// <summary>

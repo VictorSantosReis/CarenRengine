@@ -173,6 +173,7 @@ typedef HRESULT ResultadoCOM;
 typedef cli::array<Byte>^ MatrizBytes;
 typedef System::IntPtr GenPointer;
 #define DefaultGenPointer IntPtr::Zero;
+#define OutParam [Out]
 
 #ifndef Nulo
 #ifdef __cplusplus

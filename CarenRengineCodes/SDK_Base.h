@@ -5944,7 +5944,7 @@ namespace CarenRengine
 				/// </summary>
 				MF_CAPTURE_ENGINE_SINK_TYPE_PHOTO = 0x2
 			};
-
+			
 			/// <summary>
 			/// (ORIGINAL) - Enumera valores utilizados para definir um fluxo de captura. As Apis da Capture engine utilizam essa enumeração.
 			/// </summary>
@@ -5965,7 +5965,7 @@ namespace CarenRengine
 				/// </summary>
 				MF_CAPTURE_ENGINE_FIRST_SOURCE_AUDIO_STREAM = 0xFFFFFFFD
 			};
-
+			
 			/// <summary>
 			/// (MF_CAPTURE_ENGINE_STREAM_CATEGORY) - Enumera os valores para a categoria de fluxo de origem.
 			/// </summary>

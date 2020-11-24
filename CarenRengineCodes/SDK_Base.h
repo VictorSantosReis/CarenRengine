@@ -6019,6 +6019,76 @@ namespace CarenRengine
 			};
 			
 			/// <summary>
+			/// (_MF_QUALITY_DROP_MODE)(FALTA DOCUMENTAR) - Enumeração que especifica o quão agressivamente um componente do gasoduto deve soltar(drop) amostras.
+			/// </summary>
+			public enum class CA_MF_QUALITY_DROP_MODE
+			{
+				/// <summary>
+				/// 
+				/// </summary>
+				MF_DROP_MODE_NONE = 0,
+				/// <summary>
+				/// 
+				/// </summary>
+				MF_DROP_MODE_1 = 0x1,
+				/// <summary>
+				/// 
+				/// </summary>
+				MF_DROP_MODE_2 = 0x2,
+				/// <summary>
+				/// 
+				/// </summary>
+				MF_DROP_MODE_3 = 0x3,
+				/// <summary>
+				/// 
+				/// </summary>
+				MF_DROP_MODE_4 = 0x4,
+				/// <summary>
+				/// 
+				/// </summary>
+				MF_DROP_MODE_5 = 0x5,
+				/// <summary>
+				/// 
+				/// </summary>
+				MF_NUM_DROP_MODES = 0x6
+			};
+
+			/// <summary>
+			/// (MF_QUALITY_LEVEL)(FALTA DOCUMENTAR) - Enumeração que especifica o nível de qualidade de um componente de tubulação. O nível de qualidade determina como o componente consome ou produz amostras.
+			/// </summary>
+			public enum class CA_MF_QUALITY_LEVEL
+			{
+				/// <summary>
+				/// 
+				/// </summary>
+				MF_QUALITY_NORMAL = 0,
+				/// <summary>
+				/// 
+				/// </summary>
+				MF_QUALITY_NORMAL_MINUS_1 = 0x1,
+				/// <summary>
+				/// 
+				/// </summary>
+				MF_QUALITY_NORMAL_MINUS_2 = 0x2,
+				/// <summary>
+				/// 
+				/// </summary>
+				MF_QUALITY_NORMAL_MINUS_3 = 0x3,
+				/// <summary>
+				/// 
+				/// </summary>
+				MF_QUALITY_NORMAL_MINUS_4 = 0x4,
+				/// <summary>
+				/// 
+				/// </summary>
+				MF_QUALITY_NORMAL_MINUS_5 = 0x5,
+				/// <summary>
+				/// 
+				/// </summary>
+				MF_NUM_QUALITY_LEVELS = 0x6
+			};
+			
+			/// <summary>
 			/// Enumera as possiveis características de um Coletor de Midia.
 			/// </summary>
 			[FlagsAttribute]

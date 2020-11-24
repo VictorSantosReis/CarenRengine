@@ -7328,6 +7328,20 @@ namespace CarenRengine
 
 
 			//Métodos
+
+			/// <summary>
+			/// Obtém o modo de drop maximo. Um modo de drop mais alto significa que o objeto, se necessário, soltará amostras de forma mais agressiva para corresponder ao relógio de apresentação.
+			/// Para obter o modo de drop atual, ligue para o método ICarenMFQualityAdvise::GetDropMode. Para definir o modo de drop, ligue para o método ICarenMFQualityAdvise::SetDropMode.
+			/// </summary>
+			/// <param name="Param_Out_DropMode">Recebe o modo de queda máxima, especificado como membro da enumeração CA_MF_QUALITY_DROP_MODE.</param>
+			ResultCode GetMaximumDropMode([Out] CA_MF_QUALITY_DROP_MODE% Param_Out_DropMode);
+
+			/// <summary>
+			/// Obtém o nível mínimo de qualidade suportado pelo componente.
+			/// Para obter o nível de qualidade atual, ligue para o método ICarenMFQualityAdvise::GetQualityLevel. Para definir o nível de qualidade, ligue para o método ICarenMFQualityAdvise::SetQualityLevel.
+			/// </summary>
+			/// <param name="Param_Out_NivelQualidade">Recebe o nível mínimo de qualidade, especificado como membro da enumeração CA_MF_QUALITY_LEVEL.</param>
+			ResultCode GetMinimumQualityLevel([Out] CA_MF_QUALITY_LEVEL% Param_Out_NivelQualidade);
 		};
 
 		/// <summary>
@@ -7347,8 +7361,73 @@ namespace CarenRengine
 			}
 
 
+			// DELEGATES
 
-			//Métodos
+			/// <summary>
+			/// Delegate do evento OnNotifyPresentationClock.
+			/// </summary>
+			delegate CarenResult Delegate_NotifyPresentationClock(ICarenMFPresentationClock^ Param_Clok);
+			/// <summary>
+			/// Delegate do evento OnNotifyProcessInput.
+			/// </summary>
+			delegate CarenResult Delegate_NotifyProcessInput(ICarenMFTopologyNode^ Param_Node, Int32 Param_Index, ICarenMFSample^ Param_Sample);
+			/// <summary>
+			/// Delegate do evento OnNotifyProcessOutput.
+			/// </summary>
+			delegate CarenResult Delegate_NotifyProcessOutput(ICarenMFTopologyNode^ Param_Node, Int32 Param_Index, ICarenMFSample^ Param_Sample);
+			/// <summary>
+			/// Delegate do evento OnNotifyQualityEvent.
+			/// </summary>
+			delegate CarenResult Delegate_NotifyQualityEvent(ICaren^ Param_Objeto, ICarenMFMediaEvent^ Param_Evento);
+			/// <summary>
+			/// Delegate do evento OnNotifyTopology.
+			/// </summary>
+			delegate CarenResult Delegate_NotifyTopology(ICarenMFTopology^ Param_Topologia);
+			/// <summary>
+			/// Delegate do evento OnShutdown.
+			/// </summary>
+			delegate CarenResult Delegate_Shutdown();
+
+
+			// EVENTOS
+
+			/// <summary>
+			/// Evento chamado quando a Sessão de Mídia seleciona um relógio de apresentação.
+			/// </summary>
+			event Delegate_NotifyPresentationClock^ OnNotifyPresentationClock;
+			/// <summary>
+			/// Evento chamado quando o processador de mídia está prestes a fornecer uma amostra de entrada para um componente de pipeline.
+			/// </summary>
+			event Delegate_NotifyProcessInput^ OnNotifyProcessInput;
+			/// <summary>
+			/// Evento chamado após o processador de mídia receber uma amostra de saída de um componente de pipeline.
+			/// </summary>
+			event Delegate_NotifyProcessOutput^ OnNotifyProcessOutput;
+			/// <summary>
+			/// Evento chamado quando um componente de pipeline envia um evento MEQualityNotify.
+			/// </summary>
+			event Delegate_NotifyQualityEvent^ OnNotifyQualityEvent;
+			/// <summary>
+			/// Evento chamado quando a Media Session está prestes a começar a tocar uma nova topologia.
+			/// </summary>
+			event Delegate_NotifyTopology^ OnNotifyTopology;
+			/// <summary>
+			/// Evento chamado quando a Sessão de Mídia está sendo encerrada.
+			/// </summary>
+			event Delegate_Shutdown^ OnShutdown;
+
+
+			// MÉTODOS
+
+			/// <summary>
+			/// Método responsável por registrar os eventos da interface.
+			/// </summary>
+			void RegistrarCallback();
+
+			/// <summary>
+			/// Método responsável por liberar todos os registros de eventos resgistrados anteriormente. Chame esse método após uma chamada para (RegistrarCallback).
+			/// </summary>
+			void UnRegisterCallback();
 		};
 	}
 }

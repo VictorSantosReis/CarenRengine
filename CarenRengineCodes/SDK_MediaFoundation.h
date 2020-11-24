@@ -6017,7 +6017,7 @@ namespace CarenRengine
 				virtual Boolean get();
 			}
 
-
+			//Define os delegates
 			
 			/// <summary>
 			/// Delegate do evento OnEventNotify.
@@ -6045,7 +6045,6 @@ namespace CarenRengine
 			/// Método responsável por liberar todos os registros de eventos resgistrados anteriormente. Chame esse método após uma chamada para (RegistrarCallback).
 			/// </summary>
 			void UnRegisterCallback();
-
 		};
 
 		/// <summary>
@@ -6500,7 +6499,7 @@ namespace CarenRengine
 			/// <param name="Param_NovaPosicao">A nova posição, em unidades de 100 nanossegundos.</param>
 			ResultCode TimeSeek(Int64 Param_NovaPosicao);
 		};
-
+		
 		/// <summary>
 		/// (IMFCaptureSource) - Interface responsável por controlar o objeto de origem de captura. A fonte de captura gerencia os dispositivos de captura de áudio e vídeo.
 		/// Para obter um ponteiro para a fonte de captura, ligue para o método ICarenMFCaptureEngine::GetSource.
@@ -6522,127 +6521,132 @@ namespace CarenRengine
 			//Métodos
 
 			/// <summary>
-			///  
+			/// Adiciona um efeito a um fluxo de captura.
 			/// </summary>
-			/// <param name="Param_SourceStreamIndex"></param>
-			/// <param name="Nome_Parametro"></param>
+			/// <param name="Param_SourceStreamIndex">Index para o fluxo de captura. Esse valor pode ser um dois valores da enumeração (MF_CAPTURE_ENGINE_FIRST_SOURCE_INDEX) ou O índice baseado em zero de um fluxo. Para obter o número de fluxos, ligue para o método ICarenMFCaptureSource::GetDeviceStreamCount.</param>
 			/// <param name="Param_Efeito">Uma interface que contém o ponteiro para o efeito. Essa interface pode ser uma ICarenMFTransform ou ICarenActivate.</param>
 			ResultCode AddEffect(
-				Type^ Param_Nome0,
+				UInt32 Param_SourceStreamIndex,
 				ICaren^ Param_Efeito);
 
 			/// <summary>
-			///  
+			/// Obtém um formato que é suportado por um dos fluxos de captura.
+			/// Para enumerar todos os formatos disponíveis em um fluxo, chame este método em um loop enquanto incrementa o (Param_MediaTypeIndex), até que o método retorne ER_MF_E_NO_MORE_TYPES.
+			/// Algumas câmeras podem suportar uma série de taxas de quadros. As taxas mínimas e máximas de quadros são armazenadas nos atributos MF_MT_FRAME_RATE_RANGE_MIN e MF_MT_FRAME_RATE_RANGE_MAX no tipo de mídia.
 			/// </summary>
-			/// <param name="Nome_Parametro"></param>
-			/// <param name="Nome_Parametro"></param>
-			/// <param name="Nome_Parametro"></param>
+			/// <param name="Param_SourceStreamIndex">Index para o fluxo de captura. Esse valor pode ser um dois valores da enumeração (MF_CAPTURE_ENGINE_FIRST_SOURCE_INDEX) ou O índice baseado em zero de um fluxo. Para obter o número de fluxos, ligue para o método ICarenMFCaptureSource::GetDeviceStreamCount.</param>
+			/// <param name="Param_MediaTypeIndex">O índice baseado em zero do tipo de mídia para recuperar.</param>
+			/// <param name="Param_Out_MediaType">Recebe um ponteiro para a interface IMFMediaType. O chamador deve liberar a interface.</param>
 			ResultCode GetAvailableDeviceMediaType(
-				Type^ Param_Nome0,
-				Type^ Param_Nome1,
-				Type^ Param_Nome2);
+				UInt32 Param_SourceStreamIndex,
+				UInt32 Param_MediaTypeIndex,
+				[Out] ICarenMFMediaType% Param_Out_MediaType);
 
 			/// <summary>
-			///  
+			/// Obtém o ponteiro para a interface ICarenMFActivate do dispositivo de captura atual.
 			/// </summary>
-			/// <param name="Nome_Parametro"></param>
-			/// <param name="Nome_Parametro"></param>
+			/// <param name="Param_CaptureDeviceType">O tipo de dispositivo do motor de captura.</param>
+			/// <param name="Param_Out_Activate">Recebe a interface ICarenMFActivate que representa o dispositivo.</param>
 			ResultCode GetCaptureDeviceActivate(
-				Type^ Param_Nome0,
-				Type^ Param_Nome1);
+				CA_MF_CAPTURE_ENGINE_DEVICE_TYPE Param_CaptureDeviceType,
+				[Out] ICarenMFActivate% Param_Out_Activate);
 
 			/// <summary>
-			///  
+			/// Obtém o ponteiro para a interface ICarenMFMediaSource do dispositivo de captura atual
 			/// </summary>
-			/// <param name="Nome_Parametro"></param>
-			/// <param name="Nome_Parametro"></param>
+			/// <param name="Param_CaptureDeviceType">O tipo de dispositivo do motor de captura.</param>
+			/// <param name="Param_Out_MediaSource">Recebe a interface ICarenMFMediaSource que representa o dispositivo.</param>
 			ResultCode GetCaptureDeviceSource(
-				Type^ Param_Nome0,
-				Type^ Param_Nome1);
+				CA_MF_CAPTURE_ENGINE_DEVICE_TYPE Param_CaptureDeviceType,
+				[Out] ICarenMFMediaSource% Param_Out_MediaSource);
 
 			/// <summary>
-			///  
+			/// Obtém o tipo de mídia atual para um fluxo de captura. 
 			/// </summary>
-			/// <param name="Nome_Parametro"></param>
-			/// <param name="Nome_Parametro"></param>
+			/// <param name="Param_SourceStreamIndex">Index para o fluxo de captura. Esse valor pode ser um dois valores da enumeração (MF_CAPTURE_ENGINE_FIRST_SOURCE_INDEX) ou O índice baseado em zero de um fluxo. Para obter o número de fluxos, ligue para o método ICarenMFCaptureSource::GetDeviceStreamCount.</param>
+			/// <param name="Param_Out_MediaType">Recebe a interface ICarenMFMediaType. O chamador deve liberar a interface.</param>
 			ResultCode GetCurrentDeviceMediaType(
-				Type^ Param_Nome0,
-				Type^ Param_Nome1);
+				UInt32 Param_SourceStreamIndex,
+				[Out] ICarenMFMediaType% Param_Out_MediaType);
 
 			/// <summary>
-			///  
+			/// Obtém a categoria de fluxo para o índice de fluxo de origem especificado. 
 			/// </summary>
-			/// <param name="Nome_Parametro"></param>
-			/// <param name="Nome_Parametro"></param>
+			/// <param name="Param_SourceStreamIndex">Index para o fluxo de captura. Esse valor pode ser um dois valores da enumeração (MF_CAPTURE_ENGINE_FIRST_SOURCE_INDEX) ou O índice baseado em zero de um fluxo. Para obter o número de fluxos, ligue para o método ICarenMFCaptureSource::GetDeviceStreamCount.</param>
+			/// <param name="Param_Out_StreamCategory">Recebe um valor da enumeração (CA_MF_CAPTURE_ENGINE_STREAM_CATEGORY) do fluxo de origem especificado.</param>
 			ResultCode GetDeviceStreamCategory(
-				Type^ Param_Nome0,
-				Type^ Param_Nome1);
+				UInt32 Param_SourceStreamIndex,
+				[Out] CA_MF_CAPTURE_ENGINE_STREAM_CATEGORY% Param_Out_StreamCategory);
 
 			/// <summary>
-			///  
+			/// Obtém o número de fluxos de dispositivos. 
 			/// </summary>
-			/// <param name="Nome_Parametro"></param>
-			ResultCode GetDeviceStreamCount(Type^ Param_Nome0);
+			/// <param name="Param_Out_StreamCount">Recebe o número de fluxos de dispositivos.</param>
+			ResultCode GetDeviceStreamCount([Out] UInt32% Param_Out_StreamCount);
 
 			/// <summary>
-			///  
+			/// Obtém o estado de espelhamento atual da transmissão de visualização de vídeo. 
 			/// </summary>
-			/// <param name="Nome_Parametro"></param>
-			/// <param name="Nome_Parametro"></param>
+			/// <param name="Param_StreamIndex">O índice baseado em zero do fluxo.</param>
+			/// <param name="Param_Out_MirrorState">Recebe o valor TRUE se o espelhamento estiver ativado ou FALSE se o espelhamento for desativado.</param>
 			ResultCode GetMirrorState(
-				Type^ Param_Nome0,
-				Type^ Param_Nome1);
+				UInt32 Param_StreamIndex,
+				[Out] Boolean% Param_Out_MirrorState);
 
 			/// <summary>
-			///  
+			/// Obtém um ponteiro para o objeto Source Reader(ICarenMFSourceReader) subjacente. 
 			/// </summary>
-			/// <param name="Nome_Parametro"></param>
-			/// <param name="Nome_Parametro"></param>
+			/// <param name="Param_GuidServico">Um identificador de serviço GUID. Atualmente, o valor deve ser IID_IMFSourceReader ou Nulo.</param>
+			/// <param name="Param_RIIDInterface">O identificador de interface (IID) da interface que está sendo solicitada. O valor deve ser IID_IMFSourceReader. Se o valor não estiver definido para IID_IMFSourceReader,a chamada falhará e retornará ER_E_INVALIDARG.</param>
+			/// <param name="Param_Ref_Interface">Recebe um ponteiro para a interface solicitada. O usuário é responsável por inicializar a interface.</param>
 			ResultCode GetService(
-				Type^ Param_Nome0,
-				Type^ Param_Nome1);
-
+				String^ Param_GuidServico,
+				Type^ Param_RIID,
+				ICaren^% Param_Ref_Interface);
+			
 			/// <summary>
-			///  
+			/// Obtém o índice de fluxo real do dispositivo traduzido de um nome de fluxo amigável. 
 			/// </summary>
-			/// <param name="Nome_Parametro"></param>
-			/// <param name="Nome_Parametro"></param>
+			/// <param name="Param_NomeAmigavel">O nome amigável. Esse valor pode ser os valores da enumeração (CA_MF_CAPTURE_ENGINE_FIRST_SOURCE_INDEX) ou outros valores. Veja na documentação do método.</param>
+			/// <param name="Param_Out_StreamIndexAtual">Recebe o valor do índice de fluxo que corresponde ao nome amigável.</param>
 			ResultCode GetStreamIndexFromFriendlyName(
-				Type^ Param_Nome0,
-				Type^ Param_Nome1);
+				UInt32 Param_NomeAmigavel,
+				[Out] UInt32% Param_Out_StreamIndexAtual);
 
 			/// <summary>
-			///  
+			/// Remove todos os efeitos de um fluxo de captura.
 			/// </summary>
-			/// <param name="Nome_Parametro"></param>
-			ResultCode RemoveAllEffects(Type^ Param_Nome0);
+			/// <param name="Param_SourceStreamIndex">Index para o fluxo de captura. Esse valor pode ser um dois valores da enumeração (MF_CAPTURE_ENGINE_FIRST_SOURCE_INDEX) ou O índice baseado em zero de um fluxo. Para obter o número de fluxos, ligue para o método ICarenMFCaptureSource::GetDeviceStreamCount.</param>
+			ResultCode RemoveAllEffects(UInt32 Param_SourceStreamIndex);
 
 			/// <summary>
-			///  
+			/// Remove um efeito de um fluxo de captura.
+			/// Este método remove um efeito que foi adicionado anteriormente usando o método ICarenMFCaptureSource::AddEffect.
 			/// </summary>
-			/// <param name="Nome_Parametro"></param>
-			/// <param name="Nome_Parametro"></param>
+			/// <param name="Param_SourceStreamIndex">Index para o fluxo de captura. Esse valor pode ser um dois valores da enumeração (MF_CAPTURE_ENGINE_FIRST_SOURCE_INDEX) ou O índice baseado em zero de um fluxo. Para obter o número de fluxos, ligue para o método ICarenMFCaptureSource::GetDeviceStreamCount.</param>
+			/// <param name="Param_Efeito">O ponteiro para a interface que contém o efeito a ser removido.</param>
 			ResultCode RemoveEffect(
-				Type^ Param_Nome0,
-				Type^ Param_Nome1);
+				UInt32 Param_SourceStreamIndex,
+				ICaren^ Param_Efeito);
 
 			/// <summary>
-			///  
+			/// Define o formato de saída para um fluxo de captura.
+			/// Este método define o tipo de saída nativa no dispositivo de captura. O dispositivo deve suportar o formato especificado. Para obter a lista de formatos disponíveis, ligue para o ICarenMFCaptureSource::GetAvailableDeviceMediaType.
 			/// </summary>
-			/// <param name="Nome_Parametro"></param>
-			/// <param name="Nome_Parametro"></param>
+			/// <param name="Param_SourceStreamIndex">Index para o fluxo de captura. Esse valor pode ser um dois valores da enumeração (MF_CAPTURE_ENGINE_FIRST_SOURCE_INDEX) ou O índice baseado em zero de um fluxo. Para obter o número de fluxos, ligue para o método ICarenMFCaptureSource::GetDeviceStreamCount.</param>
+			/// <param name="Param_MediaType">Uma interface ICarenMFMediaType para o formato de saída para o fluxo de captura.</param>
 			ResultCode SetCurrentDeviceMediaType(
-				Type^ Param_Nome0,
-				Type^ Param_Nome1);
+				UInt32 Param_SourceStreamIndex,
+				ICarenMFMediaType^ Param_MediaType);
 
 			/// <summary>
-			///  
+			/// Habilita ou desativa o espelhamento da transmissão de visualização de vídeo. 
 			/// </summary>
-			/// <param name="Nome_Parametro"></param>
-			/// <param name="Nome_Parametro"></param>
+			/// <param name="Param_StreamIndex">O índice baseado em zero do fluxo.</param>
+			/// <param name="Param_MirrorState">Se TRUE, o espelhamento estiver ativado; se FALSO, o espelhamento é desativado.</param>
 			ResultCode SetMirrorState(
-				Type^ Param_Nome0,
-				Type^ Param_Nome1);
+				UInt32 Param_StreamIndex,
+				Boolean Param_MirrorState);
 		};
 
 		/// <summary>
@@ -6661,9 +6665,34 @@ namespace CarenRengine
 				virtual Boolean get();
 			}
 
+			//Define os delegates
+
+			/// <summary>
+			/// Delegate do evento OnEvent.
+			/// </summary>
+			delegate CarenResult Delegate_OnEvent(ICarenMFMediaEvent^ Param_Evento);
 
 
-			//Métodos
+			//Define os eventos
+
+			/// <summary>
+			/// (Thread-Safe) Evento chamado pelo mecanismo de captura para notificar a aplicação de um evento de captura. 
+			/// </summary>
+			event Delegate_OnEvent^ OnEvent;
+
+
+
+			//Métodos que registram e deletam os dados dos eventos.
+
+			/// <summary>
+			/// Método responsável por registrar os eventos da interface.
+			/// </summary>
+			void RegistrarCallback();
+
+			/// <summary>
+			/// Método responsável por liberar todos os registros de eventos resgistrados anteriormente. Chame esse método após uma chamada para (RegistrarCallback).
+			/// </summary>
+			void UnRegisterCallback();
 		};
 
 
@@ -6775,6 +6804,17 @@ namespace CarenRengine
 
 
 			//Métodos
+
+			/// <summary>
+			/// Cria uma instância do motor de captura.
+			/// </summary>
+			/// <param name="Param_CLSID">O CLSID do objeto a ser criado. Atualmente, este parâmetro deve ser igual CLSID_MFCaptureEngine.</param>
+			/// <param name="Param_RIID">O IID da interface solicitada. O mecanismo de captura suporta a interface IMFCaptureEngine.</param>
+			/// <param name="Param_Out_Interface">Recebe um ponteiro para a interface solicitada. O usuário deve inicializar essa interface.</param>
+			ResultCode CreateInstance(
+				String^ Param_CLSID,
+				String^ Param_RIID,
+				ICaren^% Param_Out_Interface);
 		};
 
 		/// <summary>
@@ -6793,9 +6833,34 @@ namespace CarenRengine
 				virtual Boolean get();
 			}
 
+			//Define os delegates
+
+			/// <summary>
+			/// Delegate do evento OnSample.
+			/// </summary>
+			delegate CarenResult Delegate_OnSample(ICarenMFSample^ Param_Amostra);
 
 
-			//Métodos
+			//Define os eventos
+
+			/// <summary>
+			/// Evento chamado quando o Sink de captura recebe uma nova amostra.
+			/// </summary>
+			event Delegate_OnSample^ OnSample;
+
+
+
+			//Métodos que registram e deletam os dados dos eventos.
+
+			/// <summary>
+			/// Método responsável por registrar os eventos da interface.
+			/// </summary>
+			void RegistrarCallback();
+
+			/// <summary>
+			/// Método responsável por liberar todos os registros de eventos resgistrados anteriormente. Chame esse método após uma chamada para (RegistrarCallback).
+			/// </summary>
+			void UnRegisterCallback();
 		};
 
 		/// <summary>
@@ -6813,9 +6878,34 @@ namespace CarenRengine
 				virtual Boolean get();
 			}
 
+			//Define os delegates
+
+			/// <summary>
+			/// Delegate do evento OnSynchronizedEvent.
+			/// </summary>
+			delegate CarenResult Delegate_OnSynchronizedEvent(ICarenMFMediaEvent^ Param_Evento);
 
 
-			//Métodos
+			//Define os eventos
+
+			/// <summary>
+			/// Evento chamado pelo Sink de captura quando o formato da amostra é alterado.
+			/// </summary>
+			event Delegate_OnSynchronizedEvent^ OnSample;
+
+
+
+			//Métodos que registram e deletam os dados dos eventos.
+
+			/// <summary>
+			/// Método responsável por registrar os eventos da interface.
+			/// </summary>
+			void RegistrarCallback();
+
+			/// <summary>
+			/// Método responsável por liberar todos os registros de eventos resgistrados anteriormente. Chame esse método após uma chamada para (RegistrarCallback).
+			/// </summary>
+			void UnRegisterCallback();
 		};
 
 		/// <summary>
@@ -6837,6 +6927,53 @@ namespace CarenRengine
 
 
 			//Métodos
+
+			/// <summary>
+			/// Conecta um fluxo da fonte de captura a esta pia de captura.
+			/// </summary>
+			/// <param name="Param_SourceStreamIndex">O fluxo de origem para se conectar. Esse valor pode ser um dois valores da enumeração (MF_CAPTURE_ENGINE_FIRST_SOURCE_INDEX) ou O índice baseado em zero de um fluxo. Para obter o número de fluxos, ligue para o método ICarenMFCaptureSource::GetDeviceStreamCount.</param>
+			/// <param name="Param_MediaType">Uma ICarenMFMediaType que especifica o formato desejado do fluxo de saída.</param>
+			/// <param name="Param_Atributos">Uma interface ICarenMFAttributes para os atributos. Para fluxos comprimidos, você pode usar este parâmetro para configurar o codificador. Este parâmetro também pode ser Nulo.</param>
+			/// <param name="Param_Out_SinkStreamIndex">Recebe o índice do novo fluxo na pia de captura. Observe que este índice não corresponderá necessariamente ao valor do (Param_SourceStreamIndex).</param>
+			ResultCode AddStream(
+				UInt32 Param_SourceStreamIndex,
+				ICarenMFMediaType^ Param_MediaType,
+				ICarenMFAttributes^ Param_Atributos,
+				[Out] UInt32% Param_Out_SinkStreamIndex);
+
+			/// <summary>
+			/// Obtém o formato de saída para um fluxo nesta pia de captura.
+			/// </summary>
+			/// <param name="Nome_Parametro">O índice baseado em zero do fluxo para consulta. O índice é devolvido no parâmetro (Param_Out_SinkStreamIndex) do método ICarenMFCaptureSink::AddStream.</param>
+			/// <param name="Nome_Parametro">Retorna uma interface ICarenMFMediaType com o formato do tipo de midia no fluxo especificado. O usuário é responsável por liberar a interface.</param>
+			ResultCode GetOutputMediaType(
+				UInt32 Param_SinkStreamIndex,
+				[Out] ICarenMFMediaType^% Param_Out_MediaType);
+
+			/// <summary>
+			/// Consulte o objeto Sink Writer(ICarenMFSourceReader) subjacente para uma interface.
+			/// </summary>
+			/// <param name="Param_SinkStreamIndex">O índice baseado em zero do fluxo para consulta. O índice é devolvido no parâmetro (Param_Out_SinkStreamIndex) do método ICarenMFCaptureSink::AddStream.</param>
+			/// <param name="Param_GuidService">Um identificador de serviço GUID. Atualmente, o valor deve ser Nulo.</param>
+			/// <param name="Param_RIID">Um identificador de serviço GUID. Atualmente, o valor deve ser IID_IMFSinkWriter.</param>
+			/// <param name="Param_Ref_Interface">Retorna um ponteiro para a interface solicitada. O usuário é responsável por criar e liberar a interface.</param>
+			ResultCode GetService(
+				UInt32 Param_SinkStreamIndex,
+				String^ Param_GuidService,
+				String^ Param_RIID,
+				ICaren^% Param_Ref_Interface);
+
+			/// <summary>
+			/// Prepara o sink de captura carregando quaisquer componentes de pipeline necessários, como codificadores, processadores de vídeo e coletores de mídia.
+			/// Chamar esse método é opcional. Este método dá ao aplicativo a oportunidade de configurar os componentes do pipeline antes de serem usados. O método é assíncrono. Se o método retornar um código de sucesso, o chamador receberá um evento MF_CAPTURE_SINK_PREPARED por meio do método ICarenMFCaptureEngineOnEventCallback::OnEvent. Depois que esse evento for recebido, chame ICarenMFCaptureSink::GetService para configurar componentes individuais.
+			/// </summary>
+			ResultCode Prepare();
+
+			/// <summary>
+			/// Remove todos os fluxos do sink de captura. 
+			/// Você pode usar este método para reconfigurar o sink.
+			/// </summary>
+			ResultCode RemoveAllStreams();
 		};
 
 		/// <summary>
@@ -6857,6 +6994,17 @@ namespace CarenRengine
 
 
 			//Métodos
+
+			/// <summary>
+			/// Define dinamicamente o tipo de mídia de saída do (Record Sink) ou (Preview Sink).
+			/// </summary>
+			/// <param name="Param_StreamIndex">O índice de fluxo para alterar o tipo de mídia de saída ligado.</param>
+			/// <param name="Param_MediaType">O novo tipo de mídia de saída.</param>
+			/// <param name="Param_AtributosEncoding">Os novos atributos do codificador. Isso pode ser Nulo.</param>
+			ResultCode SetOutputMediaType(
+				UInt32 Param_StreamIndex,
+				ICarenMFMediaType^ Param_MediaType,
+				ICarenMFAttributes^ Param_AtributosEncoding);
 		};
 
 		/// <summary>
@@ -6880,6 +7028,30 @@ namespace CarenRengine
 
 
 			//Métodos
+
+			/// <summary>
+			/// Especifica um fluxo de byte que receberá os dados de imagem still.
+			/// Chamar esse método substitui qualquer chamada anterior para ICarenMFCapturePhotoSink::SetOutputFileName ou ICarenMFCapturePhotoSink::SetSampleCallback.
+			/// </summary>
+			/// <param name="Param_ByteStream">Uma interface ICarenMFByteStream de um fluxo byte. O fluxo de byte deve ter permissão de escrita.</param>
+			/// <returns></returns>
+			CarenResult SetOutputByteStream(ICarenMFByteStream^ Param_ByteStream);
+
+			/// <summary>
+			/// Especifica o nome do arquivo de saída para a imagem parada.
+			/// Chamar esse método substitui qualquer chamada anterior para ICarenMFCapturePhotoSink::SetOutputByteStream ou ICarenMFCapturePhotoSink::SetSampleCallback.
+			/// </summary>
+			/// <param name="Param_Url">Uma string que contém a URL do arquivo de saída.</param>
+			/// <returns></returns>
+			CarenResult SetOutputFileName(String^ Param_Url);
+
+			/// <summary>
+			/// Define um retorno de chamada para receber os dados de imagem parada.
+			/// Chamar esse método substitui qualquer chamada anterior para ICarenMFCapturePhotoSink::SetOutputByteStream ou ICarenMFCapturePhotoSink::SetOutputFileName.
+			/// </summary>
+			/// <param name="Param_Callback">Uma interface ICarenMFCaptureEngineOnSampleCallback. O usuário deve implementar esta interface.</param>
+			/// <returns></returns>
+			CarenResult SetSampleCallback(ICarenMFCaptureEngineOnSampleCallback^ Param_Callback);
 		};
 
 		/// <summary>
@@ -6901,6 +7073,84 @@ namespace CarenRengine
 
 
 			//Métodos
+
+			/// <summary>
+			/// Obtém o estado de espelhamento atual da transmissão de visualização de vídeo.
+			/// </summary>
+			/// <param name="Param_Out_MirrorState">Recebe o valor TRUE se o espelhamento estiver ativado ou FALSE se o espelhamento for desativado.</param>
+			/// <returns></returns>
+			CarenResult GetMirrorState(OutParam Boolean% Param_Out_MirrorState);
+
+			/// <summary>
+			/// Obtém a rotação do fluxo de visualização de vídeo.
+			/// </summary>
+			/// <param name="Param_StreamIndex">O índice baseado em zero do fluxo. Você deve especificar uma transmissão de vídeo.</param>
+			/// <param name="Param_Out_RotacaoValue">Recebe a rotação da imagem, em graus.</param>
+			/// <returns></returns>
+			CarenResult GetRotation(
+				UInt32 Param_StreamIndex,
+				OutParam UInt32% Param_Out_RotacaoValue);
+
+			/// <summary>
+			/// Define um sink de mídia personalizada para visualização.
+			/// </summary>
+			/// <param name="Param_MediaSink">Uma interface ICarenMFMediaSink com o ponteiro para o sink de mídia</param>
+			/// <returns></returns>
+			CarenResult SetCustomSink(ICarenMFMediaSink^ Param_MediaSink);
+
+			/// <summary>
+			/// Habilita ou desativa o espelhamento da transmissão de visualização de vídeo.
+			/// </summary>
+			/// <param name="Param_MirrorState">Se TRUE, o espelhamento está ativado. Se FALSE, o espelho está desativado.</param>
+			/// <returns></returns>
+			CarenResult SetMirrorState(Boolean Param_MirrorState);
+
+			/// <summary>
+			/// Especifica uma Window(Handle) para visualização.
+			/// </summar
+			/// <param name="Param_HandleWindow">Uma Handle para a janela. O Sink de visualização desenha os quadros de vídeo dy>entro desta janela.</param>
+			/// <returns></returns>
+			CarenResult SetRenderHandle(IntPtr Param_HandleWindow);
+
+			/// <summary>
+			/// Especifica um visual Microsoft DirectComposition para visualização.
+			/// </summary>
+			/// <param name="Param_Surface">Uma interface ICaren que contém um ponteiro para um Visual DirectComposition que implementa a interface (IDCompositionVisual).</param>
+			/// <returns></returns>
+			CarenResult SetRenderSurface(ICaren^ Param_Surface);
+
+			/// <summary>
+			/// Rotaciona o fluxo de visualização de vídeo.
+			/// </summary>
+			/// <param name="Param_StreamIndex">O índice baseado em zero do fluxo para girar. Você deve especificar uma transmissão de vídeo.</param>
+			/// <param name="Param_RotacaoValue">O valor para girar o vídeo, em graus. Os valores válidos são 0, 90, 180 e 270. O valor zero restaura o vídeo à sua orientação original.</param>
+			/// <returns></returns>
+			CarenResult SetRotation(
+				UInt32 Param_StreamIndex,
+				UInt32 Param_RotacaoValue);
+
+			/// <summary>
+			/// Define um retorno de chamada para receber os dados de visualização de um fluxo.
+			/// Chamar este método substitui qualquer chamada anterior ao ICarenMFCapturePreviewSink::SetRenderHandle.
+			/// </summary>
+			/// <param name="Param_StreamSinkIndex">O índice baseado em zero do fluxo. O índice é devolvido no parâmetro (Param_Out_StreamSinkIndex) do método ICarenMFCaptureSink::AddStream.</param>
+			/// <param name="Param_Callback">Uma interface ICarenMFCaptureEngineOnSampleCallback que contém o ponteiro para o callback. O usuário deve implementar esta interface.</param>
+			/// <returns></returns>
+			CarenResult SetSampleCallback(
+				UInt32 Param_StreamSinkIndex,
+				ICarenMFCaptureEngineOnSampleCallback^ Param_Callback);
+
+			/// <summary>
+			/// Atualiza o quadro de vídeo. Ligue para este método quando a janela de visualização receber uma mensagem WM_PAINT ou WM_SIZE.
+			/// </summary>
+			/// <param name="Param_RectOrigem">Uma estrutura CA_MFVideoNormalizedRect que especifica o retângulo de origem. O retângulo de origem define a área do quadro de vídeo que é exibido. Se este parâmetro for Nulo, todo o quadro de vídeo será exibido.</param>
+			/// <param name="Param_RectDestino">Uma estrutura CA_RECT que especifica o retângulo de destino. O retângulo de destino define a área da janela ou visual directcomposition onde o vídeo é desenhado.</param>
+			/// <param name="Param_CorBorda">A cor da borda a ser definida. </param>
+			/// <returns></returns>
+			CarenResult UpdateVideo(
+			CA_MFVideoNormalizedRect^ Param_RectOrigem,
+				CA_RECT^ Param_RectDestino,
+				CA_MFARGB^ Param_CorBorda);
 		};
 
 		/// <summary>
@@ -6921,12 +7171,66 @@ namespace CarenRengine
 
 
 			//Métodos
+
+			/// <summary>
+			/// Obtém a rotação que está sendo aplicada ao fluxo de vídeo gravado.
+			/// </summary>
+			/// <param name="Param_StreamIndex">O índice baseado em zero do fluxo. Você deve especificar uma transmissão de vídeo.</param>
+			/// <param name="Param_Out_RotationValue">Recebe a rotação da imagem, em graus.</param>
+			ResultCode GetRotation(
+				UInt32 Param_StreamIndex,
+				[Out] UInt32% Param_Out_RotationValue);
+
+			/// <summary>
+			/// Define um sink de mídia personalizada para gravação.
+			/// Este método substitui a seleção padrão do sink de mídia para gravação.
+			/// </summary>
+			/// <param name="Param_MediaSink">Uma interface ICarenMFMediaSink para o sink da mídia.</param>
+			ResultCode SetCustomSink(ICarenMFMediaSink^ Param_MediaSink);
+
+			/// <summary>
+			/// Especifica um fluxo de byte que receberá os dados para a gravação.
+			/// Chamar este método substitui qualquer chamada anterior para ICarenMFCaptureRecordSink::SetOutputFileName ou ICarenMFCaptureRecordSink::SetSampleCallback.
+			/// </summary>
+			/// <param name="Param_ByteStream">Uma interface ICarenMFByteStream de um fluxo byte. O fluxo de byte deve suportar escrita.</param>
+			/// <param name="Param_GuidContainer">Um GUID que especifica o tipo de recipiente de arquivo. Os valores possíveis estão documentados no atributo MF_TRANSCODE_CONTAINERTYPE.</param>
+			ResultCode SetOutputByteStream(
+				ICarenMFByteStream^ Param_ByteStream,
+				String^ Param_GuidContainer);
+
+			/// <summary>
+			/// Especifica o nome do arquivo de saída para a gravação.
+			/// O mecanismo de captura usa a extensão do nome do arquivo para selecionar o tipo de contêiner para o arquivo de saída. Por exemplo, se a extensão do nome do arquivo for ." mp4", o mecanismo de captura cria um arquivo MP4.
+			/// Chamar este método substitui qualquer chamada anterior para ICarenMFCaptureRecordSink::SetOutputByteStream ou ICarenMFCaptureRecordSink::SetSampleCallback.
+			/// </summary>
+			/// <param name="Param_Url">Uma String que contém a URL do arquivo de saída.</param>
+			ResultCode SetOutputFileName(String^ Param_Url);
+
+			/// <summary>
+			/// Rotaciona o fluxo de vídeo gravado.
+			/// </summary>
+			/// <param name="Param_StreamIndex">O índice baseado em zero do fluxo para girar. Você deve especificar uma transmissão de vídeo.</param>
+			/// <param name="Param_RotationValue">A quantidade para girar o vídeo, em graus. Os valores válidos são 0, 90, 180 e 270. O valor zero restaura o vídeo à sua orientação original.</param>
+			ResultCode SetRotation(
+				UInt32 Param_StreamIndex,
+				UInt32 Param_RotationValue);
+
+			/// <summary>
+			/// Define um Callback para receber os dados de gravação de um fluxo.
+			/// Chamar este método substitui qualquer chamada anterior para ICarenMFCaptureRecordSink::SetOutputByteStream ou ICarenMFCaptureRecordSink::SetOutputFileName.
+			/// </summary>
+			/// <param name="Param_StreamSinkIndex">O índice baseado em zero do fluxo. O índice é devolvido no parâmetro (Param_Out_SinkStreamIndex) do método ICarenMFCaptureSink::AddStream.</param>
+			/// <param name="Param_Callback">Uma interface ICarenMFCaptureEngineOnSampleCallback. O usuário deve implementar esta interface.</param>
+			ResultCode SetSampleCallback(
+				UInt32 Param_StreamSinkIndex,
+				ICarenMFCaptureEngineOnSampleCallback^ Param_Callback);
 		};
 
 		/// <summary>
 		/// (IMFQualityAdvise) - Interface responsável permitir que o gerenciador de qualidade ajuste a qualidade de áudio ou vídeo de um componente no pipeline.
-		/// Esta interface é exposta por componentes de pipeline que podem ajustar sua qualidade. Normalmente é exposto por decodificados e pias de córrego. Por exemplo, o EVR (Enhanced Video renderer, renderizador de vídeo aprimorado) implementa essa interface. No entanto, as fontes de mídia também podem implementar essa interface.
-		/// Para obter um ponteiro para esta interface a partir de uma fonte de mídia, ligue para o ICarenMFGetService::GetService com o identificador de serviço MF_QUALITY_SERVICES. Para todos os outros objetos de pipeline (transformações e pias de mídia), ligue para o QueryInterface.
+		/// Esta interface é exposta por componentes de pipeline que podem ajustar sua qualidade. Normalmente é exposto por decodificados e sink de fluxos. Por exemplo, o EVR (Enhanced Video renderer, renderizador de vídeo aprimorado) 
+		/// implementa essa interface. No entanto, as fontes de mídia também podem implementar essa interface. Para obter um ponteiro para esta interface a partir de uma fonte de mídia, ligue para o ICarenMFGetService::GetService com o 
+		/// identificador de serviço MF_QUALITY_SERVICES. Para todos os outros objetos de pipeline (transformações e sinks de mídia), ligue para o ICaren::ConsultarInterface.
 		/// </summary>
 		[CategoryAttribute("MF Interface")]
 		[Guid("F0A42960-A36F-4417-902A-905D2AB95697")]
@@ -6943,6 +7247,37 @@ namespace CarenRengine
 
 
 			//Métodos
+
+			/// <summary>
+			/// Dropa as amostras em um intervalo de tempo especificado.
+			/// </summary>
+			/// <param name="Param_NsAmountToDrop">Quantidade de tempo para dropar, em unidades de 100 nanossegundos. Esse valor é sempre absoluto. Se o método for chamado várias vezes, não adicione os horários das chamadas anteriores.</param>
+			ResultCode DropTime(UInt64 Param_NsAmountToDrop);
+
+			/// <summary>
+			/// Recupera o modo de drop atual.
+			/// </summary>
+			/// <param name="Param_Out_DropMode">Recebe o modo de drop, especificado como membro da enumeração CA_MF_QUALITY_DROP_MODE.</param>
+			ResultCode GetDropMode([Out] CA_MF_QUALITY_DROP_MODE% Param_Out_DropMode);
+
+			/// <summary>
+			/// Recupera o nível de qualidade atual.
+			/// </summary>
+			/// <param name="Param_Out_NivelQualidade">Recebe o nível de qualidade, especificado como membro da enumeração CA_MF_QUALITY_LEVEL.</param>
+			ResultCode GetQualityLevel([Out] CA_MF_QUALITY_LEVEL% Param_Out_NivelQualidade);
+
+			/// <summary>
+			/// Define o modo de drop. No modo de drop, um componente dropa amostras, mais ou menos agressivamente dependendo do nível do modo de drop.
+			/// Se esse método for chamado a uma fonte de mídia, a fonte de mídia pode alternar entre saídas diluídas e não diluídas. Se isso ocorrer, os fluxos afetados enviarão um evento MEStreamThinMode para indicar a transição. A operação é assíncroda; após o retorno do SetDropMode, você pode receber amostras que estavam na fila antes da transição. O evento MEStreamThinMode marca o ponto exato no fluxo onde a transição ocorre.
+			/// </summary>
+			/// <param name="Param_DropMode">Modo de queda solicitado, especificado como membro da enumeração CA_MF_QUALITY_DROP_MODE.</param>
+			ResultCode SetDropMode(CA_MF_QUALITY_DROP_MODE Param_DropMode);
+
+			/// <summary>
+			/// Define o nível de qualidade. O nível de qualidade determina como o componente consome ou produz amostras.
+			/// </summary>
+			/// <param name="Param_NivelQualidade">Nível de qualidade solicitado, especificado como membro da enumeração CA_MF_QUALITY_LEVEL.</param>
+			ResultCode SetQualityLevel(CA_MF_QUALITY_LEVEL Param_NivelQualidade);
 		};
 
 		/// <summary>
@@ -6963,6 +7298,15 @@ namespace CarenRengine
 
 
 			//Métodos
+
+			/// <summary>
+			/// Encaminhe um evento MEQualityNotify do sink da mídia.
+			/// </summary>
+			/// <param name="Param_Evento">Uma interface ICarenMFMediaEvent para o evento.</param>
+			/// <param name="Param_Out_Flags">Recebe um Or bitwise de zero ou mais bandeiras da enumeração CA_MF_QUALITY_ADVISE_FLAGS.</param>
+			ResultCode NotifyQualityEvent(
+				ICarenMFMediaEvent^ Param_Evento,
+				OutParam CA_MF_QUALITY_ADVISE_FLAGS% Param_Out_Flags);
 		};
 
 		/// <summary>
@@ -6984,6 +7328,20 @@ namespace CarenRengine
 
 
 			//Métodos
+
+			/// <summary>
+			/// Obtém o modo de drop maximo. Um modo de drop mais alto significa que o objeto, se necessário, soltará amostras de forma mais agressiva para corresponder ao relógio de apresentação.
+			/// Para obter o modo de drop atual, ligue para o método ICarenMFQualityAdvise::GetDropMode. Para definir o modo de drop, ligue para o método ICarenMFQualityAdvise::SetDropMode.
+			/// </summary>
+			/// <param name="Param_Out_DropMode">Recebe o modo de queda máxima, especificado como membro da enumeração CA_MF_QUALITY_DROP_MODE.</param>
+			ResultCode GetMaximumDropMode([Out] CA_MF_QUALITY_DROP_MODE% Param_Out_DropMode);
+
+			/// <summary>
+			/// Obtém o nível mínimo de qualidade suportado pelo componente.
+			/// Para obter o nível de qualidade atual, ligue para o método ICarenMFQualityAdvise::GetQualityLevel. Para definir o nível de qualidade, ligue para o método ICarenMFQualityAdvise::SetQualityLevel.
+			/// </summary>
+			/// <param name="Param_Out_NivelQualidade">Recebe o nível mínimo de qualidade, especificado como membro da enumeração CA_MF_QUALITY_LEVEL.</param>
+			ResultCode GetMinimumQualityLevel([Out] CA_MF_QUALITY_LEVEL% Param_Out_NivelQualidade);
 		};
 
 		/// <summary>
@@ -7003,8 +7361,73 @@ namespace CarenRengine
 			}
 
 
+			// DELEGATES
 
-			//Métodos
+			/// <summary>
+			/// Delegate do evento OnNotifyPresentationClock.
+			/// </summary>
+			delegate CarenResult Delegate_NotifyPresentationClock(ICarenMFPresentationClock^ Param_Clok);
+			/// <summary>
+			/// Delegate do evento OnNotifyProcessInput.
+			/// </summary>
+			delegate CarenResult Delegate_NotifyProcessInput(ICarenMFTopologyNode^ Param_Node, Int32 Param_Index, ICarenMFSample^ Param_Sample);
+			/// <summary>
+			/// Delegate do evento OnNotifyProcessOutput.
+			/// </summary>
+			delegate CarenResult Delegate_NotifyProcessOutput(ICarenMFTopologyNode^ Param_Node, Int32 Param_Index, ICarenMFSample^ Param_Sample);
+			/// <summary>
+			/// Delegate do evento OnNotifyQualityEvent.
+			/// </summary>
+			delegate CarenResult Delegate_NotifyQualityEvent(ICaren^ Param_Objeto, ICarenMFMediaEvent^ Param_Evento);
+			/// <summary>
+			/// Delegate do evento OnNotifyTopology.
+			/// </summary>
+			delegate CarenResult Delegate_NotifyTopology(ICarenMFTopology^ Param_Topologia);
+			/// <summary>
+			/// Delegate do evento OnShutdown.
+			/// </summary>
+			delegate CarenResult Delegate_Shutdown();
+
+
+			// EVENTOS
+
+			/// <summary>
+			/// Evento chamado quando a Sessão de Mídia seleciona um relógio de apresentação.
+			/// </summary>
+			event Delegate_NotifyPresentationClock^ OnNotifyPresentationClock;
+			/// <summary>
+			/// Evento chamado quando o processador de mídia está prestes a fornecer uma amostra de entrada para um componente de pipeline.
+			/// </summary>
+			event Delegate_NotifyProcessInput^ OnNotifyProcessInput;
+			/// <summary>
+			/// Evento chamado após o processador de mídia receber uma amostra de saída de um componente de pipeline.
+			/// </summary>
+			event Delegate_NotifyProcessOutput^ OnNotifyProcessOutput;
+			/// <summary>
+			/// Evento chamado quando um componente de pipeline envia um evento MEQualityNotify.
+			/// </summary>
+			event Delegate_NotifyQualityEvent^ OnNotifyQualityEvent;
+			/// <summary>
+			/// Evento chamado quando a Media Session está prestes a começar a tocar uma nova topologia.
+			/// </summary>
+			event Delegate_NotifyTopology^ OnNotifyTopology;
+			/// <summary>
+			/// Evento chamado quando a Sessão de Mídia está sendo encerrada.
+			/// </summary>
+			event Delegate_Shutdown^ OnShutdown;
+
+
+			// MÉTODOS
+
+			/// <summary>
+			/// Método responsável por registrar os eventos da interface.
+			/// </summary>
+			void RegistrarCallback();
+
+			/// <summary>
+			/// Método responsável por liberar todos os registros de eventos resgistrados anteriormente. Chame esse método após uma chamada para (RegistrarCallback).
+			/// </summary>
+			void UnRegisterCallback();
 		};
 	}
 }

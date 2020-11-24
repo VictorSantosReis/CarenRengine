@@ -5944,7 +5944,7 @@ namespace CarenRengine
 				/// </summary>
 				MF_CAPTURE_ENGINE_SINK_TYPE_PHOTO = 0x2
 			};
-
+			
 			/// <summary>
 			/// (ORIGINAL) - Enumera valores utilizados para definir um fluxo de captura. As Apis da Capture engine utilizam essa enumeração.
 			/// </summary>
@@ -5965,7 +5965,7 @@ namespace CarenRengine
 				/// </summary>
 				MF_CAPTURE_ENGINE_FIRST_SOURCE_AUDIO_STREAM = 0xFFFFFFFD
 			};
-
+			
 			/// <summary>
 			/// (MF_CAPTURE_ENGINE_STREAM_CATEGORY) - Enumera os valores para a categoria de fluxo de origem.
 			/// </summary>
@@ -6016,6 +6016,93 @@ namespace CarenRengine
 				/// Um dispositivo de captura de vídeo, como uma webcam.
 				/// </summary>
 				MF_CAPTURE_ENGINE_DEVICE_TYPE_VIDEO = 0x1
+			};
+			
+			/// <summary>
+			/// (_MF_QUALITY_DROP_MODE)(FALTA DOCUMENTAR) - Enumeração que especifica o quão agressivamente um componente do gasoduto deve soltar(drop) amostras.
+			/// </summary>
+			public enum class CA_MF_QUALITY_DROP_MODE
+			{
+				/// <summary>
+				/// 
+				/// </summary>
+				MF_DROP_MODE_NONE = 0,
+				/// <summary>
+				/// 
+				/// </summary>
+				MF_DROP_MODE_1 = 0x1,
+				/// <summary>
+				/// 
+				/// </summary>
+				MF_DROP_MODE_2 = 0x2,
+				/// <summary>
+				/// 
+				/// </summary>
+				MF_DROP_MODE_3 = 0x3,
+				/// <summary>
+				/// 
+				/// </summary>
+				MF_DROP_MODE_4 = 0x4,
+				/// <summary>
+				/// 
+				/// </summary>
+				MF_DROP_MODE_5 = 0x5,
+				/// <summary>
+				/// 
+				/// </summary>
+				MF_NUM_DROP_MODES = 0x6
+			};
+
+			/// <summary>
+			/// (MF_QUALITY_LEVEL)(FALTA DOCUMENTAR) - Enumeração que especifica o nível de qualidade de um componente de tubulação. O nível de qualidade determina como o componente consome ou produz amostras.
+			/// </summary>
+			public enum class CA_MF_QUALITY_LEVEL
+			{
+				/// <summary>
+				/// 
+				/// </summary>
+				MF_QUALITY_NORMAL = 0,
+				/// <summary>
+				/// 
+				/// </summary>
+				MF_QUALITY_NORMAL_MINUS_1 = 0x1,
+				/// <summary>
+				/// 
+				/// </summary>
+				MF_QUALITY_NORMAL_MINUS_2 = 0x2,
+				/// <summary>
+				/// 
+				/// </summary>
+				MF_QUALITY_NORMAL_MINUS_3 = 0x3,
+				/// <summary>
+				/// 
+				/// </summary>
+				MF_QUALITY_NORMAL_MINUS_4 = 0x4,
+				/// <summary>
+				/// 
+				/// </summary>
+				MF_QUALITY_NORMAL_MINUS_5 = 0x5,
+				/// <summary>
+				/// 
+				/// </summary>
+				MF_NUM_QUALITY_LEVELS = 0x6
+			};
+
+			/// <summary>
+			/// (MF_QUALITY_ADVISE_FLAGS) - Enumerção que contém bandeiras para o método ICarenMFQualityAdvise2::NotifyQualityEvent.
+			/// </summary>
+			[FlagsAttribute]
+			public enum class CA_MF_QUALITY_ADVISE_FLAGS
+			{
+				/// <summary>
+				/// Utilizado para suporte, não faz parte da enumeração original.
+				/// </summary>
+				Zero = 0x0,
+
+				/// <summary>
+				/// O decodificador fez tudo o que pode para reduzir a latência amostral, e as amostras ainda estão atrasadas.
+				/// </summary>
+				MF_QUALITY_CANNOT_KEEP_UP = 0x1
 			};
 			
 			/// <summary>

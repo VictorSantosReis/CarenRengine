@@ -174,7 +174,7 @@ public:
 	/// (NotifyPreroll) - Notifica o coletor de mídia(ICarenMFMediaSink) que o relógio de apresentação está prestes a iniciar.
 	/// </summary>
 	/// <param name="Param_ProximaHoraInicio">A próxima hora de início para o relógio de apresentação, em unidades 100 nanosegundos. Este tempo é o mesmo valor que será dado ao método 
-	/// (ICarenRelogioApresentação.Iniciar) quando o relógio de apresentação é iniciado.</param>
-	virtual CarenResult NotificarPreroll(Int64 Param_ProximaHoraInicio);
+	/// (ICarenRelogioApresentação.Start) quando o relógio de apresentação é iniciado.</param>
+	virtual CarenResult NotifyPreroll(Int64 Param_ProximaHoraInicio);
 };
 

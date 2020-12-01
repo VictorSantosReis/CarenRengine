@@ -221,38 +221,38 @@ public:
 	/// Registra um objeto para ser notificado sempre que o relógio inicia, para, ou faz uma pausa ou muda a taxa.
 	/// </summary>
 	/// <param name="Param_InterfaceNotification">A interface que contém o objeto de notificação de eventos do Relógio.</param>
-	virtual CarenResult RegistarObjetoNotificação(ICarenMFClockStateSink^ Param_InterfaceNotification);
+	virtual CarenResult AddClockStateSink(ICarenMFClockStateSink^ Param_InterfaceNotification);
 
 	/// <summary>
 	/// Recupera a hora mais recente.
 	/// </summary>
 	/// <param name="Param_Out_NsHoraRelogio">Recebe a hora do relógio atual em unidades de 100 nanosegundos.</param>
-	virtual CarenResult ObterHora([Out] Int64% Param_Out_NsHoraRelogio);
+	virtual CarenResult GetTime([Out] Int64% Param_Out_NsHoraRelogio);
 
 	/// <summary>
 	/// Recupera a fonte de tempo de apresentação do relógio.
 	/// </summary>
 	/// <param name="Param_Out_TimeSource">Recebe a interface que contém a Fonte de apreentação do relógio.</param>
-	virtual CarenResult ObterFonteTempo([Out] ICarenMFPresentationTimeSource^% Param_Out_TimeSource);
+	virtual CarenResult GetTimeSource([Out] ICarenMFPresentationTimeSource^% Param_Out_TimeSource);
 
 	/// <summary>
 	/// Pausa o tempo de apresentação. Enquanto o relógio está em pausa, o tempo do relógio não adianta,
-	/// e (ObterHora) do relógio retorna o tempo em que o relógio foi pausado.
+	/// e (GetTime) do relógio retorna o tempo em que o relógio foi pausado.
 	/// </summary>
-	virtual CarenResult PausarRelogio();
+	virtual CarenResult Pause();
 
 	/// <summary>
 	/// Cancela o registro de um objeto que está recebendo notificações de alteração de estado do relógio.
 	/// </summary>
 	/// <param name="Param_InterfaceNotification">Cancela o registro de notificação do relógio presente na interface de eventos.</param>
-	virtual CarenResult CancelarRegistroObjetoNotificação(ICarenMFClockStateSink^ Param_InterfaceNotification);
+	virtual CarenResult RemoveClockStateSink(ICarenMFClockStateSink^ Param_InterfaceNotification);
 
 	/// <summary>
 	/// Define a fonte de tempo para o tempo de apresentação. A fonte de tempo é o objeto que 
 	/// impulsiona o relógio, fornecendo a hora atual.
 	/// </summary>
 	/// <param name="Param_TimeSource">Define o tempo na fonte de tempo do relógio de apresentação.</param>
-	virtual CarenResult DefinirFonteTempo(ICarenMFPresentationTimeSource^ Param_TimeSource);
+	virtual CarenResult SetTimeSource(ICarenMFPresentationTimeSource^ Param_TimeSource);
 
 	/// <summary>
 	/// Começa o tempo de apresentação.
@@ -261,13 +261,13 @@ public:
 	/// unidades de 100 nanosegundos. Se (Param_PosiçãoAtual) for True, desconsidere esse valor.</param>
 	/// <param name="Param_PosiçãoAtual">Define se deve iniciar a parti da posição atual. O valor de (Param_PosiçãoInicio) é desconsiderado
 	/// se esse valor for True.</param>
-	virtual CarenResult IniciarRelogio(Int64 Param_PosiçãoInicio, Boolean Param_PosiçãoAtual);
+	virtual CarenResult Start(Int64 Param_PosiçãoInicio, Boolean Param_PosiçãoAtual);
 
 	/// <summary>
 	/// Para o relógio de apresentação. Enquanto o relógio estiver parado, não adianta a hora do relógio e 
-	/// (ObterHora) método do relógio retorna zero.
+	/// (GetTime) método do relógio retorna zero.
 	/// </summary>
-	virtual CarenResult PararRelogio();
+	virtual CarenResult Stop();
 
 
 
@@ -278,13 +278,13 @@ public:
 	/// Recupera as características do relógio.
 	/// </summary>
 	/// <param name="Param_Out_CaracteristicasClock">Recebe os flags com as características do relógio.</param>
-	virtual CarenResult RecuperarCaracteristicas([Out] Enumeracoes::CA_CLOCK_CARACTERISTICAS% Param_Out_CaracteristicasClock);
+	virtual CarenResult GetClockCharacteristics([Out] Enumeracoes::CA_CLOCK_CARACTERISTICAS% Param_Out_CaracteristicasClock);
 
 	/// <summary>
 	/// (Não Suportado) - Recupera a chave de continuidade do relógio.
 	/// </summary>
 	/// <param name="Param_Out_Chave">Recebe a chave de continuidade.</param>
-	virtual CarenResult RecuperarChaveContinuidade([Out] UInt32% Param_Out_Chave);
+	virtual CarenResult GetContinuityKey([Out] UInt32% Param_Out_Chave);
 
 	/// <summary>
 	/// Recupera a hora do último relógio que foi correlacionada com a hora do sistema.
@@ -292,19 +292,19 @@ public:
 	/// <param name="Param_ValorReservado">Valor reservado. Deve ser zero.</param>
 	/// <param name="Param_Out_ClockTime">Recebe o último tempo de relógio conhecido, em unidades de freqüência do relógio.</param>
 	/// <param name="Param_NsSystemTime">Recebe a hora do sistema que corresponde ao tempo de relógio retornado em Param_Out_ClockTime, em unidades de 100 nanosegundos.</param>
-	virtual CarenResult ObterHoraCorrelacionada(UInt32 Param_ValorReservado, [Out] Int64% Param_Out_ClockTime, [Out] Int64% Param_NsSystemTime);
+	virtual CarenResult GetCorrelatedTime(UInt32 Param_ValorReservado, [Out] Int64% Param_Out_ClockTime, [Out] Int64% Param_NsSystemTime);
 
 	/// <summary>
 	/// Recupera as propriedades do relógio.
 	/// </summary>
 	/// <param name="Param_Out_PropriedadesRelogio">Retorna a estrutura que contém as propriedades do relógio atual.</param>
-	virtual CarenResult ObterPropriedades([Out] Estruturas::CA_MFCLOCK_PROPERTIES^% Param_Out_PropriedadesRelogio);
+	virtual CarenResult GetProperties([Out] Estruturas::CA_MFCLOCK_PROPERTIES^% Param_Out_PropriedadesRelogio);
 
 	/// <summary>
 	/// Recupera o estado atual do relógio.
 	/// </summary>
 	/// <param name="Param_ValorReservado">Valor reservado. Deve ser zero.</param>
 	/// <param name="Param_Out_EstadoRelogio">Retorna o valor da enumeração que define o estado atual do relógio.</param>
-	virtual CarenResult ObterEstado(UInt32 Param_ValorReservado, [Out] Enumeracoes::CA_CLOCK_ESTADO% Param_Out_EstadoRelogio);
+	virtual CarenResult GetState(UInt32 Param_ValorReservado, [Out] Enumeracoes::CA_CLOCK_ESTADO% Param_Out_EstadoRelogio);
 };
 

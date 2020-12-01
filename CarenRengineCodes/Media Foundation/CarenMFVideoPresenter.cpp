@@ -398,7 +398,7 @@ void CarenMFVideoPresenter::Finalizar()
 /// </summary>
 /// <param name="Param_Out_TipoVideo">Retorna uma interface para o tipo de midia de video do apresentador.</param>
 /// <returns></returns>
-CarenResult CarenMFVideoPresenter::ObterTipoMidiaAtual([Out] ICarenMFVideoMediaType^% Param_Out_TipoVideo)
+CarenResult CarenMFVideoPresenter::GetCurrentMediaType([Out] ICarenMFVideoMediaType^% Param_Out_TipoVideo)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

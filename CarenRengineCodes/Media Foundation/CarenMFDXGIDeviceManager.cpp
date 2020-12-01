@@ -415,10 +415,10 @@ void CarenMFDXGIDeviceManager::Finalizar()
 
 /// <summary>
 /// Fecha um identificador de dispositivo Direct3D.
-/// Chame o método quando você tiver chamado o método (AbirIdentificadorDispositivo3D).
+/// Chame o método quando você tiver chamado o método (OpenDeviceHandle).
 /// </summary>
 /// <param name="Param_Identificador">O identificador para o Dispositivo Direct3D a ser finalizado.</param>
-CarenResult CarenMFDXGIDeviceManager::FecharHandleDispositivo(IntPtr Param_Identificador)
+CarenResult CarenMFDXGIDeviceManager::CloseDeviceHandle(IntPtr Param_Identificador)
 {
 	//Variavel que vai ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_E_NOINTERFACE, false);
@@ -460,10 +460,10 @@ Done:;
 /// Obtém uma interface de serviço de aceleração de vídeo DirectX (DXVA).
 /// Obtenha o IID atravez da estrutura: GUIDs_MFDXVAInterfaces.
 /// </summary>
-/// <param name="Param_HandleDirect3D">Um identificador para um dispositivo Direct3D. Para obter um identificador dispositivo, chame o método: AbirIdentificadorDispositivo3D</param>
+/// <param name="Param_HandleDirect3D">Um identificador para um dispositivo Direct3D. Para obter um identificador dispositivo, chame o método: OpenDeviceHandle</param>
 /// <param name="Param_IIDInterface">O GUID da interface a ser obtida. Esse método suporta as seguintes interfaces: ID3D11Device, ID3D11VideoDevice</param>
 /// <param name="Param_Out_InterfaceSolicitada">Objeto que contém a interface solicitada se o método tiver sido bem sucedido.</param>
-CarenResult CarenMFDXGIDeviceManager::ObterVideoServiço(IntPtr Param_HandleDirect3D, String^ Param_IIDInterface, ICaren^ Param_Out_InterfaceSolicitada)
+CarenResult CarenMFDXGIDeviceManager::GetVideoService(IntPtr Param_HandleDirect3D, String^ Param_IIDInterface, ICaren^ Param_Out_InterfaceSolicitada)
 {
 	//Variavel que vai ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_E_NOINTERFACE, false);
@@ -520,12 +520,12 @@ Done:;
 /// <summary>
 /// Obtém acesso exclusivo ao dispositivo Direct3D.
 /// </summary>
-/// <param name="Param_Handle">Um identificador para o dispositivo Direct3D. Para obter o identificador do dispositivo, chame o método: AbirIdentificadorDispositivo3D</param>
+/// <param name="Param_Handle">Um identificador para o dispositivo Direct3D. Para obter o identificador do dispositivo, chame o método: OpenDeviceHandle</param>
 /// <param name="Param_AguardarBloqueio">Especifica se deve aguardar o bloqueio do dispositivo. Se o dispositivo já está bloqueado e esse parâmetro é true, 
 /// o método bloqueia até que o dispositivo é desbloqueado. Caso contrário, se o dispositivo está bloqueado e este bloco é false, o método retorna imediatamente com o código de erro ER_DXVA2_VIDEO_DEVICE_LOCKED.</param>
 /// <param name="Param_IIDInterface">O identificador de interface (IID) da interface solicitada. O dispositivo Direct3D apoiará as seguintes interfaces: ID3D11Device, ID3D11VideoDevice, ID3D11VideoContext</param>
 /// <param name="Param_Out_InterfaceSolicitada">Recebe a interface solicitada.</param>
-CarenResult CarenMFDXGIDeviceManager::LockDispositivo(IntPtr Param_Handle, Boolean Param_AguardarBloqueio, String^ Param_IIDInterface, ICaren^ Param_Out_InterfaceSolicitada)
+CarenResult CarenMFDXGIDeviceManager::LockDevice(IntPtr Param_Handle, Boolean Param_AguardarBloqueio, String^ Param_IIDInterface, ICaren^ Param_Out_InterfaceSolicitada)
 {
 	//Variavel que vai ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_E_NOINTERFACE, false);
@@ -577,10 +577,10 @@ Done:;
 
 /// <summary>
 /// Obtém um identificador para o dispositivo Direct3D.
-/// Você deve fechar o Identificador do dispositivo após o seu uso, chame o método (FecharHandleDispositivo) para finalizar.
+/// Você deve fechar o Identificador do dispositivo após o seu uso, chame o método (CloseDeviceHandle) para finalizar.
 /// </summary>
 /// <param name="Param_Out_Handle">Recebe a Handle para o dispositivo.</param>
-CarenResult CarenMFDXGIDeviceManager::AbirIdentificadorDispositivo3D([Out] IntPtr% Param_Out_Handle)
+CarenResult CarenMFDXGIDeviceManager::OpenDeviceHandle([Out] IntPtr% Param_Out_Handle)
 {
 	//Variavel que vai ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_E_NOINTERFACE, false);
@@ -625,7 +625,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Dispostivo3D">A interface do dispositivo Direct3D.</param>
 /// <param name="Param_Token">Token recebido no parâmetro Param_Out_ResetToken na criação deste gerenciador.</param>
-CarenResult CarenMFDXGIDeviceManager::ResetarDispositivo(ICaren^ Param_Dispostivo3D, UInt32 Param_Token)
+CarenResult CarenMFDXGIDeviceManager::ResetDevice(ICaren^ Param_Dispostivo3D, UInt32 Param_Token)
 {
 	//Variavel que vai ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_E_NOINTERFACE, false);
@@ -671,11 +671,11 @@ Done:;
 
 /// <summary>
 /// Testa se um identificador de dispositivo Direct3D é válido.
-/// Se o método retorna ER_MF_DXGI_HANDLE_INVALIDA, chame o método (FecharHandleDispositivo) para fechar o identificador e, em seguida, 
-/// chame (AbirIdentificadorDispositivo3D) novamente para obter um novo identificador. O método (ResetarDispositivo), invalida todos os identificadores de dispositivo aberto.
+/// Se o método retorna ER_MF_DXGI_HANDLE_INVALIDA, chame o método (CloseDeviceHandle) para fechar o identificador e, em seguida, 
+/// chame (OpenDeviceHandle) novamente para obter um novo identificador. O método (ResetDevice), invalida todos os identificadores de dispositivo aberto.
 /// </summary>
-/// <param name = "Param_HandleDispositivo3D">A handle para o Dispotivo do Direct3D. Para obter essa handle, chame o método: AbirIdentificadorDispositivo3D</param>
-CarenResult CarenMFDXGIDeviceManager::TestarIdentificadorDispositivo(IntPtr Param_HandleDispositivo3D)
+/// <param name = "Param_HandleDispositivo3D">A handle para o Dispotivo do Direct3D. Para obter essa handle, chame o método: OpenDeviceHandle</param>
+CarenResult CarenMFDXGIDeviceManager::TestDevice(IntPtr Param_HandleDispositivo3D)
 {
 	//Variavel que vai ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_E_NOINTERFACE, false);
@@ -716,9 +716,9 @@ Done:;
 /// <summary>
 /// Desbloqueia o dispositivo Direct3D.
 /// </summary>
-/// <param name = "Param_HandleDispositivo3D">A handle para o Dispotivo do Direct3D. Para obter essa handle, chame o método: AbirIdentificadorDispositivo3D</param>
+/// <param name = "Param_HandleDispositivo3D">A handle para o Dispotivo do Direct3D. Para obter essa handle, chame o método: OpenDeviceHandle</param>
 /// <param name = "Param_SalvarEstadoDispositivo">Reservado.</param>
-CarenResult CarenMFDXGIDeviceManager::UnlockDispositivo(IntPtr Param_HandleDispositivo3D, Boolean Param_SalvarEstadoDispositivo)
+CarenResult CarenMFDXGIDeviceManager::UnlockDevice(IntPtr Param_HandleDispositivo3D, Boolean Param_SalvarEstadoDispositivo)
 {
 	//Variavel que vai ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_E_NOINTERFACE, false);

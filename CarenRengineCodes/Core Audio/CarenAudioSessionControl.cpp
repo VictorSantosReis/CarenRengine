@@ -552,7 +552,7 @@ Done:;
 /// (GetState) - O método recupera o estado atual da sessão de áudio.
 /// </summary>
 /// <param name="Param_Out_Estado">Retorna o estado da sessão de áudio atual.</param>
-CarenResult CarenAudioSessionControl::ObterEstado([Out] Enumeracoes::CA_ESTADO_SESSAO_AUDIO% Param_Out_Estado)
+CarenResult CarenAudioSessionControl::GetState([Out] Enumeracoes::CA_ESTADO_SESSAO_AUDIO% Param_Out_Estado)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

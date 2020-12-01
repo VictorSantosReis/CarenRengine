@@ -78,7 +78,7 @@ void CarenHMONITOR::RecuperarObjeto(HMONITOR* Param_Out_Monitor)
 	}
 }
 
-void CarenHMONITOR::DefinirObjeto(HMONITOR Param_Monitor)
+void CarenHMONITOR::SetObject(HMONITOR Param_Monitor)
 {
 	//Define na variavel da classe.
 	pMonitor = Param_Monitor;

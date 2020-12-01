@@ -416,7 +416,7 @@ void CarenMFPresentationClock::Finalizar()
 /// Registra um objeto para ser notificado sempre que o relógio inicia, para, ou faz uma pausa ou muda a taxa.
 /// </summary>
 /// <param name="Param_InterfaceNotification">A interface que contém o objeto de notificação de eventos do Relógio.</param>
-CarenResult CarenMFPresentationClock::RegistarObjetoNotificação(ICarenMFClockStateSink^ Param_InterfaceNotification)
+CarenResult CarenMFPresentationClock::AddClockStateSink(ICarenMFClockStateSink^ Param_InterfaceNotification)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -464,7 +464,7 @@ Done:;
 /// Recupera a hora mais recente.
 /// </summary>
 /// <param name="Param_Out_NsHoraRelogio">Recebe a hora do relógio atual em unidades de 100 nanosegundos.</param>
-CarenResult CarenMFPresentationClock::ObterHora([Out] Int64% Param_Out_NsHoraRelogio)
+CarenResult CarenMFPresentationClock::GetTime([Out] Int64% Param_Out_NsHoraRelogio)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -508,7 +508,7 @@ Done:;
 /// Recupera a fonte de tempo de apresentação do relógio.
 /// </summary>
 /// <param name="Param_Out_TimeSource">Recebe a interface que contém a Fonte de apreentação do relógio.</param>
-CarenResult CarenMFPresentationClock::ObterFonteTempo([Out] ICarenMFPresentationTimeSource^% Param_Out_TimeSource)
+CarenResult CarenMFPresentationClock::GetTimeSource([Out] ICarenMFPresentationTimeSource^% Param_Out_TimeSource)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -557,9 +557,9 @@ Done:;
 
 /// <summary>
 /// Pausa o tempo de apresentação. Enquanto o relógio está em pausa, o tempo do relógio não adianta,
-/// e (ObterHora) do relógio retorna o tempo em que o relógio foi pausado.
+/// e (GetTime) do relógio retorna o tempo em que o relógio foi pausado.
 /// </summary>
-CarenResult CarenMFPresentationClock::PausarRelogio()
+CarenResult CarenMFPresentationClock::Pause()
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -594,7 +594,7 @@ Done:;
 /// Cancela o registro de um objeto que está recebendo notificações de alteração de estado do relógio.
 /// </summary>
 /// <param name="Param_InterfaceNotification">Cancela o registro de notificação do relógio presente na interface de eventos.</param>
-CarenResult CarenMFPresentationClock::CancelarRegistroObjetoNotificação(ICarenMFClockStateSink^ Param_InterfaceNotification)
+CarenResult CarenMFPresentationClock::RemoveClockStateSink(ICarenMFClockStateSink^ Param_InterfaceNotification)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -643,7 +643,7 @@ Done:;
 /// impulsiona o relógio, fornecendo a hora atual.
 /// </summary>
 /// <param name="Param_TimeSource">Define o tempo na fonte de tempo do relógio de apresentação.</param>
-CarenResult CarenMFPresentationClock::DefinirFonteTempo(ICarenMFPresentationTimeSource^ Param_TimeSource)
+CarenResult CarenMFPresentationClock::SetTimeSource(ICarenMFPresentationTimeSource^ Param_TimeSource)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -694,7 +694,7 @@ Done:;
 /// unidades de 100 nanosegundos. Se (Param_PosiçãoAtual) for True, desconsidere esse valor.</param>
 /// <param name="Param_PosiçãoAtual">Define se deve iniciar a parti da posição atual. O valor de (Param_PosiçãoInicio) é desconsiderado
 /// se esse valor for True.</param>
-CarenResult CarenMFPresentationClock::IniciarRelogio(Int64 Param_PosiçãoInicio, Boolean Param_PosiçãoAtual)
+CarenResult CarenMFPresentationClock::Start(Int64 Param_PosiçãoInicio, Boolean Param_PosiçãoAtual)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -736,9 +736,9 @@ Done:;
 
 /// <summary>
 /// Para o relógio de apresentação. Enquanto o relógio estiver parado, não adianta a hora do relógio e 
-/// (ObterHora) método do relógio retorna zero.
+/// (GetTime) método do relógio retorna zero.
 /// </summary>
-CarenResult CarenMFPresentationClock::PararRelogio()
+CarenResult CarenMFPresentationClock::Stop()
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -778,7 +778,7 @@ Done:;
 /// Recupera as características do relógio.
 /// </summary>
 /// <param name="Param_Out_CaracteristicasClock">Recebe os flags com as características do relógio.</param>
-CarenResult CarenMFPresentationClock::RecuperarCaracteristicas([Out] Enumeracoes::CA_CLOCK_CARACTERISTICAS% Param_Out_CaracteristicasClock)
+CarenResult CarenMFPresentationClock::GetClockCharacteristics([Out] Enumeracoes::CA_CLOCK_CARACTERISTICAS% Param_Out_CaracteristicasClock)
 {
 	//Variavel que vai retorna o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -822,7 +822,7 @@ Done:;
 /// (Não Suportado Nativamente) - Recupera a chave de continuidade do relógio.
 /// </summary>
 /// <param name="Param_Out_Chave">Recebe a chave de continuidade.</param>
-CarenResult CarenMFPresentationClock::RecuperarChaveContinuidade([Out] UInt32% Param_Out_Chave)
+CarenResult CarenMFPresentationClock::GetContinuityKey([Out] UInt32% Param_Out_Chave)
 {
 	//Variavel que vai retorna o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -868,7 +868,7 @@ Done:;
 /// <param name="Param_ValorReservado">Valor reservado. Deve ser zero.</param>
 /// <param name="Param_Out_ClockTime">Recebe o último tempo de relógio conhecido, em unidades de freqüência do relógio.</param>
 /// <param name="Param_NsSystemTime">Recebe a hora do sistema que corresponde ao tempo de relógio retornado em Param_Out_ClockTime, em unidades de 100 nanosegundos.</param>
-CarenResult CarenMFPresentationClock::ObterHoraCorrelacionada(UInt32 Param_ValorReservado, [Out] Int64% Param_Out_ClockTime, [Out] Int64% Param_NsSystemTime)
+CarenResult CarenMFPresentationClock::GetCorrelatedTime(UInt32 Param_ValorReservado, [Out] Int64% Param_Out_ClockTime, [Out] Int64% Param_NsSystemTime)
 {
 	//Variavel que vai retorna o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -914,7 +914,7 @@ Done:;
 /// Recupera as propriedades do relógio.
 /// </summary>
 /// <param name="Param_Out_PropriedadesRelogio">Retorna a estrutura que contém as propriedades do relógio atual.</param>
-CarenResult CarenMFPresentationClock::ObterPropriedades([Out] Estruturas::CA_MFCLOCK_PROPERTIES^% Param_Out_PropriedadesRelogio)
+CarenResult CarenMFPresentationClock::GetProperties([Out] Estruturas::CA_MFCLOCK_PROPERTIES^% Param_Out_PropriedadesRelogio)
 {
 	//Variavel que vai retorna o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -972,7 +972,7 @@ Done:;
 /// </summary>
 /// <param name="Param_ValorReservado">Valor reservado. Deve ser zero.</param>
 /// <param name="Param_Out_EstadoRelogio">Retorna o valor da enumeração que define o estado atual do relógio.</param>
-CarenResult CarenMFPresentationClock::ObterEstado(UInt32 Param_ValorReservado, [Out] Enumeracoes::CA_CLOCK_ESTADO% Param_Out_EstadoRelogio)
+CarenResult CarenMFPresentationClock::GetState(UInt32 Param_ValorReservado, [Out] Enumeracoes::CA_CLOCK_ESTADO% Param_Out_EstadoRelogio)
 {
 	//Variavel que vai retorna o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

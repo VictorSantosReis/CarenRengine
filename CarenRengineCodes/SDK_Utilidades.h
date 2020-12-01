@@ -8334,7 +8334,7 @@ namespace CarenRengine
 					EstruturaRetorno->Monitor = gcnew CarenHMONITOR();
 
 					//Define o ponteiro.
-					EstruturaRetorno->Monitor->DefinirObjeto(Param_Estrutura->Monitor);
+					EstruturaRetorno->Monitor->SetObject(Param_Estrutura->Monitor);
 				}
 
 				//Cria e preenche a estrutura secundaria.
@@ -8459,7 +8459,7 @@ namespace CarenRengine
 					EstruturaRetorno->Monitor = gcnew CarenHMONITOR();
 
 					//Define o ponteiro.
-					EstruturaRetorno->Monitor->DefinirObjeto(Param_Estrutura->Monitor);
+					EstruturaRetorno->Monitor->SetObject(Param_Estrutura->Monitor);
 				}
 
 				//Cria os arrays

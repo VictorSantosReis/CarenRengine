@@ -417,7 +417,7 @@ void CarenMFSourceReader::Finalizar()
 /// </summary>
 /// <param name="Param_IdFluxo">O fluxo de consulta. Você pode utilizar a enumeração (CA_SOURCE_READER_ID) para força o Leitor a obter o primeiro fluxo de áudio ou vídeo na lista.</param>
 /// <param name="Param_Out_TipoMidia">Retorna o tipo da midia no Id especificado.</param>
-CarenResult CarenMFSourceReader::ObterTipoMidiaAtual(UInt32 Param_IdFluxo, [Out] ICarenMFMediaType^% Param_Out_TipoMidia)
+CarenResult CarenMFSourceReader::GetCurrentMediaType(UInt32 Param_IdFluxo, [Out] ICarenMFMediaType^% Param_Out_TipoMidia)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -914,7 +914,7 @@ Done:;
 /// <param name="Param_IdFluxo">O Id para o fluxo a ter o tipo de mídia definido. Você pode utilizar a enumeração(CA_SOURCE_READER_ID).</param>
 /// <param name="Param_ValorReservado">Valor reservado. Define como: 0</param>
 /// <param name="Param_TipoMidia">A interface com o (Tipo Mídia) a ser definida como o tipo atual.</param>
-CarenResult CarenMFSourceReader::DefinirTipoMidiaAtual(UInt32 Param_IdFluxo, UInt32 Param_ValorReservado, ICarenMFMediaType^ Param_TipoMidia)
+CarenResult CarenMFSourceReader::SetCurrentMediaType(UInt32 Param_IdFluxo, UInt32 Param_ValorReservado, ICarenMFMediaType^ Param_TipoMidia)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

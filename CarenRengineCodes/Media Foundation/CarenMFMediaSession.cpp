@@ -415,7 +415,7 @@ void CarenMFMediaSession::Finalizar()
 /// (ClearTopologies) - Limpa todas as apresentações que estão enfileiradas para reprodução na sessão de mídia.
 /// Esse método é assíncrono. Quando a operação for concluída, a sessão de mídia enviará o evento (MESessionTopologiesCleared).
 /// </summary>
-CarenResult CarenMFMediaSession::LimparTopologias()
+CarenResult CarenMFMediaSession::ClearTopologies()
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -450,7 +450,7 @@ Done:;
 /// (Close) - Fecha a sessão de mídia e libera todos os recursos que ele está usando.
 /// Esse método é assíncrono. Quando a operação for concluída, a sessão de mídia enviará o evento(MESessionClosed) .
 /// </summary>
- CarenResult CarenMFMediaSession::Fechar()
+ CarenResult CarenMFMediaSession::Close()
  {
 	 //Variavel a ser retornada.
 	 CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -485,7 +485,7 @@ Done:;
 /// (GetClock) - Recupera o relógio de apresentação da sessão de mídia.
 /// </summary>
 /// <param name="Param_Out_Relogio">Recebe o ponteiro para o relogio de apresentação. O chamador deve liberar a interface.</param>
- CarenResult CarenMFMediaSession::ObterRelogio([Out] ICarenMFClock^% Param_Out_Relogio)
+ CarenResult CarenMFMediaSession::GetClock([Out] ICarenMFClock^% Param_Out_Relogio)
  {
 	 //Variavel a ser retornada.
 	 CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -534,7 +534,7 @@ Done:;
 /// <param name="Param_Flags">Zero ou mais sinalizadores da enumeração CA_MESESSION_GETFULLTOPOLOGY_FLAGS .</param>
 /// <param name="Param_TopoId">O identificador da topologia. Este parâmetro será ignorado se o (Param_Flags) parâmetro contém o MFSESSION_GETFULLTOPOLOGY_CURRENT sinalizador.</param>
 /// <param name="Param_Out_TopologiaCompleta">Recebe um ponteiro para a topologia. O chamador deve liberar a interface.</param>
- CarenResult CarenMFMediaSession::ObterTopologiaCompleta(Enumeracoes::CA_MFSESSION_GETFULLTOPOLOGY_FLAGS Param_Flags, UInt64 Param_TopoId, [Out] ICarenMFTopology^% Param_Out_TopologiaCompleta)
+ CarenResult CarenMFMediaSession::GetFullTopology(Enumeracoes::CA_MFSESSION_GETFULLTOPOLOGY_FLAGS Param_Flags, UInt64 Param_TopoId, [Out] ICarenMFTopology^% Param_Out_TopologiaCompleta)
  {
 	 //Variavel a ser retornada.
 	 CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -582,7 +582,7 @@ Done:;
 /// (GetSessionCapabilities) - Recupera os recursos da sessão de mídia, com base na apresentação atual.
 /// </summary>
 /// <param name="Param_Out_Recursos">Recebe um OU de bit ou de ZERO ou mais dos sinalizadores da enumeração(CA_RECURSOS_SESSAO_MIDIA).</param>
- CarenResult CarenMFMediaSession::RecuperarRecursosSessao([Out] Enumeracoes::CA_RECURSOS_SESSAO_MIDIA% Param_Out_Recursos)
+ CarenResult CarenMFMediaSession::GetSessionCapabilities([Out] Enumeracoes::CA_RECURSOS_SESSAO_MIDIA% Param_Out_Recursos)
  {
 	 //Variavel a ser retornada.
 	 CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -626,7 +626,7 @@ Done:;
 /// (Pause) - Pausa a sessão de mídia.
 /// Este método pausa o relógio de apresentação. Esse método é assíncrono.Quando a operação for concluída, a sessão de mídia enviará um evento MESessionPaused.
 /// </summary>
- CarenResult CarenMFMediaSession::Pausar()
+ CarenResult CarenMFMediaSession::Pause()
  {
 	 //Variavel a ser retornada.
 	 CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -662,7 +662,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Flags">Os flags que determinam o comportamento do método.</param>
 /// <param name="Param_Topologia">Um ponteiro para a topologia a ser definida.</param>
- CarenResult CarenMFMediaSession::DefinirTopologia(Enumeracoes::CA_MFSESSION_SETTOPOLOGY_FLAGS Param_Flags, ICarenMFTopology^ Param_Topologia)
+ CarenResult CarenMFMediaSession::SetTopology(Enumeracoes::CA_MFSESSION_SETTOPOLOGY_FLAGS Param_Flags, ICarenMFTopology^ Param_Topologia)
  {
 	 //Variavel a ser retornada.
 	 CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -713,7 +713,7 @@ Done:;
 /// (Shutdown) - Desliga a sessão de mídia e libera todos os recursos usados pela sessão de mídia.
 /// Chame esse método quando você terminar de usar a sessão de mídia, antes da chamada final para ICaren::LiberarReferencia. Caso contrário, seu aplicativo irá vazar memória.
 /// </summary>
- CarenResult CarenMFMediaSession::Desligar()
+ CarenResult CarenMFMediaSession::Shutdown()
  {
 	 //Variavel a ser retornada.
 	 CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -753,7 +753,7 @@ Done:;
 /// a passar em GUID_NULL.</param>
 /// <param name="Param_PosicaoInicio">Uma CA_PropVariant que especifica a posição inicial para reprodução. O significado e o tipo de dados desse parâmetro são indicados pelo 
 /// (Param_GuidFormatoTempo) parâmetro.</param>
- CarenResult CarenMFMediaSession::Iniciar(String^ Param_GuidFormatoTempo, Estruturas::CA_PropVariant^ Param_PosicaoInicio)
+ CarenResult CarenMFMediaSession::Start(String^ Param_GuidFormatoTempo, Estruturas::CA_PropVariant^ Param_PosicaoInicio)
  {
 	 //Variavel a ser retornada.
 	 CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -826,7 +826,7 @@ Done:;
 /// (Stop) - Interrompe a sessão de mídia.
 /// Esse método é assíncrono. Quando a operação for concluída, a sessão de mídia enviará o evento MESessionStopped. 
 /// </summary>
- CarenResult CarenMFMediaSession::Parar()
+ CarenResult CarenMFMediaSession::Stop()
  {
 	 //Variavel a ser retornada.
 	 CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -872,7 +872,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Flags">Especifica como deve obter o evento.</param>
 /// <param name="Param_Out_MidiaEvent">Recebe a interface que contém as informações da operação assincrona para o evento notificado. O chamador deve liberar a interface.</param>
- CarenResult CarenMFMediaSession::ObterEvento(CA_FLAGS_OBTER_EVENTO Param_Flags, [Out] ICarenMFMediaEvent^% Param_Out_MidiaEvent)
+ CarenResult CarenMFMediaSession::GetEvent(CA_FLAGS_OBTER_EVENTO Param_Flags, [Out] ICarenMFMediaEvent^% Param_Out_MidiaEvent)
  {
 	 //Variavel a ser retornada.
 	 CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -926,7 +926,7 @@ Done:;
  /// <param name="Param_Callback">A interface que vai receber os eventos que seram gerados pelas interfaces que derivam desta.</param>
  /// <param name="Param_ObjetoDesconhecido">Uma interface ICaren de um objeto de estado, definido pelo chamador. Este parâmetro pode ser NULO. Você pode usar esse objeto para armazenar 
  /// informações de estado. O objeto é retornado ao responsável pela chamada quando o retorno de chamada é invocado.</param>
- CarenResult CarenMFMediaSession::SolicitarProximoEvento(ICarenMFAsyncCallback^ Param_Callback, ICaren^ Param_ObjetoDesconhecido)
+ CarenResult CarenMFMediaSession::BeginGetEvent(ICarenMFAsyncCallback^ Param_Callback, ICaren^ Param_ObjetoDesconhecido)
  {
 	 //Variavel a ser retornada.
 	 CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -991,7 +991,7 @@ Done:;
  /// </summary>
  /// <param name="Param_ResultAsync">A interface ICarenMFAsyncResult. Essa interface deve ser a retornada pelo Evento (OnInvoke).</param>
  /// <param name="Param_Out_MidiaEvent">Recebe a interface que contém as informações da operação assincrona para o evento notificado. O chamador deve liberar a interface.</param>
- CarenResult CarenMFMediaSession::ConcluirSolicitaçãoEvento(ICarenMFAsyncResult^ Param_ResultAsync, [Out] ICarenMFMediaEvent^% Param_Out_MidiaEvent)
+ CarenResult CarenMFMediaSession::EndGetEvent(ICarenMFAsyncResult^ Param_ResultAsync, [Out] ICarenMFMediaEvent^% Param_Out_MidiaEvent)
  {
 	 //Variavel a ser retornada.
 	 CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1050,10 +1050,10 @@ Done:;
  /// <summary>
  /// (QueueEvent) - Coloca um novo evento na fila do objeto.
  /// </summary>
- /// <param name="Param_TipoEvento">Especifica o tipo do evento. O tipo do evento é retornado pelo método (ICarenMFMediaEvent.ObterTipo).</param>
- /// <param name="Param_GuidExtendedType">O tipo estendido. Se o evento não tiver um tipo estendido, defina como NULO. O tipo estendido é retornado pelo método (ICarenMFMediaEvent.ObterTipoExtendido) do evento.</param>
- /// <param name="Param_HResultCode">Um código de sucesso ou falha indicando o status do evento. Esse valor é retornado pelo método (ICarenMFMediaEvent.ObterStatus) do evento.</param>
- /// <param name="Param_Dados">uma CA_PropVariant que contém o valor do evento. Este parâmetro pode ser NULO. Esse valor é retornado pelo método (ICarenMFMediaEvent.ObterValor) do evento.</param>
+ /// <param name="Param_TipoEvento">Especifica o tipo do evento. O tipo do evento é retornado pelo método (ICarenMFMediaEvent.GetType).</param>
+ /// <param name="Param_GuidExtendedType">O tipo estendido. Se o evento não tiver um tipo estendido, defina como NULO. O tipo estendido é retornado pelo método (ICarenMFMediaEvent.GetExtendedType) do evento.</param>
+ /// <param name="Param_HResultCode">Um código de sucesso ou falha indicando o status do evento. Esse valor é retornado pelo método (ICarenMFMediaEvent.GetStatus) do evento.</param>
+ /// <param name="Param_Dados">uma CA_PropVariant que contém o valor do evento. Este parâmetro pode ser NULO. Esse valor é retornado pelo método (ICarenMFMediaEvent.GetValue) do evento.</param>
  CarenResult CarenMFMediaSession::InserirEventoFila(Enumeracoes::CA_MediaEventType Param_TipoEvento, String^ Param_GuidExtendedType, Int32 Param_HResultCode, Estruturas::CA_PropVariant^ Param_Dados) {
 	 //Variavel a ser retornada.
 	 CarenResult Resultado = CarenResult(E_FAIL, false);

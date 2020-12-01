@@ -416,7 +416,7 @@ void CarenMFMediaTypeHandler::Finalizar()
 /// (GetCurrentMediaType) - Recupera o tipo de mídia atual do objeto.
 /// </summary>
 /// <param name="Param_Out_MidiaType">Retorna o Tipo de midia atual.</param>
-CarenResult CarenMFMediaTypeHandler::ObterTipoMidiaAtual([Out] ICarenMFMediaType^% Param_Out_MidiaType)
+CarenResult CarenMFMediaTypeHandler::GetCurrentMediaType([Out] ICarenMFMediaType^% Param_Out_MidiaType)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -468,7 +468,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Out_GuidMidiaPrincipal">Retorna o GUID do tipo da mídia principal.</param>
 /// <param name="Param_Out_TipoPrincipal">Retorna a enumeração que define o tipo principal da mídia.</param>
-CarenResult CarenMFMediaTypeHandler::ObterTipoMidiaPrincipal([Out] String^% Param_Out_GuidMidiaPrincipal, [Out] Enumeracoes::CA_Midia_TipoPrincipal% Param_Out_TipoPrincipal)
+CarenResult CarenMFMediaTypeHandler::GetMajorType([Out] String^% Param_Out_GuidMidiaPrincipal, [Out] Enumeracoes::CA_Midia_TipoPrincipal% Param_Out_TipoPrincipal)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -530,9 +530,9 @@ Done:;
 /// <summary>
 /// (GetMediaTypeByIndex) - Recupera um tipo de mídia da lista do objeto de tipos de mídia com suporte.
 /// </summary>
-/// <param name="Param_Id">Índice baseado em zero do tipo de mídia para recuperar. Para obter o número de tipos de mídia na lista, chame o método (ObterCountTiposMidia).</param>
+/// <param name="Param_Id">Índice baseado em zero do tipo de mídia para recuperar. Para obter o número de tipos de mídia na lista, chame o método (GetMediaTypeCount).</param>
 /// <param name="Param_Out_MidiaType">Retorna o tipo da mídia no Id especificado.</param>
-CarenResult CarenMFMediaTypeHandler::ObterTipoMidiaPorIndex(UInt32 Param_Id, [Out] ICarenMFMediaType^% Param_Out_MidiaType)
+CarenResult CarenMFMediaTypeHandler::GetMediaTypeByIndex(UInt32 Param_Id, [Out] ICarenMFMediaType^% Param_Out_MidiaType)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -583,7 +583,7 @@ Done:;
 /// (GetMediaTypeCount) - Recupera o número de tipos de mídia na lista do objeto de tipos de mídia com suporte.
 /// </summary>
 /// <param name="Param_Out_Quantidade">Retorna a quantidade de tipos de mídia na interface.</param>
-CarenResult CarenMFMediaTypeHandler::ObterCountTiposMidia([Out] UInt32% Param_Out_Quantidade)
+CarenResult CarenMFMediaTypeHandler::GetMediaTypeCount([Out] UInt32% Param_Out_Quantidade)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -633,7 +633,7 @@ Done:;
 /// <param name="Param_MidiaType">O Tipo de mídia a ser verificado se é suportado pela (Fonte de mídia ou Pelo Coletor de Mídia) que gerou essa interface.</param>
 /// <param name="Param_Out_MidiaAproximada">Recebe o tipo de mídia que pode se aproximar ou não da mídia verificada. 
 /// Se o método retorna sucesso, valor dessa parametro é (NULO).</param>
-CarenResult  CarenMFMediaTypeHandler::VerificarTipoMidiaSuportado(ICarenMFMediaType^ Param_MidiaType, [Out] ICarenMFMediaType^% Param_Out_MidiaAproximada)
+CarenResult  CarenMFMediaTypeHandler::IsMediaTypeSupported(ICarenMFMediaType^ Param_MidiaType, [Out] ICarenMFMediaType^% Param_Out_MidiaAproximada)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -720,7 +720,7 @@ Done:;
 /// coletor pode receber dados que está de acordo com esse tipo de mídia.
 /// </summary>
 /// <param name="Param_MidiaType">O tipo de mídia a ser definido no objeto.</param>
-CarenResult CarenMFMediaTypeHandler::DefinirTipoMidiaAtual(ICarenMFMediaType^ Param_MidiaType)
+CarenResult CarenMFMediaTypeHandler::SetCurrentMediaType(ICarenMFMediaType^ Param_MidiaType)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

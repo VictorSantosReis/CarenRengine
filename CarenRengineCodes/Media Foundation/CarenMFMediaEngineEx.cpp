@@ -1393,7 +1393,7 @@ Done:;
 }
 
 /// <summary>
-/// Define o ponto final do dispositivo de áudio usado para a próxima chamada para DefinirFonte ou Carregar.
+/// Define o ponto final do dispositivo de áudio usado para a próxima chamada para DefinirFonte ou Load.
 /// </summary>
 /// <param name="Param_Role">Especifica a função de ponto final de áudio.</param>
 CarenResult CarenMFMediaEngineEx::SetAudioEndpointRole(CA_ERole Param_Role)
@@ -1428,7 +1428,7 @@ Done:;
 }
 
 /// <summary>
-/// Define a categoria fluxo de áudio para a próxima chamada para DefinirFonte ou Carregar.
+/// Define a categoria fluxo de áudio para a próxima chamada para DefinirFonte ou Load.
 /// </summary>
 /// <param name="Param_Categoria">Especifica a categoria do fluxo de áudio.</param>
 CarenResult CarenMFMediaEngineEx::SetAudioStreamCategory(CA_AUDIO_STREAM_CATEGORY Param_Categoria)
@@ -1536,7 +1536,7 @@ Done:;
 }
 
 /// <summary>
-/// Define o modo em tempo real usado para a próxima chamada para DefinirFonte ou Carregar.
+/// Define o modo em tempo real usado para a próxima chamada para DefinirFonte ou Load.
 /// </summary>
 /// <param name="Param_Habilitar">Especifica o modo em tempo real.</param>
 CarenResult CarenMFMediaEngineEx::SetRealTimeMode(Boolean Param_Habilitar)

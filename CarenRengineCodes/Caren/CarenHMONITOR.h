@@ -38,7 +38,7 @@ public:
 	virtual bool ConstruirFromPoint(long Param_X, long Param_Y, UInt32 Param_Flags);
 	virtual bool ConstruirFromRect(long Param_Top, long Param_Bottom, long Param_Rigth, long Param_Left, UInt32 Param_Flags);
 	virtual void RecuperarObjeto(HMONITOR* Param_Out_Monitor);
-	virtual void DefinirObjeto(HMONITOR Param_Monitor);
+	virtual void SetObject(HMONITOR Param_Monitor);
 	virtual bool Valido();
 };
 

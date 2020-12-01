@@ -4689,14 +4689,14 @@ namespace CarenRengine
 			{
 				/// <summary>
 				/// Verifique se todos os atributos da (Interface Atual) existem na (Interface No Parametro) e se possuem
-				/// os mesmos dados, onde a (Interface Atual) é quem está chamando o método (Comparar) e a (Interface No Parametro)
+				/// os mesmos dados, onde a (Interface Atual) é quem está chamando o método (Compare) e a (Interface No Parametro)
 				/// é o objeto passado no parametro.
 				/// </summary>
 				MF_ATTRIBUTES_MATCH_OUR_ITEMS = 0,
 
 				/// <summary>
 				/// Verifique se todos os atributos da (Interface No Parametro) existem na (Interface Atual) e se possuem
-				/// os mesmos dados, onde a (Interface Atual) é quem está chamando o método (Comparar) e a (Interface No Parametro)
+				/// os mesmos dados, onde a (Interface Atual) é quem está chamando o método (Compare) e a (Interface No Parametro)
 				/// é o objeto passado no parametro.
 				/// </summary>
 				MF_ATTRIBUTES_MATCH_THEIR_ITEMS,
@@ -5848,7 +5848,7 @@ namespace CarenRengine
 
 
 				/// <summary>
-				/// A mídia atual tem o tipo alterado para um ou mais fluxos. Para obter o tipo de mídia atual, chame o  método ICarenMFSourceReader.ObterTipoMidiaAtual.
+				/// A mídia atual tem o tipo alterado para um ou mais fluxos. Para obter o tipo de mídia atual, chame o  método ICarenMFSourceReader.GetCurrentMediaType.
 				/// </summary>
 				LEITURA_TIPO_ATUAL_MODIFICADO = 0x20,
 
@@ -6187,14 +6187,14 @@ namespace CarenRengine
 			public enum class CA_CLOCK_CARACTERISTICAS
 			{
 				/// <summary>
-				/// Os tempos de relógio retornados pelo método (ICarenMFClock.ObterHoraCorrelacionada) estão em unidades de 100 nanoseconds. Se este sinalizador estiver 
-				/// ausente, chame o método (ICarenMFClock.ObterPropriedades) para obter a freqüência de clock. A freqüência de Clock é fornecida na (RL_FREQUENCIA_RELOGIO)
+				/// Os tempos de relógio retornados pelo método (ICarenMFClock.GetCorrelatedTime) estão em unidades de 100 nanoseconds. Se este sinalizador estiver 
+				/// ausente, chame o método (ICarenMFClock.GetProperties) para obter a freqüência de clock. A freqüência de Clock é fornecida na (RL_FREQUENCIA_RELOGIO)
 				/// membro da estrutura CA_MFCLOCK_PROPERTIES.
 				/// </summary>
 				CH_CLOCK_FREQUENCIA_10MHZ = 0x2,
 				/// <summary>
 				/// O relógio está sempre em execução. Se este sinalizador estiver presente, o relógio não pode ser
-				/// pausado ou interrompido. Se este sinalizador estiver ausente, chame o método (ICarenMFClock.ObterEstado) para obter o estado atual.
+				/// pausado ou interrompido. Se este sinalizador estiver ausente, chame o método (ICarenMFClock.GetState) para obter o estado atual.
 				/// </summary>
 				CH_CLOCK_SEMPRE_EXECUCAO = 0x4,
 				/// <summary>
@@ -6209,7 +6209,7 @@ namespace CarenRengine
 			public enum class CA_CLOCK_RELATIONAL_FLAGS
 			{
 				/// <summary>
-				/// Os valores de jitter são sempre negativos. Em outras palavras, o tempo retornado por (ICarenMFClock.ObterHoraCorrelacionada) pode jitter por trás do tempo 
+				/// Os valores de jitter são sempre negativos. Em outras palavras, o tempo retornado por (ICarenMFClock.GetCorrelatedTime) pode jitter por trás do tempo 
 				/// real do relógio, mas nunca tremulará antes do tempo real. Se este sinalizador não estiver presente, o relógio pode jitter em qualquer direção.
 				/// </summary>
 				MFCLOCK_RELATIONAL_FLAG_JITTER_NEVER_AHEAD = 0x1
@@ -10369,7 +10369,7 @@ MEReservedMax = 10000
 			};
 
 			/// <summary>
-			/// (MFSESSION_GETFULLTOPOLOGY_FLAGS) - Enumera os Flags para o método ICarenMFMediaSession::ObterTopologiaCompleta.
+			/// (MFSESSION_GETFULLTOPOLOGY_FLAGS) - Enumera os Flags para o método ICarenMFMediaSession::GetFullTopology.
 			/// </summary>
 			public enum class CA_MFSESSION_GETFULLTOPOLOGY_FLAGS
 			{
@@ -10385,7 +10385,7 @@ MEReservedMax = 10000
 			};
 
 			/// <summary>
-			/// (MFSESSION_SETTOPOLOGY_FLAGS) - Enumera os Flags para o comportamento do método ICarenMFMediaSession::DefinirTopologia.
+			/// (MFSESSION_SETTOPOLOGY_FLAGS) - Enumera os Flags para o comportamento do método ICarenMFMediaSession::SetTopology.
 			/// </summary>
 			public enum class CA_MFSESSION_SETTOPOLOGY_FLAGS
 			{
@@ -10410,7 +10410,7 @@ MEReservedMax = 10000
 				/// <summary>
 				/// Desmarca a topologia atual seguindo criterios especificos(Consulte a documentação). As topologias pendentes não são removidas da fila de reprodução. Se houver uma topologia pendente 
 				/// na fila, essa topologia será carregada após a topologia atual ser desmarcada. Caso contrário, a reprodução simplesmente para.Para remover todas as topologias pendentes da fila, 
-				/// chame ICarenMFMediaSession::LimparTopologias.
+				/// chame ICarenMFMediaSession::ClearTopologies.
 				/// </summary>
 				MFSESSION_SETTOPOLOGY_CLEAR_CURRENT = 0x4
 			};
@@ -18179,7 +18179,7 @@ MEReservedMax = 10000
 				/// <summary>
 				/// A frequência do relógio em Hz. Um valor de MFCLOCK_FREQUENCY_HNS significa que o relógio tem uma frequência de 10 MHz 
 				/// (ticks de 100 nanossegundos), que é a unidade de tempo (MFTIME -> Int64) padrão no Media Foundation. Se o
-				/// o método (ICarenMFClock.RecuperarCaracteristicas) devolver o sinalizador CH_CLOCK_FREQUENCIA_10MHZ , o valor
+				/// o método (ICarenMFClock.GetClockCharacteristics) devolver o sinalizador CH_CLOCK_FREQUENCIA_10MHZ , o valor
 				/// deste campo deve ser MFCLOCK_FREQUENCY_HNS.
 				///</summary>
 				UInt64 RL_FREQUENCIA_CLOCK;
@@ -19846,7 +19846,7 @@ MEReservedMax = 10000
 				/// <summary>
 				/// (u64) - Valor do atributo (unsigned 32-bit inteiro). Esse membro é usado quando Attrtype é igual a MF_ATTRIBUTE_UINT64.
 				/// [ATENCAO] - Devido a um erro na declaração de estrutura, o membro u64 é declarado como um inteiro de 32 bits, não um inteiro 
-				/// de 64 bits. Portanto, qualquer valor de 64 bits passado para o método ICarenMFTopologyNodeAttributeEditor::AtualizarAtributosNode 
+				/// de 64 bits. Portanto, qualquer valor de 64 bits passado para o método ICarenMFTopologyNodeAttributeEditor::UpdateNodeAttributes 
 				/// é truncado para 32 bits.
 				/// </summary>
 				UInt64 u64;
@@ -20446,7 +20446,7 @@ MEReservedMax = 10000
 				/// <summary>
 				/// (pEvents)(Representa a interface ICarenMFCollection) - Antes de ligar para o Processar, defina este membro como NULO. Na saída, o MFT pode definir este membro para um ponteiro de interface de 
 				/// memória da ICarenMFCollection válido. O ponteiro representa uma (Coleção) que contém zero ou mais eventos. Para obter cada evento, ligue para a 
-			    /// ICarenMFCollection:ObterElemento e obtenha o ponteiro para ICarenMFMediaEvent. Quando o método ProcessarSaida retorna, o chamador é responsável 
+			    /// ICarenMFCollection:GetElement e obtenha o ponteiro para ICarenMFMediaEvent. Quando o método ProcessarSaida retorna, o chamador é responsável 
 				/// por liberar o ponteiro ICarenMFCollection se o ponteiro não for NULO.
 				/// </summary>
 				ICaren^ ColecaoEventos;
@@ -23073,7 +23073,7 @@ MEReservedMax = 10000
 				/// </summary>
 				/// <param name="Param_PropKey">TBD.</param>
 				/// <param name="Param_Out_Valor">Depois que o método retorna com êxito, este parâmetro retorna a estrutura CA_PropVariant que contém dados sobre a propriedade.</param>
-				CarenResult ObterValor(Estruturas::CA_PROPERTYKEY^% Param_PropKey, [Out] Estruturas::CA_PropVariant^% Param_Out_Valor);
+				CarenResult GetValue(Estruturas::CA_PROPERTYKEY^% Param_PropKey, [Out] Estruturas::CA_PropVariant^% Param_Out_Valor);
 
 				/// <summary>
 				/// (SetValue) - Este método define um valor de propriedade ou substitui ou remove um valor existente.

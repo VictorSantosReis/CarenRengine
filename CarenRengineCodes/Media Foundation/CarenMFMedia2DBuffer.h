@@ -173,21 +173,21 @@ public:
 	/// </summary>
 	/// <param name="Param_BufferContiguo">A interface que contém um buffer com os dados contiguou a serem copiados.</param>
 	/// <param name="Param_LarguraBuffer">A largura do buffer a ser copiado.</param>
-	virtual CarenResult CopiarBufferContiguouDe(ICarenBuffer^ Param_BufferContiguo, UInt32 Param_LarguraBuffer);
+	virtual CarenResult ContiguousCopyFrom(ICarenBuffer^ Param_BufferContiguo, UInt32 Param_LarguraBuffer);
 
 	/// <summary>
 	/// (ContiguousCopyTo) - Copia esse buffer no buffer do chamador, convertendo os dados em formato contíguo(Único).
 	/// </summary>
 	/// <param name="Param_DestinoBufferContiguou">A interface que vai receber o buffer de dados do objeto atual.</param>
-	/// <param name="Param_LarguraBufferDestino">O tamanho do buffer de destino. Obtenha esse valor chamando o método (ObterLarguraContiguou).</param>
-	virtual CarenResult CopiarBufferContiguouPara(ICarenBuffer^% Param_DestinoBufferContiguou, UInt32 Param_LarguraBufferDestino);
+	/// <param name="Param_LarguraBufferDestino">O tamanho do buffer de destino. Obtenha esse valor chamando o método (GetContiguousLength).</param>
+	virtual CarenResult ContiguousCopyTo(ICarenBuffer^% Param_DestinoBufferContiguou, UInt32 Param_LarguraBufferDestino);
 
 	/// <summary>
 	/// (GetContiguousLength) - Recupera o número de bytes necessários para armazenar os dados do buffer 
 	/// em formato contíguo.
 	/// </summary>
 	/// <param name="Param_Out_LarguraBufferContiguou">Recebe a largura do Buffer Contiguou.</param>
-	virtual CarenResult ObterLarguraContiguou([Out] UInt32% Param_Out_LarguraBufferContiguou);
+	virtual CarenResult GetContiguousLength([Out] UInt32% Param_Out_LarguraBufferContiguou);
 
 	/// <summary>
 	/// (GetScanline0AndPitch) - Recupera um ponteiro para a memória de buffer e o Stride da superfície do quadro de vídeo.
@@ -196,13 +196,13 @@ public:
 	/// </summary>
 	/// <param name="Param_Out_ByteBufferPrimeiraLinha">Recebe uma Interface de buffer para o primeiro byte da linha superior de pixels na imagem..</param>
 	/// <param name="Param_Out_Stride">Recebe o stride, em bytes.</param>
-	virtual CarenResult ObterBufferAndSuperficeStride([Out] ICarenBuffer^% Param_Out_ByteBufferPrimeiraLinha, [Out] Int64% Param_Out_Stride);
+	virtual CarenResult GetScanline0AndPitch([Out] ICarenBuffer^% Param_Out_ByteBufferPrimeiraLinha, [Out] Int64% Param_Out_Stride);
 
 	/// <summary>
 	/// (IsContiguousFormat) - Consulta se o buffer é contíguo em seu (formato nativo).
 	/// </summary>
 	/// <param name="Param_Out_BufferContiguou">Retorna true se o formato nativo deste buffer é: Contiguou.</param>
-	virtual CarenResult IsBufferFormatoContiguou([Out] Boolean% Param_Out_BufferContiguou);
+	virtual CarenResult IsContiguousFormat([Out] Boolean% Param_Out_BufferContiguou);
 
 	/// <summary>
 	/// (Lock2D) - Fornece o acesso do chamador para a memória no buffer.

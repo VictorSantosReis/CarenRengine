@@ -416,7 +416,7 @@ void CarenMFMediaBuffer::Finalizar()
 /// Recupera o comprimento dos dados válidos no buffer.
 /// </summary>
 /// <param name="Param_Out_LarguraAtual">Recebe o comprimento dos dados válidos, em bytes. Se o buffer não contiver nenhum dado válido, o valor será zero.</param>
-CarenResult CarenMFMediaBuffer::ObterLarguraAtual([Out] UInt32% Param_Out_LarguraAtual)
+CarenResult CarenMFMediaBuffer::GetCurrentLength([Out] UInt32% Param_Out_LarguraAtual)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -462,11 +462,11 @@ Done:;
 /// <summary>
 /// Recupera o Dimensionar alocado do buffer. Esse o valor da largura total
 /// de dados que podem ser adicioandos. Se o buffer conter dados, a largura dos dados
-/// podem ser menor que a lagrura máxima. Consulte (ObterLarguraAtual) para obter o 
+/// podem ser menor que a lagrura máxima. Consulte (GetCurrentLength) para obter o 
 /// valor real da largura dos dados neste Buffer.
 /// </summary>
 /// <param name="Param_Out_LarguraMaxima">Recebe a largura total de dados que esse buffer pode conter.</param>
-CarenResult CarenMFMediaBuffer::ObterLarguraMaxima([Out] UInt32 % Param_Out_LarguraMaxima)
+CarenResult CarenMFMediaBuffer::GetMaxLength([Out] UInt32 % Param_Out_LarguraMaxima)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -622,8 +622,8 @@ Done:;
 /// ATENCAO: Chame esse método se você gravar dados no buffer.
 /// </summary>
 /// <param name="Param_LarguraAtual">Comprimento dos dados válidos, em bytes. Esse valor não pode ser maior do que o tamanho alocado do buffer,
-/// que é retornado pelo método (ObterLarguraMaxima).</param>
-CarenResult CarenMFMediaBuffer::DefinirLarguraAtual(UInt32 Param_LarguraAtual)
+/// que é retornado pelo método (GetMaxLength).</param>
+CarenResult CarenMFMediaBuffer::SetCurrentLength(UInt32 Param_LarguraAtual)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

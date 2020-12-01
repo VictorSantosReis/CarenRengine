@@ -417,7 +417,7 @@ void CarenMFActivate::Finalizar()
 /// <param name="Param_InterfaceCompare">A interface que vai ter todos os atributos comparado com a interface atual.</param>
 /// <param name="Param_TipoComparação">O tipo de comparação a ser realizada.</param>
 /// <param name="Param_Out_Resultado">O resultado da comparação segundo o parametro (Param_TipoComparação).</param>
-CarenResult CarenMFActivate::Comparar(ICarenMFAttributes^ Param_InterfaceCompare, CA_ATTRIBUTES_MATCH_TYPE Param_TipoComparação, [Out] Boolean% Param_Out_Resultado)
+CarenResult CarenMFActivate::Compare(ICarenMFAttributes^ Param_InterfaceCompare, CA_ATTRIBUTES_MATCH_TYPE Param_TipoComparação, [Out] Boolean% Param_Out_Resultado)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -472,7 +472,7 @@ Done:;
 /// <param name="Param_GuidChave">Define o Guid do atributo a ter seu valor comparado com o valor da PropVariant informada.</param>
 /// <param name="Param_Valor">O valor a ser comparado com o Atributo especificado.</param>
 /// <param name="Param_Out_Resultado">O resultado da comparação do atributo.</param>
-CarenResult CarenMFActivate::CompararItem(String^ Param_GuidChave, CA_PropVariant^ Param_Valor, [Out] Boolean% Param_Out_Resultado)
+CarenResult CarenMFActivate::CompareItem(String^ Param_GuidChave, CA_PropVariant^ Param_Valor, [Out] Boolean% Param_Out_Resultado)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -566,7 +566,7 @@ Done:;
 /// para o exemplo de destino. Você deve copiar esses valores para a nova amostra manualmente.
 /// </summary>
 /// <param name="Param_Out_InterfaceDestino">A interface de destino que vai receber os itens dessa interface.</param>
-CarenResult CarenMFActivate::CopiarTodosItens(ICarenMFAttributes^ Param_Out_InterfaceDestino)
+CarenResult CarenMFActivate::CopyAllItems(ICarenMFAttributes^ Param_Out_InterfaceDestino)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -631,7 +631,7 @@ Done:;
 /// <summary>
 /// Remove todos os pares chave/valor da lista de atributos do objeto.
 /// </summary>
-CarenResult CarenMFActivate::DeletarTodosItens()
+CarenResult CarenMFActivate::DeleteAllItems()
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -667,7 +667,7 @@ Done:;
 /// Se a chave especificada não existir, o método retornar (SS_OK) da mesma forma.
 /// </summary>
 /// <param name="Param_GuidChave">O Guid da chave a ser deletada.</param>
-CarenResult CarenMFActivate::DeletarItem(String^ Param_GuidChave)
+CarenResult CarenMFActivate::DeleteItem(String^ Param_GuidChave)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -727,7 +727,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para chave que contém o Blob a ser obtido.</param>
 /// <param name="Param_Out_Buffer">O buffer que contém os dados da matriz bytes do valor da chave solicitada.</param>
-CarenResult CarenMFActivate::ObterAlocaçãoBlob(String^ Param_GuidChave, [Out] Estruturas::CA_BlobData^% Param_Out_Buffer)
+CarenResult CarenMFActivate::GetAllocatedBlob(String^ Param_GuidChave, [Out] Estruturas::CA_BlobData^% Param_Out_Buffer)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -790,7 +790,7 @@ Done:;
 /// <param name="Param_GuidChave">O GUID para chave que contém o Blob a ser obtido. O tipo de atributo deve ser MF_ATTRIBUTE_STRING.</param>
 /// <param name="Param_Out_String">Retorna a string com os dados do valor da chave solicitada.</param>
 /// <param name="Param_Out_LarguraString">Retorna a largura em bytes da matriz que continha a String.</param>
-CarenResult CarenMFActivate::ObterAlocaçãoString(String^ Param_GuidChave, [Out] String^% Param_Out_String, [Out] UInt32% Param_Out_LarguraString)
+CarenResult CarenMFActivate::GetAllocatedString(String^ Param_GuidChave, [Out] String^% Param_Out_String, [Out] UInt32% Param_Out_LarguraString)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -846,8 +846,8 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para chave que contém o Blob a ser obtido.</param>
 /// <param name="Param_Out_Buffer">O buffer que contém os dados da matriz bytes do valor da chave solicitada.</param>
-/// <param name="Param_TamanhoBuffer">Define o tamanho da matriz em bytes do valor da chave a ser obtido. Chame o método (ObterBlobSize) para obter o valor para esse parametro.</param>
-CarenResult CarenMFActivate::ObterBlob(String^ Param_GuidChave, UInt32 Param_TamanhoBuffer, [Out] Estruturas::CA_BlobData^% Param_Out_Buffer)
+/// <param name="Param_TamanhoBuffer">Define o tamanho da matriz em bytes do valor da chave a ser obtido. Chame o método (GetBlobSize) para obter o valor para esse parametro.</param>
+CarenResult CarenMFActivate::GetBlob(String^ Param_GuidChave, UInt32 Param_TamanhoBuffer, [Out] Estruturas::CA_BlobData^% Param_Out_Buffer)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -909,7 +909,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para chave que contém o Blob a ser obtido. O tipo de atributo deve ser MF_ATTRIBUTE_BLOB.</param>
 /// <param name="Param_TamanhoBuffer">Recebe o tamanho da matriz que contem o valor da chave solicitada.</param>
-CarenResult CarenMFActivate::ObterBlobSize(String^ Param_GuidChave, [Out] UInt32% Param_Out_TamanhoBuffer)
+CarenResult CarenMFActivate::GetBlobSize(String^ Param_GuidChave, [Out] UInt32% Param_Out_TamanhoBuffer)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -955,7 +955,7 @@ Done:;
 /// Recupera o número de atributos que são definidos neste objeto.
 /// </summary>
 /// <param name="Param_QuantidadeAtributos">Recebe a quantidade de atributos na interface.</param>
-CarenResult CarenMFActivate::ObterCountAtributos([Out] UInt32% Param_QuantidadeAtributos)
+CarenResult CarenMFActivate::GetCount([Out] UInt32% Param_QuantidadeAtributos)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -997,7 +997,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (Double) obtido.</param>
 /// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-CarenResult CarenMFActivate::ObterDouble(String^ Param_GuidChave, [Out] Double% Param_Out_Valor)
+CarenResult CarenMFActivate::GetDouble(String^ Param_GuidChave, [Out] Double% Param_Out_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1044,7 +1044,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (GUID) obtido.</param>
 /// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-CarenResult CarenMFActivate::ObterGuid(String^ Param_GuidChave, [Out] String^% Param_Out_Valor)
+CarenResult CarenMFActivate::GetGUID(String^ Param_GuidChave, [Out] String^% Param_Out_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1091,7 +1091,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (CA_PropVariant) obtido.</param>
 /// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-CarenResult CarenMFActivate::ObterItem(String^ Param_GuidChave, [Out] CA_PropVariant^% Param_Out_Valor)
+CarenResult CarenMFActivate::GetItem(String^ Param_GuidChave, [Out] CA_PropVariant^% Param_Out_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1148,7 +1148,7 @@ Done:;
 /// <param name="Param_Out_GuidChave">Recebe o guid associado a chave obtida pelo id.</param>
 /// <param name="Param_IdItem">O Id do item a ter o seu valor obtido.</param>
 /// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-CarenResult CarenMFActivate::ObterItemPorIndex(UInt32 Param_IdItem, [Out] String^% Param_Out_GuidChave, [Out] CA_PropVariant^% Param_Out_Valor)
+CarenResult CarenMFActivate::GetItemByIndex(UInt32 Param_IdItem, [Out] String^% Param_Out_GuidChave, [Out] CA_PropVariant^% Param_Out_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1204,7 +1204,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave a ser verificado o tipo do valor.</param>
 /// <param name="Param_Out_TipoDado">O tipo do dado contido na chave solicitada.</param>
-CarenResult CarenMFActivate::ObterTipoDadosItem(String^ Param_GuidChave, [Out] CA_ATTRIBUTE_TYPE% Param_Out_TipoDado)
+CarenResult CarenMFActivate::GetItemType(String^ Param_GuidChave, [Out] CA_ATTRIBUTE_TYPE% Param_Out_TipoDado)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1250,9 +1250,9 @@ Done:;
 /// Recupera uma sequência de caracteres largos associada a uma chave.
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (String) obtido. O tipo de atributo deve ser MF_ATTRIBUTE_STRING.</param>
-/// <param name="Param_Out_Valor">A largura da string a ser recebida. Some +1 a esse valor. Para obter esse valor, chame o método: ObterLarguraString</param>
+/// <param name="Param_Out_Valor">A largura da string a ser recebida. Some +1 a esse valor. Para obter esse valor, chame o método: GetStringLength</param>
 /// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada.</param>
-CarenResult CarenMFActivate::ObterString(String^ Param_GuidChave, UInt32 Param_LagruraString, [Out] String^% Param_Out_Valor)
+CarenResult CarenMFActivate::GetString(String^ Param_GuidChave, UInt32 Param_LagruraString, [Out] String^% Param_Out_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1310,7 +1310,7 @@ Done:;
 /// <param name="Param_GuidChave">O GUID para a chave a ser consultada a largura da String. O tipo de atributo deve ser MF_ATTRIBUTE_STRING.</param>
 /// <param name="Param_Out_Largura">Se a chave for encontrada e o valor é um tipo de sequência de caracteres, esse parâmetro recebe o número de caracteres na 
 /// sequência de caracteres, não incluindo o caractere nulo de terminação</param>
-CarenResult CarenMFActivate::ObterLarguraString(String^ Param_GuidChave, [Out] UInt32% Param_Out_Largura)
+CarenResult CarenMFActivate::GetStringLength(String^ Param_GuidChave, [Out] UInt32% Param_Out_Largura)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1357,7 +1357,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (UInt32) obtido.</param>
 /// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-CarenResult CarenMFActivate::ObterUINT32(String^ Param_GuidChave, [Out] UInt32% Param_Out_Valor)
+CarenResult CarenMFActivate::GetUINT32(String^ Param_GuidChave, [Out] UInt32% Param_Out_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1404,7 +1404,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (UInt64) obtido.</param>
 /// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-CarenResult CarenMFActivate::ObterUINT64(String^ Param_GuidChave, [Out] UInt64% Param_Out_Valor)
+CarenResult CarenMFActivate::GetUINT64(String^ Param_GuidChave, [Out] UInt64% Param_Out_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1611,7 +1611,7 @@ Done:;
 /// <summary>
 /// Bloqueia o armazenamento de atributo para que nenhum outro thread possa acessá-lo.
 /// </summary>
-CarenResult CarenMFActivate::BloquearArmazenamento()
+CarenResult CarenMFActivate::LockStore()
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1650,7 +1650,7 @@ CarenResult CarenMFActivate::BloquearArmazenamento()
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 /// <param name="Param_Buffer">A matriz de bytes a ser associada a chave especificada.</param>
-CarenResult CarenMFActivate::DefinirBlob(String^ Param_GuidChave, cli::array<Byte>^ Param_Buffer)
+CarenResult CarenMFActivate::SetBlob(String^ Param_GuidChave, cli::array<Byte>^ Param_Buffer)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1714,7 +1714,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 /// <param name="Param_Valor">O valor a ser definido na chave especificada.</param>
-CarenResult CarenMFActivate::DefinirDouble(String^ Param_GuidChave, Double Param_Valor)
+CarenResult CarenMFActivate::SetDouble(String^ Param_GuidChave, Double Param_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1757,7 +1757,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 /// <param name="Param_Valor">O valor a ser definido na chave especificada.</param>
-CarenResult CarenMFActivate::DefinirGUID(String^ Param_GuidChave, String^ Param_Valor)
+CarenResult CarenMFActivate::SetGUID(String^ Param_GuidChave, String^ Param_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1802,7 +1802,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 /// <param name="Param_PropVariantValor">A PropVariant que contém o valor a ser definido na chave especificada.</param>
-CarenResult CarenMFActivate::DefinirItem(String^ Param_GuidChave, Estruturas::CA_PropVariant^ Param_PropVariantValor)
+CarenResult CarenMFActivate::SetItem(String^ Param_GuidChave, Estruturas::CA_PropVariant^ Param_PropVariantValor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1884,7 +1884,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 /// <param name="Param_Valor">O valor a ser definido na chave especificada.</param>
-CarenResult CarenMFActivate::DefinirString(String^ Param_GuidChave, String^ Param_Valor)
+CarenResult CarenMFActivate::SetString(String^ Param_GuidChave, String^ Param_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1948,7 +1948,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 /// <param name="Param_Valor">O valor a ser definido na chave especificada.</param>
-CarenResult CarenMFActivate::DefinirUINT32(String^ Param_GuidChave, UInt32 Param_Valor)
+CarenResult CarenMFActivate::SetUINT32(String^ Param_GuidChave, UInt32 Param_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1991,7 +1991,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 /// <param name="Param_Valor">O valor a ser definido na chave especificada.</param>
-CarenResult CarenMFActivate::DefinirUINT64(String^ Param_GuidChave, UInt64 Param_Valor)
+CarenResult CarenMFActivate::SetUINT64(String^ Param_GuidChave, UInt64 Param_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -2185,7 +2185,7 @@ Done:;
 /// (UnlockStore) - Desbloqueia o armazenamento de atributo após uma chamada para o método (BloquearAtributo). 
 /// Enquanto o objeto é desbloqueado, Múltiplos threads podem acessar atributos do objeto.
 /// </summary>
-CarenResult CarenMFActivate::DesbloquearAtributo()
+CarenResult CarenMFActivate::UnlockStore()
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -2339,7 +2339,7 @@ CarenResult CarenMFActivate::DesligarObjeto()
 	//Variavel COM
 	ResultadoCOM Hr = E_FAIL;
 
-	//Chama o método para Desligar o objeto.
+	//Chama o método para Shutdown o objeto.
 	Hr = PonteiroTrabalho->ShutdownObject();
 
 	//Processa o resultado da chamada.

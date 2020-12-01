@@ -419,7 +419,7 @@ void CarenMFTopoLoader::Finalizar()
 /// <param name="Param_Out_TopologiaCompleta">Recebe um ponteiro para a interface ICarenMFTopology da topologia concluída. O chamador deve liberar a interface.</param>
 /// <param name="Param_TopologiaAnterior">Um ponteiro para a interface ICarenMFTopology da topologia completa anterior. O carregador de topologia pode reusar objetos dessa topologia na nova topologia. 
 /// Este parâmetro pode ser NULL.</param>
-CarenResult CarenMFTopoLoader::Carregar(ICarenMFTopology^ Param_TopologiaParcial, [Out] ICarenMFTopology^% Param_Out_TopologiaCompleta, ICarenMFTopology^ Param_TopologiaAnterior)
+CarenResult CarenMFTopoLoader::Load(ICarenMFTopology^ Param_TopologiaParcial, [Out] ICarenMFTopology^% Param_Out_TopologiaCompleta, ICarenMFTopology^ Param_TopologiaAnterior)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

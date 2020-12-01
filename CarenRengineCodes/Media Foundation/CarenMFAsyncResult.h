@@ -86,7 +86,7 @@ public:
 	/// <summary>
 	/// Método responsável por criar um novo resutlado Assincrono.
 	/// </summary>
-	/// <param name="Param_ObjetoDados">Interface para o objeto armazenado no resultado assíncrono. Essa Interface é retornado pelo método (ICarenMFAsyncResult.ObterObjeto). Este parâmetro pode ser MULO.</param>
+	/// <param name="Param_ObjetoDados">Interface para o objeto armazenado no resultado assíncrono. Essa Interface é retornado pelo método (ICarenMFAsyncResult.GetObject). Este parâmetro pode ser MULO.</param>
 	/// <param name="Param_Callback">A interface que é implementada pelo usuário para receber os eventos do sistema.</param>
 	/// <param name="Param_ObjetoEstado">Interface desconhecida de um objeto de estado. Esse valor é fornecido pelo chamador do método assíncrono. Este parâmetro pode ser NULO.</param>
 	/// <param name="Param_Out_AsyncResult">Recebe a interface que contém o resultado assincrono para uma operação.</param>
@@ -300,30 +300,30 @@ public:
 	/// </summary>
 	/// <param name="Param_Out_Objeto">Recebe a interface com o objeto desconhecido. Se nenhum objeto estiver associado à operação, esse parâmetro receberá o valor NULO. 
 	/// Se o valor não for NULO, o chamador deverá liberar a interface. O usuário deve criar a interface antes de chamar este método.</param>
-	virtual CarenResult ObterObjeto(ICaren^ Param_Out_Objeto);
+	virtual CarenResult GetObject(ICaren^ Param_Out_Objeto);
 
 	/// <summary>
 	/// (GetState) - Retorna o objeto de estado especificado pelo chamador no método Begin assíncrono.
 	/// O chamador do método assíncrono especifica o objeto de estado e pode usá-lo para qualquer finalidade definida pelo responsável da chamada. O objeto de estado pode ser NULO.
 	/// </summary>
 	/// <param name="Param_Out_ObjetoEstado">Recebe a interface com o objeto desconhecido. Se o valor não for NULO, o chamador deverá liberar a interface. O usuário deve criar a interface antes de chamar este método.</param>
-	virtual CarenResult ObterEstado(ICaren^ Param_Out_ObjetoEstado);
+	virtual CarenResult GetState(ICaren^ Param_Out_ObjetoEstado);
 
 	/// <summary>
 	/// (GetStateNoAddRef) - Retorna o objeto de estado especificado pelo chamador no método assíncrono Begin, sem incrementar a contagem de referência do objeto.
 	/// </summary>
 	/// <param name="Param_Out_ObjetoEstado">Recebe a interface com o objeto desconhecido. Se o valor não for NULO, o chamador deverá liberar a interface. O usuário deve criar a interface antes de chamar este método.</param>
-	virtual CarenResult ObterEstadoNoAddRef(ICaren^ Param_Out_ObjetoEstado);
+	virtual CarenResult GetStateNoAddRef(ICaren^ Param_Out_ObjetoEstado);
 
 	/// <summary>
 	/// (GetStatus) - Retorna o status da operação assíncrona.
 	/// </summary>
-	virtual CarenResult ObterStatus();
+	virtual CarenResult GetStatus();
 
 	/// <summary>
 	/// (SetStatus) - Define o status da operação assíncrona.
 	/// </summary>
 	/// <param name="Param_HRESULT">O código HRESULT que vai definir o status geral da operação.</param>
-	virtual CarenResult DefinirStatus(int Param_HRESULT);
+	virtual CarenResult SetStatus(int Param_HRESULT);
 };
 

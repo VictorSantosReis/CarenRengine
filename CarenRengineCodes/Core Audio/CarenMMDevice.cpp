@@ -542,7 +542,7 @@ Done:;
 /// (GetState) - O método recupera o estado atual do dispositivo.
 /// </summary>
 /// <param name="Param_Out_EstadoDispositivo">Retorna o estado do dispositivo atual.</param>
-CarenResult CarenMMDevice::ObterEstado([Out] Enumeracoes::CA_DEVICE_STATE_XXX% Param_Out_EstadoDispositivo)
+CarenResult CarenMMDevice::GetState([Out] Enumeracoes::CA_DEVICE_STATE_XXX% Param_Out_EstadoDispositivo)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

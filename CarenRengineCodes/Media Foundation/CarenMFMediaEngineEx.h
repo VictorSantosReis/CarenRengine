@@ -348,13 +348,13 @@ public:
 	virtual CarenResult RemoveAllEffects();
 
 	/// <summary>
-	/// Define o ponto final do dispositivo de áudio usado para a próxima chamada para DefinirFonte ou Carregar.
+	/// Define o ponto final do dispositivo de áudio usado para a próxima chamada para DefinirFonte ou Load.
 	/// </summary>
 	/// <param name="Param_Role">Especifica a função de ponto final de áudio.</param>
 	virtual CarenResult SetAudioEndpointRole(CA_ERole Param_Role);
 
 	/// <summary>
-	/// Define a categoria fluxo de áudio para a próxima chamada para DefinirFonte ou Carregar.
+	/// Define a categoria fluxo de áudio para a próxima chamada para DefinirFonte ou Load.
 	/// </summary>
 	/// <param name="Param_Categoria">Especifica a categoria do fluxo de áudio.</param>
 	virtual CarenResult SetAudioStreamCategory(CA_AUDIO_STREAM_CATEGORY Param_Categoria);
@@ -375,7 +375,7 @@ public:
 	CA_MF_MEDIA_ENGINE_SEEK_MODE Param_Modo);
 
 	/// <summary>
-	/// Define o modo em tempo real usado para a próxima chamada para DefinirFonte ou Carregar.
+	/// Define o modo em tempo real usado para a próxima chamada para DefinirFonte ou Load.
 	/// </summary>
 	/// <param name="Param_Habilitar">Especifica o modo em tempo real.</param>
 	virtual CarenResult SetRealTimeMode(Boolean Param_Habilitar);

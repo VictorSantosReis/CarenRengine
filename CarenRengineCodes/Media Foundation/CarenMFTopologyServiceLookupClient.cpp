@@ -417,7 +417,7 @@ void CarenMFTopologyServiceLookupClient::Finalizar()
 /// </summary>
 /// <param name="Param_QueryInterface">Ponteiro para o ICarenMFTopologyServiceLookup interface. Para consultar o EVR para uma interface, 
 /// chame ICarenMFTopologyServiceLookup::PesquisarServiço.</param>
-CarenResult CarenMFTopologyServiceLookupClient::IniciarServicosPonteiros(ICarenMFTopologyServiceLookup^ Param_QueryInterface)
+CarenResult CarenMFTopologyServiceLookupClient::InitServicePointers(ICarenMFTopologyServiceLookup^ Param_QueryInterface)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -465,10 +465,10 @@ Done:;
 
 /// <summary>
 /// (ReleaseServicePointers) - Sinaliza o objeto para liberar os ponteiros de interface obtidos do renderizador de vídeo aprimorado (EVR).
-/// Depois que esse método é chamado, quaisquer ponteiros de interface obtidos durante a chamada anterior para ICarenMFTopologyServiceLookupClient::IniciarServicosPonteiros não 
+/// Depois que esse método é chamado, quaisquer ponteiros de interface obtidos durante a chamada anterior para ICarenMFTopologyServiceLookupClient::InitServicePointers não 
 /// são mais válidos. O objeto deve liberá-los.
 /// </summary>
-CarenResult CarenMFTopologyServiceLookupClient::LiberarPonteirosServicos()
+CarenResult CarenMFTopologyServiceLookupClient::ReleaseServicePointers()
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

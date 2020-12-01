@@ -416,7 +416,7 @@ void CarenMFTopologyNodeAttributeEditor::Finalizar()
 /// <param name="Param_TopoId">Reservado.</param>
 /// <param name="Param_CountArray">A quantidade de elementos no array que contém as atualizações dos atributos.</param>
 /// <param name="Param_ArrayUpdates">Uma matriz que contém elementos que atualizam os atributos. Cada elemento atualiza (um) atributo no nó.</param>
-CarenResult CarenMFTopologyNodeAttributeEditor::AtualizarAtributosNode(UInt64 Param_TopoId, UInt32 Param_CountArray, cli::array<Estruturas::CA_MFTOPONODE_ATTRIBUTE_UPDATE^>^ Param_ArrayUpdates)
+CarenResult CarenMFTopologyNodeAttributeEditor::UpdateNodeAttributes(UInt64 Param_TopoId, UInt32 Param_CountArray, cli::array<Estruturas::CA_MFTOPONODE_ATTRIBUTE_UPDATE^>^ Param_ArrayUpdates)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

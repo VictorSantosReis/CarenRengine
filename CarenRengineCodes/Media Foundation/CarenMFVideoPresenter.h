@@ -280,7 +280,7 @@ public:
 	/// /// </summary>
 	/// /// <param name="Param_Out_TipoVideo">Retorna uma interface para o tipo de midia de video do apresentador.</param>
 	/// /// <returns></returns>
-	virtual CarenResult ObterTipoMidiaAtual([Out] ICarenMFVideoMediaType^% Param_Out_TipoVideo);
+	virtual CarenResult GetCurrentMediaType([Out] ICarenMFVideoMediaType^% Param_Out_TipoVideo);
 
 	/// <summary>
 	/// Envia uma mensagem para o apresentador de vídeo. As mensagens são usadas para sinalizar ao apresentador que ele deve realizar alguma ação, ou que algum evento ocorreu.

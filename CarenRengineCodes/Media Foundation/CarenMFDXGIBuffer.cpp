@@ -410,12 +410,12 @@ void CarenMFDXGIBuffer::Finalizar()
 //
 
 /// <summary>
-/// (GetResource) - Consulta a superfície do Microsoft DirectX Graphics infra-estrutura (DXGI) para uma interface.
+/// Consulta a superfície do Microsoft DirectX Graphics infra-estrutura (DXGI) para uma interface.
 /// Você pode usar esse método para obter um ponteiro para a interface de ID3D11Texture2D da superfície. Se o buffer estiver bloqueado, o método retorna ER_MF_REQUISICAO_INVALIDA.
 /// </summary>
 /// <param name="Param_Guid">O identificador de interface (IID) da interface requisitada.</param>
 /// <param name="Param_Out_InterfaceRecurso">Recebe um ponteiro para a interface. O chamador deve liberar a interface.</param>
-CarenResult CarenMFDXGIBuffer::ObterRecurso(String^ Param_Guid, ICaren^ Param_Out_InterfaceRecurso)
+CarenResult CarenMFDXGIBuffer::GetResource(String^ Param_Guid, ICaren^ Param_Out_InterfaceRecurso)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -461,10 +461,10 @@ Done:;
 }
 
 /// <summary>
-/// (GetSubresourceIndex) - Obtém o índice do sub-recurso que está associado com esse buffer de mídia.
+/// Obtém o índice do sub-recurso que está associado com esse buffer de mídia.
 /// </summary>
 /// <param name="Param_Out_SubResourceId">Recebe o índice baseado em zero do sub-recurso.</param>
-CarenResult CarenMFDXGIBuffer::ObterSubRecursoId([Out] UInt32% Param_Out_SubResourceId) 
+CarenResult CarenMFDXGIBuffer::GetSubresourceIndex([Out] UInt32% Param_Out_SubResourceId) 
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -499,12 +499,12 @@ Done:;
 }
 
 /// <summary>
-/// (GetUnknown) - Obtém um ponteiro IUnknown que anteriormente foi armazenado no objeto de reserva de meios de comunicação.
+/// Obtém um ponteiro IUnknown que anteriormente foi armazenado no objeto de reserva de meios de comunicação.
 /// </summary>
 /// <param name="Param_GuidInterface">O identificador do ponteiro IUnknown.</param>
 /// <param name="Param_IID">O identificador de interface (IID) da interface requisitada.</param>
-/// <param name="Param_Out_InterfaceRequisitada">Recebe um ponteiro para a interface. O chamador deve liberar a interface. O Usuário deve criar a interface antes de chamar este método.</param>
-CarenResult CarenMFDXGIBuffer::ObterPonteiroDesconhecido(String^ Param_GuidInterface, String^ Param_IID, ICaren^ Param_Out_InterfaceRequisitada) 
+/// <param name="Param_Ref_InterfaceRequisitada">Recebe um ponteiro para o objeto anteriormente definido. O chamador é responsável por criar e liberar a interface.param>
+CarenResult CarenMFDXGIBuffer::GetUnknown(String^ Param_GuidInterface, String^ Param_IID, ICaren^ Param_Ref_InterfaceRequisitada)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -516,14 +516,14 @@ CarenResult CarenMFDXGIBuffer::ObterPonteiroDesconhecido(String^ Param_GuidInter
 	Utilidades Util;
 	GUID GuidInterface = GUID_NULL;
 	GUID RidInterfaceRequisitada = GUID_NULL;
-	LPUNKNOWN pInterfaceRequested = NULL;
+	LPVOID pInterfaceRequested = NULL;
 
 	//Obtém os dados dos guids
 	GuidInterface = Util.CreateGuidFromString(Param_GuidInterface);
 	RidInterfaceRequisitada = Util.CreateGuidFromString(Param_IID);
 
 	//Chama o método para realizar a operação
-	Hr = PonteiroTrabalho->GetUnknown(GuidInterface, RidInterfaceRequisitada, (LPVOID*)&pInterfaceRequested);
+	Hr = PonteiroTrabalho->GetUnknown(GuidInterface, RidInterfaceRequisitada, &pInterfaceRequested);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -541,7 +541,7 @@ CarenResult CarenMFDXGIBuffer::ObterPonteiroDesconhecido(String^ Param_GuidInter
 	}
 
 	//Define o ponteiro de trabalho.
-	Param_Out_InterfaceRequisitada->AdicionarPonteiro(pInterfaceRequested);
+	Param_Ref_InterfaceRequisitada->AdicionarPonteiro(pInterfaceRequested);
 
 	//Define sucesso na operação
 	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
@@ -552,11 +552,11 @@ Done:;
 }
 
 /// <summary>
-/// (SetUnknown) - Armazena um ponteiro IUnknown arbitrário em objeto de reserva de meios de comunicação. 
+/// Armazena um ponteiro IUnknown arbitrário em objeto de reserva de meios de comunicação.  
 /// </summary>
 /// <param name="Param_GuidInterface">O identificador para o ponteiro IUnknown. Esse identificador é usado como uma chave para recuperar o valor. Pode ser qualquer valor GUID.</param>
 /// <param name="Param_Interface">Um ponteiro para a interface IUnknown. Defina este parâmetro como NULL para limpar um ponteiro que foi previamente definido.</param>
-CarenResult CarenMFDXGIBuffer::DefinirPonteiroDesconhecido(String^ Param_GuidInterface, ICaren^ Param_Interface) 
+CarenResult CarenMFDXGIBuffer::SetUnknown(String^ Param_GuidInterface, ICaren^ Param_Interface) 
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

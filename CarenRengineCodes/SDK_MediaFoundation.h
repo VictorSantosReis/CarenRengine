@@ -37,7 +37,7 @@ namespace CarenRengine
 	{
 		/// <summary>
 		/// (IMFGetService) - Está interface é responsável por consultar e obter um ponteiro para um serviço exposto pelo objeto a qual foi chamado.
-		/// Um serviço é uma interface que é exposta por um objeto, mas pode ser implementada por outro objeto. O método (ObterServiço) é equivalente a (ConsultarInterface), 
+		/// Um serviço é uma interface que é exposta por um objeto, mas pode ser implementada por outro objeto. O método (GetService) é equivalente a (ConsultarInterface), 
 		/// com a seguinte diferença: quando (ConsultarInterface) recupera um ponteiro para uma interface, é garantido que você pode consultar a interface e voltar a interface original. 
 		/// O método GetService não faz esta garantia, porque a interface obtida pode ser implementada por um objeto separado.
 		/// </summary>
@@ -54,19 +54,19 @@ namespace CarenRengine
 			}
 
 			/// <summary>
-			/// (GetService) - Método responsável por consultar e obter um determinado serviço(Interface) em um Componente especificado.
+			/// Método responsável por consultar e obter um determinado serviço(Interface) em um Componente especificado.
 			/// Pode retornar: SS_OK ou ER_SERVIÇO_NAO_SUPORTADO
 			/// </summary>
 			/// <param name="Param_SID">O GUID que expõe o (Identificador de Serviço) do serviço a ser obtido. Acesse (GUIDs_MFInterfacesServico) para obter esse GUID.</param>
 			/// <param name="Param_IIDInterface">Define o GUID da interface que se quer obter do serviço solicitado.</param>
 			/// <param name="Param_Out_InterfaceSolicitada">Retorna a interface solicitada se o método tiver sido bem sucedido. O usuário deve criar a interface antes de chamar este método.</param>
-			CarenResult ObterServiço(String^ Param_SID, String^ Param_IIDInterface, ICaren^ Param_Out_InterfaceSolicitada);
+			CarenResult GetService(String^ Param_SID, String^ Param_IIDInterface, ICaren^ Param_Out_InterfaceSolicitada);
 		};
 
 		/// <summary>
 		/// (IMFCollection) - Classe responsável por representar uma coleção genérica de ponteiros desconhecidos.
 		/// </summary>
-		[CategoryAttribute("Coleção - Armazena uma coleção de ponteiros.")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("4C627299-4D4A-4948-BF0D-DA88D7A81AC0")]
 		public interface class ICarenMFCollection : ICaren
 		{
@@ -83,49 +83,49 @@ namespace CarenRengine
 			//Métodos
 
 			/// <summary>
-			/// (AddElement) - Adiciona um objeto à coleção.
+			/// Adiciona um objeto à coleção.
 			/// </summary>
 			/// <param name="Param_Elemento">O ponteiro a ser adicionado a coleção.</param>
-			CarenResult AdicionarElemento(ICaren^ Param_Elemento);
+			CarenResult AddElement(ICaren^ Param_Elemento);
 
 			/// <summary>
-			/// (GetElement) - Recupera um objeto na coleção. Este método não remove o objeto da coleção.
+			/// Recupera um objeto na coleção. Este método não remove o objeto da coleção.
 			/// </summary>
 			/// <param name="Param_IndexElemento">O index do elemento a ser obtido.</param>
 			/// <param name="Param_Out_Elemento">Retorna um ponteiro para o elemento especificado. O usuário deve criar a interface antes de chamar este método.</param>
-			CarenResult ObterElemento(UInt32 Param_IndexElemento, ICaren^ Param_Out_Elemento);
+			CarenResult GetElement(UInt32 Param_IndexElemento, ICaren^ Param_Out_Elemento);
 
 			/// <summary>
-			/// (GetElementCount) - Obtém a quantidade de elementos na coleção.
+			/// Obtém a quantidade de elementos na coleção.
 			/// </summary>
 			/// <param name="Param_Out_Quantidade">Retorna a quantidade de elementos.</param>
-			CarenResult ObterQuantidadeElementos([Out] UInt32% Param_Out_Quantidade);
+			CarenResult GetElementCount([Out] UInt32% Param_Out_Quantidade);
 
 			/// <summary>
-			/// (InsertElementAt) - Adiciona um objeto no índice especificado na coleção.
+			/// Adiciona um objeto no índice especificado na coleção.
 			/// </summary>
 			/// <param name="Param_Indice">O (Indice) onde será adicionado o elemento.</param>
 			/// <param name="Param_Elemento">O objeto a ser inserido na coleção.</param>
-			CarenResult InserirElemento(UInt32 Param_Indice, ICaren^ Param_Elemento);
+			CarenResult InsertElementAt(UInt32 Param_Indice, ICaren^ Param_Elemento);
 
 			/// <summary>
-			/// (RemoveAllElements) - Remove todos os itens da coleção.
+			/// Remove todos os itens da coleção.
 			/// </summary>
-			CarenResult RemoverTodosElementos();
+			CarenResult RemoveAllElements();
 
 			/// <summary>
-			/// (RemoveElement) - Remove um objeto da coleção.
+			/// Remove um objeto da coleção.
 			/// </summary>
 			/// <param name="Param_Indice">O (Indice) para o elemento que será removido da coleção.</param>
 			/// <param name="Param_Out_Elemento">Recebe um ponteiro para o elemento removido da lista. O chamado que deve liberar
 			/// a referência para o ponteiro. Esse parametro pode retornar NULO. O usuário deve criar a interface antes de chamar este método.</param>
-			CarenResult RemoverElemento(UInt32 Param_Indice, ICaren^ Param_Out_Elemento);
+			CarenResult RemoveElement(UInt32 Param_Indice, ICaren^ Param_Out_Elemento);
 		};
 
 		/// <summary>
 		/// (IMFMediaSinkPreroll) -  Falta documentar.
 		/// </summary>
-		[CategoryAttribute("IMFMediaSinkPreroll - Notifica o coletor para armazenar amostras de midia antes do relogio de apresentação começar.")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("CE735A9F-4B0C-4725-AD46-B0AEC9FD1172")]
 		public interface class ICarenMFMediaSinkPreroll : ICaren
 		{
@@ -139,11 +139,11 @@ namespace CarenRengine
 
 
 			/// <summary>
-			/// (NotifyPreroll) - Notifica o coletor de mídia(ICarenMFMediaSink) que o relógio de apresentação está prestes a iniciar.
+			/// Notifica o coletor de mídia(ICarenMFMediaSink) que o relógio de apresentação está prestes a iniciar.
 			/// </summary>
 			/// <param name="Param_ProximaHoraInicio">A próxima hora de início para o relógio de apresentação, em unidades 100 nanosegundos. Este tempo é o mesmo valor que será dado ao método 
-			/// (ICarenMFPresentationClock.Iniciar) quando o relógio de apresentação é iniciado.</param>
-			CarenResult NotificarPreroll(Int64 Param_ProximaHoraInicio);
+			/// (ICarenMFPresentationClock.Start) quando o relógio de apresentação é iniciado.</param>
+			CarenResult NotifyPreroll(Int64 Param_ProximaHoraInicio);
 		};
 
 		/// <summary>
@@ -164,40 +164,40 @@ namespace CarenRengine
 			//Métodos
 
 			/// <summary>
-			/// (GetResource) - Consulta a superfície do Microsoft DirectX Graphics infra-estrutura (DXGI) para uma interface.
+			/// Consulta a superfície do Microsoft DirectX Graphics infra-estrutura (DXGI) para uma interface.
 			/// Você pode usar esse método para obter um ponteiro para a interface de ID3D11Texture2D da superfície. Se o buffer estiver bloqueado, o método retorna ER_MF_REQUISICAO_INVALIDA.
 			/// </summary>
 			/// <param name="Param_Guid">O identificador de interface (IID) da interface requisitada.</param>
 			/// <param name="Param_Out_InterfaceRecurso">Recebe um ponteiro para a interface. O chamador deve liberar a interface. O Usuário deve criar a interface antes de chamar este método.</param>
-			CarenResult ObterRecurso(String^ Param_Guid, ICaren^ Param_Out_InterfaceRecurso);
+			CarenResult GetResource(String^ Param_Guid, ICaren^ Param_Out_InterfaceRecurso);
 
 			/// <summary>
-			/// (GetSubresourceIndex) - Obtém o índice do sub-recurso que está associado com esse buffer de mídia.
+			/// Obtém o índice do sub-recurso que está associado com esse buffer de mídia.
 			/// </summary>
 			/// <param name="Param_Out_SubResourceId">Recebe o índice baseado em zero do sub-recurso.</param>
-			CarenResult ObterSubRecursoId([Out] UInt32% Param_Out_SubResourceId);
+			CarenResult GetSubresourceIndex([Out] UInt32% Param_Out_SubResourceId);
 
 			/// <summary>
-			/// (GetUnknown) - Obtém um ponteiro IUnknown que anteriormente foi armazenado no objeto de reserva de meios de comunicação.
+			/// Obtém um ponteiro IUnknown que anteriormente foi armazenado no objeto de reserva de meios de comunicação.
 			/// </summary>
 			/// <param name="Param_GuidInterface">O identificador do ponteiro IUnknown.</param>
 			/// <param name="Param_IID">O identificador de interface (IID) da interface requisitada.</param>
-			/// <param name="Param_Out_InterfaceRequisitada">Recebe um ponteiro para a interface. O chamador deve liberar a interface.</param>
-			CarenResult ObterPonteiroDesconhecido(String^ Param_GuidInterface, String^ Param_IID, ICaren^ Param_Out_InterfaceRequisitada);
+			/// <param name="Param_Ref_InterfaceRequisitada">Recebe um ponteiro para o objeto anteriormente definido. O chamador é responsável por criar e liberar a interface.param>
+			CarenResult GetUnknown(String^ Param_GuidInterface, String^ Param_IID, ICaren^ Param_Ref_InterfaceRequisitada);
 
 			/// <summary>
-			/// (SetUnknown) - Armazena um ponteiro IUnknown arbitrário em objeto de reserva de meios de comunicação. 
+			/// Armazena um ponteiro IUnknown arbitrário em objeto de reserva de meios de comunicação.
 			/// </summary>
 			/// <param name="Param_GuidInterface">O identificador para o ponteiro IUnknown. Esse identificador é usado como uma chave para recuperar o valor. Pode ser qualquer valor GUID.</param>
 			/// <param name="Param_Interface">Um ponteiro para a interface IUnknown. Defina este parâmetro como NULO para limpar um ponteiro que foi previamente definido.</param>
-			CarenResult DefinirPonteiroDesconhecido(String^ Param_GuidInterface, ICaren^ Param_Interface);
+			CarenResult SetUnknown(String^ Param_GuidInterface, ICaren^ Param_Interface);
 		};
 
 		/// <summary>
 		/// (IMFDXGIDeviceManager) - Permite que dois segmentos compartilhem o mesmo dispositivo Microsoft Direct3D 11. Está interface é utilizada para armazenar o ponteiro para o 
 		/// Dispositivo Direct3D utilizado para habilitar o DXVA2.
 		/// </summary>
-		[CategoryAttribute("IMFDXGIDeviceManager  - Acesso ao DXVA (DirectX Video Acceleration)")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("1E2795CA-AC98-4481-A387-69AE862DB9CA")]
 		public interface class ICarenMFDXGIDeviceManager : ICaren
 		{
@@ -212,36 +212,36 @@ namespace CarenRengine
 
 			/// <summary>
 			/// Fecha um identificador de dispositivo Direct3D.
-			/// Chame o método quando você tiver chamado o método (AbirIdentificadorDispositivo3D).
+			/// Chame o método quando você tiver chamado o método (OpenDeviceHandle).
 			/// </summary>
 			/// <param name="Param_Identificador">O identificador para o Dispositivo Direct3D a ser finalizado.</param>
-			CarenResult FecharHandleDispositivo(IntPtr Param_Identificador);
+			CarenResult CloseDeviceHandle(IntPtr Param_Identificador);
 
 			/// <summary>
 			/// Obtém uma interface de serviço de aceleração de vídeo DirectX (DXVA).
 			/// Obtenha o IID atravez da estrutura: GUIDs_MFDXVAInterfaces.
 			/// </summary>
-			/// <param name="Param_HandleDirect3D">Um identificador para um dispositivo Direct3D. Para obter um identificador dispositivo, chame o método: AbirIdentificadorDispositivo3D</param>
+			/// <param name="Param_HandleDirect3D">Um identificador para um dispositivo Direct3D. Para obter um identificador dispositivo, chame o método: OpenDeviceHandle</param>
 			/// <param name="Param_IIDInterface">O GUID da interface a ser obtida. Esse método suporta as seguintes interfaces: ID3D11Device, ID3D11VideoDevice</param>
 			/// <param name="Param_Out_InterfaceSolicitada">Retorna a interface solicitada se o método tiver sido bem sucedido. O usuário deve criar a interface antes de chamar este método.</param>
-			CarenResult ObterVideoServiço(IntPtr Param_HandleDirect3D, String^ Param_IIDInterface, ICaren^ Param_Out_InterfaceSolicitada);
+			CarenResult GetVideoService(IntPtr Param_HandleDirect3D, String^ Param_IIDInterface, ICaren^ Param_Out_InterfaceSolicitada);
 
 			/// <summary>
 			/// Obtém acesso exclusivo ao dispositivo Direct3D.
 			/// </summary>
-			/// <param name="Param_Handle">Um identificador para o dispositivo Direct3D. Para obter o identificador do dispositivo, chame o método: AbirIdentificadorDispositivo3D</param>
+			/// <param name="Param_Handle">Um identificador para o dispositivo Direct3D. Para obter o identificador do dispositivo, chame o método: OpenDeviceHandle</param>
 			/// <param name="Param_AguardarBloqueio">Especifica se deve aguardar o bloqueio do dispositivo. Se o dispositivo já está bloqueado e esse parâmetro é true, 
 			/// o método bloqueia até que o dispositivo é desbloqueado. Caso contrário, se o dispositivo está bloqueado e este bloco é false, o método retorna imediatamente com o código de erro ER_DXVA2_VIDEO_DEVICE_LOCKED.</param>
 			/// <param name="Param_IIDInterface">O identificador de interface (IID) da interface solicitada. O dispositivo Direct3D apoiará as seguintes interfaces: ID3D11Device, ID3D11VideoDevice, ID3D11VideoContext</param>
 			/// <param name="Param_Out_InterfaceSolicitada">Recebe a interface solicitada. O usuário deve criar a interface antes de chamar este método.</param>
-			CarenResult LockDispositivo(IntPtr Param_Handle, Boolean Param_AguardarBloqueio, String^ Param_IIDInterface, ICaren^ Param_Out_InterfaceSolicitada);
+			CarenResult LockDevice(IntPtr Param_Handle, Boolean Param_AguardarBloqueio, String^ Param_IIDInterface, ICaren^ Param_Out_InterfaceSolicitada);
 
 			/// <summary>
 			/// Obtém um identificador para o dispositivo Direct3D.
-			/// Você deve fechar o Identificador do dispositivo após o seu uso, chame o método (FecharHandleDispositivo) para finalizar.
+			/// Você deve fechar o Identificador do dispositivo após o seu uso, chame o método (CloseDeviceHandle) para finalizar.
 			/// </summary>
 			/// <param name="Param_Out_Handle">Recebe a Handle para o dispositivo.</param>
-			CarenResult AbirIdentificadorDispositivo3D([Out] IntPtr% Param_Out_Handle);
+			CarenResult OpenDeviceHandle([Out] IntPtr% Param_Out_Handle);
 
 			/// <summary>
 			/// Define o dispositivo Microsoft Direct3D ou notifica o Gerenciador de dispositivo que o dispositivo Direct3D foi zerado..
@@ -250,28 +250,28 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_Dispostivo3D">A interface do dispositivo Direct3D.</param>
 			/// <param name="Param_Token">Token recebido no parâmetro Param_Out_ResetToken na criação deste gerenciador.</param>
-			CarenResult ResetarDispositivo(ICaren^ Param_Dispostivo3D, UInt32 Param_Token);
+			CarenResult ResetDevice(ICaren^ Param_Dispostivo3D, UInt32 Param_Token);
 
 			/// <summary>
 			/// Testa se um identificador de dispositivo Direct3D é válido.
-			/// Se o método retorna ER_MF_DXGI_HANDLE_INVALIDA, chame o método (FecharHandleDispositivo) para fechar o identificador e, em seguida, 
-			/// chame (AbirIdentificadorDispositivo3D) novamente para obter um novo identificador. O método (ResetarDispositivo), invalida todos os identificadores de dispositivo aberto.
+			/// Se o método retorna ER_MF_DXGI_HANDLE_INVALIDA, chame o método (CloseDeviceHandle) para fechar o identificador e, em seguida, 
+			/// chame (OpenDeviceHandle) novamente para obter um novo identificador. O método (ResetDevice), invalida todos os identificadores de dispositivo aberto.
 			/// </summary>
-			/// <param name = "Param_HandleDispositivo3D">A handle para o Dispotivo do Direct3D. Para obter essa handle, chame o método: AbirIdentificadorDispositivo3D</param>
-			CarenResult TestarIdentificadorDispositivo(IntPtr Param_HandleDispositivo3D);
+			/// <param name = "Param_HandleDispositivo3D">A handle para o Dispotivo do Direct3D. Para obter essa handle, chame o método: OpenDeviceHandle</param>
+			CarenResult TestDevice(IntPtr Param_HandleDispositivo3D);
 
 			/// <summary>
 			/// Desbloqueia o dispositivo Direct3D.
 			/// </summary>
-			/// <param name="Param_HandleDispositivo3D">A handle para o Dispotivo do Direct3D. Para obter essa handle, chame o método: AbirIdentificadorDispositivo3D</param>
+			/// <param name="Param_HandleDispositivo3D">A handle para o Dispotivo do Direct3D. Para obter essa handle, chame o método: OpenDeviceHandle</param>
 			/// <param name="Param_SalvarEstadoDispositivo">Define se deve salvar o estado do dispositivo.</param>
-			CarenResult UnlockDispositivo(IntPtr Param_HandleDispositivo3D, Boolean Param_SalvarEstadoDispositivo);
+			CarenResult UnlockDevice(IntPtr Param_HandleDispositivo3D, Boolean Param_SalvarEstadoDispositivo);
 		};
 
 		/// <summary>
 		/// (IMFClock) - Fornece informações de temporização de um relógio no Microsoft Media Foundation.
 		/// </summary>
-		[CategoryAttribute("IMFClock - Informações de temporização.")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("8CE7A5EE-9C2F-40C3-A394-CE0C542696FC")]
 		public interface class ICarenMFClock : ICaren
 		{
@@ -289,13 +289,13 @@ namespace CarenRengine
 			/// Recupera as características do relógio.
 			/// </summary>
 			/// <param name="Param_Out_CaracteristicasClock">Recebe os flags com as características do relógio.</param>
-			CarenResult RecuperarCaracteristicas([Out] Enumeracoes::CA_CLOCK_CARACTERISTICAS% Param_Out_CaracteristicasClock);
+			CarenResult GetClockCharacteristics([Out] Enumeracoes::CA_CLOCK_CARACTERISTICAS% Param_Out_CaracteristicasClock);
 
 			/// <summary>
 			/// (Não Suportado Nativamente) - Recupera a chave de continuidade do relógio.
 			/// </summary>
 			/// <param name="Param_Out_Chave">Recebe a chave de continuidade.</param>
-			CarenResult RecuperarChaveContinuidade([Out] UInt32% Param_Out_Chave);
+			CarenResult GetContinuityKey([Out] UInt32% Param_Out_Chave);
 
 			/// <summary>
 			/// Recupera a hora do último relógio que foi correlacionada com a hora do sistema.
@@ -303,20 +303,20 @@ namespace CarenRengine
 			/// <param name="Param_ValorReservado">Valor reservado. Deve ser zero.</param>
 			/// <param name="Param_Out_ClockTime">Recebe o último tempo de relógio conhecido, em unidades de freqüência do relógio.</param>
 			/// <param name="Param_Out_NsSystemTime">Recebe a hora do sistema que corresponde ao tempo de relógio retornado em Param_Out_ClockTime, em unidades de 100 nanosegundos.</param>
-			CarenResult ObterHoraCorrelacionada(UInt32 Param_ValorReservado, [Out] Int64% Param_Out_ClockTime, [Out] Int64% Param_Out_NsSystemTime);
+			CarenResult GetCorrelatedTime(UInt32 Param_ValorReservado, [Out] Int64% Param_Out_ClockTime, [Out] Int64% Param_Out_NsSystemTime);
 
 			/// <summary>
 			/// Recupera as propriedades do relógio.
 			/// </summary>
 			/// <param name="Param_Out_PropriedadesRelogio">Retorna a estrutura que contém as propriedades do relógio atual.</param>
-			CarenResult ObterPropriedades([Out] CA_MFCLOCK_PROPERTIES^% Param_Out_PropriedadesRelogio);
+			CarenResult GetProperties([Out] CA_MFCLOCK_PROPERTIES^% Param_Out_PropriedadesRelogio);
 
 			/// <summary>
 			/// Recupera o estado atual do relógio.
 			/// </summary>
 			/// <param name="Param_ValorReservado">Valor reservado. Deve ser zero.</param>
 			/// <param name="Param_Out_EstadoRelogio">Retorna o valor da enumeração que define o estado atual do relógio.</param>
-			CarenResult ObterEstado(UInt32 Param_ValorReservado, [Out] Enumeracoes::CA_CLOCK_ESTADO% Param_Out_EstadoRelogio);
+			CarenResult GetState(UInt32 Param_ValorReservado, [Out] Enumeracoes::CA_CLOCK_ESTADO% Param_Out_EstadoRelogio);
 		};
 
 		/// <summary>
@@ -324,7 +324,7 @@ namespace CarenRengine
 		/// Essa é a interface que retorna o relogio real para as interfaces de tempo.
 		/// O relógio real é dado pela interface IMFClock -> ICarenMFClock.
 		/// </summary>
-		[CategoryAttribute("IMFPresentationTimeSource  - Fornece o tempo real do relógio.")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("93D71DA6-8431-4F8C-91E5-B323A165BA70")]
 		public interface class ICarenMFPresentationTimeSource : ICarenMFClock
 		{
@@ -343,14 +343,14 @@ namespace CarenRengine
 			/// gerar seus tempos de relógio.
 			/// </summary>
 			/// <param name="Param_Out_Relogio">Recebe a interface ICarenMFClock que representa um Relógio. O chamador deve liberar a interface.</param>
-			CarenResult ObterRelogioSubjacente([Out] ICarenMFClock^% Param_Out_Relogio);
+			CarenResult GetUnderlyingClock([Out] ICarenMFClock^% Param_Out_Relogio);
 		};
 
 		/// <summary>
 		/// (IMFClockStateSink) - Recebe notificações de alteração de estado do relógio de apresentação. Para receber notificações de alteração de estado do relógio de apresentação, implemente essa interface e 
-		/// chame o método (ICarenMFPresentationClock.RegistarObjetoNotificação) no relógio de apresentação.
+		/// chame o método (ICarenMFPresentationClock.AddClockStateSink) no relógio de apresentação.
 		/// </summary>
-		[CategoryAttribute("IMFClockStateSink - Interface que recebe eventos do Relógio.")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("A9FAE071-9C80-413F-AD9B-E71386810EA6")]
 		public interface class ICarenMFClockStateSink : ICaren
 		{
@@ -419,7 +419,7 @@ namespace CarenRengine
 		/// (IMFPresentationClock) - Interface responsável por representar uma relógio de apresentação que é usado para agendar
 		/// quando as amostras de mídia devem ser processadas e para sincronizar vários fluxos.
 		/// </summary>
-		[CategoryAttribute("IMFPresentationClock  - Relógio da apresentação para agendamento de amostras.")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("5D331E43-DA1F-44DE-81ED-DF5A7F61CA4D")]
 		public interface class ICarenMFPresentationClock : ICarenMFClock
 		{
@@ -436,39 +436,39 @@ namespace CarenRengine
 			/// Registra um objeto para ser notificado sempre que o relógio inicia, para, ou faz uma pausa ou muda a taxa.
 			/// </summary>
 			/// <param name="Param_InterfaceNotification">A interface que contém o objeto de notificação de eventos do Relógio.</param>
-			CarenResult RegistarObjetoNotificação(ICarenMFClockStateSink^ Param_InterfaceNotification);
+			CarenResult AddClockStateSink(ICarenMFClockStateSink^ Param_InterfaceNotification);
 
 			/// <summary>
 			/// Recupera a hora mais recente. O valor retornado é representado em unidades de 100 nanosegundos, ou seja, 1 segundo é representado
 			/// por 10^7(10 elevado a 7 potência), que equivale a 10Mhz.
 			/// </summary>
 			/// <param name="Param_Out_NsHoraRelogio">Recebe a hora do relógio atual em unidades de 100 nanosegundos.</param>
-			CarenResult ObterHora([Out] Int64% Param_Out_NsHoraRelogio);
+			CarenResult GetTime([Out] Int64% Param_Out_NsHoraRelogio);
 
 			/// <summary>
 			/// Recupera a fonte de tempo de apresentação do relógio.
 			/// </summary>
 			/// <param name="Param_Out_TimeSource">Recebe a interface que contém a Fonte de apreentação do relógio.</param>
-			CarenResult ObterFonteTempo([Out] ICarenMFPresentationTimeSource^% Param_Out_TimeSource);
+			CarenResult GetTimeSource([Out] ICarenMFPresentationTimeSource^% Param_Out_TimeSource);
 
 			/// <summary>
 			/// Pausa o tempo de apresentação. Enquanto o relógio está em pausa, o tempo do relógio não adianta,
-			/// e (ObterHora) do relógio retorna o tempo em que o relógio foi pausado.
+			/// e (GetTime) do relógio retorna o tempo em que o relógio foi pausado.
 			/// </summary>
-			CarenResult PausarRelogio();
+			CarenResult Pause();
 
 			/// <summary>
 			/// Cancela o registro de um objeto que está recebendo notificações de alteração de estado do relógio.
 			/// </summary>
 			/// <param name="Param_InterfaceNotification">Cancela o registro de notificação do relógio presente na interface de eventos.</param>
-			CarenResult CancelarRegistroObjetoNotificação(ICarenMFClockStateSink^ Param_InterfaceNotification);
+			CarenResult RemoveClockStateSink(ICarenMFClockStateSink^ Param_InterfaceNotification);
 
 			/// <summary>
 			/// Define a fonte de tempo para o tempo de apresentação. A fonte de tempo é o objeto que 
 			/// impulsiona o relógio, fornecendo a hora atual.
 			/// </summary>
 			/// <param name="Param_TimeSource">Define o tempo na fonte de tempo do relógio de apresentação.</param>
-			CarenResult DefinirFonteTempo(ICarenMFPresentationTimeSource^ Param_TimeSource);
+			CarenResult SetTimeSource(ICarenMFPresentationTimeSource^ Param_TimeSource);
 
 			/// <summary>
 			/// Começa o tempo de apresentação.
@@ -477,13 +477,13 @@ namespace CarenRengine
 			/// unidades de 100 nanosegundos. Se (Param_PosiçãoAtual) for True, desconsidere esse valor.</param>
 			/// <param name="Param_PosiçãoAtual">Define se deve iniciar a parti da posição atual. O valor de (Param_PosiçãoInicio) é desconsiderado
 			/// se esse valor for True.</param>
-			CarenResult IniciarRelogio(Int64 Param_PosiçãoInicio, Boolean Param_PosiçãoAtual);
+			CarenResult Start(Int64 Param_PosiçãoInicio, Boolean Param_PosiçãoAtual);
 
 			/// <summary>
 			/// Para o relógio de apresentação. Enquanto o relógio estiver parado, não adianta a hora do relógio e 
-			/// (ObterHora) método do relógio retorna zero.
+			/// (GetTime) método do relógio retorna zero.
 			/// </summary>
-			CarenResult PararRelogio();
+			CarenResult Stop();
 		};
 
 		/// <summary>
@@ -534,7 +534,7 @@ namespace CarenRengine
 		/// (IMFAttributes) - Fornece uma maneira genérica para armazenar pares Chave/Valor em um objeto. As chaves são GUIDs, e os valores podem ser qualquer um dos seguintes tipos de dados: 
 		/// UINT32, UINT64, Double, GUID, Cadeia de caracteres largos, Matriz de Byte.
 		/// </summary>
-		[CategoryAttribute("IMFAttributes - Armazenador de pares Chave/Valor em um objeto")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("FA2D7457-E082-410A-A38D-9FBE47F62AC2")]
 		public interface class ICarenMFAttributes : ICaren
 		{
@@ -552,7 +552,7 @@ namespace CarenRengine
 			/// <param name="Param_InterfaceCompare">A interface que vai ter todos os atributos comparado com a interface atual.</param>
 			/// <param name="Param_TipoComparação">O tipo de comparação a ser realizada.</param>
 			/// <param name="Param_Out_Resultado">O resultado da comparação segundo o parametro (Param_TipoComparação).</param>
-			CarenResult Comparar(ICarenMFAttributes^ Param_InterfaceCompare, Enumeracoes::CA_ATTRIBUTES_MATCH_TYPE Param_TipoComparação, [Out] Boolean% Param_Out_Resultado);
+			CarenResult Compare(ICarenMFAttributes^ Param_InterfaceCompare, Enumeracoes::CA_ATTRIBUTES_MATCH_TYPE Param_TipoComparação, [Out] Boolean% Param_Out_Resultado);
 
 			/// <summary>
 			/// Consulta se um valor de atributo armazenado é igual ao valor que está armazenado numa CA_PropVariant.
@@ -563,7 +563,7 @@ namespace CarenRengine
 			/// <param name="Param_GuidChave">Define o Guid do atributo a ter seu valor comparado com o valor da PropVariant informada.</param>
 			/// <param name="Param_Valor">O valor a ser comparado com o Atributo especificado.</param>
 			/// <param name="Param_Out_Resultado">O resultado da comparação do atributo.</param>
-			CarenResult CompararItem(String^ Param_GuidChave, CA_PropVariant^ Param_Valor, [Out] Boolean% Param_Out_Resultado);
+			CarenResult CompareItem(String^ Param_GuidChave, CA_PropVariant^ Param_Valor, [Out] Boolean% Param_Out_Resultado);
 
 			/// <summary>
 			/// (CopyAllItems) - Copia todos os atributos deste objeto em outro armazenamento de atributo.
@@ -572,19 +572,19 @@ namespace CarenRengine
 			/// para a amostra de destino. Você deve copiar esses valores para a nova amostra manualmente.
 			/// </summary>
 			/// <param name="Param_Out_InterfaceDestino">A interface de destino que vai receber os itens dessa interface.</param>
-			CarenResult CopiarTodosItens(ICarenMFAttributes^ Param_Out_InterfaceDestino);
+			CarenResult CopyAllItems(ICarenMFAttributes^ Param_Out_InterfaceDestino);
 
 			/// <summary>
 			/// Remove todos os pares chave/valor da lista de atributos do objeto.
 			/// </summary>
-			CarenResult DeletarTodosItens();
+			CarenResult DeleteAllItems();
 
 			/// <summary>
 			/// Remove um emparelhar chave/valor da lista de atributos do objeto.
 			/// Se a chave especificada não existir, o método retornar (SS_OK) da mesma forma.
 			/// </summary>
 			/// <param name="Param_GuidChave">O Guid da chave a ser deletada.</param>
-			CarenResult DeletarItem(String^ Param_GuidChave);
+			CarenResult DeleteItem(String^ Param_GuidChave);
 
 
 
@@ -598,7 +598,7 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_GuidChave">O GUID para chave que contém o Blob a ser obtido.</param>
 			/// <param name="Param_Out_Buffer">O buffer que contém os dados da matriz bytes do valor da chave solicitada.</param>
-			CarenResult ObterAlocaçãoBlob(String^ Param_GuidChave, [Out] CA_BlobData^% Param_Out_Buffer);
+			CarenResult GetAllocatedBlob(String^ Param_GuidChave, [Out] CA_BlobData^% Param_Out_Buffer);
 
 			/// <summary>
 			/// Obtém uma seqüência de caracteres largos associada a uma chave. 
@@ -607,7 +607,7 @@ namespace CarenRengine
 			/// <param name="Param_GuidChave">O GUID para chave que contém o Blob a ser obtido. O tipo de atributo deve ser MF_ATTRIBUTE_STRING.</param>
 			/// <param name="Param_Out_String">Retorna a string com os dados do valor da chave solicitada.</param>
 			/// <param name="Param_Out_LarguraString">Retorna a largura em bytes da matriz que continha a String.</param>
-			CarenResult ObterAlocaçãoString(String^ Param_GuidChave, [Out] String^% Param_Out_String, [Out] UInt32% Param_Out_LarguraString);
+			CarenResult GetAllocatedString(String^ Param_GuidChave, [Out] String^% Param_Out_String, [Out] UInt32% Param_Out_LarguraString);
 
 			/// <summary>
 			/// Recupera uma matriz de byte associada a uma chave. 
@@ -615,42 +615,42 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_GuidChave">O GUID para chave que contém o Blob a ser obtido.</param>
 			/// <param name="Param_Out_Buffer">O buffer que contém os dados da matriz bytes do valor da chave solicitada.</param>
-			/// <param name="Param_TamanhoBuffer">Define o tamanho da matriz em bytes do valor da chave a ser obtido. Chame o método (ObterBlobSize) para obter o valor para esse parametro.</param>
-			CarenResult ObterBlob(String^ Param_GuidChave, UInt32 Param_TamanhoBuffer, [Out] CA_BlobData^% Param_Out_Buffer);
+			/// <param name="Param_TamanhoBuffer">Define o tamanho da matriz em bytes do valor da chave a ser obtido. Chame o método (GetBlobSize) para obter o valor para esse parametro.</param>
+			CarenResult GetBlob(String^ Param_GuidChave, UInt32 Param_TamanhoBuffer, [Out] CA_BlobData^% Param_Out_Buffer);
 
 			/// <summary>
 			/// Recupera o comprimento de uma matriz de byte associado a uma chave.
 			/// </summary>
 			/// <param name="Param_GuidChave">O GUID para chave que contém o Blob a ser obtido. O tipo de atributo deve ser MF_ATTRIBUTE_BLOB.</param>
 			/// <param name="Param_Out_TamanhoBuffer">Recebe o tamanho da matriz que contem o valor da chave solicitada.</param>
-			CarenResult ObterBlobSize(String^ Param_GuidChave, [Out] UInt32% Param_Out_TamanhoBuffer);
+			CarenResult GetBlobSize(String^ Param_GuidChave, [Out] UInt32% Param_Out_TamanhoBuffer);
 
 			/// <summary>
 			/// Recupera o número de atributos que são definidos neste objeto.
 			/// </summary>
 			/// <param name="Param_QuantidadeAtributos">Recebe a quantidade de atributos na interface.</param>
-			CarenResult ObterCountAtributos([Out] UInt32% Param_QuantidadeAtributos);
+			CarenResult GetCount([Out] UInt32% Param_QuantidadeAtributos);
 
 			/// <summary>
 			/// Recupera um valor (Double) associado a uma chave.
 			/// </summary>
 			/// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (Double) obtido.</param>
 			/// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-			CarenResult ObterDouble(String^ Param_GuidChave, [Out] Double% Param_Out_Valor);
+			CarenResult GetDouble(String^ Param_GuidChave, [Out] Double% Param_Out_Valor);
 
 			/// <summary>
 			/// Recupera um valor GUID associado a uma chave.
 			/// </summary>
 			/// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (GUID) obtido.</param>
 			/// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-			CarenResult ObterGuid(String^ Param_GuidChave, [Out] String^% Param_Out_Valor);
+			CarenResult GetGUID(String^ Param_GuidChave, [Out] String^% Param_Out_Valor);
 
 			/// <summary>
 			/// Recupera o valor desconhecido associado a uma chave.
 			/// </summary>
 			/// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (CA_PropVariant) obtido.</param>
 			/// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-			CarenResult ObterItem(String^ Param_GuidChave, [Out] CA_PropVariant^% Param_Out_Valor);
+			CarenResult GetItem(String^ Param_GuidChave, [Out] CA_PropVariant^% Param_Out_Valor);
 
 			/// <summary>
 			/// Recupera um atributo no índice especificado.
@@ -658,22 +658,22 @@ namespace CarenRengine
 			/// <param name="Param_Out_GuidChave">Recebe o guid associado a chave obtida pelo id.</param>
 			/// <param name="Param_IdItem">O Id do item a ter o seu valor obtido.</param>
 			/// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-			CarenResult ObterItemPorIndex(UInt32 Param_IdItem, [Out] String^% Param_Out_GuidChave, [Out] CA_PropVariant^% Param_Out_Valor);
+			CarenResult GetItemByIndex(UInt32 Param_IdItem, [Out] String^% Param_Out_GuidChave, [Out] CA_PropVariant^% Param_Out_Valor);
 
 			/// <summary>
 			/// Recupera o tipo de dados do valor associado a uma chave.
 			/// </summary>
 			/// <param name="Param_GuidChave">O GUID para a chave a ser verificado o tipo do valor.</param>
 			/// <param name="Param_Out_TipoDado">O tipo do dado contido na chave solicitada.</param>
-			CarenResult ObterTipoDadosItem(String^ Param_GuidChave, [Out] Enumeracoes::CA_ATTRIBUTE_TYPE% Param_Out_TipoDado);
+			CarenResult GetItemType(String^ Param_GuidChave, [Out] Enumeracoes::CA_ATTRIBUTE_TYPE% Param_Out_TipoDado);
 
 			/// <summary>
 			/// Recupera uma sequência de caracteres largos associada a uma chave.
 			/// </summary>
 			/// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (String) obtido. O tipo de atributo deve ser MF_ATTRIBUTE_STRING.</param>
-			/// <param name="Param_LarguraString">A largura da string a ser recebida. Some +1 a esse valor. Para obter esse valor, chame o método: ObterLarguraString</param>
+			/// <param name="Param_LarguraString">A largura da string a ser recebida. Some +1 a esse valor. Para obter esse valor, chame o método: GetStringLength</param>
 			/// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada.</param>
-			CarenResult ObterString(String^ Param_GuidChave, UInt32 Param_LarguraString, [Out] String^% Param_Out_Valor);
+			CarenResult GetString(String^ Param_GuidChave, UInt32 Param_LarguraString, [Out] String^% Param_Out_Valor);
 
 			/// <summary>
 			/// Recupera o comprimento de um valor de cadeia de caracteres associado a uma chave.
@@ -681,21 +681,21 @@ namespace CarenRengine
 			/// <param name="Param_GuidChave">O GUID para a chave a ser consultada a largura da String. O tipo de atributo deve ser MF_ATTRIBUTE_STRING.</param>
 			/// <param name="Param_Out_Largura">Se a chave for encontrada e o valor é um tipo de sequência de caracteres, esse parâmetro recebe o número de caracteres na 
 			/// sequência de caracteres, não incluindo o caractere nulo de terminação</param>
-			CarenResult ObterLarguraString(String^ Param_GuidChave, [Out] UInt32% Param_Out_Largura);
+			CarenResult GetStringLength(String^ Param_GuidChave, [Out] UInt32% Param_Out_Largura);
 
 			/// <summary>
 			/// (GetUINT32) - Recupera um valor de UINT32 associado a uma chave.
 			/// </summary>
 			/// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (UINT32) obtido.</param>
 			/// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-			CarenResult ObterUINT32(String^ Param_GuidChave, [Out] UInt32% Param_Out_Valor);
+			CarenResult GetUINT32(String^ Param_GuidChave, [Out] UInt32% Param_Out_Valor);
 
 			/// <summary>
 			/// (GetUINT64) - Recupera um valor de UINT64 associado a uma chave.
 			/// </summary>
 			/// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (UINT64) obtido.</param>
 			/// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-			CarenResult ObterUINT64(String^ Param_GuidChave, [Out] UInt64% Param_Out_Valor);
+			CarenResult GetUINT64(String^ Param_GuidChave, [Out] UInt64% Param_Out_Valor);
 
 			/// <summary>
 			/// (MFGetAttributeRatio) - Recupera um valor UINT64 associado a uma chave.
@@ -721,12 +721,12 @@ namespace CarenRengine
 			/// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (Desconhecido) obtido.</param>
 			/// <param name="Param_GuidInterfaceSolicitada">O GUID para a interface a ser obtida da chave. Este GUID é um (IID).</param>
 			/// <param name="Param_Out_InterfaceDesconhecida">Recebe a interface com o ponteiro para o objeto desconhecido. O usuário deve criar a interface antes de chamar este método.</param>
-			CarenResult ObterPonteiroDesconhecido(String^ Param_GuidChave, String^ Param_GuidInterfaceSolicitada, ICaren^ Param_Out_InterfaceDesconhecida);
+			CarenResult GetUnknown(String^ Param_GuidChave, String^ Param_GuidInterfaceSolicitada, ICaren^ Param_Out_InterfaceDesconhecida);
 
 			/// <summary>
 			/// (LockStore) - Bloqueia o armazenamento de atributo para que nenhum outro thread possa acessá-lo.
 			/// </summary>
-			CarenResult BloquearArmazenamento();
+			CarenResult LockStore();
 
 
 
@@ -741,49 +741,49 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 			/// <param name="Param_Buffer">A matriz de bytes a ser associada a chave especificada.</param>
-			CarenResult DefinirBlob(String^ Param_GuidChave, cli::array<Byte>^ Param_Buffer);
+			CarenResult SetBlob(String^ Param_GuidChave, cli::array<Byte>^ Param_Buffer);
 
 			/// <summary>
 			/// Associa um valor duplo com uma chave.
 			/// </summary>
 			/// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 			/// <param name="Param_Valor">O valor a ser definido na chave especificada.</param>
-			CarenResult DefinirDouble(String^ Param_GuidChave, Double Param_Valor);
+			CarenResult SetDouble(String^ Param_GuidChave, Double Param_Valor);
 
 			/// <summary>
 			/// RAssocia um valor GUID com uma chave.
 			/// </summary>
 			/// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 			/// <param name="Param_Valor">O valor a ser definido na chave especificada.</param>
-			CarenResult DefinirGUID(String^ Param_GuidChave, String^ Param_Valor);
+			CarenResult SetGUID(String^ Param_GuidChave, String^ Param_Valor);
 
 			/// <summary>
 			/// Adiciona um valor de atributo com uma chave especificada.
 			/// </summary>
 			/// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 			/// <param name="Param_PropVariantValor">A PropVariant que contém o valor a ser definido na chave especificada.</param>
-			CarenResult DefinirItem(String^ Param_GuidChave, CA_PropVariant^ Param_PropVariantValor);
+			CarenResult SetItem(String^ Param_GuidChave, CA_PropVariant^ Param_PropVariantValor);
 
 			/// <summary>
 			/// Associa uma seqüência de caracteres largos com uma chave.
 			/// </summary>
 			/// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 			/// <param name="Param_Valor">O valor a ser definido na chave especificada.</param>
-			CarenResult DefinirString(String^ Param_GuidChave, String^ Param_Valor);
+			CarenResult SetString(String^ Param_GuidChave, String^ Param_Valor);
 
 			/// <summary>
 			/// Associa um valor de UINT32 com uma chave.
 			/// </summary>
 			/// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 			/// <param name="Param_Valor">O valor a ser definido na chave especificada.</param>
-			CarenResult DefinirUINT32(String^ Param_GuidChave, UInt32 Param_Valor);
+			CarenResult SetUINT32(String^ Param_GuidChave, UInt32 Param_Valor);
 
 			/// <summary>
 			/// Associa um UInt64 valor com uma chave.
 			/// </summary>
 			/// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 			/// <param name="Param_Valor">O valor a ser definido na chave especificada.</param>
-			CarenResult DefinirUINT64(String^ Param_GuidChave, UInt64 Param_Valor);
+			CarenResult SetUINT64(String^ Param_GuidChave, UInt64 Param_Valor);
 
 			/// <summary>
 			/// (MFSetAttributeRatio) - Associa um valor UInt64 com uma chave.
@@ -810,19 +810,19 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 			/// <param name="Param_InterfaceDesconhecida">A interface desconhecida a ser definida no valor da chave solicitada.</param>
-			CarenResult DefinirPonteiroDesconhecido(String^ Param_GuidChave, ICaren^ Param_InterfaceDesconhecida);
+			CarenResult SetUnknown(String^ Param_GuidChave, ICaren^ Param_InterfaceDesconhecida);
 
 			/// <summary>
 			/// (UnlockStore) - Desbloqueia o armazenamento de atributo após uma chamada para o método (BloquearAtributo). 
 			/// Enquanto o objeto é desbloqueado, Múltiplos threads podem acessar atributos do objeto.
 			/// </summary>
-			CarenResult DesbloquearAtributo();
+			CarenResult UnlockStore();
 		};
 
 		/// <summary>
 		/// (IMFAsyncResult) - Fornece informações sobre o resultado de uma operação assíncrona.
 		/// </summary>
-		[CategoryAttribute("IMFAsyncResult - Contém o resultado de uma operação assincrona.")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("CAC9CAC9-B241-43DC-8DA8-94EB8A08EB78")]
 		public interface class ICarenMFAsyncResult : ICaren
 		{
@@ -845,37 +845,37 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_Out_Objeto">Recebe a interface com o objeto desconhecido. Se nenhum objeto estiver associado à operação, esse parâmetro receberá o valor NULO. 
 			/// Se o valor não for NULO, o chamador deverá liberar a interface. O usuário deve criar a interface antes de chamar este método.</param>
-			CarenResult ObterObjeto(ICaren^ Param_Out_Objeto);
+			CarenResult GetObject(ICaren^ Param_Out_Objeto);
 
 			/// <summary>
 			/// (GetState) - Retorna o objeto de estado especificado pelo chamador no método Begin assíncrono.
 			/// O chamador do método assíncrono especifica o objeto de estado e pode usá-lo para qualquer finalidade definida pelo responsável da chamada. O objeto de estado pode ser NULO.
 			/// </summary>
 			/// <param name="Param_Out_ObjetoEstado">Recebe a interface com o objeto desconhecido. Se o valor não for NULO, o chamador deverá liberar a interface. O usuário deve criar a interface antes de chamar este método.</param>
-			CarenResult ObterEstado(ICaren^ Param_Out_ObjetoEstado);
+			CarenResult GetState(ICaren^ Param_Out_ObjetoEstado);
 
 			/// <summary>
 			/// (GetStateNoAddRef) - Retorna o objeto de estado especificado pelo chamador no método assíncrono Begin, sem incrementar a contagem de referência do objeto.
 			/// </summary>
 			/// <param name="Param_Out_ObjetoEstado">Recebe a interface com o objeto desconhecido. Se o valor não for NULO, o chamador deverá liberar a interface. O usuário deve criar a interface antes de chamar este método.</param>
-			CarenResult ObterEstadoNoAddRef(ICaren^ Param_Out_ObjetoEstado);
+			CarenResult GetStateNoAddRef(ICaren^ Param_Out_ObjetoEstado);
 
 			/// <summary>
 			/// (GetStatus) - Retorna o status da operação assíncrona.
 			/// </summary>
-			CarenResult ObterStatus();
+			CarenResult GetStatus();
 
 			/// <summary>
 			/// (SetStatus) - Define o status da operação assíncrona.
 			/// </summary>
 			/// <param name="Param_HRESULT">O código HRESULT que vai definir o status geral da operação.</param>
-			CarenResult DefinirStatus(int Param_HRESULT);
+			CarenResult SetStatus(int Param_HRESULT);
 		};
 
 		/// <summary>
 		/// (IMFAsyncCallback) - Interface de retorno de chamada para notificar o aplicativo quando um método assíncrono for concluído.
 		/// </summary>
-		[CategoryAttribute("IMFAsyncCallback - Interface de retorna de chamada para métodos assincronos.")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("A9EE4C92-7062-4D1A-8468-A9FCD269DDA1")]
 		public interface class ICarenMFAsyncCallback : ICaren
 		{
@@ -945,7 +945,7 @@ namespace CarenRengine
 		/// <summary>
 		/// (IMFMediaEvent) - Representa um evento gerado por um objeto do Media Foundation. Use essa interface para obter informações sobre o evento.
 		/// </summary>
-		[CategoryAttribute("IMFMediaEvent - Representa um evento gerado por um objeto do Media Event.")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("0EDC6D22-20F5-44D7-B6B9-EA8A2A321D49")]
 		public interface class ICarenMFMediaEvent : ICaren, ICarenMFAttributes
 		{
@@ -964,34 +964,34 @@ namespace CarenRengine
 			/// (GetStatus) - Recupera um HRESULT que especifica o status do evento.
 			/// </summary>
 			/// <param name="Param_Out_HResultCode">Recebe o código de status do evento.</param>
-			CarenResult ObterStatus([Out] int% Param_Out_HResultCode);
+			CarenResult GetStatus([Out] int% Param_Out_HResultCode);
 
 			/// <summary>		
 			/// (GetType) - Recupera o tipo de evento. O tipo de evento indica o que aconteceu para acionar o evento. Também define o significado do valor do evento.
 			/// </summary>
 			/// <param name="Param_Out_TipoEvento">Recebe a enumeração que define o tipo do evento gerado.</param>
-			CarenResult ObterTipo([Out] Enumeracoes::CA_MediaEventType% Param_Out_TipoEvento);
+			CarenResult GetType([Out] Enumeracoes::CA_MediaEventType% Param_Out_TipoEvento);
 
 			/// <summary>
 			/// (GetExtendedType) - Recupera o tipo estendido do evento. Utilizado para da suporte a eventos personalizados.
 			/// </summary>
 			/// <param name="Param_Out_GuidExtendedType">Recebe o guid para o tipo extendido do evento.</param>
-			CarenResult ObterTipoExtendido([Out] String^% Param_Out_GuidExtendedType);
+			CarenResult GetExtendedType([Out] String^% Param_Out_GuidExtendedType);
 
 			/// <summary>
 			/// (GetValue) - Recupera o valor associado ao evento, se houver. O valor é recuperado como uma estrutura CA_PropVariant. O tipo de dados real e o significado do valor 
 			/// dependem do evento.
 			/// </summary>
 			/// <param name="Param_Out_ValorEvento">Recebe a PropVariant que contém o valor associado ao evento. Nem todos eventos possuem valores.</param>
-			CarenResult ObterValor([Out] CA_PropVariant^% Param_Out_ValorEvento);
+			CarenResult GetValue([Out] CA_PropVariant^% Param_Out_ValorEvento);
 		};
 
 		/// <summary>
 		/// (IMFMediaEventGenerator) - Recupera eventos de qualquer objeto do Media Foundation que gera eventos.
-		/// Um objeto que suporta essa interface mantém uma fila de eventos. O cliente do objeto pode recuperar os eventos de forma síncrona ou assíncrona. O método síncrono é (ObterEvento). 
-		/// Os métodos assíncronos são SolicitarProximoEvento e ConcluirSolicitaçãoEvento.
+		/// Um objeto que suporta essa interface mantém uma fila de eventos. O cliente do objeto pode recuperar os eventos de forma síncrona ou assíncrona. O método síncrono é (GetEvent). 
+		/// Os métodos assíncronos são BeginGetEvent e EndGetEvent.
 		/// </summary>
-		[CategoryAttribute("IMFMediaEventGenerator - Gerenciador de eventos de objetos do Media Foundation.")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("266CD5F0-C874-4BCA-8CE4-1440A35CB816")]
 		public interface class ICarenMFMediaEventGenerator : ICaren
 		{
@@ -1015,7 +1015,7 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_Flags">Especifica como deve obter o evento.</param>
 			/// <param name="Param_Out_MidiaEvent">Recebe a interface que contém as informações da operação assincrona para o evento notificado. O chamador deve liberar a interface.</param>
-			CarenResult ObterEvento(Enumeracoes::CA_FLAGS_OBTER_EVENTO Param_Flags, [Out] ICarenMFMediaEvent^% Param_Out_MidiaEvent);
+			CarenResult GetEvent(Enumeracoes::CA_FLAGS_OBTER_EVENTO Param_Flags, [Out] ICarenMFMediaEvent^% Param_Out_MidiaEvent);
 
 			/// <summary>
 			/// (BeginGetEvent) - Inicia uma solicitação assíncrona para o próximo evento na fila.
@@ -1024,22 +1024,22 @@ namespace CarenRengine
 			/// <param name="Param_Callback">A interface que vai receber os eventos que seram gerados pelas interfaces que derivam desta.</param>
 			/// <param name="Param_ObjetoDesconhecido">Uma interface ICaren de um objeto de estado, definido pelo chamador. Este parâmetro pode ser NULO. Você pode usar esse objeto para armazenar 
 			/// informações de estado. O objeto é retornado ao responsável pela chamada quando o retorno de chamada é invocado.</param>
-			CarenResult SolicitarProximoEvento(ICarenMFAsyncCallback^ Param_Callback, ICaren^ Param_ObjetoDesconhecido);
+			CarenResult BeginGetEvent(ICarenMFAsyncCallback^ Param_Callback, ICaren^ Param_ObjetoDesconhecido);
 
 			/// <summary>
 			/// (EndGetEvent) - Conclui uma solicitação (Assíncrona) para o próximo evento na fila.
 			/// </summary>
 			/// <param name="Param_ResultAsync">A interface ICarenMFAsyncResult. Essa interface deve ser a retornada pelo Evento (OnInvoke).</param>
 			/// <param name="Param_Out_MidiaEvent">Recebe a interface que contém as informações da operação assincrona para o evento notificado. O chamador deve liberar a interface.</param>
-			CarenResult ConcluirSolicitaçãoEvento(ICarenMFAsyncResult^ Param_ResultAsync, [Out] ICarenMFMediaEvent^% Param_Out_MidiaEvent);
+			CarenResult EndGetEvent(ICarenMFAsyncResult^ Param_ResultAsync, [Out] ICarenMFMediaEvent^% Param_Out_MidiaEvent);
 
 			/// <summary>
 			/// (QueueEvent) - Coloca um novo evento na fila do objeto.
 			/// </summary>
-			/// <param name="Param_TipoEvento">Especifica o tipo do evento. O tipo do evento é retornado pelo método (ICarenMFMediaEvent.ObterTipo).</param>
-			/// <param name="Param_GuidExtendedType">O tipo estendido. Se o evento não tiver um tipo estendido, defina como NULO. O tipo estendido é retornado pelo método (ICarenMFMediaEvent.ObterTipoExtendido) do evento.</param>
-			/// <param name="Param_HResultCode">Um código de sucesso ou falha indicando o status do evento. Esse valor é retornado pelo método (ICarenMFMediaEvent.ObterStatus) do evento.</param>
-			/// <param name="Param_Dados">uma CA_PropVariant que contém o valor do evento. Este parâmetro pode ser NULO. Esse valor é retornado pelo método (ICarenMFMediaEvent.ObterValor) do evento.</param>
+			/// <param name="Param_TipoEvento">Especifica o tipo do evento. O tipo do evento é retornado pelo método (ICarenMFMediaEvent.GetType).</param>
+			/// <param name="Param_GuidExtendedType">O tipo estendido. Se o evento não tiver um tipo estendido, defina como NULO. O tipo estendido é retornado pelo método (ICarenMFMediaEvent.GetExtendedType) do evento.</param>
+			/// <param name="Param_HResultCode">Um código de sucesso ou falha indicando o status do evento. Esse valor é retornado pelo método (ICarenMFMediaEvent.GetStatus) do evento.</param>
+			/// <param name="Param_Dados">uma CA_PropVariant que contém o valor do evento. Este parâmetro pode ser NULO. Esse valor é retornado pelo método (ICarenMFMediaEvent.GetValue) do evento.</param>
 			CarenResult InserirEventoFila(Enumeracoes::CA_MediaEventType Param_TipoEvento, String^ Param_GuidExtendedType, Int32 Param_HResultCode, CA_PropVariant^ Param_Dados);
 		};
 
@@ -1047,7 +1047,7 @@ namespace CarenRengine
 		/// (IMFMediaType) - Interface responsável por representar um tipo de mídia que descreve o formato de um fluxo de mídia. Negocia formatos de mídia entre as interfaces do (Media Foundation) e descobre 
 		/// o formato de um arquivo de mídia ou fluxo.
 		/// </summary>
-		[CategoryAttribute("IMFMediaType - Representa uma descrição de midia.")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("B3D4DF6C-271E-4509-9E11-627518A65ED9")]
 		public interface class ICarenMFMediaType : ICarenMFAttributes, ICarenMidiaExtensões
 		{
@@ -1065,13 +1065,13 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_Out_GuidTipoMidia">Retorna o GUID do tipo principal da mídia.</param>
 			/// <param name="Param_Out_TipoPrincipal">Retorna a enumeração com o tipo principal da mídia.</param>
-			CarenResult ObterTipoPrincipal([Out] String^% Param_Out_GuidTipoMidia, [Out] Enumeracoes::CA_Midia_TipoPrincipal% Param_Out_TipoPrincipal);
+			CarenResult GetMajorType([Out] String^% Param_Out_GuidTipoMidia, [Out] Enumeracoes::CA_Midia_TipoPrincipal% Param_Out_TipoPrincipal);
 
 			/// <summary>
 			/// (IsCompressedFormat) - Consulta se o tipo de mídia é um formato compactado(CompressedFormat).
 			/// </summary>
 			/// <param name="Param_Out_FormatoCompactado">Retorna se o formato da mídia está compactado.</param>
-			CarenResult FormatoCompactado([Out] Boolean% Param_Out_FormatoCompactado);
+			CarenResult IsCompressedFormat([Out] Boolean% Param_Out_FormatoCompactado);
 
 			/// <summary>
 			/// (IsEqual) - Compara dois tipos de mídia e determina se eles são idênticos. 
@@ -1079,14 +1079,14 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_MidiaCompare">A interface a ser comparada com a atual.</param>
 			/// <param name="Param_Out_ResultadoCompare">O resultado da comparação dos objetos.</param>
-			CarenResult CompararMidiaTypes(ICarenMFMediaType^ Param_MidiaCompare, [Out] Enumeracoes::CA_MEDIA_TYPE_EQUAL% Param_Out_ResultadoCompare);
+			CarenResult IsEqual(ICarenMFMediaType^ Param_MidiaCompare, [Out] Enumeracoes::CA_MEDIA_TYPE_EQUAL% Param_Out_ResultadoCompare);
 		};
 
 		/// <summary>
 		/// (IMFMediaTypeHandler) - Interface responsável por manipular os Tipos de midia entre as interfaces do Media Foundation.
 		/// Essa interface é a responsável por definir um (ICarenMFMediaType) para Leituras, Gravações em fluxos de midia.
 		/// </summary>
-		[CategoryAttribute("IMFMediaTypeHandler - Manipula os tipos de midia")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("4F53961B-71F3-4190-9530-63060FDBE567")]
 		public interface class ICarenMFMediaTypeHandler : ICaren
 		{
@@ -1104,27 +1104,27 @@ namespace CarenRengine
 			/// (GetCurrentMediaType) - Recupera o tipo de mídia atual do objeto.
 			/// </summary>
 			/// <param name="Param_Out_MidiaType">Retorna o Tipo de midia atual.</param>
-			CarenResult ObterTipoMidiaAtual([Out] ICarenMFMediaType^% Param_Out_MidiaType);
+			CarenResult GetCurrentMediaType([Out] ICarenMFMediaType^% Param_Out_MidiaType);
 
 			/// <summary>
 			/// (GetMajorType) - Obtém o tipo de mídia principal do objeto.
 			/// </summary>
 			/// <param name="Param_Out_GuidMidiaPrincipal">Retorna o GUID do tipo da mídia principal.</param>
 			/// <param name="Param_Out_TipoPrincipal">Retorna a enumeração que define o tipo principal da mídia.</param>
-			CarenResult ObterTipoMidiaPrincipal([Out] String^% Param_Out_GuidMidiaPrincipal, [Out] Enumeracoes::CA_Midia_TipoPrincipal% Param_Out_TipoPrincipal);
+			CarenResult GetMajorType([Out] String^% Param_Out_GuidMidiaPrincipal, [Out] Enumeracoes::CA_Midia_TipoPrincipal% Param_Out_TipoPrincipal);
 
 			/// <summary>
 			/// (GetMediaTypeByIndex) - Recupera um tipo de mídia da lista do objeto de tipos de mídia com suporte.
 			/// </summary>
-			/// <param name="Param_Id">Índice baseado em zero do tipo de mídia para recuperar. Para obter o número de tipos de mídia na lista, chame o método (ObterCountTiposMidia).</param>
+			/// <param name="Param_Id">Índice baseado em zero do tipo de mídia para recuperar. Para obter o número de tipos de mídia na lista, chame o método (GetMediaTypeCount).</param>
 			/// <param name="Param_Out_MidiaType">Retorna o tipo da mídia no Id especificado.</param>
-			CarenResult ObterTipoMidiaPorIndex(UInt32 Param_Id, [Out] ICarenMFMediaType^% Param_Out_MidiaType);
+			CarenResult GetMediaTypeByIndex(UInt32 Param_Id, [Out] ICarenMFMediaType^% Param_Out_MidiaType);
 
 			/// <summary>
 			/// (GetMediaTypeCount) - Recupera o número de tipos de mídia na lista do objeto de tipos de mídia com suporte.
 			/// </summary>
 			/// <param name="Param_Out_Quantidade">Retorna a quantidade de tipos de mídia na interface.</param>
-			CarenResult ObterCountTiposMidia([Out] UInt32% Param_Out_Quantidade);
+			CarenResult GetMediaTypeCount([Out] UInt32% Param_Out_Quantidade);
 
 			/// <summary>
 			/// (IsMediaTypeSupported) - Consulta se o objeto oferece suporte a um tipo de mídia especificado.
@@ -1136,7 +1136,7 @@ namespace CarenRengine
 			/// <param name="Param_MidiaType">O Tipo de mídia a ser verificado se é suportado pela (Fonte de mídia ou Pelo Coletor de Mídia) que gerou essa interface.</param>
 			/// <param name="Param_Out_MidiaAproximada">Recebe o tipo de mídia que pode se aproximar ou não da mídia verificada. 
 			/// Se o método retorna sucesso, valor dessa parametro é (NULO).</param>
-			CarenResult VerificarTipoMidiaSuportado(ICarenMFMediaType^ Param_MidiaType, [Out] ICarenMFMediaType^% Param_Out_MidiaAproximada);
+			CarenResult IsMediaTypeSupported(ICarenMFMediaType^ Param_MidiaType, [Out] ICarenMFMediaType^% Param_Out_MidiaAproximada);
 
 			/// <summary>
 			/// (SetCurrentMediaType) - Define o tipo de mídia do objeto.
@@ -1145,7 +1145,7 @@ namespace CarenRengine
 			/// coletor pode receber dados que está de acordo com esse tipo de mídia.
 			/// </summary>
 			/// <param name="Param_MidiaType">O tipo de mídia a ser definido no objeto.</param>
-			CarenResult DefinirTipoMidiaAtual(ICarenMFMediaType^ Param_MidiaType);
+			CarenResult SetCurrentMediaType(ICarenMFMediaType^ Param_MidiaType);
 		};
 
 		/// <summary>
@@ -1154,7 +1154,7 @@ namespace CarenRengine
 		/// para a interface (IDirect3DSurface9) ou (IMF2DBuffer), representada pela Interface (ICarenDirect3DSurface9) e (ICarenMFMedia2DBuffer). 
 		/// Chamadas para Lock, sendo que o Buffer contém (Imagems 2D), pode gerar um aumento de memória interna desnecessária.
 		/// </summary>
-		[CategoryAttribute("IMFMediaBuffer - Contém buffers de dados de midia.")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("124E1685-0A18-442A-A0C7-6EA86C274F4D")]
 		public interface class ICarenMFMediaBuffer : ICaren
 		{
@@ -1172,17 +1172,17 @@ namespace CarenRengine
 			/// Recupera o comprimento dos dados válidos no buffer.
 			/// </summary>
 			/// <param name="Param_Out_LarguraAtual">Recebe o comprimento dos dados válidos, em bytes. Se o buffer não contiver nenhum dado válido, o valor será zero.</param>
-			CarenResult ObterLarguraAtual([Out] UInt32% Param_Out_LarguraAtual);
+			CarenResult GetCurrentLength([Out] UInt32% Param_Out_LarguraAtual);
 
 
 			/// <summary>
 			/// Recupera o Dimensionar alocado do buffer. Esse o valor da largura total
 			/// de dados que podem ser adicioandos. Se o buffer conter dados, a largura dos dados
-			/// podem ser menor que a lagrura máxima. Consulte (ObterLarguraAtual) para obter o 
+			/// podem ser menor que a lagrura máxima. Consulte (GetCurrentLength) para obter o 
 			/// valor real da largura dos dados neste Buffer.
 			/// </summary>
 			/// <param name="Param_Out_LarguraMaxima">Recebe a largura total de dados que esse buffer pode conter.</param>
-			CarenResult ObterLarguraMaxima([Out] UInt32% Param_Out_LarguraMaxima);
+			CarenResult GetMaxLength([Out] UInt32% Param_Out_LarguraMaxima);
 
 
 			/// <summary>
@@ -1209,8 +1209,8 @@ namespace CarenRengine
 			/// ATENÇÃO: Chame esse método se você gravar dados no buffer.
 			/// </summary>
 			/// <param name="Param_LarguraAtual">Comprimento dos dados válidos, em bytes. Esse valor não pode ser maior do que o tamanho alocado do buffer,
-			/// que é retornado pelo método (ObterLarguraMaxima).</param>
-			CarenResult DefinirLarguraAtual(UInt32 Param_LarguraAtual);
+			/// que é retornado pelo método (GetMaxLength).</param>
+			CarenResult SetCurrentLength(UInt32 Param_LarguraAtual);
 		};
 
 		/// <summary>
@@ -1220,7 +1220,7 @@ namespace CarenRengine
 		/// A passada pode ser maior do que a largura da imagem, porque a superfície pode conter bytes de preenchimento após cada linha de pixels.
 		/// (Stride) também pode ser (Negativo), se os pixels são orientados (bottom-up) na memória
 		/// </summary>
-		[CategoryAttribute("IMF2DBuffer - Contém buffers 2D exclusivamente de Video.")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("B3902CBD-7049-4A7E-AA78-3E66CE9AA524")]
 		public interface class ICarenMFMedia2DBuffer : ICaren
 		{
@@ -1238,22 +1238,22 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_BufferContiguo">A interface que contém um buffer com os dados contiguou a serem copiados.</param>
 			/// <param name="Param_LarguraBuffer">A largura do buffer a ser copiado.</param>
-			CarenResult CopiarBufferContiguouDe(ICarenBuffer^ Param_BufferContiguo, UInt32 Param_LarguraBuffer);
+			CarenResult ContiguousCopyFrom(ICarenBuffer^ Param_BufferContiguo, UInt32 Param_LarguraBuffer);
 
 
 			/// <summary>
 			/// (ContiguousCopyTo) - Copia esse buffer no buffer do chamador, convertendo os dados em formato contíguo(Único).
 			/// </summary>
 			/// <param name="Param_DestinoBufferContiguou">A interface que vai receber o buffer de dados do objeto atual.</param>
-			/// <param name="Param_LarguraBufferDestino">O tamanho do buffer de destino. Obtenha esse valor chamando o método (ObterLarguraContiguou).</param>
-			CarenResult CopiarBufferContiguouPara(ICarenBuffer^% Param_DestinoBufferContiguou, UInt32 Param_LarguraBufferDestino);
+			/// <param name="Param_LarguraBufferDestino">O tamanho do buffer de destino. Obtenha esse valor chamando o método (GetContiguousLength).</param>
+			CarenResult ContiguousCopyTo(ICarenBuffer^% Param_DestinoBufferContiguou, UInt32 Param_LarguraBufferDestino);
 
 			/// <summary>
 			/// (GetContiguousLength) - Recupera o número de bytes necessários para armazenar os dados do buffer 
 			/// em formato contíguo.
 			/// </summary>
 			/// <param name="Param_Out_LarguraBufferContiguou">Recebe a largura do Buffer Contiguou.</param>
-			CarenResult ObterLarguraContiguou([Out] UInt32% Param_Out_LarguraBufferContiguou);
+			CarenResult GetContiguousLength([Out] UInt32% Param_Out_LarguraBufferContiguou);
 
 
 			/// <summary>
@@ -1263,14 +1263,14 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_Out_ByteBufferPrimeiraLinha">Recebe uma Interface de buffer para o primeiro byte da linha superior de pixels na imagem..</param>
 			/// <param name="Param_Out_Stride">Recebe o stride, em bytes.</param>
-			CarenResult ObterBufferAndSuperficeStride([Out] ICarenBuffer^% Param_Out_ByteBufferPrimeiraLinha, [Out] Int64% Param_Out_Stride);
+			CarenResult GetScanline0AndPitch([Out] ICarenBuffer^% Param_Out_ByteBufferPrimeiraLinha, [Out] Int64% Param_Out_Stride);
 
 
 			/// <summary>
 			/// (IsContiguousFormat) - Consulta se o buffer é contíguo em seu (formato nativo).
 			/// </summary>
 			/// <param name="Param_Out_BufferContiguou">Retorna true se o formato nativo deste buffer é: Contiguou.</param>
-			CarenResult IsBufferFormatoContiguou([Out] Boolean% Param_Out_BufferContiguou);
+			CarenResult IsContiguousFormat([Out] Boolean% Param_Out_BufferContiguou);
 
 
 			/// <summary>
@@ -1294,7 +1294,7 @@ namespace CarenRengine
 		/// (IMF2DBuffer2) - Interface responsável por representar um buffer que contém uma superfície bidimensional, como um quadro de vídeo.
 		/// Essa interface extende os métodos da interface base (ICarenMFMedia2DBuffer) e adiciona uma versão mais segura do método (Lock2D).
 		/// </summary>
-		[CategoryAttribute("IMF2DBuffer2 - Extende a interface IMF2DBuffer.")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("5E6AA0AA-0E58-42E7-9FC3-EF516E52C134")]
 		public interface class ICarenMFMedia2DBuffer2 : ICarenMFMedia2DBuffer
 		{
@@ -1312,7 +1312,7 @@ namespace CarenRengine
 			/// (Copy2DTo) - Copia o buffer para outro objeto de buffer 2D.
 			/// </summary>
 			/// <param name="Param_Interface2DBufferDestino">A interface de destino que vai receber o buffer.</param>
-			CarenResult Copiar2DBufferPara(ICarenMFMedia2DBuffer2^% Param_Interface2DBufferDestino);
+			CarenResult Copy2DTo(ICarenMFMedia2DBuffer2^% Param_Interface2DBufferDestino);
 
 			/// <summary>
 			/// (Lock2DSize) - Fornece o acesso do chamador para a memória no buffer.
@@ -1335,7 +1335,7 @@ namespace CarenRengine
 		/// (IMFSample) - Representa uma amosta de midia. Pode ser Video ou Áudio. Utilize essa interface para obter e gerenciar as Amostras de midia do sistema. Amostras de Vídeo, devem 
 		/// ter seus Buffers de midia (Consultados) para interfaces 2D ou Superfices do DirectX, antes de fazer chamadas para (Lock) na interface (ICarenMFMediaBuffer) .
 		/// </summary>
-		[CategoryAttribute("IMFSample - Contém amostras de dados de midia.")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("06BFA703-3BFF-4878-A2E9-C45EDCF4EB20")]
 		public interface class ICarenMFSample : ICarenMFAttributes, ICarenMidiaExtensões
 		{
@@ -1355,7 +1355,7 @@ namespace CarenRengine
 			/// Em geral, armazenar vários buffers em uma amostra é desencorajado.
 			/// </summary>
 			/// <param name="Param_NovoBuffer">A interface que contém o novo buffer a ser adicionado.</param>
-			CarenResult AdicionarMediaBuffer(ICarenMFMediaBuffer^ Param_NovoBuffer);
+			CarenResult AddBuffer(ICarenMFMediaBuffer^ Param_NovoBuffer);
 
 			/// <summary>
 			/// Converte um exemplo com (Múltiplo Buffers) em um exemplo com um único buffer.
@@ -1363,7 +1363,7 @@ namespace CarenRengine
 			/// Se o exemplo conter apenas 1 Buffer, o sistema vai retornar uma interface para o mesmo.
 			/// </summary>
 			/// <param name="Param_Out_SingleBuffer">Retorna a interface(ICarenMFMediaBuffer) que contém o (Single Buffer).</param>
-			CarenResult ConverterParaSingleBuffer([Out] ICarenMFMediaBuffer^% Param_Out_SingleBuffer);
+			CarenResult ConvertToContiguousBuffer([Out] ICarenMFMediaBuffer^% Param_Out_SingleBuffer);
 
 			/// <summary>
 			/// Copia os dados de exemplo para um buffer. Este método conforma os 
@@ -1371,7 +1371,7 @@ namespace CarenRengine
 			/// Obtenha a (Largura Total) do (Buffer de Destino) para saber se o mesmo tem (Capacidade) para alocar os dados a serem copiados.
 			/// </summary>
 			/// <param name="Param_BufferDestino">A interface que que vai receber o buffer a ser copiado.</param>
-			CarenResult CopiarParaBuffer(ICarenMFMediaBuffer^% Param_BufferDestino);
+			CarenResult CopyToBuffer(ICarenMFMediaBuffer^% Param_BufferDestino);
 
 			/// <summary>
 			/// Obtém um buffer da amostra, por índice.
@@ -1379,69 +1379,69 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_IdBuffer">O Id baseado em 0, do buffer que se quer obter na amostra.</param>
 			/// <param name="Param_Out_Buffer">Recebe a interface(ICarenMFMediaBuffer) com o buffer no id requisitado.</param>
-			CarenResult ObterBufferPorIndex(UInt32 Param_IdBuffer, [Out] ICarenMFMediaBuffer^% Param_Out_Buffer);
+			CarenResult GetBufferByIndex(UInt32 Param_IdBuffer, [Out] ICarenMFMediaBuffer^% Param_Out_Buffer);
 
 			/// <summary>
 			/// Recupera o número de buffers na amostra.
 			/// </summary>
 			/// <param name="Param_Out_QuantidadeBuffers">Contém o valor com a quantidade de Buffers na Amostra.</param>
-			CarenResult ObterCountBuffers([Out] UInt32% Param_Out_QuantidadeBuffers);
+			CarenResult GetBufferCount([Out] UInt32% Param_Out_QuantidadeBuffers);
 
 			/// <summary>
 			/// Recupera a duração do exemplo.
 			/// </summary>
 			/// <param name="Param_Out_DuraçãoAmostra">Contém a duração da Amostra em: Unidades de 100 nanosegundos.</param>
-			CarenResult ObterDuraçãoAmostra([Out] Int64% Param_Out_DuraçãoAmostra);
+			CarenResult GetSampleDuration([Out] Int64% Param_Out_DuraçãoAmostra);
 
 			/// <summary>
 			/// Recupera os sinalizadores associados com o exemplo. Atualmente não há 
 			/// sinalizadores definidos.
 			/// </summary>
 			/// <param name="Param_Out_Flags">Como não há atualmente nenhuma flags definida, o retorno é 0.</param>
-			CarenResult ObterFlagsAmostra([Out] UInt32% Param_Out_Flags);
+			CarenResult GetSampleFlags([Out] UInt32% Param_Out_Flags);
 
 			/// <summary>
 			/// Recupera o tempo de apresentação da amostra.
 			/// </summary>
 			/// <param name="Param_Out_TempoApresentacao">Contém o tempo de apresentação em: Unidades de 100 nanosegundos.</param>
-			CarenResult ObterTempoApresentaçãoAmostra([Out] Int64% Param_Out_TempoApresentacao);
+			CarenResult GetSampleTime([Out] Int64% Param_Out_TempoApresentacao);
 
 			/// <summary>
 			/// Recupera o comprimento total dos dados válidos em todos os buffers na amostra. 
 			/// O comprimento é calculado como a soma dos valores recuperados pelo método
-			/// ICarenMFMediaBuffer.ObterLarguraAtual.
+			/// ICarenMFMediaBuffer.GetCurrentLength.
 			/// </summary>
 			/// <param name="Param_Out_LarguraTotal">Recebe o comprimento total dos dados válidos, em bytes.</param>
-			CarenResult ObterTotalLength([Out] UInt32% Param_Out_LarguraTotal);
+			CarenResult GetTotalLength([Out] UInt32% Param_Out_LarguraTotal);
 
 			/// <summary>
 			/// Remove todos os buffers do exemplo.
 			/// </summary>
-			CarenResult RemoverTodosBuffers();
+			CarenResult RemoveAllBuffers();
 
 			/// <summary>
 			/// Remove um buffer em um índice especificado da amostra.
 			/// </summary>
 			/// <param name="Param_IdBuffer">O Id para o buffer que será removido da amostra.</param>
-			CarenResult RemoverBufferPorIndex(UInt32 Param_IdBuffer);
+			CarenResult RemoveBufferByIndex(UInt32 Param_IdBuffer);
 
 			/// <summary>
 			/// Define a duração desta amostra.
 			/// </summary>
 			/// <param name="Param_Duração">A duração da amostra em unidades de 100 nanosegundos.</param>
-			CarenResult DefinirDuraçãoAmostra(Int64 Param_Duração);
+			CarenResult SetSampleDuration(Int64 Param_Duração);
 
 			/// <summary>
 			/// Define o tempo de apresentação do exemplo.
 			/// </summary>
 			/// <param name="Param_TempoApresentação">O tempo da apresentação da amostra em unidades de 100 nanosegundos.</param>
-			CarenResult DefinirTempoApresentaçãoAmostra(Int64 Param_TempoApresentação);
+			CarenResult SetSampleTime(Int64 Param_TempoApresentação);
 
 			/// <summary>
 			/// Define os sinalizadores associados com o exemplo. Atualmente não há sinalizadores são definidos.
 			/// </summary>
 			/// <param name="Param_Flag">Esse valor é reservado. Deixe como 0</param>
-			CarenResult DefinirFlagsAmostra(UInt32 Param_Flag);
+			CarenResult SetSampleFlags(UInt32 Param_Flag);
 		};
 
 		/// <summary>
@@ -1450,7 +1450,7 @@ namespace CarenRengine
 		/// Os dissipadores de fluxo representa a interface (ICarenStreamSink).
 		/// Use o guid (MR_VIDEO_ACCELERATION_SERVICE) para obter essa interface atravez da ICarenMFGetService::GetService.
 		/// </summary>
-		[CategoryAttribute("IMFVideoSampleAllocator - Armazena amostas de vídeo para o EVR.")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("E7093167-4C8E-45A1-AA82-FD2F1FD08AB0")]
 		public interface class ICarenMFVideoSampleAllocator : ICaren
 		{
@@ -1467,7 +1467,7 @@ namespace CarenRengine
 			/// (AllocateSample) - Obtém uma amostra de vídeo do alocador.
 			/// </summary>
 			/// <param name="Param_Out_AmostraVideo">Recebe a interface que contém a amostra de vídeo. O chamado deve liberar a interface.</param>
-			CarenResult ObterAmostraVideo([Out] ICarenMFSample^% Param_Out_AmostraVideo);
+			CarenResult AllocateSample([Out] ICarenMFSample^% Param_Out_AmostraVideo);
 
 			/// <summary>
 			/// (InitializeSampleAllocator) - Inicializa o alocador informando a quantidade de amostras para alocar e o tipo de mídia
@@ -1476,7 +1476,7 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_CountAmostra">A quantidade de amostas para alocar.</param>
 			/// <param name="Param_TipoAmostraVideo">Uma interface que contém o Tipo de mídia de vídeo que será alocada.</param>
-			CarenResult InicializarAlocadorAmostras(UInt32 Param_CountAmostra, ICarenMFMediaType^ Param_TipoAmostraVideo);
+			CarenResult InitializeSampleAllocator(UInt32 Param_CountAmostra, ICarenMFMediaType^ Param_TipoAmostraVideo);
 
 			/// <summary>
 			/// (InitializeSampleAllocatorEx) - Inicializa o alocador informando a quantidade de amostras para alocar e o tipo de mídia
@@ -1485,7 +1485,7 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_CountAmostra">A quantidade de amostas para alocar.</param>
 			/// <param name="Param_TipoAmostraVideo">Uma interface que contém o Tipo de mídia de vídeo que será alocada.</param>
-			CarenResult InicializarAlocadorAmostrasD3D11(UInt32 Param_CountAmostra, ICarenMFMediaType^ Param_TipoAmostraVideo);
+			CarenResult InitializeSampleAllocatorEx(UInt32 Param_CountAmostra, ICarenMFMediaType^ Param_TipoAmostraVideo);
 
 			/// <summary>
 			/// (SetDirectXManager) - Especifica o dispositivo do gerenciamento do Direct3D para o coletor de mídia de vídeo utilizar.
@@ -1493,20 +1493,20 @@ namespace CarenRengine
 			/// habilita vários objetos no pipeline (como um processador de vídeo e um decodificador de vídeo) para compartilhar o mesmo dispositivo Direct3D.
 			/// </summary>
 			/// <param name="Param_Interface">A interface que o gerenciador do Direct3D a ser usado.</param>
-			CarenResult DefinirDirect3DDeviceManager(ICaren^ Param_Interface);
+			CarenResult SetDirectXManager(ICaren^ Param_Interface);
 
 			/// <summary>
 			/// (UninitializeSampleAllocator) - Libera Todas as amostras de vídeo que tenham sido alocadas.
 			/// </summary>
-			CarenResult LiberarTodasAmostras();
+			CarenResult UninitializeSampleAllocator();
 		};
 
 		/// <summary>
 		/// (IMFStreamSink) - Representa um fluxo em um objeto de coletor de mídia (ICarenMFMediaSink). Representado pela interface IMFMediaSink.
 		/// </summary>
-		[CategoryAttribute("IMFStreamSink - Coletor de fluxo.")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("4442A91B-3521-4E0A-9F65-2BEFB93DA6E4")]
-		public interface class ICarenMFMediaStreamSink : ICaren, ICarenMFMediaEventGenerator
+		public interface class ICarenMFMediaStreamSink : ICarenMFMediaEventGenerator
 		{
 			/// <summary>
 			/// Propriedade que define se a classe foi descartada.
@@ -1554,7 +1554,7 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_Marcador">Especifica o tipo de marcador, como um membro da enumeração: CA_MIDIA_STREAM_SINK_MARCADORES</param>
 			/// <param name="Param_ValorAdicional">Um valor que contém informações adicionais relacionadas ao marcador. Esse parâmetro pode ser (NULO).</param>
-			/// <param name="Param_DadosAnexoEvento">Valor que é anexado junto ao evento(MEStreamSinkMarker). Chame o método (ObterValor) na interface 
+			/// <param name="Param_DadosAnexoEvento">Valor que é anexado junto ao evento(MEStreamSinkMarker). Chame o método (GetValue) na interface 
 			/// de evento para obter esse valor. Esse parâmetro pode ser (NULO).</param>
 			CarenResult AdicionarMarcador(Enumeracoes::CA_MIDIA_STREAM_SINK_MARCADORES Param_Marcador, CA_PropVariant^ Param_ValorAdicional, CA_PropVariant^ Param_DadosAnexoEvento);
 
@@ -1568,7 +1568,7 @@ namespace CarenRengine
 		/// <summary>
 		/// (IMFMediaSink) - Interface responsável por representar a base para todos os Coletores de Mídia do Media Foundation. Um coletor de fluxo manipula o processamento real de dados em cada fluxo.
 		/// </summary>
-		[CategoryAttribute("IMFMediaSink - Coletor de mídia.")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("C8514E08-756F-4C42-AB65-C9FFEEACD7CD")]
 		public interface class ICarenMFMediaSink : ICaren
 		{
@@ -1645,7 +1645,7 @@ namespace CarenRengine
 		/// <summary>
 		/// (IMFSinkWriterCallback) - Interface de retorno de chamada para o gravador de coletor(ICarenMFSinkWriter).
 		/// </summary>
-		[CategoryAttribute("IMFSinkWriterCallback - Interface de retorno de chamada para o gravador de coletor(ICarenMidiaSinkWriter).")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("1F2A9FB7-403A-477A-A781-A0F072FBE15C")]
 		public interface class ICarenMFMediaSinkWriterCallback : ICaren
 		{
@@ -1707,7 +1707,7 @@ namespace CarenRengine
 		/// (IMFSinkWriter) - Implementado pelo objeto de gravador de coletor do Microsoft Media Foundation. Interface responsável por enviar os dados dos (Coletores de Mídia) para um Arquivo ou Hardware.
 		/// Essa é a interface responsável por enviar amostras de Áudio para o Hardware de destino que vai reproduzir o Som.
 		/// </summary>
-		[CategoryAttribute("IMFSinkWriter - Gravador de coletor de dados de mídia.")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("37386B09-9CCD-4F48-B5D3-8A71C8B098F1")]
 		public interface class ICarenMFSinkWriter : ICaren
 		{
@@ -1822,7 +1822,7 @@ namespace CarenRengine
 		/// <summary>
 		/// (IMFSourceReaderCallback) - Representa a interface utilizada para receber os eventos gerados pelo Leitor de Midia e alguns eventos da Fonte de Midia.
 		/// </summary>
-		[CategoryAttribute("IMFSourceReaderCallback - Interface que recebe eventos do leitor de mídia.")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("B62DD692-4317-4D5C-8DDF-FB53E7C13A93")]
 		public interface class ICarenMFSourceReaderCallback : ICaren
 		{
@@ -1898,7 +1898,7 @@ namespace CarenRengine
 		/// (IMFSourceReader) - Representa um leitor de midia. Essa interface é responsável por decodificar e ler as amostras de midia(IMFSample), que são representadas pela
 		/// interface (ICarenMFSample).
 		/// </summary>
-		[CategoryAttribute("IMFSourceReader - Leitor de midia.")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("70F77178-5F15-4279-8322-979DE274790E")]
 		public interface class ICarenMFSourceReader : ICaren, ICarenLeitorMidiaExtensões
 		{
@@ -1916,7 +1916,7 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_IdFluxo">O fluxo de consulta. Você pode utilizar a enumeração (CA_SOURCE_READER_ID) para força o Leitor a obter o primeiro fluxo de áudio ou vídeo na lista.</param>
 			/// <param name="Param_Out_TipoMidia">Retorna o tipo da midia no Id especificado.</param>
-			CarenResult ObterTipoMidiaAtual(UInt32 Param_IdFluxo, [Out] ICarenMFMediaType^% Param_Out_TipoMidia);
+			CarenResult GetCurrentMediaType(UInt32 Param_IdFluxo, [Out] ICarenMFMediaType^% Param_Out_TipoMidia);
 
 			/// <summary>
 			/// Obtém um formato que é suportado nativamente pelo fonte de mídia.
@@ -1945,7 +1945,7 @@ namespace CarenRengine
 			/// <param name="Param_IdFluxo">O fluxo ou objeto para consulta. Você pode utilizar a enumeração(CA_SOURCE_READER_ID). Se o valor for ID_FONTE_MIDIA, 
 			/// o método consultará a fonte de mídia. Caso contrário, ele consulta o decodificador que está associado com o fluxo especificado.</param>
 			/// <param name="Param_GuidServiço">Um identificador de serviço GUID, consulte a estrutura(MFInterfacesServiço) para  obter um GUID. Se o valor for (NULO), 
-			/// o método chama (ConsultarInterface) para obter a interface solicitada. Caso contrário, o método chama o ICarenMFGetService.ObterServiço.</param>
+			/// o método chama (ConsultarInterface) para obter a interface solicitada. Caso contrário, o método chama o ICarenMFGetService.GetService.</param>
 			/// <param name="Param_GuidInterface">O identificador de interface (IID) da interface que está sendo solicitada..</param>
 			/// <param name="Param_Out_InterfaceDesconhecida">Recebe a interface que foi solicitada. O usuário deve criar a interface antes de chamar este método.</param>
 			CarenResult ObterServiceParaFluxo(UInt32 Param_IdFluxo, String^ Param_GuidServiço, String^ Param_GuidInterface, ICaren^ Param_Out_InterfaceDesconhecida);
@@ -1999,7 +1999,7 @@ namespace CarenRengine
 			/// <param name="Param_IdFluxo">O Id para o fluxo a ter o tipo de mídia definido. Você pode utilizar a enumeração(CA_SOURCE_READER_ID).</param>
 			/// <param name="Param_ValorReservado">Valor reservado. Define como: 0</param>
 			/// <param name="Param_TipoMidia">A interface com o (Tipo Mídia) a ser definida como o tipo atual.</param>
-			CarenResult DefinirTipoMidiaAtual(UInt32 Param_IdFluxo, UInt32 Param_ValorReservado, ICarenMFMediaType^ Param_TipoMidia);
+			CarenResult SetCurrentMediaType(UInt32 Param_IdFluxo, UInt32 Param_ValorReservado, ICarenMFMediaType^ Param_TipoMidia);
 
 			/// <summary>
 			/// Define uma nova posição para ler as amostras de midia com base no tempo de apresentação.
@@ -2029,7 +2029,7 @@ namespace CarenRengine
 		/// (IMFTransform) - MFTs (Media Foundation Transforms) fornecem um modelo genérico para o processamento de dados de mídia. MFTs são usados para decodificadores, 
 		/// codificadores e processadores de sinais digitais (DSPs). Em suma, tudo o que fica na mídia pipleine entre a fonte de mídia e o coletor de mídia é uma MFT.
 		/// </summary>
-		[CategoryAttribute("IMFTransform - Implementado por todos os objetos de tranformação de mídia do (Media Foundation).")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("D443AE42-007A-4866-8174-8EE4EAC215AF")]
 		public interface class ICarenMFTransform : ICaren
 		{
@@ -2254,7 +2254,7 @@ namespace CarenRengine
 		/// ponteiro para ICarenMFVideoMediaType como parâmetro. Você pode obter todas as informações de formato de um tipo de mídia de vídeo através da interface ICarenMFAttributes, 
 		/// que o ICarenMFMediaType herda.
 		/// </summary>
-		[CategoryAttribute("IMFVideoMediaType - Descreve um formato de video.")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("5C45B3A5-2B27-4C0D-AA9D-736AA765F9F0")]
 		public interface class ICarenMFVideoMediaType : ICarenMFMediaType
 		{
@@ -2276,7 +2276,7 @@ namespace CarenRengine
 		/// vídeo, e os apresenta de alguma forma, geralmente exibindo-os no visor. O renderizador de vídeo aprimorado (EVR) fornece um apresentador de vídeo padrão e os aplicativos podem 
 		/// implementar apresentadores personalizados. Geralmente, o usuário não cria essa interface diretamente. Consulte essa interface no EVR.
 		/// </summary>
-		[CategoryAttribute("IMFVideoPresenter - Apresentado de vídeo utilizado pelo EVR.")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("C2FA308B-3962-4F6F-8CC7-C2D2641E3BFA")]
 		public interface class ICarenMFVideoPresenter : ICarenMFClockStateSink
 		{
@@ -2296,7 +2296,7 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_Out_TipoVideo">Retorna uma interface para o tipo de midia de video do apresentador.</param>
 			/// <returns></returns>
-			CarenResult ObterTipoMidiaAtual([Out] ICarenMFVideoMediaType^% Param_Out_TipoVideo);
+			CarenResult GetCurrentMediaType([Out] ICarenMFVideoMediaType^% Param_Out_TipoVideo);
 
 			/// <summary>
 			/// Envia uma mensagem para o apresentador de vídeo. As mensagens são usadas para sinalizar ao apresentador que ele deve realizar alguma ação, ou que algum evento ocorreu.
@@ -2311,7 +2311,7 @@ namespace CarenRengine
 		/// (IMFVideoRenderer) - Representa o EVR(Renderizador de Vídeo Aprimorado). Está é a interface responsável pelo processamento de Vídeo.
 		/// Essa interface é geralmente adquiridada atravez do IMFMediaSink, representado pela interface (ICarenMFMediaSink).
 		/// </summary>
-		[CategoryAttribute("IMFVideoRenderer - (EVR)Renderizador de Video Aprimorado.")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("E23C9042-83C2-4B7F-B237-F888C3DE84E1")]
 		public interface class ICarenMFVideoRenderer : ICaren
 		{
@@ -2337,7 +2337,7 @@ namespace CarenRengine
 		/// (IMFVideoDisplayControl) - Interface responsável por controlar como o Vídeo é exbido pelo EVR (Renderizador de Vídeo Aprimorado).
 		/// Essa interface é um Serviço do EVR, exposto para o usuário.
 		/// </summary>
-		[CategoryAttribute("IMFVideoDisplayControl  - Controla como o vídeo é exebido.")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("494723EC-8E10-4E29-BCF9-9A9F072ADE51")]
 		public interface class ICarenMFVideoDisplayControl : ICaren
 		{
@@ -2486,7 +2486,7 @@ namespace CarenRengine
 		/// (IMFActivate) - Permite que um componente tenha sua criação Adiada. Essa interface é utilizada para criar objetos dos quais devem ser inicializados
 		/// por outra interface.
 		/// </summary>
-		[CategoryAttribute("IMFActivate - Ativador de Objetos do Media Foundation")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("A86D1E72-CD70-4602-B35C-DD3A0D5B57C3")]
 		public interface class ICarenMFActivate : ICaren, ICarenMFAttributes
 		{
@@ -2531,7 +2531,7 @@ namespace CarenRengine
 		/// <summary>
 		/// (IMFStreamDescriptor) - Interface responsável por obter informações sobre um fluxo em uma fonte de mídia.
 		/// </summary>
-		[CategoryAttribute("IMFStreamDescriptor - Obtém informações de um fluxo.")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("AACE49BC-AF53-4AE9-A2BC-D0A58A33401F")]
 		public interface class ICarenMFStreamDescriptor : ICarenMFAttributes
 		{
@@ -2566,7 +2566,7 @@ namespace CarenRengine
 		/// compartilham um tempo de apresentação comum.
 		/// Descritores de apresentação são usados para configurar fontes de mídia e afunda-se alguns meios de comunicação.
 		/// </summary>
-		[CategoryAttribute("IMFPresentationDescriptor - Descreve detalhes de uma apresentação.")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("D6085D8F-2AB7-4513-B464-68EF19270CE4")]
 		public interface class ICarenMFPresentationDescriptor : ICarenMFAttributes
 		{
@@ -2621,7 +2621,7 @@ namespace CarenRengine
 		/// (IMFByteStream) - Representa um fluxo de bytes de alguma fonte de dados, que pode ser um arquivo local, um arquivo de rede ou alguma outra fonte. 
 		/// A interface ICarenMFByteStream suporta as operações de fluxo típicas, como leitura, gravação e busca.
 		/// </summary>
-		[CategoryAttribute("IMFByteStream - Representa um fluxo de bytes de alguma fonte de dados.")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("6B3BB243-D012-4703-9C6E-4C7EE4B68C77")]
 		public interface class ICarenMFByteStream :ICaren
 		{
@@ -2771,7 +2771,7 @@ namespace CarenRengine
 		/// (IMFMediaSource) - Fontes de mídia são objetos que geram dados de mídia. Por exemplo, os dados podem vir de um arquivo de vídeo, um fluxo de rede ou um dispositivo de hardware, como uma câmera. 
 		/// Cada fonte de mídia contém um ou mais fluxos e cada fluxo fornece dados de um tipo, como áudio ou vídeo.
 		/// </summary>
-		[CategoryAttribute("IMFMediaSource - Representa uma fonte de midia.")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("380D3681-BFE5-4408-BADC-D952A88EB52F")]
 		public interface class ICarenMFMediaSource : ICaren, ICarenMFMediaEventGenerator
 		{
@@ -2803,34 +2803,34 @@ namespace CarenRengine
 			/// (Start) - Inicia, procura ou reinicia a fonte de mídia especificando onde iniciar a reprodução.
 			/// </summary>
 			/// <param name="Param_DescritorApresentação">A interface de ICarenMFPresentationDescriptor de descritor de apresentação da fonte de mídia. Para obter o descritor de apresentação, chamade o método (ICarenMFPresentationDescriptor::CriarDescritorApresentação). 
-			/// Você pode modificar o descritor de apresentação antes de chamar Iniciar, para selecionar ou desmarcar fluxos ou alterar os tipos de mídia.</param>
+			/// Você pode modificar o descritor de apresentação antes de chamar Start, para selecionar ou desmarcar fluxos ou alterar os tipos de mídia.</param>
 			/// <param name="Param_GuidTimeFormato">Um GUID que especifica o formato de hora. O formato de hora define as unidades para o parâmetro Param_PosiçãoInicio. Se o valor é NULL, o formato é definido como unidades de 100 nanossegundos. Algumas fontes de 
 			/// mídia podem oferecer suporte o formato de hora adicional. Este parâmetro pode ser nulo. Se o valor for nulo, é equivalente a GUID_NULL.</param>
 			/// <param name="Param_PosiçãoInicio">Especifica onde iniciar a reprodução. As unidades deste parâmetro são indicadas pelo formato tempo dado em Param_GuidTimeFormato. Se o formato de hora é GUID_NULL, o tipo de variante deve ser VT_I8 ou VT_EMPTY. Use VT_I8 
 			/// para especificar uma nova posição inicial, em unidades de 100 nanossegundos. Use VT_EMPTY para começar a partir da posição atual. Outros formatos de hora podem usar outros tipos CA_PropVariant.</param>
-			CarenResult Iniciar(ICarenMFPresentationDescriptor^ Param_DescritorApresentação, String^ Param_GuidTimeFormato, CA_PropVariant^ Param_PosiçãoInicio);
+			CarenResult Start(ICarenMFPresentationDescriptor^ Param_DescritorApresentação, String^ Param_GuidTimeFormato, CA_PropVariant^ Param_PosiçãoInicio);
 
 			/// <summary>
 			/// (Pause) - Pausa todos os fluxos ativos na fonte de mídia.
 			/// </summary>
-			CarenResult Pausar();
+			CarenResult Pause();
 
 			/// <summary>
 			/// (Stop) - Interrompe todos os fluxos ativos na fonte de mídia.
 			/// </summary>
-			CarenResult Parar();
+			CarenResult Stop();
 
 			/// <summary>
 			/// (Shutdown) - Desliga a fonte de mídia e libera os recursos que ela está usando.
 			/// </summary>
-			CarenResult Desligar();
+			CarenResult Shutdown();
 		};
 
 		/// <summary>
 		/// (IMFMediaSourceEx) - Estende a interface IMFMediaSource para fornecer recursos adicionais para uma fonte de mídia.
 		/// Para obter essa interface, Chame o método (ConsultarInterface) na interface ICarenMFMediaSource.
 		/// </summary>
-		[CategoryAttribute("IMFMediaSourceEx - Representa uma extensão para a fonte de midia.")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("B6073936-21AF-402C-96EE-FA56BB7E6BF8")]
 		public interface class ICarenMFMediaSourceEx : ICarenMFMediaSource
 		{
@@ -2870,7 +2870,7 @@ namespace CarenRengine
 		/// (IMFMediaStream) - Representa um fluxo em uma fonte de mídia. Fluxos são criados quando uma fonte de mídia é iniciada. Para cada fluxo, a origem de mídia envia
 		/// um evento MENewStream com um ponteiro para esta interface.
 		/// </summary>
-		[CategoryAttribute("IMFMediaStream - Representa uma fluxo em uma fonte de mídia.")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("1B7C719B-C391-4C38-91C4-7D47E0BC669C")]
 		public interface class ICarenMFMediaStream : ICarenMFMediaEventGenerator
 		{
@@ -2909,7 +2909,7 @@ namespace CarenRengine
 		/// O processador de áudio streaming (SAR) expõe essa interface como um serviço. Para obter um ponteiro para a interface, chame ICaren::ConsultarInterfaceServiço
 		/// com o identificador de serviço MR_STREAM_VOLUME_SERVICE. Você pode chamar GetService diretamente sobre o SAR ou chamá-lo sobre a sessão de mídia.
 		/// </summary>
-		[CategoryAttribute("IMFAudioStreamVolume - Interface que controla o volume de audio em cada canal de audio.")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("CE0A8168-5D19-4A9B-A558-9F356C36EC51")]
 		public interface class ICarenMFAudioStreamVolume : ICaren
 		{
@@ -2967,7 +2967,7 @@ namespace CarenRengine
 		/// Essa interface é exposta como uma serviço pelo SAR(Streaming Audio Render) e pelo sistema de captura de Audio. Para o SAR, utilize o o identificador de serviço
 		/// (MR_POLICY_VOLUME_SERVICE) e para o sistema de captura o (MR_CAPTURE_POLICY_VOLUME_SERVICE).
 		/// </summary>
-		[CategoryAttribute("IMFSimpleAudioVolume - Interface que controla o nivel de audio principal.")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("87D01DE6-1E2F-446E-B734-9B0FE5CAF540")]
 		public interface class ICarenMFSimpleAudioVolume : ICaren
 		{
@@ -3010,7 +3010,7 @@ namespace CarenRengine
 		/// <summary>
 		/// (IMFSourceResolver) - Interface responsável por criar uma fonte de mídia a parti de uma URL ou um fluxo de bytes.
 		/// </summary>
-		[CategoryAttribute("IMFSourceResolver - Criação de fontes de mídia.")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("94A89CF7-7DE7-46B6-A9B6-4F74B9D7C02C")]
 		public interface class ICarenMFSourceResolver : ICaren
 		{
@@ -3146,7 +3146,7 @@ namespace CarenRengine
 		/// <summary>
 		/// (IMFTopologyNode) - Interface responsável por representar um nó de topologia. Os tipos de nó suportado por essa interface são: Saida, Origem, Transformação(MFT), Tee.
 		/// </summary>
-		[CategoryAttribute("IMFTopologyNode - Nó de topologia.")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("313763D6-9C55-4879-8BC0-55B052436249")]
 		public interface class ICarenMFTopologyNode : ICarenMFAttributes
 		{
@@ -3165,7 +3165,7 @@ namespace CarenRengine
 			/// (CloneFrom) - Copia os dados de outro nó de topologia para este nó.
 			/// </summary>
 			/// <param name="Param_NodeClone">O nó que vai ter os dados copiados para esse.</param>
-			CarenResult ClonarDe(ICarenMFTopologyNode^ Param_NodeClone);
+			CarenResult CloneFrom(ICarenMFTopologyNode^ Param_NodeClone);
 
 			/// <summary>
 			/// (ConnectOutput) - Conecta um fluxo de saída deste nó para o fluxo de entrada de outro nó.
@@ -3174,13 +3174,13 @@ namespace CarenRengine
 			/// <param name="Param_IndexFluxoSaida">Índice baseado em zero do fluxo de saída neste nó.</param>
 			/// <param name="Param_NoConexao">Ponteiro para a interface ICarenMFTopologyNode do nó ao qual se conectar.</param>
 			/// <param name="Param_IndexFluxoEntrada">Índice baseado em zero do fluxo de entrada no outro nó.</param>
-			CarenResult ConectarSaida(UInt32 Param_IndexFluxoSaida, ICarenMFTopologyNode^ Param_NoConexao, UInt32 Param_IndexFluxoEntrada);
+			CarenResult ConnectOutput(UInt32 Param_IndexFluxoSaida, ICarenMFTopologyNode^ Param_NoConexao, UInt32 Param_IndexFluxoEntrada);
 
 			/// <summary>
 			/// (DisconnectOutput) - Desconecta um fluxo de saída neste nó.
 			/// </summary>
 			/// <param name="Param_IndexSaida">Índice baseado em zero do fluxo de saída para se desconectar.</param>
-			CarenResult DesconectarSaida(UInt32 Param_IndexSaida);
+			CarenResult DisconnectOutput(UInt32 Param_IndexSaida);
 
 			/// <summary>
 			/// (GetInput) - Recupera o nó que está conectado a um fluxo de entrada especificado neste nó.
@@ -3188,32 +3188,32 @@ namespace CarenRengine
 			/// <param name="Param_IndexEntrada">Índice baseado em zero de um fluxo de entrada neste nó.</param>
 			/// <param name="Param_Out_NoConectado">Recebe um ponteiro para ICarenMFTopologyNode do nó que está conectado ao fluxo de entrada especificado. O chamador deve liberar a interface.</param>
 			/// <param name="Param_Out_IndexFluxoSaida">Recebe o índice do fluxo de saída que está conectado ao fluxo de entrada deste nó.</param>
-			CarenResult ObterEntrada(UInt32 Param_IndexEntrada, [Out] ICarenMFTopologyNode^% Param_Out_NoConectado, [Out] UInt32% Param_Out_IndexFluxoSaida);
+			CarenResult GetInput(UInt32 Param_IndexEntrada, [Out] ICarenMFTopologyNode^% Param_Out_NoConectado, [Out] UInt32% Param_Out_IndexFluxoSaida);
 
 			/// <summary>
 			/// (GetInputCount) - Recupera o número de fluxos de entrada que existem atualmente neste nó.
 			/// </summary>
 			/// <param name="Param_Out_QuantidadeFluxosEntrada">Recebe o número de fluxos de entrada.</param>
-			CarenResult ObterQuantidadeEntradas([Out] UInt32% Param_Out_QuantidadeFluxosEntrada);
+			CarenResult GetInputCount([Out] UInt32% Param_Out_QuantidadeFluxosEntrada);
 
 			/// <summary>
 			/// (GetInputPrefType) - Recupera o tipo de mídia preferencial para um fluxo de entrada neste nó.
 			/// </summary>
 			/// <param name="Param_IndexEntrada">Índice baseado em zero do fluxo de Entrada.</param>
 			/// <param name="Param_Out_TipoMidiaPreferencial">Recebe um ponteiro para IMFMediaType do tipo de mídia. O chamador deve liberar a interface.</param>
-			CarenResult ObterTipoMidiaPreferencialEntrada(UInt32 Param_IndexEntrada, [Out] ICarenMFMediaType^% Param_Out_TipoMidiaPreferencial);
+			CarenResult GetInputPrefType(UInt32 Param_IndexEntrada, [Out] ICarenMFMediaType^% Param_Out_TipoMidiaPreferencial);
 
 			/// <summary>
 			/// (GetNodeType) - Recupera o tipo de nó.
 			/// </summary>
 			/// <param name="Param_Out_TipoNode">Recebe um valor de enumeração que define o tipo do nó na topologia.</param>
-			CarenResult ObterTipoNode([Out] Enumeracoes::CA_TOPOLOGY_TYPE% Param_Out_TipoNode);
+			CarenResult GetNodeType([Out] Enumeracoes::CA_TOPOLOGY_TYPE% Param_Out_TipoNode);
 
 			/// <summary>
 			/// (GetObject) - Obtém o objeto associado a este nó.
 			/// </summary>
 			/// <param name="Param_Out_Objeto">Recebe uma interface que está associada a esse nó. O usuário deve criar a interfaces antes de chamar este método.</param>
-			CarenResult ObterObjeto(ICaren^ Param_Out_Objeto);
+			CarenResult GetObject(ICaren^ Param_Out_Objeto);
 
 			/// <summary>
 			/// (GetOutput) - Recupera o nó que está conectado a um fluxo de saída especificado neste nó.
@@ -3221,20 +3221,20 @@ namespace CarenRengine
 			/// <param name="Param_IndexSaidaFluxo">Índice baseado em zero de um fluxo de saída neste nó.</param>
 			/// <param name="Param_Out_NodeConexao">Recebe um ponteiro para ICarenMFTopologyNode do nó que está conectado ao fluxo de saída especificado. O chamador deve liberar a interface.</param>
 			/// <param name="Param_Out_IndexEntradaFluxo">Recebe o índice do fluxo de entrada que está conectado ao fluxo de saída deste nó.</param>
-			CarenResult ObterSaida(UInt32 Param_IndexSaidaFluxo, [Out] ICarenMFTopologyNode^% Param_Out_NodeConexao, [Out] UInt32% Param_Out_IndexEntradaFluxo);
+			CarenResult GetOutput(UInt32 Param_IndexSaidaFluxo, [Out] ICarenMFTopologyNode^% Param_Out_NodeConexao, [Out] UInt32% Param_Out_IndexEntradaFluxo);
 
 			/// <summary>
 			/// (GetOutputCount) - Recupera o número de fluxos de saída que existem atualmente neste nó.
 			/// </summary>
 			/// <param name="Param_Out_QuantidadeFluxosSaida">Recebe o número de fluxos de saída.</param>
-			CarenResult ObterQuantidadeSaidas([Out] UInt32% Param_Out_QuantidadeFluxosSaida);
+			CarenResult GetOutputCount([Out] UInt32% Param_Out_QuantidadeFluxosSaida);
 
 			/// <summary>
 			/// (GetOutputPrefType) - Recupera o tipo de mídia preferencial para um fluxo de saída neste nó.
 			/// </summary>
 			/// <param name="Param_IndexSaida">Índice baseado em zero do fluxo de Saida.</param>
 			/// <param name="Param_Out_TipoMidiaPreferencial">Recebe um ponteiro para ICarenMFMediaType do tipo de mídia. O chamador deve liberar a interface.</param>
-			CarenResult ObterTipoMidiaPreferencialSaida(UInt32 Param_IndexSaida, [Out] ICarenMFMediaType^% Param_Out_TipoMidiaPreferencial);
+			CarenResult GetOutputPrefType(UInt32 Param_IndexSaida, [Out] ICarenMFMediaType^% Param_Out_TipoMidiaPreferencial);
 
 			/// <summary>
 			/// (GetTopoNodeID) - Recupera o identificador do nó.
@@ -3242,41 +3242,41 @@ namespace CarenRengine
 			/// em várias topologias.
 			/// </summary>
 			/// <param name="Param_Out_IdentificadorNode">Recebe o identificador deste nó.</param>
-			CarenResult ObterTopoNodeID([Out] UInt64% Param_Out_IdentificadorNode);
+			CarenResult GetTopoNodeID([Out] UInt64% Param_Out_IdentificadorNode);
 
 			/// <summary>
 			/// (SetInputPrefType) - Define o tipo de mídia preferencial para um fluxo de entrada neste nó.
 			/// </summary>
 			/// <param name="Param_IndexFluxoEntrada">Índice baseado em zero do fluxo de Entrada.</param>
 			/// <param name="Param_TipoMidia">Ponteiro para ICarenMFMediaType do tipo de mídia.</param>
-			CarenResult DefinirTipoMidiaPreferencialEntrada(UInt32 Param_IndexFluxoEntrada, ICarenMFMediaType^ Param_TipoMidia);
+			CarenResult SetInputPrefType(UInt32 Param_IndexFluxoEntrada, ICarenMFMediaType^ Param_TipoMidia);
 
 			/// <summary>
 			/// (SetObject) - Define o objeto associado a este nó.
 			/// </summary>
 			/// <param name="Param_Objeto">A interface a ser associada a este nó. Defina como NULO para limpar o objeto definido anteriormente.</param>
-			CarenResult DefinirObjeto(ICaren^ Param_Objeto);
+			CarenResult SetObject(ICaren^ Param_Objeto);
 
 			/// <summary>
 			/// (SetOutputPrefType) - Define o tipo de mídia preferencial para um fluxo de saída neste nó.
 			/// </summary>
 			/// <param name="Param_IndexFluxoSaida">Índice baseado em zero do fluxo de Saida.</param>
 			/// <param name="Param_TipoMidia">A interface ICarenMFMediaType que contém o ponteiro para o tipo de midia..</param>
-			CarenResult DefinirTipoMidiaPreferencialSaida(UInt32 Param_IndexFluxoSaida, ICarenMFMediaType^ Param_TipoMidia);
+			CarenResult SetOutputPrefType(UInt32 Param_IndexFluxoSaida, ICarenMFMediaType^ Param_TipoMidia);
 
 			/// <summary>
 			/// (SetTopoNodeID) - Define o identificador para o nó.
 			/// Quando um nó é criado pela primeira vez, é atribuído um identificador. Normalmente, não há nenhuma razão para um aplicativo substituir o identificador.
 			/// </summary>
 			/// <param name="Param_IdentificadorNode">O novo identificador para este nó.</param>
-			CarenResult DefinirTopoNodeID(UInt64 Param_IdentificadorNode);
+			CarenResult SetTopoNodeID(UInt64 Param_IdentificadorNode);
 		};
 
 		/// <summary>
 		/// (IMFTopology) - Interface responsável por representar uma topologia. Uma topologia descreve uma coleção de fontes de mídia, pias e transformações que estão conectadas em uma determinada ordem. Esses objetos são representados dentro da topologia por nós de 
 		/// topologia, que expõem a interface ICarenMFTopologyNode. Uma topologia descreve o caminho dos dados multimídia por meio desses nós.
 		/// </summary>
-		[CategoryAttribute("IMFTopology - Topoloigia de Midia")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("4A272C13-FDE3-489E-9FB2-9C1D2981E3F7")]
 		public interface class ICarenMFTopology : ICarenMFAttributes
 		{
@@ -3295,58 +3295,58 @@ namespace CarenRengine
 			/// (AddNode) - Adiciona um nó a topologia.
 			/// </summary>
 			/// <param name="Param_NoTopologia">Ponteiro para a interface de IMFTopologyNode do nó.</param>
-			CarenResult AdicionarNode(ICarenMFTopologyNode^ Param_NoTopologia);
+			CarenResult AddNode(ICarenMFTopologyNode^ Param_NoTopologia);
 
 			/// <summary>
 			/// (Clear) - Remove todos os nós da topologia.
 			/// </summary>
-			CarenResult Limpar();
+			CarenResult Clear();
 
 			/// <summary>
 			/// (CloneFrom) - Converte essa topologia em uma cópia de outra topologia.
 			/// </summary>
 			/// <param name="Param_TopologiaClone">Um ponteiro para a topologia que será clonada.</param>
-			CarenResult ClonarDe(ICarenMFTopology^ Param_TopologiaClone);
+			CarenResult CloneFrom(ICarenMFTopology^ Param_TopologiaClone);
 
 			/// <summary>
 			/// (GetNode) - Obtém um nó na topologia, especificado por um index.
 			/// </summary>
-			/// <param name="Param_Index">O índice baseado em zero do nó. Para obter o número de nós na topologia, chame o método ObterQuantidadeNode.</param>
+			/// <param name="Param_Index">O índice baseado em zero do nó. Para obter o número de nós na topologia, chame o método GetNodeCount.</param>
 			/// <param name="Param_Out_NodeTopologia">Retorna um ponteiro para o nó no index informado.</param>
-			CarenResult ObterNode(UInt16 Param_Index, [Out] ICarenMFTopologyNode^% Param_Out_NodeTopologia);
+			CarenResult GetNode(UInt16 Param_Index, [Out] ICarenMFTopologyNode^% Param_Out_NodeTopologia);
 
 			/// <summary>
 			/// (GetNodeByID) - Obtém um nó na topologia, especificado pelo identificador de nó.
 			/// </summary>
-			/// <param name="Param_IdentificadorNode">O identificador do nó para recuperar. Para obter o identificador de um nó, chame o método ICarenMFTopologyNode::ObterTopoNodeID.</param>
+			/// <param name="Param_IdentificadorNode">O identificador do nó para recuperar. Para obter o identificador de um nó, chame o método ICarenMFTopologyNode::GetTopoNodeID.</param>
 			/// <param name="Param_Out_NodeTopologia">Retorna um ponteiro para o nó no indentificador informado.</param>
-			CarenResult ObterNodePorID(UInt64 Param_IdentificadorNode, [Out] ICarenMFTopologyNode^% Param_Out_NodeTopologia);
+			CarenResult GetNodeByID(UInt64 Param_IdentificadorNode, [Out] ICarenMFTopologyNode^% Param_Out_NodeTopologia);
 
 			/// <summary>
 			/// (GetNodeCount) - Obtém o número de nós na topologia.
 			/// </summary>
 			/// <param name="Param_Out_Quantidade">Retorna a quantidade de nó na topologia.</param>
-			CarenResult ObterQuantidadeNode([Out] UInt16 Param_Out_Quantidade);
+			CarenResult GetNodeCount([Out] UInt16 Param_Out_Quantidade);
 
 			/// <summary>
 			/// (GetOutputNodeCollection) - Obtém os nós de saída na topologia.
 			/// </summary>
 			/// <param name="Param_Out_ColecaoNoSaida">Retorna um ponteiro para a coleção que contém os nó de saida. O chamador que deve liberar o ponteiro.
 			/// A coleção pode conter 0 ou mais ponteiros. Todos os objetos dentro da coleção podem ser consultados para a interface ICarenMFTopologyNode.</param>
-			CarenResult ObterColecaoNodeSaida([Out] ICarenMFCollection^% Param_Out_ColecaoNoSaida);
+			CarenResult GetOutputNodeCollection([Out] ICarenMFCollection^% Param_Out_ColecaoNoSaida);
 
 			/// <summary>
 			/// (GetSourceNodeCollection) - Obtém os nós de origem na topologia.
 			/// </summary>
 			/// <param name="Param_Out_ColecaoNoOrigem">Retorna um ponteiro para a coleção que contém os nó de Origem. O chamador que deve liberar o ponteiro.
 			/// A coleção pode conter 0 ou mais ponteiros. Todos os objetos dentro da coleção podem ser consultados para a interface ICarenMFTopologyNode.</param>
-			CarenResult ObterColecaoNodeOrigem([Out] ICarenMFCollection^% Param_Out_ColecaoNoOrigem);
+			CarenResult GetSourceNodeCollection([Out] ICarenMFCollection^% Param_Out_ColecaoNoOrigem);
 
 			/// <summary>
 			/// (GetTopologyID) - Obtém o identificador da topologia.
 			/// </summary>
 			/// <param name="Param_Out_IdentificadorTopologia">Retorna o identificador desta topologia.</param>
-			CarenResult ObterIDTopologia([Out] UInt64% Param_Out_IdentificadorTopologia);
+			CarenResult GetTopologyID([Out] UInt64% Param_Out_IdentificadorTopologia);
 
 			/// <summary>
 			/// (RemoveNode) - Remove um nó da topologia.
@@ -3354,13 +3354,13 @@ namespace CarenRengine
 			/// O método interrompe todas as conexões entre o nó especificado e outros nós.
 			/// </summary>
 			/// <param name="Param_NodeRemove">O nó a ser removido da topologia.</param>
-			CarenResult RemoverNode(ICarenMFTopologyNode^ Param_NodeRemove);
+			CarenResult RemoveNode(ICarenMFTopologyNode^ Param_NodeRemove);
 		};
 
 		/// <summary>
 		/// (IMFTopoLoader) - Interface responsável por converte uma topologia parcial em uma topologia completa. O carregador de topologia expõe essa interface.
 		/// </summary>
-		[CategoryAttribute("IMFTopoLoader - Conversor de Topologia")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("FA3945D6-0F34-4EA4-AE63-567436B0B3E3")]
 		public interface class ICarenMFTopoLoader : ICaren
 		{
@@ -3384,14 +3384,14 @@ namespace CarenRengine
 			/// <param name="Param_Out_TopologiaCompleta">Recebe um ponteiro para a interface ICarenMFTopology da topologia concluída. O chamador deve liberar a interface.</param>
 			/// <param name="Param_TopologiaAnterior">Um ponteiro para a interface ICarenMFTopology da topologia completa anterior. O carregador de topologia pode reusar objetos dessa topologia na nova topologia. 
 			/// Este parâmetro pode ser NULL.</param>
-			CarenResult Carregar(ICarenMFTopology^ Param_TopologiaParcial, [Out] ICarenMFTopology^% Param_Out_TopologiaCompleta, ICarenMFTopology^ Param_TopologiaAnterior);
+			CarenResult Load(ICarenMFTopology^ Param_TopologiaParcial, [Out] ICarenMFTopology^% Param_Out_TopologiaCompleta, ICarenMFTopology^ Param_TopologiaAnterior);
 		};
 
 		/// <summary>
 		/// (IMFTopologyNodeAttributeEditor) - Interface responsável por atualiza os atributos de um ou mais nós na topologia atual da sessão de mídia.A sessão de mídia expõe essa interface como 
 		/// um serviço. Para obter um ponteiro para a interface, chame ICaren::ConsultarServiço.O identificador de serviço é MF_TOPONODE_ATTRIBUTE_EDITOR_SERVICE.
 		/// </summary>
-		[CategoryAttribute("IMFTopologyNodeAttributeEditor - ")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("2E5FC788-616F-4D4F-BC4F-CACBE26071E0")]
 		public interface class ICarenMFTopologyNodeAttributeEditor : ICaren
 		{
@@ -3411,13 +3411,13 @@ namespace CarenRengine
 			/// <param name="Param_TopoId">Reservado.</param>
 			/// <param name="Param_CountArray">A quantidade de elementos no array que contém as atualizações dos atributos.</param>
 			/// <param name="Param_ArrayUpdates">Uma matriz que contém elementos que atualizam os atributos. Cada elemento atualiza (um) atributo no nó.</param>
-			CarenResult AtualizarAtributosNode(UInt64 Param_TopoId, UInt32 Param_CountArray, cli::array<CA_MFTOPONODE_ATTRIBUTE_UPDATE^>^ Param_ArrayUpdates);
+			CarenResult UpdateNodeAttributes(UInt64 Param_TopoId, UInt32 Param_CountArray, cli::array<CA_MFTOPONODE_ATTRIBUTE_UPDATE^>^ Param_ArrayUpdates);
 		};
 
 		/// <summary>
 		/// (IMFTopologyServiceLookup) - Interface responsável por recuperar uma interface do renderizador de vídeo aprimorado (EVR) ou do mixer de vídeo ou do apresentador de vídeo.
 		/// </summary>
-		[CategoryAttribute("IMFTopologyServiceLookup - Recupera interfaces de serviços do EVR.")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("C81258EB-DA90-49DF-B965-956F17AD3E15")]
 		public interface class ICarenMFTopologyServiceLookup : ICaren
 		{
@@ -3439,11 +3439,11 @@ namespace CarenRengine
 			/// <param name="Param_GuidServico">Serviço GUID da interface solicitada.</param>
 			/// <param name="Param_IID">Identificador de interface da interface solicitada.</param>
 			/// <param name="Param_Out_ArrayInterfaces">Matriz de ponteiros de interface. Se o método for bem-sucedido, cada membro da matriz contém um ponteiro de interface válido ou NULL. 
-			/// O chamador deve liberar os ponteiros de interface quando o EVR chamar ICarenMFTopologyServiceLookupClient::LiberarPonteirosServicos, (ou anterior). Se o método falhar, cada membro da 
+			/// O chamador deve liberar os ponteiros de interface quando o EVR chamar ICarenMFTopologyServiceLookupClient::ReleaseServicePointers, (ou anterior). Se o método falhar, cada membro da 
 			/// matriz é nulo.</param>
 			/// <param name="Param_TamanhoMatriz">Um valor que especifica o dimensionar do (Param_Out_ArrayInterfaces) matriz. O valor deve ser pelo menos 1. Na implementação atual, não há nenhum 
 			/// motivo para especificar um Dimensionar de matriz maior que um elemento. O valor não é alterado na saída.</param>
-			CarenResult PesquisarServico(
+			CarenResult LookupService(
 				Enumeracoes::CA_MF_SERVICE_LOOKUP_TYPE Param_EscopoPesquisa,
 				UInt32 Param_Indice, String^ Param_GuidServico,
 				String^ Param_IID,
@@ -3455,7 +3455,7 @@ namespace CarenRengine
 		/// (IMFTopologyServiceLookupClient) - Interface responsável por inicializar um mixer de vídeo ou apresentador. Essa interface é implementada por misturadores e apresentadores e permite 
 		/// que eles consultem o renderizador de vídeo aprimorado (EVR) para ponteiros de interface.
 		/// </summary>
-		[CategoryAttribute("IMFTopologyServiceLookupClient - ")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("5717881A-5013-4EB0-86A3-7354728AA877")]
 		public interface class ICarenMFTopologyServiceLookupClient : ICaren
 		{
@@ -3473,22 +3473,22 @@ namespace CarenRengine
 			/// (InitServicePointers) - Sinaliza o mixer ou apresentador para consultar o renderizador de vídeo aprimorado (EVR) para ponteiros de interface.
 			/// </summary>
 			/// <param name="Param_QueryInterface">Ponteiro para o ICarenMFTopologyServiceLookup interface. Para consultar o EVR para uma interface, 
-			/// chame ICarenMFTopologyServiceLookup::PesquisarServico.</param>
-			CarenResult IniciarServicosPonteiros(ICarenMFTopologyServiceLookup^ Param_QueryInterface);
+			/// chame ICarenMFTopologyServiceLookup::LookupService.</param>
+			CarenResult InitServicePointers(ICarenMFTopologyServiceLookup^ Param_QueryInterface);
 
 			/// <summary>
 			/// (ReleaseServicePointers) - Sinaliza o objeto para liberar os ponteiros de interface obtidos do renderizador de vídeo aprimorado (EVR).
-			/// Depois que esse método é chamado, quaisquer ponteiros de interface obtidos durante a chamada anterior para ICarenMFTopologyServiceLookupClient::IniciarServicosPonteiros não 
+			/// Depois que esse método é chamado, quaisquer ponteiros de interface obtidos durante a chamada anterior para ICarenMFTopologyServiceLookupClient::InitServicePointers não 
 			/// são mais válidos. O objeto deve liberá-los.
 			/// </summary>
-			CarenResult LiberarPonteirosServicos();
+			CarenResult ReleaseServicePointers();
 		};
 
 		/// <summary>
 		/// (IMFRateSupport) - Interface responsável por consultar o intervalo de taxas de reprodução que são suportadas, incluindo a reprodução inversa.
-		/// Para obter um ponteiro para essa interface, chame ICaren::ObterServiço com o identificador de serviço MF_RATE_CONTROL_SERVICE ou utilize o método nativo.
+		/// Para obter um ponteiro para essa interface, chame ICaren::GetService com o identificador de serviço MF_RATE_CONTROL_SERVICE ou utilize o método nativo.
 		/// </summary>
-		[CategoryAttribute("IMFRateSupport - Consulta taxas de reprodução e suporte.")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("8B12498B-5B50-4151-B550-B18CD0E0C6E2")]
 		public interface class ICarenMFRateSupport : ICaren
 		{
@@ -3537,7 +3537,7 @@ namespace CarenRengine
 		/// <summary>
 		/// (IMFRateControl) - Interface responsável por obter ou definir a taxa de reprodução.
 		/// </summary>
-		[CategoryAttribute("IMFRateControl - Controla taxas de reprodução.")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("1BC89272-01B3-4342-B04D-057BE0EED163")]
 		public interface class ICarenMFRateControl : ICaren
 		{
@@ -3574,7 +3574,7 @@ namespace CarenRengine
 		/// (IMFMediaSession) - Interface responsável por fornecer controles de reprodução para conteúdo protegido e desprotegido. A sessão de mídia e os objetos de sessão do caminho de mídia 
 		/// protegida(PMP) expõem essa interface. Essa interface é a interface principal que os aplicativos usam para controlar o pipeline do Media Foundation.
 		/// </summary>
-		[CategoryAttribute("IMFMediaSession - Controles de reprodução de conteúdo.")]
+		[CategoryAttribute("MF Interface")]
 		[Guid("6B506B17-C575-4D0E-AE80-C490199B3984")]
 		public interface class ICarenMFMediaSession : ICarenMFMediaEventGenerator
 		{
@@ -3594,19 +3594,19 @@ namespace CarenRengine
 			/// (ClearTopologies) - Limpa todas as apresentações que estão enfileiradas para reprodução na sessão de mídia.
 			/// Esse método é assíncrono. Quando a operação for concluída, a sessão de mídia enviará o evento (MESessionTopologiesCleared).
 			/// </summary>
-			CarenResult LimparTopologias();
+			CarenResult ClearTopologies();
 
 			/// <summary>
 			/// (Close) - Fecha a sessão de mídia e libera todos os recursos que ele está usando.
 			/// Esse método é assíncrono. Quando a operação for concluída, a sessão de mídia enviará o evento(MESessionClosed) .
 			/// </summary>
-			CarenResult Fechar();
+			CarenResult Close();
 
 			/// <summary>
 			/// (GetClock) - Recupera o relógio de apresentação da sessão de mídia.
 			/// </summary>
 			/// <param name="Param_Out_Relogio">Recebe o ponteiro para o relogio de apresentação. O chamador deve liberar a interface.</param>
-			CarenResult ObterRelogio([Out] ICarenMFClock^% Param_Out_Relogio);
+			CarenResult GetClock([Out] ICarenMFClock^% Param_Out_Relogio);
 
 			/// <summary>
 			/// (GetFullTopology) - Obtém uma topologia da sessão de mídia.
@@ -3614,32 +3614,32 @@ namespace CarenRengine
 			/// <param name="Param_Flags">Zero ou mais sinalizadores da enumeração CA_MESESSION_GETFULLTOPOLOGY_FLAGS .</param>
 			/// <param name="Param_TopoId">O identificador da topologia. Este parâmetro será ignorado se o (Param_Flags) parâmetro contém o MFSESSION_GETFULLTOPOLOGY_CURRENT sinalizador.</param>
 			/// <param name="Param_Out_TopologiaCompleta">Recebe um ponteiro para a topologia. O chamador deve liberar a interface.</param>
-			CarenResult ObterTopologiaCompleta(Enumeracoes::CA_MFSESSION_GETFULLTOPOLOGY_FLAGS Param_Flags, UInt64 Param_TopoId, [Out] ICarenMFTopology^% Param_Out_TopologiaCompleta);
+			CarenResult GetFullTopology(Enumeracoes::CA_MFSESSION_GETFULLTOPOLOGY_FLAGS Param_Flags, UInt64 Param_TopoId, [Out] ICarenMFTopology^% Param_Out_TopologiaCompleta);
 
 			/// <summary>
 			/// (GetSessionCapabilities) - Recupera os recursos da sessão de mídia, com base na apresentação atual.
 			/// </summary>
 			/// <param name="Param_Out_Recursos">Recebe um OU de bit ou de ZERO ou mais dos sinalizadores da enumeração(CA_RECURSOS_SESSAO_MIDIA).</param>
-			CarenResult RecuperarRecursosSessao([Out] Enumeracoes::CA_RECURSOS_SESSAO_MIDIA% Param_Out_Recursos);
+			CarenResult GetSessionCapabilities([Out] Enumeracoes::CA_RECURSOS_SESSAO_MIDIA% Param_Out_Recursos);
 
 			/// <summary>
 			/// (Pause) - Pausa a sessão de mídia.
 			/// Este método pausa o relógio de apresentação. Esse método é assíncrono.Quando a operação for concluída, a sessão de mídia enviará um evento MESessionPaused.
 			/// </summary>
-			CarenResult Pausar();
+			CarenResult Pause();
 
 			/// <summary>
 			/// (SetTopology) - Define uma topologia na sessão de mídia.
 			/// </summary>
 			/// <param name="Param_Flags">Os flags que determinam o comportamento do método.</param>
 			/// <param name="Param_Topologia">Um ponteiro para a topologia a ser definida.</param>
-			CarenResult DefinirTopologia(Enumeracoes::CA_MFSESSION_SETTOPOLOGY_FLAGS Param_Flags, ICarenMFTopology^ Param_Topologia);
+			CarenResult SetTopology(Enumeracoes::CA_MFSESSION_SETTOPOLOGY_FLAGS Param_Flags, ICarenMFTopology^ Param_Topologia);
 
 			/// <summary>
 			/// (Shutdown) - Desliga a sessão de mídia e libera todos os recursos usados pela sessão de mídia.
 			/// Chame esse método quando você terminar de usar a sessão de mídia, antes da chamada final para ICaren::LiberarReferencia. Caso contrário, seu aplicativo irá vazar memória.
 			/// </summary>
-			CarenResult Desligar();
+			CarenResult Shutdown();
 
 			/// <summary>
 			/// (Start) - Inicia a sessão de mídia.
@@ -3650,13 +3650,13 @@ namespace CarenRengine
 			/// a passar em GUID_NULL.</param>
 			/// <param name="Param_PosicaoInicio">Uma CA_PropVariant que especifica a posição inicial para reprodução. O significado e o tipo de dados desse parâmetro são indicados pelo 
 			/// (Param_GuidFormatoTempo) parâmetro.</param>
-			CarenResult Iniciar(String^ Param_GuidFormatoTempo, CA_PropVariant^ Param_PosicaoInicio);
+			CarenResult Start(String^ Param_GuidFormatoTempo, CA_PropVariant^ Param_PosicaoInicio);
 
 			/// <summary>
 			/// (Stop) - Interrompe a sessão de mídia.
 			/// Esse método é assíncrono. Quando a operação for concluída, a sessão de mídia enviará o evento MESessionStopped. 
 			/// </summary>
-			CarenResult Parar();
+			CarenResult Stop();
 		};
 
 		/// <summary>
@@ -5360,13 +5360,13 @@ namespace CarenRengine
 			CarenResult RemoveAllEffects();
 
 			/// <summary>
-			/// Define o ponto final do dispositivo de áudio usado para a próxima chamada para DefinirFonte ou Carregar.
+			/// Define o ponto final do dispositivo de áudio usado para a próxima chamada para DefinirFonte ou Load.
 			/// </summary>
 			/// <param name="Param_Role">Especifica a função de ponto final de áudio.</param>
 			CarenResult SetAudioEndpointRole(CA_ERole Param_Role);
 
 			/// <summary>
-			/// Define a categoria fluxo de áudio para a próxima chamada para DefinirFonte ou Carregar.
+			/// Define a categoria fluxo de áudio para a próxima chamada para DefinirFonte ou Load.
 			/// </summary>
 			/// <param name="Param_Categoria">Especifica a categoria do fluxo de áudio.</param>
 			CarenResult SetAudioStreamCategory(CA_AUDIO_STREAM_CATEGORY Param_Categoria);
@@ -5387,7 +5387,7 @@ namespace CarenRengine
 				CA_MF_MEDIA_ENGINE_SEEK_MODE Param_Modo);
 
 			/// <summary>
-			/// Define o modo em tempo real usado para a próxima chamada para DefinirFonte ou Carregar.
+			/// Define o modo em tempo real usado para a próxima chamada para DefinirFonte ou Load.
 			/// </summary>
 			/// <param name="Param_Habilitar">Especifica o modo em tempo real.</param>
 			CarenResult SetRealTimeMode(Boolean Param_Habilitar);
@@ -6298,6 +6298,18 @@ namespace CarenRengine
 			/// <param name="Param_ullStreamMask">Um valor de máscara de bits onde os bits que estão ligados representam os índices dos subfluxos incluídos na configuração do fluxo.</param>
 			CarenResult RemoveStreamConfiguration(UInt64 Param_ullStreamMask);
 		};
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

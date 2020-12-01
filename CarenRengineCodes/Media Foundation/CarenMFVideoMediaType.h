@@ -186,13 +186,13 @@ public:
 	/// </summary>
 	/// <param name="Param_Out_GuidTipoMidia">Retorna o GUID do tipo principal da mídia.</param>
 	/// <param name="Param_Out_TipoPrincipal">Retorna a enumeração com o tipo principal da mídia.</param>
-	virtual CarenResult ObterTipoPrincipal([Out] String^% Param_Out_GuidTipoMidia, [Out] Enumeracoes::CA_Midia_TipoPrincipal% Param_Out_TipoPrincipal);
+	virtual CarenResult GetMajorType([Out] String^% Param_Out_GuidTipoMidia, [Out] Enumeracoes::CA_Midia_TipoPrincipal% Param_Out_TipoPrincipal);
 
 	/// <summary>
 	/// (IsCompressedFormat) - Consulta se o tipo de mídia é um formato compactado(CompressedFormat).
 	/// </summary>
 	/// <param name="Param_Out_FormatoCompactado">Retorna se o formato da mídia está compactado.</param>
-	virtual CarenResult FormatoCompactado([Out] Boolean% Param_Out_FormatoCompactado);
+	virtual CarenResult IsCompressedFormat([Out] Boolean% Param_Out_FormatoCompactado);
 
 	/// <summary>
 	/// (IsEqual) - Compara dois tipos de mídia e determina se eles são idênticos. 
@@ -200,7 +200,7 @@ public:
 	/// </summary>
 	/// <param name="Param_MidiaCompare">A interface a ser comparada com a atual.</param>
 	/// <param name="Param_Out_ResultadoCompare">O resultado da comparação dos objetos.</param>
-	virtual CarenResult CompararMidiaTypes(ICarenMFMediaType^ Param_MidiaCompare, [Out] Enumeracoes::CA_MEDIA_TYPE_EQUAL% Param_Out_ResultadoCompare);
+	virtual CarenResult IsEqual(ICarenMFMediaType^ Param_MidiaCompare, [Out] Enumeracoes::CA_MEDIA_TYPE_EQUAL% Param_Out_ResultadoCompare);
 
 
 
@@ -214,7 +214,7 @@ public:
 	/// <param name="Param_InterfaceCompare">A interface que vai ter todos os atributos comparado com a interface atual.</param>
 	/// <param name="Param_TipoComparação">O tipo de comparação a ser realizada.</param>
 	/// <param name="Param_Out_Resultado">O resultado da comparação segundo o parametro (Param_TipoComparação).</param>
-	virtual CarenResult Comparar(ICarenMFAttributes^ Param_InterfaceCompare, Enumeracoes::CA_ATTRIBUTES_MATCH_TYPE Param_TipoComparação, [Out] Boolean% Param_Out_Resultado);
+	virtual CarenResult Compare(ICarenMFAttributes^ Param_InterfaceCompare, Enumeracoes::CA_ATTRIBUTES_MATCH_TYPE Param_TipoComparação, [Out] Boolean% Param_Out_Resultado);
 
 
 	/// <summary>
@@ -226,7 +226,7 @@ public:
 	/// <param name="Param_GuidChave">Define o Guid do atributo a ter seu valor comparado com o valor da PropVariant informada.</param>
 	/// <param name="Param_Valor">O valor a ser comparado com o Atributo especificado.</param>
 	/// <param name="Param_Out_Resultado">O resultado da comparação do atributo.</param>
-	virtual CarenResult CompararItem(String^ Param_GuidChave, Estruturas::CA_PropVariant^ Param_Valor, [Out] Boolean% Param_Out_Resultado);
+	virtual CarenResult CompareItem(String^ Param_GuidChave, Estruturas::CA_PropVariant^ Param_Valor, [Out] Boolean% Param_Out_Resultado);
 
 
 	/// <summary>
@@ -236,13 +236,13 @@ public:
 	/// para o exemplo de destino. Você deve copiar esses valores para a nova amostra manualmente.
 	/// </summary>
 	/// <param name="Param_Out_InterfaceDestino">A interface de destino que vai receber os itens dessa interface.</param>
-	virtual CarenResult CopiarTodosItens(ICarenMFAttributes^ Param_Out_InterfaceDestino);
+	virtual CarenResult CopyAllItems(ICarenMFAttributes^ Param_Out_InterfaceDestino);
 
 
 	/// <summary>
 	/// Remove todos os pares chave/valor da lista de atributos do objeto.
 	/// </summary>
-	virtual CarenResult DeletarTodosItens();
+	virtual CarenResult DeleteAllItems();
 
 
 	/// <summary>
@@ -250,7 +250,7 @@ public:
 	/// Se a chave especificada não existir, o método retornar (SS_OK) da mesma forma.
 	/// </summary>
 	/// <param name="Param_GuidChave">O Guid da chave a ser deletada.</param>
-	virtual CarenResult DeletarItem(String^ Param_GuidChave);
+	virtual CarenResult DeleteItem(String^ Param_GuidChave);
 
 
 
@@ -264,7 +264,7 @@ public:
 	/// </summary>
 	/// <param name="Param_GuidChave">O GUID para chave que contém o Blob a ser obtido.</param>
 	/// <param name="Param_Out_Buffer">O buffer que contém os dados da matriz bytes do valor da chave solicitada.</param>
-	virtual CarenResult ObterAlocaçãoBlob(String^ Param_GuidChave, [Out] Estruturas::CA_BlobData^% Param_Out_Buffer);
+	virtual CarenResult GetAllocatedBlob(String^ Param_GuidChave, [Out] Estruturas::CA_BlobData^% Param_Out_Buffer);
 
 
 	/// <summary>
@@ -274,7 +274,7 @@ public:
 	/// <param name="Param_GuidChave">O GUID para chave que contém o Blob a ser obtido. O tipo de atributo deve ser MF_ATTRIBUTE_STRING.</param>
 	/// <param name="Param_Out_String">Retorna a string com os dados do valor da chave solicitada.</param>
 	/// <param name="Param_Out_LarguraString">Retorna a largura em bytes da matriz que continha a String.</param>
-	virtual CarenResult ObterAlocaçãoString(String^ Param_GuidChave, [Out] String^% Param_Out_String, [Out] UInt32% Param_Out_LarguraString);
+	virtual CarenResult GetAllocatedString(String^ Param_GuidChave, [Out] String^% Param_Out_String, [Out] UInt32% Param_Out_LarguraString);
 
 
 	/// <summary>
@@ -283,8 +283,8 @@ public:
 	/// </summary>
 	/// <param name="Param_GuidChave">O GUID para chave que contém o Blob a ser obtido.</param>
 	/// <param name="Param_Out_Buffer">O buffer que contém os dados da matriz bytes do valor da chave solicitada.</param>
-	/// <param name="Param_TamanhoBuffer">Define o tamanho da matriz em bytes do valor da chave a ser obtido. Chame o método (ObterBlobSize) para obter o valor para esse parametro.</param>
-	virtual CarenResult ObterBlob(String^ Param_GuidChave, UInt32 Param_TamanhoBuffer, [Out] Estruturas::CA_BlobData^% Param_Out_Buffer);
+	/// <param name="Param_TamanhoBuffer">Define o tamanho da matriz em bytes do valor da chave a ser obtido. Chame o método (GetBlobSize) para obter o valor para esse parametro.</param>
+	virtual CarenResult GetBlob(String^ Param_GuidChave, UInt32 Param_TamanhoBuffer, [Out] Estruturas::CA_BlobData^% Param_Out_Buffer);
 
 
 	/// <summary>
@@ -292,14 +292,14 @@ public:
 	/// </summary>
 	/// <param name="Param_GuidChave">O GUID para chave que contém o Blob a ser obtido. O tipo de atributo deve ser MF_ATTRIBUTE_BLOB.</param>
 	/// <param name="Param_TamanhoBuffer">Recebe o tamanho da matriz que contem o valor da chave solicitada.</param>
-	virtual CarenResult ObterBlobSize(String^ Param_GuidChave, [Out] UInt32% Param_TamanhoBuffer);
+	virtual CarenResult GetBlobSize(String^ Param_GuidChave, [Out] UInt32% Param_TamanhoBuffer);
 
 
 	/// <summary>
 	/// Recupera o número de atributos que são definidos neste objeto.
 	/// </summary>
 	/// <param name="Param_QuantidadeAtributos">Recebe a quantidade de atributos na interface.</param>
-	virtual CarenResult ObterCountAtributos([Out] UInt32% Param_QuantidadeAtributos);
+	virtual CarenResult GetCount([Out] UInt32% Param_QuantidadeAtributos);
 
 
 	/// <summary>
@@ -307,7 +307,7 @@ public:
 	/// </summary>
 	/// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (Double) obtido.</param>
 	/// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-	virtual CarenResult ObterDouble(String^ Param_GuidChave, [Out] Double% Param_Out_Valor);
+	virtual CarenResult GetDouble(String^ Param_GuidChave, [Out] Double% Param_Out_Valor);
 
 
 	/// <summary>
@@ -315,7 +315,7 @@ public:
 	/// </summary>
 	/// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (GUID) obtido.</param>
 	/// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-	virtual CarenResult ObterGuid(String^ Param_GuidChave, [Out] String^% Param_Out_Valor);
+	virtual CarenResult GetGUID(String^ Param_GuidChave, [Out] String^% Param_Out_Valor);
 
 
 	/// <summary>
@@ -323,7 +323,7 @@ public:
 	/// </summary>
 	/// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (CA_PropVariant) obtido.</param>
 	/// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-	virtual CarenResult ObterItem(String^ Param_GuidChave, [Out] Estruturas::CA_PropVariant^% Param_Out_Valor);
+	virtual CarenResult GetItem(String^ Param_GuidChave, [Out] Estruturas::CA_PropVariant^% Param_Out_Valor);
 
 
 	/// <summary>
@@ -332,7 +332,7 @@ public:
 	/// <param name="Param_Out_GuidChave">Recebe o guid associado a chave obtida pelo id.</param>
 	/// <param name="Param_IdItem">O Id do item a ter o seu valor obtido.</param>
 	/// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-	virtual CarenResult ObterItemPorIndex(UInt32 Param_IdItem, [Out] String^% Param_Out_GuidChave, [Out] Estruturas::CA_PropVariant^% Param_Out_Valor);
+	virtual CarenResult GetItemByIndex(UInt32 Param_IdItem, [Out] String^% Param_Out_GuidChave, [Out] Estruturas::CA_PropVariant^% Param_Out_Valor);
 
 
 	/// <summary>
@@ -340,16 +340,16 @@ public:
 	/// </summary>
 	/// <param name="Param_GuidChave">O GUID para a chave a ser verificado o tipo do valor.</param>
 	/// <param name="Param_Out_TipoDado">O tipo do dado contido na chave solicitada.</param>
-	virtual CarenResult ObterTipoDadosItem(String^ Param_GuidChave, [Out] Enumeracoes::CA_ATTRIBUTE_TYPE% Param_Out_TipoDado);
+	virtual CarenResult GetItemType(String^ Param_GuidChave, [Out] Enumeracoes::CA_ATTRIBUTE_TYPE% Param_Out_TipoDado);
 
 
 	/// <summary>
 	/// Recupera uma sequência de caracteres largos associada a uma chave.
 	/// </summary>
 	/// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (String) obtido. O tipo de atributo deve ser MF_ATTRIBUTE_STRING.</param>
-	/// <param name="Param_Out_Valor">A largura da string a ser recebida. Some +1 a esse valor. Para obter esse valor, chame o método: ObterLarguraString</param>
+	/// <param name="Param_Out_Valor">A largura da string a ser recebida. Some +1 a esse valor. Para obter esse valor, chame o método: GetStringLength</param>
 	/// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada.</param>
-	virtual CarenResult ObterString(String^ Param_GuidChave, UInt32 Param_LagruraString, [Out] String^% Param_Out_Valor);
+	virtual CarenResult GetString(String^ Param_GuidChave, UInt32 Param_LagruraString, [Out] String^% Param_Out_Valor);
 
 
 	/// <summary>
@@ -358,7 +358,7 @@ public:
 	/// <param name="Param_GuidChave">O GUID para a chave a ser consultada a largura da String. O tipo de atributo deve ser MF_ATTRIBUTE_STRING.</param>
 	/// <param name="Param_Out_Largura">Se a chave for encontrada e o valor é um tipo de sequência de caracteres, esse parâmetro recebe o número de caracteres na 
 	/// sequência de caracteres, não incluindo o caractere nulo de terminação</param>
-	virtual CarenResult ObterLarguraString(String^ Param_GuidChave, [Out] UInt32% Param_Out_Largura);
+	virtual CarenResult GetStringLength(String^ Param_GuidChave, [Out] UInt32% Param_Out_Largura);
 
 
 	/// <summary>
@@ -366,7 +366,7 @@ public:
 	/// </summary>
 	/// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (UINT32) obtido.</param>
 	/// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-	virtual CarenResult ObterUINT32(String^ Param_GuidChave, [Out] UInt32% Param_Out_Valor);
+	virtual CarenResult GetUINT32(String^ Param_GuidChave, [Out] UInt32% Param_Out_Valor);
 
 
 	/// <summary>
@@ -374,7 +374,7 @@ public:
 	/// </summary>
 	/// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (UInt64) obtido.</param>
 	/// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-	virtual CarenResult ObterUINT64(String^ Param_GuidChave, [Out] UInt64% Param_Out_Valor);
+	virtual CarenResult GetUINT64(String^ Param_GuidChave, [Out] UInt64% Param_Out_Valor);
 
 	/// <summary>
 	/// (MFGetAttributeRatio) - Recupera um valor UINT64 associado a uma chave.
@@ -405,7 +405,7 @@ public:
 	/// <summary>
 	/// Bloqueia o armazenamento de atributo para que nenhum outro thread possa acessá-lo.
 	/// </summary>
-	virtual CarenResult BloquearArmazenamento();
+	virtual CarenResult LockStore();
 
 
 
@@ -420,7 +420,7 @@ public:
 	/// </summary>
 	/// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 	/// <param name="Param_Buffer">A matriz de bytes a ser associada a chave especificada.</param>
-	virtual CarenResult DefinirBlob(String^ Param_GuidChave, cli::array<Byte>^ Param_Buffer);
+	virtual CarenResult SetBlob(String^ Param_GuidChave, cli::array<Byte>^ Param_Buffer);
 
 
 	/// <summary>
@@ -428,7 +428,7 @@ public:
 	/// </summary>
 	/// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 	/// <param name="Param_Valor">O valor a ser definido na chave especificada.</param>
-	virtual CarenResult DefinirDouble(String^ Param_GuidChave, Double Param_Valor);
+	virtual CarenResult SetDouble(String^ Param_GuidChave, Double Param_Valor);
 
 
 	/// <summary>
@@ -436,7 +436,7 @@ public:
 	/// </summary>
 	/// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 	/// <param name="Param_Valor">O valor a ser definido na chave especificada.</param>
-	virtual CarenResult DefinirGUID(String^ Param_GuidChave, String^ Param_Valor);
+	virtual CarenResult SetGUID(String^ Param_GuidChave, String^ Param_Valor);
 
 
 	/// <summary>
@@ -444,7 +444,7 @@ public:
 	/// </summary>
 	/// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 	/// <param name="Param_PropVariantValor">A PropVariant que contém o valor a ser definido na chave especificada.</param>
-	virtual CarenResult DefinirItem(String^ Param_GuidChave, Estruturas::CA_PropVariant^ Param_PropVariantValor);
+	virtual CarenResult SetItem(String^ Param_GuidChave, Estruturas::CA_PropVariant^ Param_PropVariantValor);
 
 
 	/// <summary>
@@ -452,7 +452,7 @@ public:
 	/// </summary>
 	/// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 	/// <param name="Param_Valor">O valor a ser definido na chave especificada.</param>
-	virtual CarenResult DefinirString(String^ Param_GuidChave, String^ Param_Valor);
+	virtual CarenResult SetString(String^ Param_GuidChave, String^ Param_Valor);
 
 
 	/// <summary>
@@ -460,7 +460,7 @@ public:
 	/// </summary>
 	/// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 	/// <param name="Param_Valor">O valor a ser definido na chave especificada.</param>
-	virtual CarenResult DefinirUINT32(String^ Param_GuidChave, UInt32 Param_Valor);
+	virtual CarenResult SetUINT32(String^ Param_GuidChave, UInt32 Param_Valor);
 
 
 	/// <summary>
@@ -468,7 +468,7 @@ public:
 	/// </summary>
 	/// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 	/// <param name="Param_Valor">O valor a ser definido na chave especificada.</param>
-	virtual CarenResult DefinirUINT64(String^ Param_GuidChave, UInt64 Param_Valor);
+	virtual CarenResult SetUINT64(String^ Param_GuidChave, UInt64 Param_Valor);
 
 	/// <summary>
 	/// (MFSetAttributeRatio) - Associa um valor UInt64 com uma chave.
@@ -502,7 +502,7 @@ public:
 	/// (UnlockStore) - Desbloqueia o armazenamento de atributo após uma chamada para o método (BloquearAtributo). 
 	/// Enquanto o objeto é desbloqueado, Múltiplos threads podem acessar atributos do objeto.
 	/// </summary>
-	virtual CarenResult DesbloquearAtributo();
+	virtual CarenResult UnlockStore();
 
 
 

@@ -197,6 +197,6 @@ public:
 	/// <param name="Param_TopoId">Reservado.</param>
 	/// <param name="Param_CountArray">A quantidade de elementos no array que contém as atualizações dos atributos.</param>
 	/// <param name="Param_ArrayUpdates">Uma matriz que contém elementos que atualizam os atributos. Cada elemento atualiza (um) atributo no nó.</param>
-	virtual CarenResult AtualizarAtributosNode(UInt64 Param_TopoId, UInt32 Param_CountArray, cli::array<Estruturas::CA_MFTOPONODE_ATTRIBUTE_UPDATE^>^ Param_ArrayUpdates);
+	virtual CarenResult UpdateNodeAttributes(UInt64 Param_TopoId, UInt32 Param_CountArray, cli::array<Estruturas::CA_MFTOPONODE_ATTRIBUTE_UPDATE^>^ Param_ArrayUpdates);
 };
 

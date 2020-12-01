@@ -415,7 +415,7 @@ void CarenMFMediaEvent::Finalizar()
 /// (GetStatus) - Recupera um HRESULT que especifica o status do evento.
 /// </summary>
 /// <param name="Param_Out_HResultCode">Recebe o código de status do evento.</param>
-CarenResult CarenMFMediaEvent::ObterStatus([Out] int% Param_Out_HResultCode)
+CarenResult CarenMFMediaEvent::GetStatus([Out] int% Param_Out_HResultCode)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -456,7 +456,7 @@ Done:;
 /// (GetType) - Recupera o tipo de evento. O tipo de evento indica o que aconteceu para acionar o evento. Também define o significado do valor do evento.
 /// </summary>
 /// <param name="Param_Out_TipoEvento">Recebe a enumeração que define o tipo do evento gerado.</param>
-CarenResult CarenMFMediaEvent::ObterTipo([Out] Enumeracoes::CA_MediaEventType% Param_Out_TipoEvento)
+CarenResult CarenMFMediaEvent::GetType([Out] Enumeracoes::CA_MediaEventType% Param_Out_TipoEvento)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -497,7 +497,7 @@ Done:;
 /// (GetExtendedType) - Recupera o tipo estendido do evento. Utilizado para da suporte a eventos personalizados.
 /// </summary>
 /// <param name="Param_Out_GuidExtendedType">Recebe o guid para o tipo extendido do evento.</param>
-CarenResult CarenMFMediaEvent::ObterTipoExtendido([Out] String^% Param_Out_GuidExtendedType)
+CarenResult CarenMFMediaEvent::GetExtendedType([Out] String^% Param_Out_GuidExtendedType)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -537,7 +537,7 @@ Done:;
 /// dependem do evento.
 /// </summary>
 /// <param name="Param_Out_ValorEvento">Recebe a PropVariant que contém o valor associado ao evento. Nem todos eventos possuem valores.</param>
-CarenResult CarenMFMediaEvent::ObterValor([Out] Estruturas::CA_PropVariant^% Param_Out_ValorEvento)
+CarenResult CarenMFMediaEvent::GetValue([Out] Estruturas::CA_PropVariant^% Param_Out_ValorEvento)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -595,7 +595,7 @@ Done:;
 /// <param name="Param_InterfaceCompare">A interface que vai ter todos os atributos comparado com a interface atual.</param>
 /// <param name="Param_TipoComparação">O tipo de comparação a ser realizada.</param>
 /// <param name="Param_Out_Resultado">O resultado da comparação segundo o parametro (Param_TipoComparação).</param>
-CarenResult CarenMFMediaEvent::Comparar(ICarenMFAttributes^ Param_InterfaceCompare, CA_ATTRIBUTES_MATCH_TYPE Param_TipoComparação, [Out] Boolean% Param_Out_Resultado)
+CarenResult CarenMFMediaEvent::Compare(ICarenMFAttributes^ Param_InterfaceCompare, CA_ATTRIBUTES_MATCH_TYPE Param_TipoComparação, [Out] Boolean% Param_Out_Resultado)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -650,7 +650,7 @@ Done:;
 /// <param name="Param_GuidChave">Define o Guid do atributo a ter seu valor comparado com o valor da PropVariant informada.</param>
 /// <param name="Param_Valor">O valor a ser comparado com o Atributo especificado.</param>
 /// <param name="Param_Out_Resultado">O resultado da comparação do atributo.</param>
-CarenResult CarenMFMediaEvent::CompararItem(String^ Param_GuidChave, CA_PropVariant^ Param_Valor, [Out] Boolean% Param_Out_Resultado)
+CarenResult CarenMFMediaEvent::CompareItem(String^ Param_GuidChave, CA_PropVariant^ Param_Valor, [Out] Boolean% Param_Out_Resultado)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -744,7 +744,7 @@ Done:;
 /// para o exemplo de destino. Você deve copiar esses valores para a nova amostra manualmente.
 /// </summary>
 /// <param name="Param_Out_InterfaceDestino">A interface de destino que vai receber os itens dessa interface.</param>
-CarenResult CarenMFMediaEvent::CopiarTodosItens(ICarenMFAttributes^ Param_Out_InterfaceDestino)
+CarenResult CarenMFMediaEvent::CopyAllItems(ICarenMFAttributes^ Param_Out_InterfaceDestino)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -809,7 +809,7 @@ Done:;
 /// <summary>
 /// Remove todos os pares chave/valor da lista de atributos do objeto.
 /// </summary>
-CarenResult CarenMFMediaEvent::DeletarTodosItens()
+CarenResult CarenMFMediaEvent::DeleteAllItems()
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -845,7 +845,7 @@ Done:;
 /// Se a chave especificada não existir, o método retornar (SS_OK) da mesma forma.
 /// </summary>
 /// <param name="Param_GuidChave">O Guid da chave a ser deletada.</param>
-CarenResult CarenMFMediaEvent::DeletarItem(String^ Param_GuidChave)
+CarenResult CarenMFMediaEvent::DeleteItem(String^ Param_GuidChave)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -905,7 +905,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para chave que contém o Blob a ser obtido.</param>
 /// <param name="Param_Out_Buffer">O buffer que contém os dados da matriz bytes do valor da chave solicitada.</param>
-CarenResult CarenMFMediaEvent::ObterAlocaçãoBlob(String^ Param_GuidChave, [Out] Estruturas::CA_BlobData^% Param_Out_Buffer)
+CarenResult CarenMFMediaEvent::GetAllocatedBlob(String^ Param_GuidChave, [Out] Estruturas::CA_BlobData^% Param_Out_Buffer)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -968,7 +968,7 @@ Done:;
 /// <param name="Param_GuidChave">O GUID para chave que contém o Blob a ser obtido. O tipo de atributo deve ser MF_ATTRIBUTE_STRING.</param>
 /// <param name="Param_Out_String">Retorna a string com os dados do valor da chave solicitada.</param>
 /// <param name="Param_Out_LarguraString">Retorna a largura em bytes da matriz que continha a String.</param>
-CarenResult CarenMFMediaEvent::ObterAlocaçãoString(String^ Param_GuidChave, [Out] String^% Param_Out_String, [Out] UInt32% Param_Out_LarguraString)
+CarenResult CarenMFMediaEvent::GetAllocatedString(String^ Param_GuidChave, [Out] String^% Param_Out_String, [Out] UInt32% Param_Out_LarguraString)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1024,8 +1024,8 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para chave que contém o Blob a ser obtido.</param>
 /// <param name="Param_Out_Buffer">O buffer que contém os dados da matriz bytes do valor da chave solicitada.</param>
-/// <param name="Param_TamanhoBuffer">Define o tamanho da matriz em bytes do valor da chave a ser obtido. Chame o método (ObterBlobSize) para obter o valor para esse parametro.</param>
-CarenResult CarenMFMediaEvent::ObterBlob(String^ Param_GuidChave, UInt32 Param_TamanhoBuffer, [Out] Estruturas::CA_BlobData^% Param_Out_Buffer)
+/// <param name="Param_TamanhoBuffer">Define o tamanho da matriz em bytes do valor da chave a ser obtido. Chame o método (GetBlobSize) para obter o valor para esse parametro.</param>
+CarenResult CarenMFMediaEvent::GetBlob(String^ Param_GuidChave, UInt32 Param_TamanhoBuffer, [Out] Estruturas::CA_BlobData^% Param_Out_Buffer)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1087,7 +1087,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para chave que contém o Blob a ser obtido. O tipo de atributo deve ser MF_ATTRIBUTE_BLOB.</param>
 /// <param name="Param_TamanhoBuffer">Recebe o tamanho da matriz que contem o valor da chave solicitada.</param>
-CarenResult CarenMFMediaEvent::ObterBlobSize(String^ Param_GuidChave, [Out] UInt32% Param_Out_TamanhoBuffer)
+CarenResult CarenMFMediaEvent::GetBlobSize(String^ Param_GuidChave, [Out] UInt32% Param_Out_TamanhoBuffer)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1133,7 +1133,7 @@ Done:;
 /// Recupera o número de atributos que são definidos neste objeto.
 /// </summary>
 /// <param name="Param_QuantidadeAtributos">Recebe a quantidade de atributos na interface.</param>
-CarenResult CarenMFMediaEvent::ObterCountAtributos([Out] UInt32% Param_QuantidadeAtributos)
+CarenResult CarenMFMediaEvent::GetCount([Out] UInt32% Param_QuantidadeAtributos)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1175,7 +1175,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (Double) obtido.</param>
 /// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-CarenResult CarenMFMediaEvent::ObterDouble(String^ Param_GuidChave, [Out] Double% Param_Out_Valor)
+CarenResult CarenMFMediaEvent::GetDouble(String^ Param_GuidChave, [Out] Double% Param_Out_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1222,7 +1222,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (GUID) obtido.</param>
 /// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-CarenResult CarenMFMediaEvent::ObterGuid(String^ Param_GuidChave, [Out] String^% Param_Out_Valor)
+CarenResult CarenMFMediaEvent::GetGUID(String^ Param_GuidChave, [Out] String^% Param_Out_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1269,7 +1269,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (CA_PropVariant) obtido.</param>
 /// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-CarenResult CarenMFMediaEvent::ObterItem(String^ Param_GuidChave, [Out] CA_PropVariant^% Param_Out_Valor)
+CarenResult CarenMFMediaEvent::GetItem(String^ Param_GuidChave, [Out] CA_PropVariant^% Param_Out_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1323,7 +1323,7 @@ Done:;
 /// <param name="Param_Out_GuidChave">Recebe o guid associado a chave obtida pelo id.</param>
 /// <param name="Param_IdItem">O Id do item a ter o seu valor obtido.</param>
 /// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-CarenResult CarenMFMediaEvent::ObterItemPorIndex(UInt32 Param_IdItem, [Out] String^% Param_Out_GuidChave, [Out] CA_PropVariant^% Param_Out_Valor)
+CarenResult CarenMFMediaEvent::GetItemByIndex(UInt32 Param_IdItem, [Out] String^% Param_Out_GuidChave, [Out] CA_PropVariant^% Param_Out_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1376,7 +1376,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave a ser verificado o tipo do valor.</param>
 /// <param name="Param_Out_TipoDado">O tipo do dado contido na chave solicitada.</param>
-CarenResult CarenMFMediaEvent::ObterTipoDadosItem(String^ Param_GuidChave, [Out] CA_ATTRIBUTE_TYPE% Param_Out_TipoDado)
+CarenResult CarenMFMediaEvent::GetItemType(String^ Param_GuidChave, [Out] CA_ATTRIBUTE_TYPE% Param_Out_TipoDado)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1422,9 +1422,9 @@ Done:;
 /// Recupera uma sequência de caracteres largos associada a uma chave.
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (String) obtido. O tipo de atributo deve ser MF_ATTRIBUTE_STRING.</param>
-/// <param name="Param_Out_Valor">A largura da string a ser recebida. Some +1 a esse valor. Para obter esse valor, chame o método: ObterLarguraString</param>
+/// <param name="Param_Out_Valor">A largura da string a ser recebida. Some +1 a esse valor. Para obter esse valor, chame o método: GetStringLength</param>
 /// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada.</param>
-CarenResult CarenMFMediaEvent::ObterString(String^ Param_GuidChave, UInt32 Param_LarguraString, [Out] String^% Param_Out_Valor)
+CarenResult CarenMFMediaEvent::GetString(String^ Param_GuidChave, UInt32 Param_LarguraString, [Out] String^% Param_Out_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1482,7 +1482,7 @@ Done:;
 /// <param name="Param_GuidChave">O GUID para a chave a ser consultada a largura da String. O tipo de atributo deve ser MF_ATTRIBUTE_STRING.</param>
 /// <param name="Param_Out_Largura">Se a chave for encontrada e o valor é um tipo de sequência de caracteres, esse parâmetro recebe o número de caracteres na 
 /// sequência de caracteres, não incluindo o caractere nulo de terminação</param>
-CarenResult CarenMFMediaEvent::ObterLarguraString(String^ Param_GuidChave, [Out] UInt32% Param_Out_Largura)
+CarenResult CarenMFMediaEvent::GetStringLength(String^ Param_GuidChave, [Out] UInt32% Param_Out_Largura)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1529,7 +1529,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (UInt32) obtido.</param>
 /// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-CarenResult CarenMFMediaEvent::ObterUINT32(String^ Param_GuidChave, [Out] UInt32% Param_Out_Valor)
+CarenResult CarenMFMediaEvent::GetUINT32(String^ Param_GuidChave, [Out] UInt32% Param_Out_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1576,7 +1576,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (UInt64) obtido.</param>
 /// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-CarenResult CarenMFMediaEvent::ObterUINT64(String^ Param_GuidChave, [Out] UInt64% Param_Out_Valor)
+CarenResult CarenMFMediaEvent::GetUINT64(String^ Param_GuidChave, [Out] UInt64% Param_Out_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1783,7 +1783,7 @@ Done:;
 /// <summary>
 /// Bloqueia o armazenamento de atributo para que nenhum outro thread possa acessá-lo.
 /// </summary>
-CarenResult CarenMFMediaEvent::BloquearArmazenamento()
+CarenResult CarenMFMediaEvent::LockStore()
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1822,7 +1822,7 @@ CarenResult CarenMFMediaEvent::BloquearArmazenamento()
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 /// <param name="Param_Buffer">A matriz de bytes a ser associada a chave especificada.</param>
-CarenResult CarenMFMediaEvent::DefinirBlob(String^ Param_GuidChave, cli::array<Byte>^ Param_Buffer)
+CarenResult CarenMFMediaEvent::SetBlob(String^ Param_GuidChave, cli::array<Byte>^ Param_Buffer)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1886,7 +1886,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 /// <param name="Param_Valor">O valor a ser definido na chave especificada.</param>
-CarenResult CarenMFMediaEvent::DefinirDouble(String^ Param_GuidChave, Double Param_Valor)
+CarenResult CarenMFMediaEvent::SetDouble(String^ Param_GuidChave, Double Param_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1929,7 +1929,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 /// <param name="Param_Valor">O valor a ser definido na chave especificada.</param>
-CarenResult CarenMFMediaEvent::DefinirGUID(String^ Param_GuidChave, String^ Param_Valor)
+CarenResult CarenMFMediaEvent::SetGUID(String^ Param_GuidChave, String^ Param_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1974,7 +1974,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 /// <param name="Param_PropVariantValor">A PropVariant que contém o valor a ser definido na chave especificada.</param>
-CarenResult CarenMFMediaEvent::DefinirItem(String^ Param_GuidChave, Estruturas::CA_PropVariant^ Param_PropVariantValor)
+CarenResult CarenMFMediaEvent::SetItem(String^ Param_GuidChave, Estruturas::CA_PropVariant^ Param_PropVariantValor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -2055,7 +2055,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 /// <param name="Param_Valor">O valor a ser definido na chave especificada.</param>
-CarenResult CarenMFMediaEvent::DefinirString(String^ Param_GuidChave, String^ Param_Valor)
+CarenResult CarenMFMediaEvent::SetString(String^ Param_GuidChave, String^ Param_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -2119,7 +2119,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 /// <param name="Param_Valor">O valor a ser definido na chave especificada.</param>
-CarenResult CarenMFMediaEvent::DefinirUINT32(String^ Param_GuidChave, UInt32 Param_Valor)
+CarenResult CarenMFMediaEvent::SetUINT32(String^ Param_GuidChave, UInt32 Param_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -2162,7 +2162,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 /// <param name="Param_Valor">O valor a ser definido na chave especificada.</param>
-CarenResult CarenMFMediaEvent::DefinirUINT64(String^ Param_GuidChave, UInt64 Param_Valor)
+CarenResult CarenMFMediaEvent::SetUINT64(String^ Param_GuidChave, UInt64 Param_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -2356,7 +2356,7 @@ Done:;
 /// (UnlockStore) - Desbloqueia o armazenamento de atributo após uma chamada para o método (BloquearAtributo). 
 /// Enquanto o objeto é desbloqueado, Múltiplos threads podem acessar atributos do objeto.
 /// </summary>
-CarenResult CarenMFMediaEvent::DesbloquearAtributo()
+CarenResult CarenMFMediaEvent::UnlockStore()
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

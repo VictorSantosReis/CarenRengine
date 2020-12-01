@@ -539,7 +539,7 @@ Done:;
 /// </summary>
 /// <param name="Param_PropKey">TBD.</param>
 /// <param name="Param_Out_Valor">Depois que o método retorna com êxito, este parâmetro retorna a estrutura CA_PropVariant que contém dados sobre a propriedade.</param>
-CarenResult CarenPropertyStore::ObterValor(Estruturas::CA_PROPERTYKEY^% Param_PropKey, [Out] Estruturas::CA_PropVariant^% Param_Out_Valor)
+CarenResult CarenPropertyStore::GetValue(Estruturas::CA_PROPERTYKEY^% Param_PropKey, [Out] Estruturas::CA_PropVariant^% Param_Out_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

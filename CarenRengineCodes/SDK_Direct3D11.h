@@ -4037,7 +4037,7 @@ namespace CarenRengine
 
 			/// <summary>
 			/// Fecha um identificador de dispositivo Direct3D.
-			/// Chame o método quando você tiver chamado o método (AbirIdentificadorDispositivo3D).
+			/// Chame o método quando você tiver chamado o método (OpenDeviceHandle).
 			/// </summary>
 			/// <param name="Param_Identificador">O identificador para o Dispositivo Direct3D a ser finalizado.</param>
 			virtual CarenResult FecharHandleDispositivo(IntPtr Param_Identificador);
@@ -4046,7 +4046,7 @@ namespace CarenRengine
 			/// Obtém uma interface de serviço de aceleração de vídeo DirectX (DXVA).
 			/// Obtenha o IID atravez da estrutura: GUIDs_MFDXVAInterfaces.
 			/// </summary>
-			/// <param name="Param_HandleDirect3D">Um identificador para um dispositivo Direct3D. Para obter um identificador dispositivo, chame o método: AbirIdentificadorDispositivo3D</param>
+			/// <param name="Param_HandleDirect3D">Um identificador para um dispositivo Direct3D. Para obter um identificador dispositivo, chame o método: OpenDeviceHandle</param>
 			/// <param name="Param_IIDInterface">O GUID da interface a ser obtida. Essa interface suporta os Seguintes IDs: IID_IDirectXVideoDecoderService, IID_IDirectXVideoProcessorService</param>
 			/// <param name="Param_Out_InterfaceSolicitada">Objeto que contém a interface solicitada se o método tiver sido bem sucedido. O usuário deve criar a interface antes de chamar este método.</param>
 			virtual CarenResult ObterVideoServiço(IntPtr Param_HandleDirect3D, String^ Param_IIDInterface, ICaren^ Param_Out_InterfaceSolicitada);
@@ -4054,7 +4054,7 @@ namespace CarenRengine
 			/// <summary>
 			/// Obtém acesso exclusivo ao dispositivo Direct3D.
 			/// </summary>
-			/// <param name="Param_Handle">Um identificador para o dispositivo Direct3D. Para obter o identificador do dispositivo, chame o método: AbirIdentificadorDispositivo3D</param>
+			/// <param name="Param_Handle">Um identificador para o dispositivo Direct3D. Para obter o identificador do dispositivo, chame o método: OpenDeviceHandle</param>
 			/// <param name="Param_Out_Dispositivo">Recebe a interface IDirect3DDevice9[NAO IMPLEMENTADA PELA BIBLIOTECA]. O usuário deve criar a interface antes de chamar este método.</param>
 			/// <param name="Param_AguardarBloqueio">Especifica se deve aguardar o bloqueio do dispositivo. Se o dispositivo já está bloqueado e esse parâmetro é true, 
 			/// o método bloqueia até que o dispositivo é desbloqueado. Caso contrário, se o dispositivo está bloqueado e este bloco é false, o método retorna imediatamente com o código de erro ER_DXVA2_VIDEO_DEVICE_LOCKED.</param>
@@ -4062,7 +4062,7 @@ namespace CarenRengine
 
 			/// <summary>
 			/// Obtém um identificador para o dispositivo Direct3D.
-			/// Você deve fechar o Identificador do dispositivo após o seu uso, chame o método (FecharHandleDispositivo) para finalizar.
+			/// Você deve fechar o Identificador do dispositivo após o seu uso, chame o método (CloseDeviceHandle) para finalizar.
 			/// </summary>
 			/// <param name="Param_Out_Handle">Recebe a Handle para o dispositivo.</param>
 			virtual CarenResult AbirIdentificadorDispositivo3D([Out] IntPtr% Param_Out_Handle);	
@@ -4078,16 +4078,16 @@ namespace CarenRengine
 
 			/// <summary>
 			/// Testa se um identificador de dispositivo Direct3D é válido.
-			/// Se o método retorna ER_DXVA2_HANDLE_INVALIDA, chame o método (FecharHandleDispositivo) para fechar o identificador e, em seguida, 
-			/// chame (AbirIdentificadorDispositivo3D) novamente para obter um novo identificador. O (ResetarDispositivo) método invalida todos os identificadores de dispositivo aberto.
+			/// Se o método retorna ER_DXVA2_HANDLE_INVALIDA, chame o método (CloseDeviceHandle) para fechar o identificador e, em seguida, 
+			/// chame (OpenDeviceHandle) novamente para obter um novo identificador. O (ResetDevice) método invalida todos os identificadores de dispositivo aberto.
 			/// </summary>
-			/// <param name = "Param_HandleDispositivo3D">A handle para o Dispotivo do Direct3D. Para obter essa handle, chame o método: AbirIdentificadorDispositivo3D</param>
+			/// <param name = "Param_HandleDispositivo3D">A handle para o Dispotivo do Direct3D. Para obter essa handle, chame o método: OpenDeviceHandle</param>
 			virtual CarenResult TestarIdentificadorDispositivo(IntPtr Param_HandleDispositivo3D);
 
 			/// <summary>
 			/// Desbloqueia o dispositivo Direct3D.
 			/// </summary>
-			/// <param name = "Param_HandleDispositivo3D">A handle para o Dispotivo do Direct3D. Para obter essa handle, chame o método: AbirIdentificadorDispositivo3D</param>
+			/// <param name = "Param_HandleDispositivo3D">A handle para o Dispotivo do Direct3D. Para obter essa handle, chame o método: OpenDeviceHandle</param>
 			/// <param name = "Param_SalvarEstadoDispositivo">Se true, o método salva o estado do dispositivo Direct3D em um bloco de estado. Internamente, o método usa o Direct3D IDirect3DStateBlock9 interface para salvar o estado dispositivo. 
 			/// Na próxima vez que você chamar lockdevice com o mesmo identificador de dispositivo, o bloco de estado é restaurado.</param>
 			virtual CarenResult UnlockDispositivo(IntPtr Param_HandleDispositivo3D, Boolean Param_SalvarEstadoDispositivo);

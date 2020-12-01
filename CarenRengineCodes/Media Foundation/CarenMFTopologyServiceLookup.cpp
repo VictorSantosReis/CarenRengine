@@ -418,11 +418,11 @@ void CarenMFTopologyServiceLookup::Finalizar()
 /// <param name="Param_GuidServico">Serviço GUID da interface solicitada.</param>
 /// <param name="Param_IID">Identificador de interface da interface solicitada.</param>
 /// <param name="Param_Out_ArrayInterfaces">Matriz de ponteiros de interface. Se o método for bem-sucedido, cada membro da matriz contém um ponteiro de interface válido ou NULL. 
-/// O chamador deve liberar os ponteiros de interface quando o EVR chamar ICarenMFTopologyServiceLookupClient::LiberarPonteirosServicos, (ou anterior). Se o método falhar, cada membro da 
+/// O chamador deve liberar os ponteiros de interface quando o EVR chamar ICarenMFTopologyServiceLookupClient::ReleaseServicePointers, (ou anterior). Se o método falhar, cada membro da 
 /// matriz é nulo.</param>
 /// <param name="Param_TamanhoMatriz">Um valor que especifica o dimensionar do (Param_Out_ArrayInterfaces) matriz. O valor deve ser pelo menos 1. Na implementação atual, não há nenhum 
 /// motivo para especificar um Dimensionar de matriz maior que um(1) elemento. O valor não é alterado na saída.</param>
-CarenResult CarenMFTopologyServiceLookup::PesquisarServico(
+CarenResult CarenMFTopologyServiceLookup::LookupService(
 	Enumeracoes::CA_MF_SERVICE_LOOKUP_TYPE Param_EscopoPesquisa,
 	UInt32 Param_Indice,
 	String^ Param_GuidServico,

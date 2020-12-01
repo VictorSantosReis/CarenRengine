@@ -312,7 +312,7 @@ public:
 	/// </summary>
 	/// <param name="Param_IdFluxo">O fluxo de consulta. Você pode utilizar a enumeração (CA_SOURCE_READER_ID) para força o Leitor a obter o primeiro fluxo de áudio ou vídeo na lista.</param>
 	/// <param name="Param_Out_TipoMidia">Retorna o tipo da midia no Id especificado.</param>
-	virtual CarenResult ObterTipoMidiaAtual(UInt32 Param_IdFluxo, [Out] ICarenMFMediaType^% Param_Out_TipoMidia);
+	virtual CarenResult GetCurrentMediaType(UInt32 Param_IdFluxo, [Out] ICarenMFMediaType^% Param_Out_TipoMidia);
 
 	/// <summary>
 	/// Obtém um formato que é suportado nativamente pelo fonte de mídia.
@@ -394,7 +394,7 @@ public:
 	/// <param name="Param_IdFluxo">O Id para o fluxo a ter o tipo de mídia definido. Você pode utilizar a enumeração(CA_SOURCE_READER_ID).</param>
 	/// <param name="Param_ValorReservado">Valor reservado. Define como: 0</param>
 	/// <param name="Param_TipoMidia">A interface com o (Tipo Mídia) a ser definida como o tipo atual.</param>
-	virtual CarenResult DefinirTipoMidiaAtual(UInt32 Param_IdFluxo, UInt32 Param_ValorReservado, ICarenMFMediaType^ Param_TipoMidia);
+	virtual CarenResult SetCurrentMediaType(UInt32 Param_IdFluxo, UInt32 Param_ValorReservado, ICarenMFMediaType^ Param_TipoMidia);
 
 	/// <summary>
 	/// Define uma nova posição para ler as amostras de midia com base no tempo

@@ -415,7 +415,7 @@ void CarenAudioClient::Finalizar()
 /// (GetBufferSize) - O método recupera o tamanho (capacidade máxima) do buffer de ponto de extremidade.
 /// </summary>
 /// <param name="Param_Out_NumeroFramesBuffer">Retorna o número de quadros de áudio que o buffer pode conter.</param>
-CarenResult CarenAudioClient::ObterTamanhoBuffer([Out] UInt32% Param_Out_NumeroFramesBuffer)
+CarenResult CarenAudioClient::GetBufferSize([Out] UInt32% Param_Out_NumeroFramesBuffer)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -456,7 +456,7 @@ Done:;
 /// (GetCurrentPadding) - O método recupera o número de quadros de preenchimento no buffer de ponto de extremidade.
 /// </summary>
 /// <param name="Param_Out_NumeroQuadrosPreenchimento">Retorna a contagem de quadros (o número de quadros de áudio de preenchimento no buffer).</param>
-CarenResult CarenAudioClient::ObterQuadrosPreenchimentoBuffer([Out] UInt32% Param_Out_NumeroQuadrosPreenchimento)
+CarenResult CarenAudioClient::GetCurrentPadding([Out] UInt32% Param_Out_NumeroQuadrosPreenchimento)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -498,7 +498,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Out_IntervaloPeriodicoDefault">Retorna um valor de tempo especificando o intervalo padrão entre o processamento periódico passa pelo mecanismo de áudio. O tempo é expresso em unidades de 100 nanossegundos.</param>
 /// <param name="Param_Out_IntervaloPeriodicoMinimo">Retorna um valor de tempo especificando o intervalo mínimo entre o processamento periódico passa pelo dispositivo de ponto de extremidade de áudio. O tempo é expresso em unidades de 100 nanossegundos.</param>
-CarenResult CarenAudioClient::ObterInterveloPeriodico([Out] Int64% Param_Out_IntervaloPeriodicoDefault, [Out] Int64% Param_Out_IntervaloPeriodicoMinimo)
+CarenResult CarenAudioClient::GetDevicePeriod([Out] Int64% Param_Out_IntervaloPeriodicoDefault, [Out] Int64% Param_Out_IntervaloPeriodicoMinimo)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -543,7 +543,7 @@ Done:;
 /// dispositivo de ponto final de áudio.
 /// </summary>
 /// <param name="Param_Out_FormatoDispositivo">Retorna uma estrutura que contém os dados do formato de mixagem. Se o método falhar, este parametro é nulo.</param>
-CarenResult CarenAudioClient::ObterMixFormato([Out] Estruturas::CA_WAVEFORMATEXEXTENSIBLE^% Param_Out_FormatoDispositivo)
+CarenResult CarenAudioClient::GetMixFormat([Out] Estruturas::CA_WAVEFORMATEXEXTENSIBLE^% Param_Out_FormatoDispositivo)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -639,7 +639,7 @@ Done:;
 /// (GetStreamLatency) - O método recupera a latência máxima para o fluxo atual e pode ser chamado a qualquer momento depois que o fluxo foi inicializado.
 /// </summary>
 /// <param name="Param_Out_Latencia">Retorna um valor de tempo que representa a latência. O tempo é expresso em unidades de 100 nanosegundos.</param>
-CarenResult CarenAudioClient::ObterLatenciaFluxo([Out] Int64% Param_Out_Latencia)
+CarenResult CarenAudioClient::GetStreamLatency([Out] Int64% Param_Out_Latencia)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -687,12 +687,12 @@ Done:;
 /// <param name="Param_PeriodoDispositivo">O período do dispositivo. Este parâmetro pode ser diferente de zero somente no modo exclusivo. No modo compartilhado, sempre defina esse parâmetro como 0. No 
 /// modo exclusivo, esse parâmetro especifica o período de agendamento solicitado para acessos de buffer sucessivos pelo dispositivo de ponto de extremidade de áudio. Se o período de dispositivo solicitado
 /// estiver fora do intervalo que é definido pelo período mínimo do dispositivo e o período máximo do sistema, o método aperta o período para esse intervalo. Se este parâmetro for 0, o método define o 
-/// período do dispositivo para seu valor padrão. Para obter o período de dispositivo padrão, chame o método ICarenAudioClient::ObterInterveloPeriodico.</param>
+/// período do dispositivo para seu valor padrão. Para obter o período de dispositivo padrão, chame o método ICarenAudioClient::GetDevicePeriod.</param>
 /// <param name="Param_Formato">Uma estrutura que é um descritor do formato de áudio a ser processado. Este parâmetro deve apontar para um descritor de formato válido do tipo CA_WAVEFORMATEXEXTENSIBLE</param>
 /// <param name="Param_GuidSessãoAudio">O guid da sessão audio. Este valor é um GUID que identifica a sessão de áudio que pertence o fluxo. Se o GUID identifica uma sessão que 
 /// foi aberta anteriormente, o método adiciona o fluxo para essa sessão. Se o GUID não identifica uma sessão existente, o método abre uma nova sessão e adiciona o fluxo para essa sessão. O fluxo 
 /// permanece um membro da mesma sessão para seu tempo de vida. Definindo esse parâmetro como NULO é equivalente a passar um ponteiro para um valor GUID_NULL.</param>
-CarenResult CarenAudioClient::Inicializar(
+CarenResult CarenAudioClient::Initialize(
 	Enumeracoes::CA_AUDIOCLIENTE_SHAREMODE Param_ModoCompartilhamento,
 	UInt32 Param_FlagsFluxo,
 	Int64 Param_DuraçãoBuffer,
@@ -763,7 +763,7 @@ Done:;
 /// <param name="Param_ModoCompartilhamento">O modo de compartilhamento para o Formatar de fluxo. Por meio desse parâmetro, o cliente indica se deseja usar o formato especificado no modo exclusivo ou no modo compartilhado.</param>
 /// <param name="Param_Formato">O formato de fluxo especificado a ser verificado.</param>
 /// <param name="Param_Out_FormatoMaisProximo">Retorna o formato mais proximo do formato especificado no paramêtro (Param_Formato).</param>
-CarenResult CarenAudioClient::VerificarFormatoSuportado(
+CarenResult CarenAudioClient::IsFormatSupported(
 	Enumeracoes::CA_AUDIOCLIENTE_SHAREMODE Param_ModoCompartilhamento,
 	Estruturas::CA_WAVEFORMATEXEXTENSIBLE^% Param_Formato,
 	[Out] Estruturas::CA_WAVEFORMATEXEXTENSIBLE^% Param_Out_FormatoMaisProximo)
@@ -827,10 +827,10 @@ Done:;
 
 /// <summary>
 /// (Reset) - O método redefine o fluxo de áudio. Esse método requer inicialização anterior do Audio Cliente antes de ser chamado.
-/// Reset é um método de controle que o cliente chama para redefinir um fluxo de áudio interrompido. Redefinir o fluxo libera todos os dados pendentes e redefine a posição do fluxo de relógio de 
+/// Reset é um método de controle que o cliente chama para redefinir um fluxo de áudio interrompido. Reset o fluxo libera todos os dados pendentes e redefine a posição do fluxo de relógio de 
 /// áudio para 0. Esse método falhará se ele é chamado em um fluxo que não é interrompido.
 /// </summary>
-CarenResult CarenAudioClient::Redefinir() {
+CarenResult CarenAudioClient::Reset() {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
 
@@ -864,7 +864,7 @@ Done:;
 /// (SetEventHandle) - O método define o identificador de evento que o sistema sinaliza quando um buffer de áudio está pronto para ser processado pelo cliente.
 /// </summary>
 /// <param name="Param_EventHandle">O identificador de evento.</param>
-CarenResult CarenAudioClient::DefinirEventHandle(IntPtr Param_EventHandle) {
+CarenResult CarenAudioClient::SetEventHandle(IntPtr Param_EventHandle) {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
 
@@ -903,7 +903,7 @@ Done:;
 /// Start é um método de controle que o cliente chama para iniciar o fluxo de áudio. Iniciando o fluxo faz com que a ICarenAudioClient interface para iniciar o streaming de dados entre o buffer de 
 /// ponto de extremidade e o mecanismo de áudio. Ele também faz com que o fluxo de relógio de áudio para retomar a contagem de sua posição atual.
 /// </summary>
-CarenResult CarenAudioClient::Iniciar() {
+CarenResult CarenAudioClient::Start() {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
 
@@ -936,10 +936,10 @@ Done:;
 /// <summary>
 /// (Stop) - O método interrompe o fluxo de áudio. Esse método requer inicialização anterior do Audio Cliente antes de ser chamado.
 /// Stop é um método de controle que interrompe um fluxo de áudio em execução. Esse método interrompe a transmissão de dados por meio da conexão do cliente com o mecanismo de áudio. Interromper o fluxo 
-/// congela o relógio de áudio do fluxo em sua posição atual do fluxo. Uma chamada subsequente para ICarenAudioClient::Iniciar faz com que o fluxo retomar a execução a partir dessa posição. 
-/// Se necessário, o cliente pode chamar o ICarenAudioClient::Redefinir método para redefinir a posição enquanto o fluxo é interrompido.
+/// congela o relógio de áudio do fluxo em sua posição atual do fluxo. Uma chamada subsequente para ICarenAudioClient::Start faz com que o fluxo retomar a execução a partir dessa posição. 
+/// Se necessário, o cliente pode chamar o ICarenAudioClient::Reset método para redefinir a posição enquanto o fluxo é interrompido.
 /// </summary>
-CarenResult CarenAudioClient::Parar()
+CarenResult CarenAudioClient::Stop()
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

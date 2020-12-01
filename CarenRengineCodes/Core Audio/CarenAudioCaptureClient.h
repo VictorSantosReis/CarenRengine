@@ -204,7 +204,7 @@ public:
 	/// quadros de áudio desde o início do fluxo.</param>
 	/// <param name="Param_Out_QPCPosicao">Retorna o valor do contador de desempenho no momento em que o dispositivo de ponto de extremidade de áudio gravou a posição do dispositivo do 
 	/// primeiro quadro de áudio no pacote de dados. O método converte o valor do contador para unidades de 100 nanossegundos antes de escrevê-lo para (Param_Out_QPCPosicao).</param>
-	virtual CarenResult ObterBuffer(
+	virtual CarenResult GetBuffer(
 					[Out] ICarenBuffer^% Param_Out_BufferData, 
 					[Out] UInt32% Param_Out_NumeroFramesLidos, 
 					[Out] Enumeracoes::CA_AUDIOCLIENTE_BUFFERFLAGS% Param_Out_Flags,
@@ -215,12 +215,12 @@ public:
 	/// (GetNextPacketSize) - O método recupera o número de quadros(FRAMES) no próximo pacote de dados no buffer de ponto de extremidade de captura.
 	/// </summary>
 	/// <param name="Param_Out_FramesProximoPacote">Retorna a quantidade de FRAMES do proximo pacote a ser lido.</param>
-	virtual CarenResult ObterProximoTamanhoPacote([Out] UInt32% Param_Out_FramesProximoPacote);
+	virtual CarenResult GetNextPacketSize([Out] UInt32% Param_Out_FramesProximoPacote);
 
 	/// <summary>
-	/// (ReleaseBuffer) - O método libera o espaço de buffer adquirido na chamada anterior para o método ICarenAudioCaptureClient::ObterBuffer.
+	/// (ReleaseBuffer) - O método libera o espaço de buffer adquirido na chamada anterior para o método ICarenAudioCaptureClient::GetBuffer.
 	/// </summary>
 	/// <param name="Param_NumeroFramesLidos">O número de quadros de áudio que o cliente ler do buffer de captura. Esse parâmetro deve ser igual ao número de quadros no pacote de dados 
 	/// adquirido anteriormente ou 0. O valor desse paramêtro é em (FRAMES).</param>
-	virtual CarenResult LiberarBuffer(UInt32 Param_NumeroFramesLidos);
+	virtual CarenResult ReleaseBuffer(UInt32 Param_NumeroFramesLidos);
 };

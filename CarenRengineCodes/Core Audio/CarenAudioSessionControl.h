@@ -194,35 +194,35 @@ public:
 public:
 	/// <summary>
 	/// (GetDisplayName) - O método recupera o nome de exibição para a sessão de áudio.
-	/// Se o cliente não tiver chamado (ICarenAudioSessionControl::DefinirNomeExibicao) para definir o nome de exibição, a sequência de caracteres estará vazia. 
+	/// Se o cliente não tiver chamado (ICarenAudioSessionControl::SetDisplayName) para definir o nome de exibição, a sequência de caracteres estará vazia. 
 	/// </summary>
 	/// <param name="Param_Out_Nome">Retorna o nome de exbição da sessão de áudio.</param>
-	virtual CarenResult ObterNomeExibicao([Out] String^% Param_Out_Nome);
+	virtual CarenResult GetDisplayName([Out] String^% Param_Out_Nome);
 
 	/// <summary>
 	/// (GetGroupingParam) - O método recupera o parâmetro de agrupamento da sessão de áudio.
 	/// </summary>
 	/// <param name="Param_Out_GUID">Retorna um GUID do paramêtro de agrupamento.</param>
-	virtual CarenResult ObterParametroAgrupamento([Out] String^% Param_Out_GUID);
+	virtual CarenResult GetGroupingParam([Out] String^% Param_Out_GUID);
 
 	/// <summary>
 	/// (GetIconPath) - O método recupera o caminho para o ícone de exibição para a sessão de áudio.
 	/// </summary>
 	/// <param name="Param_Out_Url">Retorna o caminho completo completo para o .ico, .exe, .dll que contenha um icone para a sessão de áudio.</param>
-	virtual CarenResult ObterUrlIcone([Out] String^% Param_Out_Url);
+	virtual CarenResult GetIconPath([Out] String^% Param_Out_Url);
 
 	/// <summary>
 	/// (GetState) - O método recupera o estado atual da sessão de áudio.
 	/// </summary>
 	/// <param name="Param_Out_Estado">Retorna o estado da sessão de áudio atual.</param>
-	virtual CarenResult ObterEstado([Out] Enumeracoes::CA_ESTADO_SESSAO_AUDIO% Param_Out_Estado);
+	virtual CarenResult GetState([Out] Enumeracoes::CA_ESTADO_SESSAO_AUDIO% Param_Out_Estado);
 
 	/// <summary>
 	/// (RegisterAudioSessionNotification) - O método registra o cliente para receber notificações de eventos de sessão, incluindo as alterações no estado de fluxo.
 	/// </summary>
 	/// <param name="Param_Notificador">Ponteiro para uma interface IAudioSessionEvents, implementada pelo cliente. Se o método for bem-sucedido, ele chama o AddRef método na interface do 
 	/// cliente IAudioSessionEvents.</param>
-	virtual CarenResult RegistrarSessaoNotificacaoAudio(ICarenAudioSessionEvents^ Param_Notificador);
+	virtual CarenResult RegisterAudioSessionNotification(ICarenAudioSessionEvents^ Param_Notificador);
 
 	/// <summary>
 	/// (SetDisplayName) - O método atribui um nome de exibição para a sessão atual.
@@ -233,7 +233,7 @@ public:
 	/// com cada notificação. Ao receber uma notificação, um cliente pode determinar se ele ou outro cliente é a origem do evento inspecionando o valor de ContextoEvento.
 	/// Esse esquema depende do cliente selecionando um valor para esse parâmetro que é exclusivo entre todos os clientes na sessão. Se o chamador fornece uma String NULA para este parâmetro, 
 	/// o método de notificação do cliente recebe NULO ou VAZIO na string de contexto.</param>
-	virtual CarenResult DefinirNomeExibicao(String^ Param_Nome, String^ Param_GuidContextoEvento);
+	virtual CarenResult SetDisplayName(String^ Param_Nome, String^ Param_GuidContextoEvento);
 
 	/// <summary>
 	/// (SetGroupingParam) - O método atribui uma sessão a um agrupamento de sessões.
@@ -244,7 +244,7 @@ public:
 	/// com cada notificação. Ao receber uma notificação, um cliente pode determinar se ele ou outro cliente é a origem do evento inspecionando o valor de (ContextoEvento).
 	/// Esse esquema depende do cliente selecionando um valor para esse parâmetro que é exclusivo entre todos os clientes na sessão. Se o chamador fornece uma String NULA para este parâmetro, 
 	/// o método de notificação do cliente recebe NULO ou VAZIO na string de contexto.</param>
-	virtual CarenResult DefinirParametroAgrupamento(String^ Param_GuidNovoParametro, String^ Param_ContextoEvento);
+	virtual CarenResult SetGroupingParam(String^ Param_GuidNovoParametro, String^ Param_ContextoEvento);
 
 	/// <summary>
 	/// (SetIconPath) - O método atribui um ícone de exibir para a sessão atual.
@@ -255,13 +255,13 @@ public:
 	/// cada notificação. Ao receber uma notificação, um cliente pode determinar se ele ou outro cliente é a origem do evento inspecionando o valor de (ContextoEvento).
 	/// Esse esquema depende do cliente selecionando um valor para esse parâmetro que é exclusivo entre todos os clientes na sessão. Se o chamador fornece uma String NULA para este parâmetro,
 	/// o método de notificação do cliente recebe NULO ou VAZIO na string de contexto.</param>
-	virtual CarenResult DefinirUrlIcone(String^ Param_UrlCompletaIco, String^ Param_ContextoEvento);
+	virtual CarenResult SetIconPath(String^ Param_UrlCompletaIco, String^ Param_ContextoEvento);
 
 	/// <summary>
 	/// (UnregisterAudioSessionNotification) - O método exclui um registro anterior pelo cliente para receber notificações.
 	/// </summary>
 	/// <param name="Param_Notificador">Ponteiro para a interface IAudioSessionEvents implementada pelo cliente. O cliente passou esse mesmo ponteiro de interface para o Gerenciador de sessão 
-	/// em uma chamada anterior para o método ICarenAudioSessionControl::RegistrarSessaoNotificacaoAudio. Se o (CancelarRegistroSessaoNotificacaoAudio) método for bem-sucedido, ele chama o 
+	/// em uma chamada anterior para o método ICarenAudioSessionControl::RegisterAudioSessionNotification. Se o (UnregisterAudioSessionNotification) método for bem-sucedido, ele chama o 
 	/// método Release na interface IAudioSessionEvents do cliente.</param>
-	virtual CarenResult CancelarRegistroSessaoNotificacaoAudio(ICarenAudioSessionEvents^% Param_Notificador);
+	virtual CarenResult UnregisterAudioSessionNotification(ICarenAudioSessionEvents^% Param_Notificador);
 };

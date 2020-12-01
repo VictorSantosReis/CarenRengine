@@ -195,23 +195,23 @@ public:
 	/// (GetCharacteristics) - Método é reservado para uso futuro.
 	/// </summary>
 	/// <param name="Param_Out_Caracteristicas">Retorna um valor que indica as características do relógio de áudio.</param>
-	virtual CarenResult ObterCaracteristicas([Out] UInt32% Param_Out_Caracteristicas);
+	virtual CarenResult GetCharacteristics([Out] UInt32% Param_Out_Caracteristicas);
 
 	/// <summary>
 	/// (GetFrequency ) - Obtém a frequência do dispositivo.
 	/// A frequência do dispositivo é a frequência gerada pelo relógio de hardware no dispositivo de áudio. Esse método informa a frequência do dispositivo em unidades que são compatíveis 
-	/// com os da posição do dispositivo que o do método (ObterPosicao) utiliza.
+	/// com os da posição do dispositivo que o do método (GetPosition) utiliza.
 	/// </summary>
 	/// <param name="Param_Out_Frequencia">Retorna o valor da frequência do dispositivo.</param>
-	virtual CarenResult ObterFrequencia([Out] UInt64% Param_Out_Frequencia);
+	virtual CarenResult GetFrequency([Out] UInt64% Param_Out_Frequencia);
 
 	/// <summary>
 	/// (GetPosition) - Obtém a posição do dispositivo atual.
 	/// </summary>
 	/// <param name="Param_Out_Posicao">Retorna a posição do dispositivo. A posição do dispositivo é o deslocamento do início do fluxo para a posição atual no fluxo. No entanto, as unidades 
-	/// em que esse deslocamento é expresso são indefinidas - o valor de posição do dispositivo tem significado somente em relação à frequência relatada pelo método (ObterFrequencia).</param>
+	/// em que esse deslocamento é expresso são indefinidas - o valor de posição do dispositivo tem significado somente em relação à frequência relatada pelo método (GetFrequency).</param>
 	/// <param name="Param_Out_QPCPosicao">Retorna o valor do contador de desempenho no momento em que o dispositivo de ponto de extremidade de áudio ler a posição do dispositivo 
-	/// (Param_Out_Posicao) em resposta a chamada (ObterPosicao). O método converte o valor do contador para unidades de 100 nanossegundos de tempo antes de escrevê-lo para 
+	/// (Param_Out_Posicao) em resposta a chamada (GetPosition). O método converte o valor do contador para unidades de 100 nanossegundos de tempo antes de escrevê-lo para 
 	/// (Param_Out_QPCPosicao).</param>
-	virtual CarenResult ObterPosicao([Out] UInt64% Param_Out_Posicao, [Out] UInt64% Param_Out_QPCPosicao);
+	virtual CarenResult GetPosition([Out] UInt64% Param_Out_Posicao, [Out] UInt64% Param_Out_QPCPosicao);
 };

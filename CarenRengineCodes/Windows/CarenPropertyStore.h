@@ -227,7 +227,7 @@ public:
 	/// (GetCount) - Esse método retorna uma contagem do número de propriedades anexadas ao arquivo.
 	/// </summary>
 	/// <param name="Param_Out_CountProps">Retorna a contagem de propriedades.</param>
-	virtual CarenResult GetCount([Out] UInt32% Param_Out_CountProps);
+	virtual CarenResult ObterQuantidade([Out] UInt32% Param_Out_CountProps);
 
 	/// <summary>
 	/// (GetValue) - Este método recupera os dados para uma propriedade específica.

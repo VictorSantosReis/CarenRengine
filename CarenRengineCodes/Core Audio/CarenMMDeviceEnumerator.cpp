@@ -420,7 +420,7 @@ void CarenMMDeviceEnumerator::Finalizar()
 /// enumeração.</param>
 /// <param name="Param_Out_ColeçãoDispotivios">Recebe a coleção de dispositivos solicitados. Por meio desse método, o chamador obtém uma referência contada para a interface. O chamador é responsável por 
 /// liberar a interface, quando ele não é mais necessário, chamando o método de Release da interface.</param>
-CarenResult CarenMMDeviceEnumerator::ObterColeçãoDispositivosAudio(
+CarenResult CarenMMDeviceEnumerator::EnumAudioEndpoints(
 	Enumeracoes::CA_EDataFlow Param_DireçãoFluxo,
 	Enumeracoes::CA_DEVICE_STATE_XXX Param_EstadosPontoExtremidade,
 	[Out] ICarenMMDeviceCollection^% Param_Out_ColeçãoDispotivios)
@@ -470,7 +470,7 @@ Done:;
 /// <param name="Param_DireçãoFluxo">A direção de fluxo de dados para o dispositivo de ponto de extremidade.</param>
 /// <param name="Param_FunçãoDispositivo">A direção do fluxo de dados para um dispositivo de renderização é eRender. A direção do fluxo de dados para um dispositivo de captura é eCapture.</param>
 /// <param name="Param_Out_DispositivoDefault">Retorna o dispositivo de Audio padrão do sistema de acordo com sua função e direção.</param>
-CarenResult CarenMMDeviceEnumerator::ObterDispositivoAudioDefault(
+CarenResult CarenMMDeviceEnumerator::GetDefaultAudioEndpoint(
 	Enumeracoes::CA_EDataFlow Param_DireçãoFluxo,
 	Enumeracoes::CA_ERole Param_FunçãoDispositivo,
 	[Out] ICarenMMDevice^% Param_Out_DispositivoDefault)
@@ -522,7 +522,7 @@ Done:;
 /// ICarenMMDevice::ObterId método ou de um dos métodos na ICarenMMNotificationClient interface.</param>
 /// <param name="Param_Out_DispositivoSolicitado">Recebe um ponteiro para a interface do dispositivo solicitado. Por meio desse método, o chamador obtém uma referência contada para a interface. 
 /// O chamador é responsável por liberar a interface, quando ele não é mais necessário, chamando o método de Release da interface.</param>
-CarenResult CarenMMDeviceEnumerator::ObterDispositivo(String^ Param_IDPontoExtremidade, [Out] ICarenMMDevice^% Param_Out_DispositivoSolicitado)
+CarenResult CarenMMDeviceEnumerator::GetDevice(String^ Param_IDPontoExtremidade, [Out] ICarenMMDevice^% Param_Out_DispositivoSolicitado)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -578,7 +578,7 @@ Done:;
 /// (RegisterEndpointNotificationCallback) - O método registra a interface de retorno de chamada de notificação do cliente.
 /// </summary>
 /// <param name="Param_Cliente">A interface que será registrada para receber as notificações.</param>
-CarenResult CarenMMDeviceEnumerator::RegistrarInterfaceNotificação(ICarenMMNotificationClient^ Param_Cliente)
+CarenResult CarenMMDeviceEnumerator::RegisterEndpointNotificationCallback(ICarenMMNotificationClient^ Param_Cliente)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -628,7 +628,7 @@ Done:;
 /// (UnregisterEndpointNotificationCallback) - O método exclui o registro de uma interface de notificação que o cliente registrado em uma chamada anterior para o IMMDeviceEnumerator::RegisterEndpointNotificationCallback método.
 /// </summary>
 /// <param name="Param_Cliente">A interface que será removida para não receber mais notificações.</param>
-CarenResult CarenMMDeviceEnumerator::RemoverRegistroInterfaceNotificação(ICarenMMNotificationClient^ Param_Cliente)
+CarenResult CarenMMDeviceEnumerator::UnregisterEndpointNotificationCallback(ICarenMMNotificationClient^ Param_Cliente)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

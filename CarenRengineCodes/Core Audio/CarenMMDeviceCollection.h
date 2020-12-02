@@ -194,7 +194,7 @@ public:
 	/// (GetCount) - O método recupera uma contagem dos dispositivos na coleção de dispositivo.
 	/// </summary>
 	/// <param name="Param_Out_Quantidade">Retorna a quantidade de dispositivos na coleção.</param>
-	virtual CarenResult ObterQuantidade([Out] UInt32% Param_Out_Quantidade);
+	virtual CarenResult GetCount([Out] UInt32% Param_Out_Quantidade);
 
 	/// <summary>
 	/// (Item) - O método recupera um ponteiro para o item especificado na coleção de dispositivos.

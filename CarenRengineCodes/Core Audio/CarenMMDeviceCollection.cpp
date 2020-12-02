@@ -415,7 +415,7 @@ void CarenMMDeviceCollection::Finalizar()
 /// (GetCount) - O método recupera uma contagem dos dispositivos na coleção de dispositivo.
 /// </summary>
 /// <param name="Param_Out_Quantidade">Retorna a quantidade de dispositivos na coleção.</param>
-CarenResult CarenMMDeviceCollection::ObterQuantidade([Out] UInt32% Param_Out_Quantidade)
+CarenResult CarenMMDeviceCollection::GetCount([Out] UInt32% Param_Out_Quantidade)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

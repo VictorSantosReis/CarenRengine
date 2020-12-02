@@ -48,7 +48,6 @@ namespace CarenRengine
 		/// Nota: No Windows 8, o primeiro uso dessa interface para acessar o dispositivo de áudio deve estar no thread STA. Chamadas de um thread MTA podem resultar em comportamento indefinido.
 		/// </summary>
 		[CategoryAttribute("Interface WASAPI")]
-		[DescriptionAttribute("Inicializador de fluxo de áudio.")]
 		[Guid("74DCD6D6-9B5E-4660-A183-77038A11DFCE")]
 		public interface class ICarenAudioClient : ICaren
 		{
@@ -222,7 +221,6 @@ namespace CarenRengine
 		/// consulte as periodicidades suportadas e a periodicidade atual do mecanismo de áudio, bem como solicite a inicialização de um fluxo de áudio compartilhado com uma periodicidade especificada.
 		/// </summary>
 		[CategoryAttribute("Interface WASAPI")]
-		[DescriptionAttribute("Inicializador de fluxo de áudio.")]
 		[Guid("F9976109-03BE-4EF3-B146-568D7E06091E")]
 		public interface class ICarenAudioClient3 : ICarenAudioClient2
 		{
@@ -288,7 +286,6 @@ namespace CarenRengine
 		/// ICarenAudioRenderClient de um objeto de fluxo chamando o método ICarenAudioClient::GetService com o parâmetro RIID definido como IID_IAudioRenderClient.
 		/// </summary>
 		[CategoryAttribute("Interface WASAPI")]
-		[DescriptionAttribute("Grava dados na saida do dispositivo de Audio.")]
 		[Guid("A45F14E9-05F9-497A-91E1-E2903B0DFAC0")]
 		public interface class ICarenAudioRenderClient : ICaren
 		{
@@ -336,7 +333,6 @@ namespace CarenRengine
 		/// IID_IAudioCaptureClient.
 		/// </summary>
 		[CategoryAttribute("Interface WASAPI")]
-		[DescriptionAttribute("Captura dados da saida do dispositivo de Audio.")]
 		[Guid("C7E7CBD3-4090-4C06-BBA8-FD209BD34DA1")]
 		public interface class ICarenAudioCaptureClient : ICaren
 		{
@@ -392,7 +388,6 @@ namespace CarenRengine
 		/// ICarenAudioClient::GetService que criou o objeto.
 		/// </summary>
 		[CategoryAttribute("Interface WASAPI")]
-		[DescriptionAttribute("Monitora a taxa de dados e a posição atual no fluxo.")]
 		[Guid("DE941B25-B610-4698-9303-DCBE7D37AE74")]
 		public interface class ICarenAudioClock : ICaren
 		{
@@ -441,7 +436,6 @@ namespace CarenRengine
 		/// REFIID IID_IAudioClock.
 		/// </summary>
 		[CategoryAttribute("Interface WASAPI")]
-		[DescriptionAttribute("Obtém a posição atual do dispositivo.")]
 		[Guid("525FB789-3E55-4677-90A0-84E779B9B6F2")]
 		public interface class ICarenAudioClock2 : ICarenAudioClock
 		{
@@ -472,7 +466,6 @@ namespace CarenRengine
 		/// Para receber notificações de evento, o cliente passa um ponteiro para sua interface ICarenAudioSessionEvents para o método ICarenAudioSessionControl::RegisterAudioSessionNotification.
 		/// </summary>
 		[CategoryAttribute("Interface WASAPI")]
-		[DescriptionAttribute("Fornece notificações de eventos relacionados à sessão de áudio.")]
 		[Guid("5F54DD3A-B886-4DCA-BB24-10C7A93E2FAE")]
 		public interface class ICarenAudioSessionEvents : ICaren
 		{
@@ -586,7 +579,6 @@ namespace CarenRengine
 		/// interface em um objeto de fluxo chamando o ICarenAudioClient::GetService método com o parâmetro RIID definido como IID_IAudioSessionControl.
 		/// </summary>
 		[CategoryAttribute("Interface WASAPI")]
-		[DescriptionAttribute("Controla uma sessão de áudio.")]
 		[Guid("525FB789-3E55-4677-90A0-84E779B9B6F2")]
 		public interface class ICarenAudioSessionControl : ICaren
 		{
@@ -683,7 +675,6 @@ namespace CarenRengine
 		/// Em vez disso, o cliente chama o método ICarenAudioSessionManager::GetSimpleAudioVolume com a sessão GUID.
 		/// </summary>
 		[CategoryAttribute("Interface WASAPI")]
-		[DescriptionAttribute("Permite que um cliente controle o nível de volume mestre de uma sessão de áudio.")]
 		[Guid("933A6F1F-5FF4-4143-9073-EF71819CE384")]
 		public interface class ICarenSimpleAudioVolume : ICaren
 		{
@@ -739,7 +730,6 @@ namespace CarenRengine
 		/// objeto de fluxo chamando o método ICarenAudioClient::GetService com o parâmetro RIID definido como IID_IChannelAudioVolume.
 		/// </summary>
 		[CategoryAttribute("Interface WASAPI")]
-		[DescriptionAttribute("Permite que um cliente controle e monitore os níveis de volume para todos os canais.")]
 		[Guid("9ADFEBCF-FED0-4AB3-9F00-CF6B63D04C32")]
 		public interface class ICarenChannelAudioVolume : ICaren
 		{
@@ -807,7 +797,6 @@ namespace CarenRengine
 		/// criados na parte superior do WASAPI e usam controles de sessão internamente, mas não dão a seus clientes acesso a controles de sessão.
 		/// </summary>
 		[CategoryAttribute("Interface WASAPI")]
-		[DescriptionAttribute("Permite ao cliente acessar os controles de sessão e controles de volume.")]
 		[Guid("14BBF8B3-68FE-42A5-8E3E-D0576F4BBA26")]
 		public interface class ICarenAudioSessionManager : ICaren
 		{
@@ -861,7 +850,6 @@ namespace CarenRengine
 		/// Na implementação atual da API MMDevice, suporta apenas a enumeração de dispositios de audio de ponto de extremidade.
 		/// </summary>
 		[CategoryAttribute("Interface MMDevice")]
-		[DescriptionAttribute("Responsável por encapsular as caracteristicas de recursos multimedia.")]
 		[Guid("B7FD481F-1413-47F9-887D-3D78E98AAEC8")]
 		public interface class ICarenMMDevice : ICaren
 		{
@@ -918,7 +906,6 @@ namespace CarenRengine
 		/// Na implementação atual da API MMDevice, suporta apenas a enumeração de dispositios de audio de ponto de extremidade.
 		/// </summary>
 		[CategoryAttribute("Interface MMDevice")]
-		[DescriptionAttribute("Contém uma colecação de dispositivos de audio.")]
 		[Guid("71718D05-C46B-4543-B2FA-38C8BD603493")]
 		public interface class ICarenMMDeviceCollection : ICaren
 		{
@@ -954,7 +941,6 @@ namespace CarenRengine
 		/// sistema da API MMDevice, um cliente de API MMDevice implementa a interface ICarenMMNotificationClient.
 		/// </summary>
 		[CategoryAttribute("Interface MMDevice")]
-		[DescriptionAttribute("Notificação de dispositivos de audio.")]
 		[Guid("A9336FC5-E130-4300-81FC-3421A7D22C57")]
 		public interface class ICarenMMNotificationClient : ICaren
 		{

@@ -25,9 +25,9 @@ using namespace CarenRengine::SDKBase::Estruturas;
 using namespace CarenRengine::SDKBase::Interfaces;
 
 
-//////////////////////
-// CORE AUDIO API's //
-//////////////////////
+////////////////////////////////////////
+// Windows Audio Session API (WASAPI) //
+////////////////////////////////////////
 
 
 //Namespace principal do sistema.
@@ -36,11 +36,6 @@ namespace CarenRengine
 	//Namespace da API do SDK.
 	namespace CoreAudio
 	{
-		////////////////////////////////////////
-		// WINDOWS AUDIO SESSION API - WASAPI //
-		////////////////////////////////////////
-
-
 		/// <summary>
 		/// (IAudioClient) - Interface responsável por permitir que um cliente criar e inicializar um fluxo de áudio entre um aplicativo de áudio e o mecanismo de áudio (para um fluxo de modo compartilhado) ou o 
 		/// buffer de hardware de um dispositivo de ponto de extremidade de áudio (para um modo exclusivo fluxo). Um cliente obtém uma referência a uma interface Iaudioclient para um dispositivo de ponto de 
@@ -680,7 +675,7 @@ namespace CarenRengine
 		/// O cliente obtém uma referência à interface ICarenSimpleAudioVolume em um objeto de fluxo chamando o método ICarenAudioClient::GetService com o parâmetro riid definido como REFIID 
 		/// IID_ISimpleAudioVolume.
 		/// Como alternativa, um cliente pode obter a interface ICarenSimpleAudioVolume de uma sessão existente sem ter que primeiro criar um objeto de fluxo e adicionar o fluxo para a sessão.
-		/// Em vez disso, o cliente chama o método ICarenAudioSessionManager::GetSimpleAudioVolume com a sessão GUID.
+		/// Em vez disso, o cliente chama o método ICarenAudioSessionManager::ObterAudioSimplesVolume com a sessão GUID.
 		/// </summary>
 		[CategoryAttribute("Interface WASAPI")]
 		[DescriptionAttribute("Permite que um cliente controle o nível de volume mestre de uma sessão de áudio.")]
@@ -757,22 +752,22 @@ namespace CarenRengine
 			/// <summary>
 			/// (GetAllVolumes) - O método recupera os níveis de volume para todos os canais na sessão de áudio.
 			/// </summary>
-			/// <param name="Param_QuantidadeCanais">A quantidade de canais no formato do fluxo. Chame o método (GetChannelCount) para obter a quantidade total.</param>
+			/// <param name="Param_QuantidadeCanais">A quantidade de canais no formato do fluxo. Chame o método (ObterQuantidadeCanais) para obter a quantidade total.</param>
 			/// <param name="Param_Out_ArrayVolumes">Retorna um array que contém o nivel de volume de cada canal na sessão de áudio. Os níveis de volume estão no intervalo 0,0 a 1,0.</param>
-			CarenResult GetAllVolumes(UInt32 Param_QuantidadeCanais, [Out] cli::array<float>^% Param_Out_ArrayVolumes);
+			CarenResult ObterTodosVolumes(UInt32 Param_QuantidadeCanais, [Out] cli::array<float>^% Param_Out_ArrayVolumes);
 
 			/// <summary>
 			/// (GetChannelCount) - O método recupera o número de canais no formato de fluxo para a sessão de áudio.
 			/// </summary>
 			/// <param name="Param_QuantidadeCanais">Retorna a quantidade de canais.</param>
-			CarenResult GetChannelCount([Out] UInt32% Param_QuantidadeCanais);
+			CarenResult ObterQuantidadeCanais([Out] UInt32% Param_QuantidadeCanais);
 
 			/// <summary>
 			/// (GetChannelVolume) - O método recupera o nível de volume para o canal especificado na sessão de áudio.
 			/// </summary>
 			/// <param name="Param_NumeroCanal">O número do canal. Se o formato de fluxo para a sessão de áudio tem N canais, em seguida, os canais são numerados de 0 a N 1.</param>
 			/// <param name="Param_Out_NivelVolume">Retorna uma variável no qual o método grava o nível de volume do canal especificado. O nível de volume está no intervalo de 0.0 a 1.0.</param>
-			CarenResult GetChannelVolume(UInt32 Param_NumeroCanal, [Out] float% Param_Out_NivelVolume);
+			CarenResult ObterVolumeCanal(UInt32 Param_NumeroCanal, [Out] float% Param_Out_NivelVolume);
 
 			/// <summary>
 			/// (SetAllVolumes) - O método define os níveis de volume individuais para todos os canais na sessão de áudio.
@@ -784,7 +779,7 @@ namespace CarenRengine
 			/// (ContextoEvento) com cada notificação. Ao receber uma notificação, um cliente pode determinar se ele ou outro cliente é a origem do evento inspecionando o valor de (ContextoEvento).
 			/// Esse esquema depende do cliente selecionando um valor para esse parâmetro que é exclusivo entre todos os clientes na sessão. Se o chamador fornece uma String NULA para este parâmetro, 
 			/// o método de notificação do cliente recebe NULO ou VAZIO na string de contexto.</param>
-			CarenResult SetAllVolumes(UInt32 Param_QuantidadeItens, cli::array<float>^ Param_ArrayVolumes, String^ Param_ContextoEvento);
+			CarenResult DefinirTodosVolumes(UInt32 Param_QuantidadeItens, cli::array<float>^ Param_ArrayVolumes, String^ Param_ContextoEvento);
 
 			/// <summary>
 			/// (SetChannelVolume) - O método define o nível de volume para o canal especificado na sessão de áudio.
@@ -796,7 +791,7 @@ namespace CarenRengine
 			/// (ContextoEvento) com cada notificação. Ao receber uma notificação, um cliente pode determinar se ele ou outro cliente é a origem do evento inspecionando o valor de (ContextoEvento).
 			/// Esse esquema depende do cliente selecionando um valor para esse parâmetro que é exclusivo entre todos os clientes na sessão. Se o chamador fornece uma String NULA para este parâmetro, 
 			/// o método de notificação do cliente recebe NULO ou VAZIO na string de contexto.</param>
-			CarenResult SetChannelVolume(UInt32 Param_IndexCanal, float Param_Volume, String^ Param_ContextoEvento);
+			CarenResult DefinirVolumeCanal(UInt32 Param_IndexCanal, float Param_Volume, String^ Param_ContextoEvento);
 		};
 
 		/// <summary>
@@ -830,7 +825,7 @@ namespace CarenRengine
 			/// <param name="Param_FlagsFluxo">Especifica o status dos sinalizadores para o fluxo de áudio.</param>
 			/// <param name="Param_Out_ControleSessaoAudio">Retorna a interface de controle de sessão de áudio. O chamador é responsável por liberar a interface, quando ela não é 
 			/// mais necessária</param>
-			CarenResult GetAudioSessionControl(String^ Param_GuidSessaoAudio, UInt32 Param_FlagsFluxo, [Out] ICarenAudioSessionControl^% Param_Out_ControleSessaoAudio);
+			CarenResult ObterAudioControleSessao(String^ Param_GuidSessaoAudio, UInt32 Param_FlagsFluxo, [Out] ICarenAudioSessionControl^% Param_Out_ControleSessaoAudio);
 
 			/// <summary>
 			/// (GetSimpleAudioVolume) - O método recupera um controle de volume de áudio simples.
@@ -841,7 +836,7 @@ namespace CarenRengine
 			/// sessão não é processo cruzado.</param>
 			/// <param name="Param_Out_ControladorSimplesVolume">Retorna a interface de controle de volume áudio. Essa interface representa o controle de volume de áudio simples para o processo atual. O chamador é responsável por 
 			/// liberar a interface, quando ela não é mais necessária.</param>
-			CarenResult GetSimpleAudioVolume(String^ Param_GuidSessaoAudio, UInt32 Param_FlagsFluxo, [Out] ICarenSimpleAudioVolume^% Param_Out_ControladorSimplesVolume);
+			CarenResult ObterAudioSimplesVolume(String^ Param_GuidSessaoAudio, UInt32 Param_FlagsFluxo, [Out] ICarenSimpleAudioVolume^% Param_Out_ControladorSimplesVolume);
 		};
 
 
@@ -852,7 +847,7 @@ namespace CarenRengine
 
 
 		//////////////////////////////////////
-		// Multimedia Device API - MMDevice //
+		// Multimedia Device (MMDevice) API //
 		//////////////////////////////////////
 
 
@@ -888,14 +883,14 @@ namespace CarenRengine
 			/// de ponto de extremidade de áudio. </param>
 			/// <param name="Param_Out_InterfaceRequisitada">Recebe a interface requisitada. Por meio desse método, o chamador obtém uma referência contada para a interface. O chamador é responsável por liberar a 
 			/// interface, quando ele não é mais necessário, chamando o método de Release da interface.</param>
-			CarenResult Activate(String^ Param_GuidInterface, Enumeracoes::CA_CLSCTX Param_ContextoEx, Estruturas::CA_PropVariant^ Param_ParmetrosActive, ICaren^ Param_Out_InterfaceRequisitada);
+			CarenResult AtivarObjeto(String^ Param_GuidInterface, Enumeracoes::CA_CLSCTX Param_ContextoEx, Estruturas::CA_PropVariant^ Param_ParmetrosActive, ICaren^ Param_Out_InterfaceRequisitada);
 
 			/// <summary>
 			/// (GetId) - O método recupera uma cadeia de caracteres de ID de ponto de extremidade que identifica o dispositivo de ponto de extremidade de áudio.
 			/// </summary>
 			/// <param name="Param_Out_EndpointId">Retorna o endereço de uma sequência de caracteres largos terminada por caractere nulo que contém o ID do dispositivo de ponto 
 			/// de extremidade.</param>
-			CarenResult GetId([Out] String^% Param_Out_EndpointId);
+			CarenResult ObterId([Out] String^% Param_Out_EndpointId);
 
 			/// <summary>
 			/// (GetState) - O método recupera o estado atual do dispositivo.
@@ -910,7 +905,7 @@ namespace CarenRengine
 			/// leitura/gravação.</param>
 			/// <param name="Param_Out_Store">Rece uma interface que contém o armazenamento de propriedades do dispositivo. O chamador é responsável por liberar a interface, quando ele não é mais necessário, 
 			/// chamando o método de Release da interface.</param>
-			CarenResult OpenPropertyStore(Enumeracoes::CA_STGMs Param_TipoAcesso, [Out] ICarenPropertyStore^% Param_Out_Store);
+			CarenResult AbrirPropertyStore(Enumeracoes::CA_STGMs Param_TipoAcesso, [Out] ICarenPropertyStore^% Param_Out_Store);
 		};
 
 		/// <summary>
@@ -937,7 +932,7 @@ namespace CarenRengine
 			/// (GetCount) - O método recupera uma contagem dos dispositivos na coleção de dispositivo.
 			/// </summary>
 			/// <param name="Param_Out_Quantidade">Retorna a quantidade de dispositivos na coleção.</param>
-			CarenResult GetCount([Out] UInt32% Param_Out_Quantidade);
+			CarenResult ObterQuantidade([Out] UInt32% Param_Out_Quantidade);
 
 			/// <summary>
 			/// (Item) - O método recupera um ponteiro para o item especificado na coleção de dispositivos.
@@ -1044,6 +1039,7 @@ namespace CarenRengine
 		/// Na implementação atual da API MMDevice, suporta apenas a enumeração de dispositios de audio de ponto de extremidade. 
 		/// </summary>
 		[CategoryAttribute("Interface MMDevice")]
+		[DescriptionAttribute("Enumera recursos de multimedia do dispositivo de Audio.")]
 		[Guid("EF8A8894-93C7-42D2-B629-D8C7696844A2")]
 		public interface class ICarenMMDeviceEnumerator : ICaren
 		{
@@ -1067,7 +1063,7 @@ namespace CarenRengine
 			/// enumeração.</param>
 			/// <param name="Param_Out_ColeçãoDispotivios">Recebe a coleção de dispositivos solicitados. Por meio desse método, o chamador obtém uma referência contada para a interface. O chamador é responsável por 
 			/// liberar a interface, quando ele não é mais necessário, chamando o método de Release da interface.</param>
-			CarenResult EnumAudioEndpoints(
+			CarenResult ObterColeçãoDispositivosAudio(
 				Enumeracoes::CA_EDataFlow Param_DireçãoFluxo,
 				Enumeracoes::CA_DEVICE_STATE_XXX Param_EstadosPontoExtremidade,
 				[Out] ICarenMMDeviceCollection^% Param_Out_ColeçãoDispotivios);
@@ -1078,7 +1074,7 @@ namespace CarenRengine
 			/// <param name="Param_DireçãoFluxo">A direção de fluxo de dados para o dispositivo de ponto de extremidade.</param>
 			/// <param name="Param_FunçãoDispositivo">A direção do fluxo de dados para um dispositivo de renderização é eRender. A direção do fluxo de dados para um dispositivo de captura é eCapture.</param>
 			/// <param name="Param_Out_DispositivoDefault">Retorna o dispositivo de Audio padrão do sistema de acordo com sua função e direção.</param>
-			CarenResult GetDefaultAudioEndpoint(
+			CarenResult ObterDispositivoAudioDefault(
 				Enumeracoes::CA_EDataFlow Param_DireçãoFluxo,
 				Enumeracoes::CA_ERole Param_FunçãoDispositivo,
 				[Out] ICarenMMDevice^% Param_Out_DispositivoDefault);
@@ -1087,22 +1083,22 @@ namespace CarenRengine
 			/// (GetDevice) - O método recupera um dispositivo de ponto de extremidade de áudio que é identificado por uma cadeia de caracteres de ID de ponto de extremidade.
 			/// </summary>
 			/// <param name="Param_IDPontoExtremidade">Ponteiro para uma seqüência de caracteres que contém o ID de ponto de extremidade. O chamador normalmente obtém essa seqüência de caracteres a partir de 
-			/// ICarenMMDevice::GetId método ou de um dos métodos na ICarenMMNotificationClient interface.</param>
+			/// ICarenMMDevice::ObterId método ou de um dos métodos na ICarenMMNotificationClient interface.</param>
 			/// <param name="Param_Out_DispositivoSolicitado">Recebe um ponteiro para a interface do dispositivo solicitado. Por meio desse método, o chamador obtém uma referência contada para a interface. 
 			/// O chamador é responsável por liberar a interface, quando ele não é mais necessário, chamando o método de Release da interface.</param>
-			CarenResult GetDevice(String^ Param_IDPontoExtremidade, [Out] ICarenMMDevice^% Param_Out_DispositivoSolicitado);
+			CarenResult ObterDispositivo(String^ Param_IDPontoExtremidade, [Out] ICarenMMDevice^% Param_Out_DispositivoSolicitado);
 
 			/// <summary>
 			/// (RegisterEndpointNotificationCallback) - O método registra a interface de retorno de chamada de notificação do cliente.
 			/// </summary>
 			/// <param name="Param_Cliente">A interface que será registrada para receber as notificações.</param>
-			CarenResult RegisterEndpointNotificationCallback(ICarenMMNotificationClient^ Param_Cliente);
+			CarenResult RegistrarInterfaceNotificação(ICarenMMNotificationClient^ Param_Cliente);
 
 			/// <summary>
 			/// (UnregisterEndpointNotificationCallback) - O método exclui o registro de uma interface de notificação que o cliente registrado em uma chamada anterior para o IMMDeviceEnumerator:: RegisterEndpointNotificationCallback método.
 			/// </summary>
 			/// <param name="Param_Cliente">A interface que será removida para não receber mais notificações.</param>
-			CarenResult UnregisterEndpointNotificationCallback(ICarenMMNotificationClient^ Param_Cliente);
+			CarenResult RemoverRegistroInterfaceNotificação(ICarenMMNotificationClient^ Param_Cliente);
 		};
 
 

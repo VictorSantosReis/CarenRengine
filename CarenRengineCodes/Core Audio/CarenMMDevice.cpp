@@ -419,7 +419,7 @@ void CarenMMDevice::Finalizar()
 /// de ponto de extremidade de áudio. </param>
 /// <param name="Param_Out_InterfaceRequisitada">Recebe a interface requisitada. Por meio desse método, o chamador obtém uma referência contada para a interface. O chamador é responsável por liberar a 
 /// interface, quando ele não é mais necessário, chamando o método de Release da interface.</param>
-CarenResult CarenMMDevice::Activate(String^ Param_GuidInterface, Enumeracoes::CA_CLSCTX Param_ContextoEx, Estruturas::CA_PropVariant^ Param_ParmetrosActive, ICaren^ Param_Out_InterfaceRequisitada)
+CarenResult CarenMMDevice::AtivarObjeto(String^ Param_GuidInterface, Enumeracoes::CA_CLSCTX Param_ContextoEx, Estruturas::CA_PropVariant^ Param_ParmetrosActive, ICaren^ Param_Out_InterfaceRequisitada)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -493,7 +493,7 @@ Done:;
 /// (GetId) - O método recupera uma cadeia de caracteres de ID de ponto de extremidade que identifica o dispositivo de ponto de extremidade de áudio.
 /// </summary>
 /// <param name="Param_Out_EndpointId">>Retorna o endereço de uma sequência de caracteres largos terminada por caractere nulo que contém o ID do dispositivo de ponto de extremidade.</param>
-CarenResult CarenMMDevice::GetId([Out] String^% Param_Out_EndpointId)
+CarenResult CarenMMDevice::ObterId([Out] String^% Param_Out_EndpointId)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -586,7 +586,7 @@ Done:;
 /// leitura/gravação.</param>
 /// <param name="Param_Out_Store">Rece uma interface que contém o armazenamento de propriedades do dispositivo. O chamador é responsável por liberar a interface, quando ele não é mais necessário, 
 /// chamando o método de Release da interface.</param>
-CarenResult CarenMMDevice::OpenPropertyStore(Enumeracoes::CA_STGMs Param_TipoAcesso, [Out] ICarenPropertyStore^% Param_Out_Store)
+CarenResult CarenMMDevice::AbrirPropertyStore(Enumeracoes::CA_STGMs Param_TipoAcesso, [Out] ICarenPropertyStore^% Param_Out_Store)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

@@ -54,7 +54,7 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_RIIDInterface">A identificação da interface solicitada.</param>
 			/// <param name="Param_Out_ObjetoPai">Recebe o ponteiro para o objeto pai do objeto atual. O usuário deve inicializar a interface antes de chamar este método.</param>
-			CarenResult ObterPaiObjeto(String^ Param_RIIDInterface, ICaren^ Param_Out_ObjetoPai);
+			CarenResult GetParent(String^ Param_RIIDInterface, ICaren^ Param_Out_ObjetoPai);
 
 			/// <summary>
 			/// (SetPrivateData) - Define dados definidos pelo aplicativo para o objeto e associa esses dados a um GUID.
@@ -1347,7 +1347,7 @@ namespace CarenRengine
 		/// (IDXGIFactory) - Interface responsável por implementar métodos para gerar objetos DXGI (que lidam com transições de tela cheia).
 		/// Como você pode criar um dispositivo Direct3D sem criar uma cadeia de swap, você pode precisar recuperar a fábrica que é usada
 		/// para criar o dispositivo para criar uma cadeia de swap. Você pode solicitar a interface ICarenDXGIDevice do dispositivo Direct3D
-		/// e, em seguida, usar o método ICarenDXGIObject::ObterPaiObjeto para localizar a fábrica.
+		/// e, em seguida, usar o método ICarenDXGIObject::GetParent para localizar a fábrica.
 		/// </summary>
 		[CategoryAttribute("Interface DXGI")]
 		[DescriptionAttribute("Representa uma fabrica que gera objetos DXGI.")]

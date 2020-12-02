@@ -201,7 +201,7 @@ public:
 	/// <param name="Param_FlagsFluxo">Especifica o status dos sinalizadores para o fluxo de áudio.</param>
 	/// <param name="Param_Out_ControleSessaoAudio">Retorna a interface de controle de sessão de áudio. O chamador é responsável por liberar a interface, quando ela não é 
 	/// mais necessária</param>
-	virtual CarenResult GetAudioSessionControl(String^ Param_GuidSessaoAudio, UInt32 Param_FlagsFluxo, [Out] ICarenAudioSessionControl^% Param_Out_ControleSessaoAudio);
+	virtual CarenResult ObterAudioControleSessao(String^ Param_GuidSessaoAudio, UInt32 Param_FlagsFluxo, [Out] ICarenAudioSessionControl^% Param_Out_ControleSessaoAudio);
 
 	/// <summary>
 	/// (GetSimpleAudioVolume) - O método recupera um controle de volume de áudio simples.
@@ -212,5 +212,5 @@ public:
 	/// sessão não é processo cruzado.</param>
 	/// <param name="Param_Out_ControladorSimplesVolume">Retorna a interface de controle de volume áudio. Essa interface representa o controle de volume de áudio simples para o processo atual. O chamador é responsável por 
 	/// liberar a interface, quando ela não é mais necessária.</param>
-	virtual CarenResult GetSimpleAudioVolume(String^ Param_GuidSessaoAudio, UInt32 Param_FlagsFluxo, [Out] ICarenSimpleAudioVolume^% Param_Out_ControladorSimplesVolume);
+	virtual CarenResult ObterAudioSimplesVolume(String^ Param_GuidSessaoAudio, UInt32 Param_FlagsFluxo, [Out] ICarenSimpleAudioVolume^% Param_Out_ControladorSimplesVolume);
 };

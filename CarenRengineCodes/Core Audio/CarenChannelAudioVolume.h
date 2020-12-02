@@ -194,22 +194,22 @@ public:
 	/// <summary>
 	/// (GetAllVolumes) - O método recupera os níveis de volume para todos os canais na sessão de áudio.
 	/// </summary>
-	/// <param name="Param_QuantidadeCanais">A quantidade de canais no formato do fluxo. Chame o método (GetChannelCount) para obter a quantidade total.</param>
+	/// <param name="Param_QuantidadeCanais">A quantidade de canais no formato do fluxo. Chame o método (ObterQuantidadeCanais) para obter a quantidade total.</param>
 	/// <param name="Param_Out_ArrayVolumes">Retorna um array que contém o nivel de volume de cada canal na sessão de áudio. Os níveis de volume estão no intervalo 0,0 a 1,0.</param>
-	virtual CarenResult GetAllVolumes(UInt32 Param_QuantidadeCanais, [Out] cli::array<float>^% Param_Out_ArrayVolumes);
+	virtual CarenResult ObterTodosVolumes(UInt32 Param_QuantidadeCanais, [Out] cli::array<float>^% Param_Out_ArrayVolumes);
 
 	/// <summary>
 	/// (GetChannelCount) - O método recupera o número de canais no formato de fluxo para a sessão de áudio.
 	/// </summary>
 	/// <param name="Param_QuantidadeCanais">Retorna a quantidade de canais.</param>
-	virtual CarenResult GetChannelCount([Out] UInt32% Param_QuantidadeCanais);
+	virtual CarenResult ObterQuantidadeCanais([Out] UInt32% Param_QuantidadeCanais);
 
 	/// <summary>
 	/// (GetChannelVolume) - O método recupera o nível de volume para o canal especificado na sessão de áudio.
 	/// </summary>
 	/// <param name="Param_NumeroCanal">O número do canal. Se o formato de fluxo para a sessão de áudio tem N canais, em seguida, os canais são numerados de 0 a N- 1.</param>
 	/// <param name="Param_Out_NivelVolume">Retorna uma variável no qual o método grava o nível de volume do canal especificado. O nível de volume está no intervalo de 0.0 a 1.0.</param>
-	virtual CarenResult GetChannelVolume(UInt32 Param_NumeroCanal, [Out] float% Param_Out_NivelVolume);
+	virtual CarenResult ObterVolumeCanal(UInt32 Param_NumeroCanal, [Out] float% Param_Out_NivelVolume);
 
 	/// <summary>
 	/// (SetAllVolumes) - O método define os níveis de volume individuais para todos os canais na sessão de áudio.
@@ -221,7 +221,7 @@ public:
 	/// (ContextoEvento) com cada notificação. Ao receber uma notificação, um cliente pode determinar se ele ou outro cliente é a origem do evento inspecionando o valor de (ContextoEvento).
 	/// Esse esquema depende do cliente selecionando um valor para esse parâmetro que é exclusivo entre todos os clientes na sessão. Se o chamador fornece uma String NULA para este parâmetro, 
 	/// o método de notificação do cliente recebe NULO ou VAZIO na string de contexto.</param>
-	virtual CarenResult SetAllVolumes(UInt32 Param_QuantidadeItens, cli::array<float>^ Param_ArrayVolumes, String^ Param_ContextoEvento);
+	virtual CarenResult DefinirTodosVolumes(UInt32 Param_QuantidadeItens, cli::array<float>^ Param_ArrayVolumes, String^ Param_ContextoEvento);
 
 	/// <summary>
 	/// (SetChannelVolume) - O método define o nível de volume para o canal especificado na sessão de áudio.
@@ -233,5 +233,5 @@ public:
 	/// (ContextoEvento) com cada notificação. Ao receber uma notificação, um cliente pode determinar se ele ou outro cliente é a origem do evento inspecionando o valor de (ContextoEvento).
 	/// Esse esquema depende do cliente selecionando um valor para esse parâmetro que é exclusivo entre todos os clientes na sessão. Se o chamador fornece uma String NULA para este parâmetro, 
 	/// o método de notificação do cliente recebe NULO ou VAZIO na string de contexto.</param>
-	virtual CarenResult SetChannelVolume(UInt32 Param_IndexCanal, float Param_Volume, String^ Param_ContextoEvento);
+	virtual CarenResult DefinirVolumeCanal(UInt32 Param_IndexCanal, float Param_Volume, String^ Param_ContextoEvento);
 };

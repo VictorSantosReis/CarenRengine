@@ -1054,7 +1054,7 @@ Done:;
 /// (GetDesc1) - Obtém uma descrição da cadeia de swaps.
 /// </summary>
 /// <param name="Param_Out_Desc">Retorna uma estrutura que contém a descrição da cadeia de Swap.</param>
-CarenResult CarenDXGISwapChain4::ObterDescricao1([Out] CA_DXGI_SWAP_CHAIN_DESC1^% Param_Out_Desc)
+CarenResult CarenDXGISwapChain4::GetDesc1([Out] CA_DXGI_SWAP_CHAIN_DESC1^% Param_Out_Desc)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1531,7 +1531,7 @@ Done:;
 /// (GetDesc) - Obtém uma descrição da cadeia de swaps.
 /// </summary>
 /// <param name="Param_Out_DescricaoCadeiaSwap">Retorna uma estrutura com a descrição da cadeia de troca.</param>
-CarenResult CarenDXGISwapChain4::ObterDescricao([Out] Estruturas::CA_DXGI_SWAP_CHAIN_DESC^% Param_Out_DescricaoCadeiaSwap)
+CarenResult CarenDXGISwapChain4::GetDesc([Out] Estruturas::CA_DXGI_SWAP_CHAIN_DESC^% Param_Out_DescricaoCadeiaSwap)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1573,7 +1573,7 @@ Done:;
 /// (GetFrameStatistics) - Obtém estatísticas de desempenho sobre o último quadro render.
 /// </summary>
 /// <param name="Param_Out_FrameEstatisticas">Retorna uma estrutura com as estatiticas do frame.</param>
-CarenResult CarenDXGISwapChain4::ObterEstatisticasFrame([Out] Estruturas::CA_DXGI_FRAME_STATISTICS^% Param_Out_FrameEstatisticas)
+CarenResult CarenDXGISwapChain4::GetFrameStatistics([Out] Estruturas::CA_DXGI_FRAME_STATISTICS^% Param_Out_FrameEstatisticas)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

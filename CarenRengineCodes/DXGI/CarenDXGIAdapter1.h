@@ -195,9 +195,9 @@ public:
 	/// <summary>
 	/// (GetDesc1) - Obtém uma descrição DXGI 1.1 de um adaptador (ou cartão de vídeo).
 	/// </summary>
-	/// <param name="Param_Out_DescAdaptador">Retorna uma estrutura CA_DXGI_ADAPTER_DESC1 que descreve o adaptador. No hardware gráfico de nível 9 de recurso, o (ObterDescricao1) retorna zeros para o 
+	/// <param name="Param_Out_DescAdaptador">Retorna uma estrutura CA_DXGI_ADAPTER_DESC1 que descreve o adaptador. No hardware gráfico de nível 9 de recurso, o (GetDesc1) retorna zeros para o 
 	/// PCI ID no VendorId, DeviceId, SubSysId e membros de revisão de CA_DXGI_ADAPTER_DESC1 e "Adaptador de Software" para a sequencia de descrição no membro Description.</param>
-	virtual CarenResult ObterDescricao1([Out] CA_DXGI_ADAPTER_DESC1^% Param_Out_DescAdaptador);
+	virtual CarenResult GetDesc1([Out] CA_DXGI_ADAPTER_DESC1^% Param_Out_DescAdaptador);
 
 
 
@@ -220,9 +220,9 @@ public:
 	/// <summary>
 	/// (GetDesc) - Obtém uma descrição DXGI 1.0 de um adaptador (ou cartão de vídeo).
 	/// </summary>
-	/// <param name="Param_Out_DescAdaptador">Retorna uma estrutura CA_DXGI_ADAPTER_DESC que descreve o adaptador. No hardware gráfico de nível 9 de recurso, o (ObterDescricao) retorna zeros para o 
+	/// <param name="Param_Out_DescAdaptador">Retorna uma estrutura CA_DXGI_ADAPTER_DESC que descreve o adaptador. No hardware gráfico de nível 9 de recurso, o (GetDesc) retorna zeros para o 
 	/// PCI ID no VendorId, DeviceId, SubSysId e membros de revisão de CA_DXGI_ADAPTER_DESC e "Adaptador de Software" para a sequencia de descrição no membro Description.</param>
-	virtual CarenResult ObterDescricao([Out] CA_DXGI_ADAPTER_DESC^% Param_Out_DescAdaptador);
+	virtual CarenResult GetDesc([Out] CA_DXGI_ADAPTER_DESC^% Param_Out_DescAdaptador);
 
 
 

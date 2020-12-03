@@ -759,7 +759,7 @@ namespace CarenRengine
 			ER_DXGI_ERROR_NOT_CURRENTLY_AVAILABLE,
 
 			/// <summary>
-			/// (DXGI_ERROR_NAME_ALREADY_EXISTS) - O nome fornecido de um recurso em uma chamada para ICarenDXGIResource1::CriarHandleCompartilhada já está associado a algum outro recurso.
+			/// (DXGI_ERROR_NAME_ALREADY_EXISTS) - O nome fornecido de um recurso em uma chamada para ICarenDXGIResource1::CreateSharedHandle já está associado a algum outro recurso.
 			/// </summary>
 			ER_DXGI_ERROR_NAME_ALREADY_EXISTS,
 

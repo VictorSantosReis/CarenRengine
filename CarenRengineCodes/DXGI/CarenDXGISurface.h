@@ -195,20 +195,20 @@ public:
 	/// (GetDesc) - Método responsável por obter uma descrição da superfície.
 	/// </summary>
 	/// <param name="Param_Out_DescSuperfice">Recebe uma estrutura descrevendo a superfice.</param>
-	virtual CarenResult ObterDescricao([Out] CA_DXGI_SURFACE_DESC^% Param_Out_DescSuperfice);
+	virtual CarenResult GetDesc([Out] CA_DXGI_SURFACE_DESC^% Param_Out_DescSuperfice);
 
 	/// <summary>
 	/// (Map) - Método responsável por obter um ponteiro para os dados contidos na superfície e negue o acesso da GPU à superfície.
 	/// </summary>
 	/// <param name="Param_Flags">Bandeiras de leitura da CPU que definem o tipo de acesso ao dados da superfice.</param>
 	/// <param name="Param_Out_RectMapeado">Recebe uma estrutura que contém os dados mapeados da superfice.</param>
-	virtual CarenResult Mapear(CA_DXGI_MAP_FLAGS Param_Flags, [Out] CA_DXGI_MAPPED_RECT^% Param_Out_RectMapeado);
+	virtual CarenResult Map(CA_DXGI_MAP_FLAGS Param_Flags, [Out] CA_DXGI_MAPPED_RECT^% Param_Out_RectMapeado);
 
 	/// <summary>
-	/// (Unmap) - Método responsável por invalidar o ponteiro para a superfície recuperada pelo ICarenDXGISurface::Mapear e 
+	/// (Unmap) - Método responsável por invalidar o ponteiro para a superfície recuperada pelo ICarenDXGISurface::Map e 
 	/// reativar o acesso GPU ao recurso.
 	/// </summary>
-	virtual CarenResult Desmapear();
+	virtual CarenResult Unmap();
 
 
 

@@ -210,7 +210,7 @@ public:
 	/// (GetDesc1) - Obtém uma descrição da cadeia de swaps.
 	/// </summary>
 	/// <param name="Param_Out_Desc">Retorna uma estrutura que contém a descrição da cadeia de Swap.</param>
-	virtual CarenResult ObterDescricao1([Out] CA_DXGI_SWAP_CHAIN_DESC1^% Param_Out_Desc);
+	virtual CarenResult GetDesc1([Out] CA_DXGI_SWAP_CHAIN_DESC1^% Param_Out_Desc);
 
 	/// <summary>
 	/// (GetFullscreenDesc) - Obtém uma descrição de uma cadeia de troca em tela cheia.
@@ -286,13 +286,13 @@ public:
 	/// (GetDesc) - Obtém uma descrição da cadeia de swaps.
 	/// </summary>
 	/// <param name="Param_Out_DescricaoCadeiaSwap">Retorna uma estrutura com a descrição da cadeia de troca.</param>
-	virtual CarenResult ObterDescricao([Out] Estruturas::CA_DXGI_SWAP_CHAIN_DESC^% Param_Out_DescricaoCadeiaSwap);
+	virtual CarenResult GetDesc([Out] Estruturas::CA_DXGI_SWAP_CHAIN_DESC^% Param_Out_DescricaoCadeiaSwap);
 
 	/// <summary>
 	/// (GetFrameStatistics) - Obtém estatísticas de desempenho sobre o último quadro render.
 	/// </summary>
 	/// <param name="Param_Out_FrameEstatisticas">Retorna uma estrutura com as estatiticas do frame.</param>
-	virtual CarenResult ObterEstatisticasFrame([Out] Estruturas::CA_DXGI_FRAME_STATISTICS^% Param_Out_FrameEstatisticas);
+	virtual CarenResult GetFrameStatistics([Out] Estruturas::CA_DXGI_FRAME_STATISTICS^% Param_Out_FrameEstatisticas);
 
 	/// <summary>
 	/// (GetFullscreenState) - Associe o estado ao modo de tela cheia.

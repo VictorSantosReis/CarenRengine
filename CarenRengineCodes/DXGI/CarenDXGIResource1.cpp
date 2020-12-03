@@ -415,7 +415,7 @@ void CarenDXGIResource1::Finalizar()
 /// </summary>
 /// <param name="Param_Atributos">Uma estrutura CA_ATRIBUTOS_SEGURANCA que contém dois membros de dados separados, mas relacionados: um descritor de segurança opcional e 
 /// um valor booleano que determina se os processos crianças podem herdar a Handle devolvida.
-/// Defina esse parâmetro para NULO se desejar que os processos filhos que o aplicativo possa criar não herdem a Handle retornado por CriarHandleCompartilhada e se 
+/// Defina esse parâmetro para NULO se desejar que os processos filhos que o aplicativo possa criar não herdem a Handle retornado por CreateSharedHandle e se 
 /// desejar que o recurso associado ao identificador retornado obtenha um descritor de segurança padrão.</param>
 /// <param name="Param_Acesso">Os direitos de acesso solicitados ao recurso. Você pode realizar um bitwise entre as enumerações CA_ACCESS_RIGHTS e CA_DXGI_SHARED_RESOURCE_RW 
 /// para definir esse parametro.</param>
@@ -424,7 +424,7 @@ void CarenDXGIResource1::Finalizar()
 /// em vez disso, ligar para o método ICarenD3D11Device1::AbrirRecursoCompartilhado1 para acessar o recurso compartilhado por cabo, defina este parâmetro para NULO.</param>
 /// <param name="Param_Out_Handle">Recebe o ponteiro para uma variável que recebe o valor NT HANDLE para o recurso para compartilhar. Você pode usar esta Handle em 
 /// chamadas para acessar o recurso.</param>
-CarenResult CarenDXGIResource1::CriarHandleCompartilhada(
+CarenResult CarenDXGIResource1::CreateSharedHandle(
 				CA_ATRIBUTOS_SEGURANCA^ Param_Atributos,
 				UInt64 Param_Acesso,
 				String^ Param_Nome,
@@ -499,7 +499,7 @@ Done:;
 /// <param name="Param_Index">O índice do objeto de superfície do subrecurso a ser enumerado.</param>
 /// <param name="Param_Out_DXGISurface2">Recebe um ponteiro para uma interface ICarenDXGISurface2 que representa o objeto de superfície do subrecurso criado na posição 
 /// especificada pelo parâmetro (Param_Index). O usuário deve inicializar a interface antes de chamar este método.</param>
-CarenResult CarenDXGIResource1::CriarSuperficeSubrecurso(UInt32 Param_Index, ICaren^ Param_Out_DXGISurface2)
+CarenResult CarenDXGIResource1::CreateSubresourceSurface(UInt32 Param_Index, ICaren^ Param_Out_DXGISurface2)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -547,7 +547,7 @@ Done:;
 /// (GetEvictionPriority) - Obtenha a prioridade de despejo.
 /// </summary>
 /// <param name="Param_Out_PrioridadeDespejo">Recebe valores da enumeração CA_DXGI_RESOURCE_PRIORITY, que determinam quando o recurso pode ser despejado.</param>
-CarenResult CarenDXGIResource1::ObterPrioridadeDespejo([Out] CA_DXGI_RESOURCE_PRIORITY% Param_Out_PrioridadeDespejo)
+CarenResult CarenDXGIResource1::GetEvictionPriority([Out] CA_DXGI_RESOURCE_PRIORITY% Param_Out_PrioridadeDespejo)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -586,13 +586,13 @@ Done:;
 
 /// <summary>
 /// (GetSharedHandle) - Obtém a Handle para um recurso compartilhado.
-/// [A partir do Direct3D 11.1, recomendamos não usar o (ObterHandleCompartilhada) mais para recuperar a alça a um recurso compartilhado. Em vez disso, use o 
-/// ICarenDXGIResource1::CriarHandleCompartilhada para obter uma Handle para compartilhar. Para usar o ICarenDXGIResource1::CriarHandleCompartilhada deve especificar 
+/// [A partir do Direct3D 11.1, recomendamos não usar o (GetSharedHandle) mais para recuperar a alça a um recurso compartilhado. Em vez disso, use o 
+/// ICarenDXGIResource1::CreateSharedHandle para obter uma Handle para compartilhar. Para usar o ICarenDXGIResource1::CreateSharedHandle deve especificar 
 /// que ele usa Handle NT (ou seja, você define a bandeira CA_D3D11_RESOURCE_MISC_SHARED_NTHANDLE). Também recomendamos que você crie recursos compartilhados que 
 /// usam Handles NT para que você possa usar CloseHandle, DuplicateHandle, e assim por diante esses recursos compartilhados.]
 /// </summary>
 /// <param name="Param_Out_SharedHandle">Retorna um ponteiro para a Handle compartilhada.</param>
-CarenResult CarenDXGIResource1::ObterHandleCompartilhada([Out] IntPtr% Param_Out_SharedHandle)
+CarenResult CarenDXGIResource1::GetSharedHandle([Out] IntPtr% Param_Out_SharedHandle)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -635,7 +635,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Out_Usage">Recebe uma bandeira de uso(DXGI_USAGE). Para direct3D 10, uma superfície pode ser usada como entrada sombreadora ou uma saída de 
 /// destino renderizado.</param>
-CarenResult CarenDXGIResource1::ObterUso([Out] CA_DXGI_USAGE% Param_Out_Usage)
+CarenResult CarenDXGIResource1::GetUsage([Out] CA_DXGI_USAGE% Param_Out_Usage)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -676,7 +676,7 @@ Done:;
 /// (SetEvictionPriority) - Defina a prioridade para despejar o recurso da memória.
 /// </summary>
 /// <param name="Param_PrioridadeDespejo">Um valor da enumeração CA_DXGI_RESOURCE_PRIORITY que define a prioridade do despejo.</param>
-CarenResult CarenDXGIResource1::DefinirPrioridadeDespejo(CA_DXGI_RESOURCE_PRIORITY Param_PrioridadeDespejo)
+CarenResult CarenDXGIResource1::SetEvictionPriority(CA_DXGI_RESOURCE_PRIORITY Param_PrioridadeDespejo)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

@@ -414,7 +414,7 @@ void CarenDXGISurface::Finalizar()
 /// (GetDesc) - Método responsável por obter uma descrição da superfície.
 /// </summary>
 /// <param name="Param_Out_DescSuperfice">Recebe uma estrutura descrevendo a superfice.</param>
-CarenResult CarenDXGISurface::ObterDescricao([Out] CA_DXGI_SURFACE_DESC^% Param_Out_DescSuperfice)
+CarenResult CarenDXGISurface::GetDesc([Out] CA_DXGI_SURFACE_DESC^% Param_Out_DescSuperfice)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -457,7 +457,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Flags">Bandeiras de leitura da CPU que definem o tipo de acesso ao dados da superfice.</param>
 /// <param name="Param_Out_RectMapeado">Recebe uma estrutura que contém os dados mapeados da superfice.</param>
-CarenResult CarenDXGISurface::Mapear(CA_DXGI_MAP_FLAGS Param_Flags, [Out] CA_DXGI_MAPPED_RECT^% Param_Out_RectMapeado)
+CarenResult CarenDXGISurface::Map(CA_DXGI_MAP_FLAGS Param_Flags, [Out] CA_DXGI_MAPPED_RECT^% Param_Out_RectMapeado)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -497,10 +497,10 @@ Done:;
 }
 
 /// <summary>
-/// (Unmap) - Método responsável por invalidar o ponteiro para a superfície recuperada pelo ICarenDXGISurface::Mapear e 
+/// (Unmap) - Método responsável por invalidar o ponteiro para a superfície recuperada pelo ICarenDXGISurface::Map e 
 /// reativar o acesso GPU ao recurso.
 /// </summary>
-CarenResult CarenDXGISurface::Desmapear()
+CarenResult CarenDXGISurface::Unmap()
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

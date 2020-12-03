@@ -200,7 +200,7 @@ public:
 	/// <param name="Param_RIID">O identificador globalmente único (GUID) do tipo de interface solicitado.</param>
 	/// <param name="Param_Out_ObjetoRecurso">Recebe um ponteiro para um buffer que recebe um ponteiro para o objeto de recurso pai para a superfície do subrecurso.  O usuário deve inicializar a interface antes de chamar este método.</param>
 	/// <param name="Param_Ref_IndexSubrecurso">Recebe o índice da superfície do subrecurso.</param>
-	virtual CarenResult ObterRecurso(String^ Param_RIID, ICaren^ Param_Out_ObjetoRecurso, UInt32% Param_Ref_IndexSubrecurso);
+	virtual CarenResult GetResource(String^ Param_RIID, ICaren^ Param_Out_ObjetoRecurso, UInt32% Param_Ref_IndexSubrecurso);
 
 
 
@@ -213,7 +213,7 @@ public:
 	/// TRUE direciona o tempo de execução para não preservar o conteúdo Direct3D no GDI DC; ou seja, o tempo de execução 
 	/// descarta o conteúdo Direct3D. False garante que o conteúdo Direct3D esteja disponível no GDI DC.</param>
 	/// <param name="Param_Out_HDCHandle">Recebe um ponteiro para uma Handle(Alça) HDC que representa o contexto atual do dispositivo para renderização GDI.</param>
-	virtual CarenResult ObterDC(Boolean Param_Descartar, [Out] IntPtr% Param_Out_HDCHandle);
+	virtual CarenResult GetDC(Boolean Param_Descartar, [Out] IntPtr% Param_Out_HDCHandle);
 
 	/// <summary>
 	/// (ReleaseDC) - Libera o contexto do dispositivo GDI (DC) que está associado à superfície atual e permite que você use o Direct3D para renderizar.
@@ -221,10 +221,10 @@ public:
 	/// <param name="Param_Regiao">Um ponteiro para uma estrutura rect que identifica a região suja da superfície. Uma região suja é qualquer 
 	/// parte da superfície que você usou para renderização GDI e que você quer preservar.Esta área é usada como uma dica de desempenho para 
 	/// subsistema gráfico em certos cenários.Não utilize este parâmetro para restringir a renderização à região retangular especificada. 
-	/// Se você passar NULO, LiberarDC considera toda a superfície como suja. Caso contrário, o (LiberarDC) usa a área especificada pelo CA_RECT
+	/// Se você passar NULO, ReleaseDC considera toda a superfície como suja. Caso contrário, o (ReleaseDC) usa a área especificada pelo CA_RECT
 	/// como uma dica de desempenho para indicar quais áreas foram manipuladas pela renderização GDI. Você pode passar um ponteiro para uma 
 	/// estrutura rect vazia(um retângulo sem posição ou área) se você não alterar qualquer conteúdo.</param>
-	virtual CarenResult LiberarDC(CA_RECT^ Param_Regiao);
+	virtual CarenResult ReleaseDC(CA_RECT^ Param_Regiao);
 
 
 
@@ -235,20 +235,20 @@ public:
 	/// (GetDesc) - Método responsável por obter uma descrição da superfície.
 	/// </summary>
 	/// <param name="Param_Out_DescSuperfice">Recebe uma estrutura descrevendo a superfice.</param>
-	virtual CarenResult ObterDescricao([Out] CA_DXGI_SURFACE_DESC^% Param_Out_DescSuperfice);
+	virtual CarenResult GetDesc([Out] CA_DXGI_SURFACE_DESC^% Param_Out_DescSuperfice);
 
 	/// <summary>
 	/// (Map) - Método responsável por obter um ponteiro para os dados contidos na superfície e negue o acesso da GPU à superfície.
 	/// </summary>
 	/// <param name="Param_Flags">Bandeiras de leitura da CPU que definem o tipo de acesso ao dados da superfice.</param>
 	/// <param name="Param_Out_RectMapeado">Recebe uma estrutura que contém os dados mapeados da superfice.</param>
-	virtual CarenResult Mapear(CA_DXGI_MAP_FLAGS Param_Flags, [Out] CA_DXGI_MAPPED_RECT^% Param_Out_RectMapeado);
+	virtual CarenResult Map(CA_DXGI_MAP_FLAGS Param_Flags, [Out] CA_DXGI_MAPPED_RECT^% Param_Out_RectMapeado);
 
 	/// <summary>
-	/// (Unmap) - Método responsável por invalidar o ponteiro para a superfície recuperada pelo ICarenDXGISurface::Mapear e 
+	/// (Unmap) - Método responsável por invalidar o ponteiro para a superfície recuperada pelo ICarenDXGISurface::Map e 
 	/// reativar o acesso GPU ao recurso.
 	/// </summary>
-	virtual CarenResult Desmapear();
+	virtual CarenResult Unmap();
 
 
 

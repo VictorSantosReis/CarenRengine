@@ -416,7 +416,7 @@ void CarenDXGIAdapter2::Finalizar()
 /// sua tarefa atual.
 /// </summary>
 /// <param name="Param_Out_DescAdaptador">Retorna uma estrutura CA_DXGI_ADAPTER_DESC2 que descreve o adaptador. Este parâmetro não deve ser 
-/// NULO.No hardware gráfico nível 9, versões anteriores do ObterDescricao2(ObterDescricao e ObterDescricao1) retorna zero para o 
+/// NULO.No hardware gráfico nível 9, versões anteriores do ObterDescricao2(GetDesc e GetDesc1) retorna zero para o 
 /// PCI ID em e (VendorId, DeviceId, SubSysId, e Revision) da estrutura de descrição do adaptador e "Adaptador de Software" para a descrição 
 /// do membro (Description). O ObterDescricao2 retorna os valores reais de hardware nível 9 nesses membros.</param>
 CarenResult CarenDXGIAdapter2::ObterDescricao2([Out] CA_DXGI_ADAPTER_DESC2^% Param_Out_DescAdaptador)
@@ -467,9 +467,9 @@ Done:;
 /// <summary>
 /// (GetDesc1) - Obtém uma descrição DXGI 1.1 de um adaptador (ou cartão de vídeo).
 /// </summary>
-/// <param name="Param_Out_DescAdaptador">Retorna uma estrutura CA_DXGI_ADAPTER_DESC1 que descreve o adaptador. No hardware gráfico de nível 9 de recurso, o (ObterDescricao1) retorna zeros para o 
+/// <param name="Param_Out_DescAdaptador">Retorna uma estrutura CA_DXGI_ADAPTER_DESC1 que descreve o adaptador. No hardware gráfico de nível 9 de recurso, o (GetDesc1) retorna zeros para o 
 /// PCI ID no VendorId, DeviceId, SubSysId e membros de revisão de CA_DXGI_ADAPTER_DESC1 e "Adaptador de Software" para a sequencia de descrição no membro Description.</param>
-CarenResult CarenDXGIAdapter2::ObterDescricao1([Out] CA_DXGI_ADAPTER_DESC1^% Param_Out_DescAdaptador)
+CarenResult CarenDXGIAdapter2::GetDesc1([Out] CA_DXGI_ADAPTER_DESC1^% Param_Out_DescAdaptador)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -611,9 +611,9 @@ Done:;
 /// <summary>
 /// (GetDesc) - Obtém uma descrição DXGI 1.0 de um adaptador (ou cartão de vídeo).
 /// </summary>
-/// <param name="Param_Out_DescAdaptador">Retorna uma estrutura CA_DXGI_ADAPTER_DESC que descreve o adaptador. No hardware gráfico de nível 9 de recurso, o (ObterDescricao) retorna zeros para o 
+/// <param name="Param_Out_DescAdaptador">Retorna uma estrutura CA_DXGI_ADAPTER_DESC que descreve o adaptador. No hardware gráfico de nível 9 de recurso, o (GetDesc) retorna zeros para o 
 /// PCI ID no VendorId, DeviceId, SubSysId e membros de revisão de CA_DXGI_ADAPTER_DESC e "Adaptador de Software" para a sequencia de descrição no membro Description.</param>
-CarenResult CarenDXGIAdapter2::ObterDescricao([Out] CA_DXGI_ADAPTER_DESC^% Param_Out_DescAdaptador)
+CarenResult CarenDXGIAdapter2::GetDesc([Out] CA_DXGI_ADAPTER_DESC^% Param_Out_DescAdaptador)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

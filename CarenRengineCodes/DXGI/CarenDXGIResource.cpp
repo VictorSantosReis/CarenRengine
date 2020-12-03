@@ -414,7 +414,7 @@ void CarenDXGIResource::Finalizar()
 /// (GetEvictionPriority) - Obtenha a prioridade de despejo.
 /// </summary>
 /// <param name="Param_Out_PrioridadeDespejo">Recebe valores da enumeração CA_DXGI_RESOURCE_PRIORITY, que determinam quando o recurso pode ser despejado.</param>
-CarenResult CarenDXGIResource::ObterPrioridadeDespejo([Out] CA_DXGI_RESOURCE_PRIORITY% Param_Out_PrioridadeDespejo)
+CarenResult CarenDXGIResource::GetEvictionPriority([Out] CA_DXGI_RESOURCE_PRIORITY% Param_Out_PrioridadeDespejo)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -453,13 +453,13 @@ Done:;
 
 /// <summary>
 /// (GetSharedHandle) - Obtém a Handle para um recurso compartilhado.
-/// [A partir do Direct3D 11.1, recomendamos não usar o (ObterHandleCompartilhada) mais para recuperar a alça a um recurso compartilhado. Em vez disso, use o 
-/// ICarenDXGIResource1::CriarHandleCompartilhada para obter uma Handle para compartilhar. Para usar o ICarenDXGIResource1::CriarHandleCompartilhada deve especificar 
+/// [A partir do Direct3D 11.1, recomendamos não usar o (GetSharedHandle) mais para recuperar a alça a um recurso compartilhado. Em vez disso, use o 
+/// ICarenDXGIResource1::CreateSharedHandle para obter uma Handle para compartilhar. Para usar o ICarenDXGIResource1::CreateSharedHandle deve especificar 
 /// que ele usa Handle NT (ou seja, você define a bandeira CA_D3D11_RESOURCE_MISC_SHARED_NTHANDLE). Também recomendamos que você crie recursos compartilhados que 
 /// usam Handles NT para que você possa usar CloseHandle, DuplicateHandle, e assim por diante esses recursos compartilhados.]
 /// </summary>
 /// <param name="Param_Out_SharedHandle">Retorna um ponteiro para a Handle compartilhada.</param>
-CarenResult CarenDXGIResource::ObterHandleCompartilhada([Out] IntPtr% Param_Out_SharedHandle)
+CarenResult CarenDXGIResource::GetSharedHandle([Out] IntPtr% Param_Out_SharedHandle)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -502,7 +502,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Out_Usage">Recebe uma bandeira de uso(DXGI_USAGE). Para direct3D 10, uma superfície pode ser usada como entrada sombreadora ou uma saída de 
 /// destino renderizado.</param>
-CarenResult CarenDXGIResource::ObterUso([Out] CA_DXGI_USAGE% Param_Out_Usage)
+CarenResult CarenDXGIResource::GetUsage([Out] CA_DXGI_USAGE% Param_Out_Usage)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -543,7 +543,7 @@ Done:;
 /// (SetEvictionPriority) - Defina a prioridade para despejar o recurso da memória.
 /// </summary>
 /// <param name="Param_PrioridadeDespejo">Um valor da enumeração CA_DXGI_RESOURCE_PRIORITY que define a prioridade do despejo.</param>
-CarenResult CarenDXGIResource::DefinirPrioridadeDespejo(CA_DXGI_RESOURCE_PRIORITY Param_PrioridadeDespejo)
+CarenResult CarenDXGIResource::SetEvictionPriority(CA_DXGI_RESOURCE_PRIORITY Param_PrioridadeDespejo)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

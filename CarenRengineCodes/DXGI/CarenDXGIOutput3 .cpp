@@ -414,12 +414,12 @@ void CarenDXGIOutput3 ::Finalizar()
 /// (CheckOverlaySupport) - Verifica o apoio ao Overlay(Sobrepor).
 /// </summary>
 /// <param name="Param_Formato">Um valor CA_DXGI_FORMAT digitado para o formato de cor.</param>
-/// <param name="Param_DispositivoD3D">Um ponteiro para a interface do dispositivo Direct3D. O (ChecarSuporteOverlay)
+/// <param name="Param_DispositivoD3D">Um ponteiro para a interface do dispositivo Direct3D. O (CheckOverlaySupport)
 /// retorna apenas informações de suporte sobre este dispositivo de varredura.</param>
 /// <param name="Param_Out_Flags">Recebe uma variável que recebe uma combinação de valores digitados 
 /// CA_DXGI_OVERLAY_SUPPORT_FLAGque são combinados usando uma operação ou bitwise. O valor resultante especifica 
 /// opções de suporte sobreposição.</param>
-CarenResult CarenDXGIOutput3 ::ChecarSuporteOverlay(
+CarenResult CarenDXGIOutput3 ::CheckOverlaySupport(
 				CA_DXGI_FORMAT Param_Formato, 
 				ICaren^ Param_DispositivoD3D, 
 				[Out] CA_DXGI_OVERLAY_SUPPORT_FLAG% Param_Out_Flags)
@@ -485,7 +485,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Out_Suporte">Recebe TRUE se o adaptador de saída é o adaptador primário e suporta sobreposições multiplanárias, caso 
 /// contrário retorna FALSE.</param>
-CarenResult CarenDXGIOutput3::SuporteOverlay([Out] Boolean Param_Out_Suporte)
+CarenResult CarenDXGIOutput3::SupportsOverlays([Out] Boolean Param_Out_Suporte)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -518,7 +518,7 @@ CarenResult CarenDXGIOutput3::SuporteOverlay([Out] Boolean Param_Out_Suporte)
 /// </summary>
 /// <param name="Param_Dispositivo3D">Um ponteiro para a interface do dispositivo Direct3D que você pode usar para processar a imagem da área de trabalho. Este dispositivo deve ser criado a partir do adaptador ao qual a saída está conectada.</param>
 /// <param name="Param_Out_SaidaDuplicada">Recebe um ponteiro da interface para a nova saida duplicada.</param>
-CarenResult CarenDXGIOutput3::DuplicarSaida(ICaren^ Param_Dispositivo3D, [Out] ICarenDXGIOutputDuplication^% Param_Out_SaidaDuplicada)
+CarenResult CarenDXGIOutput3::DuplicateOutput(ICaren^ Param_Dispositivo3D, [Out] ICarenDXGIOutputDuplication^% Param_Out_SaidaDuplicada)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -579,12 +579,12 @@ Done:;
 /// não está especificado. Se largura ou altura for 0, ambos devem ser 0. Um numerador e denominador de 0 no RefreshRate indicam que ele não 
 /// está especificado. Outros membros do CA_DXGI_MODE_DESC1 possuem valores de enumeração que indicam que o membro não está especificado. 
 /// Se o (Param_Dispositivo3D) for NULO, o membro (Formato) em CA_DXGI_MODE_DESC1 não pode ser CA_DXGI_FORMAT_UNKNOWN.</param>
-/// <param name="Param_Dispositivo3D">Um ponteiro para a interface do dispositivo Direct3D. Se este parâmetro for NULO, o (EncontrarModoExibicaoAdequado1) 
-/// retorna apenas modos cujo formato corresponde ao do Param_DescCombine; caso contrário, o (EncontrarModoExibicaoAdequado1) retorna apenas 
+/// <param name="Param_Dispositivo3D">Um ponteiro para a interface do dispositivo Direct3D. Se este parâmetro for NULO, o (FindClosestMatchingMode1) 
+/// retorna apenas modos cujo formato corresponde ao do Param_DescCombine; caso contrário, o (FindClosestMatchingMode1) retorna apenas 
 /// aos formatos suportados para escaneamento pelo dispositivo.</param>
 /// <param name="Param_Out_DescCorrespondente"> Recebe uma estrutura CA_DXGI_MODE_DESC1 que contém uma descrição do modo de exibição que 
 /// mais corresponde ao modo de exibição descrito no Param_DescCombine.</param>
-CarenResult CarenDXGIOutput3::EncontrarModoExibicaoAdequado1(
+CarenResult CarenDXGIOutput3::FindClosestMatchingMode1(
 	CA_DXGI_MODE_DESC1^ Param_DescCombine,
 	ICaren^ Param_Dispositivo3D,
 	[Out] CA_DXGI_MODE_DESC1^% Param_Out_DescCorrespondente)
@@ -656,12 +656,12 @@ Done:;
 /// de exibição que requerem dimensionamento. Os modos centrados que não requerem escala e correspondem diretamente à saída do display são 
 /// enumerados por padrão.</param>
 /// <param name="Param_RecuperaQuantidadeModos">Defina para TRUE para obter o número de modos de exibição. Se TRUE, Param_Out_MatrizDescModos retorna NULO e (Param_QuantidadeModos) retorna a quantidade total de modos.</param>
-/// <param name="Param_Ref_QuantidadeModos">Recebe o número de modos de exibição que o (ObterListaModosExibicao1) retorna no bloco de memória
+/// <param name="Param_Ref_QuantidadeModos">Recebe o número de modos de exibição que o (GetDisplayModeList1) retorna no bloco de memória
 /// para o qual o (Param_Out_MatrizDecModos) aponta. Defina (Param_Out_MatrizDecModos) para NULO para que o (Param_Ref_QuantidadeModos) 
 /// retorne o número de modos de exibição que correspondam ao formato e às opções. Caso contrário, o (Param_Ref_QuantidadeModos) retorna o 
 /// número de modos de exibição devolvidos no (Param_Out_MatrizDecModos).</param>
 /// <param name="Param_Out_MatrizDecModos">Recebe uma lista de modos de exibição.</param>
-CarenResult CarenDXGIOutput3::ObterListaModosExibicao1(
+CarenResult CarenDXGIOutput3::GetDisplayModeList1(
 	CA_DXGI_FORMAT Param_Formato,
 	CA_DXGI_ENUM_MODES Param_Flags,
 	Boolean Param_RecuperaQuantidadeModos,
@@ -755,8 +755,8 @@ Done:;
 /// (GetDisplaySurfaceData1) - Copia a superfície do display(buffer frontal) para um recurso fornecido pelo usuário.
 /// </summary>
 /// <param name="Param_SuperficeDestino">Um interface de recurso que representa o recurso para o qual o 
-/// (ObterDadosSuperficeExibicaoAtual1) copia a superfície do display. A interface não pode ser NULA e deve reprentar uma textura 2D da interface( ICarenD3D11Texture2D)</param>
-CarenResult CarenDXGIOutput3::ObterDadosSuperficeExibicaoAtual1(ICarenDXGIResource^ Param_SuperficeDestino)
+/// (GetDisplaySurfaceData1) copia a superfície do display. A interface não pode ser NULA e deve reprentar uma textura 2D da interface( ICarenD3D11Texture2D)</param>
+CarenResult CarenDXGIOutput3::GetDisplaySurfaceData1(ICarenDXGIResource^ Param_SuperficeDestino)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -819,7 +819,7 @@ Done:;
 /// <param name="Param_Out_ModoMaisAproximado">O modo que mais se aproxima do (Param_ModoDesc).</param>
 /// <param name="Param_Dispositivo3D">Um ponteiro para a interface do dispositivo Direct3D. Se este parâmetro é NULO, apenas modos cujo formato corresponde ao do (Param_ModoDesc) serão devolvidos; caso contrário, apenas os formatos que 
 /// são suportados para digitalização pelo dispositivo são devolvidos.</param>
-CarenResult CarenDXGIOutput3::EncontrarModoExibicaoAdequado(CA_DXGI_MODE_DESC^ Param_ModoDesc, [Out] CA_DXGI_MODE_DESC^% Param_Out_ModoMaisAproximado, ICaren^ Param_Dispositivo3D)
+CarenResult CarenDXGIOutput3::FindClosestMatchingMode(CA_DXGI_MODE_DESC^ Param_ModoDesc, [Out] CA_DXGI_MODE_DESC^% Param_Out_ModoMaisAproximado, ICaren^ Param_Dispositivo3D)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -879,7 +879,7 @@ Done:;
 /// (GetDesc) - Obter uma descrição da saída.
 /// </summary>
 /// <param name="Param_Out_DescSaida">Retorna uma estrutura que contém a descrição da saida.</param>
-CarenResult CarenDXGIOutput3::ObterDescricao([Out] CA_DXGI_OUTPUT_DESC^% Param_Out_DescSaida)
+CarenResult CarenDXGIOutput3::GetDesc([Out] CA_DXGI_OUTPUT_DESC^% Param_Out_DescSaida)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -926,7 +926,7 @@ Done:;
 /// <param name="Param_Ref_QuantidadeModos">Na entrada define a quantidade de dados que seram retornadados na matriz (Param_Out_MatrizDecModos). Na saida contém a quantidade de dados de (Param_Out_MatrizDecModos).</param>
 /// <param name="Param_RecuperaQuantidadeModos">Defina para TRUE para obter o número de modos de exibição. Se TRUE, Param_Out_MatrizDescModos retorna NULO e (Param_QuantidadeModos) retorna a quantidade total de modos.</param>
 /// <param name="Param_Out_MatrizDescModos">Retorna uma lista de modos de exibição.</param>
-CarenResult CarenDXGIOutput3::ObterListaModosExibicao(
+CarenResult CarenDXGIOutput3::GetDisplayModeList(
 	CA_DXGI_FORMAT Param_Formato,
 	CA_DXGI_ENUM_MODES Param_Flags,
 	Boolean Param_RecuperaQuantidadeModos,
@@ -1015,7 +1015,7 @@ Done:;
 /// O método só pode ser chamado quando uma saída está no modo de tela cheia. Se o método for bem-sucedido, a DXGI preenche a superfície do destino.
 /// </summary>
 /// <param name="Param_SuperficeDestino">Um ponteiro para uma superfície de destino que vai receber a superfice.</param>
-CarenResult CarenDXGIOutput3::ObterDadosSuperficeExibicaoAtual(ICarenDXGISurface^% Param_SuperficeDestino)
+CarenResult CarenDXGIOutput3::GetDisplaySurfaceData(ICarenDXGISurface^% Param_SuperficeDestino)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1066,7 +1066,7 @@ Done:;
 /// (GetFrameStatistics) - Obtém estatísticas sobre quadros recentemente renderizados.
 /// </summary>
 /// <param name="Param_Out_EstatisticasFrame">Retorna uma estrutura com as informações.</param>
-CarenResult CarenDXGIOutput3::ObterEstatisticasFrame([Out] CA_DXGI_FRAME_STATISTICS^% Param_Out_EstatisticasFrame)
+CarenResult CarenDXGIOutput3::GetFrameStatistics([Out] CA_DXGI_FRAME_STATISTICS^% Param_Out_EstatisticasFrame)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1108,7 +1108,7 @@ Done:;
 /// (GetGammaControl) - Obtém as configurações de controle gama.
 /// </summary>
 /// <param name="Param_Out_ControleGamma">Retorna uma estrutura que contém as informações do controle gamma.</param>
-CarenResult CarenDXGIOutput3::ObterControleGamma([Out] CA_DXGI_GAMMA_CONTROL^% Param_Out_ControleGamma)
+CarenResult CarenDXGIOutput3::GetGammaControl([Out] CA_DXGI_GAMMA_CONTROL^% Param_Out_ControleGamma)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1150,7 +1150,7 @@ Done:;
 /// (GetGammaControlCapabilities) - Obtém uma descrição das capacidades de controle gama.
 /// </summary>
 /// <param name="Param_Out_GammaCaps">Retorna uma estrutura que contém as descrições das capcidades do controle Gamma.</param>
-CarenResult CarenDXGIOutput3::ObterDescricaoCapacidadesControleGamma([Out] CA_DXGI_GAMMA_CONTROL_CAPABILITIES^% Param_Out_GammaCaps)
+CarenResult CarenDXGIOutput3::GetGammaControlCapabilities([Out] CA_DXGI_GAMMA_CONTROL_CAPABILITIES^% Param_Out_GammaCaps)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1191,7 +1191,7 @@ Done:;
 /// <summary>
 /// (ReleaseOwnership) - Libera a propriedade da saída.
 /// </summary>
-CarenResult CarenDXGIOutput3::LiberarPropriedadeSaida()
+CarenResult CarenDXGIOutput3::ReleaseOwnership()
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1213,7 +1213,7 @@ CarenResult CarenDXGIOutput3::LiberarPropriedadeSaida()
 /// (SetDisplaySurface) - Altera o modo de exibição.
 /// </summary>
 /// <param name="Param_Superfice">Um ponteiro para uma superfície usado para renderizar uma imagem para a tela. A superfície deve ter sido criada como um amortecedor traseiro (DXGI_USAGE_BACKBUFFER).</param>
-CarenResult CarenDXGIOutput3::DefinirSuperficeDisplay(ICarenDXGISurface^% Param_Superfice)
+CarenResult CarenDXGIOutput3::SetDisplaySurface(ICarenDXGISurface^% Param_Superfice)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1263,7 +1263,7 @@ Done:;
 /// (SetGammaControl) - Define os controles gama.
 /// </summary>
 /// <param name="Param_ControleGama">Uma estrutura CA_DXGI_GAMMA_CONTROL que descreve a curva gama a ser definida.</param>
-CarenResult CarenDXGIOutput3::DefinirControlesGamma(CA_DXGI_GAMMA_CONTROL^ Param_ControleGama)
+CarenResult CarenDXGIOutput3::SetGammaControl(CA_DXGI_GAMMA_CONTROL^ Param_ControleGama)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1305,13 +1305,13 @@ Done:;
 }
 
 /// <summary>
-/// (TakeOwnership) - Toma posse de uma saída. Quando você terminar com a saída, chame o método ICarenDXGIOutput::LiberarPropriedadeSaida().
+/// (TakeOwnership) - Toma posse de uma saída. Quando você terminar com a saída, chame o método ICarenDXGIOutput::ReleaseOwnership().
 /// Este método não deve ser chamado diretamente por aplicativos, uma vez que os resultados serão imprevisíveis. É chamado implicitamente pelo objeto da cadeia de swap DXGI durante as transições em tela cheia, e não deve ser usado como 
 /// um substituto para métodos de cadeia de swap.
 /// </summary>
 /// <param name="Param_DispositivoD3D">Um ponteiro para a interface IUnknown de um dispositivo do Direct3D.</param>
 /// <param name="Param_Exclusivo">Definido para TRUE para permitir que outros tópicos ou aplicativos para assumir a propriedade do dispositivo; caso contrário, definido como FALSE.</param>
-CarenResult CarenDXGIOutput3::ObterPosseSaida(ICaren^ Param_DispositivoD3D, Boolean Param_Exclusivo)
+CarenResult CarenDXGIOutput3::TakeOwnership(ICaren^ Param_DispositivoD3D, Boolean Param_Exclusivo)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1362,7 +1362,7 @@ Done:;
 /// <summary>
 /// (WaitForVBlank ) - Pare um Thread até que o próximo espaço em branco vertical ocorra.
 /// </summary>
-CarenResult CarenDXGIOutput3::AguardarForVBlank()
+CarenResult CarenDXGIOutput3::WaitForVBlank()
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

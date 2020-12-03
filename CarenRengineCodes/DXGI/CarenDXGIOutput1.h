@@ -197,7 +197,7 @@ public:
 	/// </summary>
 	/// <param name="Param_Dispositivo3D">Um ponteiro para a interface do dispositivo Direct3D que você pode usar para processar a imagem da área de trabalho. Este dispositivo deve ser criado a partir do adaptador ao qual a saída está conectada.</param>
 	/// <param name="Param_Out_SaidaDuplicada">Recebe um ponteiro da interface para a nova saida duplicada.</param>
-	virtual CarenResult DuplicarSaida(ICaren^ Param_Dispositivo3D, [Out] ICarenDXGIOutputDuplication^% Param_Out_SaidaDuplicada);
+	virtual CarenResult DuplicateOutput(ICaren^ Param_Dispositivo3D, [Out] ICarenDXGIOutputDuplication^% Param_Out_SaidaDuplicada);
 
 	/// <summary>
 	/// (FindClosestMatchingMode1) - Encontra o modo de exibição que mais combina com o modo de exibição solicitado.
@@ -207,12 +207,12 @@ public:
 	/// não está especificado. Se largura ou altura for 0, ambos devem ser 0. Um numerador e denominador de 0 no RefreshRate indicam que ele não 
 	/// está especificado. Outros membros do CA_DXGI_MODE_DESC1 possuem valores de enumeração que indicam que o membro não está especificado. 
 	/// Se o (Param_Dispositivo3D) for NULO, o membro (Formato) em CA_DXGI_MODE_DESC1 não pode ser CA_DXGI_FORMAT_UNKNOWN.</param>
-	/// <param name="Param_Dispositivo3D">Um ponteiro para a interface do dispositivo Direct3D. Se este parâmetro for NULO, o (EncontrarModoExibicaoAdequado1) 
-	/// retorna apenas modos cujo formato corresponde ao do Param_DescCombine; caso contrário, o (EncontrarModoExibicaoAdequado1) retorna apenas 
+	/// <param name="Param_Dispositivo3D">Um ponteiro para a interface do dispositivo Direct3D. Se este parâmetro for NULO, o (FindClosestMatchingMode1) 
+	/// retorna apenas modos cujo formato corresponde ao do Param_DescCombine; caso contrário, o (FindClosestMatchingMode1) retorna apenas 
 	/// aos formatos suportados para escaneamento pelo dispositivo.</param>
 	/// <param name="Param_Out_DescCorrespondente"> Recebe uma estrutura CA_DXGI_MODE_DESC1 que contém uma descrição do modo de exibição que 
 	/// mais corresponde ao modo de exibição descrito no Param_DescCombine.</param>
-	virtual CarenResult EncontrarModoExibicaoAdequado1(
+	virtual CarenResult FindClosestMatchingMode1(
 		CA_DXGI_MODE_DESC1^ Param_DescCombine,
 		ICaren^ Param_Dispositivo3D,
 		[Out] CA_DXGI_MODE_DESC1^% Param_Out_DescCorrespondente);
@@ -226,12 +226,12 @@ public:
 	/// de exibição que requerem dimensionamento. Os modos centrados que não requerem escala e correspondem diretamente à saída do display são 
 	/// enumerados por padrão.</param>
 	/// <param name="Param_RecuperaQuantidadeModos">Defina para TRUE para obter o número de modos de exibição. Se TRUE, Param_Out_MatrizDescModos retorna NULO e (Param_QuantidadeModos) retorna a quantidade total de modos.</param>
-	/// <param name="Param_Ref_QuantidadeModos">Recebe o número de modos de exibição que o (ObterListaModosExibicao1) retorna no bloco de memória
+	/// <param name="Param_Ref_QuantidadeModos">Recebe o número de modos de exibição que o (GetDisplayModeList1) retorna no bloco de memória
 	/// para o qual o (Param_Out_MatrizDecModos) aponta. Defina (Param_Out_MatrizDecModos) para NULO para que o (Param_Ref_QuantidadeModos) 
 	/// retorne o número de modos de exibição que correspondam ao formato e às opções. Caso contrário, o (Param_Ref_QuantidadeModos) retorna o 
 	/// número de modos de exibição devolvidos no (Param_Out_MatrizDecModos).</param>
 	/// <param name="Param_Out_MatrizDecModos">Recebe uma lista de modos de exibição.</param>
-	virtual CarenResult ObterListaModosExibicao1(
+	virtual CarenResult GetDisplayModeList1(
 		CA_DXGI_FORMAT Param_Formato,
 		CA_DXGI_ENUM_MODES Param_Flags,
 		Boolean Param_RecuperaQuantidadeModos,
@@ -242,8 +242,8 @@ public:
 	/// (GetDisplaySurfaceData1) - Copia a superfície do display(buffer frontal) para um recurso fornecido pelo usuário.
 	/// </summary>
 	/// <param name="Param_SuperficeDestino">Um interface de recurso que representa o recurso para o qual o 
-	/// (ObterDadosSuperficeExibicaoAtual1) copia a superfície do display. A interface não pode ser NULA e deve reprentar uma textura 2D da interface( ICarenD3D11Texture2D)</param>
-	virtual CarenResult ObterDadosSuperficeExibicaoAtual1(ICarenDXGIResource^ Param_SuperficeDestino);
+	/// (GetDisplaySurfaceData1) copia a superfície do display. A interface não pode ser NULA e deve reprentar uma textura 2D da interface( ICarenD3D11Texture2D)</param>
+	virtual CarenResult GetDisplaySurfaceData1(ICarenDXGIResource^ Param_SuperficeDestino);
 
 
 
@@ -258,13 +258,13 @@ public:
 	/// <param name="Param_Out_ModoMaisAproximado">O modo que mais se aproxima do (Param_ModoDesc).</param>
 	/// <param name="Param_Dispositivo3D">Um ponteiro para a interface do dispositivo Direct3D. Se este parâmetro é NULO, apenas modos cujo formato corresponde ao do (Param_ModoDesc) serão devolvidos; caso contrário, apenas os formatos que 
 	/// são suportados para digitalização pelo dispositivo são devolvidos.</param>
-	virtual CarenResult EncontrarModoExibicaoAdequado(CA_DXGI_MODE_DESC^ Param_ModoDesc, [Out] CA_DXGI_MODE_DESC^% Param_Out_ModoMaisAproximado, ICaren^ Param_Dispositivo3D);
+	virtual CarenResult FindClosestMatchingMode(CA_DXGI_MODE_DESC^ Param_ModoDesc, [Out] CA_DXGI_MODE_DESC^% Param_Out_ModoMaisAproximado, ICaren^ Param_Dispositivo3D);
 
 	/// <summary>
 	/// (GetDesc) - Obter uma descrição da saída.
 	/// </summary>
 	/// <param name="Param_Out_DescSaida">Retorna uma estrutura que contém a descrição da saida.</param>
-	virtual CarenResult ObterDescricao([Out] CA_DXGI_OUTPUT_DESC^% Param_Out_DescSaida);
+	virtual CarenResult GetDesc([Out] CA_DXGI_OUTPUT_DESC^% Param_Out_DescSaida);
 
 	/// <summary>
 	/// (GetDisplayModeList) - Obtém os modos de exibição que correspondem ao formato solicitado e outras opções de entrada.
@@ -275,7 +275,7 @@ public:
 	/// <param name="Param_Ref_QuantidadeModos">Na entrada define a quantidade de dados que seram retornadados na matriz (Param_Out_MatrizDescModos). Na saida contém a quantidade de dados de (Param_Out_MatrizDescModos).</param>
 	/// <param name="Param_RecuperaQuantidadeModos">Defina para TRUE para obter o número de modos de exibição. Se TRUE, Param_Out_MatrizDescModos retorna NULO e (Param_QuantidadeModos) retorna a quantidade total de modos.</param>
 	/// <param name="Param_Out_MatrizDescModos">Retorna uma lista de modos de exibição.</param>
-	virtual CarenResult ObterListaModosExibicao(
+	virtual CarenResult GetDisplayModeList(
 		CA_DXGI_FORMAT Param_Formato,
 		CA_DXGI_ENUM_MODES Param_Flags,
 		Boolean Param_RecuperaQuantidadeModos,
@@ -287,56 +287,56 @@ public:
 	/// O método só pode ser chamado quando uma saída está no modo de tela cheia. Se o método for bem-sucedido, a DXGI preenche a superfície do destino.
 	/// </summary>
 	/// <param name="Param_SuperficeDestino">Um ponteiro para uma superfície de destino que vai receber a superfice.</param>
-	virtual CarenResult ObterDadosSuperficeExibicaoAtual(ICarenDXGISurface^% Param_SuperficeDestino);
+	virtual CarenResult GetDisplaySurfaceData(ICarenDXGISurface^% Param_SuperficeDestino);
 
 	/// <summary>
 	/// (GetFrameStatistics) - Obtém estatísticas sobre quadros recentemente renderizados.
 	/// </summary>
 	/// <param name="Param_Out_EstatisticasFrame">Retorna uma estrutura com as informações.</param>
-	virtual CarenResult ObterEstatisticasFrame([Out] CA_DXGI_FRAME_STATISTICS^% Param_Out_EstatisticasFrame);
+	virtual CarenResult GetFrameStatistics([Out] CA_DXGI_FRAME_STATISTICS^% Param_Out_EstatisticasFrame);
 
 	/// <summary>
 	/// (GetGammaControl) - Obtém as configurações de controle gama.
 	/// </summary>
 	/// <param name="Param_Out_ControleGamma">Retorna uma estrutura que contém as informações do controle gamma.</param>
-	virtual CarenResult ObterControleGamma([Out] CA_DXGI_GAMMA_CONTROL^% Param_Out_ControleGamma);
+	virtual CarenResult GetGammaControl([Out] CA_DXGI_GAMMA_CONTROL^% Param_Out_ControleGamma);
 
 	/// <summary>
 	/// (GetGammaControlCapabilities) - Obtém uma descrição das capacidades de controle gama.
 	/// </summary>
 	/// <param name="Param_Out_GammaCaps">Retorna uma estrutura que contém as descrições das capcidades do controle Gamma.</param>
-	virtual CarenResult ObterDescricaoCapacidadesControleGamma([Out] CA_DXGI_GAMMA_CONTROL_CAPABILITIES^% Param_Out_GammaCaps);
+	virtual CarenResult GetGammaControlCapabilities([Out] CA_DXGI_GAMMA_CONTROL_CAPABILITIES^% Param_Out_GammaCaps);
 
 	/// <summary>
 	/// (ReleaseOwnership) - Libera a propriedade da saída.
 	/// </summary>
-	virtual CarenResult LiberarPropriedadeSaida();
+	virtual CarenResult ReleaseOwnership();
 
 	/// <summary>
 	/// (SetDisplaySurface) - Altera o modo de exibição.
 	/// </summary>
 	/// <param name="Param_Superfice">Um ponteiro para uma superfície usado para renderizar uma imagem para a tela. A superfície deve ter sido criada como um amortecedor traseiro (DXGI_USAGE_BACKBUFFER).</param>
-	virtual CarenResult DefinirSuperficeDisplay(ICarenDXGISurface^% Param_Superfice);
+	virtual CarenResult SetDisplaySurface(ICarenDXGISurface^% Param_Superfice);
 
 	/// <summary>
 	/// (SetGammaControl) - Define os controles gama.
 	/// </summary>
 	/// <param name="Param_ControleGama">Uma estrutura CA_DXGI_GAMMA_CONTROL que descreve a curva gama a ser definida.</param>
-	virtual CarenResult DefinirControlesGamma(CA_DXGI_GAMMA_CONTROL^ Param_ControleGama);
+	virtual CarenResult SetGammaControl(CA_DXGI_GAMMA_CONTROL^ Param_ControleGama);
 
 	/// <summary>
-	/// (TakeOwnership) - Toma posse de uma saída. Quando você terminar com a saída, chame o método ICarenDXGIOutput::LiberarPropriedadeSaida().
+	/// (TakeOwnership) - Toma posse de uma saída. Quando você terminar com a saída, chame o método ICarenDXGIOutput::ReleaseOwnership().
 	/// Este método não deve ser chamado diretamente por aplicativos, uma vez que os resultados serão imprevisíveis. É chamado implicitamente pelo objeto da cadeia de swap DXGI durante as transições em tela cheia, e não deve ser usado como 
 	/// um substituto para métodos de cadeia de swap.
 	/// </summary>
 	/// <param name="Param_DispositivoD3D">Um ponteiro para a interface IUnknown de um dispositivo do Direct3D.</param>
 	/// <param name="Param_Exclusivo">Definido para TRUE para permitir que outros tópicos ou aplicativos para assumir a propriedade do dispositivo; caso contrário, definido como FALSE.</param>
-	virtual CarenResult ObterPosseSaida(ICaren^ Param_DispositivoD3D, Boolean Param_Exclusivo);
+	virtual CarenResult TakeOwnership(ICaren^ Param_DispositivoD3D, Boolean Param_Exclusivo);
 
 	/// <summary>
 	/// (WaitForVBlank ) - Pare um Thread até que o próximo espaço em branco vertical ocorra.
 	/// </summary>
-	virtual CarenResult AguardarForVBlank();
+	virtual CarenResult WaitForVBlank();
 
 
 

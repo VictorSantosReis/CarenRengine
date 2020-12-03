@@ -417,7 +417,7 @@ void CarenDXGISurface1::Finalizar()
 /// TRUE direciona o tempo de execução para não preservar o conteúdo Direct3D no GDI DC; ou seja, o tempo de execução 
 /// descarta o conteúdo Direct3D. False garante que o conteúdo Direct3D esteja disponível no GDI DC.</param>
 /// <param name="Param_Out_HDCHandle">Recebe um ponteiro para uma Handle(Alça) HDC que representa o contexto atual do dispositivo para renderização GDI.</param>
-CarenResult CarenDXGISurface1::ObterDC(Boolean Param_Descartar, [Out] IntPtr% Param_Out_HDCHandle)
+CarenResult CarenDXGISurface1::GetDC(Boolean Param_Descartar, [Out] IntPtr% Param_Out_HDCHandle)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -460,10 +460,10 @@ Done:;
 /// <param name="Param_Regiao">Um ponteiro para uma estrutura rect que identifica a região suja da superfície. Uma região suja é qualquer 
 /// parte da superfície que você usou para renderização GDI e que você quer preservar.Esta área é usada como uma dica de desempenho para 
 /// subsistema gráfico em certos cenários.Não utilize este parâmetro para restringir a renderização à região retangular especificada. 
-/// Se você passar NULO, LiberarDC considera toda a superfície como suja. Caso contrário, o (LiberarDC) usa a área especificada pelo CA_RECT
+/// Se você passar NULO, ReleaseDC considera toda a superfície como suja. Caso contrário, o (ReleaseDC) usa a área especificada pelo CA_RECT
 /// como uma dica de desempenho para indicar quais áreas foram manipuladas pela renderização GDI. Você pode passar um ponteiro para uma 
 /// estrutura rect vazia(um retângulo sem posição ou área) se você não alterar qualquer conteúdo.</param>
-CarenResult CarenDXGISurface1::LiberarDC(CA_RECT^ Param_Regiao)
+CarenResult CarenDXGISurface1::ReleaseDC(CA_RECT^ Param_Regiao)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -522,7 +522,7 @@ Done:;
 /// (GetDesc) - Método responsável por obter uma descrição da superfície.
 /// </summary>
 /// <param name="Param_Out_DescSuperfice">Recebe uma estrutura descrevendo a superfice.</param>
-CarenResult CarenDXGISurface1::ObterDescricao([Out] CA_DXGI_SURFACE_DESC^% Param_Out_DescSuperfice)
+CarenResult CarenDXGISurface1::GetDesc([Out] CA_DXGI_SURFACE_DESC^% Param_Out_DescSuperfice)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -565,7 +565,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Flags">Bandeiras de leitura da CPU que definem o tipo de acesso ao dados da superfice.</param>
 /// <param name="Param_Out_RectMapeado">Recebe uma estrutura que contém os dados mapeados da superfice.</param>
-CarenResult CarenDXGISurface1::Mapear(CA_DXGI_MAP_FLAGS Param_Flags, [Out] CA_DXGI_MAPPED_RECT^% Param_Out_RectMapeado)
+CarenResult CarenDXGISurface1::Map(CA_DXGI_MAP_FLAGS Param_Flags, [Out] CA_DXGI_MAPPED_RECT^% Param_Out_RectMapeado)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -605,10 +605,10 @@ Done:;
 }
 
 /// <summary>
-/// (Unmap) - Método responsável por invalidar o ponteiro para a superfície recuperada pelo ICarenDXGISurface::Mapear e 
+/// (Unmap) - Método responsável por invalidar o ponteiro para a superfície recuperada pelo ICarenDXGISurface::Map e 
 /// reativar o acesso GPU ao recurso.
 /// </summary>
-CarenResult CarenDXGISurface1::Desmapear()
+CarenResult CarenDXGISurface1::Unmap()
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

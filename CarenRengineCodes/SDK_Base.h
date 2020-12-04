@@ -8122,7 +8122,7 @@ MEReservedMax = 10000
 
 
 			/// <summary>
-			/// (DXGI_SWAP_EFFECT)(FALTA DOCUMENTAR) - Enumera as opções para lidar com pixels em uma superfície de exibição depos de chamar ICarenDXGISwapChain1::Apresentar1.
+			/// (DXGI_SWAP_EFFECT)(FALTA DOCUMENTAR) - Enumera as opções para lidar com pixels em uma superfície de exibição depos de chamar ICarenDXGISwapChain1::Present1.
 			/// </summary>
 			public enum class CA_DXGI_SWAP_EFFECT
 			{
@@ -19141,7 +19141,7 @@ MEReservedMax = 10000
 
 				/// <summary>
 				/// A quantidade de memória de vídeo, em bytes, que o aplicativo tem disponível para reserva. Para reservar essa memória de vídeo, o aplicativo deve ligar 
-				/// para ICarenDXGIAdapter3::DefinirReversaMemoriaVideo.
+				/// para ICarenDXGIAdapter3::SetVideoMemoryReservation.
 				///</summary>
 				UInt64 AvailableForReservation;
 
@@ -19944,7 +19944,7 @@ MEReservedMax = 10000
 			};
 
 			/// <summary>
-			/// (DXGI_MATRIX_3X2_F) - Representa uma matriz 3x2. Usado com ObterMatrixTransform e DefinirMatrixTransform para indicar a transformação de escala e tradução para cadeias de swap em SwapChainPanel.
+			/// (DXGI_MATRIX_3X2_F) - Representa uma matriz 3x2. Usado com GetMatrixTransform e SetMatrixTransform para indicar a transformação de escala e tradução para cadeias de swap em SwapChainPanel.
 			/// </summary>
 			public ref struct CA_DXGI_MATRIX_3X2_F
 			{

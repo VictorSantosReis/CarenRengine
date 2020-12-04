@@ -415,10 +415,10 @@ void CarenDXGIAdapter4::Finalizar()
 /// informações sobre compatibilidade com ACG.
 /// </summary>
 /// <param name="Param_Out_DescAdaptador">Recebe uma estrutura CA_DXGI_ADAPTER_DESC3 que descreve o adaptador. Este parâmetro não deve ser NULO. No hardware gráfico nível 9, 
-/// versões iniciais do ObterDescricao3(GetDesc1 GetDesc) retornam zeros para o ID PCI em (VendorId, DeviceId, SubSysId, e Revision) da estrutura de descrição do 
-/// adaptador e "Adaptador de Software" para a string de descrição no membro (Description). ObterDescricao3 e ObterDescricao2 retornam os valores reais de hardware nível 9 
+/// versões iniciais do GetDesc3(GetDesc1 GetDesc) retornam zeros para o ID PCI em (VendorId, DeviceId, SubSysId, e Revision) da estrutura de descrição do 
+/// adaptador e "Adaptador de Software" para a string de descrição no membro (Description). GetDesc3 e GetDesc2 retornam os valores reais de hardware nível 9 
 /// nesses membros.</param>
-CarenResult CarenDXGIAdapter4::ObterDescricao3([Out] CA_DXGI_ADAPTER_DESC3^% Param_Out_DescAdaptador)
+CarenResult CarenDXGIAdapter4::GetDesc3([Out] CA_DXGI_ADAPTER_DESC3^% Param_Out_DescAdaptador)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -468,7 +468,7 @@ Done:;
 /// <param name="Param_NodeId">Especifica o adaptador físico do dispositivo para o qual as informações da memória de vídeo são consultadas. Para operação de GPU única, coloque isso em zero. Se houver vários nós da GPU, coloque isso no índice do nó (adaptador físico do dispositivo) para o qual as informações de memória de vídeo são consultadas.</param>
 /// <param name="Param_GrupoSegmento">Especifica uma CA_DXGI_MEMORY_SEGMENT_GROUP que identifica o grupo como local ou não local.</param>
 /// <param name="Param_Out_InfoMemoria">Recebe uma estrutura CA_DXGI_QUERY_VIDEO_MEMORY_INFO com os valores atuais.</param>
-CarenResult CarenDXGIAdapter4::ConsultarInfoMemoriaVideo(
+CarenResult CarenDXGIAdapter4::QueryVideoMemoryInfo(
 	UInt32 Param_NodeId,
 	CA_DXGI_MEMORY_SEGMENT_GROUP Param_GrupoSegmento,
 	[Out] CA_DXGI_QUERY_VIDEO_MEMORY_INFO^% Param_Out_InfoMemoria)
@@ -513,9 +513,9 @@ Done:;
 /// (RegisterHardwareContentProtectionTeardownStatusEvent) - Se registra para receber notificação de eventos de proteção de proteção de conteúdo de hardware.
 /// </summary>
 /// <param name="Param_Evento">Uma Handle para o objeto de evento que o sistema operacional define quando ocorre o (TearDown) de proteção de conteúdo de hardware. </param>
-/// <param name="Param_Out_Cookie">um valor-chave que um aplicativo pode passar para o método ICarenDXGIAdapter3:::CancelarHardwareContentProtectionTeardownStatus para 
+/// <param name="Param_Out_Cookie">um valor-chave que um aplicativo pode passar para o método ICarenDXGIAdapter3:::UnregisterHardwareContentProtectionTeardownStatus para 
 /// descadastrar o evento de notificação que o Param_Evento especifica.</param>
-CarenResult CarenDXGIAdapter4::RegistrarHardwareContentProtectionTeardownStatusEvent(ICarenWindowsEvent^ Param_Evento, [Out] UInt32 Param_Out_Cookie)
+CarenResult CarenDXGIAdapter4::RegisterHardwareContentProtectionTeardownStatusEvent(ICarenWindowsEvent^ Param_Evento, [Out] UInt32 Param_Out_Cookie)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -570,9 +570,9 @@ Done:;
 /// (RegisterVideoMemoryBudgetChangeNotificationEvent) - Este método estabelece uma correlação entre um objeto de sincronização da CPU e o evento de mudança orçamentária.
 /// </summary>
 /// <param name="Param_Evento">Uma Handle para o objeto de evento.</param>
-/// <param name="Param_Out_Cookie">Um valor-chave para a janela ou evento para descadastrar. O método ICarenDXGIAdapter3::RegistrarHardwareContentProtectionTeardownStatusEvent
+/// <param name="Param_Out_Cookie">Um valor-chave para a janela ou evento para descadastrar. O método ICarenDXGIAdapter3::RegisterHardwareContentProtectionTeardownStatusEvent
 /// retorna esse valor.</param>
-CarenResult CarenDXGIAdapter4::RegistrarVideoMemoryBudgetChangeNotificationEvent(ICarenWindowsEvent^ Param_Evento, [Out] UInt32 Param_Out_Cookie)
+CarenResult CarenDXGIAdapter4::RegisterVideoMemoryBudgetChangeNotificationEvent(ICarenWindowsEvent^ Param_Evento, [Out] UInt32 Param_Out_Cookie)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -631,7 +631,7 @@ Done:;
 /// vídeo estão sendo definidas.</param>
 /// <param name="Param_SegmentoGrupoMemoria">Especifica uma CA_DXGI_MEMORY_SEGMENT_GROUP que identifica o grupo como local ou não local.</param>
 /// <param name="Param_ReversaMemoria">Especifica um UInt64 que define a memória física mínima necessária, em bytes.</param>
-CarenResult CarenDXGIAdapter4::DefinirReversaMemoriaVideo(
+CarenResult CarenDXGIAdapter4::SetVideoMemoryReservation(
 	UInt32 Param_NodeId,
 	CA_DXGI_MEMORY_SEGMENT_GROUP Param_SegmentoGrupoMemoria,
 	UInt64 Param_ReversaMemoria)
@@ -669,9 +669,9 @@ Done:;
 /// (UnregisterHardwareContentProtectionTeardownStatus) - O Desregistra(Cancelar) um evento para impedi-lo de receber a notificação de eventos de proteção de 
 /// conteúdo de hardware.
 /// </summary>
-/// <param name="Param_Cookie">Um valor-chave para a janela ou evento para descadastrar. O método ICarenDXGIAdapter3::RegistrarHardwareContentProtectionTeardownStatusEvent 
+/// <param name="Param_Cookie">Um valor-chave para a janela ou evento para descadastrar. O método ICarenDXGIAdapter3::RegisterHardwareContentProtectionTeardownStatusEvent 
 /// retorna esse valor.</param>
-CarenResult CarenDXGIAdapter4::CancelarHardwareContentProtectionTeardownStatus(UInt32 Param_Cookie)
+CarenResult CarenDXGIAdapter4::UnregisterHardwareContentProtectionTeardownStatus(UInt32 Param_Cookie)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -689,9 +689,9 @@ CarenResult CarenDXGIAdapter4::CancelarHardwareContentProtectionTeardownStatus(U
 /// <summary>
 /// (UnregisterVideoMemoryBudgetChangeNotification) - Este método deixa de notificar um objeto de sincronização da CPU sempre que ocorre uma mudança orçamentária. Um aplicativo pode mudar para a votação regular das informações.
 /// </summary>
-/// <param name="Param_Cookie">Um valor-chave para a janela ou evento para descadastrar. O método ICarenDXGIAdapter3::RegistrarHardwareContentProtectionTeardownStatusEvent 
+/// <param name="Param_Cookie">Um valor-chave para a janela ou evento para descadastrar. O método ICarenDXGIAdapter3::RegisterHardwareContentProtectionTeardownStatusEvent 
 /// retorna esse valor.</param>
-CarenResult CarenDXGIAdapter4::CancelarVideoMemoryBudgetChangeNotification(UInt32 Param_Cookie)
+CarenResult CarenDXGIAdapter4::UnregisterVideoMemoryBudgetChangeNotification(UInt32 Param_Cookie)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -719,10 +719,10 @@ CarenResult CarenDXGIAdapter4::CancelarVideoMemoryBudgetChangeNotification(UInt3
 /// sua tarefa atual.
 /// </summary>
 /// <param name="Param_Out_DescAdaptador">Retorna uma estrutura CA_DXGI_ADAPTER_DESC2 que descreve o adaptador. Este parâmetro não deve ser 
-/// NULO.No hardware gráfico nível 9, versões anteriores do ObterDescricao2(GetDesc e GetDesc1) retorna zero para o 
+/// NULO.No hardware gráfico nível 9, versões anteriores do GetDesc2(GetDesc e GetDesc1) retorna zero para o 
 /// PCI ID em e (VendorId, DeviceId, SubSysId, e Revision) da estrutura de descrição do adaptador e "Adaptador de Software" para a descrição 
-/// do membro (Description). O ObterDescricao2 retorna os valores reais de hardware nível 9 nesses membros.</param>
-CarenResult CarenDXGIAdapter4::ObterDescricao2([Out] CA_DXGI_ADAPTER_DESC2^% Param_Out_DescAdaptador)
+/// do membro (Description). O GetDesc2 retorna os valores reais de hardware nível 9 nesses membros.</param>
+CarenResult CarenDXGIAdapter4::GetDesc2([Out] CA_DXGI_ADAPTER_DESC2^% Param_Out_DescAdaptador)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -821,7 +821,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidInterface">O GUID da interface da versão do dispositivo para a qual o suporte está sendo verificado.</param>
 /// <param name="Param_Out_UMDVersion">A versão do motorista do modo de usuário do (Param_GuidInterface). Isso só é devolvido se a interface for suportada, caso contrário, este parâmetro será -12354.</param>
-CarenResult CarenDXGIAdapter4::ChecarSuporteInterface(String^ Param_GuidInterface, [Out] Int64% Param_Out_UMDVersion)
+CarenResult CarenDXGIAdapter4::CheckInterfaceSupport(String^ Param_GuidInterface, [Out] Int64% Param_Out_UMDVersion)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -868,7 +868,7 @@ Done:;
 /// </summary>
 /// <param name="Param_IndexSaida">O índice da saída.</param>
 /// <param name="Param_Out_Saida">O endereço de um ponteiro para uma interface ICarenDXGIOutput na posição especificada pelo parâmetro (Param_IndexSaida).</param>
-CarenResult CarenDXGIAdapter4::EnumerarSaidas(UInt32 Param_IndexSaida, [Out] ICarenDXGIOutput^% Param_Out_Saida)
+CarenResult CarenDXGIAdapter4::EnumOutputs(UInt32 Param_IndexSaida, [Out] ICarenDXGIOutput^% Param_Out_Saida)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

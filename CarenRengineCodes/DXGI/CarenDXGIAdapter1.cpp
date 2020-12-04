@@ -467,7 +467,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidInterface">O GUID da interface da versão do dispositivo para a qual o suporte está sendo verificado.</param>
 /// <param name="Param_Out_UMDVersion">A versão do motorista do modo de usuário do (Param_GuidInterface). Isso só é devolvido se a interface for suportada, caso contrário, este parâmetro será -12354.</param>
-CarenResult CarenDXGIAdapter1::ChecarSuporteInterface(String^ Param_GuidInterface, [Out] Int64% Param_Out_UMDVersion)
+CarenResult CarenDXGIAdapter1::CheckInterfaceSupport(String^ Param_GuidInterface, [Out] Int64% Param_Out_UMDVersion)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -514,7 +514,7 @@ Done:;
 /// </summary>
 /// <param name="Param_IndexSaida">O índice da saída.</param>
 /// <param name="Param_Out_Saida">O endereço de um ponteiro para uma interface ICarenDXGIOutput na posição especificada pelo parâmetro (Param_IndexSaida).</param>
-CarenResult CarenDXGIAdapter1::EnumerarSaidas(UInt32 Param_IndexSaida, [Out] ICarenDXGIOutput^% Param_Out_Saida)
+CarenResult CarenDXGIAdapter1::EnumOutputs(UInt32 Param_IndexSaida, [Out] ICarenDXGIOutput^% Param_Out_Saida)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

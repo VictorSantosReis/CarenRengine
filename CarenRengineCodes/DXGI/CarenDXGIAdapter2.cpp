@@ -416,10 +416,10 @@ void CarenDXGIAdapter2::Finalizar()
 /// sua tarefa atual.
 /// </summary>
 /// <param name="Param_Out_DescAdaptador">Retorna uma estrutura CA_DXGI_ADAPTER_DESC2 que descreve o adaptador. Este parâmetro não deve ser 
-/// NULO.No hardware gráfico nível 9, versões anteriores do ObterDescricao2(GetDesc e GetDesc1) retorna zero para o 
+/// NULO.No hardware gráfico nível 9, versões anteriores do GetDesc2(GetDesc e GetDesc1) retorna zero para o 
 /// PCI ID em e (VendorId, DeviceId, SubSysId, e Revision) da estrutura de descrição do adaptador e "Adaptador de Software" para a descrição 
-/// do membro (Description). O ObterDescricao2 retorna os valores reais de hardware nível 9 nesses membros.</param>
-CarenResult CarenDXGIAdapter2::ObterDescricao2([Out] CA_DXGI_ADAPTER_DESC2^% Param_Out_DescAdaptador)
+/// do membro (Description). O GetDesc2 retorna os valores reais de hardware nível 9 nesses membros.</param>
+CarenResult CarenDXGIAdapter2::GetDesc2([Out] CA_DXGI_ADAPTER_DESC2^% Param_Out_DescAdaptador)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -518,7 +518,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidInterface">O GUID da interface da versão do dispositivo para a qual o suporte está sendo verificado.</param>
 /// <param name="Param_Out_UMDVersion">A versão do motorista do modo de usuário do (Param_GuidInterface). Isso só é devolvido se a interface for suportada, caso contrário, este parâmetro será -12354.</param>
-CarenResult CarenDXGIAdapter2::ChecarSuporteInterface(String^ Param_GuidInterface, [Out] Int64% Param_Out_UMDVersion)
+CarenResult CarenDXGIAdapter2::CheckInterfaceSupport(String^ Param_GuidInterface, [Out] Int64% Param_Out_UMDVersion)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -565,7 +565,7 @@ Done:;
 /// </summary>
 /// <param name="Param_IndexSaida">O índice da saída.</param>
 /// <param name="Param_Out_Saida">O endereço de um ponteiro para uma interface ICarenDXGIOutput na posição especificada pelo parâmetro (Param_IndexSaida).</param>
-CarenResult CarenDXGIAdapter2::EnumerarSaidas(UInt32 Param_IndexSaida, [Out] ICarenDXGIOutput^% Param_Out_Saida)
+CarenResult CarenDXGIAdapter2::EnumOutputs(UInt32 Param_IndexSaida, [Out] ICarenDXGIOutput^% Param_Out_Saida)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

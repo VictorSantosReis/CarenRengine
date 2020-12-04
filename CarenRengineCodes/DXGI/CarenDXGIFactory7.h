@@ -282,7 +282,7 @@ public:
 	/// Você também deve especificar o valor DXGI_SCALING_STRETCH no membro de Scale de CA_DXGI_SWAP_CHAIN_DESC1.</param>
 	/// <param name="Param_SaidaRestrita">Um ponteiro para a interface ICarenDXGIOutput para a saída para restringir o conteúdo. Defina este parâmetro para NULO se você não 
 	/// quiser restringir o conteúdo a uma meta de saída.
-	/// Você também deve passar a bandeira DXGI_PRESENT_RESTRICT_TO_OUTPUT em uma chamada ICarenDXGISwapChain1::Apresentar1 para forçar o conteúdo a aparecer apagado em qualquer outra saída. Se você quiser 
+	/// Você também deve passar a bandeira DXGI_PRESENT_RESTRICT_TO_OUTPUT em uma chamada ICarenDXGISwapChain1::Present1 para forçar o conteúdo a aparecer apagado em qualquer outra saída. Se você quiser 
 	/// restringir o conteúdo a uma saída diferente, você deve criar uma nova cadeia de swaps. No entanto, você pode restringir condicionalmente o conteúdo com base na bandeira 
 	/// DXGI_PRESENT_RESTRICT_TO_OUTPUT.</param>
 	/// <param name="Param_Out_SwapChain">Retorna um ponteiro para a interface ICarenDXGISwapChain1 que o método (CriarSwapChainForComposition) cria.</param>
@@ -323,7 +323,7 @@ public:
 	/// este parâmetro para criar uma cadeia de swap de tela cheia. Configurá-lo para NULO para criar uma cadeia de swap em modo Janela.</param>
 	/// <param name="Param_SaidaRestrita">Um ponteiro para a interface ICarenDXGIOutput para a saída para restringir o conteúdo. Defina este parâmetro para NULO se você não 
 	/// quiser restringir o conteúdo a uma meta de saída.
-	/// Você também deve passar a bandeira DXGI_PRESENT_RESTRICT_TO_OUTPUT em uma chamada ICarenDXGISwapChain1::Apresentar1 para forçar o conteúdo a aparecer apagado em qualquer outra saída. Se você quiser 
+	/// Você também deve passar a bandeira DXGI_PRESENT_RESTRICT_TO_OUTPUT em uma chamada ICarenDXGISwapChain1::Present1 para forçar o conteúdo a aparecer apagado em qualquer outra saída. Se você quiser 
 	/// restringir o conteúdo a uma saída diferente, você deve criar uma nova cadeia de swaps. No entanto, você pode restringir condicionalmente o conteúdo com base na bandeira 
 	/// DXGI_PRESENT_RESTRICT_TO_OUTPUT.</param>
 	/// <param name="Param_Out_SwapChain">Retorna um ponteiro para a interface ICarenDXGISwapChain1 que o método (CriarSwapChainForHwnd) cria.</param>
@@ -424,18 +424,18 @@ public:
 	/// </summary>
 	/// <param name="Param_ModuleHandle">Uma handle para a (.dll) do adaptador de software.</param>
 	/// <param name="Param_Out_Adaptador">Recebe um ponteiro para o adaptador criado.</param>
-	virtual CarenResult CriarAdaptadorSofware(IntPtr Param_ModuleHandle, [Out] ICarenDXGIAdapter^% Param_Out_Adaptador);
+	virtual CarenResult CreateSoftwareAdapter(IntPtr Param_ModuleHandle, [Out] ICarenDXGIAdapter^% Param_Out_Adaptador);
 
 	/// <summary>
 	/// (CreateSwapChain) - Cria uma cadeia de swaps.
-	/// [Começando com o Direct3D 11.1, recomendamos não usar mais o CriarSwapChain para criar uma cadeia de swaps. Em vez disso, use CriarSwapChainForHwnd, CriarSwapChainForCoreWindow, ou 
+	/// [Começando com o Direct3D 11.1, recomendamos não usar mais o CreateSwapChain para criar uma cadeia de swaps. Em vez disso, use CriarSwapChainForHwnd, CriarSwapChainForCoreWindow, ou 
 	/// CriarSwapChainForComposition dependendo de como você quer criar a cadeia de swap.]
 	/// </summary>
 	/// <param name="Param_Dispositivo3D">Para Direct3D 11, e versões anteriores do Direct3D, este é um ponteiro para o dispositivo Direct3D para a cadeia de swap. Para Direct3D 12 este é 
 	/// um ponteiro para uma fila de comando direto(D3D12CommandQueue). Este parâmetro não pode ser NULO.</param>
 	/// <param name="Param_Desc">Uma estrutura CA_DXGI_SWAP_CHAIN_DESC para a descrição da cadeia de swap. Este parâmetro não pode ser NULO.</param>
 	/// <param name="Param_Out_SwapChain">Recebe um ponteiro para a interface do SwapChain.</param>
-	virtual CarenResult CriarSwapChain(ICaren^ Param_Dispositivo3D, CA_DXGI_SWAP_CHAIN_DESC^ Param_Desc, [Out] ICarenDXGISwapChain^% Param_Out_SwapChain);
+	virtual CarenResult CreateSwapChain(ICaren^ Param_Dispositivo3D, CA_DXGI_SWAP_CHAIN_DESC^ Param_Desc, [Out] ICarenDXGISwapChain^% Param_Out_SwapChain);
 
 	/// <summary>
 	/// (EnumAdapters) - Enumera os adaptadores (Placas Graficas).
@@ -444,13 +444,13 @@ public:
 	/// </summary>
 	/// <param name="Param_IdAdaptador">O Indice para o adaptador a ser enumerado.</param>
 	/// <param name="Param_Out_Adaptador">Recebe um ponteiro para a interface do adaptador no indice especificado. O chamador é responsável por liberar a interface.</param>
-	virtual CarenResult EnumerarAdaptadores(UInt32 Param_IdAdaptador, [Out] ICarenDXGIAdapter^% Param_Out_Adaptador);
+	virtual CarenResult EnumAdapters(UInt32 Param_IdAdaptador, [Out] ICarenDXGIAdapter^% Param_Out_Adaptador);
 
 	/// <summary>
 	/// (GetWindowAssociation) - Obtenha a janela através da qual o usuário controla a transição de e para a tela cheia.
 	/// </summary>
 	/// <param name="Param_HandleJanela">Retorna um ponteiro para a alça da janela.</param>
-	virtual CarenResult ObterWindowAssociation([Out] IntPtr% Param_HandleJanela);
+	virtual CarenResult GetWindowAssociation([Out] IntPtr% Param_HandleJanela);
 
 	/// <summary>
 	/// (MakeWindowAssociation) - Permite que a DXGI monitore a fila de mensagens de um aplicativo para a sequência de chave de entrada em alt (que faz com que o aplicativo mude de janelas 
@@ -458,7 +458,7 @@ public:
 	/// </summary>
 	/// <param name="Param_HandleJanela">A handle da janela que deve ser monitorada. Este parâmetro pode ser NULO; mas somente se as bandeiras também forem 0.</param>
 	/// <param name="Param_Flags"></param>
-	virtual CarenResult CriarWindowAssociation(IntPtr Param_HandleJanela, CA_DXGI_MWA_FLAGS Param_Flags);
+	virtual CarenResult MakeWindowAssociation(IntPtr Param_HandleJanela, CA_DXGI_MWA_FLAGS Param_Flags);
 
 
 	//Métodos da interface(ICarenDXGIObject)

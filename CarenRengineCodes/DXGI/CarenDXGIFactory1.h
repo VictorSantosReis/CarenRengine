@@ -246,13 +246,13 @@ public:
 	/// </summary>
 	/// <param name="Param_IdAdaptador">O Indice para o adaptador a ser enumerado.</param>
 	/// <param name="Param_Out_Adaptador">Recebe um ponteiro para a interface do adaptador no indice especificado. O chamador é responsável por liberar a interface.</param>
-	virtual CarenResult EnumerarAdaptadores1(UInt32 Param_IdAdaptador, [Out] ICarenDXGIAdapter1^% Param_Out_Adaptador);
+	virtual CarenResult EnumAdapters1(UInt32 Param_IdAdaptador, [Out] ICarenDXGIAdapter1^% Param_Out_Adaptador);
 
 	/// <summary>
 	/// (IsCurrent) - Informa uma aplicação da possível necessidade de reenumerar adaptadores.
 	/// </summary>
 	/// <param name="Param_Out_Atual">Retorna FALSO para informar o aplicativo de chamada para re-enumerar adaptadores.</param>
-	virtual CarenResult Atual([Out] Boolean% Param_Out_Atual);
+	virtual CarenResult IsCurrent([Out] Boolean% Param_Out_Atual);
 
 
 	//Métodos da interface(ICarenDXGIFactory)
@@ -266,8 +266,8 @@ public:
 
 	/// <summary>
 	/// (CreateSwapChain) - Cria uma cadeia de swaps.
-	/// [Começando com o Direct3D 11.1, recomendamos não usar mais o CreateSwapChain para criar uma cadeia de swaps. Em vez disso, use CriarSwapChainForHwnd, CriarSwapChainForCoreWindow, ou 
-	/// CriarSwapChainForComposition dependendo de como você quer criar a cadeia de swap.]
+	/// [Começando com o Direct3D 11.1, recomendamos não usar mais o CreateSwapChain para criar uma cadeia de swaps. Em vez disso, use CreateSwapChainForHwnd, CreateSwapChainForCoreWindow, ou 
+	/// CreateSwapChainForComposition dependendo de como você quer criar a cadeia de swap.]
 	/// </summary>
 	/// <param name="Param_Dispositivo3D">Para Direct3D 11, e versões anteriores do Direct3D, este é um ponteiro para o dispositivo Direct3D para a cadeia de swap. Para Direct3D 12 este é 
 	/// um ponteiro para uma fila de comando direto(D3D12CommandQueue). Este parâmetro não pode ser NULO.</param>
@@ -302,33 +302,33 @@ public:
 	//Métodos da interface(ICarenDXGIObject)
 public:
 	/// <summary>
-	/// (GetParent) - Recupera o objeto pai deste objeto.
+	/// Recupera o objeto pai deste objeto.
 	/// </summary>
 	/// <param name="Param_RIIDInterface">A identificação da interface solicitada.</param>
 	/// <param name="Param_Out_ObjetoPai">Recebe o ponteiro para o objeto pai do objeto atual. O usuário deve inicializar a interface antes de chamar este método.</param>
 	virtual CarenResult GetParent(String^ Param_RIIDInterface, ICaren^ Param_Out_ObjetoPai);
 
 	/// <summary>
-	/// (SetPrivateData) - Define dados definidos pelo aplicativo para o objeto e associa esses dados a um GUID.
+	/// Define dados definidos pelo aplicativo para o objeto e associa esses dados a um GUID.
 	/// </summary>
 	/// <param name="Param_GuidIdentificao">Um GUID que identifica os dados. Use esse GUID em uma chamada para o GetPrivateData para obter os dados.</param>
 	/// <param name="Param_TamanhoDados">O tamanho dos dados.</param>
 	/// <param name="Param_Dados">Ponteiro para os dados.</param>
-	virtual CarenResult DefinirDadosPrivados(String^ Param_GuidIdentificao, UInt32 Param_TamanhoDados, ICaren^ Param_Dados);
+	virtual CarenResult SetPrivateData(String^ Param_GuidIdentificao, UInt32 Param_TamanhoDados, ICaren^ Param_Dados);
 
 	/// <summary>
-	/// (GetPrivateData) - Obtém um ponteiro para os dados do objeto.
+	/// Obtém um ponteiro para os dados do objeto.
 	/// </summary>
 	/// <param name="Param_GuidIdentificao">Um GUID identificando os dados.</param>
 	/// <param name="Param_Ref_TamanhoDados">Retorna o tamanho dos dados.</param>
 	/// <param name="Param_Out_Dados">Retorna um ponteiro para os dados. Esse ponteiro pode e não pode ser uma interface IUnknown. Sendo uma (IUnknown), o chamador é responsável por liberar
 	/// a referência para a interface. O usuário deve inicializar a interface antes de chamar este método.</param>
-	virtual CarenResult ObterDadosPrivados(String^ Param_GuidIdentificao, UInt32% Param_Ref_TamanhoDados, ICaren^ Param_Out_Dados);
+	virtual CarenResult GetPrivateData(String^ Param_GuidIdentificao, UInt32% Param_Ref_TamanhoDados, ICaren^ Param_Out_Dados);
 
 	/// <summary>
-	/// (SetPrivateDataInterface) - Defina uma interface nos dados privados do objeto.
+	/// Define uma interface nos dados privados do objeto.
 	/// </summary>
 	/// <param name="Param_GuidInterface">Guid de identificação da interface.</param>
 	/// <param name="Param_Interface">Um ponteiro para a interface a ser definida.</param>
-	virtual CarenResult DefinirDadosPrivadosInterface(String^ Param_GuidInterface, ICaren^ Param_Interface);
+	virtual CarenResult SetPrivateDataInterface(String^ Param_GuidInterface, ICaren^ Param_Interface);
 };

@@ -411,13 +411,13 @@ void CarenDXGIDevice4::Finalizar()
 //
 
 /// <summary>
-/// (OfferResources) - Permite que o sistema operacional liberte a memória de vídeo dos recursos, incluindo tanto descartar o conteúdo quanto descomprometer a memória.
+/// (OfferResources1) - Permite que o sistema operacional liberte a memória de vídeo dos recursos, incluindo tanto descartar o conteúdo quanto descomprometer a memória.
 /// </summary>
 /// <param name="Param_QuantidadeRecursos">O número de recursos na matriz de argumentos (Param_Recursos).</param>
 /// <param name="Param_Recursos">Um array de interfaces ICarenDXGIResource para os recursos a serem oferecidos.</param>
 /// <param name="Param_Prioridade">Um valor CA_DXGI_OFFER_RESOURCE_PRIORITY que indica o quão valiosos os dados são.</param>
 /// <param name="Param_Flags">Especifica o DXGI_OFFER_RESOURCE_FLAGS.</param>
-CarenResult CarenDXGIDevice4::OfertarRecursos1(
+CarenResult CarenDXGIDevice4::OfferResources1(
 				UInt32 Param_QuantidadeRecursos,
 				cli::array<ICarenDXGIResource^>^ Param_Recursos,
 				CA_DXGI_OFFER_RESOURCE_PRIORITY Param_Prioridade,
@@ -475,14 +475,14 @@ Done:;
 }
 
 /// <summary>
-/// (ReclaimResources) - Restaura o acesso a recursos que foram oferecidos anteriormente ligando para ICarenDXGIDevice4::OfertarRecursos1.
+/// (ReclaimResources) - Restaura o acesso a recursos que foram oferecidos anteriormente ligando para ICarenDXGIDevice4::OfferResources.
 /// </summary>
 /// <param name="Param_QuantidadeRecursos">O número de recursos no argumento (Param_Recursos) e (Param_Ref_Resultado) conjuntos de argumentos.</param>
 /// <param name="Param_Recursos">>Um array de interfaces ICarenDXGIResource para os recursos a serem recuperados.</param>
 /// <param name="Param_Ref_Resultado">Uma matriz que recebe valores da enumeração CA_DXGI_RECLAIM_RESOURCE_RESULTS. Cada valor na matriz corresponde a um recurso 
 /// no mesmo índice que o parâmetro (Param_Recursos) especifica. O chamador pode passar em NULO, se o chamador pretende preencher os recursos com novos conteúdos, 
 /// independentemente de o conteúdo antigo ter sido descartado.</param>
-CarenResult CarenDXGIDevice4::RecuperarRecursos1(
+CarenResult CarenDXGIDevice4::ReclaimResources1(
 				Int32 Param_QuantidadeRecursos,
 				cli::array<ICarenDXGIResource^>^ Param_Recursos,
 				cli::array<CA_DXGI_RECLAIM_RESOURCE_RESULTS>^% Param_Ref_Resultado)
@@ -589,7 +589,7 @@ CarenResult CarenDXGIDevice4::Trim()
 /// </summary>
 /// <param name="Param_HandleEvento">Uma Handle para o objeto do evento. Todos os tipos de objetos de evento (manual-reset, auto-reset e assim por diante) são suportados. 
 /// A Handle deve ter a bandeira de direito de acesso (EVENT_MODIFY_STATE).</param>
-CarenResult CarenDXGIDevice4::EnqueueDefinirEvento(ICarenWindowsEvent^ Param_HandleEvento)
+CarenResult CarenDXGIDevice4::EnqueueSetEvent(ICarenWindowsEvent^ Param_HandleEvento)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -641,7 +641,7 @@ Done:;
 /// <param name="Param_QuantidadeRecursos">O número de recursos na matriz de argumentos (Param_Recursos).</param>
 /// <param name="Param_Recursos">Um array de interfaces ICarenDXGIResource para os recursos a serem oferecidos.</param>
 /// <param name="Param_Prioridade">Um valor CA_DXGI_OFFER_RESOURCE_PRIORITY que indica o quão valiosos os dados são.</param>
-CarenResult CarenDXGIDevice4::OfertarRecursos(
+CarenResult CarenDXGIDevice4::OfferResources1(
 	UInt32 Param_QuantidadeRecursos,
 	cli::array<ICarenDXGIResource^>^ Param_Recursos,
 	CA_DXGI_OFFER_RESOURCE_PRIORITY Param_Prioridade)
@@ -671,7 +671,7 @@ CarenResult CarenDXGIDevice4::OfertarRecursos(
 	}
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->OfferResources(Param_QuantidadeRecursos, ppMatrizRecursos, Prioridade);
+	Hr = PonteiroTrabalho->OfferResources1(Param_QuantidadeRecursos, ppMatrizRecursos, Prioridade);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -697,7 +697,7 @@ Done:;
 }
 
 /// <summary>
-/// (ReclaimResources) - Restaura o acesso a recursos que foram oferecidos anteriormente ligando para ICarenDXGIDevice2::OfertarRecursos.
+/// (ReclaimResources) - Restaura o acesso a recursos que foram oferecidos anteriormente ligando para ICarenDXGIDevice2::OfferResources.
 /// </summary>
 /// <param name="Param_QuantidadeRecursos">O número de recursos no argumento (Param_Recursos) e (Param_Ref_Descartado) conjuntos de argumentos.</param>
 /// <param name="Param_Recursos">>Um array de interfaces ICarenDXGIResource para os recursos a serem recuperados.</param>
@@ -705,7 +705,7 @@ Done:;
 /// (Param_Recursos) especifica. O tempo de execução define cada valor booleano para TRUE se o conteúdo do recurso correspondente foi descartado e agora estiver 
 /// indefinido, ou para FALSE se o conteúdo antigo do recurso correspondente ainda estiver intacto. O chamador pode passar NULO, se o chamador pretende preencher 
 /// os recursos com novos conteúdos, independentemente de o conteúdo antigo ter sido descartado.</param>
-CarenResult CarenDXGIDevice4::RecuperarRecursos(
+CarenResult CarenDXGIDevice4::ReclaimResources(
 	Int32 Param_QuantidadeRecursos,
 	cli::array<ICarenDXGIResource^>^ Param_Recursos,
 	cli::array<bool>^% Param_Ref_Descartado)
@@ -782,7 +782,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Out_LatenciaMaxima">Esse valor é definido para o número de quadros que podem ser enfileirados para renderização. Esse valor está 
 /// inadimplente em 3, mas pode variar de 1 a 16.</param>
-CarenResult CarenDXGIDevice4::ObterLatenciaMaximaFrame([Out] UInt32% Param_Out_LatenciaMaxima)
+CarenResult CarenDXGIDevice4::GetMaximumFrameLatency([Out] UInt32% Param_Out_LatenciaMaxima)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -824,7 +824,7 @@ Done:;
 /// </summary>
 /// <param name="Param_LatenciaMaxima">O número máximo de quadros de buffer traseiro que um motorista pode fazer fila. O valor está inadimplente a 3, mas pode 
 /// variar de 1 a 16. Um valor de 0 redefinirá a latência ao padrão. Para dispositivos (per-head), esse valor é especificado por cabeça(Head).</param>
-CarenResult CarenDXGIDevice4::DefinirLatenciaMaximaFrame(UInt32 Param_LatenciaMaxima)
+CarenResult CarenDXGIDevice4::SetMaximumFrameLatency(UInt32 Param_LatenciaMaxima)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -873,7 +873,7 @@ CarenResult CarenDXGIDevice4::CreateSurface()
 /// (GetAdapter) - Retorna o adaptador para o dispositivo especificado.
 /// </summary>
 /// <param name="Param_Out_Adaptador">Retorna um ponteiro para a interface(ICarenDXGIAdapter) do adaptador.</param>
-CarenResult CarenDXGIDevice4::ObterAdaptador([Out] ICarenDXGIAdapter^% Param_Out_Adaptador)
+CarenResult CarenDXGIDevice4::GetAdapter([Out] ICarenDXGIAdapter^% Param_Out_Adaptador)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -917,7 +917,7 @@ Done:;
 /// (GetGPUThreadPriority) - Retorna a prioridade da Thread GPU.
 /// </summary>
 /// <param name="Param_Out_Prioridade">recebe um valor que indica a prioridade atual da Thread GPU. O valor será entre -7 e 7, inclusive, onde 0 representa prioridade normal.</param>
-CarenResult CarenDXGIDevice4::ObterPrioridadeThreadGPU([Out] int% Param_Out_Prioridade)
+CarenResult CarenDXGIDevice4::GetGPUThreadPriority([Out] int% Param_Out_Prioridade)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -967,15 +967,15 @@ Done:;
 /// <summary>
 /// (QueryResourceResidency) - Obtém o status de residência de uma série de recursos.
 /// As informações devolvidas pelo conjunto de argumentos (Param_Ref_StatusResidencia) descrevem o status de residência no momento em que o método 
-/// (ObterStatusResidenciaRecurso) foi chamado. 
+/// (QueryResourceResidency) foi chamado. 
 /// [O status de residência mudará constantemente.]
-/// Se você ligar para o método (ObterStatusResidenciaRecurso) durante um estado removido do dispositivo, o argumento (Param_Ref_StatusResidencia) devolverá 
+/// Se você ligar para o método (QueryResourceResidency) durante um estado removido do dispositivo, o argumento (Param_Ref_StatusResidencia) devolverá 
 /// a bandeira CA_DXGI_RESIDENCY_RESIDENT_IN_SHARED_MEMORY.
 /// </summary>
 /// <param name="Param_ArrayRecursos">Um array que contém uma série de interfaces(ICarenDXGIResource) a serem obtido o status de residência.</param>
 /// <param name="Param_Ref_StatusResidencia">Um Array que vai conter o status de residência(ResidencyStatus) de cada recurso no parametro(Param_ArrayRecursos).</param>
 /// <param name="Param_QuantidadeRecursos">A quantidade de elementos no array de recursos.</param>
-CarenResult CarenDXGIDevice4::ObterStatusResidenciaRecurso(
+CarenResult CarenDXGIDevice4::QueryResourceResidency(
 	cli::array<ICarenDXGIResource^>^ Param_ArrayRecursos,
 	cli::array<CA_DXGI_RESIDENCY>^% Param_Ref_StatusResidencia,
 	UInt32 Param_QuantidadeRecursos)
@@ -1043,7 +1043,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Prioridade">Um valor que especifica a prioridade necessária da Thread da GPU. Esse valor deve ser entre -7 e 7, inclusive, onde 0 representa 
 /// prioridade normal.</param>
-CarenResult CarenDXGIDevice4::DefinrPrioridadeThreadGPU(int Param_Prioridade)
+CarenResult CarenDXGIDevice4::SetGPUThreadPriority(int Param_Prioridade)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1079,7 +1079,7 @@ Done:;
 
 
 /// <summary>
-/// (GetParent) - Recupera o objeto pai deste objeto.
+/// Recupera o objeto pai deste objeto.
 /// </summary>
 /// <param name="Param_RIIDInterface">A identificação da interface solicitada.</param>
 /// <param name="Param_Out_ObjetoPai">Recebe o ponteiro para o objeto pai do objeto atual. O usuário deve inicializar a interface antes de chamar este método.</param>
@@ -1126,12 +1126,12 @@ Done:;
 }
 
 /// <summary>
-/// (SetPrivateData) - Define dados definidos pelo aplicativo para o objeto e associa esses dados a um GUID.
+/// Define dados definidos pelo aplicativo para o objeto e associa esses dados a um GUID.
 /// </summary>
 /// <param name="Param_GuidIdentificao">Um GUID que identifica os dados. Use esse GUID em uma chamada para o GetPrivateData para obter os dados.</param>
 /// <param name="Param_TamanhoDados">O tamanho dos dados.</param>
 /// <param name="Param_Dados">Ponteiro para os dados.</param>
-CarenResult CarenDXGIDevice4::DefinirDadosPrivados(String^ Param_GuidIdentificao, UInt32 Param_TamanhoDados, ICaren^ Param_Dados)
+CarenResult CarenDXGIDevice4::SetPrivateData(String^ Param_GuidIdentificao, UInt32 Param_TamanhoDados, ICaren^ Param_Dados)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1183,13 +1183,13 @@ Done:;
 }
 
 /// <summary>
-/// (GetPrivateData) - Obtém um ponteiro para os dados do objeto.
+/// Obtém um ponteiro para os dados do objeto.
 /// </summary>
 /// <param name="Param_GuidIdentificao">Um GUID identificando os dados.</param>
 /// <param name="Param_Ref_TamanhoDados">Retorna o tamanho dos dados.</param>
 /// <param name="Param_Out_Dados">Retorna um ponteiro para os dados. Esse ponteiro pode e não pode ser uma interface IUnknown. Sendo uma (IUnknown), o chamador é responsável por liberar a 
 /// referência para a interface. O usuário deve inicializar a interface antes de chamar este método.</param>
-CarenResult CarenDXGIDevice4::ObterDadosPrivados(String^ Param_GuidIdentificao, UInt32% Param_Ref_TamanhoDados, ICaren^ Param_Out_Dados)
+CarenResult CarenDXGIDevice4::GetPrivateData(String^ Param_GuidIdentificao, UInt32% Param_Ref_TamanhoDados, ICaren^ Param_Out_Dados)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1236,11 +1236,11 @@ Done:;
 }
 
 /// <summary>
-/// (SetPrivateDataInterface) - Defina uma interface nos dados privados do objeto.
+/// Define uma interface nos dados privados do objeto.
 /// </summary>
 /// <param name="Param_GuidInterface">Guid de identificação da interface.</param>
 /// <param name="Param_Interface">Um ponteiro para a interface a ser definida.</param>
-CarenResult CarenDXGIDevice4::DefinirDadosPrivadosInterface(String^ Param_GuidInterface, ICaren^ Param_Interface)
+CarenResult CarenDXGIDevice4::SetPrivateDataInterface(String^ Param_GuidInterface, ICaren^ Param_Interface)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

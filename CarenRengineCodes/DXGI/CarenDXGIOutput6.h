@@ -211,7 +211,7 @@ public:
 	//Métodos da interface(ICarenDXGIOutput5)
 public:
 	/// <summary>
-	/// (DuplicateOutput1) - 
+	/// Permite especificar uma lista de formatos suportados para superfícies fullscreen que podem ser devolvidas pelo objeto ICarenDXGIOutputDuplication.
 	/// </summary>
 	/// <param name="Param_Dispositivo3D">Um ponteiro para a interface do dispositivo Direct3D que você pode usar para 
 	/// processar a imagem da área de trabalho. Este dispositivo deve ser criado a partir do adaptador ao qual a saída 
@@ -432,33 +432,33 @@ public:
 	//Métodos da interface(ICarenDXGIObject)
 public:
 	/// <summary>
-	/// (GetParent) - Recupera o objeto pai deste objeto.
+	/// Recupera o objeto pai deste objeto.
 	/// </summary>
 	/// <param name="Param_RIIDInterface">A identificação da interface solicitada.</param>
 	/// <param name="Param_Out_ObjetoPai">Recebe o ponteiro para o objeto pai do objeto atual. O usuário deve inicializar a interface antes de chamar este método.</param>
 	virtual CarenResult GetParent(String^ Param_RIIDInterface, ICaren^ Param_Out_ObjetoPai);
 
 	/// <summary>
-	/// (SetPrivateData) - Define dados definidos pelo aplicativo para o objeto e associa esses dados a um GUID.
+	/// Define dados definidos pelo aplicativo para o objeto e associa esses dados a um GUID.
 	/// </summary>
 	/// <param name="Param_GuidIdentificao">Um GUID que identifica os dados. Use esse GUID em uma chamada para o GetPrivateData para obter os dados.</param>
 	/// <param name="Param_TamanhoDados">O tamanho dos dados.</param>
 	/// <param name="Param_Dados">Ponteiro para os dados.</param>
-	virtual CarenResult DefinirDadosPrivados(String^ Param_GuidIdentificao, UInt32 Param_TamanhoDados, ICaren^ Param_Dados);
+	virtual CarenResult SetPrivateData(String^ Param_GuidIdentificao, UInt32 Param_TamanhoDados, ICaren^ Param_Dados);
 
 	/// <summary>
-	/// (GetPrivateData) - Obtém um ponteiro para os dados do objeto.
+	/// Obtém um ponteiro para os dados do objeto.
 	/// </summary>
 	/// <param name="Param_GuidIdentificao">Um GUID identificando os dados.</param>
 	/// <param name="Param_Ref_TamanhoDados">Retorna o tamanho dos dados.</param>
 	/// <param name="Param_Out_Dados">Retorna um ponteiro para os dados. Esse ponteiro pode e não pode ser uma interface IUnknown. Sendo uma (IUnknown), o chamador é responsável por liberar
 	/// a referência para a interface. O usuário deve inicializar a interface antes de chamar este método.</param>
-	virtual CarenResult ObterDadosPrivados(String^ Param_GuidIdentificao, UInt32% Param_Ref_TamanhoDados, ICaren^ Param_Out_Dados);
+	virtual CarenResult GetPrivateData(String^ Param_GuidIdentificao, UInt32% Param_Ref_TamanhoDados, ICaren^ Param_Out_Dados);
 
 	/// <summary>
-	/// (SetPrivateDataInterface) - Defina uma interface nos dados privados do objeto.
+	/// Define uma interface nos dados privados do objeto.
 	/// </summary>
 	/// <param name="Param_GuidInterface">Guid de identificação da interface.</param>
 	/// <param name="Param_Interface">Um ponteiro para a interface a ser definida.</param>
-	virtual CarenResult DefinirDadosPrivadosInterface(String^ Param_GuidInterface, ICaren^ Param_Interface);
+	virtual CarenResult SetPrivateDataInterface(String^ Param_GuidInterface, ICaren^ Param_Interface);
 };

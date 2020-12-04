@@ -50,35 +50,35 @@ namespace CarenRengine
 			//Métodos
 
 			/// <summary>
-			/// (GetParent) - Recupera o objeto pai deste objeto.
+			/// Recupera o objeto pai deste objeto.
 			/// </summary>
 			/// <param name="Param_RIIDInterface">A identificação da interface solicitada.</param>
 			/// <param name="Param_Out_ObjetoPai">Recebe o ponteiro para o objeto pai do objeto atual. O usuário deve inicializar a interface antes de chamar este método.</param>
 			CarenResult GetParent(String^ Param_RIIDInterface, ICaren^ Param_Out_ObjetoPai);
 
 			/// <summary>
-			/// (SetPrivateData) - Define dados definidos pelo aplicativo para o objeto e associa esses dados a um GUID.
+			/// Define dados definidos pelo aplicativo para o objeto e associa esses dados a um GUID.
 			/// </summary>
 			/// <param name="Param_GuidIdentificao">Um GUID que identifica os dados. Use esse GUID em uma chamada para o GetPrivateData para obter os dados.</param>
 			/// <param name="Param_TamanhoDados">O tamanho dos dados.</param>
 			/// <param name="Param_Dados">Ponteiro para os dados.</param>
-			CarenResult DefinirDadosPrivados(String^ Param_GuidIdentificao, UInt32 Param_TamanhoDados, ICaren^ Param_Dados);
+			CarenResult SetPrivateData(String^ Param_GuidIdentificao, UInt32 Param_TamanhoDados, ICaren^ Param_Dados);
 
 			/// <summary>
-			/// (GetPrivateData) - Obtém um ponteiro para os dados do objeto.
+			/// Obtém um ponteiro para os dados do objeto.
 			/// </summary>
 			/// <param name="Param_GuidIdentificao">Um GUID identificando os dados.</param>
 			/// <param name="Param_Ref_TamanhoDados">Retorna o tamanho dos dados.</param>
 			/// <param name="Param_Out_Dados">Retorna um ponteiro para os dados. Esse ponteiro pode e não pode ser uma interface IUnknown. Sendo uma (IUnknown), o chamador é responsável por 
 			/// liberar a referência para a interface. O usuário deve inicializar a interface antes de chamar este método.</param>
-			CarenResult ObterDadosPrivados(String^ Param_GuidIdentificao, UInt32% Param_Ref_TamanhoDados, ICaren^ Param_Out_Dados);
+			CarenResult GetPrivateData(String^ Param_GuidIdentificao, UInt32% Param_Ref_TamanhoDados, ICaren^ Param_Out_Dados);
 
 			/// <summary>
-			/// (SetPrivateDataInterface) - Defina uma interface nos dados privados do objeto.
+			/// Define uma interface nos dados privados do objeto.
 			/// </summary>
 			/// <param name="Param_GuidInterface">Guid de identificação da interface.</param>
 			/// <param name="Param_Interface">Um ponteiro para a interface a ser definida.</param>
-			CarenResult DefinirDadosPrivadosInterface(String^ Param_GuidInterface, ICaren^ Param_Interface);
+			CarenResult SetPrivateDataInterface(String^ Param_GuidInterface, ICaren^ Param_Interface);
 		};
 
 		/// <summary>
@@ -102,11 +102,11 @@ namespace CarenRengine
 			//Métodos
 
 			/// <summary>
-			/// (GetDevice) - Recupera o dispositivo.
+			/// Recupera o dispositivo.
 			/// </summary>
 			/// <param name="Param_RIIDInterface">O ID de referência para o dispositivo.</param>
 			/// <param name="Param_Out_Objeto">Recebe um ponteiro para o dispositivo solictiado. O usuário deve inicializar a interface antes de chamar este método.</param>
-			CarenResult ObterDispositivo(String^ Param_RIIDInterface, ICaren^ Param_Out_Objeto);
+			CarenResult GetDevice(String^ Param_RIIDInterface, ICaren^ Param_Out_Objeto);
 		};
 
 		/// <summary>
@@ -714,7 +714,7 @@ namespace CarenRengine
 			//Métodos
 
 			/// <summary>
-			/// (DuplicateOutput1) - 
+			/// Permite especificar uma lista de formatos suportados para superfícies fullscreen que podem ser devolvidas pelo objeto ICarenDXGIOutputDuplication.
 			/// </summary>
 			/// <param name="Param_Dispositivo3D">Um ponteiro para a interface do dispositivo Direct3D que você pode usar para 
 			/// processar a imagem da área de trabalho. Este dispositivo deve ser criado a partir do adaptador ao qual a saída 
@@ -1374,8 +1374,8 @@ namespace CarenRengine
 
 			/// <summary>
 			/// (CreateSwapChain) - Cria uma cadeia de swaps.
-			/// [Começando com o Direct3D 11.1, recomendamos não usar mais o (CreateSwapChain) para criar uma cadeia de swaps. Em vez disso, use CriarSwapChainForHwnd, CriarSwapChainForCoreWindow, ou 
-			/// CriarSwapChainForComposition dependendo de como você quer criar a cadeia de swap.]
+			/// [Começando com o Direct3D 11.1, recomendamos não usar mais o (CreateSwapChain) para criar uma cadeia de swaps. Em vez disso, use CreateSwapChainForHwnd, CreateSwapChainForCoreWindow, ou 
+			/// CreateSwapChainForComposition dependendo de como você quer criar a cadeia de swap.]
 			/// </summary>
 			/// <param name="Param_Dispositivo3D">Para Direct3D 11, e versões anteriores do Direct3D, este é um ponteiro para o dispositivo Direct3D para a cadeia de swap. Para Direct3D 12 este é 
 			/// um ponteiro para uma fila de comando direto(D3D12CommandQueue). Este parâmetro não pode ser NULO.</param>
@@ -1433,13 +1433,13 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_IdAdaptador">O Indice para o adaptador a ser enumerado.</param>
 			/// <param name="Param_Out_Adaptador">Recebe um ponteiro para a interface do adaptador no indice especificado. O chamador é responsável por liberar a interface.</param>
-			CarenResult EnumerarAdaptadores1(UInt32 Param_IdAdaptador, [Out] ICarenDXGIAdapter1^% Param_Out_Adaptador);
+			CarenResult EnumAdapters1(UInt32 Param_IdAdaptador, [Out] ICarenDXGIAdapter1^% Param_Out_Adaptador);
 
 			/// <summary>
 			/// (IsCurrent) - Informa uma aplicação da possível necessidade de reenumerar adaptadores.
 			/// </summary>
 			/// <param name="Param_Out_Atual">Retorna FALSO para informar o aplicativo de chamada para re-enumerar adaptadores.</param>
-			CarenResult Atual([Out] Boolean% Param_Out_Atual);
+			CarenResult IsCurrent([Out] Boolean% Param_Out_Atual);
 		};
 	
 		/// <summary>
@@ -1468,7 +1468,7 @@ namespace CarenRengine
 			/// Para Direct3D 12 este é um ponteiro para uma fila de comando direto (consulte ID3D12CommandQueue). Este parâmetro não pode ser NULO. Os drivers de software, 
 			/// como D3D_DRIVER_TYPE_REFERENCE, não são suportados para cadeias de troca de composição.</param>
 			/// <param name="Param_DescSwap">Uma estrutura DXGI_SWAP_CHAIN_DESC1 que descreve a cadeia de swap. Este parâmetro não pode ser NULO.
-			/// Você deve especificar o valor DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL no membro SwapEffect da CA_DXGI_SWAP_CHAIN_DESC1 porque o método (CriarSwapChainForComposition) suporta 
+			/// Você deve especificar o valor DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL no membro SwapEffect da CA_DXGI_SWAP_CHAIN_DESC1 porque o método (CreateSwapChainForComposition) suporta 
 			/// apenas um modelo de apresentação de flip.
 			/// Você também deve especificar o valor DXGI_SCALING_STRETCH no membro de Scale de CA_DXGI_SWAP_CHAIN_DESC1.</param>
 			/// <param name="Param_SaidaRestrita">Um ponteiro para a interface ICarenDXGIOutput para a saída para restringir o conteúdo. Defina este parâmetro para NULO se você não 
@@ -1476,8 +1476,8 @@ namespace CarenRengine
 			/// Você também deve passar a bandeira DXGI_PRESENT_RESTRICT_TO_OUTPUT em uma chamada ICarenDXGISwapChain1::Present1 para forçar o conteúdo a aparecer apagado em qualquer outra saída. Se você quiser 
 			/// restringir o conteúdo a uma saída diferente, você deve criar uma nova cadeia de swaps. No entanto, você pode restringir condicionalmente o conteúdo com base na bandeira 
 			/// DXGI_PRESENT_RESTRICT_TO_OUTPUT.</param>
-			/// <param name="Param_Out_SwapChain">Retorna um ponteiro para a interface ICarenDXGISwapChain1 que o método (CriarSwapChainForComposition) cria.</param>
-			CarenResult CriarSwapChainForComposition(
+			/// <param name="Param_Out_SwapChain">Retorna um ponteiro para a interface ICarenDXGISwapChain1 que o método (CreateSwapChainForComposition) cria.</param>
+			CarenResult CreateSwapChainForComposition(
 				ICaren^ Param_DispositivoDirect3D, 
 				CA_DXGI_SWAP_CHAIN_DESC1^ Param_DescSwap, 
 				ICarenDXGIOutput^ Param_SaidaRestrita, 
@@ -1489,13 +1489,13 @@ namespace CarenRengine
 			/// <param name="Param_DispositivoDirect3D">Para Direct3D 11, e versões anteriores do Direct3D, este é um ponteiro para o dispositivo Direct3D para a cadeia de swap. 
 			/// Para Direct3D 12 este é um ponteiro para uma fila de comando direto (consulte ID3D12CommandQueue). Este parâmetro não pode ser NULO. Os drivers de software, 
 			/// como D3D_DRIVER_TYPE_REFERENCE, não são suportados para cadeias de troca de composição.</param>
-			/// <param name="Param_CoreWindow">Um ponteiro para o objeto CoreWindow que está associado com a cadeia de swap que (CriarSwapChainForCoreWindow) cria.</param>
+			/// <param name="Param_CoreWindow">Um ponteiro para o objeto CoreWindow que está associado com a cadeia de swap que (CreateSwapChainForCoreWindow) cria.</param>
 			/// <param name="Param_DescSwap">Uma estrutura DXGI_SWAP_CHAIN_DESC1 que descreve a cadeia de swap. Este parâmetro não pode ser NULO.</param>
 			/// <param name="Param_SaidaRestrita">Um ponteiro para a interface ICarenDXGIOutput que a cadeia de swap é restrito. Se a cadeia de swaps for movida para uma saída diferente, 
 			/// o conteúdo é preto. Você pode definir opcionalmente este parâmetro para uma meta de saída que usa DXGI_PRESENT_RESTRICT_TO_OUTPUT para restringir o conteúdo dessa saída. 
 			/// Se você não definir este parâmetro para restringir o conteúdo em uma meta de saída, você pode defini-lo para NULO.</param>
-			/// <param name="Param_Out_SwapChain">Retorna um ponteiro para a interface ICarenDXGISwapChain1 que o método (CriarSwapChainForCoreWindow) cria.</param>
-			CarenResult CriarSwapChainForCoreWindow(
+			/// <param name="Param_Out_SwapChain">Retorna um ponteiro para a interface ICarenDXGISwapChain1 que o método (CreateSwapChainForCoreWindow) cria.</param>
+			CarenResult CreateSwapChainForCoreWindow(
 				ICaren^ Param_DispositivoDirect3D, 
 				ICaren^ Param_CoreWindow, 
 				CA_DXGI_SWAP_CHAIN_DESC1^ Param_DescSwap, 
@@ -1508,7 +1508,7 @@ namespace CarenRengine
 			/// <param name="Param_DispositivoDirect3D">Para Direct3D 11, e versões anteriores do Direct3D, este é um ponteiro para o dispositivo Direct3D para a cadeia de swap. 
 			/// Para Direct3D 12 este é um ponteiro para uma fila de comando direto (consulte ID3D12CommandQueue). Este parâmetro não pode ser NULO. Os drivers de software, 
 			/// como D3D_DRIVER_TYPE_REFERENCE, não são suportados para cadeias de troca de composição.</param>
-			/// <param name="Param_Handle">A alça(HWND - HANDLE) que está associado com a cadeia de swap que (CriarSwapChainForHwnd) cria. Este parâmetro não pode ser NULO.</param>
+			/// <param name="Param_Handle">A alça(HWND - HANDLE) que está associado com a cadeia de swap que (CreateSwapChainForHwnd) cria. Este parâmetro não pode ser NULO.</param>
 			/// <param name="Param_DescSwap">Uma estrutura DXGI_SWAP_CHAIN_DESC1 que descreve a cadeia de swap. Este parâmetro não pode ser NULO.</param>
 			/// <param name="Param_DescFullScreen">Uma estrutura CA_DXGI_SWAP_CHAIN_FULLSCREEN_DESC para a descrição de uma cadeia de swap de tela cheia. Você pode definir opcionalmente 
 			/// este parâmetro para criar uma cadeia de swap de tela cheia. Configurá-lo para NULO para criar uma cadeia de swap em modo Janela.</param>
@@ -1517,8 +1517,8 @@ namespace CarenRengine
 			/// Você também deve passar a bandeira DXGI_PRESENT_RESTRICT_TO_OUTPUT em uma chamada ICarenDXGISwapChain1::Present1 para forçar o conteúdo a aparecer apagado em qualquer outra saída. Se você quiser 
 			/// restringir o conteúdo a uma saída diferente, você deve criar uma nova cadeia de swaps. No entanto, você pode restringir condicionalmente o conteúdo com base na bandeira 
 			/// DXGI_PRESENT_RESTRICT_TO_OUTPUT.</param>
-			/// <param name="Param_Out_SwapChain">Retorna um ponteiro para a interface ICarenDXGISwapChain1 que o método (CriarSwapChainForHwnd) cria.</param>
-			CarenResult CriarSwapChainForHwnd(
+			/// <param name="Param_Out_SwapChain">Retorna um ponteiro para a interface ICarenDXGISwapChain1 que o método (CreateSwapChainForHwnd) cria.</param>
+			CarenResult CreateSwapChainForHwnd(
 				ICaren^ Param_DispositivoDirect3D,
 				IntPtr Param_Handle,
 				CA_DXGI_SWAP_CHAIN_DESC1^ Param_DescSwap,
@@ -1533,61 +1533,61 @@ namespace CarenRengine
 			/// <param name="Param_Out_Luid">Retorna uma variavel que recebe um identificador localmente único(LUID). Valor que identifica o adaptador. Um CA_LUID é um valor de 64 bits 
 			/// que é garantido para ser único apenas no sistema operacional em que foi gerado. A singularidade de um LUID é garantida apenas até que o sistema operacional seja 
 			/// reiniciado.</param>
-			CarenResult ObterRecursoCompartilhadoAdaptadorLuid(IntPtr Param_HandleRecurso, [Out] CA_LUID^% Param_Out_Luid);
+			CarenResult GetSharedResourceAdapterLuid(IntPtr Param_HandleRecurso, [Out] CA_LUID^% Param_Out_Luid);
 
 			/// <summary>
 			/// (IsWindowedStereoEnabled) - Determina se deve usar o modo estéreo.
 			/// </summary>
 			/// <param name="Param_Out_ModoEstereoHabilitado">Retorna um valor que indica se deve usar o modo estéreo. TRUE indica que você pode usar o modo estéreo; se não, FALSO.</param>
-			CarenResult WindowedStereoHabilitado([Out] Boolean% Param_Out_ModoEstereoHabilitado);
+			CarenResult IsWindowedStereoEnabled([Out] Boolean% Param_Out_ModoEstereoHabilitado);
 
 			/// <summary>
 			/// (RegisterOcclusionStatusEvent) - Registra-se para receber notificação de alterações no status de oclusão usando a sinalização do evento.
 			/// </summary>
 			/// <param name="Param_Evento">Uma alça para o objeto do evento que o sistema operacional define quando ocorre a notificação de alteração de status de oclusão. 
 			/// A função CriarEvento ou AbrirEvento retorna essa alça.</param>
-			/// <param name="Param_Out_Cookie">Retorna um valor-chave que um aplicativo pode passar para o método ICarenDXGIFactory2::DesregistrarOcclusionStatus para cancelar o 
+			/// <param name="Param_Out_Cookie">Retorna um valor-chave que um aplicativo pode passar para o método ICarenDXGIFactory2::UnregisterOcclusionStatus para cancelar o 
 			/// registro do evento de notificação que (Param_Evento) especifica.</param>
-			CarenResult RegistrarOcclusionStatusEvent(ICarenWindowsEvent^ Param_Evento, [Out] UInt32% Param_Out_Cookie);
+			CarenResult RegisterOcclusionStatusEvent(ICarenWindowsEvent^ Param_Evento, [Out] UInt32% Param_Out_Cookie);
 
 			/// <summary>
 			/// (RegisterOcclusionStatusWindow) - Registra uma janela de inscrição para receber mensagens de notificação de alterações do status de oclusão.
 			/// </summary>
 			/// <param name="Param_HandleJanela">A alça(Handle) para a janela que vai receber a mensagem de notificação para quando ocorre a alteração de status de oclusão.</param>
 			/// <param name="Param_WinMensagemCode">Especifica a mensagem de notificação para enviar para a janela define em (Param_HandleJanela).</param>
-			/// <param name="Param_Out_Cookie">Retorna um valor-chave que um aplicativo pode passar para o método ICarenDXGIFactory2::DesregistrarOcclusionStatus para cancelar o registro da mensagem 
+			/// <param name="Param_Out_Cookie">Retorna um valor-chave que um aplicativo pode passar para o método ICarenDXGIFactory2::UnregisterOcclusionStatus para cancelar o registro da mensagem 
 			/// de notificação que (Param_WinMensagemCode) especifica.</param>
-			CarenResult RegistrarOcclusionStatusWindow(IntPtr Param_HandleJanela, UInt32 Param_WinMensagemCode, [Out] UInt32% Param_Out_Cookie);
+			CarenResult RegisterOcclusionStatusWindow(IntPtr Param_HandleJanela, UInt32 Param_WinMensagemCode, [Out] UInt32% Param_Out_Cookie);
 
 			/// <summary>
 			/// (RegisterStereoStatusEvent) - Registra-se para receber notificação de alterações no status estéreo usando a sinalização do evento.
 			/// </summary>
 			/// <param name="Param_Evento">Uma alça para o objeto do evento que o sistema operacional define quando ocorre a notificação de alteração de status do modo Stereo. 
 			/// A função CriarEvento ou AbrirEvento retorna essa alça.</param>
-			/// <param name="Param_Out_Cookie">Retorna um valor-chave que um aplicativo pode passar para o método ICarenDXGIFactory2::DesregistrarStereoStatus para cancelar o 
+			/// <param name="Param_Out_Cookie">Retorna um valor-chave que um aplicativo pode passar para o método ICarenDXGIFactory2::UnregisterStereoStatus para cancelar o 
 			/// registro do evento de notificação que (Param_Evento) especifica.</param>
-			CarenResult RegistrarStereoStatusEvent(ICarenWindowsEvent^ Param_Evento, [Out] UInt32% Param_Out_Cookie);
+			CarenResult RegisterStereoStatusEvent(ICarenWindowsEvent^ Param_Evento, [Out] UInt32% Param_Out_Cookie);
 
 			/// <summary>
 			/// (RegisterStereoStatusWindow) - Registra uma janela de inscrição para receber mensagens de notificação de alterações de status estéreo.
 			/// </summary>
 			/// <param name="Param_HandleJanela">A alça(Handle) para a janela que vai receber a mensagem de notificação para quando ocorre a alteração do modo Stereo.</param>
 			/// <param name="Param_WinMensagemCode">Especifica a mensagem de notificação para enviar para a janela define em (Param_HandleJanela).</param>
-			/// <param name="Param_Out_Cookie">Retorna um valor-chave que um aplicativo pode passar para o método ICarenDXGIFactory2::DesregistrarStereoStatus para cancelar o registro da mensagem 
+			/// <param name="Param_Out_Cookie">Retorna um valor-chave que um aplicativo pode passar para o método ICarenDXGIFactory2::UnregisterStereoStatus para cancelar o registro da mensagem 
 			/// de notificação que (Param_WinMensagemCode) especifica.</param>
-			CarenResult RegistrarStereoStatusWindow(IntPtr Param_HandleJanela, UInt32 Param_WinMensagemCode, [Out] UInt32% Param_Out_Cookie);
+			CarenResult RegisterStereoStatusWindow(IntPtr Param_HandleJanela, UInt32 Param_WinMensagemCode, [Out] UInt32% Param_Out_Cookie);
 
 			/// <summary>
 			/// (UnregisterOcclusionStatus) - Desregistrar uma janela ou um evento para impedi-lo de receber notificação quando o status de oclusão muda.
 			/// </summary>
 			/// <param name="Param_Cookie">Um valor-chave para a janela ou evento para cancelar o registro. Esse valor é retornado nos métodos de registro de evento e janela desta interface.</param>
-			CarenResult DesregistrarOcclusionStatus(UInt32 Param_Cookie);
+			CarenResult UnregisterOcclusionStatus(UInt32 Param_Cookie);
 
 			/// <summary>
 			/// (UnregisterStereoStatus) - Desregistrar uma janela ou um evento para impedi-lo de receber notificação quando o status estéreo muda.
 			/// </summary>
 			/// <param name="Param_Cookie">Um valor-chave para a janela ou evento para cancelar o registro. Esse valor é retornado nos métodos de registro de evento e janela desta interface.</param>
-			CarenResult DesregistrarStereoStatus(UInt32 Param_Cookie);
+			CarenResult UnregisterStereoStatus(UInt32 Param_Cookie);
 		};
 
 		/// <summary>
@@ -1612,7 +1612,7 @@ namespace CarenRengine
 			/// (GetCreationFlags) - Recebe as bandeiras que foram usadas quando um objeto Microsoft DirectX Graphics Infrastructure (DXGI) foi criado.
 			/// </summary>
 			/// <param name="Param_Out_Flags">Retorna o flag utilizada na criação da fabrica(DXGIFactory).</param>
-			CarenResult ObterFlagsCriacao([Out] UInt32% Param_Out_Flags);
+			CarenResult GetCreationFlags([Out] UInt32% Param_Out_Flags);
 		};
 
 		/// <summary>
@@ -1639,14 +1639,14 @@ namespace CarenRengine
 			/// <param name="Param_LUID">Um valor único que identifica o adaptador.</param>
 			/// <param name="Param_RIID">O identificador globalmente único (GUID) do objeto ICarenDXGIAdapter referenciado pelo parâmetro (Param_InterfaceAdapter).</param>
 			/// <param name="Param_Out_InterfaceAdapter">Recebe um ponteiro de interface ICarenDXGIAdapter para o adaptador.</param>
-			CarenResult EnumerarAdaptadoresPorLUID(CA_LUID^ Param_LUID, String^ Param_RIID, [Out] ICaren^ Param_Out_InterfaceAdapter);
+			CarenResult EnumAdapterByLuid(CA_LUID^ Param_LUID, String^ Param_RIID, [Out] ICaren^ Param_Out_InterfaceAdapter);
 
 			/// <summary>
 			/// (EnumWarpAdapter) - Fornece um adaptador que pode ser fornecido a função D3D12CreateDevice para usar o renderizador WARP.
 			/// </summary>
 			/// <param name="Param_RIID">O identificador globalmente único (GUID) do objeto ICarenDXGIAdapter referenciado pelo parâmetro (Param_InterfaceAdapter).</param>
 			/// <param name="Param_Out_InterfaceAdapter">Recebe um ponteiro de interface ICarenDXGIAdapter para o adaptador.</param>
-			CarenResult EnumerarWarpAdapter(String^ Param_RIID, [Out] ICaren^ Param_Out_InterfaceAdapter);
+			CarenResult EnumWarpAdapter(String^ Param_RIID, [Out] ICaren^ Param_Out_InterfaceAdapter);
 		};
 
 		/// <summary>
@@ -1673,7 +1673,7 @@ namespace CarenRengine
 			/// <param name="Param_Recurso">Especifica um membro da CA_DXGI_FEATURE para consultar o suporte.</param>
 			/// <param name="Param_SizeBuffer">O tamanho de Param_Ref_BufferDescFeature, em bytes.</param>
 			/// <param name="Param_Ref_BufferDescFeature">Especifica um ponteiro para um buffer que será preenchido com dados que descrevem o suporte ao recurso.</param>
-			CarenResult ChecarSuporteRecurso(CA_DXGI_FEATURE Param_Recurso, UInt32 Param_SizeBuffer, ICarenBuffer^% Param_Ref_BufferDescFeature);
+			CarenResult CheckFeatureSupport(CA_DXGI_FEATURE Param_Recurso, UInt32 Param_SizeBuffer, ICarenBuffer^% Param_Ref_BufferDescFeature);
 		};
 
 		/// <summary>
@@ -1704,7 +1704,7 @@ namespace CarenRengine
 			/// <param name="Param_PreferenciaGPU">A preferência da GPU pelo aplicativo</param>
 			/// <param name="Param_RIID">O identificador globalmente único (GUID) do objeto ICarenDXGIAdapter referenciado pelo parâmetro Param_Out_Adaptador.</param>
 			/// <param name="Param_Out_Adaptador">Recebe um ponteiro para a interface ICarenDXGIAdapter do adaptador.</param>
-			CarenResult EnumerarAdaptadorPorPreferenciaGPU(
+			CarenResult EnumAdapterByGpuPreference(
 				UInt32 Param_IndexAdaptador,
 				CA_DXGI_GPU_PREFERENCE Param_PreferenciaGPU,
 				String^ Param_RIID,
@@ -1735,13 +1735,13 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_HandleEvento">Uma Handle para o objeto do evento.</param>
 			/// <param name="Param_Out_Cookie">Recebe um valor da chave para o evento registrado.</param>
-			CarenResult RegistrarEventoModificacaoAdaptador(ICarenWindowsEvent^ Param_HandleEvento, [Out] UInt32% Param_Out_Cookie);
+			CarenResult RegisterAdaptersChangedEvent(ICarenWindowsEvent^ Param_HandleEvento, [Out] UInt32% Param_Out_Cookie);
 
 			/// <summary>
 			/// (UnregisterAdaptersChangedEvent) - Cancela o registro do evento para parar de receber notificações quando o estado de enumeração do adaptador muda.
 			/// </summary>
-			/// <param name="Param_Cookie">O valor da chave do evento registrado para ser cancelado. Esse valor é obtido do método (RegistrarEventoModificacaoAdaptador).</param>
-			CarenResult CancelarEventoModificacaoAdaptador(UInt32 Param_Cookie);
+			/// <param name="Param_Cookie">O valor da chave do evento registrado para ser cancelado. Esse valor é obtido do método (RegisterAdaptersChangedEvent).</param>
+			CarenResult UnregisterAdaptersChangedEvent(UInt32 Param_Cookie);
 		};
 
 		/// <summary>
@@ -1775,26 +1775,26 @@ namespace CarenRengine
 			/// (GetAdapter) - Retorna o adaptador para o dispositivo especificado.
 			/// </summary>
 			/// <param name="Param_Out_Adaptador">Retorna um ponteiro para a interface(ICarenDXGIAdapter) do adaptador.</param>
-			CarenResult ObterAdaptador([Out] ICarenDXGIAdapter^% Param_Out_Adaptador);
+			CarenResult GetAdapter([Out] ICarenDXGIAdapter^% Param_Out_Adaptador);
 
 			/// <summary>
 			/// (GetGPUThreadPriority) - Retorna a prioridade da Thread GPU.
 			/// </summary>
 			/// <param name="Param_Out_Prioridade">recebe um valor que indica a prioridade atual da Thread GPU. O valor será entre -7 e 7, inclusive, onde 0 representa prioridade normal.</param>
-			CarenResult ObterPrioridadeThreadGPU([Out] int% Param_Out_Prioridade);
+			CarenResult GetGPUThreadPriority([Out] int% Param_Out_Prioridade);
 
 			/// <summary>
 			/// (QueryResourceResidency) - Obtém o status de residência de uma série de recursos.
 			/// As informações devolvidas pelo conjunto de argumentos (Param_Ref_StatusResidencia) descrevem o status de residência no momento em que o método 
-			/// (ObterStatusResidenciaRecurso) foi chamado. 
+			/// (QueryResourceResidency) foi chamado. 
 			/// [O status de residência mudará constantemente.]
-			/// Se você ligar para o método (ObterStatusResidenciaRecurso) durante um estado removido do dispositivo, o argumento (Param_Ref_StatusResidencia) devolverá 
+			/// Se você ligar para o método (QueryResourceResidency) durante um estado removido do dispositivo, o argumento (Param_Ref_StatusResidencia) devolverá 
 			/// a bandeira CA_DXGI_RESIDENCY_RESIDENT_IN_SHARED_MEMORY.
 			/// </summary>
 			/// <param name="Param_ArrayRecursos">Um array que contém uma série de interfaces(ICarenDXGIResource) a serem obtido o status de residência.</param>
 			/// <param name="Param_Ref_StatusResidencia">Um Array que vai conter o status de residência(ResidencyStatus) de cada recurso no parametro(Param_ArrayRecursos).</param>
 			/// <param name="Param_QuantidadeRecursos">A quantidade de elementos no array de recursos.</param>
-			CarenResult ObterStatusResidenciaRecurso(
+			CarenResult QueryResourceResidency(
 				cli::array<ICarenDXGIResource^>^ Param_ArrayRecursos, 
 				cli::array<CA_DXGI_RESIDENCY>^% Param_Ref_StatusResidencia, 
 				UInt32 Param_QuantidadeRecursos);
@@ -1804,7 +1804,7 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_Prioridade">Um valor que especifica a prioridade necessária da Thread da GPU. Esse valor deve ser entre -7 e 7, inclusive, onde 0 representa 
 			/// prioridade normal.</param>
-			CarenResult DefinrPrioridadeThreadGPU(int Param_Prioridade);
+			CarenResult SetGPUThreadPriority(int Param_Prioridade);
 		};
 
 		/// <summary>
@@ -1830,14 +1830,14 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_Out_LatenciaMaxima">Esse valor é definido para o número de quadros que podem ser enfileirados para renderização. Esse valor está 
 			/// inadimplente em 3, mas pode variar de 1 a 16.</param>
-			CarenResult ObterLatenciaMaximaFrame([Out] UInt32% Param_Out_LatenciaMaxima);
+			CarenResult GetMaximumFrameLatency([Out] UInt32% Param_Out_LatenciaMaxima);
 
 			/// <summary>
 			/// (SetMaximumFrameLatency) - Define o número de quadros que o sistema pode fazer fila para renderização.
 			/// </summary>
 			/// <param name="Param_LatenciaMaxima">O número máximo de quadros de buffer traseiro que um motorista pode fazer fila. O valor está inadimplente a 3, mas pode 
 			/// variar de 1 a 16. Um valor de 0 redefinirá a latência ao padrão. Para dispositivos (per-head), esse valor é especificado por cabeça(Head).</param>
-			CarenResult DefinirLatenciaMaximaFrame(UInt32 Param_LatenciaMaxima);
+			CarenResult SetMaximumFrameLatency(UInt32 Param_LatenciaMaxima);
 		};
 
 		/// <summary>
@@ -1866,7 +1866,7 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_HandleEvento">Uma Handle para o objeto do evento. Todos os tipos de objetos de evento (manual-reset, auto-reset e assim por diante) são suportados. 
 			/// A Handle deve ter a bandeira de direito de acesso (EVENT_MODIFY_STATE).</param>
-			CarenResult EnqueueDefinirEvento(ICarenWindowsEvent^ Param_HandleEvento);
+			CarenResult EnqueueSetEvent(ICarenWindowsEvent^ Param_HandleEvento);
 
 			/// <summary>
 			/// (OfferResources) - Permite que o sistema operacional liberte a memória de vídeo dos recursos descartando seu conteúdo.
@@ -1874,13 +1874,13 @@ namespace CarenRengine
 			/// <param name="Param_QuantidadeRecursos">O número de recursos na matriz de argumentos (Param_Recursos).</param>
 			/// <param name="Param_Recursos">Um array de interfaces ICarenDXGIResource para os recursos a serem oferecidos.</param>
 			/// <param name="Param_Prioridade">Um valor CA_DXGI_OFFER_RESOURCE_PRIORITY que indica o quão valiosos os dados são.</param>
-			CarenResult OfertarRecursos(
+			CarenResult OfferResources1(
 				UInt32 Param_QuantidadeRecursos,
 				cli::array<ICarenDXGIResource^>^ Param_Recursos,
 				CA_DXGI_OFFER_RESOURCE_PRIORITY Param_Prioridade);
 
 			/// <summary>
-			/// (ReclaimResources) - Restaura o acesso a recursos que foram oferecidos anteriormente ligando para ICarenDXGIDevice2::OfertarRecursos.
+			/// (ReclaimResources) - Restaura o acesso a recursos que foram oferecidos anteriormente ligando para ICarenDXGIDevice2::OfferResources.
 			/// </summary>
 			/// <param name="Param_QuantidadeRecursos">O número de recursos no argumento (Param_Recursos) e (Param_Ref_Descartado) conjuntos de argumentos.</param>
 			/// <param name="Param_Recursos">>Um array de interfaces ICarenDXGIResource para os recursos a serem recuperados.</param>
@@ -1888,7 +1888,7 @@ namespace CarenRengine
 			/// (Param_Recursos) especifica. O tempo de execução define cada valor booleano para TRUE se o conteúdo do recurso correspondente foi descartado e agora estiver 
 			/// indefinido, ou para FALSE se o conteúdo antigo do recurso correspondente ainda estiver intacto. O chamador pode passar NULO, se o chamador pretende preencher 
 			/// os recursos com novos conteúdos, independentemente de o conteúdo antigo ter sido descartado.</param>
-			CarenResult RecuperarRecursos(
+			CarenResult ReclaimResources(
 				Int32 Param_QuantidadeRecursos, 
 				cli::array<ICarenDXGIResource^>^ Param_Recursos,
 				cli::array<bool>^% Param_Ref_Descartado);
@@ -1946,27 +1946,27 @@ namespace CarenRengine
 			//Métodos
 
 			/// <summary>
-			/// (OfferResources) - Permite que o sistema operacional liberte a memória de vídeo dos recursos, incluindo tanto descartar o conteúdo quanto descomprometer a memória.
+			/// (OfferResources1) - Permite que o sistema operacional liberte a memória de vídeo dos recursos, incluindo tanto descartar o conteúdo quanto descomprometer a memória.
 			/// </summary>
 			/// <param name="Param_QuantidadeRecursos">O número de recursos na matriz de argumentos (Param_Recursos).</param>
 			/// <param name="Param_Recursos">Um array de interfaces ICarenDXGIResource para os recursos a serem oferecidos.</param>
 			/// <param name="Param_Prioridade">Um valor CA_DXGI_OFFER_RESOURCE_PRIORITY que indica o quão valiosos os dados são.</param>
 			/// <param name="Param_Flags">Especifica o DXGI_OFFER_RESOURCE_FLAGS.</param>
-			CarenResult OfertarRecursos1(
+			CarenResult OfferResources1(
 				UInt32 Param_QuantidadeRecursos,
 				cli::array<ICarenDXGIResource^>^ Param_Recursos,
 				CA_DXGI_OFFER_RESOURCE_PRIORITY Param_Prioridade,
 				CA_DXGI_OFFER_RESOURCE_FLAGS Param_Flags);
 
 			/// <summary>
-			/// (ReclaimResources) - Restaura o acesso a recursos que foram oferecidos anteriormente ligando para ICarenDXGIDevice4::OfertarRecursos1.
+			/// (ReclaimResources) - Restaura o acesso a recursos que foram oferecidos anteriormente ligando para ICarenDXGIDevice4::OfferResources.
 			/// </summary>
 			/// <param name="Param_QuantidadeRecursos">O número de recursos no argumento (Param_Recursos) e (Param_Ref_Resultado) conjuntos de argumentos.</param>
 			/// <param name="Param_Recursos">>Um array de interfaces ICarenDXGIResource para os recursos a serem recuperados.</param>
 			/// <param name="Param_Ref_Resultado">Yma matriz que recebe valores da enumeração CA_DXGI_RECLAIM_RESOURCE_RESULTS. Cada valor na matriz corresponde a um recurso 
 			/// no mesmo índice que o parâmetro (Param_Recursos) especifica. O chamador pode passar em NULO, se o chamador pretende preencher os recursos com novos conteúdos, 
 			/// independentemente de o conteúdo antigo ter sido descartado.</param>
-			CarenResult RecuperarRecursos1(
+			CarenResult ReclaimResources1(
 				Int32 Param_QuantidadeRecursos,
 				cli::array<ICarenDXGIResource^>^ Param_Recursos,
 				cli::array<CA_DXGI_RECLAIM_RESOURCE_RESULTS>^% Param_Ref_Resultado);

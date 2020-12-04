@@ -198,7 +198,7 @@ public:
 	/// </summary>
 	/// <param name="Param_HandleEvento">Uma Handle para o objeto do evento. Todos os tipos de objetos de evento (manual-reset, auto-reset e assim por diante) são suportados. 
 	/// A Handle deve ter a bandeira de direito de acesso (EVENT_MODIFY_STATE).</param>
-	virtual CarenResult EnqueueDefinirEvento(ICarenWindowsEvent^ Param_HandleEvento);
+	virtual CarenResult EnqueueSetEvent(ICarenWindowsEvent^ Param_HandleEvento);
 
 	/// <summary>
 	/// (OfferResources) - Permite que o sistema operacional liberte a memória de vídeo dos recursos descartando seu conteúdo.
@@ -206,13 +206,13 @@ public:
 	/// <param name="Param_QuantidadeRecursos">O número de recursos na matriz de argumentos (Param_Recursos).</param>
 	/// <param name="Param_Recursos">Um array de interfaces ICarenDXGIResource para os recursos a serem oferecidos.</param>
 	/// <param name="Param_Prioridade">Um valor CA_DXGI_OFFER_RESOURCE_PRIORITY que indica o quão valiosos os dados são.</param>
-	virtual CarenResult OfertarRecursos(
+	virtual CarenResult OfferResources(
 		UInt32 Param_QuantidadeRecursos,
 		cli::array<ICarenDXGIResource^>^ Param_Recursos,
 		CA_DXGI_OFFER_RESOURCE_PRIORITY Param_Prioridade);
 
 	/// <summary>
-	/// (ReclaimResources) - Restaura o acesso a recursos que foram oferecidos anteriormente ligando para ICarenDXGIDevice2::OfertarRecursos.
+	/// (ReclaimResources) - Restaura o acesso a recursos que foram oferecidos anteriormente ligando para ICarenDXGIDevice2::OfferResources.
 	/// </summary>
 	/// <param name="Param_QuantidadeRecursos">O número de recursos no argumento (Param_Recursos) e (Param_Ref_Descartado) conjuntos de argumentos.</param>
 	/// <param name="Param_Recursos">>Um array de interfaces ICarenDXGIResource para os recursos a serem recuperados.</param>
@@ -220,7 +220,7 @@ public:
 	/// (Param_Recursos) especifica. O tempo de execução define cada valor booleano para TRUE se o conteúdo do recurso correspondente foi descartado e agora estiver 
 	/// indefinido, ou para FALSE se o conteúdo antigo do recurso correspondente ainda estiver intacto. O chamador pode passar NULO, se o chamador pretende preencher 
 	/// os recursos com novos conteúdos, independentemente de o conteúdo antigo ter sido descartado.</param>
-	virtual CarenResult RecuperarRecursos(
+	virtual CarenResult ReclaimResources(
 		Int32 Param_QuantidadeRecursos,
 		cli::array<ICarenDXGIResource^>^ Param_Recursos,
 		cli::array<bool>^% Param_Ref_Descartado);
@@ -233,14 +233,14 @@ public:
 	/// </summary>
 	/// <param name="Param_Out_LatenciaMaxima">Esse valor é definido para o número de quadros que podem ser enfileirados para renderização. Esse valor está 
 	/// inadimplente em 3, mas pode variar de 1 a 16.</param>
-	virtual CarenResult ObterLatenciaMaximaFrame([Out] UInt32% Param_Out_LatenciaMaxima);
+	virtual CarenResult GetMaximumFrameLatency([Out] UInt32% Param_Out_LatenciaMaxima);
 
 	/// <summary>
 	/// (SetMaximumFrameLatency) - Define o número de quadros que o sistema pode fazer fila para renderização.
 	/// </summary>
 	/// <param name="Param_LatenciaMaxima">O número máximo de quadros de buffer traseiro que um motorista pode fazer fila. O valor está inadimplente a 3, mas pode 
 	/// variar de 1 a 16. Um valor de 0 redefinirá a latência ao padrão. Para dispositivos (per-head), esse valor é especificado por cabeça(Head).</param>
-	virtual CarenResult DefinirLatenciaMaximaFrame(UInt32 Param_LatenciaMaxima);
+	virtual CarenResult SetMaximumFrameLatency(UInt32 Param_LatenciaMaxima);
 
 	//Métodos da interface(ICarenDXGIDevice)
 public:
@@ -253,26 +253,26 @@ public:
 	/// (GetAdapter) - Retorna o adaptador para o dispositivo especificado.
 	/// </summary>
 	/// <param name="Param_Out_Adaptador">Retorna um ponteiro para a interface(ICarenDXGIAdapter) do adaptador.</param>
-	virtual CarenResult ObterAdaptador([Out] ICarenDXGIAdapter^% Param_Out_Adaptador);
+	virtual CarenResult GetAdapter([Out] ICarenDXGIAdapter^% Param_Out_Adaptador);
 
 	/// <summary>
 	/// (GetGPUThreadPriority) - Retorna a prioridade da Thread GPU.
 	/// </summary>
 	/// <param name="Param_Out_Prioridade">recebe um valor que indica a prioridade atual da Thread GPU. O valor será entre -7 e 7, inclusive, onde 0 representa prioridade normal.</param>
-	virtual CarenResult ObterPrioridadeThreadGPU([Out] int% Param_Out_Prioridade);
+	virtual CarenResult GetGPUThreadPriority([Out] int% Param_Out_Prioridade);
 
 	/// <summary>
 	/// (QueryResourceResidency) - Obtém o status de residência de uma série de recursos.
 	/// As informações devolvidas pelo conjunto de argumentos (Param_Ref_StatusResidencia) descrevem o status de residência no momento em que o método 
-	/// (ObterStatusResidenciaRecurso) foi chamado. 
+	/// (QueryResourceResidency) foi chamado. 
 	/// [O status de residência mudará constantemente.]
-	/// Se você ligar para o método (ObterStatusResidenciaRecurso) durante um estado removido do dispositivo, o argumento (Param_Ref_StatusResidencia) devolverá 
+	/// Se você ligar para o método (QueryResourceResidency) durante um estado removido do dispositivo, o argumento (Param_Ref_StatusResidencia) devolverá 
 	/// a bandeira CA_DXGI_RESIDENCY_RESIDENT_IN_SHARED_MEMORY.
 	/// </summary>
 	/// <param name="Param_ArrayRecursos">Um array que contém uma série de interfaces(ICarenDXGIResource) a serem obtido o status de residência.</param>
 	/// <param name="Param_Ref_StatusResidencia">Um Array que vai conter o status de residência(ResidencyStatus) de cada recurso no parametro(Param_ArrayRecursos).</param>
 	/// <param name="Param_QuantidadeRecursos">A quantidade de elementos no array de recursos.</param>
-	virtual CarenResult ObterStatusResidenciaRecurso(
+	virtual CarenResult QueryResourceResidency(
 		cli::array<ICarenDXGIResource^>^ Param_ArrayRecursos,
 		cli::array<CA_DXGI_RESIDENCY>^% Param_Ref_StatusResidencia,
 		UInt32 Param_QuantidadeRecursos);
@@ -282,39 +282,39 @@ public:
 	/// </summary>
 	/// <param name="Param_Prioridade">Um valor que especifica a prioridade necessária da Thread da GPU. Esse valor deve ser entre -7 e 7, inclusive, onde 0 representa 
 	/// prioridade normal.</param>
-	virtual CarenResult DefinrPrioridadeThreadGPU(int Param_Prioridade);
+	virtual CarenResult SetGPUThreadPriority(int Param_Prioridade);
 
 
 	//Métodos da interface(ICarenDXGIObject)
 public:
 	/// <summary>
-	/// (GetParent) - Recupera o objeto pai deste objeto.
+	/// Recupera o objeto pai deste objeto.
 	/// </summary>
 	/// <param name="Param_RIIDInterface">A identificação da interface solicitada.</param>
 	/// <param name="Param_Out_ObjetoPai">Recebe o ponteiro para o objeto pai do objeto atual. O usuário deve inicializar a interface antes de chamar este método.</param>
 	virtual CarenResult GetParent(String^ Param_RIIDInterface, ICaren^ Param_Out_ObjetoPai);
 
 	/// <summary>
-	/// (SetPrivateData) - Define dados definidos pelo aplicativo para o objeto e associa esses dados a um GUID.
+	/// Define dados definidos pelo aplicativo para o objeto e associa esses dados a um GUID.
 	/// </summary>
 	/// <param name="Param_GuidIdentificao">Um GUID que identifica os dados. Use esse GUID em uma chamada para o GetPrivateData para obter os dados.</param>
 	/// <param name="Param_TamanhoDados">O tamanho dos dados.</param>
 	/// <param name="Param_Dados">Ponteiro para os dados.</param>
-	virtual CarenResult DefinirDadosPrivados(String^ Param_GuidIdentificao, UInt32 Param_TamanhoDados, ICaren^ Param_Dados);
+	virtual CarenResult SetPrivateData(String^ Param_GuidIdentificao, UInt32 Param_TamanhoDados, ICaren^ Param_Dados);
 
 	/// <summary>
-	/// (GetPrivateData) - Obtém um ponteiro para os dados do objeto.
+	/// Obtém um ponteiro para os dados do objeto.
 	/// </summary>
 	/// <param name="Param_GuidIdentificao">Um GUID identificando os dados.</param>
 	/// <param name="Param_Ref_TamanhoDados">Retorna o tamanho dos dados.</param>
 	/// <param name="Param_Out_Dados">Retorna um ponteiro para os dados. Esse ponteiro pode e não pode ser uma interface IUnknown. Sendo uma (IUnknown), o chamador é responsável por liberar
 	/// a referência para a interface. O usuário deve inicializar a interface antes de chamar este método.</param>
-	virtual CarenResult ObterDadosPrivados(String^ Param_GuidIdentificao, UInt32% Param_Ref_TamanhoDados, ICaren^ Param_Out_Dados);
+	virtual CarenResult GetPrivateData(String^ Param_GuidIdentificao, UInt32% Param_Ref_TamanhoDados, ICaren^ Param_Out_Dados);
 
 	/// <summary>
-	/// (SetPrivateDataInterface) - Defina uma interface nos dados privados do objeto.
+	/// Define uma interface nos dados privados do objeto.
 	/// </summary>
 	/// <param name="Param_GuidInterface">Guid de identificação da interface.</param>
 	/// <param name="Param_Interface">Um ponteiro para a interface a ser definida.</param>
-	virtual CarenResult DefinirDadosPrivadosInterface(String^ Param_GuidInterface, ICaren^ Param_Interface);
+	virtual CarenResult SetPrivateDataInterface(String^ Param_GuidInterface, ICaren^ Param_Interface);
 };

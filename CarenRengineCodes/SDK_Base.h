@@ -10474,7 +10474,7 @@ MEReservedMax = 10000
 			};
 
 			/// <summary>
-			/// (_DXGI_OFFER_RESOURCE_FLAGS) - Enumera bandeiras para serem utilizadas pelo método ICarenDXGIDevice4::OfertarRecursos1.
+			/// (_DXGI_OFFER_RESOURCE_FLAGS) - Enumera bandeiras para serem utilizadas pelo método ICarenDXGIDevice4::OfferResources.
 			/// </summary>
 			public enum class CA_DXGI_OFFER_RESOURCE_FLAGS
 			{
@@ -10490,18 +10490,18 @@ MEReservedMax = 10000
 			};
 
 			/// <summary>
-			/// (DXGI_RECLAIM_RESOURCE_RESULTS) - Enumera bandeiras de resultados para o método ICarenDXGIDevice4::RecuperarRecursos1.
+			/// (DXGI_RECLAIM_RESOURCE_RESULTS) - Enumera bandeiras de resultados para o método ICarenDXGIDevice4::ReclaimResources1.
 			/// </summary>
 			public enum class CA_DXGI_RECLAIM_RESOURCE_RESULTS
 			{
 				/// <summary>
-				/// A superfície foi recuperada com sucesso e tem conteúdo válido. Este resultado é idêntico ao valor falso devolvido pelo antigo método (RecuperarRecursos).
+				/// A superfície foi recuperada com sucesso e tem conteúdo válido. Este resultado é idêntico ao valor falso devolvido pelo antigo método (ReclaimResources).
 				/// </summary>
 				CA_DXGI_RECLAIM_RESOURCE_RESULT_OK = 0,
 
 				/// <summary>
 				/// A superfície foi recuperada, mas o conteúdo antigo foi perdido e deve ser regenerado. Este resultado é idêntico ao verdadeiro valor devolvido 
-				/// pelo antigo método (RecuperarRecursos).
+				/// pelo antigo método (ReclaimResources).
 				/// </summary>
 				CA_DXGI_RECLAIM_RESOURCE_RESULT_DISCARDED = 1,
 

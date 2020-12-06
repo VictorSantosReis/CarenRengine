@@ -6694,7 +6694,6 @@ namespace CarenRengine
 			void UnRegisterCallback();
 		};
 
-
 		/// <summary>
 		/// (IMFCaptureEngine) - Interface responsável por controlar um ou mais dispositivos de captura. O mecanismo de captura implementa esta interface.
 		/// ICarenMFCaptureEngine suporta apenas uma codificação CBR de passagem.

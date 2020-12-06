@@ -1605,7 +1605,7 @@ Done:;
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (UINT64) obtido.</param>
 /// <param name="Param_Out_Numerador">Recebe o valor referente ao: Numerador</param>
 /// <param name="Param_Out_Denominador">Recebe o valor referente ao: Denominador</param>
-CarenResult CarenMFVideoMediaType::ObterRatioAtribute(String^ Param_GuidChave, [Out] UInt32% Param_Out_Numerador, [Out] UInt32% Param_Out_Denominador)
+CarenResult CarenMFVideoMediaType::MFGetAttributeRatio(String^ Param_GuidChave, [Out] UInt32% Param_Out_Numerador, [Out] UInt32% Param_Out_Denominador)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1655,7 +1655,7 @@ Done:;
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor obtido. O atribute deve ser do tipo: UInt64</param>
 /// <param name="Param_Out_Largura">Recebe a largura em pixels.</param>
 /// <param name="Param_Out_Altura">Recebe a altura em pixels.</param>
-CarenResult CarenMFVideoMediaType::ObterSizeAttribute(String^ Param_GuidChave, [Out] UInt32% Param_Out_Largura, [Out] UInt32% Param_Out_Altura)
+CarenResult CarenMFVideoMediaType::MFGetAttributeSize(String^ Param_GuidChave, [Out] UInt32% Param_Out_Largura, [Out] UInt32% Param_Out_Altura)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1705,7 +1705,7 @@ Done:;
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (Desconhecido) obtido.</param>
 /// <param name="Param_GuidInterfaceSolicitada">O GUID para a interface a ser obtida da chave. Este GUID é um (IID).</param>
 /// <param name="Param_Out_InterfaceDesconhecida">Recebe a interface com o ponteiro par ao objeto desconhecido. O usuário deve criar a interface antes de chamar este método.</param>
-CarenResult CarenMFVideoMediaType::ObterPonteiroDesconhecido(String^ Param_GuidChave, String^ Param_GuidInterfaceSolicitada, ICaren^ Param_Out_InterfaceDesconhecida)
+CarenResult CarenMFVideoMediaType::GetUnknown(String^ Param_GuidChave, String^ Param_GuidInterfaceSolicitada, ICaren^ Param_Out_InterfaceDesconhecida)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -2232,7 +2232,7 @@ Done:;
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor. O tipo do atributo deve ser: UInt64</param>
 /// <param name="Param_Largura">A Largura do vídeo em pixels.</param>
 /// <param name="Param_Altura">A Altura do vídeo em pixels.</param>
-CarenResult CarenMFVideoMediaType::DefinirSizeAttribute(String^ Param_GuidChave, UInt32 Param_Largura, UInt32 Param_Altura)
+CarenResult CarenMFVideoMediaType::MFGetAttributeSize(String^ Param_GuidChave, UInt32 Param_Largura, UInt32 Param_Altura)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -2275,7 +2275,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 /// <param name="Param_InterfaceDesconhecida">A interface desconhecida a ser definida no valor da chave solicitada.</param>
-CarenResult CarenMFVideoMediaType::DefinirPonteiroDesconhecido(String^ Param_GuidChave, ICaren^ Param_InterfaceDesconhecida)
+CarenResult CarenMFVideoMediaType::SetUnknown(String^ Param_GuidChave, ICaren^ Param_InterfaceDesconhecida)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

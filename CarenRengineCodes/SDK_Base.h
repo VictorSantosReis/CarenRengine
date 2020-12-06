@@ -291,7 +291,7 @@ namespace CarenRengine
 				literal String^ MF_MT_FRAME_RATE_RANGE_MIN = "{D2E7558C-DC1F-403f-9A72-D28BB1EB3B5E}";
 				/// <summary>
 				/// Tipo do valor: UInt64.
-				/// Método: DefinirSizeAttribute | ObterSizeAttribute
+				/// Método: MFGetAttributeSize | MFGetAttributeSize
 				/// Largura e altura de um quadro de vídeo, em pixels.
 				/// </summary>
 				literal String^ MF_MT_FRAME_SIZE = "{1652c33d-d6b2-4012-b834-72030849a37d}";

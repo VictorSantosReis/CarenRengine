@@ -488,7 +488,7 @@ public:
 	/// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (UINT64) obtido.</param>
 	/// <param name="Param_Out_Numerador">Recebe o valor referente ao: Numerador</param>
 	/// <param name="Param_Out_Denominador">Recebe o valor referente ao: Denominador</param>
-	virtual CarenResult ObterRatioAtribute(String^ Param_GuidChave, [Out] UInt32% Param_Out_Numerador, [Out] UInt32% Param_Out_Denominador);
+	virtual CarenResult MFGetAttributeRatio(String^ Param_GuidChave, [Out] UInt32% Param_Out_Numerador, [Out] UInt32% Param_Out_Denominador);
 
 	/// <summary>
 	/// (GetUnknown) - Recupera um ponteiro de interface associado a uma chave.
@@ -496,7 +496,7 @@ public:
 	/// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (Desconhecido) obtido.</param>
 	/// <param name="Param_GuidInterfaceSolicitada">O GUID para a interface a ser obtida da chave. Este GUID é um (IID).</param>
 	/// <param name="Param_Out_InterfaceDesconhecida">Recebe a interface com o ponteiro para o objeto desconhecido. O usuário deve criar a interface antes de chamar este método.</param>
-	virtual CarenResult ObterPonteiroDesconhecido(String^ Param_GuidChave, String^ Param_GuidInterfaceSolicitada, ICaren^ Param_Out_InterfaceDesconhecida);
+	virtual CarenResult GetUnknown(String^ Param_GuidChave, String^ Param_GuidInterfaceSolicitada, ICaren^ Param_Out_InterfaceDesconhecida);
 
 	/// <summary>
 	/// (MFGetAttributeSize) - Recupera um atributo cujo valor é um tamanho, expresso como uma largura e altura.
@@ -504,7 +504,7 @@ public:
 	/// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor obtido. O atribute deve ser do tipo: UInt64</param>
 	/// <param name="Param_Out_Largura">Recebe a largura em pixels.</param>
 	/// <param name="Param_Out_Altura">Recebe a altura em pixels.</param>
-	virtual CarenResult ObterSizeAttribute(String^ Param_GuidChave, [Out] UInt32% Param_Out_Largura, [Out] UInt32% Param_Out_Altura);
+	virtual CarenResult MFGetAttributeSize(String^ Param_GuidChave, [Out] UInt32% Param_Out_Largura, [Out] UInt32% Param_Out_Altura);
 
 	/// <summary>
 	/// Bloqueia o armazenamento de atributo para que nenhum outro thread possa acessá-lo.
@@ -592,14 +592,14 @@ public:
 	/// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor. O tipo do atributo deve ser: UInt64</param>
 	/// <param name="Param_Largura">A largura do vídeo em pixels.</param>
 	/// <param name="Param_Altura">A altura do vídeo em pixels.</param>
-	virtual CarenResult DefinirSizeAttribute(String^ Param_GuidChave, UInt32 Param_Largura, UInt32 Param_Altura);
+	virtual CarenResult MFGetAttributeSize(String^ Param_GuidChave, UInt32 Param_Largura, UInt32 Param_Altura);
 
 	/// <summary>
 	/// (TESTE) - Associa um IUnknown ponteiro com uma chave.
 	/// </summary>
 	/// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 	/// <param name="Param_InterfaceDesconhecida">A interface desconhecida a ser definida no valor da chave solicitada.</param>
-	virtual CarenResult DefinirPonteiroDesconhecido(String^ Param_GuidChave, ICaren^ Param_InterfaceDesconhecida);
+	virtual CarenResult SetUnknown(String^ Param_GuidChave, ICaren^ Param_InterfaceDesconhecida);
 
 
 	/// <summary>

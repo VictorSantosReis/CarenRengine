@@ -323,7 +323,7 @@ public:
 	/// <param name="Param_IdFluxo">O fluxo de consulta. Você pode utilizar a enumeração (CA_SOURCE_READER_ID) para força o Leitor a obter o primeiro fluxo de áudio ou vídeo na lista.</param>
 	/// <param name="Param_IdMediaTypeIndice">O Id para o tipo de mídia na lista a ser obtida. O valor pode ser qualquer um dos seguintes. Indice baseado em 0 ou o valor: 0xffffffff que representa o tipo da mídia nativa atual. </param>
 	/// <param name="Param_Out_TipoMidia">Retorna o tipo da midia no Id especificado.</param>
-	virtual CarenResult ObterTipoMidiaNativa(UInt32 Param_IdFluxo, UInt32 Param_IdMediaTypeIndice, [Out] ICarenMFMediaType^% Param_Out_TipoMidia);
+	virtual CarenResult GetNativeMediaType(UInt32 Param_IdFluxo, UInt32 Param_IdMediaTypeIndice, [Out] ICarenMFMediaType^% Param_Out_TipoMidia);
 
 	/// <summary>
 	/// Obtém um determinado atributo da fonte de mídia atual.
@@ -333,10 +333,10 @@ public:
 	/// Param_GuidAtributo pode especificar os atributos de: MFAtributos_DescritorApresentação, MF_SOURCE_READER_MEDIASOURCE_CHARACTERISTICS.
 	/// Se Param_IdFluxo espeficifica um Fluxo, Param_GuidAtributo deve especificar um atributo do Descritor de Fluxo(GUIDs_MFAtributos_DescritorFluxo) </param>
 	/// <param name="Param_Out_ValorAtributo">Retorna o valor do atributo solicitado</param>
-	virtual CarenResult ObterAtributoApresentacao(UInt32 Param_IdFluxo, String^ Param_GuidAtributo, [Out] Estruturas::CA_PropVariant^% Param_Out_ValorAtributo);
+	virtual CarenResult GetPresentationAttribute(UInt32 Param_IdFluxo, String^ Param_GuidAtributo, [Out] Estruturas::CA_PropVariant^% Param_Out_ValorAtributo);
 
 	/// <summary>
-	/// () - Consulta a fonte subjacente de mídia ou decodificador para uma interface.
+	/// Consulta a fonte subjacente de mídia ou decodificador para uma interface.
 	/// </summary>
 	/// <param name="Param_IdFluxo">O fluxo ou objeto para consulta. Você pode utilizar a enumeração(CA_SOURCE_READER_ID). Se o valor for ID_FONTE_MIDIA, 
 	/// o método consultará a fonte de mídia. Caso contrário, ele consulta o decodificador que está associado com o fluxo especificado.</param>
@@ -344,7 +344,7 @@ public:
 	/// o método chama (ConsultarInterface) para obter a interface solicitada. Caso contrário, o método chama o ICarenMFGetService.ObterServiço.</param>
 	/// <param name="Param_GuidInterface">O identificador de interface (IID) da interface que está sendo solicitada..</param>
 	/// <param name="Param_Out_InterfaceDesconhecida">Recebe a interface que foi solicitada. O usuário deve criar a interface antes de chamar este método.</param>
-	virtual CarenResult ObterServiceParaFluxo(UInt32 Param_IdFluxo, String^ Param_GuidServiço, String^ Param_GuidInterface, ICaren^ Param_Out_InterfaceDesconhecida);
+	virtual CarenResult GetServiceForStream(UInt32 Param_IdFluxo, String^ Param_GuidServiço, String^ Param_GuidInterface, ICaren^ Param_Out_InterfaceDesconhecida);
 
 	/// <summary>
 	/// Consulta se um determinado fluxo, baseado em seu (Id) está selecionado.
@@ -352,10 +352,10 @@ public:
 	/// <param name="Param_IdFluxo">O Fluxo para consulta. Você pode utilizar a enumeração(CA_SOURCE_READER_ID).</param>
 	/// <param name="Param_Out_ResultadoFluxoSelecionado">Recebe true se o fluxo é selecionado e irá gerar dados. Recebe false se o fluxo não está selecionado 
 	/// e não irá gerar dados.</param>
-	virtual CarenResult ConsultarFluxoSelecionado(UInt32 Param_IdFluxo, [Out] Boolean% Param_Out_ResultadoFluxoSelecionado);
+	virtual CarenResult GetStreamSelection(UInt32 Param_IdFluxo, [Out] Boolean% Param_Out_ResultadoFluxoSelecionado);
 
 	/// <summary>
-	/// Método responsável por ler a proxima amostra de mídia disponivel na fonte de mídia.
+	/// Método responsável por ler a proxima amostra de mídia disponivel na fonte de mídia. Defina todos os parametros (out) ou (ref) como 0 e Nulo para chamar o método em modo assincrono.
 	/// Esse método pode retornar (Sucesso) e ainda assim retornar uma amostra de mídia (NULA).
 	/// Consulte o resultado do parametro (Param_Out_FlagsLeituraAmostra) que vai indicar o resultado da leitura e o que se deve fazer.
 	/// </summary>
@@ -365,27 +365,15 @@ public:
 	/// <param name="Param_Out_IdFluxoLido">Retorna o Id do fluxo que foi extraido a amostra de mídia.</param>
 	/// <param name="Param_Out_FlagsLeituraAmostra">Retorna um (Flag) que indca um resultado adicional a leitura da amostra. Utilize essa valor para decidir como deve processar o resultado do método.</param>
 	/// <param name="Param_Out_TimSpanAmostra">Retorna o (TimeSpan) da amostra de mídia lida. TimeSpan indica a Data/Hora que deve iniciar uma amostra. Esse valor é dado em (unidades de 100 Nanosegundos).</param>
-	/// <param name="Param_Out_Amostra">Retorna a interface que contém a amostra de mídia que foi lida.</param>
-	virtual CarenResult LerAmostra
+	/// <param name="Param_Ref_Amostra">Retorna a interface que contém a amostra de mídia que foi lida. O usuário deve inicializar a interface antes de chamar o método em modo sincrono.</param>
+	virtual CarenResult ReadSample
 	(
 		UInt32 Param_IdFluxo, 
 		UInt32 Param_ControlFlag, 
-		[Out] Enumeracoes::CA_AMOSTRA_RESULTADO% Param_Out_ResultadoLeitura, 
+		[Out] Enumeracoes::CA_SAMPLE_READ_RESULT% Param_Out_ResultadoLeitura, 
 		[Out] UInt32% Param_Out_IdFluxoLido, [Out] Enumeracoes::CA_SOURCE_READER_FLAGS% Param_Out_FlagsLeituraAmostra, 
 		[Out] Int64% Param_Out_TimSpanAmostra, 
-		[Out] ICarenMFSample^% Param_Out_Amostra
-	);
-
-	/// <summary>
-	/// Método responsável por ler a proxima amostra de mídia disponivel na fonte de mídia de modo assincrono.
-	/// Esse método retorna imediatamente após a chamada.
-	/// </summary>
-	/// <param name="Param_IdFluxo">O Id do fluxo que vai extrair os dados de mídia. Você pode utilizar a enumeração(CA_SOURCE_READER_ID).</param>
-	/// <param name="Param_ControlFlag">Um flag para realizar a leitura da amostra de mídia. Pode deixar Zero, ou definir um valor da enumeração(CA_SOURCE_READER_CONTROL_FLAG)</param>
-	virtual CarenResult LerAmostraAsync
-	(
-		UInt32 Param_IdFluxo,
-		UInt32 Param_ControlFlag
+		ICarenMFSample^% Param_Ref_Amostra
 	);
 
 	/// <summary>
@@ -401,7 +389,7 @@ public:
 	/// da apresentação.
 	/// </summary>
 	/// <param name="Param_PosiçãoNanoSegundos">A posição para leitura dos dados. O valor é dado em unidades de 100 nanosegundos.</param>
-	virtual CarenResult DefinirPosicaoLeitura(Int64 Param_PosiçãoNanoSegundos);
+	virtual CarenResult SetCurrentPosition(Int64 Param_PosiçãoNanoSegundos);
 
 	/// <summary>
 	/// Seleciona ou Desseleciona um ou mais fluxos.
@@ -411,7 +399,7 @@ public:
 	/// </summary>
 	/// <param name="Param_IdFluxo">O Id para o fluxo a ser selecionado. Você pode utilizar a enumeração(CA_SOURCE_READER_ID).</param>
 	/// <param name="Param_EstadoSeleção">Define se deve (Selecionar) ou (Desselecionar) o fluxo especificado.</param>
-	virtual CarenResult DefinirEstadoSelecaoFluxo(UInt32 Param_IdFluxo, Boolean Param_EstadoSeleção);
+	virtual CarenResult SetStreamSelection(UInt32 Param_IdFluxo, Boolean Param_EstadoSeleção);
 
 
 	/// <summary>

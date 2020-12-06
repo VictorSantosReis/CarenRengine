@@ -288,7 +288,7 @@ public:
 	/// <param name="Param_Mensagem">Especifica a mensagem como membro da enumeração CA_MFVP_MESSAGE_TYPE.</param>
 	/// <param name="Param_UlParam">Parâmetro de mensagem. O significado deste parâmetro depende do tipo de mensagem.</param>
 	/// <returns></returns>
-	virtual CarenResult ProcessarMensagem(CA_MFVP_MESSAGE_TYPE Param_Mensagem, UInt64 Param_UlParam);
+	virtual CarenResult ProcessMessage(CA_MFVP_MESSAGE_TYPE Param_Mensagem, UInt64 Param_UlParam);
 
 
 	//Métodos da interface proprietaria.

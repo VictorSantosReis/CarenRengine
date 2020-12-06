@@ -171,24 +171,24 @@ public:
 	/// (GetMasterVolume) - Recupera o nível de volume principal.
 	/// </summary>
 	/// <param name="Param_Out_VolumePrincipal">Retorna o volume principal do áudio.</param>
-	virtual CarenResult ObterVolumePrincipal([Out] float% Param_Out_VolumePrincipal);
+	virtual CarenResult GetMasterVolume([Out] float% Param_Out_VolumePrincipal);
 
 	/// <summary>
 	/// (GetMute) - Consulta se o áudio está sem áudio.
 	/// </summary>
 	/// <param name="Param_Out_AudioMudo">Retorna um valor boleano que indica se o áudio está mudo ou não.</param>
-	virtual CarenResult ConsultarAudioMudo([Out] Boolean% Param_Out_AudioMudo);
+	virtual CarenResult GetMute([Out] Boolean% Param_Out_AudioMudo);
 
 	/// <summary>
 	/// (SetMasterVolume) - Define o nível de volume principal.
 	/// </summary>
 	/// <param name="Param_VolumePrincipal">Define o volume principal do áudio. O valor vai de 0.0(Mudo) a 1.0(Maximo).</param>
-	virtual CarenResult DefinirVolumePrincipal(float Param_VolumePrincipal);
+	virtual CarenResult SetMasterVolume(float Param_VolumePrincipal);
 
 	/// <summary>
 	/// (SetMute) - Silencia ou repõe o áudio.
 	/// </summary>
 	/// <param name="Param_EstadoAudio">Define o estado de volume do áudio.</param>
-	virtual CarenResult DefinirEstadoAudio(Boolean Param_EstadoAudio);
+	virtual CarenResult SetMute(Boolean Param_EstadoAudio);
 };
 

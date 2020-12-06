@@ -78,7 +78,7 @@ public:
 public:
 	/// <summary>
 	/// Cria uma instância do gerenciador de tipo de mídia (IMFMediaTypeHandler), para definir os tipos em determinados objetos.
-	/// Essa classe é muito utilizada pelo ICarenMFMediaStreamSink para reprodução de Vídeo ou Áudio.
+	/// Essa classe é muito utilizada pelo ICarenMFStreamSink para reprodução de Vídeo ou Áudio.
 	/// </summary>
 	/// <param name="Param_Out_MidiaTypeHandler">Recebe o ponteiro para o ICarenMFMediaTypeHandler.</param>
 	static CarenResult CriarInstancia([Out] ICarenMFMediaTypeHandler^% Param_Out_MidiaTypeHandler)

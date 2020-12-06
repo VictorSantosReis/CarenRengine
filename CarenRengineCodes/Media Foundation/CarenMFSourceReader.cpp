@@ -470,7 +470,7 @@ Done:;
 /// <param name="Param_IdFluxo">O fluxo de consulta. Você pode utilizar a enumeração (CA_SOURCE_READER_ID) para força o Leitor a obter o primeiro fluxo de áudio ou vídeo na lista.</param>
 /// <param name="Param_IdMediaTypeIndice">O Id para o tipo de mídia na lista a ser obtida. O valor pode ser qualquer um dos seguintes. Indice baseado em 0 ou o valor: 0xffffffff que representa o tipo da mídia nativa atual. </param>
 /// <param name="Param_Out_TipoMidia">Retorna o tipo da midia no Id especificado.</param>
-CarenResult CarenMFSourceReader::ObterTipoMidiaNativa(UInt32 Param_IdFluxo, UInt32 Param_IdMediaTypeIndice, [Out] ICarenMFMediaType^% Param_Out_TipoMidia)
+CarenResult CarenMFSourceReader::GetNativeMediaType(UInt32 Param_IdFluxo, UInt32 Param_IdMediaTypeIndice, [Out] ICarenMFMediaType^% Param_Out_TipoMidia)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -522,7 +522,7 @@ Done:;
 /// Param_GuidAtributo pode especificar os atributos de: MFAtributos_DescritorApresentação, MF_SOURCE_READER_MEDIASOURCE_CHARACTERISTICS.
 /// Se Param_IdFluxo espeficifica um Fluxo, Param_GuidAtributo deve especificar um atributo do Descritor de Fluxo(GUIDs_MFAtributos_DescritorFluxo) </param>
 /// <param name="Param_Out_ValorAtributo">Retorna o valor do atributo solicitado</param>
-CarenResult CarenMFSourceReader::ObterAtributoApresentacao(UInt32 Param_IdFluxo, String^ Param_GuidAtributo, [Out] Estruturas::CA_PropVariant^% Param_Out_ValorAtributo)
+CarenResult CarenMFSourceReader::GetPresentationAttribute(UInt32 Param_IdFluxo, String^ Param_GuidAtributo, [Out] Estruturas::CA_PropVariant^% Param_Out_ValorAtributo)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -585,7 +585,7 @@ Done:;
 }
 
 /// <summary>
-/// () - Consulta a fonte subjacente de mídia ou decodificador para uma interface.
+/// Consulta a fonte subjacente de mídia ou decodificador para uma interface.
 /// </summary>
 /// <param name="Param_IdFluxo">O fluxo ou objeto para consulta. Você pode utilizar a enumeração(CA_SOURCE_READER_ID). Se o valor for ID_FONTE_MIDIA, 
 /// o método consultará a fonte de mídia. Caso contrário, ele consulta o decodificador que está associado com o fluxo especificado.</param>
@@ -593,7 +593,7 @@ Done:;
 /// o método chama (ConsultarInterface) para obter a interface solicitada. Caso contrário, o método chama o ICarenMFGetService.ObterServiço.</param>
 /// <param name="Param_GuidInterface">O identificador de interface (IID) da interface que está sendo solicitada..</param>
 /// <param name="Param_Out_InterfaceDesconhecida">Recebe a interface que foi solicitada. O usuário deve criar a interface antes de chamar este método.</param>
-CarenResult CarenMFSourceReader::ObterServiceParaFluxo(UInt32 Param_IdFluxo, String^ Param_GuidServiço, String^ Param_GuidInterface, ICaren^ Param_Out_InterfaceDesconhecida)
+CarenResult CarenMFSourceReader::GetServiceForStream(UInt32 Param_IdFluxo, String^ Param_GuidServiço, String^ Param_GuidInterface, ICaren^ Param_Out_InterfaceDesconhecida)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -677,7 +677,7 @@ Done:;
 /// <param name="Param_IdFluxo">O Fluxo para consulta. Você pode utilizar a enumeração(CA_SOURCE_READER_ID).</param>
 /// <param name="Param_Out_ResultadoFluxoSelecionado">Recebe true se o fluxo é selecionado e irá gerar dados. Recebe false se o fluxo não está selecionado 
 /// e não irá gerar dados.</param>
-CarenResult CarenMFSourceReader::ConsultarFluxoSelecionado(UInt32 Param_IdFluxo, [Out] Boolean% Param_Out_ResultadoFluxoSelecionado)
+CarenResult CarenMFSourceReader::GetStreamSelection(UInt32 Param_IdFluxo, [Out] Boolean% Param_Out_ResultadoFluxoSelecionado)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -712,7 +712,7 @@ Done:;
 }
 
 /// <summary>
-/// Método responsável por ler a proxima amostra de mídia disponivel na fonte de mídia.
+/// Método responsável por ler a proxima amostra de mídia disponivel na fonte de mídia. Defina todos os parametros (out) ou (ref) como 0 e Nulo para chamar o método em modo assincrono.
 /// Esse método pode retornar (Sucesso) e ainda assim retornar uma amostra de mídia (NULA).
 /// Consulte o resultado do parametro (Param_Out_FlagsLeituraAmostra) que vai indicar o resultado da leitura e o que se deve fazer.
 /// </summary>
@@ -722,8 +722,15 @@ Done:;
 /// <param name="Param_Out_IdFluxoLido">Retorna o Id do fluxo que foi extraido a amostra de mídia.</param>
 /// <param name="Param_Out_FlagsLeituraAmostra">Retorna um (Flag) que indca um resultado adicional a leitura da amostra. Utilize essa valor para decidir como deve processar o resultado do método.</param>
 /// <param name="Param_Out_TimSpanAmostra">Retorna o (TimeSpan) da amostra de mídia lida. TimeSpan indica a Data/Hora que deve iniciar uma amostra. Esse valor é dado em (unidades de 100 Nanosegundos).</param>
-/// <param name="Param_Out_Amostra">Retorna a interface que contém a amostra de mídia que foi lida.</param>
-CarenResult CarenMFSourceReader::LerAmostra(UInt32 Param_IdFluxo, UInt32 Param_ControlFlag, [Out] Enumeracoes::CA_AMOSTRA_RESULTADO% Param_Out_ResultadoLeitura, [Out] UInt32% Param_Out_IdFluxoLido, [Out] Enumeracoes::CA_SOURCE_READER_FLAGS% Param_Out_FlagsLeituraAmostra, [Out] Int64% Param_Out_TimSpanAmostra, [Out] ICarenMFSample^% Param_Out_Amostra)
+/// <param name="Param_Ref_Amostra">Retorna a interface que contém a amostra de mídia que foi lida. O usuário deve inicializar a interface antes de chamar o método em modo sincrono.</param>
+CarenResult CarenMFSourceReader::ReadSample(
+	UInt32 Param_IdFluxo, 
+	UInt32 Param_ControlFlag, 
+	[Out] Enumeracoes::CA_SAMPLE_READ_RESULT% Param_Out_ResultadoLeitura, 
+	[Out] UInt32% Param_Out_IdFluxoLido,
+	[Out] Enumeracoes::CA_SOURCE_READER_FLAGS% Param_Out_FlagsLeituraAmostra, 
+	[Out] Int64% Param_Out_TimSpanAmostra, 
+	ICarenMFSample^% Param_Ref_Amostra)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -732,14 +739,21 @@ CarenResult CarenMFSourceReader::LerAmostra(UInt32 Param_IdFluxo, UInt32 Param_C
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
-	ICarenMFSample^ AmostraMidia = nullptr;
-	IMFSample *pSampleAmostra = NULL;
-	DWORD IdFluxoLido = 0;
-	INT64 TimeSpanAmostra = 0;
-	DWORD ReaderFlagsNative = 0;
+	IMFSample *vi_pOutSample = NULL;
+	DWORD vi_OutIdFluxoLido = 0;
+	INT64 vi_OutTimeSpanAmostra = 0;
+	DWORD vi_OutReaderFlagsNative = 0;
+	BOOL vi_IsAsync = !ObjetoGerenciadoValido(Param_Ref_Amostra); // Se a amostra for valida o método será chamado de forma Sincrona. Se NULA será chamada de forma Assincrona.
+	
 
 	//Chama o método para ler a amostra de mídia.
-	Hr = PonteiroTrabalho->ReadSample(Param_IdFluxo, Param_ControlFlag, &IdFluxoLido, &ReaderFlagsNative, &TimeSpanAmostra, &pSampleAmostra);
+	Hr = PonteiroTrabalho->ReadSample(
+		Param_IdFluxo,
+		Param_ControlFlag, 
+		vi_IsAsync ? Nulo : &vi_OutIdFluxoLido,
+		vi_IsAsync ? Nulo : &vi_OutReaderFlagsNative,
+		vi_IsAsync ? Nulo : &vi_OutTimeSpanAmostra,
+		vi_IsAsync ? Nulo : &vi_pOutSample);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -756,150 +770,130 @@ CarenResult CarenMFSourceReader::LerAmostra(UInt32 Param_IdFluxo, UInt32 Param_C
 		Sair;
 	}
 
-	//Determina o Id do fluxo.
-	Param_Out_IdFluxoLido = IdFluxoLido;
-	//Determina os flags de leitura da amostra de mídia.
-	Param_Out_FlagsLeituraAmostra = (CA_SOURCE_READER_FLAGS)ReaderFlagsNative;
-	//Define o TimeSpan da amostra
-	Param_Out_TimSpanAmostra = TimeSpanAmostra;
-
-	//Verifica os Flags para determina o retorno
-
-	//Determina que o tipo de dados(Formato) foi modificado.
-	if (ReaderFlagsNative & MF_SOURCE_READERF_CURRENTMEDIATYPECHANGED)
+	//Verifica se o método foi chamado de forma SINCRONA ou ASSINCRONA.
+	switch (vi_IsAsync)
 	{
-		//Determina que já chegou no final do fluxo.
-		Param_Out_ResultadoLeitura = CA_AMOSTRA_RESULTADO::TipoModificado;
 
-		//Sai do método
-		goto Done;
-	}
+		//O método será chamado de forma ASSINCRONA.
 
-	//Indica que já alcançou o final de fluxo e não há mais Simples a serem lidas.
-	else if (ReaderFlagsNative & MF_SOURCE_READERF_ENDOFSTREAM)
-	{
-		//Determina que já chegou no final do fluxo.
-		Param_Out_ResultadoLeitura = CA_AMOSTRA_RESULTADO::FimFluxo;
+	case TRUE:
+		
+		//Define alguns resultados dos parmetros de saida.
+		Param_Out_IdFluxoLido = static_cast<UInt32>(vi_OutIdFluxoLido);
+		Param_Out_FlagsLeituraAmostra = static_cast<CA_SOURCE_READER_FLAGS>(vi_OutReaderFlagsNative);
+		Param_Out_TimSpanAmostra = vi_OutTimeSpanAmostra;
 
-		//Sai do método
-		goto Done;
-	}
+		//Verifica as flags do resultado de leitura da amostra e define no parametro de saida (Param_Out_ResultadoLeitura).
 
-	//Indica que houve um erro ao ler os dados.
-	else if (ReaderFlagsNative & MF_SOURCE_READERF_ERROR)
-	{
-		//Determina que houve uma falha ao ler os dados da midia.
-		Param_Out_ResultadoLeitura = CA_AMOSTRA_RESULTADO::Erro;
+		//Determina que o tipo de dados(Formato) foi modificado.
+		if (vi_OutReaderFlagsNative & MF_SOURCE_READERF_CURRENTMEDIATYPECHANGED)
+		{
+			//Determina que já chegou no final do fluxo.
+			Param_Out_ResultadoLeitura = CA_SAMPLE_READ_RESULT::TipoModificado;
 
-		//Sai do método
-		goto Done;
-	}
+			//Sai do método
+			Sair;
+		}
 
-	//Indica que houve uma lacuna no fluxo.
-	else if (ReaderFlagsNative & MF_SOURCE_READERF_STREAMTICK)
-	{
-		//Define que houve uma lacuna no fluxo.
-		Param_Out_ResultadoLeitura = CA_AMOSTRA_RESULTADO::LacunaFluxo;
+		//Indica que já alcançou o final de fluxo e não há mais Simples a serem lidas.
+		else if (vi_OutReaderFlagsNative & MF_SOURCE_READERF_ENDOFSTREAM)
+		{
+			//Determina que já chegou no final do fluxo.
+			Param_Out_ResultadoLeitura = CA_SAMPLE_READ_RESULT::FimFluxo;
 
-		//Sai do método
-		goto Done;
-	}
+			//Sai do método
+			Sair;
+		}
 
-	//Indica que o tipo da midia nativa foi modificada.
-	else if (ReaderFlagsNative & MF_SOURCE_READERF_NATIVEMEDIATYPECHANGED)
-	{
-		//Define que o tipo nativo foi modificado.
-		Param_Out_ResultadoLeitura = CA_AMOSTRA_RESULTADO::TipoNativoModificado;
+		//Indica que houve um erro ao ler os dados.
+		else if (vi_OutReaderFlagsNative & MF_SOURCE_READERF_ERROR)
+		{
+			//Determina que houve uma falha ao ler os dados da midia.
+			Param_Out_ResultadoLeitura = CA_SAMPLE_READ_RESULT::Erro;
 
-		//Sai do método
-		goto Done;
-	}
+			//Sai do método
+			Sair;
+		}
 
-	//Indica que o decodificador definido pelo usuário foi removido manualmente ou devido a uma modificação do tipo da midia sendo lida.
-	else if (ReaderFlagsNative & MF_SOURCE_READERF_ALLEFFECTSREMOVED)
-	{
-		//Define que o decodificador foi removido
-		Param_Out_ResultadoLeitura = CA_AMOSTRA_RESULTADO::DecodificadorRemovido;
+		//Indica que houve uma lacuna no fluxo.
+		else if (vi_OutReaderFlagsNative & MF_SOURCE_READERF_STREAMTICK)
+		{
+			//Define que houve uma lacuna no fluxo.
+			Param_Out_ResultadoLeitura = CA_SAMPLE_READ_RESULT::LacunaFluxo;
 
-		//Sai do método
-		goto Done;
-	}
+			//Sai do método
+			Sair;
+		}
 
-	//(MF_SOURCE_READERF_NEWSTREAM) Indica que novos fluxos de midia foram adicionados. O usuário deve selecionar novamente o fluxo a ser decodificado.
-	else if (ReaderFlagsNative & MF_SOURCE_READERF_NEWSTREAM)
-	{
-		//Define que um novo Stream de midia foi adicionado e que é necessário selcionar novamente o fluxo de midia desejado.
-		Param_Out_ResultadoLeitura = CA_AMOSTRA_RESULTADO::NovoFluxo;
+		//Indica que o tipo da midia nativa foi modificada.
+		else if (vi_OutReaderFlagsNative & MF_SOURCE_READERF_NATIVEMEDIATYPECHANGED)
+		{
+			//Define que o tipo nativo foi modificado.
+			Param_Out_ResultadoLeitura = CA_SAMPLE_READ_RESULT::TipoNativoModificado;
 
-		//Sai do método
-		goto Done;
-	}
+			//Sai do método
+			Sair;
+		}
 
-	//Pode continuar normalmente.
-	else
-	{	
-		//Deixa o método continuar.
-	}
+		//Indica que o decodificador definido pelo usuário foi removido manualmente ou devido a uma modificação do tipo da midia sendo lida.
+		else if (vi_OutReaderFlagsNative & MF_SOURCE_READERF_ALLEFFECTSREMOVED)
+		{
+			//Define que o decodificador foi removido
+			Param_Out_ResultadoLeitura = CA_SAMPLE_READ_RESULT::DecodificadorRemovido;
 
-	//Indica que não há Samples não posição lida. Deve ler a proxima amostra de mídia.
-	if (pSampleAmostra == NULL)
-	{
-		//Determina que não há dados e que deve ler a proxima amostra de mídia.
-		Param_Out_ResultadoLeitura = CA_AMOSTRA_RESULTADO::NoData;
+			//Sai do método
+			Sair;
+		}
 
-		//Sai do método
-		goto Done;
-	}
+		//(MF_SOURCE_READERF_NEWSTREAM) Indica que novos fluxos de midia foram adicionados. O usuário deve selecionar novamente o fluxo a ser decodificado.
+		else if (vi_OutReaderFlagsNative & MF_SOURCE_READERF_NEWSTREAM)
+		{
+			//Define que um novo Stream de midia foi adicionado e que é necessário selcionar novamente o fluxo de midia desejado.
+			Param_Out_ResultadoLeitura = CA_SAMPLE_READ_RESULT::NovoFluxo;
 
-	//Cria a interface gerenciada que vai conter a amostra
-	AmostraMidia = gcnew CarenMFSample();
+			//Sai do método
+			Sair;
+		}
 
-	//Chama o método para definir o ponteiro de trabalho na interface
-	AmostraMidia->AdicionarPonteiro(pSampleAmostra);
+		//Pode continuar normalmente.
+		else
+		{
+			//Deixa o método continuar.
+		}
 
-	//Define a interface com a amostra lida.
-	Param_Out_Amostra = AmostraMidia;
+		//Indica que não há Samples na posição lida. Deve ler a proxima amostra de mídia.
+		if (!ObjetoValido(vi_pOutSample))
+		{
+			//Determina que não há dados e que deve ler a proxima amostra de mídia.
+			Param_Out_ResultadoLeitura = CA_SAMPLE_READ_RESULT::NoData;
 
-	//Determina que há dados para serem processados.
-	Param_Out_ResultadoLeitura = CA_AMOSTRA_RESULTADO::Sucesso;
+			//Define sucesso na operação mesmo a amostra não sendo valida.
+			Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
 
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+			//Sai do método
+			Sair;
+		}
 
-Done:;
-	//Retorna o resultado
-	return Resultado;
-}
+		//Define o ponteiro na interface.
+		CarenSetPointerToICarenSafe(vi_pOutSample, Param_Ref_Amostra, true);
 
-/// <summary>
-/// Método responsável por ler a proxima amostra de mídia disponivel na fonte de mídia de modo assincrono.
-/// Esse método retorna imediatamente após a chamada.
-/// </summary>
-/// <param name="Param_IdFluxo">O Id do fluxo que vai extrair os dados de mídia. Você pode utilizar a enumeração(CA_SOURCE_READER_ID).</param>
-/// <param name="Param_ControlFlag">Um flag para realizar a leitura da amostra de mídia. Pode deixar Zero, ou definir um valor da enumeração(CA_SOURCE_READER_CONTROL_FLAG)</param>
-CarenResult CarenMFSourceReader::LerAmostraAsync(UInt32 Param_IdFluxo, UInt32 Param_ControlFlag)
-{
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
+		//Determina que há dados para serem processados.
+		Param_Out_ResultadoLeitura = CA_SAMPLE_READ_RESULT::Sucesso;
+		break;
 
-	//Resultados Com.
-	ResultadoCOM Hr = E_FAIL;
+		//O método será chamado de forma SINCRONA.
 
-	//Chama o método para ler a amostra de mídia de forma Assincrona.
-	Hr = PonteiroTrabalho->ReadSample(Param_IdFluxo, Param_ControlFlag, NULL, NULL, NULL, NULL);
+	case FALSE:
+		//No modo assincrono o método não retorna nada além do resultado HRESULT.
+		break;
 
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
+	default:
+		//Erro
 
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
+		//Define erro na operação.
+		Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
+		//Sai do método.
 		Sair;
 	}
 
@@ -966,7 +960,7 @@ Done:;
 /// Define uma nova posição para ler as amostras de midia com base no tempo da apresentação.
 /// </summary>
 /// <param name="Param_PosiçãoNanoSegundos">A posição para leitura dos dados. O valor é dado em unidades de 100 nanosegundos.</param>
-CarenResult CarenMFSourceReader::DefinirPosicaoLeitura(Int64 Param_PosiçãoNanoSegundos)
+CarenResult CarenMFSourceReader::SetCurrentPosition(Int64 Param_PosiçãoNanoSegundos)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1023,7 +1017,7 @@ Done:;
 /// </summary>
 /// <param name="Param_IdFluxo">O Id para o fluxo a ser selecionado. Você pode utilizar a enumeração(CA_SOURCE_READER_ID).</param>
 /// <param name="Param_EstadoSeleção">Define se deve (Selecionar) ou (Desselecionar) o fluxo especificado.</param>
-CarenResult CarenMFSourceReader::DefinirEstadoSelecaoFluxo(UInt32 Param_IdFluxo, Boolean Param_EstadoSeleção)
+CarenResult CarenMFSourceReader::SetStreamSelection(UInt32 Param_IdFluxo, Boolean Param_EstadoSeleção)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

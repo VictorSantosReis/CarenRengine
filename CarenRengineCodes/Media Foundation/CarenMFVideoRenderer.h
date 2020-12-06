@@ -298,6 +298,6 @@ public:
 	/// o EVR usa seu misturador padrão.</param>
 	/// <param name="Param_Apresentador">Ponteiro para a interface (IMFVideoPresenter) do apresentador para usar. Este parâmetro pode ser (NULO). Se este parâmetro 
 	/// for NULL, o EVR usa seu apresentador padrão.</param>
-	virtual CarenResult InicializarRenderizador(ICarenMFTransform^ Param_VideoMixer, ICarenMFVideoPresenter^ Param_Apresentador);
+	virtual CarenResult InitializeRenderer(ICarenMFTransform^ Param_VideoMixer, ICarenMFVideoPresenter^ Param_Apresentador);
 };
 

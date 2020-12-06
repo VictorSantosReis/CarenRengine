@@ -418,7 +418,7 @@ void CarenMFMediaSink::Finalizar()
 /// <param name="Param_IdentificadorFluxo">Um (Identificador) para o fluxo. O valor é (Arbitrário), mas deve ser exclusivo.</param>
 /// <param name="Param_TipoMidia">Uma interface com o tipo de mídia do Stream a ser adicionado. Esse valor pode ser (NULO).</param>
 /// <param name="Param_Out_FluxoSink">Retorna uma interface para o fluxo adicionado.</param>
-CarenResult CarenMFMediaSink::AddStreamSink(UInt32 Param_IdentificadorFluxo, ICarenMFMediaType^ Param_TipoMidia, [Out] ICarenMFMediaStreamSink^% Param_Out_FluxoSink)
+CarenResult CarenMFMediaSink::AddStreamSink(UInt32 Param_IdentificadorFluxo, ICarenMFMediaType^ Param_TipoMidia, [Out] ICarenMFStreamSink^% Param_Out_FluxoSink)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -452,7 +452,7 @@ CarenResult CarenMFMediaSink::AddStreamSink(UInt32 Param_IdentificadorFluxo, ICa
 	}
 
 	//Cria a interface a ser retornada.
-	Param_Out_FluxoSink = gcnew CarenMFMediaStreamSink();
+	Param_Out_FluxoSink = gcnew CarenMFStreamSink();
 
 	//Define o ponteiro na interface
 	CarenSetPointerToICarenSafe(vi_pOutStreamSink, Param_Out_FluxoSink, true);
@@ -552,7 +552,7 @@ Done:;
 /// </summary>
 /// <param name="Param_IdentificadorFluxo">O Identificador para o fluxo a ser obtido.</param>
 /// <param name="Param_Out_FluxoSink">Recebe a interface que contém o Stream Sink requisitado pelo seu (Identificador)</param>
-CarenResult CarenMFMediaSink::GetStreamSinkById(UInt32 Param_IdentificadorFluxo, [Out] ICarenMFMediaStreamSink^% Param_Out_FluxoSink)
+CarenResult CarenMFMediaSink::GetStreamSinkById(UInt32 Param_IdentificadorFluxo, [Out] ICarenMFStreamSink^% Param_Out_FluxoSink)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -582,7 +582,7 @@ CarenResult CarenMFMediaSink::GetStreamSinkById(UInt32 Param_IdentificadorFluxo,
 	}
 
 	//Cria a interface a ser retornada.
-	Param_Out_FluxoSink = gcnew CarenMFMediaStreamSink();
+	Param_Out_FluxoSink = gcnew CarenMFStreamSink();
 
 	//Define o ponteiro na interface
 	CarenSetPointerToICarenSafe(vi_pOutStreamSink, Param_Out_FluxoSink, true);
@@ -597,7 +597,7 @@ Done:;
 /// </summary>
 /// <param name="Param_IdFluxo">O Id para o coletor de fluxo a ser obtido.</param>
 /// <param name="Param_Out_FluxoSink">Recebe a interface que contém o coletor de fluxo requisitado.</param>
-CarenResult CarenMFMediaSink::GetStreamSinkByIndex(UInt32 Param_IdFluxo, [Out] ICarenMFMediaStreamSink^% Param_Out_FluxoSink)
+CarenResult CarenMFMediaSink::GetStreamSinkByIndex(UInt32 Param_IdFluxo, [Out] ICarenMFStreamSink^% Param_Out_FluxoSink)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -627,7 +627,7 @@ CarenResult CarenMFMediaSink::GetStreamSinkByIndex(UInt32 Param_IdFluxo, [Out] I
 	}
 
 	//Cria a interface a ser retornada.
-	Param_Out_FluxoSink = gcnew CarenMFMediaStreamSink();
+	Param_Out_FluxoSink = gcnew CarenMFStreamSink();
 
 	//Define o ponteiro na interface
 	CarenSetPointerToICarenSafe(vi_pOutStreamSink, Param_Out_FluxoSink, true);

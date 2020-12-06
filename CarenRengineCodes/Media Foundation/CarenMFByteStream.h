@@ -193,14 +193,14 @@ public:
 	/// <summary>
 	/// (BeginRead) - Inicia uma operação de leitura assíncrona do fluxo.
 	/// Quando todos os dados forem lidos no buffer, o método ICarenMFAsyncCallback::Invoke é chamado do objeto de retorno de chamada. Nesse ponto, o aplicativo deve chamar 
-	/// ICarenMFByteStream::ConcluirLeituraAsync para concluir a solicitação assíncrona.
+	/// ICarenMFByteStream::EndRead para concluir a solicitação assíncrona.
 	/// </summary>
 	/// <param name="Param_Buffer">Um ponteiro para o buffer que vai receber os dados. O chamador deve alocar o buffer.</param>
 	/// <param name="Param_TamanhoBuffer">O tamanho do buffer em bytes.</param>
 	/// <param name="Param_Callback">Uma interface de retorno de chamada. O chamador que deve implementar a interface.</param>
 	/// <param name="Param_ObjetoEstado">Um objeto de estado, definido pelo chamador. Este parâmetro pode ser NULO. Você pode usar este objeto para conter informações do estado. 
 	/// O objeto é devolvido ao chamador quando o retorno de chamada é invocado.</param>
-	virtual CarenResult LerAsync(
+	virtual CarenResult BeginRead(
 		ICarenBuffer^ Param_Buffer,
 		UInt64 Param_TamanhoBuffer,
 		ICarenMFAsyncCallback^ Param_Callback,
@@ -209,14 +209,14 @@ public:
 	/// <summary>
 	/// (BeginWrite) - Inicia uma operação de gravação assíncrona no fluxo.
 	/// Quando todos os dados foram gravados no fluxo, o método ICarenMFAsyncCallback::Invoke é chamado do objeto de retorno de chamada. Nesse ponto, o aplicativo deve chamar 
-	/// ICarenMFByteStream::ConcluirEscritaAsync para concluir a solicitação assíncrona.
+	/// ICarenMFByteStream::EndWrite para concluir a solicitação assíncrona.
 	/// </summary>
 	/// <param name="Param_Buffer">Um ponteiro para o buffer a ser escrito no fluxo.</param>
 	/// <param name="Param_TamanhoBuffer">O tamanho do buffer em bytes.</param>
 	/// <param name="Param_Callback">Uma interface de retorno de chamada. O chamador que deve implementar a interface.</param>
 	/// <param name="Param_ObjetoEstado">Um objeto de estado, definido pelo chamador. Este parâmetro pode ser NULO. Você pode usar este objeto para conter informações do estado. 
 	/// O objeto é devolvido ao chamador quando o retorno de chamada é invocado.</param>
-	virtual CarenResult EscreverAsync(
+	virtual CarenResult BeginWrite(
 		ICarenBuffer^ Param_Buffer,
 		UInt64 Param_TamanhoBuffer,
 		ICarenMFAsyncCallback^ Param_Callback,
@@ -234,7 +234,7 @@ public:
 	/// <param name="Param_Resultado">Um ponteiro para a interface ICarenMFAsyncResult. Passe no mesmo ponteiro que o objeto de retorno de chamada recebeu no método 
 	/// ICarenMFAsyncCallback::Invoke.</param>
 	/// <param name="Param_Out_TotalLido">Recebe o total de bytes que foi lido do fluxo.</param>
-	virtual CarenResult ConcluirLeituraAsync(ICarenMFAsyncResult^ Param_Resultado, [Out] UInt64% Param_Out_TotalLido);
+	virtual CarenResult EndRead(ICarenMFAsyncResult^ Param_Resultado, [Out] UInt64% Param_Out_TotalLido);
 
 	/// <summary>
 	/// (EndWrite) - Conclui uma operação de gravação assíncrona.
@@ -242,7 +242,7 @@ public:
 	/// <param name="Param_Resultado">Um ponteiro para a interface ICarenMFAsyncResult. Passe no mesmo ponteiro que o objeto de retorno de chamada recebeu no método 
 	/// ICarenMFAsyncCallback::Invoke.</param>
 	/// <param name="Param_Out_TotalEscrito">Recebe o número de bytes que foram escritos.</param>
-	virtual CarenResult ConcluirEscritaAsync(ICarenMFAsyncResult^ Param_Resultado, [Out] UInt64% Param_Out_TotalEscrito);
+	virtual CarenResult EndWrite(ICarenMFAsyncResult^ Param_Resultado, [Out] UInt64% Param_Out_TotalEscrito);
 
 	/// <summary>
 	/// (Flush) - Limpa todos os buffers internos usados pelo fluxo. Se você estiver gravando no fluxo, os dados em buffer serão gravados no arquivo ou dispositivo subjacente.
@@ -253,25 +253,25 @@ public:
 	/// (GetCapabilities) - Recupera as características do fluxo de bytes.
 	/// </summary>
 	/// <param name="Param_Out_CaracteristicasFluxo">Retorna uma ou mais bandeiras da enumeração (CA_CARACTERISTICAS_BYTESTREAM) que definem as caracteristicas do fluxo de bytes.</param>
-	virtual CarenResult ObterCaracteristicas([Out] CA_CARACTERISTICAS_BYTESTREAM% Param_Out_CaracteristicasFluxo);
+	virtual CarenResult GetCapabilities([Out] CA_CARACTERISTICAS_BYTESTREAM% Param_Out_CaracteristicasFluxo);
 
 	/// <summary>
 	/// (GetCurrentPosition) - Recupera a posição atual de leitura ou gravação no fluxo.
 	/// </summary>
 	/// <param name="Param_Out_Posicao">Retorna a posição atual, em bytes.</param>
-	virtual CarenResult ObterPosicaoAtual([Out] UInt64% Param_Out_Posicao);
+	virtual CarenResult GetCurrentPosition([Out] UInt64% Param_Out_Posicao);
 
 	/// <summary>
 	/// (GetLength) - Recupera o comprimento do fluxo.
 	/// </summary>
 	/// <param name="Param_Out_Largura">Recebe o comprimento do fluxo, em bytes. Se o comprimento for desconhecido, este valor é -1.</param>
-	virtual CarenResult ObterLargura([Out] UInt64% Param_Out_Largura);
+	virtual CarenResult GetLength([Out] UInt64% Param_Out_Largura);
 
 	/// <summary>
 	/// (IsEndOfStream) - Consulta se a posição atual atingiu o final do fluxo.
 	/// </summary>
 	/// <param name="Param_Out_FinalFluxo">Retorna o valor TRUE se a posiçao atual for o final do fluxo, caso contrário FALSE.</param>
-	virtual CarenResult VerificarFinalFluxo([Out] Boolean% Param_Out_FinalFluxo);
+	virtual CarenResult IsEndOfStream([Out] Boolean% Param_Out_FinalFluxo);
 
 	/// <summary>
 	/// (Read) - Lê dados do fluxo.
@@ -279,7 +279,7 @@ public:
 	/// <param name="Param_Buffer">Um ponteiro para o buffer que vai receber os dados. O chamador deve alocar esse buffer.</param>
 	/// <param name="Param_Tamanho">O tamanho do buffer em bytes.</param>
 	/// <param name="Param_Out_TotalLido">Recebe o número de bytes lidos no buffer.</param>
-	virtual CarenResult Ler(
+	virtual CarenResult Read(
 		ICarenBuffer^ Param_Buffer,
 		UInt64 Param_Tamanho,
 		[Out] UInt64% Param_Out_TotalLido);
@@ -301,13 +301,13 @@ public:
 	/// (SetCurrentPosition) - Define a posição atual de leitura ou gravação.
 	/// </summary>
 	/// <param name="Param_Posicao">Nova posição no fluxo, como um byte offset desde o início do fluxo.</param>
-	virtual CarenResult DefinirPosicaoAtual(UInt64 Param_Posicao);
+	virtual CarenResult SetCurrentPosition(UInt64 Param_Posicao);
 
 	/// <summary>
 	/// (SetLength) - Define o comprimento do fluxo.
 	/// </summary>
 	/// <param name="Param_LarguraFluxo">A largura do fluxo em bytes.</param>
-	virtual CarenResult DefinirLargura(UInt64 Param_LarguraFluxo);
+	virtual CarenResult SetLength(UInt64 Param_LarguraFluxo);
 
 	/// <summary>
 	/// (Write) - Grava dados no fluxo.
@@ -315,7 +315,7 @@ public:
 	/// <param name="Param_Buffer">Um ponteiro para o buffer que contém os dados a serem escritos.</param>
 	/// <param name="Param_Tamanho">O tamanho do buffer em bytes.</param>
 	/// <param name="Param_Out_TotalEscrito">Recebe o numero de bytes que foram escritos no buffer.</param>
-	virtual CarenResult Escrever(
+	virtual CarenResult Write(
 		ICarenBuffer^ Param_Buffer,
 		UInt64 Param_Tamanho,
 		[Out] UInt64% Param_Out_TotalEscrito);

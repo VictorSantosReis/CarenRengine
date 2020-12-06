@@ -250,36 +250,36 @@ public:
 	/// (Clone) - Cria um copiar deste descritor de apresentação.
 	/// </summary>
 	/// <param name="Param_Out_ClonagemDescritor">Recebe uma clone da interface do descritor de apresentação atual.</param>
-	virtual CarenResult Clonar([Out] ICarenMFPresentationDescriptor^% Param_Out_ClonagemDescritor);
+	virtual CarenResult Clone([Out] ICarenMFPresentationDescriptor^% Param_Out_ClonagemDescritor);
 
 	/// <summary>
 	/// (DeselectStream) - Cancela a seleção de um fluxo na apresentação.
 	/// </summary>
 	/// <param name="Param_IdFluxo">O número de fluxo para desmarcar, indexados a partir de zero. Para encontrar o número de fluxos na apresentação, chame o método 
-	/// ICarenMFPresentationDescriptor::ObterQuantidadeDescritoresFluxo.</param>
-	virtual CarenResult CancelarFluxo(UInt32 Param_IdFluxo);
+	/// ICarenMFPresentationDescriptor::GetStreamDescriptorCount.</param>
+	virtual CarenResult DeselectStream(UInt32 Param_IdFluxo);
 
 	/// <summary>
 	/// (GetStreamDescriptorByIndex) - Recupera um descritor de fluxo para um fluxo na apresentação. O descritor de stream contém informação sobre o fluxo.
 	/// </summary>
-	/// <param name="Param_IdDescritorFluxo">Índice baseado em zero do fluxo. Para encontrar o número de fluxos na apresentação, chame o método ICarenMFPresentationDescriptor::ObterQuantidadeDescritoresFluxo.</param>
+	/// <param name="Param_IdDescritorFluxo">Índice baseado em zero do fluxo. Para encontrar o número de fluxos na apresentação, chame o método ICarenMFPresentationDescriptor::GetStreamDescriptorCount.</param>
 	/// <param name="Param_Out_FluxoSelecionado">Recebe um valor booleano que indica se o fluxo está selecionado.</param>
 	/// <param name="Param_Out_DescritorFluxo">Recebe a interface do descritor de fluxo no id especificado.</param>
-	virtual CarenResult ObterDescritorFluxoPorId(UInt32 Param_IdDescritorFluxo, [Out] Boolean% Param_Out_FluxoSelecionado, [Out] ICarenMFStreamDescriptor^% Param_Out_DescritorFluxo);
+	virtual CarenResult GetStreamDescriptorByIndex(UInt32 Param_IdDescritorFluxo, [Out] Boolean% Param_Out_FluxoSelecionado, [Out] ICarenMFStreamDescriptor^% Param_Out_DescritorFluxo);
 
 	/// <summary>
 	/// (GetStreamDescriptorCount) - Recupera o número de descritores de fluxo na apresentação. Cada descritor de stream contém informação sobre um córrego na fonte 
-	/// de mídia. Para recuperar um descritor de fluxo, chame o método ICarenMFPresentationDescriptor::ObterDescritorFluxoPorId.
+	/// de mídia. Para recuperar um descritor de fluxo, chame o método ICarenMFPresentationDescriptor::GetStreamDescriptorByIndex.
 	/// </summary>
 	/// <param name="Param_Out_Quantidade">Recebe a quantidade de Descritores de fluxo na apresentação.</param>
-	virtual CarenResult ObterQuantidadeDescritoresFluxo([Out] UInt32% Param_Out_Quantidade);
+	virtual CarenResult GetStreamDescriptorCount([Out] UInt32% Param_Out_Quantidade);
 
 	/// <summary>
 	/// (SelectStream) - Seleciona um fluxo na apresentação.
 	/// </summary>
 	/// <param name="Param_IdFluxo">O número do fluxo para selecionar, indexados a partir de zero. Para encontrar o número de fluxos na apresentação, chame o método 
-	/// ICarenMFPresentationDescriptor::ObterQuantidadeDescritoresFluxo.</param>
-	virtual CarenResult SelecionarFluxo(UInt32 Param_IdFluxo);
+	/// ICarenMFPresentationDescriptor::GetStreamDescriptorCount.</param>
+	virtual CarenResult SelectStream(UInt32 Param_IdFluxo);
 
 
 

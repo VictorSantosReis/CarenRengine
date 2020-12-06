@@ -174,19 +174,19 @@ public:
 	/// (GetMediaSource) - Recupera um ponteiro para a fonte de mídia que criou este fluxo de mídia.
 	/// </summary>
 	/// <param name="Param_Out_FonteMidia">Recebe a fonte de mídia responsável por esse fluxo.</param>
-	virtual CarenResult ObterFonteMidia([Out] ICarenMFMediaSource^% Param_Out_FonteMidia);
+	virtual CarenResult GetMediaSource([Out] ICarenMFMediaSource^% Param_Out_FonteMidia);
 
 	/// <summary>
 	/// (GetStreamDescriptor) - Recupera um descritor de stream para este fluxo de mídia.
 	/// </summary>
 	/// <param name="Param_Out_DescritorFluxo">Recebe o descritor deste fluxo.</param>
-	virtual CarenResult ObterDescritorFluxo([Out] ICarenMFStreamDescriptor^% Param_Out_DescritorFluxo);
+	virtual CarenResult GetStreamDescriptor([Out] ICarenMFStreamDescriptor^% Param_Out_DescritorFluxo);
 
 	/// <summary>
 	/// (RequestSample) - Solicite uma amostra da fonte de mídia.
 	/// </summary>
 	/// <param name="Param_Token">Um Objeto que é usado como símbolo para solicitação. O chamador deve implementar este objeto. Este parâmetro pode ser nulo.</param>
-	virtual CarenResult RequisitarAmostra(ICaren^ Param_Token);
+	virtual CarenResult RequestSample(ICaren^ Param_Token);
 
 
 

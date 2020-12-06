@@ -3655,7 +3655,7 @@ namespace CarenRengine
 				literal String^ GUID_CA_INTF_MFMidiaSink = "{C8514E08-756F-4C42-AB65-C9FFEEACD7CD}";
 
 				/// <summary>
-				/// Guid da interface: ICarenMFMediaStreamSink
+				/// Guid da interface: ICarenMFStreamSink
 				/// </summary>
 				literal String^ GUID_CA_INTF_MFMidiaStreamSink = "{4442A91B-3521-4E0A-9F65-2BEFB93DA6E4}";
 
@@ -5617,9 +5617,9 @@ namespace CarenRengine
 			};
 
 			/// <summary>
-			/// Enumera um resultado para a leitura de uma amostra de mídia.
+			/// Enumera valores para o resultado de leitura de uma amostra de mídia.
 			/// </summary>
-			public enum class CA_AMOSTRA_RESULTADO
+			public enum class CA_SAMPLE_READ_RESULT
 			{
 				/// <summary>
 				/// Determina que uma amostra de mídia foi obtida com sucesso.
@@ -5796,20 +5796,20 @@ namespace CarenRengine
 			};
 
 			/// <summary>
-			/// Contém sinalizadores para o método ICarenMFSample.LerAmostra.
+			/// Contém sinalizadores para o método ICarenMFSample.ReadSample.
 			/// </summary>
 			public enum class CA_SOURCE_READER_CONTROL_FLAG
 			{
 				/// <summary>
 				/// Recupere quaisquer amostras pendentes, mas não solicite mais amostras da fonte de mídia. 
-				/// Para obter todos as amostras pendentes, chame (LerAmostra) com esse sinalizador até que o método 
+				/// Para obter todos as amostras pendentes, chame (ReadSample) com esse sinalizador até que o método 
 				/// retorna uma amostra (NULA).
 				/// </summary>
 				MF_SOURCE_READER_CONTROLF_DRAIN = 0x1
 			};
 
 			/// <summary>
-			/// Contém sinalizadores que indcam o status de uma chamada para o método ICarenMFSample.LerAmostra.
+			/// Contém sinalizadores que indcam o status de uma chamada para o método ICarenMFSample.ReadSample.
 			/// </summary>
 			[FlagsAttribute]
 			public enum class CA_SOURCE_READER_FLAGS
@@ -5821,7 +5821,7 @@ namespace CarenRengine
 
 
 				/// <summary>
-				/// Ocorreu um erro durante a realização da chamada para a interface (ICarenMFSourceReader). Não chame novamente o método para Ler uma proxima amostra.
+				/// Ocorreu um erro durante a realização da chamada para a interface (ICarenMFSourceReader). Não chame novamente o método para Read uma proxima amostra.
 				/// </summary>
 				LEITURA_ERROR = 0x1,
 
@@ -6288,11 +6288,11 @@ namespace CarenRengine
 			/// (MFVideoRenderPrefs) Enumera sinalizadores que definem como o renderizador de vídeo aprimorado (EVR) exibe o vídeo.
 			/// </summary>
 			[FlagsAttribute]
-			public enum class CA_VIDEO_RENDER_CONFIGURACOES
+			public enum class CA_MFVideoRenderPrefs
 			{
 				/// <summary>
 				/// Se este sinalizador estiver definido, o EVR não desenha a cor da borda. Por padrão, o EVR desenha uma borda em áreas do 
-				/// retângulo de destino que não têm nenhum vídeo. Consulte o método: ICarenMFVideoDisplayControl.DefinirCorBorda
+				/// retângulo de destino que não têm nenhum vídeo. Consulte o método: ICarenMFVideoDisplayControl.SetBorderColor
 				/// </summary>
 				VR_NO_RENDER_BORDER = 0x1,
 
@@ -10887,7 +10887,7 @@ MEReservedMax = 10000
 				Zero = 0x0,
 
 				/// <summary>
-				/// (MFT_OUTPUT_STATUS_SAMPLE_READY) - Há uma amostra disponível para pelo menos um fluxo de saída. Para recuperar as amostras de produção disponíveis, ligue para o ICarenMFTransform::ProcessarSaida.
+				/// (MFT_OUTPUT_STATUS_SAMPLE_READY) - Há uma amostra disponível para pelo menos um fluxo de saída. Para recuperar as amostras de produção disponíveis, ligue para o ICarenMFTransform::ProcessOutput.
 				/// </summary>
 				CA_MFT_OUTPUT_STATUS_SAMPLE_READY = MFT_OUTPUT_STATUS_SAMPLE_READY
 			};
@@ -10920,7 +10920,7 @@ MEReservedMax = 10000
 			};
 			
 			/// <summary>
-			/// (MFT_MESSAGE_TYPE)(FALTA DOCUMENTAR) - Enumera as mensagens para uma transformação da Media Foundation (MFT). Para enviar uma mensagem a um MFT, ligue para o ICarenMFTransform::ProcessarMensagem.
+			/// (MFT_MESSAGE_TYPE)(FALTA DOCUMENTAR) - Enumera as mensagens para uma transformação da Media Foundation (MFT). Para enviar uma mensagem a um MFT, ligue para o ICarenMFTransform::ProcessMessage.
 			/// </summary>
 			public enum class CA_MFT_MESSAGE_TYPE
 			{
@@ -10956,7 +10956,7 @@ MEReservedMax = 10000
 			};
 			
 			/// <summary>
-			/// (MFVP_MESSAGE_TYPE)(FALTA DOCUMENTAR) - Enumera mensagens para um apresentador de renderização de vídeo aprimorado (EVR). Esta enumeração é usada com o método ICarenMFVideoPresenter::ProcessarMensagem.
+			/// (MFVP_MESSAGE_TYPE)(FALTA DOCUMENTAR) - Enumera mensagens para um apresentador de renderização de vídeo aprimorado (EVR). Esta enumeração é usada com o método ICarenMFVideoPresenter::ProcessMessage.
 			/// </summary>
 			public enum class CA_MFVP_MESSAGE_TYPE
 			{
@@ -10994,7 +10994,7 @@ MEReservedMax = 10000
 			};
 
 			/// <summary>
-			/// (_MFT_OUTPUT_DATA_BUFFER_FLAGS)(FALTA DOCUMENTAR) - Enumera bandeiras para o método ICarenMFTransform::ProcessarSaida
+			/// (_MFT_OUTPUT_DATA_BUFFER_FLAGS)(FALTA DOCUMENTAR) - Enumera bandeiras para o método ICarenMFTransform::ProcessOutput
 			/// </summary>
 			public enum class CA_MFT_OUTPUT_DATA_BUFFER_FLAGS
 			{
@@ -11013,7 +11013,7 @@ MEReservedMax = 10000
 			};
 
 			/// <summary>
-			/// (_MFT_PROCESS_OUTPUT_STATUS)(FALTA DOCUMENTAR) - Enumera o status de uma chamada para ICarenMFTransform::ProcessarSaida.
+			/// (_MFT_PROCESS_OUTPUT_STATUS)(FALTA DOCUMENTAR) - Enumera o status de uma chamada para ICarenMFTransform::ProcessOutput.
 			/// </summary>
 			[FlagsAttribute]
 			public enum class CA_MFT_PROCESS_OUTPUT_STATUS
@@ -18074,25 +18074,25 @@ MEReservedMax = 10000
 
 				/// <summary>
 				/// (llLastTimestampReceived) O carimbo de data/hora da amostra mais recente dada ao gravador de coletor. O gravador de coletor atualiza esse valor
-				/// sempre que o aplicativo chama o método (EscreverAmostra).
+				/// sempre que o aplicativo chama o método (WriteSample).
 				///</summary>
 				Int64 ES_TIMESPAN_AMOSTRA_RECENTE_ENVIADA;
 
 				/// <summary>
 				/// (llLastTimestampEncoded) O carimbo de data/hora da amostra mais recente a ser codificado. O gravador de coletor atualiza esse valor sempre que 
-				/// ele chama o método (ProcessarSaida) no MFT do codificador.
+				/// ele chama o método (ProcessOutput) no MFT do codificador.
 				///</summary>
 				Int64 ES_TIMESPAN_AMOSTRA_RECENTE_CODIFICADA;
 
 				/// <summary>
 				/// (llLastTimestampProcessed) O carimbo de data/hora da amostra mais recente fornecida para o coletor de mídia. O gravador de coletor atualiza esse 
-				/// valor sempre que ele chama o método (ProcessarAmostraMidia) no coletor de mídia(ICarenMFMediaStreamSink).
+				/// valor sempre que ele chama o método (ProcessSample) no coletor de mídia(ICarenMFStreamSink).
 				///</summary>
 				Int64 ES_TIMESPAN_AMOSTRA_RECENTE_PROCESSADA;
 
 				/// <summary>
 				/// (llLastStreamTickReceived) O carimbo de hora do Tick de fluxo mais recente. O gravador de coletor atualiza esse valor sempre que o aplicativo chama
-				/// o método (EnviarLacunaFluxo) no Gravador de Coletor(ICarenMFSinkWriter).
+				/// o método (SendStreamTick) no Gravador de Coletor(ICarenMFSinkWriter).
 				///</summary>
 				Int64 ES_TIMESPAN_TICK_FLUXO_RECENTE;
 
@@ -20420,25 +20420,25 @@ MEReservedMax = 10000
 			};
 
 			/// <summary>
-			/// (_MFT_OUTPUT_DATA_BUFFER) - Contém informações sobre um Buffer de saída para uma transformação da Media Foundation. Esta estrutura é usada no método ICarenMFTransform::ProcessarSaida.
+			/// (_MFT_OUTPUT_DATA_BUFFER) - Contém informações sobre um Buffer de saída para uma transformação da Media Foundation. Esta estrutura é usada no método ICarenMFTransform::ProcessOutput.
 			/// </summary>
 			public ref struct CA_MFT_OUTPUT_DATA_BUFFER
 			{
 				/// <summary>
-				/// (dwStreamID) - Identificador de fluxo de saída. Antes de ligar para o ProcessarSaida, coloque este membro em um identificador de fluxo válido.
-				/// Exceção: Se o método ICarenMFTransform::ObterIDsFluxo retorna E_NOTIMPL, o MFT ignora este membro e usa os índices do conjunto (Param_MatrizAmostra) 
-				/// no método ProcessarSaida como identificadores de fluxo. Em outras palavras, ele usa o primeiro elemento na matriz para o fluxo 0, o segundo para o fluxo 1, 
+				/// (dwStreamID) - Identificador de fluxo de saída. Antes de ligar para o ProcessOutput, coloque este membro em um identificador de fluxo válido.
+				/// Exceção: Se o método ICarenMFTransform::GetStreamIDs retorna E_NOTIMPL, o MFT ignora este membro e usa os índices do conjunto (Param_MatrizAmostra) 
+				/// no método ProcessOutput como identificadores de fluxo. Em outras palavras, ele usa o primeiro elemento na matriz para o fluxo 0, o segundo para o fluxo 1, 
 				/// e assim por diante. Recomenda-se (mas não necessário) que o chamador configure (FluxoID) igual ao índice array neste caso.
 				/// </summary>
 				UInt32 FluxoID;
 
 				/// <summary>
-				/// (pSample)(Representa a interface ICarenMFSample) - Ponteiro para a interface ICarenMFSample. Antes de chamar o ProcessarSaida, defina este membro igual a um ponteiro de amostra ou NULO.
+				/// (pSample)(Representa a interface ICarenMFSample) - Ponteiro para a interface ICarenMFSample. Antes de chamar o ProcessOutput, defina este membro igual a um ponteiro de amostra ou NULO.
 				/// </summary>
 				ICaren^ AmostraMidia;
 
 				/// <summary>
-				/// (dwStatus) - Antes de ligar para o ProcessarSaida, defina este membro para zero. Quando o método retorna, o MFT pode definir o membro igual a um valor 
+				/// (dwStatus) - Antes de ligar para o ProcessOutput, defina este membro para zero. Quando o método retorna, o MFT pode definir o membro igual a um valor 
 				/// do CA_MFT_OUTPUT_DATA_BUFFER_FLAGS enumeração. Caso contrário, o MFT deixa este membro igual a zero.
 				/// </summary>
 				Enumeracoes::CA_MFT_OUTPUT_DATA_BUFFER_FLAGS Status;
@@ -20446,7 +20446,7 @@ MEReservedMax = 10000
 				/// <summary>
 				/// (pEvents)(Representa a interface ICarenMFCollection) - Antes de ligar para o Processar, defina este membro como NULO. Na saída, o MFT pode definir este membro para um ponteiro de interface de 
 				/// memória da ICarenMFCollection válido. O ponteiro representa uma (Coleção) que contém zero ou mais eventos. Para obter cada evento, ligue para a 
-			    /// ICarenMFCollection:GetElement e obtenha o ponteiro para ICarenMFMediaEvent. Quando o método ProcessarSaida retorna, o chamador é responsável 
+			    /// ICarenMFCollection:GetElement e obtenha o ponteiro para ICarenMFMediaEvent. Quando o método ProcessOutput retorna, o chamador é responsável 
 				/// por liberar o ponteiro ICarenMFCollection se o ponteiro não for NULO.
 				/// </summary>
 				ICaren^ ColecaoEventos;

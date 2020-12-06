@@ -250,13 +250,13 @@ public:
 	/// obter o tipo de mídia atual e definir o tipo de mídia.
 	/// </summary>
 	/// <param name="Param_Out_TipoMidiaHandler">Recebe a interface do manipular de tipo de mídia.</param>
-	virtual CarenResult ObterManipuladorTipoMidia([Out] ICarenMFMediaTypeHandler^% Param_Out_TipoMidiaHandler);
+	virtual CarenResult GetMediaTypeHandler([Out] ICarenMFMediaTypeHandler^% Param_Out_TipoMidiaHandler);
 
 	/// <summary>
 	/// (GetStreamIdentifier) - Recupera um identificador para o fluxo.
 	/// </summary>
 	/// <param name="Param_Out_Identificador">Recebe o identificador do fluxo.</param>
-	virtual CarenResult ObterIdentificadorFluxo([Out] UInt32% Param_Out_Identificador);
+	virtual CarenResult GetStreamIdentifier([Out] UInt32% Param_Out_Identificador);
 
 
 	//Métodos da interface(ICarenMFAttributes)

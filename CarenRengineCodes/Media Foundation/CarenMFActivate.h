@@ -179,25 +179,25 @@ public:
 	/// </summary>
 	/// <param name="Param_IIDInterface">Identificador de interface (IID) da interface solicitada.</param>
 	/// <param name="Param_Out_InterfaceSolicitada">Recebe a interface que contém a interface solicitada. O usuário deve criar a interfaces antes de chamar este método.</param>
-	virtual CarenResult AtivarObjeto(String^ Param_IIDInterface, ICaren^ Param_Out_InterfaceSolicitada);
+	virtual CarenResult ActivateObject(String^ Param_IIDInterface, ICaren^ Param_Out_InterfaceSolicitada);
 
 
 	/// <summary>
 	/// (DetachObject) - Desanexa o objeto criado a partir do objeto de ativação.
-	/// O objeto de ativação libera Todas as suas referências internas para o objeto criado. Se você chamar (AtivarObjeto) novamente, o objeto 
+	/// O objeto de ativação libera Todas as suas referências internas para o objeto criado. Se você chamar (ActivateObject) novamente, o objeto 
 	/// de ativação criará uma nova instância do outro objeto.
 	/// O método não desliga o objeto criado. Se o método for bem-sucedido, o cliente deve desligar o objeto criado
 	/// </summary>
-	virtual CarenResult DesanexarObjeto();
+	virtual CarenResult DetachObject();
 
 
 	/// <summary>
 	/// (ShutdownObject) - Desliga o objeto criado.
-	/// O componente que chama (AtivarObjeto) não o componente que cria o objeto de ativação  é responsável por chamar (DesligarObjeto). Por exemplo, 
-	/// em um aplicativo de reprodução típica, o aplicativo cria objetos de ativação para os coletores de mídia, mas a sessão de mídia chama (AtivarObjeto). 
-	/// Portanto, a sessão de mídia, não o aplicativo, chama (DesligarObjeto).
+	/// O componente que chama (ActivateObject) não o componente que cria o objeto de ativação  é responsável por chamar (ShutdownObject). Por exemplo, 
+	/// em um aplicativo de reprodução típica, o aplicativo cria objetos de ativação para os coletores de mídia, mas a sessão de mídia chama (ActivateObject). 
+	/// Portanto, a sessão de mídia, não o aplicativo, chama (ShutdownObject).
 	/// </summary>
-	virtual CarenResult DesligarObjeto();
+	virtual CarenResult ShutdownObject();
 
 
 

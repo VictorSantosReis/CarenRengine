@@ -420,7 +420,7 @@ void CarenMFVideoRenderer::Finalizar()
 /// o EVR usa seu misturador padrão.</param>
 /// <param name="Param_Apresentador">Ponteiro para a interface (IMFVideoPresenter) do apresentador para usar. Este parâmetro pode ser (NULO). Se este parâmetro 
 /// for NULL, o EVR usa seu apresentador padrão.</param>
-CarenResult CarenMFVideoRenderer::InicializarRenderizador(ICarenMFTransform^ Param_VideoMixer, ICarenMFVideoPresenter^ Param_Apresentador)
+CarenResult CarenMFVideoRenderer::InitializeRenderer(ICarenMFTransform^ Param_VideoMixer, ICarenMFVideoPresenter^ Param_Apresentador)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

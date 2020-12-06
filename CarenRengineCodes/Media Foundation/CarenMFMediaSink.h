@@ -289,7 +289,7 @@ public:
 	/// <param name="Param_IdentificadorFluxo">Um (Identificador) para o fluxo. O valor é (Arbitrário), mas deve ser exclusivo.</param>
 	/// <param name="Param_TipoMidia">Uma interface com o tipo de mídia do Stream a ser adicionado. Esse valor pode ser (NULO).</param>
 	/// <param name="Param_Out_FluxoSink">Retorna uma interface para o fluxo adicionado.</param>
-	virtual CarenResult AddStreamSink(UInt32 Param_IdentificadorFluxo, ICarenMFMediaType^ Param_TipoMidia, [Out] ICarenMFMediaStreamSink^% Param_Out_FluxoSink);
+	virtual CarenResult AddStreamSink(UInt32 Param_IdentificadorFluxo, ICarenMFMediaType^ Param_TipoMidia, [Out] ICarenMFStreamSink^% Param_Out_FluxoSink);
 
 	/// <summary>
 	/// Obtém as características do coletor de mídia.
@@ -308,14 +308,14 @@ public:
 	/// </summary>
 	/// <param name="Param_IdentificadorFluxo">O Identificador para o fluxo a ser obtido.</param>
 	/// <param name="Param_Out_FluxoSink">Recebe a interface que contém o Stream Sink requisitado pelo seu (Identificador)</param>
-	virtual CarenResult GetStreamSinkById(UInt32 Param_IdentificadorFluxo, [Out] ICarenMFMediaStreamSink^% Param_Out_FluxoSink);
+	virtual CarenResult GetStreamSinkById(UInt32 Param_IdentificadorFluxo, [Out] ICarenMFStreamSink^% Param_Out_FluxoSink);
 
 	/// <summary>
 	/// Obtém um coletor de fluxo, especificado por index.
 	/// </summary>
 	/// <param name="Param_IdFluxo">O Id para o coletor de fluxo a ser obtido.</param>
 	/// <param name="Param_Out_FluxoSink">Recebe a interface que contém o coletor de fluxo requisitado.</param>
-	virtual CarenResult GetStreamSinkByIndex(UInt32 Param_IdFluxo, [Out] ICarenMFMediaStreamSink^% Param_Out_FluxoSink);
+	virtual CarenResult GetStreamSinkByIndex(UInt32 Param_IdFluxo, [Out] ICarenMFStreamSink^% Param_Out_FluxoSink);
 
 	/// <summary>
 	/// Obtém o número de coletores de fluxo neste coletor de mídia.

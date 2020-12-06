@@ -445,7 +445,7 @@ Done:;
 /// <param name="Param_Mensagem">Especifica a mensagem como membro da enumeração CA_MFVP_MESSAGE_TYPE.</param>
 /// <param name="Param_UlParam">Parâmetro de mensagem. O significado deste parâmetro depende do tipo de mensagem.</param>
 /// <returns></returns>
-CarenResult CarenMFVideoPresenter::ProcessarMensagem(CA_MFVP_MESSAGE_TYPE Param_Mensagem, UInt64 Param_UlParam)
+CarenResult CarenMFVideoPresenter::ProcessMessage(CA_MFVP_MESSAGE_TYPE Param_Mensagem, UInt64 Param_UlParam)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

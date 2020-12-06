@@ -419,7 +419,7 @@ void CarenMFVideoDisplayControl::Finalizar()
 /// (GetAspectRatioMode) - Consulta como o processador de vídeo avançado (EVR) lida com a relação de aspecto da fonte de vídeo.
 /// </summary>
 /// <param name="Param_Out_AspectRatio">Recebe um ou mais bit de sinalizadores da enumeração: CA_VIDEO_DISPLAY_ASPECT_RATIO_MODE</param>
-CarenResult CarenMFVideoDisplayControl::ObterAspectRatio([Out] Enumeracoes::CA_VIDEO_DISPLAY_ASPECT_RATIO_MODE% Param_Out_AspectRatio)
+CarenResult CarenMFVideoDisplayControl::GetAspectRatioMode([Out] Enumeracoes::CA_VIDEO_DISPLAY_ASPECT_RATIO_MODE% Param_Out_AspectRatio)
 {
 	//Variavel que vai retorna o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -460,7 +460,7 @@ Done:;
 /// (GetBorderColor) - Obtém a cor da borda para o vídeo.
 /// </summary>
 /// <param name="Param_Out_CorHexadecimalBorda">Recebe o valor que especifica em hexadecimal, uma cor RGB.</param>
-CarenResult CarenMFVideoDisplayControl::ObterCorBorda([Out] UInt32% Param_Out_CorHexadecimalBorda)
+CarenResult CarenMFVideoDisplayControl::GetBorderColor([Out] UInt32% Param_Out_CorHexadecimalBorda)
 {
 	//Variavel que vai retorna o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -506,7 +506,7 @@ Done:;
 /// O chamador deve liberar a memória para o bitmap chamando: CoTaskMemFree</param>
 /// <param name="Param_Out_BufferLargura">Contém a largura do buffer retornado em: Param_Out_BufferImagem.</param>
 /// <param name="Param_Out_TimeStamp">Recebe o carimbo de data/hora da imagem capturada. O valor é em unidades de 100 nanosegundos.</param>
-CarenResult CarenMFVideoDisplayControl::ObterCopiaImagemAtual(
+CarenResult CarenMFVideoDisplayControl::GetCurrentImage(
 	[Out] Estruturas::CA_BITMAPINFOHEADER^% Param_Out_BimapInfoHeader,
 	[Out] ICarenBuffer^% Param_Out_BufferImagem,
 	[Out] UInt32% Param_Out_BufferLargura,
@@ -589,7 +589,7 @@ Done:;
 /// (GetFullscreen) - Consulta se o processador de vídeo avançado (EVR) está atualmente no modo de tela cheia.
 /// </summary>
 /// <param name="Param_Out_FullScreen">Recebe o valor que define se o vídeo está sendo renderizado em FullScreen.</param>
-CarenResult CarenMFVideoDisplayControl::ObterEstadoFullScreen([Out] Boolean% Param_Out_FullScreen)
+CarenResult CarenMFVideoDisplayControl::GetFullscreen([Out] Boolean% Param_Out_FullScreen)
 {
 	//Variavel que vai retorna o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -635,7 +635,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Out_Minimo_VideoSizeIdeal">Recebe a estrutura que contém os valores (Minimos) da Largura e Altura (Ideias) para o vídeo.</param>
 /// <param name="Param_Out_Maximo_VideoSizeIdeal">Recebe a estrutura que contém os valores (Maximos) da Largura e Altura (Ideias) para o vídeo.</param>
-CarenResult CarenMFVideoDisplayControl::ObterSizeIdealVideo(
+CarenResult CarenMFVideoDisplayControl::GetIdealVideoSize(
 	[Out] Estruturas::CA_SIZE^% Param_Out_Minimo_VideoSizeIdeal,
 	[Out] Estruturas::CA_SIZE^% Param_Out_Maximo_VideoSizeIdeal)
 {
@@ -700,7 +700,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Out_VideoSize">Recebe a estrutura que contém a Largura e Altura (Nativas) para o vídeo.</param>
 /// <param name="Param_Out_TaxaProporcaoVideo">Recebe a estrutura que contém a (Taxa de proporção) do vídeo.</param>
-CarenResult CarenMFVideoDisplayControl::ObterSizeNativoVideo(
+CarenResult CarenMFVideoDisplayControl::GetNativeVideoSize(
 	[Out] Estruturas::CA_SIZE^% Param_Out_VideoSize,
 	[Out] Estruturas::CA_SIZE^% Param_Out_TaxaProporcaoVideo)
 {
@@ -763,8 +763,8 @@ Done:;
 /// <summary>
 /// (GetRenderingPrefs) - Obtém várias configurações de processamento de vídeo.
 /// </summary>
-/// <param name="Param_Out_Sinalizadores">Recebe um bit ou zero ou mais sinalizadores da enumeração: CA_VIDEO_RENDER_CONFIGURACOES</param>
-CarenResult CarenMFVideoDisplayControl::ObterConfiguraçãoRenderização([Out] Enumeracoes::CA_VIDEO_RENDER_CONFIGURACOES% Param_Out_Sinalizadores)
+/// <param name="Param_Out_Sinalizadores">Recebe um bit ou zero ou mais sinalizadores da enumeração: CA_MFVideoRenderPrefs</param>
+CarenResult CarenMFVideoDisplayControl::GetRenderingPrefs([Out] Enumeracoes::CA_MFVideoRenderPrefs% Param_Out_Sinalizadores)
 {
 	//Variavel que vai retorna o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -794,7 +794,7 @@ CarenResult CarenMFVideoDisplayControl::ObterConfiguraçãoRenderização([Out] 
 	}
 
 	//Converte e define os flags no parametro de saida.
-	Param_Out_Sinalizadores = (CA_VIDEO_RENDER_CONFIGURACOES)RenderPrefs;
+	Param_Out_Sinalizadores = (CA_MFVideoRenderPrefs)RenderPrefs;
 
 	//Define sucesso na operação
 	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
@@ -809,7 +809,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Out_RetanguloNormalized">Recebe uma estrutura que contém o retângulo de origem.</param>
 /// <param name="Param_Out_RetanguloDestino">Recebe uma estrutura com o retângulo de destino atual.</param>
-CarenResult CarenMFVideoDisplayControl::ObterPosiçãoVideo(
+CarenResult CarenMFVideoDisplayControl::GetVideoPosition(
 	[Out] Estruturas::CA_MFVideoNormalizedRect^% Param_Out_RetanguloNormalized,
 	[Out] Estruturas::CA_RECT^% Param_Out_RetanguloDestino)
 {
@@ -856,7 +856,7 @@ Done:;
 /// hospedando a renderização do vídeo para o usuário.
 /// </summary>
 /// <param name="Param_Out_HandleJanela">Recebe a handle da janela que a qual o vídeo está sendo renderizado.</param>
-CarenResult CarenMFVideoDisplayControl::ObterJanelaVideo([Out] IntPtr% Param_Out_HandleJanela)
+CarenResult CarenMFVideoDisplayControl::GetVideoWindow([Out] IntPtr% Param_Out_HandleJanela)
 {
 	//Variavel que vai retorna o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -900,7 +900,7 @@ Done:;
 /// (RepaintSuperfice) - Redesenha o quadro de vídeo atual. Chame esse método sempre que a interface do usuário
 /// sofre uma atualização da interface.
 /// </summary>
-CarenResult CarenMFVideoDisplayControl::RedesenharSuperfice()
+CarenResult CarenMFVideoDisplayControl::RepaintSuperfice()
 {
 	//Variavel que vai retorna o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -936,7 +936,7 @@ Done:;
 /// da fonte de vídeo.
 /// </summary>
 /// <param name="Param_AspectRatio">Bit a bit ou de um ou mais sinalizadores da enumeração: CA_VIDEO_DISPLAY_ASPECT_RATIO_MODE</param>
-CarenResult CarenMFVideoDisplayControl::DefinirModoAspectRatio(Enumeracoes::CA_VIDEO_DISPLAY_ASPECT_RATIO_MODE Param_AspectRatio) {
+CarenResult CarenMFVideoDisplayControl::SetAspectRatioMode(Enumeracoes::CA_VIDEO_DISPLAY_ASPECT_RATIO_MODE Param_AspectRatio) {
 	//Variavel que vai retorna o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
 
@@ -970,7 +970,7 @@ Done:;
 /// (SetBorderColor) - Define a cor da borda para o vídeo.
 /// </summary>
 /// <param name="Param_ColorRef">Especifica a cor da borda como um valor UInt32</param>
-CarenResult CarenMFVideoDisplayControl::DefinirCorBorda(UInt32 Param_ColorRef)
+CarenResult CarenMFVideoDisplayControl::SetBorderColor(UInt32 Param_ColorRef)
 {
 	//Variavel que vai retorna o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1009,7 +1009,7 @@ Done:;
 /// </summary>
 /// <param name="Param_EstadoFullScreen">Se true, o renderizador de vídeo aprimorado (EVR) usará o modo de tela inteira. Se false, o EVR desenha o vídeo na 
 /// janela de recorte fornecido pelo aplicativo.</param>
-CarenResult CarenMFVideoDisplayControl::DefinirFullScreen(Boolean Param_EstadoFullScreen)
+CarenResult CarenMFVideoDisplayControl::SetFullScreen(Boolean Param_EstadoFullScreen)
 {
 	//Variavel que vai retorna o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1043,7 +1043,7 @@ Done:;
 /// <summary>
 /// (SetRenderingPrefs)Define preferências diversas, relacionadas com a processamento de vídeo.
 /// </summary>
-CarenResult CarenMFVideoDisplayControl::DefinirConfiguraçãoRenderização(Enumeracoes::CA_VIDEO_RENDER_CONFIGURACOES Param_RenderConfigs)
+CarenResult CarenMFVideoDisplayControl::SetRenderingPrefs(Enumeracoes::CA_MFVideoRenderPrefs Param_RenderConfigs)
 {
 	//Variavel que vai retorna o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1092,7 +1092,7 @@ Done:;
 /// retângulo de origem não é alterado.</param>
 /// <param name="Param_RetanguloDestino">Especifica o retângulo de destino. Este parâmetro pode ser NULL. Se este parâmetro é NULL, o retângulo 
 /// de destino não é alterado.</param>
-CarenResult CarenMFVideoDisplayControl::DefinirPosiçãoVideo(
+CarenResult CarenMFVideoDisplayControl::SetVideoPosition(
 	Estruturas::CA_MFVideoNormalizedRect^ Param_RetanguloNormalized,
 	Estruturas::CA_RECT^ Param_RetanguloDestino)
 {
@@ -1148,7 +1148,7 @@ Done:;
 /// do usuário.
 /// </summary>
 /// <param name="Param_JanelaVideo"></param>
-CarenResult CarenMFVideoDisplayControl::DefinirJanelaVideo(IntPtr Param_JanelaVideo)
+CarenResult CarenMFVideoDisplayControl::SetVideoWindow(IntPtr Param_JanelaVideo)
 {
 	//Variavel que vai retorna o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

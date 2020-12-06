@@ -314,21 +314,21 @@ public:
 	/// </summary>
 	/// <param name="Param_TipoMidia">Esse tipo de mídia especifica o formato das amostras que serão gravados no arquivo ou Hardware. 
 	/// Ele não precisa corresponder ao formato de entrada. Para definir o formato de entrada, chame o método :
-	/// DefinirTipoMidiaEntrada</param>
+	/// SetInputMediaType</param>
 	/// <param name="Param_Out_IdFluxoAdicionado">Recebe o índice baseado em zero do novo fluxo.</param>
-	virtual CarenResult AdicionarFluxo(ICarenMFMediaType^ Param_TipoMidia, [Out] UInt32% Param_Out_IdFluxoAdicionado);
+	virtual CarenResult AddStream(ICarenMFMediaType^ Param_TipoMidia, [Out] UInt32% Param_Out_IdFluxoAdicionado);
 
 	/// <summary>
 	/// (BeginWriting) - Inicializa o gravador de coletor para gravação.
 	/// Chame esse método depois de configurar os fluxos de entrada e antes de enviar 
 	/// os dados para o gravador de coletor.
 	/// </summary>
-	virtual CarenResult InicializarEscrita();
+	virtual CarenResult BeginWriting();
 
 	/// <summary>
 	/// (Finalize) - Conclui todas as operações de gravação no gravador de coletor.
 	/// </summary>
-	virtual CarenResult Concluir();
+	virtual CarenResult Finalize();
 
 	/// <summary>
 	/// (Flush) - Libera um ou mais fluxos.
@@ -347,7 +347,7 @@ public:
 	/// interface solicitada.</param>
 	/// <param name="Param_GuidInterfaceSolicitada">O Guid para a interface solicitada.</param>
 	/// <param name="Param_Out_Interface">Recebe a interface solicitada.</param>
-	virtual CarenResult ObterServiçoParaStream(
+	virtual CarenResult GetServiceForStream(
 		UInt32 Param_IdFluxo,
 		Boolean Param_ConsultarColetor,
 		String^ Param_GuidServiço,
@@ -360,7 +360,7 @@ public:
 	/// <param name="Param_IdFluxo">O Id para o fluxo de consulta. Se (Param_ConsularColetor) for True, desconsidere esse valor.</param>
 	/// <param name="Param_ConsultarColetor">Define se deve obter as estatísticas do (Coletor de Mídia) propriamente dito.</param>
 	/// <param name="Param_Out_StatusDesempenho">Retorna a estrutura que contém todas as informações de sempenho </param>
-	virtual CarenResult ObterEstatisticasGravador(UInt32 Param_IdFluxo, Boolean Param_ConsultarColetor, [Out] Estruturas::CA_MF_SINK_WRITER_STATISTICS^% Param_Out_StatusDesempenho);
+	virtual CarenResult GetStatistics(UInt32 Param_IdFluxo, Boolean Param_ConsultarColetor, [Out] Estruturas::CA_MF_SINK_WRITER_STATISTICS^% Param_Out_StatusDesempenho);
 
 	/// <summary>
 	/// (NotifyEndOfSegment) - Notifica o coletor de mídia que um fluxo atingiu o final de um segmento.
@@ -368,16 +368,16 @@ public:
 	/// <param name="Param_IdFluxo">O indica para o fluxo que vai ser notificado que foi atingido o final de um segmento. Desconsidere esse valor se (Param_NotificarTodos)
 	/// for True.</param>
 	/// <param name="Param_NotificarTodos">Indica que vai notificar que todos os fluxos atingiram o final de um segmento.</param>
-	virtual CarenResult NotificarFimSegmento(UInt32 Param_IdFluxo, Boolean Param_NotificarTodos);
+	virtual CarenResult NotifyEndOfSegment(UInt32 Param_IdFluxo, Boolean Param_NotificarTodos);
 
 	/// <summary>
-	/// (TESTE)(PlaceMarker) - Coloca um marcador no fluxo especificado.
+	/// Coloca um marcador no fluxo especificado.
 	/// Para usar esse método, você deve fornecer um retorno de chamada assíncrono(MF_SINK_WRITER_ASYNC_CALLBACK) quando você cria o Gravador de Coletor(ICarenMFSinkWriter).
 	/// Caso contrario, o método retorna o código: ER_MF_REQUISICAO_INVALIDA
 	/// </summary>
 	/// <param name="Param_IdFluxo">O Id para o fluxo que vai ter o marcador adicionado.</param>
 	/// <param name="Param_Valor">A interface que contém o valor desconhecido a ser definido.</param>
-	virtual CarenResult DefinirMarcadorFluxo(UInt32 Param_IdFluxo, ICaren^ Param_Valor);
+	virtual CarenResult PlaceMarker(UInt32 Param_IdFluxo, ICaren^ Param_Valor);
 
 	/// <summary>
 	/// (SendStreamTick) - Indica uma lacuna em um fluxo de entrada.
@@ -385,7 +385,7 @@ public:
 	/// <param name="Param_IdFluxo">O índice baseado em zero do fluxo.o.</param>
 	/// <param name="Param_IdFluxo">A posição no fluxo onde ocorre a lacuna nos dados. O valor é fornecido em 100-nanosecond unidades, 
 	/// em relação ao início do fluxo..</param>
-	virtual CarenResult EnviarLacunaFluxo(UInt32 Param_IdFluxo, Int64 Param_TimeStamp);
+	virtual CarenResult SendStreamTick(UInt32 Param_IdFluxo, Int64 Param_TimeStamp);
 
 	/// <summary>
 	/// (SetInputMediaType) - Define o Formatar de entrada para um fluxo no gravador de coletor.
@@ -395,15 +395,15 @@ public:
 	/// formato de entrada.</param>
 	/// <param name="Param_ParametrosEncode">Use o repositório de atributos para configurar o codificador. 
 	/// Este parâmetro pode ser nulo.</param>
-	virtual CarenResult DefinirTipoMidiaEntrada(UInt32 Param_IdFluxo, ICarenMFMediaType^ Param_TipoMidia, ICarenMFAttributes^ Param_ParametrosEncode);
+	virtual CarenResult SetInputMediaType(UInt32 Param_IdFluxo, ICarenMFMediaType^ Param_TipoMidia, ICarenMFAttributes^ Param_ParametrosEncode);
 
 	/// <summary>
 	/// (WriteSample) - Fornece uma amostra para o gravador de coletor.
-	/// Você deve chamar o método (InicializarEscrita) antes de chamar esse método. Caso contrário, o método retornará 
+	/// Você deve chamar o método (BeginWriting) antes de chamar esse método. Caso contrário, o método retornará 
 	/// o código: ER_MF_REQUISICAO_INVALIDA.
 	/// </summary>
 	/// <param name="Param_IdFluxo">O índice baseado em zero do fluxo para este exemplo.</param>
 	/// <param name="Param_AmostraMidia">A interface que contém a amostra a ser escrita.</param>
-	virtual CarenResult EscreverAmostra(UInt32 Param_IdFluxo, ICarenMFSample^ Param_AmostraMidia);
+	virtual CarenResult WriteSample(UInt32 Param_IdFluxo, ICarenMFSample^ Param_AmostraMidia);
 };
 

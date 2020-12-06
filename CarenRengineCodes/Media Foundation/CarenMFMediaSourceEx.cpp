@@ -414,7 +414,7 @@ void CarenMFMediaSourceEx::Finalizar()
 /// (GetSourceAttributes) - Obtém um armazenamento de atributo para a fonte de mídia.
 /// </summary>
 /// <param name="Param_Out_AtributosFonteMidia">Recebe a interface que contém os atributos para a fonte de midia.</param>
-CarenResult CarenMFMediaSourceEx::ObterAtributosFonteMidia([Out] ICarenMFAttributes^% Param_Out_AtributosFonteMidia)
+CarenResult CarenMFMediaSourceEx::GetSourceAttributes([Out] ICarenMFAttributes^% Param_Out_AtributosFonteMidia)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -465,8 +465,8 @@ Done:;
 /// (GetStreamAttributes) - Obtém um armazenamento de atributo para um fluxo na fonte de mídia.
 /// </summary>
 /// <param name="Param_Out_AtributosFluxoFonte">Recebe a interface que contém os atributos para um fluxo na fonte de midia.</param>
-/// <param name="Param_IdentificadorFluxo">O identificador do fluxo. Para obter o identificador, chame ICarenMFStreamDescriptor::ObterIdentificadorFluxo no descritor de fluxo.</param>
-CarenResult CarenMFMediaSourceEx::ObterAtributosFluxoFonte(UInt32 Param_IdentificadorFluxo, [Out] ICarenMFAttributes^% Param_Out_AtributosFluxoFonte)
+/// <param name="Param_IdentificadorFluxo">O identificador do fluxo. Para obter o identificador, chame ICarenMFStreamDescriptor::GetStreamIdentifier no descritor de fluxo.</param>
+CarenResult CarenMFMediaSourceEx::GetStreamAttributes(UInt32 Param_IdentificadorFluxo, [Out] ICarenMFAttributes^% Param_Out_AtributosFluxoFonte)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -517,7 +517,7 @@ Done:;
 /// (SetD3DManager) - Define um ponteiro para o Gerenciador de dispositivos do Microsoft DirectX Graphics infra-estrutura (DXGI) na fonte de mídia.
 /// </summary>
 /// <param name="Param_DXGIManager">O Gerenciador do DXGI que será utilizado.</param>
-CarenResult CarenMFMediaSourceEx::DefinirGerenciadorDXGI(ICarenMFDXGIDeviceManager^ Param_DXGIManager)
+CarenResult CarenMFMediaSourceEx::SetD3DManager(ICarenMFDXGIDeviceManager^ Param_DXGIManager)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -570,7 +570,7 @@ Done:;
 /// (CreatePresentationDescriptor) - Recupera uma cópia do descritor de apresentação da fonte de mídia. Os aplicativos usam o descritor de apresentação para selecionar fluxos e obter informações sobre o conteúdo de origem.
 /// </summary>
 /// <param name="Param_Out_DescritorApresentação">Recebe a interface para o descritor de apresentação.</param>
-CarenResult CarenMFMediaSourceEx::CriarDescritorApresentação([Out] ICarenMFPresentationDescriptor^% Param_Out_DescritorApresentação)
+CarenResult CarenMFMediaSourceEx::CreatePresentationDescriptor([Out] ICarenMFPresentationDescriptor^% Param_Out_DescritorApresentação)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -621,7 +621,7 @@ Done:;
 /// (GetCharacteristics) - Recupera as características da fonte de mídia.
 /// </summary>
 /// <param name="Param_Out_Caracteristicas">Recebe um OR de bit a bit de zero ou mais sinalizadores da enumeração (CA_MFMEDIASOURCE_CHARACTERISTICS).</param>
-CarenResult CarenMFMediaSourceEx::ObterCaracteristicas([Out] Enumeracoes::CA_MFMEDIASOURCE_CHARACTERISTICS% Param_Out_Caracteristicas)
+CarenResult CarenMFMediaSourceEx::GetCharacteristics([Out] Enumeracoes::CA_MFMEDIASOURCE_CHARACTERISTICS% Param_Out_Caracteristicas)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -664,7 +664,7 @@ Done:;
 /// <summary>
 /// (Start) - Inicia, procura ou reinicia a fonte de mídia especificando onde iniciar a reprodução.
 /// </summary>
-/// <param name="Param_DescritorApresentação">A interface de ICarenMFPresentationDescriptor de descritor de apresentação da fonte de mídia. Para obter o descritor de apresentação, chamade o método (ICarenMFPresentationDescriptor::CriarDescritorApresentação). 
+/// <param name="Param_DescritorApresentação">A interface de ICarenMFPresentationDescriptor de descritor de apresentação da fonte de mídia. Para obter o descritor de apresentação, chamade o método (ICarenMFPresentationDescriptor::CreatePresentationDescriptor). 
 /// Você pode modificar o descritor de apresentação antes de chamar Start, para selecionar ou desmarcar fluxos ou alterar os tipos de mídia.</param>
 /// <param name="Param_GuidTimeFormato">Um GUID que especifica o formato de hora. O formato de hora define as unidades para o parâmetro Param_PosiçãoInicio. Se o valor é NULL, o formato é definido como unidades de 100 nanossegundos. Algumas fontes de 
 /// mídia podem oferecer suporte o formato de hora adicional. Este parâmetro pode ser nulo. Se o valor for nulo, é equivalente a GUID_NULL.</param>

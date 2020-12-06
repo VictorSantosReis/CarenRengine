@@ -492,7 +492,7 @@ void CarenMFSourceReaderCallback::EncaminharEvento_OnReadSample(HRESULT Param_HR
 	//Variveis utilizadas no método.
 	ICarenMFSample^ InterfaceAmostra = nullptr;
 	CA_SOURCE_READER_FLAGS FlagsLeitura = (CA_SOURCE_READER_FLAGS)Param_FluxoFlgs;
-	CA_AMOSTRA_RESULTADO ResultadoLeitura = CA_AMOSTRA_RESULTADO::Erro;
+	CA_SAMPLE_READ_RESULT ResultadoLeitura = CA_SAMPLE_READ_RESULT::Erro;
 	ResultCode Resultado = ResultCode::SS_FALSE;
 	CarenResult ResultadoSetPointer;
 
@@ -563,7 +563,7 @@ void CarenMFSourceReaderCallback::EncaminharEvento_OnReadSample(HRESULT Param_HR
 	if (Param_FluxoFlgs & MF_SOURCE_READERF_CURRENTMEDIATYPECHANGED)
 	{
 		//Determina que o tipo da midia foi modificado.
-		ResultadoLeitura = CA_AMOSTRA_RESULTADO::TipoModificado;
+		ResultadoLeitura = CA_SAMPLE_READ_RESULT::TipoModificado;
 
 		//Define sucesso na operação.
 		Resultado = ResultCode::SS_OK;
@@ -579,7 +579,7 @@ void CarenMFSourceReaderCallback::EncaminharEvento_OnReadSample(HRESULT Param_HR
 	else if (Param_FluxoFlgs & MF_SOURCE_READERF_ENDOFSTREAM)
 	{
 		//Determina que chegou ao final do fluxo.
-		ResultadoLeitura = CA_AMOSTRA_RESULTADO::FimFluxo;
+		ResultadoLeitura = CA_SAMPLE_READ_RESULT::FimFluxo;
 
 		//Define sucesso na operação.
 		Resultado = ResultCode::SS_OK;
@@ -595,7 +595,7 @@ void CarenMFSourceReaderCallback::EncaminharEvento_OnReadSample(HRESULT Param_HR
 	else if (Param_FluxoFlgs & MF_SOURCE_READERF_ERROR)
 	{
 		//Determina que houve uma falha ao ler os dados da midia.
-		ResultadoLeitura = CA_AMOSTRA_RESULTADO::Erro;
+		ResultadoLeitura = CA_SAMPLE_READ_RESULT::Erro;
 
 		//Define sucesso na operação.
 		Resultado = ResultCode::ER_FAIL;
@@ -611,7 +611,7 @@ void CarenMFSourceReaderCallback::EncaminharEvento_OnReadSample(HRESULT Param_HR
 	else if (Param_FluxoFlgs & MF_SOURCE_READERF_STREAMTICK)
 	{
 		//Define que houve uma lacuna no fluxo.
-		ResultadoLeitura = CA_AMOSTRA_RESULTADO::LacunaFluxo;
+		ResultadoLeitura = CA_SAMPLE_READ_RESULT::LacunaFluxo;
 
 		//Define sucesso na operação.
 		Resultado = ResultCode::SS_OK;
@@ -627,7 +627,7 @@ void CarenMFSourceReaderCallback::EncaminharEvento_OnReadSample(HRESULT Param_HR
 	else if (Param_FluxoFlgs & MF_SOURCE_READERF_NATIVEMEDIATYPECHANGED)
 	{
 		//Define que o tipo nativo foi modificado.
-		ResultadoLeitura = CA_AMOSTRA_RESULTADO::TipoNativoModificado;
+		ResultadoLeitura = CA_SAMPLE_READ_RESULT::TipoNativoModificado;
 
 		//Define sucesso na operação.
 		Resultado = ResultCode::SS_OK;
@@ -643,7 +643,7 @@ void CarenMFSourceReaderCallback::EncaminharEvento_OnReadSample(HRESULT Param_HR
 	else if (Param_FluxoFlgs & MF_SOURCE_READERF_ALLEFFECTSREMOVED)
 	{
 		//Define que o decodificador foi removido
-		ResultadoLeitura = CA_AMOSTRA_RESULTADO::DecodificadorRemovido;
+		ResultadoLeitura = CA_SAMPLE_READ_RESULT::DecodificadorRemovido;
 
 		//Define sucesso na operação.
 		Resultado = ResultCode::SS_OK;
@@ -659,7 +659,7 @@ void CarenMFSourceReaderCallback::EncaminharEvento_OnReadSample(HRESULT Param_HR
 	else if (Param_FluxoFlgs & MF_SOURCE_READERF_NEWSTREAM)
 	{
 		//Define que um novo Stream de midia foi adicionado e que é necessário selcionar novamente o fluxo de midia desejado.
-		ResultadoLeitura = CA_AMOSTRA_RESULTADO::NovoFluxo;
+		ResultadoLeitura = CA_SAMPLE_READ_RESULT::NovoFluxo;
 
 		//Define sucesso na operação.
 		Resultado = ResultCode::SS_OK;
@@ -681,7 +681,7 @@ void CarenMFSourceReaderCallback::EncaminharEvento_OnReadSample(HRESULT Param_HR
 	if (Param_AmostraMidia == NULL)
 	{
 		//Determina que não há dados e que deve ler a proxima amostra de mídia.
-		ResultadoLeitura = CA_AMOSTRA_RESULTADO::NoData;
+		ResultadoLeitura = CA_SAMPLE_READ_RESULT::NoData;
 
 		//Define sucesso na operação mesmo com o ponteiro sem dados.
 		Resultado = ResultCode::SS_OK;
@@ -720,7 +720,7 @@ void CarenMFSourceReaderCallback::EncaminharEvento_OnReadSample(HRESULT Param_HR
 	}
 
 	//Determina que há dados para serem processados.
-	ResultadoLeitura = CA_AMOSTRA_RESULTADO::Sucesso;
+	ResultadoLeitura = CA_SAMPLE_READ_RESULT::Sucesso;
 
 	//Define sucesso na operação
 	Resultado = ResultCode::SS_OK;

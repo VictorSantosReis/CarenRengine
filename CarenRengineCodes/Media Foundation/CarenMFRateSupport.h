@@ -200,7 +200,7 @@ public:
 	/// Para alguns formatos (como ASF), desbaste significa descartar todos os quadros que não são I-frames. Se um componente produz dados de fluxo, como uma fonte de mídia ou um 
 	/// demultiplexer, ele deve prestar atenção para o (Param_Thin) parâmetro e retornar MF_E_THINNING_UNSUPPORTED se ele não é possível Thin o fluxo.</param>
 	/// <param name="Param_Out_TaxaReproducao">Recebe a taxa de reprodução mais rápida que o objeto oferece suporte.</param>
-	virtual CarenResult ObterTaxaReproduçãoMaisRapida(Enumeracoes::CA_MFRATE_DIRECTION Param_Diracao, Boolean Param_Thin, [Out] float% Param_Out_TaxaReproducao);
+	virtual CarenResult GetFastestRate(Enumeracoes::CA_MFRATE_DIRECTION Param_Diracao, Boolean Param_Thin, [Out] float% Param_Out_TaxaReproducao);
 
 	/// <summary>
 	/// (GetSlowestRate) - Recupera a taxa de reprodução mais lenta suportada pelo objeto.
@@ -211,7 +211,7 @@ public:
 	/// é suportado. Por exemplo, um componente que ofereça suporte a taxas arbitrariamente lentas retornará zero em (Param_Out_TaxaReproducao), e os aplicativos devem chamar 
 	/// (SuporteTaxa) separadamente para determinar se o componente oferece suporte à taxa 0.</param>
 	/// <param name="Param_Out_TaxaReproducao">Recebe a taxa de reprodução mais lenta que o objeto oferece suporte.</param>
-	virtual CarenResult ObterTaxaReproduçãoMaisLenta(Enumeracoes::CA_MFRATE_DIRECTION Param_Diracao, Boolean Param_Thin, [Out] float% Param_Out_TaxaReproducao);
+	virtual CarenResult GetSlowestRate(Enumeracoes::CA_MFRATE_DIRECTION Param_Diracao, Boolean Param_Thin, [Out] float% Param_Out_TaxaReproducao);
 
 	/// <summary>
 	/// (IsRateSupported) - Consulta se o objeto oferece suporte a uma taxa de reprodução especificada.
@@ -221,6 +221,6 @@ public:
 	/// <param name="Param_Taxa">A taxa de reprodução para consulta.</param>
 	/// <param name="Param_Out_TaxaSuportada">Se o objeto não suportar a taxa de reprodução fornecida em (Param_Taxa), esse parâmetro receberá a taxa de reprodução suportada mais próxima. 
 	/// Se o método retorna SS_OK, esse parâmetro recebe o valor fornecido em (Param_Taxa).</param>
-	virtual CarenResult SuporteTaxaEspecifica(Boolean Param_Thin, float Param_Taxa, [Out] float% Param_Out_TaxaSuportada);
+	virtual CarenResult IsRateSupported(Boolean Param_Thin, float Param_Taxa, [Out] float% Param_Out_TaxaSuportada);
 };
 

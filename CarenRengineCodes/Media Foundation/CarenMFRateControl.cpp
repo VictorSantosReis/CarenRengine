@@ -417,7 +417,7 @@ void CarenMFRateControl::Finalizar()
 /// <param name="Param_Out_Thin">Recebe o valor true se o fluxo está sendo diluído no momento. Se o objeto não oferece suporte a desbaste, esse parâmetro sempre recebe
 /// o valor false.</param>
 /// <param name="Param_Out_Taxa">Recebe a taxa de reprodução atual.</param>
-CarenResult CarenMFRateControl::ObterTaxa([Out] Boolean% Param_Out_Thin, [Out] float% Param_Out_Taxa)
+CarenResult CarenMFRateControl::GetRate([Out] Boolean% Param_Out_Thin, [Out] float% Param_Out_Taxa)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -464,7 +464,7 @@ Done:;
 /// são diluídos.</param>
 /// <param name="Param_Taxa">A taxa de reprodução solicitada. Os valores postive indicam a reprodução direta, os valores negativos indicam a reprodução inversa, e zero indica 
 /// esfregando (a fonte entrega um único quadro).</param>
- CarenResult CarenMFRateControl::DefinirTaxa(Boolean Param_Thin, float Param_Taxa)
+ CarenResult CarenMFRateControl::SetRate(Boolean Param_Thin, float Param_Taxa)
  {
 	 //Variavel a ser retornada.
 	 CarenResult Resultado = CarenResult(E_FAIL, false);

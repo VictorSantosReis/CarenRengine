@@ -173,13 +173,13 @@ public:
 	/// (GetAspectRatioMode) - Consulta como o processador de vídeo avançado (EVR) lida com a relação de aspecto da fonte de vídeo.
 	/// </summary>
 	/// <param name="Param_Out_AspectRatio">Recebe um ou mais bit de sinalizadores da enumeração: CA_VIDEO_DISPLAY_ASPECT_RATIO_MODE</param>
-	virtual CarenResult ObterAspectRatio([Out] Enumeracoes::CA_VIDEO_DISPLAY_ASPECT_RATIO_MODE% Param_Out_AspectRatio);
+	virtual CarenResult GetAspectRatioMode([Out] Enumeracoes::CA_VIDEO_DISPLAY_ASPECT_RATIO_MODE% Param_Out_AspectRatio);
 
 	/// <summary>
 	/// (GetBorderColor) - Obtém a cor da borda para o vídeo.
 	/// </summary>
 	/// <param name="Param_Out_CorHexadecimalBorda">Recebe o valor que especifica em hexadecimal, uma cor RGB.</param>
-	virtual CarenResult ObterCorBorda([Out] UInt32% Param_Out_CorHexadecimalBorda);
+	virtual CarenResult GetBorderColor([Out] UInt32% Param_Out_CorHexadecimalBorda);
 
 	/// <summary>
 	/// (GetCurrentImage) - Obtém uma cópia da imagem atual sendo exibida pelo processador de vídeo.
@@ -189,7 +189,7 @@ public:
 	/// O chamador deve liberar a memória para o bitmap chamando: CoTaskMemFree</param>
 	/// <param name="Param_Out_BufferLargura">Contém a largura do buffer retornado em: Param_Out_BufferImagem.</param>
 	/// <param name="Param_Out_TimeStamp">Recebe o carimbo de data/hora da imagem capturada. O valor é em unidades de 100 nanosegundos.</param>
-	virtual CarenResult ObterCopiaImagemAtual(
+	virtual CarenResult GetCurrentImage(
 		[Out] Estruturas::CA_BITMAPINFOHEADER^% Param_Out_BimapInfoHeader,
 		[Out] ICarenBuffer^% Param_Out_BufferImagem,
 		[Out] UInt32% Param_Out_BufferLargura,
@@ -199,7 +199,7 @@ public:
 	/// (GetFullscreen) - Consulta se o processador de vídeo avançado (EVR) está atualmente no modo de tela cheia.
 	/// </summary>
 	/// <param name="Param_Out_FullScreen">Recebe o valor que define se o vídeo está sendo renderizado em FullScreen.</param>
-	virtual CarenResult ObterEstadoFullScreen([Out] Boolean% Param_Out_FullScreen);
+	virtual CarenResult GetFullscreen([Out] Boolean% Param_Out_FullScreen);
 
 	/// <summary>
 	/// (GetIdealVideoSize) - Obtém o intervalo de tamanhos, que o processador de vídeo avançado (EVR) pode exibir sem degradar 
@@ -207,7 +207,7 @@ public:
 	/// </summary>
 	/// <param name="Param_Out_Minimo_VideoSizeIdeal">Recebe a estrutura que contém os valores (Minimos) da Largura e Altura (Ideias) para o vídeo.</param>
 	/// <param name="Param_Out_Maximo_VideoSizeIdeal">Recebe a estrutura que contém os valores (Maximos) da Largura e Altura (Ideias) para o vídeo.</param>
-	virtual CarenResult ObterSizeIdealVideo(
+	virtual CarenResult GetIdealVideoSize(
 		[Out] Estruturas::CA_SIZE^% Param_Out_Minimo_VideoSizeIdeal,
 		[Out] Estruturas::CA_SIZE^% Param_Out_Maximo_VideoSizeIdeal);
 
@@ -216,22 +216,22 @@ public:
 	/// </summary>
 	/// <param name="Param_Out_VideoSize">Recebe a estrutura que contém a Largura e Altura (Nativas) para o vídeo.</param>
 	/// <param name="Param_Out_TaxaProporcaoVideo">Recebe a estrutura que contém a (Taxa de proporção) do vídeo.</param>
-	virtual CarenResult ObterSizeNativoVideo(
+	virtual CarenResult GetNativeVideoSize(
 		[Out] Estruturas::CA_SIZE^% Param_Out_VideoSize,
 		[Out] Estruturas::CA_SIZE^% Param_Out_TaxaProporcaoVideo);
 
 	/// <summary>
 	/// (GetRenderingPrefs) - Obtém várias configurações de processamento de vídeo.
 	/// </summary>
-	/// <param name="Param_Out_Sinalizadores">Recebe um bit ou zero ou mais sinalizadores da enumeração: CA_VIDEO_RENDER_CONFIGURACOES</param>
-	virtual CarenResult ObterConfiguraçãoRenderização([Out] Enumeracoes::CA_VIDEO_RENDER_CONFIGURACOES% Param_Out_Sinalizadores);
+	/// <param name="Param_Out_Sinalizadores">Recebe um bit ou zero ou mais sinalizadores da enumeração: CA_MFVideoRenderPrefs</param>
+	virtual CarenResult GetRenderingPrefs([Out] Enumeracoes::CA_MFVideoRenderPrefs% Param_Out_Sinalizadores);
 
 	/// <summary>
 	/// (GetVideoPosition) - Obtém os retângulos de origem e de destino para o Vídeo.
 	/// </summary>
 	/// <param name="Param_Out_RetanguloNormalized">Recebe uma estrutura que contém o retângulo de origem.</param>
 	/// <param name="Param_Out_RetanguloDestino">Recebe uma estrutura com o retângulo de destino atual.</param>
-	virtual CarenResult ObterPosiçãoVideo(
+	virtual CarenResult GetVideoPosition(
 		[Out] Estruturas::CA_MFVideoNormalizedRect^% Param_Out_RetanguloNormalized,
 		[Out] Estruturas::CA_RECT^% Param_Out_RetanguloDestino);
 
@@ -240,26 +240,26 @@ public:
 	/// hospedando a renderização do vídeo para o usuário.
 	/// </summary>
 	/// <param name="Param_Out_HandleJanela">Recebe a handle da janela que a qual o vídeo está sendo renderizado.</param>
-	virtual CarenResult ObterJanelaVideo([Out] IntPtr% Param_Out_HandleJanela);
+	virtual CarenResult GetVideoWindow([Out] IntPtr% Param_Out_HandleJanela);
 
 	/// <summary>
 	/// (RepaintSuperfice) - Redesenha o quadro de vídeo atual. Chame esse método sempre que a interface do usuário
 	/// sofre uma atualização da interface.
 	/// </summary>
-	virtual CarenResult RedesenharSuperfice();
+	virtual CarenResult RepaintSuperfice();
 
 	/// <summary>
 	/// (SetAspectRatioMode) - Especifica como o processador de vídeo avançado (EVR) lida com a relação de aspecto 
 	/// da fonte de vídeo.
 	/// </summary>
 	/// <param name="Param_AspectRatio">Bit a bit ou de um ou mais sinalizadores da enumeração: CA_VIDEO_DISPLAY_ASPECT_RATIO_MODE</param>
-	virtual CarenResult DefinirModoAspectRatio(Enumeracoes::CA_VIDEO_DISPLAY_ASPECT_RATIO_MODE Param_AspectRatio);
+	virtual CarenResult SetAspectRatioMode(Enumeracoes::CA_VIDEO_DISPLAY_ASPECT_RATIO_MODE Param_AspectRatio);
 
 	/// <summary>
 	/// (SetBorderColor) - Define a cor da borda para o vídeo.
 	/// </summary>
 	/// <param name="Param_ColorRef">Especifica a cor da borda como um valor UInt32</param>
-	virtual CarenResult DefinirCorBorda(UInt32 Param_ColorRef);
+	virtual CarenResult SetBorderColor(UInt32 Param_ColorRef);
 
 	/// <summary>
 	/// [Esta API não é suportada e pode ser alterada ou indisponível no futuro.]
@@ -269,12 +269,12 @@ public:
 	/// </summary>
 	/// <param name="Param_EstadoFullScreen">Se true, o renderizador de vídeo aprimorado (EVR) usará o modo de tela inteira. Se false, o EVR desenha o vídeo na 
 	/// janela de recorte fornecido pelo aplicativo.</param>
-	virtual CarenResult DefinirFullScreen(Boolean Param_EstadoFullScreen);
+	virtual CarenResult SetFullScreen(Boolean Param_EstadoFullScreen);
 
 	/// <summary>
 	/// (SetRenderingPrefs)Define preferências diversas, relacionadas com a processamento de vídeo.
 	/// </summary>
-	virtual CarenResult DefinirConfiguraçãoRenderização(Enumeracoes::CA_VIDEO_RENDER_CONFIGURACOES Param_RenderConfigs);
+	virtual CarenResult SetRenderingPrefs(Enumeracoes::CA_MFVideoRenderPrefs Param_RenderConfigs);
 
 	/// <summary>
 	/// (SetVideoPosition) - Define os retângulos de origem e de destino para o vídeo.
@@ -288,7 +288,7 @@ public:
 	/// retângulo de origem não é alterado.</param>
 	/// <param name="Param_RetanguloDestino">Especifica o retângulo de destino. Este parâmetro pode ser NULL. Se este parâmetro é NULL, o retângulo 
 	/// de destino não é alterado.</param>
-	virtual CarenResult DefinirPosiçãoVideo(
+	virtual CarenResult SetVideoPosition(
 		Estruturas::CA_MFVideoNormalizedRect^ Param_RetanguloNormalized,
 		Estruturas::CA_RECT^ Param_RetanguloDestino);
 
@@ -298,6 +298,6 @@ public:
 	/// do usuário.
 	/// </summary>
 	/// <param name="Param_JanelaVideo"></param>
-	virtual CarenResult DefinirJanelaVideo(IntPtr Param_JanelaVideo);
+	virtual CarenResult SetVideoWindow(IntPtr Param_JanelaVideo);
 };
 

@@ -415,7 +415,7 @@ void CarenMFMetadataProvider ::Finalizar()
 /// </summary>
 /// <param name="Param_Descritor">Ponteiro para a interface do descritor de apresentação(ICarenMFPresentationDescriptor) da fonte de mídia.</param>
 /// <param name="Param_IdenticaoFluxo">Se esse parâmetro for zero, o método recuperará metadados que se aplicam a toda a apresentação. Caso contrário, este parâmetro especifica 
-/// um identificador de fluxo e o método recupera metadados para esse fluxo. Para obter o identificador de fluxo de um fluxo, ligue para o ICarenMFStreamDescriptor::ObterIdentificadorFluxo.</param>
+/// um identificador de fluxo e o método recupera metadados para esse fluxo. Para obter o identificador de fluxo de um fluxo, ligue para o ICarenMFStreamDescriptor::GetStreamIdentifier.</param>
 /// <param name="Param_Flags">Reservado. Deixe como ZERO.</param>
 /// <param name="Param_Out_Metadata">Recebe um ponteiro para a interface ICarenMFMetadata. Use esta interface para acessar os metadados. O chamador deve liberar a interface.</param>
 CarenResult CarenMFMetadataProvider::GetMFMetadata(ICarenMFPresentationDescriptor^ Param_Descritor, UInt32 Param_IdenticaoFluxo, UInt32 Param_Flags, [Out] ICarenMFMetadata^% Param_Out_Metadata)

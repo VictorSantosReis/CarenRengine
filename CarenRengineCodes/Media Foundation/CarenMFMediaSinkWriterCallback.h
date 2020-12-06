@@ -38,7 +38,7 @@ using namespace CarenRengine::SDKUtilidades;
 
 /// <summary>
 /// [Concluido - Fase de Testes] - Classe responsável por conter os eventos chamados pelo coletor de Gravador para notificar o usuário sobre a conclusão
-/// dos métodos assincronos (Finalizar e DefinirMarcadorFluxo).
+/// dos métodos assincronos (Finalizar e PlaceMarker).
 /// </summary>
 public ref class CarenMFMediaSinkWriterCallback :public ICarenMFMediaSinkWriterCallback
 {
@@ -91,12 +91,12 @@ public:
 
 
 	/// <summary>
-	/// Evento chamado quando a operação assincrono do método (ICarenMFSinkWriter.Concluir) é conlcuido.
+	/// Evento chamado quando a operação assincrono do método (ICarenMFSinkWriter.Finalize) é conlcuido.
 	/// </summary>
 	virtual event ICarenMFMediaSinkWriterCallback::Delegate_OnFinalize^ OnFinalize;
 
 	/// <summary>
-	/// Evento chamado quando a operação assincrono do método (ICarenMFSinkWriter.DefinirMarcadorFluxo) é conlcuido.
+	/// Evento chamado quando a operação assincrono do método (ICarenMFSinkWriter.PlaceMarker) é conlcuido.
 	/// </summary>
 	virtual event ICarenMFMediaSinkWriterCallback::Delegate_OnMarker^ OnMarker;
 

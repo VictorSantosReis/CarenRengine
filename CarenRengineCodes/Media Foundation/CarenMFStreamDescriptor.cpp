@@ -416,7 +416,7 @@ void CarenMFStreamDescriptor::Finalizar()
 /// obter o tipo de mídia atual e definir o tipo de mídia.
 /// </summary>
 /// <param name="Param_Out_TipoMidiaHandler">Recebe a interface do manipular de tipo de mídia.</param>
-CarenResult CarenMFStreamDescriptor::ObterManipuladorTipoMidia([Out] ICarenMFMediaTypeHandler^% Param_Out_TipoMidiaHandler)
+CarenResult CarenMFStreamDescriptor::GetMediaTypeHandler([Out] ICarenMFMediaTypeHandler^% Param_Out_TipoMidiaHandler)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -464,7 +464,7 @@ Done:;
 /// (GetStreamIdentifier) - Recupera um identificador para o fluxo.
 /// </summary>
 /// <param name="Param_Out_Identificador">Recebe o identificador do fluxo.</param>
-CarenResult CarenMFStreamDescriptor::ObterIdentificadorFluxo([Out] UInt32% Param_Out_Identificador)
+CarenResult CarenMFStreamDescriptor::GetStreamIdentifier([Out] UInt32% Param_Out_Identificador)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

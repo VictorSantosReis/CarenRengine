@@ -167,36 +167,36 @@ public:
 	/// (GetAllVolumes) - Recupera os níveis de volume para todos os canais no fluxo de áudio.
 	/// </summary>
 	/// <param name="Param_TamanhoMatriz">O Tamanho da matriz no parmêtro (Param_Out_MatrizVolumes). Esse valor representa a quantidade de canais de áudio.
-	/// Para obter esse valor, chame o método (ObterQuantidadeCanais).</param>
+	/// Para obter esse valor, chame o método (GetChannelCount).</param>
 	/// <param name="Param_Out_MatrizVolumes">Recebe a matriz com o nível de volume de para cada canal no fluxo.</param>
-	virtual CarenResult ObterTodosVolumes(UInt32 Param_TamanhoMatriz, [Out] cli::array<float>^% Param_Out_MatrizVolumes);
+	virtual CarenResult GetAllVolumes(UInt32 Param_TamanhoMatriz, [Out] cli::array<float>^% Param_Out_MatrizVolumes);
 
 	/// <summary>
 	/// (GetChannelCount) - Recupera o número de canais no fluxo de áudio.
 	/// </summary>
 	/// <param name="Param_Out_QuantidadeCanais">Recebe o número de canais no fluxo de áudio.</param>
-	virtual CarenResult ObterQuantidadeCanais([Out] UInt32% Param_Out_QuantidadeCanais);
+	virtual CarenResult GetChannelCount([Out] UInt32% Param_Out_QuantidadeCanais);
 
 	/// <summary>
 	/// (GetChannelVolume) - Recupera o nível de volume para um canal específico no fluxo de áudio.
 	/// </summary>
-	/// <param name="Param_IdCanal">Índice baseado em zero do canal de áudio. Para obter o número de canais, chame o método (ObterQuantidadeCanais).</param>
+	/// <param name="Param_IdCanal">Índice baseado em zero do canal de áudio. Para obter o número de canais, chame o método (GetChannelCount).</param>
 	/// <param name="Param_Out_NivelVolume">Recebe o nível de volume no canal especificado.</param>
-	virtual CarenResult ObterVolumeCanalEspecifico(UInt32 Param_IdCanal, [Out] float% Param_Out_NivelVolume);
+	virtual CarenResult GetChannelVolume(UInt32 Param_IdCanal, [Out] float% Param_Out_NivelVolume);
 
 	/// <summary>
 	/// (SetAllVolumes) - Define os níveis de volume individual para todos os canais no fluxo de áudio.
 	/// </summary>
 	/// <param name="Param_TamanhoMatriz">O Tamanho da matriz no parmêtro (Param_NiveisVolume). Esse valor representa a quantidade de canais de áudio.
-	/// Para obter esse valor, chame o método (ObterQuantidadeCanais).</param>
+	/// Para obter esse valor, chame o método (GetChannelCount).</param>
 	/// <param name="Param_NiveisVolume"> A matriz sspecifica os níveis de volume para todos os canais. Antes de chamar o método, defina cada elemento da matriz para o
 	/// nível de volume desejado para o canal.</param>
-	virtual CarenResult DefinirTodosVolumes(UInt32 Param_TamanhoMatriz, cli::array<float>^ Param_NiveisVolume);
+	virtual CarenResult SetAllVolumes(UInt32 Param_TamanhoMatriz, cli::array<float>^ Param_NiveisVolume);
 
 	/// <summary>
 	/// (SetChannelVolume) - Define o nível de volume para um canal específico no fluxo de áudio.
 	/// </summary>
-	/// <param name="Param_IdCanal">Índice baseado em zero do canal de áudio. Para obter o número de canais, chame o método (ObterQuantidadeCanais).</param>
+	/// <param name="Param_IdCanal">Índice baseado em zero do canal de áudio. Para obter o número de canais, chame o método (GetChannelCount).</param>
 	/// <param name="Param_NivelVolume">O nível de volume a ser definido no canal especificado.</param>
-	virtual CarenResult DefinirVolumeCanalEspecifico(UInt32 Param_IdCanal, float Param_NivelVolume);
+	virtual CarenResult SetChannelVolume(UInt32 Param_IdCanal, float Param_NivelVolume);
 };

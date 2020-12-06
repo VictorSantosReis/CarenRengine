@@ -409,7 +409,7 @@ void CarenMFMediaStream::Finalizar()
 //Métodos da interface Proprietaria
 //
 
-CarenResult CarenMFMediaStream::ObterFonteMidia(ICarenMFMediaSource^% Param_Out_FonteMidia)
+CarenResult CarenMFMediaStream::GetMediaSource(ICarenMFMediaSource^% Param_Out_FonteMidia)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -453,7 +453,7 @@ Done:;
 	return Resultado;
 }
 
-CarenResult CarenMFMediaStream::ObterDescritorFluxo(ICarenMFStreamDescriptor^% Param_Out_DescritorFluxo)
+CarenResult CarenMFMediaStream::GetStreamDescriptor(ICarenMFStreamDescriptor^% Param_Out_DescritorFluxo)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -497,7 +497,7 @@ Done:;
 	return Resultado;
 }
 
-CarenResult CarenMFMediaStream::RequisitarAmostra(ICaren^ Param_Token)
+CarenResult CarenMFMediaStream::RequestSample(ICaren^ Param_Token)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

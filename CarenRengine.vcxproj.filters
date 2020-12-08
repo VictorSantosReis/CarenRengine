@@ -1371,77 +1371,77 @@
     <ClInclude Include="CarenRengineCodes\Windows\CarenPropertyBag2.h">
       <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
     </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFQualityManager.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFByteStreamBuffering.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFByteStreamCacheControl.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFByteStreamCacheControl2.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFByteStreamProxyClassFactory.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFByteStreamTimeSeek.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFCaptureEngine.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFCaptureEngineClassFactory.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFCaptureEngineOnEventCallback.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFCaptureEngineOnSampleCallback.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFCaptureEngineOnSampleCallback2.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFCapturePhotoSink.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFCapturePreviewSink.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFCaptureRecordSink.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFCaptureSink.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFCaptureSink2.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFCaptureSource.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFQualityAdvise.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFQualityAdvise2.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFQualityAdviseLimits.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFQualityManager.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFCaptureEngineOnEventCallback.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFCaptureEngineOnSampleCallback.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFCaptureEngineOnSampleCallback2.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFQualityManager.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\Media Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFCaptureEngineOnEventCallback.h">
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\Media Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFCaptureEngineOnSampleCallback.h">
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\Media Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFCaptureEngineOnSampleCallback2.h">
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\Media Foundation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2625,76 +2625,76 @@
       <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFQualityManager.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFByteStreamBuffering.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFByteStreamCacheControl.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFByteStreamCacheControl2.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFByteStreamProxyClassFactory.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFByteStreamTimeSeek.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFCaptureEngine.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFCaptureEngineClassFactory.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFCaptureEngineOnEventCallback.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFCaptureEngineOnSampleCallback.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFCaptureEngineOnSampleCallback2.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFCapturePhotoSink.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFCapturePreviewSink.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFCaptureRecordSink.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFCaptureSink.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFCaptureSink2.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFCaptureSource.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFQualityAdvise.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFQualityAdvise2.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFQualityAdviseLimits.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFCaptureEngineOnEventCallback.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFCaptureEngineOnSampleCallback.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFCaptureEngineOnSampleCallback2.cpp">
-      <Filter>Arquivos de Origem</Filter>
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFQualityManager.cpp">
-      <Filter>Arquivos de Origem</Filter>
+      <Filter>Arquivos de Origem\Classes Nativas\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFCaptureEngineOnEventCallback.cpp">
+      <Filter>Arquivos de Origem\Classes Nativas\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFCaptureEngineOnSampleCallback.cpp">
+      <Filter>Arquivos de Origem\Classes Nativas\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFCaptureEngineOnSampleCallback2.cpp">
+      <Filter>Arquivos de Origem\Classes Nativas\MediaFoundation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

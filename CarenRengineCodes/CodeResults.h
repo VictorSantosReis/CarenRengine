@@ -269,7 +269,7 @@ namespace CarenRengine
 			ER_AUDCLNT_E_NOT_STOPPED,
 
 			/// <summary>
-			/// (AUDCLNT_E_EVENTHANDLE_NOT_SET) - O fluxo de áudio é configurado para usar o buffer orientado a eventos, mas o chamador não chamou ICarenAudioClient::DefinirEventHandle para definir o identificador de evento no fluxo.
+			/// (AUDCLNT_E_EVENTHANDLE_NOT_SET) - O fluxo de áudio é configurado para usar o buffer orientado a eventos, mas o chamador não chamou ICarenAudioClient::SetEventHandle para definir o identificador de evento no fluxo.
 			/// </summary>
 			ER_AUDCLNT_E_EVENTHANDLE_NOT_SET,
 
@@ -296,7 +296,7 @@ namespace CarenRengine
 			ER_AUDCLNT_E_BUFFER_SIZE_ERROR,
 
 			/// <summary>
-			/// (AUDCLNT_E_BUFFER_ERROR) - Houve uma falha interna do método (ICarenAudioRenderClient::ObterBuffer) ao recuperar um ponteiro para os dados.
+			/// (AUDCLNT_E_BUFFER_ERROR) - Houve uma falha interna do método (ICarenAudioRenderClient::GetBuffer) ao recuperar um ponteiro para os dados.
 			/// </summary>
 			ER_AUDCLNT_E_BUFFER_ERROR,
 
@@ -306,12 +306,12 @@ namespace CarenRengine
 			ER_AUDCLNT_E_BUFFER_TOO_LARGE,
 
 			/// <summary>
-			/// (AUDCLNT_E_INVALID_SIZE) - O valor Param_NumeroFramesEscritos excede o valor Param_NumeroFramesRequisitados especificado na chamada (ICarenAudioRenderClient::ObterBuffer) anterior.
+			/// (AUDCLNT_E_INVALID_SIZE) - O valor Param_NumeroFramesEscritos excede o valor Param_NumeroFramesRequisitados especificado na chamada (ICarenAudioRenderClient::GetBuffer) anterior.
 			/// </summary>
 			ER_AUDCLNT_E_INVALID_SIZE,
 
 			/// <summary>
-			/// (AUDCLNT_E_OUT_OF_ORDER) - Uma chamada para o método ICarenAudioRenderClient::ObterBuffer ainda está em vigor.
+			/// (AUDCLNT_E_OUT_OF_ORDER) - Uma chamada para o método ICarenAudioRenderClient::GetBuffer ainda está em vigor.
 			/// </summary>
 			ER_AUDCLNT_E_OUT_OF_ORDER,
 

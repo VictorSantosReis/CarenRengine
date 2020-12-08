@@ -414,10 +414,10 @@ void CarenAudioSessionControl::Finalizar()
 
 /// <summary>
 /// (GetDisplayName) - O método recupera o nome de exibição para a sessão de áudio.
-/// Se o cliente não tiver chamado (ICarenAudioSessionControl::DefinirNomeExibicao) para definir o nome de exibição, a sequência de caracteres estará vazia. 
+/// Se o cliente não tiver chamado (ICarenAudioSessionControl::SetDisplayName) para definir o nome de exibição, a sequência de caracteres estará vazia. 
 /// </summary>
 /// <param name="Param_Out_Nome">Retorna o nome de exbição da sessão de áudio.</param>
-CarenResult CarenAudioSessionControl::ObterNomeExibicao([Out] String^% Param_Out_Nome)
+CarenResult CarenAudioSessionControl::GetDisplayName([Out] String^% Param_Out_Nome)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -466,7 +466,7 @@ Done:;
 /// (GetGroupingParam) - O método recupera o parâmetro de agrupamento da sessão de áudio.
 /// </summary>
 /// <param name="Param_Out_GUID">Retorna um GUID do paramêtro de agrupamento.</param>
-CarenResult CarenAudioSessionControl::ObterParametroAgrupamento([Out] String^% Param_Out_GUID)
+CarenResult CarenAudioSessionControl::GetGroupingParam([Out] String^% Param_Out_GUID)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -508,7 +508,7 @@ Done:;
 /// (GetIconPath) - O método recupera o caminho para o ícone de exibição para a sessão de áudio.
 /// </summary>
 /// <param name="Param_Out_Url">Retorna o caminho completo completo para o .ico, .exe, .dll que contenha um icone para a sessão de áudio.</param>
-CarenResult CarenAudioSessionControl::ObterUrlIcone([Out] String^% Param_Out_Url)
+CarenResult CarenAudioSessionControl::GetIconPath([Out] String^% Param_Out_Url)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -595,7 +595,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Notificador">Ponteiro para uma interface IAudioSessionEvents, implementada pelo cliente. Se o método for bem-sucedido, ele chama o AddRef método na interface do 
 /// cliente IAudioSessionEvents.</param>
-CarenResult CarenAudioSessionControl::RegistrarSessaoNotificacaoAudio(ICarenAudioSessionEvents^ Param_Notificador)
+CarenResult CarenAudioSessionControl::RegisterAudioSessionNotification(ICarenAudioSessionEvents^ Param_Notificador)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -650,7 +650,7 @@ Done:;
 /// com cada notificação. Ao receber uma notificação, um cliente pode determinar se ele ou outro cliente é a origem do evento inspecionando o valor de ContextoEvento.
 /// Esse esquema depende do cliente selecionando um valor para esse parâmetro que é exclusivo entre todos os clientes na sessão. Se o chamador fornece uma String NULA para este parâmetro, 
 /// o método de notificação do cliente recebe NULO ou VAZIO na string de contexto.</param>
-CarenResult CarenAudioSessionControl::DefinirNomeExibicao(String^ Param_Nome, String^ Param_GuidContextoEvento)
+CarenResult CarenAudioSessionControl::SetDisplayName(String^ Param_Nome, String^ Param_GuidContextoEvento)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -708,7 +708,7 @@ Done:;
 /// com cada notificação. Ao receber uma notificação, um cliente pode determinar se ele ou outro cliente é a origem do evento inspecionando o valor de (ContextoEvento).
 /// Esse esquema depende do cliente selecionando um valor para esse parâmetro que é exclusivo entre todos os clientes na sessão. Se o chamador fornece uma String NULA para este parâmetro, 
 /// o método de notificação do cliente recebe NULO ou VAZIO na string de contexto.</param>
-CarenResult CarenAudioSessionControl::DefinirParametroAgrupamento(String^ Param_GuidNovoParametro, String^ Param_ContextoEvento)
+CarenResult CarenAudioSessionControl::SetGroupingParam(String^ Param_GuidNovoParametro, String^ Param_ContextoEvento)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -763,7 +763,7 @@ Done:;
 /// cada notificação. Ao receber uma notificação, um cliente pode determinar se ele ou outro cliente é a origem do evento inspecionando o valor de (ContextoEvento).
 /// Esse esquema depende do cliente selecionando um valor para esse parâmetro que é exclusivo entre todos os clientes na sessão. Se o chamador fornece uma String NULA para este parâmetro,
 /// o método de notificação do cliente recebe NULO ou VAZIO na string de contexto.</param>
-CarenResult CarenAudioSessionControl::DefinirUrlIcone(String^ Param_UrlCompletaIco, String^ Param_ContextoEvento)
+CarenResult CarenAudioSessionControl::SetIconPath(String^ Param_UrlCompletaIco, String^ Param_ContextoEvento)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -813,9 +813,9 @@ Done:;
 /// (UnregisterAudioSessionNotification) - O método exclui um registro anterior pelo cliente para receber notificações.
 /// </summary>
 /// <param name="Param_Notificador">Ponteiro para a interface IAudioSessionEvents implementada pelo cliente. O cliente passou esse mesmo ponteiro de interface para o Gerenciador de sessão 
-/// em uma chamada anterior para o método ICarenAudioSessionControl::RegistrarSessaoNotificacaoAudio. Se o (CancelarRegistroSessaoNotificacaoAudio) método for bem-sucedido, ele chama o 
+/// em uma chamada anterior para o método ICarenAudioSessionControl::RegisterAudioSessionNotification. Se o (UnregisterAudioSessionNotification) método for bem-sucedido, ele chama o 
 /// método Release na interface IAudioSessionEvents do cliente.</param>
-CarenResult CarenAudioSessionControl::CancelarRegistroSessaoNotificacaoAudio(ICarenAudioSessionEvents^% Param_Notificador)
+CarenResult CarenAudioSessionControl::UnregisterAudioSessionNotification(ICarenAudioSessionEvents^% Param_Notificador)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

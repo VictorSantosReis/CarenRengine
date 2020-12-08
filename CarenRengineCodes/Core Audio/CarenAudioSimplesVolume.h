@@ -196,13 +196,13 @@ public:
 	/// (GetMasterVolume) - O método recupera o nível de volume do cliente para a sessão de áudio.
 	/// </summary>
 	/// <param name="Param_Out_NivelVolume">Retorna uma variável no qual o método grava o nível de volume do cliente. O nível de volume é um valor no intervalo de 0.0 a 1.0.</param>
-	virtual CarenResult RecuperarNivelVolume([Out] float% Param_Out_NivelVolume);
+	virtual CarenResult GetMasterVolume([Out] float% Param_Out_NivelVolume);
 
 	/// <summary>
 	/// (GetMute) - O método recupera o atual muting estado para a sessão de áudio.
 	/// </summary>
 	/// <param name="Param_Out_EstadoMudo">Retorna uma variável no qual o método grava o estado (MUTING). True indica que o (MUTING) está habilitado. False indica que ele está desabilitado.</param>
-	virtual CarenResult RecuperarEstadoMudo([Out] Boolean% Param_Out_EstadoMudo);
+	virtual CarenResult GetMute([Out] Boolean% Param_Out_EstadoMudo);
 
 	/// <summary>
 	/// (SetMasterVolume) - O método define o nível de volume principal para a sessão de áudio.
@@ -213,7 +213,7 @@ public:
 	/// (ContextoEvento) com cada notificação. Ao receber uma notificação, um cliente pode determinar se ele ou outro cliente é a origem do evento inspecionando o valor de (ContextoEvento).
 	/// Esse esquema depende do cliente selecionando um valor para esse parâmetro que é exclusivo entre todos os clientes na sessão. Se o chamador fornece uma String NULA para este parâmetro, 
 	/// o método de notificação do cliente recebe NULO ou VAZIO na string de contexto.</param>
-	virtual CarenResult DefinirNivelVolume(float Param_NivelVolume, String^ Param_ContextoEvento);
+	virtual CarenResult SetMasterVolume(float Param_NivelVolume, String^ Param_ContextoEvento);
 
 	/// <summary>
 	/// (SetMute) - O método define o estado muting para a sessão de áudio.
@@ -224,5 +224,5 @@ public:
 	/// (ContextoEvento) com cada notificação. Ao receber uma notificação, um cliente pode determinar se ele ou outro cliente é a origem do evento inspecionando o valor de (ContextoEvento).
 	/// Esse esquema depende do cliente selecionando um valor para esse parâmetro que é exclusivo entre todos os clientes na sessão. Se o chamador fornece uma String NULA para este parâmetro, 
 	/// o método de notificação do cliente recebe NULO ou VAZIO na string de contexto.</param>
-	virtual CarenResult DefinirEstadoMudo(Boolean Param_EstadoMudo, String^ Param_ContextoEvento);
+	virtual CarenResult SetMute(Boolean Param_EstadoMudo, String^ Param_ContextoEvento);
 };

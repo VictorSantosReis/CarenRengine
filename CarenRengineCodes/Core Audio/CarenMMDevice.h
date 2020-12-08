@@ -203,13 +203,13 @@ public:
 	/// de ponto de extremidade de áudio. </param>
 	/// <param name="Param_Out_InterfaceRequisitada">Recebe a interface requisitada. Por meio desse método, o chamador obtém uma referência contada para a interface. O chamador é responsável por liberar a 
 	/// interface, quando ele não é mais necessário, chamando o método de Release da interface.</param>
-	virtual CarenResult AtivarObjeto(String^ Param_GuidInterface, Enumeracoes::CA_CLSCTX Param_ContextoEx, Estruturas::CA_PropVariant^ Param_ParmetrosActive, ICaren^ Param_Out_InterfaceRequisitada);
+	virtual CarenResult Activate(String^ Param_GuidInterface, Enumeracoes::CA_CLSCTX Param_ContextoEx, Estruturas::CA_PropVariant^ Param_ParmetrosActive, ICaren^ Param_Out_InterfaceRequisitada);
 
 	/// <summary>
 	/// (GetId) - O método recupera uma cadeia de caracteres de ID de ponto de extremidade que identifica o dispositivo de ponto de extremidade de áudio.
 	/// </summary>
 	/// <param name="Param_Out_EndpointId">>Retorna o endereço de uma sequência de caracteres largos terminada por caractere nulo que contém o ID do dispositivo de ponto de extremidade.</param>
-	virtual CarenResult ObterId([Out] String^% Param_Out_EndpointId);
+	virtual CarenResult GetId([Out] String^% Param_Out_EndpointId);
 
 	/// <summary>
 	/// (GetState) - O método recupera o estado atual do dispositivo.
@@ -224,6 +224,6 @@ public:
 	/// leitura/gravação.</param>
 	/// <param name="Param_Out_Store">Rece uma interface que contém o armazenamento de propriedades do dispositivo. O chamador é responsável por liberar a interface, quando ele não é mais necessário, 
 	/// chamando o método de Release da interface.</param>
-	virtual CarenResult AbrirPropertyStore(Enumeracoes::CA_STGMs Param_TipoAcesso, [Out] ICarenPropertyStore^% Param_Out_Store);
+	virtual CarenResult OpenPropertyStore(Enumeracoes::CA_STGMs Param_TipoAcesso, [Out] ICarenPropertyStore^% Param_Out_Store);
 };
 

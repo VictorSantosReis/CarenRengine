@@ -416,7 +416,7 @@ void CarenSimpleAudioVolume::Finalizar()
 /// (GetMasterVolume) - O método recupera o nível de volume do cliente para a sessão de áudio.
 /// </summary>
 /// <param name="Param_Out_NivelVolume">Retorna uma variável no qual o método grava o nível de volume do cliente. O nível de volume é um valor no intervalo de 0.0 a 1.0.</param>
-CarenResult CarenSimpleAudioVolume::RecuperarNivelVolume([Out] float% Param_Out_NivelVolume)
+CarenResult CarenSimpleAudioVolume::GetMasterVolume([Out] float% Param_Out_NivelVolume)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -457,7 +457,7 @@ Done:;
 /// (GetMute) - O método recupera o atual muting estado para a sessão de áudio.
 /// </summary>
 /// <param name="Param_Out_EstadoMudo">Retorna uma variável no qual o método grava o estado (MUTING). True indica que o (MUTING) está habilitado. False indica que ele está desabilitado.</param>
-CarenResult CarenSimpleAudioVolume::RecuperarEstadoMudo([Out] Boolean% Param_Out_EstadoMudo)
+CarenResult CarenSimpleAudioVolume::GetMute([Out] Boolean% Param_Out_EstadoMudo)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -503,7 +503,7 @@ Done:;
 /// (ContextoEvento) com cada notificação. Ao receber uma notificação, um cliente pode determinar se ele ou outro cliente é a origem do evento inspecionando o valor de (ContextoEvento).
 /// Esse esquema depende do cliente selecionando um valor para esse parâmetro que é exclusivo entre todos os clientes na sessão. Se o chamador fornece uma String NULA para este parâmetro, 
 /// o método de notificação do cliente recebe NULO ou VAZIO na string de contexto.</param>
-CarenResult CarenSimpleAudioVolume::DefinirNivelVolume(float Param_NivelVolume, String^ Param_ContextoEvento)
+CarenResult CarenSimpleAudioVolume::SetMasterVolume(float Param_NivelVolume, String^ Param_ContextoEvento)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -554,7 +554,7 @@ Done:;
 /// (ContextoEvento) com cada notificação. Ao receber uma notificação, um cliente pode determinar se ele ou outro cliente é a origem do evento inspecionando o valor de (ContextoEvento).
 /// Esse esquema depende do cliente selecionando um valor para esse parâmetro que é exclusivo entre todos os clientes na sessão. Se o chamador fornece uma String NULA para este parâmetro, 
 /// o método de notificação do cliente recebe NULO ou VAZIO na string de contexto.</param>
-CarenResult CarenSimpleAudioVolume::DefinirEstadoMudo(Boolean Param_EstadoMudo, String^ Param_ContextoEvento)
+CarenResult CarenSimpleAudioVolume::SetMute(Boolean Param_EstadoMudo, String^ Param_ContextoEvento)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

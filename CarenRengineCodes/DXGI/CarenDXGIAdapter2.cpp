@@ -416,10 +416,10 @@ void CarenDXGIAdapter2::Finalizar()
 /// sua tarefa atual.
 /// </summary>
 /// <param name="Param_Out_DescAdaptador">Retorna uma estrutura CA_DXGI_ADAPTER_DESC2 que descreve o adaptador. Este parâmetro não deve ser 
-/// NULO.No hardware gráfico nível 9, versões anteriores do ObterDescricao2(ObterDescricao e ObterDescricao1) retorna zero para o 
+/// NULO.No hardware gráfico nível 9, versões anteriores do GetDesc2(GetDesc e GetDesc1) retorna zero para o 
 /// PCI ID em e (VendorId, DeviceId, SubSysId, e Revision) da estrutura de descrição do adaptador e "Adaptador de Software" para a descrição 
-/// do membro (Description). O ObterDescricao2 retorna os valores reais de hardware nível 9 nesses membros.</param>
-CarenResult CarenDXGIAdapter2::ObterDescricao2([Out] CA_DXGI_ADAPTER_DESC2^% Param_Out_DescAdaptador)
+/// do membro (Description). O GetDesc2 retorna os valores reais de hardware nível 9 nesses membros.</param>
+CarenResult CarenDXGIAdapter2::GetDesc2([Out] CA_DXGI_ADAPTER_DESC2^% Param_Out_DescAdaptador)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -467,9 +467,9 @@ Done:;
 /// <summary>
 /// (GetDesc1) - Obtém uma descrição DXGI 1.1 de um adaptador (ou cartão de vídeo).
 /// </summary>
-/// <param name="Param_Out_DescAdaptador">Retorna uma estrutura CA_DXGI_ADAPTER_DESC1 que descreve o adaptador. No hardware gráfico de nível 9 de recurso, o (ObterDescricao1) retorna zeros para o 
+/// <param name="Param_Out_DescAdaptador">Retorna uma estrutura CA_DXGI_ADAPTER_DESC1 que descreve o adaptador. No hardware gráfico de nível 9 de recurso, o (GetDesc1) retorna zeros para o 
 /// PCI ID no VendorId, DeviceId, SubSysId e membros de revisão de CA_DXGI_ADAPTER_DESC1 e "Adaptador de Software" para a sequencia de descrição no membro Description.</param>
-CarenResult CarenDXGIAdapter2::ObterDescricao1([Out] CA_DXGI_ADAPTER_DESC1^% Param_Out_DescAdaptador)
+CarenResult CarenDXGIAdapter2::GetDesc1([Out] CA_DXGI_ADAPTER_DESC1^% Param_Out_DescAdaptador)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -518,7 +518,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidInterface">O GUID da interface da versão do dispositivo para a qual o suporte está sendo verificado.</param>
 /// <param name="Param_Out_UMDVersion">A versão do motorista do modo de usuário do (Param_GuidInterface). Isso só é devolvido se a interface for suportada, caso contrário, este parâmetro será -12354.</param>
-CarenResult CarenDXGIAdapter2::ChecarSuporteInterface(String^ Param_GuidInterface, [Out] Int64% Param_Out_UMDVersion)
+CarenResult CarenDXGIAdapter2::CheckInterfaceSupport(String^ Param_GuidInterface, [Out] Int64% Param_Out_UMDVersion)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -565,7 +565,7 @@ Done:;
 /// </summary>
 /// <param name="Param_IndexSaida">O índice da saída.</param>
 /// <param name="Param_Out_Saida">O endereço de um ponteiro para uma interface ICarenDXGIOutput na posição especificada pelo parâmetro (Param_IndexSaida).</param>
-CarenResult CarenDXGIAdapter2::EnumerarSaidas(UInt32 Param_IndexSaida, [Out] ICarenDXGIOutput^% Param_Out_Saida)
+CarenResult CarenDXGIAdapter2::EnumOutputs(UInt32 Param_IndexSaida, [Out] ICarenDXGIOutput^% Param_Out_Saida)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -611,9 +611,9 @@ Done:;
 /// <summary>
 /// (GetDesc) - Obtém uma descrição DXGI 1.0 de um adaptador (ou cartão de vídeo).
 /// </summary>
-/// <param name="Param_Out_DescAdaptador">Retorna uma estrutura CA_DXGI_ADAPTER_DESC que descreve o adaptador. No hardware gráfico de nível 9 de recurso, o (ObterDescricao) retorna zeros para o 
+/// <param name="Param_Out_DescAdaptador">Retorna uma estrutura CA_DXGI_ADAPTER_DESC que descreve o adaptador. No hardware gráfico de nível 9 de recurso, o (GetDesc) retorna zeros para o 
 /// PCI ID no VendorId, DeviceId, SubSysId e membros de revisão de CA_DXGI_ADAPTER_DESC e "Adaptador de Software" para a sequencia de descrição no membro Description.</param>
-CarenResult CarenDXGIAdapter2::ObterDescricao([Out] CA_DXGI_ADAPTER_DESC^% Param_Out_DescAdaptador)
+CarenResult CarenDXGIAdapter2::GetDesc([Out] CA_DXGI_ADAPTER_DESC^% Param_Out_DescAdaptador)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -657,11 +657,11 @@ Done:;
 
 
 /// <summary>
-/// (GetParent) - Recupera o objeto pai deste objeto.
+/// Recupera o objeto pai deste objeto.
 /// </summary>
 /// <param name="Param_RIIDInterface">A identificação da interface solicitada.</param>
 /// <param name="Param_Out_ObjetoPai">Recebe o ponteiro para o objeto pai do objeto atual. O usuário deve inicializar a interface antes de chamar este método.</param>
-CarenResult CarenDXGIAdapter2::ObterPaiObjeto(String^ Param_RIIDInterface, ICaren^ Param_Out_ObjetoPai)
+CarenResult CarenDXGIAdapter2::GetParent(String^ Param_RIIDInterface, ICaren^ Param_Out_ObjetoPai)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -704,12 +704,12 @@ Done:;
 }
 
 /// <summary>
-/// (SetPrivateData) - Define dados definidos pelo aplicativo para o objeto e associa esses dados a um GUID.
+/// Define dados definidos pelo aplicativo para o objeto e associa esses dados a um GUID.
 /// </summary>
 /// <param name="Param_GuidIdentificao">Um GUID que identifica os dados. Use esse GUID em uma chamada para o GetPrivateData para obter os dados.</param>
 /// <param name="Param_TamanhoDados">O tamanho dos dados.</param>
 /// <param name="Param_Dados">Ponteiro para os dados.</param>
-CarenResult CarenDXGIAdapter2::DefinirDadosPrivados(String^ Param_GuidIdentificao, UInt32 Param_TamanhoDados, ICaren^ Param_Dados)
+CarenResult CarenDXGIAdapter2::SetPrivateData(String^ Param_GuidIdentificao, UInt32 Param_TamanhoDados, ICaren^ Param_Dados)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -761,13 +761,13 @@ Done:;
 }
 
 /// <summary>
-/// (GetPrivateData) - Obtém um ponteiro para os dados do objeto.
+/// Obtém um ponteiro para os dados do objeto.
 /// </summary>
 /// <param name="Param_GuidIdentificao">Um GUID identificando os dados.</param>
 /// <param name="Param_Ref_TamanhoDados">Retorna o tamanho dos dados.</param>
 /// <param name="Param_Out_Dados">Retorna um ponteiro para os dados. Esse ponteiro pode e não pode ser uma interface IUnknown. Sendo uma (IUnknown), o chamador é responsável por liberar a 
 /// referência para a interface. O usuário deve inicializar a interface antes de chamar este método.</param>
-CarenResult CarenDXGIAdapter2::ObterDadosPrivados(String^ Param_GuidIdentificao, UInt32% Param_Ref_TamanhoDados, ICaren^ Param_Out_Dados)
+CarenResult CarenDXGIAdapter2::GetPrivateData(String^ Param_GuidIdentificao, UInt32% Param_Ref_TamanhoDados, ICaren^ Param_Out_Dados)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -814,11 +814,11 @@ Done:;
 }
 
 /// <summary>
-/// (SetPrivateDataInterface) - Defina uma interface nos dados privados do objeto.
+/// Define uma interface nos dados privados do objeto.
 /// </summary>
 /// <param name="Param_GuidInterface">Guid de identificação da interface.</param>
 /// <param name="Param_Interface">Um ponteiro para a interface a ser definida.</param>
-CarenResult CarenDXGIAdapter2::DefinirDadosPrivadosInterface(String^ Param_GuidInterface, ICaren^ Param_Interface)
+CarenResult CarenDXGIAdapter2::SetPrivateDataInterface(String^ Param_GuidInterface, ICaren^ Param_Interface)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

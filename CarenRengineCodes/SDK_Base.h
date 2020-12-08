@@ -8314,7 +8314,7 @@ MEReservedMax = 10000
 
 
 			/// <summary>
-			/// (DXGI_SWAP_EFFECT)(FALTA DOCUMENTAR) - Enumera as opções para lidar com pixels em uma superfície de exibição depos de chamar ICarenDXGISwapChain1::Apresentar1.
+			/// (DXGI_SWAP_EFFECT)(FALTA DOCUMENTAR) - Enumera as opções para lidar com pixels em uma superfície de exibição depos de chamar ICarenDXGISwapChain1::Present1.
 			/// </summary>
 			public enum class CA_DXGI_SWAP_EFFECT
 			{
@@ -10666,7 +10666,7 @@ MEReservedMax = 10000
 			};
 
 			/// <summary>
-			/// (_DXGI_OFFER_RESOURCE_FLAGS) - Enumera bandeiras para serem utilizadas pelo método ICarenDXGIDevice4::OfertarRecursos1.
+			/// (_DXGI_OFFER_RESOURCE_FLAGS) - Enumera bandeiras para serem utilizadas pelo método ICarenDXGIDevice4::OfferResources.
 			/// </summary>
 			public enum class CA_DXGI_OFFER_RESOURCE_FLAGS
 			{
@@ -10682,18 +10682,18 @@ MEReservedMax = 10000
 			};
 
 			/// <summary>
-			/// (DXGI_RECLAIM_RESOURCE_RESULTS) - Enumera bandeiras de resultados para o método ICarenDXGIDevice4::RecuperarRecursos1.
+			/// (DXGI_RECLAIM_RESOURCE_RESULTS) - Enumera bandeiras de resultados para o método ICarenDXGIDevice4::ReclaimResources1.
 			/// </summary>
 			public enum class CA_DXGI_RECLAIM_RESOURCE_RESULTS
 			{
 				/// <summary>
-				/// A superfície foi recuperada com sucesso e tem conteúdo válido. Este resultado é idêntico ao valor falso devolvido pelo antigo método (RecuperarRecursos).
+				/// A superfície foi recuperada com sucesso e tem conteúdo válido. Este resultado é idêntico ao valor falso devolvido pelo antigo método (ReclaimResources).
 				/// </summary>
 				CA_DXGI_RECLAIM_RESOURCE_RESULT_OK = 0,
 
 				/// <summary>
 				/// A superfície foi recuperada, mas o conteúdo antigo foi perdido e deve ser regenerado. Este resultado é idêntico ao verdadeiro valor devolvido 
-				/// pelo antigo método (RecuperarRecursos).
+				/// pelo antigo método (ReclaimResources).
 				/// </summary>
 				CA_DXGI_RECLAIM_RESOURCE_RESULT_DISCARDED = 1,
 
@@ -19382,7 +19382,7 @@ MEReservedMax = 10000
 
 				/// <summary>
 				/// A quantidade de memória de vídeo, em bytes, que o aplicativo tem disponível para reserva. Para reservar essa memória de vídeo, o aplicativo deve ligar 
-				/// para ICarenDXGIAdapter3::DefinirReversaMemoriaVideo.
+				/// para ICarenDXGIAdapter3::SetVideoMemoryReservation.
 				///</summary>
 				UInt64 AvailableForReservation;
 
@@ -20185,7 +20185,7 @@ MEReservedMax = 10000
 			};
 
 			/// <summary>
-			/// (DXGI_MATRIX_3X2_F) - Representa uma matriz 3x2. Usado com ObterMatrixTransform e DefinirMatrixTransform para indicar a transformação de escala e tradução para cadeias de swap em SwapChainPanel.
+			/// (DXGI_MATRIX_3X2_F) - Representa uma matriz 3x2. Usado com GetMatrixTransform e SetMatrixTransform para indicar a transformação de escala e tradução para cadeias de swap em SwapChainPanel.
 			/// </summary>
 			public ref struct CA_DXGI_MATRIX_3X2_F
 			{

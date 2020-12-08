@@ -198,7 +198,7 @@ public:
 	/// frame antes de retornar ao chamador. Este método retorna se o intervalo expirar e uma nova imagem da área de trabalho não estiver disponível.</param>
 	/// <param name="Param_Out_FrameInfo">Recebe a estrutura CA_DXGI_OUTDUPL_FRAME_INFO que descreve estatísticas de tempo e apresentação para um quadro.</param>
 	/// <param name="Param_Out_DesktopResource">Recebe um ponteiro para a interface ICarenDXGIResource da superfície que contém o bitmap desktop.</param>
-	virtual CarenResult AdquirirProximoFrame(
+	virtual CarenResult AcquireNextFrame(
 		UInt32 Param_TimeOutMilliSeconds,
 		[Out] CA_DXGI_OUTDUPL_FRAME_INFO^% Param_Out_FrameInfo,
 		[Out] ICarenDXGIResource^% Param_Out_DesktopResource);
@@ -207,16 +207,16 @@ public:
 	/// (GetDesc) - Recupera uma descrição de uma saída duplicada. Esta descrição especifica as dimensões da superfície que contém a imagem da área de trabalho.
 	/// </summary>
 	/// <param name="Param_Out_Desc">Recebe uma estrutura CA_DXGI_OUTDUPL_DESC que descreve a saída duplicada.</param>
-	virtual CarenResult ObterDescricao([Out] CA_DXGI_OUTDUPL_DESC^% Param_Out_Desc);
+	virtual CarenResult GetDesc([Out] CA_DXGI_OUTDUPL_DESC^% Param_Out_Desc);
 
 	/// <summary>
 	/// (GetFrameDirtyRects) - Obtém informações sobre retângulos sujos para o quadro(Frame) de desktop atual.
 	/// </summary>
 	/// <param name="Param_SizeMatrizRetangulos">O tamanho em bytes do buffer que o chamador passou para o parâmetro Param_Out_MatrizRetangulosSujos.</param>
 	/// <param name="Param_Out_MatrizRetangulosSujos">Recebe uma série de estruturas CA_RECT que identifica as regiões de retângulo sujo para o quadro de desktop.</param>
-	/// <param name="Param_Out_SizeMatrizRetangulos">Recebe o número de bytes que (ObterFrameDirtyRects) precisa armazenar informações sobre regiões sujas 
+	/// <param name="Param_Out_SizeMatrizRetangulos">Recebe o número de bytes que (GetFrameDirtyRects) precisa armazenar informações sobre regiões sujas 
 	/// no buffer em (Param_Out_MatrizRetangulosSujos).</param>
-	virtual CarenResult ObterFrameDirtyRects(
+	virtual CarenResult GetFrameDirtyRects(
 		UInt32 Param_SizeMatrizRetangulos,
 		[Out] cli::array<CA_RECT^>^% Param_Out_MatrizRetangulosSujos,
 		[Out] UInt32% Param_Out_SizeMatrizRetangulos);
@@ -227,9 +227,9 @@ public:
 	/// <param name="Param_SizeMatrizMoveRects">O tamanho em bytes do buffer que o chamador passou para o parâmetro Param_Out_MatrizMoveRects.</param>
 	/// <param name="Param_Out_MatrizMoveRects">Recebe uma matriz de estruturas CA_DXGI_OUTDUPL_MOVE_RECT que identifica as regiões de retângulo movido para o 
 	/// quadro de desktop.</param>
-	/// <param name="Param_Out_SizeMatrizMoveRects">Recebe o número de bytes que (ObterFrameMoveRects) precisa para armazenar informações sobre regiões movidas no buffer 
+	/// <param name="Param_Out_SizeMatrizMoveRects">Recebe o número de bytes que (GetFrameMoveRects) precisa para armazenar informações sobre regiões movidas no buffer 
 	/// no Param_Out_MatrizMoveRects.</param>
-	virtual CarenResult ObterFrameMoveRects(
+	virtual CarenResult GetFrameMoveRects(
 		UInt32 Param_SizeMatrizMoveRects,
 		[Out] cli::array<CA_DXGI_OUTDUPL_MOVE_RECT^>^% Param_Out_MatrizMoveRects,
 		[Out] UInt32% Param_Out_SizeMatrizMoveRects);
@@ -238,12 +238,12 @@ public:
 	/// (GetFramePointerShape) - Obtém informações sobre a nova forma do ponteiro para o quadro(Frame) de desktop atual.
 	/// </summary>
 	/// <param name="Param_SizeBufferShape">O tamanho em bytes do buffer que o chamador passou para o parâmetro (Param_Ref_ShapePointerBuffer).</param>
-	/// <param name="Param_Ref_ShapePointerBuffer">Um ponteiro para um buffer para o qual o (ObterFramePointerShape) copia e retorna dados de pixels para a nova 
+	/// <param name="Param_Ref_ShapePointerBuffer">Um ponteiro para um buffer para o qual o (GetFramePointerShape) copia e retorna dados de pixels para a nova 
 	/// forma do ponteiro.</param>
-	/// <param name="Param_Out_SizeBufferShapeRequerido">Recebe o número de bytes que o (ObterFramePointerShape) precisa para armazenar os novos dados de pixel de 
+	/// <param name="Param_Out_SizeBufferShapeRequerido">Recebe o número de bytes que o (GetFramePointerShape) precisa para armazenar os novos dados de pixel de 
 	/// forma de ponteiro no buffer em (Param_Ref_ShapePointerBuffer).</param>
 	/// <param name="Param_Out_PointerShapeInfo">Recebe uma estrutura CA_DXGI_OUTDUPL_POINTER_SHAPE_INFO que contém as informações de forma do ponteiro.</param>
-	virtual CarenResult ObterFramePointerShape(
+	virtual CarenResult GetFramePointerShape(
 		UInt32 Param_SizeBufferShape,
 		ICarenBuffer^% Param_Ref_ShapePointerBuffer,
 		[Out] UInt32% Param_Out_SizeBufferShapeRequerido,
@@ -254,50 +254,50 @@ public:
 	/// </summary>
 	/// <param name="Param_Out_MapData">Retorna uma estrutura CA_DXGI_MAPPED_RECT que recebe os dados superficiais que a CPU precisa para acessar diretamente 
 	/// os dados da superfície.</param>
-	virtual CarenResult MapearSuperficeDesktop([Out] CA_DXGI_MAPPED_RECT^% Param_Out_MapData);
+	virtual CarenResult MapDesktopSurface([Out] CA_DXGI_MAPPED_RECT^% Param_Out_MapData);
 
 	/// <summary>
 	/// (ReleaseFrame) - Indica que o aplicativo terminou de processar o quadro(Frame).
 	/// </summary>
-	virtual CarenResult LiberarFrame();
+	virtual CarenResult ReleaseFrame();
 
 	/// <summary>
-	/// (UnMapDesktopSurface) - Invalida o ponteiro para a imagem de desktop que foi recuperada usando ICarenDXGIOutputDuplication::MapearSuperficeDesktop.
+	/// (UnMapDesktopSurface) - Invalida o ponteiro para a imagem de desktop que foi recuperada usando ICarenDXGIOutputDuplication::MapDesktopSurface.
 	/// </summary>
-	virtual CarenResult UnMapearSuperficeDesktop();
+	virtual CarenResult UnMapDesktopSurface();
 
 
 
 	//Métodos da interface(ICarenDXGIObject)
 public:
 	/// <summary>
-	/// (GetParent) - Recupera o objeto pai deste objeto.
+	/// Recupera o objeto pai deste objeto.
 	/// </summary>
 	/// <param name="Param_RIIDInterface">A identificação da interface solicitada.</param>
 	/// <param name="Param_Out_ObjetoPai">Recebe o ponteiro para o objeto pai do objeto atual. O usuário deve inicializar a interface antes de chamar este método.</param>
-	virtual CarenResult ObterPaiObjeto(String^ Param_RIIDInterface, ICaren^ Param_Out_ObjetoPai);
+	virtual CarenResult GetParent(String^ Param_RIIDInterface, ICaren^ Param_Out_ObjetoPai);
 
 	/// <summary>
-	/// (SetPrivateData) - Define dados definidos pelo aplicativo para o objeto e associa esses dados a um GUID.
+	/// Define dados definidos pelo aplicativo para o objeto e associa esses dados a um GUID.
 	/// </summary>
 	/// <param name="Param_GuidIdentificao">Um GUID que identifica os dados. Use esse GUID em uma chamada para o GetPrivateData para obter os dados.</param>
 	/// <param name="Param_TamanhoDados">O tamanho dos dados.</param>
 	/// <param name="Param_Dados">Ponteiro para os dados.</param>
-	virtual CarenResult DefinirDadosPrivados(String^ Param_GuidIdentificao, UInt32 Param_TamanhoDados, ICaren^ Param_Dados);
+	virtual CarenResult SetPrivateData(String^ Param_GuidIdentificao, UInt32 Param_TamanhoDados, ICaren^ Param_Dados);
 
 	/// <summary>
-	/// (GetPrivateData) - Obtém um ponteiro para os dados do objeto.
+	/// Obtém um ponteiro para os dados do objeto.
 	/// </summary>
 	/// <param name="Param_GuidIdentificao">Um GUID identificando os dados.</param>
 	/// <param name="Param_Ref_TamanhoDados">Retorna o tamanho dos dados.</param>
 	/// <param name="Param_Out_Dados">Retorna um ponteiro para os dados. Esse ponteiro pode e não pode ser uma interface IUnknown. Sendo uma (IUnknown), o chamador é responsável por liberar
 	/// a referência para a interface. O usuário deve inicializar a interface antes de chamar este método.</param>
-	virtual CarenResult ObterDadosPrivados(String^ Param_GuidIdentificao, UInt32% Param_Ref_TamanhoDados, ICaren^ Param_Out_Dados);
+	virtual CarenResult GetPrivateData(String^ Param_GuidIdentificao, UInt32% Param_Ref_TamanhoDados, ICaren^ Param_Out_Dados);
 
 	/// <summary>
-	/// (SetPrivateDataInterface) - Defina uma interface nos dados privados do objeto.
+	/// Define uma interface nos dados privados do objeto.
 	/// </summary>
 	/// <param name="Param_GuidInterface">Guid de identificação da interface.</param>
 	/// <param name="Param_Interface">Um ponteiro para a interface a ser definida.</param>
-	virtual CarenResult DefinirDadosPrivadosInterface(String^ Param_GuidInterface, ICaren^ Param_Interface);
+	virtual CarenResult SetPrivateDataInterface(String^ Param_GuidInterface, ICaren^ Param_Interface);
 };

@@ -414,7 +414,7 @@ void CarenDXGISurface::Finalizar()
 /// (GetDesc) - Método responsável por obter uma descrição da superfície.
 /// </summary>
 /// <param name="Param_Out_DescSuperfice">Recebe uma estrutura descrevendo a superfice.</param>
-CarenResult CarenDXGISurface::ObterDescricao([Out] CA_DXGI_SURFACE_DESC^% Param_Out_DescSuperfice)
+CarenResult CarenDXGISurface::GetDesc([Out] CA_DXGI_SURFACE_DESC^% Param_Out_DescSuperfice)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -457,7 +457,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Flags">Bandeiras de leitura da CPU que definem o tipo de acesso ao dados da superfice.</param>
 /// <param name="Param_Out_RectMapeado">Recebe uma estrutura que contém os dados mapeados da superfice.</param>
-CarenResult CarenDXGISurface::Mapear(CA_DXGI_MAP_FLAGS Param_Flags, [Out] CA_DXGI_MAPPED_RECT^% Param_Out_RectMapeado)
+CarenResult CarenDXGISurface::Map(CA_DXGI_MAP_FLAGS Param_Flags, [Out] CA_DXGI_MAPPED_RECT^% Param_Out_RectMapeado)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -497,10 +497,10 @@ Done:;
 }
 
 /// <summary>
-/// (Unmap) - Método responsável por invalidar o ponteiro para a superfície recuperada pelo ICarenDXGISurface::Mapear e 
+/// (Unmap) - Método responsável por invalidar o ponteiro para a superfície recuperada pelo ICarenDXGISurface::Map e 
 /// reativar o acesso GPU ao recurso.
 /// </summary>
-CarenResult CarenDXGISurface::Desmapear()
+CarenResult CarenDXGISurface::Unmap()
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -537,11 +537,11 @@ Done:;
 
 
 /// <summary>
-/// (GetDevice) - Recupera o dispositivo.
+/// Recupera o dispositivo.
 /// </summary>
 /// <param name="Param_RIIDInterface">O ID de referência para o dispositivo.</param>
 /// <param name="Param_Out_Objeto">Recebe um ponteiro para o dispositivo solictiado. O usuário deve inicializar a interface antes de chamar este método.</param>
-CarenResult CarenDXGISurface::ObterDispositivo(String^ Param_RIIDInterface, ICaren^ Param_Out_Objeto)
+CarenResult CarenDXGISurface::GetDevice(String^ Param_RIIDInterface, ICaren^ Param_Out_Objeto)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -600,11 +600,11 @@ Done:;
 
 
 /// <summary>
-/// (GetParent) - Recupera o objeto pai deste objeto.
+/// Recupera o objeto pai deste objeto.
 /// </summary>
 /// <param name="Param_RIIDInterface">A identificação da interface solicitada.</param>
 /// <param name="Param_Out_ObjetoPai">Recebe o ponteiro para o objeto pai do objeto atual. O usuário deve inicializar a interface antes de chamar este método.</param>
-CarenResult CarenDXGISurface::ObterPaiObjeto(String^ Param_RIIDInterface, ICaren^ Param_Out_ObjetoPai)
+CarenResult CarenDXGISurface::GetParent(String^ Param_RIIDInterface, ICaren^ Param_Out_ObjetoPai)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -647,12 +647,12 @@ Done:;
 }
 
 /// <summary>
-/// (SetPrivateData) - Define dados definidos pelo aplicativo para o objeto e associa esses dados a um GUID.
+/// Define dados definidos pelo aplicativo para o objeto e associa esses dados a um GUID.
 /// </summary>
 /// <param name="Param_GuidIdentificao">Um GUID que identifica os dados. Use esse GUID em uma chamada para o GetPrivateData para obter os dados.</param>
 /// <param name="Param_TamanhoDados">O tamanho dos dados.</param>
 /// <param name="Param_Dados">Ponteiro para os dados.</param>
-CarenResult CarenDXGISurface::DefinirDadosPrivados(String^ Param_GuidIdentificao, UInt32 Param_TamanhoDados, ICaren^ Param_Dados)
+CarenResult CarenDXGISurface::SetPrivateData(String^ Param_GuidIdentificao, UInt32 Param_TamanhoDados, ICaren^ Param_Dados)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -704,13 +704,13 @@ Done:;
 }
 
 /// <summary>
-/// (GetPrivateData) - Obtém um ponteiro para os dados do objeto.
+/// Obtém um ponteiro para os dados do objeto.
 /// </summary>
 /// <param name="Param_GuidIdentificao">Um GUID identificando os dados.</param>
 /// <param name="Param_Ref_TamanhoDados">Retorna o tamanho dos dados.</param>
 /// <param name="Param_Out_Dados">Retorna um ponteiro para os dados. Esse ponteiro pode e não pode ser uma interface IUnknown. Sendo uma (IUnknown), o chamador é responsável por liberar a 
 /// referência para a interface. O usuário deve inicializar a interface antes de chamar este método.</param>
-CarenResult CarenDXGISurface::ObterDadosPrivados(String^ Param_GuidIdentificao, UInt32% Param_Ref_TamanhoDados, ICaren^ Param_Out_Dados)
+CarenResult CarenDXGISurface::GetPrivateData(String^ Param_GuidIdentificao, UInt32% Param_Ref_TamanhoDados, ICaren^ Param_Out_Dados)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -757,11 +757,11 @@ Done:;
 }
 
 /// <summary>
-/// (SetPrivateDataInterface) - Defina uma interface nos dados privados do objeto.
+/// Define uma interface nos dados privados do objeto.
 /// </summary>
 /// <param name="Param_GuidInterface">Guid de identificação da interface.</param>
 /// <param name="Param_Interface">Um ponteiro para a interface a ser definida.</param>
-CarenResult CarenDXGISurface::DefinirDadosPrivadosInterface(String^ Param_GuidInterface, ICaren^ Param_Interface)
+CarenResult CarenDXGISurface::SetPrivateDataInterface(String^ Param_GuidInterface, ICaren^ Param_Interface)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

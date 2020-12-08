@@ -135,7 +135,7 @@ public:
 	/// <summary>
 	/// Cria a instância de um dispositivo do Direct3D11.
 	/// </summary>
-	/// <param name="Param_Adaptador">Um ponteiro para o adaptador de vídeo para usar ao criar um dispositivo. Passe NULO para usar o adaptador padrão, que é o primeiro adaptador que é enumerado por ICarenDXGIFactory1::EnumerarAdaptadores.</param>
+	/// <param name="Param_Adaptador">Um ponteiro para o adaptador de vídeo para usar ao criar um dispositivo. Passe NULO para usar o adaptador padrão, que é o primeiro adaptador que é enumerado por ICarenDXGIFactory1::EnumAdapters.</param>
 	/// <param name="Param_NiveisRecurso">Um array com os niveis de recurso que seram suportados pelo dispositivo.</param>
 	/// <param name="Param_TipoDriver">O tipo do driver do dispositivo a ser criado.</param>
 	/// <param name="Param_FlagsCreateDevice">Os flags utilizados para criar o dispositivo D3D 11.</param>
@@ -218,7 +218,7 @@ public:
 	/// <summary>
 	/// Cria a instância de um dispositivo do Direct3D11 e fornece a possibilidade de retorna o seu Contexto Imediato.
 	/// </summary>
-	/// <param name="Param_Adaptador">Um ponteiro para o adaptador de vídeo para usar ao criar um dispositivo. Passe NULO para usar o adaptador padrão, que é o primeiro adaptador que é enumerado por ICarenDXGIFactory1::EnumerarAdaptadores.</param>
+	/// <param name="Param_Adaptador">Um ponteiro para o adaptador de vídeo para usar ao criar um dispositivo. Passe NULO para usar o adaptador padrão, que é o primeiro adaptador que é enumerado por ICarenDXGIFactory1::EnumAdapters.</param>
 	/// <param name="Param_NiveisRecurso">Um array com os niveis de recurso que seram suportados pelo dispositivo.</param>
 	/// <param name="Param_TipoDriver">O tipo do driver do dispositivo a ser criado.</param>
 	/// <param name="Param_FlagsCreateDevice">Os flags utilizados para criar o dispositivo D3D 11.</param>
@@ -306,7 +306,7 @@ public:
 	/// <summary>
 	/// Cria a instância de um dispositivo do D3D11 e fornece as interfaces: Cadeia de troca(SwapChain) e o Contexto Imediato(DeviceContext).
 	/// </summary>
-	/// <param name="Param_Adaptador">Um ponteiro para o adaptador de vídeo para usar ao criar um dispositivo. Passe NULO para usar o adaptador padrão, que é o primeiro adaptador que é enumerado por ICarenDXGIFactory1::EnumerarAdaptadores.</param>
+	/// <param name="Param_Adaptador">Um ponteiro para o adaptador de vídeo para usar ao criar um dispositivo. Passe NULO para usar o adaptador padrão, que é o primeiro adaptador que é enumerado por ICarenDXGIFactory1::EnumAdapters.</param>
 	/// <param name="Param_NiveisRecurso">Um array com os niveis de recurso que seram suportados pelo dispositivo.</param>
 	/// <param name="Param_TipoDriver">O tipo do driver do dispositivo a ser criado.</param>
 	/// <param name="Param_FlagsCreateDevice">Os flags utilizados para criar o dispositivo D3D 11.</param>

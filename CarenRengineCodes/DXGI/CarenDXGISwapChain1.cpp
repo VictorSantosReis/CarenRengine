@@ -417,7 +417,7 @@ void CarenDXGISwapChain1::Finalizar()
 /// (GetBackgroundColor) - Recupera a cor de fundo da cadeia de swaps.
 /// </summary>
 /// <param name="Param_Out_Cor">Retorna uma estrutura que contém as informações de cor do Background.</param>
-CarenResult CarenDXGISwapChain1::ObterCorBackground([Out] CA_DXGI_RGBA^% Param_Out_Cor)
+CarenResult CarenDXGISwapChain1::GetBackgroundColor([Out] CA_DXGI_RGBA^% Param_Out_Cor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -460,7 +460,7 @@ Done:;
 /// </summary>
 /// <param name="Param_RIID">Um ponteiro para o identificador globalmente único(GUID) do objeto CoreWindow que é referenciado pelo parâmetro Param_Out_CoreWindow.</param>
 /// <param name="Param_Out_CoreWindow">Retorna o ponteiro do objeto para a CoreWindow.  O usuário deve inicializar a interface antes de chamar este método.</param>
-CarenResult CarenDXGISwapChain1::ObterCoreWindow(String^ Param_RIID, ICaren^ Param_Out_CoreWindow)
+CarenResult CarenDXGISwapChain1::GetCoreWindow(String^ Param_RIID, ICaren^ Param_Out_CoreWindow)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -506,7 +506,7 @@ Done:;
 /// (GetDesc1) - Obtém uma descrição da cadeia de swaps.
 /// </summary>
 /// <param name="Param_Out_Desc">Retorna uma estrutura que contém a descrição da cadeia de Swap.</param>
-CarenResult CarenDXGISwapChain1::ObterDescricao1([Out] CA_DXGI_SWAP_CHAIN_DESC1^% Param_Out_Desc)
+CarenResult CarenDXGISwapChain1::GetDesc1([Out] CA_DXGI_SWAP_CHAIN_DESC1^% Param_Out_Desc)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -548,7 +548,7 @@ Done:;
 /// (GetFullscreenDesc) - Obtém uma descrição de uma cadeia de troca em tela cheia.
 /// </summary>
 /// <param name="Param_Out_DescFullScreenSwap">Retorna uma estrutura que contém a descrição no modo FullScreen na cadeia de Swap.</param>
-CarenResult CarenDXGISwapChain1::ObterDescricaoFullScreen([Out] CA_DXGI_SWAP_CHAIN_FULLSCREEN_DESC^% Param_Out_DescFullScreenSwap)
+CarenResult CarenDXGISwapChain1::GetFullscreenDesc([Out] CA_DXGI_SWAP_CHAIN_FULLSCREEN_DESC^% Param_Out_DescFullScreenSwap)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -590,7 +590,7 @@ Done:;
 /// (GetHwnd) - Recupera o HWND subjacente para este objeto de cadeia de swap.
 /// </summary>
 /// <param name="Param_Out_HWND">Retorna um ponteiro para o HWND do objeto de cadeia de Swap.</param>
-CarenResult CarenDXGISwapChain1::ObterHwnd([Out] IntPtr% Param_Out_HWND)
+CarenResult CarenDXGISwapChain1::GetHwnd([Out] IntPtr% Param_Out_HWND)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -633,7 +633,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Out_Saida">Um ponteiro para um buffer que recebe um ponteiro para a interface IDXGIOutput para a saída de restrição.  Um aplicativo passa este ponteiro para 
 /// ICarenDXGIOutput em uma chamada para o ICarenDXGIFactory2::CreateSwapChainForHwnd, ICarenDXGIFactory2::CreateSwapChainForCoreWindow, ou ICarenDXGIFactory2::CreateSwapChainForComposition</param>
-CarenResult CarenDXGISwapChain1::ObterSaidaParaRestricao([Out] ICarenDXGIOutput^% Param_Out_Saida)
+CarenResult CarenDXGISwapChain1::GetRestrictToOutput([Out] ICarenDXGIOutput^% Param_Out_Saida)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -677,7 +677,7 @@ Done:;
 /// (GetRotation) - Obtém a rotação dos buffers traseiros para a cadeia de swaps.
 /// </summary>
 /// <param name="Param_Out_Rotacao">Retorna uma enumeração que define a rotação do Buffer Traseiro(BackBuffer).</param>
-CarenResult CarenDXGISwapChain1::ObterRotacao([Out] CA_DXGI_MODE_ROTATION% Param_Out_Rotacao)
+CarenResult CarenDXGISwapChain1::GetRotation([Out] CA_DXGI_MODE_ROTATION% Param_Out_Rotacao)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -718,7 +718,7 @@ Done:;
 /// (IsTemporaryMonoSupported) - Determina se uma cadeia de swap suporta "mono temporário".
 /// </summary>
 /// <param name="Param_Out_Suporte">Retorna um Booleano que define o suporte ao mono.</param>
-CarenResult CarenDXGISwapChain1::IsSuporteMonoTemporario([Out] Boolean% Param_Out_Suporte)
+CarenResult CarenDXGISwapChain1::IsTemporaryMonoSupported([Out] Boolean% Param_Out_Suporte)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -748,7 +748,7 @@ CarenResult CarenDXGISwapChain1::IsSuporteMonoTemporario([Out] Boolean% Param_Ou
 /// <param name="Param_IntervaloSincronizacao">Um inteiro que especifica como sincronizar a apresentação de um quadro com o espaço em branco vertical.</param>
 /// <param name="Param_FlagsApresentacao">Um valor inteiro que contém opções de apresentação em cadeia de swaps.</param>
 /// <param name="Param_ParametrosApresentacao">uma estrutura CA_DXGI_PRESENT_PARAMETERS que descreve retângulos atualizados e rolar informações do quadro para apresentar.</param>
-CarenResult CarenDXGISwapChain1::Apresentar1(UInt32 Param_IntervaloSincronizacao, CA_DXGI_PRESENT Param_FlagsApresentacao, CA_DXGI_PRESENT_PARAMETERS^ Param_ParametrosApresentacao)
+CarenResult CarenDXGISwapChain1::Present1(UInt32 Param_IntervaloSincronizacao, CA_DXGI_PRESENT Param_FlagsApresentacao, CA_DXGI_PRESENT_PARAMETERS^ Param_ParametrosApresentacao)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -798,7 +798,7 @@ CarenResult CarenDXGISwapChain1::Apresentar1(UInt32 Param_IntervaloSincronizacao
 /// (SetBackgroundColor) - Muda a cor de fundo da cadeia de swaps.
 /// </summary>
 /// <param name="Param_Cor">A nova cor para o Background do buffer traseiro.</param>
-CarenResult CarenDXGISwapChain1::DefinirCorBackground(CA_DXGI_RGBA^ Param_Cor)
+CarenResult CarenDXGISwapChain1::SetBackgroundColor(CA_DXGI_RGBA^ Param_Cor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -843,7 +843,7 @@ Done:;
 /// (SetRotation) - Define a rotação dos buffers de volta para a cadeia de swap.
 /// </summary>
 /// <param name="Param_Rotacao">A nova rotação dos Buffers Traseiro(BackBuffers).</param>
-CarenResult CarenDXGISwapChain1::DefinirRotacao(CA_DXGI_MODE_ROTATION Param_Rotacao)
+CarenResult CarenDXGISwapChain1::SetRotation(CA_DXGI_MODE_ROTATION Param_Rotacao)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -890,7 +890,7 @@ Done:;
 /// <param name="Param_IndexBuffer">O Indince para o buffer de volta(Back-Buffer).</param>
 /// <param name="Param_RiidInterface">O tipo de interface usada para manipular o buffer.</param>
 /// <param name="Param_Out_InterfaceBuffer">Retorna a interface que gerencia o Buffer de volta(Back-Buffer). O Usuário é responsável por criar a interface que será retornada.</param>
-CarenResult CarenDXGISwapChain1::ObterBuffer(UInt32 Param_IndexBuffer, String^ Param_RiidInterface, ICaren^ Param_Out_InterfaceBuffer)
+CarenResult CarenDXGISwapChain1::GetBuffer(UInt32 Param_IndexBuffer, String^ Param_RiidInterface, ICaren^ Param_Out_InterfaceBuffer)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -937,7 +937,7 @@ Done:;
 /// Se o método for bem-sucedido, a interface de saída será preenchida e sua contagem de referência incrementada. Quando você terminar com ele, não se esqueça de liberar a interface para evitar um vazamento de memória.
 /// </summary>
 /// <param name="Param_Out_MonitorSaida">Retorna a interface para o monitor de exbicão de saida.</param>
-CarenResult CarenDXGISwapChain1::ObterMonitorExebicaoSaida([Out] ICarenDXGIOutput^% Param_Out_MonitorSaida)
+CarenResult CarenDXGISwapChain1::GetContainingOutput([Out] ICarenDXGIOutput^% Param_Out_MonitorSaida)
 
 {
 	//Variavel a ser retornada.
@@ -983,7 +983,7 @@ Done:;
 /// (GetDesc) - Obtém uma descrição da cadeia de swaps.
 /// </summary>
 /// <param name="Param_Out_DescricaoCadeiaSwap">Retorna uma estrutura com a descrição da cadeia de troca.</param>
-CarenResult CarenDXGISwapChain1::ObterDescricao([Out] Estruturas::CA_DXGI_SWAP_CHAIN_DESC^% Param_Out_DescricaoCadeiaSwap)
+CarenResult CarenDXGISwapChain1::GetDesc([Out] Estruturas::CA_DXGI_SWAP_CHAIN_DESC^% Param_Out_DescricaoCadeiaSwap)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1025,7 +1025,7 @@ Done:;
 /// (GetFrameStatistics) - Obtém estatísticas de desempenho sobre o último quadro render.
 /// </summary>
 /// <param name="Param_Out_FrameEstatisticas">Retorna uma estrutura com as estatiticas do frame.</param>
-CarenResult CarenDXGISwapChain1::ObterEstatisticasFrame([Out] Estruturas::CA_DXGI_FRAME_STATISTICS^% Param_Out_FrameEstatisticas)
+CarenResult CarenDXGISwapChain1::GetFrameStatistics([Out] Estruturas::CA_DXGI_FRAME_STATISTICS^% Param_Out_FrameEstatisticas)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1068,7 +1068,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Out_EstadoFullScreen">Retorna o estado do FullScreen. Se TRUE, a cadeia de swap está no modo de tela cheia. Se FALSE, a cadeia de swap está em modo de janela.</param>
 /// <param name="Param_Out_MonitorSaida">Retorna um ponteiro para o monitor de saida quando em modo de Tela Cheia(FullScreen); caso contrario retorna NULO.</param>
-CarenResult CarenDXGISwapChain1::ObterEstadoFullScreen([Out] Boolean% Param_Out_EstadoFullScreen, [Out] ICarenDXGIOutput^% Param_Out_MonitorSaida)
+CarenResult CarenDXGISwapChain1::GetFullscreenState([Out] Boolean% Param_Out_EstadoFullScreen, [Out] ICarenDXGIOutput^% Param_Out_MonitorSaida)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1124,10 +1124,10 @@ Done:;
 }
 
 /// <summary>
-/// (GetLastPresentCount) - Obtém o número de vezes que o método ICarenDXGISwapChain::Apresentar ou ICarenDXGISwapChain1::Apresentar1 foi chamado.
+/// (GetLastPresentCount) - Obtém o número de vezes que o método ICarenDXGISwapChain::Apresentar ou ICarenDXGISwapChain1::Present1 foi chamado.
 /// </summary>
-/// <param name="Param_Out_QuantidadeChamadas">Retorna a quantidade de chamadas para o método Apresentar ou Apresentar1.</param>
-CarenResult CarenDXGISwapChain1::ObterQuantidadeChamadasPresent([Out] UInt32% Param_Out_QuantidadeChamadas)
+/// <param name="Param_Out_QuantidadeChamadas">Retorna a quantidade de chamadas para o método Apresentar ou Present1.</param>
+CarenResult CarenDXGISwapChain1::GetLastPresentCount([Out] UInt32% Param_Out_QuantidadeChamadas)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1170,7 +1170,7 @@ Done:;
 /// </summary>
 /// <param name="Param_IntervaloSincronizacao">Um inteiro que especifica como sincronizar a apresentação de um quadro com o espaço em branco vertical.</param>
 /// <param name="Param_Flags">Um valor inteiro que contém opções de apresentação em cadeia de swaps. Essas opções são definidas pela enumeração (CA_DXGI_PRESENT).</param>
-CarenResult CarenDXGISwapChain1::Apresentar(UInt32 Param_IntervaloSincronizacao, Enumeracoes::CA_DXGI_PRESENT Param_Flags)
+CarenResult CarenDXGISwapChain1::Present(UInt32 Param_IntervaloSincronizacao, Enumeracoes::CA_DXGI_PRESENT Param_Flags)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1216,7 +1216,7 @@ Done:;
 /// <param name="Param_Altura">A nova altura do amortecedor traseiro. Se você especificar zero, DXGI usará a altura da área do cliente da janela do alvo. </param>
 /// <param name="Param_NovoFormato">O novo formato do buffer traseiro. Defina esse valor para DXGI_FORMAT_UNKNOWN para preservar o formato existente do buffer traseiro.</param>
 /// <param name="Param_SwapChainFlags">Uma combinação de CA_DXGI_SWAP_CHAIN_FLAG- digitado valores que são combinados usando um bitwise ou operação. O valor resultante especifica opções para o comportamento da cadeia de swaps</param>
-CarenResult CarenDXGISwapChain1::AlterarTamanhoBuffers(UInt32 Param_NumeroBuffers, UInt32 Param_Largura, UInt32 Param_Altura, Enumeracoes::CA_DXGI_FORMAT Param_NovoFormato, Enumeracoes::CA_DXGI_SWAP_CHAIN_FLAG Param_SwapChainFlags)
+CarenResult CarenDXGISwapChain1::ResizeBuffers(UInt32 Param_NumeroBuffers, UInt32 Param_Largura, UInt32 Param_Altura, Enumeracoes::CA_DXGI_FORMAT Param_NovoFormato, Enumeracoes::CA_DXGI_SWAP_CHAIN_FLAG Param_SwapChainFlags)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1254,9 +1254,9 @@ Done:;
 /// <summary>
 /// (ResizeTarget) - Redimensiona a meta de saída.
 /// </summary>
-/// <param name="Param_NovaDesc">A estrutura CA_DXGI_MODE_DESC que descreve o modo, que especifica a nova largura, altura, formato e taxa de atualização do alvo. Se o formato for DXGI_FORMAT_UNKNOWN, o método (RedimensionarSaida)
+/// <param name="Param_NovaDesc">A estrutura CA_DXGI_MODE_DESC que descreve o modo, que especifica a nova largura, altura, formato e taxa de atualização do alvo. Se o formato for DXGI_FORMAT_UNKNOWN, o método (ResizeTarget)
 /// utilizara o formato existente. Recomendamos apenas que você use DXGI_FORMAT_UNKNOWN quando a cadeia de swap está em modo de tela cheia, pois este método não é seguro para o segmento.</param>
-CarenResult CarenDXGISwapChain1::RedimensionarSaida(Estruturas::CA_DXGI_MODE_DESC^ Param_NovaDesc)
+CarenResult CarenDXGISwapChain1::ResizeTarget(Estruturas::CA_DXGI_MODE_DESC^ Param_NovaDesc)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1301,7 +1301,7 @@ Done:;
 /// <param name="Param_MonitorSaida">Se você passar o TRUE para o parâmetro (Param_EstadoFullScreen) para definir o estado de exibição para tela cheia, você pode definir opcionalmente este parâmetro para um ponteiro para uma interface
 /// IDXGIOutput para o alvo de saída que contém a cadeia de swap. Se você definir este parâmetro para NULO, DXGI escolherá a saída com base no dispositivo da cadeia de swap e na colocação da janela de saída. Se você passar FALSE 
 /// para (Param_EstadoFullScreen), você deve definir este parâmetro para NULO.</param>
-CarenResult CarenDXGISwapChain1::DefinirEstadoFullScreen(Boolean Param_EstadoFullScreen, ICarenDXGIOutput^ Param_MonitorSaida)
+CarenResult CarenDXGISwapChain1::SetFullscreenState(Boolean Param_EstadoFullScreen, ICarenDXGIOutput^ Param_MonitorSaida)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1350,11 +1350,11 @@ Done:;
 
 
 /// <summary>
-/// (GetDevice) - Recupera o dispositivo.
+/// Recupera o dispositivo.
 /// </summary>
 /// <param name="Param_RIIDInterface">O ID de referência para o dispositivo.</param>
 /// <param name="Param_Out_Objeto">Recebe um ponteiro para o dispositivo solictiado. O usuário deve inicializar a interface antes de chamar este método.</param>
-CarenResult CarenDXGISwapChain1::ObterDispositivo(String^ Param_RIIDInterface, ICaren^ Param_Out_Objeto)
+CarenResult CarenDXGISwapChain1::GetDevice(String^ Param_RIIDInterface, ICaren^ Param_Out_Objeto)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1413,11 +1413,11 @@ Done:;
 
 
 /// <summary>
-/// (GetParent) - Recupera o objeto pai deste objeto.
+/// Recupera o objeto pai deste objeto.
 /// </summary>
 /// <param name="Param_RIIDInterface">A identificação da interface solicitada.</param>
 /// <param name="Param_Out_ObjetoPai">Recebe o ponteiro para o objeto pai do objeto atual. O usuário deve inicializar a interface antes de chamar este método.</param>
-CarenResult CarenDXGISwapChain1::ObterPaiObjeto(String^ Param_RIIDInterface, ICaren^ Param_Out_ObjetoPai)
+CarenResult CarenDXGISwapChain1::GetParent(String^ Param_RIIDInterface, ICaren^ Param_Out_ObjetoPai)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1460,12 +1460,12 @@ Done:;
 }
 
 /// <summary>
-/// (SetPrivateData) - Define dados definidos pelo aplicativo para o objeto e associa esses dados a um GUID.
+/// Define dados definidos pelo aplicativo para o objeto e associa esses dados a um GUID.
 /// </summary>
 /// <param name="Param_GuidIdentificao">Um GUID que identifica os dados. Use esse GUID em uma chamada para o GetPrivateData para obter os dados.</param>
 /// <param name="Param_TamanhoDados">O tamanho dos dados.</param>
 /// <param name="Param_Dados">Ponteiro para os dados.</param>
-CarenResult CarenDXGISwapChain1::DefinirDadosPrivados(String^ Param_GuidIdentificao, UInt32 Param_TamanhoDados, ICaren^ Param_Dados)
+CarenResult CarenDXGISwapChain1::SetPrivateData(String^ Param_GuidIdentificao, UInt32 Param_TamanhoDados, ICaren^ Param_Dados)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1517,13 +1517,13 @@ Done:;
 }
 
 /// <summary>
-/// (GetPrivateData) - Obtém um ponteiro para os dados do objeto.
+/// Obtém um ponteiro para os dados do objeto.
 /// </summary>
 /// <param name="Param_GuidIdentificao">Um GUID identificando os dados.</param>
 /// <param name="Param_Ref_TamanhoDados">Retorna o tamanho dos dados.</param>
 /// <param name="Param_Out_Dados">Retorna um ponteiro para os dados. Esse ponteiro pode e não pode ser uma interface IUnknown. Sendo uma (IUnknown), o chamador é responsável por liberar a 
 /// referência para a interface. O usuário deve inicializar a interface antes de chamar este método.</param>
-CarenResult CarenDXGISwapChain1::ObterDadosPrivados(String^ Param_GuidIdentificao, UInt32% Param_Ref_TamanhoDados, ICaren^ Param_Out_Dados)
+CarenResult CarenDXGISwapChain1::GetPrivateData(String^ Param_GuidIdentificao, UInt32% Param_Ref_TamanhoDados, ICaren^ Param_Out_Dados)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1570,11 +1570,11 @@ Done:;
 }
 
 /// <summary>
-/// (SetPrivateDataInterface) - Defina uma interface nos dados privados do objeto.
+/// Define uma interface nos dados privados do objeto.
 /// </summary>
 /// <param name="Param_GuidInterface">Guid de identificação da interface.</param>
 /// <param name="Param_Interface">Um ponteiro para a interface a ser definida.</param>
-CarenResult CarenDXGISwapChain1::DefinirDadosPrivadosInterface(String^ Param_GuidInterface, ICaren^ Param_Interface)
+CarenResult CarenDXGISwapChain1::SetPrivateDataInterface(String^ Param_GuidInterface, ICaren^ Param_Interface)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

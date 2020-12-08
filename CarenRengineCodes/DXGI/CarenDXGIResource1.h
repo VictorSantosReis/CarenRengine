@@ -196,7 +196,7 @@ public:
 	/// </summary>
 	/// <param name="Param_Atributos">Uma estrutura CA_ATRIBUTOS_SEGURANCA que contém dois membros de dados separados, mas relacionados: um descritor de segurança opcional e 
 	/// um valor booleano que determina se os processos crianças podem herdar a Handle devolvida.
-	/// Defina esse parâmetro para NULO se desejar que os processos filhos que o aplicativo possa criar não herdem a Handle retornado por CriarHandleCompartilhada e se 
+	/// Defina esse parâmetro para NULO se desejar que os processos filhos que o aplicativo possa criar não herdem a Handle retornado por CreateSharedHandle e se 
 	/// desejar que o recurso associado ao identificador retornado obtenha um descritor de segurança padrão.</param>
 	/// <param name="Param_Acesso">Os direitos de acesso solicitados ao recurso. Você pode realizar um bitwise entre as enumerações CA_ACCESS_RIGHTS e CA_DXGI_SHARED_RESOURCE_RW 
 	/// para definir esse parametro.</param>
@@ -205,7 +205,7 @@ public:
 	/// em vez disso, ligar para o método ICarenD3D11Device1::AbrirRecursoCompartilhado1 para acessar o recurso compartilhado por cabo, defina este parâmetro para NULO.</param>
 	/// <param name="Param_Out_Handle">Recebe o ponteiro para uma variável que recebe o valor NT HANDLE para o recurso para compartilhar. Você pode usar esta Handle em 
 	/// chamadas para acessar o recurso.</param>
-	virtual CarenResult CriarHandleCompartilhada(
+	virtual CarenResult CreateSharedHandle(
 		CA_ATRIBUTOS_SEGURANCA^ Param_Atributos,
 		UInt64 Param_Acesso,
 		String^ Param_Nome,
@@ -217,7 +217,7 @@ public:
 	/// <param name="Param_Index">O índice do objeto de superfície do subrecurso a ser enumerado.</param>
 	/// <param name="Param_Out_DXGISurface2">Recebe um ponteiro para uma interface ICarenDXGISurface2 que representa o objeto de superfície do subrecurso criado na posição 
 	/// especificada pelo parâmetro (Param_Index).  O usuário deve inicializar a interface antes de chamar este método. </param>
-	virtual CarenResult CriarSuperficeSubrecurso(UInt32 Param_Index, ICaren^ Param_Out_DXGISurface2);
+	virtual CarenResult CreateSubresourceSurface(UInt32 Param_Index, ICaren^ Param_Out_DXGISurface2);
 
 
 
@@ -227,72 +227,72 @@ public:
 	/// (GetEvictionPriority) - Obtenha a prioridade de despejo.
 	/// </summary>
 	/// <param name="Param_Out_PrioridadeDespejo">Recebe valores da enumeração CA_DXGI_RESOURCE_PRIORITY, que determinam quando o recurso pode ser despejado.</param>
-	virtual CarenResult ObterPrioridadeDespejo([Out] CA_DXGI_RESOURCE_PRIORITY% Param_Out_PrioridadeDespejo);
+	virtual CarenResult GetEvictionPriority([Out] CA_DXGI_RESOURCE_PRIORITY% Param_Out_PrioridadeDespejo);
 
 	/// <summary>
 	/// (GetSharedHandle) - Obtém a Handle para um recurso compartilhado.
-	/// [A partir do Direct3D 11.1, recomendamos não usar o (ObterHandleCompartilhada) mais para recuperar a alça a um recurso compartilhado. Em vez disso, use o 
-	/// ICarenDXGIResource1::CriarHandleCompartilhada para obter uma Handle para compartilhar. Para usar o ICarenDXGIResource1::CriarHandleCompartilhada deve especificar 
+	/// [A partir do Direct3D 11.1, recomendamos não usar o (GetSharedHandle) mais para recuperar a alça a um recurso compartilhado. Em vez disso, use o 
+	/// ICarenDXGIResource1::CreateSharedHandle para obter uma Handle para compartilhar. Para usar o ICarenDXGIResource1::CreateSharedHandle deve especificar 
 	/// que ele usa Handle NT (ou seja, você define a bandeira CA_D3D11_RESOURCE_MISC_SHARED_NTHANDLE). Também recomendamos que você crie recursos compartilhados que 
 	/// usam Handles NT para que você possa usar CloseHandle, DuplicateHandle, e assim por diante esses recursos compartilhados.]
 	/// </summary>
 	/// <param name="Param_Out_SharedHandle">Retorna um ponteiro para a Handle compartilhada.</param>
-	virtual CarenResult ObterHandleCompartilhada([Out] IntPtr% Param_Out_SharedHandle);
+	virtual CarenResult GetSharedHandle([Out] IntPtr% Param_Out_SharedHandle);
 
 	/// <summary>
 	/// (GetUsage) - Obtenha o uso esperado de recursos.
 	/// </summary>
 	/// <param name="Param_Out_Usage">Recebe uma bandeira de uso(DXGI_USAGE). Para direct3D 10, uma superfície pode ser usada como entrada sombreadora ou uma saída de 
 	/// destino renderizado.</param>
-	virtual CarenResult ObterUso([Out] CA_DXGI_USAGE% Param_Out_Usage);
+	virtual CarenResult GetUsage([Out] CA_DXGI_USAGE% Param_Out_Usage);
 
 	/// <summary>
 	/// (SetEvictionPriority) - Defina a prioridade para despejar o recurso da memória.
 	/// </summary>
 	/// <param name="Param_PrioridadeDespejo">Um valor da enumeração CA_DXGI_RESOURCE_PRIORITY que define a prioridade do despejo.</param>
-	virtual CarenResult DefinirPrioridadeDespejo(CA_DXGI_RESOURCE_PRIORITY Param_PrioridadeDespejo);
+	virtual CarenResult SetEvictionPriority(CA_DXGI_RESOURCE_PRIORITY Param_PrioridadeDespejo);
 
 
 	//Métodos da interface(ICarenDXGIDeviceSubObject)
 public:
 	/// <summary>
-	/// (GetDevice) - Recupera o dispositivo.
+	/// Recupera o dispositivo.
 	/// </summary>
 	/// <param name="Param_RIIDInterface">O ID de referência para o dispositivo.</param>
 	/// <param name="Param_Out_Objeto">Recebe um ponteiro para o dispositivo solictiado. O usuário deve inicializar a interface antes de chamar este método.</param>
-	virtual CarenResult ObterDispositivo(String^ Param_RIIDInterface, ICaren^ Param_Out_Objeto);
+	virtual CarenResult GetDevice(String^ Param_RIIDInterface, ICaren^ Param_Out_Objeto);
 
 
 	//Métodos da interface(ICarenDXGIObject)
 public:
 	/// <summary>
-	/// (GetParent) - Recupera o objeto pai deste objeto.
+	/// Recupera o objeto pai deste objeto.
 	/// </summary>
 	/// <param name="Param_RIIDInterface">A identificação da interface solicitada.</param>
 	/// <param name="Param_Out_ObjetoPai">Recebe o ponteiro para o objeto pai do objeto atual. O usuário deve inicializar a interface antes de chamar este método.</param>
-	virtual CarenResult ObterPaiObjeto(String^ Param_RIIDInterface, ICaren^ Param_Out_ObjetoPai);
+	virtual CarenResult GetParent(String^ Param_RIIDInterface, ICaren^ Param_Out_ObjetoPai);
 
 	/// <summary>
-	/// (SetPrivateData) - Define dados definidos pelo aplicativo para o objeto e associa esses dados a um GUID.
+	/// Define dados definidos pelo aplicativo para o objeto e associa esses dados a um GUID.
 	/// </summary>
 	/// <param name="Param_GuidIdentificao">Um GUID que identifica os dados. Use esse GUID em uma chamada para o GetPrivateData para obter os dados.</param>
 	/// <param name="Param_TamanhoDados">O tamanho dos dados.</param>
 	/// <param name="Param_Dados">Ponteiro para os dados.</param>
-	virtual CarenResult DefinirDadosPrivados(String^ Param_GuidIdentificao, UInt32 Param_TamanhoDados, ICaren^ Param_Dados);
+	virtual CarenResult SetPrivateData(String^ Param_GuidIdentificao, UInt32 Param_TamanhoDados, ICaren^ Param_Dados);
 
 	/// <summary>
-	/// (GetPrivateData) - Obtém um ponteiro para os dados do objeto.
+	/// Obtém um ponteiro para os dados do objeto.
 	/// </summary>
 	/// <param name="Param_GuidIdentificao">Um GUID identificando os dados.</param>
 	/// <param name="Param_Ref_TamanhoDados">Retorna o tamanho dos dados.</param>
 	/// <param name="Param_Out_Dados">Retorna um ponteiro para os dados. Esse ponteiro pode e não pode ser uma interface IUnknown. Sendo uma (IUnknown), o chamador é responsável por liberar
 	/// a referência para a interface. O usuário deve inicializar a interface antes de chamar este método.</param>
-	virtual CarenResult ObterDadosPrivados(String^ Param_GuidIdentificao, UInt32% Param_Ref_TamanhoDados, ICaren^ Param_Out_Dados);
+	virtual CarenResult GetPrivateData(String^ Param_GuidIdentificao, UInt32% Param_Ref_TamanhoDados, ICaren^ Param_Out_Dados);
 
 	/// <summary>
-	/// (SetPrivateDataInterface) - Defina uma interface nos dados privados do objeto.
+	/// Define uma interface nos dados privados do objeto.
 	/// </summary>
 	/// <param name="Param_GuidInterface">Guid de identificação da interface.</param>
 	/// <param name="Param_Interface">Um ponteiro para a interface a ser definida.</param>
-	virtual CarenResult DefinirDadosPrivadosInterface(String^ Param_GuidInterface, ICaren^ Param_Interface);
+	virtual CarenResult SetPrivateDataInterface(String^ Param_GuidInterface, ICaren^ Param_Interface);
 };

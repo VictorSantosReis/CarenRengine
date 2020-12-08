@@ -422,7 +422,7 @@ CarenResult CarenDXGIDevice::CreateSurface()
 /// (GetAdapter) - Retorna o adaptador para o dispositivo especificado.
 /// </summary>
 /// <param name="Param_Out_Adaptador">Retorna um ponteiro para a interface(ICarenDXGIAdapter) do adaptador.</param>
-CarenResult CarenDXGIDevice::ObterAdaptador([Out] ICarenDXGIAdapter^% Param_Out_Adaptador)
+CarenResult CarenDXGIDevice::GetAdapter([Out] ICarenDXGIAdapter^% Param_Out_Adaptador)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -466,7 +466,7 @@ Done:;
 /// (GetGPUThreadPriority) - Retorna a prioridade da Thread GPU.
 /// </summary>
 /// <param name="Param_Out_Prioridade">recebe um valor que indica a prioridade atual da Thread GPU. O valor será entre -7 e 7, inclusive, onde 0 representa prioridade normal.</param>
-CarenResult CarenDXGIDevice::ObterPrioridadeThreadGPU([Out] int% Param_Out_Prioridade)
+CarenResult CarenDXGIDevice::GetGPUThreadPriority([Out] int% Param_Out_Prioridade)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -516,15 +516,15 @@ Done:;
 /// <summary>
 /// (QueryResourceResidency) - Obtém o status de residência de uma série de recursos.
 /// As informações devolvidas pelo conjunto de argumentos (Param_Ref_StatusResidencia) descrevem o status de residência no momento em que o método 
-/// (ObterStatusResidenciaRecurso) foi chamado. 
+/// (QueryResourceResidency) foi chamado. 
 /// [O status de residência mudará constantemente.]
-/// Se você ligar para o método (ObterStatusResidenciaRecurso) durante um estado removido do dispositivo, o argumento (Param_Ref_StatusResidencia) devolverá 
+/// Se você ligar para o método (QueryResourceResidency) durante um estado removido do dispositivo, o argumento (Param_Ref_StatusResidencia) devolverá 
 /// a bandeira CA_DXGI_RESIDENCY_RESIDENT_IN_SHARED_MEMORY.
 /// </summary>
 /// <param name="Param_ArrayRecursos">Um array que contém uma série de interfaces(ICarenDXGIResource) a serem obtido o status de residência.</param>
 /// <param name="Param_Ref_StatusResidencia">Um Array que vai conter o status de residência(ResidencyStatus) de cada recurso no parametro(Param_ArrayRecursos).</param>
 /// <param name="Param_QuantidadeRecursos">A quantidade de elementos no array de recursos.</param>
-CarenResult CarenDXGIDevice::ObterStatusResidenciaRecurso(
+CarenResult CarenDXGIDevice::QueryResourceResidency(
 				cli::array<ICarenDXGIResource^>^ Param_ArrayRecursos, 
 				cli::array<CA_DXGI_RESIDENCY>^% Param_Ref_StatusResidencia, 
 				UInt32 Param_QuantidadeRecursos)
@@ -592,7 +592,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Prioridade">Um valor que especifica a prioridade necessária da Thread da GPU. Esse valor deve ser entre -7 e 7, inclusive, onde 0 representa 
 /// prioridade normal.</param>
-CarenResult CarenDXGIDevice::DefinrPrioridadeThreadGPU(int Param_Prioridade)
+CarenResult CarenDXGIDevice::SetGPUThreadPriority(int Param_Prioridade)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -629,11 +629,11 @@ Done:;
 
 
 /// <summary>
-/// (GetParent) - Recupera o objeto pai deste objeto.
+/// Recupera o objeto pai deste objeto.
 /// </summary>
 /// <param name="Param_RIIDInterface">A identificação da interface solicitada.</param>
 /// <param name="Param_Out_ObjetoPai">Recebe o ponteiro para o objeto pai do objeto atual. O usuário deve inicializar a interface antes de chamar este método.</param>
-CarenResult CarenDXGIDevice::ObterPaiObjeto(String^ Param_RIIDInterface, ICaren^ Param_Out_ObjetoPai)
+CarenResult CarenDXGIDevice::GetParent(String^ Param_RIIDInterface, ICaren^ Param_Out_ObjetoPai)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -676,12 +676,12 @@ Done:;
 }
 
 /// <summary>
-/// (SetPrivateData) - Define dados definidos pelo aplicativo para o objeto e associa esses dados a um GUID.
+/// Define dados definidos pelo aplicativo para o objeto e associa esses dados a um GUID.
 /// </summary>
 /// <param name="Param_GuidIdentificao">Um GUID que identifica os dados. Use esse GUID em uma chamada para o GetPrivateData para obter os dados.</param>
 /// <param name="Param_TamanhoDados">O tamanho dos dados.</param>
 /// <param name="Param_Dados">Ponteiro para os dados.</param>
-CarenResult CarenDXGIDevice::DefinirDadosPrivados(String^ Param_GuidIdentificao, UInt32 Param_TamanhoDados, ICaren^ Param_Dados)
+CarenResult CarenDXGIDevice::SetPrivateData(String^ Param_GuidIdentificao, UInt32 Param_TamanhoDados, ICaren^ Param_Dados)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -733,13 +733,13 @@ Done:;
 }
 
 /// <summary>
-/// (GetPrivateData) - Obtém um ponteiro para os dados do objeto.
+/// Obtém um ponteiro para os dados do objeto.
 /// </summary>
 /// <param name="Param_GuidIdentificao">Um GUID identificando os dados.</param>
 /// <param name="Param_Ref_TamanhoDados">Retorna o tamanho dos dados.</param>
 /// <param name="Param_Out_Dados">Retorna um ponteiro para os dados. Esse ponteiro pode e não pode ser uma interface IUnknown. Sendo uma (IUnknown), o chamador é responsável por liberar a 
 /// referência para a interface. O usuário deve inicializar a interface antes de chamar este método.</param>
-CarenResult CarenDXGIDevice::ObterDadosPrivados(String^ Param_GuidIdentificao, UInt32% Param_Ref_TamanhoDados, ICaren^ Param_Out_Dados)
+CarenResult CarenDXGIDevice::GetPrivateData(String^ Param_GuidIdentificao, UInt32% Param_Ref_TamanhoDados, ICaren^ Param_Out_Dados)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -786,11 +786,11 @@ Done:;
 }
 
 /// <summary>
-/// (SetPrivateDataInterface) - Defina uma interface nos dados privados do objeto.
+/// Define uma interface nos dados privados do objeto.
 /// </summary>
 /// <param name="Param_GuidInterface">Guid de identificação da interface.</param>
 /// <param name="Param_Interface">Um ponteiro para a interface a ser definida.</param>
-CarenResult CarenDXGIDevice::DefinirDadosPrivadosInterface(String^ Param_GuidInterface, ICaren^ Param_Interface)
+CarenResult CarenDXGIDevice::SetPrivateDataInterface(String^ Param_GuidInterface, ICaren^ Param_Interface)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

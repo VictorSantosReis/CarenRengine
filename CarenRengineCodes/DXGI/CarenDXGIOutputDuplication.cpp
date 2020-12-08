@@ -417,7 +417,7 @@ void CarenDXGIOutputDuplication::Finalizar()
 /// chamador. Este método retorna se o intervalo passar, e uma nova imagem de desktop não estiver disponível.</param>
 /// <param name="Param_Out_FrameInfo">Recebe a estrutura CA_DXGI_OUTDUPL_FRAME_INFO que descreve estatísticas de tempo e apresentação para um quadro.</param>
 /// <param name="Param_Out_DesktopResource">Recebe um ponteiro para a interface ICarenDXGIResource da superfície que contém o bitmap desktop.</param>
-CarenResult CarenDXGIOutputDuplication::AdquirirProximoFrame(
+CarenResult CarenDXGIOutputDuplication::AcquireNextFrame(
 				UInt32 Param_TimeOutMilliSeconds,
 				[Out] CA_DXGI_OUTDUPL_FRAME_INFO^% Param_Out_FrameInfo,
 				[Out] ICarenDXGIResource^% Param_Out_DesktopResource)
@@ -469,7 +469,7 @@ Done:;
 /// (GetDesc) - Recupera uma descrição de uma saída duplicada. Esta descrição especifica as dimensões da superfície que contém a imagem da área de trabalho.
 /// </summary>
 /// <param name="Param_Out_Desc">Recebe uma estrutura CA_DXGI_OUTDUPL_DESC que descreve a saída duplicada.</param>
-CarenResult CarenDXGIOutputDuplication::ObterDescricao([Out] CA_DXGI_OUTDUPL_DESC^% Param_Out_Desc)
+CarenResult CarenDXGIOutputDuplication::GetDesc([Out] CA_DXGI_OUTDUPL_DESC^% Param_Out_Desc)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -499,9 +499,9 @@ CarenResult CarenDXGIOutputDuplication::ObterDescricao([Out] CA_DXGI_OUTDUPL_DES
 /// </summary>
 /// <param name="Param_SizeMatrizRetangulos">O tamanho em bytes do buffer que o chamador passou para o parâmetro Param_Out_MatrizRetangulosSujos.</param>
 /// <param name="Param_Out_MatrizRetangulosSujos">Recebe uma série de estruturas CA_RECT que identifica as regiões de retângulo sujo para o quadro de desktop.</param>
-/// <param name="Param_Out_SizeMatrizRetangulos">Recebe o número de bytes que (ObterFrameDirtyRects) precisa armazenar informações sobre regiões sujas 
+/// <param name="Param_Out_SizeMatrizRetangulos">Recebe o número de bytes que (GetFrameDirtyRects) precisa armazenar informações sobre regiões sujas 
 /// no buffer em (Param_Out_MatrizRetangulosSujos).</param>
-CarenResult CarenDXGIOutputDuplication::ObterFrameDirtyRects(
+CarenResult CarenDXGIOutputDuplication::GetFrameDirtyRects(
 				UInt32 Param_SizeMatrizRetangulos,
 				[Out] cli::array<CA_RECT^>^% Param_Out_MatrizRetangulosSujos,
 				[Out] UInt32% Param_Out_SizeMatrizRetangulos)
@@ -578,9 +578,9 @@ Done:;
 /// <param name="Param_SizeMatrizMoveRects">O tamanho em bytes do buffer que o chamador passou para o parâmetro Param_Out_MatrizMoveRects.</param>
 /// <param name="Param_Out_MatrizMoveRects">Recebe uma matriz de estruturas CA_DXGI_OUTDUPL_MOVE_RECT que identifica as regiões de retângulo movido para o 
 /// quadro de desktop.</param>
-/// <param name="Param_Out_SizeMatrizMoveRects">Recebe o número de bytes que (ObterFrameMoveRects) precisa para armazenar informações sobre regiões movidas no buffer 
+/// <param name="Param_Out_SizeMatrizMoveRects">Recebe o número de bytes que (GetFrameMoveRects) precisa para armazenar informações sobre regiões movidas no buffer 
 /// no Param_Out_MatrizMoveRects.</param>
-CarenResult CarenDXGIOutputDuplication::ObterFrameMoveRects(
+CarenResult CarenDXGIOutputDuplication::GetFrameMoveRects(
 				UInt32 Param_SizeMatrizMoveRects, 
 				[Out] cli::array<CA_DXGI_OUTDUPL_MOVE_RECT^>^% Param_Out_MatrizMoveRects,
 				[Out] UInt32% Param_Out_SizeMatrizMoveRects)
@@ -652,12 +652,12 @@ Done:;
 /// (GetFramePointerShape) - Obtém informações sobre a nova forma do ponteiro para o quadro(Frame) de desktop atual.
 /// </summary>
 /// <param name="Param_SizeBufferShape">O tamanho em bytes do buffer que o chamador passou para o parâmetro (Param_Ref_ShapePointerBuffer).</param>
-/// <param name="Param_Ref_ShapePointerBuffer">Um ponteiro para um buffer para o qual o (ObterFramePointerShape) copia e retorna dados de pixels para a nova 
+/// <param name="Param_Ref_ShapePointerBuffer">Um ponteiro para um buffer para o qual o (GetFramePointerShape) copia e retorna dados de pixels para a nova 
 /// forma do ponteiro.</param>
-/// <param name="Param_Out_SizeBufferShapeRequerido">Recebe o número de bytes que o (ObterFramePointerShape) precisa para armazenar os novos dados de pixel de 
+/// <param name="Param_Out_SizeBufferShapeRequerido">Recebe o número de bytes que o (GetFramePointerShape) precisa para armazenar os novos dados de pixel de 
 /// forma de ponteiro no buffer em (Param_Ref_ShapePointerBuffer).</param>
 /// <param name="Param_Out_PointerShapeInfo">Recebe uma estrutura CA_DXGI_OUTDUPL_POINTER_SHAPE_INFO que contém as informações de forma do ponteiro.</param>
-CarenResult CarenDXGIOutputDuplication::ObterFramePointerShape(
+CarenResult CarenDXGIOutputDuplication::GetFramePointerShape(
 				UInt32 Param_SizeBufferShape,
 				ICarenBuffer^% Param_Ref_ShapePointerBuffer,
 				[Out] UInt32% Param_Out_SizeBufferShapeRequerido,
@@ -747,7 +747,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Out_MapData">Retorna uma estrutura CA_DXGI_MAPPED_RECT que recebe os dados superficiais que a CPU precisa para acessar diretamente 
 /// os dados da superfície.</param>
-CarenResult CarenDXGIOutputDuplication::MapearSuperficeDesktop([Out] CA_DXGI_MAPPED_RECT^% Param_Out_MapData)
+CarenResult CarenDXGIOutputDuplication::MapDesktopSurface([Out] CA_DXGI_MAPPED_RECT^% Param_Out_MapData)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -788,7 +788,7 @@ Done:;
 /// <summary>
 /// (ReleaseFrame) - Indica que o aplicativo terminou de processar o quadro(Frame).
 /// </summary>
-CarenResult CarenDXGIOutputDuplication::LiberarFrame()
+CarenResult CarenDXGIOutputDuplication::ReleaseFrame()
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -820,9 +820,9 @@ Done:;
 }
 
 /// <summary>
-/// (UnMapDesktopSurface) - Invalida o ponteiro para a imagem de desktop que foi recuperada usando ICarenDXGIOutputDuplication::MapearSuperficeDesktop.
+/// (UnMapDesktopSurface) - Invalida o ponteiro para a imagem de desktop que foi recuperada usando ICarenDXGIOutputDuplication::MapDesktopSurface.
 /// </summary>
-CarenResult CarenDXGIOutputDuplication::UnMapearSuperficeDesktop()
+CarenResult CarenDXGIOutputDuplication::UnMapDesktopSurface()
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -858,11 +858,11 @@ Done:;
 
 
 /// <summary>
-/// (GetParent) - Recupera o objeto pai deste objeto.
+/// Recupera o objeto pai deste objeto.
 /// </summary>
 /// <param name="Param_RIIDInterface">A identificação da interface solicitada.</param>
 /// <param name="Param_Out_ObjetoPai">Recebe o ponteiro para o objeto pai do objeto atual. O usuário deve inicializar a interface antes de chamar este método.</param>
-CarenResult CarenDXGIOutputDuplication::ObterPaiObjeto(String^ Param_RIIDInterface, ICaren^ Param_Out_ObjetoPai)
+CarenResult CarenDXGIOutputDuplication::GetParent(String^ Param_RIIDInterface, ICaren^ Param_Out_ObjetoPai)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -905,12 +905,12 @@ Done:;
 }
 
 /// <summary>
-/// (SetPrivateData) - Define dados definidos pelo aplicativo para o objeto e associa esses dados a um GUID.
+/// Define dados definidos pelo aplicativo para o objeto e associa esses dados a um GUID.
 /// </summary>
 /// <param name="Param_GuidIdentificao">Um GUID que identifica os dados. Use esse GUID em uma chamada para o GetPrivateData para obter os dados.</param>
 /// <param name="Param_TamanhoDados">O tamanho dos dados.</param>
 /// <param name="Param_Dados">Ponteiro para os dados.</param>
-CarenResult CarenDXGIOutputDuplication::DefinirDadosPrivados(String^ Param_GuidIdentificao, UInt32 Param_TamanhoDados, ICaren^ Param_Dados)
+CarenResult CarenDXGIOutputDuplication::SetPrivateData(String^ Param_GuidIdentificao, UInt32 Param_TamanhoDados, ICaren^ Param_Dados)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -962,13 +962,13 @@ Done:;
 }
 
 /// <summary>
-/// (GetPrivateData) - Obtém um ponteiro para os dados do objeto.
+/// Obtém um ponteiro para os dados do objeto.
 /// </summary>
 /// <param name="Param_GuidIdentificao">Um GUID identificando os dados.</param>
 /// <param name="Param_Ref_TamanhoDados">Retorna o tamanho dos dados.</param>
 /// <param name="Param_Out_Dados">Retorna um ponteiro para os dados. Esse ponteiro pode e não pode ser uma interface IUnknown. Sendo uma (IUnknown), o chamador é responsável por liberar a 
 /// referência para a interface. O usuário deve inicializar a interface antes de chamar este método.</param>
-CarenResult CarenDXGIOutputDuplication::ObterDadosPrivados(String^ Param_GuidIdentificao, UInt32% Param_Ref_TamanhoDados, ICaren^ Param_Out_Dados)
+CarenResult CarenDXGIOutputDuplication::GetPrivateData(String^ Param_GuidIdentificao, UInt32% Param_Ref_TamanhoDados, ICaren^ Param_Out_Dados)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1015,11 +1015,11 @@ Done:;
 }
 
 /// <summary>
-/// (SetPrivateDataInterface) - Defina uma interface nos dados privados do objeto.
+/// Define uma interface nos dados privados do objeto.
 /// </summary>
 /// <param name="Param_GuidInterface">Guid de identificação da interface.</param>
 /// <param name="Param_Interface">Um ponteiro para a interface a ser definida.</param>
-CarenResult CarenDXGIOutputDuplication::DefinirDadosPrivadosInterface(String^ Param_GuidInterface, ICaren^ Param_Interface)
+CarenResult CarenDXGIOutputDuplication::SetPrivateDataInterface(String^ Param_GuidInterface, ICaren^ Param_Interface)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

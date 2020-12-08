@@ -629,7 +629,7 @@ namespace CarenRengine
 			SS_DXGI_STATUS_MODE_CHANGED,
 
 			/// <summary>
-			/// (DXGI_STATUS_MODE_CHANGE_IN_PROGRESS) - ICarenDXGISwapChain::RedimensionarSaida e ICarenDXGISwapChain::DefinirEstadoFullScreen retornará DXGI_STATUS_MODE_CHANGE_IN_PROGRESS se uma transição de modo fullscreen/windowed estiver ocorrendo 
+			/// (DXGI_STATUS_MODE_CHANGE_IN_PROGRESS) - ICarenDXGISwapChain::ResizeTarget e ICarenDXGISwapChain::SetFullscreenState retornará DXGI_STATUS_MODE_CHANGE_IN_PROGRESS se uma transição de modo fullscreen/windowed estiver ocorrendo 
 			/// quando qualquer API for chamada.
 			/// </summary>
 			SS_DXGI_STATUS_MODE_CHANGE_IN_PROGRESS,
@@ -749,7 +749,7 @@ namespace CarenRengine
 			ER_DXGI_ERROR_REMOTE_CLIENT_DISCONNECTED,
 
 			/// <summary>
-			/// (DXGI_ERROR_NOT_FOUND) - Ao ligar para O ICarenDXGIObject::ObterDadosPrivados,o GUID passou não é reconhecido como um anteriormente passado para ICarenDXGIObject::DefinirDadosPrivados ou ICarenDXGIObject::DefinirDadosPrivadosInterface. Ao chamar ICarenDXGIFactory::EnumerarAdaptadores ou ICarenDXGIAdapter::EnumerarSaidas, o ordinal enumerado está fora de alcance.
+			/// (DXGI_ERROR_NOT_FOUND) - Ao ligar para O ICarenDXGIObject::GetPrivateData,o GUID passou não é reconhecido como um anteriormente passado para ICarenDXGIObject::SetPrivateData ou ICarenDXGIObject::SetPrivateDataInterface. Ao chamar ICarenDXGIFactory::EnumAdapters ou ICarenDXGIAdapter::EnumOutputs, o ordinal enumerado está fora de alcance.
 			/// </summary>
 			ER_DXGI_ERROR_NOT_FOUND,
 
@@ -759,7 +759,7 @@ namespace CarenRengine
 			ER_DXGI_ERROR_NOT_CURRENTLY_AVAILABLE,
 
 			/// <summary>
-			/// (DXGI_ERROR_NAME_ALREADY_EXISTS) - O nome fornecido de um recurso em uma chamada para ICarenDXGIResource1::CriarHandleCompartilhada já está associado a algum outro recurso.
+			/// (DXGI_ERROR_NAME_ALREADY_EXISTS) - O nome fornecido de um recurso em uma chamada para ICarenDXGIResource1::CreateSharedHandle já está associado a algum outro recurso.
 			/// </summary>
 			ER_DXGI_ERROR_NAME_ALREADY_EXISTS,
 

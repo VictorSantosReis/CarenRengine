@@ -215,7 +215,7 @@ public:
 	/// (GetState) - O método recupera o estado atual do dispositivo.
 	/// </summary>
 	/// <param name="Param_Out_EstadoDispositivo">Retorna o estado do dispositivo atual.</param>
-	virtual CarenResult ObterEstado([Out] Enumeracoes::CA_DEVICE_STATE_XXX% Param_Out_EstadoDispositivo);
+	virtual CarenResult GetState([Out] Enumeracoes::CA_DEVICE_STATE_XXX% Param_Out_EstadoDispositivo);
 
 	/// <summary>
 	/// (OpenPropertyStore) - O método recupera uma interface para o armazenamento de Propriedade do dispositivo.

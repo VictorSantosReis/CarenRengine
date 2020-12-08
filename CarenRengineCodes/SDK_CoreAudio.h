@@ -171,7 +171,6 @@ namespace CarenRengine
 		/// faça o seguinte: opte por descarregar, consultar propriedades de fluxo e obtenha informações do hardware que lida com a descarga.
 		/// </summary>
 		[CategoryAttribute("Interface WASAPI")]
-		[DescriptionAttribute("Inicializador de fluxo de áudio.")]
 		[Guid("CDBEB9FD-C9F2-4CAB-B9D6-61301D8D92DC")]
 		public interface class ICarenAudioClient2 : ICarenAudioClient
 		{

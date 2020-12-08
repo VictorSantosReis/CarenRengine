@@ -107,8 +107,8 @@ public:
 	/// <param name="Param_RIID">Identifica o tipo de superfície DXGI. Este valor deve ser IID_ID3D11Texture2D.</param>
 	/// <param name="Param_SuperficeDXGI">Um ponteiro para a interface IUnknown da superfície DXGI.</param>
 	/// <param name="Param_IndexSubrecurso">Um índice baseado em Zero do subrecurso da superfície. O objeto de Buffer de mídia está associado a esse subrecurso.</param>
-	/// <param name="Param_BottomUpQuandoLinear">Se TRUE, ICarenMF2DBuffer:CopiarBufferContiguouPara copia o buffer em um formato bottom-up(De baixo para cima). O formato de baixo para cima é compatível com GDI para imagens RGB não compactas. 
-	/// Se este parâmetro for FALSE,o método CopiarBufferContiguouPara copia o buffer em um formato Top-Down(de cima para baixo), que é compatível com o Direct3D.</param>
+	/// <param name="Param_BottomUpQuandoLinear">Se TRUE, ICarenMF2DBuffer:ContiguousCopyTo copia o buffer em um formato bottom-up(De baixo para cima). O formato de baixo para cima é compatível com GDI para imagens RGB não compactas. 
+	/// Se este parâmetro for FALSE,o método ContiguousCopyTo copia o buffer em um formato Top-Down(de cima para baixo), que é compatível com o Direct3D.</param>
 	/// <param name="Param_Out_CarenMFDXGIBuffer">Retorna a interface do Buffer DXGI. O chamado é responsável por liberar a interface.</param>
 	static CarenResult CriarInstancia(String^ Param_RIID, ICaren^ Param_SuperficeDXGI, UInt32 Param_IndexSubrecurso, Boolean Param_BottomUpQuandoLinear, [Out] ICarenMFDXGIBuffer^% Param_Out_CarenMFDXGIBuffer)
 	{
@@ -202,8 +202,8 @@ public:
 	/// <param name="Param_RIID">Identifica o tipo de superfície DXGI. Este valor deve ser IID_ID3D11Texture2D.</param>
 	/// <param name="Param_SuperficeDXGI">Um ponteiro para a interface IUnknown da superfície DXGI.</param>
 	/// <param name="Param_IndexSubrecurso">Um índice baseado em Zero do subrecurso da superfície. O objeto de Buffer de mídia está associado a esse subrecurso.</param>
-	/// <param name="Param_BottomUpQuandoLinear">Se TRUE, ICarenMF2DBuffer:CopiarBufferContiguouPara copia o buffer em um formato bottom-up(De baixo para cima). O formato de baixo para cima é compatível com GDI para imagens RGB não compactas. 
-	/// Se este parâmetro for FALSE,o método CopiarBufferContiguouPara copia o buffer em um formato Top-Down(de cima para baixo), que é compatível com o Direct3D.</param>
+	/// <param name="Param_BottomUpQuandoLinear">Se TRUE, ICarenMF2DBuffer:ContiguousCopyTo copia o buffer em um formato bottom-up(De baixo para cima). O formato de baixo para cima é compatível com GDI para imagens RGB não compactas. 
+	/// Se este parâmetro for FALSE,o método ContiguousCopyTo copia o buffer em um formato Top-Down(de cima para baixo), que é compatível com o Direct3D.</param>
 	/// <param name="Param_Out_CarenMidiaBuffer">Retorna a interface de buffer. A interface retornada suporta as seguintes interfaces: ICarenMFMedia2DBuffer, ICarenMFMedia2DBuffer2 e ICarenMFDXGIBuffer. 
 	/// O chamador é responsável por liberar a interface.</param>
 	static CarenResult CriarInstancia(String^ Param_RIID, ICaren^ Param_SuperficeDXGI, UInt32 Param_IndexSubrecurso, Boolean Param_BottomUpQuandoLinear, [Out] ICarenMFMediaBuffer^% Param_Out_CarenMidiaBuffer)
@@ -356,32 +356,32 @@ public:
 	//Métodos da interface Proprietaria
 public:
 	/// <summary>
-	/// (GetResource) - Consulta a superfície do Microsoft DirectX Graphics infra-estrutura (DXGI) para uma interface.
+	/// Consulta a superfície do Microsoft DirectX Graphics infra-estrutura (DXGI) para uma interface.
 	/// Você pode usar esse método para obter um ponteiro para a interface de ID3D11Texture2D da superfície. Se o buffer estiver bloqueado, o método retorna ER_MF_REQUISICAO_INVALIDA.
 	/// </summary>
 	/// <param name="Param_Guid">O identificador de interface (IID) da interface requisitada.</param>
 	/// <param name="Param_Out_InterfaceRecurso">Recebe um ponteiro para a interface. O chamador deve liberar a interface. O Usuário deve criar a interface antes de chamar este método.</param>
-	virtual CarenResult ObterRecurso(String^ Param_Guid, ICaren^ Param_Out_InterfaceRecurso);
+	virtual CarenResult GetResource(String^ Param_Guid, ICaren^ Param_Out_InterfaceRecurso);
 
 	/// <summary>
-	/// (GetSubresourceIndex) - Obtém o índice do sub-recurso que está associado com esse buffer de mídia.
+	/// Obtém o índice do sub-recurso que está associado com esse buffer de mídia.
 	/// </summary>
 	/// <param name="Param_Out_SubResourceId">Recebe o índice baseado em zero do sub-recurso.</param>
-	virtual CarenResult ObterSubRecursoId([Out] UInt32% Param_Out_SubResourceId);
+	virtual CarenResult GetSubresourceIndex([Out] UInt32% Param_Out_SubResourceId);
 
 	/// <summary>
-	/// (GetUnknown) - Obtém um ponteiro IUnknown que anteriormente foi armazenado no objeto de reserva de meios de comunicação.
+	/// Obtém um ponteiro IUnknown que anteriormente foi armazenado no objeto de reserva de meios de comunicação.
 	/// </summary>
 	/// <param name="Param_GuidInterface">O identificador do ponteiro IUnknown.</param>
 	/// <param name="Param_IID">O identificador de interface (IID) da interface requisitada.</param>
-	/// <param name="Param_Out_InterfaceRequisitada">Recebe um ponteiro para a interface. O chamador deve liberar a interface. O Usuário deve criar a interface antes de chamar este método.</param>
-	virtual CarenResult ObterPonteiroDesconhecido(String^ Param_GuidInterface, String^ Param_IID, ICaren^ Param_Out_InterfaceRequisitada);
+	/// <param name="Param_Ref_InterfaceRequisitada">Recebe um ponteiro para o objeto anteriormente definido. O chamador é responsável por criar e liberar a interface.param>
+	virtual CarenResult GetUnknown(String^ Param_GuidInterface, String^ Param_IID, ICaren^ Param_Ref_InterfaceRequisitada);
 
 	/// <summary>
-	/// (SetUnknown) - Armazena um ponteiro IUnknown arbitrário em objeto de reserva de meios de comunicação. 
+	/// Armazena um ponteiro IUnknown arbitrário em objeto de reserva de meios de comunicação.  
 	/// </summary>
 	/// <param name="Param_GuidInterface">O identificador para o ponteiro IUnknown. Esse identificador é usado como uma chave para recuperar o valor. Pode ser qualquer valor GUID.</param>
 	/// <param name="Param_Interface">Um ponteiro para a interface IUnknown. Defina este parâmetro como NULL para limpar um ponteiro que foi previamente definido.</param>
-	virtual CarenResult DefinirPonteiroDesconhecido(String^ Param_GuidInterface, ICaren^ Param_Interface);
+	virtual CarenResult SetUnknown(String^ Param_GuidInterface, ICaren^ Param_Interface);
 };
 

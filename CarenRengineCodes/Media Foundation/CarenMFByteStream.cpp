@@ -413,14 +413,14 @@ void CarenMFByteStream::Finalizar()
 /// <summary>
 /// (BeginRead) - Inicia uma operação de leitura assíncrona do fluxo.
 /// Quando todos os dados forem lidos no buffer, o método ICarenMFAsyncCallback::Invoke é chamado do objeto de retorno de chamada. Nesse ponto, o aplicativo deve chamar 
-/// ICarenMFByteStream::ConcluirLeituraAsync para concluir a solicitação assíncrona.
+/// ICarenMFByteStream::EndRead para concluir a solicitação assíncrona.
 /// </summary>
 /// <param name="Param_Buffer">Um ponteiro para o buffer que vai receber os dados. O chamador deve alocar o buffer.</param>
 /// <param name="Param_TamanhoBuffer">O tamanho do buffer em bytes.</param>
 /// <param name="Param_Callback">Uma interface de retorno de chamada. O chamador que deve implementar a interface.</param>
 /// <param name="Param_ObjetoEstado">Um objeto de estado, definido pelo chamador. Este parâmetro pode ser NULO. Você pode usar este objeto para conter informações do estado. 
 /// O objeto é devolvido ao chamador quando o retorno de chamada é invocado.</param>
-CarenResult CarenMFByteStream::LerAsync(
+CarenResult CarenMFByteStream::BeginRead(
 				ICarenBuffer^ Param_Buffer,
 				UInt64 Param_TamanhoBuffer,
 				ICarenMFAsyncCallback^ Param_Callback,
@@ -508,14 +508,14 @@ Done:;
 /// <summary>
 /// (BeginWrite) - Inicia uma operação de gravação assíncrona no fluxo.
 /// Quando todos os dados foram gravados no fluxo, o método ICarenMFAsyncCallback::Invoke é chamado do objeto de retorno de chamada. Nesse ponto, o aplicativo deve chamar 
-/// ICarenMFByteStream::ConcluirEscritaAsync para concluir a solicitação assíncrona.
+/// ICarenMFByteStream::EndWrite para concluir a solicitação assíncrona.
 /// </summary>
 /// <param name="Param_Buffer">Um ponteiro para o buffer a ser escrito no fluxo.</param>
 /// <param name="Param_TamanhoBuffer">O tamanho do buffer em bytes.</param>
 /// <param name="Param_Callback">Uma interface de retorno de chamada. O chamador que deve implementar a interface.</param>
 /// <param name="Param_ObjetoEstado">Um objeto de estado, definido pelo chamador. Este parâmetro pode ser NULO. Você pode usar este objeto para conter informações do estado. 
 /// O objeto é devolvido ao chamador quando o retorno de chamada é invocado.</param>
-CarenResult CarenMFByteStream::EscreverAsync(
+CarenResult CarenMFByteStream::BeginWrite(
 				ICarenBuffer^ Param_Buffer,
 				UInt64 Param_TamanhoBuffer,
 				ICarenMFAsyncCallback^ Param_Callback,
@@ -640,7 +640,7 @@ Done:;
 /// <param name="Param_Resultado">Um ponteiro para a interface ICarenMFAsyncResult. Passe no mesmo ponteiro que o objeto de retorno de chamada recebeu no método 
 /// ICarenMFAsyncCallback::Invoke.</param>
 /// <param name="Param_Out_TotalLido">Recebe o total de bytes que foi lido do fluxo.</param>
-CarenResult CarenMFByteStream::ConcluirLeituraAsync(ICarenMFAsyncResult^ Param_Resultado, [Out] UInt64% Param_Out_TotalLido)
+CarenResult CarenMFByteStream::EndRead(ICarenMFAsyncResult^ Param_Resultado, [Out] UInt64% Param_Out_TotalLido)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -696,7 +696,7 @@ Done:;
 /// <param name="Param_Resultado">Um ponteiro para a interface ICarenMFAsyncResult. Passe no mesmo ponteiro que o objeto de retorno de chamada recebeu no método 
 /// ICarenMFAsyncCallback::Invoke.</param>
 /// <param name="Param_Out_TotalEscrito">Recebe o número de bytes que foram escritos.</param>
-CarenResult CarenMFByteStream::ConcluirEscritaAsync(ICarenMFAsyncResult^ Param_Resultado, [Out] UInt64% Param_Out_TotalEscrito)
+CarenResult CarenMFByteStream::EndWrite(ICarenMFAsyncResult^ Param_Resultado, [Out] UInt64% Param_Out_TotalEscrito)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -783,8 +783,8 @@ Done:;
 /// <summary>
 /// (GetCapabilities) - Recupera as características do fluxo de bytes.
 /// </summary>
-/// <param name="Param_Out_CaracteristicasFluxo">Retorna uma ou mais bandeiras da enumeração (CA_CARACTERISTICAS_BYTESTREAM) que definem as caracteristicas do fluxo de bytes.</param>
-CarenResult CarenMFByteStream::ObterCaracteristicas([Out] CA_CARACTERISTICAS_BYTESTREAM% Param_Out_CaracteristicasFluxo)
+/// <param name="Param_Out_CaracteristicasFluxo">Retorna uma ou mais bandeiras da enumeração (CA_MFBYTESTREAM_CHARACTERISTICS) que definem as caracteristicas do fluxo de bytes.</param>
+CarenResult CarenMFByteStream::GetCapabilities([Out] CA_MFBYTESTREAM_CHARACTERISTICS% Param_Out_CaracteristicasFluxo)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -814,7 +814,7 @@ CarenResult CarenMFByteStream::ObterCaracteristicas([Out] CA_CARACTERISTICAS_BYT
 	}
 
 	//Define as caracteristicas no parametro de saida.
-	Param_Out_CaracteristicasFluxo = static_cast<CA_CARACTERISTICAS_BYTESTREAM>(CaracteristicasFluxo);
+	Param_Out_CaracteristicasFluxo = static_cast<CA_MFBYTESTREAM_CHARACTERISTICS>(CaracteristicasFluxo);
 
 Done:;
 	//Retorna o resultado.
@@ -825,7 +825,7 @@ Done:;
 /// (GetCurrentPosition) - Recupera a posição atual de leitura ou gravação no fluxo.
 /// </summary>
 /// <param name="Param_Out_Posicao">Retorna a posição atual, em bytes.</param>
-CarenResult CarenMFByteStream::ObterPosicaoAtual([Out] UInt64% Param_Out_Posicao)
+CarenResult CarenMFByteStream::GetCurrentPosition([Out] UInt64% Param_Out_Posicao)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -866,7 +866,7 @@ Done:;
 /// (GetLength) - Recupera o comprimento do fluxo.
 /// </summary>
 /// <param name="Param_Out_Largura">Recebe o comprimento do fluxo, em bytes. Se o comprimento for desconhecido, este valor é -1.</param>
-CarenResult CarenMFByteStream::ObterLargura([Out] UInt64% Param_Out_Largura)
+CarenResult CarenMFByteStream::GetLength([Out] UInt64% Param_Out_Largura)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -907,7 +907,7 @@ Done:;
 /// (IsEndOfStream) - Consulta se a posição atual atingiu o final do fluxo.
 /// </summary>
 /// <param name="Param_Out_FinalFluxo">Retorna o valor TRUE se a posiçao atual for o final do fluxo, caso contrário FALSE.</param>
-CarenResult CarenMFByteStream::VerificarFinalFluxo([Out] Boolean% Param_Out_FinalFluxo)
+CarenResult CarenMFByteStream::IsEndOfStream([Out] Boolean% Param_Out_FinalFluxo)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -950,7 +950,7 @@ Done:;
 /// <param name="Param_Buffer">Um ponteiro para o buffer que vai receber os dados. O chamador deve alocar esse buffer.</param>
 /// <param name="Param_Tamanho">O tamanho do buffer em bytes.</param>
 /// <param name="Param_Out_TotalLido">Recebe o número de bytes lidos no buffer.</param>
-CarenResult CarenMFByteStream::Ler(
+CarenResult CarenMFByteStream::Read(
 				ICarenBuffer^ Param_Buffer,
 				UInt64 Param_Tamanho,
 				[Out] UInt64% Param_Out_TotalLido)
@@ -1062,7 +1062,7 @@ Done:;
 /// (SetCurrentPosition) - Define a posição atual de leitura ou gravação.
 /// </summary>
 /// <param name="Param_Posicao">Nova posição no fluxo, como um byte offset desde o início do fluxo.</param>
-CarenResult CarenMFByteStream::DefinirPosicaoAtual(UInt64 Param_Posicao)
+CarenResult CarenMFByteStream::SetCurrentPosition(UInt64 Param_Posicao)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1097,7 +1097,7 @@ Done:;
 /// (SetLength) - Define o comprimento do fluxo.
 /// </summary>
 /// <param name="Param_LarguraFluxo">A largura do fluxo em bytes.</param>
-CarenResult CarenMFByteStream::DefinirLargura(UInt64 Param_LarguraFluxo)
+CarenResult CarenMFByteStream::SetLength(UInt64 Param_LarguraFluxo)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1134,7 +1134,7 @@ Done:;
 /// <param name="Param_Buffer">Um ponteiro para o buffer que contém os dados a serem escritos.</param>
 /// <param name="Param_Tamanho">O tamanho do buffer em bytes.</param>
 /// <param name="Param_Out_TotalEscrito">Recebe o numero de bytes que foram escritos no buffer.</param>
-CarenResult CarenMFByteStream::Escrever(
+CarenResult CarenMFByteStream::Write(
 				ICarenBuffer^ Param_Buffer,
 				UInt64 Param_Tamanho,
 				[Out] UInt64% Param_Out_TotalEscrito)

@@ -20,7 +20,7 @@ limitations under the License.
 
 
 //Destruidor.
-CarenMFMediaStreamSink::~CarenMFMediaStreamSink()
+CarenMFStreamSink::~CarenMFStreamSink()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
@@ -37,7 +37,7 @@ CarenMFMediaStreamSink::~CarenMFMediaStreamSink()
 /// </summary>
 /// <param name="Param_Guid">O IID(Identificador de Interface) ou GUID para a interface desejada.</param>
 /// <param name="Param_InterfaceSolicitada">A interface que vai receber o ponteiro nativo. O usuário deve inicializar a interface antes de chamar o método. Libere a interface quando não for mais usá-la.</param>
-CarenResult CarenMFMediaStreamSink::ConsultarInterface(String^ Param_Guid, ICaren^ Param_InterfaceSolicitada)
+CarenResult CarenMFStreamSink::ConsultarInterface(String^ Param_Guid, ICaren^ Param_InterfaceSolicitada)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -148,7 +148,7 @@ Done:;
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
 /// </summary>
 /// <param name="Param_PonteiroNativo">Variável (GERENCIADA) para o ponteiro nativo a ser adicionado.</param>
-CarenResult CarenMFMediaStreamSink::AdicionarPonteiro(IntPtr Param_PonteiroNativo)
+CarenResult CarenMFStreamSink::AdicionarPonteiro(IntPtr Param_PonteiroNativo)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -189,7 +189,7 @@ Done:;
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
 /// </summary>
 /// <param name="Param_PonteiroNativo">Variável (NATIVA) para o ponteiro nativo a ser adicionado.</param>
-CarenResult CarenMFMediaStreamSink::AdicionarPonteiro(LPVOID Param_PonteiroNativo)
+CarenResult CarenMFStreamSink::AdicionarPonteiro(LPVOID Param_PonteiroNativo)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -233,7 +233,7 @@ Done:;
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
 /// </summary>
 /// <param name="Param_Out_PonteiroNativo">Variável (GERENCIADA) que vai receber o ponteiro nativo.</param>
-CarenResult CarenMFMediaStreamSink::RecuperarPonteiro([Out] IntPtr% Param_Out_PonteiroNativo)
+CarenResult CarenMFStreamSink::RecuperarPonteiro([Out] IntPtr% Param_Out_PonteiroNativo)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -264,7 +264,7 @@ Done:;
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
 /// </summary>
 /// <param name="Param_Out_PonteiroNativo">Variável (NATIVA) que vai receber o ponteiro nativo.</param>
-CarenResult CarenMFMediaStreamSink::RecuperarPonteiro(LPVOID* Param_Out_PonteiroNativo)
+CarenResult CarenMFStreamSink::RecuperarPonteiro(LPVOID* Param_Out_PonteiroNativo)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -295,7 +295,7 @@ Done:;
 /// Método responsável por retornar a quantidade de referências do objeto COM atual.
 /// </summary>
 /// <param name="Param_Out_Referencias">Variável que vai receber a quantidade de referências do objeto.</param>
-CarenResult CarenMFMediaStreamSink::RecuperarReferencias([Out] UInt64% Param_Out_Referencias)
+CarenResult CarenMFStreamSink::RecuperarReferencias([Out] UInt64% Param_Out_Referencias)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -330,7 +330,7 @@ Done:;
 /// <summary>
 /// Método responsável por indicar se o ponteiro COM atual é válido.
 /// </summary>
-CarenResult CarenMFMediaStreamSink::StatusPonteiro()
+CarenResult CarenMFStreamSink::StatusPonteiro()
 {
 	return (ObjetoValido(PonteiroTrabalho) ? CarenResult(ResultCode::SS_OK, true) : CarenResult(ResultCode::ER_E_POINTER, false));
 }
@@ -339,7 +339,7 @@ CarenResult CarenMFMediaStreamSink::StatusPonteiro()
 /// Método responsável por retornar a variável que armazena o último código de erro desconhecido ou não documentado gerado pela classe.
 /// Esse método não chama o método nativo (GetLastError), apenas retorna o código de erro que foi armazenado na classe.
 /// </summary>
-Int32 CarenMFMediaStreamSink::ObterCodigoErro()
+Int32 CarenMFStreamSink::ObterCodigoErro()
 {
 	return Var_Glob_LAST_HRESULT;
 }
@@ -348,7 +348,7 @@ Int32 CarenMFMediaStreamSink::ObterCodigoErro()
 /// (AddRef) - Incrementa a contagem de referência para o ponteiro do objeto COM atual. Você deve chamar este método sempre que 
 /// você fazer uma cópia de um ponteiro de interface.
 /// </summary>
-void CarenMFMediaStreamSink::AdicionarReferencia()
+void CarenMFStreamSink::AdicionarReferencia()
 {
 	//Adiciona uma referência ao ponteiro
 	PonteiroTrabalho->AddRef();
@@ -357,7 +357,7 @@ void CarenMFMediaStreamSink::AdicionarReferencia()
 /// <summary>
 /// (Release) - 'Decrementa' a contagem de referência do objeto COM atual.
 /// </summary>
-void CarenMFMediaStreamSink::LiberarReferencia()
+void CarenMFStreamSink::LiberarReferencia()
 {
 	//Libera a referência e obtém a quantidade atual.
 	ULONG RefCount = PonteiroTrabalho->Release();
@@ -375,7 +375,7 @@ void CarenMFMediaStreamSink::LiberarReferencia()
 /// Método responsável por limpar os dados do objeto COM e códigos de erros gerados pelos métodos da classe.
 /// Este método não libera a referência do objeto COM atual, vai apenas anular o ponteiro.
 /// </summary>
-void CarenMFMediaStreamSink::LimparDados()
+void CarenMFStreamSink::LimparDados()
 {
 	//Verifica se o ponteiro é um objeto valido e limpa.
 	if (ObjetoValido(PonteiroTrabalho))
@@ -392,7 +392,7 @@ void CarenMFMediaStreamSink::LimparDados()
 /// Método responsável por chamar o finalizador da interface para realizar a limpeza e descarte de dados pendentes.
 /// Este método pode ser escrito de forma diferente para cada interface.
 /// </summary>
-void CarenMFMediaStreamSink::Finalizar()
+void CarenMFStreamSink::Finalizar()
 {
 	//////////////////////
 	//Código de descarte//
@@ -402,12 +402,12 @@ void CarenMFMediaStreamSink::Finalizar()
 	GC::SuppressFinalize(this);
 
 	//Chama o finalizador da classe
-	this->~CarenMFMediaStreamSink();
+	this->~CarenMFStreamSink();
 }
 
 
 //
-// Métodos da interface ICarenMFMediaStreamSink
+// Métodos da interface ICarenMFStreamSink
 //
 
 
@@ -416,13 +416,15 @@ void CarenMFMediaStreamSink::Finalizar()
 /// Recupera o (Coletor de Mídia) que possui esse (Coletor de Fluxo).
 /// </summary>
 /// <param name="Param_Out_MidiaSink">Recebe a interface(ICarenMFMediaSink) do (Coletor de Mídia) responsável por esse (Coletor de Fluxo). O usuário deve criar a interface antes de chamar o método.</param>
-CarenResult CarenMFMediaStreamSink::RecuperarMediaSink(ICaren^ Param_Out_MidiaSink)
+CarenResult CarenMFStreamSink::GetMediaSink(ICaren^ Param_Out_MidiaSink)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(ResultCode::SS_OK, false);
 
 	//Variavel COM
 	ResultadoCOM Hr = E_FAIL;
+
+	//Variveis utilizadas pelo método
 	IMFMediaSink* pMediaSink = NULL;
 	
 	//Chama o método para realizar a operação.
@@ -460,7 +462,7 @@ Done:;
 /// (por exemplo, um coletor de arquivamento que multiplexa os fluxos).
 /// </summary>
 /// <param name="Param_AmostraMidia">A amostra de mídia a ser processada.</param>
-CarenResult CarenMFMediaStreamSink::ProcessarAmostraMidia(ICarenMFSample^ Param_AmostraMidia)
+CarenResult CarenMFStreamSink::ProcessSample(ICarenMFSample^ Param_AmostraMidia)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -508,7 +510,7 @@ Done:;
 /// Recupera o identificador de fluxo para este coletor de fluxo.
 /// </summary>
 /// <param name="Param_Out_IdentificadorFluxo">Retorna o identificador deste fluxo.</param>
-CarenResult CarenMFMediaStreamSink::ObterIdentificador([Out] UInt32% Param_Out_IdentificadorFluxo)
+CarenResult CarenMFStreamSink::GetIdentifier([Out] UInt32% Param_Out_IdentificadorFluxo)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -554,7 +556,7 @@ Done:;
 /// formatos o fluxo oferece suporte e para definir o tipo de mídia no fluxo.
 /// </summary>
 /// <param name="Param_Out_MidiaHandle">Recebe a interface que possui o (Manipulador de Mídia).</param>
-CarenResult CarenMFMediaStreamSink::ObterMediaTypeHandle([Out] ICarenMFMediaTypeHandler^% Param_Out_MidiaHandle)
+CarenResult CarenMFStreamSink::GetMediaTypeHandler([Out] ICarenMFMediaTypeHandler^% Param_Out_MidiaHandle)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -608,9 +610,9 @@ Done:;
 /// </summary>
 /// <param name="Param_Marcador">Especifica o tipo de marcador, como um membro da enumeração: CA_MIDIA_STREAM_SINK_MARCADORES</param>
 /// <param name="Param_ValorAdicional">Um valor que contém informações adicionais relacionadas ao marcador. Esse parâmetro pode ser (NULO).</param>
-/// <param name="Param_DadosAnexoEvento">Valor que é anexado junto ao evento(MEStreamSinkMarker). Chame o método (ObterValor) na interface 
+/// <param name="Param_DadosAnexoEvento">Valor que é anexado junto ao evento(MEStreamSinkMarker). Chame o método (GetValue) na interface 
 /// de evento para obter esse valor. Esse parâmetro pode ser (NULO).</param>
-CarenResult CarenMFMediaStreamSink::AdicionarMarcador(Enumeracoes::CA_MIDIA_STREAM_SINK_MARCADORES Param_Marcador, Estruturas::CA_PropVariant^ Param_ValorAdicional, Estruturas::CA_PropVariant^ Param_DadosAnexoEvento)
+CarenResult CarenMFStreamSink::PlaceMarker(Enumeracoes::CA_MIDIA_STREAM_SINK_MARCADORES Param_Marcador, Estruturas::CA_PropVariant^ Param_ValorAdicional, Estruturas::CA_PropVariant^ Param_DadosAnexoEvento)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -737,7 +739,7 @@ Done:;
 /// Faz com que o coletor de fluxo para descartar todas as amostras que ele 
 /// recebeu e ainda não processado.
 /// </summary>
-CarenResult CarenMFMediaStreamSink::Flush()
+CarenResult CarenMFStreamSink::Flush()
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -786,7 +788,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Flags">Especifica como deve obter o evento.</param>
 /// <param name="Param_Out_MidiaEvent">Recebe a interface que contém as informações da operação assincrona para o evento notificado. O chamador deve liberar a interface.</param>
-CarenResult CarenMFMediaStreamSink::ObterEvento(CA_FLAGS_OBTER_EVENTO Param_Flags, [Out] ICarenMFMediaEvent^% Param_Out_MidiaEvent)
+CarenResult CarenMFStreamSink::GetEvent(CA_FLAGS_OBTER_EVENTO Param_Flags, [Out] ICarenMFMediaEvent^% Param_Out_MidiaEvent)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -840,7 +842,7 @@ Done:;
 /// <param name="Param_Callback">A interface que vai receber os eventos que seram gerados pelas interfaces que derivam desta.</param>
 /// <param name="Param_ObjetoDesconhecido">Uma interface ICaren de um objeto de estado, definido pelo chamador. Este parâmetro pode ser NULO. Você pode usar esse objeto para armazenar 
 /// informações de estado. O objeto é retornado ao responsável pela chamada quando o retorno de chamada é invocado.</param>
-CarenResult CarenMFMediaStreamSink::SolicitarProximoEvento(ICarenMFAsyncCallback^ Param_Callback, ICaren^ Param_ObjetoDesconhecido)
+CarenResult CarenMFStreamSink::BeginGetEvent(ICarenMFAsyncCallback^ Param_Callback, ICaren^ Param_ObjetoDesconhecido)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -905,7 +907,7 @@ Done:;
 /// </summary>
 /// <param name="Param_ResultAsync">A interface ICarenMFAsyncResult. Essa interface deve ser a retornada pelo Evento (OnInvoke).</param>
 /// <param name="Param_Out_MidiaEvent">Recebe a interface que contém as informações da operação assincrona para o evento notificado. O chamador deve liberar a interface.</param>
-CarenResult CarenMFMediaStreamSink::ConcluirSolicitaçãoEvento(ICarenMFAsyncResult^ Param_ResultAsync, [Out] ICarenMFMediaEvent^% Param_Out_MidiaEvent)
+CarenResult CarenMFStreamSink::EndGetEvent(ICarenMFAsyncResult^ Param_ResultAsync, [Out] ICarenMFMediaEvent^% Param_Out_MidiaEvent)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -967,11 +969,11 @@ Done:;
 /// <summary>
 /// (QueueEvent) - Coloca um novo evento na fila do objeto.
 /// </summary>
-/// <param name="Param_TipoEvento">Especifica o tipo do evento. O tipo do evento é retornado pelo método (ICarenMFMediaEvent.ObterTipo).</param>
-/// <param name="Param_GuidExtendedType">O tipo estendido. Se o evento não tiver um tipo estendido, defina como NULO. O tipo estendido é retornado pelo método (ICarenMFMediaEvent.ObterTipoExtendido) do evento.</param>
-/// <param name="Param_HResultCode">Um código de sucesso ou falha indicando o status do evento. Esse valor é retornado pelo método (ICarenMFMediaEvent.ObterStatus) do evento.</param>
-/// <param name="Param_Dados">uma CA_PropVariant que contém o valor do evento. Este parâmetro pode ser NULO. Esse valor é retornado pelo método (ICarenMFMediaEvent.ObterValor) do evento.</param>
-CarenResult CarenMFMediaStreamSink::InserirEventoFila(Enumeracoes::CA_MediaEventType Param_TipoEvento, String^ Param_GuidExtendedType, Int32 Param_HResultCode, Estruturas::CA_PropVariant^ Param_Dados) {
+/// <param name="Param_TipoEvento">Especifica o tipo do evento. O tipo do evento é retornado pelo método (ICarenMFMediaEvent.GetType).</param>
+/// <param name="Param_GuidExtendedType">O tipo estendido. Se o evento não tiver um tipo estendido, defina como NULO. O tipo estendido é retornado pelo método (ICarenMFMediaEvent.GetExtendedType) do evento.</param>
+/// <param name="Param_HResultCode">Um código de sucesso ou falha indicando o status do evento. Esse valor é retornado pelo método (ICarenMFMediaEvent.GetStatus) do evento.</param>
+/// <param name="Param_Dados">uma CA_PropVariant que contém o valor do evento. Este parâmetro pode ser NULO. Esse valor é retornado pelo método (ICarenMFMediaEvent.GetValue) do evento.</param>
+CarenResult CarenMFStreamSink::InserirEventoFila(Enumeracoes::CA_MediaEventType Param_TipoEvento, String^ Param_GuidExtendedType, Int32 Param_HResultCode, Estruturas::CA_PropVariant^ Param_Dados) {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
 

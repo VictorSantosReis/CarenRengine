@@ -407,17 +407,17 @@ void CarenMFCollection::Finalizar()
 
 
 
-//
-//Métodos da interface ICarenMFCollection
-//
+
+// Métodos da interface ICarenMFCollection
+
 
 
 
 /// <summary>
-/// (AddElement) - Adiciona um objeto à coleção. Este método não remove o objeto da coleção.
+/// Adiciona um objeto à coleção. Este método não remove o objeto da coleção.
 /// </summary>
 /// <param name="Param_Elemento">O ponteiro a ser adicionado a coleção.</param>
-CarenResult CarenMFCollection::AdicionarElemento(ICaren^ Param_Elemento)
+CarenResult CarenMFCollection::AddElement(ICaren^ Param_Elemento)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -468,7 +468,7 @@ Done:;
 /// </summary>
 /// <param name="Param_IndexElemento">O index do elemento a ser obtido.</param>
 /// <param name="Param_Out_Elemento">Retorna um ponteiro para o elemento especificado. O usuário deve criar a interface antes de chamar este método.</param>
-CarenResult CarenMFCollection::ObterElemento(UInt32 Param_IndexElemento, ICaren^ Param_Out_Elemento)
+CarenResult CarenMFCollection::GetElement(UInt32 Param_IndexElemento, ICaren^ Param_Out_Elemento)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -506,10 +506,10 @@ Done:;
 }
 
 /// <summary>
-/// (GetElementCount) - Obtém a quantidade de elementos na coleção.
+/// Obtém a quantidade de elementos na coleção.
 /// </summary>
 /// <param name="Param_Out_Quantidade">Retorna a quantidade de elementos.</param>
-CarenResult CarenMFCollection::ObterQuantidadeElementos([Out] UInt32% Param_Out_Quantidade)
+CarenResult CarenMFCollection::GetElementCount([Out] UInt32% Param_Out_Quantidade)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -547,11 +547,11 @@ Done:;
 }
 
 /// <summary>
-/// (InsertElementAt) - Adiciona um objeto no índice especificado na coleção.
+/// Adiciona um objeto no índice especificado na coleção.
 /// </summary>
 /// <param name="Param_Indice">O (Indice) onde será adicionado o elemento.</param>
 /// <param name="Param_Elemento">O objeto a ser inserido na coleção.</param>
-CarenResult CarenMFCollection::InserirElemento(UInt32 Param_Indice, ICaren^ Param_Elemento)
+CarenResult CarenMFCollection::InsertElementAt(UInt32 Param_Indice, ICaren^ Param_Elemento)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -598,9 +598,9 @@ Done:;
 }
 
 /// <summary>
-/// (RemoveAllElements) - Remove todos os itens da coleção.
+/// Remove todos os itens da coleção.
 /// </summary>
-CarenResult CarenMFCollection::RemoverTodosElementos()
+CarenResult CarenMFCollection::RemoveAllElements()
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -632,12 +632,12 @@ Done:;
 }
 
 /// <summary>
-/// (RemoveElement) - Remove um objeto da coleção.
+/// Remove um objeto da coleção.
 /// </summary>
 /// <param name="Param_Indice">O (Indice) para o elemento que será removido da coleção.</param>
 /// <param name="Param_Out_Elemento">Recebe um ponteiro para o elemento removido da lista. O chamado que deve liberar
 /// a referência para o ponteiro. Esse parametro pode retornar NULO.</param>
-CarenResult CarenMFCollection::RemoverElemento(UInt32 Param_Indice, ICaren^ Param_Out_Elemento)
+CarenResult CarenMFCollection::RemoveElement(UInt32 Param_Indice, ICaren^ Param_Out_Elemento)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

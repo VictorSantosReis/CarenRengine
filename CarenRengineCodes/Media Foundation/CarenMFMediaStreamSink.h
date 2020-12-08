@@ -37,9 +37,9 @@ using namespace CarenRengine::SDKBase::Interfaces;
 using namespace CarenRengine::SDKUtilidades;
 
 /// <summary>
-/// [Concluido - Fase de Testes]
+/// (Concluido - Fase de testes) - Classe responsável por representar um fluxo em um objeto de coletor de mídia.
 /// </summary>
-public ref class CarenMFMediaStreamSink :public ICarenMFMediaStreamSink
+public ref class CarenMFStreamSink :public ICarenMFStreamSink
 {
 	/////////////////////////////////////////
 	//Objeto gerenciado por essa interface.//
@@ -50,7 +50,7 @@ public ref class CarenMFMediaStreamSink :public ICarenMFMediaStreamSink
 
 	//Destruidor.
 public:
-	~CarenMFMediaStreamSink();
+	~CarenMFStreamSink();
 
 	//Variaveis Internas.
 internal:
@@ -166,17 +166,17 @@ public:
 
 
 	//
-	//ICarenMFMediaStreamSink
+	//ICarenMFStreamSink
 	//
 
 
-	//Métodos da interface (ICarenMFMediaStreamSink)
+	//Métodos da interface (ICarenMFStreamSink)
 public:
 	/// <summary>
 	/// Recupera o (Coletor de Mídia) que possui esse (Coletor de Fluxo).
 	/// </summary>
 	/// <param name="Param_Out_MidiaSink">Recebe a interface(ICarenMFMediaSink) do (Coletor de Mídia) responsável por esse (Coletor de Fluxo). O usuário deve criar a interface antes de chamar o método.</param>
-	virtual CarenResult RecuperarMediaSink(ICaren^ Param_Out_MidiaSink);
+	virtual CarenResult GetMediaSink(ICaren^ Param_Out_MidiaSink);
 
 	/// <summary>
 	/// Fornece uma amostra para o fluxo. O coletor de mídia processa o exemplo.
@@ -187,13 +187,13 @@ public:
 	/// (por exemplo, um coletor de arquivamento que multiplexa os fluxos).
 	/// </summary>
 	/// <param name="Param_AmostraMidia">A amostra de mídia a ser processada.</param>
-	virtual CarenResult ProcessarAmostraMidia(ICarenMFSample^ Param_AmostraMidia);
+	virtual CarenResult ProcessSample(ICarenMFSample^ Param_AmostraMidia);
 
 	/// <summary>
 	/// Recupera o identificador de fluxo para este coletor de fluxo.
 	/// </summary>
 	/// <param name="Param_Out_IdentificadorFluxo">Retorna o identificador deste fluxo.</param>
-	virtual CarenResult ObterIdentificador([Out] UInt32% Param_Out_IdentificadorFluxo);
+	virtual CarenResult GetIdentifier([Out] UInt32% Param_Out_IdentificadorFluxo);
 
 	/// <summary>
 	/// Recupera o manipulador de tipo de mídia para o coletor de fluxo. 
@@ -201,7 +201,7 @@ public:
 	/// formatos o fluxo oferece suporte e para definir o tipo de mídia no fluxo.
 	/// </summary>
 	/// <param name="Param_Out_MidiaHandle">Recebe a interface que possui o (Manipulador de Mídia).</param>
-	virtual CarenResult ObterMediaTypeHandle([Out] ICarenMFMediaTypeHandler^% Param_Out_MidiaHandle);
+	virtual CarenResult GetMediaTypeHandler([Out] ICarenMFMediaTypeHandler^% Param_Out_MidiaHandle);
 
 	/// <summary>
 	/// Coloca um marcador no fluxo.
@@ -210,9 +210,9 @@ public:
 	/// </summary>
 	/// <param name="Param_Marcador">Especifica o tipo de marcador, como um membro da enumeração: CA_MIDIA_STREAM_SINK_MARCADORES</param>
 	/// <param name="Param_ValorAdicional">Um valor que contém informações adicionais relacionadas ao marcador. Esse parâmetro pode ser (NULO).</param>
-	/// <param name="Param_DadosAnexoEvento">Valor que é anexado junto ao evento(MEStreamSinkMarker). Chame o método (ObterValor) na interface 
+	/// <param name="Param_DadosAnexoEvento">Valor que é anexado junto ao evento(MEStreamSinkMarker). Chame o método (GetValue) na interface 
 	/// de evento para obter esse valor. Esse parâmetro pode ser (NULO).</param>
-	virtual CarenResult AdicionarMarcador(Enumeracoes::CA_MIDIA_STREAM_SINK_MARCADORES Param_Marcador, Estruturas::CA_PropVariant^ Param_ValorAdicional, Estruturas::CA_PropVariant^ Param_DadosAnexoEvento);
+	virtual CarenResult PlaceMarker(Enumeracoes::CA_MIDIA_STREAM_SINK_MARCADORES Param_Marcador, Estruturas::CA_PropVariant^ Param_ValorAdicional, Estruturas::CA_PropVariant^ Param_DadosAnexoEvento);
 
 	/// <summary>
 	/// Faz com que o coletor de fluxo para descartar todas as amostras que ele 
@@ -239,7 +239,7 @@ public:
 	/// </summary>
 	/// <param name="Param_Flags">Especifica como deve obter o evento.</param>
 	/// <param name="Param_Out_MidiaEvent">Recebe a interface que contém as informações da operação assincrona para o evento notificado. O chamador deve liberar a interface.</param>
-	virtual CarenResult ObterEvento(Enumeracoes::CA_FLAGS_OBTER_EVENTO Param_Flags, [Out] ICarenMFMediaEvent^% Param_Out_MidiaEvent);
+	virtual CarenResult GetEvent(Enumeracoes::CA_FLAGS_OBTER_EVENTO Param_Flags, [Out] ICarenMFMediaEvent^% Param_Out_MidiaEvent);
 
 	/// <summary>
 	/// (BeginGetEvent) - Inicia uma solicitação assíncrona para o próximo evento na fila.
@@ -248,22 +248,22 @@ public:
 	/// <param name="Param_Callback">A interface que vai receber os eventos que seram gerados pelas interfaces que derivam desta.</param>
 	/// <param name="Param_ObjetoDesconhecido">Uma interface ICaren de um objeto de estado, definido pelo chamador. Este parâmetro pode ser NULO. Você pode usar esse objeto para armazenar 
 	/// informações de estado. O objeto é retornado ao responsável pela chamada quando o retorno de chamada é invocado.</param>
-	virtual CarenResult SolicitarProximoEvento(ICarenMFAsyncCallback^ Param_Callback, ICaren^ Param_ObjetoDesconhecido);
+	virtual CarenResult BeginGetEvent(ICarenMFAsyncCallback^ Param_Callback, ICaren^ Param_ObjetoDesconhecido);
 
 	/// <summary>
 	/// (EndGetEvent) - Conclui uma solicitação (Assíncrona) para o próximo evento na fila.
 	/// </summary>
 	/// <param name="Param_ResultAsync">A interface ICarenMFAsyncResult. Essa interface deve ser a retornada pelo Evento (OnInvoke).</param>
 	/// <param name="Param_Out_MidiaEvent">Recebe a interface que contém as informações da operação assincrona para o evento notificado. O chamador deve liberar a interface.</param>
-	virtual CarenResult ConcluirSolicitaçãoEvento(ICarenMFAsyncResult^ Param_ResultAsync, [Out] ICarenMFMediaEvent^% Param_Out_MidiaEvent);
+	virtual CarenResult EndGetEvent(ICarenMFAsyncResult^ Param_ResultAsync, [Out] ICarenMFMediaEvent^% Param_Out_MidiaEvent);
 
 	/// <summary>
 	/// (QueueEvent) - Coloca um novo evento na fila do objeto.
 	/// </summary>
-	/// <param name="Param_TipoEvento">Especifica o tipo do evento. O tipo do evento é retornado pelo método (ICarenMFMediaEvent.ObterTipo).</param>
-	/// <param name="Param_GuidExtendedType">O tipo estendido. Se o evento não tiver um tipo estendido, defina como NULO. O tipo estendido é retornado pelo método (ICarenMFMediaEvent.ObterTipoExtendido) do evento.</param>
-	/// <param name="Param_HResultCode">Um código de sucesso ou falha indicando o status do evento. Esse valor é retornado pelo método (ICarenMFMediaEvent.ObterStatus) do evento.</param>
-	/// <param name="Param_Dados">uma CA_PropVariant que contém o valor do evento. Este parâmetro pode ser NULO. Esse valor é retornado pelo método (ICarenMFMediaEvent.ObterValor) do evento.</param>
+	/// <param name="Param_TipoEvento">Especifica o tipo do evento. O tipo do evento é retornado pelo método (ICarenMFMediaEvent.GetType).</param>
+	/// <param name="Param_GuidExtendedType">O tipo estendido. Se o evento não tiver um tipo estendido, defina como NULO. O tipo estendido é retornado pelo método (ICarenMFMediaEvent.GetExtendedType) do evento.</param>
+	/// <param name="Param_HResultCode">Um código de sucesso ou falha indicando o status do evento. Esse valor é retornado pelo método (ICarenMFMediaEvent.GetStatus) do evento.</param>
+	/// <param name="Param_Dados">uma CA_PropVariant que contém o valor do evento. Este parâmetro pode ser NULO. Esse valor é retornado pelo método (ICarenMFMediaEvent.GetValue) do evento.</param>
 	virtual CarenResult InserirEventoFila(Enumeracoes::CA_MediaEventType Param_TipoEvento, String^ Param_GuidExtendedType, Int32 Param_HResultCode, Estruturas::CA_PropVariant^ Param_Dados);
 };
 

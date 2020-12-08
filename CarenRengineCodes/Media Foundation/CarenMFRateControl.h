@@ -198,7 +198,7 @@ public:
 	/// <param name="Param_Out_Thin">Recebe o valor true se o fluxo está sendo diluído no momento. Se o objeto não oferece suporte a desbaste, esse parâmetro sempre recebe
 	/// o valor false.</param>
 	/// <param name="Param_Out_Taxa">Recebe a taxa de reprodução atual.</param>
-	virtual CarenResult ObterTaxa([Out] Boolean% Param_Out_Thin, [Out] float% Param_Out_Taxa);
+	virtual CarenResult GetRate([Out] Boolean% Param_Out_Thin, [Out] float% Param_Out_Taxa);
 
 	/// <summary>
 	/// (SetRate) - Define a taxa de reprodução.
@@ -208,6 +208,6 @@ public:
 	/// são diluídos.</param>
 	/// <param name="Param_Taxa">A taxa de reprodução solicitada. Os valores postive indicam a reprodução direta, os valores negativos indicam a reprodução inversa, e zero indica 
 	/// esfregando (a fonte entrega um único quadro).</param>
-	virtual CarenResult DefinirTaxa(Boolean Param_Thin, float Param_Taxa);
+	virtual CarenResult SetRate(Boolean Param_Thin, float Param_Taxa);
 };
 

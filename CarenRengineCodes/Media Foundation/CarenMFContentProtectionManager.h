@@ -171,7 +171,7 @@ public:
 	/// Este método solicita que o aplicativo execute uma etapa específica necessária para adquirir direitos sobre o conteúdo, usando um objeto ativador de conteúdo.
 	/// </summary>
 	/// <param name="Param_Ativador">Ponteiro para a interface ICarenMFActivate de um objeto ativador de conteúdo. Para criar o ativador de conteúdo, ligue para 
-	/// o método ICarenMFActivate::AtivarObjeto e solicite a interface IMFContentEnabler. O aplicativo deve usar os métodos no IMFContentEnabler para concluir 
+	/// o método ICarenMFActivate::ActivateObject e solicite a interface IMFContentEnabler. O aplicativo deve usar os métodos no IMFContentEnabler para concluir 
 	/// a ação de habilitação de conteúdo.</param>
 	/// <param name="Param_Topologia">Ponteiro para a interface ICarenMFTopology da topologia pendente.</param>
 	/// <param name="Param_Callback">Ponteiro para a interface ICarenMFAsyncCallback de um objeto de retorno de chamada. Quando a operação estiver concluída, o aplicativo 

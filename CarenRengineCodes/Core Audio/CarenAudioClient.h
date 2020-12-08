@@ -286,12 +286,12 @@ public:
 	/// Start é um método de controle que o cliente chama para iniciar o fluxo de áudio. Iniciando o fluxo faz com que a ICarenAudioClient interface para iniciar o streaming de dados entre o buffer de 
 	/// ponto de extremidade e o mecanismo de áudio. Ele também faz com que o fluxo de relógio de áudio para retomar a contagem de sua posição atual.
 	/// </summary>
-	virtual CarenResult Iniciar();
+	virtual CarenResult Start();
 
 	/// <summary>
 	/// (Stop) - O método interrompe o fluxo de áudio. Esse método requer inicialização anterior do Audio Cliente antes de ser chamado.
 	/// Stop é um método de controle que interrompe um fluxo de áudio em execução. Esse método interrompe a transmissão de dados por meio da conexão do cliente com o mecanismo de áudio. Interromper o fluxo 
-	/// congela o relógio de áudio do fluxo em sua posição atual do fluxo. Uma chamada subsequente para ICarenAudioClient::Iniciar faz com que o fluxo retomar a execução a partir dessa posição. 
+	/// congela o relógio de áudio do fluxo em sua posição atual do fluxo. Uma chamada subsequente para ICarenAudioClient::Start faz com que o fluxo retomar a execução a partir dessa posição. 
 	/// Se necessário, o cliente pode chamar o ICarenAudioClient::Redefinir método para redefinir a posição enquanto o fluxo é interrompido.
 	/// </summary>
 	virtual CarenResult Parar();

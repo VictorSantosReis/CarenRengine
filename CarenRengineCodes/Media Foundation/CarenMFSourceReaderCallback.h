@@ -110,7 +110,7 @@ public:
 
 
 	/// <summary>
-	/// Evento chamado quando o método (ICarenMFSourceReader.LerAmostraAsync) é concluido.
+	/// Evento chamado quando o método (ICarenMFSourceReader.ReadAmostraAsync) é concluido.
 	/// </summary>
 	virtual event ICarenMFSourceReaderCallback::Delegate_OnReadSample^ OnReadSample;
 

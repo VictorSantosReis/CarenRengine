@@ -237,42 +237,42 @@ public:
 	//Métodos da interface(ICarenMFCollection)
 public:
 	/// <summary>
-	/// (AddElement) - Adiciona um objeto à coleção.
+	/// Adiciona um objeto à coleção.
 	/// </summary>
 	/// <param name="Param_Elemento">O ponteiro a ser adicionado a coleção.</param>
-	virtual CarenResult AdicionarElemento(ICaren^ Param_Elemento);
+	virtual CarenResult AddElement(ICaren^ Param_Elemento);
 
 	/// <summary>
-	/// (GetElement) - Recupera um objeto na coleção. Este método não remove o objeto da coleção.
+	/// Recupera um objeto na coleção. Este método não remove o objeto da coleção.
 	/// </summary>
 	/// <param name="Param_IndexElemento">O index do elemento a ser obtido.</param>
 	/// <param name="Param_Out_Elemento">Retorna um ponteiro para o elemento especificado. O usuário deve criar a interface antes de chamar este método.</param>
-	virtual CarenResult ObterElemento(UInt32 Param_IndexElemento, ICaren^ Param_Out_Elemento);
+	virtual CarenResult GetElement(UInt32 Param_IndexElemento, ICaren^ Param_Out_Elemento);
 
 	/// <summary>
-	/// (GetElementCount) - Obtém a quantidade de elementos na coleção.
+	/// Obtém a quantidade de elementos na coleção.
 	/// </summary>
 	/// <param name="Param_Out_Quantidade">Retorna a quantidade de elementos.</param>
-	virtual CarenResult ObterQuantidadeElementos([Out] UInt32% Param_Out_Quantidade);
+	virtual CarenResult GetElementCount([Out] UInt32% Param_Out_Quantidade);
 
 	/// <summary>
-	/// (InsertElementAt) - Adiciona um objeto no índice especificado na coleção.
+	/// Adiciona um objeto no índice especificado na coleção.
 	/// </summary>
 	/// <param name="Param_Indice">O (Indice) onde será adicionado o elemento.</param>
 	/// <param name="Param_Elemento">O objeto a ser inserido na coleção.</param>
-	virtual CarenResult InserirElemento(UInt32 Param_Indice, ICaren^ Param_Elemento);
+	virtual CarenResult InsertElementAt(UInt32 Param_Indice, ICaren^ Param_Elemento);
 
 	/// <summary>
-	/// (RemoveAllElements) - Remove todos os itens da coleção.
+	/// Remove todos os itens da coleção.
 	/// </summary>
-	virtual CarenResult RemoverTodosElementos();
+	virtual CarenResult RemoveAllElements();
 
 	/// <summary>
-	/// (RemoveElement) - Remove um objeto da coleção.
+	/// Remove um objeto da coleção.
 	/// </summary>
 	/// <param name="Param_Indice">O (Indice) para o elemento que será removido da coleção.</param>
 	/// <param name="Param_Out_Elemento">Recebe um ponteiro para o elemento removido da lista. O chamado que deve liberar
 	/// a referência para o ponteiro. Esse parametro pode retornar NULO. O usuário deve criar a interface antes de chamar este método.</param>
-	virtual CarenResult RemoverElemento(UInt32 Param_Indice, ICaren^ Param_Out_Elemento);
+	virtual CarenResult RemoveElement(UInt32 Param_Indice, ICaren^ Param_Out_Elemento);
 };
 

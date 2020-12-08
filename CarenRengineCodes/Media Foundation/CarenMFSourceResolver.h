@@ -232,11 +232,11 @@ public:
 	/// <param name="Param_Propriedades">Um ponteiro para a interface de ICarenPropertyStore de uma loja de propriedade. O método passa a loja de propriedade para o manipulador de fluxo de bytes.
 	/// O manipulador de fluxo de bytes pode usar o armazenamento de propriedade para configurar a fonte de mídia. Este parâmetro pode ser nulo.</param>
 	/// <param name="Param_ObjetoCancel">Recebe um ponteiro ICaren ou o valor nulo. Se o valor não for NULO, você pode cancelar a operação assíncrona, passando esse ponteiro para o método 
-	/// de ICarenMFSourceResolver::CancelarCriaçãoObjeto. O chamador deve liberar a interface. Este parâmetro pode ser nulo.</param>
+	/// de ICarenMFSourceResolver::CancelObjectCreation. O chamador deve liberar a interface. Este parâmetro pode ser nulo.</param>
 	/// <param name="Param_Callback">Um ponteiro para a interface de ICarenMFAsyncCallback de um objeto de retorno de chamada. O chamador deve implementar essa interface.</param>
 	/// <param name="Param_ObjetoEstado">Um ponteiro para a interface ICaren de um objeto de estado, definido pelo chamador. Este parâmetro pode ser nulo. Você pode usar esse objeto para 
 	/// armazenar informações de estado. O objeto é retornado ao chamador de quando o callback é invocado.</param>
-	virtual CarenResult CriarObjetoFromByteStreamAsync
+	virtual CarenResult BeginCreateObjectFromByteStream
 	(
 		ICarenMFByteStream^ Param_FluxoBytes,
 		String^ Param_Url,
@@ -255,11 +255,11 @@ public:
 	/// <param name="Param_Propriedades">Ponteiro para a interface de ICarenPropertyStore de uma loja de propriedade. O método passa a loja de propriedade para o esquema manipulador ou 
 	/// manipulador de fluxo de bytes que cria o objeto. O manipulador pode usar o armazenamento de propriedade para configurar o objeto. Este parâmetro pode ser nulo</param>
 	/// <param name="Param_ObjetoCancel">Recebe um ponteiro ICaren ou o valor nulo. Se o valor não for NULO, você pode cancelar a operação assíncrona, passando esse ponteiro para o método 
-	/// de ICarenMFSourceResolver::CancelarCriaçãoObjeto. O chamador deve liberar a interface. Este parâmetro pode ser nulo.</param>
+	/// de ICarenMFSourceResolver::CancelObjectCreation. O chamador deve liberar a interface. Este parâmetro pode ser nulo.</param>
 	/// <param name="Param_Callback">Um ponteiro para a interface de ICarenMFAsyncCallback de um objeto de retorno de chamada. O chamador deve implementar essa interface.</param>
 	/// <param name="Param_ObjetoEstado">Um ponteiro para a interface ICaren de um objeto de estado, definido pelo chamador. Este parâmetro pode ser nulo. Você pode usar esse objeto para 
 	/// armazenar informações de estado. O objeto é retornado ao chamador de quando o callback é invocado.</param>
-	virtual CarenResult CriarObjetoFromUrlAsync
+	virtual CarenResult BeginCreateObjectFromURL
 	(
 		String^ Param_Url,
 		Enumeracoes::CA_SOURCE_RESOLVER_FLAGS Param_Flags,
@@ -272,9 +272,9 @@ public:
 	/// <summary>
 	/// (CancelObjectCreation) - Cancela uma solicitação assíncrona para criar um objeto.
 	/// </summary>
-	/// <param name="Param_ObjetoCancel">Ponteiro para a interface ICaren que foi retornada no parâmetro Param_ObjetoCancel do método ICarenMFSourceResolver::CriarObjetoFromByteStreamAsync 
-	/// ou ICarenMFSourceResolver::CriarObjetoFromUrlAsync. </param>
-	virtual CarenResult CancelarCriaçãoObjeto(ICaren^ Param_ObjetoCancel);
+	/// <param name="Param_ObjetoCancel">Ponteiro para a interface ICaren que foi retornada no parâmetro Param_ObjetoCancel do método ICarenMFSourceResolver::BeginCreateObjectFromByteStream 
+	/// ou ICarenMFSourceResolver::BeginCreateObjectFromURL. </param>
+	virtual CarenResult CancelObjectCreation(ICaren^ Param_ObjetoCancel);
 
 	/// <summary>
 	/// (CreateObjectFromByteStream) - Cria uma fonte de mídia de um fluxo de bytes. Este método é síncrono.
@@ -286,7 +286,7 @@ public:
 	/// O manipulador de fluxo de bytes pode usar o armazenamento de propriedade para configurar a fonte de mídia. Este parâmetro pode ser nulo.</param>
 	/// <param name="Param_Out_TipoObjeto">Recebe um membro da enumeração CA_MF_OBJECT_TYPE, especificando o tipo de objeto que foi criado.</param>
 	/// <param name="Param_Out_FonteMidia">Recebe a interface para a fonte de mídia criada. O chamador deve liberar a interface. O usuário deve criar a interface antes de chamar este método.</param>
-	virtual CarenResult CriarObjetoFromByteStream
+	virtual CarenResult CreateObjectFromByteStream
 	(
 		ICarenMFByteStream^ Param_FluxoBytes,
 		String^ Param_Url,
@@ -305,7 +305,7 @@ public:
 	/// O manipulador de fluxo de bytes pode usar o armazenamento de propriedade para configurar a fonte de mídia. Este parâmetro pode ser nulo.</param>
 	/// <param name="Param_Out_TipoObjeto">Recebe um membro da enumeração CA_MF_OBJECT_TYPE, especificando o tipo de objeto que foi criado.</param>
 	/// <param name="Param_Out_FonteMidia">Recebe a interface para a fonte de mídia criada. O chamador deve liberar a interface. O usuário deve criar a interface antes de chamar este método.</param>
-	virtual CarenResult CriarObjetoFromUrl
+	virtual CarenResult CreateObjectFromURL
 	(
 		String^ Param_Url,
 		Enumeracoes::CA_SOURCE_RESOLVER_FLAGS Param_Flags,
@@ -320,7 +320,7 @@ public:
 	/// <param name="Param_Resultado">Ponteiro para a interface ICarenMFAsyncResult. Passar o mesmo ponteiro que recebeu de seu objeto de retorno de chamada no método Invoke.</param>
 	/// <param name="Param_Out_TipoObjeto">Recebe um membro da enumeração CA_MF_OBJECT_TYPE, especificando o tipo de objeto que foi criado.</param>
 	/// <param name="Param_Out_FonteMidia">Recebe a interface para a fonte de mídia criada. O chamador deve liberar a interface. O usuário deve criar a interface antes de chamar este método.</param>
-	virtual CarenResult ConcluirCriaçãoObjetoFromByteStream
+	virtual CarenResult EndCreateObjectFromByteStream
 	(
 		ICarenMFAsyncResult^ Param_Resultado,
 		[Out] Enumeracoes::CA_MF_OBJECT_TYPE% Param_Out_TipoObjeto,
@@ -333,7 +333,7 @@ public:
 	/// <param name="Param_Resultado">Ponteiro para a interface ICarenMFAsyncResult. Passar o mesmo ponteiro que recebeu de seu objeto de retorno de chamada no método Invoke.</param>
 	/// <param name="Param_Out_TipoObjeto">Recebe um membro da enumeração CA_MF_OBJECT_TYPE, especificando o tipo de objeto que foi criado.</param>
 	/// <param name="Param_Out_FonteMidia">Recebe a interface para a fonte de mídia criada. O chamador deve liberar a interface. O usuário deve criar a interface antes de chamar este método.</param>
-	virtual CarenResult ConcluirCriaçãoObjetoFromUrl
+	virtual CarenResult EndCreateObjectFromURL
 	(
 		ICarenMFAsyncResult^ Param_Resultado,
 		[Out] Enumeracoes::CA_MF_OBJECT_TYPE% Param_Out_TipoObjeto,

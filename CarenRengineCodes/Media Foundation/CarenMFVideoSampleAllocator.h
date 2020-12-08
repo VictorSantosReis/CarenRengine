@@ -272,7 +272,7 @@ public:
 	/// (AllocateSample) - Obtém uma amostra de vídeo do alocador.
 	/// </summary>
 	/// <param name="Param_Out_AmostraVideo">Recebe a interface que contém a amostra de vídeo. O chamado deve liberar a interface.</param>
-	virtual CarenResult ObterAmostraVideo([Out] ICarenMFSample^% Param_Out_AmostraVideo);
+	virtual CarenResult AllocateSample([Out] ICarenMFSample^% Param_Out_AmostraVideo);
 
 	/// <summary>
 	/// (InitializeSampleAllocator) - Inicializa o alocador informando a quantidade de amostras para alocar e o tipo de mídia
@@ -281,7 +281,7 @@ public:
 	/// </summary>
 	/// <param name="Param_CountAmostra">A quantidade de amostas para alocar.</param>
 	/// <param name="Param_TipoAmostraVideo">Uma interface que contém o Tipo de mídia de vídeo que será alocada.</param>
-	virtual CarenResult InicializarAlocadorAmostras(UInt32 Param_CountAmostra, ICarenMFMediaType^ Param_TipoAmostraVideo);
+	virtual CarenResult InitializeSampleAllocator(UInt32 Param_CountAmostra, ICarenMFMediaType^ Param_TipoAmostraVideo);
 
 	/// <summary>
 	/// (InitializeSampleAllocatorEx) - Inicializa o alocador informando a quantidade de amostras para alocar e o tipo de mídia
@@ -290,7 +290,7 @@ public:
 	/// </summary>
 	/// <param name="Param_CountAmostra">A quantidade de amostas para alocar.</param>
 	/// <param name="Param_TipoAmostraVideo">Uma interface que contém o Tipo de mídia de vídeo que será alocada.</param>
-	virtual CarenResult InicializarAlocadorAmostrasD3D11(UInt32 Param_CountAmostra, ICarenMFMediaType^ Param_TipoAmostraVideo);
+	virtual CarenResult InitializeSampleAllocatorEx(UInt32 Param_CountAmostra, ICarenMFMediaType^ Param_TipoAmostraVideo);
 
 	/// <summary>
 	/// (SetDirectXManager) - Especifica o dispositivo do gerenciamento do Direct3D para o coletor de mídia de vídeo utilizar.
@@ -298,12 +298,12 @@ public:
 	/// habilita vários objetos no pipeline (como um processador de vídeo e um decodificador de vídeo) para compartilhar o mesmo dispositivo Direct3D.
 	/// </summary>
 	/// <param name="Param_Interface">A interface que o gerenciador do Direct3D a ser usado.</param>
-	virtual CarenResult DefinirDirect3DDeviceManager(ICaren^ Param_Interface);
+	virtual CarenResult SetDirectXManager(ICaren^ Param_Interface);
 
 	/// <summary>
 	/// (UninitializeSampleAllocator) - Libera Todas as amostras de vídeo que tenham sido alocadas.
 	/// </summary>
-	virtual CarenResult LiberarTodasAmostras();
+	virtual CarenResult UninitializeSampleAllocator();
 
 };
 

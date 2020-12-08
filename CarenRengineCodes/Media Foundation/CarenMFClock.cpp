@@ -415,7 +415,7 @@ void CarenMFClock::Finalizar()
 /// Recupera as características do relógio.
 /// </summary>
 /// <param name="Param_Out_CaracteristicasClock">Recebe os flags com as características do relógio.</param>
-CarenResult CarenMFClock::RecuperarCaracteristicas([Out] Enumeracoes::CA_CLOCK_CARACTERISTICAS% Param_Out_CaracteristicasClock)
+CarenResult CarenMFClock::GetClockCharacteristics([Out] Enumeracoes::CA_CLOCK_CARACTERISTICAS% Param_Out_CaracteristicasClock)
 {
 	//Variavel que vai retorna o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -459,7 +459,7 @@ Done:;
 /// (Não Suportado Nativamente) - Recupera a chave de continuidade do relógio.
 /// </summary>
 /// <param name="Param_Out_Chave">Recebe a chave de continuidade.</param>
-CarenResult CarenMFClock::RecuperarChaveContinuidade([Out] UInt32% Param_Out_Chave)
+CarenResult CarenMFClock::GetContinuityKey([Out] UInt32% Param_Out_Chave)
 {
 	//Variavel que vai retorna o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -505,7 +505,7 @@ Done:;
 /// <param name="Param_ValorReservado">Valor reservado. Deve ser zero.</param>
 /// <param name="Param_Out_ClockTime">Recebe o último tempo de relógio conhecido, em unidades de freqüência do relógio.</param>
 /// <param name="Param_Out_NsSystemTime">Recebe a hora do sistema que corresponde ao tempo de relógio retornado em Param_Out_ClockTime, em unidades de 100 nanosegundos.</param>
-CarenResult CarenMFClock::ObterHoraCorrelacionada(UInt32 Param_ValorReservado, [Out] Int64% Param_Out_ClockTime, [Out] Int64% Param_Out_NsSystemTime)
+CarenResult CarenMFClock::GetCorrelatedTime(UInt32 Param_ValorReservado, [Out] Int64% Param_Out_ClockTime, [Out] Int64% Param_Out_NsSystemTime)
 {
 	//Variavel que vai retorna o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -551,7 +551,7 @@ Done:;
 /// Recupera as propriedades do relógio.
 /// </summary>
 /// <param name="Param_Out_PropriedadesRelogio">Retorna a estrutura que contém as propriedades do relógio atual.</param>
-CarenResult CarenMFClock::ObterPropriedades([Out] Estruturas::CA_MFCLOCK_PROPERTIES^% Param_Out_PropriedadesRelogio)
+CarenResult CarenMFClock::GetProperties([Out] Estruturas::CA_MFCLOCK_PROPERTIES^% Param_Out_PropriedadesRelogio)
 {
 	//Variavel que vai retorna o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -609,7 +609,7 @@ Done:;
 /// </summary>
 /// <param name="Param_ValorReservado">Valor reservado. Deve ser zero.</param>
 /// <param name="Param_Out_EstadoRelogio">Retorna o valor da enumeração que define o estado atual do relógio.</param>
-CarenResult CarenMFClock::ObterEstado(UInt32 Param_ValorReservado, [Out] Enumeracoes::CA_CLOCK_ESTADO% Param_Out_EstadoRelogio)
+CarenResult CarenMFClock::GetState(UInt32 Param_ValorReservado, [Out] Enumeracoes::CA_CLOCK_ESTADO% Param_Out_EstadoRelogio)
 {
 	//Variavel que vai retorna o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

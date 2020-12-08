@@ -329,6 +329,5 @@ public:
 	virtual void EncaminharEvento_OnClockRestart(MFTIME hnsSystemTime);
 
 	virtual void EncaminharEvento_OnClockSetRate(MFTIME hnsSystemTime, float flRate);
-
 };
 

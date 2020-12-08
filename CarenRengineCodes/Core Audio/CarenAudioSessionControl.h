@@ -215,7 +215,7 @@ public:
 	/// (GetState) - O método recupera o estado atual da sessão de áudio.
 	/// </summary>
 	/// <param name="Param_Out_Estado">Retorna o estado da sessão de áudio atual.</param>
-	virtual CarenResult ObterEstado([Out] Enumeracoes::CA_ESTADO_SESSAO_AUDIO% Param_Out_Estado);
+	virtual CarenResult GetState([Out] Enumeracoes::CA_ESTADO_SESSAO_AUDIO% Param_Out_Estado);
 
 	/// <summary>
 	/// (RegisterAudioSessionNotification) - O método registra o cliente para receber notificações de eventos de sessão, incluindo as alterações no estado de fluxo.

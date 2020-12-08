@@ -417,9 +417,9 @@ void CarenMFSinkWriter::Finalizar()
 /// (AddStream) - Adiciona um fluxo para o gravador de coletor.
 /// </summary>
 /// <param name="Param_TipoMidia">Esse tipo de mídia especifica o formato das amostras que serão gravados no arquivo ou Hardware. 
-/// Ele não precisa corresponder ao formato de entrada. Para definir o formato de entrada, chame o método: DefinirTipoMidiaEntrada</param>
+/// Ele não precisa corresponder ao formato de entrada. Para definir o formato de entrada, chame o método: SetInputMediaType</param>
 /// <param name="Param_Out_IdFluxoAdicionado">Recebe o índice baseado em zero do novo fluxo.</param>
-CarenResult CarenMFSinkWriter::AdicionarFluxo(ICarenMFMediaType^ Param_TipoMidia, [Out] UInt32% Param_Out_IdFluxoAdicionado)
+CarenResult CarenMFSinkWriter::AddStream(ICarenMFMediaType^ Param_TipoMidia, [Out] UInt32% Param_Out_IdFluxoAdicionado)
 {
 	//Define falha na operação.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -477,7 +477,7 @@ Done:;
 /// Chame esse método depois de configurar os fluxos de entrada e antes de enviar 
 /// os dados para o gravador de coletor.
 /// </summary>
-CarenResult CarenMFSinkWriter::InicializarEscrita()
+CarenResult CarenMFSinkWriter::BeginWriting()
 {
 	//Define falha na operação.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -511,7 +511,7 @@ Done:;
 /// <summary>
 /// (Finalize) - Conclui todas as operações de gravação no gravador de coletor.
 /// </summary>
-CarenResult CarenMFSinkWriter::Concluir()
+CarenResult CarenMFSinkWriter::_Finalize()
 {
 	//Define falha na operação.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -599,7 +599,7 @@ Done:;
 /// interface solicitada.</param>
 /// <param name="Param_GuidInterfaceSolicitada">O Guid para a interface solicitada.</param>
 /// <param name="Param_Out_Interface">Recebe a interface solicitada.</param>
-CarenResult CarenMFSinkWriter::ObterServiçoParaStream(
+CarenResult CarenMFSinkWriter::GetServiceForStream(
 	UInt32 Param_IdFluxo,
 	Boolean Param_ConsultarColetor,
 	String^ Param_GuidServiço,
@@ -685,7 +685,7 @@ Done:;
 /// <param name="Param_IdFluxo">O Id para o fluxo de consulta. Se (Param_ConsularColetor) for True, desconsidere esse valor.</param>
 /// <param name="Param_ConsultarColetor">Define se deve obter as estatísticas do (Coletor de Mídia) propriamente dito.</param>
 /// <param name="Param_Out_StatusDesempenho">Retorna a estrutura que contém todas as informações de Desempenho </param>
-CarenResult CarenMFSinkWriter::ObterEstatisticasGravador(UInt32 Param_IdFluxo, Boolean Param_ConsultarColetor, [Out] Estruturas::CA_MF_SINK_WRITER_STATISTICS^% Param_Out_StatusDesempenho)
+CarenResult CarenMFSinkWriter::GetStatistics(UInt32 Param_IdFluxo, Boolean Param_ConsultarColetor, [Out] Estruturas::CA_MF_SINK_WRITER_STATISTICS^% Param_Out_StatusDesempenho)
 {
 	//Define falha na operação.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -743,7 +743,7 @@ Done:;
 /// <param name="Param_IdFluxo">O indica para o fluxo que vai ser notificado que foi atingido o final de um segmento. Desconsidere esse valor se (Param_NotificarTodos)
 /// for True.</param>
 /// <param name="Param_NotificarTodos">Indica que vai notificar que todos os fluxos atingiram o final de um segmento.</param>
-CarenResult CarenMFSinkWriter::NotificarFimSegmento(UInt32 Param_IdFluxo, Boolean Param_NotificarTodos)
+CarenResult CarenMFSinkWriter::NotifyEndOfSegment(UInt32 Param_IdFluxo, Boolean Param_NotificarTodos)
 {
 	//Define falha na operação.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -784,13 +784,13 @@ Done:;
 }
 
 /// <summary>
-/// (TESTE)(PlaceMarker) - Coloca um marcador no fluxo especificado.
+/// Coloca um marcador no fluxo especificado.
 /// Para usar esse método, você deve fornecer um retorno de chamada assíncrono(MF_SINK_WRITER_ASYNC_CALLBACK) quando você cria o Gravador de Coletor(ICarenMFSinkWriter).
 /// Caso contrario, o método retorna o código: ER_MF_REQUISICAO_INVALIDA
 /// </summary>
 /// <param name="Param_IdFluxo">O Id para o fluxo que vai ter o marcador adicionado.</param>
 /// <param name="Param_Valor">A interface que contém o valor desconhecido a ser definido.</param>
-CarenResult CarenMFSinkWriter::DefinirMarcadorFluxo(UInt32 Param_IdFluxo, ICaren^ Param_Valor)
+CarenResult CarenMFSinkWriter::PlaceMarker(UInt32 Param_IdFluxo, ICaren^ Param_Valor)
 {
 	//Define falha na operação.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -841,7 +841,7 @@ Done:;
 /// <param name="Param_IdFluxo">O índice baseado em zero do fluxo.</param>
 /// <param name="Param_IdFluxo">A posição no fluxo onde ocorre a lacuna nos dados. O valor é fornecido em 100-nanosecond unidades, 
 /// em relação ao início do fluxo..</param>
-CarenResult CarenMFSinkWriter::EnviarLacunaFluxo(UInt32 Param_IdFluxo, Int64 Param_TimeStamp)
+CarenResult CarenMFSinkWriter::SendStreamTick(UInt32 Param_IdFluxo, Int64 Param_TimeStamp)
 {
 	//Define falha na operação.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -882,7 +882,7 @@ Done:;
 /// formato de entrada.</param>
 /// <param name="Param_ParametrosEncode">Use o repositório de atributos para configurar o codificador. 
 /// Este parâmetro pode ser nulo.</param>
-CarenResult CarenMFSinkWriter::DefinirTipoMidiaEntrada(UInt32 Param_IdFluxo, ICarenMFMediaType^ Param_TipoMidia, ICarenMFAttributes^ Param_ParametrosEncode)
+CarenResult CarenMFSinkWriter::SetInputMediaType(UInt32 Param_IdFluxo, ICarenMFMediaType^ Param_TipoMidia, ICarenMFAttributes^ Param_ParametrosEncode)
 {
 	//Define falha na operação.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -950,12 +950,12 @@ Done:;
 
 /// <summary>
 /// (WriteSample) - Fornece uma amostra para o gravador de coletor.
-/// Você deve chamar o método (InicializarEscrita) antes de chamar esse método. Caso contrário, o método retornará 
+/// Você deve chamar o método (BeginWriting) antes de chamar esse método. Caso contrário, o método retornará 
 /// o código: ER_MF_REQUISICAO_INVALIDA.
 /// </summary>
 /// <param name="Param_IdFluxo">O índice baseado em zero do fluxo para este exemplo.</param>
 /// <param name="Param_AmostraMidia">A interface que contém a amostra a ser escrita.</param>
-CarenResult CarenMFSinkWriter::EscreverAmostra(UInt32 Param_IdFluxo, ICarenMFSample^ Param_AmostraMidia)
+CarenResult CarenMFSinkWriter::WriteSample(UInt32 Param_IdFluxo, ICarenMFSample^ Param_AmostraMidia)
 {
 	//Define falha na operação.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

@@ -413,7 +413,7 @@ void CarenMFSimpleAudioVolume::Finalizar()
 /// (GetMasterVolume) - Recupera o nível de volume principal.
 /// </summary>
 /// <param name="Param_Out_VolumePrincipal">Retorna o volume principal do áudio.</param>
-CarenResult CarenMFSimpleAudioVolume::ObterVolumePrincipal([Out] float% Param_Out_VolumePrincipal)
+CarenResult CarenMFSimpleAudioVolume::GetMasterVolume([Out] float% Param_Out_VolumePrincipal)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -454,7 +454,7 @@ Done:;
 /// (GetMute) - Consulta se o áudio está sem áudio.
 /// </summary>
 /// <param name="Param_Out_AudioMudo">Retorna um valor boleano que indica se o áudio está mudo ou não.</param>
-CarenResult CarenMFSimpleAudioVolume::ConsultarAudioMudo([Out] Boolean% Param_Out_AudioMudo)
+CarenResult CarenMFSimpleAudioVolume::GetMute([Out] Boolean% Param_Out_AudioMudo)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -495,7 +495,7 @@ Done:;
 /// (SetMasterVolume) - Define o nível de volume principal.
 /// </summary>
 /// <param name="Param_VolumePrincipal">Define o volume principal do áudio. O valor vai de 0.0(Mudo) a 1.0(Maximo).</param>
-CarenResult CarenMFSimpleAudioVolume::DefinirVolumePrincipal(float Param_VolumePrincipal)
+CarenResult CarenMFSimpleAudioVolume::SetMasterVolume(float Param_VolumePrincipal)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -530,7 +530,7 @@ Done:;
 /// (SetMute) - Silencia ou repõe o áudio.
 /// </summary>
 /// <param name="Param_EstadoAudio">Define o estado de volume do áudio.</param>
-CarenResult CarenMFSimpleAudioVolume::DefinirEstadoAudio(Boolean Param_EstadoAudio)
+CarenResult CarenMFSimpleAudioVolume::SetMute(Boolean Param_EstadoAudio)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

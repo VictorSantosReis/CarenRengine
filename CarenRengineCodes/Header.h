@@ -96,7 +96,7 @@ limitations under the License.
 #include <audiopolicy.h>
 #include <functiondiscoverykeys_devpkey.h>
 
-//Iniciar os guids
+//Start os guids
 #include <initguid.h>
 
 //Directx and DXGI

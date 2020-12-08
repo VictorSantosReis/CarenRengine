@@ -78,7 +78,7 @@ public:
 public:
 	/// <summary>
 	/// Cria uma instância do gerenciador de tipo de mídia (IMFMediaTypeHandler), para definir os tipos em determinados objetos.
-	/// Essa classe é muito utilizada pelo ICarenMFMediaStreamSink para reprodução de Vídeo ou Áudio.
+	/// Essa classe é muito utilizada pelo ICarenMFStreamSink para reprodução de Vídeo ou Áudio.
 	/// </summary>
 	/// <param name="Param_Out_MidiaTypeHandler">Recebe o ponteiro para o ICarenMFMediaTypeHandler.</param>
 	static CarenResult CriarInstancia([Out] ICarenMFMediaTypeHandler^% Param_Out_MidiaTypeHandler)
@@ -240,27 +240,27 @@ public:
 	/// (GetCurrentMediaType) - Recupera o tipo de mídia atual do objeto.
 	/// </summary>
 	/// <param name="Param_Out_MidiaType">Retorna o Tipo de midia atual.</param>
-	virtual CarenResult ObterTipoMidiaAtual([Out] ICarenMFMediaType^% Param_Out_MidiaType);
+	virtual CarenResult GetCurrentMediaType([Out] ICarenMFMediaType^% Param_Out_MidiaType);
 
 	/// <summary>
 	/// (GetMajorType) - Obtém o tipo de mídia principal do objeto.
 	/// </summary>
 	/// <param name="Param_Out_GuidMidiaPrincipal">Retorna o GUID do tipo da mídia principal.</param>
 	/// <param name="Param_Out_TipoPrincipal">Retorna a enumeração que define o tipo principal da mídia.</param>
-	virtual CarenResult ObterTipoMidiaPrincipal([Out] String^% Param_Out_GuidMidiaPrincipal, [Out] Enumeracoes::CA_Midia_TipoPrincipal% Param_Out_TipoPrincipal);
+	virtual CarenResult GetMajorType([Out] String^% Param_Out_GuidMidiaPrincipal, [Out] Enumeracoes::CA_Midia_TipoPrincipal% Param_Out_TipoPrincipal);
 
 	/// <summary>
 	/// (GetMediaTypeByIndex) - Recupera um tipo de mídia da lista do objeto de tipos de mídia com suporte.
 	/// </summary>
-	/// <param name="Param_Id">Índice baseado em zero do tipo de mídia para recuperar. Para obter o número de tipos de mídia na lista, chame o método (ObterCountTiposMidia).</param>
+	/// <param name="Param_Id">Índice baseado em zero do tipo de mídia para recuperar. Para obter o número de tipos de mídia na lista, chame o método (GetMediaTypeCount).</param>
 	/// <param name="Param_Out_MidiaType">Retorna o tipo da mídia no Id especificado.</param>
-	virtual CarenResult ObterTipoMidiaPorIndex(UInt32 Param_Id, [Out] ICarenMFMediaType^% Param_Out_MidiaType);
+	virtual CarenResult GetMediaTypeByIndex(UInt32 Param_Id, [Out] ICarenMFMediaType^% Param_Out_MidiaType);
 
 	/// <summary>
 	/// (GetMediaTypeCount) - Recupera o número de tipos de mídia na lista do objeto de tipos de mídia com suporte.
 	/// </summary>
 	/// <param name="Param_Out_Quantidade">Retorna a quantidade de tipos de mídia na interface.</param>
-	virtual CarenResult ObterCountTiposMidia([Out] UInt32% Param_Out_Quantidade);
+	virtual CarenResult GetMediaTypeCount([Out] UInt32% Param_Out_Quantidade);
 
 	/// <summary>
 	/// (IsMediaTypeSupported) - Consulta se o objeto oferece suporte a um tipo de mídia especificado.
@@ -272,7 +272,7 @@ public:
 	/// <param name="Param_MidiaType">O Tipo de mídia a ser verificado se é suportado pela (Fonte de mídia ou Pelo Coletor de Mídia) que gerou essa interface.</param>
 	/// <param name="Param_Out_MidiaAproximada">Recebe o tipo de mídia que pode se aproximar ou não da mídia verificada. 
 	/// Se o método retorna sucesso, valor dessa parametro é (NULO).</param>
-	virtual CarenResult VerificarTipoMidiaSuportado(ICarenMFMediaType^ Param_MidiaType, [Out] ICarenMFMediaType^% Param_Out_MidiaAproximada);
+	virtual CarenResult IsMediaTypeSupported(ICarenMFMediaType^ Param_MidiaType, [Out] ICarenMFMediaType^% Param_Out_MidiaAproximada);
 
 	/// <summary>
 	/// (SetCurrentMediaType) - Define o tipo de mídia do objeto.
@@ -281,6 +281,6 @@ public:
 	/// coletor pode receber dados que está de acordo com esse tipo de mídia.
 	/// </summary>
 	/// <param name="Param_MidiaType">O tipo de mídia a ser definido no objeto.</param>
-	virtual CarenResult DefinirTipoMidiaAtual(ICarenMFMediaType^ Param_MidiaType);
+	virtual CarenResult SetCurrentMediaType(ICarenMFMediaType^ Param_MidiaType);
 };
 

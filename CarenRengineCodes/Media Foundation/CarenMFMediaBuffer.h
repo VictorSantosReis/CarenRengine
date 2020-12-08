@@ -244,17 +244,17 @@ public:
 	/// Recupera o comprimento dos dados válidos no buffer.
 	/// </summary>
 	/// <param name="Param_Out_LarguraAtual">Recebe o comprimento dos dados válidos, em bytes. Se o buffer não contiver nenhum dado válido, o valor será zero.</param>
-	virtual CarenResult ObterLarguraAtual([Out] UInt32% Param_Out_LarguraAtual);
+	virtual CarenResult GetCurrentLength([Out] UInt32% Param_Out_LarguraAtual);
 
 
 	/// <summary>
 	/// Recupera o Dimensionar alocado do buffer. Esse o valor da largura total
 	/// de dados que podem ser adicioandos. Se o buffer conter dados, a largura dos dados
-	/// podem ser menor que a lagrura máxima. Consulte (ObterLarguraAtual) para obter o 
+	/// podem ser menor que a lagrura máxima. Consulte (GetCurrentLength) para obter o 
 	/// valor real da largura dos dados neste Buffer.
 	/// </summary>
 	/// <param name="Param_Out_LarguraMaxima">Recebe a largura total de dados que esse buffer pode conter.</param>
-	virtual CarenResult ObterLarguraMaxima([Out] UInt32% Param_Out_LarguraMaxima);
+	virtual CarenResult GetMaxLength([Out] UInt32% Param_Out_LarguraMaxima);
 
 
 	/// <summary>
@@ -262,7 +262,7 @@ public:
 	/// Esse método fornece o acesso do chamador para o buffer inteiro, até o tamanho máximo retornado no Param_LarguraMaximaEscrita parâmetro. O valor retornado em Param_LarguraAtual 
 	/// é o tamanho de todos os dados válidos já no buffer, que pode ser menor do que o tamanho do buffer total.
 	/// </summary>
-	/// <param name="Param_Out_BufferMidia">Recebe a interface responsável por gerenciar o buffer preso(Lock). Você poder: Escrever e Ler para o buffer.</param>
+	/// <param name="Param_Out_BufferMidia">Recebe a interface responsável por gerenciar o buffer preso(Lock). Você poder: Write e Read para o buffer.</param>
 	/// <param name="Param_Out_LarguraMaximaEscrita">Recebe a quantidade máxima de dados que podem ser gravados para o buffer. Este parâmetro pode ser (NULO).</param>
 	/// <param name="Param_Out_LarguraAtual">Recebe o comprimento dos dados válidos no buffer, em bytes. Este parâmetro pode ser (NULO).</param>
 	virtual CarenResult Lock([Out] ICarenBuffer^% Param_Out_BufferMidia, [Out] UInt32% Param_Out_LarguraMaximaEscrita, [Out] UInt32% Param_Out_LarguraAtual);
@@ -281,8 +281,8 @@ public:
 	/// ATENCAO: Chame esse método se você gravar dados no buffer.
 	/// </summary>
 	/// <param name="Param_LarguraAtual">Comprimento dos dados válidos, em bytes. Esse valor não pode ser maior do que o tamanho alocado do buffer,
-	/// que é retornado pelo método (ObterLarguraMaxima).</param>
-	virtual CarenResult DefinirLarguraAtual(UInt32 Param_LarguraAtual);
+	/// que é retornado pelo método (GetMaxLength).</param>
+	virtual CarenResult SetCurrentLength(UInt32 Param_LarguraAtual);
 
 };
 

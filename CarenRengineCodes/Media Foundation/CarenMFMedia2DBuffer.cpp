@@ -416,7 +416,7 @@ void CarenMFMedia2DBuffer::Finalizar()
 /// </summary>
 /// <param name="Param_BufferContiguo">A interface que contém um buffer com os dados contiguou a serem copiados.</param>
 /// <param name="Param_LarguraBuffer">A largura do buffer a ser copiado.</param>
-CarenResult CarenMFMedia2DBuffer::CopiarBufferContiguouDe(ICarenBuffer^ Param_BufferContiguo, UInt32 Param_LarguraBuffer)
+CarenResult CarenMFMedia2DBuffer::ContiguousCopyFrom(ICarenBuffer^ Param_BufferContiguo, UInt32 Param_LarguraBuffer)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -464,8 +464,8 @@ Done:;
 /// (ContiguousCopyTo) - Copia esse buffer no buffer do chamador, convertendo os dados em formato contíguo(Único).
 /// </summary>
 /// <param name="Param_DestinoBufferContiguou">A interface que vai receber o buffer de dados do objeto atual.</param>
-/// <param name="Param_LarguraBufferDestino">O tamanho do buffer de destino. Obtenha esse valor chamando o método (ObterLarguraContiguou).</param>
-CarenResult CarenMFMedia2DBuffer::CopiarBufferContiguouPara(ICarenBuffer^% Param_DestinoBufferContiguou, UInt32 Param_LarguraBufferDestino)
+/// <param name="Param_LarguraBufferDestino">O tamanho do buffer de destino. Obtenha esse valor chamando o método (GetContiguousLength).</param>
+CarenResult CarenMFMedia2DBuffer::ContiguousCopyTo(ICarenBuffer^% Param_DestinoBufferContiguou, UInt32 Param_LarguraBufferDestino)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -514,7 +514,7 @@ Done:;
 /// em formato contíguo.
 /// </summary>
 /// <param name="Param_Out_LarguraBufferContiguou">Recebe a largura do Buffer Contiguou.</param>
-CarenResult CarenMFMedia2DBuffer::ObterLarguraContiguou([Out] UInt32% Param_Out_LarguraBufferContiguou)
+CarenResult CarenMFMedia2DBuffer::GetContiguousLength([Out] UInt32% Param_Out_LarguraBufferContiguou)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -558,7 +558,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Out_ByteBufferPrimeiraLinha">Recebe uma Interface de buffer para o primeiro byte da linha superior de pixels na imagem.</param>
 /// <param name="Param_Out_Stride">Recebe o stride, em bytes.</param>
-CarenResult CarenMFMedia2DBuffer::ObterBufferAndSuperficeStride([Out] ICarenBuffer^% Param_Out_ByteBufferPrimeiraLinha, [Out] Int64% Param_Out_Stride)
+CarenResult CarenMFMedia2DBuffer::GetScanline0AndPitch([Out] ICarenBuffer^% Param_Out_ByteBufferPrimeiraLinha, [Out] Int64% Param_Out_Stride)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -606,7 +606,7 @@ Done:;
 /// (IsContiguousFormat) - Consulta se o buffer é contíguo em seu (formato nativo).
 /// </summary>
 /// <param name="Param_Out_BufferContiguou">Retorna true se o formato nativo deste buffer é: Contiguou.</param>
-CarenResult CarenMFMedia2DBuffer::IsBufferFormatoContiguou([Out] Boolean% Param_Out_BufferContiguou)
+CarenResult CarenMFMedia2DBuffer::IsContiguousFormat([Out] Boolean% Param_Out_BufferContiguou)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

@@ -418,7 +418,7 @@ void CarenMFTransform::Finalizar()
 /// </summary>
 /// <param name="Param_Quantidade">Quantidade de fluxos a serem adicionados.</param> 
 /// <param name="Param_ArrayIdentificadores">Matriz de identificadores de fluxo. Os novos identificadores de fluxo não devem corresponder a nenhum fluxo de entrada existente.</param> 
-CarenResult CarenMFTransform::AdicionarFluxosEntrada(UInt32 Param_Quantidade, cli::array<UInt32>^ Param_ArrayIdentificadores)
+CarenResult CarenMFTransform::AddInputStreams(UInt32 Param_Quantidade, cli::array<UInt32>^ Param_ArrayIdentificadores)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -463,7 +463,7 @@ Done:;
 /// (DeleteInputStream) - Remove um fluxo de entrada desta transformação da Media Foundation (MFT).
 /// </summary>
 /// <param name="Param_FluxoID"> O Id do fluxo a ser removido.</param>
-CarenResult CarenMFTransform::DeletarFluxoEntrada(UInt32 Param_FluxoID)
+CarenResult CarenMFTransform::DeleteInputStream(UInt32 Param_FluxoID)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -499,7 +499,7 @@ Done:;
 /// Use o ponteiro recuperado por este método para obter ou definir atributos que se aplicam a todo o MFT.
 /// </summary>
 /// <param name="Param_Out_Atributos">Recebe um ponteiro para a interface de atributos. O chamdor deve liberar a interface.</param>
-CarenResult CarenMFTransform::ObterAtributos([Out] ICarenMFAttributes^% Param_Out_Atributos)
+CarenResult CarenMFTransform::GetAttributes([Out] ICarenMFAttributes^% Param_Out_Atributos)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -542,10 +542,10 @@ Done:;
 /// <summary>
 /// (GetInputAvailableType) - Obtém um tipo de mídia disponível para um fluxo de entrada nesta transformação da Media Foundation (MFT).
 /// </summary>
-/// <param name="Param_IDFluxoEntrada">Identificador de fluxo de entrada. Para obter a lista de identificadores de fluxo, ligue para ICarenMFTransform::ObterIDsFluxo.</param>
+/// <param name="Param_IDFluxoEntrada">Identificador de fluxo de entrada. Para obter a lista de identificadores de fluxo, ligue para ICarenMFTransform::GetStreamIDs.</param>
 /// <param name="Param_TipoID">Índice do tipo mídia para recuperar. Os tipos de mídia são indexados a partir de zero e devolvidos em ordem aproximada de preferência.</param>
 /// <param name="Param_Out_InterfaceTipoMidia">Recebe um ponteiro para a interface ICarenMFMediaType.</param>
-CarenResult CarenMFTransform::ObterTipoFluxoEntradaDisponivel(UInt32 Param_IDFluxoEntrada, UInt32 Param_TipoID, [Out] ICarenMFMediaType^% Param_Out_InterfaceTipoMidia)
+CarenResult CarenMFTransform::GetInputAvailableType(UInt32 Param_IDFluxoEntrada, UInt32 Param_TipoID, [Out] ICarenMFMediaType^% Param_Out_InterfaceTipoMidia)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -588,9 +588,9 @@ Done:;
 /// <summary>
 /// (GetInputCurrentType) - Obtém o tipo de mídia atual para um fluxo de entrada nesta transformação da Media Foundation (MFT).
 /// </summary>
-/// <param name="Param_IDFluxoEntrada">Identificador de fluxo de entrada. Para obter a lista de identificadores de fluxo, ligue para ICarenMFTransform::ObterIDsFluxo.</param>
+/// <param name="Param_IDFluxoEntrada">Identificador de fluxo de entrada. Para obter a lista de identificadores de fluxo, ligue para ICarenMFTransform::GetStreamIDs.</param>
 /// <param name="Param_Out_InterfaceTipoMidia">Recebe um ponteiro para a interface ICarenMFMediaType.</param>
-CarenResult CarenMFTransform::ObterTipoFluxoEntradaAtual(UInt32 Param_IDFluxoEntrada, [Out] ICarenMFMediaType^% Param_Out_InterfaceTipoMidia)
+CarenResult CarenMFTransform::GetInputCurrentType(UInt32 Param_IDFluxoEntrada, [Out] ICarenMFMediaType^% Param_Out_InterfaceTipoMidia)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -633,13 +633,13 @@ Done:;
 /// <summary>
 /// (GetInputStatus) - Consulta se um fluxo de entrada nesta transformação da Media Foundation (MFT) pode aceitar mais dados.
 /// Se o método retornar a bandeira CA_MFT_INPUT_STATUS_ACCEPT_DATA, você pode fornecer uma amostra de entrada para o fluxo 
-/// especificado ligando para ICarenMFTransform::ProcessarEntrada. Se o método for bem sucedido, mas não devolver nenhuma 
+/// especificado ligando para ICarenMFTransform::ProcessInput. Se o método for bem sucedido, mas não devolver nenhuma 
 /// bandeira no parâmetro Param_Out_Flag, significa que o fluxo de entrada já tem o máximo de dados que pode aceitar.
 /// </summary>
-/// <param name="Param_IDFluxoEntrada">Identificador de fluxo de entrada. Para obter a lista de identificadores de fluxo, ligue para ICarenMFTransform::ObterIDsFluxo.</param>
+/// <param name="Param_IDFluxoEntrada">Identificador de fluxo de entrada. Para obter a lista de identificadores de fluxo, ligue para ICarenMFTransform::GetStreamIDs.</param>
 /// <param name="Param_Out_Flag">Recebe um membro da enumeração CA_MFT_INPUT_STATUS_FLAGS, ou zero. Se o valor for CA_MFT_INPUT_STATUS_ACCEPT_DATA, o fluxo especificado 
 /// no Param_IDFluxoEntrada pode aceitar mais dados de entrada.</param>
-CarenResult CarenMFTransform::ObterStatusEntrada(UInt32 Param_IDFluxoEntrada, [Out] CA_MFT_INPUT_STATUS_FLAGS% Param_Out_Flag)
+CarenResult CarenMFTransform::GetInputStatus(UInt32 Param_IDFluxoEntrada, [Out] CA_MFT_INPUT_STATUS_FLAGS% Param_Out_Flag)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -679,9 +679,9 @@ Done:;
 /// <summary>
 /// (GetInputStreamAttributes) - Recebe a loja de atributos para um fluxo de entrada nesta transformação da Media Foundation (MFT).
 /// </summary>
-/// <param name="Param_IDFluxoEntrada">Identificador de fluxo de entrada. Para obter a lista de identificadores de fluxo, ligue para ICarenMFTransform::ObterIDsFluxo.</param>
+/// <param name="Param_IDFluxoEntrada">Identificador de fluxo de entrada. Para obter a lista de identificadores de fluxo, ligue para ICarenMFTransform::GetStreamIDs.</param>
 /// <param name="Param_Out_AtributosFluxo">Retorna uma interface de atributos para o fluxo informado. O chamador é responsável por liberar a interface.</param>
-CarenResult CarenMFTransform::ObterAtributosFluxoEntrada(UInt32 Param_IDFluxoEntrada, [Out] ICarenMFAttributes^% Param_Out_AtributosFluxo)
+CarenResult CarenMFTransform::GetInputStreamAttributes(UInt32 Param_IDFluxoEntrada, [Out] ICarenMFAttributes^% Param_Out_AtributosFluxo)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -724,9 +724,9 @@ Done:;
 /// <summary>
 /// (GetInputStreamInfo) - Obtém os requisitos de buffer e outras informações para um fluxo de entrada nesta transformação da Media Foundation (MFT).
 /// </summary>
-/// <param name="Param_IDFluxoEntrada">Identificador de fluxo de entrada. Para obter a lista de identificadores de fluxo, ligue para ICarenMFTransform::ObterIDsFluxo.</param>
+/// <param name="Param_IDFluxoEntrada">Identificador de fluxo de entrada. Para obter a lista de identificadores de fluxo, ligue para ICarenMFTransform::GetStreamIDs.</param>
 /// <param name="Param_Out_InfoFluxo">Recebe uma estrutura CA_MFT_INPUT_STREAM_INFO. O método preenche a estrutura com informações sobre o fluxo de entrada.</param>
-CarenResult CarenMFTransform::ObterInfoFluxoEntrada(UInt32 Param_IDFluxoEntrada, [Out] CA_MFT_INPUT_STREAM_INFO^% Param_Out_InfoFluxo)
+CarenResult CarenMFTransform::GetInputStreamInfo(UInt32 Param_IDFluxoEntrada, [Out] CA_MFT_INPUT_STREAM_INFO^% Param_Out_InfoFluxo)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -767,10 +767,10 @@ Done:;
 /// <summary>
 /// (GetOutputAvailableType) - Obtém um tipo de mídia disponível para um fluxo de saída nesta transformação da Media Foundation (MFT).
 /// </summary>
-/// <param name="Param_IDFluxoSaida">Identificador de fluxo de Saida. Para obter a lista de identificadores de fluxo, ligue para ICarenMFTransform::ObterIDsFluxo.</param>
+/// <param name="Param_IDFluxoSaida">Identificador de fluxo de Saida. Para obter a lista de identificadores de fluxo, ligue para ICarenMFTransform::GetStreamIDs.</param>
 /// <param name="Param_TipoID">Índice do tipo mídia para recuperar. Os tipos de mídia são indexados a partir de zero e devolvidos em ordem aproximada de preferência.</param>
 /// <param name="Param_Out_InterfaceTipoMidia">Recebe uma interface de tipo de midia. O chamador deve liberar a interface.</param>
-CarenResult CarenMFTransform::ObterTipoFluxoSaidaDisponivel(UInt32 Param_IDFluxoSaida, UInt32 Param_TipoID, [Out] ICarenMFMediaType^% Param_Out_InterfaceTipoMidia)
+CarenResult CarenMFTransform::GetOutputAvailableType(UInt32 Param_IDFluxoSaida, UInt32 Param_TipoID, [Out] ICarenMFMediaType^% Param_Out_InterfaceTipoMidia)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -813,9 +813,9 @@ Done:;
 /// <summary>
 /// (GetOutputCurrentType) - Obtém o tipo de mídia atual para um fluxo de saída nesta transformação da Media Foundation (MFT).
 /// </summary>
-/// <param name="Param_IDFluxoSaida">Identificador de fluxo de Saida. Para obter a lista de identificadores de fluxo, ligue para ICarenMFTransform::ObterIDsFluxo.</param>
+/// <param name="Param_IDFluxoSaida">Identificador de fluxo de Saida. Para obter a lista de identificadores de fluxo, ligue para ICarenMFTransform::GetStreamIDs.</param>
 /// <param name="Param_Out_InterfaceTipoMidia">Recebe uma interface de tipo de midia. O chamador deve liberar a interface.</param>
-CarenResult CarenMFTransform::ObterTipoFluxoSaidaAtual(UInt32 Param_IDFluxoSaida, [Out] ICarenMFMediaType^% Param_Out_InterfaceTipoMidia)
+CarenResult CarenMFTransform::GetOutputCurrentType(UInt32 Param_IDFluxoSaida, [Out] ICarenMFMediaType^% Param_Out_InterfaceTipoMidia)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -858,11 +858,11 @@ Done:;
 /// <summary>
 /// (GetOutputStatus) - Questiona se a transformação da Media Foundation (MFT) está pronta para produzir dados de produção.
 /// Se o método devolver a bandeira CA_MFT_OUTPUT_STATUS_SAMPLE_READY, significa que você pode gerar uma ou mais amostras de produção ligando 
-/// para o ICarenMFTransform::ProcessarSaida.
+/// para o ICarenMFTransform::ProcessOutput.
 /// </summary>
 /// <param name="Param_Out_Flag">Recebe um membro da enumeração CA_MFT_OUTPUT_STATUS_FLAGS, ou zero. Se o valor for MFT_OUTPUT_STATUS_SAMPLE_READY, o MFT pode produzir 
 /// uma amostra de saída.</param>
-CarenResult CarenMFTransform::ObterStatusSaida([Out] CA_MFT_OUTPUT_STATUS_FLAGS% Param_Out_Flag)
+CarenResult CarenMFTransform::GetOutputStatus([Out] CA_MFT_OUTPUT_STATUS_FLAGS% Param_Out_Flag)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -902,9 +902,9 @@ Done:;
 /// <summary>
 /// (GetOutputStreamAttributes) - Recebe a loja de atributos para um fluxo de saída nesta transformação da Media Foundation (MFT).
 /// </summary>
-/// <param name="Param_IDFluxoSaida">Identificador de fluxo de Saida. Para obter a lista de identificadores de fluxo, ligue para ICarenMFTransform::ObterIDsFluxo.</param>
+/// <param name="Param_IDFluxoSaida">Identificador de fluxo de Saida. Para obter a lista de identificadores de fluxo, ligue para ICarenMFTransform::GetStreamIDs.</param>
 /// <param name="Param_Out_AtributosFluxo">Retorna uma interface de atributos para o fluxo informado. O chamador é responsável por liberar a interface.</param>
-CarenResult CarenMFTransform::ObterAtributosFluxoSaida(UInt32 Param_IDFluxoSaida, [Out] ICarenMFAttributes^% Param_Out_AtributosFluxo)
+CarenResult CarenMFTransform::GetOutputStreamAttributes(UInt32 Param_IDFluxoSaida, [Out] ICarenMFAttributes^% Param_Out_AtributosFluxo)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -947,9 +947,9 @@ Done:;
 /// <summary>
 /// (GetOutputStreamInfo) - Obtém os requisitos de buffer e outras informações para um fluxo de saída nesta transformação da Media Foundation (MFT).
 /// </summary>
-/// <param name="Param_IDFluxoSaida">Identificador de fluxo de Saida. Para obter a lista de identificadores de fluxo, ligue para ICarenMFTransform::ObterIDsFluxo.</param>
+/// <param name="Param_IDFluxoSaida">Identificador de fluxo de Saida. Para obter a lista de identificadores de fluxo, ligue para ICarenMFTransform::GetStreamIDs.</param>
 /// <param name="Param_Out_InfoFluxo">Recebe uma estrutura CA_MFT_OUTPUT_STREAM_INFO. O método preenche a estrutura com informações sobre o fluxo de saida.</param>
-CarenResult CarenMFTransform::ObterInfoFluxoSaida(UInt32 Param_IDFluxoSaida, [Out] CA_MFT_OUTPUT_STREAM_INFO^% Param_Out_InfoFluxo)
+CarenResult CarenMFTransform::GetOutputStreamInfo(UInt32 Param_IDFluxoSaida, [Out] CA_MFT_OUTPUT_STREAM_INFO^% Param_Out_InfoFluxo)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -993,7 +993,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Out_FluxoEntrada">Retorna a quantidade de fluxos de entrada.</param>
 /// <param name="Param_Out_FluxoSaida">Retorna a quantidade de fluxos de saida.</param>
-CarenResult CarenMFTransform::ObterQuantidadeFluxos([Out] UInt32% Param_Out_FluxoEntrada, [Out] UInt32% Param_Out_FluxoSaida)
+CarenResult CarenMFTransform::GetStreamCount([Out] UInt32% Param_Out_FluxoEntrada, [Out] UInt32% Param_Out_FluxoSaida)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1037,11 +1037,11 @@ Done:;
 /// </summary>
 /// <param name="Param_SizeMatrizFluxosEntrada">O tamanho da matriz que vai conter os IDs dos fluxos de entrada.</param>
 /// <param name="Param_MatrizFluxosEntrada">Uma matriz que vai receber todos os identificadores de fluxos de Entrada. O chamador é responsável por criar a matriz. 
-/// Chame o método ICarenMFTransform::ObterQuantidadeFluxos para descobrir o tamanho que deve ser essa matriz.</param>
+/// Chame o método ICarenMFTransform::GetStreamCount para descobrir o tamanho que deve ser essa matriz.</param>
 /// <param name="Param_SizeMatrizFluxosSaida">O tamanho da matriz que vai conter os IDs dos fluxos de Saida.</param>
 /// <param name="Param_MatrizFluxosSaida">Uma matriz que vai receber todos os identificadores de fluxos de Saida. O chamador é responsável por criar a matriz. 
-/// Chame o método ICarenMFTransform::ObterQuantidadeFluxos para descobrir o tamanho que deve ser essa matriz.</param>
-CarenResult CarenMFTransform::ObterIDsFluxo(
+/// Chame o método ICarenMFTransform::GetStreamCount para descobrir o tamanho que deve ser essa matriz.</param>
+CarenResult CarenMFTransform::GetStreamIDs(
 				UInt32 Param_SizeMatrizFluxosEntrada, 
 				cli::array<UInt32>^% Param_MatrizFluxosEntrada,  //REF
 				UInt32 Param_SizeMatrizFluxosSaida, 
@@ -1104,7 +1104,7 @@ Done:;
 /// <param name="Param_Out_FluxoEntradaMaximo">Recebe o número máximo de fluxos de entrada. Se não houver no máximo, recebe o valor MFT_STREAMS_UNLIMITED.</param>
 /// <param name="Param_Out_FluxoSaidaMinimo">Recebe o número mínimo de fluxos de saída.</param>
 /// <param name="Param_Out_FluxoSaidaMaximo">Recebe o número máximo de fluxos de saída. Se não houver no máximo, recebe o valor MFT_STREAMS_UNLIMITED.</param>
-CarenResult CarenMFTransform::ObterLimitesFluxos(
+CarenResult CarenMFTransform::GetStreamLimits(
 				[Out] UInt32% Param_Out_FluxoEntradaMinimo, 
 				[Out] UInt32% Param_Out_FluxoEntradaMaximo,
 				[Out] UInt32% Param_Out_FluxoSaidaMinimo,
@@ -1154,9 +1154,9 @@ Done:;
 /// <summary>
 /// (ProcessEvent) - Envia um evento para um fluxo de entrada nesta transformação da Media Foundation (MFT).
 /// </summary>
-/// <param name="Param_IDFluxoEntrada">Identificador de fluxo de entrada. Para obter a lista de identificadores de fluxo, ligue para ICarenMFTransform::ObterIDsFluxo.</param>
+/// <param name="Param_IDFluxoEntrada">Identificador de fluxo de entrada. Para obter a lista de identificadores de fluxo, ligue para ICarenMFTransform::GetStreamIDs.</param>
 /// <param name="Param_Evento">Um ponteiro para a interface de eventos(ICarenMFMediaEvent).</param>
-CarenResult CarenMFTransform::ProcessarEvento(UInt32 Param_IDFluxoEntrada, ICarenMFMediaEvent^ Param_Evento)
+CarenResult CarenMFTransform::ProcessEvent(UInt32 Param_IDFluxoEntrada, ICarenMFMediaEvent^ Param_Evento)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1206,12 +1206,12 @@ Done:;
 /// (ProcessInput) - Fornece dados para um fluxo de entrada nesta transformação da Media Foundation (MFT).
 /// Na maioria dos casos, se o método for bem sucedido, o MFT armazena a amostra e mantém uma contagem de referência no ponteiro ICarenMFSample. 
 /// Não reutilize a amostra até que o MFT libere a amostra. Em vez de armazenar a amostra, no entanto, um MFT pode copiar os dados da amostra em um novo buffer. 
-/// Nesse caso, o MFT deve definir a bandeira MFT_INPUT_STREAM_DOES_NOT_ADDREF no método ICarenMFTransform::ObterInfoFluxoEntrada.
+/// Nesse caso, o MFT deve definir a bandeira MFT_INPUT_STREAM_DOES_NOT_ADDREF no método ICarenMFTransform::GetInputStreamInfo.
 /// </summary>
-/// <param name="Param_IDFluxoEntrada">Identificador de fluxo de entrada. Para obter a lista de identificadores de fluxo, ligue para ICarenMFTransform::ObterIDsFluxo.</param>
+/// <param name="Param_IDFluxoEntrada">Identificador de fluxo de entrada. Para obter a lista de identificadores de fluxo, ligue para ICarenMFTransform::GetStreamIDs.</param>
 /// <param name="Param_Amostra">Um ponteiro para a interface de amostra de midia. A amostra deve conter pelo menos um Buffer de mídia que contém dados de entrada válidos.</param>
 /// <param name="Param_Flags">Reservado. Deixe como zero.</param>
-CarenResult CarenMFTransform::ProcessarEntrada(UInt32 Param_IDFluxoEntrada, ICarenMFSample^ Param_Amostra, UInt32 Param_Flags)
+CarenResult CarenMFTransform::ProcessInput(UInt32 Param_IDFluxoEntrada, ICarenMFSample^ Param_Amostra, UInt32 Param_Flags)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1262,7 +1262,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Mensagem">A mensagem a enviar, especificada como membro da enumeração CA_MFT_MESSAGE_TYPE.</param>
 /// <param name="Param_ulPram">Parâmetro de mensagem. O significado deste parâmetro depende do tipo de mensagem.</param>
-CarenResult CarenMFTransform::ProcessarMensagem(CA_MFT_MESSAGE_TYPE Param_Mensagem, UInt32 Param_ulPram)
+CarenResult CarenMFTransform::ProcessMessage(CA_MFT_MESSAGE_TYPE Param_Mensagem, UInt32 Param_ulPram)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1304,7 +1304,7 @@ Done:;
 /// <param name="Param_QuantidadeElementos">Número de elementos na matriz (Param_MatrizBuffersSaida). O valor deve ser de pelo menos 1.</param>
 /// <param name="Param_MatrizBuffersSaida">Uma matriz de estruturas CA_MFT_OUTPUT_DATA_BUFFER. O MFT usa este array para devolver dados de saída ao chamador.</param>
 /// <param name="Param_Out_Status">Recebe zero ou mais bandeiras da enumeração CA_MFT_PROCESS_OUTPUT_STATUS.</param>
-CarenResult CarenMFTransform::ProcessarSaida(
+CarenResult CarenMFTransform::ProcessOutput(
 				CA_MFT_PROCESS_OUTPUT_FLAGS Param_Flags, 
 				UInt32 Param_QuantidadeElementos, 
 				cli::array<CA_MFT_OUTPUT_DATA_BUFFER^>^% Param_MatrizBuffersSaida, //REF
@@ -1366,10 +1366,10 @@ Done:;
 /// <summary>
 /// (SetInputType) - Define, testa ou limpa o tipo de mídia para um fluxo de entrada nesta transformação da Media Foundation (MFT).
 /// </summary>
-/// <param name="Param_IDFluxoEntrada">Identificador de fluxo de Entrada. Para obter a lista de identificadores de fluxo, ligue para ICarenMFTransform::ObterIDsFluxo.</param>
+/// <param name="Param_IDFluxoEntrada">Identificador de fluxo de Entrada. Para obter a lista de identificadores de fluxo, ligue para ICarenMFTransform::GetStreamIDs.</param>
 /// <param name="Param_TipoMidiaFluxo">Um ponteiro para a interface ICarenMFMediaType ou NULO.</param>
 /// <param name="Param_Flags">Zero ou mais flags da enumeração CA_MFT_SET_TYPE_FLAGS.</param>
-CarenResult CarenMFTransform::DefinirTipoFluxoEntrada(
+CarenResult CarenMFTransform::SetInputType(
 				UInt32 Param_IDFluxoEntrada, 
 				ICarenMFMediaType^ Param_TipoMidiaFluxo, 
 				CA_MFT_SET_TYPE_FLAGS Param_Flags)
@@ -1429,7 +1429,7 @@ Done:;
 /// valor MFT_OUTPUT_BOUND_LOWER_UNBOUNDED(0).</param>
 /// <param name="Param_HorarioMaior">Especifica o último carimbo de tempo. O MFT não produzirá uma amostra de saída com carimbos de tempo mais tarde do que desta vez. Se 
 /// não houver limite superior, use o valor MFT_OUTPUT_BOUND_UPPER_UNBOUNDED(-1).</param>
-CarenResult CarenMFTransform::DefinirLimiteSaida(Int64 Param_HorarioAntigo, Int64 Param_HorarioMaior)
+CarenResult CarenMFTransform::SetOutputBounds(Int64 Param_HorarioAntigo, Int64 Param_HorarioMaior)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1463,10 +1463,10 @@ Done:;
 /// <summary>
 /// (SetOutputType) - Define, testa ou limpa o tipo de mídia para um fluxo de saída nesta transformação da Media Foundation (MFT).
 /// </summary>
-/// <param name="Param_IDFluxoSaida">Identificador de fluxo de Saida. Para obter a lista de identificadores de fluxo, ligue para ICarenMFTransform::ObterIDsFluxo.</param>
+/// <param name="Param_IDFluxoSaida">Identificador de fluxo de Saida. Para obter a lista de identificadores de fluxo, ligue para ICarenMFTransform::GetStreamIDs.</param>
 /// <param name="Param_TipoMidiaFluxo">Um ponteiro para a interface ICarenMFMediaType ou NULO.</param>
 /// <param name="Param_Flags">Zero ou mais flags da enumeração CA_MFT_SET_TYPE_FLAGS.</param>
-CarenResult CarenMFTransform::DefinirTipoFluxoSaida(
+CarenResult CarenMFTransform::SetOutputType(
 				UInt32 Param_IDFluxoSaida,
 				ICarenMFMediaType^ Param_TipoMidiaFluxo,
 				CA_MFT_SET_TYPE_FLAGS Param_Flags)

@@ -2557,6 +2557,158 @@ namespace CarenRengine
 			}
 
 
+			//Converte uma estrutura gerenciada(CA_MF_LEAKY_BUCKET_PAIR) para sua correspondencia não gerenciada(MF_LEAKY_BUCKET_PAIR).
+			MF_LEAKY_BUCKET_PAIR* ConverterMF_LEAKY_BUCKET_PAIRManaged_ToUnamaged(CA_MF_LEAKY_BUCKET_PAIR^ Param_Estrutura)
+			{
+				//Variavel que vai ser retornada.
+				MF_LEAKY_BUCKET_PAIR* EstruturaRetorno = CriarEstrutura<MF_LEAKY_BUCKET_PAIR>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(MF_LEAKY_BUCKET_PAIR));
+
+				//Define os valores
+				EstruturaRetorno->dwBitrate = static_cast<DWORD>(Param_Estrutura->dwBitrate);
+				EstruturaRetorno->msBufferWindow = static_cast<DWORD>(Param_Estrutura->msBufferWindow);
+
+				//Retorna a estrutura.
+				return EstruturaRetorno;
+			}
+
+			//Converte uma estrutura não gerenciada(MF_LEAKY_BUCKET_PAIR) para sua correspondencia gerenciada(CA_MF_LEAKY_BUCKET_PAIR).
+			CA_MF_LEAKY_BUCKET_PAIR^ ConverterMF_LEAKY_BUCKET_PAIRUnamaged_ToManaged(MF_LEAKY_BUCKET_PAIR* Param_Estrutura)
+			{
+				//Variavel que vai ser retornada.
+				CA_MF_LEAKY_BUCKET_PAIR^ EstruturaRetorno = gcnew CA_MF_LEAKY_BUCKET_PAIR();
+
+				//Define os valores
+				EstruturaRetorno->dwBitrate = static_cast<UInt32>(Param_Estrutura->dwBitrate);
+				EstruturaRetorno->msBufferWindow = static_cast<UInt32>(Param_Estrutura->msBufferWindow);
+
+				//Retorna a estrutura.
+				return EstruturaRetorno;
+			}
+
+
+			//Converte uma estrutura gerenciada(CA_MFBYTESTREAM_BUFFERING_PARAMS) para sua correspondencia não gerenciada(MFBYTESTREAM_BUFFERING_PARAMS).
+			MFBYTESTREAM_BUFFERING_PARAMS* ConverterMFBYTESTREAM_BUFFERING_PARAMSManaged_ToUnamaged(CA_MFBYTESTREAM_BUFFERING_PARAMS^ Param_Estrutura)
+			{
+				//Variavel que vai ser retornada.
+				MFBYTESTREAM_BUFFERING_PARAMS* EstruturaRetorno = CriarEstrutura<MFBYTESTREAM_BUFFERING_PARAMS>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(MFBYTESTREAM_BUFFERING_PARAMS));
+
+				//Variaveis a serem utilizadas.
+				MF_LEAKY_BUCKET_PAIR* vi_pAuxiliar = Nulo;
+
+				//Define os valores
+				EstruturaRetorno->cbTotalFileSize = Param_Estrutura->cbTotalFileSize;
+				EstruturaRetorno->cbPlayableDataSize = Param_Estrutura->cbPlayableDataSize;
+				EstruturaRetorno->cBuckets = static_cast<DWORD>(Param_Estrutura->cBuckets);
+				EstruturaRetorno->qwNetBufferingTime = Param_Estrutura->qwNetBufferingTime;
+				EstruturaRetorno->qwExtraBufferingTimeDuringSeek = Param_Estrutura->qwExtraBufferingTimeDuringSeek;
+				EstruturaRetorno->qwPlayDuration = Param_Estrutura->qwPlayDuration;
+				EstruturaRetorno->dRate = Param_Estrutura->dRate;
+
+				//Verifica se contém dados o array e cria com a quantidade especificada.
+				if(Param_Estrutura->cBuckets >= 1)
+					EstruturaRetorno->prgBuckets = CriarMatrizUnidimensional<MF_LEAKY_BUCKET_PAIR>(EstruturaRetorno->cBuckets);
+
+				//Copia os dados para a matriz nativa se valida.
+				if (ObjetoValido(EstruturaRetorno->prgBuckets))
+				{
+					//Faz um for para copiar os dados para a matriz nativa.
+					for (DWORD i = 0; i < EstruturaRetorno->cBuckets; i++)
+					{
+						//Converte a estrutura gerenciada.
+						vi_pAuxiliar = ConverterMF_LEAKY_BUCKET_PAIRManaged_ToUnamaged(Param_Estrutura->prgBuckets[i]);
+
+						//Define na estrutura nativa.
+						EstruturaRetorno->prgBuckets[i] = *vi_pAuxiliar;
+
+						//Libera a memória utilizada pela estrutura.
+						DeletarEstruturaSafe(&vi_pAuxiliar);
+					}
+				}
+
+				//Retorna a estrutura.
+				return EstruturaRetorno;
+			}
+
+			//Converte uma estrutura não gerenciada(MFBYTESTREAM_BUFFERING_PARAMS) para sua correspondencia gerenciada(CA_MFBYTESTREAM_BUFFERING_PARAMS).
+			CA_MFBYTESTREAM_BUFFERING_PARAMS^ ConverterMFBYTESTREAM_BUFFERING_PARAMSUnamaged_ToManaged(MFBYTESTREAM_BUFFERING_PARAMS* Param_Estrutura)
+			{
+				//Variavel que vai ser retornada.
+				CA_MFBYTESTREAM_BUFFERING_PARAMS^ EstruturaRetorno = gcnew CA_MFBYTESTREAM_BUFFERING_PARAMS();
+
+				//Define os valores
+				EstruturaRetorno->cbTotalFileSize = static_cast<UInt64>(Param_Estrutura->cbTotalFileSize);
+				EstruturaRetorno->cbPlayableDataSize = static_cast<UInt64>(Param_Estrutura->cbPlayableDataSize);
+				EstruturaRetorno->cBuckets = static_cast<UInt32>(Param_Estrutura->cBuckets);
+				EstruturaRetorno->qwNetBufferingTime = static_cast<UInt64>(Param_Estrutura->qwNetBufferingTime);
+				EstruturaRetorno->qwExtraBufferingTimeDuringSeek = static_cast<UInt64>(Param_Estrutura->qwExtraBufferingTimeDuringSeek);
+				EstruturaRetorno->qwPlayDuration = static_cast<UInt64>(Param_Estrutura->qwPlayDuration);
+				EstruturaRetorno->dRate = Param_Estrutura->dRate;
+				
+				//Verifica se contém dados o array e cria com a quantidade especificada.
+				if (Param_Estrutura->cBuckets >= 1)
+					EstruturaRetorno->prgBuckets = gcnew cli::array<CA_MF_LEAKY_BUCKET_PAIR^>(EstruturaRetorno->cBuckets);
+
+				//Copia os dados para a matriz gerenciada se valida.
+				if (ObjetoGerenciadoValido(EstruturaRetorno->prgBuckets))
+				{
+					//Faz um for para copiar os dados para a matriz gerenciada.
+					for (UInt32 i = 0; i < EstruturaRetorno->cBuckets; i++)
+					{
+						//Define na estrutura gerenciada.
+						EstruturaRetorno->prgBuckets[i] = ConverterMF_LEAKY_BUCKET_PAIRUnamaged_ToManaged(&Param_Estrutura->prgBuckets[i]);
+					}
+				}
+
+				//Retorna a estrutura.
+				return EstruturaRetorno;
+			}
+
+
+			//Converte uma estrutura gerenciada(CA_MF_BYTE_STREAM_CACHE_RANGE) para sua correspondencia não gerenciada(MF_BYTE_STREAM_CACHE_RANGE).
+			MF_BYTE_STREAM_CACHE_RANGE* ConverterMF_BYTE_STREAM_CACHE_RANGEManaged_ToUnamaged(CA_MF_BYTE_STREAM_CACHE_RANGE^ Param_Estrutura)
+			{
+				//Variavel que vai ser retornada.
+				MF_BYTE_STREAM_CACHE_RANGE* EstruturaRetorno = CriarEstrutura<MF_BYTE_STREAM_CACHE_RANGE>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(MF_BYTE_STREAM_CACHE_RANGE));
+
+				//Define os valores
+				EstruturaRetorno->qwStartOffset = Param_Estrutura->qwStartOffset;
+				EstruturaRetorno->qwEndOffset = Param_Estrutura->qwEndOffset;
+
+				//Retorna a estrutura.
+				return EstruturaRetorno;
+			}
+
+			//Converte uma estrutura não gerenciada(MF_BYTE_STREAM_CACHE_RANGE) para sua correspondencia gerenciada(CA_MF_BYTE_STREAM_CACHE_RANGE).
+			CA_MF_BYTE_STREAM_CACHE_RANGE^ ConverterMF_BYTE_STREAM_CACHE_RANGEUnamaged_ToManaged(MF_BYTE_STREAM_CACHE_RANGE* Param_Estrutura)
+			{
+				//Variavel que vai ser retornada.
+				CA_MF_BYTE_STREAM_CACHE_RANGE^ EstruturaRetorno = gcnew CA_MF_BYTE_STREAM_CACHE_RANGE();
+
+				//Define os valores
+				EstruturaRetorno->qwStartOffset = static_cast<Int64>(Param_Estrutura->qwStartOffset);
+				EstruturaRetorno->qwEndOffset = static_cast<Int64>(Param_Estrutura->qwEndOffset);
+
+				//Retorna a estrutura.
+				return EstruturaRetorno;
+			}
+
+
+
+
+
+
+
+
+
 
 			//D2D ESTRUTURAS
 
@@ -8334,7 +8486,7 @@ namespace CarenRengine
 					EstruturaRetorno->Monitor = gcnew CarenHMONITOR();
 
 					//Define o ponteiro.
-					EstruturaRetorno->Monitor->DefinirObjeto(Param_Estrutura->Monitor);
+					EstruturaRetorno->Monitor->SetObject(Param_Estrutura->Monitor);
 				}
 
 				//Cria e preenche a estrutura secundaria.
@@ -8459,7 +8611,7 @@ namespace CarenRengine
 					EstruturaRetorno->Monitor = gcnew CarenHMONITOR();
 
 					//Define o ponteiro.
-					EstruturaRetorno->Monitor->DefinirObjeto(Param_Estrutura->Monitor);
+					EstruturaRetorno->Monitor->SetObject(Param_Estrutura->Monitor);
 				}
 
 				//Cria os arrays

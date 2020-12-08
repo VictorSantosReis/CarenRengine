@@ -197,13 +197,13 @@ public:
 	/// </summary>
 	/// <param name="Param_QueryInterface">Ponteiro para o ICarenMFTopologyServiceLookup interface. Para consultar o EVR para uma interface, 
 	/// chame ICarenMFTopologyServiceLookup::PesquisarServiço.</param>
-	virtual CarenResult IniciarServicosPonteiros(ICarenMFTopologyServiceLookup^ Param_QueryInterface);
+	virtual CarenResult InitServicePointers(ICarenMFTopologyServiceLookup^ Param_QueryInterface);
 
 	/// <summary>
 	/// (ReleaseServicePointers) - Sinaliza o objeto para liberar os ponteiros de interface obtidos do renderizador de vídeo aprimorado (EVR).
-	/// Depois que esse método é chamado, quaisquer ponteiros de interface obtidos durante a chamada anterior para ICarenMFTopologyServiceLookupClient::IniciarServicosPonteiros não 
+	/// Depois que esse método é chamado, quaisquer ponteiros de interface obtidos durante a chamada anterior para ICarenMFTopologyServiceLookupClient::InitServicePointers não 
 	/// são mais válidos. O objeto deve liberá-los.
 	/// </summary>
-	virtual CarenResult LiberarPonteirosServicos();
+	virtual CarenResult ReleaseServicePointers();
 };
 

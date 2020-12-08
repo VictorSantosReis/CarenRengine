@@ -415,7 +415,7 @@ void CarenMFTopologyNode::Finalizar()
 /// (CloneFrom) - Copia os dados de outro nó de topologia para este nó.
 /// </summary>
 /// <param name="Param_NodeClone">O nó que vai ter os dados copiados para esse.</param>
-CarenResult CarenMFTopologyNode::ClonarDe(ICarenMFTopologyNode^ Param_NodeClone)
+CarenResult CarenMFTopologyNode::CloneFrom(ICarenMFTopologyNode^ Param_NodeClone)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -474,7 +474,7 @@ Done:;
 /// <param name="Param_IndexFluxoSaida">Índice baseado em zero do fluxo de saída neste nó.</param>
 /// <param name="Param_NoConexao">Ponteiro para a interface ICarenMFTopologyNode do nó ao qual se conectar.</param>
 /// <param name="Param_IndexFluxoEntrada">Índice baseado em zero do fluxo de entrada no outro nó.</param>
-CarenResult CarenMFTopologyNode::ConectarSaida(UInt32 Param_IndexFluxoSaida, ICarenMFTopologyNode^ Param_NoConexao, UInt32 Param_IndexFluxoEntrada)
+CarenResult CarenMFTopologyNode::ConnectOutput(UInt32 Param_IndexFluxoSaida, ICarenMFTopologyNode^ Param_NoConexao, UInt32 Param_IndexFluxoEntrada)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -527,7 +527,7 @@ Done:;
 /// (DisconnectOutput) - Desconecta um fluxo de saída neste nó.
 /// </summary>
 /// <param name="Param_IndexSaida">Índice baseado em zero do fluxo de saída para se desconectar.</param>
-CarenResult CarenMFTopologyNode::DesconectarSaida(UInt32 Param_IndexSaida)
+CarenResult CarenMFTopologyNode::DisconnectOutput(UInt32 Param_IndexSaida)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -564,7 +564,7 @@ Done:;
 /// <param name="Param_IndexEntrada">Índice baseado em zero de um fluxo de entrada neste nó.</param>
 /// <param name="Param_Out_NoConectado">Recebe um ponteiro para ICarenMFTopologyNode do nó que está conectado ao fluxo de entrada especificado. O chamador deve liberar a interface.</param>
 /// <param name="Param_Out_IndexFluxoSaida">Recebe o índice do fluxo de saída que está conectado ao fluxo de entrada deste nó.</param>
-CarenResult CarenMFTopologyNode::ObterEntrada(UInt32 Param_IndexEntrada, [Out] ICarenMFTopologyNode^% Param_Out_NoConectado, [Out] UInt32% Param_Out_IndexFluxoSaida)
+CarenResult CarenMFTopologyNode::GetInput(UInt32 Param_IndexEntrada, [Out] ICarenMFTopologyNode^% Param_Out_NoConectado, [Out] UInt32% Param_Out_IndexFluxoSaida)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -612,7 +612,7 @@ Done:;
 /// (GetInputCount) - Recupera o número de fluxos de entrada que existem atualmente neste nó.
 /// </summary>
 /// <param name="Param_Out_QuantidadeFluxosEntrada">Recebe o número de fluxos de entrada.</param>
-CarenResult CarenMFTopologyNode::ObterQuantidadeEntradas([Out] UInt32% Param_Out_QuantidadeFluxosEntrada)
+CarenResult CarenMFTopologyNode::GetInputCount([Out] UInt32% Param_Out_QuantidadeFluxosEntrada)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -657,7 +657,7 @@ Done:;
 /// </summary>
 /// <param name="Param_IndexEntrada">Índice baseado em zero do fluxo de Entrada.</param>
 /// <param name="Param_Out_TipoMidiaPreferencial">Recebe um ponteiro para IMFMediaType do tipo de mídia. O chamador deve liberar a interface.</param>
-CarenResult CarenMFTopologyNode::ObterTipoMidiaPreferencialEntrada(UInt32 Param_IndexEntrada, [Out] ICarenMFMediaType^% Param_Out_TipoMidiaPreferencial)
+CarenResult CarenMFTopologyNode::GetInputPrefType(UInt32 Param_IndexEntrada, [Out] ICarenMFMediaType^% Param_Out_TipoMidiaPreferencial)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -704,7 +704,7 @@ Done:;
 /// (GetNodeType) - Recupera o tipo de nó.
 /// </summary>
 /// <param name="Param_Out_TipoNode">Recebe um valor de enumeração que define o tipo do nó na topologia.</param>
-CarenResult CarenMFTopologyNode::ObterTipoNode([Out] Enumeracoes::CA_TOPOLOGY_TYPE% Param_Out_TipoNode)
+CarenResult CarenMFTopologyNode::GetNodeType([Out] Enumeracoes::CA_TOPOLOGY_TYPE% Param_Out_TipoNode)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -748,7 +748,7 @@ Done:;
 /// (GetObject) - Obtém o objeto associado a este nó.
 /// </summary>
 /// <param name="Param_Out_Objeto">Recebe uma interface que está associada a esse nó. O usuário deve criar a interfaces antes de chamar este método.</param>
-CarenResult CarenMFTopologyNode::ObterObjeto(ICaren^ Param_Out_Objeto)
+CarenResult CarenMFTopologyNode::GetObject(ICaren^ Param_Out_Objeto)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -794,7 +794,7 @@ Done:;
 /// <param name="Param_IndexSaidaFluxo">Índice baseado em zero de um fluxo de saída neste nó.</param>
 /// <param name="Param_Out_NodeConexao">Recebe um ponteiro para ICarenMFTopologyNode do nó que está conectado ao fluxo de saída especificado. O chamador deve liberar a interface.</param>
 /// <param name="Param_Out_IndexEntradaFluxo">Recebe o índice do fluxo de entrada que está conectado ao fluxo de saída deste nó.</param>
-CarenResult CarenMFTopologyNode::ObterSaida(UInt32 Param_IndexSaidaFluxo, [Out] ICarenMFTopologyNode^% Param_Out_NodeConexao, [Out] UInt32% Param_Out_IndexEntradaFluxo)
+CarenResult CarenMFTopologyNode::GetOutput(UInt32 Param_IndexSaidaFluxo, [Out] ICarenMFTopologyNode^% Param_Out_NodeConexao, [Out] UInt32% Param_Out_IndexEntradaFluxo)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -845,7 +845,7 @@ Done:;
 /// (GetOutputCount) - Recupera o número de fluxos de saída que existem atualmente neste nó.
 /// </summary>
 /// <param name="Param_Out_QuantidadeFluxosSaida">Recebe o número de fluxos de saída.</param>
-CarenResult CarenMFTopologyNode::ObterQuantidadeSaidas([Out] UInt32% Param_Out_QuantidadeFluxosSaida)
+CarenResult CarenMFTopologyNode::GetOutputCount([Out] UInt32% Param_Out_QuantidadeFluxosSaida)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -890,7 +890,7 @@ Done:;
 /// </summary>
 /// <param name="Param_IndexSaida">Índice baseado em zero do fluxo de Saida.</param>
 /// <param name="Param_Out_TipoMidiaPreferencial">Recebe um ponteiro para ICarenMFMediaType do tipo de mídia. O chamador deve liberar a interface.</param>
-CarenResult CarenMFTopologyNode::ObterTipoMidiaPreferencialSaida(UInt32 Param_IndexSaida, [Out] ICarenMFMediaType^% Param_Out_TipoMidiaPreferencial)
+CarenResult CarenMFTopologyNode::GetOutputPrefType(UInt32 Param_IndexSaida, [Out] ICarenMFMediaType^% Param_Out_TipoMidiaPreferencial)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -939,7 +939,7 @@ Done:;
 /// em várias topologias.
 /// </summary>
 /// <param name="Param_Out_IdentificadorNode">Recebe o identificador deste nó.</param>
-CarenResult CarenMFTopologyNode::ObterTopoNodeID([Out] UInt64% Param_Out_IdentificadorNode)
+CarenResult CarenMFTopologyNode::GetTopoNodeID([Out] UInt64% Param_Out_IdentificadorNode)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -984,7 +984,7 @@ Done:;
 /// </summary>
 /// <param name="Param_IndexFluxoEntrada">Índice baseado em zero do fluxo de Entrada.</param>
 /// <param name="Param_TipoMidia">Ponteiro para ICarenMFMediaType do tipo de mídia.</param>
-CarenResult CarenMFTopologyNode::DefinirTipoMidiaPreferencialEntrada(UInt32 Param_IndexFluxoEntrada, ICarenMFMediaType^ Param_TipoMidia)
+CarenResult CarenMFTopologyNode::SetInputPrefType(UInt32 Param_IndexFluxoEntrada, ICarenMFMediaType^ Param_TipoMidia)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1040,7 +1040,7 @@ Done:;
 /// (SetObject) - Define o objeto associado a este nó.
 /// </summary>
 /// <param name="Param_Objeto">A interface a ser associada a este nó. Defina como NULO para limpar o objeto definido anteriormente.</param>
-CarenResult CarenMFTopologyNode::DefinirObjeto(ICaren^ Param_Objeto)
+CarenResult CarenMFTopologyNode::SetObject(ICaren^ Param_Objeto)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1097,7 +1097,7 @@ Done:;
 /// </summary>
 /// <param name="Param_IndexFluxoSaida">Índice baseado em zero do fluxo de Saida.</param>
 /// <param name="Param_TipoMidia">A interface ICarenMFMediaType que contém o ponteiro para o tipo de midia..</param>
-CarenResult CarenMFTopologyNode::DefinirTipoMidiaPreferencialSaida(UInt32 Param_IndexFluxoSaida, ICarenMFMediaType^ Param_TipoMidia)
+CarenResult CarenMFTopologyNode::SetOutputPrefType(UInt32 Param_IndexFluxoSaida, ICarenMFMediaType^ Param_TipoMidia)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1154,7 +1154,7 @@ Done:;
 /// Quando um nó é criado pela primeira vez, é atribuído um identificador. Normalmente, não há nenhuma razão para um aplicativo substituir o identificador.
 /// </summary>
 /// <param name="Param_IdentificadorNode">O novo identificador para este nó.</param>
-CarenResult CarenMFTopologyNode::DefinirTopoNodeID(UInt64 Param_IdentificadorNode)
+CarenResult CarenMFTopologyNode::SetTopoNodeID(UInt64 Param_IdentificadorNode)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1198,7 +1198,7 @@ Done:;
 /// <param name="Param_InterfaceCompare">A interface que vai ter todos os atributos comparado com a interface atual.</param>
 /// <param name="Param_TipoComparação">O tipo de comparação a ser realizada.</param>
 /// <param name="Param_Out_Resultado">O resultado da comparação segundo o parametro (Param_TipoComparação).</param>
-CarenResult CarenMFTopologyNode::Comparar(ICarenMFAttributes^ Param_InterfaceCompare, CA_ATTRIBUTES_MATCH_TYPE Param_TipoComparação, [Out] Boolean% Param_Out_Resultado)
+CarenResult CarenMFTopologyNode::Compare(ICarenMFAttributes^ Param_InterfaceCompare, CA_ATTRIBUTES_MATCH_TYPE Param_TipoComparação, [Out] Boolean% Param_Out_Resultado)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1253,7 +1253,7 @@ Done:;
 /// <param name="Param_GuidChave">Define o Guid do atributo a ter seu valor comparado com o valor da PropVariant informada.</param>
 /// <param name="Param_Valor">O valor a ser comparado com o Atributo especificado.</param>
 /// <param name="Param_Out_Resultado">O resultado da comparação do atributo.</param>
-CarenResult CarenMFTopologyNode::CompararItem(String^ Param_GuidChave, CA_PropVariant^ Param_Valor, [Out] Boolean% Param_Out_Resultado)
+CarenResult CarenMFTopologyNode::CompareItem(String^ Param_GuidChave, CA_PropVariant^ Param_Valor, [Out] Boolean% Param_Out_Resultado)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1347,7 +1347,7 @@ Done:;
 /// para o exemplo de destino. Você deve copiar esses valores para a nova amostra manualmente.
 /// </summary>
 /// <param name="Param_Out_InterfaceDestino">A interface de destino que vai receber os itens dessa interface.</param>
-CarenResult CarenMFTopologyNode::CopiarTodosItens(ICarenMFAttributes^ Param_Out_InterfaceDestino)
+CarenResult CarenMFTopologyNode::CopyAllItems(ICarenMFAttributes^ Param_Out_InterfaceDestino)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1412,7 +1412,7 @@ Done:;
 /// <summary>
 /// Remove todos os pares chave/valor da lista de atributos do objeto.
 /// </summary>
-CarenResult CarenMFTopologyNode::DeletarTodosItens()
+CarenResult CarenMFTopologyNode::DeleteAllItems()
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1448,7 +1448,7 @@ Done:;
 /// Se a chave especificada não existir, o método retornar (SS_OK) da mesma forma.
 /// </summary>
 /// <param name="Param_GuidChave">O Guid da chave a ser deletada.</param>
-CarenResult CarenMFTopologyNode::DeletarItem(String^ Param_GuidChave)
+CarenResult CarenMFTopologyNode::DeleteItem(String^ Param_GuidChave)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1508,7 +1508,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para chave que contém o Blob a ser obtido.</param>
 /// <param name="Param_Out_Buffer">O buffer que contém os dados da matriz bytes do valor da chave solicitada.</param>
-CarenResult CarenMFTopologyNode::ObterAlocaçãoBlob(String^ Param_GuidChave, [Out] Estruturas::CA_BlobData^% Param_Out_Buffer)
+CarenResult CarenMFTopologyNode::GetAllocatedBlob(String^ Param_GuidChave, [Out] Estruturas::CA_BlobData^% Param_Out_Buffer)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1571,7 +1571,7 @@ Done:;
 /// <param name="Param_GuidChave">O GUID para chave que contém o Blob a ser obtido. O tipo de atributo deve ser MF_ATTRIBUTE_STRING.</param>
 /// <param name="Param_Out_String">Retorna a string com os dados do valor da chave solicitada.</param>
 /// <param name="Param_Out_LarguraString">Retorna a largura em bytes da matriz que continha a String.</param>
-CarenResult CarenMFTopologyNode::ObterAlocaçãoString(String^ Param_GuidChave, [Out] String^% Param_Out_String, [Out] UInt32% Param_Out_LarguraString)
+CarenResult CarenMFTopologyNode::GetAllocatedString(String^ Param_GuidChave, [Out] String^% Param_Out_String, [Out] UInt32% Param_Out_LarguraString)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1627,8 +1627,8 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para chave que contém o Blob a ser obtido.</param>
 /// <param name="Param_Out_Buffer">O buffer que contém os dados da matriz bytes do valor da chave solicitada.</param>
-/// <param name="Param_TamanhoBuffer">Define o tamanho da matriz em bytes do valor da chave a ser obtido. Chame o método (ObterBlobSize) para obter o valor para esse parametro.</param>
-CarenResult CarenMFTopologyNode::ObterBlob(String^ Param_GuidChave, UInt32 Param_TamanhoBuffer, [Out] Estruturas::CA_BlobData^% Param_Out_Buffer)
+/// <param name="Param_TamanhoBuffer">Define o tamanho da matriz em bytes do valor da chave a ser obtido. Chame o método (GetBlobSize) para obter o valor para esse parametro.</param>
+CarenResult CarenMFTopologyNode::GetBlob(String^ Param_GuidChave, UInt32 Param_TamanhoBuffer, [Out] Estruturas::CA_BlobData^% Param_Out_Buffer)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1690,7 +1690,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para chave que contém o Blob a ser obtido. O tipo de atributo deve ser MF_ATTRIBUTE_BLOB.</param>
 /// <param name="Param_TamanhoBuffer">Recebe o tamanho da matriz que contem o valor da chave solicitada.</param>
-CarenResult CarenMFTopologyNode::ObterBlobSize(String^ Param_GuidChave, [Out] UInt32% Param_Out_TamanhoBuffer)
+CarenResult CarenMFTopologyNode::GetBlobSize(String^ Param_GuidChave, [Out] UInt32% Param_Out_TamanhoBuffer)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1736,7 +1736,7 @@ Done:;
 /// Recupera o número de atributos que são definidos neste objeto.
 /// </summary>
 /// <param name="Param_QuantidadeAtributos">Recebe a quantidade de atributos na interface.</param>
-CarenResult CarenMFTopologyNode::ObterCountAtributos([Out] UInt32% Param_QuantidadeAtributos)
+CarenResult CarenMFTopologyNode::GetCount([Out] UInt32% Param_QuantidadeAtributos)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1778,7 +1778,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (Double) obtido.</param>
 /// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-CarenResult CarenMFTopologyNode::ObterDouble(String^ Param_GuidChave, [Out] Double% Param_Out_Valor)
+CarenResult CarenMFTopologyNode::GetDouble(String^ Param_GuidChave, [Out] Double% Param_Out_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1825,7 +1825,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (GUID) obtido.</param>
 /// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-CarenResult CarenMFTopologyNode::ObterGuid(String^ Param_GuidChave, [Out] String^% Param_Out_Valor)
+CarenResult CarenMFTopologyNode::GetGUID(String^ Param_GuidChave, [Out] String^% Param_Out_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1872,7 +1872,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (CA_PropVariant) obtido.</param>
 /// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-CarenResult CarenMFTopologyNode::ObterItem(String^ Param_GuidChave, [Out] CA_PropVariant^% Param_Out_Valor)
+CarenResult CarenMFTopologyNode::GetItem(String^ Param_GuidChave, [Out] CA_PropVariant^% Param_Out_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1926,7 +1926,7 @@ Done:;
 /// <param name="Param_Out_GuidChave">Recebe o guid associado a chave obtida pelo id.</param>
 /// <param name="Param_IdItem">O Id do item a ter o seu valor obtido.</param>
 /// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-CarenResult CarenMFTopologyNode::ObterItemPorIndex(UInt32 Param_IdItem, [Out] String^% Param_Out_GuidChave, [Out] CA_PropVariant^% Param_Out_Valor)
+CarenResult CarenMFTopologyNode::GetItemByIndex(UInt32 Param_IdItem, [Out] String^% Param_Out_GuidChave, [Out] CA_PropVariant^% Param_Out_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1979,7 +1979,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave a ser verificado o tipo do valor.</param>
 /// <param name="Param_Out_TipoDado">O tipo do dado contido na chave solicitada.</param>
-CarenResult CarenMFTopologyNode::ObterTipoDadosItem(String^ Param_GuidChave, [Out] CA_ATTRIBUTE_TYPE% Param_Out_TipoDado)
+CarenResult CarenMFTopologyNode::GetItemType(String^ Param_GuidChave, [Out] CA_ATTRIBUTE_TYPE% Param_Out_TipoDado)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -2025,9 +2025,9 @@ Done:;
 /// Recupera uma sequência de caracteres largos associada a uma chave.
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (String) obtido. O tipo de atributo deve ser MF_ATTRIBUTE_STRING.</param>
-/// <param name="Param_Out_Valor">A largura da string a ser recebida. Some +1 a esse valor. Para obter esse valor, chame o método: ObterLarguraString</param>
+/// <param name="Param_Out_Valor">A largura da string a ser recebida. Some +1 a esse valor. Para obter esse valor, chame o método: GetStringLength</param>
 /// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada.</param>
-CarenResult CarenMFTopologyNode::ObterString(String^ Param_GuidChave, UInt32 Param_LarguraString, [Out] String^% Param_Out_Valor)
+CarenResult CarenMFTopologyNode::GetString(String^ Param_GuidChave, UInt32 Param_LarguraString, [Out] String^% Param_Out_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -2085,7 +2085,7 @@ Done:;
 /// <param name="Param_GuidChave">O GUID para a chave a ser consultada a largura da String. O tipo de atributo deve ser MF_ATTRIBUTE_STRING.</param>
 /// <param name="Param_Out_Largura">Se a chave for encontrada e o valor é um tipo de sequência de caracteres, esse parâmetro recebe o número de caracteres na 
 /// sequência de caracteres, não incluindo o caractere nulo de terminação</param>
-CarenResult CarenMFTopologyNode::ObterLarguraString(String^ Param_GuidChave, [Out] UInt32% Param_Out_Largura)
+CarenResult CarenMFTopologyNode::GetStringLength(String^ Param_GuidChave, [Out] UInt32% Param_Out_Largura)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -2132,7 +2132,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (UInt32) obtido.</param>
 /// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-CarenResult CarenMFTopologyNode::ObterUINT32(String^ Param_GuidChave, [Out] UInt32% Param_Out_Valor)
+CarenResult CarenMFTopologyNode::GetUINT32(String^ Param_GuidChave, [Out] UInt32% Param_Out_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -2179,7 +2179,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (UInt64) obtido.</param>
 /// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-CarenResult CarenMFTopologyNode::ObterUINT64(String^ Param_GuidChave, [Out] UInt64% Param_Out_Valor)
+CarenResult CarenMFTopologyNode::GetUINT64(String^ Param_GuidChave, [Out] UInt64% Param_Out_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -2229,7 +2229,7 @@ Done:;
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (UINT64) obtido.</param>
 /// <param name="Param_Out_Numerador">Recebe o valor referente ao: Numerador</param>
 /// <param name="Param_Out_Denominador">Recebe o valor referente ao: Denominador</param>
-CarenResult CarenMFTopologyNode::ObterRatioAtribute(String^ Param_GuidChave, [Out] UInt32% Param_Out_Numerador, [Out] UInt32% Param_Out_Denominador)
+CarenResult CarenMFTopologyNode::_MFGetAttributeRatio(String^ Param_GuidChave, [Out] UInt32% Param_Out_Numerador, [Out] UInt32% Param_Out_Denominador)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -2279,7 +2279,7 @@ Done:;
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor obtido. O atribute deve ser do tipo: UInt64</param>
 /// <param name="Param_Out_Largura">Recebe a largura em pixels.</param>
 /// <param name="Param_Out_Altura">Recebe a altura em pixels.</param>
-CarenResult CarenMFTopologyNode::ObterSizeAttribute(String^ Param_GuidChave, [Out] UInt32% Param_Out_Largura, [Out] UInt32% Param_Out_Altura)
+CarenResult CarenMFTopologyNode::_MFGetAttributeSize(String^ Param_GuidChave, [Out] UInt32% Param_Out_Largura, [Out] UInt32% Param_Out_Altura)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -2329,7 +2329,7 @@ Done:;
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (Desconhecido) obtido.</param>
 /// <param name="Param_GuidInterfaceSolicitada">O GUID para a interface a ser obtida da chave. Este GUID é um (IID).</param>
 /// <param name="Param_Out_InterfaceDesconhecida">Recebe a interface com o ponteiro par ao objeto desconhecido. O usuário deve criar a interface antes de chamar este método.</param>
-CarenResult CarenMFTopologyNode::ObterPonteiroDesconhecido(String^ Param_GuidChave, String^ Param_GuidInterfaceSolicitada, ICaren^ Param_Out_InterfaceDesconhecida)
+CarenResult CarenMFTopologyNode::GetUnknown(String^ Param_GuidChave, String^ Param_GuidInterfaceSolicitada, ICaren^ Param_Out_InterfaceDesconhecida)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -2389,7 +2389,7 @@ Done:;
 /// <summary>
 /// Bloqueia o armazenamento de atributo para que nenhum outro thread possa acessá-lo.
 /// </summary>
-CarenResult CarenMFTopologyNode::BloquearArmazenamento()
+CarenResult CarenMFTopologyNode::LockStore()
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -2428,7 +2428,7 @@ CarenResult CarenMFTopologyNode::BloquearArmazenamento()
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 /// <param name="Param_Buffer">A matriz de bytes a ser associada a chave especificada.</param>
-CarenResult CarenMFTopologyNode::DefinirBlob(String^ Param_GuidChave, cli::array<Byte>^ Param_Buffer)
+CarenResult CarenMFTopologyNode::SetBlob(String^ Param_GuidChave, cli::array<Byte>^ Param_Buffer)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -2492,7 +2492,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 /// <param name="Param_Valor">O valor a ser definido na chave especificada.</param>
-CarenResult CarenMFTopologyNode::DefinirDouble(String^ Param_GuidChave, Double Param_Valor)
+CarenResult CarenMFTopologyNode::SetDouble(String^ Param_GuidChave, Double Param_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -2535,7 +2535,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 /// <param name="Param_Valor">O valor a ser definido na chave especificada.</param>
-CarenResult CarenMFTopologyNode::DefinirGUID(String^ Param_GuidChave, String^ Param_Valor)
+CarenResult CarenMFTopologyNode::SetGUID(String^ Param_GuidChave, String^ Param_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -2580,7 +2580,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 /// <param name="Param_PropVariantValor">A PropVariant que contém o valor a ser definido na chave especificada.</param>
-CarenResult CarenMFTopologyNode::DefinirItem(String^ Param_GuidChave, Estruturas::CA_PropVariant^ Param_PropVariantValor)
+CarenResult CarenMFTopologyNode::SetItem(String^ Param_GuidChave, Estruturas::CA_PropVariant^ Param_PropVariantValor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -2662,7 +2662,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 /// <param name="Param_Valor">O valor a ser definido na chave especificada.</param>
-CarenResult CarenMFTopologyNode::DefinirString(String^ Param_GuidChave, String^ Param_Valor)
+CarenResult CarenMFTopologyNode::SetString(String^ Param_GuidChave, String^ Param_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -2726,7 +2726,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 /// <param name="Param_Valor">O valor a ser definido na chave especificada.</param>
-CarenResult CarenMFTopologyNode::DefinirUINT32(String^ Param_GuidChave, UInt32 Param_Valor)
+CarenResult CarenMFTopologyNode::SetUINT32(String^ Param_GuidChave, UInt32 Param_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -2769,7 +2769,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 /// <param name="Param_Valor">O valor a ser definido na chave especificada.</param>
-CarenResult CarenMFTopologyNode::DefinirUINT64(String^ Param_GuidChave, UInt64 Param_Valor)
+CarenResult CarenMFTopologyNode::SetUINT64(String^ Param_GuidChave, UInt64 Param_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -2815,7 +2815,7 @@ Done:;
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor. O tipo do atributo deve ser: UInt64</param>
 /// <param name="Param_Numerador">Define o valor do: Numerador</param>
 /// <param name="Param_Denominador">Define o valor do: Denominador</param>
-CarenResult CarenMFTopologyNode::DefinirRatioAtribute(String^ Param_GuidChave, UInt32 Param_Numerador, UInt32 Param_Denominador)
+CarenResult CarenMFTopologyNode::_MFSetAttributeRatio(String^ Param_GuidChave, UInt32 Param_Numerador, UInt32 Param_Denominador)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -2861,7 +2861,7 @@ Done:;
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor. O tipo do atributo deve ser: UInt64</param>
 /// <param name="Param_Largura">A Largura do vídeo em pixels.</param>
 /// <param name="Param_Altura">A Altura do vídeo em pixels.</param>
-CarenResult CarenMFTopologyNode::DefinirSizeAttribute(String^ Param_GuidChave, UInt32 Param_Largura, UInt32 Param_Altura)
+CarenResult CarenMFTopologyNode::_MFSetAttributeSize(String^ Param_GuidChave, UInt32 Param_Largura, UInt32 Param_Altura)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -2904,7 +2904,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 /// <param name="Param_InterfaceDesconhecida">A interface desconhecida a ser definida no valor da chave solicitada.</param>
-CarenResult CarenMFTopologyNode::DefinirPonteiroDesconhecido(String^ Param_GuidChave, ICaren^ Param_InterfaceDesconhecida)
+CarenResult CarenMFTopologyNode::SetUnknown(String^ Param_GuidChave, ICaren^ Param_InterfaceDesconhecida)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -2963,7 +2963,7 @@ Done:;
 /// (UnlockStore) - Desbloqueia o armazenamento de atributo após uma chamada para o método (BloquearAtributo). 
 /// Enquanto o objeto é desbloqueado, Múltiplos threads podem acessar atributos do objeto.
 /// </summary>
-CarenResult CarenMFTopologyNode::DesbloquearAtributo()
+CarenResult CarenMFTopologyNode::UnlockStore()
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

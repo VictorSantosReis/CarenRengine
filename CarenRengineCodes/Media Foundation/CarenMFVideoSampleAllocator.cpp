@@ -416,7 +416,7 @@ void CarenMFVideoSampleAllocator::Finalizar()
 /// (AllocateSample) - Obtém uma amostra de vídeo do alocador.
 /// </summary>
 /// <param name="Param_Out_AmostraVideo">Recebe a interface que contém a amostra de vídeo. O chamado deve liberar a interface.</param>
-CarenResult CarenMFVideoSampleAllocator::ObterAmostraVideo([Out] ICarenMFSample^% Param_Out_AmostraVideo)
+CarenResult CarenMFVideoSampleAllocator::AllocateSample([Out] ICarenMFSample^% Param_Out_AmostraVideo)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -462,7 +462,7 @@ Done:;
 /// </summary>
 /// <param name="Param_CountAmostra">A quantidade de amostas para alocar.</param>
 /// <param name="Param_TipoAmostraVideo">Uma interface que contém o Tipo de mídia de vídeo que será alocada.</param>
-CarenResult CarenMFVideoSampleAllocator::InicializarAlocadorAmostras(UInt32 Param_CountAmostra, ICarenMFMediaType^ Param_TipoAmostraVideo)
+CarenResult CarenMFVideoSampleAllocator::InitializeSampleAllocator(UInt32 Param_CountAmostra, ICarenMFMediaType^ Param_TipoAmostraVideo)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -513,7 +513,7 @@ Done:;
 /// </summary>
 /// <param name="Param_CountAmostra">A quantidade de amostas para alocar.</param>
 /// <param name="Param_TipoAmostraVideo">Uma interface que contém o Tipo de mídia de vídeo que será alocada.</param>
-CarenResult CarenMFVideoSampleAllocator::InicializarAlocadorAmostrasD3D11(UInt32 Param_CountAmostra, ICarenMFMediaType^ Param_TipoAmostraVideo)
+CarenResult CarenMFVideoSampleAllocator::InitializeSampleAllocatorEx(UInt32 Param_CountAmostra, ICarenMFMediaType^ Param_TipoAmostraVideo)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -563,7 +563,7 @@ Done:;
 /// habilita vários objetos no pipeline (como um processador de vídeo e um decodificador de vídeo) para compartilhar o mesmo dispositivo Direct3D.
 /// </summary>
 /// <param name="Param_Interface">A interface que o gerenciador do Direct3D a ser usado.</param>
-CarenResult CarenMFVideoSampleAllocator::DefinirDirect3DDeviceManager(ICaren^ Param_Interface)
+CarenResult CarenMFVideoSampleAllocator::SetDirectXManager(ICaren^ Param_Interface)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -610,7 +610,7 @@ Done:;
 /// <summary>
 /// (UninitializeSampleAllocator) - Libera Todas as amostras de vídeo que tenham sido alocadas.
 /// </summary>
-CarenResult CarenMFVideoSampleAllocator::LiberarTodasAmostras()
+CarenResult CarenMFVideoSampleAllocator::UninitializeSampleAllocator()
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

@@ -291,7 +291,7 @@ namespace CarenRengine
 				literal String^ MF_MT_FRAME_RATE_RANGE_MIN = "{D2E7558C-DC1F-403f-9A72-D28BB1EB3B5E}";
 				/// <summary>
 				/// Tipo do valor: UInt64.
-				/// Método: DefinirSizeAttribute | ObterSizeAttribute
+				/// Método: MFGetAttributeSize | MFGetAttributeSize
 				/// Largura e altura de um quadro de vídeo, em pixels.
 				/// </summary>
 				literal String^ MF_MT_FRAME_SIZE = "{1652c33d-d6b2-4012-b834-72030849a37d}";
@@ -3655,7 +3655,7 @@ namespace CarenRengine
 				literal String^ GUID_CA_INTF_MFMidiaSink = "{C8514E08-756F-4C42-AB65-C9FFEEACD7CD}";
 
 				/// <summary>
-				/// Guid da interface: ICarenMFMediaStreamSink
+				/// Guid da interface: ICarenMFStreamSink
 				/// </summary>
 				literal String^ GUID_CA_INTF_MFMidiaStreamSink = "{4442A91B-3521-4E0A-9F65-2BEFB93DA6E4}";
 
@@ -4689,14 +4689,14 @@ namespace CarenRengine
 			{
 				/// <summary>
 				/// Verifique se todos os atributos da (Interface Atual) existem na (Interface No Parametro) e se possuem
-				/// os mesmos dados, onde a (Interface Atual) é quem está chamando o método (Comparar) e a (Interface No Parametro)
+				/// os mesmos dados, onde a (Interface Atual) é quem está chamando o método (Compare) e a (Interface No Parametro)
 				/// é o objeto passado no parametro.
 				/// </summary>
 				MF_ATTRIBUTES_MATCH_OUR_ITEMS = 0,
 
 				/// <summary>
 				/// Verifique se todos os atributos da (Interface No Parametro) existem na (Interface Atual) e se possuem
-				/// os mesmos dados, onde a (Interface Atual) é quem está chamando o método (Comparar) e a (Interface No Parametro)
+				/// os mesmos dados, onde a (Interface Atual) é quem está chamando o método (Compare) e a (Interface No Parametro)
 				/// é o objeto passado no parametro.
 				/// </summary>
 				MF_ATTRIBUTES_MATCH_THEIR_ITEMS,
@@ -5617,9 +5617,9 @@ namespace CarenRengine
 			};
 
 			/// <summary>
-			/// Enumera um resultado para a leitura de uma amostra de mídia.
+			/// Enumera valores para o resultado de leitura de uma amostra de mídia.
 			/// </summary>
-			public enum class CA_AMOSTRA_RESULTADO
+			public enum class CA_SAMPLE_READ_RESULT
 			{
 				/// <summary>
 				/// Determina que uma amostra de mídia foi obtida com sucesso.
@@ -5686,8 +5686,14 @@ namespace CarenRengine
 			/// (ORIGINAL) - Enumera bandeiras que definem as caracteristicas do fluxo de bytes(ICarenMFByteStream).
 			/// </summary>
 			[FlagsAttribute]
-			public enum class CA_CARACTERISTICAS_BYTESTREAM
+			public enum class CA_MFBYTESTREAM_CHARACTERISTICS
 			{
+				/// <summary>
+				/// Utilizado para suporte. Não faz parte das contantes originais.
+				/// </summary>
+				Zero = 0x0,
+
+
 				/// <summary>
 				/// O fluxo de bytes pode ser lido.
 				/// </summary>
@@ -5796,20 +5802,20 @@ namespace CarenRengine
 			};
 
 			/// <summary>
-			/// Contém sinalizadores para o método ICarenMFSample.LerAmostra.
+			/// Contém sinalizadores para o método ICarenMFSample.ReadSample.
 			/// </summary>
 			public enum class CA_SOURCE_READER_CONTROL_FLAG
 			{
 				/// <summary>
 				/// Recupere quaisquer amostras pendentes, mas não solicite mais amostras da fonte de mídia. 
-				/// Para obter todos as amostras pendentes, chame (LerAmostra) com esse sinalizador até que o método 
+				/// Para obter todos as amostras pendentes, chame (ReadSample) com esse sinalizador até que o método 
 				/// retorna uma amostra (NULA).
 				/// </summary>
 				MF_SOURCE_READER_CONTROLF_DRAIN = 0x1
 			};
 
 			/// <summary>
-			/// Contém sinalizadores que indcam o status de uma chamada para o método ICarenMFSample.LerAmostra.
+			/// Contém sinalizadores que indcam o status de uma chamada para o método ICarenMFSample.ReadSample.
 			/// </summary>
 			[FlagsAttribute]
 			public enum class CA_SOURCE_READER_FLAGS
@@ -5821,7 +5827,7 @@ namespace CarenRengine
 
 
 				/// <summary>
-				/// Ocorreu um erro durante a realização da chamada para a interface (ICarenMFSourceReader). Não chame novamente o método para Ler uma proxima amostra.
+				/// Ocorreu um erro durante a realização da chamada para a interface (ICarenMFSourceReader). Não chame novamente o método para Read uma proxima amostra.
 				/// </summary>
 				LEITURA_ERROR = 0x1,
 
@@ -5848,7 +5854,7 @@ namespace CarenRengine
 
 
 				/// <summary>
-				/// A mídia atual tem o tipo alterado para um ou mais fluxos. Para obter o tipo de mídia atual, chame o  método ICarenMFSourceReader.ObterTipoMidiaAtual.
+				/// A mídia atual tem o tipo alterado para um ou mais fluxos. Para obter o tipo de mídia atual, chame o  método ICarenMFSourceReader.GetCurrentMediaType.
 				/// </summary>
 				LEITURA_TIPO_ATUAL_MODIFICADO = 0x20,
 
@@ -6106,45 +6112,50 @@ namespace CarenRengine
 			};
 			
 			/// <summary>
-			/// Enumera as possiveis características de um Coletor de Midia.
+			/// (Original) - Enumera as possiveis características de um Coletor de Midia.
 			/// </summary>
 			[FlagsAttribute]
-			public enum class CA_MIDIA_SINK_CARACTERISTCAS
+			public enum class CA_MEDIASINK_CHARACTERISTICS
 			{
+				/// <summary>
+				/// Utilizado para suporte. Não faz parte das contantes originais.
+				/// </summary>
+				Zero = 0x0,
+
 				/// <summary>
 				/// O coletor de mídia tem um número fixo de fluxos. Ele não oferece suporte aos métodos: 
 				/// AddStreamSink e RemoveStreamSink no Coletor de mídia.
 				/// </summary>
-				COLETOR_FLUXOS_FIXOS = 0x00000001,
+				CA_MEDIASINK_FIXED_STREAMS = 0x00000001,
 
 				/// <summary>
 				/// O coletor de mídia não pode corresponder às taxas com um relógio externo.
 				/// </summary>
-				COLETOR_NOT_CORRESPONDE_CLOCK = 0x00000002,
+				CA_MEDIASINK_CANNOT_MATCH_CLOCK = 0x00000002,
 
 				/// <summary>
-				/// O coletor de mídia é sem nome. Ele consome amostras o mais rápido possível e não se sincroniza com 
-				/// um relógio de apresentação.
+				/// O coletor de mídia não tem sinal. Ele consome amostras o mais rápido possível e não se sincroniza com um relógio de apresentação.
+				/// A maioria dos coletores de arquivamento não tem identificação.
 				/// </summary>
-				COLETOR_NO_NAME = 0x00000004,
+				CA_MEDIASINK_RATELESS = 0x00000004,
 
 				/// <summary>
 				/// O coletor de mídia requer um relógio de apresentação. O relógio de apresentação é definido chamando o 
 				/// o método (DefinirRelogioApresentação) no coletor de mídia.
 				/// </summary>
-				COLETOR_REQUER_CLOCK = 0x00000008,
+				CA_MEDIASINK_CLOCK_REQUIRED = 0x00000008,
 
 				/// <summary>
 				///  O coletor de mídia pode aceitar exemplos de (Preroll) antes que o relógio de apresentação seja iniciado. 
 				/// O coletor de mídia expõe o IMFMediaSinkPreroll interface.
 				/// </summary>
-				COLETOR_ACEITA_PREROLL = 0x00000010,
+				CA_MEDIASINK_CAN_PREROLL = 0x00000010,
 
 				/// <summary>
 				/// O primeiro coletor de fluxo (índice 0) é um fluxo de referência. O fluxo de referência deve
 				/// ter um tipo de mídia antes que os tipos de mídia podem ser definidos em outros coletores de fluxo.
 				/// </summary>
-				COLETOR_REQUER_TIPO_MIDIA_FLUXO_REFERENCIA = 0x00000020,
+				CA_MEDIASINK_REQUIRE_REFERENCE_MEDIATYPE = 0x00000020,
 
 			};
 
@@ -6187,14 +6198,14 @@ namespace CarenRengine
 			public enum class CA_CLOCK_CARACTERISTICAS
 			{
 				/// <summary>
-				/// Os tempos de relógio retornados pelo método (ICarenMFClock.ObterHoraCorrelacionada) estão em unidades de 100 nanoseconds. Se este sinalizador estiver 
-				/// ausente, chame o método (ICarenMFClock.ObterPropriedades) para obter a freqüência de clock. A freqüência de Clock é fornecida na (RL_FREQUENCIA_RELOGIO)
+				/// Os tempos de relógio retornados pelo método (ICarenMFClock.GetCorrelatedTime) estão em unidades de 100 nanoseconds. Se este sinalizador estiver 
+				/// ausente, chame o método (ICarenMFClock.GetProperties) para obter a freqüência de clock. A freqüência de Clock é fornecida na (RL_FREQUENCIA_RELOGIO)
 				/// membro da estrutura CA_MFCLOCK_PROPERTIES.
 				/// </summary>
 				CH_CLOCK_FREQUENCIA_10MHZ = 0x2,
 				/// <summary>
 				/// O relógio está sempre em execução. Se este sinalizador estiver presente, o relógio não pode ser
-				/// pausado ou interrompido. Se este sinalizador estiver ausente, chame o método (ICarenMFClock.ObterEstado) para obter o estado atual.
+				/// pausado ou interrompido. Se este sinalizador estiver ausente, chame o método (ICarenMFClock.GetState) para obter o estado atual.
 				/// </summary>
 				CH_CLOCK_SEMPRE_EXECUCAO = 0x4,
 				/// <summary>
@@ -6209,7 +6220,7 @@ namespace CarenRengine
 			public enum class CA_CLOCK_RELATIONAL_FLAGS
 			{
 				/// <summary>
-				/// Os valores de jitter são sempre negativos. Em outras palavras, o tempo retornado por (ICarenMFClock.ObterHoraCorrelacionada) pode jitter por trás do tempo 
+				/// Os valores de jitter são sempre negativos. Em outras palavras, o tempo retornado por (ICarenMFClock.GetCorrelatedTime) pode jitter por trás do tempo 
 				/// real do relógio, mas nunca tremulará antes do tempo real. Se este sinalizador não estiver presente, o relógio pode jitter em qualquer direção.
 				/// </summary>
 				MFCLOCK_RELATIONAL_FLAG_JITTER_NEVER_AHEAD = 0x1
@@ -6288,11 +6299,11 @@ namespace CarenRengine
 			/// (MFVideoRenderPrefs) Enumera sinalizadores que definem como o renderizador de vídeo aprimorado (EVR) exibe o vídeo.
 			/// </summary>
 			[FlagsAttribute]
-			public enum class CA_VIDEO_RENDER_CONFIGURACOES
+			public enum class CA_MFVideoRenderPrefs
 			{
 				/// <summary>
 				/// Se este sinalizador estiver definido, o EVR não desenha a cor da borda. Por padrão, o EVR desenha uma borda em áreas do 
-				/// retângulo de destino que não têm nenhum vídeo. Consulte o método: ICarenMFVideoDisplayControl.DefinirCorBorda
+				/// retângulo de destino que não têm nenhum vídeo. Consulte o método: ICarenMFVideoDisplayControl.SetBorderColor
 				/// </summary>
 				VR_NO_RENDER_BORDER = 0x1,
 
@@ -10369,7 +10380,7 @@ MEReservedMax = 10000
 			};
 
 			/// <summary>
-			/// (MFSESSION_GETFULLTOPOLOGY_FLAGS) - Enumera os Flags para o método ICarenMFMediaSession::ObterTopologiaCompleta.
+			/// (MFSESSION_GETFULLTOPOLOGY_FLAGS) - Enumera os Flags para o método ICarenMFMediaSession::GetFullTopology.
 			/// </summary>
 			public enum class CA_MFSESSION_GETFULLTOPOLOGY_FLAGS
 			{
@@ -10385,7 +10396,7 @@ MEReservedMax = 10000
 			};
 
 			/// <summary>
-			/// (MFSESSION_SETTOPOLOGY_FLAGS) - Enumera os Flags para o comportamento do método ICarenMFMediaSession::DefinirTopologia.
+			/// (MFSESSION_SETTOPOLOGY_FLAGS) - Enumera os Flags para o comportamento do método ICarenMFMediaSession::SetTopology.
 			/// </summary>
 			public enum class CA_MFSESSION_SETTOPOLOGY_FLAGS
 			{
@@ -10410,7 +10421,7 @@ MEReservedMax = 10000
 				/// <summary>
 				/// Desmarca a topologia atual seguindo criterios especificos(Consulte a documentação). As topologias pendentes não são removidas da fila de reprodução. Se houver uma topologia pendente 
 				/// na fila, essa topologia será carregada após a topologia atual ser desmarcada. Caso contrário, a reprodução simplesmente para.Para remover todas as topologias pendentes da fila, 
-				/// chame ICarenMFMediaSession::LimparTopologias.
+				/// chame ICarenMFMediaSession::ClearTopologies.
 				/// </summary>
 				MFSESSION_SETTOPOLOGY_CLEAR_CURRENT = 0x4
 			};
@@ -10887,7 +10898,7 @@ MEReservedMax = 10000
 				Zero = 0x0,
 
 				/// <summary>
-				/// (MFT_OUTPUT_STATUS_SAMPLE_READY) - Há uma amostra disponível para pelo menos um fluxo de saída. Para recuperar as amostras de produção disponíveis, ligue para o ICarenMFTransform::ProcessarSaida.
+				/// (MFT_OUTPUT_STATUS_SAMPLE_READY) - Há uma amostra disponível para pelo menos um fluxo de saída. Para recuperar as amostras de produção disponíveis, ligue para o ICarenMFTransform::ProcessOutput.
 				/// </summary>
 				CA_MFT_OUTPUT_STATUS_SAMPLE_READY = MFT_OUTPUT_STATUS_SAMPLE_READY
 			};
@@ -10920,7 +10931,7 @@ MEReservedMax = 10000
 			};
 			
 			/// <summary>
-			/// (MFT_MESSAGE_TYPE)(FALTA DOCUMENTAR) - Enumera as mensagens para uma transformação da Media Foundation (MFT). Para enviar uma mensagem a um MFT, ligue para o ICarenMFTransform::ProcessarMensagem.
+			/// (MFT_MESSAGE_TYPE)(FALTA DOCUMENTAR) - Enumera as mensagens para uma transformação da Media Foundation (MFT). Para enviar uma mensagem a um MFT, ligue para o ICarenMFTransform::ProcessMessage.
 			/// </summary>
 			public enum class CA_MFT_MESSAGE_TYPE
 			{
@@ -10956,7 +10967,7 @@ MEReservedMax = 10000
 			};
 			
 			/// <summary>
-			/// (MFVP_MESSAGE_TYPE)(FALTA DOCUMENTAR) - Enumera mensagens para um apresentador de renderização de vídeo aprimorado (EVR). Esta enumeração é usada com o método ICarenMFVideoPresenter::ProcessarMensagem.
+			/// (MFVP_MESSAGE_TYPE)(FALTA DOCUMENTAR) - Enumera mensagens para um apresentador de renderização de vídeo aprimorado (EVR). Esta enumeração é usada com o método ICarenMFVideoPresenter::ProcessMessage.
 			/// </summary>
 			public enum class CA_MFVP_MESSAGE_TYPE
 			{
@@ -10994,7 +11005,7 @@ MEReservedMax = 10000
 			};
 
 			/// <summary>
-			/// (_MFT_OUTPUT_DATA_BUFFER_FLAGS)(FALTA DOCUMENTAR) - Enumera bandeiras para o método ICarenMFTransform::ProcessarSaida
+			/// (_MFT_OUTPUT_DATA_BUFFER_FLAGS)(FALTA DOCUMENTAR) - Enumera bandeiras para o método ICarenMFTransform::ProcessOutput
 			/// </summary>
 			public enum class CA_MFT_OUTPUT_DATA_BUFFER_FLAGS
 			{
@@ -11013,7 +11024,7 @@ MEReservedMax = 10000
 			};
 
 			/// <summary>
-			/// (_MFT_PROCESS_OUTPUT_STATUS)(FALTA DOCUMENTAR) - Enumera o status de uma chamada para ICarenMFTransform::ProcessarSaida.
+			/// (_MFT_PROCESS_OUTPUT_STATUS)(FALTA DOCUMENTAR) - Enumera o status de uma chamada para ICarenMFTransform::ProcessOutput.
 			/// </summary>
 			[FlagsAttribute]
 			public enum class CA_MFT_PROCESS_OUTPUT_STATUS
@@ -18074,25 +18085,25 @@ MEReservedMax = 10000
 
 				/// <summary>
 				/// (llLastTimestampReceived) O carimbo de data/hora da amostra mais recente dada ao gravador de coletor. O gravador de coletor atualiza esse valor
-				/// sempre que o aplicativo chama o método (EscreverAmostra).
+				/// sempre que o aplicativo chama o método (WriteSample).
 				///</summary>
 				Int64 ES_TIMESPAN_AMOSTRA_RECENTE_ENVIADA;
 
 				/// <summary>
 				/// (llLastTimestampEncoded) O carimbo de data/hora da amostra mais recente a ser codificado. O gravador de coletor atualiza esse valor sempre que 
-				/// ele chama o método (ProcessarSaida) no MFT do codificador.
+				/// ele chama o método (ProcessOutput) no MFT do codificador.
 				///</summary>
 				Int64 ES_TIMESPAN_AMOSTRA_RECENTE_CODIFICADA;
 
 				/// <summary>
 				/// (llLastTimestampProcessed) O carimbo de data/hora da amostra mais recente fornecida para o coletor de mídia. O gravador de coletor atualiza esse 
-				/// valor sempre que ele chama o método (ProcessarAmostraMidia) no coletor de mídia(ICarenMFMediaStreamSink).
+				/// valor sempre que ele chama o método (ProcessSample) no coletor de mídia(ICarenMFStreamSink).
 				///</summary>
 				Int64 ES_TIMESPAN_AMOSTRA_RECENTE_PROCESSADA;
 
 				/// <summary>
 				/// (llLastStreamTickReceived) O carimbo de hora do Tick de fluxo mais recente. O gravador de coletor atualiza esse valor sempre que o aplicativo chama
-				/// o método (EnviarLacunaFluxo) no Gravador de Coletor(ICarenMFSinkWriter).
+				/// o método (SendStreamTick) no Gravador de Coletor(ICarenMFSinkWriter).
 				///</summary>
 				Int64 ES_TIMESPAN_TICK_FLUXO_RECENTE;
 
@@ -18179,7 +18190,7 @@ MEReservedMax = 10000
 				/// <summary>
 				/// A frequência do relógio em Hz. Um valor de MFCLOCK_FREQUENCY_HNS significa que o relógio tem uma frequência de 10 MHz 
 				/// (ticks de 100 nanossegundos), que é a unidade de tempo (MFTIME -> Int64) padrão no Media Foundation. Se o
-				/// o método (ICarenMFClock.RecuperarCaracteristicas) devolver o sinalizador CH_CLOCK_FREQUENCIA_10MHZ , o valor
+				/// o método (ICarenMFClock.GetClockCharacteristics) devolver o sinalizador CH_CLOCK_FREQUENCIA_10MHZ , o valor
 				/// deste campo deve ser MFCLOCK_FREQUENCY_HNS.
 				///</summary>
 				UInt64 RL_FREQUENCIA_CLOCK;
@@ -18402,14 +18413,14 @@ MEReservedMax = 10000
 			/// </summary>
 			public ref struct CA_MFBYTESTREAM_BUFFERING_PARAMS
 			{
-				Int64                                 cbTotalFileSize;
-				Int64                                 cbPlayableDataSize;
-				cli::array<CA_MF_LEAKY_BUCKET_PAIR^>^ prgBuckets;
-				Int64                                 cBuckets;
-				Int64                                 qwNetBufferingTime;
-				Int64                                 qwExtraBufferingTimeDuringSeek;
-				Int64                                 qwPlayDuration;
-				float                                 dRate;
+				UInt64                                 cbTotalFileSize;
+				UInt64                                 cbPlayableDataSize;
+				cli::array<CA_MF_LEAKY_BUCKET_PAIR^>^  prgBuckets;
+				UInt32                                  cBuckets;
+				UInt64                                 qwNetBufferingTime;
+				UInt64                                 qwExtraBufferingTimeDuringSeek;
+				UInt64                                 qwPlayDuration;
+				float                                  dRate;
 			};
 
 			/// <summary>
@@ -19846,7 +19857,7 @@ MEReservedMax = 10000
 				/// <summary>
 				/// (u64) - Valor do atributo (unsigned 32-bit inteiro). Esse membro é usado quando Attrtype é igual a MF_ATTRIBUTE_UINT64.
 				/// [ATENCAO] - Devido a um erro na declaração de estrutura, o membro u64 é declarado como um inteiro de 32 bits, não um inteiro 
-				/// de 64 bits. Portanto, qualquer valor de 64 bits passado para o método ICarenMFTopologyNodeAttributeEditor::AtualizarAtributosNode 
+				/// de 64 bits. Portanto, qualquer valor de 64 bits passado para o método ICarenMFTopologyNodeAttributeEditor::UpdateNodeAttributes 
 				/// é truncado para 32 bits.
 				/// </summary>
 				UInt64 u64;
@@ -20420,25 +20431,25 @@ MEReservedMax = 10000
 			};
 
 			/// <summary>
-			/// (_MFT_OUTPUT_DATA_BUFFER) - Contém informações sobre um Buffer de saída para uma transformação da Media Foundation. Esta estrutura é usada no método ICarenMFTransform::ProcessarSaida.
+			/// (_MFT_OUTPUT_DATA_BUFFER) - Contém informações sobre um Buffer de saída para uma transformação da Media Foundation. Esta estrutura é usada no método ICarenMFTransform::ProcessOutput.
 			/// </summary>
 			public ref struct CA_MFT_OUTPUT_DATA_BUFFER
 			{
 				/// <summary>
-				/// (dwStreamID) - Identificador de fluxo de saída. Antes de ligar para o ProcessarSaida, coloque este membro em um identificador de fluxo válido.
-				/// Exceção: Se o método ICarenMFTransform::ObterIDsFluxo retorna E_NOTIMPL, o MFT ignora este membro e usa os índices do conjunto (Param_MatrizAmostra) 
-				/// no método ProcessarSaida como identificadores de fluxo. Em outras palavras, ele usa o primeiro elemento na matriz para o fluxo 0, o segundo para o fluxo 1, 
+				/// (dwStreamID) - Identificador de fluxo de saída. Antes de ligar para o ProcessOutput, coloque este membro em um identificador de fluxo válido.
+				/// Exceção: Se o método ICarenMFTransform::GetStreamIDs retorna E_NOTIMPL, o MFT ignora este membro e usa os índices do conjunto (Param_MatrizAmostra) 
+				/// no método ProcessOutput como identificadores de fluxo. Em outras palavras, ele usa o primeiro elemento na matriz para o fluxo 0, o segundo para o fluxo 1, 
 				/// e assim por diante. Recomenda-se (mas não necessário) que o chamador configure (FluxoID) igual ao índice array neste caso.
 				/// </summary>
 				UInt32 FluxoID;
 
 				/// <summary>
-				/// (pSample)(Representa a interface ICarenMFSample) - Ponteiro para a interface ICarenMFSample. Antes de chamar o ProcessarSaida, defina este membro igual a um ponteiro de amostra ou NULO.
+				/// (pSample)(Representa a interface ICarenMFSample) - Ponteiro para a interface ICarenMFSample. Antes de chamar o ProcessOutput, defina este membro igual a um ponteiro de amostra ou NULO.
 				/// </summary>
 				ICaren^ AmostraMidia;
 
 				/// <summary>
-				/// (dwStatus) - Antes de ligar para o ProcessarSaida, defina este membro para zero. Quando o método retorna, o MFT pode definir o membro igual a um valor 
+				/// (dwStatus) - Antes de ligar para o ProcessOutput, defina este membro para zero. Quando o método retorna, o MFT pode definir o membro igual a um valor 
 				/// do CA_MFT_OUTPUT_DATA_BUFFER_FLAGS enumeração. Caso contrário, o MFT deixa este membro igual a zero.
 				/// </summary>
 				Enumeracoes::CA_MFT_OUTPUT_DATA_BUFFER_FLAGS Status;
@@ -20446,7 +20457,7 @@ MEReservedMax = 10000
 				/// <summary>
 				/// (pEvents)(Representa a interface ICarenMFCollection) - Antes de ligar para o Processar, defina este membro como NULO. Na saída, o MFT pode definir este membro para um ponteiro de interface de 
 				/// memória da ICarenMFCollection válido. O ponteiro representa uma (Coleção) que contém zero ou mais eventos. Para obter cada evento, ligue para a 
-			    /// ICarenMFCollection:ObterElemento e obtenha o ponteiro para ICarenMFMediaEvent. Quando o método ProcessarSaida retorna, o chamador é responsável 
+			    /// ICarenMFCollection:GetElement e obtenha o ponteiro para ICarenMFMediaEvent. Quando o método ProcessOutput retorna, o chamador é responsável 
 				/// por liberar o ponteiro ICarenMFCollection se o ponteiro não for NULO.
 				/// </summary>
 				ICaren^ ColecaoEventos;
@@ -23073,7 +23084,7 @@ MEReservedMax = 10000
 				/// </summary>
 				/// <param name="Param_PropKey">TBD.</param>
 				/// <param name="Param_Out_Valor">Depois que o método retorna com êxito, este parâmetro retorna a estrutura CA_PropVariant que contém dados sobre a propriedade.</param>
-				CarenResult ObterValor(Estruturas::CA_PROPERTYKEY^% Param_PropKey, [Out] Estruturas::CA_PropVariant^% Param_Out_Valor);
+				CarenResult GetValue(Estruturas::CA_PROPERTYKEY^% Param_PropKey, [Out] Estruturas::CA_PropVariant^% Param_Out_Valor);
 
 				/// <summary>
 				/// (SetValue) - Este método define um valor de propriedade ou substitui ou remove um valor existente.

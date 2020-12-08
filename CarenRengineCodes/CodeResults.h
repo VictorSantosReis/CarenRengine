@@ -684,7 +684,7 @@ namespace CarenRengine
 			ER_DXVA2_E_NOT_AVAILABLE,
 
 			/// <summary>
-			/// (DXVA2_E_NOT_INITIALIZED) - O Gerenciador de dispositivos Direct3D não foi inicializado. O proprietário do dispositivo deve chamar o método (ICarenDirect3DDeviceManager9::ResetarDispositivo).
+			/// (DXVA2_E_NOT_INITIALIZED) - O Gerenciador de dispositivos Direct3D não foi inicializado. O proprietário do dispositivo deve chamar o método (ICarenDirect3DDeviceManager9::ResetDevice).
 			/// </summary>
 			ER_DXVA2_E_NOT_INITIALIZED,
 
@@ -1355,7 +1355,7 @@ namespace CarenRengine
 			ER_MF_E_NO_CLOCK,
 
 			/// <summary>
-			/// (MF_E_CLOCK_NO_TIME_SOURCE) - O relógio de apresentação não tem uma (Origem de Tempo). Chame o método (ICarenRelogioApresentação.DefinirFonteTempo)
+			/// (MF_E_CLOCK_NO_TIME_SOURCE) - O relógio de apresentação não tem uma (Origem de Tempo). Chame o método (ICarenRelogioApresentação.SetTimeSource)
 			/// para definir um fonte de tempo para o Relógio atual.
 			/// </summary>
 			ER_MF_E_CLOCK_NO_TIME_SOURCE,
@@ -1476,7 +1476,7 @@ namespace CarenRengine
 			ER_MF_E_DXGI_NEW_VIDEO_DEVICE,
 
 			/// <summary>
-			/// (MF_E_DXGI_DEVICE_NOT_INITIALIZED) - O Gerenciador de dispositivo DXGI não foi inicializado. O proprietário do aparelho deve chamar o método (ICarenMFDXGIDeviceManager::ResetarDispositivo).
+			/// (MF_E_DXGI_DEVICE_NOT_INITIALIZED) - O Gerenciador de dispositivo DXGI não foi inicializado. O proprietário do aparelho deve chamar o método (ICarenMFDXGIDeviceManager::ResetDevice).
 			/// </summary>
 			ER_MF_E_DXGI_DEVICE_NOT_INITIALIZED,
 

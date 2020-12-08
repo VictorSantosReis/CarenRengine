@@ -224,7 +224,7 @@ public:
 	/// gerar seus tempos de relógio.
 	/// </summary>
 	/// <param name="Param_Out_Relogio">Recebe a interface ICarenMFClock que representa um Relógio. O chamador deve liberar a interface.</param>
-	virtual CarenResult ObterRelogioSubjacente([Out] ICarenMFClock^% Param_Out_Relogio);
+	virtual CarenResult GetUnderlyingClock([Out] ICarenMFClock^% Param_Out_Relogio);
 
 
 
@@ -236,13 +236,13 @@ public:
 	/// Recupera as características do relógio.
 	/// </summary>
 	/// <param name="Param_Out_CaracteristicasClock">Recebe os flags com as características do relógio.</param>
-	virtual CarenResult RecuperarCaracteristicas([Out] Enumeracoes::CA_CLOCK_CARACTERISTICAS% Param_Out_CaracteristicasClock);
+	virtual CarenResult GetClockCharacteristics([Out] Enumeracoes::CA_CLOCK_CARACTERISTICAS% Param_Out_CaracteristicasClock);
 
 	/// <summary>
 	/// (Não Suportado) - Recupera a chave de continuidade do relógio.
 	/// </summary>
 	/// <param name="Param_Out_Chave">Recebe a chave de continuidade.</param>
-	virtual CarenResult RecuperarChaveContinuidade([Out] UInt32% Param_Out_Chave);
+	virtual CarenResult GetContinuityKey([Out] UInt32% Param_Out_Chave);
 
 	/// <summary>
 	/// Recupera a hora do último relógio que foi correlacionada com a hora do sistema.
@@ -250,20 +250,20 @@ public:
 	/// <param name="Param_ValorReservado">Valor reservado. Deve ser zero.</param>
 	/// <param name="Param_Out_ClockTime">Recebe o último tempo de relógio conhecido, em unidades de freqüência do relógio.</param>
 	/// <param name="Param_NsSystemTime">Recebe a hora do sistema que corresponde ao tempo de relógio retornado em Param_Out_ClockTime, em unidades de 100 nanosegundos.</param>
-	virtual CarenResult ObterHoraCorrelacionada(UInt32 Param_ValorReservado, [Out] Int64% Param_Out_ClockTime, [Out] Int64% Param_NsSystemTime);
+	virtual CarenResult GetCorrelatedTime(UInt32 Param_ValorReservado, [Out] Int64% Param_Out_ClockTime, [Out] Int64% Param_NsSystemTime);
 
 	/// <summary>
 	/// Recupera as propriedades do relógio.
 	/// </summary>
 	/// <param name="Param_Out_PropriedadesRelogio">Retorna a estrutura que contém as propriedades do relógio atual.</param>
-	virtual CarenResult ObterPropriedades([Out] Estruturas::CA_MFCLOCK_PROPERTIES^% Param_Out_PropriedadesRelogio);
+	virtual CarenResult GetProperties([Out] Estruturas::CA_MFCLOCK_PROPERTIES^% Param_Out_PropriedadesRelogio);
 
 	/// <summary>
 	/// Recupera o estado atual do relógio.
 	/// </summary>
 	/// <param name="Param_ValorReservado">Valor reservado. Deve ser zero.</param>
 	/// <param name="Param_Out_EstadoRelogio">Retorna o valor da enumeração que define o estado atual do relógio.</param>
-	virtual CarenResult ObterEstado(UInt32 Param_ValorReservado, [Out] Enumeracoes::CA_CLOCK_ESTADO% Param_Out_EstadoRelogio);
+	virtual CarenResult GetState(UInt32 Param_ValorReservado, [Out] Enumeracoes::CA_CLOCK_ESTADO% Param_Out_EstadoRelogio);
 
 };
 

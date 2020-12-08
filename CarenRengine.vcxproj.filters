@@ -37,9 +37,6 @@
     <Filter Include="Arquivos de Cabeçalho\SDKs">
       <UniqueIdentifier>{987012d2-80b4-481e-a4f2-07b1bb784298}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Arquivos de Cabeçalho\Sistema">
-      <UniqueIdentifier>{2c6b857a-547c-49a4-be8c-e84aa8a69575}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Arquivos de Cabeçalho\Classes\Caren">
       <UniqueIdentifier>{e81f8702-3212-499b-8d18-af7fe17bf7d8}</UniqueIdentifier>
     </Filter>
@@ -147,6 +144,9 @@
     </Filter>
     <Filter Include="Arquivos de Origem\Classes Nativas\WIC">
       <UniqueIdentifier>{0bbe8735-4632-4f26-9f00-12f3e4e47806}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Classes\Sistema">
+      <UniqueIdentifier>{2c6b857a-547c-49a4-be8c-e84aa8a69575}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -646,13 +646,13 @@
       <Filter>Arquivos de Cabeçalho\Classes\Caren</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Caren\CarenHMONITOR.h">
-      <Filter>Arquivos de Cabeçalho\Sistema</Filter>
+      <Filter>Arquivos de Origem\Classes\Sistema</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Caren\CarenWindowsEvent.h">
       <Filter>Arquivos de Cabeçalho\Classes\Caren</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Caren\CastInterface.h">
-      <Filter>Arquivos de Cabeçalho\Sistema</Filter>
+      <Filter>Arquivos de Origem\Classes\Sistema</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Windows\CarenPropertyStore.h">
       <Filter>Arquivos de Cabeçalho\Classes\Windows</Filter>

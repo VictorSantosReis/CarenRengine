@@ -250,7 +250,7 @@ public:
 	/// <param name="Param_QuantidadeRecursos">O número de recursos na matriz de argumentos (Param_Recursos).</param>
 	/// <param name="Param_Recursos">Um array de interfaces ICarenDXGIResource para os recursos a serem oferecidos.</param>
 	/// <param name="Param_Prioridade">Um valor CA_DXGI_OFFER_RESOURCE_PRIORITY que indica o quão valiosos os dados são.</param>
-	virtual CarenResult OfferResources1(
+	virtual CarenResult OfferResources(
 		UInt32 Param_QuantidadeRecursos,
 		cli::array<ICarenDXGIResource^>^ Param_Recursos,
 		CA_DXGI_OFFER_RESOURCE_PRIORITY Param_Prioridade);

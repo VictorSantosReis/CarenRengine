@@ -641,7 +641,7 @@ Done:;
 /// <param name="Param_QuantidadeRecursos">O número de recursos na matriz de argumentos (Param_Recursos).</param>
 /// <param name="Param_Recursos">Um array de interfaces ICarenDXGIResource para os recursos a serem oferecidos.</param>
 /// <param name="Param_Prioridade">Um valor CA_DXGI_OFFER_RESOURCE_PRIORITY que indica o quão valiosos os dados são.</param>
-CarenResult CarenDXGIDevice4::OfferResources1(
+CarenResult CarenDXGIDevice4::OfferResources(
 	UInt32 Param_QuantidadeRecursos,
 	cli::array<ICarenDXGIResource^>^ Param_Recursos,
 	CA_DXGI_OFFER_RESOURCE_PRIORITY Param_Prioridade)
@@ -671,7 +671,7 @@ CarenResult CarenDXGIDevice4::OfferResources1(
 	}
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->OfferResources1(Param_QuantidadeRecursos, ppMatrizRecursos, Prioridade);
+	Hr = PonteiroTrabalho->OfferResources(Param_QuantidadeRecursos, ppMatrizRecursos, Prioridade);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);

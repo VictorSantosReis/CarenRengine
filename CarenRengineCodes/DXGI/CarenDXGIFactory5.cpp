@@ -1306,7 +1306,7 @@ Done:;
 /// (IsCurrent) - Informa uma aplicação da possível necessidade de reenumerar adaptadores.
 /// </summary>
 /// <param name="Param_Out_Atual">Retorna FALSO para informar o aplicativo de chamada para re-enumerar adaptadores.</param>
-CarenResult CarenDXGIFactory5::Atual([Out] Boolean% Param_Out_Atual)
+CarenResult CarenDXGIFactory5::IsCurrent([Out] Boolean% Param_Out_Atual)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

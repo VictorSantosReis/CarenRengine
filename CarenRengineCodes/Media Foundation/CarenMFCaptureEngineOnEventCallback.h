@@ -19,6 +19,8 @@ limitations under the License.
 #include "../SDK_Caren.h"
 #include "../SDK_Utilidades.h"
 #include "../FunctionClass/GlobalFuncs.h"
+#include "../Nativas/CLN_IMFCaptureEngineOnEventCallback.h"
+#include "CarenMFMediaEvent.h"
 
 //Importa o namespace que contém as interfaces da API primária.
 using namespace CarenRengine::MediaFoundation;
@@ -33,7 +35,7 @@ using namespace CarenRengine::SDKUtilidades;
 
 
 /// <summary>
-/// (Em desenvolvimento) - 
+/// (Concluido - Fase de Testes) - Classe responsável por representar um Callback que serve para receber eventos do mecanismo de captura(ICarenMFCaptureEngine).
 /// </summary>
 public ref class CarenMFCaptureEngineOnEventCallback : public ICarenMFCaptureEngineOnEventCallback
 {
@@ -48,9 +50,10 @@ public ref class CarenMFCaptureEngineOnEventCallback : public ICarenMFCaptureEng
 	//Contrutores e destuidor da classe.
 public:
 	/// <summary>
-	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// Inicializa a classe com uma implementação da interface nativa (IMFNetResourceFilter) criada internamente ou Nulo.
 	/// </summary>
-	CarenMFCaptureEngineOnEventCallback();
+	/// <param name="Param_ImplInterno">Um valor booleano que indica se deve criar uma implementação interna nativa.</param>
+	CarenMFCaptureEngineOnEventCallback(Boolean Param_ImplInterno);
 	
 	~CarenMFCaptureEngineOnEventCallback();
 
@@ -77,6 +80,41 @@ public:
 			return Prop_DisposedClasse;
 		}
 	}
+
+
+
+	//(EVENTOS)
+public:
+
+	/////////////////////////////////////////////
+	//EVENTOS CHAMADOS PARA NOTIFICAR O USUÁRIO//
+	/////////////////////////////////////////////
+
+	/// <summary>
+	/// (Thread-Safe) Evento chamado pelo mecanismo de captura para notificar a aplicação de um evento de captura. 
+	/// </summary>
+	virtual event ICarenMFCaptureEngineOnEventCallback::Delegate_OnEvent^ OnEvent;
+
+	//(DELEGATES).
+private:
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//DELEGATES UTILIZADOS PARA RECEBER OS EVENTOS NATIVOS DA CLASSE (CLN_IMFCaptureEngineOnEventCallback)//
+	////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	/// <summary>
+	/// Delegate nativo que vai conter o método que vai receber o evento(OnEvent) nativo da classe (CLN_IMFCaptureEngineOnEventCallback) para ser enviado ao usuário.
+	/// </summary>
+	delegate HRESULT DelegateNativo_Evento_OnEvent(_In_  IMFMediaEvent*);
+	DelegateNativo_Evento_OnEvent^ Callback_OnEvent = nullptr;
+
+
+	//(HANDLES ALOCADAS DOS EVENTOS)
+private:
+	/// <summary>
+	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnEvent).
+	/// </summary>
+	GCHandle gHandle_Delegate_OnEvent;
 
 
 	///////////////////////////////////////////////////////
@@ -175,4 +213,14 @@ public:
 	/// Método responsável por liberar todos os registros de eventos resgistrados anteriormente. Chame esse método após uma chamada para (RegistrarCallback).
 	/// </summary>
 	virtual void UnRegisterCallback();
+
+
+
+
+	//Métodos que são utilizados para receberem os eventos da classe nativa (CLN_IMFCaptureEngineOnEventCallback).
+public:
+	/// <summary>
+	/// Método responsável por chamar o evento gerenciado para notificar o usuário sobre uma chamada para o método (OnEvent) na classe nativa.
+	/// </summary>
+	virtual HRESULT EncaminharEvento_OnEvent(_In_  IMFMediaEvent* pEvent);
 };

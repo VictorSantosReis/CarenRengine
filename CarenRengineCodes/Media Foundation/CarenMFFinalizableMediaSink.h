@@ -200,7 +200,7 @@ public:
 	/// Obtém as características do coletor de mídia.
 	/// </summary>
 	/// <param name="Param_Out_Caracteristicas">Retorna as características desse (Coletor de mídia).</param>
-	virtual CarenResult GetCharacteristics([Out] Enumeracoes::CA_MIDIA_SINK_CARACTERISTCAS% Param_Out_Caracteristicas);
+	virtual CarenResult GetCharacteristics([Out] Enumeracoes::CA_MEDIASINK_CHARACTERISTICS% Param_Out_Caracteristicas);
 
 	/// <summary>
 	/// Obtém o relógio de apresentação que foi definido no coletor de mídia.

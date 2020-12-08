@@ -462,7 +462,7 @@ public:
 	/// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (UINT64) obtido.</param>
 	/// <param name="Param_Out_Numerador">Recebe o valor referente ao: Numerador</param>
 	/// <param name="Param_Out_Denominador">Recebe o valor referente ao: Denominador</param>
-	virtual CarenResult MFGetAttributeRatio(String^ Param_GuidChave, [Out] UInt32% Param_Out_Numerador, [Out] UInt32% Param_Out_Denominador);
+	virtual CarenResult _MFGetAttributeRatio(String^ Param_GuidChave, [Out] UInt32% Param_Out_Numerador, [Out] UInt32% Param_Out_Denominador);
 
 	/// <summary>
 	/// (GetUnknown) - Recupera um ponteiro de interface associado a uma chave.
@@ -478,7 +478,7 @@ public:
 	/// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor obtido. O atribute deve ser do tipo: UInt64</param>
 	/// <param name="Param_Out_Largura">Recebe a largura em pixels.</param>
 	/// <param name="Param_Out_Altura">Recebe a altura em pixels.</param>
-	virtual CarenResult MFGetAttributeSize(String^ Param_GuidChave, [Out] UInt32% Param_Out_Largura, [Out] UInt32% Param_Out_Altura);
+	virtual CarenResult _MFGetAttributeSize(String^ Param_GuidChave, [Out] UInt32% Param_Out_Largura, [Out] UInt32% Param_Out_Altura);
 
 	/// <summary>
 	/// Bloqueia o armazenamento de atributo para que nenhum outro thread possa acessá-lo.
@@ -556,17 +556,17 @@ public:
 	/// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor. O tipo do atributo deve ser: UInt64</param>
 	/// <param name="Param_Numerador">Define o valor do: Numerador</param>
 	/// <param name="Param_Denominador">Define o valor do: Denominador</param>
-	virtual CarenResult DefinirRatioAtribute(String^ Param_GuidChave, UInt32 Param_Numerador, UInt32 Param_Denominador);
+	virtual CarenResult _MFSetAttributeRatio(String^ Param_GuidChave, UInt32 Param_Numerador, UInt32 Param_Denominador);
 
 	/// <summary>
-	/// (MFGetAttributeSize) - Define a largura e a altura como um único valor de atributo de 64 bits.
+	/// (MFSetAttributeSize) - Define a largura e a altura como um único valor de atributo de 64 bits.
 	/// Alguns atributos especificam uma largura e uma altura como um valor UINT64 compactado. Essa função empacota os valores de 
 	/// largura e altura em um único valor de UInt64.
 	/// </summary>
 	/// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor. O tipo do atributo deve ser: UInt64</param>
 	/// <param name="Param_Largura">A largura do vídeo em pixels.</param>
 	/// <param name="Param_Altura">A altura do vídeo em pixels.</param>
-	virtual CarenResult MFGetAttributeSize(String^ Param_GuidChave, UInt32 Param_Largura, UInt32 Param_Altura);
+	virtual CarenResult _MFSetAttributeSize(String^ Param_GuidChave, UInt32 Param_Largura, UInt32 Param_Altura);
 
 	/// <summary>
 	/// (TESTE) - Associa um IUnknown ponteiro com uma chave.

@@ -19,6 +19,9 @@ limitations under the License.
 #include "../SDK_Caren.h"
 #include "../SDK_Utilidades.h"
 #include "../FunctionClass/GlobalFuncs.h"
+#include "CarenMFMediaType.h"
+#include "CarenMFMediaSource.h"
+#include "CarenMFActivate.h"
 
 //Importa o namespace que contém as interfaces da API primária.
 using namespace CarenRengine::MediaFoundation;
@@ -33,7 +36,7 @@ using namespace CarenRengine::SDKUtilidades;
 
 
 /// <summary>
-/// (Em desenvolvimento) - 
+/// (Concluido - Fase de Testes) - Classe responsável por controlar o objeto de origem de captura. A fonte de captura gerencia os dispositivos de captura de áudio e vídeo.
 /// </summary>
 public ref class CarenMFCaptureSource : public ICarenMFCaptureSource
 {
@@ -171,7 +174,7 @@ public:
 	/// </summary>
 	/// <param name="Param_SourceStreamIndex">Index para o fluxo de captura. Esse valor pode ser um dois valores da enumeração (MF_CAPTURE_ENGINE_FIRST_SOURCE_INDEX) ou O índice baseado em zero de um fluxo. Para obter o número de fluxos, ligue para o método ICarenMFCaptureSource::GetDeviceStreamCount.</param>
 	/// <param name="Param_Efeito">Uma interface que contém o ponteiro para o efeito. Essa interface pode ser uma ICarenMFTransform ou ICarenActivate.</param>
-ResultCode AddEffect(
+	virtual CarenResult AddEffect(
 	UInt32 Param_SourceStreamIndex,
 	ICaren^ Param_Efeito);
 
@@ -183,44 +186,44 @@ ResultCode AddEffect(
 	/// <param name="Param_SourceStreamIndex">Index para o fluxo de captura. Esse valor pode ser um dois valores da enumeração (MF_CAPTURE_ENGINE_FIRST_SOURCE_INDEX) ou O índice baseado em zero de um fluxo. Para obter o número de fluxos, ligue para o método ICarenMFCaptureSource::GetDeviceStreamCount.</param>
 	/// <param name="Param_MediaTypeIndex">O índice baseado em zero do tipo de mídia para recuperar.</param>
 	/// <param name="Param_Out_MediaType">Recebe um ponteiro para a interface IMFMediaType. O chamador deve liberar a interface.</param>
-ResultCode GetAvailableDeviceMediaType(
+	virtual CarenResult GetAvailableDeviceMediaType(
 	UInt32 Param_SourceStreamIndex,
 	UInt32 Param_MediaTypeIndex,
-	[Out] ICarenMFMediaType% Param_Out_MediaType);
+	[Out] ICarenMFMediaType^% Param_Out_MediaType);
 
 	/// <summary>
 	/// Obtém o ponteiro para a interface ICarenMFActivate do dispositivo de captura atual.
 	/// </summary>
 	/// <param name="Param_CaptureDeviceType">O tipo de dispositivo do motor de captura.</param>
 	/// <param name="Param_Out_Activate">Recebe a interface ICarenMFActivate que representa o dispositivo.</param>
-ResultCode GetCaptureDeviceActivate(
+	virtual CarenResult GetCaptureDeviceActivate(
 	CA_MF_CAPTURE_ENGINE_DEVICE_TYPE Param_CaptureDeviceType,
-	[Out] ICarenMFActivate% Param_Out_Activate);
+	[Out] ICarenMFActivate^% Param_Out_Activate);
 
 	/// <summary>
 	/// Obtém o ponteiro para a interface ICarenMFMediaSource do dispositivo de captura atual
 	/// </summary>
 	/// <param name="Param_CaptureDeviceType">O tipo de dispositivo do motor de captura.</param>
 	/// <param name="Param_Out_MediaSource">Recebe a interface ICarenMFMediaSource que representa o dispositivo.</param>
-ResultCode GetCaptureDeviceSource(
+	virtual CarenResult GetCaptureDeviceSource(
 	CA_MF_CAPTURE_ENGINE_DEVICE_TYPE Param_CaptureDeviceType,
-	[Out] ICarenMFMediaSource% Param_Out_MediaSource);
+	[Out] ICarenMFMediaSource^% Param_Out_MediaSource);
 
 	/// <summary>
 	/// Obtém o tipo de mídia atual para um fluxo de captura. 
 	/// </summary>
 	/// <param name="Param_SourceStreamIndex">Index para o fluxo de captura. Esse valor pode ser um dois valores da enumeração (MF_CAPTURE_ENGINE_FIRST_SOURCE_INDEX) ou O índice baseado em zero de um fluxo. Para obter o número de fluxos, ligue para o método ICarenMFCaptureSource::GetDeviceStreamCount.</param>
 	/// <param name="Param_Out_MediaType">Recebe a interface ICarenMFMediaType. O chamador deve liberar a interface.</param>
-ResultCode GetCurrentDeviceMediaType(
+	virtual CarenResult GetCurrentDeviceMediaType(
 	UInt32 Param_SourceStreamIndex,
-	[Out] ICarenMFMediaType% Param_Out_MediaType);
+	[Out] ICarenMFMediaType^% Param_Out_MediaType);
 
 	/// <summary>
 	/// Obtém a categoria de fluxo para o índice de fluxo de origem especificado. 
 	/// </summary>
 	/// <param name="Param_SourceStreamIndex">Index para o fluxo de captura. Esse valor pode ser um dois valores da enumeração (MF_CAPTURE_ENGINE_FIRST_SOURCE_INDEX) ou O índice baseado em zero de um fluxo. Para obter o número de fluxos, ligue para o método ICarenMFCaptureSource::GetDeviceStreamCount.</param>
 	/// <param name="Param_Out_StreamCategory">Recebe um valor da enumeração (CA_MF_CAPTURE_ENGINE_STREAM_CATEGORY) do fluxo de origem especificado.</param>
-ResultCode GetDeviceStreamCategory(
+	virtual CarenResult GetDeviceStreamCategory(
 	UInt32 Param_SourceStreamIndex,
 	[Out] CA_MF_CAPTURE_ENGINE_STREAM_CATEGORY% Param_Out_StreamCategory);
 
@@ -228,14 +231,14 @@ ResultCode GetDeviceStreamCategory(
 	/// Obtém o número de fluxos de dispositivos. 
 	/// </summary>
 	/// <param name="Param_Out_StreamCount">Recebe o número de fluxos de dispositivos.</param>
-ResultCode GetDeviceStreamCount([Out] UInt32% Param_Out_StreamCount);
+	virtual CarenResult GetDeviceStreamCount([Out] UInt32% Param_Out_StreamCount);
 
 	/// <summary>
 	/// Obtém o estado de espelhamento atual da transmissão de visualização de vídeo. 
 	/// </summary>
 	/// <param name="Param_StreamIndex">O índice baseado em zero do fluxo.</param>
 	/// <param name="Param_Out_MirrorState">Recebe o valor TRUE se o espelhamento estiver ativado ou FALSE se o espelhamento for desativado.</param>
-ResultCode GetMirrorState(
+	virtual CarenResult GetMirrorState(
 	UInt32 Param_StreamIndex,
 	[Out] Boolean% Param_Out_MirrorState);
 
@@ -245,9 +248,9 @@ ResultCode GetMirrorState(
 	/// <param name="Param_GuidServico">Um identificador de serviço GUID. Atualmente, o valor deve ser IID_IMFSourceReader ou Nulo.</param>
 	/// <param name="Param_RIIDInterface">O identificador de interface (IID) da interface que está sendo solicitada. O valor deve ser IID_IMFSourceReader. Se o valor não estiver definido para IID_IMFSourceReader,a chamada falhará e retornará ER_E_INVALIDARG.</param>
 	/// <param name="Param_Ref_Interface">Recebe um ponteiro para a interface solicitada. O usuário é responsável por inicializar a interface.</param>
-ResultCode GetService(
+	virtual CarenResult GetService(
 	String^ Param_GuidServico,
-	Type^ Param_RIID,
+	String^ Param_RIID,
 	ICaren^% Param_Ref_Interface);
 
 	/// <summary>
@@ -255,7 +258,7 @@ ResultCode GetService(
 	/// </summary>
 	/// <param name="Param_NomeAmigavel">O nome amigável. Esse valor pode ser os valores da enumeração (CA_MF_CAPTURE_ENGINE_FIRST_SOURCE_INDEX) ou outros valores. Veja na documentação do método.</param>
 	/// <param name="Param_Out_StreamIndexAtual">Recebe o valor do índice de fluxo que corresponde ao nome amigável.</param>
-ResultCode GetStreamIndexFromFriendlyName(
+	virtual CarenResult GetStreamIndexFromFriendlyName(
 	UInt32 Param_NomeAmigavel,
 	[Out] UInt32% Param_Out_StreamIndexAtual);
 
@@ -263,7 +266,7 @@ ResultCode GetStreamIndexFromFriendlyName(
 	/// Remove todos os efeitos de um fluxo de captura.
 	/// </summary>
 	/// <param name="Param_SourceStreamIndex">Index para o fluxo de captura. Esse valor pode ser um dois valores da enumeração (MF_CAPTURE_ENGINE_FIRST_SOURCE_INDEX) ou O índice baseado em zero de um fluxo. Para obter o número de fluxos, ligue para o método ICarenMFCaptureSource::GetDeviceStreamCount.</param>
-ResultCode RemoveAllEffects(UInt32 Param_SourceStreamIndex);
+	virtual CarenResult RemoveAllEffects(UInt32 Param_SourceStreamIndex);
 
 	/// <summary>
 	/// Remove um efeito de um fluxo de captura.
@@ -271,7 +274,7 @@ ResultCode RemoveAllEffects(UInt32 Param_SourceStreamIndex);
 	/// </summary>
 	/// <param name="Param_SourceStreamIndex">Index para o fluxo de captura. Esse valor pode ser um dois valores da enumeração (MF_CAPTURE_ENGINE_FIRST_SOURCE_INDEX) ou O índice baseado em zero de um fluxo. Para obter o número de fluxos, ligue para o método ICarenMFCaptureSource::GetDeviceStreamCount.</param>
 	/// <param name="Param_Efeito">O ponteiro para a interface que contém o efeito a ser removido.</param>
-ResultCode RemoveEffect(
+	virtual CarenResult RemoveEffect(
 	UInt32 Param_SourceStreamIndex,
 	ICaren^ Param_Efeito);
 
@@ -281,7 +284,7 @@ ResultCode RemoveEffect(
 	/// </summary>
 	/// <param name="Param_SourceStreamIndex">Index para o fluxo de captura. Esse valor pode ser um dois valores da enumeração (MF_CAPTURE_ENGINE_FIRST_SOURCE_INDEX) ou O índice baseado em zero de um fluxo. Para obter o número de fluxos, ligue para o método ICarenMFCaptureSource::GetDeviceStreamCount.</param>
 	/// <param name="Param_MediaType">Uma interface ICarenMFMediaType para o formato de saída para o fluxo de captura.</param>
-ResultCode SetCurrentDeviceMediaType(
+	virtual CarenResult SetCurrentDeviceMediaType(
 	UInt32 Param_SourceStreamIndex,
 	ICarenMFMediaType^ Param_MediaType);
 
@@ -290,7 +293,7 @@ ResultCode SetCurrentDeviceMediaType(
 	/// </summary>
 	/// <param name="Param_StreamIndex">O índice baseado em zero do fluxo.</param>
 	/// <param name="Param_MirrorState">Se TRUE, o espelhamento estiver ativado; se FALSO, o espelhamento é desativado.</param>
-ResultCode SetMirrorState(
+	virtual CarenResult SetMirrorState(
 	UInt32 Param_StreamIndex,
 	Boolean Param_MirrorState);
 };

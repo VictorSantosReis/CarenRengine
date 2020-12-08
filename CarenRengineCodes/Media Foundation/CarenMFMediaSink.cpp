@@ -466,7 +466,7 @@ Done:;
 /// Obtém as características do coletor de mídia.
 /// </summary>
 /// <param name="Param_Out_Caracteristicas">Retorna as características desse (Coletor de mídia).</param>
-CarenResult CarenMFMediaSink::GetCharacteristics([Out] Enumeracoes::CA_MIDIA_SINK_CARACTERISTCAS% Param_Out_Caracteristicas)
+CarenResult CarenMFMediaSink::GetCharacteristics([Out] Enumeracoes::CA_MEDIASINK_CHARACTERISTICS% Param_Out_Caracteristicas)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -496,7 +496,7 @@ CarenResult CarenMFMediaSink::GetCharacteristics([Out] Enumeracoes::CA_MIDIA_SIN
 	}
 
 	//Converter as caracteristicas para a enumerção
-	Param_Out_Caracteristicas = static_cast<CA_MIDIA_SINK_CARACTERISTCAS>(vi_OutCaracteristicasColetorCode);
+	Param_Out_Caracteristicas = static_cast<CA_MEDIASINK_CHARACTERISTICS>(vi_OutCaracteristicasColetorCode);
 
 Done:;
 	//Retorna o resultado

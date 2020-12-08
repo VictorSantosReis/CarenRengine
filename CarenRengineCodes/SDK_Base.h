@@ -5686,8 +5686,14 @@ namespace CarenRengine
 			/// (ORIGINAL) - Enumera bandeiras que definem as caracteristicas do fluxo de bytes(ICarenMFByteStream).
 			/// </summary>
 			[FlagsAttribute]
-			public enum class CA_CARACTERISTICAS_BYTESTREAM
+			public enum class CA_MFBYTESTREAM_CHARACTERISTICS
 			{
+				/// <summary>
+				/// Utilizado para suporte. Não faz parte das contantes originais.
+				/// </summary>
+				Zero = 0x0,
+
+
 				/// <summary>
 				/// O fluxo de bytes pode ser lido.
 				/// </summary>
@@ -6106,45 +6112,50 @@ namespace CarenRengine
 			};
 			
 			/// <summary>
-			/// Enumera as possiveis características de um Coletor de Midia.
+			/// (Original) - Enumera as possiveis características de um Coletor de Midia.
 			/// </summary>
 			[FlagsAttribute]
-			public enum class CA_MIDIA_SINK_CARACTERISTCAS
+			public enum class CA_MEDIASINK_CHARACTERISTICS
 			{
+				/// <summary>
+				/// Utilizado para suporte. Não faz parte das contantes originais.
+				/// </summary>
+				Zero = 0x0,
+
 				/// <summary>
 				/// O coletor de mídia tem um número fixo de fluxos. Ele não oferece suporte aos métodos: 
 				/// AddStreamSink e RemoveStreamSink no Coletor de mídia.
 				/// </summary>
-				COLETOR_FLUXOS_FIXOS = 0x00000001,
+				CA_MEDIASINK_FIXED_STREAMS = 0x00000001,
 
 				/// <summary>
 				/// O coletor de mídia não pode corresponder às taxas com um relógio externo.
 				/// </summary>
-				COLETOR_NOT_CORRESPONDE_CLOCK = 0x00000002,
+				CA_MEDIASINK_CANNOT_MATCH_CLOCK = 0x00000002,
 
 				/// <summary>
-				/// O coletor de mídia é sem nome. Ele consome amostras o mais rápido possível e não se sincroniza com 
-				/// um relógio de apresentação.
+				/// O coletor de mídia não tem sinal. Ele consome amostras o mais rápido possível e não se sincroniza com um relógio de apresentação.
+				/// A maioria dos coletores de arquivamento não tem identificação.
 				/// </summary>
-				COLETOR_NO_NAME = 0x00000004,
+				CA_MEDIASINK_RATELESS = 0x00000004,
 
 				/// <summary>
 				/// O coletor de mídia requer um relógio de apresentação. O relógio de apresentação é definido chamando o 
 				/// o método (DefinirRelogioApresentação) no coletor de mídia.
 				/// </summary>
-				COLETOR_REQUER_CLOCK = 0x00000008,
+				CA_MEDIASINK_CLOCK_REQUIRED = 0x00000008,
 
 				/// <summary>
 				///  O coletor de mídia pode aceitar exemplos de (Preroll) antes que o relógio de apresentação seja iniciado. 
 				/// O coletor de mídia expõe o IMFMediaSinkPreroll interface.
 				/// </summary>
-				COLETOR_ACEITA_PREROLL = 0x00000010,
+				CA_MEDIASINK_CAN_PREROLL = 0x00000010,
 
 				/// <summary>
 				/// O primeiro coletor de fluxo (índice 0) é um fluxo de referência. O fluxo de referência deve
 				/// ter um tipo de mídia antes que os tipos de mídia podem ser definidos em outros coletores de fluxo.
 				/// </summary>
-				COLETOR_REQUER_TIPO_MIDIA_FLUXO_REFERENCIA = 0x00000020,
+				CA_MEDIASINK_REQUIRE_REFERENCE_MEDIATYPE = 0x00000020,
 
 			};
 
@@ -18402,14 +18413,14 @@ MEReservedMax = 10000
 			/// </summary>
 			public ref struct CA_MFBYTESTREAM_BUFFERING_PARAMS
 			{
-				Int64                                 cbTotalFileSize;
-				Int64                                 cbPlayableDataSize;
-				cli::array<CA_MF_LEAKY_BUCKET_PAIR^>^ prgBuckets;
-				Int64                                 cBuckets;
-				Int64                                 qwNetBufferingTime;
-				Int64                                 qwExtraBufferingTimeDuringSeek;
-				Int64                                 qwPlayDuration;
-				float                                 dRate;
+				UInt64                                 cbTotalFileSize;
+				UInt64                                 cbPlayableDataSize;
+				cli::array<CA_MF_LEAKY_BUCKET_PAIR^>^  prgBuckets;
+				UInt32                                  cBuckets;
+				UInt64                                 qwNetBufferingTime;
+				UInt64                                 qwExtraBufferingTimeDuringSeek;
+				UInt64                                 qwPlayDuration;
+				float                                  dRate;
 			};
 
 			/// <summary>

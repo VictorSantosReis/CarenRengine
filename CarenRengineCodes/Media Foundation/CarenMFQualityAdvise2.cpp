@@ -415,7 +415,7 @@ void CarenMFQualityAdvise2::Finalizar()
 /// </summary>
 /// <param name="Param_Evento">Uma interface ICarenMFMediaEvent para o evento.</param>
 /// <param name="Param_Out_Flags">Recebe um Or bitwise de zero ou mais bandeiras da enumeração CA_MF_QUALITY_ADVISE_FLAGS.</param>
-ResultCode NotifyQualityEvent(
+CarenResult CarenMFQualityAdvise2::NotifyQualityEvent(
 ICarenMFMediaEvent^ Param_Evento,
 OutParam CA_MF_QUALITY_ADVISE_FLAGS% Param_Out_Flags)
 {
@@ -426,10 +426,212 @@ OutParam CA_MF_QUALITY_ADVISE_FLAGS% Param_Out_Flags)
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	Utilidades Util;
+	IMFMediaEvent* vi_pMediaEvent = Nulo;
+	DWORD vi_OutQualityFlags = 0;
 
+	//Recupera o ponteiro para o evento.
+	CarenGetPointerFromICarenSafe(Param_Evento, vi_pMediaEvent);
 
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->NotifyQualityEvent(vi_pMediaEvent, &vi_OutQualityFlags);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Define o código na classe.
+		Var_Glob_LAST_HRESULT = Hr;
+
+		//Sai do método
+		Sair;
+	}
+
+	//Converte o valor e define no parametro de saida.
+	Param_Out_Flags = static_cast<CA_MF_QUALITY_ADVISE_FLAGS>(vi_OutQualityFlags);
+
+Done:;
+	//Retorna o resultado.
+	return Resultado;
+}
+
+
+
+
+// Métodos da interface (ICarenMFQualityAdvise)
+
+
+/// <summary>
+/// Dropa as amostras em um intervalo de tempo especificado.
+/// </summary>
+/// <param name="Param_NsAmountToDrop">Quantidade de tempo para dropar, em unidades de 100 nanossegundos. Esse valor é sempre absoluto. Se o método for chamado várias vezes, não adicione os horários das chamadas anteriores.</param>
+CarenResult CarenMFQualityAdvise2::DropTime(UInt64 Param_NsAmountToDrop)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Resultado COM.
+	ResultadoCOM Hr = E_FAIL;
+
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->DropTime(Param_NsAmountToDrop);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Define o código na classe.
+		Var_Glob_LAST_HRESULT = Hr;
+
+		//Sai do método
+		Sair;
+	}
+
+Done:;
+	//Retorna o resultado.
+	return Resultado;
+}
+
+/// <summary>
+/// Recupera o modo de drop atual.
+/// </summary>
+/// <param name="Param_Out_DropMode">Recebe o modo de drop, especificado como membro da enumeração CA_MF_QUALITY_DROP_MODE.</param>
+CarenResult CarenMFQualityAdvise2::GetDropMode([Out] CA_MF_QUALITY_DROP_MODE% Param_Out_DropMode)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Resultado COM.
+	ResultadoCOM Hr = E_FAIL;
+
+	//Variaveis a serem utilizadas.
+	MF_QUALITY_DROP_MODE vi_OutQualityDrop = MF_QUALITY_DROP_MODE::MF_DROP_MODE_NONE;
+
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetDropMode(&vi_OutQualityDrop);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Define o código na classe.
+		Var_Glob_LAST_HRESULT = Hr;
+
+		//Sai do método
+		Sair;
+	}
+
+	//Converte e define no parametro de saida.
+	Param_Out_DropMode = static_cast<CA_MF_QUALITY_DROP_MODE>(vi_OutQualityDrop);
+
+Done:;
+	//Retorna o resultado.
+	return Resultado;
+}
+
+/// <summary>
+/// Recupera o nível de qualidade atual.
+/// </summary>
+/// <param name="Param_Out_NivelQualidade">Recebe o nível de qualidade, especificado como membro da enumeração CA_MF_QUALITY_LEVEL.</param>
+CarenResult CarenMFQualityAdvise2::GetQualityLevel([Out] CA_MF_QUALITY_LEVEL% Param_Out_NivelQualidade)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Resultado COM.
+	ResultadoCOM Hr = E_FAIL;
+
+	//Variaveis a serem utilizadas.
+	Utilidades Util;
+	MF_QUALITY_LEVEL vi_OutQualityLevel = MF_QUALITY_LEVEL::MF_QUALITY_NORMAL;
+
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetQualityLevel(&vi_OutQualityLevel);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Define o código na classe.
+		Var_Glob_LAST_HRESULT = Hr;
+
+		//Sai do método
+		Sair;
+	}
+
+	//Converte e define no parametro de saida.
+	Param_Out_NivelQualidade = static_cast<CA_MF_QUALITY_LEVEL>(vi_OutQualityLevel);
+
+Done:;
+	//Retorna o resultado.
+	return Resultado;
+}
+
+/// <summary>
+/// Define o modo de drop. No modo de drop, um componente dropa amostras, mais ou menos agressivamente dependendo do nível do modo de drop.
+/// Se esse método for chamado a uma fonte de mídia, a fonte de mídia pode alternar entre saídas diluídas e não diluídas. Se isso ocorrer, os fluxos afetados enviarão um evento MEStreamThinMode para indicar a transição. A operação é assíncroda; após o retorno do SetDropMode, você pode receber amostras que estavam na fila antes da transição. O evento MEStreamThinMode marca o ponto exato no fluxo onde a transição ocorre.
+/// </summary>
+/// <param name="Param_DropMode">Modo de queda solicitado, especificado como membro da enumeração CA_MF_QUALITY_DROP_MODE.</param>
+CarenResult CarenMFQualityAdvise2::SetDropMode(CA_MF_QUALITY_DROP_MODE Param_DropMode)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Resultado COM.
+	ResultadoCOM Hr = E_FAIL;
+
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->SetDropMode(static_cast<MF_QUALITY_DROP_MODE>(Param_DropMode));
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Define o código na classe.
+		Var_Glob_LAST_HRESULT = Hr;
+
+		//Sai do método
+		Sair;
+	}
+
+Done:;
+	//Retorna o resultado.
+	return Resultado;
+}
+
+/// <summary>
+/// Define o nível de qualidade. O nível de qualidade determina como o componente consome ou produz amostras.
+/// </summary>
+/// <param name="Param_NivelQualidade">Nível de qualidade solicitado, especificado como membro da enumeração CA_MF_QUALITY_LEVEL.</param>
+CarenResult CarenMFQualityAdvise2::SetQualityLevel(CA_MF_QUALITY_LEVEL Param_NivelQualidade)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Resultado COM.
+	ResultadoCOM Hr = E_FAIL;
+
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->SetQualityLevel(static_cast<MF_QUALITY_LEVEL>(Param_NivelQualidade));
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);

@@ -415,7 +415,7 @@ void CarenMFCaptureEngine::Finalizar()
 /// </summary>
 /// <param name="Param_CaptureSinkType">Um valor da enumeração CA_MF_CAPTURE_ENGINE_SINK_TYPE que especifica o sink de captura a ser recuperado.</param>
 /// <param name="Param_Ref_Sink">A interface que vai receber o sink de captura especificado. O usuário deve criar e é responsável por liberar quando não foi mais usar.</param>
-ResultCode GetSink(
+CarenResult CarenMFCaptureEngine::GetSink(
 CA_MF_CAPTURE_ENGINE_SINK_TYPE Param_CaptureSinkType,
 ICaren^% Param_Ref_Sink)
 {
@@ -426,10 +426,10 @@ ICaren^% Param_Ref_Sink)
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	Utilidades Util;
-
+	IMFCaptureSink* vi_pOutSink = Nulo;
 
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetSink(static_cast<MF_CAPTURE_ENGINE_SINK_TYPE>(Param_CaptureSinkType), &vi_pOutSink);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -445,6 +445,9 @@ ICaren^% Param_Ref_Sink)
 		//Sai do método
 		Sair;
 	}
+
+	//Define o sink na interface criada pelo usuário.
+	CarenSetPointerToICarenSafe(vi_pOutSink, Param_Ref_Sink, true);
 
 Done:;
 	//Retorna o resultado.
@@ -455,7 +458,7 @@ Done:;
 /// Obtém um ponteiro para o objeto de origem de captura. Use a fonte de captura para configurar os dispositivos de captura. 
 /// </summary>
 /// <param name="Param_Out_CaptureSource">Retorna um ponteiro para a interface ICarenMFCaptureSource. O usuário é responsável por liberar a interface.</param>
-ResultCode GetSource([Out] ICarenMFCaptureSource^% Param_Out_CaptureSource)
+CarenResult CarenMFCaptureEngine::GetSource([Out] ICarenMFCaptureSource^% Param_Out_CaptureSource)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -464,10 +467,10 @@ ResultCode GetSource([Out] ICarenMFCaptureSource^% Param_Out_CaptureSource)
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	Utilidades Util;
-
+	IMFCaptureSource* vi_pOutCaptureSource = Nulo;
 
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetSource(&vi_pOutCaptureSource);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -483,6 +486,12 @@ ResultCode GetSource([Out] ICarenMFCaptureSource^% Param_Out_CaptureSource)
 		//Sai do método
 		Sair;
 	}
+
+	//Cria a interface a ser retornada.
+	Param_Out_CaptureSource = gcnew CarenMFCaptureSource();
+
+	//Define o ponteiro na interface a ser retornada.
+	CarenSetPointerToICarenSafe(vi_pOutCaptureSource, Param_Out_CaptureSource, true);
 
 Done:;
 	//Retorna o resultado.
@@ -498,7 +507,7 @@ Done:;
 /// <param name="Param_Atributos">Você pode usar este parâmetro para configurar o mecanismo de captura. Este parâmetro pode ser Nulo.</param>
 /// <param name="Param_AudioSource">Um ponteiro que especifica um dispositivo de captura de áudio. Este parâmetro pode ser Nulo.</param>
 /// <param name="Param_VideoSource">Um ponteiro que especifica um dispositivo de captura de vídeo. Este parâmetro pode ser Nulo.</param>
-ResultCode Initialize(
+CarenResult CarenMFCaptureEngine::Initialize(
 ICarenMFCaptureEngineOnEventCallback^ Param_Callback,
 ICarenMFAttributes^ Param_Atributos,
 ICaren^ Param_AudioSource,
@@ -511,10 +520,32 @@ ICaren^ Param_VideoSource)
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	Utilidades Util;
+	IMFCaptureEngineOnEventCallback* vi_pEngineCallback = Nulo;
+	IMFAttributes* vi_pAttributes = Nulo; //Pode ser Nulo.
+	IUnknown* vi_pAudioSource = Nulo; //Pode ser Nulo.
+	IUnknown* vi_pVideoSource = Nulo; //Pode ser Nulo.
 
+	//Recupera o ponteiro para o Callback
+	CarenGetPointerFromICarenSafe(Param_Callback, vi_pEngineCallback);
+
+	//Recupera o ponteiro para os Atributos se valido.
+	if (ObjetoGerenciadoValido(Param_Atributos))
+		CarenGetPointerFromICarenSafe(Param_Atributos, vi_pAttributes);
+
+	//Recupera o ponteiro para o Audio Source se informado.
+	if (ObjetoGerenciadoValido(Param_AudioSource))
+		CarenGetPointerFromICarenSafe(Param_AudioSource, vi_pAudioSource);
+
+	//Recupera o ponteiro para o Video Source se informado.
+	if (ObjetoGerenciadoValido(Param_VideoSource))
+		CarenGetPointerFromICarenSafe(Param_VideoSource, vi_pVideoSource);
 
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->Initialize(
+		vi_pEngineCallback,
+		vi_pAttributes,
+		vi_pAudioSource,
+		vi_pVideoSource);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -542,7 +573,7 @@ Done:;
 /// Para obter um ponteiro para o Sink de visualização, ligue para o ICarenMFCaptureEngine::GetSink.
 /// Este método é assíncrono. Se o método retornar um código de sucesso, o chamador receberá um MF_CAPTURE_ENGINE_PREVIEW_STARTED evento através do método ICarenMFCaptureEngineOnEventCallback::OnEvent. A operação pode falhar assincronicamente após o sucesso do método. Se assim for, o código de erro é transmitido através do método OnEvent.
 /// </summary>
-ResultCode StartPreview()
+CarenResult CarenMFCaptureEngine::StartPreview()
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -550,11 +581,8 @@ ResultCode StartPreview()
 	//Resultado COM.
 	ResultadoCOM Hr = E_FAIL;
 
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-
-
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->StartPreview();
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -581,7 +609,7 @@ Done:;
 /// Antes de chamar esse método, configure o Sink de gravação chamando IMFCaptureSink::AddStream. Para obter um ponteiro para o Sink de gravação, ligue para o ICarenMFCaptureEngine::GetSink.
 /// Este método é assíncrono. Se o método retornar um código de sucesso, o chamador receberá um MF_CAPTURE_ENGINE_RECORD_STARTED evento através do método ICarenMFCaptureEngineOnEventCallback::OnEvent. A operação pode falhar assincronicamente após o sucesso do método. Se assim for, o código de erro é transmitido através do método OnEvent.
 /// </summary>
-ResultCode StartRecord()
+CarenResult CarenMFCaptureEngine::StartRecord()
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -589,11 +617,8 @@ ResultCode StartRecord()
 	//Resultado COM.
 	ResultadoCOM Hr = E_FAIL;
 
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-
-
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->StartRecord();
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -619,7 +644,7 @@ Done:;
 /// Interrompe a visualização.
 /// Este método é assíncrono. Se o método retornar um código de sucesso, o chamador receberá um MF_CAPTURE_ENGINE_PREVIEW_STOPPED evento através do método ICarenMFCaptureEngineOnEventCallback::OnEvent. A operação pode falhar assincronicamente após o sucesso do método. Se assim for, o código de erro é transmitido através do método OnEvent.
 /// </summary>
-ResultCode StopPreview()
+CarenResult CarenMFCaptureEngine::StopPreview()
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -627,11 +652,8 @@ ResultCode StopPreview()
 	//Resultado COM.
 	ResultadoCOM Hr = E_FAIL;
 
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-
-
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->StopPreview();
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -658,8 +680,8 @@ Done:;
 /// Este método é assíncrono. Se o método retornar um código de sucesso, o chamador receberá um MF_CAPTURE_ENGINE_RECORD_STOPPED evento através do método ICarenMFCaptureEngineOnEventCallback::OnEvent. A operação pode falhar assincronicamente após o sucesso do método. Se assim for, o código de erro é transmitido através do método OnEvent.
 /// </summary>
 /// <param name="Param_Finalizar">Um valor booleano que especifica se deve finalizar o arquivo de saída. Para criar um arquivo de saída válido, especifique TRUE. Especifique FALSO somente se você quiser interromper a gravação e descartar o arquivo de saída. Se o valor for FALSO,a operação será concluída mais rapidamente, mas o arquivo não será jogável.</param>
-/// <param name="Param_FlushUnprocessedSamples">Um valor booleano que especifica se as amostras não processadas que aguardam para serem codificadas devem ser lavadas.</param>
-ResultCode StopRecord(
+/// <param name="Param_FlushUnprocessedSamples">Um valor booleano que especifica se as amostras não processadas aguardando para serem codificadas devem ser liberadas.</param>
+CarenResult CarenMFCaptureEngine::StopRecord(
 Boolean Param_Finalizar,
 Boolean Param_FlushUnprocessedSamples)
 {
@@ -669,11 +691,8 @@ Boolean Param_FlushUnprocessedSamples)
 	//Resultado COM.
 	ResultadoCOM Hr = E_FAIL;
 
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-
-
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->StopRecord(Param_Finalizar ? TRUE : FALSE, Param_FlushUnprocessedSamples ? TRUE : FALSE);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -699,7 +718,7 @@ Done:;
 /// Captura uma imagem parada do fluxo de vídeo. 
 /// Este método é assíncrono. Se o método retornar um código de sucesso, o chamador receberá um MF_CAPTURE_ENGINE_PHOTO_TAKEN evento através do método ICarenMFCaptureEngineOnEventCallback::OnEvent. A operação pode falhar assincronicamente após o sucesso do método. Se assim for, o código de erro é transmitido através do método OnEvent.
 /// </summary>
-ResultCode TakePhoto()
+CarenResult CarenMFCaptureEngine::TakePhoto()
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -707,11 +726,8 @@ ResultCode TakePhoto()
 	//Resultado COM.
 	ResultadoCOM Hr = E_FAIL;
 
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-
-
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->TakePhoto();
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);

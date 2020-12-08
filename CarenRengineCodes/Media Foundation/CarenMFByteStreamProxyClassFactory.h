@@ -33,7 +33,7 @@ using namespace CarenRengine::SDKUtilidades;
 
 
 /// <summary>
-/// (Em desenvolvimento) - 
+/// (Concluido - Fase de Testes) - Classe responsável por criar um proxy para um fluxo byte. 
 /// </summary>
 public ref class CarenMFByteStreamProxyClassFactory : public ICarenMFByteStreamProxyClassFactory
 {
@@ -171,9 +171,9 @@ public:
 	/// </summary>
 	/// <param name="Param_ByteStream">Uma interface ICarenMFByteStream do fluxo byte para o proxy.</param>
 	/// <param name="Param_Atributos">Reservado. Defina como NULO.</param>
-	/// <param name="Param_RIID">O identifer de interface (IID) da interface que está sendo solicitada.</param>
+	/// <param name="Param_RIID">O identificador de interface (IID) da interface que está sendo solicitada.</param>
 	/// <param name="Param_Ref_InterfaceObjeto">A interface que vai receber o ponteiro. O usuário é responsável por criar e liberar a interface.</param>
-ResultCode CreateByteStreamProxy(
+	virtual CarenResult CreateByteStreamProxy(
 	ICarenMFByteStream^ Param_ByteStream,
 	ICarenMFAttributes^ Param_Atributos,
 	String^ Param_RIID,

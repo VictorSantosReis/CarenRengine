@@ -415,7 +415,7 @@ void CarenMFCaptureSource::Finalizar()
 /// </summary>
 /// <param name="Param_SourceStreamIndex">Index para o fluxo de captura. Esse valor pode ser um dois valores da enumeração (MF_CAPTURE_ENGINE_FIRST_SOURCE_INDEX) ou O índice baseado em zero de um fluxo. Para obter o número de fluxos, ligue para o método ICarenMFCaptureSource::GetDeviceStreamCount.</param>
 /// <param name="Param_Efeito">Uma interface que contém o ponteiro para o efeito. Essa interface pode ser uma ICarenMFTransform ou ICarenActivate.</param>
-ResultCode AddEffect(
+CarenResult CarenMFCaptureSource::AddEffect(
 UInt32 Param_SourceStreamIndex,
 ICaren^ Param_Efeito)
 {
@@ -426,10 +426,13 @@ ICaren^ Param_Efeito)
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	Utilidades Util;
+	IUnknown* vi_pEfeito = Nulo;
 
+	//Recupera o ponteiro para a interface do efeito.
+	CarenGetPointerFromICarenSafe(Param_Efeito, vi_pEfeito);
 
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->AddEffect(static_cast<DWORD>(Param_SourceStreamIndex), vi_pEfeito);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -459,10 +462,10 @@ Done:;
 /// <param name="Param_SourceStreamIndex">Index para o fluxo de captura. Esse valor pode ser um dois valores da enumeração (MF_CAPTURE_ENGINE_FIRST_SOURCE_INDEX) ou O índice baseado em zero de um fluxo. Para obter o número de fluxos, ligue para o método ICarenMFCaptureSource::GetDeviceStreamCount.</param>
 /// <param name="Param_MediaTypeIndex">O índice baseado em zero do tipo de mídia para recuperar.</param>
 /// <param name="Param_Out_MediaType">Recebe um ponteiro para a interface IMFMediaType. O chamador deve liberar a interface.</param>
-ResultCode GetAvailableDeviceMediaType(
+CarenResult CarenMFCaptureSource::GetAvailableDeviceMediaType(
 UInt32 Param_SourceStreamIndex,
 UInt32 Param_MediaTypeIndex,
-[Out] ICarenMFMediaType% Param_Out_MediaType)
+[Out] ICarenMFMediaType^% Param_Out_MediaType)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -471,10 +474,10 @@ UInt32 Param_MediaTypeIndex,
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	Utilidades Util;
-
+	IMFMediaType* vi_pOutMediaType = Nulo;
 
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetAvailableDeviceMediaType(static_cast<DWORD>(Param_SourceStreamIndex), static_cast<DWORD>(Param_MediaTypeIndex), &vi_pOutMediaType);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -490,6 +493,12 @@ UInt32 Param_MediaTypeIndex,
 		//Sai do método
 		Sair;
 	}
+
+	//Cria a interface a ser retornada.
+	Param_Out_MediaType = gcnew CarenMFMediaType();
+
+	//Define o ponteiro na interface
+	CarenSetPointerToICarenSafe(vi_pOutMediaType, Param_Out_MediaType, true);
 
 Done:;
 	//Retorna o resultado.
@@ -501,9 +510,9 @@ Done:;
 /// </summary>
 /// <param name="Param_CaptureDeviceType">O tipo de dispositivo do motor de captura.</param>
 /// <param name="Param_Out_Activate">Recebe a interface ICarenMFActivate que representa o dispositivo.</param>
-ResultCode GetCaptureDeviceActivate(
+CarenResult CarenMFCaptureSource::GetCaptureDeviceActivate(
 CA_MF_CAPTURE_ENGINE_DEVICE_TYPE Param_CaptureDeviceType,
-[Out] ICarenMFActivate% Param_Out_Activate)
+[Out] ICarenMFActivate^% Param_Out_Activate)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -512,10 +521,10 @@ CA_MF_CAPTURE_ENGINE_DEVICE_TYPE Param_CaptureDeviceType,
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	Utilidades Util;
-
+	IMFActivate* vi_pOutActivate = Nulo;
 
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetCaptureDeviceActivate(static_cast<MF_CAPTURE_ENGINE_DEVICE_TYPE>(Param_CaptureDeviceType), &vi_pOutActivate);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -531,6 +540,12 @@ CA_MF_CAPTURE_ENGINE_DEVICE_TYPE Param_CaptureDeviceType,
 		//Sai do método
 		Sair;
 	}
+
+	//Cria a interface a ser retornada.
+	Param_Out_Activate = gcnew CarenMFActivate();
+
+	//Define o ponteiro na interface
+	CarenSetPointerToICarenSafe(vi_pOutActivate, Param_Out_Activate, true);
 
 Done:;
 	//Retorna o resultado.
@@ -542,9 +557,9 @@ Done:;
 /// </summary>
 /// <param name="Param_CaptureDeviceType">O tipo de dispositivo do motor de captura.</param>
 /// <param name="Param_Out_MediaSource">Recebe a interface ICarenMFMediaSource que representa o dispositivo.</param>
-ResultCode GetCaptureDeviceSource(
+CarenResult CarenMFCaptureSource::GetCaptureDeviceSource(
 CA_MF_CAPTURE_ENGINE_DEVICE_TYPE Param_CaptureDeviceType,
-[Out] ICarenMFMediaSource% Param_Out_MediaSource)
+[Out] ICarenMFMediaSource^% Param_Out_MediaSource)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -553,10 +568,10 @@ CA_MF_CAPTURE_ENGINE_DEVICE_TYPE Param_CaptureDeviceType,
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	Utilidades Util;
-
+	IMFMediaSource* vi_pOutMediaSource = Nulo;
 
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetCaptureDeviceSource(static_cast<MF_CAPTURE_ENGINE_DEVICE_TYPE>(Param_CaptureDeviceType), &vi_pOutMediaSource);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -572,6 +587,12 @@ CA_MF_CAPTURE_ENGINE_DEVICE_TYPE Param_CaptureDeviceType,
 		//Sai do método
 		Sair;
 	}
+
+	//Cria a interface a ser retornada.
+	Param_Out_MediaSource = gcnew CarenMFMediaSource();
+
+	//Define o ponteiro na interface
+	CarenSetPointerToICarenSafe(vi_pOutMediaSource, Param_Out_MediaSource, true);
 
 Done:;
 	//Retorna o resultado.
@@ -583,9 +604,9 @@ Done:;
 /// </summary>
 /// <param name="Param_SourceStreamIndex">Index para o fluxo de captura. Esse valor pode ser um dois valores da enumeração (MF_CAPTURE_ENGINE_FIRST_SOURCE_INDEX) ou O índice baseado em zero de um fluxo. Para obter o número de fluxos, ligue para o método ICarenMFCaptureSource::GetDeviceStreamCount.</param>
 /// <param name="Param_Out_MediaType">Recebe a interface ICarenMFMediaType. O chamador deve liberar a interface.</param>
-ResultCode GetCurrentDeviceMediaType(
+CarenResult CarenMFCaptureSource::GetCurrentDeviceMediaType(
 UInt32 Param_SourceStreamIndex,
-[Out] ICarenMFMediaType% Param_Out_MediaType)
+[Out] ICarenMFMediaType^% Param_Out_MediaType)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -594,10 +615,10 @@ UInt32 Param_SourceStreamIndex,
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	Utilidades Util;
-
+	IMFMediaType* vi_pOutMediaType = Nulo;
 
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetCurrentDeviceMediaType(static_cast<DWORD>(Param_SourceStreamIndex), &vi_pOutMediaType);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -613,6 +634,12 @@ UInt32 Param_SourceStreamIndex,
 		//Sai do método
 		Sair;
 	}
+
+	//Cria a interface a ser retornada.
+	Param_Out_MediaType = gcnew CarenMFMediaType();
+
+	//Define o ponteiro na interface
+	CarenSetPointerToICarenSafe(vi_pOutMediaType, Param_Out_MediaType, true);
 
 Done:;
 	//Retorna o resultado.
@@ -624,7 +651,7 @@ Done:;
 /// </summary>
 /// <param name="Param_SourceStreamIndex">Index para o fluxo de captura. Esse valor pode ser um dois valores da enumeração (MF_CAPTURE_ENGINE_FIRST_SOURCE_INDEX) ou O índice baseado em zero de um fluxo. Para obter o número de fluxos, ligue para o método ICarenMFCaptureSource::GetDeviceStreamCount.</param>
 /// <param name="Param_Out_StreamCategory">Recebe um valor da enumeração (CA_MF_CAPTURE_ENGINE_STREAM_CATEGORY) do fluxo de origem especificado.</param>
-ResultCode GetDeviceStreamCategory(
+CarenResult CarenMFCaptureSource::GetDeviceStreamCategory(
 UInt32 Param_SourceStreamIndex,
 [Out] CA_MF_CAPTURE_ENGINE_STREAM_CATEGORY% Param_Out_StreamCategory)
 {
@@ -635,10 +662,10 @@ UInt32 Param_SourceStreamIndex,
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	Utilidades Util;
-
+	MF_CAPTURE_ENGINE_STREAM_CATEGORY vi_OutCategory = MF_CAPTURE_ENGINE_STREAM_CATEGORY::MF_CAPTURE_ENGINE_STREAM_CATEGORY_UNSUPPORTED;
 
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetDeviceStreamCategory(static_cast<DWORD>(Param_SourceStreamIndex), &vi_OutCategory);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -654,6 +681,9 @@ UInt32 Param_SourceStreamIndex,
 		//Sai do método
 		Sair;
 	}
+
+	//Converte e define no parametro de saida o resultado.
+	Param_Out_StreamCategory = static_cast<CA_MF_CAPTURE_ENGINE_STREAM_CATEGORY>(vi_OutCategory);
 
 Done:;
 	//Retorna o resultado.
@@ -664,7 +694,7 @@ Done:;
 /// Obtém o número de fluxos de dispositivos. 
 /// </summary>
 /// <param name="Param_Out_StreamCount">Recebe o número de fluxos de dispositivos.</param>
-ResultCode GetDeviceStreamCount([Out] UInt32% Param_Out_StreamCount)
+CarenResult CarenMFCaptureSource::GetDeviceStreamCount([Out] UInt32% Param_Out_StreamCount)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -673,10 +703,10 @@ ResultCode GetDeviceStreamCount([Out] UInt32% Param_Out_StreamCount)
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	Utilidades Util;
-
+	DWORD vi_OutStreamCount = 0;
 
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetDeviceStreamCount(&vi_OutStreamCount);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -692,6 +722,9 @@ ResultCode GetDeviceStreamCount([Out] UInt32% Param_Out_StreamCount)
 		//Sai do método
 		Sair;
 	}
+
+	//Define o resultado no parametro de saida.
+	Param_Out_StreamCount = static_cast<UInt32>(vi_OutStreamCount);
 
 Done:;
 	//Retorna o resultado.
@@ -703,7 +736,7 @@ Done:;
 /// </summary>
 /// <param name="Param_StreamIndex">O índice baseado em zero do fluxo.</param>
 /// <param name="Param_Out_MirrorState">Recebe o valor TRUE se o espelhamento estiver ativado ou FALSE se o espelhamento for desativado.</param>
-ResultCode GetMirrorState(
+CarenResult CarenMFCaptureSource::GetMirrorState(
 UInt32 Param_StreamIndex,
 [Out] Boolean% Param_Out_MirrorState)
 {
@@ -714,10 +747,10 @@ UInt32 Param_StreamIndex,
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	Utilidades Util;
-
+	BOOL vi_OutStateMirror = FALSE;
 
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetMirrorState(static_cast<DWORD>(Param_StreamIndex), &vi_OutStateMirror);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -733,6 +766,9 @@ UInt32 Param_StreamIndex,
 		//Sai do método
 		Sair;
 	}
+
+	//Converte e define o resultado no parametro de saida.
+	Param_Out_MirrorState = vi_OutStateMirror ? true : false;
 
 Done:;
 	//Retorna o resultado.
@@ -745,9 +781,9 @@ Done:;
 /// <param name="Param_GuidServico">Um identificador de serviço GUID. Atualmente, o valor deve ser IID_IMFSourceReader ou Nulo.</param>
 /// <param name="Param_RIIDInterface">O identificador de interface (IID) da interface que está sendo solicitada. O valor deve ser IID_IMFSourceReader. Se o valor não estiver definido para IID_IMFSourceReader,a chamada falhará e retornará ER_E_INVALIDARG.</param>
 /// <param name="Param_Ref_Interface">Recebe um ponteiro para a interface solicitada. O usuário é responsável por inicializar a interface.</param>
-ResultCode GetService(
+CarenResult CarenMFCaptureSource::GetService(
 String^ Param_GuidServico,
-Type^ Param_RIID,
+String^ Param_RIID,
 ICaren^% Param_Ref_Interface)
 {
 	//Variavel a ser retornada.
@@ -758,9 +794,19 @@ ICaren^% Param_Ref_Interface)
 
 	//Variaveis a serem utilizadas.
 	Utilidades Util;
+	GUID vi_GuidService = GUID_NULL; //Pode ser Nulo.
+	GUID vi_Riid = GUID_NULL;
+	IUnknown* vi_pOutInterface = Nulo;
 
+	//Cria o guid de serviço se for valido.
+	if (StringObjetoValido(Param_GuidServico))
+		vi_GuidService = Util.CreateGuidFromString(Param_GuidServico);
+
+	//Cria o RIID da interface a ser criada.
+	vi_Riid = Util.CreateGuidFromString(Param_RIID);
 
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetService(vi_GuidService, vi_Riid, &vi_pOutInterface);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -776,6 +822,9 @@ ICaren^% Param_Ref_Interface)
 		//Sai do método
 		Sair;
 	}
+
+	//Define o ponteiro na interface criada pelo usuário.
+	CarenSetPointerToICarenSafe(vi_pOutInterface, Param_Ref_Interface, true);
 
 Done:;
 	//Retorna o resultado.
@@ -787,7 +836,7 @@ Done:;
 /// </summary>
 /// <param name="Param_NomeAmigavel">O nome amigável. Esse valor pode ser os valores da enumeração (CA_MF_CAPTURE_ENGINE_FIRST_SOURCE_INDEX) ou outros valores. Veja na documentação do método.</param>
 /// <param name="Param_Out_StreamIndexAtual">Recebe o valor do índice de fluxo que corresponde ao nome amigável.</param>
-ResultCode GetStreamIndexFromFriendlyName(
+CarenResult CarenMFCaptureSource::GetStreamIndexFromFriendlyName(
 UInt32 Param_NomeAmigavel,
 [Out] UInt32% Param_Out_StreamIndexAtual)
 {
@@ -798,10 +847,10 @@ UInt32 Param_NomeAmigavel,
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	Utilidades Util;
-
+	DWORD vi_OutStreamIndexAtual = 0;
 
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetStreamIndexFromFriendlyName(Param_NomeAmigavel, &vi_OutStreamIndexAtual);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -818,6 +867,9 @@ UInt32 Param_NomeAmigavel,
 		Sair;
 	}
 
+	//Define o valor no parametro de saida.
+	Param_Out_StreamIndexAtual = static_cast<UInt32>(vi_OutStreamIndexAtual);
+
 Done:;
 	//Retorna o resultado.
 	return Resultado;
@@ -827,7 +879,7 @@ Done:;
 /// Remove todos os efeitos de um fluxo de captura.
 /// </summary>
 /// <param name="Param_SourceStreamIndex">Index para o fluxo de captura. Esse valor pode ser um dois valores da enumeração (MF_CAPTURE_ENGINE_FIRST_SOURCE_INDEX) ou O índice baseado em zero de um fluxo. Para obter o número de fluxos, ligue para o método ICarenMFCaptureSource::GetDeviceStreamCount.</param>
-ResultCode RemoveAllEffects(UInt32 Param_SourceStreamIndex)
+CarenResult CarenMFCaptureSource::RemoveAllEffects(UInt32 Param_SourceStreamIndex)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -835,11 +887,8 @@ ResultCode RemoveAllEffects(UInt32 Param_SourceStreamIndex)
 	//Resultado COM.
 	ResultadoCOM Hr = E_FAIL;
 
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-
-
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->RemoveAllEffects(static_cast<DWORD>(Param_SourceStreamIndex));
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -867,7 +916,7 @@ Done:;
 /// </summary>
 /// <param name="Param_SourceStreamIndex">Index para o fluxo de captura. Esse valor pode ser um dois valores da enumeração (MF_CAPTURE_ENGINE_FIRST_SOURCE_INDEX) ou O índice baseado em zero de um fluxo. Para obter o número de fluxos, ligue para o método ICarenMFCaptureSource::GetDeviceStreamCount.</param>
 /// <param name="Param_Efeito">O ponteiro para a interface que contém o efeito a ser removido.</param>
-ResultCode RemoveEffect(
+CarenResult CarenMFCaptureSource::RemoveEffect(
 UInt32 Param_SourceStreamIndex,
 ICaren^ Param_Efeito)
 {
@@ -878,10 +927,13 @@ ICaren^ Param_Efeito)
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	Utilidades Util;
+	IUnknown* vi_pEfeito = Nulo;
 
+	//Recupera o ponteiro par ao efeito a ser removido.
+	CarenGetPointerFromICarenSafe(Param_Efeito, vi_pEfeito);
 
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->RemoveEffect(static_cast<DWORD>(Param_SourceStreamIndex), vi_pEfeito);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -909,7 +961,7 @@ Done:;
 /// </summary>
 /// <param name="Param_SourceStreamIndex">Index para o fluxo de captura. Esse valor pode ser um dois valores da enumeração (MF_CAPTURE_ENGINE_FIRST_SOURCE_INDEX) ou O índice baseado em zero de um fluxo. Para obter o número de fluxos, ligue para o método ICarenMFCaptureSource::GetDeviceStreamCount.</param>
 /// <param name="Param_MediaType">Uma interface ICarenMFMediaType para o formato de saída para o fluxo de captura.</param>
-ResultCode SetCurrentDeviceMediaType(
+CarenResult CarenMFCaptureSource::SetCurrentDeviceMediaType(
 UInt32 Param_SourceStreamIndex,
 ICarenMFMediaType^ Param_MediaType)
 {
@@ -921,9 +973,13 @@ ICarenMFMediaType^ Param_MediaType)
 
 	//Variaveis a serem utilizadas.
 	Utilidades Util;
+	IMFMediaType* vi_pMediaType = Nulo;
 
+	//Recupera o ponteiro para o media type atual.
+	CarenGetPointerFromICarenSafe(Param_MediaType, vi_pMediaType);
 
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->SetCurrentDeviceMediaType(static_cast<DWORD>(Param_SourceStreamIndex), vi_pMediaType);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -950,7 +1006,7 @@ Done:;
 /// </summary>
 /// <param name="Param_StreamIndex">O índice baseado em zero do fluxo.</param>
 /// <param name="Param_MirrorState">Se TRUE, o espelhamento estiver ativado; se FALSO, o espelhamento é desativado.</param>
-ResultCode SetMirrorState(
+CarenResult CarenMFCaptureSource::SetMirrorState(
 UInt32 Param_StreamIndex,
 Boolean Param_MirrorState)
 {
@@ -960,11 +1016,8 @@ Boolean Param_MirrorState)
 	//Resultado COM.
 	ResultadoCOM Hr = E_FAIL;
 
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-
-
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->SetMirrorState(static_cast<DWORD>(Param_StreamIndex), Param_MirrorState ? true : false);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);

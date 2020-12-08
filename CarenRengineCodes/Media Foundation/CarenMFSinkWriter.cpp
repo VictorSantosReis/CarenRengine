@@ -511,7 +511,7 @@ Done:;
 /// <summary>
 /// (Finalize) - Conclui todas as operações de gravação no gravador de coletor.
 /// </summary>
-CarenResult CarenMFSinkWriter::Finalize()
+CarenResult CarenMFSinkWriter::_Finalize()
 {
 	//Define falha na operação.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

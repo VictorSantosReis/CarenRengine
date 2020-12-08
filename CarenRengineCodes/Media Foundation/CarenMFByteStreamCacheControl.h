@@ -33,7 +33,7 @@ using namespace CarenRengine::SDKUtilidades;
 
 
 /// <summary>
-/// (Em desenvolvimento) - 
+/// Classe responsável por controlar como um fluxo de byte de rede transfere dados para um cache local.  
 /// </summary>
 public ref class CarenMFByteStreamCacheControl : public ICarenMFByteStreamCacheControl
 {
@@ -169,5 +169,5 @@ public:
 	/// <summary>
 	///  Interrompe a transferência de dados em segundo plano para o cache local.
 	/// </summary>
-ResultCode StopBackgroundTransfer();
+	virtual CarenResult StopBackgroundTransfer();
 };

@@ -172,7 +172,7 @@ public:
 	/// <param name="Param_CLSID">O CLSID do objeto a ser criado. Atualmente, este parâmetro deve ser igual CLSID_MFCaptureEngine.</param>
 	/// <param name="Param_RIID">O IID da interface solicitada. O mecanismo de captura suporta a interface IMFCaptureEngine.</param>
 	/// <param name="Param_Out_Interface">Recebe um ponteiro para a interface solicitada. O usuário deve inicializar essa interface.</param>
-ResultCode CreateInstance(
+	virtual CarenResult CreateInstance(
 	String^ Param_CLSID,
 	String^ Param_RIID,
 	ICaren^% Param_Out_Interface);

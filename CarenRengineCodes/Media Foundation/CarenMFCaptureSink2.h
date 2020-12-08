@@ -19,6 +19,7 @@ limitations under the License.
 #include "../SDK_Caren.h"
 #include "../SDK_Utilidades.h"
 #include "../FunctionClass/GlobalFuncs.h"
+#include "CarenMFMediaType.h"
 
 //Importa o namespace que contém as interfaces da API primária.
 using namespace CarenRengine::MediaFoundation;
@@ -33,7 +34,7 @@ using namespace CarenRengine::SDKUtilidades;
 
 
 /// <summary>
-/// (Em desenvolvimento) - 
+/// (Concluido - Fase de Testes) - Classe responsável por estender a (ICarenMFCaptureSink) para fornecer funcionalidade para definir dinamicamente o tipo de mídia de saída do (Record Sink) ou (Preview Sink).
 /// </summary>
 public ref class CarenMFCaptureSink2 : public ICarenMFCaptureSink2
 {
@@ -172,8 +173,58 @@ public:
 	/// <param name="Param_StreamIndex">O índice de fluxo para alterar o tipo de mídia de saída ligado.</param>
 	/// <param name="Param_MediaType">O novo tipo de mídia de saída.</param>
 	/// <param name="Param_AtributosEncoding">Os novos atributos do codificador. Isso pode ser Nulo.</param>
-ResultCode SetOutputMediaType(
+	virtual CarenResult SetOutputMediaType(
 	UInt32 Param_StreamIndex,
 	ICarenMFMediaType^ Param_MediaType,
 	ICarenMFAttributes^ Param_AtributosEncoding);
+
+
+	//Métodos da interface(ICarenMFCaptureSink)
+public:
+	/// <summary>
+	/// Conecta um fluxo da fonte de captura a esta pia de captura.
+	/// </summary>
+	/// <param name="Param_SourceStreamIndex">O fluxo de origem para se conectar. Esse valor pode ser um dois valores da enumeração (MF_CAPTURE_ENGINE_FIRST_SOURCE_INDEX) ou O índice baseado em zero de um fluxo. Para obter o número de fluxos, ligue para o método ICarenMFCaptureSource::GetDeviceStreamCount.</param>
+	/// <param name="Param_MediaType">Uma ICarenMFMediaType que especifica o formato desejado do fluxo de saída.</param>
+	/// <param name="Param_Atributos">Uma interface ICarenMFAttributes para os atributos. Para fluxos comprimidos, você pode usar este parâmetro para configurar o codificador. Este parâmetro também pode ser Nulo.</param>
+	/// <param name="Param_Out_SinkStreamIndex">Recebe o índice do novo fluxo na pia de captura. Observe que este índice não corresponderá necessariamente ao valor do (Param_SourceStreamIndex).</param>
+	virtual CarenResult AddStream(
+		UInt32 Param_SourceStreamIndex,
+		ICarenMFMediaType^ Param_MediaType,
+		ICarenMFAttributes^ Param_Atributos,
+		[Out] UInt32% Param_Out_SinkStreamIndex);
+
+	/// <summary>
+	/// Obtém o formato de saída para um fluxo nesta pia de captura.
+	/// </summary>
+	/// <param name="Nome_Parametro">O índice baseado em zero do fluxo para consulta. O índice é devolvido no parâmetro (Param_Out_SinkStreamIndex) do método ICarenMFCaptureSink::AddStream.</param>
+	/// <param name="Nome_Parametro">Retorna uma interface ICarenMFMediaType com o formato do tipo de midia no fluxo especificado. O usuário é responsável por liberar a interface.</param>
+	virtual CarenResult GetOutputMediaType(
+		UInt32 Param_SinkStreamIndex,
+		[Out] ICarenMFMediaType^% Param_Out_MediaType);
+
+	/// <summary>
+	/// Consulte o objeto Sink Writer(ICarenMFSourceReader) subjacente para uma interface.
+	/// </summary>
+	/// <param name="Param_SinkStreamIndex">O índice baseado em zero do fluxo para consulta. O índice é devolvido no parâmetro (Param_Out_SinkStreamIndex) do método ICarenMFCaptureSink::AddStream.</param>
+	/// <param name="Param_GuidService">Um identificador de serviço GUID. Atualmente, o valor deve ser Nulo.</param>
+	/// <param name="Param_RIID">Um identificador de serviço GUID. Atualmente, o valor deve ser IID_IMFSinkWriter.</param>
+	/// <param name="Param_Ref_Interface">Retorna um ponteiro para a interface solicitada. O usuário é responsável por criar e liberar a interface.</param>
+	virtual CarenResult GetService(
+		UInt32 Param_SinkStreamIndex,
+		String^ Param_GuidService,
+		String^ Param_RIID,
+		ICaren^% Param_Ref_Interface);
+
+	/// <summary>
+	/// Prepara o sink de captura carregando quaisquer componentes de pipeline necessários, como codificadores, processadores de vídeo e coletores de mídia.
+	/// Chamar esse método é opcional. Este método dá ao aplicativo a oportunidade de configurar os componentes do pipeline antes de serem usados. O método é assíncrono. Se o método retornar um código de sucesso, o chamador receberá um evento MF_CAPTURE_SINK_PREPARED por meio do método ICarenMFCaptureEngineOnEventCallback::OnEvent. Depois que esse evento for recebido, chame ICarenMFCaptureSink::GetService para configurar componentes individuais.
+	/// </summary>
+	virtual CarenResult Prepare();
+
+	/// <summary>
+	/// Remove todos os fluxos do sink de captura. 
+	/// Você pode usar este método para reconfigurar o sink.
+	/// </summary>
+	virtual CarenResult RemoveAllStreams();
 };

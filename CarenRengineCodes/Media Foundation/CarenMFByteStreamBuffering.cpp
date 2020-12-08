@@ -414,7 +414,7 @@ void CarenMFByteStreamBuffering::Finalizar()
 /// Habilita ou desativa o buffering.
 /// </summary>
 /// <param name="Param_Habilitar">Especifica se o fluxo de bytes armazena dados em buffer.Se TRUE, o buffer está habilitado.Se FALSE, o buffer está desabilitado.</param>
-ResultCode EnableBuffering(Boolean Param_Habilitar)
+CarenResult CarenMFByteStreamBuffering::EnableBuffering(Boolean Param_Habilitar)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -422,11 +422,8 @@ ResultCode EnableBuffering(Boolean Param_Habilitar)
 	//Resultado COM.
 	ResultadoCOM Hr = E_FAIL;
 
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-
-
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->EnableBuffering(Param_Habilitar ? TRUE : FALSE);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -451,8 +448,8 @@ Done:;
 /// <summary>
 /// Define os parâmetros de buffering.
 /// </summary>
-/// <param name="Param_Params">Uma estrutura (CA_MFBYTESTREAM_BUFFERING_PARAMS) que contenm os parâmetros de buffering.  fluxo byte usa essas informações para calcular quantos dados para buffer da rede.</param>
-ResultCode SetBufferingParams(CA_MFBYTESTREAM_BUFFERING_PARAMS^ Param_Params)
+/// <param name="Param_BufferingParams">Uma estrutura (CA_MFBYTESTREAM_BUFFERING_PARAMS) que contenm os parâmetros de buffering.  fluxo byte usa essas informações para calcular quantos dados para buffer da rede.</param>
+CarenResult CarenMFByteStreamBuffering::SetBufferingParams(CA_MFBYTESTREAM_BUFFERING_PARAMS^ Param_BufferingParams)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -462,9 +459,13 @@ ResultCode SetBufferingParams(CA_MFBYTESTREAM_BUFFERING_PARAMS^ Param_Params)
 
 	//Variaveis a serem utilizadas.
 	Utilidades Util;
+	MFBYTESTREAM_BUFFERING_PARAMS* vi_pBufferingParams = Nulo;
 
+	//Converte a estrutura.
+	vi_pBufferingParams = Util.ConverterMFBYTESTREAM_BUFFERING_PARAMSManaged_ToUnamaged(Param_BufferingParams);
 
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->SetBufferingParams(vi_pBufferingParams);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -482,6 +483,10 @@ ResultCode SetBufferingParams(CA_MFBYTESTREAM_BUFFERING_PARAMS^ Param_Params)
 	}
 
 Done:;
+	//Libera a memória utilizada pela estrutura
+	DeletarMatrizUnidimensionalSafe(&vi_pBufferingParams->prgBuckets);
+	DeletarEstruturaSafe(&vi_pBufferingParams);
+
 	//Retorna o resultado.
 	return Resultado;
 }
@@ -489,7 +494,7 @@ Done:;
 /// <summary>
 /// Para qualquer armazenamento em buffer em andamento.
 /// </summary>
-ResultCode StopBuffering()
+CarenResult CarenMFByteStreamBuffering::StopBuffering()
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -497,11 +502,8 @@ ResultCode StopBuffering()
 	//Resultado COM.
 	ResultadoCOM Hr = E_FAIL;
 
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-
-
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->StopBuffering();
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);

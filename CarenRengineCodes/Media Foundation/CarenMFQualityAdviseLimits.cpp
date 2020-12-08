@@ -415,7 +415,7 @@ void CarenMFQualityAdviseLimits::Finalizar()
 /// Para obter o modo de drop atual, ligue para o método ICarenMFQualityAdvise::GetDropMode. Para definir o modo de drop, ligue para o método ICarenMFQualityAdvise::SetDropMode.
 /// </summary>
 /// <param name="Param_Out_DropMode">Recebe o modo de queda máxima, especificado como membro da enumeração CA_MF_QUALITY_DROP_MODE.</param>
-ResultCode GetMaximumDropMode([Out] CA_MF_QUALITY_DROP_MODE% Param_Out_DropMode)
+CarenResult CarenMFQualityAdviseLimits::GetMaximumDropMode([Out] CA_MF_QUALITY_DROP_MODE% Param_Out_DropMode)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -424,10 +424,10 @@ ResultCode GetMaximumDropMode([Out] CA_MF_QUALITY_DROP_MODE% Param_Out_DropMode)
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	Utilidades Util;
-
+	MF_QUALITY_DROP_MODE vi_OutMaximumDrop = MF_QUALITY_DROP_MODE::MF_DROP_MODE_NONE;
 
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetMaximumDropMode(&vi_OutMaximumDrop);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -443,6 +443,9 @@ ResultCode GetMaximumDropMode([Out] CA_MF_QUALITY_DROP_MODE% Param_Out_DropMode)
 		//Sai do método
 		Sair;
 	}
+
+	//Define o valor no parametro de saida.
+	Param_Out_DropMode = static_cast<CA_MF_QUALITY_DROP_MODE>(vi_OutMaximumDrop);
 
 Done:;
 	//Retorna o resultado.
@@ -454,7 +457,7 @@ Done:;
 /// Para obter o nível de qualidade atual, ligue para o método ICarenMFQualityAdvise::GetQualityLevel. Para definir o nível de qualidade, ligue para o método ICarenMFQualityAdvise::SetQualityLevel.
 /// </summary>
 /// <param name="Param_Out_NivelQualidade">Recebe o nível mínimo de qualidade, especificado como membro da enumeração CA_MF_QUALITY_LEVEL.</param>
-ResultCode GetMinimumQualityLevel([Out] CA_MF_QUALITY_LEVEL% Param_Out_NivelQualidade)
+CarenResult CarenMFQualityAdviseLimits::GetMinimumQualityLevel([Out] CA_MF_QUALITY_LEVEL% Param_Out_NivelQualidade)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -463,10 +466,10 @@ ResultCode GetMinimumQualityLevel([Out] CA_MF_QUALITY_LEVEL% Param_Out_NivelQual
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	Utilidades Util;
-
+	MF_QUALITY_LEVEL vi_OutMaximumQuality = MF_QUALITY_LEVEL::MF_QUALITY_NORMAL;
 
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetMinimumQualityLevel(&vi_OutMaximumQuality);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -482,6 +485,9 @@ ResultCode GetMinimumQualityLevel([Out] CA_MF_QUALITY_LEVEL% Param_Out_NivelQual
 		//Sai do método
 		Sair;
 	}
+
+	//Define o valor no parametro de saida.
+	Param_Out_NivelQualidade = static_cast<CA_MF_QUALITY_LEVEL>(vi_OutMaximumQuality);
 
 Done:;
 	//Retorna o resultado.

@@ -1431,6 +1431,18 @@
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFQualityManager.h">
       <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
     </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFCaptureEngineOnEventCallback.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFCaptureEngineOnSampleCallback.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFCaptureEngineOnSampleCallback2.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFQualityManager.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D10Multithread.cpp">
@@ -2671,6 +2683,18 @@
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFQualityAdviseLimits.cpp">
       <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFCaptureEngineOnEventCallback.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFCaptureEngineOnSampleCallback.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFCaptureEngineOnSampleCallback2.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFQualityManager.cpp">
+      <Filter>Arquivos de Origem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

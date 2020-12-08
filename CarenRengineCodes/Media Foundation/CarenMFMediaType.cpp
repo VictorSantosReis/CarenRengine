@@ -1779,7 +1779,7 @@ Done:;
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (UINT64) obtido.</param>
 /// <param name="Param_Out_Numerador">Recebe o valor referente ao: Numerador</param>
 /// <param name="Param_Out_Denominador">Recebe o valor referente ao: Denominador</param>
-CarenResult CarenMFMediaType::MFGetAttributeRatio(String^ Param_GuidChave, [Out] UInt32% Param_Out_Numerador, [Out] UInt32% Param_Out_Denominador)
+CarenResult CarenMFMediaType::_MFGetAttributeRatio(String^ Param_GuidChave, [Out] UInt32% Param_Out_Numerador, [Out] UInt32% Param_Out_Denominador)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1829,7 +1829,7 @@ Done:;
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor obtido. O atribute deve ser do tipo: UInt64</param>
 /// <param name="Param_Out_Largura">Recebe a largura em pixels.</param>
 /// <param name="Param_Out_Altura">Recebe a altura em pixels.</param>
-CarenResult CarenMFMediaType::MFGetAttributeSize(String^ Param_GuidChave, [Out] UInt32% Param_Out_Largura, [Out] UInt32% Param_Out_Altura)
+CarenResult CarenMFMediaType::_MFGetAttributeSize(String^ Param_GuidChave, [Out] UInt32% Param_Out_Largura, [Out] UInt32% Param_Out_Altura)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -2362,7 +2362,7 @@ Done:;
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor. O tipo do atributo deve ser: UInt64</param>
 /// <param name="Param_Numerador">Define o valor do: Numerador</param>
 /// <param name="Param_Denominador">Define o valor do: Denominador</param>
-CarenResult CarenMFMediaType::DefinirRatioAtribute(String^ Param_GuidChave, UInt32 Param_Numerador, UInt32 Param_Denominador)
+CarenResult CarenMFMediaType::_MFSetAttributeRatio(String^ Param_GuidChave, UInt32 Param_Numerador, UInt32 Param_Denominador)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -2408,7 +2408,7 @@ Done:;
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor. O tipo do atributo deve ser: UInt64</param>
 /// <param name="Param_Largura">A Largura do vídeo em pixels.</param>
 /// <param name="Param_Altura">A Altura do vídeo em pixels.</param>
-CarenResult CarenMFMediaType::MFGetAttributeSize(String^ Param_GuidChave, UInt32 Param_Largura, UInt32 Param_Altura)
+CarenResult CarenMFMediaType::_MFSetAttributeSize(String^ Param_GuidChave, UInt32 Param_Largura, UInt32 Param_Altura)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

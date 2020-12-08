@@ -417,7 +417,7 @@ void CarenMFCaptureSink::Finalizar()
 /// <param name="Param_MediaType">Uma ICarenMFMediaType que especifica o formato desejado do fluxo de saída.</param>
 /// <param name="Param_Atributos">Uma interface ICarenMFAttributes para os atributos. Para fluxos comprimidos, você pode usar este parâmetro para configurar o codificador. Este parâmetro também pode ser Nulo.</param>
 /// <param name="Param_Out_SinkStreamIndex">Recebe o índice do novo fluxo na pia de captura. Observe que este índice não corresponderá necessariamente ao valor do (Param_SourceStreamIndex).</param>
-ResultCode AddStream(
+CarenResult CarenMFCaptureSink::AddStream(
 UInt32 Param_SourceStreamIndex,
 ICarenMFMediaType^ Param_MediaType,
 ICarenMFAttributes^ Param_Atributos,
@@ -430,10 +430,19 @@ ICarenMFAttributes^ Param_Atributos,
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	Utilidades Util;
+	IMFMediaType* vi_pMediaType = Nulo;
+	IMFAttributes* vi_pAttributes = Nulo; //Pode ser Nulo.
+	DWORD vi_OutStreamSink = 0;
 
+	//Recupera ao ponteiro para o Media Type
+	CarenGetPointerFromICarenSafe(Param_MediaType, vi_pMediaType);
+
+	//Recupera um ponteiro para os atributos se informado
+	if (ObjetoGerenciadoValido(Param_Atributos))
+		CarenGetPointerFromICarenSafe(Param_Atributos, vi_pAttributes);
 
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->AddStream(static_cast<DWORD>(Param_SourceStreamIndex), vi_pMediaType, vi_pAttributes, &vi_OutStreamSink);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -449,6 +458,9 @@ ICarenMFAttributes^ Param_Atributos,
 		//Sai do método
 		Sair;
 	}
+
+	//Defie o index do stream adicionado no parametro de saida.
+	Param_Out_SinkStreamIndex = static_cast<UInt32>(vi_OutStreamSink);
 
 Done:;
 	//Retorna o resultado.
@@ -460,7 +472,7 @@ Done:;
 /// </summary>
 /// <param name="Nome_Parametro">O índice baseado em zero do fluxo para consulta. O índice é devolvido no parâmetro (Param_Out_SinkStreamIndex) do método ICarenMFCaptureSink::AddStream.</param>
 /// <param name="Nome_Parametro">Retorna uma interface ICarenMFMediaType com o formato do tipo de midia no fluxo especificado. O usuário é responsável por liberar a interface.</param>
-ResultCode GetOutputMediaType(
+CarenResult CarenMFCaptureSink::GetOutputMediaType(
 UInt32 Param_SinkStreamIndex,
 [Out] ICarenMFMediaType^% Param_Out_MediaType)
 {
@@ -471,10 +483,10 @@ UInt32 Param_SinkStreamIndex,
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	Utilidades Util;
-
+	IMFMediaType* vi_pOutMediaType = Nulo;
 
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetOutputMediaType(static_cast<DWORD>(Param_SinkStreamIndex), &vi_pOutMediaType);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -490,6 +502,12 @@ UInt32 Param_SinkStreamIndex,
 		//Sai do método
 		Sair;
 	}
+
+	//Cria a interface a ser retornada.
+	Param_Out_MediaType = gcnew CarenMFMediaType();
+
+	//Define o ponteiro na interface.
+	CarenSetPointerToICarenSafe(vi_pOutMediaType, Param_Out_MediaType, true);
 
 Done:;
 	//Retorna o resultado.
@@ -503,7 +521,7 @@ Done:;
 /// <param name="Param_GuidService">Um identificador de serviço GUID. Atualmente, o valor deve ser Nulo.</param>
 /// <param name="Param_RIID">Um identificador de serviço GUID. Atualmente, o valor deve ser IID_IMFSinkWriter.</param>
 /// <param name="Param_Ref_Interface">Retorna um ponteiro para a interface solicitada. O usuário é responsável por criar e liberar a interface.</param>
-ResultCode GetService(
+CarenResult CarenMFCaptureSink::GetService(
 UInt32 Param_SinkStreamIndex,
 String^ Param_GuidService,
 String^ Param_RIID,
@@ -517,9 +535,19 @@ ICaren^% Param_Ref_Interface)
 
 	//Variaveis a serem utilizadas.
 	Utilidades Util;
+	GUID vi_GuidService = GUID_NULL; //Atualmente (07.12.2020) esse valor é Nulo.
+	GUID vi_Riid = GUID_NULL;
+	IUnknown* vi_pOutInterface = Nulo;
 
+	//Converte o guid de serviço se informado.
+	if (StringObjetoValido(Param_GuidService))
+		vi_GuidService = Util.CreateGuidFromString(Param_GuidService);
+
+	//Converte a string para o guid da interface.
+	vi_Riid = Util.CreateGuidFromString(Param_RIID);
 
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetService(static_cast<DWORD>(Param_SinkStreamIndex), vi_GuidService, vi_Riid, &vi_pOutInterface);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -536,6 +564,9 @@ ICaren^% Param_Ref_Interface)
 		Sair;
 	}
 
+	//Define o ponteiro na interface criada pelo usuário.
+	CarenSetPointerToICarenSafe(vi_pOutInterface, Param_Ref_Interface, true);
+
 Done:;
 	//Retorna o resultado.
 	return Resultado;
@@ -545,7 +576,7 @@ Done:;
 /// Prepara o sink de captura carregando quaisquer componentes de pipeline necessários, como codificadores, processadores de vídeo e coletores de mídia.
 /// Chamar esse método é opcional. Este método dá ao aplicativo a oportunidade de configurar os componentes do pipeline antes de serem usados. O método é assíncrono. Se o método retornar um código de sucesso, o chamador receberá um evento MF_CAPTURE_SINK_PREPARED por meio do método ICarenMFCaptureEngineOnEventCallback::OnEvent. Depois que esse evento for recebido, chame ICarenMFCaptureSink::GetService para configurar componentes individuais.
 /// </summary>
-ResultCode Prepare()
+CarenResult CarenMFCaptureSink::Prepare()
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -553,11 +584,8 @@ ResultCode Prepare()
 	//Resultado COM.
 	ResultadoCOM Hr = E_FAIL;
 
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-
-
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->Prepare();
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -583,7 +611,7 @@ Done:;
 /// Remove todos os fluxos do sink de captura. 
 /// Você pode usar este método para reconfigurar o sink.
 /// </summary>
-ResultCode RemoveAllStreams()
+CarenResult CarenMFCaptureSink::RemoveAllStreams()
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -591,11 +619,8 @@ ResultCode RemoveAllStreams()
 	//Resultado COM.
 	ResultadoCOM Hr = E_FAIL;
 
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-
-
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->RemoveAllStreams();
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);

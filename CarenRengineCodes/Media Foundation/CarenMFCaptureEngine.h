@@ -19,6 +19,7 @@ limitations under the License.
 #include "../SDK_Caren.h"
 #include "../SDK_Utilidades.h"
 #include "../FunctionClass/GlobalFuncs.h"
+#include "CarenMFCaptureSource.h"
 
 //Importa o namespace que contém as interfaces da API primária.
 using namespace CarenRengine::MediaFoundation;
@@ -33,7 +34,7 @@ using namespace CarenRengine::SDKUtilidades;
 
 
 /// <summary>
-/// (Em desenvolvimento) - 
+/// (Concluido - Fase de Testes) - Classe responsável por controlar um ou mais dispositivos de captura. O mecanismo de captura implementa esta interface. 
 /// </summary>
 public ref class CarenMFCaptureEngine : public ICarenMFCaptureEngine
 {
@@ -171,7 +172,7 @@ public:
 	/// </summary>
 	/// <param name="Param_CaptureSinkType">Um valor da enumeração CA_MF_CAPTURE_ENGINE_SINK_TYPE que especifica o sink de captura a ser recuperado.</param>
 	/// <param name="Param_Ref_Sink">A interface que vai receber o sink de captura especificado. O usuário deve criar e é responsável por liberar quando não foi mais usar.</param>
-ResultCode GetSink(
+	virtual CarenResult GetSink(
 	CA_MF_CAPTURE_ENGINE_SINK_TYPE Param_CaptureSinkType,
 	ICaren^% Param_Ref_Sink);
 
@@ -179,7 +180,7 @@ ResultCode GetSink(
 	/// Obtém um ponteiro para o objeto de origem de captura. Use a fonte de captura para configurar os dispositivos de captura. 
 	/// </summary>
 	/// <param name="Param_Out_CaptureSource">Retorna um ponteiro para a interface ICarenMFCaptureSource. O usuário é responsável por liberar a interface.</param>
-ResultCode GetSource([Out] ICarenMFCaptureSource^% Param_Out_CaptureSource);
+	virtual CarenResult GetSource([Out] ICarenMFCaptureSource^% Param_Out_CaptureSource);
 
 	/// <summary>
 	/// Inicializa o motor de captura.
@@ -190,7 +191,7 @@ ResultCode GetSource([Out] ICarenMFCaptureSource^% Param_Out_CaptureSource);
 	/// <param name="Param_Atributos">Você pode usar este parâmetro para configurar o mecanismo de captura. Este parâmetro pode ser Nulo.</param>
 	/// <param name="Param_AudioSource">Um ponteiro que especifica um dispositivo de captura de áudio. Este parâmetro pode ser Nulo.</param>
 	/// <param name="Param_VideoSource">Um ponteiro que especifica um dispositivo de captura de vídeo. Este parâmetro pode ser Nulo.</param>
-ResultCode Initialize(
+	virtual CarenResult Initialize(
 	ICarenMFCaptureEngineOnEventCallback^ Param_Callback,
 	ICarenMFAttributes^ Param_Atributos,
 	ICaren^ Param_AudioSource,
@@ -202,28 +203,28 @@ ResultCode Initialize(
 	/// Para obter um ponteiro para o Sink de visualização, ligue para o ICarenMFCaptureEngine::GetSink.
 	/// Este método é assíncrono. Se o método retornar um código de sucesso, o chamador receberá um MF_CAPTURE_ENGINE_PREVIEW_STARTED evento através do método ICarenMFCaptureEngineOnEventCallback::OnEvent. A operação pode falhar assincronicamente após o sucesso do método. Se assim for, o código de erro é transmitido através do método OnEvent.
 	/// </summary>
-ResultCode StartPreview();
+	virtual CarenResult StartPreview();
 
 	/// <summary>
 	/// Começa a gravar áudio e/ou vídeo em um arquivo.
 	/// Antes de chamar esse método, configure o Sink de gravação chamando IMFCaptureSink::AddStream. Para obter um ponteiro para o Sink de gravação, ligue para o ICarenMFCaptureEngine::GetSink.
 	/// Este método é assíncrono. Se o método retornar um código de sucesso, o chamador receberá um MF_CAPTURE_ENGINE_RECORD_STARTED evento através do método ICarenMFCaptureEngineOnEventCallback::OnEvent. A operação pode falhar assincronicamente após o sucesso do método. Se assim for, o código de erro é transmitido através do método OnEvent.
 	/// </summary>
-ResultCode StartRecord();
+	virtual CarenResult StartRecord();
 
 	/// <summary>
 	/// Interrompe a visualização.
 	/// Este método é assíncrono. Se o método retornar um código de sucesso, o chamador receberá um MF_CAPTURE_ENGINE_PREVIEW_STOPPED evento através do método ICarenMFCaptureEngineOnEventCallback::OnEvent. A operação pode falhar assincronicamente após o sucesso do método. Se assim for, o código de erro é transmitido através do método OnEvent.
 	/// </summary>
-ResultCode StopPreview();
+	virtual CarenResult StopPreview();
 
 	/// <summary>
 	/// Para de gravar. 
 	/// Este método é assíncrono. Se o método retornar um código de sucesso, o chamador receberá um MF_CAPTURE_ENGINE_RECORD_STOPPED evento através do método ICarenMFCaptureEngineOnEventCallback::OnEvent. A operação pode falhar assincronicamente após o sucesso do método. Se assim for, o código de erro é transmitido através do método OnEvent.
 	/// </summary>
 	/// <param name="Param_Finalizar">Um valor booleano que especifica se deve finalizar o arquivo de saída. Para criar um arquivo de saída válido, especifique TRUE. Especifique FALSO somente se você quiser interromper a gravação e descartar o arquivo de saída. Se o valor for FALSO,a operação será concluída mais rapidamente, mas o arquivo não será jogável.</param>
-	/// <param name="Param_FlushUnprocessedSamples">Um valor booleano que especifica se as amostras não processadas que aguardam para serem codificadas devem ser lavadas.</param>
-ResultCode StopRecord(
+	/// <param name="Param_FlushUnprocessedSamples">Um valor booleano que especifica se as amostras não processadas aguardando para serem codificadas devem ser liberadas.</param>
+	virtual CarenResult StopRecord(
 	Boolean Param_Finalizar,
 	Boolean Param_FlushUnprocessedSamples);
 
@@ -231,5 +232,5 @@ ResultCode StopRecord(
 	/// Captura uma imagem parada do fluxo de vídeo. 
 	/// Este método é assíncrono. Se o método retornar um código de sucesso, o chamador receberá um MF_CAPTURE_ENGINE_PHOTO_TAKEN evento através do método ICarenMFCaptureEngineOnEventCallback::OnEvent. A operação pode falhar assincronicamente após o sucesso do método. Se assim for, o código de erro é transmitido através do método OnEvent.
 	/// </summary>
-ResultCode TakePhoto();
+	virtual CarenResult TakePhoto();
 };

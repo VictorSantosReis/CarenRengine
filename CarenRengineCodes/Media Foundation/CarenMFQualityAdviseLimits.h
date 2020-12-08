@@ -33,7 +33,8 @@ using namespace CarenRengine::SDKUtilidades;
 
 
 /// <summary>
-/// (Em desenvolvimento) - 
+/// (Concluido - Fase de Testes) - Classe responsável por consultar um objeto para o número de modos de qualidade que suporta. Os modos de qualidade são usados para ajustar a troca entre qualidade e 
+/// velocidade ao renderizar áudio ou vídeo. 
 /// </summary>
 public ref class CarenMFQualityAdviseLimits : public ICarenMFQualityAdviseLimits
 {
@@ -171,12 +172,12 @@ public:
 	/// Para obter o modo de drop atual, ligue para o método ICarenMFQualityAdvise::GetDropMode. Para definir o modo de drop, ligue para o método ICarenMFQualityAdvise::SetDropMode.
 	/// </summary>
 	/// <param name="Param_Out_DropMode">Recebe o modo de queda máxima, especificado como membro da enumeração CA_MF_QUALITY_DROP_MODE.</param>
-ResultCode GetMaximumDropMode([Out] CA_MF_QUALITY_DROP_MODE% Param_Out_DropMode);
+	virtual CarenResult GetMaximumDropMode([Out] CA_MF_QUALITY_DROP_MODE% Param_Out_DropMode);
 
 	/// <summary>
 	/// Obtém o nível mínimo de qualidade suportado pelo componente.
 	/// Para obter o nível de qualidade atual, ligue para o método ICarenMFQualityAdvise::GetQualityLevel. Para definir o nível de qualidade, ligue para o método ICarenMFQualityAdvise::SetQualityLevel.
 	/// </summary>
 	/// <param name="Param_Out_NivelQualidade">Recebe o nível mínimo de qualidade, especificado como membro da enumeração CA_MF_QUALITY_LEVEL.</param>
-ResultCode GetMinimumQualityLevel([Out] CA_MF_QUALITY_LEVEL% Param_Out_NivelQualidade);
+	virtual CarenResult GetMinimumQualityLevel([Out] CA_MF_QUALITY_LEVEL% Param_Out_NivelQualidade);
 };

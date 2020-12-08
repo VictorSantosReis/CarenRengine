@@ -24,9 +24,11 @@ CarenMFCaptureEngineOnEventCallback::~CarenMFCaptureEngineOnEventCallback()
 	Prop_DisposedClasse = true;
 }
 //Construtores
-CarenMFCaptureEngineOnEventCallback::CarenMFCaptureEngineOnEventCallback()
+CarenMFCaptureEngineOnEventCallback::CarenMFCaptureEngineOnEventCallback(Boolean Param_ImplInterno)
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//Verifica se deve criar uma implementação interna.
+	if (Param_ImplInterno)
+		PonteiroTrabalho = new CLN_IMFCaptureEngineOnEventCallback(); //Cria uma implementação interna.
 }
 
 // Métodos da interface ICaren
@@ -415,36 +417,22 @@ void CarenMFCaptureEngineOnEventCallback::Finalizar()
 /// </summary>
 void CarenMFCaptureEngineOnEventCallback::RegistrarCallback()
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
+	//Variaveis utilizadas no método
 	Utilidades Util;
 
+	//Configura os delegates.
 
-	//Chama o método para realizar a operação.
+	//Cria todos os delegates.
+	Callback_OnEvent = gcnew DelegateNativo_Evento_OnEvent(this, &CarenMFCaptureEngineOnEventCallback::EncaminharEvento_OnEvent);
 
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
+	//Converte os delegates para ponteiros do IntPtr
+	IntPtr Pointer_OnEvent = Util.ConverterDelegateToPointer(Callback_OnEvent);
 
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
+	//Aloca a Handle para cada delegate que fornece o método de chamado do evento.
+	gHandle_Delegate_OnEvent = Util.AlocarPointerDelegate(Pointer_OnEvent);
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Registra os delegates criados para os delegates nativo na classe CLN_IAudioSessionEvents que envia os eventos.
+	((CLN_IMFCaptureEngineOnEventCallback*)PonteiroTrabalho)->Evento_OnEvent = Util.ConverterPointerDelegateToNativeDelegate<CLN_IMFCaptureEngineOnEventCallback_EventoNativo_OnEvent>(Pointer_OnEvent);
 }
 
 /// <summary>
@@ -452,34 +440,43 @@ Done:;
 /// </summary>
 void CarenMFCaptureEngineOnEventCallback::UnRegisterCallback()
 {
-	//Variavel a ser retornada.
+	//Libera o ponteiro para todos os eventos
+	gHandle_Delegate_OnEvent.Free();
+
+	//Libera os ponteiro da classe nativa
+
+	//Verifica se é valido e exlui o ponteiro.
+	if (ObjetoValido(((CLN_IMFCaptureEngineOnEventCallback*)PonteiroTrabalho)->Evento_OnEvent))
+	{
+		//Descarta o delegate.
+		((CLN_IMFCaptureEngineOnEventCallback*)PonteiroTrabalho)->Evento_OnEvent = NULL;
+	}
+}
+
+
+//Métodos que encaminham os eventos nativos gerado pela implementação da classe nativa.
+
+HRESULT CarenMFCaptureEngineOnEventCallback::EncaminharEvento_OnEvent(IMFMediaEvent* pEvent)
+{
+	//Variavel que vai retornar o resultado
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
 
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
+	//Variveis a serem utilizadas.
+	ICarenMFMediaEvent^ vi_EventManaged = nullptr;
 
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-
-
-	//Chama o método para realizar a operação.
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	//Verifica se o evento é valido e cria a interface e define seu ponteiro.
+	if (ObjetoValido(pEvent))
 	{
-		//Falhou ao realizar a operação.
+		//Cria a interface.
+		vi_EventManaged = gcnew CarenMFMediaEvent();
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
+		//Define o ponteiro na interface.
+		CarenSetPointerToICarenSafe(pEvent, vi_EventManaged, false);
 	}
 
-Done:;
+	//Chama o evento para notificar o usuário.
+	Resultado = OnEvent(vi_EventManaged);
+
 	//Retorna o resultado.
-	return Resultado;
+	return static_cast<ResultadoCOM>(Resultado.HResult);
 }

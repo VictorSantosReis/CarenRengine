@@ -33,7 +33,7 @@ using namespace CarenRengine::SDKUtilidades;
 
 
 /// <summary>
-/// (Em desenvolvimento) - 
+/// (Concluido - Fase de Testes) - Classe responsável por buscar um fluxo de bytes por posição de tempo. 
 /// </summary>
 public ref class CarenMFByteStreamTimeSeek : public ICarenMFByteStreamTimeSeek
 {
@@ -173,7 +173,7 @@ public:
 	/// <param name="Param_Out_StartTime">Recebe a nova posição após a busca, em unidades de 100 nanossegundos.</param>
 	/// <param name="Param_Out_StopTime">Recebe o tempo de parada, em unidades de 100 nanossegundos. Se o tempo de parada for desconhecido, o valor é zero.</param>
 	/// <param name="Param_Out_Duracao">Recebe a duração total do arquivo, em unidades de 100 nanossegundos. Se a duração for desconhecida, o valor é de -1.</param>
-ResultCode GetTimeSeekResult(
+	virtual CarenResult GetTimeSeekResult(
 	[Out] Int64% Param_Out_StartTime,
 	[Out] Int64% Param_Out_StopTime,
 	[Out] Int64% Param_Out_Duracao);
@@ -182,12 +182,12 @@ ResultCode GetTimeSeekResult(
 	/// Verifica se o fluxo byte suporta a busca baseada no tempo.
 	/// </summary>
 	/// <param name="Param_Out_TimeSeekSuportado">Recebe o valor TRUE se o fluxo byte suportar a busca baseada no tempo ou FALSO de outra forma.</param>
-ResultCode IsTimeSeekSupported([Out] Boolean% Param_Out_TimeSeekSuportado);
+	virtual CarenResult IsTimeSeekSupported([Out] Boolean% Param_Out_TimeSeekSuportado);
 
 	/// <summary>
 	/// Busca uma nova posição no fluxo byte.
 	/// Se o fluxo de byte for lido a partir de um servidor, ele poderá armazenar a solicitação de solicitação até a próxima solicitação de leitura. Portanto, o fluxo byte pode não enviar uma solicitação ao servidor imediatamente.
 	/// </summary>
 	/// <param name="Param_NovaPosicao">A nova posição, em unidades de 100 nanossegundos.</param>
-ResultCode TimeSeek(Int64 Param_NovaPosicao);
+	virtual CarenResult TimeSeek(Int64 Param_NovaPosicao);
 };

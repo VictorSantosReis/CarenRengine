@@ -413,7 +413,7 @@ void CarenMFByteStreamCacheControl::Finalizar()
 /// <summary>
 ///  Interrompe a transferência de dados em segundo plano para o cache local.
 /// </summary>
-ResultCode StopBackgroundTransfer()
+CarenResult CarenMFByteStreamCacheControl::StopBackgroundTransfer()
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -421,11 +421,8 @@ ResultCode StopBackgroundTransfer()
 	//Resultado COM.
 	ResultadoCOM Hr = E_FAIL;
 
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-
-
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->StopBackgroundTransfer();
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);

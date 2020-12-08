@@ -252,8 +252,8 @@ public:
 	/// <summary>
 	/// (GetCapabilities) - Recupera as características do fluxo de bytes.
 	/// </summary>
-	/// <param name="Param_Out_CaracteristicasFluxo">Retorna uma ou mais bandeiras da enumeração (CA_CARACTERISTICAS_BYTESTREAM) que definem as caracteristicas do fluxo de bytes.</param>
-	virtual CarenResult GetCapabilities([Out] CA_CARACTERISTICAS_BYTESTREAM% Param_Out_CaracteristicasFluxo);
+	/// <param name="Param_Out_CaracteristicasFluxo">Retorna uma ou mais bandeiras da enumeração (CA_MFBYTESTREAM_CHARACTERISTICS) que definem as caracteristicas do fluxo de bytes.</param>
+	virtual CarenResult GetCapabilities([Out] CA_MFBYTESTREAM_CHARACTERISTICS% Param_Out_CaracteristicasFluxo);
 
 	/// <summary>
 	/// (GetCurrentPosition) - Recupera a posição atual de leitura ou gravação no fluxo.

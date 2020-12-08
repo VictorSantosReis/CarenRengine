@@ -415,9 +415,9 @@ void CarenMFByteStreamProxyClassFactory::Finalizar()
 /// </summary>
 /// <param name="Param_ByteStream">Uma interface ICarenMFByteStream do fluxo byte para o proxy.</param>
 /// <param name="Param_Atributos">Reservado. Defina como NULO.</param>
-/// <param name="Param_RIID">O identifer de interface (IID) da interface que está sendo solicitada.</param>
+/// <param name="Param_RIID">O identificador de interface (IID) da interface que está sendo solicitada.</param>
 /// <param name="Param_Ref_InterfaceObjeto">A interface que vai receber o ponteiro. O usuário é responsável por criar e liberar a interface.</param>
-ResultCode CreateByteStreamProxy(
+CarenResult CarenMFByteStreamProxyClassFactory::CreateByteStreamProxy(
 ICarenMFByteStream^ Param_ByteStream,
 ICarenMFAttributes^ Param_Atributos,
 String^ Param_RIID,
@@ -431,9 +431,23 @@ ICaren^% Param_Ref_InterfaceObjeto)
 
 	//Variaveis a serem utilizadas.
 	Utilidades Util;
+	IMFByteStream* vi_pByteStream = Nulo;
+	IMFAttributes* vi_pAttributes = Nulo; //Reservado até então (06.12.2020). Definido como Nulo.
+	GUID vi_Riid = GUID_NULL;
+	LPVOID vi_pOutInterface = Nulo;
 
+	//Recupera o ponteiro para o fluxo de bytes.
+	CarenGetPointerFromICarenSafe(Param_ByteStream, vi_pByteStream);
+
+	//Recupera o ponteiro para os attributos se valido.
+	if(ObjetoGerenciadoValido(Param_Atributos))
+		CarenGetPointerFromICarenSafe(Param_Atributos, vi_pAttributes);
+
+	//Cria o Guid da interface a ser criada.
+	vi_Riid = Util.CreateGuidFromString(Param_RIID);
 
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->CreateByteStreamProxy(vi_pByteStream, vi_pAttributes, vi_Riid, &vi_pOutInterface);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -449,6 +463,9 @@ ICaren^% Param_Ref_InterfaceObjeto)
 		//Sai do método
 		Sair;
 	}
+
+	//Define o ponteiro na interface criada pelo usuário.
+	CarenSetPointerToICarenSafe(reinterpret_cast<IUnknown*>(vi_pOutInterface), Param_Ref_InterfaceObjeto, true);
 
 Done:;
 	//Retorna o resultado.

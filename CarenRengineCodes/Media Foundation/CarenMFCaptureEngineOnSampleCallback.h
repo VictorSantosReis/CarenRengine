@@ -19,6 +19,8 @@ limitations under the License.
 #include "../SDK_Caren.h"
 #include "../SDK_Utilidades.h"
 #include "../FunctionClass/GlobalFuncs.h"
+#include "../Nativas/CLN_IMFCaptureEngineOnSampleCallback.h"
+#include "CarenMFSample.h"
 
 //Importa o namespace que contém as interfaces da API primária.
 using namespace CarenRengine::MediaFoundation;
@@ -33,7 +35,7 @@ using namespace CarenRengine::SDKUtilidades;
 
 
 /// <summary>
-/// (Em desenvolvimento) - 
+/// (Concluido - Fase de Testes) - Classe responsável por representar um Callback que serve para receber dados do mecanismo de captura(ICarenMFCaptureEngine).
 /// </summary>
 public ref class CarenMFCaptureEngineOnSampleCallback : public ICarenMFCaptureEngineOnSampleCallback
 {
@@ -48,9 +50,10 @@ public ref class CarenMFCaptureEngineOnSampleCallback : public ICarenMFCaptureEn
 	//Contrutores e destuidor da classe.
 public:
 	/// <summary>
-	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// Inicializa a classe com uma implementação da interface nativa (IMFNetResourceFilter) criada internamente ou Nulo.
 	/// </summary>
-	CarenMFCaptureEngineOnSampleCallback();
+	/// <param name="Param_ImplInterno">Um valor booleano que indica se deve criar uma implementação interna nativa.</param>
+	CarenMFCaptureEngineOnSampleCallback(Boolean Param_ImplInterno);
 	
 	~CarenMFCaptureEngineOnSampleCallback();
 
@@ -77,6 +80,41 @@ public:
 			return Prop_DisposedClasse;
 		}
 	}
+
+
+
+	//(EVENTOS)
+public:
+
+	/////////////////////////////////////////////
+	//EVENTOS CHAMADOS PARA NOTIFICAR O USUÁRIO//
+	/////////////////////////////////////////////
+
+	/// <summary>
+	/// Evento chamado quando o Sink de captura recebe uma nova amostra.
+	/// </summary>
+	virtual event ICarenMFCaptureEngineOnSampleCallback::Delegate_OnSample^ OnSample;
+
+	//(DELEGATES).
+private:
+
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//DELEGATES UTILIZADOS PARA RECEBER OS EVENTOS NATIVOS DA CLASSE (CLN_IMFCaptureEngineOnSampleCallback)//
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	/// <summary>
+	/// Delegate nativo que vai conter o método que vai receber o evento(OnSample) nativo da classe (CLN_IMFCaptureEngineOnSampleCallback) para ser enviado ao usuário.
+	/// </summary>
+	delegate HRESULT DelegateNativo_Evento_OnSample(_In_opt_  IMFSample*);
+	DelegateNativo_Evento_OnSample^ Callback_OnSample = nullptr;
+
+
+	//(HANDLES ALOCADAS DOS EVENTOS)
+private:
+	/// <summary>
+	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnSample).
+	/// </summary>
+	GCHandle gHandle_Delegate_OnSample;
 
 
 	///////////////////////////////////////////////////////
@@ -175,4 +213,14 @@ public:
 	/// Método responsável por liberar todos os registros de eventos resgistrados anteriormente. Chame esse método após uma chamada para (RegistrarCallback).
 	/// </summary>
 	virtual void UnRegisterCallback();
+
+
+
+
+	//Métodos que são utilizados para receberem os eventos da classe nativa (CLN_IMFCaptureEngineOnSampleCallback).
+public:
+	/// <summary>
+	/// Método responsável por chamar o evento gerenciado para notificar o usuário sobre uma chamada para o método (OnSample) na classe nativa.
+	/// </summary>
+	virtual HRESULT EncaminharEvento_OnSample(_In_opt_  IMFSample* pSample);
 };

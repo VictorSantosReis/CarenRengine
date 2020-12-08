@@ -24,9 +24,11 @@ CarenMFQualityManager::~CarenMFQualityManager()
 	Prop_DisposedClasse = true;
 }
 //Construtores
-CarenMFQualityManager::CarenMFQualityManager()
+CarenMFQualityManager::CarenMFQualityManager(Boolean Param_ImplInterno)
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//Verifica se deve criar uma implementação interna.
+	if (Param_ImplInterno)
+		PonteiroTrabalho = new CLN_IMFQualityManager(); //Cria uma implementação interna.
 }
 
 // Métodos da interface ICaren
@@ -415,36 +417,42 @@ void CarenMFQualityManager::Finalizar()
 /// </summary>
 void CarenMFQualityManager::RegistrarCallback()
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
+	//Variaveis utilizadas no método
 	Utilidades Util;
 
+	//Configura os delegates.
 
-	//Chama o método para realizar a operação.
+	//Cria todos os delegates.
+	Callback_OnNotifyPresentationClock = gcnew DelegateNativo_Evento_OnNotifyPresentationClock(this, &CarenMFQualityManager::EncaminharEvento_OnNotifyPresentationClock);
+	Callback_OnNotifyTopology = gcnew DelegateNativo_Evento_OnNotifyTopology(this, &CarenMFQualityManager::EncaminharEvento_OnNotifyTopology);
+	Callback_OnNotifyProcessInput = gcnew DelegateNativo_Evento_OnNotifyProcessInput(this, &CarenMFQualityManager::EncaminharEvento_OnNotifyProcessInput);
+	Callback_OnNotifyProcessOutput = gcnew DelegateNativo_Evento_OnNotifyProcessOutput(this, &CarenMFQualityManager::EncaminharEvento_OnNotifyProcessOutput);
+	Callback_OnNotifyQualityEvent = gcnew DelegateNativo_Evento_OnNotifyQualityEvent(this, &CarenMFQualityManager::EncaminharEvento_OnNotifyQualityEvent);
+	Callback_OnShutdown = gcnew DelegateNativo_Evento_OnShutdown(this, &CarenMFQualityManager::EncaminharEvento_OnShutdown);
 
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
+	//Converte os delegates para ponteiros do IntPtr
+	IntPtr Pointer_OnNotifyPresentationClock = Util.ConverterDelegateToPointer(Callback_OnNotifyPresentationClock);
+	IntPtr Pointer_OnNotifyTopology = Util.ConverterDelegateToPointer(Callback_OnNotifyTopology);
+	IntPtr Pointer_OnNotifyProcessInput = Util.ConverterDelegateToPointer(Callback_OnNotifyProcessInput);
+	IntPtr Pointer_OnNotifyProcessOutput = Util.ConverterDelegateToPointer(Callback_OnNotifyProcessOutput);
+	IntPtr Pointer_OnNotifyQualityEvent = Util.ConverterDelegateToPointer(Callback_OnNotifyQualityEvent);
+	IntPtr Pointer_OnShutdown = Util.ConverterDelegateToPointer(Callback_OnShutdown);
 
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
+	//Aloca a Handle para cada delegate que fornece o método de chamado do evento.
+	gHandle_Delegate_OnNotifyPresentationClock = Util.AlocarPointerDelegate(Pointer_OnNotifyPresentationClock);
+	gHandle_Delegate_OnNotifyTopology = Util.AlocarPointerDelegate(Pointer_OnNotifyTopology);
+	gHandle_Delegate_OnNotifyProcessInput = Util.AlocarPointerDelegate(Pointer_OnNotifyProcessInput);
+	gHandle_Delegate_OnNotifyProcessOutput = Util.AlocarPointerDelegate(Pointer_OnNotifyProcessOutput);
+	gHandle_Delegate_OnNotifyQualityEvent = Util.AlocarPointerDelegate(Pointer_OnNotifyQualityEvent);
+	gHandle_Delegate_OnShutdown = Util.AlocarPointerDelegate(Pointer_OnShutdown);
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Registra os delegates criados para os delegates nativo na classe CLN_IMFQualityManager que envia os eventos.
+	((CLN_IMFQualityManager*)PonteiroTrabalho)->Evento_NotifyPresentationClock = Util.ConverterPointerDelegateToNativeDelegate<CLN_IMFQualityManager_EventoNativo_NotifyPresentationClock>(Pointer_OnNotifyPresentationClock);
+	((CLN_IMFQualityManager*)PonteiroTrabalho)->Evento_NotifyTopology = Util.ConverterPointerDelegateToNativeDelegate<CLN_IMFQualityManager_EventoNativo_NotifyTopology>(Pointer_OnNotifyTopology);
+	((CLN_IMFQualityManager*)PonteiroTrabalho)->Evento_NotifyProcessInput = Util.ConverterPointerDelegateToNativeDelegate<CLN_IMFQualityManager_EventoNativo_NotifyProcessInput>(Pointer_OnNotifyProcessInput);
+	((CLN_IMFQualityManager*)PonteiroTrabalho)->Evento_NotifyProcessOutput = Util.ConverterPointerDelegateToNativeDelegate<CLN_IMFQualityManager_EventoNativo_NotifyProcessOutput>(Pointer_OnNotifyProcessOutput);
+	((CLN_IMFQualityManager*)PonteiroTrabalho)->Evento_NotifyQualityEvent = Util.ConverterPointerDelegateToNativeDelegate<CLN_IMFQualityManager_EventoNativo_NotifyQualityEvent>(Pointer_OnNotifyQualityEvent);
+	((CLN_IMFQualityManager*)PonteiroTrabalho)->Evento_Shutdown = Util.ConverterPointerDelegateToNativeDelegate<CLN_IMFQualityManager_EventoNativo_Shutdown>(Pointer_OnShutdown);
 }
 
 /// <summary>
@@ -452,34 +460,221 @@ Done:;
 /// </summary>
 void CarenMFQualityManager::UnRegisterCallback()
 {
-	//Variavel a ser retornada.
+	//Libera o ponteiro para todos os eventos
+	gHandle_Delegate_OnNotifyPresentationClock.Free();
+	gHandle_Delegate_OnNotifyTopology.Free();
+	gHandle_Delegate_OnNotifyProcessInput.Free();
+	gHandle_Delegate_OnNotifyProcessOutput.Free();
+	gHandle_Delegate_OnNotifyQualityEvent.Free();
+	gHandle_Delegate_OnShutdown.Free();
+
+	//Libera os ponteiro da classe nativa
+
+	//Ponteiro trabalho.
+	CLN_IMFQualityManager* vi_pPonteiroTrabalho = static_cast<CLN_IMFQualityManager*>(PonteiroTrabalho);
+
+	//Verifica se é valido e exlui o ponteiro.
+	if (ObjetoValido(vi_pPonteiroTrabalho->Evento_NotifyPresentationClock))
+	{
+		//Descarta o delegate.
+		vi_pPonteiroTrabalho->Evento_NotifyPresentationClock = NULL;
+	}
+	if (ObjetoValido(vi_pPonteiroTrabalho->Evento_NotifyTopology))
+	{
+		//Descarta o delegate.
+		vi_pPonteiroTrabalho->Evento_NotifyTopology = NULL;
+	}
+	if (ObjetoValido(vi_pPonteiroTrabalho->Evento_NotifyProcessInput))
+	{
+		//Descarta o delegate.
+		vi_pPonteiroTrabalho->Evento_NotifyProcessInput = NULL;
+	}
+	if (ObjetoValido(vi_pPonteiroTrabalho->Evento_NotifyProcessOutput))
+	{
+		//Descarta o delegate.
+		vi_pPonteiroTrabalho->Evento_NotifyProcessOutput = NULL;
+	}
+	if (ObjetoValido(vi_pPonteiroTrabalho->Evento_NotifyQualityEvent))
+	{
+		//Descarta o delegate.
+		vi_pPonteiroTrabalho->Evento_NotifyQualityEvent = NULL;
+	}
+	if (ObjetoValido(vi_pPonteiroTrabalho->Evento_Shutdown))
+	{
+		//Descarta o delegate.
+		vi_pPonteiroTrabalho->Evento_Shutdown = NULL;
+	}
+}
+
+
+//Métodos que encaminham os eventos nativos gerado pela implementação da classe nativa.
+
+HRESULT CarenMFQualityManager::EncaminharEvento_OnNotifyTopology(IMFTopology* pTopology)
+{
+	//Variavel que vai retornar o resultado
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
 
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
+	//Variveis a serem utilizadas.
+	ICarenMFTopology^ vi_TopologyManaged = nullptr;
 
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-
-
-	//Chama o método para realizar a operação.
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	//Verifica se o parametro é valido e cria a interface e define os dados.
+	if (ObjetoValido(pTopology))
 	{
-		//Falhou ao realizar a operação.
+		//Cria a interface.
+		vi_TopologyManaged = gcnew CarenMFTopology();
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
+		//Define o ponteiro na interface.
+		CarenSetPointerToICarenSafe(pTopology, vi_TopologyManaged, false);
 	}
 
-Done:;
+	//Chama o evento para notificar o usuário
+	Resultado = OnNotifyTopology(vi_TopologyManaged);
+
 	//Retorna o resultado.
-	return Resultado;
+	return static_cast<ResultadoCOM>(Resultado.HResult);
+}
+
+HRESULT CarenMFQualityManager::EncaminharEvento_OnNotifyPresentationClock(IMFPresentationClock* pClock)
+{
+	//Variavel que vai retornar o resultado
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Variveis a serem utilizadas.
+	ICarenMFPresentationClock^ vi_PresentationClockManaged = nullptr;
+
+	//Verifica se o parametro é valido e cria a interface e define os dados.
+	if (ObjetoValido(pClock))
+	{
+		//Cria a interface.
+		vi_PresentationClockManaged = gcnew CarenMFPresentationClock();
+
+		//Define o ponteiro na interface.
+		CarenSetPointerToICarenSafe(pClock, vi_PresentationClockManaged, false);
+	}
+
+	//Chama o evento para notificar o usuário.
+	Resultado = OnNotifyPresentationClock(vi_PresentationClockManaged);
+
+	//Retorna o resultado.
+	return static_cast<ResultadoCOM>(Resultado.HResult);
+}
+
+HRESULT CarenMFQualityManager::EncaminharEvento_OnNotifyProcessInput(IMFTopologyNode* pNode, long lInputIndex, IMFSample* pSample)
+{
+	//Variavel que vai retornar o resultado
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Variveis a serem utilizadas.
+	ICarenMFTopologyNode^ vi_TopologyNodeManaged = nullptr;
+	ICarenMFSample^ vi_SampleManaged = nullptr;
+
+	//Verifica se o no da tapologia é valido e cria a interface e define seu ponteiro.
+	if (ObjetoValido(pNode))
+	{
+		//Cria a interface.
+		vi_TopologyNodeManaged = gcnew CarenMFTopologyNode();
+
+		//Define o ponteiro na interface.
+		CarenSetPointerToICarenSafe(pNode, vi_TopologyNodeManaged, false);
+	}
+
+	//Verifica se a amostra é valida e cria a interface e define seu ponteiro.
+	if (ObjetoValido(pSample))
+	{
+		//Cria a interface.
+		vi_SampleManaged = gcnew CarenMFSample();
+
+		//Define o ponteiro na interface.
+		CarenSetPointerToICarenSafe(pSample, vi_SampleManaged, false);
+	}
+
+	//Chama o evento para notificar o usuário.
+	Resultado = OnNotifyProcessInput(vi_TopologyNodeManaged, static_cast<int>(lInputIndex), vi_SampleManaged);
+
+	//Retorna o resultado.
+	return static_cast<ResultadoCOM>(Resultado.HResult);
+}
+
+HRESULT CarenMFQualityManager::EncaminharEvento_OnNotifyProcessOutput(IMFTopologyNode* pNode, long lOutputIndex, IMFSample* pSample)
+{
+	//Variavel que vai retornar o resultado
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Variveis a serem utilizadas.
+	ICarenMFTopologyNode^ vi_TopologyNodeManaged = nullptr;
+	ICarenMFSample^ vi_SampleManaged = nullptr;
+
+	//Verifica se o no da tapologia é valido e cria a interface e define seu ponteiro.
+	if (ObjetoValido(pNode))
+	{
+		//Cria a interface.
+		vi_TopologyNodeManaged = gcnew CarenMFTopologyNode();
+
+		//Define o ponteiro na interface.
+		CarenSetPointerToICarenSafe(pNode, vi_TopologyNodeManaged, false);
+	}
+
+	//Verifica se a amostra é valida e cria a interface e define seu ponteiro.
+	if (ObjetoValido(pSample))
+	{
+		//Cria a interface.
+		vi_SampleManaged = gcnew CarenMFSample();
+
+		//Define o ponteiro na interface.
+		CarenSetPointerToICarenSafe(pSample, vi_SampleManaged, false);
+	}
+
+	//Chama o evento para notificar o usuário.
+	Resultado = OnNotifyProcessInput(vi_TopologyNodeManaged, static_cast<int>(lOutputIndex), vi_SampleManaged);
+
+	//Retorna o resultado.
+	return static_cast<ResultadoCOM>(Resultado.HResult);
+}
+
+HRESULT CarenMFQualityManager::EncaminharEvento_OnNotifyQualityEvent(IUnknown* pObject, IMFMediaEvent* pEvent)
+{
+	//Variavel que vai retornar o resultado
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Variveis a serem utilizadas.
+	ICaren^ vi_ObjetoManaged = nullptr;
+	ICarenMFMediaEvent^ vi_EventManaged = nullptr;
+
+	//Verifica se o objeto é valido e cria a interface e define seu ponteiro.
+	if (ObjetoValido(pObject))
+	{
+		//Cria a interface.
+		vi_ObjetoManaged = gcnew Caren();
+
+		//Define o ponteiro na interface.
+		CarenSetPointerToICarenSafe(pObject, vi_ObjetoManaged, false);
+	}
+
+	//Verifica se o evento é valido e cria a interface e define seu ponteiro.
+	if (ObjetoValido(pEvent))
+	{
+		//Cria a interface.
+		vi_EventManaged = gcnew CarenMFMediaEvent();
+
+		//Define o ponteiro na interface.
+		CarenSetPointerToICarenSafe(pEvent, vi_EventManaged, false);
+	}
+
+	//Chama o evento para notificar o usuário.
+	Resultado = OnNotifyQualityEvent(vi_ObjetoManaged, vi_EventManaged);
+
+	//Retorna o resultado.
+	return static_cast<ResultadoCOM>(Resultado.HResult);
+}
+
+HRESULT CarenMFQualityManager::EncaminharEvento_OnShutdown()
+{
+	//Variavel que vai retornar o resultado
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Chama o evento para notificar o usuário.
+	Resultado = OnShutdown();
+
+	//Retorna o resultado.
+	return static_cast<ResultadoCOM>(Resultado.HResult);
 }

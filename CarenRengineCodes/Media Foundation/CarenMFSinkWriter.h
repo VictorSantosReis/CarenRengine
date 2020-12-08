@@ -328,7 +328,7 @@ public:
 	/// <summary>
 	/// (Finalize) - Conclui todas as operações de gravação no gravador de coletor.
 	/// </summary>
-	virtual CarenResult Finalize();
+	virtual CarenResult _Finalize();
 
 	/// <summary>
 	/// (Flush) - Libera um ou mais fluxos.

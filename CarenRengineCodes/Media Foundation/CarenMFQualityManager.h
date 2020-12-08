@@ -19,6 +19,12 @@ limitations under the License.
 #include "../SDK_Caren.h"
 #include "../SDK_Utilidades.h"
 #include "../FunctionClass/GlobalFuncs.h"
+#include "../Nativas/CLN_IMFQualityManager.h"
+#include "CarenMFSample.h"
+#include "CarenMFTopology.h"
+#include "CarenMFTopologyNode.h"
+#include "CarenMFMediaEvent.h"
+#include "CarenMFPresentationClock.h"
 
 //Importa o namespace que contém as interfaces da API primária.
 using namespace CarenRengine::MediaFoundation;
@@ -33,7 +39,7 @@ using namespace CarenRengine::SDKUtilidades;
 
 
 /// <summary>
-/// (Em desenvolvimento) - 
+/// (Concluido - Fase de Testes) - Classe responsável por ajustar a qualidade de reprodução. Esta interface é exposta pelo gerenciador de qualidade.
 /// </summary>
 public ref class CarenMFQualityManager : public ICarenMFQualityManager
 {
@@ -48,9 +54,10 @@ public ref class CarenMFQualityManager : public ICarenMFQualityManager
 	//Contrutores e destuidor da classe.
 public:
 	/// <summary>
-	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// Inicializa a classe com uma implementação da interface nativa (IMFNetResourceFilter) criada internamente ou Nulo.
 	/// </summary>
-	CarenMFQualityManager();
+	/// <param name="Param_ImplInterno">Um valor booleano que indica se deve criar uma implementação interna nativa.</param>
+	CarenMFQualityManager(Boolean Param_ImplInterno);
 	
 	~CarenMFQualityManager();
 
@@ -77,6 +84,115 @@ public:
 			return Prop_DisposedClasse;
 		}
 	}
+
+
+
+	//(EVENTOS)
+public:
+
+	/////////////////////////////////////////////
+	//EVENTOS CHAMADOS PARA NOTIFICAR O USUÁRIO//
+	/////////////////////////////////////////////
+
+	/// <summary>
+	/// Evento chamado quando a Sessão de Mídia seleciona um relógio de apresentação.
+	/// </summary>
+	virtual event ICarenMFQualityManager::Delegate_NotifyPresentationClock^ OnNotifyPresentationClock;
+	/// <summary>
+	/// Evento chamado quando o processador de mídia está prestes a fornecer uma amostra de entrada para um componente de pipeline.
+	/// </summary>
+	virtual event ICarenMFQualityManager::Delegate_NotifyProcessInput^ OnNotifyProcessInput;
+	/// <summary>
+	/// Evento chamado após o processador de mídia receber uma amostra de saída de um componente de pipeline.
+	/// </summary>
+	virtual event ICarenMFQualityManager::Delegate_NotifyProcessOutput^ OnNotifyProcessOutput;
+	/// <summary>
+	/// Evento chamado quando um componente de pipeline envia um evento MEQualityNotify.
+	/// </summary>
+	virtual event ICarenMFQualityManager::Delegate_NotifyQualityEvent^ OnNotifyQualityEvent;
+	/// <summary>
+	/// Evento chamado quando a Media Session está prestes a começar a tocar uma nova topologia.
+	/// </summary>
+	virtual event ICarenMFQualityManager::Delegate_NotifyTopology^ OnNotifyTopology;
+	/// <summary>
+	/// Evento chamado quando a Sessão de Mídia está sendo encerrada.
+	/// </summary>
+	virtual event ICarenMFQualityManager::Delegate_Shutdown^ OnShutdown;
+
+	//(DELEGATES).
+private:
+
+	//////////////////////////////////////////////////////////////////////////////////////////
+	//DELEGATES UTILIZADOS PARA RECEBER OS EVENTOS NATIVOS DA CLASSE (CLN_IMFQualityManager)//
+	//////////////////////////////////////////////////////////////////////////////////////////
+
+	/// <summary>
+	/// Delegate nativo que vai conter o método que vai receber o evento(NotifyPresentationClock) nativo da classe (CLN_IMFQualityManager) para ser enviado ao usuário.
+	/// </summary>
+	delegate HRESULT DelegateNativo_Evento_OnNotifyPresentationClock(IMFPresentationClock*);
+	DelegateNativo_Evento_OnNotifyPresentationClock^ Callback_OnNotifyPresentationClock = nullptr;
+	/// <summary>
+	/// Delegate nativo que vai conter o método que vai receber o evento(NotifyProcessInput) nativo da classe (CLN_IMFQualityManager) para ser enviado ao usuário.
+	/// </summary>
+	delegate HRESULT DelegateNativo_Evento_OnNotifyProcessInput(
+		IMFTopologyNode*,
+		long,
+		IMFSample*);
+	DelegateNativo_Evento_OnNotifyProcessInput^ Callback_OnNotifyProcessInput = nullptr;
+	/// <summary>
+	/// Delegate nativo que vai conter o método que vai receber o evento(NotifyProcessOutput) nativo da classe (CLN_IMFQualityManager) para ser enviado ao usuário.
+	/// </summary>
+	delegate HRESULT DelegateNativo_Evento_OnNotifyProcessOutput(
+		IMFTopologyNode*,
+		long,
+		IMFSample*);
+	DelegateNativo_Evento_OnNotifyProcessOutput^ Callback_OnNotifyProcessOutput = nullptr;
+	/// <summary>
+	/// Delegate nativo que vai conter o método que vai receber o evento(NotifyQualityEvent) nativo da classe (CLN_IMFQualityManager) para ser enviado ao usuário.
+	/// </summary>
+	delegate HRESULT DelegateNativo_Evento_OnNotifyQualityEvent(
+		IUnknown* pObject,
+		IMFMediaEvent* pEvent);
+	DelegateNativo_Evento_OnNotifyQualityEvent^ Callback_OnNotifyQualityEvent = nullptr;
+	/// <summary>
+	/// Delegate nativo que vai conter o método que vai receber o evento(NotifyTopology) nativo da classe (CLN_IMFQualityManager) para ser enviado ao usuário.
+	/// </summary>
+	delegate HRESULT DelegateNativo_Evento_OnNotifyTopology(IMFTopology*);
+	DelegateNativo_Evento_OnNotifyTopology^ Callback_OnNotifyTopology = nullptr;
+	/// <summary>
+	/// Delegate nativo que vai conter o método que vai receber o evento(Shutdown) nativo da classe (CLN_IMFQualityManager) para ser enviado ao usuário.
+	/// </summary>
+	delegate HRESULT DelegateNativo_Evento_OnShutdown();
+	DelegateNativo_Evento_OnShutdown^ Callback_OnShutdown = nullptr;
+
+
+	//(HANDLES ALOCADAS DOS EVENTOS)
+private:
+	/// <summary>
+	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnNotifyPresentationClock).
+	/// </summary>
+	GCHandle gHandle_Delegate_OnNotifyPresentationClock;
+	/// <summary>
+	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnNotifyProcessInput).
+	/// </summary>
+	GCHandle gHandle_Delegate_OnNotifyProcessInput;
+	/// <summary>
+	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnNotifyProcessOutput).
+	/// </summary>
+	GCHandle gHandle_Delegate_OnNotifyProcessOutput;
+	/// <summary>
+	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnNotifyQualityEvent).
+	/// </summary>
+	GCHandle gHandle_Delegate_OnNotifyQualityEvent;
+	/// <summary>
+	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnNotifyTopology).
+	/// </summary>
+	GCHandle gHandle_Delegate_OnNotifyTopology;
+	/// <summary>
+	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnShutdown).
+	/// </summary>
+	GCHandle gHandle_Delegate_OnShutdown;
+
 
 
 	///////////////////////////////////////////////////////
@@ -175,4 +291,42 @@ public:
 	/// Método responsável por liberar todos os registros de eventos resgistrados anteriormente. Chame esse método após uma chamada para (RegistrarCallback).
 	/// </summary>
 	virtual void UnRegisterCallback();
+
+
+
+
+	//Métodos que são utilizados para receberem os eventos da classe nativa ().
+public:
+	/// <summary>
+	/// Método responsável por chamar o evento gerenciado para notificar o usuário sobre uma chamada para o método (NotifyTopology) na classe nativa.
+	/// </summary>
+	virtual HRESULT EncaminharEvento_OnNotifyTopology(IMFTopology* pTopology);
+	/// <summary>
+	/// Método responsável por chamar o evento gerenciado para notificar o usuário sobre uma chamada para o método (NotifyPresentationClock) na classe nativa.
+	/// </summary>
+	virtual HRESULT EncaminharEvento_OnNotifyPresentationClock(IMFPresentationClock* pClock);
+	/// <summary>
+	/// Método responsável por chamar o evento gerenciado para notificar o usuário sobre uma chamada para o método (NotifyProcessInput) na classe nativa.
+	/// </summary>
+	virtual HRESULT EncaminharEvento_OnNotifyProcessInput(
+		IMFTopologyNode* pNode,
+		long lInputIndex,
+		IMFSample* pSample);
+	/// <summary>
+	/// Método responsável por chamar o evento gerenciado para notificar o usuário sobre uma chamada para o método (NotifyProcessOutput) na classe nativa.
+	/// </summary>
+	virtual HRESULT EncaminharEvento_OnNotifyProcessOutput(
+		IMFTopologyNode* pNode,
+		long lOutputIndex,
+		IMFSample* pSample);
+	/// <summary>
+	/// Método responsável por chamar o evento gerenciado para notificar o usuário sobre uma chamada para o método (NotifyQualityEvent) na classe nativa.
+	/// </summary>
+	virtual HRESULT EncaminharEvento_OnNotifyQualityEvent(
+		IUnknown* pObject,
+		IMFMediaEvent* pEvent);
+	/// <summary>
+	/// Método responsável por chamar o evento gerenciado para notificar o usuário sobre uma chamada para o método (Shutdown) na classe nativa.
+	/// </summary>
+	virtual HRESULT EncaminharEvento_OnShutdown();
 };

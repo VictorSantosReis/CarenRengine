@@ -783,8 +783,8 @@ Done:;
 /// <summary>
 /// (GetCapabilities) - Recupera as características do fluxo de bytes.
 /// </summary>
-/// <param name="Param_Out_CaracteristicasFluxo">Retorna uma ou mais bandeiras da enumeração (CA_CARACTERISTICAS_BYTESTREAM) que definem as caracteristicas do fluxo de bytes.</param>
-CarenResult CarenMFByteStream::GetCapabilities([Out] CA_CARACTERISTICAS_BYTESTREAM% Param_Out_CaracteristicasFluxo)
+/// <param name="Param_Out_CaracteristicasFluxo">Retorna uma ou mais bandeiras da enumeração (CA_MFBYTESTREAM_CHARACTERISTICS) que definem as caracteristicas do fluxo de bytes.</param>
+CarenResult CarenMFByteStream::GetCapabilities([Out] CA_MFBYTESTREAM_CHARACTERISTICS% Param_Out_CaracteristicasFluxo)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -814,7 +814,7 @@ CarenResult CarenMFByteStream::GetCapabilities([Out] CA_CARACTERISTICAS_BYTESTRE
 	}
 
 	//Define as caracteristicas no parametro de saida.
-	Param_Out_CaracteristicasFluxo = static_cast<CA_CARACTERISTICAS_BYTESTREAM>(CaracteristicasFluxo);
+	Param_Out_CaracteristicasFluxo = static_cast<CA_MFBYTESTREAM_CHARACTERISTICS>(CaracteristicasFluxo);
 
 Done:;
 	//Retorna o resultado.

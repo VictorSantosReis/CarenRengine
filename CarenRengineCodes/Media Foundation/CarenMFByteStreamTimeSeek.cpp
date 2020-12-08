@@ -417,7 +417,7 @@ void CarenMFByteStreamTimeSeek::Finalizar()
 /// <param name="Param_Out_StartTime">Recebe a nova posição após a busca, em unidades de 100 nanossegundos.</param>
 /// <param name="Param_Out_StopTime">Recebe o tempo de parada, em unidades de 100 nanossegundos. Se o tempo de parada for desconhecido, o valor é zero.</param>
 /// <param name="Param_Out_Duracao">Recebe a duração total do arquivo, em unidades de 100 nanossegundos. Se a duração for desconhecida, o valor é de -1.</param>
-ResultCode GetTimeSeekResult(
+CarenResult CarenMFByteStreamTimeSeek::GetTimeSeekResult(
 [Out] Int64% Param_Out_StartTime,
 [Out] Int64% Param_Out_StopTime,
 [Out] Int64% Param_Out_Duracao)
@@ -429,10 +429,10 @@ ResultCode GetTimeSeekResult(
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	Utilidades Util;
-
+	QWORD vi_OutStartTime, vi_OutStopTime, vi_OutDuration = 0;
 
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetTimeSeekResult(&vi_OutStartTime, &vi_OutStopTime, &vi_OutDuration);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -448,6 +448,11 @@ ResultCode GetTimeSeekResult(
 		//Sai do método
 		Sair;
 	}
+
+	//Define os dados nos parametros de saida.
+	Param_Out_StartTime = static_cast<Int64>(vi_OutStartTime);
+	Param_Out_StopTime = static_cast<Int64>(vi_OutStopTime);
+	Param_Out_Duracao = static_cast<Int64>(vi_OutDuration);
 
 Done:;
 	//Retorna o resultado.
@@ -458,7 +463,7 @@ Done:;
 /// Verifica se o fluxo byte suporta a busca baseada no tempo.
 /// </summary>
 /// <param name="Param_Out_TimeSeekSuportado">Recebe o valor TRUE se o fluxo byte suportar a busca baseada no tempo ou FALSO de outra forma.</param>
-ResultCode IsTimeSeekSupported([Out] Boolean% Param_Out_TimeSeekSuportado)
+CarenResult CarenMFByteStreamTimeSeek::IsTimeSeekSupported([Out] Boolean% Param_Out_TimeSeekSuportado)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -467,10 +472,10 @@ ResultCode IsTimeSeekSupported([Out] Boolean% Param_Out_TimeSeekSuportado)
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	Utilidades Util;
-
+	BOOL vi_OutSuporte = FALSE;
 
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->IsTimeSeekSupported(&vi_OutSuporte);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -486,6 +491,9 @@ ResultCode IsTimeSeekSupported([Out] Boolean% Param_Out_TimeSeekSuportado)
 		//Sai do método
 		Sair;
 	}
+
+	//Define o resultado no parametro de saida.
+	Param_Out_TimeSeekSuportado = vi_OutSuporte ? true : false;
 
 Done:;
 	//Retorna o resultado.
@@ -497,7 +505,7 @@ Done:;
 /// Se o fluxo de byte for lido a partir de um servidor, ele poderá armazenar a solicitação de solicitação até a próxima solicitação de leitura. Portanto, o fluxo byte pode não enviar uma solicitação ao servidor imediatamente.
 /// </summary>
 /// <param name="Param_NovaPosicao">A nova posição, em unidades de 100 nanossegundos.</param>
-ResultCode TimeSeek(Int64 Param_NovaPosicao)
+CarenResult CarenMFByteStreamTimeSeek::TimeSeek(Int64 Param_NovaPosicao)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -505,11 +513,8 @@ ResultCode TimeSeek(Int64 Param_NovaPosicao)
 	//Resultado COM.
 	ResultadoCOM Hr = E_FAIL;
 
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-
-
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->TimeSeek(Param_NovaPosicao);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);

@@ -33,7 +33,7 @@ using namespace CarenRengine::SDKUtilidades;
 
 
 /// <summary>
-/// (Em desenvolvimento) - 
+/// (Concluido - Fase de Testes) - Classe responsável por controlar como um fluxo de bytes armazena dados de uma rede. 
 /// </summary>
 public ref class CarenMFByteStreamBuffering : public ICarenMFByteStreamBuffering
 {
@@ -170,16 +170,16 @@ public:
 	/// Habilita ou desativa o buffering.
 	/// </summary>
 	/// <param name="Param_Habilitar">Especifica se o fluxo de bytes armazena dados em buffer.Se TRUE, o buffer está habilitado.Se FALSE, o buffer está desabilitado.</param>
-ResultCode EnableBuffering(Boolean Param_Habilitar);
+	virtual CarenResult EnableBuffering(Boolean Param_Habilitar);
 
 	/// <summary>
 	/// Define os parâmetros de buffering.
 	/// </summary>
 	/// <param name="Param_Params">Uma estrutura (CA_MFBYTESTREAM_BUFFERING_PARAMS) que contenm os parâmetros de buffering.  fluxo byte usa essas informações para calcular quantos dados para buffer da rede.</param>
-ResultCode SetBufferingParams(CA_MFBYTESTREAM_BUFFERING_PARAMS^ Param_Params);
+	virtual CarenResult SetBufferingParams(CA_MFBYTESTREAM_BUFFERING_PARAMS^ Param_Params);
 
 	/// <summary>
 	/// Para qualquer armazenamento em buffer em andamento.
 	/// </summary>
-ResultCode StopBuffering();
+	virtual CarenResult StopBuffering();
 };

@@ -424,10 +424,10 @@ CarenResult CarenMFCapturePreviewSink::GetMirrorState(OutParam Boolean% Param_Ou
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	Utilidades Util;
-
+	BOOL vi_OutMirrorState = FALSE;
 
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetMirrorState(&vi_OutMirrorState);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -443,6 +443,9 @@ CarenResult CarenMFCapturePreviewSink::GetMirrorState(OutParam Boolean% Param_Ou
 		//Sai do método
 		Sair;
 	}
+
+	//Define o resultado no parametro de saida.
+	Param_Out_MirrorState = vi_OutMirrorState ? true : false;
 
 Done:;
 	//Retorna o resultado.
@@ -466,10 +469,10 @@ OutParam UInt32% Param_Out_RotacaoValue)
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	Utilidades Util;
-
+	DWORD vi_OutRotationValue = 0;
 
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetRotation(static_cast<DWORD>(Param_StreamIndex), &vi_OutRotationValue);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -485,6 +488,9 @@ OutParam UInt32% Param_Out_RotacaoValue)
 		//Sai do método
 		Sair;
 	}
+
+	//Define o valor no parametro de saida.
+	Param_Out_RotacaoValue = static_cast<UInt32>(Param_Out_RotacaoValue);
 
 Done:;
 	//Retorna o resultado.
@@ -505,10 +511,13 @@ CarenResult CarenMFCapturePreviewSink::SetCustomSink(ICarenMFMediaSink^ Param_Me
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	Utilidades Util;
+	IMFMediaSink* vi_pMediaSink = Nulo;
 
+	//Recupera o ponteiro para o Media Sink.
+	CarenGetPointerFromICarenSafe(Param_MediaSink, vi_pMediaSink);
 
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->SetCustomSink(vi_pMediaSink);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -543,11 +552,8 @@ CarenResult CarenMFCapturePreviewSink::SetMirrorState(Boolean Param_MirrorState)
 	//Resultado COM.
 	ResultadoCOM Hr = E_FAIL;
 
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-
-
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->SetMirrorState(Param_MirrorState ? TRUE : FALSE);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -585,8 +591,8 @@ CarenResult CarenMFCapturePreviewSink::SetRenderHandle(IntPtr Param_HandleWindow
 	//Variaveis a serem utilizadas.
 	Utilidades Util;
 
-
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->SetRenderHandle(Util.ConverterIntPtrToHandle(Param_HandleWindow));
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -622,10 +628,13 @@ CarenResult CarenMFCapturePreviewSink::SetRenderSurface(ICaren^ Param_Surface)
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	Utilidades Util;
+	IUnknown* vi_pSurface = Nulo;
 
+	//Recupera o ponteiro para a superfice.
+	CarenGetPointerFromICarenSafe(Param_Surface, vi_pSurface);
 
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->SetRenderSurface(vi_pSurface);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -663,11 +672,8 @@ UInt32 Param_RotacaoValue)
 	//Resultado COM.
 	ResultadoCOM Hr = E_FAIL;
 
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-
-
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->SetRotation(static_cast<DWORD>(Param_StreamIndex), static_cast<DWORD>(Param_RotacaoValue));
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -707,10 +713,13 @@ ICarenMFCaptureEngineOnSampleCallback^ Param_Callback)
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	Utilidades Util;
+	IMFCaptureEngineOnSampleCallback* vi_pEngineCallback = Nulo;
 
+	//Recupera o ponteiro para a interface de callback.
+	CarenGetPointerFromICarenSafe(Param_Callback, vi_pEngineCallback);
 
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->SetSampleCallback(static_cast<DWORD>(Param_StreamSinkIndex), vi_pEngineCallback);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -737,7 +746,7 @@ Done:;
 /// </summary>
 /// <param name="Param_RectOrigem">Uma estrutura CA_MFVideoNormalizedRect que especifica o retângulo de origem. O retângulo de origem define a área do quadro de vídeo que é exibido. Se este parâmetro for Nulo, todo o quadro de vídeo será exibido.</param>
 /// <param name="Param_RectDestino">Uma estrutura CA_RECT que especifica o retângulo de destino. O retângulo de destino define a área da janela ou visual directcomposition onde o vídeo é desenhado.</param>
-/// <param name="Param_CorBorda">A cor da borda a ser definida. </param>
+/// <param name="Param_CorBorda">A cor da borda a ser definida.</param>
 /// <returns></returns>
 CarenResult CarenMFCapturePreviewSink::UpdateVideo(
 CA_MFVideoNormalizedRect^ Param_RectOrigem,
@@ -752,9 +761,264 @@ CA_MFARGB^ Param_CorBorda)
 
 	//Variaveis a serem utilizadas.
 	Utilidades Util;
+	MFVideoNormalizedRect* vi_pNormalizedRect = Nulo; //Pode ser Nulo.
+	PRECT vi_pRectDestino = Nulo;
+	COLORREF vi_CorBorda = 0;
 
+	//Converte o retangulo de origem se informado.
+	if (ObjetoGerenciadoValido(Param_RectOrigem))
+		vi_pNormalizedRect = Util.ConverterMFVideoNormalizedRectManaged_ToUnamaged(Param_RectOrigem);
+
+	//Converte a estrutura para o retangulo de destino.
+	vi_pRectDestino = Util.ConverterRECTManagedToUnmanaged(Param_RectDestino);
+
+	//Define os dados da cor da borda.
+	vi_CorBorda = RGB(static_cast<DWORD>(Param_CorBorda->rgbRed), static_cast<DWORD>(Param_CorBorda->rgbGreen), static_cast<DWORD>(Param_CorBorda->rgbBlue));
 
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->UpdateVideo(vi_pNormalizedRect, vi_pRectDestino, &vi_CorBorda);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Define o código na classe.
+		Var_Glob_LAST_HRESULT = Hr;
+
+		//Sai do método
+		Sair;
+	}
+
+Done:;
+	//Libera a memória utilizada pelas estruturas.
+	DeletarEstruturaSafe(&vi_pNormalizedRect);
+	DeletarEstruturaSafe(&vi_pRectDestino);
+
+	//Retorna o resultado.
+	return Resultado;
+}
+
+
+
+
+// Métodos da interface (ICarenMFCaptureSink)
+
+
+/// <summary>
+/// Conecta um fluxo da fonte de captura a esta pia de captura.
+/// </summary>
+/// <param name="Param_SourceStreamIndex">O fluxo de origem para se conectar. Esse valor pode ser um dois valores da enumeração (MF_CAPTURE_ENGINE_FIRST_SOURCE_INDEX) ou O índice baseado em zero de um fluxo. Para obter o número de fluxos, ligue para o método ICarenMFCaptureSource::GetDeviceStreamCount.</param>
+/// <param name="Param_MediaType">Uma ICarenMFMediaType que especifica o formato desejado do fluxo de saída.</param>
+/// <param name="Param_Atributos">Uma interface ICarenMFAttributes para os atributos. Para fluxos comprimidos, você pode usar este parâmetro para configurar o codificador. Este parâmetro também pode ser Nulo.</param>
+/// <param name="Param_Out_SinkStreamIndex">Recebe o índice do novo fluxo na pia de captura. Observe que este índice não corresponderá necessariamente ao valor do (Param_SourceStreamIndex).</param>
+CarenResult CarenMFCapturePreviewSink::AddStream(
+	UInt32 Param_SourceStreamIndex,
+	ICarenMFMediaType^ Param_MediaType,
+	ICarenMFAttributes^ Param_Atributos,
+	[Out] UInt32% Param_Out_SinkStreamIndex)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Resultado COM.
+	ResultadoCOM Hr = E_FAIL;
+
+	//Variaveis a serem utilizadas.
+	IMFMediaType* vi_pMediaType = Nulo;
+	IMFAttributes* vi_pAttributes = Nulo; //Pode ser Nulo.
+	DWORD vi_OutStreamSink = 0;
+
+	//Recupera ao ponteiro para o Media Type
+	CarenGetPointerFromICarenSafe(Param_MediaType, vi_pMediaType);
+
+	//Recupera um ponteiro para os atributos se informado
+	if (ObjetoGerenciadoValido(Param_Atributos))
+		CarenGetPointerFromICarenSafe(Param_Atributos, vi_pAttributes);
+
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->AddStream(static_cast<DWORD>(Param_SourceStreamIndex), vi_pMediaType, vi_pAttributes, &vi_OutStreamSink);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Define o código na classe.
+		Var_Glob_LAST_HRESULT = Hr;
+
+		//Sai do método
+		Sair;
+	}
+
+	//Defie o index do stream adicionado no parametro de saida.
+	Param_Out_SinkStreamIndex = static_cast<UInt32>(vi_OutStreamSink);
+
+Done:;
+	//Retorna o resultado.
+	return Resultado;
+}
+
+/// <summary>
+/// Obtém o formato de saída para um fluxo nesta pia de captura.
+/// </summary>
+/// <param name="Nome_Parametro">O índice baseado em zero do fluxo para consulta. O índice é devolvido no parâmetro (Param_Out_SinkStreamIndex) do método ICarenMFCaptureSink::AddStream.</param>
+/// <param name="Nome_Parametro">Retorna uma interface ICarenMFMediaType com o formato do tipo de midia no fluxo especificado. O usuário é responsável por liberar a interface.</param>
+CarenResult CarenMFCapturePreviewSink::GetOutputMediaType(
+	UInt32 Param_SinkStreamIndex,
+	[Out] ICarenMFMediaType^% Param_Out_MediaType)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Resultado COM.
+	ResultadoCOM Hr = E_FAIL;
+
+	//Variaveis a serem utilizadas.
+	IMFMediaType* vi_pOutMediaType = Nulo;
+
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetOutputMediaType(static_cast<DWORD>(Param_SinkStreamIndex), &vi_pOutMediaType);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Define o código na classe.
+		Var_Glob_LAST_HRESULT = Hr;
+
+		//Sai do método
+		Sair;
+	}
+
+	//Cria a interface a ser retornada.
+	Param_Out_MediaType = gcnew CarenMFMediaType();
+
+	//Define o ponteiro na interface.
+	CarenSetPointerToICarenSafe(vi_pOutMediaType, Param_Out_MediaType, true);
+
+Done:;
+	//Retorna o resultado.
+	return Resultado;
+}
+
+/// <summary>
+/// Consulte o objeto Sink Writer(ICarenMFSourceReader) subjacente para uma interface.
+/// </summary>
+/// <param name="Param_SinkStreamIndex">O índice baseado em zero do fluxo para consulta. O índice é devolvido no parâmetro (Param_Out_SinkStreamIndex) do método ICarenMFCaptureSink::AddStream.</param>
+/// <param name="Param_GuidService">Um identificador de serviço GUID. Atualmente, o valor deve ser Nulo.</param>
+/// <param name="Param_RIID">Um identificador de serviço GUID. Atualmente, o valor deve ser IID_IMFSinkWriter.</param>
+/// <param name="Param_Ref_Interface">Retorna um ponteiro para a interface solicitada. O usuário é responsável por criar e liberar a interface.</param>
+CarenResult CarenMFCapturePreviewSink::GetService(
+	UInt32 Param_SinkStreamIndex,
+	String^ Param_GuidService,
+	String^ Param_RIID,
+	ICaren^% Param_Ref_Interface)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Resultado COM.
+	ResultadoCOM Hr = E_FAIL;
+
+	//Variaveis a serem utilizadas.
+	Utilidades Util;
+	GUID vi_GuidService = GUID_NULL; //Atualmente (07.12.2020) esse valor é Nulo.
+	GUID vi_Riid = GUID_NULL;
+	IUnknown* vi_pOutInterface = Nulo;
+
+	//Converte o guid de serviço se informado.
+	if (StringObjetoValido(Param_GuidService))
+		vi_GuidService = Util.CreateGuidFromString(Param_GuidService);
+
+	//Converte a string para o guid da interface.
+	vi_Riid = Util.CreateGuidFromString(Param_RIID);
+
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetService(static_cast<DWORD>(Param_SinkStreamIndex), vi_GuidService, vi_Riid, &vi_pOutInterface);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Define o código na classe.
+		Var_Glob_LAST_HRESULT = Hr;
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o ponteiro na interface criada pelo usuário.
+	CarenSetPointerToICarenSafe(vi_pOutInterface, Param_Ref_Interface, true);
+
+Done:;
+	//Retorna o resultado.
+	return Resultado;
+}
+
+/// <summary>
+/// Prepara o sink de captura carregando quaisquer componentes de pipeline necessários, como codificadores, processadores de vídeo e coletores de mídia.
+/// Chamar esse método é opcional. Este método dá ao aplicativo a oportunidade de configurar os componentes do pipeline antes de serem usados. O método é assíncrono. Se o método retornar um código de sucesso, o chamador receberá um evento MF_CAPTURE_SINK_PREPARED por meio do método ICarenMFCaptureEngineOnEventCallback::OnEvent. Depois que esse evento for recebido, chame ICarenMFCaptureSink::GetService para configurar componentes individuais.
+/// </summary>
+CarenResult CarenMFCapturePreviewSink::Prepare()
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Resultado COM.
+	ResultadoCOM Hr = E_FAIL;
+
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->Prepare();
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Define o código na classe.
+		Var_Glob_LAST_HRESULT = Hr;
+
+		//Sai do método
+		Sair;
+	}
+
+Done:;
+	//Retorna o resultado.
+	return Resultado;
+}
+
+/// <summary>
+/// Remove todos os fluxos do sink de captura. 
+/// Você pode usar este método para reconfigurar o sink.
+/// </summary>
+CarenResult CarenMFCapturePreviewSink::RemoveAllStreams()
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Resultado COM.
+	ResultadoCOM Hr = E_FAIL;
+
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->RemoveAllStreams();
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);

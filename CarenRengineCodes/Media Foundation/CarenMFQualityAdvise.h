@@ -33,7 +33,7 @@ using namespace CarenRengine::SDKUtilidades;
 
 
 /// <summary>
-/// (Em desenvolvimento) - 
+/// (Concluido - Fase de Testes) - Classe responsável permitir que o gerenciador de qualidade ajuste a qualidade de áudio ou vídeo de um componente no pipeline. 
 /// </summary>
 public ref class CarenMFQualityAdvise : public ICarenMFQualityAdvise
 {
@@ -170,30 +170,30 @@ public:
 	/// Dropa as amostras em um intervalo de tempo especificado.
 	/// </summary>
 	/// <param name="Param_NsAmountToDrop">Quantidade de tempo para dropar, em unidades de 100 nanossegundos. Esse valor é sempre absoluto. Se o método for chamado várias vezes, não adicione os horários das chamadas anteriores.</param>
-ResultCode DropTime(UInt64 Param_NsAmountToDrop);
+	virtual CarenResult DropTime(UInt64 Param_NsAmountToDrop);
 
 	/// <summary>
 	/// Recupera o modo de drop atual.
 	/// </summary>
 	/// <param name="Param_Out_DropMode">Recebe o modo de drop, especificado como membro da enumeração CA_MF_QUALITY_DROP_MODE.</param>
-ResultCode GetDropMode([Out] CA_MF_QUALITY_DROP_MODE% Param_Out_DropMode);
+	virtual CarenResult GetDropMode([Out] CA_MF_QUALITY_DROP_MODE% Param_Out_DropMode);
 
 	/// <summary>
 	/// Recupera o nível de qualidade atual.
 	/// </summary>
 	/// <param name="Param_Out_NivelQualidade">Recebe o nível de qualidade, especificado como membro da enumeração CA_MF_QUALITY_LEVEL.</param>
-ResultCode GetQualityLevel([Out] CA_MF_QUALITY_LEVEL% Param_Out_NivelQualidade);
+	virtual CarenResult GetQualityLevel([Out] CA_MF_QUALITY_LEVEL% Param_Out_NivelQualidade);
 
 	/// <summary>
 	/// Define o modo de drop. No modo de drop, um componente dropa amostras, mais ou menos agressivamente dependendo do nível do modo de drop.
 	/// Se esse método for chamado a uma fonte de mídia, a fonte de mídia pode alternar entre saídas diluídas e não diluídas. Se isso ocorrer, os fluxos afetados enviarão um evento MEStreamThinMode para indicar a transição. A operação é assíncroda; após o retorno do SetDropMode, você pode receber amostras que estavam na fila antes da transição. O evento MEStreamThinMode marca o ponto exato no fluxo onde a transição ocorre.
 	/// </summary>
 	/// <param name="Param_DropMode">Modo de queda solicitado, especificado como membro da enumeração CA_MF_QUALITY_DROP_MODE.</param>
-ResultCode SetDropMode(CA_MF_QUALITY_DROP_MODE Param_DropMode);
+	virtual CarenResult SetDropMode(CA_MF_QUALITY_DROP_MODE Param_DropMode);
 
 	/// <summary>
 	/// Define o nível de qualidade. O nível de qualidade determina como o componente consome ou produz amostras.
 	/// </summary>
 	/// <param name="Param_NivelQualidade">Nível de qualidade solicitado, especificado como membro da enumeração CA_MF_QUALITY_LEVEL.</param>
-ResultCode SetQualityLevel(CA_MF_QUALITY_LEVEL Param_NivelQualidade);
+	virtual CarenResult SetQualityLevel(CA_MF_QUALITY_LEVEL Param_NivelQualidade);
 };

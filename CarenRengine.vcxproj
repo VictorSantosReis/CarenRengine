@@ -406,7 +406,11 @@
     <ClInclude Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink5.h" />
     <ClInclude Include="CarenRengineCodes\FunctionClass\DirectxFunctions.h" />
     <ClInclude Include="CarenRengineCodes\Caren\CarenHMONITOR.h" />
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFCaptureEngineOnEventCallback.h" />
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFCaptureEngineOnSampleCallback.h" />
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFCaptureEngineOnSampleCallback2.h" />
     <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFMediaKeySessionNotify.h" />
+    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFQualityManager.h" />
     <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFSourceOpenMonitor.h" />
     <ClInclude Include="CarenRengineCodes\Nativas\CLN_IWICDevelopRawNotificationCallback.h" />
     <ClInclude Include="CarenRengineCodes\SDK_Base.h" />
@@ -863,7 +867,11 @@
     <ClCompile Include="CarenRengineCodes\Core Audio\CarenMMDeviceEnumerator.cpp" />
     <ClCompile Include="CarenRengineCodes\Core Audio\CarenMMNotificationClient.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFGetService.cpp" />
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFCaptureEngineOnEventCallback.cpp" />
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFCaptureEngineOnSampleCallback.cpp" />
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFCaptureEngineOnSampleCallback2.cpp" />
     <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFMediaKeySessionNotify.cpp" />
+    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFQualityManager.cpp" />
     <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFSourceOpenMonitor.cpp" />
     <ClCompile Include="CarenRengineCodes\Nativas\CLN_IWICDevelopRawNotificationCallback.cpp" />
     <ClCompile Include="CarenRengineCodes\WIC\CarenWICBitmap.cpp" />

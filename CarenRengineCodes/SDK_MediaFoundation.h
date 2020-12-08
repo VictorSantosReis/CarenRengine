@@ -705,7 +705,7 @@ namespace CarenRengine
 			/// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (UINT64) obtido.</param>
 			/// <param name="Param_Out_Numerador">Recebe o valor referente ao: Numerador</param>
 			/// <param name="Param_Out_Denominador">Recebe o valor referente ao: Denominador</param>
-			CarenResult MFGetAttributeRatio(String^ Param_GuidChave, [Out] UInt32% Param_Out_Numerador, [Out] UInt32% Param_Out_Denominador);
+			CarenResult _MFGetAttributeRatio(String^ Param_GuidChave, [Out] UInt32% Param_Out_Numerador, [Out] UInt32% Param_Out_Denominador);
 
 			/// <summary>
 			/// (MFGetAttributeSize) - Recupera um atributo cujo valor é um tamanho, expresso como uma largura e altura.
@@ -713,7 +713,7 @@ namespace CarenRengine
 			/// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor obtido. O atribute deve ser do tipo: UInt64</param>
 			/// <param name="Param_Out_Largura">Recebe a largura em pixels.</param>
 			/// <param name="Param_Out_Altura">Recebe a altura em pixels.</param>
-			CarenResult MFGetAttributeSize(String^ Param_GuidChave, [Out] UInt32% Param_Out_Largura, [Out] UInt32% Param_Out_Altura);
+			CarenResult _MFGetAttributeSize(String^ Param_GuidChave, [Out] UInt32% Param_Out_Largura, [Out] UInt32% Param_Out_Altura);
 
 			/// <summary>
 			/// (GetUnknown) - Recupera um ponteiro de interface associado a uma chave.
@@ -793,7 +793,7 @@ namespace CarenRengine
 			/// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor. O tipo do atributo deve ser: UInt64</param>
 			/// <param name="Param_Numerador">Define o valor do: Numerador</param>
 			/// <param name="Param_Denominador">Define o valor do: Denominador</param>
-			CarenResult DefinirRatioAtribute(String^ Param_GuidChave, UInt32 Param_Numerador, UInt32 Param_Denominador);
+			CarenResult _MFSetAttributeRatio(String^ Param_GuidChave, UInt32 Param_Numerador, UInt32 Param_Denominador);
 
 			/// <summary>
 			/// (MFSetAttributeSize) - Define a largura e a altura como um único valor de atributo de 64 bits.
@@ -803,7 +803,7 @@ namespace CarenRengine
 			/// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor. O tipo do atributo deve ser: UInt64</param>
 			/// <param name="Param_Largura">A Largura do vídeo em pixels.</param>
 			/// <param name="Param_Altura">A Altura do vídeo em pixels.</param>
-			CarenResult MFGetAttributeSize(String^ Param_GuidChave, UInt32 Param_Largura, UInt32 Param_Altura);
+			CarenResult _MFSetAttributeSize(String^ Param_GuidChave, UInt32 Param_Largura, UInt32 Param_Altura);
 
 			/// <summary>
 			/// Associa um IUnknown ponteiro com uma chave.
@@ -1594,7 +1594,7 @@ namespace CarenRengine
 			/// Obtém as características do coletor de mídia.
 			/// </summary>
 			/// <param name="Param_Out_Caracteristicas">Retorna as características desse (Coletor de mídia).</param>
-			CarenResult GetCharacteristics([Out] Enumeracoes::CA_MIDIA_SINK_CARACTERISTCAS% Param_Out_Caracteristicas);
+			CarenResult GetCharacteristics([Out] Enumeracoes::CA_MEDIASINK_CHARACTERISTICS% Param_Out_Caracteristicas);
 
 			/// <summary>
 			/// Obtém o relógio de apresentação que foi definido no coletor de mídia.
@@ -2683,10 +2683,10 @@ namespace CarenRengine
 			CarenResult Flush();
 
 			/// <summary>
-			/// (GetCharacteristics) - Recupera as características do fluxo de bytes.
+			/// (GetCapabilities) - Recupera as características do fluxo de bytes.
 			/// </summary>
-			/// <param name="Param_Out_CaracteristicasFluxo">Retorna uma ou mais bandeiras da enumeração (CA_CARACTERISTICAS_BYTESTREAM) que definem as caracteristicas do fluxo de bytes.</param>
-			CarenResult GetCharacteristics([Out] CA_CARACTERISTICAS_BYTESTREAM% Param_Out_CaracteristicasFluxo);
+			/// <param name="Param_Out_CaracteristicasFluxo">Retorna uma ou mais bandeiras da enumeração (CA_MFBYTESTREAM_CHARACTERISTICS) que definem as caracteristicas do fluxo de bytes.</param>
+			CarenResult GetCapabilities([Out] CA_MFBYTESTREAM_CHARACTERISTICS% Param_Out_CaracteristicasFluxo);
 
 			/// <summary>
 			/// (GetCurrentPosition) - Recupera a posição atual de leitura ou gravação no fluxo.
@@ -6415,7 +6415,7 @@ namespace CarenRengine
 			/// Defeine o limite do cache.
 			/// </summary>
 			/// <param name="Param_MaximoBytes">O número máximo de bytes para armazenar no cache ou (18446744073709551615) para nenhum limite. O valor padrão é sem limite.</param>
-			CarenResult SetCacheLimit(Int64^ Param_MaximoBytes);
+			CarenResult SetCacheLimit(Int64 Param_MaximoBytes);
 		};
 		
 		/// <summary>
@@ -6443,7 +6443,7 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_ByteStream">Uma interface ICarenMFByteStream do fluxo byte para o proxy.</param>
 			/// <param name="Param_Atributos">Reservado. Defina como NULO.</param>
-			/// <param name="Param_RIID">O identifer de interface (IID) da interface que está sendo solicitada.</param>
+			/// <param name="Param_RIID">O identificador de interface (IID) da interface que está sendo solicitada.</param>
 			/// <param name="Param_Ref_InterfaceObjeto">A interface que vai receber o ponteiro. O usuário é responsável por criar e liberar a interface.</param>
 			CarenResult CreateByteStreamProxy(
 				ICarenMFByteStream^ Param_ByteStream,
@@ -6454,7 +6454,8 @@ namespace CarenRengine
 
 		/// <summary>
 		/// (IMFByteStreamTimeSeek) - Interface responsável por buscar um fluxo de bytes por posição de tempo.
-		/// Um fluxo byte pode implementar essa interface se ela suportar a busca baseada no tempo. Por exemplo, um fluxo de byte que lê dados de um servidor pode implementar a interface. Normalmente, um fluxo de byte baseado em arquivos local não o implementaria.
+		/// Um fluxo byte pode implementar essa interface se ela suportar a busca baseada no tempo. Por exemplo, um fluxo de byte que lê dados de um servidor pode implementar a interface. Normalmente, um fluxo de byte baseado em 
+		/// arquivos local não o implementaria.
 		/// Para obter um ponteiro para esta interface, ligue para ICaren::ConsultarInterface no objeto de fluxo byte.
 		/// </summary>
 		[CategoryAttribute("MF Interface")]
@@ -6539,7 +6540,7 @@ namespace CarenRengine
 			CarenResult GetAvailableDeviceMediaType(
 				UInt32 Param_SourceStreamIndex,
 				UInt32 Param_MediaTypeIndex,
-				[Out] ICarenMFMediaType% Param_Out_MediaType);
+				[Out] ICarenMFMediaType^% Param_Out_MediaType);
 
 			/// <summary>
 			/// Obtém o ponteiro para a interface ICarenMFActivate do dispositivo de captura atual.
@@ -6548,7 +6549,7 @@ namespace CarenRengine
 			/// <param name="Param_Out_Activate">Recebe a interface ICarenMFActivate que representa o dispositivo.</param>
 			CarenResult GetCaptureDeviceActivate(
 				CA_MF_CAPTURE_ENGINE_DEVICE_TYPE Param_CaptureDeviceType,
-				[Out] ICarenMFActivate% Param_Out_Activate);
+				[Out] ICarenMFActivate^% Param_Out_Activate);
 
 			/// <summary>
 			/// Obtém o ponteiro para a interface ICarenMFMediaSource do dispositivo de captura atual
@@ -6557,7 +6558,7 @@ namespace CarenRengine
 			/// <param name="Param_Out_MediaSource">Recebe a interface ICarenMFMediaSource que representa o dispositivo.</param>
 			CarenResult GetCaptureDeviceSource(
 				CA_MF_CAPTURE_ENGINE_DEVICE_TYPE Param_CaptureDeviceType,
-				[Out] ICarenMFMediaSource% Param_Out_MediaSource);
+				[Out] ICarenMFMediaSource^% Param_Out_MediaSource);
 
 			/// <summary>
 			/// Obtém o tipo de mídia atual para um fluxo de captura. 
@@ -6566,7 +6567,7 @@ namespace CarenRengine
 			/// <param name="Param_Out_MediaType">Recebe a interface ICarenMFMediaType. O chamador deve liberar a interface.</param>
 			CarenResult GetCurrentDeviceMediaType(
 				UInt32 Param_SourceStreamIndex,
-				[Out] ICarenMFMediaType% Param_Out_MediaType);
+				[Out] ICarenMFMediaType^% Param_Out_MediaType);
 
 			/// <summary>
 			/// Obtém a categoria de fluxo para o índice de fluxo de origem especificado. 
@@ -6600,7 +6601,7 @@ namespace CarenRengine
 			/// <param name="Param_Ref_Interface">Recebe um ponteiro para a interface solicitada. O usuário é responsável por inicializar a interface.</param>
 			CarenResult GetService(
 				String^ Param_GuidServico,
-				Type^ Param_RIID,
+				String^ Param_RIID,
 				ICaren^% Param_Ref_Interface);
 			
 			/// <summary>
@@ -6771,7 +6772,7 @@ namespace CarenRengine
 			/// Este método é assíncrono. Se o método retornar um código de sucesso, o chamador receberá um MF_CAPTURE_ENGINE_RECORD_STOPPED evento através do método ICarenMFCaptureEngineOnEventCallback::OnEvent. A operação pode falhar assincronicamente após o sucesso do método. Se assim for, o código de erro é transmitido através do método OnEvent.
 			/// </summary>
 			/// <param name="Param_Finalizar">Um valor booleano que especifica se deve finalizar o arquivo de saída. Para criar um arquivo de saída válido, especifique TRUE. Especifique FALSO somente se você quiser interromper a gravação e descartar o arquivo de saída. Se o valor for FALSO,a operação será concluída mais rapidamente, mas o arquivo não será jogável.</param>
-			/// <param name="Param_FlushUnprocessedSamples">Um valor booleano que especifica se as amostras não processadas que aguardam para serem codificadas devem ser lavadas.</param>
+			/// <param name="Param_FlushUnprocessedSamples">Um valor booleano que especifica se as amostras não processadas aguardando para serem codificadas devem ser liberadas.</param>
 			CarenResult StopRecord(
 				Boolean Param_Finalizar,
 				Boolean Param_FlushUnprocessedSamples);
@@ -6889,7 +6890,7 @@ namespace CarenRengine
 			/// <summary>
 			/// Evento chamado pelo Sink de captura quando o formato da amostra é alterado.
 			/// </summary>
-			event Delegate_OnSynchronizedEvent^ OnSample;
+			event Delegate_OnSynchronizedEvent^ OnSynchronizedEvent;
 
 
 
@@ -7308,8 +7309,8 @@ namespace CarenRengine
 		};
 
 		/// <summary>
-		/// (IMFQualityAdviseLimits) - Interface responsável por consultar um objeto para o número de modos de qualidade que suporta. Os modos de qualidade são usados para ajustar a troca entre qualidade e velocidade ao renderizar áudio ou vídeo.
-		/// O apresentador padrão do renderizador de vídeo aprimorado (EVR) implementa esta interface. O EVR usa a interface para responder a mensagens de qualidade do gerenciador de qualidade.
+		/// (IMFQualityAdviseLimits) - Interface responsável por consultar um objeto para o número de modos de qualidade que suporta. Os modos de qualidade são usados para ajustar a troca entre qualidade e velocidade 
+		/// ao renderizar áudio ou vídeo. O apresentador padrão do renderizador de vídeo aprimorado (EVR) implementa esta interface. O EVR usa a interface para responder a mensagens de qualidade do gerenciador de qualidade.
 		/// </summary>
 		[CategoryAttribute("MF Interface")]
 		[Guid("020A8DAA-60A5-46C1-AE7A-564D06177166")]
@@ -7344,7 +7345,8 @@ namespace CarenRengine
 
 		/// <summary>
 		/// (IMFQualityManager) - Interface responsável por ajustar a qualidade de reprodução. Esta interface é exposta pelo gerenciador de qualidade.
-		/// A Media Foundation fornece um gerenciador de qualidade padrão que está sintonizado para reprodução. Os aplicativos podem fornecer um gerenciador de qualidade personalizado para a Sessão de Mídia, definindo o atributo MF_SESSION_QUALITY_MANAGER ao criar a Sessão de Mídia.
+		/// A Media Foundation fornece um gerenciador de qualidade padrão que está sintonizado para reprodução. Os aplicativos podem fornecer um gerenciador de qualidade personalizado para a Sessão de Mídia, 
+		/// definindo o atributo MF_SESSION_QUALITY_MANAGER ao criar a Sessão de Mídia.
 		/// </summary>
 		[CategoryAttribute("MF Interface")]
 		[Guid("BD411392-BDA5-4AD1-959B-82A1E17E02C4")]

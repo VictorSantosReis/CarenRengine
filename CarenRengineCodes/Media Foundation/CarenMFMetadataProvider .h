@@ -167,7 +167,7 @@ public:
 	virtual void Finalizar();
 
 
-	//Métodos da interface(ICarenMFMetadataProvider )
+	//Métodos da interface(ICarenMFMetadataProvider)
 public:
 	/// <summary>
 	/// Obtém uma coleção de metadados, seja para uma apresentação inteira, ou para um fluxo na apresentação.

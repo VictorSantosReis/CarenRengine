@@ -33,7 +33,7 @@ using namespace CarenRengine::SDKUtilidades;
 
 
 /// <summary>
-/// (Em desenvolvimento) - 
+/// (Concluido - Fase de Testes) - Classe responsável por controlar como um fluxo de byte de rede transfere dados para um cache local.
 /// </summary>
 public ref class CarenMFByteStreamCacheControl2 : public ICarenMFByteStreamCacheControl2
 {
@@ -171,7 +171,7 @@ public:
 	/// </summary>
 	/// <param name="Param_Out_QuantidadeRanges">Recebe o número de intervalos retornados na matriz (Param_Out_Ranges).</param>
 	/// <param name="Param_Out_Ranges">Recebe uma série de estruturas MF_BYTE_STREAM_CACHE_RANGE. Cada estrutura especifica uma gama de bytes armazenados no cache.</param>
-ResultCode GetByteRanges(
+	virtual CarenResult GetByteRanges(
 	[Out] UInt32% Param_Out_QuantidadeRanges,
 	[Out] cli::array<CA_MF_BYTE_STREAM_CACHE_RANGE^>^% Param_Out_Ranges);
 
@@ -180,11 +180,19 @@ ResultCode GetByteRanges(
 	/// A transferência em segundo plano pode ser interrompida porque o limite do cache foi atingido (consulte IMFByteStreamCacheControl2 :: SetCacheLimit) ou porque o método IMFByteStreamCacheControl :: StopBackgroundTransfer foi chamado.
 	/// </summary>
 	/// <param name="Param_Out_Ativo">Recebe o valor TRUE se a transferência em segundo plano estiver ativa no momento ou FALSE caso contrário.</param>
-ResultCode IsBackgroundTransferActive([Out] Boolean% Param_Out_Ativo);
+	virtual CarenResult IsBackgroundTransferActive([Out] Boolean% Param_Out_Ativo);
 
 	/// <summary>
 	/// Defeine o limite do cache.
 	/// </summary>
 	/// <param name="Param_MaximoBytes">O número máximo de bytes para armazenar no cache ou (18446744073709551615) para nenhum limite. O valor padrão é sem limite.</param>
-ResultCode SetCacheLimit(Int64^ Param_MaximoBytes);
+	virtual CarenResult SetCacheLimit(Int64 Param_MaximoBytes);
+
+
+	//Métodos da interface(ICarenMFByteStreamCacheControl)
+public:
+	/// <summary>
+	///  Interrompe a transferência de dados em segundo plano para o cache local.
+	/// </summary>
+	virtual CarenResult StopBackgroundTransfer();
 };

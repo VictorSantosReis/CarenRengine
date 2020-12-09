@@ -411,7 +411,7 @@ void CarenD3D11BlendState::Finalizar()
 /// (GetDesc) - Obtém a descrição para o estado que você usou para criar o objeto de mistura-estado de mistura.
 /// </summary>
 /// <param name="Param_Out_DescEstado">Retorna uma estrutura com a descrição de um misturador de estado(Blend State).</param>
-CarenResult CarenD3D11BlendState::ObterDescriçaoEstado([Out] Estruturas::CA_D3D11_BLEND_DESC^% Param_Out_DescEstado)
+CarenResult CarenD3D11BlendState::GetDesc([Out] Estruturas::CA_D3D11_BLEND_DESC^% Param_Out_DescEstado)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -442,7 +442,7 @@ CarenResult CarenD3D11BlendState::ObterDescriçaoEstado([Out] Estruturas::CA_D3D
 /// (GetDevice) - Obtém um ponteiro para o dispositivo que criou essa interface.
 /// </summary>
 /// <param name="Param_Out_DispositivoD3D11">Retorna o dispositivo D3D11 que criou essa interface.</param>
-CarenResult CarenD3D11BlendState::ObterDispositivo(ICaren^ Param_Out_DispositivoD3D11)
+CarenResult CarenD3D11BlendState::GetDevice(ICaren^ Param_Out_DispositivoD3D11)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -490,9 +490,9 @@ Done:;
 /// <param name="Param_Guid">GUID associado com os dados.</param>
 /// <param name="Param_TamanhoBuffer">O tamanho do buffer que será retornado.</param>
 /// <param name="Param_Out_TamanhoBufferSaida">O valor real do buffer retornado pelo parametro (Param_Out_BufferDados).</param>
-/// <param name="Param_Out_BufferDados">Um ponteiro para um buffer que (ObterDadosPrivados) preenche com dados da criança dispositivo se (Param_TamanhoBuffer) aponta para um valor 
+/// <param name="Param_Out_BufferDados">Um ponteiro para um buffer que (GetPrivateData) preenche com dados da criança dispositivo se (Param_TamanhoBuffer) aponta para um valor 
 /// que especifica um buffer grande o suficiente para armazenar os dados.</param>
-CarenResult CarenD3D11BlendState::ObterDadosPrivados(
+CarenResult CarenD3D11BlendState::GetPrivateData(
 	String^ Param_Guid,
 	UInt32 Param_TamanhoBuffer,
 	[Out] UInt32% Param_Out_TamanhoBufferSaida,
@@ -562,7 +562,7 @@ Done:;
 /// <param name="Param_TamanhoBuffer">O tamanho do buffer no parametro (Param_Buffer).</param>
 /// <param name="Param_Buffer">Ponteiro para os dados a serem armazenados com essa criança de dispositivo. Se Param_Buffer é NULO, Param_TamanhoBuffer também deve ser 0, e quaisquer 
 /// dados anteriormente associados com o especificado GUID serão destruídos.</param>
-CarenResult CarenD3D11BlendState::DefinirDadosPrivados(
+CarenResult CarenD3D11BlendState::SetPrivateData(
 	String^ Param_Guid,
 
 	UInt32 Param_TamanhoBuffer, ICarenBuffer^ Param_Buffer)
@@ -636,7 +636,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Guid">GUID associado com a interface a ser definida.</param>
 /// <param name="Param_Interface">Ponteiro para uma interface IUnknown-derivado a ser associado com a criança do dispositivo.</param>
-CarenResult CarenD3D11BlendState::DefinirInterfaceDadosPrivados(
+CarenResult CarenD3D11BlendState::SetPrivateDataInterface(
 	String^ Param_Guid, ICaren^ Param_Interface)
 {
 	//Variavel a ser retornada.

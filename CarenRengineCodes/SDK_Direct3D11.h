@@ -55,7 +55,7 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_Out_DispositivoD3D11">Retorna o dispositivo D3D11 que criou essa interface. A interface retornada é uma (ICarenD3D11Device). Utilize a classe (CastInterface)
 			/// para transforma em sua interface original.</param>
-			CarenResult ObterDispositivo(ICaren^ Param_Out_DispositivoD3D11);
+			CarenResult GetDevice(ICaren^ Param_Out_DispositivoD3D11);
 
 			/// <summary>
 			/// (GetPrivateData)[TESTE - PRECISA VERIFICAR SE A CONVERSAO ESTÁ CORRETA] - Obtém os dados definidos pelo aplicativo de um filho de dispositivo.
@@ -63,9 +63,9 @@ namespace CarenRengine
 			/// <param name="Param_Guid">GUID associado com os dados.</param>
 			/// <param name="Param_TamanhoBuffer">O tamanho do buffer que será retornado.</param>
 			/// <param name="Param_Out_TamanhoBufferSaida">O valor real do buffer retornado pelo parametro (Param_Out_BufferDados).</param>
-			/// <param name="Param_Out_BufferDados">Um ponteiro para um buffer que (ObterDadosPrivados) preenche com dados da criança dispositivo se (Param_TamanhoBuffer) aponta para um valor 
+			/// <param name="Param_Out_BufferDados">Um ponteiro para um buffer que (GetPrivateData) preenche com dados da criança dispositivo se (Param_TamanhoBuffer) aponta para um valor 
 			/// que especifica um buffer grande o suficiente para armazenar os dados.</param>
-			CarenResult ObterDadosPrivados(
+			CarenResult GetPrivateData(
 				String^ Param_Guid,
 				UInt32 Param_TamanhoBuffer,
 				[Out] UInt32% Param_Out_TamanhoBufferSaida,
@@ -78,9 +78,8 @@ namespace CarenRengine
 			/// <param name="Param_TamanhoBuffer">O tamanho do buffer no parametro (Param_Buffer).</param>
 			/// <param name="Param_Buffer">Ponteiro para os dados a serem armazenados com essa criança de dispositivo. Se Param_Buffer é NULO, Param_TamanhoBuffer também deve ser 0, e quaisquer 
 			/// dados anteriormente associados com o especificado GUID serão destruídos.</param>
-			CarenResult DefinirDadosPrivados(
+			CarenResult SetPrivateData(
 				String^ Param_Guid,
-
 				UInt32 Param_TamanhoBuffer, ICarenBuffer^ Param_Buffer);
 
 			/// <summary>
@@ -88,7 +87,7 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_Guid">GUID associado com a interface a ser definida.</param>
 			/// <param name="Param_Interface">Ponteiro para uma interface IUnknown-derivado a ser associado com a criança do dispositivo.</param>
-			CarenResult DefinirInterfaceDadosPrivados(
+			CarenResult SetPrivateDataInterface(
 				String^ Param_Guid, ICaren^ Param_Interface);
 
 		};
@@ -116,13 +115,13 @@ namespace CarenRengine
 			/// (GetEvictionPriority) - Obtém a prioridade de despejo de um recurso.
 			/// </summary>
 			/// <param name="Param_Out_Prioridade">Retorna a prioridade do recurso que está sendo usado.</param>
-			CarenResult ObterPrioridadeDespejo([Out] Enumeracoes::CA_DXGI_PRIORIDADE_RECURSO% Param_Out_Prioridade);
+			CarenResult GetEvictionPriority([Out] Enumeracoes::CA_DXGI_PRIORIDADE_RECURSO% Param_Out_Prioridade);
 
 			/// <summary>
 			/// (GetType) - Obtém o tipo de recurso.
 			/// </summary>
 			/// <param name="Param_Out_TipoRecurso">Retorna o tipo do recurso usado.</param>
-			CarenResult ObterTipo([Out] Enumeracoes::CA_D3D11_TIPO_RECURSO% Param_Out_TipoRecurso);
+			CarenResult GetType([Out] Enumeracoes::CA_D3D11_TIPO_RECURSO% Param_Out_TipoRecurso);
 
 			/// <summary>
 			/// (SetEvictionPriority) - Define a prioridade de despejo de um recurso.
@@ -130,7 +129,7 @@ namespace CarenRengine
 			/// memória do sistema ou possivelmente colocado no disco rígido. O recurso será carregado volta na memória de vídeo quando for necessário.
 			/// </summary>
 			/// <param name="Param_PrioridadeRecurso">Define o tipo do recurso sendo usado.</param>
-			CarenResult DefinirPrioridadeDespejo(Enumeracoes::CA_DXGI_PRIORIDADE_RECURSO Param_PrioridadeRecurso);
+			CarenResult SetEvictionPriority(Enumeracoes::CA_DXGI_PRIORIDADE_RECURSO Param_PrioridadeRecurso);
 		};
 
 		/// <summary>
@@ -157,7 +156,7 @@ namespace CarenRengine
 			/// (GetDesc) - Obtém as propriedades de um recurso de reserva.
 			/// </summary>
 			/// <param name="Param_Out_DescBuffer">Retorna uma estrutura com a descrição do buffer de reserva.</param>
-			CarenResult ObterPropriedadesRecurso([Out] Estruturas::CA_D3D11_BUFFER_DESC^% Param_Out_DescBuffer);
+			CarenResult GetDesc([Out] Estruturas::CA_D3D11_BUFFER_DESC^% Param_Out_DescBuffer);
 		};
 
 		/// <summary>
@@ -184,7 +183,7 @@ namespace CarenRengine
 			/// (GetResource) - Obtém o recurso que é acessado por meio dessa visualização.
 			/// </summary>
 			/// <param name="Param_Out_Recurso">Retorna um ponteiro para o recurso que é acessado através desta vista.</param>
-			CarenResult ObterRecurso([Out] ICarenD3D11Resource^% Param_Out_Recurso);
+			CarenResult GetResource([Out] ICarenD3D11Resource^% Param_Out_Recurso);
 		};
 
 		/// <summary>
@@ -210,7 +209,7 @@ namespace CarenRengine
 			/// (CreateSharedHandle) - Cria uma Handle compartilhada em um objeto de Fence.
 			/// </summary>
 			/// <param name="Param_AtributosSec">Uma estrutura CA_ATRIBUTOS_SEGURANCA que contém dois membros de dados separados, mas relacionados: um descritor de segurança opcional e um valor booleanoque determina se os
-			/// processos filho podem herdar a Handle retornada. Defina esse parâmetro como NULO se quiser processos filho que o aplicativo pode criar para não herdar a Handle devolvida pelo (CriarHandlerCompartilhada) se você 
+			/// processos filho podem herdar a Handle retornada. Defina esse parâmetro como NULO se quiser processos filho que o aplicativo pode criar para não herdar a Handle devolvida pelo (CreateSharedHandle) se você 
 			/// quiser que o recurso associado à Handle retornada obtenha um descritor de segurança padrão. O membro do lpSecurityDescriptor da estrutura especifica um CA_DESCRITOR_SEGURANCA para o recurso. Defina esse membro como 
 			/// NULO se quiser que o tempo de execução atribua um descritor de segurança padrão ao recurso associado à Handle retornada. As ACLs no descritor de segurança padrão para o recurso vêm do token principal ou de 
 			/// personificação do criador.</param>
@@ -218,7 +217,7 @@ namespace CarenRengine
 			/// <param name="Param_Nome">Uma sequência UNICODE com término NULO que contém o nome para associar com o heap compartilhado. O nome é limitado a MAX_PATH caracteres. A comparação de nomes é sensível a maiúsculas 
 			/// e minúsculas.</param>
 			/// <param name="Param_Out_SharedHandle">Recebe o valor NT HANDLE para o recurso a compartilhar. Você pode usar está Handle em chamadas para acessar o recurso.</param>
-			CarenResult CriarHandlerCompartilhada(
+			CarenResult CreateSharedHandle(
 				CA_ATRIBUTOS_SEGURANCA^ Param_AtributosSec, 
 				UInt32 Param_TipoAcesso, 
 				String^ Param_Nome, 
@@ -228,14 +227,14 @@ namespace CarenRengine
 			/// (GetCompletedValue) - Obtém o valor atual do Fence.
 			/// </summary>
 			/// <param name="Param_Out_Valor">Obtém o valor atual do Fence.</param>
-			CarenResult ObterValorAtual([Out] UInt64% Param_Out_Valor);
+			CarenResult GetCompletedValue([Out] UInt64% Param_Out_Valor);
 
 			/// <summary>
 			/// (SetEventOnCompletion) - Especifica um evento que deve ser disparado quando a vedação atinge um determinado valor.
 			/// </summary>
 			/// <param name="Param_ValorDisparo">O valor do Fence quando o evento deve ser sinalizado.</param>
 			/// <param name="Param_HandleEvento">Uma handle para o objeto do evento.</param>
-			CarenResult DefinirEvento_NaConclusao(
+			CarenResult SetEventOnCompletion(
 				UInt64 Param_ValorDisparo,
 				ICarenWindowsEvent^ Param_HandleEvento);
 		};
@@ -264,7 +263,7 @@ namespace CarenRengine
 			/// (GetDesc) - Obtém a descrição para o estado que você usou para criar o objeto de mistura-estado de mistura.
 			/// </summary>
 			/// <param name="Param_Out_DescEstado">Retorna uma estrutura com a descrição de um misturador de estado(Blend State).</param>
-			CarenResult ObterDescriçaoEstado([Out] Estruturas::CA_D3D11_BLEND_DESC^% Param_Out_DescEstado);
+			CarenResult GetDesc([Out] Estruturas::CA_D3D11_BLEND_DESC^% Param_Out_DescEstado);
 		};
 
 		/// <summary>
@@ -291,7 +290,7 @@ namespace CarenRengine
 			/// (GetDesc1) - Obtém a descrição para o estado que você usou para criar o objeto de mistura-estado de mistura.
 			/// </summary>
 			/// <param name="Param_Out_DescEstado">Retorna uma estrutura com a descrição de um misturador de estado(Blend State).</param>
-			CarenResult ObterDescriçaoEstado1([Out] Estruturas::CA_D3D11_BLEND_DESC1^% Param_Out_DescEstado);
+			CarenResult GetDesc1([Out] Estruturas::CA_D3D11_BLEND_DESC1^% Param_Out_DescEstado);
 		};
 
 		/// <summary>
@@ -323,7 +322,7 @@ namespace CarenRengine
 			/// <param name="Param_DeslocamentoTextura">O slot de textura para a primeira textura; pode haver múltiplas texturas seguindo o deslocamento.</param>
 			/// <param name="Param_DeslocamentoAmostrador">O slot de amostra para o primeiro sampler; pode haver vários amostradores seguindo o deslocamento.</param>
 			/// <param name="Param_Out_ClasseInstance">Recebe um ponteiro para a interface (ICarenD3D11ClassInstance) para ser inicializada. O usuário deve criar a interface antes de chamar este método.</param>
-			CarenResult CriarInstanciaClasseHLSL(
+			CarenResult CreateClassInstance(
 				String^ Para_NomeTipoClasse,
 				UInt32 Param_DeslocamentoBufferConstante,
 				UInt32 Param_DeslocamentoVetorConstante,
@@ -337,12 +336,12 @@ namespace CarenRengine
 			/// <param name="Param_NomeInstanciaClasse">O nome de uma classe para o qual deseja obter a instância de classe.</param>
 			/// <param name="Param_IndiceInstancia">O índice da instância da classe.</param>
 			/// <param name="Param_Out_InstanceClasse">Recebe um ponteiro para a interface (ICarenD3D11ClassInstance) para ser inicializada. O usuário deve criar a interface antes de chamar este método.</param>
-			CarenResult ObterInstanciaClasse(String^ Param_NomeInstanciaClasse, UInt32 Param_IndiceInstancia, ICaren^ Param_Out_InstanceClasse);
+			CarenResult GetClassInstance(String^ Param_NomeInstanciaClasse, UInt32 Param_IndiceInstancia, ICaren^ Param_Out_InstanceClasse);
 		};
 
 		/// <summary>
 		/// (ID3D11ClassInstance) - Essa interface encapsula uma classe HLSL.
-		/// Essa interface é criada chamando ICarenD3D11ClassLinkage::CriarInstanciaClasseHLSL. A interface é usada quando a vinculação de recursos de sombreamento para o pipeline usando APIs como 
+		/// Essa interface é criada chamando ICarenD3D11ClassLinkage::CreateClassInstance. A interface é usada quando a vinculação de recursos de sombreamento para o pipeline usando APIs como 
 		/// ICarenD3D11DeviceContext::VSDefinirShader.
 		/// </summary>
 		[CategoryAttribute("Interface D3D11")]
@@ -374,14 +373,14 @@ namespace CarenRengine
 
 			/// <summary>
 			/// (GetInstanceName) - Obtém o nome de instância da classe atual de HLSL.
-			/// Este método só irá retornar um nome válido somente para instâncias adquiridas usando ICarenD3D11ClassLinkage::ObterInstanciaClasse.
+			/// Este método só irá retornar um nome válido somente para instâncias adquiridas usando ICarenD3D11ClassLinkage::GetClassInstance.
 			/// </summary>
 			/// <param name="Param_Out_NomeInstancia">Retorna o nome da instânca atual de HLSL.</param>
 			CarenResult ObterNomeInstancia([Out] String^% Param_Out_NomeInstancia);
 
 			/// <summary>
 			/// (GetTypeName) - Obtém o tipo da classe atual de HLSL.
-			/// Este método só irá retornar um nome válido somente para instâncias adquiridas usando ICarenD3D11ClassLinkage::ObterInstanciaClasse.
+			/// Este método só irá retornar um nome válido somente para instâncias adquiridas usando ICarenD3D11ClassLinkage::GetClassInstance.
 			/// </summary>
 			/// <param name="Param_Out_NomeTipoHLSL">Retorna o nome do tipo da classe atual do HLSL.</param>
 			CarenResult ObterNomeTipoHLSL([Out] String^% Param_Out_NomeTipoHLSL);
@@ -1547,7 +1546,7 @@ namespace CarenRengine
 			/// (GetType) - Obtém o tipo de contexto de dispositivo.
 			/// </summary>
 			/// <param name="Param_Out_ContextoDispositivo">Retorna as opções de contexto do dispositivo.</param> 
-			CarenResult ObterTipo([Out] Enumeracoes::CA_D3D11_DEVICE_CONTEXT_TYPE% Param_Out_ContextoDispositivo);
+			CarenResult GetType([Out] Enumeracoes::CA_D3D11_DEVICE_CONTEXT_TYPE% Param_Out_ContextoDispositivo);
 
 			/// <summary>
 			/// (GSGetConstantBuffers) - Se os buffers constantes usados pela fase geometria shader pipeline.
@@ -3464,7 +3463,7 @@ namespace CarenRengine
 			/// <param name="Param_TamanhoBuffer">O tamanho do buffer de saida.</param>
 			/// <param name="Param_Out_TamanhoBufferSaida">Recebe o tamanho que total do buffer no parametro (Param_Out_Buffer).</param>
 			/// <param name="Param_Out_Buffer">Recebe a interface que gerencia o buffer retornado.</param>
-			CarenResult ObterDadosPrivados(
+			CarenResult GetPrivateData(
 				String^ Param_Guid,
 				UInt32 Param_TamanhoBuffer,
 				[Out] UInt32% Param_Out_TamanhoBufferSaida,
@@ -3494,7 +3493,7 @@ namespace CarenRengine
 			/// <param name="Param_TamanhoBuffer">O tamanho do buffer de entrada.</param>
 			/// <param name="Param_Buffer">Ponteiro para os dados sejam armazenados com este dispositivo. Se Param_Buffer é NULO, Param_TamanhoBuffer também deve ser 0, e quaisquer dados anteriormente associados com o 
 			/// guid serão destruídos.</param>
-			CarenResult DefinirDadosPrivados(
+			CarenResult SetPrivateData(
 				String^ Param_Guid,
 				UInt32 Param_TamanhoBuffer,
 				ICarenBuffer^ Param_Buffer);
@@ -3668,19 +3667,19 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_Recurso">Um ponteiro para a interface de recurso ICarenD3D11Resource a ser obtida as informações.</param>
 			/// <param name="Param_Out_NumeroTilesParaRecurso">Uma variável que recebe o número de Tiles necessárias para armazenar todo o recurso de Tiles.</param>
-			/// <param name="Param_Out_DescPackedMip">Uma estrutura CA_D3D11_PACKED_MIP_DESC que o (ObterRecursoTiling) preenche com informações sobre como os 
+			/// <param name="Param_Out_DescPackedMip">Uma estrutura CA_D3D11_PACKED_MIP_DESC que o (GetResourceTiling) preenche com informações sobre como os 
 			/// mipmaps do recurso de Tiles estão embalados.</param>
-			/// <param name="Param_Out_DescTileShape">Recebe uma estrutura CA_D3D11_TILE_SHAPE que (ObterRecursoTiling) preenche com informações sobre a forma do bloco. 
+			/// <param name="Param_Out_DescTileShape">Recebe uma estrutura CA_D3D11_TILE_SHAPE que (GetResourceTiling) preenche com informações sobre a forma do bloco. 
 			/// São informações sobre como os pixels se encaixam nos blocos, independentemente das dimensões do recurso em Tiles, sem incluir os mipmaps compactados. 
 			/// Se todo o recurso lado a lado estiver embalado, esse parâmetro não terá sentido porque o recurso lado a lado não possui layout definido para 
-			/// mipmaps compactados. Nessa situação, (ObterRecursoTiling) define os membros de CA_D3D11_TILE_SHAPE como zeros.</param>
+			/// mipmaps compactados. Nessa situação, (GetResourceTiling) define os membros de CA_D3D11_TILE_SHAPE como zeros.</param>
 			/// <param name="Param_Ref_CountSubrecursoTile">Uma variável que contém o número de Tiles no subrecurso. Na entrada, este é o número de subrecursos para 
 			/// consulta de Tiles; na saída, este é o número que foi realmente recuperado em (Param_Out_DescTileShape) (fixado ao que está disponível).</param>
-			/// <param name="Param_PrimeiroSubrecursoObter">O número da primeira Tile do subrecursos para obter. (ObterRecursoTiling) ignora este parâmetro se o número 
+			/// <param name="Param_PrimeiroSubrecursoObter">O número da primeira Tile do subrecursos para obter. (GetResourceTiling) ignora este parâmetro se o número 
 			/// que o (Param_Ref_CountSubrecursoTile) aponta é 0.</param>
-			/// <param name="Param_Out_DescTileSubrecurso">Recebe uma estrutura CA_D3D11_SUBRESOURCE_TILING que o (ObterRecursoTiling) preenche com informações sobre Tile 
+			/// <param name="Param_Out_DescTileSubrecurso">Recebe uma estrutura CA_D3D11_SUBRESOURCE_TILING que o (GetResourceTiling) preenche com informações sobre Tile 
 			/// de subrecursos.</param>
-			CarenResult ObterRecursoTiling(
+			CarenResult GetResourceTiling(
 				ICarenD3D11Resource^ Param_Recurso,
 				[Out] UInt32% Param_Out_NumeroTilesParaRecurso,
 				[Out] CA_D3D11_PACKED_MIP_DESC^% Param_Out_DescPackedMip,
@@ -3923,7 +3922,7 @@ namespace CarenRengine
 			/// Direct3D 11 e Direct3D 12 em cenários interop.Ao contrário do ID3D12Device::OpenSharedHandle que opera com recursos, montes e cercas, a função ICarenD3D11Device5::AbrirFenceCompartilhado só funciona em cercas; 
 			/// no Direct3D 11, os recursos compartilhados são abertos com a função de membro ICarenD3D11Device1::AbrirRecursoCompartilhado1.
 			/// </summary>
-			/// <param name="Param_Handle">A handle que foi devolvida por uma chamada para ICarenD3D11Fence::CriarHandlerCompartilhada ou ID3D12Device::CreateSharedHandle.</param>
+			/// <param name="Param_Handle">A handle que foi devolvida por uma chamada para ICarenD3D11Fence::CreateSharedHandle ou ID3D12Device::CreateSharedHandle.</param>
 			/// <param name="Param_RIIDInterface">O identificador globalmente único(GUID) para a interface ICarenD3D11Fence</param>
 			/// <param name="Param_Ref_FenceInterface">Um ponteiro para um bloco de memória que recebe um ponteiro para a interface ICarenD3D11Fence.</param>
 			CarenResult AbrirFenceCompartilhado(

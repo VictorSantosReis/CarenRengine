@@ -749,7 +749,7 @@ namespace CarenRengine
 			ER_DXGI_ERROR_REMOTE_CLIENT_DISCONNECTED,
 
 			/// <summary>
-			/// (DXGI_ERROR_NOT_FOUND) - Ao ligar para O ICarenDXGIObject::ObterDadosPrivados,o GUID passou não é reconhecido como um anteriormente passado para ICarenDXGIObject::DefinirDadosPrivados ou ICarenDXGIObject::DefinirDadosPrivadosInterface. Ao chamar ICarenDXGIFactory::EnumerarAdaptadores ou ICarenDXGIAdapter::EnumerarSaidas, o ordinal enumerado está fora de alcance.
+			/// (DXGI_ERROR_NOT_FOUND) - Ao ligar para O ICarenDXGIObject::GetPrivateData,o GUID passou não é reconhecido como um anteriormente passado para ICarenDXGIObject::SetPrivateData ou ICarenDXGIObject::SetPrivateDataInterface. Ao chamar ICarenDXGIFactory::EnumerarAdaptadores ou ICarenDXGIAdapter::EnumerarSaidas, o ordinal enumerado está fora de alcance.
 			/// </summary>
 			ER_DXGI_ERROR_NOT_FOUND,
 

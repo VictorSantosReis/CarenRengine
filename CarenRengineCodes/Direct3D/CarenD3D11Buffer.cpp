@@ -412,7 +412,7 @@ void CarenD3D11Buffer::Finalizar()
 /// (GetDesc) - Obtém as propriedades de um recurso de reserva.
 /// </summary>
 /// <param name="Param_Out_DescBuffer">Retorna uma estrutura com a descrição do buffer de reserva.</param>
-CarenResult CarenD3D11Buffer::ObterPropriedadesRecurso([Out] Estruturas::CA_D3D11_BUFFER_DESC^% Param_Out_DescBuffer)
+CarenResult CarenD3D11Buffer::GetDesc([Out] Estruturas::CA_D3D11_BUFFER_DESC^% Param_Out_DescBuffer)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -448,7 +448,7 @@ CarenResult CarenD3D11Buffer::ObterPropriedadesRecurso([Out] Estruturas::CA_D3D1
 /// (GetEvictionPriority) - Obtém a prioridade de despejo de um recurso.
 /// </summary>
 /// <param name="Param_Out_Prioridade">Retorna a prioridade do recurso que está sendo usado.</param>
-CarenResult CarenD3D11Buffer::ObterPrioridadeDespejo([Out] Enumeracoes::CA_DXGI_PRIORIDADE_RECURSO% Param_Out_Prioridade)
+CarenResult CarenD3D11Buffer::GetEvictionPriority([Out] Enumeracoes::CA_DXGI_PRIORIDADE_RECURSO% Param_Out_Prioridade)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -473,7 +473,7 @@ CarenResult CarenD3D11Buffer::ObterPrioridadeDespejo([Out] Enumeracoes::CA_DXGI_
 /// (GetType) - Obtém o tipo de recurso.
 /// </summary>
 /// <param name="Param_Out_TipoRecurso">Retorna o tipo do recurso usado.</param>
-CarenResult CarenD3D11Buffer::ObterTipo([Out] Enumeracoes::CA_D3D11_TIPO_RECURSO% Param_Out_TipoRecurso)
+CarenResult CarenD3D11Buffer::GetType([Out] Enumeracoes::CA_D3D11_TIPO_RECURSO% Param_Out_TipoRecurso)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -500,7 +500,7 @@ CarenResult CarenD3D11Buffer::ObterTipo([Out] Enumeracoes::CA_D3D11_TIPO_RECURSO
 /// memória do sistema ou possivelmente colocado no disco rígido. O recurso será carregado volta na memória de vídeo quando for necessário.
 /// </summary>
 /// <param name="Param_PrioridadeRecurso">Define o tipo do recurso sendo usado.</param>
-CarenResult CarenD3D11Buffer::DefinirPrioridadeDespejo(Enumeracoes::CA_DXGI_PRIORIDADE_RECURSO Param_PrioridadeRecurso)
+CarenResult CarenD3D11Buffer::SetEvictionPriority(Enumeracoes::CA_DXGI_PRIORIDADE_RECURSO Param_PrioridadeRecurso)
 {
 
 	//Variavel a ser retornada.
@@ -528,7 +528,7 @@ CarenResult CarenD3D11Buffer::DefinirPrioridadeDespejo(Enumeracoes::CA_DXGI_PRIO
 /// </summary>
 /// <param name="Param_Out_DispositivoD3D11">Retorna o dispositivo D3D11 que criou essa interface. A interface retornada é uma (ICarenD3D11Device). Utilize a classe (CastInterface)
 /// para transforma em sua interface original.</param>
-CarenResult CarenD3D11Buffer::ObterDispositivo(ICaren^ Param_Out_DispositivoD3D11)
+CarenResult CarenD3D11Buffer::GetDevice(ICaren^ Param_Out_DispositivoD3D11)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -576,9 +576,9 @@ Done:;
 /// <param name="Param_Guid">GUID associado com os dados.</param>
 /// <param name="Param_TamanhoBuffer">O tamanho do buffer que será retornado.</param>
 /// <param name="Param_Out_TamanhoBufferSaida">O valor real do buffer retornado pelo parametro (Param_Out_BufferDados).</param>
-/// <param name="Param_Out_BufferDados">Um ponteiro para um buffer que (ObterDadosPrivados) preenche com dados da criança dispositivo se (Param_TamanhoBuffer) aponta para um valor 
+/// <param name="Param_Out_BufferDados">Um ponteiro para um buffer que (GetPrivateData) preenche com dados da criança dispositivo se (Param_TamanhoBuffer) aponta para um valor 
 /// que especifica um buffer grande o suficiente para armazenar os dados.</param>
-CarenResult CarenD3D11Buffer::ObterDadosPrivados(
+CarenResult CarenD3D11Buffer::GetPrivateData(
 	String^ Param_Guid,
 	UInt32 Param_TamanhoBuffer,
 	[Out] UInt32% Param_Out_TamanhoBufferSaida,
@@ -648,7 +648,7 @@ Done:;
 /// <param name="Param_TamanhoBuffer">O tamanho do buffer no parametro (Param_Buffer).</param>
 /// <param name="Param_Buffer">Ponteiro para os dados a serem armazenados com essa criança de dispositivo. Se Param_Buffer é NULO, Param_TamanhoBuffer também deve ser 0, e quaisquer 
 /// dados anteriormente associados com o especificado GUID serão destruídos.</param>
-CarenResult CarenD3D11Buffer::DefinirDadosPrivados(
+CarenResult CarenD3D11Buffer::SetPrivateData(
 	String^ Param_Guid,
 
 	UInt32 Param_TamanhoBuffer, ICarenBuffer^ Param_Buffer)
@@ -722,7 +722,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Guid">GUID associado com a interface a ser definida.</param>
 /// <param name="Param_Interface">Ponteiro para uma interface IUnknown-derivado a ser associado com a criança do dispositivo.</param>
-CarenResult CarenD3D11Buffer::DefinirInterfaceDadosPrivados(
+CarenResult CarenD3D11Buffer::SetPrivateDataInterface(
 	String^ Param_Guid, ICaren^ Param_Interface)
 {
 	//Variavel a ser retornada.

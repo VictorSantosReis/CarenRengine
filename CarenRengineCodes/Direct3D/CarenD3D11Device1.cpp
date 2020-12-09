@@ -3435,7 +3435,7 @@ Done:;
 /// <param name="Param_TamanhoBuffer">O tamanho do buffer de saida.</param>
 /// <param name="Param_Out_TamanhoBufferSaida">Recebe o tamanho que total do buffer no parametro (Param_Out_Buffer).</param>
 /// <param name="Param_Out_Buffer">Recebe a interface que gerencia o buffer retornado.</param>
-CarenResult CarenD3D11Device1::ObterDadosPrivados(
+CarenResult CarenD3D11Device1::GetPrivateData(
 	String^ Param_Guid,
 	UInt32 Param_TamanhoBuffer,
 	[Out] UInt32% Param_Out_TamanhoBufferSaida,
@@ -3588,7 +3588,7 @@ Done:;
 /// <param name="Param_TamanhoBuffer">O tamanho do buffer de entrada.</param>
 /// <param name="Param_Buffer">Ponteiro para os dados sejam armazenados com este dispositivo. Se Param_Buffer é NULO, Param_TamanhoBuffer também deve ser 0, e quaisquer dados anteriormente associados com o 
 /// guid serão destruídos.</param>
-CarenResult CarenD3D11Device1::DefinirDadosPrivados(
+CarenResult CarenD3D11Device1::SetPrivateData(
 	String^ Param_Guid,
 	UInt32 Param_TamanhoBuffer,
 	ICarenBuffer^ Param_Buffer)

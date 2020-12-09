@@ -258,19 +258,19 @@ public:
 	/// </summary>
 	/// <param name="Param_Recurso">Um ponteiro para a interface de recurso ICarenD3D11Resource a ser obtida as informações.</param>
 	/// <param name="Param_Out_NumeroTilesParaRecurso">Uma variável que recebe o número de Tiles necessárias para armazenar todo o recurso de Tiles.</param>
-	/// <param name="Param_Out_DescPackedMip">Uma estrutura CA_D3D11_PACKED_MIP_DESC que o (ObterRecursoTiling) preenche com informações sobre como os 
+	/// <param name="Param_Out_DescPackedMip">Uma estrutura CA_D3D11_PACKED_MIP_DESC que o (GetResourceTiling) preenche com informações sobre como os 
 	/// mipmaps do recurso de Tiles estão embalados.</param>
-	/// <param name="Param_Out_DescTileShape">Recebe uma estrutura CA_D3D11_TILE_SHAPE que (ObterRecursoTiling) preenche com informações sobre a forma do bloco. 
+	/// <param name="Param_Out_DescTileShape">Recebe uma estrutura CA_D3D11_TILE_SHAPE que (GetResourceTiling) preenche com informações sobre a forma do bloco. 
 	/// São informações sobre como os pixels se encaixam nos blocos, independentemente das dimensões do recurso em Tiles, sem incluir os mipmaps compactados. 
 	/// Se todo o recurso lado a lado estiver embalado, esse parâmetro não terá sentido porque o recurso lado a lado não possui layout definido para 
-	/// mipmaps compactados. Nessa situação, (ObterRecursoTiling) define os membros de CA_D3D11_TILE_SHAPE como zeros.</param>
+	/// mipmaps compactados. Nessa situação, (GetResourceTiling) define os membros de CA_D3D11_TILE_SHAPE como zeros.</param>
 	/// <param name="Param_Ref_CountSubrecursoTile">Uma variável que contém o número de Tiles no subrecurso. Na entrada, este é o número de subrecursos para 
 	/// consulta de Tiles; na saída, este é o número que foi realmente recuperado em (Param_Out_DescTileShape) (fixado ao que está disponível).</param>
-	/// <param name="Param_PrimeiroSubrecursoObter">O número da primeira Tile do subrecursos para obter. (ObterRecursoTiling) ignora este parâmetro se o número 
+	/// <param name="Param_PrimeiroSubrecursoObter">O número da primeira Tile do subrecursos para obter. (GetResourceTiling) ignora este parâmetro se o número 
 	/// que o (Param_Ref_CountSubrecursoTile) aponta é 0.</param>
-	/// <param name="Param_Out_DescTileSubrecurso">Recebe uma estrutura CA_D3D11_SUBRESOURCE_TILING que o (ObterRecursoTiling) preenche com informações sobre Tile 
+	/// <param name="Param_Out_DescTileSubrecurso">Recebe uma estrutura CA_D3D11_SUBRESOURCE_TILING que o (GetResourceTiling) preenche com informações sobre Tile 
 	/// de subrecursos.</param>
-	virtual CarenResult ObterRecursoTiling(
+	virtual CarenResult GetResourceTiling(
 		ICarenD3D11Resource^ Param_Recurso,
 		[Out] UInt32% Param_Out_NumeroTilesParaRecurso,
 		[Out] CA_D3D11_PACKED_MIP_DESC^% Param_Out_DescPackedMip,
@@ -813,7 +813,7 @@ public:
 	/// <param name="Param_TamanhoBuffer">O tamanho do buffer de saida.</param>
 	/// <param name="Param_Out_TamanhoBufferSaida">Recebe o tamanho que total do buffer no parametro (Param_Out_Buffer).</param>
 	/// <param name="Param_Out_Buffer">Recebe a interface que gerencia o buffer retornado.</param>
-	virtual CarenResult ObterDadosPrivados(
+	virtual CarenResult GetPrivateData(
 		String^ Param_Guid,
 		UInt32 Param_TamanhoBuffer,
 		[Out] UInt32% Param_Out_TamanhoBufferSaida,
@@ -843,7 +843,7 @@ public:
 	/// <param name="Param_TamanhoBuffer">O tamanho do buffer de entrada.</param>
 	/// <param name="Param_Buffer">Ponteiro para os dados sejam armazenados com este dispositivo. Se Param_Buffer é NULO, Param_TamanhoBuffer também deve ser 0, e quaisquer dados anteriormente associados com o 
 	/// guid serão destruídos.</param>
-	virtual CarenResult DefinirDadosPrivados(
+	virtual CarenResult SetPrivateData(
 		String^ Param_Guid,
 		UInt32 Param_TamanhoBuffer,
 		ICarenBuffer^ Param_Buffer);

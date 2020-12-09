@@ -419,7 +419,7 @@ void CarenD3D11ClassLinkage::Finalizar()
 /// <param name="Param_DeslocamentoTextura">O slot de textura para a primeira textura; pode haver múltiplas texturas seguindo o deslocamento.</param>
 /// <param name="Param_DeslocamentoAmostrador">O slot de amostra para o primeiro sampler; pode haver vários amostradores seguindo o deslocamento.</param>
 /// <param name="Param_Out_ClasseInstance">Recebe um ponteiro para a interface (ICarenD3D11ClassInstance) para ser inicializada. O usuário deve criar a interface antes de chamar este método.</param>
-CarenResult CarenD3D11ClassLinkage::CriarInstanciaClasseHLSL(
+CarenResult CarenD3D11ClassLinkage::CreateClassInstance(
 	String^ Para_NomeTipoClasse,
 	UInt32 Param_DeslocamentoBufferConstante,
 	UInt32 Param_DeslocamentoVetorConstante,
@@ -473,7 +473,7 @@ Done:;
 /// <param name="Param_NomeInstanciaClasse">O nome de uma classe para o qual deseja obter a instância de classe.</param>
 /// <param name="Param_IndiceInstancia">O índice da instância da classe.</param>
 /// <param name="Param_Out_InstanceClasse">Recebe um ponteiro para a interface (ICarenD3D11ClassInstance) para ser inicializada. O usuário deve criar a interface antes de chamar este método.</param>
-CarenResult CarenD3D11ClassLinkage::ObterInstanciaClasse(
+CarenResult CarenD3D11ClassLinkage::GetClassInstance(
 	String^ Param_NomeInstanciaClasse, 
 	UInt32 Param_IndiceInstancia, 
 	ICaren^ Param_Out_InstanceClasse) 
@@ -531,7 +531,7 @@ Done:;
 /// (GetDevice) - Obtém um ponteiro para o dispositivo que criou essa interface.
 /// </summary>
 /// <param name="Param_Out_DispositivoD3D11">Retorna o dispositivo D3D11 que criou essa interface. O usuário deve criar a interface antes de chamar este método.</param>
-CarenResult CarenD3D11ClassLinkage::ObterDispositivo(ICaren^ Param_Out_DispositivoD3D11)
+CarenResult CarenD3D11ClassLinkage::GetDevice(ICaren^ Param_Out_DispositivoD3D11)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -579,9 +579,9 @@ Done:;
 /// <param name="Param_Guid">GUID associado com os dados.</param>
 /// <param name="Param_TamanhoBuffer">O tamanho do buffer que será retornado.</param>
 /// <param name="Param_Out_TamanhoBufferSaida">O valor real do buffer retornado pelo parametro (Param_Out_BufferDados).</param>
-/// <param name="Param_Out_BufferDados">Um ponteiro para um buffer que (ObterDadosPrivados) preenche com dados da criança dispositivo se (Param_TamanhoBuffer) aponta para um valor 
+/// <param name="Param_Out_BufferDados">Um ponteiro para um buffer que (GetPrivateData) preenche com dados da criança dispositivo se (Param_TamanhoBuffer) aponta para um valor 
 /// que especifica um buffer grande o suficiente para armazenar os dados.</param>
-CarenResult CarenD3D11ClassLinkage::ObterDadosPrivados(
+CarenResult CarenD3D11ClassLinkage::GetPrivateData(
 	String^ Param_Guid,
 	UInt32 Param_TamanhoBuffer,
 	[Out] UInt32% Param_Out_TamanhoBufferSaida,
@@ -651,7 +651,7 @@ Done:;
 /// <param name="Param_TamanhoBuffer">O tamanho do buffer no parametro (Param_Buffer).</param>
 /// <param name="Param_Buffer">Ponteiro para os dados a serem armazenados com essa criança de dispositivo. Se Param_Buffer é NULO, Param_TamanhoBuffer também deve ser 0, e quaisquer 
 /// dados anteriormente associados com o especificado GUID serão destruídos.</param>
-CarenResult CarenD3D11ClassLinkage::DefinirDadosPrivados(
+CarenResult CarenD3D11ClassLinkage::SetPrivateData(
 	String^ Param_Guid,
 
 	UInt32 Param_TamanhoBuffer, ICarenBuffer^ Param_Buffer)
@@ -725,7 +725,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Guid">GUID associado com a interface a ser definida.</param>
 /// <param name="Param_Interface">Ponteiro para uma interface IUnknown-derivado a ser associado com a criança do dispositivo.</param>
-CarenResult CarenD3D11ClassLinkage::DefinirInterfaceDadosPrivados(
+CarenResult CarenD3D11ClassLinkage::SetPrivateDataInterface(
 	String^ Param_Guid, ICaren^ Param_Interface)
 {
 	//Variavel a ser retornada.

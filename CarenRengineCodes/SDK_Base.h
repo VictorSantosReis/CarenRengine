@@ -5848,7 +5848,7 @@ namespace CarenRengine
 
 
 				/// <summary>
-				/// A mídia atual tem o tipo alterado para um ou mais fluxos. Para obter o tipo de mídia atual, chame o  método ICarenMFSourceReader.ObterTipoMidiaAtual.
+				/// A mídia atual tem o tipo alterado para um ou mais fluxos. Para obter o tipo de mídia atual, chame o  método ICarenMFSourceReader.GetTypeMidiaAtual.
 				/// </summary>
 				LEITURA_TIPO_ATUAL_MODIFICADO = 0x20,
 

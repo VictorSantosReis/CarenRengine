@@ -194,7 +194,7 @@ public:
 	/// (GetClassLinkage) - Obtém o objeto de ID3D11ClassLinkage associado com a classe atual de HLSL
 	/// </summary>
 	/// <param name="Param_Out_ClassLinkageAssociado">Retorna a interface do Class Linkage associado a classe atual de HLSL.</param>
-	virtual CarenResult ObterClassLinkage([Out] ICarenD3D11ClassLinkage^% Param_Out_ClassLinkageAssociado);
+	virtual CarenResult GetClassLinkage([Out] ICarenD3D11ClassLinkage^% Param_Out_ClassLinkageAssociado);
 
 	/// <summary>
 	/// (GetDesc) - Obtém uma descrição da classe atual de HLSL.
@@ -207,14 +207,14 @@ public:
 	/// Este método só irá retornar um nome válido somente para instâncias adquiridas usando ICarenD3D11ClassLinkage::GetClassInstance.
 	/// </summary>
 	/// <param name="Param_Out_NomeInstancia">Retorna o nome da instânca atual de HLSL.</param>
-	virtual CarenResult ObterNomeInstancia([Out] String^% Param_Out_NomeInstancia);
+	virtual CarenResult GetInstanceName([Out] String^% Param_Out_NomeInstancia);
 
 	/// <summary>
 	/// (GetTypeName) - Obtém o tipo da classe atual de HLSL.
 	/// Este método só irá retornar um nome válido somente para instâncias adquiridas usando ICarenD3D11ClassLinkage::GetClassInstance.
 	/// </summary>
 	/// <param name="Param_Out_NomeTipoHLSL">Retorna o nome do tipo da classe atual do HLSL.</param>
-	virtual CarenResult ObterNomeTipoHLSL([Out] String^% Param_Out_NomeTipoHLSL);
+	virtual CarenResult GetTypeName([Out] String^% Param_Out_NomeTipoHLSL);
 
 
 

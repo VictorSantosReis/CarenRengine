@@ -191,10 +191,10 @@ public:
 	//Métodos da interface proprietaria.
 public:
 	/// <summary>
-	/// (GetDataSize) - Obtém o tamanho dos dados (em bytes) que é a saída ao chamar ICarenD3D11DeviceContext::ObterDados.
+	/// (GetDataSize) - Obtém o tamanho dos dados (em bytes) que é a saída ao chamar ICarenD3D11DeviceContext::GetData.
 	/// </summary>
-	/// <param name="Param_TamanhoDados">Retorna o tamanho dos dados (em bytes) que são emitidos ao chamar ICarenD3D11DeviceContext::ObterDados.</param>
-	virtual CarenResult ObterTamanhoDados([Out] UInt32% Param_TamanhoDados);
+	/// <param name="Param_TamanhoDados">Retorna o tamanho dos dados (em bytes) que são emitidos ao chamar ICarenD3D11DeviceContext::GetData.</param>
+	virtual CarenResult GetDataSize([Out] UInt32% Param_TamanhoDados);
 
 
 

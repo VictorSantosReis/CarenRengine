@@ -414,7 +414,7 @@ void CarenD3D11RasterizerState2::Finalizar()
 /// (GetDesc2) - Obtém a descrição para o rasterizador de estado que você usou para criar o objeto rasterizador-estado.
 /// </summary>
 /// <param name="Param_Out_DescRasterizador">Retorna uma estrutura que contém a descrição do rasterizador de estado.</param>
-CarenResult CarenD3D11RasterizerState2::ObterDescrição2([Out] Estruturas::CA_D3D11_RASTERIZER_DESC2^% Param_Out_DescRasterizador)
+CarenResult CarenD3D11RasterizerState2::GetDesc2([Out] Estruturas::CA_D3D11_RASTERIZER_DESC2^% Param_Out_DescRasterizador)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

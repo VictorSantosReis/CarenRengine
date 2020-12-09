@@ -194,7 +194,7 @@ public:
 	/// (GetDesc2) - Obtém a descrição para o rasterizador de estado que você usou para criar o objeto rasterizador-estado.
 	/// </summary>
 	/// <param name="Param_Out_DescRasterizador">Retorna uma estrutura que contém a descrição do rasterizador de estado.</param>
-	virtual CarenResult ObterDescrição2([Out] Estruturas::CA_D3D11_RASTERIZER_DESC2^% Param_Out_DescRasterizador);
+	virtual CarenResult GetDesc2([Out] Estruturas::CA_D3D11_RASTERIZER_DESC2^% Param_Out_DescRasterizador);
 
 
 	//Métodos da interface ICarenD3D11RasterizerState1

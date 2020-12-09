@@ -443,10 +443,10 @@ CarenResult CarenD3D11Query::GetDesc([Out] Estruturas::CA_D3D11_QUERY_DESC^% Par
 //Métodos da interface ICarenD3D11Asynchronous
 
 /// <summary>
-/// (GetDataSize) - Obtém o tamanho dos dados (em bytes) que é a saída ao chamar ICarenD3D11DeviceContext::ObterDados.
+/// (GetDataSize) - Obtém o tamanho dos dados (em bytes) que é a saída ao chamar ICarenD3D11DeviceContext::GetData.
 /// </summary>
-/// <param name="Param_TamanhoDados">Retorna o tamanho dos dados (em bytes) que são emitidos ao chamar ICarenD3D11DeviceContext::ObterDados.</param>
-CarenResult CarenD3D11Query::ObterTamanhoDados([Out] UInt32% Param_TamanhoDados)
+/// <param name="Param_TamanhoDados">Retorna o tamanho dos dados (em bytes) que são emitidos ao chamar ICarenD3D11DeviceContext::GetData.</param>
+CarenResult CarenD3D11Query::GetDataSize([Out] UInt32% Param_TamanhoDados)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

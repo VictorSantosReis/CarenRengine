@@ -416,7 +416,7 @@ void CarenD3D11CommandList::Finalizar()
 /// </summary>
 /// <param name="Param_Out_SinalizadoresContexto">Retorna os sinalizadores de contexto. 
 /// Atenção: O sinalizador de contexto é reservado para uso futuro e é sempre 0.</param>
-CarenResult CarenD3D11CommandList::ObterFlagsContexto([Out] UInt32% Param_Out_SinalizadoresContexto)
+CarenResult CarenD3D11CommandList::GetContextFlags([Out] UInt32% Param_Out_SinalizadoresContexto)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

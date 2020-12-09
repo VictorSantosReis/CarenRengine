@@ -413,7 +413,7 @@ void CarenD3D11ClassInstance::Finalizar()
 /// (GetClassLinkage) - Obtém o objeto de ID3D11ClassLinkage associado com a classe atual de HLSL
 /// </summary>
 /// <param name="Param_Out_ClassLinkageAssociado">Retorna a interface do Class Linkage associado a classe atual de HLSL.</param>
-CarenResult CarenD3D11ClassInstance::ObterClassLinkage([Out] ICarenD3D11ClassLinkage^% Param_Out_ClassLinkageAssociado) 
+CarenResult CarenD3D11ClassInstance::GetClassLinkage([Out] ICarenD3D11ClassLinkage^% Param_Out_ClassLinkageAssociado) 
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -486,7 +486,7 @@ CarenResult CarenD3D11ClassInstance::GetDesc([Out] Estruturas::CA_D3D11_CLASS_IN
 /// Este método só irá retornar um nome válido somente para instâncias adquiridas usando ICarenD3D11ClassLinkage::GetClassInstance.
 /// </summary>
 /// <param name="Param_Out_NomeInstancia">Retorna o nome da instânca atual de HLSL.</param>
-CarenResult CarenD3D11ClassInstance::ObterNomeInstancia([Out] String^% Param_Out_NomeInstancia) 
+CarenResult CarenD3D11ClassInstance::GetInstanceName([Out] String^% Param_Out_NomeInstancia) 
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -529,7 +529,7 @@ Done:;
 /// Este método só irá retornar um nome válido somente para instâncias adquiridas usando ICarenD3D11ClassLinkage::GetClassInstance.
 /// </summary>
 /// <param name="Param_Out_NomeTipoHLSL">Retorna o nome do tipo da classe atual do HLSL.</param>
-CarenResult CarenD3D11ClassInstance::ObterNomeTipoHLSL([Out] String^% Param_Out_NomeTipoHLSL)
+CarenResult CarenD3D11ClassInstance::GetTypeName([Out] String^% Param_Out_NomeTipoHLSL)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

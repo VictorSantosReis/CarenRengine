@@ -408,10 +408,10 @@ void CarenD3D11Asynchronous::Finalizar()
 //Métodos da interface proprietaria
 
 /// <summary>
-	/// (GetDataSize) - Obtém o tamanho dos dados (em bytes) que é a saída ao chamar ICarenD3D11DeviceContext::ObterDados.
+	/// (GetDataSize) - Obtém o tamanho dos dados (em bytes) que é a saída ao chamar ICarenD3D11DeviceContext::GetData.
 	/// </summary>
-	/// <param name="Param_TamanhoDados">Retorna o tamanho dos dados (em bytes) que são emitidos ao chamar ICarenD3D11DeviceContext::ObterDados.</param>
-CarenResult CarenD3D11Asynchronous::ObterTamanhoDados([Out] UInt32% Param_TamanhoDados)
+	/// <param name="Param_TamanhoDados">Retorna o tamanho dos dados (em bytes) que são emitidos ao chamar ICarenD3D11DeviceContext::GetData.</param>
+CarenResult CarenD3D11Asynchronous::GetDataSize([Out] UInt32% Param_TamanhoDados)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

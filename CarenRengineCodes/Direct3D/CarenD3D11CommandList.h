@@ -195,7 +195,7 @@ public:
 	/// </summary>
 	/// <param name="Param_Out_SinalizadoresContexto">Retorna os sinalizadores de contexto. 
 	/// Atenção: O sinalizador de contexto é reservado para uso futuro e é sempre 0.</param>
-	virtual CarenResult ObterFlagsContexto([Out] UInt32% Param_Out_SinalizadoresContexto);
+	virtual CarenResult GetContextFlags([Out] UInt32% Param_Out_SinalizadoresContexto);
 
 
 

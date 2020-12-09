@@ -93,7 +93,7 @@ namespace CarenRengine
 		};
 
 		/// <summary>
-		/// (ID3D11Resource) - Uma interface de recurso fornece ações comuns em todos os recursos.
+		/// (ID3D11Resource) - Uma interface de recurso que fornece ações comuns em todos os recursos.
 		/// Você não criar diretamente uma interface de recurso; em vez disso, você criar buffers e texturas que herdam de uma interface de recurso.
 		/// </summary>
 		[CategoryAttribute("Interface D3D11")]
@@ -363,7 +363,7 @@ namespace CarenRengine
 			/// (GetClassLinkage) - Obtém o objeto de ID3D11ClassLinkage associado com a classe atual de HLSL
 			/// </summary>
 			/// <param name="Param_Out_ClassLinkageAssociado">Retorna a interface do Class Linkage associado a classe atual de HLSL.</param>
-			CarenResult ObterClassLinkage([Out] ICarenD3D11ClassLinkage^% Param_Out_ClassLinkageAssociado);
+			CarenResult GetClassLinkage([Out] ICarenD3D11ClassLinkage^% Param_Out_ClassLinkageAssociado);
 
 			/// <summary>
 			/// (GetDesc) - Obtém uma descrição da classe atual de HLSL.
@@ -376,14 +376,14 @@ namespace CarenRengine
 			/// Este método só irá retornar um nome válido somente para instâncias adquiridas usando ICarenD3D11ClassLinkage::GetClassInstance.
 			/// </summary>
 			/// <param name="Param_Out_NomeInstancia">Retorna o nome da instânca atual de HLSL.</param>
-			CarenResult ObterNomeInstancia([Out] String^% Param_Out_NomeInstancia);
+			CarenResult GetInstanceName([Out] String^% Param_Out_NomeInstancia);
 
 			/// <summary>
 			/// (GetTypeName) - Obtém o tipo da classe atual de HLSL.
 			/// Este método só irá retornar um nome válido somente para instâncias adquiridas usando ICarenD3D11ClassLinkage::GetClassInstance.
 			/// </summary>
 			/// <param name="Param_Out_NomeTipoHLSL">Retorna o nome do tipo da classe atual do HLSL.</param>
-			CarenResult ObterNomeTipoHLSL([Out] String^% Param_Out_NomeTipoHLSL);
+			CarenResult GetTypeName([Out] String^% Param_Out_NomeTipoHLSL);
 		};
 
 		/// <summary>
@@ -426,10 +426,10 @@ namespace CarenRengine
 			//Métodos
 
 			/// <summary>
-			/// (GetDataSize) - Obtém o tamanho dos dados (em bytes) que é a saída ao chamar ICarenD3D11DeviceContext::ObterDados.
+			/// (GetDataSize) - Obtém o tamanho dos dados (em bytes) que é a saída ao chamar ICarenD3D11DeviceContext::GetData.
 			/// </summary>
-			/// <param name="Param_TamanhoDados">Retorna o tamanho dos dados (em bytes) que são emitidos ao chamar ICarenD3D11DeviceContext::ObterDados.</param>
-			CarenResult ObterTamanhoDados([Out] UInt32% Param_TamanhoDados);
+			/// <param name="Param_TamanhoDados">Retorna o tamanho dos dados (em bytes) que são emitidos ao chamar ICarenD3D11DeviceContext::GetData.</param>
+			CarenResult GetDataSize([Out] UInt32% Param_TamanhoDados);
 		};
 
 		/// <summary>
@@ -869,7 +869,7 @@ namespace CarenRengine
 			/// (GetDesc2) - Obtém a descrição para o rasterizador de estado que você usou para criar o objeto rasterizador-estado.
 			/// </summary>
 			/// <param name="Param_Out_DescRasterizador">Retorna uma estrutura que contém a descrição do rasterizador de estado.</param>
-			CarenResult ObterDescrição2([Out] Estruturas::CA_D3D11_RASTERIZER_DESC2^% Param_Out_DescRasterizador);
+			CarenResult GetDesc2([Out] Estruturas::CA_D3D11_RASTERIZER_DESC2^% Param_Out_DescRasterizador);
 		};
 
 		/// <summary>
@@ -997,7 +997,7 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_Out_SinalizadoresContexto">Retorna os sinalizadores de contexto. 
 			/// Atenção: O sinalizador de contexto é reservado para uso futuro e é sempre 0.</param>
-			CarenResult ObterFlagsContexto([Out] UInt32% Param_Out_SinalizadoresContexto);
+			CarenResult GetContextFlags([Out] UInt32% Param_Out_SinalizadoresContexto);
 		};
 
 		/// <summary>
@@ -1052,7 +1052,7 @@ namespace CarenRengine
 			/// <param name="Param_ClearFlags">Identifica o tipo de dados para limpar </param>
 			/// <param name="Param_Depth">Limpe o buffer de profundidade com esse valor. Este valor irá ser fixada entre 0 e 1.</param>
 			/// <param name="Param_Stencil">Limpe o buffer de estêncil com esse valor.</param>
-			CarenResult LimparDepthStencilView(
+			CarenResult ClearDepthStencilView(
 				ICarenD3D11DepthStencilView^ Param_DepthStencil,
 				Enumeracoes::CA_D3D11_CLEAR_FLAG Param_ClearFlags,
 				float Param_Depth,
@@ -1070,7 +1070,7 @@ namespace CarenRengine
 			/// <summary>
 			/// (ClearState) - Restaure todas as configurações padrão. 
 			/// </summary>
-			CarenResult RestaurarConfiguracoesDefault();
+			CarenResult ClearState();
 
 			/// <summary>
 			/// (ClearUnorderedAccessViewFloat) - Limpa um recurso de acesso não ordenada, com um valor float.
@@ -1079,7 +1079,7 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_UnorderedAccess">O ID3D11UnorderedAccessView para limpar.</param>
 			/// <param name="Param_Valores">Valores para copiar para canais correspondentes.</param>
-			CarenResult LimparRecursoNaoOrdenadoFloat(
+			CarenResult ClearUnorderedAccessViewFloat(
 				ICarenD3D11UnorderedAccessView^ Param_UnorderedAccess,
 				cli::array<float>^ Param_Valores);
 
@@ -1090,7 +1090,7 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_UnorderedAccess">O ID3D11UnorderedAccessView para limpar.</param>
 			/// <param name="Param_Valores">Valores para copiar para canais correspondentes.</param>
-			CarenResult LimparRecursoNaoOrdenadoUint(
+			CarenResult ClearUnorderedAccessViewUint(
 				ICarenD3D11UnorderedAccessView^ Param_UnorderedAccess,
 				cli::array<UInt32>^ Param_Valores);
 
@@ -1099,7 +1099,7 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_DestinoRecurso">Um ponteiro para a interface ID3D11Resource que representa o DESTINO do recurso.</param>
 			/// <param name="Param_OrigemRecurso">Um ponteiro para a interface ID3D11Resource que representa a FONTE de recursos.</param>
-			CarenResult CopiarRecurso(
+			CarenResult CopyResource(
 				ICarenD3D11Resource^ Param_DestinoRecurso,
 				ICarenD3D11Resource^ Param_OrigemRecurso);
 
@@ -1111,7 +1111,7 @@ namespace CarenRengine
 			/// <param name="Param_DestinoAlignedOffsetByte">Offset do início do Param_DestinoBuffer para gravar contagem de estrutura(vértice) UINT 32 bits de Param_OrigemView.</param>
 			/// <param name="Param_OrigemView">Ponteiro para um ID3D11UnorderedAccessView de um recurso de Buffer estruturado criado com D3D11_BUFFER_UAV_FLAG_APPEND ou D3D11_BUFFER_UAV_FLAG_COUNTER especificado 
 			/// quando o UAV foi criado. Esses tipos de recursos têm contadores ocultos rastreando "quantos" registros foram escritos.</param>
-			CarenResult CopiarStructureCount(
+			CarenResult CopyStructureCount(
 				ICarenD3D11Buffer^ Param_DestinoBuffer,
 				UInt32 Param_DestinoAlignedOffsetByte,
 				ICarenD3D11UnorderedAccessView^ Param_OrigemView);
@@ -1128,7 +1128,7 @@ namespace CarenRengine
 			/// <param name="Param_IndiceSubrecrusoFonte">Índice de sub-recurso da fonte.</param>
 			/// <param name="Param_OrigemBox">Uma estrutura(CAIXA 3D) que define o sub-recurso de fonte que pode ser copiado. Se nulo, o sub-recurso fonte inteiro é copiado. A caixa deve caber dentro da fonte 
 			/// de recurso.</param>
-			CarenResult CopiarSubRecursoRegiao(
+			CarenResult CopySubresourceRegion(
 				ICarenD3D11Resource^ Param_DestinoRecurso,
 				UInt32 Param_IndiceSubrecrusoDestino,
 				UInt32 Param_DestX,
@@ -1147,7 +1147,7 @@ namespace CarenRengine
 			/// <param name="Param_StartSlot">Index na matriz baseada em zero do dispositivo para começar a recuperar os buffers de constantes de (varia de 0 a D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - 1).</param>
 			/// <param name="Param_NumerosBuffers">Número de buffers para recuperar (varia de 0 a D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - Param_StartSlot).</param>
 			/// <param name="Param_Out_BuffersConstantes">Recebe uma matriz com os ponteiros para os buffers constantes.</param>
-			CarenResult CSObterConstantBuffers(
+			CarenResult CSGetConstantBuffers(
 				UInt32 Param_StartSlot,
 				UInt32 Param_NumerosBuffers,
 				[Out] cli::array<ICarenD3D11Buffer^>^% Param_Out_BuffersConstantes);
@@ -1159,7 +1159,7 @@ namespace CarenRengine
 			/// <param name="Param_NumeroSamplers">Número dos amostradores para obter um contexto de dispositivo. Cada estágio do pipeline tem um total de 16 amostrador vagas disponíveis 
 			/// (varia de 0 a D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT - StartSlot).</param>
 			/// <param name="Param_Out_SamplersState">Recebe uma matriz com os ponteiros para os amostradores de estado(Samplers States).</param>
-			CarenResult CSObterSamplers(
+			CarenResult CSGetSamplers(
 				UInt32 Param_StartSlot,
 				UInt32 Param_NumeroSamplers,
 				[Out] cli::array<ICarenD3D11SamplerState^>^% Param_Out_SamplersState);
@@ -1170,7 +1170,7 @@ namespace CarenRengine
 			/// <param name="Param_Out_ComputeShader">Retorna uma ponteiro para a interface de Shader Compute.</param>
 			/// <param name="Param_Out_ArrayClassInstance">Retorna um Array que contém ponteiros para Instâncias de Classe.</param>
 			/// <param name="Param_Out_QuantidadeClass">Retorna a quantidade de itens no array do parametro (Param_Out_ArrayClassInstance).</param>
-			CarenResult CSObterShader(
+			CarenResult CSGetShader(
 				[Out] ICarenD3D11ComputeShader^% Param_Out_ComputeShader,
 				[Out] cli::array<ICarenD3D11ClassInstance^>^% Param_Out_ArrayClassInstance,
 				[Out] UInt32% Param_Out_QuantidadeClass);
@@ -1184,7 +1184,7 @@ namespace CarenRengine
 			/// <param name="Param_NumeroRecursos">O número de recursos para obter a partir do dispositivo. Até um máximo de 128 vagas estão disponíveis para recursos de sombreamento 
 			/// (varia de 0 a D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - Param_StartSlot).</param>
 			/// <param name="Param_Out_MatrizShaderRecursoSombreador">Retorna uma Matriz com ponteiros de exibição de recurso de sombreador retornado pelo Dispositivo.</param>
-			CarenResult CSObterShaderResources(
+			CarenResult CSGetShaderResources(
 				UInt32 Param_StartSlot,
 				UInt32 Param_NumeroRecursos,
 				[Out] cli::array<ICarenD3D11ShaderResourceView^>^% Param_Out_MatrizShaderRecursoSombreador);
@@ -1197,7 +1197,7 @@ namespace CarenRengine
 			/// <param name="Param_StartSlot">Índice do primeiro elemento na matriz baseada em zero para retornar (varia de 0 a D3D11_1_UAV_SLOT_COUNT - 1).</param>
 			/// <param name="Param_NumeroUAVs">Número de pontos de vista para obter (varia de 0 a D3D11_1_UAV_SLOT_COUNT - Param_StartSlot).</param>
 			/// <param name="Param_Out_MatrizInterfacesNaoOrdenadas">Retorna uma Matriz que contém ponteiros para as interfaces ID3D11UnorderedAccessView.</param>
-			CarenResult CSObterUnorderedAccessViews(
+			CarenResult CSGetUnorderedAccessViews(
 				UInt32 Param_StartSlot,
 				UInt32 Param_NumeroUAVs,
 				[Out] cli::array<ICarenD3D11UnorderedAccessView^>^% Param_Out_MatrizInterfacesNaoOrdenadas);
@@ -1210,7 +1210,7 @@ namespace CarenRengine
 			/// <param name="Param_StartSlot">Índice para a matriz baseada em zero para começar a definir buffers constantes (varia de 0 a D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - 1).</param>
 			/// <param name="Param_NumeroBuffers">Número de buffers para definir (varia de 0 a D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - Param_StartSlot).</param>
 			/// <param name="Param_MatrizBuffers">Matriz de buffers constantes a ser dada ao dispositivo.</param>
-			CarenResult CSDefinirConstantBuffers(
+			CarenResult CSSetConstantBuffers(
 				UInt32 Param_StartSlot,
 				UInt32 Param_NumeroBuffers,
 				cli::array<ICarenD3D11Buffer^>^ Param_MatrizBuffers);
@@ -1222,7 +1222,7 @@ namespace CarenRengine
 			/// <param name="Param_NumeroSamplers">Número dos amostradores na matriz. Cada estágio do pipeline tem um total de 16 amostrador vagas disponíveis 
 			/// (varia de 0 a D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT - Param_StartSlot).</param>
 			/// <param name="Param_MatrizSamplers">Uma matriz de interfaces do amostrador de estado a serem definidas no dispositivo.</param>
-			CarenResult CSDefinirSamplers(
+			CarenResult CSSetSamplers(
 				UInt32 Param_StartSlot,
 				UInt32 Param_NumeroSamplers,
 				cli::array<ICarenD3D11SamplerState^>^ Param_MatrizSamplers);
@@ -1235,7 +1235,7 @@ namespace CarenRengine
 			/// <param name="Param_MatrizClassInstance">Um ponteiro para uma matriz que contem as interfaces de instâncias de classe. Cada interface usada por um sombreador deve ter uma instância de classe correspondente ou o shader 
 			/// vai ser desativado. Definir Param_MatrizClassInstance para NULO se o sombreador não usa quaisquer interfaces.</param>
 			/// <param name="Param_QuantidadeClassInstances">A quantidade de itens no array do parametro (Param_MatrizClassInstance).</param>
-			CarenResult CSDefinirShader(
+			CarenResult CSSetShader(
 				ICarenD3D11ComputeShader^ Param_ComputeShader,
 				cli::array<ICarenD3D11ClassInstance^>^ Param_MatrizClassInstance,
 				UInt32 Param_QuantidadeClassInstances);
@@ -1247,7 +1247,7 @@ namespace CarenRengine
 			/// <param name="Param_NumeroRecursos">Número de recursos de sombreador definir. Até um máximo de 128 vagas estão disponíveis para recursos de sombreamento 
 			/// (varia de 0 a D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - StartSlot).</param>
 			/// <param name="Param_MatrizShaderRecursoSombreador">Matriz de interfaces de exibição de recurso de sombreador definir para o dispositivo.</param>
-			CarenResult CSDefinirShaderResources(
+			CarenResult CSSetShaderResources(
 				UInt32 Param_StartSlot,
 				UInt32 Param_NumeroRecursos,
 				cli::array<ICarenD3D11ShaderResourceView^>^ Param_MatrizShaderRecursoSombreador);
@@ -1261,7 +1261,7 @@ namespace CarenRengine
 			/// <param name="Param_MatrizInitialUAVsCount">Uma matriz de acrescentar e consumir deslocamentos de reserva. Um valor de -1 indica que para manter o atual deslocamento. Quaisquer outros valores definir o 
 			/// contador oculto para aquele UAV (APPENDABLE) e consumíveis. Param_MatrizInitialUAVsCount só é relevante para UAVs que foram criados com qualquer D3D11_BUFFER_UAV_FLAG_APPEND ou 
 			/// D3D11_BUFFER_UAV_FLAG_COUNTER especificado quando o UAV foi criado; caso contrário, o argumento é ignorado.</param>
-			CarenResult CSDefinirUnorderedAccessViews(
+			CarenResult CSSetUnorderedAccessViews(
 				UInt32 Param_StartSlot,
 				UInt32 Param_NumeroUAVs,
 				cli::array<ICarenD3D11UnorderedAccessView^>^ Param_MatrizInterfacesNaoOrdenadas,
@@ -1274,7 +1274,7 @@ namespace CarenRengine
 			/// <param name="Param_NumeroGrupoExpedidoY">O número de grupos expedidos na direção Y. NumeroGrupoExpedidoY deve ser menor ou igual a D3D11_CS_DISPATCH_MAX_THREAD_GROUPS_PER_DIMENSION (65535).</param>
 			/// <param name="Param_NumeroGrupoExpedidoZ">O número de grupos expedidos na direção Z. NumeroGrupoExpedidoZ deve ser menor ou igual a D3D11_CS_DISPATCH_MAX_THREAD_GROUPS_PER_DIMENSION (65535). 
 			/// Em nível de recurso 10 o valor para NumeroGrupoExpedidoZ deve ser 1.</param>
-			CarenResult Despacho(
+			CarenResult Dispatch(
 				UInt32 Param_NumeroGrupoExpedidoX,
 				UInt32 Param_NumeroGrupoExpedidoY,
 				UInt32 Param_NumeroGrupoExpedidoZ);
@@ -1283,9 +1283,9 @@ namespace CarenRengine
 			/// (DispatchIndirect) - Execute uma lista de comando por um ou mais grupos de discussão.
 			/// Você chamar este método para executar comandos em um (Compute Shader).
 			/// </summary>
-			/// <param name="Param_BufferForArgs">Um ponteiro para um ID3D11Buffer, que deve ser carregado com os dados que corresponde à lista de argumento para ICarenD3D11DeviceContext::Despacho.</param>
+			/// <param name="Param_BufferForArgs">Um ponteiro para um ID3D11Buffer, que deve ser carregado com os dados que corresponde à lista de argumento para ICarenD3D11DeviceContext::Dispatch.</param>
 			/// <param name="Param_AlinhamentoBytesOffsetForArgs">Um deslocamento de byte alinhado entre o início do buffer e os argumentos.</param>
-			CarenResult DespachoIndireto(
+			CarenResult DispatchIndirect(
 				ICarenD3D11Buffer^ Param_BufferForArgs,
 				UInt32 Param_AlinhamentoBytesOffsetForArgs);
 
@@ -1297,7 +1297,7 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_NumeroVertices">Número de vértices para desenhar.</param>
 			/// <param name="Param_LocalizacaoVertice">Índice do primeiro vértice, que é geralmente um deslocamento em um buffer de vértice.</param>
-			CarenResult Desenhar(
+			CarenResult Draw(
 				UInt32 Param_NumeroVertices,
 				UInt32 Param_LocalizacaoVertice);
 
@@ -1306,7 +1306,7 @@ namespace CarenRengine
 			/// Uma API de desenho envia trabalho para o pipeline de renderização. Esta API submete o trabalho de um tamanho desconhecido que foi processado pelos estágios montador de entrada, sombreador de vértice e 
 			/// fluxo-saída; o trabalho pode ou não ter passado pelo estágio de sombreamento de geometria.
 			/// </summary>
-			CarenResult DesenharAuto();
+			CarenResult DrawAuto();
 
 			/// <summary>
 			/// (DrawIndexed) - Sorteio indexado, não-instanced primitivos.
@@ -1315,7 +1315,7 @@ namespace CarenRengine
 			/// <param name="Param_NumeroIndices">Número de índices para desenhar.</param>
 			/// <param name="Param_StartIndexLocalizacao">A localização do índice primeiro ler pela GPU do buffer do índice.</param>
 			/// <param name="Param_BaseVerticeLocalizacao">Um valor acrescentado para cada índice antes de ler um vértice de buffer vértice.</param>
-			CarenResult DesenharIndexado(
+			CarenResult DrawIndexed(
 				UInt32 Param_NumeroIndices,
 				UInt32 Param_StartIndexLocalizacao,
 				Int32 Param_BaseVerticeLocalizacao);
@@ -1328,7 +1328,7 @@ namespace CarenRengine
 			/// <param name="Param_StartIndexLocalizacao">A localização do índice primeiro ler pela GPU do buffer do índice.</param>
 			/// <param name="Param_BaseVerticeLocalizacao">Um valor acrescentado para cada índice antes de ler um vértice de buffer vértice.</param>
 			/// <param name="Param_StartInstanciaLocalizacao">Um valor acrescentado para cada índice antes de ler dados por instância de um buffer de vértice.</param>
-			CarenResult DesenharIndexadoInstaciado(
+			CarenResult DrawIndexedInstanced(
 				UInt32 Param_QuantidadeIndicesPorInstnacia,
 				UInt32 Param_QuantidadeInstnacias,
 				UInt32 Param_StartIndexLocalizacao,
@@ -1340,7 +1340,7 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_BufferForArgs">Um ponteiro para um ID3D11Buffer, que é um buffer contendo o GPU gerado primitivos.</param>
 			/// <param name="Param_AlinhamentoBytesOffsetForArgs">Deslocamento em Param_BufferForArgs para o início da GPU gerado primitivos.</param>
-			CarenResult DesenharIndexadoInstaciadoIndireto(
+			CarenResult DrawIndexedInstancedIndirect(
 				ICarenD3D11Buffer^ Param_BufferForArgs,
 				UInt32 Param_AlinhamentoBytesOffsetForArgs);
 
@@ -1353,7 +1353,7 @@ namespace CarenRengine
 			/// <param name="Param_QuantidadeInstnacias">Número de instâncias para desenhar.</param>
 			/// <param name="Param_StartVerticeLocalizacao">Índice do primeiro vértice.</param>
 			/// <param name="Param_StartInstanciaLocalizacao">Um valor acrescentado para cada índice antes de ler dados por instância de um buffer de vértice.</param>			
-			CarenResult DesenharInstanciado(
+			CarenResult DrawInstanced(
 				UInt32 Param_QuantidadeVerticiesPorInstnacia,
 				UInt32 Param_QuantidadeInstnacias,
 				UInt32 Param_StartVerticeLocalizacao,
@@ -1364,7 +1364,7 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_BufferDadosPrimitivos">Um ponteiro para um ID3D11Buffer, que é um buffer contendo o GPU gerado primitivos.</param>
 			/// <param name="Param_DeslocamentoDados">Deslocamento em (Param_BufferDadosPrimitivos) para o início da GPU gerado primitivos.</param>
-			CarenResult DesenharInstanciadoIndiretamente(
+			CarenResult DrawInstancedIndirect(
 				ICarenD3D11Buffer^% Param_BufferDadosPrimitivos,
 				UInt32 Param_DeslocamentoDados);
 
@@ -1375,7 +1375,7 @@ namespace CarenRengine
 			/// <param name="Param_StartSlot">Index na matriz baseada em zero do dispositivo para começar a recuperar os buffers de constantes de (varia de 0 a D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - 1).</param>
 			/// <param name="Param_NumeroBuffers">Número de buffers para recuperar (varia de 0 a D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - Param_StartSlot).</param>
 			/// <param name="Param_Out_MatrizBuffers">Retorna uma matriz que contém as interfaces para o Buffers constantes.</param>
-			CarenResult DSObterConstantBuffers(
+			CarenResult DSGetConstantBuffers(
 				UInt32 Param_StartSlot,
 				UInt32 Param_NumeroBuffers,
 				[Out] cli::array<ICarenD3D11Buffer^>^% Param_Out_MatrizBuffers);
@@ -1387,7 +1387,7 @@ namespace CarenRengine
 			/// <param name="Param_Amostradores">Número dos amostradores para obter um contexto de dispositivo. Cada estágio do pipeline tem um total de 16 amostrador vagas disponíveis 
 			/// (varia de 0 a D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT - Param_StartSlot).</param>
 			/// <param name="Param_Out_MatrizAmostradoresEstado">Uma matriz para as interfaces com amostradores de estado.</param>
-			CarenResult DSObterSamplers(
+			CarenResult DSGetSamplers(
 				UInt32 Param_StartSlot,
 				UInt32 Param_Amostradores,
 				[Out] cli::array<ICarenD3D11SamplerState^>^% Param_Out_MatrizAmostradoresEstado);
@@ -1399,7 +1399,7 @@ namespace CarenRengine
 			/// <param name="Param_Out_SombreadorDominio">Retorna a interface para o sombreador de dominio.</param>
 			/// <param name="Param_Out_MatrizInstanciasClasse">Retorna uma matriz que contém interface de instâncias de classe.</param>
 			/// <param name="Param_Out_ElementosMatriz">Retorna a quantidade de elementos na matriz(Param_Out_MatrizInstanciasClasse).</param>
-			CarenResult DSObterShader(
+			CarenResult DSGetShader(
 				[Out] ICarenD3D11DomainShader^% Param_Out_SombreadorDominio,
 				[Out] cli::array<ICarenD3D11ClassInstance^>^% Param_Out_MatrizInstanciasClasse,
 				[Out] UInt32% Param_Out_ElementosMatriz);
@@ -1411,7 +1411,7 @@ namespace CarenRengine
 			/// <param name="Param_QuantidadeRecursos">O número de recursos para obter a partir do dispositivo. Até um máximo de 128 vagas estão disponíveis para recursos de sombreamento 
 			/// (varia de 0 a D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - Param_StartSlot).</param>
 			/// <param name="Param_Out_MatrizRecursoShader">Matriz de interfaces de exibição de recurso de sombreador a ser retornado pelo dispositivo.</param>
-			CarenResult DSObterShaderResources(
+			CarenResult DSGetShaderResources(
 				UInt32 Param_StartSlot,
 				UInt32 Param_QuantidadeRecursos,
 				[Out] cli::array<ICarenD3D11ShaderResourceView^>^% Param_Out_MatrizRecursoShader);
@@ -1422,7 +1422,7 @@ namespace CarenRengine
 			/// <param name="Param_StartSlot">Índice para a matriz baseada em zero para começar a definir buffers constantes (varia de 0 a D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - 1).</param>
 			/// <param name="Param_NumeroBuffers">Número de buffers para definir (varia de 0 a D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - Param_StartSlot).</param>
 			/// <param name="Param_MatrizBuffers">Matriz de buffers constantes a ser dada ao dispositivo.</param>
-			CarenResult DSDefinirConstantBuffers(
+			CarenResult DSSetConstantBuffers(
 				UInt32 Param_StartSlot,
 				UInt32 Param_NumeroBuffers,
 				cli::array<ICarenD3D11Buffer^>^ Param_MatrizBuffers);
@@ -1434,7 +1434,7 @@ namespace CarenRengine
 			/// <param name="Param_Amostradores">Número dos amostradores na matriz. Cada estágio do pipeline tem um total de 16 amostrador vagas disponíveis 
 			/// (varia de 0 a D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT - Param_StartSlot).</param>
 			/// <param name="Param_MatrizAmostradoresEstado">Uma matriz de interfaces amostrador-estado a ser dado ao dispositivo.</param>
-			CarenResult DSDefinirSamplers(
+			CarenResult DSSetSamplers(
 				UInt32 Param_StartSlot,
 				UInt32 Param_Amostradores,
 				cli::array<ICarenD3D11SamplerState^>^ Param_MatrizAmostradoresEstado);
@@ -1446,7 +1446,7 @@ namespace CarenRengine
 			/// <param name="Param_MatrizInstanciasClasse">Um ponteiro para uma matriz de instância da classe interfaces. Cada interface usada por um sombreador deve ter uma instância de 
 			/// classe correspondente ou o shader vai ser desativado. Definir Param_MatrizInstanciasClasse para NULO se o sombreador não usa quaisquer interfaces.</param>
 			/// <param name="Param_ElementosMatriz">A quantidade de elementos na matriz(Param_Out_MatrizInstanciasClasse).</param>
-			CarenResult DSDefinirShader(
+			CarenResult DSSetShader(
 				ICarenD3D11DomainShader^ Param_SombreadorDominio,
 				cli::array<ICarenD3D11ClassInstance^>^ Param_MatrizInstanciasClasse,
 				UInt32 Param_ElementosMatriz);
@@ -1458,7 +1458,7 @@ namespace CarenRengine
 			/// <param name="Param_QuantidadeRecursos">Número de recursos de sombreador definir. Até um máximo de 128 vagas estão disponíveis para recursos de sombreamento 
 			/// (varia de 0 a D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - Param_StartSlot).</param>
 			/// <param name="Param_MatrizRecursoShader">Matriz de interfaces de exibição de recurso de sombreador definir para o dispositivo.</param>
-			CarenResult DSDefinirShaderResources(
+			CarenResult DSSetShaderResources(
 				UInt32 Param_StartSlot,
 				UInt32 Param_QuantidadeRecursos,
 				cli::array<ICarenD3D11ShaderResourceView^>^ Param_MatrizRecursoShader);
@@ -1478,7 +1478,7 @@ namespace CarenRengine
 			/// execução precisa salvar e restaurar o estado. Use FALSE para indicar que nenhum estado deve ser salvo ou restaurado, o que faz com que o contexto de destino retorne ao seu estado padrão após a 
 			/// execução da lista de comandos. Normalmente, os aplicativos devem usar FALSE, a menos que restaurem o estado para ser quase equivalente ao estado que o tempo de execução restauraria se TRUE fosse 
 			/// passado. Quando os aplicativos usam FALSE , eles podem evitar transições de estado desnecessárias e ineficientes.</param>
-			CarenResult ExecutarComandosLista(
+			CarenResult ExecuteCommandList(
 				ICarenD3D11CommandList^ Param_FilaComandos,
 				Boolean Param_RestaurarEstadoContexto);
 
@@ -1491,7 +1491,7 @@ namespace CarenRengine
 			/// o estado para ser quase equivalente ao estado que o tempo de execução restauraria se você passasse por TRUE . Quando você usa FALSE, você pode evitar transições de estado desnecessárias e ineficientes.</param>
 			/// <param name="Param_Out_FilaComandos">Retorna um ponteiro da interface ICarenD3D11CommandList que é inicializado com as informações da lista de comandos gravados. O objeto ICarenD3D11CommandList 
 			/// resultante é imutável e só pode ser usado com ICarenD3D11DeviceContext::ExecutarListaComandos.</param>
-			CarenResult TerminarComandosLista(
+			CarenResult FinishCommandList(
 				Boolean Param_RestDeferidoEstadoContexto,
 				[Out] ICarenD3D11CommandList^% Param_Out_FilaComandos);
 
@@ -1504,23 +1504,23 @@ namespace CarenRengine
 			/// (GenerateMips) - Gera mipmaps para o recurso de sombreador determinado.
 			/// </summary>
 			/// <param name="Param_RecursoSombreador">Um ponteiro para uma interface ICarenD3D11ShaderResourceView que representa o recurso de sombreador.</param>
-			CarenResult GerarMipmaps(ICarenD3D11ShaderResourceView^ Param_RecursoSombreador);
+			CarenResult GenerateMips(ICarenD3D11ShaderResourceView^ Param_RecursoSombreador);
 
 			/// <summary>
 			/// (GetContextFlags) - Obtém os sinalizadores de inicialização associados com o atual contexto diferido.
 			/// </summary>
 			/// <param name="Param_Out_ContextFlags">recebe as bandeiras que foram fornecidos à ContextFlags parâmetro de ICarenD3D11Device::CreateDeferredContext; no entanto, o sinalizador de contexto é reservado para 
 			/// uso futuro.</param>
-			CarenResult ObterContextFlags([Out] UInt32% Param_Out_ContextFlags);
+			CarenResult GetContextFlags([Out] UInt32% Param_Out_ContextFlags);
 
 			/// <summary>
 			/// (GetData) - Obter dados a partir da unidade de processamento gráfico (GPU) de forma assíncrona.
 			/// </summary>
-			/// <param name="Param_Async">Um ponteiro para uma interface ICarenD3D11Asynchronous para o objeto sobre o qual (ObterDados) recupera dados.</param>
-			/// <param name="Param_Dados">Ponteiro para uma interface de buffer que receberá os dados. Se NULO, (ObterDados) será usado apenas para verificar o estado. O tipo de saída de dados depende do tipo de interface assíncrona.</param>
+			/// <param name="Param_Async">Um ponteiro para uma interface ICarenD3D11Asynchronous para o objeto sobre o qual (GetData) recupera dados.</param>
+			/// <param name="Param_Dados">Ponteiro para uma interface de buffer que receberá os dados. Se NULO, (GetData) será usado apenas para verificar o estado. O tipo de saída de dados depende do tipo de interface assíncrona.</param>
 			/// <param name="Param_TamanhoDados">Tamanho dos dados a serem recuperados ou 0. Deve ser 0 quando (Param_Dados) for NULO.</param>
 			/// <param name="Param_FlagsGetData">Bandeiras opcionais. Pode ser 0 ou qualquer combinação das bandeiras enumeradas por CA_D3D11_ASYNC_GETDATA_FLAG.</param>
-			CarenResult ObterDados(
+			CarenResult GetData(
 				ICarenD3D11Asynchronous^ Param_Async,
 				ICarenBuffer^% Param_Dados,
 				UInt32 Param_TamanhoDados,

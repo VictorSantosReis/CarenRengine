@@ -4084,7 +4084,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Out_Predicado">Recebe um ponteiro para um predicado. O valor armazenado aqui será NULO na criação do dispositivo.</param> 
 /// <param name="Param_Out_ValuePredicado">Recebe um valor booleano para preencher o valor de comparação de predicado. FALSE na criação do dispositivo.</param>
-CarenResult CarenD3D11DeviceContext1::ObterPredicado(
+CarenResult CarenD3D11DeviceContext1::GetPredication(
 	[Out] ICarenD3D11Predicate^% Param_Out_Predicado,
 	[Out] Boolean% Param_Out_ValuePredicado)
 {
@@ -4124,7 +4124,7 @@ CarenResult CarenD3D11DeviceContext1::ObterPredicado(
 /// </summary>
 /// <param name="Param_Recurso">Um ponteiro para uma interface que representa um recurso.</param> 
 /// <param name="Param_Out_LODMinimo">Retorna o LOD minímo.</param> 
-CarenResult CarenD3D11DeviceContext1::ObterResourceMinLOD(ICarenD3D11Resource^ Param_Recurso, [Out] float% Param_Out_LODMinimo)
+CarenResult CarenD3D11DeviceContext1::GetResourceMinLOD(ICarenD3D11Resource^ Param_Recurso, [Out] float% Param_Out_LODMinimo)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -4177,7 +4177,7 @@ CarenResult CarenD3D11DeviceContext1::GetType([Out] Enumeracoes::CA_D3D11_DEVICE
 /// <param name="Param_StartSlot">Índice na matriz baseada em zero do dispositivo para começar a recuperar buffers constantes de (varia de 0 a D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - 1).</param>
 /// <param name="Param_NumeroBuffers">Número de buffers a serem recuperados (varia de 0 a D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_Out_MatrizBuffers">Retorna uma matriz de ponteiros de interface de buffer constante.</param>
-CarenResult CarenD3D11DeviceContext1::GSObterConstantBuffers(
+CarenResult CarenD3D11DeviceContext1::GSGetConstantBuffers(
 	UInt32 Param_StartSlot,
 	UInt32 Param_NumeroBuffers,
 	[Out] cli::array<ICarenD3D11Buffer^>^% Param_Out_MatrizBuffers)
@@ -4246,7 +4246,7 @@ Done:;
 /// <param name="Param_StartSlot">Índice em uma matriz baseada em zero para começar a obter samplers de (varia de 0 a D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT - 1).</param>
 /// <param name="Param_NumeroAmostradores">Número de (Samplers) para obter de um contexto de dispositivo. Cada estágio de pipeline tem um total de 16 slots disponíveis (varia de 0 a D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_Out_MatrizEstadoAmostrado">Retorna uma matriz com interfaces do amostrador de estado.</param>
-CarenResult CarenD3D11DeviceContext1::GSObterSamplers(
+CarenResult CarenD3D11DeviceContext1::GSGetSamplers(
 	UInt32 Param_StartSlot,
 	UInt32 Param_NumeroAmostradores,
 	[Out] cli::array<ICarenD3D11SamplerState^>^% Param_Out_MatrizEstadoAmostrado)
@@ -4312,7 +4312,7 @@ Done:;
 /// <param name="Param_Out_SombreadorGeometria">Retorna uma interface para o sombreador de Geometria.</param>
 /// <param name="Param_Out_MatrizInstanciasClasse">Retorna uma matriz com interfaces de Instancias de classe.</param>
 /// <param name="Param_Out_QuantidadeInstancias">Retorna a quantidade de de instancias de classe na matriz do parametro (Param_Out_MatrizInstanciasClasse).</param>
-CarenResult CarenD3D11DeviceContext1::GSObterShader(
+CarenResult CarenD3D11DeviceContext1::GSGetShader(
 	[Out] ICarenD3D11GeometryShader^% Param_Out_SombreadorGeometria,
 	[Out] cli::array<ICarenD3D11ClassInstance^>^% Param_Out_MatrizInstanciasClasse,
 	[Out] UInt32% Param_Out_QuantidadeInstancias)
@@ -4391,7 +4391,7 @@ Done:;
 /// <param name="Param_StartSlot">Índice na matriz baseada em zero do dispositivo para começar a obter recursos do shader (varia de 0 a D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - 1).</param>
 /// <param name="Param_NumeroViews">O número de recursos para obter do dispositivo. Até um máximo de 128 slots estão disponíveis para recursos de sombreador (varia de 0 a D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_Out_MatrizVisualizadoresSombreador">Matriz de interfaces de visualização de recursos do sombreador a serem retornadas pelo dispositivo.</param>
-CarenResult CarenD3D11DeviceContext1::GSObterShaderResources(
+CarenResult CarenD3D11DeviceContext1::GSGetShaderResources(
 	UInt32 Param_StartSlot,
 	UInt32 Param_NumeroViews,
 	[Out] cli::array<ICarenD3D11ShaderResourceView^>^% Param_Out_MatrizVisualizadoresSombreador)
@@ -4452,7 +4452,7 @@ Done:;
 /// <param name="Param_StartSlot">Índice na matriz baseada em zero do dispositivo para começar a definir buffers constantes para (varia de 0 a D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - 1).</param>
 /// <param name="Param_NumeroBuffers">Número de buffers a definir (varia de 0 a D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - Param_StartSlot).</param> 
 /// <param name="Param_MatrizBuffers">Matriz de buffers constantes sendo fornecidos ao dispositivo.</param> 
-CarenResult CarenD3D11DeviceContext1::GSDefinirConstantBuffers(
+CarenResult CarenD3D11DeviceContext1::GSSetConstantBuffers(
 	UInt32 Param_StartSlot,
 	UInt32 Param_NumeroBuffers,
 	cli::array<ICarenD3D11Buffer^>^ Param_MatrizBuffers)
@@ -4501,7 +4501,7 @@ CarenResult CarenD3D11DeviceContext1::GSDefinirConstantBuffers(
 /// <param name="Param_StartSlot">Index na matriz baseada em zero do dispositivo para começar a configurar os samplers para (varia de 0 a D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT - 1).</param>
 /// <param name="Param_NumeroAmostradores">Número de amostradores na matriz. Cada estágio de pipeline tem um total de 16 slots disponíveis (varia de 0 a D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_MatrizAmostradoresEstado">Uma matriz de interfaces de estado do amostrador.</param>
-CarenResult CarenD3D11DeviceContext1::GSDefinirSamplers(
+CarenResult CarenD3D11DeviceContext1::GSSetSamplers(
 	UInt32 Param_StartSlot,
 	UInt32 Param_NumeroAmostradores,
 	cli::array<ICarenD3D11SamplerState^>^ Param_MatrizAmostradoresEstado)
@@ -4550,7 +4550,7 @@ CarenResult CarenD3D11DeviceContext1::GSDefinirSamplers(
 /// <param name="Param_SombreadorGeometria">Ponteiro para um sombreador de vértice. Passar em NULO desativa o shader para este estágio de pipeline.</param>  
 /// <param name="Param_MatrizInstanciaClasse">Uma matriz de interfaces de instância de classe. Cada interface usada por um sombreador deve ter uma instância de classe correspondente ou o shader será desativado. Defina como NULO se o sombreador não usar nenhuma interface.</param>
 /// <param name="Param_NumeroInstanciasClasse">O numero de (ICarenD3D11ClassInstance) dentro da matriz (Param_MatrizInstanciaClasse).</param>
-CarenResult CarenD3D11DeviceContext1::GSDefinirShader(
+CarenResult CarenD3D11DeviceContext1::GSSetShader(
 	ICarenD3D11GeometryShader^ Param_SombreadorGeometria,
 	cli::array<ICarenD3D11ClassInstance^>^ Param_MatrizInstanciaClasse,
 	UInt32 Param_NumeroInstanciasClasse)
@@ -4612,7 +4612,7 @@ CarenResult CarenD3D11DeviceContext1::GSDefinirShader(
 /// <param name="Param_StartSlot">Index na matriz baseada em zero do dispositivo para começar a configurar os recursos do shader para (o intervalo é de 0 a D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - 1).</param>
 /// <param name="Param_NumeroViews">Número de recursos do shader a serem definidos. Até um máximo de 128 slots estão disponíveis para recursos de sombreador (o intervalo é de 0 a D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_MatrizVisualizadoresSombreador">Uma matriz que contém os Visualizadores de recurso do sombreador para serem definidos no Disposiivo.</param>
-CarenResult CarenD3D11DeviceContext1::GSDefinirShaderResources(
+CarenResult CarenD3D11DeviceContext1::GSSetShaderResources(
 	UInt32 Param_StartSlot,
 	UInt32 Param_NumeroViews,
 	cli::array<ICarenD3D11ShaderResourceView^>^ Param_MatrizVisualizadoresSombreador)
@@ -4660,7 +4660,7 @@ CarenResult CarenD3D11DeviceContext1::GSDefinirShaderResources(
 /// <param name="Param_StartSlot">Índice na matriz baseada em zero do dispositivo para começar a recuperar buffers constantes de (varia de 0 a D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - 1).</param>
 /// <param name="Param_NumeroBuffers">Número de buffers a serem recuperados (varia de 0 a D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_Out_MatrizBuffers">Retorna uma matriz de ponteiros de interface de buffer constante.</param>
-CarenResult CarenD3D11DeviceContext1::HSObterConstantBuffers(
+CarenResult CarenD3D11DeviceContext1::HSGetConstantBuffers(
 	UInt32 Param_StartSlot,
 	UInt32 Param_NumeroBuffers,
 	[Out] cli::array<ICarenD3D11Buffer^>^% Param_Out_MatrizBuffers)
@@ -4729,7 +4729,7 @@ Done:;
 /// <param name="Param_StartSlot">Índice em uma matriz baseada em zero para começar a obter samplers de (varia de 0 a D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT - 1).</param>
 /// <param name="Param_NumeroAmostradores">Número de (Samplers) para obter de um contexto de dispositivo. Cada estágio de pipeline tem um total de 16 slots disponíveis (varia de 0 a D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_Out_MatrizEstadoAmostrado">Retorna uma matriz com interfaces do amostrador de estado.</param>
-CarenResult CarenD3D11DeviceContext1::HSObterSamplers(
+CarenResult CarenD3D11DeviceContext1::HSGetSamplers(
 	UInt32 Param_StartSlot,
 	UInt32 Param_NumeroAmostradores,
 	[Out] cli::array<ICarenD3D11SamplerState^>^% Param_Out_MatrizEstadoAmostrado)
@@ -4795,7 +4795,7 @@ Done:;
 /// <param name="Param_Out_SombreadorCasco">Retorna uma interface para o Sombreador de Casco.</param>
 /// <param name="Param_Out_MatrizInstanciasClasse">Retorna uma matriz com interfaces de Instancias de classe.</param>
 /// <param name="Param_Out_QuantidadeInstancias">Retorna a quantidade de de instancias de classe na matriz do parametro (Param_Out_MatrizInstanciasClasse).</param>
-CarenResult CarenD3D11DeviceContext1::HSObterShader(
+CarenResult CarenD3D11DeviceContext1::HSGetShader(
 	[Out] ICarenD3D11HullShader^% Param_Out_SombreadorCasco,
 	[Out] cli::array<ICarenD3D11ClassInstance^>^% Param_Out_MatrizInstanciasClasse,
 	[Out] UInt32% Param_Out_QuantidadeInstancias)
@@ -4874,7 +4874,7 @@ Done:;
 /// <param name="Param_StartSlot">Índice na matriz baseada em zero do dispositivo para começar a obter recursos do shader (varia de 0 a D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - 1).</param>
 /// <param name="Param_NumeroViews">O número de recursos para obter do dispositivo. Até um máximo de 128 slots estão disponíveis para recursos de sombreador (varia de 0 a D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_Out_MatrizVisualizadoresSombreador">Matriz de interfaces de visualização de recursos do sombreador a serem retornadas pelo dispositivo.</param>
-CarenResult CarenD3D11DeviceContext1::HSObterShaderResources(
+CarenResult CarenD3D11DeviceContext1::HSGetShaderResources(
 	UInt32 Param_StartSlot,
 	UInt32 Param_NumeroViews,
 	[Out] cli::array<ICarenD3D11ShaderResourceView^>^% Param_Out_MatrizVisualizadoresSombreador)
@@ -4935,7 +4935,7 @@ Done:;
 /// <param name="Param_StartSlot">Índice na matriz baseada em zero do dispositivo para começar a definir buffers constantes para (varia de 0 a D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - 1).</param>
 /// <param name="Param_NumeroBuffers">Número de buffers a definir (varia de 0 a D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - Param_StartSlot).</param> 
 /// <param name="Param_MatrizBuffers">Matriz de buffers constantes sendo fornecidos ao dispositivo.</param> 
-CarenResult CarenD3D11DeviceContext1::HSDefinirConstantBuffers(
+CarenResult CarenD3D11DeviceContext1::HSSetConstantBuffers(
 	UInt32 Param_StartSlot,
 	UInt32 Param_NumeroBuffers,
 	cli::array<ICarenD3D11Buffer^>^ Param_MatrizBuffers)
@@ -4984,7 +4984,7 @@ CarenResult CarenD3D11DeviceContext1::HSDefinirConstantBuffers(
 /// <param name="Param_StartSlot">Index na matriz baseada em zero do dispositivo para começar a configurar os samplers para (varia de 0 a D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT - 1).</param>
 /// <param name="Param_NumeroAmostradores">Número de amostradores na matriz. Cada estágio de pipeline tem um total de 16 slots disponíveis (varia de 0 a D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_MatrizAmostradoresEstado">Uma matriz de interfaces de estado do amostrador.</param>
-CarenResult CarenD3D11DeviceContext1::HSDefinirSamplers(
+CarenResult CarenD3D11DeviceContext1::HSSetSamplers(
 	UInt32 Param_StartSlot,
 	UInt32 Param_NumeroAmostradores,
 	cli::array<ICarenD3D11SamplerState^>^ Param_MatrizAmostradoresEstado)
@@ -5032,7 +5032,7 @@ CarenResult CarenD3D11DeviceContext1::HSDefinirSamplers(
 /// <param name="Param_SombreadorCasco">Ponteiro para um Sombreador de Casco(Hull). Passar em NULO desativa o shader para este estágio de pipeline.</param>  
 /// <param name="Param_MatrizInstanciaClasse">Uma matriz de interfaces de instância de classe. Cada interface usada por um sombreador deve ter uma instância de classe correspondente ou o shader será desativado. Defina como NULO se o sombreador não usar nenhuma interface.</param>
 /// <param name="Param_NumeroInstanciasClasse">O numero de (ICarenD3D11ClassInstance) dentro da matriz (Param_MatrizInstanciaClasse).</param>
-CarenResult CarenD3D11DeviceContext1::HSDefinirShader(
+CarenResult CarenD3D11DeviceContext1::HSSetShader(
 	ICarenD3D11HullShader^ Param_SombreadorCasco,
 	cli::array<ICarenD3D11ClassInstance^>^ Param_MatrizInstanciaClasse,
 	UInt32 Param_NumeroInstanciasClasse)
@@ -5094,7 +5094,7 @@ CarenResult CarenD3D11DeviceContext1::HSDefinirShader(
 /// <param name="Param_StartSlot">Index na matriz baseada em zero do dispositivo para começar a configurar os recursos do shader para (o intervalo é de 0 a D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - 1).</param>
 /// <param name="Param_NumeroViews">Número de recursos do shader a serem definidos. Até um máximo de 128 slots estão disponíveis para recursos de sombreador (o intervalo é de 0 a D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_MatrizVisualizadoresSombreador">Uma matriz que contém os Visualizadores de recurso do sombreador para serem definidos no Disposiivo.</param>
-CarenResult CarenD3D11DeviceContext1::HSDefinirShaderResources(
+CarenResult CarenD3D11DeviceContext1::HSSetShaderResources(
 	UInt32 Param_StartSlot,
 	UInt32 Param_NumeroViews,
 	cli::array<ICarenD3D11ShaderResourceView^>^ Param_MatrizVisualizadoresSombreador)
@@ -5143,7 +5143,7 @@ CarenResult CarenD3D11DeviceContext1::HSDefinirShaderResources(
 /// <param name="Param_Out_Formato">Retorna uma especificação do formato dos dados no buffer de índice. Esses formatos oferecem o tamanho e o tipo de dados no buffer. Os formatos só permitidos para dados 
 /// de reserva de índice são (DXGI_FORMAT_R16_UINT) de 16-bit e 32-bit inteiros (DXGI_FORMAT_R32_UINT).</param>
 /// <param name="Param_Out_Deslocamento">Retorna o Deslocamento(Offset) (em bytes) desde o início do buffer de índice, o primeiro índice para usar.</param>
-CarenResult CarenD3D11DeviceContext1::IAObterIndexBuffer(
+CarenResult CarenD3D11DeviceContext1::IAGetIndexBuffer(
 	[Out] ICarenD3D11Buffer^% Param_Out_Buffer,
 	[Out] Enumeracoes::CA_DXGI_FORMAT% Param_Out_Formato,
 	[Out] UInt32% Param_Out_Deslocamento)
@@ -5198,7 +5198,7 @@ Done:;
 /// necessários para vitar vazamentos de memória.
 /// </summary>
 /// <param name="Param_Out_InputLayout">Reretorna um ponteiro para o layout de entrada de objeto, que descreve os buffers de entrada que serão lido pelo palco IA.</param>
-CarenResult CarenD3D11DeviceContext1::IAObterInputLayout([Out] ICarenD3D11InputLayout^% Param_Out_InputLayout)
+CarenResult CarenD3D11DeviceContext1::IAGetInputLayout([Out] ICarenD3D11InputLayout^% Param_Out_InputLayout)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -5240,7 +5240,7 @@ Done:;
 /// (IAGetPrimitiveTopology) - Obter informações sobre o tipo primitivo e a ordem de dados que descreve os dados de entrada para o estágio de entrada da montadora.
 /// </summary>
 /// <param name="Param_Out_TipoPrimitivo"></param>
-CarenResult CarenD3D11DeviceContext1::IAObterPrimitiveTopology([Out] Enumeracoes::CA_D3D11_PRIMITIVE_TOPOLOGY% Param_Out_TipoPrimitivo)
+CarenResult CarenD3D11DeviceContext1::IAGetPrimitiveTopology([Out] Enumeracoes::CA_D3D11_PRIMITIVE_TOPOLOGY% Param_Out_TipoPrimitivo)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -5273,7 +5273,7 @@ CarenResult CarenD3D11DeviceContext1::IAObterPrimitiveTopology([Out] Enumeracoes
 /// dos elementos que devem ser usados desse buffer de vértice.</param>
 /// <param name="Param_Out_MatrizDeslocamentos">uma matriz de valores de deslocamento retornado pelo método; um valor para cada buffer na matriz de buffer de vértice de deslocamento. Cada deslocamento é o 
 /// número de bytes entre o primeiro elemento de um buffer de vértice e o primeiro elemento que será usado.</param>
-CarenResult CarenD3D11DeviceContext1::IAObterVertexBuffers(
+CarenResult CarenD3D11DeviceContext1::IAGetVertexBuffers(
 	UInt32 Param_StartSlot,
 	UInt32 Param_NumeroBuffers,
 	[Out] cli::array<ICarenD3D11Buffer^>^% Param_Out_MatrizVertexBuffers,
@@ -5354,7 +5354,7 @@ Done:;
 /// <param name="Param_Buffer">Um ponteiro para um objeto ICarenD3D11Buffer, que contém os índices. O buffer do índice deve ter sido criado com o sinalizador D3D11_BIND_INDEX_BUFFER .</param>
 /// <param name="Param_Formato">Um CA_D3D11_DXGI_FORMAT que especifica o formato dos dados no buffer de índice. Os formatos só permitidos para dados de reserva de índice são (DXGI_FORMAT_R16_UINT) de 16-bit e 32-bit inteiros (DXGI_FORMAT_R32_UINT).</param>
 /// <param name="Param_Deslocamento">Offset (em bytes) do início do buffer de índice para o primeiro índice para usar.</param>
-CarenResult CarenD3D11DeviceContext1::IADefinirIndexBuffer(
+CarenResult CarenD3D11DeviceContext1::IASetIndexBuffer(
 	ICarenD3D11Buffer^ Param_Buffer,
 	Enumeracoes::CA_DXGI_FORMAT Param_Formato,
 	UInt32 Param_Deslocamento)
@@ -5390,7 +5390,7 @@ Done:;
 /// (IASetInputLayout) - Vincule um objeto de layout de entrada para o estágio de entrada-montador.
 /// </summary>
 /// <param name="Param_InputLayout">Um ponteiro para o layout de entrada de objeto, que descreve os buffers de entrada que serão lido pelo palco IA.</param>
-CarenResult CarenD3D11DeviceContext1::IADefinirInputLayout(ICarenD3D11InputLayout^ Param_InputLayout)
+CarenResult CarenD3D11DeviceContext1::IASetInputLayout(ICarenD3D11InputLayout^ Param_InputLayout)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -5422,7 +5422,7 @@ Done:;
 /// (IASetPrimitiveTopology) - Vincule informações sobre o tipo primitivo e ordem de dados que descreve os dados de entrada para o estágio de entrada da montadora.
 /// </summary>
 /// <param name="Param_TipoPrimitivo">O tipo de primitivo e ordenação dos dados primitivos.</param>
-CarenResult CarenD3D11DeviceContext1::IADefinirPrimitiveTopology(Enumeracoes::CA_D3D11_PRIMITIVE_TOPOLOGY Param_TipoPrimitivo)
+CarenResult CarenD3D11DeviceContext1::IASetPrimitiveTopology(Enumeracoes::CA_D3D11_PRIMITIVE_TOPOLOGY Param_TipoPrimitivo)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -5453,7 +5453,7 @@ CarenResult CarenD3D11DeviceContext1::IADefinirPrimitiveTopology(Enumeracoes::CA
 /// usados desse buffer de vértice.</param>
 /// <param name="Param_MatrizDeslocamentos">uma matriz de valores de deslocamento; um valor para cada buffer na matriz de buffer de vértice de deslocamento. Cada deslocamento é o número de bytes entre o 
 /// primeiro elemento de um buffer de vértice e o primeiro elemento que será usado.</param>
-CarenResult CarenD3D11DeviceContext1::IADefinirVertexBuffers(
+CarenResult CarenD3D11DeviceContext1::IASetVertexBuffers(
 	UInt32 Param_StartSlot,
 	UInt32 Param_NumeroBuffers,
 	cli::array<ICarenD3D11Buffer^>^ Param_MatrizVertexBuffers,
@@ -5509,7 +5509,7 @@ CarenResult CarenD3D11DeviceContext1::IADefinirVertexBuffers(
 }
 
 /// <summary>
-/// (map) - Obtém um ponteiro para os dados contidos em um sub-recurso e nega o acesso GPU para aquele sub-recurso.
+/// (Map) - Obtém um ponteiro para os dados contidos em um sub-recurso e nega o acesso GPU para aquele sub-recurso.
 /// Esse método também retorna DXGI_ERROR_WAS_STILL_DRAWING se MapFlags especifica D3D11_MAP_FLAG_DO_NOT_WAIT e a GPU ainda não está terminado com o recurso.
 /// </summary>
 /// <param name="Param_Recurso">Um ponteiro para uma interface de ID3D11Resource .</param>
@@ -5600,7 +5600,7 @@ Done:;
 /// <param name="Param_Out_EstadoMitura">Retorna um ponteiro para a interface de estado de mistura.</param>
 /// <param name="Param_Out_MatrizFatoresMistura">Matriz de mistura de fatores, um para cada componente RGBA.</param>
 /// <param name="Param_Out_SampleMask">Retorna um valor para uma máscara de amostra.</param>
-CarenResult CarenD3D11DeviceContext1::OMObterBlendState(
+CarenResult CarenD3D11DeviceContext1::OMGetBlendState(
 	[Out] ICarenD3D11BlendState^% Param_Out_EstadoMitura,
 	[Out] cli::array<float>^% Param_Out_MatrizFatoresMistura,
 	[Out] UInt32% Param_Out_SampleMask)
@@ -5651,7 +5651,7 @@ CarenResult CarenD3D11DeviceContext1::OMObterBlendState(
 /// </summary>
 /// <param name="Param_Out_DepthStencilState">Retorna um ponteiro para interface de estado de profundidade-estêncil para ser preenchido com informações do dispositivo.</param>
 /// <param name="Param_Out_StencilRef">Retorna um valor para um estado de profundidade-estêncil para ser preenchido com informações do dispositivo.</param>
-CarenResult CarenD3D11DeviceContext1::OMObterDepthStencilState(
+CarenResult CarenD3D11DeviceContext1::OMGetDepthStencilState(
 	[Out] ICarenD3D11DepthStencilState^% Param_Out_DepthStencilState,
 	[Out] UInt32% Param_Out_StencilRef)
 {
@@ -5695,7 +5695,7 @@ CarenResult CarenD3D11DeviceContext1::OMObterDepthStencilState(
 /// <param name="Param_IgnorarRecuperaçãoModoExibição">Defina (TRUE) para esse parâmetro quando a recuperação do modo de exibição de profundidade-estêncil não é necessária.
 /// O parametro (Param_Out_DepthStencilView) retorna NULO se esse valor for verdadeiro.</param>
 /// <param name="Param_Out_DepthStencilView">Ponteiro para um ID3D11DepthStencilView, que representa uma visão de profundidade-estêncil.</param>
-CarenResult CarenD3D11DeviceContext1::OMObterRenderTargets(
+CarenResult CarenD3D11DeviceContext1::OMGetRenderTargets(
 	UInt32 Param_NumeroViews,
 	Boolean Param_IgnorarRecuperaçãoDestino,
 	[Out] cli::array<ICarenD3D11RenderTargetView^>^% Param_Out_MatrizRenderTargetViews,
@@ -5779,7 +5779,7 @@ CarenResult CarenD3D11DeviceContext1::OMObterRenderTargets(
 /// <param name="Param_IgnorarUnorderedAccessView">Defina (TRUE) para esse parâmetro quando a recuperação de pontos de vista de acesso não-ordenados não é necessária.
 ///  O parametro (Param_Out_MatrizUnorderedAccessViews) retorna NULO se esse valor for verdadeiro.</param>
 /// <param name="Param_Out_MatrizUnorderedAccessViews">Retorna uma matriz de ICarenD3D11UnorderedAccessViews, que representam vistas de acesso não ordenada que são recuperadas.</param>
-CarenResult CarenD3D11DeviceContext1::OMObterRenderTargetsAndUnorderedAccessViews(
+CarenResult CarenD3D11DeviceContext1::OMGetRenderTargetsAndUnorderedAccessViews(
 	UInt32 Param_NumeroRTVs,
 	Boolean Param_IgnorarRenderTargetView,
 	[Out] cli::array<ICarenD3D11RenderTargetView^>^% Param_Out_MatrizRenderTarget,
@@ -5893,12 +5893,12 @@ CarenResult CarenD3D11DeviceContext1::OMObterRenderTargetsAndUnorderedAccessView
 /// <param name="Param_MatrizFatoresMistura">Matriz de mistura de fatores, um para cada componente RGBA. Os fatores de mistura modulate valores para o shader de pixel, processar o alvo, ou ambos. Se você 
 /// tiver criado o objeto de mistura-estado com D3D11_BLEND_BLEND_FACTOR ou D3D11_BLEND_INV_BLEND_FACTOR, a fase de mistura usa a matriz não-nulos de mistura fatores. Se você não criar o objeto de 
 /// mistura-estado com D3D11_BLEND_BLEND_FACTOR ou D3D11_BLEND_INV_BLEND_FACTOR, fase de mesclagem não usa a matriz não-nulos de misturam fatores; o tempo de execução armazena os mistura de fatores, 
-/// e mais tarde pode chamar ICarenD3D11DeviceContext::OMObterBlendState para recuperar os fatores de mistura. Se você transmitir NULO, o tempo de execução usa ou armazena um fator de mistura igual 
+/// e mais tarde pode chamar ICarenD3D11DeviceContext::OMGetBlendState para recuperar os fatores de mistura. Se você transmitir NULO, o tempo de execução usa ou armazena um fator de mistura igual 
 /// a {1, 1, 1, 1}.</param>
 /// <param name="Param_SampleMask">cobertura de amostra de 32 bits. O valor padrão é 0xffffffff. Uma máscara de amostra determina quais amostras atualizadas em todos os destinos de processamento ativo. 
 /// O mapeamento de bits em uma máscara de amostra para amostras em um destino processar multisample é da responsabilidade de um aplicativo individual. Sempre é aplicada uma máscara de amostra; 
 /// é independente de se multisampling é habilitado e não depende de se um aplicativo usa multisample render destinos.</param>
-CarenResult CarenD3D11DeviceContext1::OMDefinirBlendState(
+CarenResult CarenD3D11DeviceContext1::OMSetBlendState(
 	ICarenD3D11BlendState^ Param_EstadoMitura,
 	cli::array<float>^ Param_MatrizFatoresMistura,
 	UInt32 Param_SampleMask)
@@ -5960,7 +5960,7 @@ Done:;
 /// </summary>
 /// <param name="Param_DepthStencilState">Ponteiro para um estado de profundidade-estêncil interface para ligar o dispositivo. Defina NULO para usar o estado padrão listado em D3D11_DEPTH_STENCIL_DESC.</param>
 /// <param name="Param_StencilRef">Valor de referência para executar contra ao fazer um teste de profundidade-estêncil.</param>
-CarenResult CarenD3D11DeviceContext1::OMDefinirDepthStencilState(
+CarenResult CarenD3D11DeviceContext1::OMSetDepthStencilState(
 	ICarenD3D11DepthStencilState^ Param_DepthStencilState,
 	UInt32 Param_StencilRef)
 {
@@ -6002,7 +6002,7 @@ Done:;
 /// na matriz a quais pontos de ppRenderTargetViews deve ser igual o número neste parâmetro.</param>
 /// <param name="Param_MatizRenderTargetViews">Uma matriz de ICarenD3D11RenderTargetView que representam as metas de render para ligar o dispositivo. Se este parâmetro for NULO, e NumViews é 0, não render destinos são vinculados.</param>
 /// <param name="Param_DepthStencilView">Ponteiro para um ICarenD3D11DepthStencilView que representa a exibição de profundidade-estêncil para ligar o dispositivo. Se este parâmetro for NULO, o estado de profundidade-estêncil não está ligado.</param>
-CarenResult CarenD3D11DeviceContext1::OMDefinirRenderTargets(
+CarenResult CarenD3D11DeviceContext1::OMSetRenderTargets(
 	UInt32 Param_NumeroViews,
 	cli::array<ICarenD3D11RenderTargetView^>^ Param_MatizRenderTargetViews,
 	ICarenD3D11DepthStencilView^ Param_DepthStencilView)
@@ -6077,7 +6077,7 @@ CarenResult CarenD3D11DeviceContext1::OMDefinirRenderTargets(
 /// <param name="Param_MatrizUAVInitialCounts">Uma matriz de acrescentar e consumir deslocamentos de reserva. Um valor de -1 indica que para manter o atual deslocamento. Quaisquer outros valores definir o 
 /// contador oculto para aquele UAV appendable e consumíveis. Param_MatrizUAVInitialCounts é relevante apenas para UAVs que foram criados com qualquer D3D11_BUFFER_UAV_FLAG_APPEND ou D3D11_BUFFER_UAV_FLAG_COUNTER 
 /// especificado quando o UAV foi criado; caso contrário, o argumento é ignorado.</param>
-CarenResult CarenD3D11DeviceContext1::OMDefinirRenderTargetsAndUnorderedAccessViews(
+CarenResult CarenD3D11DeviceContext1::OMSetRenderTargetsAndUnorderedAccessViews(
 	UInt32 Param_NumeroRTVs,
 	cli::array <ICarenD3D11RenderTargetView^>^ Param_MatrizRenderTargetViews,
 	ICarenD3D11DepthStencilView^ Param_DepthStencil,
@@ -6203,7 +6203,7 @@ Done:;
 /// <param name="Param_StartSlot">Index na matriz baseada em zero do dispositivo para começar a recuperar buffers constantes de (varia de 0 a D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - 1).</param>
 /// <param name="Param_NumeroBuffers">Número de buffers a serem recuperados (varia de 0 a D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_Out_MatrizBuffers">Retorna uma matriz de ponteiros de interface de buffer constante.</param>
-CarenResult CarenD3D11DeviceContext1::PSObterConstantBuffers(
+CarenResult CarenD3D11DeviceContext1::PSGetConstantBuffers(
 	UInt32 Param_StartSlot,
 	UInt32 Param_NumeroBuffers,
 	[Out] cli::array<ICarenD3D11Buffer^>^% Param_Out_MatrizBuffers)
@@ -6272,7 +6272,7 @@ Done:;
 /// <param name="Param_StartSlot">Index em uma matriz baseada em zero para começar a obter samplers de (varia de 0 a D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT - 1).</param>
 /// <param name="Param_NumeroAmostradores">Número de (Samplers) para obter de um contexto de dispositivo. Cada estágio de pipeline tem um total de 16 slots disponíveis (varia de 0 a D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_Out_MatrizEstadoAmostrado">Retorna uma matriz com interfaces do amostrador de estado.</param>
-CarenResult CarenD3D11DeviceContext1::PSObterSamplers(
+CarenResult CarenD3D11DeviceContext1::PSGetSamplers(
 	UInt32 Param_StartSlot,
 	UInt32 Param_NumeroAmostradores,
 	[Out] cli::array<ICarenD3D11SamplerState^>^% Param_Out_MatrizEstadoAmostrado)
@@ -6338,7 +6338,7 @@ Done:;
 /// <param name="Param_Out_SombreadorPixel">Retorna uma interface para o Sombreador de Pixel.</param>
 /// <param name="Param_Out_MatrizInstanciasClasse">Retorna uma matriz com interfaces de Instancias de classe.</param>
 /// <param name="Param_Out_QuantidadeInstancias">Retorna a quantidade de de instancias de classe na matriz do parametro (Param_Out_MatrizInstanciasClasse).</param>
-CarenResult CarenD3D11DeviceContext1::PSObterShader(
+CarenResult CarenD3D11DeviceContext1::PSGetShader(
 	[Out] ICarenD3D11PixelShader^% Param_Out_SombreadorPixel,
 	[Out] cli::array<ICarenD3D11ClassInstance^>^% Param_Out_MatrizInstanciasClasse,
 	[Out] UInt32% Param_Out_QuantidadeInstancias)
@@ -6417,7 +6417,7 @@ Done:;
 /// <param name="Param_StartSlot">Index na matriz baseada em zero do dispositivo para começar a obter recursos do shader (varia de 0 a D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - 1).</param>
 /// <param name="Param_NumeroViews">O número de recursos para obter do dispositivo. Até um máximo de 128 slots estão disponíveis para recursos de sombreador (varia de 0 a D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_Out_MatrizVisualizadoresSombreador">Matriz de interfaces de visualização de recursos do sombreador a serem retornadas pelo dispositivo.</param>
-CarenResult CarenD3D11DeviceContext1::PSObterShaderResources(
+CarenResult CarenD3D11DeviceContext1::PSGetShaderResources(
 	UInt32 Param_StartSlot,
 	UInt32 Param_NumeroViews,
 	[Out] cli::array<ICarenD3D11ShaderResourceView^>^% Param_Out_MatrizVisualizadoresSombreador)
@@ -6478,7 +6478,7 @@ Done:;
 /// <param name="Param_StartSlot">Índice na matriz baseada em zero do dispositivo para começar a definir buffers constantes para (varia de 0 a D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - 1).</param>
 /// <param name="Param_NumeroBuffers">Número de buffers a definir (varia de 0 a D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - Param_StartSlot).</param> 
 /// <param name="Param_MatrizBuffers">Matriz de buffers constantes sendo fornecidos ao dispositivo.</param>
-CarenResult CarenD3D11DeviceContext1::PSDefinirConstantBuffers(
+CarenResult CarenD3D11DeviceContext1::PSSetConstantBuffers(
 	UInt32 Param_StartSlot,
 	UInt32 Param_NumeroBuffers,
 	cli::array<ICarenD3D11Buffer^>^ Param_MatrizBuffers)
@@ -6526,7 +6526,7 @@ CarenResult CarenD3D11DeviceContext1::PSDefinirConstantBuffers(
 /// <param name="Param_StartSlot">Index na matriz baseada em zero do dispositivo para começar a configurar os samplers para (varia de 0 a D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT - 1).</param>
 /// <param name="Param_NumeroAmostradores">Número de amostradores na matriz. Cada estágio de pipeline tem um total de 16 slots disponíveis (varia de 0 a D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_MatrizAmostradoresEstado">Uma matriz de interfaces de estado do amostrador.</param>
-CarenResult CarenD3D11DeviceContext1::PSDefinirSamplers(
+CarenResult CarenD3D11DeviceContext1::PSSetSamplers(
 	UInt32 Param_StartSlot,
 	UInt32 Param_NumeroAmostradores,
 	cli::array<ICarenD3D11SamplerState^>^ Param_MatrizAmostradoresEstado)
@@ -6574,7 +6574,7 @@ CarenResult CarenD3D11DeviceContext1::PSDefinirSamplers(
 /// <param name="Param_ShaderPixel">Ponteiro para um Sombreador de Pixel. Passar NULO desativa o shader para este estágio de pipeline.</param>  
 /// <param name="Param_MatrizInstanciaClasse">Uma matriz de interfaces de instância de classe. Cada interface usada por um sombreador deve ter uma instância de classe correspondente ou o shader será desativado. Defina como NULO se o sombreador não usar nenhuma interface.</param>
 /// <param name="Param_NumeroInstanciasClasse">O numero de (ICarenD3D11ClassInstance) dentro da matriz (Param_MatrizInstanciaClasse).</param>
-CarenResult CarenD3D11DeviceContext1::PSDefinirShader(
+CarenResult CarenD3D11DeviceContext1::PSSetShader(
 	ICarenD3D11PixelShader^ Param_ShaderPixel,
 	cli::array<ICarenD3D11ClassInstance^>^ Param_MatrizInstanciaClasse,
 	UInt32 Param_NumeroInstanciasClasse)
@@ -6636,7 +6636,7 @@ CarenResult CarenD3D11DeviceContext1::PSDefinirShader(
 /// <param name="Param_StartSlot">Index na matriz baseada em zero do dispositivo para começar a configurar os recursos do shader para (o intervalo é de 0 a D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - 1).</param>
 /// <param name="Param_NumeroViews">Número de recursos do shader a serem definidos. Até um máximo de 128 slots estão disponíveis para recursos de sombreador (o intervalo é de 0 a D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_MatrizVisualizadoresSombreador">Uma matriz que contém os Visualizadores de recurso do sombreador para serem definidos no Disposiivo.</param>
-CarenResult CarenD3D11DeviceContext1::PSDefinirShaderResources(
+CarenResult CarenD3D11DeviceContext1::PSSetShaderResources(
 	UInt32 Param_StartSlot,
 	UInt32 Param_NumeroViews,
 	cli::array<ICarenD3D11ShaderResourceView^>^ Param_MatrizVisualizadoresSombreador)
@@ -6686,7 +6686,7 @@ CarenResult CarenD3D11DeviceContext1::PSDefinirShaderResources(
 /// <param name="Param_RecursoOrigem">Fonte de recursos. Deve ser multisampled.</param>
 /// <param name="Param_IndiceSubRecursoOrigem">O sub-recurso fonte de fonte de recursos.</param>
 /// <param name="Param_DXGIFormato">Um CA_DXGI_FORMAT que indica como o recurso multisampled será resolvido para um recurso único-amostrados.</param>
-CarenResult CarenD3D11DeviceContext1::ResolverSubRecurso(
+CarenResult CarenD3D11DeviceContext1::ResolveSubresource(
 	ICarenD3D11Resource^ Param_RecursoDestino,
 	UInt32 Param_IndiceSubRecursoDestino,
 	ICarenD3D11Resource^ Param_RecursoOrigem,
@@ -6727,7 +6727,7 @@ CarenResult CarenD3D11DeviceContext1::ResolverSubRecurso(
 /// Param_Out_NumeroRects para ver quantos retângulos seriam retornados.</param>
 /// <param name="Param_ChecarQuantidade">Define como (TRUE) para obter a quantidade de retangulos que seriam retornados. Se esse valor for TRUE, o parametro (Param_Out_Rects) não retorna nada.</param>
 /// <param name="Param_Out_Rects">Uma matriz de retângulos scissor. Se Param_NumeroRects for maior que o número de (Scissor Rects) atualmente vinculada, membros não utilizados da matriz conterá 0.</param>
-CarenResult CarenD3D11DeviceContext1::RSObterScissorRects(
+CarenResult CarenD3D11DeviceContext1::RSGetScissorRects(
 	[Out] UInt32% Param_Out_NumeroRects,
 	Boolean Param_ChecarQuantidade,
 	[Out] cli::array<Estruturas::CA_RECT^>^% Param_Out_Rects)
@@ -6810,7 +6810,7 @@ Done:;
 /// (RSGetState) - Obtém o estado do rasterizador do rasterizador estágio do pipeline.
 /// </summary>
 /// <param name="Param_Out_EstadoRasterizador">Um ponteiro para um estado de rasterizador interface para preencher com as informações do dispositivo.</param>
-CarenResult CarenD3D11DeviceContext1::RSObterState([Out] ICarenD3D11RasterizerState^% Param_Out_EstadoRasterizador)
+CarenResult CarenD3D11DeviceContext1::RSGetState([Out] ICarenD3D11RasterizerState^% Param_Out_EstadoRasterizador)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -6858,7 +6858,7 @@ Done:;
 /// <param name="Param_Ref_NumeroViewports">.Na entrada deve definir a quantidade de viewports que seram obtidas. Na saida, ela retorna a quantidade real de viewports retornadas pelo
 /// parametro (Param_Out_MatrizViewports).</param>
 /// <param name="Param_Out_MatrizViewports">Uma matriz de estruturas CA_D3D11_VIEWPORT para as viewports que estão vinculadas à fase do rasterizador.</param>
-CarenResult CarenD3D11DeviceContext1::RSObterViewports(
+CarenResult CarenD3D11DeviceContext1::RSGetViewports(
 	Boolean Param_ObterQuantidadeViewports,
 	UInt32% Param_Ref_NumeroViewports,
 	[Out] cli::array<Estruturas::CA_D3D11_VIEWPORT^>^% Param_Out_MatrizViewports)
@@ -6946,7 +6946,7 @@ Done:;
 /// </summary>
 /// <param name="Param_NumeroRects">Número de retângulos de tesoura para ligar.</param>
 /// <param name="Param_MatrizRects">Uma matriz de retângulos scissor.</param>
-CarenResult CarenD3D11DeviceContext1::RSDefinirScissorRects(
+CarenResult CarenD3D11DeviceContext1::RSSetScissorRects(
 	UInt32 Param_NumeroRects,
 	cli::array<Estruturas::CA_RECT^>^ Param_MatrizRects)
 {
@@ -6981,7 +6981,7 @@ CarenResult CarenD3D11DeviceContext1::RSDefinirScissorRects(
 /// (RSSetState) - Defina o estado do rasterizador para o rasterizador de estágio do pipeline.
 /// </summary>
 /// <param name="Param_EstadoRasterizador">Ponteiro para uma interface de estado rasterizador para vincular ao pipeline.</param>
-CarenResult CarenD3D11DeviceContext1::RSDefinirState(ICarenD3D11RasterizerState^ Param_EstadoRasterizador)
+CarenResult CarenD3D11DeviceContext1::RSSetState(ICarenD3D11RasterizerState^ Param_EstadoRasterizador)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -7015,7 +7015,7 @@ Done:;
 /// <param name="Param_NumeroViewports">Número de viewports para vincular.</param>
 /// <param name="Param_MatrizViewports">Uma matriz de estruturas D3D11_VIEWPORT para vincular ao dispositivo. Consulte a página de estrutura para obter detalhes sobre como o tamanho da viewport depende do nível de recurso do dispositivo que foi alterado 
 /// entre o Direct3D 11 e o Direct3D 10.</param>
-CarenResult CarenD3D11DeviceContext1::RSDefinirViewports(
+CarenResult CarenD3D11DeviceContext1::RSSetViewports(
 	UInt32 Param_NumeroViewports,
 	cli::array<Estruturas::CA_D3D11_VIEWPORT^>^ Param_MatrizViewports)
 {
@@ -7053,9 +7053,9 @@ CarenResult CarenD3D11DeviceContext1::RSDefinirViewports(
 /// (SetPredication) - Defina um predicado de renderização.
 /// </summary>
 /// <param name="Param_Predicate">Um ponteiro para a interface ICarenD3D11Predicate que representa o predicado de renderização. Um valor NULO indica predicação "não"; Nesse caso, o valor de 
-/// (Param_ValorPredicado) é irrelevante, mas será preservado para ICarenD3D11DeviceContext::ObterPredicado.</param>
+/// (Param_ValorPredicado) é irrelevante, mas será preservado para ICarenD3D11DeviceContext::GetPredication.</param>
 /// <param name="Param_ValorPredicado">Se TRUE, a renderização será afetada quando as condições do predicado forem cumpridas. Se FALSE, a renderização será afetada quando as condições não forem atendidas.</param>
-CarenResult CarenD3D11DeviceContext1::DefinirPredication(
+CarenResult CarenD3D11DeviceContext1::SetPredication(
 	ICarenD3D11Predicate^ Param_Predicate,
 	Boolean Param_ValorPredicado)
 {
@@ -7095,7 +7095,7 @@ Done:;
 /// <param name="Param_Recurso">Um ponteiro para um ID3D11Resource que representa o recurso.</param>
 /// <param name="Param_MinLOD">O nível de detalhamento, que varia entre 0 e o número máximo de níveis de mipmap do recurso. Por exemplo, o número máximo de níveis mipmap de uma textura 1D é especificado na 
 /// MipLevels membro do D3D11_TEXTURE1D_DESC estrutura.</param>
-CarenResult CarenD3D11DeviceContext1::DefinirResourceMinLOD(
+CarenResult CarenD3D11DeviceContext1::SetResourceMinLOD(
 	ICarenD3D11Resource^ Param_Recurso,
 	float Param_MinLOD)
 {
@@ -7130,7 +7130,7 @@ Done:;
 /// </summary>
 /// <param name="Param_NumeroBuffers">O número de Buffers a serem obtidos.</param>
 /// <param name="Param_Out_MatrizBuffers">Recebe a matriz com os buffers de saida retornado do dispositivo.</param>
-CarenResult CarenD3D11DeviceContext1::SOObterTargets(
+CarenResult CarenD3D11DeviceContext1::SOGetTargets(
 	UInt32 Param_NumeroBuffers,
 	[Out] cli::array<ICarenD3D11Buffer^>^% Param_Out_MatrizBuffers)
 {
@@ -7195,7 +7195,7 @@ Done:;
 /// <param name="Param_MatrizBuffers">A matriz de buffers de saída para ligar ao dispositivo. Os buffers devem ter sido criados com o sinalizador D3D11_BIND_STREAM_OUTPUT.</param>  
 /// <param name="Param_DeslocamentosBuffers">Matriz de deslocamentos para os buffers de saída de (Param_MatrizBuffers), um deslocamento para cada buffer. Os valores de deslocamento devem estar 
 /// em bytes.</param>
-CarenResult CarenD3D11DeviceContext1::SODefinirTargets(
+CarenResult CarenD3D11DeviceContext1::SOSetTargets(
 	UInt32 Param_NumeroBuffers,
 	cli::array<ICarenD3D11Buffer^>^ Param_MatrizBuffers,
 	cli::array<UInt32>^ Param_DeslocamentosBuffers)

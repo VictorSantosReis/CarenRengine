@@ -191,7 +191,7 @@ public:
 public:
 	/// <summary>
 	/// (GetDesc) - Obtém a visão de profundidade-estêncil.
-	/// Para criar uma exibição de profundidade-estêncil, chame o método ICarenD3D11Device::CriarDepthStencilView.
+	/// Para criar uma exibição de profundidade-estêncil, chame o método ICarenD3D11Device::CreateDepthStencilView.
 	/// Para vincular uma visão de profundidade - estêncil para o pipeline, chamada ICarenD3D11DeviceContext::OMSetRenderTargets.
 	/// </summary>
 	/// <param name="Param_Out_DescViewStencil">Retorna uma estrutura que contém a descrição da visão de profundidade estêncil.</param>

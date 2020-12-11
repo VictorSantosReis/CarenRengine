@@ -422,7 +422,7 @@ void CarenD3D11Multithread::Enter()
 /// <summary>
 /// (GetMultithreadProtected) - Método responsável por verificar se o Multithread está ativado ou não.
 /// </summary>
-Boolean CarenD3D11Multithread::ObterMultithreadProtected()
+Boolean CarenD3D11Multithread::GetMultithreadProtected()
 {
 	//Variaveis a serem utilizadas.
 	BOOL Result = FALSE;
@@ -447,7 +447,7 @@ void CarenD3D11Multithread::Leave()
 /// (SetMultithreadProtected) - Método responsável por definir o estado do Multithread.
 /// </summary>
 /// <param name="Param_MultiThread">O estado que deve ser definido o Multithread.</param> 
-Boolean CarenD3D11Multithread::DefinirMultithreadProtected(Boolean Param_MultiThread)
+Boolean CarenD3D11Multithread::SetMultithreadProtected(Boolean Param_MultiThread)
 {
 	//Variaveis a serem utilizadas.
 	BOOL Result = FALSE;

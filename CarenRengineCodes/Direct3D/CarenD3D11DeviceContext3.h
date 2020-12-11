@@ -226,13 +226,13 @@ public:
 	/// (GetHardwareProtectionState) - Obtém um valor que define se a proteção de hardware está ativada.
 	/// </summary>
 	/// <param name="Param_Out_ProtecaoHardwareHabilitada">Retorna TRUE se a proteção de hardware estiver habilitada, caso contrario, FALSE.</param>
-	virtual CarenResult ObterStatusProtecaoHardware([Out] bool% Param_Out_ProtecaoHardwareHabilitada);
+	virtual CarenResult GetHardwareProtectionState([Out] bool% Param_Out_ProtecaoHardwareHabilitada);
 
 	/// <summary>
 	/// (SetHardwareProtectionState) - Define o estado de proteção de hardware.
 	/// </summary>
 	/// <param name="Param_EstadoProtecao">Um valor booleano que define o estado da proteção de Hardware.</param>
-	virtual CarenResult DefinirStatusProtecaoHardware(bool Param_EstadoProtecao);
+	virtual CarenResult SetHardwareProtectionState(bool Param_EstadoProtecao);
 
 
 
@@ -398,8 +398,8 @@ public:
 	/// <param name="Param_IndiceSubrecrusoFonte">Índice de sub-recurso da fonte.</param>
 	/// <param name="Param_OrigemBox">Uma estrutura(CAIXA 3D) que define o sub-recurso de fonte que pode ser copiado. Se nulo, o sub-recurso fonte inteiro é copiado. A caixa deve caber dentro da fonte 
 	/// de recurso.</param>
-	/// <param name="Param_CopyFlags">Um valor CA_D3D11_COPY_FLAGS que especifica como realizar a operação de cópia. Se você especificar zero para nenhuma opção de cópia, CopiarSubRecursoRegiao1 se comporta como ICarenD3D11DeviceContext::CopiarSubRecursoRegiao. Para os drivers de exibição existentes que não podem processar essas bandeiras, o tempo de execução não as usa.</param>
-	virtual CarenResult CopiarSubRecursoRegiao1(
+	/// <param name="Param_CopyFlags">Um valor CA_D3D11_COPY_FLAGS que especifica como realizar a operação de cópia. Se você especificar zero para nenhuma opção de cópia, CopySubresourceRegion1 se comporta como ICarenD3D11DeviceContext::CopiarSubRecursoRegiao. Para os drivers de exibição existentes que não podem processar essas bandeiras, o tempo de execução não as usa.</param>
+	virtual CarenResult CopySubresourceRegion1(
 		ICarenD3D11Resource^ Param_DestinoRecurso,
 		UInt32 Param_IndiceSubrecrusoDestino,
 		UInt32 Param_DestX,
@@ -424,7 +424,7 @@ public:
 	/// número especifica o número de constantes que estão contidas no buffer constante que o sombreador usa. Cada número de constantes parte de sua respectiva compensação 
 	/// que é especificada na matriz (Param_Out_MatrizInicioConstante). O tempo de execução define (Param_Out_MatrizNumeroConstantes) para NULO se não especificar o número de 
 	/// constantes em cada buffer.</param>
-	virtual CarenResult CSObterConstantBuffers1(
+	virtual CarenResult CSGetConstantBuffers1(
 		UInt32 Param_StartSlot,
 		UInt32 Param_NumeroBuffers,
 		[Out] cli::array<ICarenD3D11Buffer^>^% Param_Out_MatrizBuffers,
@@ -443,7 +443,7 @@ public:
 	/// <param name="Param_MatrizNumeroConstantes">Uma matriz que contém o número de constantes nos buffers que o (Param_MatrizBuffers) especifica. Cada número especifica o número
 	/// de constantes que estão contidas no buffer constante que o sombreador usa. Cada número de constantes parte de sua respectiva compensação que é especificada na matriz 
 	/// (Param_MatrizInicioConstante). Cada número de constantes deve ser um múltiplo de 16 constantes, na faixa [0..4096].</param>
-	virtual CarenResult CSDefinirConstantBuffers1(
+	virtual CarenResult CSSetConstantBuffers1(
 		UInt32 Param_StartSlot,
 		UInt32 Param_NumeroBuffers,
 		cli::array<ICarenD3D11Buffer^>^ Param_MatrizBuffers,
@@ -454,8 +454,8 @@ public:
 	/// (DiscardResource) - Descarta um recurso do contexto do dispositivo.
 	/// </summary>
 	/// <param name="Param_Recurso">Um ponteiro para a interface de recurso a ser dercartada. O recurso deve ter sido criado com uso D3D11_USAGE_DEFAULT ou D3D11_USAGE_DYNAMIC, 
-	/// caso contrário, o tempo de execução derruba a chamada para o (DescartarRecurso); se a camada de depuração estiver ativada, o tempo de execução retorna uma mensagem de erro.</param>
-	virtual CarenResult DescartarRecurso(ICarenD3D11Resource^ Param_Recurso);
+	/// caso contrário, o tempo de execução derruba a chamada para o (DiscardResource); se a camada de depuração estiver ativada, o tempo de execução retorna uma mensagem de erro.</param>
+	virtual CarenResult DiscardResource(ICarenD3D11Resource^ Param_Recurso);
 
 	/// <summary>
 	/// (DiscardView) - Descarta uma visão de recurso do contexto do dispositivo.
@@ -490,7 +490,7 @@ public:
 	/// número especifica o número de constantes que estão contidas no buffer constante que o sombreador usa. Cada número de constantes parte de sua respectiva compensação 
 	/// que é especificada na matriz (Param_Out_MatrizInicioConstante). O tempo de execução define (Param_Out_MatrizNumeroConstantes) para NULO se não especificar o número de 
 	/// constantes em cada buffer.</param>
-	virtual CarenResult DSObterConstantBuffers1(
+	virtual CarenResult DSGetConstantBuffers1(
 		UInt32 Param_StartSlot,
 		UInt32 Param_NumeroBuffers,
 		[Out] cli::array<ICarenD3D11Buffer^>^% Param_Out_MatrizBuffers,
@@ -509,7 +509,7 @@ public:
 	/// <param name="Param_MatrizNumeroConstantes">Uma matriz que contém o número de constantes nos buffers que o (Param_MatrizBuffers) especifica. Cada número especifica o número
 	/// de constantes que estão contidas no buffer constante que o sombreador usa. Cada número de constantes parte de sua respectiva compensação que é especificada na matriz 
 	/// (Param_MatrizInicioConstante). Cada número de constantes deve ser um múltiplo de 16 constantes, na faixa [0..4096].</param>
-	virtual CarenResult DSDefinirConstantBuffers1(
+	virtual CarenResult DSSetConstantBuffers1(
 		UInt32 Param_StartSlot,
 		UInt32 Param_NumeroBuffers,
 		cli::array<ICarenD3D11Buffer^>^ Param_MatrizBuffers,
@@ -530,7 +530,7 @@ public:
 	/// número especifica o número de constantes que estão contidas no buffer constante que o sombreador usa. Cada número de constantes parte de sua respectiva compensação 
 	/// que é especificada na matriz (Param_Out_MatrizInicioConstante). O tempo de execução define (Param_Out_MatrizNumeroConstantes) para NULO se não especificar o número de 
 	/// constantes em cada buffer.</param>
-	virtual CarenResult GSObterConstantBuffers1(
+	virtual CarenResult GSGetConstantBuffers1(
 		UInt32 Param_StartSlot,
 		UInt32 Param_NumeroBuffers,
 		[Out] cli::array<ICarenD3D11Buffer^>^% Param_Out_MatrizBuffers,
@@ -549,7 +549,7 @@ public:
 	/// <param name="Param_MatrizNumeroConstantes">Uma matriz que contém o número de constantes nos buffers que o (Param_MatrizBuffers) especifica. Cada número especifica o número
 	/// de constantes que estão contidas no buffer constante que o sombreador usa. Cada número de constantes parte de sua respectiva compensação que é especificada na matriz 
 	/// (Param_MatrizInicioConstante). Cada número de constantes deve ser um múltiplo de 16 constantes, na faixa [0..4096].</param>
-	virtual CarenResult GSDefinirConstantBuffers1(
+	virtual CarenResult GSSetConstantBuffers1(
 		UInt32 Param_StartSlot,
 		UInt32 Param_NumeroBuffers,
 		cli::array<ICarenD3D11Buffer^>^ Param_MatrizBuffers,
@@ -570,7 +570,7 @@ public:
 	/// número especifica o número de constantes que estão contidas no buffer constante que o sombreador usa. Cada número de constantes parte de sua respectiva compensação 
 	/// que é especificada na matriz (Param_Out_MatrizInicioConstante). O tempo de execução define (Param_Out_MatrizNumeroConstantes) para NULO se não especificar o número de 
 	/// constantes em cada buffer.</param>
-	virtual CarenResult HSObterConstantBuffers1(
+	virtual CarenResult HSGetConstantBuffers1(
 		UInt32 Param_StartSlot,
 		UInt32 Param_NumeroBuffers,
 		[Out] cli::array<ICarenD3D11Buffer^>^% Param_Out_MatrizBuffers,
@@ -589,7 +589,7 @@ public:
 	/// <param name="Param_MatrizNumeroConstantes">Uma matriz que contém o número de constantes nos buffers que o (Param_MatrizBuffers) especifica. Cada número especifica o número
 	/// de constantes que estão contidas no buffer constante que o sombreador usa. Cada número de constantes parte de sua respectiva compensação que é especificada na matriz 
 	/// (Param_MatrizInicioConstante). Cada número de constantes deve ser um múltiplo de 16 constantes, na faixa [0..4096].</param>
-	virtual CarenResult HSDefinirConstantBuffers1(
+	virtual CarenResult HSSetConstantBuffers1(
 		UInt32 Param_StartSlot,
 		UInt32 Param_NumeroBuffers,
 		cli::array<ICarenD3D11Buffer^>^ Param_MatrizBuffers,
@@ -610,7 +610,7 @@ public:
 	/// número especifica o número de constantes que estão contidas no buffer constante que o sombreador usa. Cada número de constantes parte de sua respectiva compensação 
 	/// que é especificada na matriz (Param_Out_MatrizInicioConstante). O tempo de execução define (Param_Out_MatrizNumeroConstantes) para NULO se não especificar o número de 
 	/// constantes em cada buffer.</param>
-	virtual CarenResult PSObterConstantBuffers1(
+	virtual CarenResult PSGetConstantBuffers1(
 		UInt32 Param_StartSlot,
 		UInt32 Param_NumeroBuffers,
 		[Out] cli::array<ICarenD3D11Buffer^>^% Param_Out_MatrizBuffers,
@@ -629,7 +629,7 @@ public:
 	/// <param name="Param_MatrizNumeroConstantes">Uma matriz que contém o número de constantes nos buffers que o (Param_MatrizBuffers) especifica. Cada número especifica o número
 	/// de constantes que estão contidas no buffer constante que o sombreador usa. Cada número de constantes parte de sua respectiva compensação que é especificada na matriz 
 	/// (Param_MatrizInicioConstante). Cada número de constantes deve ser um múltiplo de 16 constantes, na faixa [0..4096].</param>
-	virtual CarenResult PSDefinirConstantBuffers1(
+	virtual CarenResult PSSetConstantBuffers1(
 		UInt32 Param_StartSlot,
 		UInt32 Param_NumeroBuffers,
 		cli::array<ICarenD3D11Buffer^>^ Param_MatrizBuffers,
@@ -640,7 +640,7 @@ public:
 	/// (SwapDeviceContextState) - Ativa o objeto de estado de contexto dado e altera o comportamento atual do dispositivo para Direct3D 11, Direct3D 10.1 ou Direct3D 10.
 	/// </summary>
 	/// <param name="Param_Estado">Um ponteiro para a interface ICarenD3DDeviceContextState para o objeto de estado de contexto que foi criado anteriormente através do método 
-	/// ICarenD3D11Device1::CriarDispositivoEstadoContexto. Se o SwapDeviceContextState for chamado com o (Param_Estado) definido como NULO,a chamada não tem efeito.</param>
+	/// ICarenD3D11Device1::CreateDeviceContextState. Se o SwapDeviceContextState for chamado com o (Param_Estado) definido como NULO,a chamada não tem efeito.</param>
 	/// <param name="Param_Out_EstadoAnterior">Recebe um ponteiro para a interface ICarenD3DDeviceContextState com o estado do objeto anteriormente ativado.</param>
 	virtual CarenResult SwapDeviceContextState(
 		ICarenD3DDeviceContextState^ Param_Estado,
@@ -657,9 +657,9 @@ public:
 	/// <param name="Param_TamanhoLinhaOrigem">(SrcRowPitch) - O tamanho de uma linha dos dados de origem.</param>
 	/// <param name="Param_TamhoFatiaProdundidade">(SrcDepthPitch) - O tamanho de uma fatia de profundidade dos dados de origem.</param>
 	/// <param name="Param_CopyFlags">Um valor D3D11_COPY_FLAGS que especifica como realizar a operação de atualização. Se você especificar zero para nenhuma opção de atualização,
-	/// o (AtualizarSubresource1) se comporta como ICarenD3D11DeviceContext::UpdateSubresource. Para os drivers de exibição existentes que não podem processar essas bandeiras, 
+	/// o (UpdateSubresource1) se comporta como ICarenD3D11DeviceContext::UpdateSubresource. Para os drivers de exibição existentes que não podem processar essas bandeiras, 
 	/// o tempo de execução não as usa.</param>
-	virtual CarenResult AtualizarSubresource1(
+	virtual CarenResult UpdateSubresource1(
 		ICarenD3D11Resource^ Param_RecursoDestino,
 		UInt32 Param_SubrecursoDestino,
 		Estruturas::CA_D3D11_BOX^ Param_Caixa,
@@ -682,7 +682,7 @@ public:
 	/// número especifica o número de constantes que estão contidas no buffer constante que o sombreador usa. Cada número de constantes parte de sua respectiva compensação 
 	/// que é especificada na matriz (Param_Out_MatrizInicioConstante). O tempo de execução define (Param_Out_MatrizNumeroConstantes) para NULO se não especificar o número de 
 	/// constantes em cada buffer.</param>
-	virtual CarenResult VSObterConstantBuffers1(
+	virtual CarenResult VSGetConstantBuffers1(
 		UInt32 Param_StartSlot,
 		UInt32 Param_NumeroBuffers,
 		[Out] cli::array<ICarenD3D11Buffer^>^% Param_Out_MatrizBuffers,
@@ -701,7 +701,7 @@ public:
 	/// <param name="Param_MatrizNumeroConstantes">Uma matriz que contém o número de constantes nos buffers que o (Param_MatrizBuffers) especifica. Cada número especifica o número
 	/// de constantes que estão contidas no buffer constante que o sombreador usa. Cada número de constantes parte de sua respectiva compensação que é especificada na matriz 
 	/// (Param_MatrizInicioConstante). Cada número de constantes deve ser um múltiplo de 16 constantes, na faixa [0..4096].</param>
-	virtual CarenResult VSDefinirConstantBuffers1(
+	virtual CarenResult VSSetConstantBuffers1(
 		UInt32 Param_StartSlot,
 		UInt32 Param_NumeroBuffers,
 		cli::array<ICarenD3D11Buffer^>^ Param_MatrizBuffers,
@@ -878,7 +878,7 @@ public:
 	/// <summary>
 	/// (CSSetConstantBuffers) - Define os constantes buffers usados pela fase computação-shader.
 	/// O método armazenará uma referência às interfaces do passado. Isso difere do comportamento de estado do dispositivo em Direct3D 10.
-	/// Se o aplicativo deseja o sombreador para acessar outras partes da reserva, ele deve chamar o método CSDefinirConstantBuffers1 em vez disso.
+	/// Se o aplicativo deseja o sombreador para acessar outras partes da reserva, ele deve chamar o método CSSetConstantBuffers1 em vez disso.
 	/// </summary>
 	/// <param name="Param_StartSlot">Índice para a matriz baseada em zero para começar a definir buffers constantes (varia de 0 a D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - 1).</param>
 	/// <param name="Param_NumeroBuffers">Número de buffers para definir (varia de 0 a D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - Param_StartSlot).</param>
@@ -1569,7 +1569,7 @@ public:
 
 	/// <summary>
 	/// (OMSetBlendState) - Defina o estado de mistura da fase de saída-fusão.
-	/// Para criar uma interface de mistura-estado, chamade o método ICarenD3D11Device::CriarBlendState.
+	/// Para criar uma interface de mistura-estado, chamade o método ICarenD3D11Device::CreateBlendState.
 	/// </summary>
 	/// <param name="Param_EstadoMitura">Ponteiro para um estado de mistura interface. Passe nulo para um estado de mistura padrão.</param>
 	/// <param name="Param_MatrizFatoresMistura">Matriz de mistura de fatores, um para cada componente RGBA. Os fatores de mistura modulate valores para o shader de pixel, processar o alvo, ou ambos. Se você 

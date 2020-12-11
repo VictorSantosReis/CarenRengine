@@ -18413,7 +18413,7 @@ MEReservedMax = 10000
 			};
 
 			/// <summary>
-			/// (D3D11_BLEND_DESC) - Descreve o estado de combinação que você usar em uma chamada para ICarenD3D11Device::CriarBlendState para criar um objeto de estado da 
+			/// (D3D11_BLEND_DESC) - Descreve o estado de combinação que você usar em uma chamada para ICarenD3D11Device::CreateBlendState para criar um objeto de estado da 
 			/// mistura.
 			/// </summary>
 			public ref struct CA_D3D11_BLEND_DESC
@@ -18439,7 +18439,7 @@ MEReservedMax = 10000
 			};
 
 			/// <summary>
-			/// (D3D11_BLEND_DESC1) - Descreve o estado de combinação que você usar em uma chamada para ICarenD3D11Device::CriarBlendState para criar um objeto de estado da 
+			/// (D3D11_BLEND_DESC1) - Descreve o estado de combinação que você usar em uma chamada para ICarenD3D11Device::CreateBlendState para criar um objeto de estado da 
 			/// mistura.
 			/// </summary>
 			public ref struct CA_D3D11_BLEND_DESC1

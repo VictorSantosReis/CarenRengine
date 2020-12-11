@@ -422,7 +422,7 @@ void CarenD3D10Multithread::Enter()
 /// <summary>
 /// Método responsável por verificar se o Multithread está ativado ou não.
 /// </summary>
-Boolean CarenD3D10Multithread::ObterMultithreadProtected()
+Boolean CarenD3D10Multithread::GetMultithreadProtected()
 {
 	//Chama o método para obter o estado do Multithread.
 	return PonteiroTrabalho->GetMultithreadProtected();
@@ -441,7 +441,7 @@ void CarenD3D10Multithread::Leave()
 /// Método responsável por definir o estado do Multithread.
 /// </summary>
 /// <param name="Param_MultiThread">O estado que deve ser definido o Multithread.</param> 
-Boolean CarenD3D10Multithread::DefinirMultithreadProtected(Boolean Param_MultiThread)
+Boolean CarenD3D10Multithread::SetMultithreadProtected(Boolean Param_MultiThread)
 {
 	//Chama o método para definir o estado e retornar o resultado diretamente.
 	return PonteiroTrabalho->SetMultithreadProtected(Param_MultiThread);

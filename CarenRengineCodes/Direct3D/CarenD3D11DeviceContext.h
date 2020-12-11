@@ -378,7 +378,7 @@ public:
 	/// <summary>
 	/// (CSSetConstantBuffers) - Define os constantes buffers usados pela fase computação-shader.
 	/// O método armazenará uma referência às interfaces do passado. Isso difere do comportamento de estado do dispositivo em Direct3D 10.
-	/// Se o aplicativo deseja o sombreador para acessar outras partes da reserva, ele deve chamar o método CSDefinirConstantBuffers1 em vez disso.
+	/// Se o aplicativo deseja o sombreador para acessar outras partes da reserva, ele deve chamar o método CSSetConstantBuffers1 em vez disso.
 	/// </summary>
 	/// <param name="Param_StartSlot">Índice para a matriz baseada em zero para começar a definir buffers constantes (varia de 0 a D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - 1).</param>
 	/// <param name="Param_NumeroBuffers">Número de buffers para definir (varia de 0 a D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - Param_StartSlot).</param>
@@ -1069,7 +1069,7 @@ public:
 
 	/// <summary>
 	/// (OMSetBlendState) - Defina o estado de mistura da fase de saída-fusão.
-	/// Para criar uma interface de mistura-estado, chamade o método ICarenD3D11Device::CriarBlendState.
+	/// Para criar uma interface de mistura-estado, chamade o método ICarenD3D11Device::CreateBlendState.
 	/// </summary>
 	/// <param name="Param_EstadoMitura">Ponteiro para um estado de mistura interface. Passe nulo para um estado de mistura padrão.</param>
 	/// <param name="Param_MatrizFatoresMistura">Matriz de mistura de fatores, um para cada componente RGBA. Os fatores de mistura modulate valores para o shader de pixel, processar o alvo, ou ambos. Se você 

@@ -411,10 +411,10 @@ void CarenPropertyBag2::Finalizar()
 
 
 /// <summary>
-/// (CountProperties) - Obtém o número de propriedades no saco da propriedade.
+/// (CountProperties) - Obtém o número de propriedades no bag da propriedade.
 /// </summary>
-/// <param name="Param_Out_Quantidade"></param>
-CarenResult CarenPropertyBag2::ObterQuantidadePropriedades([Out] UInt32% Param_Out_Quantidade)
+/// <param name="Param_Out_Quantidade">Recebe o numero de propriedades presentes na bag.</param>
+CarenResult CarenPropertyBag2::CountProperties([Out] UInt32% Param_Out_Quantidade)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -423,10 +423,10 @@ CarenResult CarenPropertyBag2::ObterQuantidadePropriedades([Out] UInt32% Param_O
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	Utilidades Util;
-
+	ULONG vi_OutCount = 0;
 
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->CountProperties(&vi_OutCount);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -443,19 +443,22 @@ CarenResult CarenPropertyBag2::ObterQuantidadePropriedades([Out] UInt32% Param_O
 		Sair;
 	}
 
+	//Converte o valor e define no parametro de saida.
+	Param_Out_Quantidade = static_cast<UInt32>(vi_OutCount);
+
 Done:;
 	//Retorna o resultado.
 	return Resultado;
 }
 
 /// <summary>
-/// (GetPropertyInfo) - Obtém informações para propriedades em um saco de propriedade sem realmente obter essas propriedades. 
+/// (GetPropertyInfo) - Obtém informações para propriedades em um bag de propriedade sem realmente obter essas propriedades. 
 /// </summary>
-/// <param name="Param_ID"></param>
-/// <param name="Param_Quantidade"></param>
-/// <param name="Param_Out_ArrayPropBags"></param>
-/// <param name="Param_Out_Quantiade"></param>
-CarenResult CarenPropertyBag2::ObterInfoPropriedades(
+/// <param name="Param_ID">O índice baseado em zero da primeira propriedade para a qual as informações são solicitadas. Este argumento deve ser menor que o número de propriedades recuperadas por ICarenPropertyBag2::CountProperties.</param>
+/// <param name="Param_Quantidade">O número de propriedades sobre as quais obter informações.Este argumento especifica o número de elementos da matriz em (Param_Out_ArrayPropBags).</param>
+/// <param name="Param_Out_ArrayPropBags">Retorna uma matriz de estruturas CA_PROPBAG2 que recebem as informações para as propriedades.</param>
+/// <param name="Param_Out_Quantiade">Recebe o número de propriedades para as quais as informações foram recuperadas na matriz (Param_Out_ArrayPropBags).</param>
+CarenResult CarenPropertyBag2::GetPropertyInfo(
 UInt32 Param_ID,
 UInt32 Param_Quantidade,
 [Out] cli::array<Estruturas::CA_PROPBAG2^>^% Param_Out_ArrayPropBags,
@@ -469,9 +472,23 @@ UInt32 Param_Quantidade,
 
 	//Variaveis a serem utilizadas.
 	Utilidades Util;
+	PROPBAG2* vi_pOutArrayPropBags = CriarMatrizEstruturas<PROPBAG2>(Param_Quantidade);
+	ULONG vi_OutCountProps = 0;
+
+	//Inicializa os membros.
+	for (UInt32 i = 0; i < Param_Quantidade; i++)
+	{
+		//Inicializa a estrutura no index.
+		ZeroMemory(&vi_pOutArrayPropBags[i], sizeof(PROPBAG2));
+	}
 
 
 	//Chama o método para realizar a operação.
+	PonteiroTrabalho->GetPropertyInfo(
+		static_cast<ULONG>(Param_ID), 
+		static_cast<ULONG>(Param_Quantidade), 
+		vi_pOutArrayPropBags,
+		&vi_OutCountProps);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -488,24 +505,44 @@ UInt32 Param_Quantidade,
 		Sair;
 	}
 
+	//Cria a matriz que vai retornar as informações
+	Param_Out_ArrayPropBags = gcnew cli::array<Estruturas::CA_PROPBAG2^>(vi_OutCountProps);
+
+	//Faz um for para converter os dados e LIBERAR A MEMÓRIA DO PARAMETRO (pstrName de cada estrutura na matriz gerenciada)
+	for (ULONG i = 0; i < vi_OutCountProps; i++)
+	{
+		//Converte e define no parametro.
+		Param_Out_ArrayPropBags[i] = Util.ConverterPROPBAG2UnmanagedToManaged(&vi_pOutArrayPropBags[i]);
+
+		//Libera o membro pstrName
+		if (ObjetoValido(vi_pOutArrayPropBags[i].pstrName))
+			CoTaskMemFree(vi_pOutArrayPropBags[i].pstrName);
+	}
+
+	//Define a quantidade de elementos no array
+	Param_Out_Quantiade = static_cast<UInt32>(vi_OutCountProps);
+
 Done:;
+	//Libera a memória utilizada pela estrutura
+	DeletarMatrizEstruturasSafe(&vi_pOutArrayPropBags);
+
 	//Retorna o resultado.
 	return Resultado;
 }
 
 
 /// <summary>
-/// (LoadObject) - Faz com que o saco de propriedade instrua um objeto de propriedade que foi criado anteriormente e inicializado para ler suas propriedades persistentes. 
+/// (LoadObject) - Faz com que o bag de propriedade instrua um objeto de propriedade que foi criado anteriormente e inicializado para ler suas propriedades persistentes. 
 /// </summary>
-/// <param name="Param_EnderecoNome"></param>
-/// <param name="Param_Hint"></param>
-/// <param name="Param_UnkObjeto"></param>
-/// <param name="Param_Ref_ErrorLog"></param>
-CarenResult CarenPropertyBag2::CarregarObjeto(
+/// <param name="Param_EnderecoNome">O do nome do objeto da propriedade.</param>
+/// <param name="Param_Hint">Um valor inteiro que foi recuperado usando ICarenPropertyBag2::GetPropertyInfo. Este argumento é opcional e deve ser zero, se o valor não for conhecido ou usado.</param>
+/// <param name="Param_UnkObjeto">O endereço da interface IUnknown do objeto. Este argumento não pode ser NULO.</param>
+/// <param name="Param_ErrorLog">Uma interface IErrorlog na qual a bag de propriedade armazena quaisquer erros que ocorram durante a carga. Este argumento pode ser NULO; nesse caso, o chamador não recebe erros de registro.</param>
+CarenResult CarenPropertyBag2::LoadObject(
 String^ Param_EnderecoNome,
 UInt32 Param_Hint,
 ICaren^ Param_UnkObjeto,
-ICaren^% Param_Ref_ErrorLog)
+ICaren^ Param_ErrorLog)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -515,9 +552,22 @@ ICaren^% Param_Ref_ErrorLog)
 
 	//Variaveis a serem utilizadas.
 	Utilidades Util;
+	LPCOLESTR vi_pEnderecoNome = Nulo;
+	IUnknown* vi_pUnkObjeto = Nulo;
+	IErrorLog* vi_pErrorLog = Nulo; //Pode ser NULO.
 
+	//Converte a string.
+	vi_pEnderecoNome = Util.ConverterStringToBSTR(Param_EnderecoNome);
+
+	//Recupera o ponteiro para a interface unknown
+	CarenGetPointerFromICarenSafe(Param_UnkObjeto, vi_pUnkObjeto);
+
+	//Recupera o ponteiro para a interface de log se fornecido.
+	if(ObjetoGerenciadoValido(Param_ErrorLog))
+		CarenGetPointerFromICarenSafe(Param_ErrorLog, vi_pErrorLog);
 
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->LoadObject(vi_pEnderecoNome, static_cast<DWORD>(Param_Hint), vi_pUnkObjeto, vi_pErrorLog);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -535,24 +585,30 @@ ICaren^% Param_Ref_ErrorLog)
 	}
 
 Done:;
+	//Libera a memória utilizada pela string.
+	DeletarStringBSTRSafe(&vi_pEnderecoNome);
+
 	//Retorna o resultado.
 	return Resultado;
 }
 
 /// <summary>
-///  (Read) - Faz com que uma ou mais propriedades sejam lidas do saco de propriedade.
+/// (Read) - Faz com que uma ou mais propriedades sejam lidas do bag de propriedade.
 /// </summary>
-/// <param name="Param_Quantidade"></param>
-/// <param name="Param_ArrayPropBagsRequest"></param>
-/// <param name="Param_InterfaceErro"></param>
-/// <param name="Param_Out_VarValue"></param>
-/// <param name="Param_Out_HRESULTArray"></param>
-CarenResult CarenPropertyBag2::Ler(
-UInt32 Param_Quantidade,
-cli::array<Estruturas::CA_PROPBAG2^>^ Param_ArrayPropBagsRequest,
-ICaren^ Param_InterfaceErro,
-[Out] cli::array<Estruturas::CA_VARIANT^>^% Param_Out_VarValue,
-[Out] cli::array<Int32>^% Param_Out_HRESULTArray)
+/// <param name="Param_Quantidade">O número de propriedades para ler. Este argumento especifica o número de elementos nas matrizes Param_ArrayPropBagsRequest, Param_Out_VarValue e Param_Out_HRESULTArray.</param>
+/// <param name="Param_ArrayPropBagsRequest">uma matriz de estruturas CA_PROPBAG2 que especificam as propriedades solicitadas. O membro vt e o membro pstrName dessas 
+/// estruturas devem ser preenchidos antes que este método possa ser chamado. O membro dwHint dessas estruturas é opcional. Este argumento não pode ser NULO.</param>
+/// <param name="Param_InterfaceErro">Uma interface IErrorlog na qual a bolsa de propriedade armazena quaisquer erros que ocorram durante as leituras. Este argumento pode ser NULO; 
+/// nesse caso, o chamador não recebe erros de registro.</param>
+/// <param name="Param_Out_VarValue">Retorna uma matriz de estruturas CA_VARIANT que recebem os valores da propriedade. O interlocutor não precisa inicializar essas estruturas antes de ligar para 
+/// ICarenPropertyBag2::Read. O método ICarenPropertyBag2::Read preenche o campo de tipo e o campo de valor nessas estruturas antes de retornar.</param>
+/// <param name="Param_Out_HRESULTArray">Retorna uma matriz de valores HRESULT que recebe o resultado de cada propriedade lido.</param>
+CarenResult CarenPropertyBag2::Read(
+	UInt32 Param_Quantidade,
+	cli::array<Estruturas::CA_PROPBAG2^>^ Param_ArrayPropBagsRequest,
+	ICaren^ Param_InterfaceErro,
+	[Out] cli::array<Estruturas::CA_VARIANT^>^% Param_Out_VarValue,
+	[Out] cli::array<Int32>^% Param_Out_HRESULTArray)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -562,9 +618,37 @@ ICaren^ Param_InterfaceErro,
 
 	//Variaveis a serem utilizadas.
 	Utilidades Util;
+	PROPBAG2* vi_pArrayPropBagRequest = CriarMatrizEstruturas<PROPBAG2>(Param_Quantidade);
+	PROPBAG2* vi_pAuxiliar = Nulo;
+	IErrorLog* vi_pErrorLog = Nulo; //Pode ser NULO.
+	VARIANT* vi_pOutArrayValues = Nulo;
+	HRESULT* vi_pOutArrayHResults = Nulo;
 
+	//Copia os dados da matriz gerenciada para a nativa.
+	for (UINT32 i = 0; i < Param_Quantidade; i++)
+	{
+		//Converte a estrutura no index especificado.
+		vi_pAuxiliar = Util.ConverterPROPBAG2ManagedToUnamaged(Param_ArrayPropBagsRequest[i]);
+
+		//Define no array nativo.
+		vi_pArrayPropBagRequest[i] = *vi_pAuxiliar;
+
+		//Libera a memória utilizada pela estrutura.
+		DeletarEstruturaSafe(&vi_pAuxiliar);
+	}
+
+
+	//Recupera o ponteiro para a interface de log se fornecido.
+	if (ObjetoGerenciadoValido(Param_InterfaceErro))
+		CarenGetPointerFromICarenSafe(Param_InterfaceErro, vi_pErrorLog);
 
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->Read(
+		static_cast<ULONG>(Param_Quantidade),
+		vi_pArrayPropBagRequest,
+		vi_pErrorLog,
+		vi_pOutArrayValues,
+		vi_pOutArrayHResults);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -581,21 +665,33 @@ ICaren^ Param_InterfaceErro,
 		Sair;
 	}
 
+	//Cria as matrizes que seram retornadas.
+	Param_Out_VarValue = gcnew cli::array<CA_VARIANT^>(Param_Quantidade);
+	Param_Out_HRESULTArray = gcnew cli::array<Int32>(Param_Quantidade);
+
+	//Faz um for para converter os dados dos valores da estrutura VARIANT para a gerenciada.
+	for (UINT32 i = 0; i < Param_Quantidade; i++)
+	{
+		//Converte a estrutura nativa para a gerenciada.
+		Param_Out_VarValue[i] = Util.converter
+	}
+
 Done:;
 	//Retorna o resultado.
 	return Resultado;
 }
 
 /// <summary>
-/// (Write) - Faz com que uma ou mais propriedades sejam salvas no saco da propriedade.
+/// (Write) - Faz com que uma ou mais propriedades sejam salvas no bag da propriedade.
 /// </summary>
-/// <param name="Param_Quantidade"></param>
-/// <param name="Param_ArrayPropBagsRequest"></param>
-/// <param name="Param_VarValue"></param>
-CarenResult CarenPropertyBag2::Escrever(
+/// <param name="Param_Quantidade">O número de propriedades para salvar. Este argumento especifica o número de elementos nas matrizes Param_ArrayPropBagsRequest e Param_VarValue.</param>
+/// <param name="Param_ArrayPropBagsRequest">Uma matriz de estruturas CA_PROPBAG2 que especificam as propriedades salvas. O membro pstrName dessas estruturas deve ser preenchido antes que este método seja 
+/// chamado. O membro dwHint dessas estruturas é opcional. Este argumento não pode ser NULO.</param>
+/// <param name="Param_VarValue">Uma matriz de estruturas CA_VARIANT que contêm os valores das propriedades para salvar. Este argumento não pode ser NULO.</param>
+CarenResult CarenPropertyBag2::Write(
 UInt32 Param_Quantidade,
 cli::array<Estruturas::CA_PROPBAG2^>^ Param_ArrayPropBagsRequest,
-cli::array<Estruturas::CA_VARIANT^>^% Param_VarValue)
+cli::array<Estruturas::CA_VARIANT^>^ Param_VarValue)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);

@@ -1759,7 +1759,7 @@ Done:;
 /// <param name="Param_TamanhoLinhaOrigem">(SrcRowPitch) - O tamanho de uma linha dos dados de origem.</param>
 /// <param name="Param_TamhoFatiaProdundidade">(SrcDepthPitch) - O tamanho de uma fatia de profundidade dos dados de origem.</param>
 /// <param name="Param_CopyFlags">Um valor D3D11_COPY_FLAGS que especifica como realizar a operação de atualização. Se você especificar zero para nenhuma opção de atualização,
-/// o (AtualizarSubresource1) se comporta como ICarenD3D11DeviceContext::AtualizarSubresource. Para os drivers de exibição existentes que não podem processar essas bandeiras, 
+/// o (AtualizarSubresource1) se comporta como ICarenD3D11DeviceContext::UpdateSubresource. Para os drivers de exibição existentes que não podem processar essas bandeiras, 
 /// o tempo de execução não as usa.</param>
 CarenResult CarenD3D11DeviceContext1::AtualizarSubresource1(
 				ICarenD3D11Resource^ Param_RecursoDestino,
@@ -7291,7 +7291,7 @@ Done:;
 /// <param name="Param_DadosOrigemMemoria">Um ponteiro para os dados de origem na memória.</param>
 /// <param name="Param_TamanhoLinhaOrigem">(SrcRowPitch) - O tamanho de uma linha dos dados de origem.</param>
 /// <param name="Param_TamhoFatiaProdundidade">(SrcDepthPitch) - O tamanho de uma fatia de profundidade dos dados de origem.</param>
-CarenResult CarenD3D11DeviceContext1::AtualizarSubresource(
+CarenResult CarenD3D11DeviceContext1::UpdateSubresource(
 	ICarenD3D11Resource^ Param_RecursoDestino,
 	UInt32 Param_SubrecursoDestino,
 	Estruturas::CA_D3D11_BOX^ Param_Caixa,
@@ -7357,7 +7357,7 @@ Done:;
 /// <param name="Param_StartSlot">Index na matriz baseada em zero do dispositivo para começar a recuperar buffers constantes de (varia de 0 a D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - 1).</param>
 /// <param name="Param_NumeroBuffers">Número de buffers a serem recuperados (varia de 0 a D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_Out_MatrizBuffers">Retorna uma matriz de ponteiros de interface de buffer constante.</param>
-CarenResult CarenD3D11DeviceContext1::VSObterConstantBuffers(
+CarenResult CarenD3D11DeviceContext1::VSGetConstantBuffers(
 	UInt32 Param_StartSlot,
 	UInt32 Param_NumeroBuffers,
 	[Out] cli::array<ICarenD3D11Buffer^>^% Param_Out_MatrizBuffers)
@@ -7426,7 +7426,7 @@ Done:;
 /// <param name="Param_StartSlot">Index em uma matriz baseada em zero para começar a obter samplers de (varia de 0 a D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT - 1).</param>
 /// <param name="Param_NumeroAmostradores">Número de (Samplers) para obter de um contexto de dispositivo. Cada estágio de pipeline tem um total de 16 slots disponíveis (varia de 0 a D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_Out_MatrizEstadoAmostrado">Retorna uma matriz com interfaces do amostrador de estado.</param>
-CarenResult CarenD3D11DeviceContext1::VSObterSamplers(
+CarenResult CarenD3D11DeviceContext1::VSGetSamplers(
 	UInt32 Param_StartSlot,
 	UInt32 Param_NumeroAmostradores,
 	[Out] cli::array<ICarenD3D11SamplerState^>^% Param_Out_MatrizEstadoAmostrado)
@@ -7492,7 +7492,7 @@ Done:;
 /// <param name="Param_Out_SombreadorVertice">Retorna uma interface para o sombreador de vertice.</param>
 /// <param name="Param_Out_MatrizInstanciasClasse">Retorna uma matriz com interfaces de Instancias de classe.</param>
 /// <param name="Param_Out_QuantidadeInstancias">Retorna a quantidade de de instancias de classe na matriz do parametro (Param_Out_MatrizInstanciasClasse).</param>
-CarenResult CarenD3D11DeviceContext1::VSObterShader(
+CarenResult CarenD3D11DeviceContext1::VSGetShader(
 	[Out] ICarenD3D11VertexShader^% Param_Out_SombreadorVertice,
 	[Out] cli::array<ICarenD3D11ClassInstance^>^% Param_Out_MatrizInstanciasClasse,
 	[Out] UInt32% Param_Out_QuantidadeInstancias)
@@ -7569,7 +7569,7 @@ Done:;
 /// <param name="Param_StartSlot">Index na matriz baseada em zero do dispositivo para começar a obter recursos do shader (varia de 0 a D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - 1).</param>
 /// <param name="Param_NumeroViews">O número de recursos para obter do dispositivo. Até um máximo de 128 slots estão disponíveis para recursos de sombreador (varia de 0 a D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_Out_MatrizVisualizadoresSombreador">Matriz de interfaces de visualização de recursos do sombreador a serem retornadas pelo dispositivo.</param>
-CarenResult CarenD3D11DeviceContext1::VSObterShaderResources(
+CarenResult CarenD3D11DeviceContext1::VSGetShaderResources(
 	UInt32 Param_StartSlot,
 	UInt32 Param_NumeroViews,
 	[Out] cli::array<ICarenD3D11ShaderResourceView^>^% Param_Out_MatrizVisualizadoresSombreador)
@@ -7630,7 +7630,7 @@ Done:;
 /// <param name="Param_StartSlot">Index na matriz baseada em zero do dispositivo para começar a definir buffers constantes para (varia de 0 a D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - 1).</param>
 /// <param name="Param_NumeroBuffers">Número de buffers a definir (varia de 0 a D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - Param_StartSlot).</param> 
 /// <param name="Param_MatrizBuffers">Matriz de buffers constantes sendo fornecidos ao dispositivo.</param> 
-CarenResult CarenD3D11DeviceContext1::VSDefinirConstantBuffers(
+CarenResult CarenD3D11DeviceContext1::VSSetConstantBuffers(
 	UInt32 Param_StartSlot,
 	UInt32 Param_NumeroBuffers,
 	cli::array<ICarenD3D11Buffer^>^ Param_MatrizBuffers)
@@ -7678,7 +7678,7 @@ CarenResult CarenD3D11DeviceContext1::VSDefinirConstantBuffers(
 /// <param name="Param_StartSlot">Index na matriz baseada em zero do dispositivo para começar a configurar os samplers para (varia de 0 a D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT - 1).</param>
 /// <param name="Param_NumeroAmostradores">Número de amostradores na matriz. Cada estágio de pipeline tem um total de 16 slots disponíveis (varia de 0 a D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_MatrizAmostradoresEstado">Uma matriz de interfaces de estado do amostrador.</param>
-CarenResult CarenD3D11DeviceContext1::VSDefinirSamplers(
+CarenResult CarenD3D11DeviceContext1::VSSetSamplers(
 	UInt32 Param_StartSlot,
 	UInt32 Param_NumeroAmostradores,
 	cli::array<ICarenD3D11SamplerState^>^ Param_MatrizAmostradoresEstado)
@@ -7726,7 +7726,7 @@ CarenResult CarenD3D11DeviceContext1::VSDefinirSamplers(
 /// <param name="Param_ShaderVertice">Ponteiro para um sombreador de vértice. Passar em NULO desativa o shader para este estágio de pipeline.</param>  
 /// <param name="Param_MatrizInstanciaClasse">Uma matriz de interfaces de instância de classe. Cada interface usada por um sombreador deve ter uma instância de classe correspondente ou o shader será desativado. Defina como NULO se o sombreador não usar nenhuma interface.</param>
 /// <param name="Param_NumeroInstanciasClasse">O numero de (ICarenD3D11ClassInstance) dentro da matriz (Param_MatrizInstanciaClasse).</param>
-CarenResult CarenD3D11DeviceContext1::VSDefnirShader(
+CarenResult CarenD3D11DeviceContext1::VSSetShader(
 	ICarenD3D11VertexShader^ Param_ShaderVertice,
 	cli::array<ICarenD3D11ClassInstance^>^ Param_MatrizInstanciaClasse,
 	UInt32 Param_NumeroInstanciasClasse)
@@ -7788,7 +7788,7 @@ CarenResult CarenD3D11DeviceContext1::VSDefnirShader(
 /// <param name="Param_StartSlot">Index na matriz baseada em zero do dispositivo para começar a configurar os recursos do shader para (o intervalo é de 0 a D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - 1).</param>
 /// <param name="Param_NumeroViews">Número de recursos do shader a serem definidos. Até um máximo de 128 slots estão disponíveis para recursos de sombreador (o intervalo é de 0 a D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_MatrizVisualizadoresSombreador">Uma matriz que contém os Visualizadores de recurso do sombreador para serem definidos no Disposiivo.</param>
-CarenResult CarenD3D11DeviceContext1::VSDefinirShaderResources(
+CarenResult CarenD3D11DeviceContext1::VSSetShaderResources(
 	UInt32 Param_StartSlot,
 	UInt32 Param_NumeroViews,
 	cli::array<ICarenD3D11ShaderResourceView^>^ Param_MatrizVisualizadoresSombreador)

@@ -414,7 +414,7 @@ void CarenD3D11Fence::Finalizar()
 /// (CreateSharedHandle) - Cria uma Handle compartilhada em um objeto de Fence.
 /// </summary>
 /// <param name="Param_AtributosSec">Uma estrutura CA_ATRIBUTOS_SEGURANCA que contém dois membros de dados separados, mas relacionados: um descritor de segurança opcional e um valor booleanoque determina se os
-/// processos filho podem herdar a Handle retornada. Defina esse parâmetro como NULO se quiser processos filho que o aplicativo pode criar para não herdar a Handle devolvida pelo (CriarHandlerCompartilhada) se você 
+/// processos filho podem herdar a Handle retornada. Defina esse parâmetro como NULO se quiser processos filho que o aplicativo pode criar para não herdar a Handle devolvida pelo (CreateSharedHandle) se você 
 /// quiser que o recurso associado à Handle retornada obtenha um descritor de segurança padrão. O membro do lpSecurityDescriptor da estrutura especifica um CA_DESCRITOR_SEGURANCA para o recurso. Defina esse membro como 
 /// NULO se quiser que o tempo de execução atribua um descritor de segurança padrão ao recurso associado à Handle retornada. As ACLs no descritor de segurança padrão para o recurso vêm do token principal ou de 
 /// personificação do criador.</param>
@@ -422,7 +422,7 @@ void CarenD3D11Fence::Finalizar()
 /// <param name="Param_Nome">Uma sequência UNICODE com término NULO que contém o nome para associar com o heap compartilhado. O nome é limitado a MAX_PATH caracteres. A comparação de nomes é sensível a maiúsculas 
 /// e minúsculas.</param>
 /// <param name="Param_Out_SharedHandle">Recebe o valor NT HANDLE para o recurso a compartilhar. Você pode usar está Handle em chamadas para acessar o recurso.</param>
-CarenResult CarenD3D11Fence::CriarHandlerCompartilhada(
+CarenResult CarenD3D11Fence::CreateSharedHandle(
 				CA_ATRIBUTOS_SEGURANCA^ Param_AtributosSec, 
 				UInt32 Param_TipoAcesso, 
 				String^ Param_Nome, 
@@ -487,7 +487,7 @@ Done:;
 /// (GetCompletedValue) - Obtém o valor atual do Fence.
 /// </summary>
 /// <param name="Param_Out_Valor">Obtém o valor atual do Fence.</param>
-CarenResult CarenD3D11Fence::ObterValorAtual([Out] UInt64% Param_Out_Valor)
+CarenResult CarenD3D11Fence::GetCompletedValue([Out] UInt64% Param_Out_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -516,7 +516,7 @@ CarenResult CarenD3D11Fence::ObterValorAtual([Out] UInt64% Param_Out_Valor)
 /// </summary>
 /// <param name="Param_ValorDisparo">O valor do Fence quando o evento deve ser sinalizado.</param>
 /// <param name="Param_HandleEvento">Uma handle para o objeto do evento.</param>
-CarenResult CarenD3D11Fence::DefinirEvento_NaConclusao(
+CarenResult CarenD3D11Fence::SetEventOnCompletion(
 				UInt64 Param_ValorDisparo,
 				ICarenWindowsEvent^ Param_HandleEvento)
 {
@@ -576,7 +576,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Out_DispositivoD3D11">Retorna o dispositivo D3D11 que criou essa interface. A interface retornada é uma (ICarenD3D11Device). Utilize a classe (CastInterface)
 /// para transforma em sua interface original.</param>
-CarenResult CarenD3D11Fence::ObterDispositivo(ICaren^ Param_Out_DispositivoD3D11)
+CarenResult CarenD3D11Fence::GetDevice(ICaren^ Param_Out_DispositivoD3D11)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -624,9 +624,9 @@ Done:;
 /// <param name="Param_Guid">GUID associado com os dados.</param>
 /// <param name="Param_TamanhoBuffer">O tamanho do buffer que será retornado.</param>
 /// <param name="Param_Out_TamanhoBufferSaida">O valor real do buffer retornado pelo parametro (Param_Out_BufferDados).</param>
-/// <param name="Param_Out_BufferDados">Um ponteiro para um buffer que (ObterDadosPrivados) preenche com dados da criança dispositivo se (Param_TamanhoBuffer) aponta para um valor 
+/// <param name="Param_Out_BufferDados">Um ponteiro para um buffer que (GetPrivateData) preenche com dados da criança dispositivo se (Param_TamanhoBuffer) aponta para um valor 
 /// que especifica um buffer grande o suficiente para armazenar os dados.</param>
-CarenResult CarenD3D11Fence::ObterDadosPrivados(
+CarenResult CarenD3D11Fence::GetPrivateData(
 	String^ Param_Guid,
 	UInt32 Param_TamanhoBuffer,
 	[Out] UInt32% Param_Out_TamanhoBufferSaida,
@@ -696,7 +696,7 @@ Done:;
 /// <param name="Param_TamanhoBuffer">O tamanho do buffer no parametro (Param_Buffer).</param>
 /// <param name="Param_Buffer">Ponteiro para os dados a serem armazenados com essa criança de dispositivo. Se Param_Buffer é NULO, Param_TamanhoBuffer também deve ser 0, e quaisquer 
 /// dados anteriormente associados com o especificado GUID serão destruídos.</param>
-CarenResult CarenD3D11Fence::DefinirDadosPrivados(
+CarenResult CarenD3D11Fence::SetPrivateData(
 	String^ Param_Guid,
 
 	UInt32 Param_TamanhoBuffer, ICarenBuffer^ Param_Buffer)
@@ -770,7 +770,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Guid">GUID associado com a interface a ser definida.</param>
 /// <param name="Param_Interface">Ponteiro para uma interface IUnknown-derivado a ser associado com a criança do dispositivo.</param>
-CarenResult CarenD3D11Fence::DefinirInterfaceDadosPrivados(
+CarenResult CarenD3D11Fence::SetPrivateDataInterface(
 	String^ Param_Guid, ICaren^ Param_Interface)
 {
 	//Variavel a ser retornada.

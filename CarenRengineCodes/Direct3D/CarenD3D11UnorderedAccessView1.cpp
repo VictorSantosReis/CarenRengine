@@ -474,7 +474,7 @@ CarenResult CarenD3D11UnorderedAccessView1::GetDesc([Out] Estruturas::CA_D3D11_U
 /// (GetResource) - Obtém o recurso que é acessado por meio dessa visualização.
 /// </summary>
 /// <param name="Param_Out_Recurso">Retorna um ponteiro para o recurso que é acessado através desta vista.</param>
-CarenResult CarenD3D11UnorderedAccessView1::ObterRecurso([Out] ICarenD3D11Resource^% Param_Out_Recurso)
+CarenResult CarenD3D11UnorderedAccessView1::GetResource([Out] ICarenD3D11Resource^% Param_Out_Recurso)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -519,7 +519,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Out_DispositivoD3D11">Retorna o dispositivo D3D11 que criou essa interface. A interface retornada é uma (ICarenD3D11Device). Utilize a classe (CastInterface)
 /// para transforma em sua interface original.</param>
-CarenResult CarenD3D11UnorderedAccessView1::ObterDispositivo(ICaren^ Param_Out_DispositivoD3D11)
+CarenResult CarenD3D11UnorderedAccessView1::GetDevice(ICaren^ Param_Out_DispositivoD3D11)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -567,9 +567,9 @@ Done:;
 /// <param name="Param_Guid">GUID associado com os dados.</param>
 /// <param name="Param_TamanhoBuffer">O tamanho do buffer que será retornado.</param>
 /// <param name="Param_Out_TamanhoBufferSaida">O valor real do buffer retornado pelo parametro (Param_Out_BufferDados).</param>
-/// <param name="Param_Out_BufferDados">Um ponteiro para um buffer que (ObterDadosPrivados) preenche com dados da criança dispositivo se (Param_TamanhoBuffer) aponta para um valor 
+/// <param name="Param_Out_BufferDados">Um ponteiro para um buffer que (GetPrivateData) preenche com dados da criança dispositivo se (Param_TamanhoBuffer) aponta para um valor 
 /// que especifica um buffer grande o suficiente para armazenar os dados.</param>
-CarenResult CarenD3D11UnorderedAccessView1::ObterDadosPrivados(
+CarenResult CarenD3D11UnorderedAccessView1::GetPrivateData(
 	String^ Param_Guid,
 	UInt32 Param_TamanhoBuffer,
 	[Out] UInt32% Param_Out_TamanhoBufferSaida,
@@ -639,7 +639,7 @@ Done:;
 /// <param name="Param_TamanhoBuffer">O tamanho do buffer no parametro (Param_Buffer).</param>
 /// <param name="Param_Buffer">Ponteiro para os dados a serem armazenados com essa criança de dispositivo. Se Param_Buffer é NULO, Param_TamanhoBuffer também deve ser 0, e quaisquer 
 /// dados anteriormente associados com o especificado GUID serão destruídos.</param>
-CarenResult CarenD3D11UnorderedAccessView1::DefinirDadosPrivados(
+CarenResult CarenD3D11UnorderedAccessView1::SetPrivateData(
 	String^ Param_Guid,
 
 	UInt32 Param_TamanhoBuffer, ICarenBuffer^ Param_Buffer)
@@ -713,7 +713,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Guid">GUID associado com a interface a ser definida.</param>
 /// <param name="Param_Interface">Ponteiro para uma interface IUnknown-derivado a ser associado com a criança do dispositivo.</param>
-CarenResult CarenD3D11UnorderedAccessView1::DefinirInterfaceDadosPrivados(
+CarenResult CarenD3D11UnorderedAccessView1::SetPrivateDataInterface(
 	String^ Param_Guid, ICaren^ Param_Interface)
 {
 	//Variavel a ser retornada.

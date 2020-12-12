@@ -9721,7 +9721,7 @@ MEReservedMax = 10000
 			};
 
 			/// <summary>
-			/// (D3D11_ASYNC_GETDATA_FLAG) - Enumera sinalizadores opcionais que controlam o comportamento de ICarenD3D11DeviceContext::ObterDados.
+			/// (D3D11_ASYNC_GETDATA_FLAG) - Enumera sinalizadores opcionais que controlam o comportamento de ICarenD3D11DeviceContext::GetData.
 			/// </summary>
 			public enum class CA_D3D11_ASYNC_GETDATA_FLAG
 			{
@@ -9731,7 +9731,7 @@ MEReservedMax = 10000
 				Zero = 0,
 
 				/// <summary>
-				/// Não liberar o buffer de comando. Este pode potencialmente causa um loop infinito se (ObterDados) chama-se continuamente até que ela retorna SS_OK como lá ainda pode ser comandos no buffer de comandos que 
+				/// Não liberar o buffer de comando. Este pode potencialmente causa um loop infinito se (GetData) chama-se continuamente até que ela retorna SS_OK como lá ainda pode ser comandos no buffer de comandos que 
 				/// precisam ser processadas em ordem para GetData retornar SS_OK. Desde que os comandos no buffer de comandos não são liberados eles não serão processados e, portanto, GetData nunca irá retornar SS_OK.
 				/// </summary>
 				D3D11_ASYNC_GETDATA_DONOTFLUSH = 0x1
@@ -18681,7 +18681,7 @@ MEReservedMax = 10000
 			};
 
 			/// <summary>
-			/// (D3D11_BLEND_DESC) - Descreve o estado de combinação que você usar em uma chamada para ICarenD3D11Device::CriarBlendState para criar um objeto de estado da 
+			/// (D3D11_BLEND_DESC) - Descreve o estado de combinação que você usar em uma chamada para ICarenD3D11Device::CreateBlendState para criar um objeto de estado da 
 			/// mistura.
 			/// </summary>
 			public ref struct CA_D3D11_BLEND_DESC
@@ -18707,7 +18707,7 @@ MEReservedMax = 10000
 			};
 
 			/// <summary>
-			/// (D3D11_BLEND_DESC1) - Descreve o estado de combinação que você usar em uma chamada para ICarenD3D11Device::CriarBlendState para criar um objeto de estado da 
+			/// (D3D11_BLEND_DESC1) - Descreve o estado de combinação que você usar em uma chamada para ICarenD3D11Device::CreateBlendState para criar um objeto de estado da 
 			/// mistura.
 			/// </summary>
 			public ref struct CA_D3D11_BLEND_DESC1

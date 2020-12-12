@@ -415,7 +415,7 @@ void CarenD3D11Device3::Finalizar()
 /// </summary>
 /// <param name="Param_Flags">Reservado para uso futuro. Deixe como ZERO(0).</param>
 /// <param name="Param_Out_ContextoDiferido">Recebe um ponteiro para a interface do contexto diferido 3.</param>
-CarenResult CarenD3D11Device3::CriarContextoDiferido3(
+CarenResult CarenD3D11Device3::CreateDeferredContext3(
 				UInt32 Param_Flags, 
 				[Out] ICarenD3D11DeviceContext3^% Param_Out_ContextoDiferido)
 {
@@ -463,7 +463,7 @@ Done:;
 /// <param name="Param_DescQuery">Uma estrutura CA_D3D11_QUERY_DESC1 que representa uma descrição de consulta.</param>
 /// <param name="Param_Ref_Query">Um ponteiro para um bloco de memória que recebe um ponteiro para uma interface ICarenD3D11Query1 para o objeto de consulta criado. Defina este parâmetro como NULO para validar os outros 
 /// parâmetros de entrada (o método retornará SS_FALSE se os outros parâmetros de entrada passarem pela validação).</param>
-CarenResult CarenD3D11Device3::CriarQuery1(
+CarenResult CarenD3D11Device3::CreateQuery1(
 				CA_D3D11_QUERY_DESC1^ Param_DescQuery, 
 				ICarenD3D11Query1^% Param_Ref_Query)
 {
@@ -523,7 +523,7 @@ Done:;
 /// <param name="Param_DescRasterizador">Uma estrutura CA_D3D11_RASTERIZER_DESC2 que descreve o estado rasterizador.</param>
 /// <param name="Param_Ref_Rasterizador">Um ponteiro para um bloco de memória que recebe um ponteiro para uma interface ICarenD3D11RasterizerState2 para o objeto de estado rasterizador criado. Defina este parâmetro 
 /// como NULO para validar os outros parâmetros de entrada (o método retornará SS_FALSE se os outros parâmetros de entrada passarem pela validação).</param>
-CarenResult CarenD3D11Device3::CriarEstadoRasterizador2(
+CarenResult CarenD3D11Device3::CreateRasterizerState2(
 				CA_D3D11_RASTERIZER_DESC2^ Param_DescRasterizador, 
 				ICarenD3D11RasterizerState2^% Param_Ref_Rasterizador)
 {
@@ -582,7 +582,7 @@ Done:;
 /// acesse todos os subrecursos no nível 0 do mipmap.</param>
 /// <param name="Param_Ref_RenderTarget">Um ponteiro para um bloco de memória que recebe um ponteiro para uma interface ICarenD3D11RenderTargetView1 para a exibição de destino de renderização criada. Defina este 
 /// parâmetro como NULO para validar os outros parâmetros de entrada (o método retornará SS_FALSE se os outros parâmetros de entrada passarem pela validação).</param>
-CarenResult CarenD3D11Device3::CriarVisualizadorRenderizacaoDestino1(
+CarenResult CarenD3D11Device3::CreateRenderTargetView1(
 				ICarenD3D11Resource^ Param_Recurso, 
 				CA_D3D11_RENDER_TARGET_VIEW_DESC1^ Param_DescRenderTarget, 
 				ICarenD3D11RenderTargetView1^% Param_Ref_RenderTarget)
@@ -657,7 +657,7 @@ Done:;
 /// recurso (usando o formato com o que o recurso foi criado).</param>
 /// <param name="Param_Ref_Shader">Um ponteiro para um bloco de memória que recebe um ponteiro para uma interface ICarenD3D11ShaderResourceView1 para a exibição de recursos de sombreamento criada. Defina este 
 /// parâmetro como NULO para validar os outros parâmetros de entrada (o método retornará SS_FALSE se os outros parâmetros de entrada passarem pela validação).</param>
-CarenResult CarenD3D11Device3::CriarVisualizadoRescursoShader1(
+CarenResult CarenD3D11Device3::CreateShaderResourceView1(
 				ICarenD3D11Resource^ Param_Recurso,
 				CA_D3D11_SHADER_RESOURCE_VIEW_DESC1^ Param_DescShader,
 				ICarenD3D11ShaderResourceView1^% Param_Ref_Shader)
@@ -733,7 +733,7 @@ Done:;
 /// (Param_DadosSubrecurso) ao criar recursos IMMUTABLE. Se o recurso for multiamostrado, (Param_DadosSubrecurso) deve ser NULO porque os recursos multiamostrados não podem ser inicializados com dados quando são criados.</param>
 /// <param name="Param_Ref_Textura2D">Um ponteiro para um bloco de memória que recebe um ponteiro para uma interface ICarenD3D11Texture2D1 para a textura criada. Defina este parâmetro como NULO para validar os outros 
 /// parâmetros de entrada (o método retornará SS_FALSE se os outros parâmetros de entrada passarem pela validação).</param>
-CarenResult CarenD3D11Device3::CriarTextura2D1(
+CarenResult CarenD3D11Device3::CreateTexture2D1(
 				CA_D3D11_TEXTURE2D_DESC1^ Param_DescTextura,
 				cli::array<CA_D3D11_SUBRESOURCE_DATA^>^ Param_DadosSubrecurso,
 				ICarenD3D11Texture2D1^% Param_Ref_Textura2D)
@@ -823,7 +823,7 @@ Done:;
 /// ao criar recursos IMMUTABLE. Se o recurso for multiamostrado, (Param_DadosSubrecurso) deve ser NULO porque os recursos multiamostrados não podem ser inicializados com dados quando são criados.</param>
 /// <param name="Param_Ref_Textura3D">Um ponteiro para um bloco de memória que recebe um ponteiro para uma interface ICarenD3D11Texture3D1 para a textura criada. Defina este parâmetro como NULO para validar os outros 
 /// parâmetros de entrada (o método retornará SS_FALSE se os outros parâmetros de entrada passarem pela validação).</param>
-CarenResult CarenD3D11Device3::CriarTextura3D1(
+CarenResult CarenD3D11Device3::CreateTexture3D1(
 				CA_D3D11_TEXTURE3D_DESC1^ Param_DescTextura,
 				cli::array<CA_D3D11_SUBRESOURCE_DATA^>^ Param_DadosSubrecurso,
 				ICarenD3D11Texture3D1^% Param_Ref_Textura3D)
@@ -912,7 +912,7 @@ Done:;
 /// visualização que acesse todo o recurso (usando o formato com o qual o recurso foi criado). </param>
 /// <param name="Param_Ref_ViewUnordered">Um ponteiro para um bloco de memória que recebe um ponteiro para uma interface ICarenD3D11UnorderedAccessView1 para a exibição de acesso não ordenado criada. Defina este 
 /// parâmetro como NULO para validar os outros parâmetros de entrada (o método retornará SS_FALSE se os outros parâmetros de entrada passarem pela validação).</param>
-CarenResult CarenD3D11Device3::CriarVisaoRecursoAcessoNaoOrdenado1(
+CarenResult CarenD3D11Device3::CreateUnorderedAccessView1(
 				ICarenD3D11Resource^ Param_Recurso,
 				Estruturas::CA_D3D11_UNORDERED_ACCESS_VIEW_DESC1^% Param_DescSombreador,
 				ICarenD3D11UnorderedAccessView1^% Param_Ref_ViewUnordered)
@@ -983,7 +983,7 @@ Done:;
 /// (GetImmediateContext3) - Obtém um contexto imediato, que pode reproduzir listas de comando.
 /// </summary>
 /// <param name="Param_Out_Contexto">Recebe um ponteiro para a interface do contexto imediato ICarenD3D11DeviceContext3.</param>
-CarenResult CarenD3D11Device3::ObterContextoImediato3([Out] ICarenD3D11DeviceContext3^% Param_Out_Contexto)
+CarenResult CarenD3D11Device3::GetImmediateContext3([Out] ICarenD3D11DeviceContext3^% Param_Out_Contexto)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1026,7 +1026,7 @@ Done:;
 /// <param name="Param_CaixaOrigem">Uma caixa que define a parte do subrecurso de destino para copiar os dados de recurso. Se NULO, os dados são lidos do subrecurso destino sem deslocamento. As dimensões do destino 
 /// devem se adequar ao destino(D3D11_BOX). Uma caixa vazia resulta em um no-op. Uma caixa está vazia se o valor superior for maior ou igual ao valor inferior, ou o valor esquerdo for maior ou igual ao valor certo, 
 /// ou o valor frontal for maior ou igual ao valor de trás. Quando a caixa está vazia, este método não realiza nenhuma operação.</param>
-CarenResult CarenD3D11Device3::LerDoSubrecurso(
+CarenResult CarenD3D11Device3::ReadFromSubresource(
 				ICarenBuffer^ Param_BufferDestino, 
 				UInt32 Param_DestinoPassoLinha,
 				UInt32 Param_DestinoPassoProfundidade, 
@@ -1103,7 +1103,7 @@ Done:;
 /// <param name="Param_BufferOrigem">Um ponteiro para os dados de origem na memória.</param>
 /// <param name="Param_OrigemPassoLinha">O tamanho de uma linha dos dados de origem.</param>
 /// <param name="Param_OrigemPassoProfundidade">O tamanho de uma fatia de profundidade dos dados de origem.</param>
-CarenResult CarenD3D11Device3::EscreverParaSubrecurso(
+CarenResult CarenD3D11Device3::WriteToSubresource(
 				ICarenD3D11Resource^ Param_RecursoDestino,
 				UInt32 Param_IndiceSubrecursoDestino,
 				CA_D3D11_BOX^ Param_CaixaDestino,
@@ -1184,7 +1184,7 @@ Done:;
 /// <param name="Param_Flags">Uma combinação de D3D11_CHECK_MULTISAMPLE_QUALITY_LEVELS_FLAGS valores que são combinados usando uma operação ou bitwise. 
 /// Atualmente, apenas D3D11_CHECK_MULTISAMPLE_QUALITY_LEVELS_TILED_RESOURCE é suportado.</param>
 /// <param name="Param_Out_NiveisQualidade">Recebe o número de níveis de qualidade suportados pelo adaptador</param>
-CarenResult CarenD3D11Device3::ObterNiveisQualidadeDisponiveis1(
+CarenResult CarenD3D11Device3::CheckMultisampleQualityLevels1(
 	CA_DXGI_FORMAT Param_Formato,
 	UInt32 Param_QuantidadeSample,
 	CA_D3D11_CHECK_MULTISAMPLE_QUALITY_LEVELS_FLAG Param_Flags,
@@ -1232,7 +1232,7 @@ Done:;
 /// </summary>
 /// <param name="Param_ContextFlags">Valor reservado para o futuro. Deixe como ZERO(0).</param>
 /// <param name="Param_Out_ContextoDiferido">Recebe um ponteiro para a interface ICarenD3D11DeviceContext2 do contexto diferido.</param>
-CarenResult CarenD3D11Device3::CriarContextoDiferido2(
+CarenResult CarenD3D11Device3::CreateDeferredContext2(
 	UInt32 Param_ContextFlags,
 	[Out] ICarenD3D11DeviceContext2^% Param_Out_ContextoDiferido)
 {
@@ -1278,7 +1278,7 @@ Done:;
 /// (GetImmediateContext2) - Obtém um contexto imediato, que pode reproduzir listas de comando.
 /// </summary>
 /// <param name="Param_Out_Contexto">Recebe um ponteiro para a interface ICarenD3D11DeviceContext2 do contexto imediato.</param>
-CarenResult CarenD3D11Device3::ObterContextoImediato2([Out] ICarenD3D11DeviceContext2^% Param_Out_Contexto)
+CarenResult CarenD3D11Device3::GetImmediateContext2([Out] ICarenD3D11DeviceContext2^% Param_Out_Contexto)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1315,19 +1315,19 @@ Done:;
 /// </summary>
 /// <param name="Param_Recurso">Um ponteiro para a interface de recurso ICarenD3D11Resource a ser obtida as informações.</param>
 /// <param name="Param_Out_NumeroTilesParaRecurso">Uma variável que recebe o número de Tiles necessárias para armazenar todo o recurso de Tiles.</param>
-/// <param name="Param_Out_DescPackedMip">Uma estrutura CA_D3D11_PACKED_MIP_DESC que o (ObterRecursoTiling) preenche com informações sobre como os 
+/// <param name="Param_Out_DescPackedMip">Uma estrutura CA_D3D11_PACKED_MIP_DESC que o (GetResourceTiling) preenche com informações sobre como os 
 /// mipmaps do recurso de Tiles estão embalados.</param>
-/// <param name="Param_Out_DescTileShape">Recebe uma estrutura CA_D3D11_TILE_SHAPE que (ObterRecursoTiling) preenche com informações sobre a forma do bloco. 
+/// <param name="Param_Out_DescTileShape">Recebe uma estrutura CA_D3D11_TILE_SHAPE que (GetResourceTiling) preenche com informações sobre a forma do bloco. 
 /// São informações sobre como os pixels se encaixam nos blocos, independentemente das dimensões do recurso em Tiles, sem incluir os mipmaps compactados. 
 /// Se todo o recurso lado a lado estiver embalado, esse parâmetro não terá sentido porque o recurso lado a lado não possui layout definido para 
-/// mipmaps compactados. Nessa situação, (ObterRecursoTiling) define os membros de CA_D3D11_TILE_SHAPE como zeros.</param>
+/// mipmaps compactados. Nessa situação, (GetResourceTiling) define os membros de CA_D3D11_TILE_SHAPE como zeros.</param>
 /// <param name="Param_Ref_CountSubrecursoTile">Uma variável que contém o número de Tiles no subrecurso. Na entrada, este é o número de subrecursos para 
 /// consulta de Tiles; na saída, este é o número que foi realmente recuperado em (Param_Out_DescTileShape) (fixado ao que está disponível).</param>
-/// <param name="Param_PrimeiroSubrecursoObter">O número da primeira Tile do subrecursos para obter. (ObterRecursoTiling) ignora este parâmetro se o número 
+/// <param name="Param_PrimeiroSubrecursoObter">O número da primeira Tile do subrecursos para obter. (GetResourceTiling) ignora este parâmetro se o número 
 /// que o (Param_Ref_CountSubrecursoTile) aponta é 0.</param>
-/// <param name="Param_Out_DescTileSubrecurso">Recebe uma estrutura CA_D3D11_SUBRESOURCE_TILING que o (ObterRecursoTiling) preenche com informações sobre Tile 
+/// <param name="Param_Out_DescTileSubrecurso">Recebe uma estrutura CA_D3D11_SUBRESOURCE_TILING que o (GetResourceTiling) preenche com informações sobre Tile 
 /// de subrecursos.</param>
-CarenResult CarenD3D11Device3::ObterRecursoTiling(
+CarenResult CarenD3D11Device3::GetResourceTiling(
 	ICarenD3D11Resource^ Param_Recurso,
 	[Out] UInt32% Param_Out_NumeroTilesParaRecurso,
 	[Out] CA_D3D11_PACKED_MIP_DESC^% Param_Out_DescPackedMip,
@@ -1394,7 +1394,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Out_DescBlend">Recebe uma estrutura CA_D3D11_BLEND_DESC1 que descreve o BlendSate(Misturador de estado).</param>
 /// <param name="Param_Out_BlendState">Recebe um ponteiro para a interface ICarenD3D11BlendState1 do misturador de estado.</param>
-CarenResult CarenD3D11Device3::CriarBlendState1([Out] CA_D3D11_BLEND_DESC1^% Param_Out_DescBlend, [Out] ICarenD3D11BlendState1^% Param_Out_BlendState)
+CarenResult CarenD3D11Device3::CreateBlendState1([Out] CA_D3D11_BLEND_DESC1^% Param_Out_DescBlend, [Out] ICarenD3D11BlendState1^% Param_Out_BlendState)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1444,7 +1444,7 @@ Done:;
 /// </summary>
 /// <param name="Param_ContextFlags">Valor reservado para o futuro. Deixe como ZERO(0).</param>
 /// <param name="Param_Out_ContextoDiferido">Recebe um ponteiro para a interfcace ICarenD3D11DeviceContext1 do contexto diferido.</param>
-CarenResult CarenD3D11Device3::CriarContextoDiferido1(UInt32 Param_ContextFlags, [Out] ICarenD3D11DeviceContext1^% Param_Out_ContextoDiferido)
+CarenResult CarenD3D11Device3::CreateDeferredContext1(UInt32 Param_ContextFlags, [Out] ICarenD3D11DeviceContext1^% Param_Out_ContextoDiferido)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1501,7 +1501,7 @@ Done:;
 /// dispositivo quando o objeto de estado de contexto está ativo.</param>
 /// <param name="Param_Out_NivelRecursoDefinido">Recebe o nivel de recurso que foi aceito.</param>
 /// <param name="Param_Out_EstadoContextoDispositivo">Recebe um ponteiro para um objeto ICarenD3DDeviceContextState que representa o estado de um dispositivo Direct3D.</param>
-CarenResult CarenD3D11Device3::CriarDispositivoEstadoContexto(
+CarenResult CarenD3D11Device3::CreateDeviceContextState(
 	CA_D3D11_1_CREATE_DEVICE_CONTEXT_STATE_FLAG Param_Flags,
 	cli::array<CA_D3D_NIVEL_RECURSO>^ Param_NiveisRecurso,
 	UInt32 Param_QuantidadeNiveisRecurso,
@@ -1571,7 +1571,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Out_DescRasterizer">Recebe uma estrutura com a descrição do rasterizador.</param>
 /// <param name="Param_Out_Rasterizador">Recebe um ponteiro para a interface do rasterizador de estado.</param>
-CarenResult CarenD3D11Device3::CriarEstadoRasterizador1(
+CarenResult CarenD3D11Device3::CreateRasterizerState1(
 	[Out] CA_D3D11_RASTERIZER_DESC1^% Param_Out_DescRasterizer,
 	[Out] ICarenD3D11RasterizerState1^% Param_Out_Rasterizador)
 {
@@ -1622,7 +1622,7 @@ Done:;
 /// (GetImmediateContext1) - Obtém um contexto imediato, que pode reproduzir listas de comando.
 /// </summary>
 /// <param name="Param_Out_ContextoImediato">Recebe um ponteiro para a interface ICarenD3D11DeviceContext1 do contexto imediato.</param>
-CarenResult CarenD3D11Device3::ObterContextoImediato1([Out] ICarenD3D11DeviceContext1^% Param_Out_ContextoImediato)
+CarenResult CarenD3D11Device3::GetImmediateContext1([Out] ICarenD3D11DeviceContext1^% Param_Out_ContextoImediato)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1661,7 +1661,7 @@ Done:;
 /// <param name="Param_RIIDInterface">O identificador globalmente único (GUID) para a interface de recursos a ser retornada.</param>
 /// <param name="Param_Ref_InterfaceRecurso">Retorna um ponteiro para a interface de recurso requisitada no (Param_RIIDInterface). Este parametro 
 /// não pode ser NULO.</param>
-CarenResult CarenD3D11Device3::AbrirRecursoCompartilhado1(
+CarenResult CarenD3D11Device3::OpenSharedResource1(
 	IntPtr Param_HandleRecurso,
 	String^ Param_RIIDInterface,
 	ICaren^% Param_Ref_InterfaceRecurso)
@@ -1714,7 +1714,7 @@ Done:;
 /// <param name="Param_RIIDInterface">O identificador globalmente único (GUID) para a interface de recursos a ser retornada.</param>
 /// <param name="Param_Ref_InterfaceRecurso">Retorna um ponteiro para a interface de recurso requisitada no (Param_RIIDInterface). Este parametro 
 /// não pode ser NULO.</param>
-CarenResult CarenD3D11Device3::AbrirRecursoCompartilhadoPorNome(
+CarenResult CarenD3D11Device3::OpenSharedResourceByName(
 	String^ Param_Nome,
 	UInt32 Param_TipoAcesso,
 	String^ Param_RIIDInterface,
@@ -1781,7 +1781,7 @@ Done:;
 /// <param name="Param_Out_LarguraNomeUnidade">Comprimento da sequência de caracteres retornado para o Param_Out_NomeUnidadeMedidas. Pode ser nulo.</param>
 /// <param name="Param_Out_DescContador">Uma descrição do contador, desde que a memória o ponteiro aponte para tem espaço suficiente para armazenar a string. Pode ser nulo. A sequência de caracteres retornada será sempre em inglês.</param>
 /// <param name="Param_Out_LarguraDescContador">Comprimento da sequência de caracteres retornada para Param_Out_DescContador. Pode ser nulo.</param>
-CarenResult CarenD3D11Device3::VerificarContador(
+CarenResult CarenD3D11Device3::CheckCounter(
 	Estruturas::CA_D3D11_DESC_CONTADOR^ Param_DescContador,
 	[Out] Enumeracoes::CA_D3D11_TIPO_DADO_CONTADOR% Param_Out_TipoDadoContador,
 	[Out] UInt32% Param_Out_NumeroContadores,
@@ -1853,7 +1853,7 @@ Done:;
 /// (CheckCounterInfo) - Obter informações de um contador.
 /// </summary>
 /// <param name="Param_Out_InfoContador">Recebe uma estrutura com as informações do contador.</param>
-CarenResult CarenD3D11Device3::VerificarInformacoesContador([Out] Estruturas::CA_D3D11_INFO_CONTADOR^% Param_Out_InfoContador)
+CarenResult CarenD3D11Device3::CheckCounterInfo([Out] Estruturas::CA_D3D11_INFO_CONTADOR^% Param_Out_InfoContador)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1884,7 +1884,7 @@ CarenResult CarenD3D11Device3::VerificarInformacoesContador([Out] Estruturas::CA
 /// <param name="Param_RecursoPesquisa">Um membro do CA_D3D11_RECURSO tipo enumerado que descreve qual recurso de consulta para apoio.</param>
 /// <param name="Param_Out_SuporteRecurso">Após a conclusão do método, a passado estrutura é preenchida com dados que descreve o suporte para o recurso.</param>
 /// <param name="Param_Out_TamanhoEstrutura">O tamanho da estrutura passado para o parâmetro Param_Out_SuporteRecurso.</param>
-CarenResult CarenD3D11Device3::VerificarRecursosSuportados(
+CarenResult CarenD3D11Device3::CheckFeatureSupport(
 	Enumeracoes::CA_D3D11_RECURSO Param_RecursoPesquisa,
 	[Out] Estruturas::CA_D3D11_FEATURE_DATA_THREADING^% Param_Out_SuporteRecurso,
 	[Out] UInt32% Param_Out_TamanhoEstrutura
@@ -1933,7 +1933,7 @@ Done:;
 /// <param name="Param_Formato">Uma enumeração de CA_DXGI_FORMAT que descreve um formato para o qual deseja verificar se há suporte.</param>
 /// <param name="Param_Out_RecursosSuportados">Um campo de bits de D3D11_FORMAT_SUPPORT valores de enumeração que descreve como o formato especificado 
 /// é suportado no dispositivo instalado. Os valores são ORed juntos.</param>
-CarenResult CarenD3D11Device3::VerificarFormatoSuportado(
+CarenResult CarenD3D11Device3::CheckFormatSupport(
 	Enumeracoes::CA_DXGI_FORMAT Param_Formato,
 	[Out] Enumeracoes::CA_D3D11_FORMATO_SUPORTE% Param_Out_RecursosSuportados)
 {
@@ -1983,7 +1983,7 @@ Done:;
 /// <param name="Param_Formato">O formato de textura. Consulte CA_DXGI_FORMAT.</param>
 /// <param name="Param_NumeroAmostras">O número de amostras durante multisampling completo.</param>
 /// <param name="Param_Out_NumeroNiveisQualidade">Recebe o número de níveis de qualidade suportada pelo adaptador.</param>
-CarenResult CarenD3D11Device3::ObterNiveisQualidadeDisponiveis(
+CarenResult CarenD3D11Device3::CheckMultisampleQualityLevels(
 	Enumeracoes::CA_DXGI_FORMAT Param_Formato,
 	UInt32 Param_NumeroAmostras,
 	[Out] UInt32% Param_Out_NumeroNiveisQualidade)
@@ -2032,7 +2032,7 @@ Done:;
 /// </summary>
 /// <param name="Param_DescMistura">Uma descrição do estado de mistura.</param>
 /// <param name="Param_Out_BlendState">Recebe uma interface para o objeto de estado de mistura criado.</param>
-CarenResult CarenD3D11Device3::CriarBlendState(
+CarenResult CarenD3D11Device3::CreateBlendState(
 	Estruturas::CA_D3D11_BLEND_DESC^% Param_DescMistura,
 	[Out] ICarenD3D11BlendState^% Param_Out_BlendState)
 {
@@ -2090,7 +2090,7 @@ Done:;
 /// maneira, antes que o recurso é lido.</param>
 /// <param name="Param_ValidarPametros">Defina como TRUE para validar os paramêtros de entrada do método. Se TRUE, Param_Out_InterfaceBuffer retorna NULO.</param>
 /// <param name="Param_Out_InterfaceBuffer">Recebe a interface ICarenD3D11Buffer para o objeto de buffer criado.</param>
-CarenResult CarenD3D11Device3::CriarBuffer(
+CarenResult CarenD3D11Device3::CreateBuffer(
 	Estruturas::CA_D3D11_BUFFER_DESC^% Param_DescBuffer,
 	Estruturas::CA_D3D11_SUBRESOURCE_DATA^% Param_DescDadosInit,
 	Boolean Param_ValidarPametros,
@@ -2191,7 +2191,7 @@ Done:;
 /// (CreateClassLinkage) - Cria bibliotecas de enlace de classe para permitir a ligação de sombreador dinâmico.
 /// </summary>
 /// <param name="Param_Out_ClassLinkage">Recebe a interface(ICarenD3D11ClassLinkage) de ligação de classe.</param>
-CarenResult CarenD3D11Device3::CriarClassLinkage([Out] ICarenD3D11ClassLinkage^% Param_Out_ClassLinkage)
+CarenResult CarenD3D11Device3::CreateClassLinkage([Out] ICarenD3D11ClassLinkage^% Param_Out_ClassLinkage)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -2243,7 +2243,7 @@ Done:;
 /// <param name="Param_ClasseLigação">Um ponteiro para um ICarenD3D11ClassLinkage, que representa a interface de ligação de classe; o valor pode ser NULO.</param>
 /// <param name="Param_ValidarParametros">Se TRUE, o método vai validar os paramêtros de entrada. Se for validado com sucesso, o método retorna SS_FALSE em vez de S_OK.</param>
 /// <param name="Param_Out_ComputeShader">Recebe a interface(ICarenD3D11ComputeShader). Se (Param_ValidarPametros) for TRUE, esse parametro retorna um objeto NULO.</param>
-CarenResult CarenD3D11Device3::CriarShaderCompute(
+CarenResult CarenD3D11Device3::CreateComputeShader(
 	ICaren^ Param_SombreadorCompilado,
 	UInt64 Param_TamanhoSombreador,
 	ICarenD3D11ClassLinkage^ Param_ClasseLigação,
@@ -2356,7 +2356,7 @@ Done:;
 /// </summary>
 /// <param name="Param_DescContador">Uma estrutura que contém a descrição do contador a ser criado.</param>
 /// <param name="Param_Out_ContadorGPU">Recebe a interface que contem uma descrição do contador.</param>
-CarenResult CarenD3D11Device3::CriarContador(
+CarenResult CarenD3D11Device3::CreateCounter(
 	Estruturas::CA_D3D11_DESC_CONTADOR^% Param_DescContador,
 	[Out] ICarenD3D11Counter^% Param_Out_ContadorGPU)
 {
@@ -2430,7 +2430,7 @@ Done:;
 /// </summary>
 /// <param name="Param_FlagsContexto">Reservado. Use 0.</param>
 /// <param name="Param_Out_D3D11Contexto">Recebe a interface ICarenD3D11DeviceContext.</param>
-CarenResult CarenD3D11Device3::CriarContextoDiferido(
+CarenResult CarenD3D11Device3::CreateDeferredContext(
 	UInt32 Param_FlagsContexto,
 	[Out] ICarenD3D11DeviceContext^% Param_Out_D3D11Contexto)
 {
@@ -2478,7 +2478,7 @@ Done:;
 /// </summary>
 /// <param name="Param_DepthStencil">Uma estrutura(CA_D3D11_DEPTH_STENCIL_DESC) que descreve o estado de profundidade do Stencil.</param>
 /// <param name="Param_Out_InterfaceStencil">Recebe a interface (ICarenD3D11DepthStencilState) de estado de profundidade do Stencil.</param>
-CarenResult CarenD3D11Device3::CriarDepthStencilState(
+CarenResult CarenD3D11Device3::CreateDepthStencilState(
 	Estruturas::CA_D3D11_DEPTH_STENCIL_DESC^% Param_DepthStencil,
 	[Out] ICarenD3D11DepthStencilState^% Param_Out_InterfaceStencil)
 {
@@ -2539,7 +2539,7 @@ Done:;
 /// inteiro (usando o recurso foi criado com o formato).</param>
 /// <param name="Param_ValidarParametros">Defina True para validar os outros parmetros. Param_Out_InterfaceStencilView retorna NULL se esse paramêtro for verdadeiro.</param>
 /// <param name="Param_Out_InterfaceStencilView">Recebe a interface do Depth Stencil View do D3D11.</param>
-CarenResult CarenD3D11Device3::CriarDepthStencilView(
+CarenResult CarenD3D11Device3::CreateDepthStencilView(
 	ICarenD3D11Resource^ Param_Resource,
 	Estruturas::CA_D3D11_DEPTH_STENCIL_VIEW_DESC^% Param_DepthStencilView,
 	Boolean Param_ValidarParametros,
@@ -2635,7 +2635,7 @@ Done:;
 /// <param name="Param_Linkage">Um ponteiro para um enlace de classe interface; o valor pode ser nulo.</param>
 /// <param name="Param_ValidarParametros">Defina True para validar os outros parmetros. Param_Out_DomainShader retorna NULL se esse paramêtro for verdadeiro.</param>
 /// <param name="Param_Out_DomainShader">Recebe a interface do Domain Shader.</param>
-CarenResult CarenD3D11Device3::CriarShaderDomain(
+CarenResult CarenD3D11Device3::CreateDomainShader(
 	ICaren^ Param_ShaderByteCode,
 	UInt64 Param_TamanhoByteCode,
 	ICarenD3D11ClassLinkage^ Param_Linkage,
@@ -2751,7 +2751,7 @@ Done:;
 /// <param name="Param_Linkage">Um ponteiro para um enlace de classe interface; o valor pode ser nulo.</param>
 /// <param name="Param_ValidarParametros">Defina True para validar os outros parmetros. Param_Out_GeometryShader retorna NULL se esse paramêtro for verdadeiro.</param>
 /// <param name="Param_Out_GeometryShader">Recebe a interface do Geometry Shader.</param>
-CarenResult CarenD3D11Device3::CriarShaderGeometry(
+CarenResult CarenD3D11Device3::CreateGeometryShader(
 	ICaren^ Param_ShaderByteCode,
 	UInt64 Param_TamanhoByteCode,
 	ICarenD3D11ClassLinkage^ Param_Linkage,
@@ -2871,7 +2871,7 @@ Done:;
 /// <param name="Param_Linkage">Um ponteiro para um enlace de classe interface; o valor pode ser nulo.</param>
 /// <param name="Param_ValidarParametros">Defina True para validar os outros parmetros. Param_Out_GeometryShader retorna NULL se esse paramêtro for verdadeiro.</param>
 /// <param name="Param_Out_GeometryShader">Recebe a interface do Geometry Shader.</param>
-CarenResult CarenD3D11Device3::CriarShaderGeometryComSaidaFluxo
+CarenResult CarenD3D11Device3::CreateGeometryShaderWithStreamOutput
 (
 	ICaren^ Param_ShaderByteCode,
 	UInt64 Param_TamanhoByteCode,
@@ -3026,7 +3026,7 @@ Done:;
 /// <param name="Param_TamanhoByteCode">Tamanho do sombreador compilado.</param>
 /// <param name="Param_Linkage">Um ponteiro para um enlace de classe interface. O valor pode ser nulo.</param>
 /// <param name="Param_Out_HullShader">Recebe a interface do Hull Shader.</param>
-CarenResult CarenD3D11Device3::CriarHullShader(
+CarenResult CarenD3D11Device3::CreateHullShader(
 	ICaren^ Param_ShaderByteCode,
 	UInt64 Param_TamanhoByteCode,
 	ICarenD3D11ClassLinkage^ Param_Linkage,
@@ -3113,7 +3113,7 @@ Done:;
 /// <param name="Param_ShaderByteCode">Um ponteiro para o shader compilado. O código compilado de sombreador contém uma assinatura de entrada que é validada contra a matriz de elementos.</param>
 /// <param name="Param_TamanhoByteCode">Tamanho do sombreador compilado.</param>
 /// <param name="Param_Out_InputLayout">Recebe a interface do Input Layout.</param>
-CarenResult CarenD3D11Device3::CriarObjetoEntradaLayout(
+CarenResult CarenD3D11Device3::CreateInputLayout(
 	cli::array<Estruturas::CA_D3D11_INPUT_ELEMENT_DESC^>^ Param_ArrayTiposDadosEntrada,
 	UInt32 Param_CountElementos,
 	ICaren^ Param_ShaderByteCode,
@@ -3198,7 +3198,7 @@ Done:;
 /// <param name="Param_Linkage">Um ponteiro para um enlace de classe interface. O valor pode ser nulo.</param>
 /// <param name="Param_ValidarParametros">Defina True para validar os outros parmetros. Param_Out_PixelShader retorna NULL se esse paramêtro for verdadeiro.</param>
 /// <param name="Param_Out_PixelShader">Recebe a interface do Hull Shader.</param>
-CarenResult CarenD3D11Device3::CriarPixelShader(
+CarenResult CarenD3D11Device3::CreatePixelShader(
 	ICaren^ Param_ShaderByteCode,
 	UInt64 Param_TamanhoByteCode,
 	ICarenD3D11ClassLinkage^ Param_Linkage,
@@ -3367,7 +3367,7 @@ Done:;
 /// </summary>
 /// <param name="Param_DescQuery">Uma descrição da interface de consulta a ser criada.</param>
 /// <param name="Param_Out_Query">Recebe a interface de consulta criada.</param>
-CarenResult CarenD3D11Device3::CriarQuery(
+CarenResult CarenD3D11Device3::CreateQuery(
 	Estruturas::CA_D3D11_QUERY_DESC^% Param_DescQuery,
 	[Out] ICarenD3D11Query^% Param_Out_Query)
 {
@@ -3422,7 +3422,7 @@ Done:;
 /// </summary>
 /// <param name="Param_DescRasterizador">Uma estrutura com a descrição do estado do rasterizador.</param>
 /// <param name="Param_Out_Rasterizador">Recebe a interface de Rasterização criada.</param>
-CarenResult CarenD3D11Device3::CriarEstadoRasterizador(
+CarenResult CarenD3D11Device3::CreateRasterizerState(
 	Estruturas::CA_D3D11_RASTERIZER_DESC^% Param_DescRasterizador,
 	[Out] ICarenD3D11RasterizerState^% Param_Out_Rasterizador)
 {
@@ -3482,7 +3482,7 @@ Done:;
 /// que acessa todos os sub-recursos mipmap nível 0.</param>
 /// <param name="Param_ValidarParametros">Defina True para validar os outros parmetros. Param_Out_ViewRender retorna NULL se esse paramêtro for verdadeiro.</param>
 /// <param name="Param_Out_ViewRender">Recebe a interface do visualizador de render.</param>
-CarenResult CarenD3D11Device3::CriarVisualizadorRenderizacaoDestino(
+CarenResult CarenD3D11Device3::CreateRenderTargetView(
 	ICarenD3D11Resource^ Param_Resource,
 	Estruturas::CA_D3D11_RENDER_TARGET_VIEW_DESC^ Param_DescRender,
 	Boolean Param_ValidarParametros,
@@ -3583,7 +3583,7 @@ Done:;
 /// </summary>
 /// <param name="Param_DescSampler">Uma descrição do estado do amostrador</param>
 /// <param name="Param_Out_SamplerState">Recebe a interface do Sampler Sate.</param>
-CarenResult CarenD3D11Device3::CriarSamplerState(
+CarenResult CarenD3D11Device3::CreateSamplerState(
 	Estruturas::CA_D3D11_SAMPLER_DESC^% Param_DescSampler,
 	[Out] ICarenD3D11SamplerState^% Param_Out_SamplerState)
 {
@@ -3641,7 +3641,7 @@ Done:;
 /// exibição que acessa o recurso inteiro (usando o recurso foi criado com o formato).</param>
 /// <param name="Param_ValidarParametros">Defina True para validar os outros parmetros. Param_Out_ShaderView retorna NULL se esse paramêtro for verdadeiro.</param>
 /// <param name="Param_Out_ShaderView">Recebe a interface para o visualizador de Shader.</param>
-CarenResult CarenD3D11Device3::CriarVisualizadoRescursoShader(
+CarenResult CarenD3D11Device3::CreateShaderResourceView(
 	ICarenD3D11Resource^ Param_Recurso,
 	Estruturas::CA_D3D11_SHADER_RESOURCE_VIEW_DESC^% Param_DescExbi,
 	Boolean Param_ValidarParametros,
@@ -3747,7 +3747,7 @@ Done:;
 /// <param name="Param_TamanhoArraySubRecursos">Contém o valor que define o tamanho do array no parametro (Param_ArrayDescSubRecursos).</param>
 /// <param name="Param_ValidarParametros">Defina True para validar os outros parmetros. Param_Out_Textura1D retorna NULL se esse paramêtro for verdadeiro.</param>
 /// <param name="Param_Out_Textura1D">Recebe a interface que contém o buffer da interface de Textura 1D.</param>
-CarenResult CarenD3D11Device3::CriarTextura1D(
+CarenResult CarenD3D11Device3::CreateTexture1D(
 	Estruturas::CA_D3D11_TEXTURE1D_DESC^% Param_DescTextura1D,
 	cli::array<Estruturas::CA_D3D11_SUBRESOURCE_DATA^>^ Param_ArrayDescSubRecursos,
 	UInt32 Param_TamanhoArraySubRecursos,
@@ -3860,7 +3860,7 @@ Done:;
 /// <param name="Param_TamanhoArraySubRecursos">Contém o valor que define o tamanho do array no parametro (Param_ArrayDescSubRecursos).</param>
 /// <param name="Param_ValidarParametros">Defina True para validar os outros parmetros. Param_Out_Textura2D retorna NULL se esse paramêtro for verdadeiro.</param>
 /// <param name="Param_Out_Textura2D">Recebe a interface que contém o buffer da interface de Textura 2D.</param>
-CarenResult CarenD3D11Device3::CriarTextura2D(
+CarenResult CarenD3D11Device3::CreateTexture2D(
 	Estruturas::CA_D3D11_TEXTURE2D_DESC^% Param_DescTextura2D,
 	cli::array<Estruturas::CA_D3D11_SUBRESOURCE_DATA^>^ Param_ArrayDescSubRecursos,
 	UInt32 Param_TamanhoArraySubRecursos,
@@ -3973,7 +3973,7 @@ Done:;
 /// <param name="Param_TamanhoArraySubRecursos">Contém o valor que define o tamanho do array no parametro (Param_ArrayDescSubRecursos).</param>
 /// <param name="Param_ValidarParametros">Defina True para validar os outros parmetros. Param_Out_Textura3D retorna NULL se esse paramêtro for verdadeiro.</param>
 /// <param name="Param_Out_Textura3D">Recebe a interface que contém o buffer da interface de Textura 3D.</param>
-CarenResult CarenD3D11Device3::CriarTextura3D(
+CarenResult CarenD3D11Device3::CreateTexture3D(
 	Estruturas::CA_D3D11_TEXTURE3D_DESC^% Param_DescTextura3D,
 	cli::array<Estruturas::CA_D3D11_SUBRESOURCE_DATA^>^ Param_ArrayDescSubRecursos,
 	UInt32 Param_TamanhoArraySubRecursos,
@@ -4081,7 +4081,7 @@ Done:;
 /// <param name="Param_DescSombreador">Uma estrutura(D3D11_UNORDERED_ACCESS_VIEW_DESC) que contém uma descrição de exibição de recurso do sombreador. Configure este parâmetro como NULO para criar uma 
 /// visualização que acesse todo o recurso (usando o formato com o qual o recurso foi criado). </param>
 /// <param name="Param_Out_Interface">Recebe a interface do Recurso de acesso não ordenado.</param>
-CarenResult CarenD3D11Device3::CriarVisãoRecursoAcessoNaoOrdenado(
+CarenResult CarenD3D11Device3::CreateUnorderedAccessView(
 	ICarenD3D11Resource^ Param_Recurso,
 	Estruturas::CA_D3D11_UNORDERED_ACCESS_VIEW_DESC^% Param_DescSombreador,
 	[Out] ICarenD3D11UnorderedAccessView^% Param_Out_Interface)
@@ -4159,7 +4159,7 @@ Done:;
 /// <param name="Param_Linkage">Um ponteiro para um enlace de classe interface. O valor pode ser nulo.</param>
 /// <param name="Param_ValidarParametros">Defina True para validar os outros parmetros. Param_Out_VertexShaderInterface retorna NULL se esse paramêtro for verdadeiro.</param>
 /// <param name="Param_Out_VertexShader">Recebe a interface do Vertex Shader.</param>
-CarenResult CarenD3D11Device3::CriarShaderVertice(
+CarenResult CarenD3D11Device3::CreateVertexShader(
 	ICaren^ Param_ShaderByteCode,
 	UInt64 Param_TamanhoByteCode,
 	ICarenD3D11ClassLinkage^ Param_Linkage,
@@ -4272,7 +4272,7 @@ Done:;
 /// (GetCreationFlags) - Se os sinalizadores usados durante a chamada para criar o dispositivo com D3D11CreateDevice.
 /// </summary>
 /// <param name="Param_Out_Flags">Recebe um flags de bit a bits da enumerção (CA_D3D11_CRIACAO_DISPOSITIVO_FLAGS) que contém o modo de criaçã do dispositivo.</param>
-CarenResult CarenD3D11Device3::ObterFlagsCriaçãoDevice([Out] Enumeracoes::CA_D3D11_CRIACAO_DISPOSITIVO_FLAGS% Param_Out_Flags)
+CarenResult CarenD3D11Device3::GetCreationFlags([Out] Enumeracoes::CA_D3D11_CRIACAO_DISPOSITIVO_FLAGS% Param_Out_Flags)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -4290,7 +4290,7 @@ CarenResult CarenD3D11Device3::ObterFlagsCriaçãoDevice([Out] Enumeracoes::CA_D
 /// <summary>
 /// (GetDeviceRemovedReason) - A razão por que o dispositivo foi removido. Esse método retorna um (ResultCode) informando o motivo.
 /// </summary>
-CarenResult CarenD3D11Device3::ObterRazãoDispositivoRemovido()
+CarenResult CarenD3D11Device3::GetDeviceRemovedReason()
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -4326,7 +4326,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Out_Except">Um valor que contém um ou mais sinalizadores de exceção; Cada sinalizador especifica uma condição que fará com que uma exceção seja levantada. Os sinalizadores estão 
 /// listados em D3D11_RAISE_FLAG. Um valor padrão de 0 significa que não há sinalizadores.</param>
-CarenResult CarenD3D11Device3::ObterSinalizadoresModoExceção([Out] Enumeracoes::CA_D3D11_RAISE_FLAG% Param_Out_Except)
+CarenResult CarenD3D11Device3::GetExceptionMode([Out] Enumeracoes::CA_D3D11_RAISE_FLAG% Param_Out_Except)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -4345,7 +4345,7 @@ CarenResult CarenD3D11Device3::ObterSinalizadoresModoExceção([Out] Enumeracoes
 /// (GetFeatureLevel) - Obtém o nível de funcionalidade de dispositivo de hardware.
 /// </summary>
 /// <param name="Param_Out_NivelRecurso">Recebe um flag de bits a bits de um ou mais sinlizadores de niveis de recuso do dispositivo de hardware.</param>
-CarenResult CarenD3D11Device3::ObterNivelRecurso([Out] Enumeracoes::CA_D3D_NIVEL_RECURSO% Param_Out_NivelRecurso)
+CarenResult CarenD3D11Device3::GetFeatureLevel([Out] Enumeracoes::CA_D3D_NIVEL_RECURSO% Param_Out_NivelRecurso)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -4370,7 +4370,7 @@ CarenResult CarenD3D11Device3::ObterNivelRecurso([Out] Enumeracoes::CA_D3D_NIVEL
 /// (GetImmediateContext) - Obtém um contexto imediato, que pode reproduzir listas de comando.
 /// </summary>
 /// <param name="Param_Out_ImediateContextInterface">Recebe a interface do contexto do dispositivo.</param>
-CarenResult CarenD3D11Device3::ObterContextoImediato([Out] ICarenD3D11DeviceContext^% Param_Out_ImediateContextInterface)
+CarenResult CarenD3D11Device3::GetImmediateContext([Out] ICarenD3D11DeviceContext^% Param_Out_ImediateContextInterface)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -4413,7 +4413,7 @@ Done:;
 /// <param name="Param_TamanhoBuffer">O tamanho do buffer de saida.</param>
 /// <param name="Param_Out_TamanhoBufferSaida">Recebe o tamanho que total do buffer no parametro (Param_Out_Buffer).</param>
 /// <param name="Param_Out_Buffer">Recebe a interface que gerencia o buffer retornado.</param>
-CarenResult CarenD3D11Device3::ObterDadosPrivados(
+CarenResult CarenD3D11Device3::GetPrivateData(
 	String^ Param_Guid,
 	UInt32 Param_TamanhoBuffer,
 	[Out] UInt32% Param_Out_TamanhoBufferSaida,
@@ -4471,7 +4471,7 @@ Done:;
 /// <param name="Param_Handle">Um identificador de recurso.</param>
 /// <param name="Param_GuidInterface">O identificador globalmente exclusivo (GUID) para a interface do recurso.</param>
 /// <param name="Param_Out_InterfaceSolicitada">Recebe a interface do recurso que foi ganhado acesso. O usuário deve criar a interfaces antes de chamar este método.</param>
-CarenResult CarenD3D11Device3::AbrirRecursoCompartilhado(
+CarenResult CarenD3D11Device3::OpenSharedResource(
 	IntPtr Param_Handle,
 	String^ Param_GuidInterface,
 	ICaren^ Param_Out_InterfaceSolicitada)
@@ -4526,7 +4526,7 @@ Done:;
 /// (SetExceptionMode) - Obter os sinalizadores de modo de exceção.
 /// </summary>
 /// <param name="Param_RaiseFlags">Os flags de modo de exceção.</param>
-CarenResult CarenD3D11Device3::DefinirSinalizadoresModoExceção(UInt32 Param_RaiseFlags)
+CarenResult CarenD3D11Device3::SetExceptionMode(UInt32 Param_RaiseFlags)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -4566,7 +4566,7 @@ Done:;
 /// <param name="Param_TamanhoBuffer">O tamanho do buffer de entrada.</param>
 /// <param name="Param_Buffer">Ponteiro para os dados sejam armazenados com este dispositivo. Se Param_Buffer é NULO, Param_TamanhoBuffer também deve ser 0, e quaisquer dados anteriormente associados com o 
 /// guid serão destruídos.</param>
-CarenResult CarenD3D11Device3::DefinirDadosPrivados(
+CarenResult CarenD3D11Device3::SetPrivateData(
 	String^ Param_Guid,
 
 	UInt32 Param_TamanhoBuffer, ICarenBuffer^ Param_Buffer)
@@ -4631,7 +4631,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Guid">O Guid associado a interface a ser definida.</param>
 /// <param name="Param_Interface">Ponteiro para uma interface derivada de IUnknown para ser associado ao filho do dispositivo.</param>
-CarenResult CarenD3D11Device3::DefinirPrivateDataInterface(
+CarenResult CarenD3D11Device3::SetPrivateDataInterface(
 	String^ Param_Guid,
 	ICaren^ Param_Interface)
 {

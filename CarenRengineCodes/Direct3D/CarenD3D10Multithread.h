@@ -202,7 +202,7 @@ public:
 	/// <summary>
 	/// Descobrir se multithreading é ligado ou não.
 	/// </summary>
-	virtual Boolean ObterMultithreadProtected();
+	virtual Boolean GetMultithreadProtected();
 
 	/// <summary>
 	/// Deixe a seção crítica de um dispositivo.
@@ -213,6 +213,6 @@ public:
 	/// Método responsável por definir o estado do Multithread.
 	/// </summary>
 	/// <param name="Param_MultiThread">O estado que deve ser definido o Multithread.</param> 
-	virtual Boolean DefinirMultithreadProtected(Boolean Param_MultiThread);
+	virtual Boolean SetMultithreadProtected(Boolean Param_MultiThread);
 };
 

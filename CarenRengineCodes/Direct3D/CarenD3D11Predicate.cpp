@@ -443,10 +443,10 @@ CarenResult CarenD3D11Predicate::GetDesc([Out] Estruturas::CA_D3D11_QUERY_DESC^%
 // Métodos da interface (ICarenD3D11Asynchronous)
 
 /// <summary>
-/// (GetDataSize) - Obtém o tamanho dos dados (em bytes) que é a saída ao chamar ICarenD3D11DeviceContext::ObterDados.
+/// (GetDataSize) - Obtém o tamanho dos dados (em bytes) que é a saída ao chamar ICarenD3D11DeviceContext::GetData.
 /// </summary>
-/// <param name="Param_TamanhoDados">Retorna o tamanho dos dados (em bytes) que são emitidos ao chamar ICarenD3D11DeviceContext::ObterDados.</param>
-CarenResult CarenD3D11Predicate::ObterTamanhoDados([Out] UInt32% Param_TamanhoDados)
+/// <param name="Param_TamanhoDados">Retorna o tamanho dos dados (em bytes) que são emitidos ao chamar ICarenD3D11DeviceContext::GetData.</param>
+CarenResult CarenD3D11Predicate::GetDataSize([Out] UInt32% Param_TamanhoDados)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -470,7 +470,7 @@ CarenResult CarenD3D11Predicate::ObterTamanhoDados([Out] UInt32% Param_TamanhoDa
 /// </summary>
 /// <param name="Param_Out_DispositivoD3D11">Retorna o dispositivo D3D11 que criou essa interface. A interface retornada é uma (ICarenD3D11Device). Utilize a classe (CastInterface)
 /// para transforma em sua interface original.</param>
-CarenResult CarenD3D11Predicate::ObterDispositivo(ICaren^ Param_Out_DispositivoD3D11)
+CarenResult CarenD3D11Predicate::GetDevice(ICaren^ Param_Out_DispositivoD3D11)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -518,9 +518,9 @@ Done:;
 /// <param name="Param_Guid">GUID associado com os dados.</param>
 /// <param name="Param_TamanhoBuffer">O tamanho do buffer que será retornado.</param>
 /// <param name="Param_Out_TamanhoBufferSaida">O valor real do buffer retornado pelo parametro (Param_Out_BufferDados).</param>
-/// <param name="Param_Out_BufferDados">Um ponteiro para um buffer que (ObterDadosPrivados) preenche com dados da criança dispositivo se (Param_TamanhoBuffer) aponta para um valor 
+/// <param name="Param_Out_BufferDados">Um ponteiro para um buffer que (GetPrivateData) preenche com dados da criança dispositivo se (Param_TamanhoBuffer) aponta para um valor 
 /// que especifica um buffer grande o suficiente para armazenar os dados.</param>
-CarenResult CarenD3D11Predicate::ObterDadosPrivados(
+CarenResult CarenD3D11Predicate::GetPrivateData(
 	String^ Param_Guid,
 	UInt32 Param_TamanhoBuffer,
 	[Out] UInt32% Param_Out_TamanhoBufferSaida,
@@ -590,7 +590,7 @@ Done:;
 /// <param name="Param_TamanhoBuffer">O tamanho do buffer no parametro (Param_Buffer).</param>
 /// <param name="Param_Buffer">Ponteiro para os dados a serem armazenados com essa criança de dispositivo. Se Param_Buffer é NULO, Param_TamanhoBuffer também deve ser 0, e quaisquer 
 /// dados anteriormente associados com o especificado GUID serão destruídos.</param>
-CarenResult CarenD3D11Predicate::DefinirDadosPrivados(
+CarenResult CarenD3D11Predicate::SetPrivateData(
 	String^ Param_Guid,
 
 	UInt32 Param_TamanhoBuffer, ICarenBuffer^ Param_Buffer)
@@ -664,7 +664,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Guid">GUID associado com a interface a ser definida.</param>
 /// <param name="Param_Interface">Ponteiro para uma interface IUnknown-derivado a ser associado com a criança do dispositivo.</param>
-CarenResult CarenD3D11Predicate::DefinirInterfaceDadosPrivados(
+CarenResult CarenD3D11Predicate::SetPrivateDataInterface(
 	String^ Param_Guid, ICaren^ Param_Interface)
 {
 	//Variavel a ser retornada.

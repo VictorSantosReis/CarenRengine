@@ -85,6 +85,7 @@ limitations under the License.
 #include <combaseapi.h>
 #include <avrt.h>
 #include <synchapi.h>
+#include <inspectable.h>
 
 //Errros Hresult
 #include <comdef.h>

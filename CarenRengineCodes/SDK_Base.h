@@ -4872,9 +4872,9 @@ namespace CarenRengine
 			};
 
 			/// <summary>
-			/// (PRECISA SER ATUALIZADA COM MAIS TIPOS SUPORTADOS E ADICIONAR OS RESTANDO NÃO SUPORTADO)Especifica o tipo de dados que está armazenado na PropVariant.
+			/// (VARTYPE) - (PRECISA SER ATUALIZADA COM MAIS TIPOS SUPORTADOS E ADICIONAR OS RESTANDO NÃO SUPORTADO)Especifica o tipo de dados que está armazenado na PropVariant.
 			/// </summary>
-			public enum class CA_PropVariant_TYPE
+			public enum class CA_VARTYPE
 			{
 
 				//Tipos não suportados:
@@ -5007,7 +5007,7 @@ namespace CarenRengine
 				TP_ERROR,
 
 				/// <summary>
-				/// O valor armazenado pela PropVariant para esse valor é (Desconhecido).
+				/// O valor armazenado pela PropVariant para esse valor é (HRESULT).
 				/// Tenta obter um Int32.
 				/// </summary>
 				TP_HRESULT,
@@ -16298,9 +16298,9 @@ MEReservedMax = 10000
 			public enum class CA_D2D1_POSTERIZE_PROP
 			{
 				/// <summary>
-	/// Property Name: "RedValueCount"
-	/// Property Type: UINT32
-	/// </summary>
+				/// Property Name: "RedValueCount"
+				/// Property Type: UINT32
+				/// /// </summary>
 				D2D1_POSTERIZE_PROP_RED_VALUE_COUNT = 0,
 
 				/// <summary>
@@ -16352,8 +16352,8 @@ MEReservedMax = 10000
 			public enum class CA_D2D1_PRINT_FONT_SUBSET_MODE
 			{
 				/// <summary>
-   /// Subset for used glyphs, send and discard font resource after every five pages
-   /// </summary>
+				/// Subset for used glyphs, send and discard font resource after every five pages
+				/// </summary>
 				D2D1_PRINT_FONT_SUBSET_MODE_DEFAULT = 0,
 
 				/// <summary>
@@ -16425,8 +16425,8 @@ MEReservedMax = 10000
 			public enum class CA_D2D1_RENDER_TARGET_TYPE
 			{
 				/// <summary>
-   /// D2D is free to choose the render target type for the caller.
-   /// </summary>
+				/// D2D is free to choose the render target type for the caller.
+				///  /// </summary>
 				D2D1_RENDER_TARGET_TYPE_DEFAULT = 0,
 
 				/// <summary>
@@ -17730,7 +17730,26 @@ MEReservedMax = 10000
 			};
 
 
+			//Windows Enumerações
 
+			/// <summary>
+			/// (TrustLevel) - Enumera valores que represetam o nível de confiança de uma classe ativavel.
+			/// </summary>
+			public enum class CA_TrustLevel
+			{
+				/// <summary>
+				/// O componente tem acesso a recursos que não estão protegidos.
+				/// </summary>
+				BaseTrust = 0,
+				/// <summary>
+				/// O componente tem acesso aos recursos solicitados no manifesto do aplicativo e aprovados pelo usuário.
+				/// </summary>
+				PartialTrust = (BaseTrust + 1),
+				/// <summary>
+				/// O componente requer todos os privilégios do usuário.
+				/// </summary>
+				FullTrust = (PartialTrust + 1)
+			};
 
 
 			///DirectWrite Enumerações (API PENDENTE)
@@ -17935,7 +17954,7 @@ MEReservedMax = 10000
 				/// <summary>
 				/// Especifica o tipo de valor que essa estrutua está contendo.
 				/// </summary>
-				Enumeracoes::CA_PropVariant_TYPE _TipoDados;
+				Enumeracoes::CA_VARTYPE _TipoDados;
 
 				/// <summary>
 				/// Especifica que está armzenando um valor: Char
@@ -18012,18 +18031,26 @@ MEReservedMax = 10000
 				Int32 Hi;
 				Int64 int64;
 			};
+
+			/// <summary>
+			/// (tagDEC) - Estrutura que 
+			/// </summary>
+			public ref struct CA_DECIMAL
+			{
+
+			};
 		
 			/// <summary>
 			/// (tagVARIANT)(FALTA A CONVERSÃO DESTA ESTRUTURA) - Estrutura que 
 			/// </summary>
 			public ref struct CA_VARIANT
 			{
-				UInt16 vt;
+				Enumeracoes::CA_VARTYPE vt;
 				UInt16 wReserved1;
 				UInt16 wReserved2;
 				UInt16 wReserved3;
 
-				UInt64 llVal;
+				Int64 llVal;
 				Int32 lVal;
 				Byte bVal;
 				Int16 iVal;
@@ -18061,7 +18088,7 @@ MEReservedMax = 10000
 				UInt64 ullVal;
 				Int32 intVal;
 				UInt32 uintVal;
-				DECIMAL* pdecVal;
+				CA_DECIMAL^ pdecVal;
 				cli::array<char>^ pcVal;
 				cli::array<unsigned short>^ puiVal;
 				cli::array<unsigned long>^ pulVal;

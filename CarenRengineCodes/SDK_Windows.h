@@ -230,14 +230,63 @@ namespace CarenRengine
 			CarenResult Save(ICarenStream^ Param_Fluxo, Boolean Param_ClearDirty);
 		};
 
+		/// <summary>
+		/// (IInspectable)(PENDENTE PARA VERSAO DA WINRT DA BIBLIOTECA) - Interface responsável por fornecer funcionalidade necessária para todas as classes do Windows Runtime.
+		/// </summary>
+		[CategoryAttribute("Windows Interface")]
+		[Guid("531A488C-B562-4D24-A632-C3B314093ABC")]
 		public interface class ICarenInspectable : ICaren
 		{
+			/// <summary>
+			/// Propriedade que define se a classe foi descartada.
+			/// /// </summary>
+			property Boolean DisposedClasse
+			{
+				virtual Boolean get();
+			}
 
+
+			//Métodos
+
+			/// <summary>
+			/// Obtém as interfaces que são implementadas pela classe atual do Windows Runtime.
+			/// </summary>
+			/// <param name="Param_Out_IIDCount">Retorna o número de interfaces que são implementadas pelo objeto atual do Windows Runtime, excluindo as implementações IUnknown e IInspectable.</param>
+			/// <param name="Param_Out_IIDs">Retorna uma matriz que contém um IID para cada interface implementado pelo objeto atual do Windows Runtime. As interfaces IUnknown e IInspectable são excluídas.</param>
+			CarenResult GetIids(
+				[Out] UInt32% Param_Out_IIDCount,
+				[Out] cli::array<String^>^% Param_Out_IIDs);
+
+			/// <summary>
+			/// Obtém o nome totalmente qualificado do objeto atual do Windows Runtime.
+			/// </summary>
+			/// <param name="Param_Out_ClassName">Retorna o nome totalmente qualificado do objeto atual do Windows Runtime.</param>
+			CarenResult GetRuntimeClassName([Out] String^% Param_Out_ClassName);
+
+			/// <summary>
+			/// Obtém o nível de confiança do objeto atual do Windows Runtime.
+			/// </summary>
+			/// <param name="Param_Out_TrustLevel">O nível de confiança do objeto atual do Windows Runtime. O padrão é BaseLevel.</param>
+			CarenResult GetTrustLevel([Out] CA_TrustLevel% Param_Out_TrustLevel);
 		};
 
+		/// <summary>
+		/// (IRandomAccessStream)(PENDENTE PARA VERSAO DA WINRT DA BIBLIOTECA) - Interface responsável por suportar acesso aleatório de dados em fluxos de entrada e saída.
+		/// </summary>
+		[CategoryAttribute("Windows Interface")]
+		[Guid("3D9B28DB-369A-4120-B3DB-704177543B75")]
 		public interface class ICarenRandomAcessStream : ICarenInspectable
 		{
+			/// <summary>
+			/// Propriedade que define se a classe foi descartada.
+			/// /// </summary>
+			property Boolean DisposedClasse
+			{
+				virtual Boolean get();
+			}
 
+
+			//Métodos
 		};
 
 		/// <summary>
@@ -341,7 +390,7 @@ namespace CarenRengine
 		};
 
 		/// <summary>
-		/// (IPropertyBag2) - Interface responsável por fornecer um objeto com um saco de propriedade no qual o objeto pode salvar suas propriedades persistentemente.
+		/// (IPropertyBag2) - Interface responsável por fornecer um objeto com um bag de propriedade no qual o objeto pode salvar suas propriedades persistentemente.
 		/// </summary>
 		[CategoryAttribute("Windows Interface")]
 		[Guid("D0E858B7-EFE8-4E6C-9EA5-536DD603A8AB")]
@@ -360,19 +409,19 @@ namespace CarenRengine
 			//Métodos
 
 			/// <summary>
-			/// (CountProperties) - Obtém o número de propriedades no saco da propriedade.
+			/// (CountProperties) - Obtém o número de propriedades no bag da propriedade.
 			/// </summary>
-			/// <param name="Param_Out_Quantidade"></param>
-			CarenResult ObterQuantidadePropriedades([Out] UInt32% Param_Out_Quantidade);
+			/// <param name="Param_Out_Quantidade">Recebe o numero de propriedades presentes na bag.</param>
+			CarenResult CountProperties([Out] UInt32% Param_Out_Quantidade);
 
 			/// <summary>
-			/// (GetPropertyInfo) - Obtém informações para propriedades em um saco de propriedade sem realmente obter essas propriedades. 
+			/// (GetPropertyInfo) - Obtém informações para propriedades em um bag de propriedade sem realmente obter essas propriedades. 
 			/// </summary>
-			/// <param name="Param_ID"></param>
-			/// <param name="Param_Quantidade"></param>
-			/// <param name="Param_Out_ArrayPropBags"></param>
-			/// <param name="Param_Out_Quantiade"></param>
-			CarenResult ObterInfoPropriedades(
+			/// <param name="Param_ID">O índice baseado em zero da primeira propriedade para a qual as informações são solicitadas. Este argumento deve ser menor que o número de propriedades recuperadas por ICarenPropertyBag2::CountProperties.</param>
+			/// <param name="Param_Quantidade">O número de propriedades sobre as quais obter informações.Este argumento especifica o número de elementos da matriz em (Param_Out_ArrayPropBags).</param>
+			/// <param name="Param_Out_ArrayPropBags">Retorna uma matriz de estruturas CA_PROPBAG2 que recebem as informações para as propriedades.</param>
+			/// <param name="Param_Out_Quantiade">Recebe o número de propriedades para as quais as informações foram recuperadas na matriz (Param_Out_ArrayPropBags).</param>
+			CarenResult GetPropertyInfo(
 				UInt32 Param_ID,
 				UInt32 Param_Quantidade,
 				[Out] cli::array<Estruturas::CA_PROPBAG2^>^% Param_Out_ArrayPropBags,
@@ -380,27 +429,30 @@ namespace CarenRengine
 
 
 			/// <summary>
-			/// (LoadObject) - Faz com que o saco de propriedade instrua um objeto de propriedade que foi criado anteriormente e inicializado para ler suas propriedades persistentes. 
+			/// (LoadObject) - Faz com que o bag de propriedade instrua um objeto de propriedade que foi criado anteriormente e inicializado para ler suas propriedades persistentes. 
 			/// </summary>
-			/// <param name="Param_EnderecoNome"></param>
-			/// <param name="Param_Hint"></param>
-			/// <param name="Param_UnkObjeto"></param>
-			/// <param name="Param_Ref_ErrorLog"></param>
-			CarenResult CarregarObjeto(
+			/// <param name="Param_EnderecoNome">O do nome do objeto da propriedade.</param>
+			/// <param name="Param_Hint">Um valor inteiro que foi recuperado usando ICarenPropertyBag2::GetPropertyInfo. Este argumento é opcional e deve ser zero, se o valor não for conhecido ou usado.</param>
+			/// <param name="Param_UnkObjeto">O endereço da interface IUnknown do objeto. Este argumento não pode ser NULO.</param>
+			/// <param name="Param_ErrorLog">Uma interface IErrorlog na qual a bag de propriedade armazena quaisquer erros que ocorram durante a carga. Este argumento pode ser NULO; nesse caso, o chamador não recebe erros de registro.</param>
+			CarenResult LoadObject(
 				String^ Param_EnderecoNome,
 				UInt32 Param_Hint,
 				ICaren^ Param_UnkObjeto,
-				ICaren^% Param_Ref_ErrorLog);
+				ICaren^ Param_ErrorLog);
 
 			/// <summary>
-			///  (Read) - Faz com que uma ou mais propriedades sejam lidas do saco de propriedade.
+			/// (Read) - Faz com que uma ou mais propriedades sejam lidas do bag de propriedade.
 			/// </summary>
-			/// <param name="Param_Quantidade"></param>
-			/// <param name="Param_ArrayPropBagsRequest"></param>
-			/// <param name="Param_InterfaceErro"></param>
-			/// <param name="Param_Out_VarValue"></param>
-			/// <param name="Param_Out_HRESULTArray"></param>
-			CarenResult Ler(
+			/// <param name="Param_Quantidade">O número de propriedades para ler. Este argumento especifica o número de elementos nas matrizes Param_ArrayPropBagsRequest, Param_Out_VarValue e Param_Out_HRESULTArray.</param>
+			/// <param name="Param_ArrayPropBagsRequest">uma matriz de estruturas CA_PROPBAG2 que especificam as propriedades solicitadas. O membro vt e o membro pstrName dessas 
+			/// estruturas devem ser preenchidos antes que este método possa ser chamado. O membro dwHint dessas estruturas é opcional. Este argumento não pode ser NULO.</param>
+			/// <param name="Param_InterfaceErro">Uma interface IErrorlog na qual a bolsa de propriedade armazena quaisquer erros que ocorram durante as leituras. Este argumento pode ser NULO; 
+			/// nesse caso, o chamador não recebe erros de registro.</param>
+			/// <param name="Param_Out_VarValue">Retorna uma matriz de estruturas CA_VARIANT que recebem os valores da propriedade. O interlocutor não precisa inicializar essas estruturas antes de ligar para 
+			/// ICarenPropertyBag2::Read. O método ICarenPropertyBag2::Read preenche o campo de tipo e o campo de valor nessas estruturas antes de retornar.</param>
+			/// <param name="Param_Out_HRESULTArray">Retorna uma matriz de valores HRESULT que recebe o resultado de cada propriedade lido.</param>
+			CarenResult Read(
 				UInt32 Param_Quantidade,
 				cli::array<Estruturas::CA_PROPBAG2^>^ Param_ArrayPropBagsRequest,
 				ICaren^ Param_InterfaceErro,
@@ -408,15 +460,16 @@ namespace CarenRengine
 				[Out] cli::array<Int32>^% Param_Out_HRESULTArray);
 
 			/// <summary>
-			/// (Write) - Faz com que uma ou mais propriedades sejam salvas no saco da propriedade.
+			/// (Write) - Faz com que uma ou mais propriedades sejam salvas no bag da propriedade.
 			/// </summary>
-			/// <param name="Param_Quantidade"></param>
-			/// <param name="Param_ArrayPropBagsRequest"></param>
-			/// <param name="Param_VarValue"></param>
-			CarenResult Escrever(
+			/// <param name="Param_Quantidade">O número de propriedades para salvar. Este argumento especifica o número de elementos nas matrizes Param_ArrayPropBagsRequest e Param_VarValue.</param>
+			/// <param name="Param_ArrayPropBagsRequest">Uma matriz de estruturas CA_PROPBAG2 que especificam as propriedades salvas. O membro pstrName dessas estruturas deve ser preenchido antes que este método seja 
+			/// chamado. O membro dwHint dessas estruturas é opcional. Este argumento não pode ser NULO.</param>
+			/// <param name="Param_VarValue">Uma matriz de estruturas CA_VARIANT que contêm os valores das propriedades para salvar. Este argumento não pode ser NULO.</param>
+			CarenResult Write(
 				UInt32 Param_Quantidade,
 				cli::array<Estruturas::CA_PROPBAG2^>^ Param_ArrayPropBagsRequest,
-				cli::array<Estruturas::CA_VARIANT^>^% Param_VarValue);
+				cli::array<Estruturas::CA_VARIANT^>^ Param_VarValue);
 		};
 	}
 }

@@ -659,7 +659,7 @@ CarenResult CarenMFMediaType::CompareItem(String^ Param_GuidChave, CA_PropVarian
 	GUID GuidChave = GUID_NULL;
 	BOOL ResultadoComp = FALSE;
 	BLOB BlobData = {};
-	char *DadosStringConvertido = NULL;
+	char* DadosStringConvertido = NULL;
 	WCHAR* DadosWcharToBstr = NULL;
 	PROPVARIANT PropVar;
 
@@ -679,163 +679,17 @@ CarenResult CarenMFMediaType::CompareItem(String^ Param_GuidChave, CA_PropVarian
 	//Inicia a PropVariant
 	PropVariantInit(&PropVar);
 
-	//Abre um switch para verificar o tipo da PropVariant e determinar o valor
-	switch (Param_Valor->_TipoDados)
+	//Chama o método para converter a propvariant gerenciada para nativa.
+	bool ConvertPropVariant = Util.ConvertPropVariantManagedToUnamaged(Param_Valor, PropVar);
+
+	//Verifica se obteve sucesso
+	if (!ConvertPropVariant)
 	{
-	case CA_PropVariant_TYPE::TP_Blob:
-		//Define o tipo da PropVariant não gerenciada.
-		PropVar.vt = VT_BLOB;
+		//Define falha na conversão da propvariant
+		Resultado.AdicionarCodigo(ResultCode::ER_CONVERSAO_PROPVARIANT, false);
 
-		//Copia os dados para o Blob
-		BlobData.cbSize = Param_Valor->Var_Blob->SizeData;
-
-		//Cria o buffer.
-		BlobData.pBlobData = new BYTE[BlobData.cbSize];
-
-		//Copia os dados
-		for (ULONG i = 0; i < BlobData.cbSize; i++)
-		{
-			//Define os dados no buffer.
-			BlobData.pBlobData[i] = Param_Valor->Var_Blob->BufferDados[i];
-		}
-
-		//Define o valor do blob na Variant.
-		PropVar.blob = BlobData;
-
-		break;
-	case CA_PropVariant_TYPE::TP_Bool:
-		//Define o tipo da PropVariant não gerenciada.
-		PropVar.vt = VT_BOOL;
-
-		//Define o valor. 0 = FALSE, -1 = TRUE
-		PropVar.boolVal = Param_Valor->Var_Bool ? -1 : 0;
-		break;
-	case CA_PropVariant_TYPE::TP_Byte: //UINT8 -> 1 Byte,
-		//Define o tipo da PropVariant não gerenciada.
-		PropVar.vt = VT_UI1;
-
-		//Define o valor.
-		PropVar.bVal = Param_Valor->Var_Byte;
-		break;
-	case CA_PropVariant_TYPE::TP_Data:
-		//Define o tipo da PropVariant não gerenciada.
-		PropVar.vt = VT_R8;
-
-		//Define o valor.
-		PropVar.dblVal = Param_Valor->Var_Double;
-		break;
-	case CA_PropVariant_TYPE::TP_Double:
-		//Define o tipo da PropVariant não gerenciada.
-		PropVar.vt = VT_R8;
-
-		//Define o valor.
-		PropVar.dblVal = Param_Valor->Var_Double;
-		break;
-	case CA_PropVariant_TYPE::TP_EMPTY:
-		//Define o tipo da PropVariant não gerenciada.
-		PropVar.vt = VT_EMPTY;
-		break;
-	case CA_PropVariant_TYPE::TP_ERROR:
-		//Define o tipo da PropVariant não gerenciada.
-		PropVar.vt = VT_R8;
-
-
-		//Define o valor.
-		PropVar.scode = (LONG)Param_Valor->Var_UInt32;
-		break;
-	case CA_PropVariant_TYPE::TP_Float:
-		//Define o tipo da PropVariant não gerenciada.
-		PropVar.vt = VT_R4;
-
-		//Define o valor.
-		PropVar.fltVal = Param_Valor->Var_Float;
-		break;
-	case CA_PropVariant_TYPE::TP_Guid:
-		//Define o tipo da PropVariant não gerenciada.
-		PropVar.vt = VT_CLSID;
-
-		//Define o valor.
-		*PropVar.puuid = Util.CreateGuidFromString(Param_Valor->Var_Guid);
-		break;
-	case CA_PropVariant_TYPE::TP_HRESULT:
-		//Define o tipo da PropVariant não gerenciada.
-		PropVar.vt = VT_I4;
-
-		//Define o valor.
-		PropVar.lVal = Param_Valor->Var_Int32;
-		break;
-	case CA_PropVariant_TYPE::TP_Int16:
-		//Define o tipo da PropVariant não gerenciada.
-		PropVar.vt = VT_I2;
-
-		//Define o valor.
-		PropVar.iVal = Param_Valor->Var_Int16;
-		break;
-	case CA_PropVariant_TYPE::TP_Int32:
-
-		break;//Define o tipo da PropVariant não gerenciada.
-		PropVar.vt = VT_I4;
-
-		//Define o valor.
-		PropVar.lVal = Param_Valor->Var_Int32;
-	case CA_PropVariant_TYPE::TP_Int64:
-		//Define o tipo da PropVariant não gerenciada.
-		PropVar.vt = VT_I8;
-
-		//Define o valor.
-		PropVar.hVal.QuadPart = Param_Valor->Var_Int64;
-		break;
-	case CA_PropVariant_TYPE::TP_SByte:
-		//Define o tipo da PropVariant não gerenciada.
-		PropVar.vt = VT_I1;
-
-		//Define o valor.
-		PropVar.cVal = Param_Valor->Var_SByte;
-		break;
-	case CA_PropVariant_TYPE::TP_String: // BSTR -> LPWSTR | LPSTR | LPBSTR
-		//Define o tipo da PropVariant não gerenciada.
-		PropVar.vt = VT_I1;
-
-		//Converte os dados para char.
-		DadosStringConvertido = Util.ConverterStringToChar(Param_Valor->Var_String);
-
-		//Converter os dados de char* para WCHAR*.
-		DadosWcharToBstr = (WCHAR*)Util.ConverterConstCharToConstWCHAR(DadosStringConvertido);
-	
-		//Define o valor.
-		PropVar.bstrVal = SysAllocString(DadosWcharToBstr);
-		break;
-	case CA_PropVariant_TYPE::TP_UInt16:
-		//Define o tipo da PropVariant não gerenciada.
-		PropVar.vt = VT_UI2;
-
-		//Define o valor.
-		PropVar.uiVal = Param_Valor->Var_UInt16;
-		break;
-	case CA_PropVariant_TYPE::TP_UInt32:
-		//Define o tipo da PropVariant não gerenciada.
-		PropVar.vt = VT_UI4;
-
-		//Define o valor.
-		PropVar.ulVal = Param_Valor->Var_UInt32;
-		break;
-	case CA_PropVariant_TYPE::TP_UInt64:
-		//Define o tipo da PropVariant não gerenciada.
-		PropVar.vt = VT_UI8;
-
-		//Define o valor.
-		PropVar.uhVal.QuadPart = Param_Valor->Var_UInt64;
-		break;
-
-
-	default:
-		//Valor não suportado
-
-		//Determina falha no método.
-		Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-		
-		//Sai do método
-		goto Done;
+		//Sai do método.
+		Sair;
 	}
 
 	//Chama o método para compar o item.
@@ -861,7 +715,7 @@ CarenResult CarenMFMediaType::CompareItem(String^ Param_GuidChave, CA_PropVarian
 
 Done:;
 	//Libera as string se forem validas
-	if(DadosStringConvertido != NULL)
+	if (DadosStringConvertido != NULL)
 	{
 		//Deleta os dados da string
 		delete DadosStringConvertido;

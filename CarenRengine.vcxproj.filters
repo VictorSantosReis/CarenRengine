@@ -1368,9 +1368,6 @@
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFTranscodeSinkInfoProvider.h">
       <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
     </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Windows\CarenPropertyBag2.h">
-      <Filter>Arquivos de Cabeçalho\Classes\Windows</Filter>
-    </ClInclude>
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFQualityManager.h">
       <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
     </ClInclude>
@@ -1442,6 +1439,9 @@
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFCaptureEngineOnSampleCallback2.h">
       <Filter>Arquivos de Cabeçalho\Classes Nativas\Media Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Windows\CarenPropertyBag2.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Windows</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2621,9 +2621,6 @@
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFTranscodeProfile.cpp">
       <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
     </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Windows\CarenPropertyBag2.cpp">
-      <Filter>Arquivos de Origem\Classes\Windows</Filter>
-    </ClCompile>
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFQualityManager.cpp">
       <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
     </ClCompile>
@@ -2695,6 +2692,9 @@
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFCaptureEngineOnSampleCallback2.cpp">
       <Filter>Arquivos de Origem\Classes Nativas\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Windows\CarenPropertyBag2.cpp">
+      <Filter>Arquivos de Origem\Classes\Windows</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

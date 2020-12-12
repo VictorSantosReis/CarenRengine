@@ -585,7 +585,7 @@ ICaren^ Param_ErrorLog)
 
 Done:;
 	//Libera a memória utilizada pela string.
-	DeletarStringBSTRSafe(&vi_pEnderecoNome);
+	DeletarStringBSTRSafe(const_cast<OLECHAR**>(&vi_pEnderecoNome));
 
 	//Retorna o resultado.
 	return Resultado;

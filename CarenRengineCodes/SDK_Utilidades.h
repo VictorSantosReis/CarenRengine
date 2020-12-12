@@ -950,49 +950,49 @@ namespace CarenRengine
 				{
 				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_CY:
 					//Não suportado.
-					EstruturaRetorno = false;
+				
 
 					break;
 
 				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_DISPATCH:
 					//Não suportado.
-					EstruturaRetorno = false;
+					
 
 					break;
 
 				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_VARIANT:
 					//Não suportado.
-					EstruturaRetorno = false;
+					
 
 					break;
 
 				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_DECIMAL:
 					//Não suportado.
-					EstruturaRetorno = false;
+					
 
 					break;
 
 				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_BSTR_BLOB:
 					//Não suportado.
-					EstruturaRetorno = false;
+					
 
 					break;
 
 				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_VOID:
 					//Não suportado.
-					EstruturaRetorno = false;
+					
 
 					break;
 
 				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_EMPTY:
 					//Não suportado.
-					EstruturaRetorno = false;
+					
 
 					break;
 
 				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_NULL:
 					//Não suportado.
-					EstruturaRetorno = false;
+					
 
 					break;
 
@@ -1104,49 +1104,29 @@ namespace CarenRengine
 				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_Guid:
 					//Define o tipo da PropVariant.
 					EstruturaRetorno->vt = VT_CLSID;
-
-					//Cria o ponteiro par ao guid.
-					EstruturaRetorno->puuid = new GUID();
-
-					//Define o valor da PropVariant
-					*EstruturaRetorno->puuid = CreateGuidFromString(Param_PropVariantManaged->Var_Guid);
 					break;
 
 				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_Data:
 					//Define o tipo da PropVariant.
 					EstruturaRetorno->vt = VT_R8;
-
-					//Define o valor da PropVariant.
-					EstruturaRetorno->dblVal = Param_PropVariantManaged->Var_Double;
 					break;
 
 				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_ERROR:
 					//Define o tipo da PropVariant.
 					EstruturaRetorno->vt = VT_UI4;
-
-					//Define o valor da PropVariant.
-					EstruturaRetorno->ulVal = Param_PropVariantManaged->Var_UInt32;
 					break;
 
 				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_HRESULT:
 					//Define o tipo da PropVariant.
 					EstruturaRetorno->vt = VT_I4;
-
-					//Define o valor da PropVariant.
-					EstruturaRetorno->lVal = Param_PropVariantManaged->Var_Int32;
 					break;
 
 				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_PonteiroDesconhecido:
 					//Define o tipo da PropVariant.
-					EstruturaRetorno->vt = VT_UNKNOWN;
-
-				
+					EstruturaRetorno->vt = VT_UNKNOWN;		
 					break;
 
 				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_Desconhecido:
-					//Não suportado.
-					EstruturaRetorno = false;
-
 					break;
 
 				default:

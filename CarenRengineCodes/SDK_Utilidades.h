@@ -360,7 +360,7 @@ namespace CarenRengine
 				//Abre um switch para definir na PropVariant o valor adicional.
 				switch (Param_PropVariantManaged->_TipoDados)
 				{
-				case CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_CY:
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_CY:
 					//Não suportado.
 					EstruturaRetorno = false;
 
@@ -368,7 +368,7 @@ namespace CarenRengine
 					goto Done;
 					break;
 
-				case CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_DISPATCH:
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_DISPATCH:
 					//Não suportado.
 					EstruturaRetorno = false;
 
@@ -376,7 +376,7 @@ namespace CarenRengine
 					goto Done;
 					break;
 
-				case CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_VARIANT:
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_VARIANT:
 					//Não suportado.
 					EstruturaRetorno = false;
 
@@ -384,7 +384,7 @@ namespace CarenRengine
 					goto Done;
 					break;
 
-				case CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_DECIMAL:
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_DECIMAL:
 					//Não suportado.
 					EstruturaRetorno = false;
 
@@ -392,7 +392,7 @@ namespace CarenRengine
 					goto Done;
 					break;
 
-				case CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_BSTR_BLOB:
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_BSTR_BLOB:
 					//Não suportado.
 					EstruturaRetorno = false;
 
@@ -400,7 +400,7 @@ namespace CarenRengine
 					goto Done;
 					break;
 
-				case CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_VOID:
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_VOID:
 					//Não suportado.
 					EstruturaRetorno = false;
 
@@ -408,7 +408,7 @@ namespace CarenRengine
 					goto Done;
 					break;
 
-				case CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_EMPTY:
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_EMPTY:
 					//Não suportado.
 					EstruturaRetorno = false;
 
@@ -416,7 +416,7 @@ namespace CarenRengine
 					goto Done;
 					break;
 
-				case CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_NULL:
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_NULL:
 					//Não suportado.
 					EstruturaRetorno = false;
 
@@ -424,7 +424,7 @@ namespace CarenRengine
 					goto Done;
 					break;
 
-				case CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_String:
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_String:
 					//Define o tipo da PropVariant
 					Param_PropVariant.vt = VT_LPWSTR;
 
@@ -435,7 +435,7 @@ namespace CarenRengine
 					Param_PropVariant.pwszVal = (WCHAR*)ConverterConstCharToConstWCHAR(StringData);
 					break;
 
-				case CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_Int16:
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_Int16:
 					//Define o tipo da PropVariant.
 					Param_PropVariant.vt = VT_I2;
 
@@ -443,7 +443,7 @@ namespace CarenRengine
 					Param_PropVariant.iVal = Param_PropVariantManaged->Var_Int16;
 					break;
 
-				case CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_Int32:
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_Int32:
 					//Define o tipo da PropVariant.
 					Param_PropVariant.vt = VT_I4;
 
@@ -451,7 +451,7 @@ namespace CarenRengine
 					Param_PropVariant.lVal = Param_PropVariantManaged->Var_Int32;
 					break;
 
-				case CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_Int64:
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_Int64:
 					//Define o tipo da PropVariant.
 					Param_PropVariant.vt = VT_I8;
 
@@ -459,7 +459,7 @@ namespace CarenRengine
 					Param_PropVariant.hVal.QuadPart = Param_PropVariantManaged->Var_Int64;
 					break;
 
-				case CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_UInt16:
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_UInt16:
 					//Define o tipo da PropVariant.
 					Param_PropVariant.vt = VT_UI2;
 
@@ -467,7 +467,7 @@ namespace CarenRengine
 					Param_PropVariant.uiVal = Param_PropVariantManaged->Var_UInt16;
 					break;
 
-				case CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_UInt32:
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_UInt32:
 					//Define o tipo da PropVariant.
 					Param_PropVariant.vt = VT_UI4;
 
@@ -475,7 +475,7 @@ namespace CarenRengine
 					Param_PropVariant.ulVal = Param_PropVariantManaged->Var_UInt32;
 					break;
 
-				case CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_UInt64:
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_UInt64:
 					//Define o tipo da PropVariant.
 					Param_PropVariant.vt = VT_UI8;
 
@@ -483,7 +483,7 @@ namespace CarenRengine
 					Param_PropVariant.uhVal.QuadPart = Param_PropVariantManaged->Var_UInt64;
 					break;
 
-				case CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_Float:
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_Float:
 					//Define o tipo da PropVariant.
 					Param_PropVariant.vt = VT_R4;
 
@@ -491,7 +491,7 @@ namespace CarenRengine
 					Param_PropVariant.fltVal = Param_PropVariantManaged->Var_Float;
 					break;
 
-				case CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_Double:
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_Double:
 					//Define o tipo da PropVariant.
 					Param_PropVariant.vt = VT_R8;
 
@@ -499,7 +499,7 @@ namespace CarenRengine
 					Param_PropVariant.dblVal = Param_PropVariantManaged->Var_Double;
 					break;
 
-				case CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_Bool:
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_Bool:
 					//Define o tipo da PropVariant.
 					Param_PropVariant.vt = VT_BOOL;
 
@@ -508,7 +508,7 @@ namespace CarenRengine
 					Param_PropVariant.boolVal = Param_PropVariantManaged->Var_Bool ? -1 : 0;
 					break;
 
-				case CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_Byte:
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_Byte:
 					//Define o tipo da PropVariant.
 					Param_PropVariant.vt = VT_UI1;
 
@@ -516,7 +516,7 @@ namespace CarenRengine
 					Param_PropVariant.bVal = Param_PropVariantManaged->Var_Byte;
 					break;
 
-				case CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_SByte:
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_SByte:
 					//Define o tipo da PropVariant.
 					Param_PropVariant.vt = VT_I1;
 
@@ -524,7 +524,7 @@ namespace CarenRengine
 					Param_PropVariant.cVal = Param_PropVariantManaged->Var_SByte;
 					break;
 
-				case CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_Blob:
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_Blob:
 					//Define o tipo da PropVariant.
 					Param_PropVariant.vt = VT_BLOB;
 
@@ -548,7 +548,7 @@ namespace CarenRengine
 					Param_PropVariant.blob = BlobData;
 					break;
 
-				case CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_Guid:
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_Guid:
 					//Define o tipo da PropVariant.
 					Param_PropVariant.vt = VT_CLSID;
 
@@ -559,7 +559,7 @@ namespace CarenRengine
 					*Param_PropVariant.puuid = CreateGuidFromString(Param_PropVariantManaged->Var_Guid);
 					break;
 
-				case CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_Data:
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_Data:
 					//Define o tipo da PropVariant.
 					Param_PropVariant.vt = VT_R8;
 
@@ -567,7 +567,7 @@ namespace CarenRengine
 					Param_PropVariant.dblVal = Param_PropVariantManaged->Var_Double;
 					break;
 
-				case CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_ERROR:
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_ERROR:
 					//Define o tipo da PropVariant.
 					Param_PropVariant.vt = VT_UI4;
 
@@ -575,7 +575,7 @@ namespace CarenRengine
 					Param_PropVariant.ulVal = Param_PropVariantManaged->Var_UInt32;
 					break;
 
-				case CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_HRESULT:
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_HRESULT:
 					//Define o tipo da PropVariant.
 					Param_PropVariant.vt = VT_I4;
 
@@ -583,7 +583,7 @@ namespace CarenRengine
 					Param_PropVariant.lVal = Param_PropVariantManaged->Var_Int32;
 					break;
 
-				case CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_PonteiroDesconhecido:
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_PonteiroDesconhecido:
 					//Define o tipo da PropVariant.
 					Param_PropVariant.vt = VT_UNKNOWN;
 
@@ -606,7 +606,7 @@ namespace CarenRengine
 					Param_PropVariant.punkVal = pInterfaceDesconhecida;
 					break;
 
-				case CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_Desconhecido:
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_Desconhecido:
 					//Não suportado.
 					EstruturaRetorno = false;
 
@@ -669,17 +669,17 @@ namespace CarenRengine
 
 				case VT_EMPTY:
 					//Define o tipo de dado.
-					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_EMPTY;
+					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_EMPTY;
 					break;
 
 				case VT_NULL:
 					//Define o tipo de dado.
-					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_NULL;
+					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_NULL;
 					break;
 
 				case VT_I2: //Int16 - 2 Bytes
 					//Define o tipo de dado.
-					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_Int16;
+					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_Int16;
 
 					//Define o valor do dado.
 					EstruturaRetorno->Var_Int16 = Param_PropVariant.iVal;
@@ -687,7 +687,7 @@ namespace CarenRengine
 
 				case VT_I4: //Int32 - 4 Bytes
 					//Define o tipo de dado.
-					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_Int32;
+					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_Int32;
 
 					//Define o valor do dado.
 					EstruturaRetorno->Var_Int32 = Param_PropVariant.lVal;
@@ -695,7 +695,7 @@ namespace CarenRengine
 
 				case VT_R4: //32 Bit Float -> Double
 					//Define o tipo de dado.
-					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_Double;
+					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_Double;
 
 					//Define o valor do dado.
 					EstruturaRetorno->Var_Double = Param_PropVariant.fltVal;
@@ -703,7 +703,7 @@ namespace CarenRengine
 
 				case VT_R8: //64 Bit Float-> Double
 					//Define o tipo de dado.
-					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_Double;
+					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_Double;
 
 					//Define o valor do dado.
 					EstruturaRetorno->Var_Double = Param_PropVariant.dblVal;
@@ -711,12 +711,12 @@ namespace CarenRengine
 
 				case VT_CY: // Não Suportado.
 					//Define o tipo de dado.
-					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_CY;
+					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_CY;
 					break;
 
 				case VT_DATE:
 					//Define o tipo de dado.
-					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_Data;
+					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_Data;
 
 					//Define o valor do dado.
 					EstruturaRetorno->Var_Double = Param_PropVariant.dblVal; //O valor VT_DATE é representado pelo VT_R8 que é um double.
@@ -724,7 +724,7 @@ namespace CarenRengine
 
 				case VT_BSTR:
 					//Define o tipo de dado.
-					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_String;
+					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_String;
 
 					//Define o valor do dado.
 					EstruturaRetorno->Var_String = gcnew String(Param_PropVariant.bstrVal);
@@ -732,12 +732,12 @@ namespace CarenRengine
 
 				case VT_DISPATCH:
 					//Define o tipo de dado.
-					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_DISPATCH;
+					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_DISPATCH;
 					break;
 
 				case VT_ERROR: //Uint32
 					//Define o tipo de dado.
-					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_ERROR;
+					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_ERROR;
 
 					//Define o valor do dado.
 					EstruturaRetorno->Var_UInt32 = Param_PropVariant.scode;
@@ -745,7 +745,7 @@ namespace CarenRengine
 
 				case VT_BOOL:
 					//Define o tipo de dado.
-					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_Bool;
+					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_Bool;
 
 					//Define o valor do dado.
 					EstruturaRetorno->Var_Bool = Param_PropVariant.boolVal == -1 ? true : false;
@@ -753,12 +753,12 @@ namespace CarenRengine
 
 				case VT_VARIANT:
 					//Define o tipo de dado.
-					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_VARIANT;
+					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_VARIANT;
 					break;
 
 				case VT_UNKNOWN:
 					//Define o tipo de dado.
-					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_PonteiroDesconhecido;
+					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_PonteiroDesconhecido;
 
 					//Cria a classe que vai conter o ponteiro.
 					EstruturaRetorno->Var_ICaren = gcnew Caren();
@@ -769,12 +769,12 @@ namespace CarenRengine
 
 				case VT_DECIMAL:
 					//Define o tipo de dado.
-					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_DECIMAL;
+					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_DECIMAL;
 					break;
 
 				case VT_I1: //Inteiro de 1 Byte -> SByte
 					//Define o tipo de dado.
-					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_SByte;
+					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_SByte;
 
 					//Define o valor do dado.
 					EstruturaRetorno->Var_SByte = Param_PropVariant.cVal;
@@ -782,7 +782,7 @@ namespace CarenRengine
 
 				case VT_UI1: //Inteiro não assinado de 1 Byte -> Byte
 					//Define o tipo de dado.
-					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_Byte;
+					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_Byte;
 
 					//Define o valor do dado.
 					EstruturaRetorno->Var_Byte = Param_PropVariant.bVal;
@@ -790,7 +790,7 @@ namespace CarenRengine
 
 				case VT_UI2: //UInt16
 					//Define o tipo de dado.
-					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_UInt16;
+					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_UInt16;
 
 					//Define o valor do dado.
 					EstruturaRetorno->Var_UInt16 = Param_PropVariant.uiVal;
@@ -798,7 +798,7 @@ namespace CarenRengine
 
 				case VT_UI4: //UInt32
 					//Define o tipo de dado.
-					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_UInt32;
+					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_UInt32;
 
 					//Define o valor do dado.
 					EstruturaRetorno->Var_UInt32 = Param_PropVariant.ulVal;
@@ -806,7 +806,7 @@ namespace CarenRengine
 
 				case VT_I8: //Int64
 					//Define o tipo de dado.
-					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_Int64;
+					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_Int64;
 
 					//Define o valor do dado.
 					EstruturaRetorno->Var_Int64 = Param_PropVariant.hVal.QuadPart;
@@ -814,7 +814,7 @@ namespace CarenRengine
 
 				case VT_UI8:
 					//Define o tipo de dado.
-					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_UInt64;
+					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_UInt64;
 
 					//Define o valor do dado.
 					EstruturaRetorno->Var_UInt64 = Param_PropVariant.uhVal.QuadPart;
@@ -822,7 +822,7 @@ namespace CarenRengine
 
 				case VT_INT: //Int32 -> Mesmo valor que o VT_I4
 					//Define o tipo de dado.
-					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_Int32;
+					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_Int32;
 
 					//Define o valor do dado.
 					EstruturaRetorno->Var_Int32 = Param_PropVariant.intVal;
@@ -830,7 +830,7 @@ namespace CarenRengine
 
 				case VT_UINT: //UInt32 -> Mesmo valor que o VT_UI4
 					//Define o tipo de dado.
-					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_UInt32;
+					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_UInt32;
 
 					//Define o valor do dado.
 					EstruturaRetorno->Var_UInt32 = Param_PropVariant.uintVal;
@@ -840,7 +840,7 @@ namespace CarenRengine
 					break;
 				case VT_HRESULT:
 					//Define o tipo de dado.
-					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_HRESULT;
+					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_HRESULT;
 
 					//Define o valor do dado.
 					EstruturaRetorno->Var_Int32 = Param_PropVariant.intVal;
@@ -855,14 +855,14 @@ namespace CarenRengine
 					break;
 				case VT_LPSTR:
 					//Define o tipo de dado.
-					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_String;
+					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_String;
 
 					//Define o valor do dado.
 					EstruturaRetorno->Var_String = gcnew String(Param_PropVariant.pszVal);
 					break;
 				case VT_LPWSTR:
 					//Define o tipo de dado.
-					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_String;
+					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_String;
 
 					//Define o valor do dado.
 					EstruturaRetorno->Var_String = gcnew String(Param_PropVariant.pwszVal);
@@ -877,7 +877,7 @@ namespace CarenRengine
 					break;
 				case VT_BLOB:
 					//Define o tipo de dado.
-					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_Blob;
+					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_Blob;
 
 					//Cria a estrutura que vai conter os dados do buffer.
 					BlobBuffer = gcnew CA_BlobData();
@@ -905,7 +905,7 @@ namespace CarenRengine
 					break;
 				case VT_CLSID:
 					//Define o tipo de dado.
-					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_PropVariant_TYPE::TP_Guid;
+					EstruturaRetorno->_TipoDados = CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_Guid;
 
 					//Define o valor do dado.
 					EstruturaRetorno->Var_Guid = Util.ConverterGuidToString(*Param_PropVariant.puuid);
@@ -931,6 +931,246 @@ namespace CarenRengine
 				//Retorna o resultado.
 				return EstruturaRetorno;
 			}
+
+			//É PRECISO REFAZER A CONVERSÃO E ADICIONAR MAIS SUPORTE AO VARENUM GERENCIADO.
+			VARIANT* ConverterVARIANTManged_ToUnamaged(CA_VARIANT^ Param_Estrutura)
+			{
+				//Variavel que vai retornar a estrutura.
+				VARIANT* EstruturaRetorno = Nulo;
+
+				//Inicializa a estrutura.
+				VariantInit(EstruturaRetorno);
+
+				//Variveis utilizadas.
+
+
+
+				//Abre um switch para verificar o tipo da VARIANT e definir os valores.
+				switch (Param_Estrutura->vt)
+				{
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_CY:
+					//Não suportado.
+					EstruturaRetorno = false;
+
+					break;
+
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_DISPATCH:
+					//Não suportado.
+					EstruturaRetorno = false;
+
+					break;
+
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_VARIANT:
+					//Não suportado.
+					EstruturaRetorno = false;
+
+					break;
+
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_DECIMAL:
+					//Não suportado.
+					EstruturaRetorno = false;
+
+					break;
+
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_BSTR_BLOB:
+					//Não suportado.
+					EstruturaRetorno = false;
+
+					break;
+
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_VOID:
+					//Não suportado.
+					EstruturaRetorno = false;
+
+					break;
+
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_EMPTY:
+					//Não suportado.
+					EstruturaRetorno = false;
+
+					break;
+
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_NULL:
+					//Não suportado.
+					EstruturaRetorno = false;
+
+					break;
+
+
+
+					//TIPOS SUPORTADOS
+
+
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_String:
+					//Define o tipo da PropVariant
+					EstruturaRetorno->vt = VT_LPWSTR;
+					break;
+
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_Int16:
+					//Define o tipo da PropVariant.
+					EstruturaRetorno->vt = VT_I2;
+
+					//Define o valor da PropVariant.
+					EstruturaRetorno->iVal = Param_Estrutura->iVal;
+					break;
+
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_Int32:
+					//Define o tipo da PropVariant.
+					EstruturaRetorno->vt = VT_I4;
+
+					//Define o valor da PropVariant.
+					EstruturaRetorno->lVal = Param_Estrutura->lVal;
+					break;
+
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_Int64:
+					//Define o tipo da PropVariant.
+					EstruturaRetorno->vt = VT_I8;
+
+					//Define o valor da PropVariant.
+					EstruturaRetorno->llVal = Param_Estrutura->llVal;
+					break;
+
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_UInt16:
+					//Define o tipo da PropVariant.
+					EstruturaRetorno->vt = VT_UI2;
+
+					//Define o valor da PropVariant.
+					EstruturaRetorno->uiVal = Param_Estrutura->uiVal;
+					break;
+
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_UInt32:
+					//Define o tipo da PropVariant.
+					EstruturaRetorno->vt = VT_UI4;
+
+					//Define o valor da PropVariant.
+					EstruturaRetorno->ulVal = Param_Estrutura->ulVal;
+					break;
+
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_UInt64:
+					//Define o tipo da PropVariant.
+					EstruturaRetorno->vt = VT_UI8;
+
+					//Define o valor da PropVariant.
+					EstruturaRetorno->ullVal = Param_Estrutura->ullVal;
+					break;
+
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_Float:
+					//Define o tipo da PropVariant.
+					EstruturaRetorno->vt = VT_R4;
+
+					//Define o valor da PropVariant.
+					EstruturaRetorno->fltVal = Param_Estrutura->fltVal;
+					break;
+
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_Double:
+					//Define o tipo da PropVariant.
+					EstruturaRetorno->vt = VT_R8;
+
+					//Define o valor da PropVariant.
+					EstruturaRetorno->dblVal = Param_Estrutura->dblVal;
+					break;
+
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_Bool:
+					//Define o tipo da PropVariant.
+					EstruturaRetorno->vt = VT_BOOL;
+
+					//Define o valor da PropVariant.
+					// -1 > TRUE | 0 > FALSE
+					EstruturaRetorno->boolVal = Param_Estrutura->boolVal ? -1 : 0;
+					break;
+
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_Byte:
+					//Define o tipo da PropVariant.
+					EstruturaRetorno->vt = VT_UI1;
+
+					//Define o valor da PropVariant.
+					EstruturaRetorno->bVal = Param_Estrutura->bVal;
+					break;
+
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_SByte:
+					//Define o tipo da PropVariant.
+					EstruturaRetorno->vt = VT_I1;
+
+					//Define o valor da PropVariant.
+					EstruturaRetorno->cVal = Param_Estrutura->cVal;
+					break;
+
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_Blob:
+					//Define o tipo da PropVariant.
+					EstruturaRetorno->vt = VT_BLOB;
+
+					break;
+
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_Guid:
+					//Define o tipo da PropVariant.
+					EstruturaRetorno->vt = VT_CLSID;
+
+					//Cria o ponteiro par ao guid.
+					EstruturaRetorno->puuid = new GUID();
+
+					//Define o valor da PropVariant
+					*EstruturaRetorno->puuid = CreateGuidFromString(Param_PropVariantManaged->Var_Guid);
+					break;
+
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_Data:
+					//Define o tipo da PropVariant.
+					EstruturaRetorno->vt = VT_R8;
+
+					//Define o valor da PropVariant.
+					EstruturaRetorno->dblVal = Param_PropVariantManaged->Var_Double;
+					break;
+
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_ERROR:
+					//Define o tipo da PropVariant.
+					EstruturaRetorno->vt = VT_UI4;
+
+					//Define o valor da PropVariant.
+					EstruturaRetorno->ulVal = Param_PropVariantManaged->Var_UInt32;
+					break;
+
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_HRESULT:
+					//Define o tipo da PropVariant.
+					EstruturaRetorno->vt = VT_I4;
+
+					//Define o valor da PropVariant.
+					EstruturaRetorno->lVal = Param_PropVariantManaged->Var_Int32;
+					break;
+
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_PonteiroDesconhecido:
+					//Define o tipo da PropVariant.
+					EstruturaRetorno->vt = VT_UNKNOWN;
+
+				
+					break;
+
+				case CarenRengine::SDKBase::Enumeracoes::CA_VARTYPE::TP_Desconhecido:
+					//Não suportado.
+					EstruturaRetorno = false;
+
+					break;
+
+				default:
+					break;
+				}
+
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+			//É PRECISO REFAZER A CONVERSÃO E ADICIONAR MAIS SUPORTE AO VARENUM GERENCIADO.
+			CA_VARIANT^ ConverterVARIANTUnamaged_ToManged(VARIANT* Param_Estrutura)
+			{
+				//Variavel que vai retornar a estrutura.
+				CA_VARIANT^ EstruturaRetorno = gcnew CA_VARIANT();
+
+				//Variveis utilizadas.
+
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
 
 			//Converte um ponteiro gerenciado para um ponteiro nativo.
 			LPVOID ConverterPonteiroGerenciadorParaNativo(IntPtr Param_Ponteiro)

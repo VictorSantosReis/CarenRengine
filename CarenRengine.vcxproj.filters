@@ -1369,7 +1369,7 @@
       <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Windows\CarenPropertyBag2.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes\Windows</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2550,7 +2550,7 @@
       <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Windows\CarenPropertyBag2.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Origem\Classes\Windows</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

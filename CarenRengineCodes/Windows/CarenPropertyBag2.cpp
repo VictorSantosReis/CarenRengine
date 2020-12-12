@@ -482,7 +482,6 @@ UInt32 Param_Quantidade,
 		ZeroMemory(&vi_pOutArrayPropBags[i], sizeof(PROPBAG2));
 	}
 
-
 	//Chama o método para realizar a operação.
 	PonteiroTrabalho->GetPropertyInfo(
 		static_cast<ULONG>(Param_ID), 
@@ -621,10 +620,10 @@ CarenResult CarenPropertyBag2::Read(
 	PROPBAG2* vi_pArrayPropBagRequest = CriarMatrizEstruturas<PROPBAG2>(Param_Quantidade);
 	PROPBAG2* vi_pAuxiliar = Nulo;
 	IErrorLog* vi_pErrorLog = Nulo; //Pode ser NULO.
-	VARIANT* vi_pOutArrayValues = Nulo;
-	HRESULT* vi_pOutArrayHResults = Nulo;
+	VARIANT* vi_pOutArrayValues = CriarMatrizEstruturas<VARIANT>(Param_Quantidade);
+	HRESULT* vi_pOutArrayHResults = CriarMatrizEstruturas<HRESULT>(Param_Quantidade);
 
-	//Copia os dados da matriz gerenciada para a nativa.
+	//COPIA OS DADOS DA MATRIZ GERENCIADA PARA NATIVA E INICIA AS VARIANTS DA MATRIZ DE SAIDA(vi_pOutArrayValues).
 	for (UINT32 i = 0; i < Param_Quantidade; i++)
 	{
 		//Converte a estrutura no index especificado.
@@ -635,8 +634,10 @@ CarenResult CarenPropertyBag2::Read(
 
 		//Libera a memória utilizada pela estrutura.
 		DeletarEstruturaSafe(&vi_pAuxiliar);
-	}
 
+		//Inicializa a variant da matriz de saida.
+		VariantInit(&vi_pOutArrayValues[i]);
+	}
 
 	//Recupera o ponteiro para a interface de log se fornecido.
 	if (ObjetoGerenciadoValido(Param_InterfaceErro))
@@ -669,14 +670,26 @@ CarenResult CarenPropertyBag2::Read(
 	Param_Out_VarValue = gcnew cli::array<CA_VARIANT^>(Param_Quantidade);
 	Param_Out_HRESULTArray = gcnew cli::array<Int32>(Param_Quantidade);
 
-	//Faz um for para converter os dados dos valores da estrutura VARIANT para a gerenciada.
+	//FAZ UM FOR PARA CONVERTER OS DADOS DAS MATRIZES (vi_pOutArrayValues, vi_pOutArrayHResults) 
+	//NATIVAS PARA A GERENCIADA E LIBERA OS DADOS DAS VARIANTS
 	for (UINT32 i = 0; i < Param_Quantidade; i++)
 	{
-		//Converte a estrutura nativa para a gerenciada.
-		Param_Out_VarValue[i] = Util.converter
+		//Converte o valor da matriz de VARIANT nativa para a gerenciada do parametro de saida.
+		Param_Out_VarValue[i] = Util.ConverterVARIANTUnamaged_ToManged(&vi_pOutArrayValues[i]);
+
+		//Converte o valor da matriz de HRESULTS nativa para a gerenciada do parametro de saida.
+		Param_Out_HRESULTArray[i] = static_cast<Int32>(vi_pOutArrayHResults[i]);
+
+		//Libera a VARIANT no index especificado.
+		VariantClear(&vi_pOutArrayValues[i]);
 	}
 
 Done:;
+	//Libera a memória utilizada pelas matrizes.
+	DeletarMatrizEstruturasSafe(&vi_pArrayPropBagRequest);
+	DeletarMatrizEstruturasSafe(&vi_pOutArrayValues);
+	DeletarMatrizEstruturasSafe(&vi_pOutArrayHResults);
+
 	//Retorna o resultado.
 	return Resultado;
 }
@@ -701,9 +714,31 @@ cli::array<Estruturas::CA_VARIANT^>^ Param_VarValue)
 
 	//Variaveis a serem utilizadas.
 	Utilidades Util;
+	PROPBAG2* vi_pArrayPropBagRequest = CriarMatrizEstruturas<PROPBAG2>(Param_Quantidade);
+	VARIANT* vi_pArrayValues = CriarMatrizEstruturas<VARIANT>(Param_Quantidade);
+	PROPBAG2* vi_pAuxiliarBag = Nulo;
+	VARIANT* vi_pAuxiliarValue = Nulo;
 
+	//Faz um for para converter os dados das matrizes gerenciadas para suas nativas.
+	for (UINT32 i = 0; i < Param_Quantidade; i++)
+	{
+		//Converte oS valorES do index especificado para uma variavel auxiliar.
+		vi_pAuxiliarBag = Util.ConverterPROPBAG2ManagedToUnamaged(Param_ArrayPropBagsRequest[i]);
+		vi_pAuxiliarValue = Util.ConverterVARIANTManged_ToUnamaged(Param_VarValue[i]);
+
+		//Define o valor nos index das matrizes nativas.
+		vi_pArrayPropBagRequest[i] = *vi_pAuxiliarBag;
+		vi_pArrayValues[i] = *vi_pAuxiliarValue;
+
+		//Libera a memória utilizada pela variavel auxiliar bag.
+		DeletarEstruturaSafe(&vi_pAuxiliarBag);
+
+		//Nula a variant auxiliar de valor.
+		vi_pAuxiliarValue = Nulo;
+	}
 
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->Write(static_cast<ULONG>(Param_Quantidade), vi_pArrayPropBagRequest, vi_pArrayValues);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -721,6 +756,34 @@ cli::array<Estruturas::CA_VARIANT^>^ Param_VarValue)
 	}
 
 Done:;
+	//Libera a memória utilizada pelo array de bags.
+	if (ObjetoValido(vi_pArrayPropBagRequest))
+	{
+		//Faz um for para liberar os dados de string da estrutura.
+		for (UINT32 i = 0; i < Param_Quantidade; i++)
+		{
+			//Libera a memória para a string se valida.
+			if (ObjetoValido(vi_pArrayPropBagRequest[i].pstrName))
+				DeletarStringAllocatedSafe(&vi_pArrayPropBagRequest[i].pstrName);
+		}
+
+		//Libera a memória utilizada por sua matriz.
+		DeletarMatrizEstruturasSafe(&vi_pArrayPropBagRequest);
+	}
+	//Libera a memória utilizada pelo array de variant.
+	if (ObjetoValido(vi_pArrayValues))
+	{
+		//Faz um for para liberar todos os dados.
+		for (UINT32 i = 0; i < Param_Quantidade; i++)
+		{
+			//Libera a variant.
+			VariantClear(&vi_pArrayValues[i]);
+		}
+
+		//Libera a memória utilizada por sua matriz.
+		DeletarMatrizEstruturasSafe(&vi_pArrayValues);
+	}
+
 	//Retorna o resultado.
 	return Resultado;
 }

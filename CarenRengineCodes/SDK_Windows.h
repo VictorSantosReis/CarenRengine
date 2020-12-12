@@ -230,14 +230,63 @@ namespace CarenRengine
 			CarenResult Save(ICarenStream^ Param_Fluxo, Boolean Param_ClearDirty);
 		};
 
+		/// <summary>
+		/// (IInspectable)(PENDENTE PARA VERSAO DA WINRT DA BIBLIOTECA) - Interface responsável por fornecer funcionalidade necessária para todas as classes do Windows Runtime.
+		/// </summary>
+		[CategoryAttribute("Windows Interface")]
+		[Guid("531A488C-B562-4D24-A632-C3B314093ABC")]
 		public interface class ICarenInspectable : ICaren
 		{
+			/// <summary>
+			/// Propriedade que define se a classe foi descartada.
+			/// /// </summary>
+			property Boolean DisposedClasse
+			{
+				virtual Boolean get();
+			}
 
+
+			//Métodos
+
+			/// <summary>
+			/// Obtém as interfaces que são implementadas pela classe atual do Windows Runtime.
+			/// </summary>
+			/// <param name="Param_Out_IIDCount">Retorna o número de interfaces que são implementadas pelo objeto atual do Windows Runtime, excluindo as implementações IUnknown e IInspectable.</param>
+			/// <param name="Param_Out_IIDs">Retorna uma matriz que contém um IID para cada interface implementado pelo objeto atual do Windows Runtime. As interfaces IUnknown e IInspectable são excluídas.</param>
+			CarenResult GetIids(
+				[Out] UInt32% Param_Out_IIDCount,
+				[Out] cli::array<String^>^% Param_Out_IIDs);
+
+			/// <summary>
+			/// Obtém o nome totalmente qualificado do objeto atual do Windows Runtime.
+			/// </summary>
+			/// <param name="Param_Out_ClassName">Retorna o nome totalmente qualificado do objeto atual do Windows Runtime.</param>
+			CarenResult GetRuntimeClassName([Out] String^% Param_Out_ClassName);
+
+			/// <summary>
+			/// Obtém o nível de confiança do objeto atual do Windows Runtime.
+			/// </summary>
+			/// <param name="Param_Out_TrustLevel">O nível de confiança do objeto atual do Windows Runtime. O padrão é BaseLevel.</param>
+			CarenResult GetTrustLevel([Out] CA_TrustLevel% Param_Out_TrustLevel);
 		};
 
+		/// <summary>
+		/// (IRandomAccessStream)(PENDENTE PARA VERSAO DA WINRT DA BIBLIOTECA) - Interface responsável por suportar acesso aleatório de dados em fluxos de entrada e saída.
+		/// </summary>
+		[CategoryAttribute("Windows Interface")]
+		[Guid("3D9B28DB-369A-4120-B3DB-704177543B75")]
 		public interface class ICarenRandomAcessStream : ICarenInspectable
 		{
+			/// <summary>
+			/// Propriedade que define se a classe foi descartada.
+			/// /// </summary>
+			property Boolean DisposedClasse
+			{
+				virtual Boolean get();
+			}
 
+
+			//Métodos
 		};
 
 		/// <summary>

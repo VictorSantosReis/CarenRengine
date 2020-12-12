@@ -33,7 +33,7 @@ using namespace CarenRengine::SDKUtilidades;
 
 
 /// <summary>
-/// (Em desenvolvimento) - 
+/// (Concluido - Fase de Testes) - Classe responsável por fornecer um objeto com um bag de propriedade no qual o objeto pode salvar suas propriedades persistentemente. 
 /// </summary>
 public ref class CarenPropertyBag2 : public ICarenPropertyBag2
 {

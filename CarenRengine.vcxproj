@@ -24,7 +24,7 @@
     <Keyword>NetCoreCProj</Keyword>
     <RootNamespace>CarenRengine</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <RepositoryUrl>https://github.com/VictorSantosReis/CarenRengine</RepositoryUrl>
     <ProjectName>CarenRengine</ProjectName>
   </PropertyGroup>

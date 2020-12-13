@@ -74,9 +74,9 @@ A documentação referente a como CarenRengine funciona ainda será publicada aq
 
 # Como começar
 Para começar a desenvolver com está biblioteca você vai precisar:
-* SDK do .Net Core 3.1 - https://dotnet.microsoft.com/download/dotnet-core/3.1
+* SDK do .Net 5 - https://dotnet.microsoft.com/download/dotnet/5.0
 * Windows 10 x86 ou x64 - Build 1809 ou superior - https://www.microsoft.com/pt-br/software-download/windows10
-* Visual Studio (16.7) ou superior - https://visualstudio.microsoft.com/pt-br/downloads/
+* Visual Studio (16.8) ou superior - https://visualstudio.microsoft.com/pt-br/downloads/
 
 
 # Pacotes Nuget

@@ -23,19 +23,17 @@ deixa muito agradável de programar na linguagem, ainda mais com o novo **.NET 5
 
 
 # Linguagem & Plataforma
-O projeto é baseado na linguagem **C++ Gerenciado** ou **C++/CLR** como é comumente chamado. A plataforma .NET utilizada para compilar é a **.NET Core 3.1** que será
-atualizada mais tarde para o **.NET 5** em seu lançamento oficial ainda este ano(2020).
-
-No momento, não tenho interesse e nem motivo em suportar a plataforma NetFramework. Com a introdução do **.NET Core** e a vinda do **.NET 5** o desempenho
-foi melhorado e muito, algo que não se pode ignorar. A utilização das intruções disponíveis pelo processador na biblioteca do **.NET** foi um ponto muito
+O projeto é baseado na linguagem **C++ Gerenciado** ou **C++/CLR** como é comumente chamado. A plataforma .NET utilizada para compilar é a **.NET 5**.
+No momento, não tenho interesse e nem motivo em suportar a plataforma NetFramework. Com a introdução do **.NET 5** o desempenho foi melhorado e muito, algo que não 
+se pode ignorar. A utilização das intruções disponíveis pelo processador na biblioteca do **.NET** foi um ponto muito
 importante para seu desempenho. Você pode dar um Google para encontrar essas informações de forma bem fácil.
 
-![NetCore](https://github.com/VictorSantosReis/CarenRengine/blob/master/Imagens/NetCoreLogoNovo100x100.jpg)
+![Net5](https://github.com/VictorSantosReis/CarenRengine/blob/master/Imagens/NET5_LOGO_100x100.jpg)
 
 
 # Arquitetura
 Atualmente, CarenRengine suporta apenas o modelo de **[1 via]** de desenvolvimento. Significa que o usuário envia comandos para a API processar, mais o contrário
-não é possível até o momento. Um modelo **[2 vias]** gerenciado é necessário em algumas interfaces que permitem que o usuário sobrescreva para poder personalizar
+não é possível até o momento. Um modelo **bidirecional** gerenciado é necessário em algumas interfaces que permitem que o usuário sobrescreva para poder personalizar
 uma entrada ou saida de dados. Um caso simples de interface seria a [IMFTransform](https://docs.microsoft.com/en-us/windows/win32/api/mftransform/nn-mftransform-imftransform)
 da API **Microsoft Media Foundation** que permite o usuário criar um decodificador personalizado para um tipo. Apesar desse recurso de implementar sua própria interface gerenciada não está diponível, ainda é possível criar uma implementação em código nativo e passar um ponteiro para a interface de destino.
 

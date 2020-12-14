@@ -83,7 +83,7 @@ Para começar a desenvolver com está biblioteca você vai precisar:
 Como o Nuget Packge não suporta de forma oficial as montagens em **C++/CLI**, decidir não fazer neste momento porque precisaria criar um pacote para cada montagem(x86 e x64) e isso seria bastante irritante. Essa é um questão que vou pensar em uma solução mais para frente já que a biblioteca será portada com o tempo para o **WInRT**.
 
 * **No momento, você pode baixar a .dll da pasta [Build](https://github.com/VictorSantosReis/CarenRengine/tree/master/Build)**
-* **Você pode está fazendo também um fork do projeto e depois compilando para arquiterura de destino de sua preferência.**
+* **Você pode está clonando o projeto e depois compilando para arquiterura de destino de sua preferência.**
 
 
 # O que esperar do Futuro?

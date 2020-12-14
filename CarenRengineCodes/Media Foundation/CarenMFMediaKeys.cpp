@@ -26,7 +26,7 @@ CarenMFMediaKeys::~CarenMFMediaKeys()
 //Construtores
 CarenMFMediaKeys::CarenMFMediaKeys()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

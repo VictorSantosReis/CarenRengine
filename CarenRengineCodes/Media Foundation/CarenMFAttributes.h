@@ -24,9 +24,6 @@ limitations under the License.
 //Importa o namespace que contém as interfaces da Media Foundation.
 using namespace CarenRengine::MediaFoundation;
 
-//Enumeração de retorno de função.
-
-
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
@@ -50,9 +47,19 @@ public ref class CarenMFAttributes : public ICarenMFAttributes
 	IMFAttributes* PonteiroTrabalho = NULL;
 
 
-
 	//Contrutor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMFAttributes();
+
+	/// <summary>
+	/// (MFCreateAttributes) - Cria uma nova instância que implementa internamente a interface (IMFAttributes).
+	/// </summary>
+	/// <param name="Param_QuantidadeAtributos">A quantidade de atributos iniciais que a interface vai conter.</param>
+	CarenMFAttributes(UInt32 Param_QuantidadeAtributos);
+
 	~CarenMFAttributes();
 
 
@@ -78,52 +85,6 @@ public:
 			//Retorna o valor.
 			return Prop_DisposedClasse;
 		}
-	}
-
-
-
-	//Cria uma instância dessa classe (Estático)
-public:
-	/// <summary>
-	/// Método responsável por criar uma instância da classe de atributos base do Media Foundation.
-	/// </summary>
-	/// <param name="Param_CountAtributosIniciais">A quantidade de atributos iniciais na interface.</param>
-	/// <param name="Param_Out_Atributos">Recebe a interface que gerenciar os atributos.</param>
-	static CarenResult CriarInstancia(UInt32 Param_CountAtributosIniciais, [Out] ICarenMFAttributes^% Param_Out_Atributos)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Variavel que contém o resultado COM.
-		HRESULT Hr = E_FAIL;
-
-		//Variavel que vai conter o ponteiro de trabalho
-		IMFAttributes *pAtributos = NULL;
-
-		//Chama o método que vai criar o ponteiro.
-		Hr = MFCreateAttributes(&pAtributos, Param_CountAtributosIniciais);
-
-		//Processa o resultado da chamada.
-		Resultado.ProcessarCodigoOperacao(Hr);
-
-		//Verifica se obteve sucesso na operação.
-		if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-		{
-			//Falhou ao realizar a operação.
-
-			//Sai do método
-			Sair;
-		}
-
-		//Cria a interface que vai ser retornada.
-		Param_Out_Atributos = gcnew CarenMFAttributes();
-
-		//Chama o método para definir o ponteiro de trabalho.
-		Param_Out_Atributos->AdicionarPonteiro(pAtributos);
-
-	Done:;
-		//Retorna o resultado.
-		return Resultado;
 	}
 
 

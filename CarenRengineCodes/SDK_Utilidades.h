@@ -254,6 +254,42 @@ namespace CarenRengine
 				return RetornoDados;
 			}
 
+			//Método responsável por traduzir em mensagem o código de erro.
+			String^ TranslateCodeResult(HRESULT Param_HResultCode)
+			{
+				//Variavel que vai conter a mensagem.
+				LPCTSTR MensagemHResult = NULL;;
+				String^ MsgHResult = nullptr;
+
+				//Variavel que vai ser utilizada para obter a mensagem.
+				_com_error Err = (Param_HResultCode);
+
+				//Verifica se existe algum erro
+				if (Param_HResultCode == 0)
+				{
+					//Sai do método.
+					goto Done;
+				}
+
+				//Obtém a mensagem de erro.
+				MensagemHResult = Err.ErrorMessage();
+
+				//Verifica se é valida
+				if (MensagemHResult != NULL)
+				{
+					//Define a mensagem de retorno.
+					MsgHResult = gcnew String(MensagemHResult);
+				}
+				else
+				{
+					//Mensagem não disponivel.
+				}
+
+			Done:;
+				//Retorna o resultado.
+				return MsgHResult;
+			}
+
 			//Função que copia dados da memoria de um buffer para outro de destino. Essa função permite definir um Index onde será iniciado
 			//a copia dos dados para o buffer de destino.
 			template<typename T>

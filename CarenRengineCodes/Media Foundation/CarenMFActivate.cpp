@@ -18,11 +18,17 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenMFActivate.h"
 
+
 //Destruidor.
 CarenMFActivate::~CarenMFActivate()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
+}
+//Construtores
+CarenMFActivate::CarenMFActivate()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 //

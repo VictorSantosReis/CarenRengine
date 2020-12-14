@@ -18,8 +18,11 @@ limitations under the License.
 #pragma once
 #include "../SDK_Base.h"
 #include "../Caren/Caren.h"
-#include "../Media Foundation/CarenMFMediaType.h"
 #include "../SDK_Utilidades.h"
+#include "../Media Foundation/CarenMFMediaType.h"
+
+//Importa o SDK Base da Media Foundation.
+using namespace CarenRengine::MediaFoundation;
 
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
@@ -44,14 +47,43 @@ public:
 	/// <summary>
 	/// Método responsável por inicia a Api do Media Foundation.
 	/// </summary>
-	CarenResult IniciarMediaFoundation();
+	CarenResult _MFStartup();
 	
 
 	/// <summary>
 	/// Método responsável por desligar a Api do Media Foundation.
 	/// </summary>
-	CarenResult DesligarMediaFoundation();
+	CarenResult _MFShutdown();
 
+	/// <summary>
+	/// Cria um ICarenMFAttributes descrevendo o conteúdo de substreams multiplexados.
+	/// </summary>
+	/// <param name="Param_ColecaoAtributosMuxStream">A coleção contendo os (IMFAttributes) para cada substream multiplexado.</param>
+	/// <param name="Param_Out_Atribtuos">Retorna a interface contendo os atributos para os substreams multiplexados. O usuário deve inicializar a interface antes de chamar este método.</param>
+	CarenResult _MFCreateMuxStreamAttributes(ICarenMFCollection^ Param_ColecaoAtributosMuxStream, ICarenMFAttributes^ Param_Out_Atribtuos);
+
+	/// <summary>
+	/// Cria um objeto de ativação para o (Streaming Audio Render).
+	/// </summary>
+	/// <param name="Param_Out_StreamingAudioRender">Retorna a interface (ICarenMFActivate) de ativação do (Streaming Audio Render). O usuário deve inicializar a interface antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _MFCreateAudioRendererActivate(ICarenMFActivate^ Param_Out_StreamingAudioRender);
+
+	/// <summary>
+	/// Cria um objeto de ativação para o (Enhanced Video Renderer (EVR)).
+	/// </summary>
+	/// <param name="Param_Hwnd">A handle para a janela que vai exibir o vídeo.</param>
+	/// <param name="Param_Out_EnhancedVideoRenderer">Retorna a interface (ICarenMFActivate) de ativação do (Enhanced Video Renderer). O usuário deve inicializar a interface antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _MFCreateVideoRendererActivate(IntPtr Param_Hwnd, ICarenMFActivate^ Param_Out_EnhancedVideoRenderer);
+
+	/// <summary>
+	/// Cria um objeto de ativação que representa um dispositivo de captura de hardware.
+	/// </summary>
+	/// <param name="Param_Atributos">Uma interface ICarenMFAttributes de uma loja de atributos, que é usada para selecionar o dispositivo de captura.</param>
+	/// <param name="Param_Out_DispositivoCaptura">Retorna a interface (ICarenMFActivate) de ativação do dispositivo de captura. O usuário deve inicializar a interface antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _MFCreateDeviceSourceActivate(ICarenMFAttributes^ Param_Atributos, ICarenMFActivate^ Param_Out_DispositivoCaptura);
 
 	/// <summary>
 	/// Converte um tipo de mídia de áudio do Media Foundation para uma estrutura Wav.
@@ -80,8 +112,6 @@ public:
 		[Out] CA_WAVEFORMATEX^% Param_Out_WavFormato,
 		[Out] UInt32% Param_Out_Size);
 	
-
-
 	/// <summary>
 	/// Inicializa um tipo de mídia de um WAVEFORMATEX estrutura.
 	/// </summary>

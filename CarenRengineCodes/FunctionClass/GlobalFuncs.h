@@ -49,11 +49,22 @@ CarenResult DefinirPonteiroInterface(IUnknown* Param_NativePointer, ICaren^ Para
 template<class OutTypePointer> CarenResult RecuperarPonteiroCaren(ICaren^ Param_Interface, OutTypePointer** Param_Out_Interface)
 {
 	//Variavel que vai ser retornada.
-	CarenResult Resultado;
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Verifica se a interface gerenciada é valida
+	if (!ObjetoGerenciadoValido(Param_Interface))
+	{
+		//Define erro.
+		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false); 
+		
+		//Sai do método.
+		Sair;
+	}
 
 	//Recupera o ponteiro
 	Resultado = Param_Interface->RecuperarPonteiro((void**)Param_Out_Interface);
 
+Done:;
 	//Retorna
 	return Resultado;
 }

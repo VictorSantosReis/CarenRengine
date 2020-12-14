@@ -38,9 +38,6 @@ using namespace CarenRengine::SDKUtilidades;
 
 /// <summary>
 /// Classe responsável por conter um Objeto de ativação que é utilizado para ser criado por outro objeto de destino.
-/// Um objeto de ativação permite adiar a criação do objeto de destino, porque você pode segurar um ponteiro de (IMFActivate - Esta classe) 
-/// sem criar o objeto de destino. Objetos de ativação também podem ser serializado e, portanto, usado para criar o objeto 
-/// de destino em outro processo.
 /// </summary>
 public ref class CarenMFActivate :public ICarenMFActivate
 {
@@ -52,8 +49,13 @@ public ref class CarenMFActivate :public ICarenMFActivate
 	IMFActivate* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtores e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMFActivate();
+
 	~CarenMFActivate();
 
 

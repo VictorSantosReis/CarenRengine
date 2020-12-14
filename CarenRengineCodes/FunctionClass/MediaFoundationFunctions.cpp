@@ -18,27 +18,24 @@ limitations under the License.
 #include "../pch.h"
 #include "MediaFoundationFunctions.h"
 
-CarenResult MediaFoundationFunctions::IniciarMediaFoundation()
+CarenResult MediaFoundationFunctions::_MFStartup()
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
 
 	//Chama o método para inciar o MF.
-	HRESULT HR = MFStartup(MF_VERSION);
+	HRESULT Hr = MFStartup(MF_VERSION);
 
-	//Verifica o resultado
-	if (Sucesso(HR))
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
-		//Define que foi iniciado com sucesso.
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-	}
-	else
-	{
-		//Define falha.
-		Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
+		//Falhou ao realizar a operação.
 
 		//Sai do método
-		goto Done;
+		Sair;
 	}
 
 Done:;
@@ -46,28 +43,169 @@ Done:;
 	return Resultado;
 }
 
-CarenResult MediaFoundationFunctions::DesligarMediaFoundation()
+CarenResult MediaFoundationFunctions::_MFShutdown()
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
 
 	//Chama o método para desligar a media foundation.
-	HRESULT HR = MFShutdown();
+	HRESULT Hr = MFShutdown();
 
-	//Verifica o resultado
-	if (Sucesso(HR))
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
-		//Define que foi iniciado com sucesso.
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-	}
-	else
-	{
-		//Define falha.
-		Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
+		//Falhou ao realizar a operação.
 
 		//Sai do método
-		goto Done;
+		Sair;
 	}
+
+Done:;
+	//Retorna o resultado
+	return Resultado;
+}
+
+CarenResult MediaFoundationFunctions::_MFCreateMuxStreamAttributes(ICarenMFCollection^ Param_ColecaoAtributosMuxStream, ICarenMFAttributes^ Param_Out_Atributos)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Variaveis utilizadas.
+	IMFCollection* vi_pColecao = Nulo;
+	IMFAttributes* vi_pOutAtributos = Nulo;
+
+	//Verifica se o ponteiro fornecido é valido.
+	if (!ObjetoGerenciadoValido(Param_ColecaoAtributosMuxStream))
+	{
+		//Define erro na operação.
+		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
+
+		//Sai do método 
+		Sair;
+	}
+
+	//Recupera o ponteiro para a coleção.
+	CarenGetPointerFromICarenSafe(Param_ColecaoAtributosMuxStream, vi_pColecao);
+
+	//Chama o método para criar a interface.
+	HRESULT Hr = MFCreateMuxStreamAttributes(vi_pColecao, &vi_pOutAtributos);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o ponteiro na interface.
+	CarenSetPointerToICarenSafe(vi_pOutAtributos, Param_Out_Atributos, true);
+
+Done:;
+	//Retorna o resultado
+	return Resultado;
+}
+
+CarenResult MediaFoundationFunctions::_MFCreateAudioRendererActivate(ICarenMFActivate^ Param_Out_StreamingAudioRender)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Variaveis utilizadas.
+	IMFActivate* vi_pOutSAR = Nulo;
+
+	//Chama o método para realizar a operação.
+	HRESULT Hr = MFCreateAudioRendererActivate(&vi_pOutSAR);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o ponteiro na interface.
+	CarenSetPointerToICarenSafe(vi_pOutSAR, Param_Out_StreamingAudioRender, true);
+
+Done:;
+	//Retorna o resultado
+	return Resultado;
+}
+
+CarenResult MediaFoundationFunctions::_MFCreateVideoRendererActivate(IntPtr Param_Hwnd, ICarenMFActivate^ Param_Out_EnhancedVideoRenderer)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IMFActivate* vi_pOutEVR = Nulo;
+
+	//Chama o método para realizar a operação.
+	HRESULT Hr = MFCreateVideoRendererActivate(Util.ConverterIntPtrToHWND(Param_Hwnd), &vi_pOutEVR);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o ponteiro na interface.
+	CarenSetPointerToICarenSafe(vi_pOutEVR, Param_Out_EnhancedVideoRenderer, true);
+
+Done:;
+	//Retorna o resultado
+	return Resultado;
+}
+
+CarenResult MediaFoundationFunctions::_MFCreateDeviceSourceActivate(ICarenMFAttributes^ Param_Atributos, ICarenMFActivate^ Param_Out_DispositivoCaptura)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IMFAttributes* vi_pAtributos = Nulo;
+	IMFActivate* vi_pOutDeviceCapture = Nulo;
+
+	//Recupera o ponteiro para a interface de atributos.
+	Resultado = CarenGetPointerFromICarenSafe(Param_Atributos, vi_pAtributos);
+
+	//Chama o método para realizar a operação.
+	HRESULT Hr = MFCreateDeviceSourceActivate(vi_pAtributos, &vi_pOutDeviceCapture);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o ponteiro na interface.
+	CarenSetPointerToICarenSafe(vi_pOutDeviceCapture, Param_Out_DispositivoCaptura, true);
 
 Done:;
 	//Retorna o resultado

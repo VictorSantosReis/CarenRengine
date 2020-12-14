@@ -35,7 +35,8 @@ using namespace CarenRengine::SDKUtilidades;
 
 
 /// <summary>
-/// () - Classe responsável 
+/// (Concluido - Fase de Testes) - Classe responsável por representar uma tecla de mídia usada para descriptografar dados de mídia usando um sistema-chave de 
+/// Gestão de Direitos Digitais (DRM).
 /// </summary>
 public ref class CarenMFMediaKeys : public ICarenMFMediaKeys
 {

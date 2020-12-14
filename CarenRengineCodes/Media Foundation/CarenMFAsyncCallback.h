@@ -38,7 +38,7 @@ using namespace CarenRengine::SDKBase::Interfaces;
 using namespace CarenRengine::SDKUtilidades;
 
 /// <summary>
-/// [Concluido - Fase de Testes] - Falta documentar.
+/// (Concluido - Fase de Testes) - Classe responsável pelo retorno de chamada para notificar o aplicativo quando um método assíncrono for concluído.
 /// </summary>
 public ref class CarenMFAsyncCallback : public ICarenMFAsyncCallback
 {
@@ -51,6 +51,12 @@ public ref class CarenMFAsyncCallback : public ICarenMFAsyncCallback
 
 	//Contrutor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe e permite que o usuário decida se vai inicializar com uma implementação interna ou vazia.
+	/// </summary>
+	/// <param name="Param_CriarImplementacao">Um valor booleano que indica se deve criar uma implementação interna.</param>
+	CarenMFAsyncCallback(Boolean Param_CriarImplementacao);
+
 	~CarenMFAsyncCallback();
 
 
@@ -76,55 +82,6 @@ public:
 			//Retorna o valor.
 			return Prop_DisposedClasse;
 		}
-	}
-
-
-
-
-	//Método estático que vai criar uma instância dessa interface.
-public:
-	/// <summary>
-	/// Método responsável por criar um instância da classe de notificação de eventos para outras interfaces da biblioteca.
-	/// </summary>
-	/// <param name="Param_Out_CallbackInterface">Recebe a interface com o Callback criado para ser utilizado.</param>
-	static CarenResult CriarInstaciaCallback([Out] ICarenMFAsyncCallback^% Param_Out_CallbackInterface)
-	{
-		//Variavel que vai retornar o resultado.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Variaveis utilizadas
-		IMFAsyncCallback* pCallbackNativo;
-		ICarenMFAsyncCallback^ InterfaceSolicitada = nullptr;
-
-		//Cria a interface callbak
-		pCallbackNativo = new CLN_IMFAsyncCallback();
-
-		//Cria a interface gerenciada
-		InterfaceSolicitada = gcnew CarenMFAsyncCallback();
-
-		//Chama o método para definir o ponteiro
-		Resultado = InterfaceSolicitada->AdicionarPonteiro(pCallbackNativo);
-
-		//Verifica o resultado
-		if (Resultado.StatusCode != ResultCode::SS_OK)
-		{
-			//Limpa
-			pCallbackNativo = NULL;
-			InterfaceSolicitada = nullptr;
-
-			//Sai do método
-			goto Done;
-		}
-
-		//Define a interface criada no parametro de saida.
-		Param_Out_CallbackInterface = InterfaceSolicitada;
-
-		//Define sucesso na operação
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	Done:;
-		//Retorna o resultado
-		return Resultado;
 	}
 
 

@@ -8,6 +8,28 @@ CarenResult DefinirPonteiroInterface(IUnknown* Param_NativePointer, ICaren^ Para
 	//Variavel que retorna o resultado.
 	CarenResultado Resultado = CarenResult(ResultCode::ER_FAIL, false);
 
+	//Verifica se as interfaces são validas.
+	if (!ObjetoGerenciadoValido(Param_Destino))
+	{
+		//Libera o ponteiro nativo se solicitado.
+		if (Param_ReleasePointerOnErro)
+			Param_NativePointer->Release(); Param_NativePointer = Nulo;
+
+		//Define erro na operação.
+		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
+
+		//Sai do método
+		Sair;
+	}
+	if (!ObjetoValido(Param_NativePointer))
+	{
+		//Define erro na operação.
+		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
+
+		//Sai do método
+		Sair;
+	}
+
 	//Define o ponteiro na interface.
 	Resultado = Param_Destino->AdicionarPonteiro(Param_NativePointer);
 
@@ -27,6 +49,7 @@ CarenResult DefinirPonteiroInterface(IUnknown* Param_NativePointer, ICaren^ Para
 		}
 	}
 
+Done:;
 	//Retorna
 	return Resultado;
 }

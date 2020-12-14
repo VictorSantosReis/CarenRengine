@@ -25,6 +25,35 @@ CarenMFAttributes::~CarenMFAttributes()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtores
+CarenMFAttributes::CarenMFAttributes()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
+
+CarenMFAttributes::CarenMFAttributes(UInt32 Param_QuantidadeAtributos)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IMFAttributes* vi_pOutAtributos = Nulo;
+	
+	//Chama o método para criar a interface.
+	Hr = MFCreateAttributes(&vi_pOutAtributos, Param_QuantidadeAtributos);
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define o ponteiro criado no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutAtributos;
+}
+
 
 //
 // Métodos da interface ICaren

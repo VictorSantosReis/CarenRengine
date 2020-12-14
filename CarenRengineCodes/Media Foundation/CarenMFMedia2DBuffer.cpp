@@ -25,6 +25,22 @@ CarenMFMedia2DBuffer::~CarenMFMedia2DBuffer()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtores
+CarenMFMedia2DBuffer::CarenMFMedia2DBuffer()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
+
+CarenMFMedia2DBuffer::CarenMFMedia2DBuffer(UInt32 Param_Width, UInt32 Param_Height, CA_D3DFORMAT Param_D3DFormat, Boolean Param_BottomUp)
+{
+	
+}
+
+CarenMFMedia2DBuffer::CarenMFMedia2DBuffer(UInt32 Param_Width, UInt32 Param_Height, UInt32 Param_FourCC, Boolean Param_BottomUp)
+{
+
+}
+	
 
 //
 // Métodos da interface ICaren

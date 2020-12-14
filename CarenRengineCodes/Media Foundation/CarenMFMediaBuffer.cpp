@@ -18,11 +18,106 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenMFMediaBuffer.h"
 
+
 //Destruidor.
 CarenMFMediaBuffer::~CarenMFMediaBuffer()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
+}
+//Construtores
+CarenMFMediaBuffer::CarenMFMediaBuffer()
+{
+	
+}
+CarenMFMediaBuffer::CarenMFMediaBuffer(UInt32 Param_Lenght)
+{
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis a serem utilizadas.
+	Utilidades Util;
+	IMFMediaBuffer* vi_pOutMediaBuffer = Nulo;
+
+	//Chama o método para realizar a operação
+	Hr = MFCreateMemoryBuffer(static_cast<DWORD>(Param_Lenght), &vi_pOutMediaBuffer);
+
+	//Verifica se não ocorreu algum erro
+	if (!Sucesso(Hr))
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao tentar criar o buffer. Mensagem de erro -> ", Util.TranslateCodeResult(Hr)));
+
+	//Define a interface criada no ponteiro de trabalho da classe.
+	PonteiroTrabalho = vi_pOutMediaBuffer;
+}
+CarenMFMediaBuffer::CarenMFMediaBuffer(UInt32 Param_Width, UInt32 Param_Height, CA_D3DFORMAT Param_D3DFormat, Boolean Param_BottomUp)
+{
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis a serem utilizadas.
+	Utilidades Util;
+	DWORD vi_D3DFormat = static_cast<DWORD>(Param_D3DFormat);
+	IMFMediaBuffer* vi_pOutMediaBuffer = Nulo;
+
+	//Chama o método para realizar a operação
+	Hr = MFCreate2DMediaBuffer(static_cast<DWORD>(Param_Width), static_cast<DWORD>(Param_Height), vi_D3DFormat, Param_BottomUp? TRUE: FALSE, &vi_pOutMediaBuffer);
+
+	//Verifica se não ocorreu algum erro
+	if (!Sucesso(Hr))
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao tentar criar o buffer. Mensagem de erro -> ", Util.TranslateCodeResult(Hr)));
+
+	//Define a interface criada no ponteiro de trabalho da classe.
+	PonteiroTrabalho = vi_pOutMediaBuffer;
+}
+CarenMFMediaBuffer::CarenMFMediaBuffer(UInt32 Param_Width, UInt32 Param_Height, UInt32 Param_FourCC, Boolean Param_BottomUp)
+{
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis a serem utilizadas.
+	Utilidades Util;
+	IMFMediaBuffer* vi_pOutMediaBuffer = Nulo;
+
+	//Chama o método para realizar a operação
+	Hr = MFCreate2DMediaBuffer(static_cast<DWORD>(Param_Width), static_cast<DWORD>(Param_Height), static_cast<DWORD>(Param_FourCC), Param_BottomUp ? TRUE : FALSE, &vi_pOutMediaBuffer);
+
+	//Verifica se não ocorreu algum erro
+	if (!Sucesso(Hr))
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao tentar criar o buffer. Mensagem de erro -> ", Util.TranslateCodeResult(Hr)));
+
+	//Define a interface criada no ponteiro de trabalho da classe.
+	PonteiroTrabalho = vi_pOutMediaBuffer;
+}
+CarenMFMediaBuffer::CarenMFMediaBuffer(ICarenMFMediaBuffer^ Param_Buffer, UInt32 Param_Offset, UInt32 Param_Lenght)
+{
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis a serem utilizadas.
+	Utilidades Util;
+	IMFMediaBuffer* vi_pMediaBufferOriginal = Nulo;
+	IMFMediaBuffer* vi_pOutMediaBuffer = Nulo;
+
+	//Recupera o ponteiro para o buffer original se valido
+	if (!ObjetoGerenciadoValido(Param_Buffer))
+		throw gcnew NullReferenceException("O parametro (Param_Buffer) não pode ser NULO.");
+
+	//Recupera o ponteiro.
+	CarenResult Resultado = RecuperarPonteiroCaren(Param_Buffer, &vi_pMediaBufferOriginal);
+
+	//Verifica se obteve com sucesso.
+	if(Resultado.StatusCode != ResultCode::SS_OK)
+		throw gcnew NullReferenceException("O ponteiro da interface (ICarenMFMediaBuffer) no parametro (Param_Buffer) não é válido.");
+
+	//Chama o método para realizar a operação
+	Hr = MFCreateMediaBufferWrapper(vi_pMediaBufferOriginal, static_cast<DWORD>(Param_Offset), static_cast<DWORD>(Param_Lenght), &vi_pOutMediaBuffer);
+
+	//Verifica se não ocorreu algum erro
+	if (!Sucesso(Hr))
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao tentar criar um Wrapper do buffer. Mensagem de erro -> ", Util.TranslateCodeResult(Hr)));
+
+	//Define a interface criada no ponteiro de trabalho da classe.
+	PonteiroTrabalho = vi_pOutMediaBuffer;
 }
 
 //

@@ -52,6 +52,11 @@ public ref class CarenMFMedia2DBuffer2 :public ICarenMFMedia2DBuffer2
 
 	//Contrutor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMFMedia2DBuffer2();
+
 	~CarenMFMedia2DBuffer2();
 
 

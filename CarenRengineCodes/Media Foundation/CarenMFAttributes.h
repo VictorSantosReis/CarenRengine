@@ -55,7 +55,7 @@ public:
 	CarenMFAttributes();
 
 	/// <summary>
-	/// (MFCreateAttributes) - Cria uma nova instância que implementa internamente a interface (IMFAttributes).
+	/// Cria uma nova instância que implementa internamente a interface (IMFAttributes).
 	/// </summary>
 	/// <param name="Param_QuantidadeAtributos">A quantidade de atributos iniciais que a interface vai conter.</param>
 	CarenMFAttributes(UInt32 Param_QuantidadeAtributos);

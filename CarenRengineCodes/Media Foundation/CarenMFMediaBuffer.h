@@ -38,7 +38,7 @@ using namespace CarenRengine::SDKUtilidades;
 
 
 /// <summary>
-/// [Concluido - Fase de testes] - Falta documentar
+/// (Concluido - Fase de Testes) - Classe responsãvel por conter dados de midia. Os tipos podem ser Áudio ou Video.
 /// </summary>
 public ref class CarenMFMediaBuffer : public ICarenMFMediaBuffer
 {
@@ -53,6 +53,45 @@ public ref class CarenMFMediaBuffer : public ICarenMFMediaBuffer
 
 	//Contrutor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMFMediaBuffer();
+
+	/// <summary>
+	/// Inicializa a classe para gerenciar um buffer de mídia a parti de uma poção de memória alocada do sistema.
+	/// </summary>
+	/// <param name="Param_Lenght">O tamanho do buffer, em bytes. O valor é alocado da memória do sistema.</param>
+	CarenMFMediaBuffer(UInt32 Param_Lenght);
+
+	/// <summary>
+	/// Inicializa a classe como um objeto de buffer de memória do sistema para armazenar dados de imagem 2D.
+	/// </summary>
+	/// <param name="Param_Width">Largura da imagem, em pixels.</param>
+	/// <param name="Param_Height">Altura da imagem, em pixels.</param>
+	/// <param name="Param_D3DFormat">Um valor CA_D3DFORMAT que especifica o formato de vídeo.</param>
+	/// <param name="Param_BottomUp">Se TRUE, o método ICarenMF2DBuffer::ContiguousCopyTo copia o buffer em um formato de baixo para cima. O formato de baixo para cima é compatível com GDI para imagens RGB não compactadas. 
+	/// Se este parâmetro for FALSE, o método ContiguousCopyTo copia o buffer em um formato de cima para baixo, compatível com o DirectX.</param>
+	CarenMFMediaBuffer(UInt32 Param_Width, UInt32 Param_Height, CA_D3DFORMAT Param_D3DFormat, Boolean Param_BottomUp);
+
+	/// <summary>
+	/// Inicializa a classe como um objeto de buffer de memória do sistema para armazenar dados de imagem 2D.
+	/// </summary>
+	/// <param name="Param_Width">Largura da imagem, em pixels.</param>
+	/// <param name="Param_Height">Altura da imagem, em pixels.</param>
+	/// <param name="Param_D3DFormat">Um código FOURCC que especifica o formato de vídeo. Se você tiver um subtipo de vídeo GUID, você pode usar o primeiro DWORD do subtipo.</param>
+	/// <param name="Param_BottomUp">Se TRUE, o método ICarenMF2DBuffer::ContiguousCopyTo copia o buffer em um formato de baixo para cima. O formato de baixo para cima é compatível com GDI para imagens RGB não compactadas. 
+	/// Se este parâmetro for FALSE, o método ContiguousCopyTo copia o buffer em um formato de cima para baixo, compatível com o DirectX.</param>
+	CarenMFMediaBuffer(UInt32 Param_Width, UInt32 Param_Height, UInt32 Param_FourCC, Boolean Param_BottomUp);
+
+	/// <summary>
+	/// Inicializa a classe do buffer de mídia que envolve um buffer de mídia existente. O novo buffer de mídia aponta para a mesma memória do buffer de mídia original, ou para um deslocamento desde o início da memória.
+	/// </summary>
+	/// <param name="Param_Buffer">Uma interface ICarenMFMediaBuffer do buffer de mídia original.</param>
+	/// <param name="Param_Offset">O início do novo buffer, como um offset em bytes do início do buffer original.</param>
+	/// <param name="Param_Lenght">O tamanho do novo buffer. O valor de Param_Offset + Param_Lenght deve ser menor ou igual ao tamanho dos dados válidos do buffer original. (O tamanho dos dados válidos é retornado pelo método ICarenMFMediaBuffer::GetCurrentLength.)</param>
+	CarenMFMediaBuffer(ICarenMFMediaBuffer^ Param_Buffer, UInt32 Param_Offset, UInt32 Param_Lenght);
+
 	~CarenMFMediaBuffer();
 
 

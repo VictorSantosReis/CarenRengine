@@ -56,6 +56,64 @@ public:
 	CarenResult _MFShutdown();
 
 	/// <summary>
+	/// Aloca a memória do sistema com um alinhamento de byte especificado e cria um buffer de mídia para gerenciar a memória.
+	/// </summary>
+	/// <param name="Param_MaxLenght">O tamanho do buffer, em bytes.</param>
+	/// <param name="Param_Aligment">Especifica o alinhamento de memória para o buffer.</param>
+	/// <param name="Param_Out_Buffer">Retorna uma interface (ICarenMFMediaBuffer) do buffer de mídia. usuário deve inicializar a interface antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _MFCreateAlignedMemoryBuffer(UInt32 Param_MaxLenght, CA_MF_BYTE_ALIGNMENT Param_Aligment, ICarenMFMediaBuffer^ Param_Out_Buffer);
+
+	/// <summary>
+	/// Cria um buffer de mídia para gerenciar uma superfície DXGI (Microsoft DirectX Graphics Infrastructure).
+	/// </summary>
+	/// <param name="Param_RIID">Identifica o tipo de superfície DXGI. Este valor deve ser IID_ID3D11Texture2D.</param>
+	/// <param name="Param_SuperficeDXGI">Uma interface IUnknown da superfície DXGI.</param>
+	/// <param name="Param_SubresourceIndex">O índice baseado em zero de uma subrefonte da superfície. O objeto buffer de mídia está associado a essa subrefonte.</param>
+	/// <param name="Param_BottomUpWhenLinear">Se TRUE, o método ICarenMF2DBuffer::ContiguousCopyTo copia o buffer em um formato de baixo para cima. O formato de baixo para cima é compatível com GDI para imagens RGB não compactadas. Se este parâmetro for FALSE, o método ContiguousCopyTo copia o buffer em um formato de cima para baixo, compatível com o Direct3D.</param>
+	/// <param name="Param_Out_Buffer">Retorna uma interface (ICarenMFMediaBuffer) do buffer de mídia. usuário deve inicializar a interface antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _MFCreateDXGISurfaceBuffer(String^ Param_RIID, ICaren^ Param_SuperficeDXGI, UInt32 Param_SubresourceIndex, Boolean Param_BottomUpWhenLinear, ICarenMFMediaBuffer^ Param_Out_Buffer);
+
+	/// <summary>
+	/// Cria um objeto buffer de mídia que gerencia uma superfície Direct3D 9.
+	/// </summary>
+	/// <param name="Param_RIID">Identifica o tipo de superfície Direct3D 9. Atualmente esse valor deve ser IID_IDirect3DSurface9.</param>
+	/// <param name="Param_SurfaceDX">Uma interface IUnknown da superfície DirectX.</param>
+	/// <param name="Param_BottomUpWhenLinear">Se TRUE, o método ICarenMF2DBuffer::ContiguousCopyTo copia o buffer em um formato de baixo para cima. O formato de baixo para cima é compatível com GDI para imagens RGB não compactadas. Se este parâmetro for FALSE, o método ContiguousCopyTo copia o buffer em um formato de cima para baixo, compatível com o Direct3D.</param>
+	/// <param name="Param_Out_Buffer">Retorna uma interface (ICarenMFMediaBuffer) do buffer de mídia. usuário deve inicializar a interface antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _MFCreateDXSurfaceBuffer(String^ Param_RIID, ICaren^ Param_SurfaceDX,  Boolean Param_BottomUpWhenLinear, ICarenMFMediaBuffer^ Param_Out_Buffer);
+
+	/// <summary>
+	/// Aloca um buffer de memória do sistema que é ideal para um tipo de mídia especificado.
+	/// </summary>
+	/// <param name="Param_MediaType">Uma interface ICarenMFMediaType do tipo de mídia.</param>
+	/// <param name="Param_Duration">A duração da amostra. Este valor é necessário para formatos de áudio.</param>
+	/// <param name="Param_MinLenght">O tamanho mínimo do buffer, em bytes. O tamanho real do buffer pode ser maior. Especifique zero para alocar o tamanho padrão do buffer para o tipo de mídia.</param>
+	/// <param name="Param_MinAligment">O alinhamento mínimo da memória para o buffer. Especifique zero para usar o alinhamento de memória padrão.</param>
+	/// <param name="Param_Out_Buffer">Retorna uma interface (ICarenMFMediaBuffer) do buffer de mídia. usuário deve inicializar a interface antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _MFCreateMediaBufferFromMediaType(ICarenMFMediaType^ Param_MediaType, Int64 Param_Duration, UInt32 Param_MinLenght, UInt32 Param_MinAligment, ICarenMFMediaBuffer^ Param_Out_Buffer);
+
+	/// <summary>
+	/// Cria um objeto buffer de mídia que gerencia um bitmap do Windows Imaging Component (WIC).
+	/// </summary>
+	/// <param name="Param_RIID">O identificador da interface. Atualmente este parametro deve ser IID_IWICBitmap</param>
+	/// <param name="Param_Surface">Uma interface IUnknown da superfície bitmap. A superfície bitmap deve ser um bitmap WIC que expõe a interface ICarenWICBitmap.</param>
+	/// <param name="Param_Out_Buffer">Retorna uma interface (ICarenMFMediaBuffer) do buffer de mídia. usuário deve inicializar a interface antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _MFCreateWICBitmapBuffer(String^ Param_RIID, ICaren^ Param_Surface, ICarenMFMediaBuffer^ Param_Out_Buffer);
+	
+
+	/// <summary>
+	/// Invoca um método de retorno para completar uma operação assíncrona.
+	/// </summary>
+	/// <param name="Param_AsyncResult">Uma interface ICarenMFAsyncResult para completar a operação.</param>
+	/// <returns></returns>
+	CarenResult _MFInvokeCallback(ICarenMFAsyncResult^ Param_AsyncResult);
+
+	/// <summary>
 	/// Cria um ICarenMFAttributes descrevendo o conteúdo de substreams multiplexados.
 	/// </summary>
 	/// <param name="Param_ColecaoAtributosMuxStream">A coleção contendo os (IMFAttributes) para cada substream multiplexado.</param>
@@ -92,7 +150,7 @@ public:
 	/// <param name="Param_FlagsConversão">Os flags utilizados para conversão.</param>
 	/// <param name="Param_Out_WavFormato">Recebe a estrutura wav com os dados do formato.</param>
 	/// <param name="Param_Out_Size">Recebe o tamanho da estrutura em bytes.</param>
-	CarenResult CA_MFCreateWaveFormatExFromMFMediaType(
+	CarenResult _MFCreateWaveFormatExFromMFMediaType(
 		ICarenMFMediaType^ Param_TipoMidia,
 		CA_MFWaveFormatExConvertFlags Param_FlagsConversão,
 		[Out] CA_WAVEFORMATEXEXTENSIBLE^% Param_Out_WavFormato,
@@ -106,7 +164,7 @@ public:
 	/// <param name="Param_FlagsConversão">Os flags utilizados para conversão.</param>
 	/// <param name="Param_Out_WavFormato">Recebe a estrutura wav com os dados do formato.</param>
 	/// <param name="Param_Out_Size">Recebe o tamanho da estrutura em bytes.</param>
-	CarenResult CA_MFCreateWaveFormatExFromMFMediaType(
+	CarenResult _MFCreateWaveFormatExFromMFMediaType(
 		ICarenMFMediaType^ Param_TipoMidia,
 		CA_MFWaveFormatExConvertFlags Param_FlagsConversão,
 		[Out] CA_WAVEFORMATEX^% Param_Out_WavFormato,

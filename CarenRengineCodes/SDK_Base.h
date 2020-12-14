@@ -4870,6 +4870,65 @@ namespace CarenRengine
 				/// </summary>
 				IUNKNOWN
 			};
+			
+			/// <summary>
+			/// (ORIGINAL)(FALTA DOCUMENTAR) - Enumera valores que especificam o alinhamento de memória para um buffer.
+			/// </summary>
+			public enum class CA_MF_BYTE_ALIGNMENT
+			{
+				/// <summary>
+				/// 
+				/// </summary>
+				CA_MF_1_BYTE_ALIGNMENT = 0x00000000,
+				/// <summary>
+				/// 
+				/// </summary>
+				CA_MF_2_BYTE_ALIGNMENT = 0x00000001,
+				/// <summary>
+				/// 
+				/// </summary>
+				CA_MF_4_BYTE_ALIGNMENT = 0x00000003,
+				/// <summary>
+				/// 
+				/// </summary>
+				CA_MF_8_BYTE_ALIGNMENT = 0x00000007,
+				/// <summary>
+				/// 
+				/// </summary>
+				CA_MF_16_BYTE_ALIGNMENT = 0x0000000f,
+				/// <summary>
+				/// 
+				/// </summary>
+				CA_MF_32_BYTE_ALIGNMENT = 0x0000001f,
+				/// <summary>
+				/// 
+				/// </summary>
+				CA_MF_64_BYTE_ALIGNMENT = 0x0000003f,
+				/// <summary>
+				/// 
+				/// </summary>
+				CA_MF_128_BYTE_ALIGNMENT = 0x0000007f,
+				/// <summary>
+				/// 
+				/// </summary>
+				CA_MF_256_BYTE_ALIGNMENT = 0x000000ff,
+				/// <summary>
+				/// 
+				/// </summary>
+				CA_MF_512_BYTE_ALIGNMENT = 0x000001ff,
+				/// <summary>
+				/// 
+				/// </summary>
+				CA_MF_1024_BYTE_ALIGNMENT = 0x000003ff,
+				/// <summary>
+				/// 
+				/// </summary>
+				CA_MF_2048_BYTE_ALIGNMENT = 0x000007ff,
+				/// <summary>
+				/// 
+				/// </summary>
+				CA_MF_4096_BYTE_ALIGNMENT = 0x00000fff
+			};
 
 			/// <summary>
 			/// (VARTYPE) - (PRECISA SER ATUALIZADA COM MAIS TIPOS SUPORTADOS E ADICIONAR OS RESTANDO NÃO SUPORTADO)Especifica o tipo de dados que está armazenado na PropVariant.

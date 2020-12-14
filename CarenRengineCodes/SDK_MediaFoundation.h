@@ -820,7 +820,7 @@ namespace CarenRengine
 		};
 
 		/// <summary>
-		/// (IMFAsyncResult) - Fornece informações sobre o resultado de uma operação assíncrona.
+		/// (IMFAsyncResult) - Interface responsável por fornecer informações sobre o resultado de uma operação assíncroda.
 		/// </summary>
 		[CategoryAttribute("MF Interface")]
 		[Guid("CAC9CAC9-B241-43DC-8DA8-94EB8A08EB78")]
@@ -1149,7 +1149,7 @@ namespace CarenRengine
 		};
 
 		/// <summary>
-		/// (IMFMediaBuffer) - Contém dados de midia. Os tipos podem ser Áudio ou Video.
+		/// (IMFMediaBuffer) - Interface responsãvel por conter dados de midia. Os tipos podem ser Áudio ou Video.
 		/// Se o buffer conter dados de Imagem 2D (Quadros de vídeo Descompactados), Consulte o Buffer
 		/// para a interface (IDirect3DSurface9) ou (IMF2DBuffer), representada pela Interface (ICarenDirect3DSurface9) e (ICarenMFMedia2DBuffer). 
 		/// Chamadas para Lock, sendo que o Buffer contém (Imagems 2D), pode gerar um aumento de memória interna desnecessária.

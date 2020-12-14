@@ -37,7 +37,7 @@ using namespace CarenRengine::SDKUtilidades;
 
 
 /// <summary>
-/// (Concluido - Fase de Testes) - Classe responsável por
+/// (Concluido - Fase de Testes) - Classe responsável por fornecer informações sobre o resultado de uma operação assíncroda
 /// </summary>
 public ref class CarenMFAsyncResult : ICarenMFAsyncResult
 {
@@ -52,6 +52,20 @@ public ref class CarenMFAsyncResult : ICarenMFAsyncResult
 
 	//Contrutor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	/// </summary>
+	CarenMFAsyncResult();
+
+	/// <summary>
+	/// Inicializa a classe com um novo objeto de resutlado Assincrono implementado internamente.
+	/// </summary>
+	/// <param name="Param_ObjetoDados">Interface para o objeto armazenado no resultado assíncrono. Essa Interface é retornado pelo método (ICarenMFAsyncResult.GetObject). Este parâmetro pode ser MULO.</param>
+	/// <param name="Param_Callback">A interface que é implementada pelo usuário para receber os eventos do sistema.</param>
+	/// <param name="Param_ObjetoEstado">Uma interface de um objeto de estado. Esse valor é fornecido pelo chamador do método assíncrono. Este parâmetro pode ser NULO.</param>
+	CarenMFAsyncResult(ICaren^ Param_ObjetoDados, ICarenMFAsyncCallback^ Param_Callback, ICaren^ Param_ObjetoEstado);
+
 	~CarenMFAsyncResult();
 
 
@@ -79,129 +93,6 @@ public:
 		}
 	}
 
-
-
-	//Cria uma instância dessa classe (Estático)
-public:
-	/// <summary>
-	/// Método responsável por criar um novo resutlado Assincrono.
-	/// </summary>
-	/// <param name="Param_ObjetoDados">Interface para o objeto armazenado no resultado assíncrono. Essa Interface é retornado pelo método (ICarenMFAsyncResult.GetObject). Este parâmetro pode ser MULO.</param>
-	/// <param name="Param_Callback">A interface que é implementada pelo usuário para receber os eventos do sistema.</param>
-	/// <param name="Param_ObjetoEstado">Interface desconhecida de um objeto de estado. Esse valor é fornecido pelo chamador do método assíncrono. Este parâmetro pode ser NULO.</param>
-	/// <param name="Param_Out_AsyncResult">Recebe a interface que contém o resultado assincrono para uma operação.</param>
-	static CarenResult CriarInstancia(ICaren^ Param_ObjetoDados, ICarenMFAsyncCallback^ Param_Callback, ICaren^ Param_ObjetoEstado, [Out] ICarenMFAsyncResult^% Param_Out_AsyncResult)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Variavel que contém o resultado COM.
-		HRESULT Hr = E_FAIL;
-
-		//Variaveis utilizadas no método.
-		IUnknown* pObjetoDados = NULL;
-		IMFAsyncCallback* pCallbackInterface = NULL;
-		IUnknown* pObjetoEstado = NULL;
-		IMFAsyncResult* pResultAsync = NULL;
-		ICarenMFAsyncResult^ CarenInterfaceEvento = nullptr;
-
-		//Obtém as interfaces que seram utilizadas nos parametros de criação do evento.
-		if (Param_ObjetoDados != nullptr)
-		{
-			//Recupera o ponteiro para o objeto de dados.
-			Param_ObjetoDados->RecuperarPonteiro((LPVOID*)&pObjetoDados);
-		}
-		if (Param_Callback != nullptr)
-		{
-			//Recupera o ponteiro para a interface que recebe os eventos.
-			Param_Callback->RecuperarPonteiro((LPVOID*)&pCallbackInterface);
-		}
-		if (Param_ObjetoEstado != nullptr)
-		{
-			//Recupera o ponteiro para o objeto de estado.
-			Param_ObjetoEstado->RecuperarPonteiro((LPVOID*)&pObjetoEstado);
-		}
-
-		//Chama o método para criar o evento.
-		Hr = MFCreateAsyncResult(pObjetoDados ? pObjetoDados : NULL, pCallbackInterface ? pCallbackInterface : NULL, pObjetoEstado ? pObjetoEstado : NULL, &pResultAsync);
-
-		//Verifica o resultado da operação
-		if (Sucesso(Hr))
-		{
-			//Deixa o método continuar.
-		}
-		else
-		{
-			//Define falha na operação.
-			Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-			//Sai do método
-			goto Done;
-		}
-
-		//Cria a interface que vai conter o evento criado.
-		CarenInterfaceEvento = gcnew CarenMFAsyncResult();
-
-		//Define o ponteiro de trabalho
-		CarenInterfaceEvento->AdicionarPonteiro(pResultAsync);
-
-		//Define a interface criada no parametro de saida.
-		Param_Out_AsyncResult = CarenInterfaceEvento;
-
-		//Define sucesso na operação
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	Done:;
-		//Retorna o resultado.
-		return Resultado;
-	}
-
-	/// <summary>
-	/// (MFInvokeCallback) - Invoca um método de retorno de chamada para concluir uma operação assíncrona.
-	/// </summary>
-	static CarenResult EnviarEvento(ICarenMFAsyncResult^ Param_Evento)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Variavel que contém o resultado COM.
-		HRESULT Hr = E_FAIL;
-
-		//Variaveis utilizadas no método.
-		IMFAsyncResult* pResultAsyncSend = NULL;
-
-		//Recupera o ponteiro para o evento a ser enviado
-		Resultado = Param_Evento->RecuperarPonteiro((LPVOID*)&pResultAsyncSend);
-
-		//Verifica se não houve erro
-		if (Resultado.StatusCode != ResultCode::SS_OK)
-		{
-			//Sai do método
-			goto Done;
-		}
-
-		//Chama o método para invocar o evento para o callback especificado.
-		Hr = MFInvokeCallback(pResultAsyncSend);
-
-		//Processa o resultado da chamada.
-		Resultado.ProcessarCodigoOperacao(Hr);
-
-		//Verifica se obteve sucesso na operação.
-		if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-		{
-			//Falhou ao realizar a operação.
-
-			//Sai do método
-			Sair;
-		}
-
-		//Define sucesso na operação
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	Done:;
-		//Retorna o resultado.
-		return Resultado;
-	}
 
 	///////////////////////////////////////////////////////
 	//A parti daqui vai conter os métodos das interfaces.//

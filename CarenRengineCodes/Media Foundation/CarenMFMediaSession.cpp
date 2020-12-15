@@ -18,11 +18,93 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenMFMediaSession.h"
 
+
 //Destruidor.
 CarenMFMediaSession::~CarenMFMediaSession()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
+}
+//Construtores
+CarenMFMediaSession::CarenMFMediaSession()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
+
+CarenMFMediaSession::CarenMFMediaSession(ICarenMFAttributes^ Param_ConfigAtributos)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IMFAttributes* vi_pAttributesConfig = Nulo; //Pode ser Nulo.
+	IMFMediaSession* vi_pOutMediaSession = Nulo;
+
+	//Recupera o ponteiro para a interface de atributos se fornecida
+	if (ObjetoGerenciadoValido(Param_ConfigAtributos))
+		RecuperarPonteiroCaren(Param_ConfigAtributos, &vi_pAttributesConfig);
+
+	//Chama o método para criar a interface.
+	Hr = MFCreateMediaSession(vi_pAttributesConfig, &vi_pOutMediaSession);
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define o ponteiro criado no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutMediaSession;
+}
+
+CarenMFMediaSession::CarenMFMediaSession(CA_PMPSESSION_CREATION_FLAGS Param_Fags, ICarenMFAttributes^ Param_ConfigAtributos, ICarenMFActivate^ Param_Out_Ativador)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	DWORD vi_FlagsCreate = static_cast<DWORD>(Param_Fags);
+	IMFAttributes* vi_pAttributesConfig = Nulo; //Pode ser Nulo.
+	IMFMediaSession* vi_pOutMediaSession = Nulo;
+	IMFActivate* vi_pOutAtivador = Nulo; //Retorna apenas se a interface (IMFMediaSession) não pode ter sido criada.
+
+	//Recupera o ponteiro para a interface de atributos se fornecida
+	if (ObjetoGerenciadoValido(Param_ConfigAtributos))
+		RecuperarPonteiroCaren(Param_ConfigAtributos, &vi_pAttributesConfig);
+
+	//Chama o método para criar a interface.
+	Hr = MFCreatePMPMediaSession(vi_FlagsCreate, vi_pAttributesConfig, &vi_pOutMediaSession, &vi_pOutAtivador);
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Verifica se retornou o media session e define no ponteiro de trabalho.
+	if (ObjetoValido(vi_pOutMediaSession))
+	{
+		//Define a interface criada no parametro de saida.
+		PonteiroTrabalho = vi_pOutMediaSession;
+
+		//Nula o ativador.
+		Param_Out_Ativador = nullptr;
+	}
+
+	//Verifica se não foi retorna o ativador e define no parametro de saida.
+	if (ObjetoValido(vi_pOutAtivador))
+	{
+		//Define o ponteiro no parametro de saida.
+		CarenResult SetPointerResult = DefinirPonteiroInterface(vi_pOutAtivador, Param_Out_Ativador, true);
+
+		//Verifica se não houve erro e chama uma exceção
+		if(!CarenSucesso(SetPointerResult))
+			throw gcnew Exception("Ocorreu uma falha ao definir o ponteiro na interface de ativação(ICarenMFActivate) no parametro (Param_Out_Ativador).");
+	}
 }
 
 //

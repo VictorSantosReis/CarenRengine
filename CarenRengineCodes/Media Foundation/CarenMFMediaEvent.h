@@ -37,7 +37,8 @@ using namespace CarenRengine::SDKBase::Interfaces;
 using namespace CarenRengine::SDKUtilidades;
 
 /// <summary>
-/// [Testes não foram realizados] - Representa um evento gerado por um objeto do Media Foundation. Use essa interface para obter informações sobre o evento.
+/// (Concluido - Fase de Testes) - Representa um evento gerado por um objeto do Media Foundation. Use essa interface para obter informações
+/// sobre o evento.
 /// </summary> 
 public ref class CarenMFMediaEvent : public ICarenMFMediaEvent
 {
@@ -50,6 +51,29 @@ public ref class CarenMFMediaEvent : public ICarenMFMediaEvent
 
 	//Contrutor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMFMediaEvent();
+
+	/// <summary>
+	/// Inicializa e cria um objeto de evento de mídia.
+	/// </summary>
+	/// <param name="Param_TypeEvent">O tipo de evento. Consulte ICarenMFMediaEvent::GetType. Para obter uma lista de tipos de eventos, consulte Media Foundation Events.</param>
+	/// <param name="Param_GuidExtendedType">O tipo estendido. Consulte ICarenMFMediaEvent::GetExtendedType. Se o tipo de evento não tiver um tipo estendido, defina esse parametro como NULO.</param>
+	/// <param name="Param_HRStatus">O status do evento.</param>
+	/// <param name="Param_Valor">O valor associado ao evento, se houver. Consulte ICarenMFMediaevent::GetValue. Este parâmetro pode ser NULO.</param>
+	CarenMFMediaEvent(CA_MediaEventType Param_TypeEvent, String^ Param_GuidExtendedType, CarenResult Param_HRStatus, CA_PropVariant^ Param_Valor);
+
+	/// <summary>
+	/// Inicializa e cria um objeto de evento de mídia.
+	/// </summary>
+	/// <param name="Param_TypeEvent">O tipo de evento. Consulte ICarenMFMediaEvent::GetType. Para obter uma lista de tipos de eventos, consulte Media Foundation Events.</param>
+	/// <param name="Param_GuidExtendedType">O tipo estendido. Consulte ICarenMFMediaEvent::GetExtendedType. Se o tipo de evento não tiver um tipo estendido, defina esse parametro como NULO.</param>
+	/// <param name="Param_HRStatus">O status do evento.</param>
+	/// <param name="Param_Valor">O valor associado ao evento, se houver. Consulte ICarenMFMediaevent::GetValue. Este parâmetro pode ser NULO.</param>
+	CarenMFMediaEvent(CA_MediaEventType Param_TypeEvent, String^ Param_GuidExtendedType, int Param_HRStatus, CA_PropVariant^ Param_Valor);
+
 	~CarenMFMediaEvent();
 
 

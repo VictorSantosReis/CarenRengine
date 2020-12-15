@@ -18,11 +18,44 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenMFDXGIDeviceManager.h"
 
+
 //Destruidor.
 CarenMFDXGIDeviceManager::~CarenMFDXGIDeviceManager()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
+}
+//Construtores
+CarenMFDXGIDeviceManager::CarenMFDXGIDeviceManager()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
+
+CarenMFDXGIDeviceManager::CarenMFDXGIDeviceManager(OutParam UInt32% Param_Out_ResetToken)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	UINT vi_OutResetToken = 0;
+	IMFDXGIDeviceManager* vi_pOutDXGIManager = Nulo;
+
+	//Chama o método para criar a interface.
+	Hr = MFCreateDXGIDeviceManager(&vi_OutResetToken, &vi_pOutDXGIManager);
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define o ponteiro criado no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutDXGIManager;
+
+	//Define o Token no parametro de saida.
+	Param_Out_ResetToken = vi_OutResetToken;
 }
 
 //

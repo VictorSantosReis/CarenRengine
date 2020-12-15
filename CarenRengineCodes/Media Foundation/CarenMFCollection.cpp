@@ -25,6 +25,37 @@ CarenMFCollection::~CarenMFCollection()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor
+CarenMFCollection::CarenMFCollection(Boolean Param_CriarInterface)
+{
+	//Verifica se deve ou não criar uma interface.
+	if (Param_CriarInterface)
+	{
+		//Variavel que vai conter o resultado COM.
+		HRESULT Hr = E_FAIL;
+
+		//Variaveis utilizadas.
+		Utilidades Util;
+		IMFCollection* vi_pOutCollection = Nulo;
+
+		//Chama o método para criar a interface.
+		Hr = MFCreateCollection(&vi_pOutCollection);
+
+		//Verifica se não ocorreu erro no processo.
+		if (!Sucesso(Hr))
+		{
+			//Chama uma exceção para informar o error.
+			throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+		}
+
+		//Define o ponteiro criado no ponteiro de trabalho
+		PonteiroTrabalho = vi_pOutCollection;
+	}
+	else
+	{
+		//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+	}
+}
 
 //
 // Métodos da interface ICaren

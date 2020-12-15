@@ -50,6 +50,17 @@ public ref class CarenMFDXGIDeviceManager :public ICarenMFDXGIDeviceManager
 
 	//Contrutor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMFDXGIDeviceManager();
+
+	/// <summary>
+	/// Inicializa e cria uma nova instância do Gerenciador de Dispositivos Microsoft DirectX Graphics Infrastructure (DXGI). 
+	/// </summary>
+	/// <param name="Param_Out_ResetToken">Recebe um token que identifica esta instância do DXGI Device Manager. Use este token ao chamar IMFDXGIDeviceManager::ResetDevice.</param>
+	CarenMFDXGIDeviceManager(OutParam UInt32% Param_Out_ResetToken);
+
 	~CarenMFDXGIDeviceManager();
 
 

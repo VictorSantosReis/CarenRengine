@@ -17,6 +17,7 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenMFNetCredentialCache.h"
 
+
 //Destruidor.
 CarenMFNetCredentialCache::~CarenMFNetCredentialCache()
 {
@@ -24,9 +25,35 @@ CarenMFNetCredentialCache::~CarenMFNetCredentialCache()
 	Prop_DisposedClasse = true;
 }
 //Construtores
-CarenMFNetCredentialCache::CarenMFNetCredentialCache()
+CarenMFNetCredentialCache::CarenMFNetCredentialCache(Boolean Param_CriarInterface)
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//Verifica se deve ou não criar uma interface.
+	if (Param_CriarInterface)
+	{
+		//Variavel que vai conter o resultado COM.
+		HRESULT Hr = E_FAIL;
+
+		//Variaveis utilizadas.
+		Utilidades Util;
+		IMFNetCredentialCache* vi_pOutCredentialCache = Nulo;
+
+		//Chama o método para criar a interface.
+		Hr = MFCreateCredentialCache(&vi_pOutCredentialCache);
+
+		//Verifica se não ocorreu erro no processo.
+		if (!Sucesso(Hr))
+		{
+			//Chama uma exceção para informar o error.
+			throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+		}
+
+		//Define o ponteiro criado no ponteiro de trabalho
+		PonteiroTrabalho = vi_pOutCredentialCache;
+	}
+	else
+	{
+		//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+	}
 }
 
 // Métodos da interface ICaren

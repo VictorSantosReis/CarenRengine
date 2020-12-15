@@ -66,6 +66,7 @@ limitations under the License.
 #include <mfmp2dlna.h>
 #include <mfmediaengine.h>
 #include <mfcaptureengine.h>
+#include <wmcontainer.h>
 #include <Shlwapi.h>
 #include <evr.h>
 #include <mmreg.h>

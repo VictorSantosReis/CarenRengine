@@ -56,6 +56,34 @@ public:
 	CarenResult _MFShutdown();
 
 	/// <summary>
+	/// Cria um objeto de ativação para uma classe do Windows Runtime.
+	/// </summary>
+	/// <param name="Param_ActivatableClassId">O identificador de classe que está associado à classe de tempo de execução ativável.</param>
+	/// <param name="Param_Configuration">Um ponteiro para um objeto IPropertySet opcional, que é usado para configurar a classe do Windows Runtime. Este parâmetro pode ser NULO.</param>
+	/// <param name="Param_RIID">O identificador de interface(IID) da interface solicitada.O objeto de ativação criado por esta função suporta as seguintes interfaces: IClassFactory, ICarenMFActivate, ICarenPersisStream</param>
+	/// <param name="Param_Out_Objeto">Recebe a interface que foi solicitada. O usuário deve inicializar a interfaces antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _MFCreateMediaExtensionActivate(String^ Param_ActivatableClassId, ICaren^ Param_Configuration, String^ Param_RIID, ICaren^ Param_Out_Objeto);
+
+	/// <summary>
+	/// Cria uma interface IMFContentDecryptorContext para o sistema de proteção de mídia especificado.
+	/// </summary>
+	/// <param name="Param_GuidMediaProtectionSystem">O identificador do sistema de proteção de mídia para o qual você deseja criar uma interface IMFContentDecryptorContext.</param>
+	/// <param name="Param_DXGIManager">Uma interface ICarenMFDXGIDeviceManager que você deseja usar para compartilhar o dispositivo Direct3D 11.</param>
+	/// <param name="Param_ProtectionDevice">A interface IMFContentProtectionDevice para o sistema de proteção de mídia especificado.</param>
+	/// <param name="Param_Out_ContentDecryptorContext">Retorna um pontiro para a interface (IMFContentDecryptorContext) criada. O usuário deve inicializar a interface antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _MFCreateContentDecryptorContext(String^ Param_GuidMediaProtectionSystem, ICarenMFDXGIDeviceManager^ Param_DXGIManager, ICaren^ Param_ProtectionDevice, ICaren^ Param_Out_ContentDecryptorContext);
+
+	/// <summary>
+	/// Cria uma interface IMFContentProtectionDevice para o sistema de proteção de mídia especificado.
+	/// </summary>
+	/// <param name="Param_GuidMediaProtectionSystem">O identificador do sistema de proteção de mídia para o qual você deseja criar a interface IMFContentProtectionDevice.</param>
+	/// <param name="Param_Out_ContentProtectionDevice">Retorna um pontiro para a interface (IMFContentProtectionDevice) criada. O usuário deve inicializar a interface antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _MFCreateContentProtectionDevice(String^ Param_GuidMediaProtectionSystem, ICaren^ Param_Out_ContentProtectionDevice);
+
+	/// <summary>
 	/// Cria um objeto de serviços DXVA (DirectX Video Acceleration, aceleração de vídeo directx). Ligue para esta função se o aplicativo usar O DXVA diretamente, sem usar o DirectShow ou a Media Foundation.
 	/// </summary>
 	/// <param name="Param_Direct3DDevice9">Umaa interface IDirect3DDevice9 de um dispositivo Direct3D.</param>
@@ -259,9 +287,27 @@ public:
 	/// O objeto de ativação do coletor de transcodificação pode ser usado para criar qualquer um dos seguintes coletores de arquivo: Coletor de arquivo 3GP, MP3 ou MP4.
 	/// </summary>
 	/// <param name="Param_Out_Transcode">Retorna uma interface ICarenMFActivate. Esta interface é usada para criar a instância do coletor de arquivos a partir do objeto de ativação. Antes de fazer isso, consulte o 
-	/// ponteiro retornado para a interface ICarenMFTranscodeSinkInfoProvider e use essa interface para inicializar o objeto.</param>
+	/// ponteiro retornado para a interface ICarenMFTranscodeSinkInfoProvider e use essa interface para inicializar o objeto.  O usuário deve inicializar a interface antes de chamar este método.</param>
 	/// <returns></returns>
 	CarenResult _MFCreateTranscodeSinkActivate(CarenMFActivate^ Param_Out_Transcode);
+
+	/// <summary>
+	/// Cria um objeto de ativação que pode ser usado para criar um codificador WMA (Windows Media Audio).
+	/// </summary>
+	/// <param name="Param_MediaType">Uma interface ICarenMFMediaType. Este parâmetro especifica o formato de saída codificado.</param>
+	/// <param name="Param_EncodingProperties">Uma interface ICarenPropertyStore de uma loja de propriedades que contém parâmetros de codificação. Os parâmetros de codificação do codificador WMV são definidos no arquivo de cabeçalho wmcodecdsp.h. Se você tiver um objeto ASF ContentInfo que contenha um objeto de perfil ASF com todos os fluxos para o arquivo de saída, você pode obter a loja de propriedades ligando para IMFASFContentInfo::GetEncodingConfigurationPropertyStore.</param>
+	/// <param name="Param_Out_Codificador">Retorna uma interface (ICarenMFActivate) do objeto de ativação para o codificador de áudio WMA. O usuário deve inicializar a interface antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _MFCreateWMAEncoderActivate(ICarenMFMediaType^ Param_MediaType, ICarenPropertyStore^ Param_EncodingProperties, ICarenMFActivate^ Param_Out_Codificador);
+
+	/// <summary>
+	/// Cria um objeto de ativação que pode ser usado para criar um codificador WMV (Windows Media Video).
+	/// </summary>
+	/// <param name="Param_MediaType">Uma interface ICarenMFMediaType. Este parâmetro especifica o formato de saída codificado.</param>
+	/// <param name="Param_EncodingProperties">Uma interface ICarenPropertyStore de uma loja de propriedades que contém parâmetros de codificação. Os parâmetros de codificação do codificador WMV são definidos no arquivo de cabeçalho wmcodecdsp.h. Se você tiver um objeto ASF ContentInfo que contenha um objeto de perfil ASF com todos os fluxos para o arquivo de saída, você pode obter a loja de propriedades ligando para IMFASFContentInfo::GetEncodingConfigurationPropertyStore.</param>
+	/// <param name="Param_Out_Codificador">Retorna uma interface (ICarenMFActivate) do objeto de ativação para o codificador de áudio WMA. O usuário deve inicializar a interface antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _MFCreateWMVEncoderActivate(ICarenMFMediaType^ Param_MediaType, ICarenPropertyStore^ Param_EncodingProperties, ICarenMFActivate^ Param_Out_Codificador);
 
 	/// <summary>
 	/// Converte um tipo de mídia de áudio do Media Foundation para uma estrutura Wav.

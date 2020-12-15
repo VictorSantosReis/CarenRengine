@@ -68,6 +68,143 @@ Done:;
 	return Resultado;
 }
 
+CarenResult MediaFoundationFunctions::_MFCreateMediaExtensionActivate(String^ Param_ActivatableClassId, ICaren^ Param_Configuration, String^ Param_RIID, ICaren^ Param_Out_Objeto)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	PCWSTR vi_pClassID = Nulo;
+	IUnknown* vi_pConfigInterface = Nulo; //Pode ser NULO.
+	GUID vi_Riid = GUID_NULL;
+	IUnknown* vi_pOutObjeto = Nulo;
+
+	//Converte a string para a Class Id.
+	vi_pClassID = Util.ConverterStringToConstWCHAR(Param_ActivatableClassId);
+
+	//Recupera a interface IPropertySet se fonecida no parametro (Param_Configuration).
+	if(ObjetoGerenciadoValido(Param_Configuration))
+		CarenGetPointerFromICarenSafe(Param_Configuration, vi_pConfigInterface)
+
+	//Converte a string para o guid.
+	vi_Riid = Util.CreateGuidFromString(Param_RIID);
+
+	//Chama o método para realizar a operação.
+	Hr = MFCreateMediaExtensionActivate(vi_pClassID, vi_pConfigInterface, vi_Riid, reinterpret_cast<void**>(&vi_pOutObjeto));
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o ponteiro na interface.
+	CarenSetPointerToICarenSafe(vi_pOutObjeto, Param_Out_Objeto, true);
+
+Done:;
+	//Libera memória para a string.
+	DeletarStringAllocatedSafe(const_cast<PWSTR*>(&vi_pClassID));
+
+	//Retorna o resultado
+	return Resultado;
+}
+
+CarenResult MediaFoundationFunctions::_MFCreateContentDecryptorContext(String^ Param_GuidMediaProtectionSystem, ICarenMFDXGIDeviceManager^ Param_DXGIManager, ICaren^ Param_ProtectionDevice, ICaren^ Param_Out_ContentDecryptorContext)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	GUID vi_Riid = GUID_NULL;
+	IMFDXGIDeviceManager* vi_pDevice = Nulo;
+	IMFContentProtectionDevice* vi_pProtectionDevice = Nulo;
+	IMFContentDecryptorContext* vi_pOutContext = Nulo;
+
+	//Converte a string para o guid.
+	vi_Riid = Util.CreateGuidFromString(Param_GuidMediaProtectionSystem);
+
+	//Recupera o ponteiro para a interface do dispositivo.
+	CarenGetPointerFromICarenSafe(Param_DXGIManager, vi_pDevice);
+
+	//Recupera o ponteiro para a interface de protecao do dispositivo de midia.
+	CarenGetPointerFromICarenSafe(Param_ProtectionDevice, vi_pProtectionDevice);
+
+	//Chama o método para realizar a operação.
+	Hr = MFCreateContentDecryptorContext(vi_Riid, vi_pDevice, vi_pProtectionDevice, &vi_pOutContext);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o ponteiro na interface.
+	CarenSetPointerToICarenSafe(vi_pOutContext, Param_Out_ContentDecryptorContext, true);
+
+Done:;
+	//Retorna o resultado
+	return Resultado;
+}
+
+CarenResult MediaFoundationFunctions::_MFCreateContentProtectionDevice(String^ Param_GuidMediaProtectionSystem, ICaren^ Param_Out_ContentProtectionDevice)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	GUID vi_Riid = GUID_NULL;
+	IMFContentProtectionDevice* vi_pOutProtectionDevice = Nulo;
+
+	//Converte a string para o guid.
+	vi_Riid = Util.CreateGuidFromString(Param_GuidMediaProtectionSystem);
+
+	//Chama o método para realizar a operação.
+	Hr = MFCreateContentProtectionDevice(vi_Riid, &vi_pOutProtectionDevice);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o ponteiro na interface.
+	CarenSetPointerToICarenSafe(vi_pOutProtectionDevice, Param_Out_ContentProtectionDevice, true);
+
+Done:;
+	//Retorna o resultado
+	return Resultado;
+}
+
 CarenResult MediaFoundationFunctions::_DXVA2CreateVideoService(ICaren^ Param_Direct3DDevice9, String^ Param_RIID, ICaren^ Param_Out_VideoService)
 {
 	//Variavel a ser retornada.
@@ -980,7 +1117,6 @@ CarenResult MediaFoundationFunctions::_MFCreateTranscodeSinkActivate(CarenMFActi
 	HRESULT Hr = E_FAIL;
 
 	//Variaveis utilizadas.
-	Utilidades Util;
 	IMFActivate* vi_pOutTranscode = Nulo;
 
 	//Chama o método para realizar a operação.
@@ -1000,6 +1136,92 @@ CarenResult MediaFoundationFunctions::_MFCreateTranscodeSinkActivate(CarenMFActi
 
 	//Define o ponteiro na interface.
 	CarenSetPointerToICarenSafe(vi_pOutTranscode, Param_Out_Transcode, true);
+
+Done:;
+	//Retorna o resultado
+	return Resultado;
+}
+
+CarenResult MediaFoundationFunctions::_MFCreateWMAEncoderActivate(ICarenMFMediaType^ Param_MediaType, ICarenPropertyStore^ Param_EncodingProperties, ICarenMFActivate^ Param_Out_Codificador)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IMFMediaType* vi_pMediaType = Nulo;
+	IPropertyStore* vi_pStore = Nulo;
+	IMFActivate* vi_pOutEncoder = Nulo;
+
+	//Recupera o ponteiro para o tipo de midia.
+	CarenGetPointerFromICarenSafe(Param_MediaType, vi_pMediaType);
+
+	//Recupera o ponteiro para a loja de propriedades
+	CarenGetPointerFromICarenSafe(Param_EncodingProperties, vi_pStore);
+
+	//Chama o método para realizar a operação.
+	Hr = MFCreateWMAEncoderActivate(vi_pMediaType, vi_pStore, &vi_pOutEncoder);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o ponteiro na interface.
+	CarenSetPointerToICarenSafe(vi_pOutEncoder, Param_Out_Codificador, true);
+
+Done:;
+	//Retorna o resultado
+	return Resultado;
+}
+
+CarenResult MediaFoundationFunctions::_MFCreateWMVEncoderActivate(ICarenMFMediaType^ Param_MediaType, ICarenPropertyStore^ Param_EncodingProperties, ICarenMFActivate^ Param_Out_Codificador)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IMFMediaType* vi_pMediaType = Nulo;
+	IPropertyStore* vi_pStore = Nulo;
+	IMFActivate* vi_pOutEncoder = Nulo;
+
+	//Recupera o ponteiro para o tipo de midia.
+	CarenGetPointerFromICarenSafe(Param_MediaType, vi_pMediaType);
+
+	//Recupera o ponteiro para a loja de propriedades
+	CarenGetPointerFromICarenSafe(Param_EncodingProperties, vi_pStore);
+
+	//Chama o método para realizar a operação.
+	Hr = MFCreateWMVEncoderActivate(vi_pMediaType, vi_pStore, &vi_pOutEncoder);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o ponteiro na interface.
+	CarenSetPointerToICarenSafe(vi_pOutEncoder, Param_Out_Codificador, true);
 
 Done:;
 	//Retorna o resultado

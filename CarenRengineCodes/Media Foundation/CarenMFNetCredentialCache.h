@@ -49,9 +49,11 @@ public ref class CarenMFNetCredentialCache : public ICarenMFNetCredentialCache
 	//Contrutores e destuidor da classe.
 public:
 	/// <summary>
-	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// Inicializa a interface e permite que o usuário decida se a biblioteca deve criar a interface ou vai iniciar sem um ponteiro 
+	/// de trabalho.
 	/// </summary>
-	CarenMFNetCredentialCache();
+	/// <param name="Param_CriarInterface">Um valor booleano, TRUE indica que deve criar uma nova interface intermanete, caso contario, FALSE.</param>
+	CarenMFNetCredentialCache(Boolean Param_CriarInterface);
 	
 	~CarenMFNetCredentialCache();
 

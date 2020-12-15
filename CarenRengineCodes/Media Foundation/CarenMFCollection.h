@@ -23,8 +23,6 @@ limitations under the License.
 //Importa o namespace que contém as interfaces da Media Foundation.
 using namespace CarenRengine::MediaFoundation;
 
-//Enumeração de retorno de função.
-
 
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
@@ -51,6 +49,13 @@ public ref class CarenMFCollection :public ICarenMFCollection
 
 	//Contrutor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a interface e permite que o usuário decida se a biblioteca deve criar a interface ou vai iniciar sem um ponteiro 
+	/// de trabalho.
+	/// </summary>
+	/// <param name="Param_CriarInterface">Um valor booleano, TRUE indica que deve criar uma nova interface intermanete, caso contario, FALSE.</param>
+	CarenMFCollection(Boolean Param_CriarInterface);
+
 	~CarenMFCollection();
 
 
@@ -76,75 +81,6 @@ public:
 			//Retorna o valor.
 			return Prop_DisposedClasse;
 		}
-	}
-
-	//Cria uma instância dessa classe (Estático)
-public:
-	/// <summary>
-	/// Método responsável por criar uma instância vazia da classe atual. Chamadas para essa interface podem gerar exceções se
-	/// um ponteiro de trabalho não tiver sido definido.
-	/// </summary>
-	/// <param name="Param_Out_MFCollection">Recebe a interface que gerencia uma coleção de ponteiros.</param>
-	static CarenResult CriarInstanciaVazia([Out] ICarenMFCollection^% Param_Out_MFCollection)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Cria a classe e retorna no parametro de saida.
-		Param_Out_MFCollection = gcnew CarenMFCollection();
-
-		//Define sucesso na operção.
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-		//Retorna o resultado.
-		return Resultado;
-	}
-
-	/// <summary>
-	/// Método responsável por criar uma instância da classe de coleção de ponteiros.
-	/// </summary>
-	/// <param name="Param_Out_MFCollection">Recebe a interface que gerencia uma coleção de ponteiros.</param>
-	static CarenResult CriarInstancia([Out] ICarenMFCollection^% Param_Out_MFCollection)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Variavel que contém o resultado COM.
-		HRESULT Hr = E_FAIL;
-
-		//Variaveis.
-		IMFCollection* pColeção = NULL;
-		ICarenMFCollection^ PonteiroInterface = nullptr;
-
-		//Chama o método que vai criar a coleção
-		Hr = MFCreateCollection(&pColeção);
-		
-		//Verifica se obteve sucesso
-		if (Sucesso(Hr))
-		{
-			//Deixa o método continuar.
-		}
-		else
-		{
-			//Sai do método.
-			goto Done;
-		}
-
-		//Cria a interface gerenciada
-		PonteiroInterface = gcnew CarenMFCollection();
-
-		//Define o ponteiro de trabalho.
-		PonteiroInterface->AdicionarPonteiro(pColeção);
-
-		//Define o ponteiro no parametro de saida.
-		Param_Out_MFCollection = PonteiroInterface;
-
-		//Define sucesso na operção.
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	Done:;
-		//Retorna o resultado.
-		return Resultado;
 	}
 
 

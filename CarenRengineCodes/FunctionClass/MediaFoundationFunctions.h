@@ -56,11 +56,21 @@ public:
 	CarenResult _MFShutdown();
 
 	/// <summary>
+	/// Cria um objeto de serviços DXVA (DirectX Video Acceleration, aceleração de vídeo directx). Ligue para esta função se o aplicativo usar O DXVA diretamente, sem usar o DirectShow ou a Media Foundation.
+	/// </summary>
+	/// <param name="Param_Direct3DDevice9">Umaa interface IDirect3DDevice9 de um dispositivo Direct3D.</param>
+	/// <param name="Param_RIID">O identificador de interface (IID) da interface solicitada. Qualquer uma das seguintes interfaces pode ser suportada pelo dispositivo Direct3D: IDirectXVideoAcacelerationService | 
+	/// IDirectXVideoDecoderService | IDirectXVideoProcessorService</param>
+	/// <param name="Param_Out_VideoService">Recebe o ponteiro para a interface solicitada. O usuário deve inicializar a interface antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _DXVA2CreateVideoService(ICaren^ Param_Direct3DDevice9, String^ Param_RIID, ICaren^ Param_Out_VideoService);
+
+	/// <summary>
 	/// Aloca a memória do sistema com um alinhamento de byte especificado e cria um buffer de mídia para gerenciar a memória.
 	/// </summary>
 	/// <param name="Param_MaxLenght">O tamanho do buffer, em bytes.</param>
 	/// <param name="Param_Aligment">Especifica o alinhamento de memória para o buffer.</param>
-	/// <param name="Param_Out_Buffer">Retorna uma interface (ICarenMFMediaBuffer) do buffer de mídia. usuário deve inicializar a interface antes de chamar este método.</param>
+	/// <param name="Param_Out_Buffer">Retorna uma interface (ICarenMFMediaBuffer) do buffer de mídia. O usuário deve inicializar a interface antes de chamar este método.</param>
 	/// <returns></returns>
 	CarenResult _MFCreateAlignedMemoryBuffer(UInt32 Param_MaxLenght, CA_MF_BYTE_ALIGNMENT Param_Aligment, ICarenMFMediaBuffer^ Param_Out_Buffer);
 
@@ -71,7 +81,7 @@ public:
 	/// <param name="Param_SuperficeDXGI">Uma interface IUnknown da superfície DXGI.</param>
 	/// <param name="Param_SubresourceIndex">O índice baseado em zero de uma subrefonte da superfície. O objeto buffer de mídia está associado a essa subrefonte.</param>
 	/// <param name="Param_BottomUpWhenLinear">Se TRUE, o método ICarenMF2DBuffer::ContiguousCopyTo copia o buffer em um formato de baixo para cima. O formato de baixo para cima é compatível com GDI para imagens RGB não compactadas. Se este parâmetro for FALSE, o método ContiguousCopyTo copia o buffer em um formato de cima para baixo, compatível com o Direct3D.</param>
-	/// <param name="Param_Out_Buffer">Retorna uma interface (ICarenMFMediaBuffer) do buffer de mídia. usuário deve inicializar a interface antes de chamar este método.</param>
+	/// <param name="Param_Out_Buffer">Retorna uma interface (ICarenMFMediaBuffer) do buffer de mídia. O usuário deve inicializar a interface antes de chamar este método.</param>
 	/// <returns></returns>
 	CarenResult _MFCreateDXGISurfaceBuffer(String^ Param_RIID, ICaren^ Param_SuperficeDXGI, UInt32 Param_SubresourceIndex, Boolean Param_BottomUpWhenLinear, ICarenMFMediaBuffer^ Param_Out_Buffer);
 
@@ -81,7 +91,7 @@ public:
 	/// <param name="Param_RIID">Identifica o tipo de superfície Direct3D 9. Atualmente esse valor deve ser IID_IDirect3DSurface9.</param>
 	/// <param name="Param_SurfaceDX">Uma interface IUnknown da superfície DirectX.</param>
 	/// <param name="Param_BottomUpWhenLinear">Se TRUE, o método ICarenMF2DBuffer::ContiguousCopyTo copia o buffer em um formato de baixo para cima. O formato de baixo para cima é compatível com GDI para imagens RGB não compactadas. Se este parâmetro for FALSE, o método ContiguousCopyTo copia o buffer em um formato de cima para baixo, compatível com o Direct3D.</param>
-	/// <param name="Param_Out_Buffer">Retorna uma interface (ICarenMFMediaBuffer) do buffer de mídia. usuário deve inicializar a interface antes de chamar este método.</param>
+	/// <param name="Param_Out_Buffer">Retorna uma interface (ICarenMFMediaBuffer) do buffer de mídia. O usuário deve inicializar a interface antes de chamar este método.</param>
 	/// <returns></returns>
 	CarenResult _MFCreateDXSurfaceBuffer(String^ Param_RIID, ICaren^ Param_SurfaceDX,  Boolean Param_BottomUpWhenLinear, ICarenMFMediaBuffer^ Param_Out_Buffer);
 
@@ -92,7 +102,7 @@ public:
 	/// <param name="Param_Duration">A duração da amostra. Este valor é necessário para formatos de áudio.</param>
 	/// <param name="Param_MinLenght">O tamanho mínimo do buffer, em bytes. O tamanho real do buffer pode ser maior. Especifique zero para alocar o tamanho padrão do buffer para o tipo de mídia.</param>
 	/// <param name="Param_MinAligment">O alinhamento mínimo da memória para o buffer. Especifique zero para usar o alinhamento de memória padrão.</param>
-	/// <param name="Param_Out_Buffer">Retorna uma interface (ICarenMFMediaBuffer) do buffer de mídia. usuário deve inicializar a interface antes de chamar este método.</param>
+	/// <param name="Param_Out_Buffer">Retorna uma interface (ICarenMFMediaBuffer) do buffer de mídia. O usuário deve inicializar a interface antes de chamar este método.</param>
 	/// <returns></returns>
 	CarenResult _MFCreateMediaBufferFromMediaType(ICarenMFMediaType^ Param_MediaType, Int64 Param_Duration, UInt32 Param_MinLenght, UInt32 Param_MinAligment, ICarenMFMediaBuffer^ Param_Out_Buffer);
 
@@ -101,7 +111,7 @@ public:
 	/// </summary>
 	/// <param name="Param_RIID">O identificador da interface. Atualmente este parametro deve ser IID_IWICBitmap</param>
 	/// <param name="Param_Surface">Uma interface IUnknown da superfície bitmap. A superfície bitmap deve ser um bitmap WIC que expõe a interface ICarenWICBitmap.</param>
-	/// <param name="Param_Out_Buffer">Retorna uma interface (ICarenMFMediaBuffer) do buffer de mídia. usuário deve inicializar a interface antes de chamar este método.</param>
+	/// <param name="Param_Out_Buffer">Retorna uma interface (ICarenMFMediaBuffer) do buffer de mídia. O usuário deve inicializar a interface antes de chamar este método.</param>
 	/// <returns></returns>
 	CarenResult _MFCreateWICBitmapBuffer(String^ Param_RIID, ICaren^ Param_Surface, ICarenMFMediaBuffer^ Param_Out_Buffer);
 	
@@ -136,12 +146,122 @@ public:
 	CarenResult _MFCreateVideoRendererActivate(IntPtr Param_Hwnd, ICarenMFActivate^ Param_Out_EnhancedVideoRenderer);
 
 	/// <summary>
+	/// Cria uma nova instância do Media Sink para o SAR (Streaming Audio Render).
+	/// </summary>
+	/// <param name="Param_AudioAtributos">Uma interface ICarenMFAttributes, que é usada para configurar o renderizador de áudio. Este parâmetro pode ser NULO.</param>
+	/// <param name="Param_Out_MediaSink">Retorna a interface (ICarenMFMediaSink) para o SAR. O usuário deve inicializar a interface antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _MFCreateAudioRenderer(ICarenMFAttributes^ Param_AudioAtributos, ICarenMFMediaSink^ Param_Out_MediaSink);
+
+	/// <summary>
+	/// Cria uma instância do Media Sink do processador de vídeo aprimorado (EVR).
+	/// </summary>
+	/// <param name="Param_RIID">Identificador de interface (IID) da interface solicitada no EVR.</param>
+	/// <param name="Param_Out_VideoRenderer">Recebe a interface solicitada. O usuário deve inicializar a interface antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _MFCreateVideoRenderer(String^ Param_RIID, ICaren^ Param_Out_VideoRenderer);
+
+	/// <summary>
+	/// Cria um media sink para criar arquivos 3GP.
+	/// </summary>
+	/// <param name="Param_ByteStream">Uma interface ICarenMFByteStream de um fluxo byte. O Media Sink grava o arquivo 3GP para este fluxo byte. O fluxo byte deve ser escrito e apoiar a busca.</param>
+	/// <param name="Param_VideoType">Uma interface ICarenMFMediaType de um tipo de mídia de vídeo. Este tipo especifica o formato da transmissão de vídeo. Este parâmetro pode ser NULO, mas não se (Param_AudioType) for NULO.</param>
+	/// <param name="Param_AudioType">Uma interface ICarenMFMediaType de um tipo de mídia de áudio. Este tipo especifica o formato do fluxo de áudio. Este parâmetro pode ser NULO, mas não se (Param_VideoType) for NULO.</param>
+	/// <param name="Param_Out_MediaSink">Retorna a interface (ICarenMFMediaSink) do coletor de mídia 3GP(Media Sink). O usuário deve inicializar a interface antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _MFCreate3GPMediaSink(ICarenMFByteStream^ Param_ByteStream, ICarenMFMediaType^ Param_VideoType, ICarenMFMediaType^ Param_AudioType, ICarenMFMediaSink^ Param_Out_MediaSink);
+
+	/// <summary>
+	/// Cria uma instância do AC-3 media sink.
+	/// </summary>
+	/// <param name="Param_ByteStream">Um a interface ICarenMFByteStream de um fluxo byte. O Media Sink grava o arquivo AC-3 para este fluxo de byte. O fluxo de byte deve ser escrito.</param>
+	/// <param name="Param_AudioType">Uma interface ICarenMFMediaType. Este parâmetro especifica o tipo de mídia para o fluxo de áudio AC-3. O tipo de mídia deve conter os seguintes atributos: MF_MT_MAJOR_TYPE & MF_MT_SUBTYPE</param>
+	/// <param name="Param_Out_MediaSink">Retorna a interface (ICarenMFMediaSink) do coletor de mídia 3GP(Media Sink). O usuário deve inicializar a interface antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _MFCreateAC3MediaSink(ICarenMFByteStream^ Param_ByteStream, ICarenMFMediaType^ Param_AudioType, ICarenMFMediaSink^ Param_Out_MediaSink);
+
+	/// <summary>
+	/// Cria uma instância do media sink do fluxo de transporte de dados de áudio (ADTS).
+	/// </summary>
+	/// <param name="Param_ByteStream">Um a interface ICarenMFByteStream de um fluxo byte. O Media Sink grava o fluxo ADTS para este fluxo byte. O fluxo de byte deve ter permissão de escrita.</param>
+	/// <param name="Param_AudioType">Uma interface ICarenMFMediaType. Este parâmetro especifica o tipo de mídia para o fluxo ADTS. O tipo de mídia deve conter os seguintes atributos: MF_MT_MAJOR_TYPE & MF_MT_SUBTYPE & MF_MT_AAC_PAYLOAD_TYPE</param>
+	/// <param name="Param_Out_MediaSink">Retorna a interface (ICarenMFMediaSink). O usuário deve inicializar a interface antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _MFCreateADTSMediaSink(ICarenMFByteStream^ Param_ByteStream, ICarenMFMediaType^ Param_AudioType, ICarenMFMediaSink^ Param_Out_MediaSink);
+
+	/// <summary>
+	/// Cria um coletor de arquivos WAVE. O coletor de arquivos WAVE pega o áudio e o grava em um arquivo .wav.
+	/// </summary>
+	/// <param name="Param_ByteStream">Um a interface ICarenMFByteStream de um fluxo byte. O Media Sink grava o fluxo WAVE para este fluxo byte. O fluxo de byte deve ter permissão de escrita.</param>
+	/// <param name="Param_AudioType">Uma interface ICarenMFMediaType. Este parâmetro especifica o tipo de mídia para o fluxo WAVE.</param>
+	/// <param name="Param_Out_MediaSink">Retorna a interface (ICarenMFMediaSink) do coletor de mídia WAVE(Media Sink). O usuário deve inicializar a interface antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _MFCreateWAVEMediaSink(ICarenMFByteStream^ Param_ByteStream, ICarenMFMediaType^ Param_AudioType, ICarenMFMediaSink^ Param_Out_MediaSink);
+
+	/// <summary>
+	/// Cria uma nova instância do coletor de midia MP3(Media Sink).
+	/// </summary>
+	/// <param name="Param_ByteStream">Um a interface ICarenMFByteStream de um fluxo byte. O Media Sink grava o arquivo mp3 para este fluxo byte. O fluxo de byte deve ter permissão de escrita.</param>
+	/// <param name="Param_Out_MediaSink">Retorna a interface (ICarenMFMediaSink). O usuário deve inicializar a interface antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _MFCreateMP3MediaSink(ICarenMFByteStream^ Param_ByteStream, ICarenMFMediaSink^ Param_Out_MediaSink);
+
+	/// <summary>
+	/// Cria um media sink para a criação de arquivos MP4 fragmentados.
+	/// </summary>
+	/// <param name="Param_ByteStream">Uma interface ICarenMFByteStream de um fluxo byte. O Media Sink grava o arquivo MP4 para este fluxo byte. O fluxo byte deve ser escrito e apoiar a busca.</param>
+	/// <param name="Param_VideoType">Uma interface ICarenMFMediaType de um tipo de mídia de vídeo. Este tipo especifica o formato da transmissão de vídeo. Este parâmetro pode ser NULO, mas não se (Param_AudioType) for NULO.</param>
+	/// <param name="Param_AudioType">Uma interface ICarenMFMediaType de um tipo de mídia de áudio. Este tipo especifica o formato do fluxo de áudio. Este parâmetro pode ser NULO, mas não se (Param_VideoType) for NULO.</param>
+	/// <param name="Param_Out_MediaSink">Retorna a interface (ICarenMFMediaSink) do coletor de mídia MP4(Media Sink). O usuário deve inicializar a interface antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _MFCreateFMPEG4MediaSink(ICarenMFByteStream^ Param_ByteStream, ICarenMFMediaType^ Param_VideoType, ICarenMFMediaType^ Param_AudioType, ICarenMFMediaSink^ Param_Out_MediaSink);
+
+	/// <summary>
+	/// Cria um media sink para a criação de arquivos MP4.
+	/// </summary>
+	/// <param name="Param_ByteStream">Uma interface ICarenMFByteStream de um fluxo byte. O Media Sink grava o arquivo AVI para este fluxo byte.</param>
+	/// <param name="Param_VideoType">Uma interface ICarenMFMediaType de um tipo de mídia de vídeo. Este tipo especifica o formato da transmissão de vídeo.</param>
+	/// <param name="Param_AudioType">Uma interface ICarenMFMediaType de um tipo de mídia de áudio. Este tipo especifica o formato do fluxo de áudio.</param>
+	/// <param name="Param_Out_MediaSink">Retorna a interface (ICarenMFMediaSink) do coletor de mídia AVI(Media Sink). O usuário deve inicializar a interface antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _MFCreateMPEG4MediaSink(ICarenMFByteStream^ Param_ByteStream, ICarenMFMediaType^ Param_VideoType, ICarenMFMediaType^ Param_AudioType, ICarenMFMediaSink^ Param_Out_MediaSink);
+
+	/// <summary>
+	/// Cria um coletor Audio-Video Interleaved (AVI).
+	/// </summary>
+	/// <param name="Param_ByteStream">Uma interface ICarenMFByteStream de um fluxo byte. O Media Sink grava o arquivo MP4 para este fluxo byte. O fluxo byte deve ser escrito e apoiar a busca.</param>
+	/// <param name="Param_VideoType">Uma interface ICarenMFMediaType de um tipo de mídia de vídeo. Este tipo especifica o formato da transmissão de vídeo. Este parâmetro pode ser NULO, mas não se (Param_AudioType) for NULO.</param>
+	/// <param name="Param_AudioType">Uma interface ICarenMFMediaType de um tipo de mídia de áudio. Este tipo especifica o formato do fluxo de áudio. Este parâmetro pode ser NULO, mas não se (Param_VideoType) for NULO.</param>
+	/// <param name="Param_Out_MediaSink">Retorna a interface (ICarenMFMediaSink) do coletor de mídia MP4(Media Sink). O usuário deve inicializar a interface antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _MFCreateAVIMediaSink(ICarenMFByteStream^ Param_ByteStream, ICarenMFMediaType^ Param_VideoType, ICarenMFMediaType^ Param_AudioType, ICarenMFMediaSink^ Param_Out_MediaSink);
+
+	/// <summary>
+	/// Cria um coletor de mídia(Media Sink) genérico que envolve uma transformação multiplexadora do Microsoft Media Foundation (MFT).
+	/// </summary>
+	/// <param name="Param_GuidOutputSubtype">O GUID do subtipo do tipo de saída para o MFT.</param>
+	/// <param name="Param_OutputAttributes">Uma lista de atributos de formato para o tipo de saída MFT. Este parâmetro é opcional e pode ser NULO.</param>
+	/// <param name="Param_OutputByteStream">uma interface ICarenMFByteStream de um fluxo de bytes. A saída do MFT é gravada neste fluxo de bytes. Este parâmetro pode ser NULO.</param>
+	/// <param name="Param_Out_MediaSink">Retorna a interface (ICarenMFMediaSink) do coletor de mídia(Media Sink). O usuário deve inicializar a interface antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _MFCreateMuxSink(String^ Param_GuidOutputSubtype, ICarenMFAttributes^ Param_OutputAttributes, ICarenMFByteStream^ Param_OutputByteStream, ICarenMFMediaSink^ Param_Out_MediaSink);
+
+	/// <summary>
 	/// Cria um objeto de ativação que representa um dispositivo de captura de hardware.
 	/// </summary>
 	/// <param name="Param_Atributos">Uma interface ICarenMFAttributes de uma loja de atributos, que é usada para selecionar o dispositivo de captura.</param>
 	/// <param name="Param_Out_DispositivoCaptura">Retorna a interface (ICarenMFActivate) de ativação do dispositivo de captura. O usuário deve inicializar a interface antes de chamar este método.</param>
 	/// <returns></returns>
 	CarenResult _MFCreateDeviceSourceActivate(ICarenMFAttributes^ Param_Atributos, ICarenMFActivate^ Param_Out_DispositivoCaptura);
+
+	/// <summary>
+	/// Cria o objeto de ativação do coletor de transcodificação.
+	/// O objeto de ativação do coletor de transcodificação pode ser usado para criar qualquer um dos seguintes coletores de arquivo: Coletor de arquivo 3GP, MP3 ou MP4.
+	/// </summary>
+	/// <param name="Param_Out_Transcode">Retorna uma interface ICarenMFActivate. Esta interface é usada para criar a instância do coletor de arquivos a partir do objeto de ativação. Antes de fazer isso, consulte o 
+	/// ponteiro retornado para a interface ICarenMFTranscodeSinkInfoProvider e use essa interface para inicializar o objeto.</param>
+	/// <returns></returns>
+	CarenResult _MFCreateTranscodeSinkActivate(CarenMFActivate^ Param_Out_Transcode);
 
 	/// <summary>
 	/// Converte um tipo de mídia de áudio do Media Foundation para uma estrutura Wav.
@@ -156,7 +276,6 @@ public:
 		[Out] CA_WAVEFORMATEXEXTENSIBLE^% Param_Out_WavFormato,
 		[Out] UInt32% Param_Out_Size);
 	
-
 	/// <summary>
 	/// Converte um tipo de mídia de áudio do Media Foundation para uma estrutura Wav.
 	/// </summary>

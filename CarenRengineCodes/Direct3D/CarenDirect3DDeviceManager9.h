@@ -48,8 +48,19 @@ public ref class CarenDirect3DDeviceManager9 : public ICarenDirect3DDeviceManage
 	//Ponteiro para a interface (IDirect3DDeviceManager9).
 	IDirect3DDeviceManager9* PonteiroTrabalho = NULL;
 
-	//Contrutor e destruidor da classe.
+	//Contrutores e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenDirect3DDeviceManager9();
+
+	/// <summary>
+	/// Cria uma instância do Direct3D Device Manager.
+	/// </summary>
+	/// <param name="Param_Out_Resetoken">Recebe um token que identifica esta instância do gerenciador de dispositivos Direct3D. Use este token ao ligar para ICarenDirect3DDeviceManager9::ResetDevice.</param>
+	CarenDirect3DDeviceManager9(OutParam UInt32% Param_Out_Resetoken);
+
 	~CarenDirect3DDeviceManager9();
 
 

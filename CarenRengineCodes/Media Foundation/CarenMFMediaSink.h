@@ -38,7 +38,7 @@ using namespace CarenRengine::SDKUtilidades;
 
 
 /// <summary>
-/// Classe responsável por representar a base para todos os Coletores de Mídia do Media Foundation. 
+/// (Concluido - Fase de Testes) - Classe responsável por representar a base para todos os Coletores de Mídia do Media Foundation. 
 /// </summary>
 public ref class CarenMFMediaSink : ICarenMFMediaSink
 {
@@ -51,6 +51,11 @@ public ref class CarenMFMediaSink : ICarenMFMediaSink
 
 	//Destruidor.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMFMediaSink();
+
 	~CarenMFMediaSink();
 
 	//Variaveis Internas.

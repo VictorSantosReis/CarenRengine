@@ -68,6 +68,49 @@ Done:;
 	return Resultado;
 }
 
+CarenResult MediaFoundationFunctions::_DXVA2CreateVideoService(ICaren^ Param_Direct3DDevice9, String^ Param_RIID, ICaren^ Param_Out_VideoService)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	GUID vi_Riid = GUID_NULL;
+	IDirect3DDevice9* vi_pDevice = Nulo;
+	IUnknown* vi_pOutVideoService = Nulo;
+
+	//Recupera o ponteiro para a interface do dispositivo.
+	CarenGetPointerFromICarenSafe(Param_Direct3DDevice9, vi_pDevice);
+
+	//Cria o riid da superfice da interface DXGI.
+	vi_Riid = Util.CreateGuidFromString(Param_RIID);
+
+	//Chama o método para realizar a operação.
+	Hr = DXVA2CreateVideoService(vi_pDevice, vi_Riid, reinterpret_cast<void**>(&vi_pDevice));
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o ponteiro na interface.
+	CarenSetPointerToICarenSafe(vi_pOutVideoService, Param_Out_VideoService, true);
+
+Done:;
+	//Retorna o resultado
+	return Resultado;
+}
+
 CarenResult MediaFoundationFunctions::_MFCreateAlignedMemoryBuffer(UInt32 Param_MaxLenght, CA_MF_BYTE_ALIGNMENT Param_Aligment, ICarenMFMediaBuffer^ Param_Out_Buffer)
 {
 	//Variavel a ser retornada.
@@ -406,10 +449,496 @@ Done:;
 	return Resultado;
 }
 
+CarenResult MediaFoundationFunctions::_MFCreateAudioRenderer(ICarenMFAttributes^ Param_AudioAtributos, ICarenMFMediaSink^ Param_Out_MediaSink)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	IMFAttributes* vi_pAudioAtributos = Nulo;
+	IMFMediaSink* vi_pOutMediaSink = Nulo;
+
+	//Recupera o ponteiro para a interface de atributos se valida.
+	if (ObjetoGerenciadoValido(Param_AudioAtributos))
+		CarenGetPointerFromICarenSafe(Param_AudioAtributos, vi_pAudioAtributos);
+
+	//Chama o método para realizar a operação.
+	Hr = MFCreateAudioRenderer(vi_pAudioAtributos, &vi_pOutMediaSink);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o ponteiro do Media Sink criado na interface.
+	CarenSetPointerToICarenSafe(vi_pOutMediaSink, Param_Out_MediaSink, true);
+
+Done:;
+	//Retorna o resultado
+	return Resultado;
+}
+
+CarenResult MediaFoundationFunctions::_MFCreateVideoRenderer(String^ Param_RIID, ICaren^ Param_Out_VideoRenderer)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	GUID vi_Riid = GUID_NULL;
+	IUnknown* vi_pOutVideoRenderer = Nulo;
+
+	//Converte a string com o guid.
+	vi_Riid = Util.CreateGuidFromString(Param_RIID);
+
+	//Chama o método para realizar a operação.
+	Hr = MFCreateVideoRenderer(vi_Riid, reinterpret_cast<void**>(&vi_pOutVideoRenderer));
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o ponteiro do Media Sink criado na interface.
+	CarenSetPointerToICarenSafe(vi_pOutVideoRenderer, Param_Out_VideoRenderer, true);
+
+Done:;
+	//Retorna o resultado
+	return Resultado;
+}
+
+CarenResult MediaFoundationFunctions::_MFCreate3GPMediaSink(ICarenMFByteStream^ Param_ByteStream, ICarenMFMediaType^ Param_VideoType, ICarenMFMediaType^ Param_AudioType, ICarenMFMediaSink^ Param_Out_MediaSink)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	IMFByteStream* vi_pByteStream = Nulo;
+	IMFMediaType* vi_pAudioType = Nulo; //Pode ser NULO - Se vi_pVideoType != NULO
+	IMFMediaType* vi_pVideoType = Nulo; //Pode ser NULO - Se vi_pAudioType != NULO
+	IMFMediaSink* vi_pOutMediaSink = Nulo;
+
+	//Recupera o ponteiro para o fluxo de bytes.
+	CarenGetPointerFromICarenSafe(Param_ByteStream, vi_pByteStream);
+
+	//Verifica se a interface para o tipo de VÍDEO é válida.
+	if (ObjetoGerenciadoValido(Param_VideoType))
+		CarenGetPointerFromICarenSafe(Param_VideoType, vi_pVideoType);
+
+	//Verifica se a interface para o tipo de ÁUDIO é válida.
+	if (ObjetoGerenciadoValido(Param_AudioType))
+		CarenGetPointerFromICarenSafe(Param_AudioType, vi_pAudioType);
+
+	//Chama o método para realizar a operação.
+	Hr = MFCreate3GPMediaSink(vi_pByteStream, vi_pVideoType, vi_pAudioType, &vi_pOutMediaSink);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o ponteiro do Media Sink criado na interface.
+	CarenSetPointerToICarenSafe(vi_pOutMediaSink, Param_Out_MediaSink, true);
+
+Done:;
+	//Retorna o resultado
+	return Resultado;
+}
+
+CarenResult MediaFoundationFunctions::_MFCreateAC3MediaSink(ICarenMFByteStream^ Param_ByteStream, ICarenMFMediaType^ Param_AudioType, ICarenMFMediaSink^ Param_Out_MediaSink)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	IMFByteStream* vi_pByteStream = Nulo;
+	IMFMediaType* vi_pAudioType = Nulo;
+	IMFMediaSink* vi_pOutMediaSink = Nulo;
+
+	//Recupera o ponteiro para o fluxo de bytes.
+	CarenGetPointerFromICarenSafe(Param_ByteStream, vi_pByteStream);
+
+	//Recupera o ponteiro para o tipo de áudio.
+	CarenGetPointerFromICarenSafe(Param_AudioType, vi_pAudioType);
+
+	//Chama o método para realizar a operação.
+	Hr = MFCreateAC3MediaSink(vi_pByteStream, vi_pAudioType, &vi_pOutMediaSink);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o ponteiro do Media Sink criado na interface.
+	CarenSetPointerToICarenSafe(vi_pOutMediaSink, Param_Out_MediaSink, true);
+
+Done:;
+	//Retorna o resultado
+	return Resultado;
+}
+
+CarenResult MediaFoundationFunctions::_MFCreateADTSMediaSink(ICarenMFByteStream^ Param_ByteStream, ICarenMFMediaType^ Param_AudioType, ICarenMFMediaSink^ Param_Out_MediaSink)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	IMFByteStream* vi_pByteStream = Nulo;
+	IMFMediaType* vi_pAudioType = Nulo;
+	IMFMediaSink* vi_pOutMediaSink = Nulo;
+
+	//Recupera o ponteiro para o fluxo de bytes.
+	CarenGetPointerFromICarenSafe(Param_ByteStream, vi_pByteStream);
+
+	//Recupera o ponteiro para o tipo de áudio.
+	CarenGetPointerFromICarenSafe(Param_AudioType, vi_pAudioType);
+
+	//Chama o método para realizar a operação.
+	Hr = MFCreateADTSMediaSink(vi_pByteStream, vi_pAudioType, &vi_pOutMediaSink);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o ponteiro do Media Sink criado na interface.
+	CarenSetPointerToICarenSafe(vi_pOutMediaSink, Param_Out_MediaSink, true);
+
+Done:;
+	//Retorna o resultado
+	return Resultado;
+}
+
+CarenResult MediaFoundationFunctions::_MFCreateWAVEMediaSink(ICarenMFByteStream^ Param_ByteStream, ICarenMFMediaType^ Param_AudioType, ICarenMFMediaSink^ Param_Out_MediaSink)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	IMFByteStream* vi_pByteStream = Nulo;
+	IMFMediaType* vi_pAudioType = Nulo;
+	IMFMediaSink* vi_pOutMediaSink = Nulo;
+
+	//Recupera o ponteiro para o fluxo de bytes.
+	CarenGetPointerFromICarenSafe(Param_ByteStream, vi_pByteStream);
+
+	//Recupera o ponteiro para o tipo de áudio.
+	CarenGetPointerFromICarenSafe(Param_AudioType, vi_pAudioType);
+
+	//Chama o método para realizar a operação.
+	Hr = MFCreateWAVEMediaSink(vi_pByteStream, vi_pAudioType, &vi_pOutMediaSink);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o ponteiro do Media Sink criado na interface.
+	CarenSetPointerToICarenSafe(vi_pOutMediaSink, Param_Out_MediaSink, true);
+
+Done:;
+	//Retorna o resultado
+	return Resultado;
+}
+
+CarenResult MediaFoundationFunctions::_MFCreateMP3MediaSink(ICarenMFByteStream^ Param_ByteStream, ICarenMFMediaSink^ Param_Out_MediaSink)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	IMFByteStream* vi_pByteStream = Nulo;
+	IMFMediaSink* vi_pOutMediaSink = Nulo;
+
+	//Recupera o ponteiro para o fluxo de bytes.
+	CarenGetPointerFromICarenSafe(Param_ByteStream, vi_pByteStream);
+
+	//Chama o método para realizar a operação.
+	Hr = MFCreateMP3MediaSink(vi_pByteStream, &vi_pOutMediaSink);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o ponteiro do Media Sink criado na interface.
+	CarenSetPointerToICarenSafe(vi_pOutMediaSink, Param_Out_MediaSink, true);
+
+Done:;
+	//Retorna o resultado
+	return Resultado;
+}
+
+CarenResult MediaFoundationFunctions::_MFCreateFMPEG4MediaSink(ICarenMFByteStream^ Param_ByteStream, ICarenMFMediaType^ Param_VideoType, ICarenMFMediaType^ Param_AudioType, ICarenMFMediaSink^ Param_Out_MediaSink)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	IMFByteStream* vi_pByteStream = Nulo;
+	IMFMediaType* vi_pAudioType = Nulo; //Pode ser NULO - Se vi_pVideoType != NULO
+	IMFMediaType* vi_pVideoType = Nulo; //Pode ser NULO - Se vi_pAudioType != NULO
+	IMFMediaSink* vi_pOutMediaSink = Nulo;
+
+	//Recupera o ponteiro para o fluxo de bytes.
+	CarenGetPointerFromICarenSafe(Param_ByteStream, vi_pByteStream);
+
+	//Verifica se a interface para o tipo de VÍDEO é válida.
+	if (ObjetoGerenciadoValido(Param_VideoType))
+		CarenGetPointerFromICarenSafe(Param_VideoType, vi_pVideoType);
+
+	//Verifica se a interface para o tipo de ÁUDIO é válida.
+	if (ObjetoGerenciadoValido(Param_AudioType))
+		CarenGetPointerFromICarenSafe(Param_AudioType, vi_pAudioType);
+
+	//Chama o método para realizar a operação.
+	Hr = MFCreateFMPEG4MediaSink(vi_pByteStream, vi_pVideoType, vi_pAudioType, &vi_pOutMediaSink);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o ponteiro do Media Sink criado na interface.
+	CarenSetPointerToICarenSafe(vi_pOutMediaSink, Param_Out_MediaSink, true);
+
+Done:;
+	//Retorna o resultado
+	return Resultado;
+}
+
+CarenResult MediaFoundationFunctions::_MFCreateMPEG4MediaSink(ICarenMFByteStream^ Param_ByteStream, ICarenMFMediaType^ Param_VideoType, ICarenMFMediaType^ Param_AudioType, ICarenMFMediaSink^ Param_Out_MediaSink)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	IMFByteStream* vi_pByteStream = Nulo;
+	IMFMediaType* vi_pAudioType = Nulo; //Pode ser NULO - Se vi_pVideoType != NULO
+	IMFMediaType* vi_pVideoType = Nulo; //Pode ser NULO - Se vi_pAudioType != NULO
+	IMFMediaSink* vi_pOutMediaSink = Nulo;
+
+	//Recupera o ponteiro para o fluxo de bytes.
+	CarenGetPointerFromICarenSafe(Param_ByteStream, vi_pByteStream);
+
+	//Verifica se a interface para o tipo de VÍDEO é válida.
+	if (ObjetoGerenciadoValido(Param_VideoType))
+		CarenGetPointerFromICarenSafe(Param_VideoType, vi_pVideoType);
+
+	//Verifica se a interface para o tipo de ÁUDIO é válida.
+	if (ObjetoGerenciadoValido(Param_AudioType))
+		CarenGetPointerFromICarenSafe(Param_AudioType, vi_pAudioType);
+
+	//Chama o método para realizar a operação.
+	Hr = MFCreateMPEG4MediaSink(vi_pByteStream, vi_pVideoType, vi_pAudioType, &vi_pOutMediaSink);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o ponteiro do Media Sink criado na interface.
+	CarenSetPointerToICarenSafe(vi_pOutMediaSink, Param_Out_MediaSink, true);
+
+Done:;
+	//Retorna o resultado
+	return Resultado;
+}
+
+CarenResult MediaFoundationFunctions::_MFCreateAVIMediaSink(ICarenMFByteStream^ Param_ByteStream, ICarenMFMediaType^ Param_VideoType, ICarenMFMediaType^ Param_AudioType, ICarenMFMediaSink^ Param_Out_MediaSink)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	IMFByteStream* vi_pByteStream = Nulo;
+	IMFMediaType* vi_pAudioType = Nulo; //Pode ser NULO - Se vi_pVideoType != NULO
+	IMFMediaType* vi_pVideoType = Nulo; //Pode ser NULO - Se vi_pAudioType != NULO
+	IMFMediaSink* vi_pOutMediaSink = Nulo;
+
+	//Recupera o ponteiro para o fluxo de bytes.
+	CarenGetPointerFromICarenSafe(Param_ByteStream, vi_pByteStream);
+
+	//Verifica se a interface para o tipo de VÍDEO é válida.
+	if (ObjetoGerenciadoValido(Param_VideoType))
+		CarenGetPointerFromICarenSafe(Param_VideoType, vi_pVideoType);
+
+	//Verifica se a interface para o tipo de ÁUDIO é válida.
+	if (ObjetoGerenciadoValido(Param_AudioType))
+		CarenGetPointerFromICarenSafe(Param_AudioType, vi_pAudioType);
+
+	//Chama o método para realizar a operação.
+	Hr = MFCreateAVIMediaSink(vi_pByteStream, vi_pVideoType, vi_pAudioType, &vi_pOutMediaSink);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o ponteiro do Media Sink criado na interface.
+	CarenSetPointerToICarenSafe(vi_pOutMediaSink, Param_Out_MediaSink, true);
+
+Done:;
+	//Retorna o resultado
+	return Resultado;
+}
+
+CarenResult MediaFoundationFunctions::_MFCreateMuxSink(String^ Param_GuidOutputSubtype, ICarenMFAttributes^ Param_OutputAttributes, ICarenMFByteStream^ Param_OutputByteStream, ICarenMFMediaSink^ Param_Out_MediaSink)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	GUID vi_OutputGuidSubtype = GUID_NULL;
+	IMFAttributes* vi_pOutputAttributes = Nulo; //Pode ser Nulo.
+	IMFByteStream* vi_pOutputByteStream = Nulo; //Pode ser Nulo.
+	IMFMediaSink* vi_pOutMediaSink = Nulo;
+
+	//Converte a string com o guid.
+	vi_OutputGuidSubtype = Util.CreateGuidFromString(Param_GuidOutputSubtype);
+
+	//Recupera o ponteiro para a interface de atributos se valida.
+	if (ObjetoGerenciadoValido(Param_OutputAttributes))
+		CarenGetPointerFromICarenSafe(Param_OutputAttributes, vi_pOutputAttributes);
+
+	//Recupera o ponteiro para a interface do byte stream se valida.
+	if (ObjetoGerenciadoValido(Param_OutputByteStream))
+		CarenGetPointerFromICarenSafe(Param_OutputByteStream, vi_pOutputByteStream);
+
+	//Chama o método para realizar a operação.
+	Hr = MFCreateMuxSink(vi_OutputGuidSubtype, vi_pOutputAttributes, vi_pOutputByteStream, &vi_pOutMediaSink);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o ponteiro do Media Sink criado na interface.
+	CarenSetPointerToICarenSafe(vi_pOutMediaSink, Param_Out_MediaSink, true);
+
+Done:;
+	//Retorna o resultado
+	return Resultado;
+}
+
 CarenResult MediaFoundationFunctions::_MFCreateDeviceSourceActivate(ICarenMFAttributes^ Param_Atributos, ICarenMFActivate^ Param_Out_DispositivoCaptura)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
 
 	//Variaveis utilizadas.
 	Utilidades Util;
@@ -420,7 +949,7 @@ CarenResult MediaFoundationFunctions::_MFCreateDeviceSourceActivate(ICarenMFAttr
 	Resultado = CarenGetPointerFromICarenSafe(Param_Atributos, vi_pAtributos);
 
 	//Chama o método para realizar a operação.
-	HRESULT Hr = MFCreateDeviceSourceActivate(vi_pAtributos, &vi_pOutDeviceCapture);
+	Hr = MFCreateDeviceSourceActivate(vi_pAtributos, &vi_pOutDeviceCapture);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -436,6 +965,41 @@ CarenResult MediaFoundationFunctions::_MFCreateDeviceSourceActivate(ICarenMFAttr
 
 	//Define o ponteiro na interface.
 	CarenSetPointerToICarenSafe(vi_pOutDeviceCapture, Param_Out_DispositivoCaptura, true);
+
+Done:;
+	//Retorna o resultado
+	return Resultado;
+}
+
+CarenResult MediaFoundationFunctions::_MFCreateTranscodeSinkActivate(CarenMFActivate^ Param_Out_Transcode)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IMFActivate* vi_pOutTranscode = Nulo;
+
+	//Chama o método para realizar a operação.
+	Hr = MFCreateTranscodeSinkActivate(&vi_pOutTranscode);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o ponteiro na interface.
+	CarenSetPointerToICarenSafe(vi_pOutTranscode, Param_Out_Transcode, true);
 
 Done:;
 	//Retorna o resultado

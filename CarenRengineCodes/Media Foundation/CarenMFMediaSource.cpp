@@ -18,11 +18,87 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenMFMediaSource.h"
 
+
 //Destruidor.
 CarenMFMediaSource::~CarenMFMediaSource()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
+}
+//Construtores
+CarenMFMediaSource::CarenMFMediaSource()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
+
+CarenMFMediaSource::CarenMFMediaSource(ICarenMFCollection^ Param_SourceCollection)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IMFCollection* vi_pCollectionSource = Nulo;
+	IMFMediaSource* vi_pOutMediaSource = Nulo;
+
+	//Verifica se a interface de atributos não é invalida.
+	if (!ObjetoGerenciadoValido(Param_SourceCollection))
+		throw gcnew NullReferenceException("A interface (ICarenMFCollection) no parametro (Param_SourceCollection) não pode ser NULO!");
+
+	//Tenta recuperar o ponteiro para a interface de atributos.
+	CarenResult Resultado = RecuperarPonteiroCaren(Param_SourceCollection, &vi_pCollectionSource);
+
+	//Verifica se não houve erro
+	if (Resultado.StatusCode != ResultCode::SS_OK)
+		throw gcnew Exception("Não foi possivel recuperar o ponteiro para a interface de coleção no parametro (Param_SourceCollection).");
+
+	//Chama o método para criar a interface.
+	Hr = MFCreateAggregateSource(vi_pCollectionSource, &vi_pOutMediaSource);
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutMediaSource;
+}
+
+CarenMFMediaSource::CarenMFMediaSource(ICarenMFAttributes^ Param_Atributos)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IMFAttributes* vi_pAtributos = Nulo;
+	IMFMediaSource* vi_pOutMediaSource = Nulo;
+
+	//Verifica se a interface de atributos não é invalida.
+	if (!ObjetoGerenciadoValido(Param_Atributos))
+		throw gcnew NullReferenceException("A interface (ICarenMFAttributes) no parametro (Param_Atributos) não pode ser NULO!");
+
+	//Tenta recuperar o ponteiro para a interface de atributos.
+	CarenResult Resultado = RecuperarPonteiroCaren(Param_Atributos, &vi_pAtributos);
+
+	//Verifica se não houve erro
+	if (Resultado.StatusCode != ResultCode::SS_OK)
+		throw gcnew Exception("Não foi possivel recuperar o ponteiro para a interface de atributos no parametro (Param_Atributos).");
+
+	//Chama o método para criar a interface.
+	Hr = MFCreateDeviceSource(vi_pAtributos, &vi_pOutMediaSource);
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutMediaSource;
 }
 
 //

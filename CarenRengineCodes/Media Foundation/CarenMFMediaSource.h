@@ -52,6 +52,23 @@ public ref class CarenMFMediaSource : public ICarenMFMediaSource
 
 	//Contrutor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMFMediaSource();
+
+	/// <summary>
+	/// Inicializa e cria uma fonte de mídia que agrega uma coleção de fontes de mídia.
+	/// </summary>
+	/// <param name="Param_SourceCollection">Uma interface (ICarenMFCollection) que contém uma coleção de fontes de mídia para serem agregadas.</param>
+	CarenMFMediaSource(ICarenMFCollection^ Param_SourceCollection);
+
+	/// <summary>
+	/// Cria uma fonte de mídia para um dispositivo de captura de hardware.
+	/// </summary>
+	/// <param name="Param_Atributos">Uma interface (ICarenMFAttributes) da loja de atributos, que é usada para selecionar o dispositivo de captura.</param>
+	CarenMFMediaSource(ICarenMFAttributes^ Param_Atributos);
+
 	~CarenMFMediaSource();
 
 

@@ -26,6 +26,103 @@ CarenMFMediaType::~CarenMFMediaType()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtores
+CarenMFMediaType::CarenMFMediaType(Boolean Param_CriarInterface)
+{
+	//Verifica se deve ou não criar uma interface.
+	if (Param_CriarInterface)
+	{
+		//Variavel que vai conter o resultado COM.
+		HRESULT Hr = E_FAIL;
+
+		//Variaveis utilizadas.
+		Utilidades Util;
+		IMFMediaType* vi_pOutMediaType = Nulo;
+
+		//Chama o método para criar a interface.
+		Hr = MFCreateMediaType(&vi_pOutMediaType);
+
+		//Verifica se não ocorreu erro no processo.
+		if (!Sucesso(Hr))
+		{
+			//Chama uma exceção para informar o error.
+			throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+		}
+
+		//Define a interface criada no ponteiro de trabalho
+		PonteiroTrabalho = vi_pOutMediaType;
+	}
+	else
+	{
+		//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+	}
+}
+
+CarenMFMediaType::CarenMFMediaType(ICaren^ Param_StreamProperties)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IUnknown* vi_pStreamProps = Nulo;
+	IMFMediaType* vi_pOutMediaType = Nulo;
+
+	//Recupera o ponteiro para o stream com as propriedades.
+	CarenResult ResultGetProps = RecuperarPonteiroCaren(Param_StreamProperties, &vi_pStreamProps);
+
+	//Verifica se não houve erro
+	if (!CarenSucesso(ResultGetProps))
+		throw gcnew Exception("Não foi possivel recuperar o ponteiro ou a interface do parametro (Param_StreamProperties) é inválida.");
+
+	//Chama o método para criar a interface.
+	Hr = MFCreateMediaTypeFromProperties(vi_pStreamProps, &vi_pOutMediaType);
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutMediaType;
+}
+
+CarenMFMediaType::CarenMFMediaType(String^ Param_GuidRepresentation, ICarenBuffer^ Param_BufferRepresentation)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	GUID vi_GuidRepresentation = GUID_NULL;
+	GenPointer vi_pBuffer = DefaultGenPointer;
+	IMFMediaType* vi_pOutMediaType = Nulo;
+
+	//Converte a string para o guid.
+	vi_GuidRepresentation = Util.CreateGuidFromString(Param_GuidRepresentation);
+
+	//Recupera o ponteiro do buffer.
+	CarenResult ResultGetBuffer = Param_BufferRepresentation->ObterPonteiroInterno(vi_pBuffer);
+
+	//Verifica se não houve erro
+	if (!CarenSucesso(ResultGetBuffer))
+		throw gcnew Exception("Falhou ao recuperar o ponteiro para o buffer ou sua interface é inválida.");
+
+	//Chama o método para criar a interface.
+	Hr = MFCreateMediaTypeFromRepresentation(vi_GuidRepresentation, Util.ConverterIntPtrTo<LPVOID>(vi_pBuffer), &vi_pOutMediaType);
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutMediaType;
+}
 
 //
 // Métodos da interface ICaren

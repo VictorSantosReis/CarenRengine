@@ -48,7 +48,7 @@ CarenMFCollection::CarenMFCollection(Boolean Param_CriarInterface)
 			throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
 		}
 
-		//Define o ponteiro criado no ponteiro de trabalho
+		//Define a interface criada no ponteiro de trabalho
 		PonteiroTrabalho = vi_pOutCollection;
 	}
 	else

@@ -98,6 +98,9 @@ CarenMFMediaSession::CarenMFMediaSession(CA_PMPSESSION_CREATION_FLAGS Param_Fags
 	//Verifica se não foi retorna o ativador e define no parametro de saida.
 	if (ObjetoValido(vi_pOutAtivador))
 	{
+		//Cria a interface que vai ser retornada.
+		Param_Out_Ativador = gcnew CarenMFActivate();
+
 		//Define o ponteiro no parametro de saida.
 		CarenResult SetPointerResult = DefinirPonteiroInterface(vi_pOutAtivador, Param_Out_Ativador, true);
 

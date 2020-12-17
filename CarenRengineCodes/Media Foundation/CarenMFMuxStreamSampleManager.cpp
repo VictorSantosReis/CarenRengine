@@ -26,7 +26,7 @@ CarenMFMuxStreamSampleManager::~CarenMFMuxStreamSampleManager()
 //Construtores
 CarenMFMuxStreamSampleManager::CarenMFMuxStreamSampleManager()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

@@ -575,7 +575,7 @@ CarenResult CarenMFTransform::GetInputAvailableType(UInt32 Param_IDFluxoEntrada,
 	}
 
 	//Cria a interface de retorno
-	Param_Out_InterfaceTipoMidia = gcnew CarenMFMediaType();
+	Param_Out_InterfaceTipoMidia = gcnew CarenMFMediaType(false);
 
 	//Define o ponteiro de trabalho
 	Param_Out_InterfaceTipoMidia->AdicionarPonteiro(pMediaType);
@@ -620,7 +620,7 @@ CarenResult CarenMFTransform::GetInputCurrentType(UInt32 Param_IDFluxoEntrada, [
 	}
 
 	//Cria a interface de retorno
-	Param_Out_InterfaceTipoMidia = gcnew CarenMFMediaType();
+	Param_Out_InterfaceTipoMidia = gcnew CarenMFMediaType(false);
 
 	//Define o ponteiro de trabalho
 	Param_Out_InterfaceTipoMidia->AdicionarPonteiro(pMediaType);
@@ -800,7 +800,7 @@ CarenResult CarenMFTransform::GetOutputAvailableType(UInt32 Param_IDFluxoSaida, 
 	}
 
 	//Cria a interface de retorno
-	Param_Out_InterfaceTipoMidia = gcnew CarenMFMediaType();
+	Param_Out_InterfaceTipoMidia = gcnew CarenMFMediaType(false);
 
 	//Define o ponteiro de trabalho
 	Param_Out_InterfaceTipoMidia->AdicionarPonteiro(pTipoFluxo);
@@ -845,7 +845,7 @@ CarenResult CarenMFTransform::GetOutputCurrentType(UInt32 Param_IDFluxoSaida, [O
 	}
 
 	//Cria a interface de retorno
-	Param_Out_InterfaceTipoMidia = gcnew CarenMFMediaType();
+	Param_Out_InterfaceTipoMidia = gcnew CarenMFMediaType(false);
 
 	//Define o ponteiro de trabalho
 	Param_Out_InterfaceTipoMidia->AdicionarPonteiro(pMediaType);

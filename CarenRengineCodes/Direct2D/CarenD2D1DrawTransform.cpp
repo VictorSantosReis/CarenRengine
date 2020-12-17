@@ -26,7 +26,7 @@ CarenD2D1DrawTransform::~CarenD2D1DrawTransform()
 //Construtores
 CarenD2D1DrawTransform::CarenD2D1DrawTransform()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

@@ -26,7 +26,7 @@ CarenMFNetProxyLocatorFactory::~CarenMFNetProxyLocatorFactory()
 //Construtores
 CarenMFNetProxyLocatorFactory::CarenMFNetProxyLocatorFactory()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 
 	//Cria o ponteiro de trabalho com base na classe nativa criada internamente.
 	PonteiroTrabalho = new CLN_IMFNetProxyLocatorFactory();

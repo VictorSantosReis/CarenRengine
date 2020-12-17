@@ -26,7 +26,7 @@ CarenMFFinalizableMediaSink::~CarenMFFinalizableMediaSink()
 //Construtores
 CarenMFFinalizableMediaSink::CarenMFFinalizableMediaSink()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

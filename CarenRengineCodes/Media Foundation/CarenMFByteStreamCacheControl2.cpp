@@ -26,7 +26,7 @@ CarenMFByteStreamCacheControl2::~CarenMFByteStreamCacheControl2()
 //Construtores
 CarenMFByteStreamCacheControl2::CarenMFByteStreamCacheControl2()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

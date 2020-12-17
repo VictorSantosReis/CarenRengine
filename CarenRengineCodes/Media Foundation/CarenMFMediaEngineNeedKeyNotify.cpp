@@ -26,7 +26,7 @@ CarenMFMediaEngineNeedKeyNotify::~CarenMFMediaEngineNeedKeyNotify()
 //Construtores
 CarenMFMediaEngineNeedKeyNotify::CarenMFMediaEngineNeedKeyNotify()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 
 	//Cria um ponteiro para a interface impelmentada internamente.
 	PonteiroTrabalho = new CLN_IMFMediaEngineNeedKeyNotify();

@@ -687,7 +687,7 @@ CarenResult CarenMFTopologyNode::GetInputPrefType(UInt32 Param_IndexEntrada, [Ou
 	}
 
 	//Cria a interface do tipo preferencia de midia
-	Param_Out_TipoMidiaPreferencial = gcnew CarenMFMediaType();
+	Param_Out_TipoMidiaPreferencial = gcnew CarenMFMediaType(false);
 
 	//Define o ponteiro de trabalho
 	Param_Out_TipoMidiaPreferencial->AdicionarPonteiro(pTipoMidia);
@@ -920,7 +920,7 @@ CarenResult CarenMFTopologyNode::GetOutputPrefType(UInt32 Param_IndexSaida, [Out
 	}
 
 	//Cria a interface do tipo preferencia de midia
-	Param_Out_TipoMidiaPreferencial = gcnew CarenMFMediaType();
+	Param_Out_TipoMidiaPreferencial = gcnew CarenMFMediaType(false);
 
 	//Define o ponteiro de trabalho
 	Param_Out_TipoMidiaPreferencial->AdicionarPonteiro(pTipoMidia);

@@ -26,7 +26,7 @@ CarenPersistStream::~CarenPersistStream()
 //Construtores
 CarenPersistStream::CarenPersistStream()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

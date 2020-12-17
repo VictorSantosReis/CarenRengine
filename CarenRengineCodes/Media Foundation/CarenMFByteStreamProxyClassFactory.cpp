@@ -17,6 +17,7 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenMFByteStreamProxyClassFactory.h"
 
+
 //Destruidor.
 CarenMFByteStreamProxyClassFactory::~CarenMFByteStreamProxyClassFactory()
 {
@@ -26,7 +27,35 @@ CarenMFByteStreamProxyClassFactory::~CarenMFByteStreamProxyClassFactory()
 //Construtores
 CarenMFByteStreamProxyClassFactory::CarenMFByteStreamProxyClassFactory()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
+
+CarenMFByteStreamProxyClassFactory::CarenMFByteStreamProxyClassFactory(CA_CLSCTX Param_Context)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IMFByteStreamProxyClassFactory* vi_pOutClassFactory = Nulo;
+
+	//Chama o método para criar a interface.
+	Hr = CoCreateInstance(
+		CLSID_MFByteStreamProxyClassFactory,
+		Nulo,
+		static_cast<DWORD>(Param_Context),
+		IID_IMFByteStreamProxyClassFactory,
+		reinterpret_cast<void**>(&vi_pOutClassFactory));
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutClassFactory;
 }
 
 // Métodos da interface ICaren

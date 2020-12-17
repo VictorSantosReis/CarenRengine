@@ -49,6 +49,17 @@ public ref class CarenMFGetService : public ICarenMFGetService
 
 	//Contrutor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMFGetService();
+
+	/// <summary>
+	/// Inicializa e recupera a interface de serviço a parti de uma interface base.
+	/// </summary>
+	/// <param name="Param_InterfaceBase">A interface da qual será usada para recuperar a interface de serviço.</param>
+	CarenMFGetService(ICaren^ Param_InterfaceBase);
+
 	~CarenMFGetService();
 
 
@@ -168,14 +179,11 @@ public:
 public:
 	/// <summary>
 	/// Método responsável por consultar e obter um determinado serviço(Interface) em um Componente especificado.
-	/// Pode retornar: SS_OK ou ER_SERVICO_NAO_SUPORTADO
+	/// Pode retornar: SS_OK ou ER_MF_E_UNSUPPORTED_SERVICE
 	/// </summary>
 	/// <param name="Param_SID">O GUID que expõe o (Identificador de Serviço) do serviço a ser obtido. Acesse (MFInterfacesServiço) para obter esse GUID.</param>
 	/// <param name="Param_IIDInterface">Define o GUID da interface que se quer obter do serviço solicitado.</param>
 	/// <param name="Param_Out_InterfaceSolicitada">Objeto que contém a interface solicitada se o método tiver sido bem sucedido.  O usuário deve criar a interfaces antes de chamar este método.</param>
 	virtual CarenResult GetService(String^ Param_SID, String^ Param_IIDInterface, ICaren^ Param_Out_InterfaceSolicitada);
-
-
-
 };
 

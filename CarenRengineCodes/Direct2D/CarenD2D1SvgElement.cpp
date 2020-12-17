@@ -26,7 +26,7 @@ CarenD2D1SvgElement::~CarenD2D1SvgElement()
 //Construtores
 CarenD2D1SvgElement::CarenD2D1SvgElement()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

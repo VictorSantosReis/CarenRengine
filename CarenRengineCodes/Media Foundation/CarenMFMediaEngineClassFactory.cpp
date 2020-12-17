@@ -26,7 +26,7 @@ CarenMFMediaEngineClassFactory::~CarenMFMediaEngineClassFactory()
 //Construtores
 CarenMFMediaEngineClassFactory::CarenMFMediaEngineClassFactory()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 
 }
 

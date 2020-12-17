@@ -18,11 +18,17 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenMFClockStateSink.h"
 
+
 //Destruidor.
 CarenMFRelogioStateSink::~CarenMFRelogioStateSink()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
+}
+//Construtor
+CarenMFRelogioStateSink::CarenMFRelogioStateSink()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 //

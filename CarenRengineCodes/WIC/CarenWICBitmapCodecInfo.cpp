@@ -26,7 +26,7 @@ CarenWICBitmapCodecInfo::~CarenWICBitmapCodecInfo()
 //Construtores
 CarenWICBitmapCodecInfo::CarenWICBitmapCodecInfo()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

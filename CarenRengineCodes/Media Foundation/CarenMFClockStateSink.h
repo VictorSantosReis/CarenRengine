@@ -37,7 +37,7 @@ using namespace CarenRengine::SDKBase::Interfaces;
 using namespace CarenRengine::SDKUtilidades;
 
 /// <summary>
-/// (Concluido - Fase de Testes) - Falta documentar.
+/// (Concluido - Fase de Testes) - Classe responsável por receber notificações de alteração de estado do relógio de apresentação.
 /// </summary>
 public ref class CarenMFRelogioStateSink : public ICarenMFClockStateSink
 {
@@ -50,6 +50,11 @@ public ref class CarenMFRelogioStateSink : public ICarenMFClockStateSink
 
 	//Contrutor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMFRelogioStateSink();
+
 	~CarenMFRelogioStateSink();
 
 

@@ -17,6 +17,7 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenMFCaptureEngineClassFactory.h"
 
+
 //Destruidor.
 CarenMFCaptureEngineClassFactory::~CarenMFCaptureEngineClassFactory()
 {
@@ -26,7 +27,35 @@ CarenMFCaptureEngineClassFactory::~CarenMFCaptureEngineClassFactory()
 //Construtores
 CarenMFCaptureEngineClassFactory::CarenMFCaptureEngineClassFactory()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
+
+CarenMFCaptureEngineClassFactory::CarenMFCaptureEngineClassFactory(CA_CLSCTX Param_Context)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IMFCaptureEngineClassFactory* vi_pOutClassFactory = Nulo;
+
+	//Chama o método para criar a interface.
+	Hr = CoCreateInstance(
+		CLSID_MFCaptureEngineClassFactory,
+		Nulo,
+		static_cast<DWORD>(Param_Context),
+		IID_IMFCaptureEngineClassFactory,
+		reinterpret_cast<void**>(&vi_pOutClassFactory));
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutClassFactory;
 }
 
 // Métodos da interface ICaren
@@ -415,7 +444,7 @@ void CarenMFCaptureEngineClassFactory::Finalizar()
 /// </summary>
 /// <param name="Param_CLSID">O CLSID do objeto a ser criado. Atualmente, este parâmetro deve ser igual CLSID_MFCaptureEngine.</param>
 /// <param name="Param_RIID">O IID da interface solicitada. O mecanismo de captura suporta a interface IMFCaptureEngine.</param>
-/// <param name="Param_Out_Interface">Recebe um ponteiro para a interface solicitada. O usuário deve inicializar essa interface.</param>
+/// <param name="Param_Out_Interface">Retorna a interface solicitada. O usuário é responsável por inicializar a interface antes de chamar este método.</param>
 CarenResult CarenMFCaptureEngineClassFactory::CreateInstance(
 String^ Param_CLSID,
 String^ Param_RIID,
@@ -429,9 +458,16 @@ ICaren^% Param_Out_Interface)
 
 	//Variaveis a serem utilizadas.
 	Utilidades Util;
+	GUID vi_CLSID = GUID_NULL;
+	GUID vi_RIID = GUID_NULL;
+	IUnknown* vi_pOutInterface = Nulo;
 
+	//Converte as string para os guids nativos.
+	vi_CLSID = Util.CreateGuidFromString(Param_CLSID);
+	vi_RIID = Util.CreateGuidFromString(Param_RIID);
 
 	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->CreateInstance(vi_CLSID, vi_RIID, reinterpret_cast<void**>(vi_pOutInterface));
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -447,6 +483,9 @@ ICaren^% Param_Out_Interface)
 		//Sai do método
 		Sair;
 	}
+
+	//Define o ponteiro na interface de saida.
+	CarenSetPointerToICarenSafe(vi_pOutInterface, Param_Out_Interface, true);
 
 Done:;
 	//Retorna o resultado.

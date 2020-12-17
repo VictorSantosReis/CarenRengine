@@ -50,7 +50,7 @@ public ref class CarenMFCaptureEngineOnEventCallback : public ICarenMFCaptureEng
 	//Contrutores e destuidor da classe.
 public:
 	/// <summary>
-	/// Inicializa a classe com uma implementação da interface nativa (IMFNetResourceFilter) criada internamente ou Nulo.
+	/// Inicializa a classe com uma implementação da interface nativa (IMFCaptureEngineOnEventCallback) criada internamente ou Nulo.
 	/// </summary>
 	/// <param name="Param_ImplInterno">Um valor booleano que indica se deve criar uma implementação interna nativa.</param>
 	CarenMFCaptureEngineOnEventCallback(Boolean Param_ImplInterno);

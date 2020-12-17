@@ -26,7 +26,7 @@ CarenMFNetResourceFilter::~CarenMFNetResourceFilter()
 //Construtores
 CarenMFNetResourceFilter::CarenMFNetResourceFilter()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 
 	//Cria a interace a parti da classe nativa implementada internamente.
 	IMFNetResourceFilter* vi_pNetPointer = new CLN_IMFNetResourceFilter();

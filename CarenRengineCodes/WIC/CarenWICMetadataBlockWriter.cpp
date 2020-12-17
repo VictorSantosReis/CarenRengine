@@ -26,7 +26,7 @@ CarenWICMetadataBlockWriter::~CarenWICMetadataBlockWriter()
 //Construtores
 CarenWICMetadataBlockWriter::CarenWICMetadataBlockWriter()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

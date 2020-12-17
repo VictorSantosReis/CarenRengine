@@ -26,7 +26,7 @@ CarenD2D1SvgPaint::~CarenD2D1SvgPaint()
 //Construtores
 CarenD2D1SvgPaint::CarenD2D1SvgPaint()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

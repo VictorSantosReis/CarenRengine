@@ -57,7 +57,7 @@ namespace CarenRengine
 			/// Método responsável por consultar e obter um determinado serviço(Interface) em um Componente especificado.
 			/// Pode retornar: SS_OK ou ER_SERVIÇO_NAO_SUPORTADO
 			/// </summary>
-			/// <param name="Param_SID">O GUID que expõe o (Identificador de Serviço) do serviço a ser obtido. Acesse (GUIDs_MFInterfacesServico) para obter esse GUID.</param>
+			/// <param name="Param_SID">O GUID que expõe o (Identificador de Serviço) do serviço a ser obtido. Acesse (GUIDs_MF_SERVICE_INTERFACES) para obter esse GUID.</param>
 			/// <param name="Param_IIDInterface">Define o GUID da interface que se quer obter do serviço solicitado.</param>
 			/// <param name="Param_Out_InterfaceSolicitada">Retorna a interface solicitada se o método tiver sido bem sucedido. O usuário deve criar a interface antes de chamar este método.</param>
 			CarenResult GetService(String^ Param_SID, String^ Param_IIDInterface, ICaren^ Param_Out_InterfaceSolicitada);
@@ -6785,7 +6785,7 @@ namespace CarenRengine
 		};
 
 		/// <summary>
-		/// (IMFCaptureEngineClassFactory) - Interface responsável por criar uma instância da ICarenMFCaptureEngine.
+		/// (IMFCaptureEngineClassFactory) - Interface responsável por criar uma instância da engine de captura(ICarenMFEngineCapture).
 		/// Chamar a função MFCreateCaptureEngine é equivalente a chamar IMFCaptureEngineClassFactory::CreateInstance.
 		/// </summary>
 		[CategoryAttribute("MF Interface")]
@@ -6809,7 +6809,7 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_CLSID">O CLSID do objeto a ser criado. Atualmente, este parâmetro deve ser igual CLSID_MFCaptureEngine.</param>
 			/// <param name="Param_RIID">O IID da interface solicitada. O mecanismo de captura suporta a interface IMFCaptureEngine.</param>
-			/// <param name="Param_Out_Interface">Recebe um ponteiro para a interface solicitada. O usuário deve inicializar essa interface.</param>
+			/// <param name="Param_Out_Interface">Retorna a interface solicitada. O usuário é responsável por inicializar a interface antes de chamar este método.</param>
 			CarenResult CreateInstance(
 				String^ Param_CLSID,
 				String^ Param_RIID,

@@ -26,7 +26,7 @@ CarenD2D1SvgStrokeDashArray::~CarenD2D1SvgStrokeDashArray()
 //Construtores
 CarenD2D1SvgStrokeDashArray::CarenD2D1SvgStrokeDashArray()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

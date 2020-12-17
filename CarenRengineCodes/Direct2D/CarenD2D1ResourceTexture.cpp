@@ -26,7 +26,7 @@ CarenD2D1ResourceTexture::~CarenD2D1ResourceTexture()
 //Construtores
 CarenD2D1ResourceTexture::CarenD2D1ResourceTexture()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

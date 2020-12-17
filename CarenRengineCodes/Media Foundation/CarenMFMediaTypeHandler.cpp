@@ -447,7 +447,7 @@ CarenResult CarenMFMediaTypeHandler::GetCurrentMediaType([Out] ICarenMFMediaType
 	}
 
 	//Cria a interface que vai conter o tipo de mídia.
-	InterfaceTipoMidia = gcnew CarenMFMediaType();
+	InterfaceTipoMidia = gcnew CarenMFMediaType(false);
 
 	//Chama o método para definir o ponteiro na interface.
 	InterfaceTipoMidia->AdicionarPonteiro(pTipoMidiaAtual);
@@ -563,7 +563,7 @@ CarenResult CarenMFMediaTypeHandler::GetMediaTypeByIndex(UInt32 Param_Id, [Out] 
 	}
 
 	//Cria a interface que vai conter o tipo de mídia.
-	InterfaceTipoMidia = gcnew CarenMFMediaType();
+	InterfaceTipoMidia = gcnew CarenMFMediaType(false);
 
 	//Chama o método para definir o ponteiro na interface.
 	InterfaceTipoMidia->AdicionarPonteiro(pTipoMidiaAtual);
@@ -678,7 +678,7 @@ CarenResult  CarenMFMediaTypeHandler::IsMediaTypeSupported(ICarenMFMediaType^ Pa
 		{
 			//Um tipo de midia foi retornada pelo método
 			//Cria a interface que vai conter e retornar no parametro.
-			InterfaceTipoMidiaAproximada = gcnew CarenMFMediaType();
+			InterfaceTipoMidiaAproximada = gcnew CarenMFMediaType(false);
 
 			//Chama o método que vai definir o ponteiro de trabalho na interface.
 			InterfaceTipoMidiaAproximada->AdicionarPonteiro(pTipoMidiaAproximada);

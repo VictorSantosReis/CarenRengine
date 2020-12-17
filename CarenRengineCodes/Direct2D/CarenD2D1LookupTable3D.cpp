@@ -26,7 +26,7 @@ CarenD2D1LookupTable3D::~CarenD2D1LookupTable3D()
 //Construtores
 CarenD2D1LookupTable3D::CarenD2D1LookupTable3D()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

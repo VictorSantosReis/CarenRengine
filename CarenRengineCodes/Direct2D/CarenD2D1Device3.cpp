@@ -26,7 +26,7 @@ CarenD2D1Device3::~CarenD2D1Device3()
 //Construtores
 CarenD2D1Device3::CarenD2D1Device3()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

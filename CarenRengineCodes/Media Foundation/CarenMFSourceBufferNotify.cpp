@@ -26,7 +26,7 @@ CarenMFSourceBufferNotify::~CarenMFSourceBufferNotify()
 //Construtores
 CarenMFSourceBufferNotify::CarenMFSourceBufferNotify()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 
 	//Cria a interface impelementada internamente.
 	PonteiroTrabalho = new CLN_IMFSourceBufferNotify();

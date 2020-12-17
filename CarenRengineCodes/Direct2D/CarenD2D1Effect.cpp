@@ -26,7 +26,7 @@ CarenD2D1Effect::~CarenD2D1Effect()
 //Construtores
 CarenD2D1Effect::CarenD2D1Effect()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

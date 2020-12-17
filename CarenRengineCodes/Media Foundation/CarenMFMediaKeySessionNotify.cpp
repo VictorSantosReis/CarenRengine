@@ -26,7 +26,7 @@ CarenMFMediaKeySessionNotify::~CarenMFMediaKeySessionNotify()
 //Construtores
 CarenMFMediaKeySessionNotify::CarenMFMediaKeySessionNotify()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 
 	//Cria a interface que vai receber as notificações.
 	PonteiroTrabalho = new CLN_IMFMediaKeySessionNotify();

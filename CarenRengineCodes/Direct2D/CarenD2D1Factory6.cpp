@@ -26,7 +26,7 @@ CarenD2D1Factory6::~CarenD2D1Factory6()
 //Construtores
 CarenD2D1Factory6::CarenD2D1Factory6()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

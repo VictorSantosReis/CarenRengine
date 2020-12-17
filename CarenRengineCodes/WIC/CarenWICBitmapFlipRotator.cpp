@@ -26,7 +26,7 @@ CarenWICBitmapFlipRotator::~CarenWICBitmapFlipRotator()
 //Construtores
 CarenWICBitmapFlipRotator::CarenWICBitmapFlipRotator()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

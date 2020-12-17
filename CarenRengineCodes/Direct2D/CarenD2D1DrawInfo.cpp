@@ -26,7 +26,7 @@ CarenD2D1DrawInfo::~CarenD2D1DrawInfo()
 //Construtores
 CarenD2D1DrawInfo::CarenD2D1DrawInfo()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

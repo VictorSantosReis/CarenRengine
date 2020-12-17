@@ -37,6 +37,7 @@ public ref class MediaFoundationFunctions
 {
 	//Destruidor da classe.
 public:
+	MediaFoundationFunctions() {}
 	~MediaFoundationFunctions()
 	{
 	}
@@ -49,11 +50,91 @@ public:
 	/// </summary>
 	CarenResult _MFStartup();
 	
-
 	/// <summary>
 	/// Método responsável por desligar a Api do Media Foundation.
 	/// </summary>
 	CarenResult _MFShutdown();
+	
+	/// <summary>
+	/// Consulta um objeto para uma interface de serviço especificada.
+	/// Esta função é uma função de ajudante que envolve o método ICarenMFGetService::GetService. A função consulta o objeto para a interface ICarenMFGetService e, se bem-sucedida, chama o GetService no objeto.
+	/// </summary>
+	/// <param name="Param_Objeto">A interface do objeto a ser consultado.</param>
+	/// <param name="Param_GuidService">O identificador de serviço (SID) do serviço. Para obter uma lista de identificadores de serviço, consulte a estrutura (GUIDs::GUIDs_MF_SERVICE_INTERFACES)</param>
+	/// <param name="Param_RIID">O identificador de interface (IID) da interface que está sendo solicitada.</param>
+	/// <param name="Param_Out_InterfaceRequested">Retorna a interface solicitada se encontrada. O usuário é responsável por inicializar a interfaces antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _MFGetService(
+		ICaren^ Param_Objeto, 
+		String^ Param_GuidService,
+		String^ Param_RIID, 
+		ICaren^ Param_Out_InterfaceRequested);
+
+	/// <summary>
+	/// Cria um fluxo byte que é apoiado por um arquivo local temporário.
+	/// </summary>
+	/// <param name="Param_AccessMode">O modo de acesso solicitado, especificado como membro da enumeração CA_MF_FILE_ACCESSMODE.</param>
+	/// <param name="Param_OpenMode">O comportamento da função se o arquivo já existe ou não existe, especificado como membro da enumeração CA_MF_FILE_OPENMODE.</param>
+	/// <param name="Param_Flags">Bitwise OR de valores da enumeração MF_FILE_FLAGS.</param>
+	/// <param name="Param_Out_ByteStream">Recebe a interface (ICarenMFByteStream) para o fluxo de bytes criado do arquivo temporário. O usuário é responsável por inicializar a interace antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _MFCreateTempFile(
+		CA_MF_FILE_ACCESSMODE Param_AccessMode,
+		CA_MF_FILE_OPENMODE Param_OpenMode,
+		CA_MF_FILE_FLAGS Param_Flags,
+		ICarenMFByteStream^ Param_Out_ByteStream);
+
+	/// <summary>
+	/// Cria um fluxo byte de um arquivo de forma sincrona.
+	/// </summary>
+	/// <param name="Param_AccessMode">O modo de acesso solicitado, especificado como membro da enumeração CA_MF_FILE_ACCESSMODE.</param>
+	/// <param name="Param_OpenMode">O comportamento da função se o arquivo já existe ou não existe, especificado como membro da enumeração CA_MF_FILE_OPENMODE.</param>
+	/// <param name="Param_Flags">Bitwise OR de valores da enumeração MF_FILE_FLAGS.</param>
+	/// <param name="Param_Url">Uma string que contém a url para o arquivo.</param>
+	/// <param name="Param_Out_ByteStream">Recebe a interface (ICarenMFByteStream) para o fluxo de bytes criado do arquivo. O usuário é responsável por inicializar a interace antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _MFCreateFile(
+		CA_MF_FILE_ACCESSMODE Param_AccessMode,
+		CA_MF_FILE_OPENMODE Param_OpenMode,
+		CA_MF_FILE_FLAGS Param_Flags,
+		String^ Param_Url,
+		ICarenMFByteStream^ Param_Out_ByteStream);
+
+	/// <summary>
+	/// Começa uma solicitação assíncrona para criar um fluxo de byte a partir de um arquivo.
+	/// Quando a solicitação for concluída, o método ICarenMFAsyncCallback do objeto de chamada é chamado. O objeto de retorno de chamada deve então chamar a função _MFEndCreateFile para obter a interface para o fluxo byte(ICarenMFByteStream).
+	/// </summary>
+	/// <param name="Param_AccessMode">O modo de acesso solicitado, especificado como membro da enumeração CA_MF_FILE_ACCESSMODE.</param>
+	/// <param name="Param_OpenMode">O comportamento da função se o arquivo já existe ou não existe, especificado como membro da enumeração CA_MF_FILE_OPENMODE.</param>
+	/// <param name="Param_Flags">Bitwise OR de valores da enumeração MF_FILE_FLAGS.</param>
+	/// <param name="Param_Url">Uma string que contém a url para o arquivo.</param>
+	/// <param name="Param_Callback">Uma interface ICarenMFAsyncCallback de um objeto de retorno de chamada. O chamador deve implementar esta interface</param>
+	/// <param name="Param_ObjectState">Uma interface IUnknown de um objeto de estado, definido pelo chamador. Este parâmetro pode ser NULO. Você pode usar este objeto para conter informações do estado. O objeto é devolvido ao chamador quando o retorno de chamada é invocado.</param>
+	/// <param name="Param_Out_CancelCookie">Recebe uma interface IUnknown ou o valor NULO. Se o valor não for NULO, você pode cancelar a operação assíncrona passando esta interface para a função _MFCancelCreateFile. O chamador deve liberar a interface. Este parâmetro é opcional e pode ser NULO.</param>
+	/// <returns></returns>
+	CarenResult _MFBeginCreateFile(
+		CA_MF_FILE_ACCESSMODE Param_AccessMode, 
+		CA_MF_FILE_OPENMODE Param_OpenMode, 
+		CA_MF_FILE_FLAGS Param_Flags, 
+		String^ Param_Url, 
+		ICarenMFAsyncCallback^ Param_Callback,
+		ICaren^ Param_ObjectState,
+		ICaren^ Param_Out_CancelCookie);
+
+	/// <summary>
+	/// Completa uma solicitação assíncrona para criar um fluxo de byte a partir de um arquivo.
+	/// </summary>
+	/// <param name="Param_Result">Uma interface ICarenMFAsyncResult. Passe a mesma interface que seu objeto de retorno de chamada recebeu no método (Invoke).</param>
+	/// <param name="Param_Out_ByteStream">Recebe a interface (ICarenMFByteStream) para o fluxo de bytes criado. O usuário é responsável por inicializar a interface antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _MFEndCreateFile(ICarenMFAsyncResult^ Param_Result, ICarenMFByteStream^ Param_Out_ByteStream);
+
+	/// <summary>
+	/// Cancela uma solicitação assíncrona para criar um fluxo de byte a partir de um arquivo.
+	/// </summary>
+	/// <param name="Param_CancelCookie">Uma interface IUnknown do objeto de cancelamento. Esta interface é recebida no parâmetro (Param_Out_CancelCookie) da função _MFBeginCreateFile.</param>
+	/// <returns></returns>
+	CarenResult _MFCancelCreateFile(ICaren^ Param_CancelCookie);
 
 	/// <summary>
 	/// Cria um objeto de ativação para uma classe do Windows Runtime.
@@ -109,7 +190,7 @@ public:
 	/// <param name="Param_SuperficeDXGI">Uma interface IUnknown da superfície DXGI.</param>
 	/// <param name="Param_SubresourceIndex">O índice baseado em zero de uma subrefonte da superfície. O objeto buffer de mídia está associado a essa subrefonte.</param>
 	/// <param name="Param_BottomUpWhenLinear">Se TRUE, o método ICarenMF2DBuffer::ContiguousCopyTo copia o buffer em um formato de baixo para cima. O formato de baixo para cima é compatível com GDI para imagens RGB não compactadas. Se este parâmetro for FALSE, o método ContiguousCopyTo copia o buffer em um formato de cima para baixo, compatível com o Direct3D.</param>
-	/// <param name="Param_Out_Buffer">Retorna uma interface (ICarenMFMediaBuffer) do buffer de mídia. O usuário deve inicializar a interface antes de chamar este método.</param>
+	/// <param name="Param_Out_Buffer">Retorna uma interface (ICarenMFMediaBuffer) do buffer de mídia. Este objeto suporta as seguintes interfaces de buffer: ICarenMF2DBuffer, ICarenMF2DBuffer2, ICarenMFDXGIBuffer e ICarenMFMediaBuffer. O usuário deve inicializar a interface antes de chamar este método.</param>
 	/// <returns></returns>
 	CarenResult _MFCreateDXGISurfaceBuffer(String^ Param_RIID, ICaren^ Param_SuperficeDXGI, UInt32 Param_SubresourceIndex, Boolean Param_BottomUpWhenLinear, ICarenMFMediaBuffer^ Param_Out_Buffer);
 
@@ -340,10 +421,10 @@ public:
 	/// </summary>
 	/// <param name="Param_WavFormato">Uma estrutura wav que contém as informações do tipo de midia a ser criado.</param>
 	/// <param name="Param_SizeEstrutura">O tamanho da estrutura em bytes.</param>
-	/// <param name="Param_Out_TipoMidia">Retorna o tipo de midia convertida da estrutura Wav.</param>
+	/// <param name="Param_Out_TipoMidia">Retorna o tipo de midia convertida da estrutura Wav. O usuário é responsável por inicializar a classe antes de chamar este método.</param>
 	CarenResult CA_MFInitMediaTypeFromWaveFormatEx(
 		CA_WAVEFORMATEXEXTENSIBLE^% Param_WavFormato, 
 		UInt32 Param_SizeEstrutura, 
-		[Out] ICarenMFMediaType^% Param_Out_TipoMidia);
+		ICarenMFMediaType^ Param_Out_TipoMidia);
 };
 

@@ -68,6 +68,280 @@ Done:;
 	return Resultado;
 }
 
+CarenResult MediaFoundationFunctions::_MFGetService(ICaren^ Param_Objeto, String^ Param_GuidService, String^ Param_RIID, ICaren^ Param_Out_InterfaceRequested)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IUnknown* vi_pInterfaceBase = Nulo;
+	GUID vi_GuidService = GUID_NULL;
+	GUID vi_RIID = GUID_NULL;
+	IUnknown* vi_pOutServiceInterface = Nulo;
+
+	//Recupera o ponteiro para a interface base na qual será obtido o serviço.
+	CarenGetPointerFromICarenSafe(Param_Objeto, vi_pInterfaceBase);
+
+	//Converte as string para o guids nativos.
+	vi_GuidService = Util.CreateGuidFromString(Param_GuidService);
+	vi_RIID = Util.CreateGuidFromString(Param_RIID);
+
+	//Chama o método para realizar a operação.
+	Hr = MFGetService(vi_pInterfaceBase, vi_GuidService, vi_RIID, reinterpret_cast<void**>(&vi_pOutServiceInterface));
+	
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o ponteiro na interface.
+	CarenSetPointerToICarenSafe(vi_pOutServiceInterface, Param_Out_InterfaceRequested, true);
+
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
+
+CarenResult MediaFoundationFunctions::_MFCreateTempFile(CA_MF_FILE_ACCESSMODE Param_AccessMode, CA_MF_FILE_OPENMODE Param_OpenMode, CA_MF_FILE_FLAGS Param_Flags, ICarenMFByteStream^ Param_Out_ByteStream)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	MF_FILE_ACCESSMODE vi_ModoAcesso = static_cast<MF_FILE_ACCESSMODE>(Param_AccessMode);
+	MF_FILE_OPENMODE vi_ModoAbertura = static_cast<MF_FILE_OPENMODE>(Param_OpenMode);
+	MF_FILE_FLAGS vi_Flags = static_cast<MF_FILE_FLAGS>(Param_Flags);
+	IMFByteStream* vi_pOutByteStream = Nulo;
+
+	//Chama o método para realizar a operação.
+	Hr = MFCreateTempFile(
+		vi_ModoAcesso,
+		vi_ModoAbertura,
+		vi_Flags,
+		&vi_pOutByteStream);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o ponteiro na interface.
+	CarenSetPointerToICarenSafe(vi_pOutByteStream, Param_Out_ByteStream, true);
+
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
+
+CarenResult MediaFoundationFunctions::_MFCreateFile(CA_MF_FILE_ACCESSMODE Param_AccessMode, CA_MF_FILE_OPENMODE Param_OpenMode, CA_MF_FILE_FLAGS Param_Flags, String^ Param_Url, ICarenMFByteStream^ Param_Out_ByteStream)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	MF_FILE_ACCESSMODE vi_ModoAcesso = static_cast<MF_FILE_ACCESSMODE>(Param_AccessMode);
+	MF_FILE_OPENMODE vi_ModoAbertura = static_cast<MF_FILE_OPENMODE>(Param_OpenMode);
+	MF_FILE_FLAGS vi_Flags = static_cast<MF_FILE_FLAGS>(Param_Flags);
+	PWSTR vi_pUrlArquivo = Nulo;
+	IMFByteStream* vi_pOutByteStream = Nulo;
+
+	//Converte a string para a URL.
+	vi_pUrlArquivo = Util.ConverterStringToWCHAR(Param_Url);
+
+	//Chama o método para realizar a operação.
+	Hr = MFCreateFile(
+		vi_ModoAcesso,
+		vi_ModoAbertura,
+		vi_Flags,
+		const_cast<LPCWSTR>(vi_pUrlArquivo),
+		&vi_pOutByteStream);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o ponteiro na interface.
+	CarenSetPointerToICarenSafe(vi_pOutByteStream, Param_Out_ByteStream, true);
+
+Done:;
+	//Libera a memória utilizada pela string
+	DeletarStringAllocatedSafe(&vi_pUrlArquivo);
+
+	//Retorna o resultado
+	return Resultado;
+}
+
+CarenResult MediaFoundationFunctions::_MFBeginCreateFile(CA_MF_FILE_ACCESSMODE Param_AccessMode, CA_MF_FILE_OPENMODE Param_OpenMode, CA_MF_FILE_FLAGS Param_Flags, String^ Param_Url, ICarenMFAsyncCallback^ Param_Callback, ICaren^ Param_ObjectState, ICaren^ Param_Out_CancelCookie)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	MF_FILE_ACCESSMODE vi_ModoAcesso = static_cast<MF_FILE_ACCESSMODE>(Param_AccessMode);
+	MF_FILE_OPENMODE vi_ModoAbertura = static_cast<MF_FILE_OPENMODE>(Param_OpenMode);
+	MF_FILE_FLAGS vi_Flags = static_cast<MF_FILE_FLAGS>(Param_Flags);
+	PWSTR vi_pUrlArquivo = Nulo;
+	IMFAsyncCallback* vi_pCallback = Nulo;
+	IUnknown* vi_pObjectState = Nulo;
+	IUnknown* vi_pOutCancelCookie = Nulo;
+
+	//Converte a string para a URL.
+	vi_pUrlArquivo = Util.ConverterStringToWCHAR(Param_Url);
+
+	//Recupera o ponteiro para o callback
+	CarenGetPointerFromICarenSafe(Param_Callback, vi_pCallback);
+
+	//Recupera o ponteiro para o objeto de estado se informado.
+	if (ObjetoGerenciadoValido(Param_ObjectState))
+		CarenGetPointerFromICarenSafe(Param_ObjectState, vi_pObjectState);
+
+	//Chama o método para realizar a operação.
+	Hr = MFBeginCreateFile(
+		vi_ModoAcesso,
+		vi_ModoAbertura,
+		vi_Flags,
+		const_cast<LPCWSTR>(vi_pUrlArquivo),
+		vi_pCallback,
+		vi_pObjectState,
+		ObjetoGerenciadoValido(Param_Out_CancelCookie)? &vi_pOutCancelCookie: Nulo);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o cookie de cancelamento se o usuário tiver requisitado
+	if (ObjetoValido(vi_pOutCancelCookie))
+		CarenSetPointerToICarenSafe(vi_pOutCancelCookie, Param_Out_CancelCookie, true);
+
+Done:;
+	//Libera a memória utilizada pela string
+	DeletarStringAllocatedSafe(&vi_pUrlArquivo);
+
+	//Retorna o resultado
+	return Resultado;
+}
+
+CarenResult MediaFoundationFunctions::_MFEndCreateFile(ICarenMFAsyncResult^ Param_Result, ICarenMFByteStream^ Param_Out_ByteStream)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	IMFAsyncResult* vi_pResult = Nulo;
+	IMFByteStream* vi_pOutByteStream = Nulo;
+
+	//Recupera o ponteiro para o resultado assincrono.
+	CarenGetPointerFromICarenSafe(Param_Result, vi_pResult);
+
+	//Chama o método para realizar a operação.
+	Hr = MFEndCreateFile(vi_pResult, &vi_pOutByteStream);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o ponteiro na interface.
+	CarenSetPointerToICarenSafe(vi_pOutByteStream, Param_Out_ByteStream, true);
+
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
+
+CarenResult MediaFoundationFunctions::_MFCancelCreateFile(ICaren^ Param_CancelCookie)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	IUnknown* vi_pCookieCancelamento = Nulo;
+
+	//Recupera o ponteiro para o cookie de cancelamento.
+	CarenGetPointerFromICarenSafe(Param_CancelCookie, vi_pCookieCancelamento);
+
+	//Chama o método para realizar a operação.
+	Hr = MFCancelCreateFile(vi_pCookieCancelamento);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
+
 CarenResult MediaFoundationFunctions::_MFCreateMediaExtensionActivate(String^ Param_ActivatableClassId, ICaren^ Param_Configuration, String^ Param_RIID, ICaren^ Param_Out_Objeto)
 {
 	//Variavel a ser retornada.
@@ -1361,7 +1635,7 @@ Done:;
 	return Resultado;
 }
 
-CarenResult MediaFoundationFunctions::CA_MFInitMediaTypeFromWaveFormatEx(CA_WAVEFORMATEXEXTENSIBLE^% Param_WavFormato, UInt32 Param_SizeEstrutura, ICarenMFMediaType^% Param_Out_TipoMidia)
+CarenResult MediaFoundationFunctions::CA_MFInitMediaTypeFromWaveFormatEx(CA_WAVEFORMATEXEXTENSIBLE^% Param_WavFormato, UInt32 Param_SizeEstrutura, ICarenMFMediaType^ Param_Out_TipoMidia)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1371,15 +1645,15 @@ CarenResult MediaFoundationFunctions::CA_MFInitMediaTypeFromWaveFormatEx(CA_WAVE
 
 	//Variaveis utilizadas no método
 	Utilidades Util;
-	IMFMediaType* pTipoMidia = NULL;
-	WAVEFORMATEXTENSIBLE* pWavFormato = NULL;
+	IMFMediaType* vi_pOutTipoMidia = NULL;
+	WAVEFORMATEXTENSIBLE* vi_pWavFormato = NULL;
 	UINT32 SizeStructure = Param_SizeEstrutura;
 
 	//Cria a estrutura não gerenciada wav
-	pWavFormato = Util.ConverterWaveformatExtensibleManagedToUnamaged(Param_WavFormato);
+	vi_pWavFormato = Util.ConverterWaveformatExtensibleManagedToUnamaged(Param_WavFormato);
 
 	//Cria o Tipo de midia para armazenar as informações
-	Hr = MFCreateMediaType(&pTipoMidia);
+	Hr = MFCreateMediaType(&vi_pOutTipoMidia);
 
 	//Verifica se a função obteve sucesso
 	if (Sucesso(Hr))
@@ -1396,7 +1670,7 @@ CarenResult MediaFoundationFunctions::CA_MFInitMediaTypeFromWaveFormatEx(CA_WAVE
 	}
 
 	//Chama a função
-	Hr = MFInitMediaTypeFromWaveFormatEx(pTipoMidia, (WAVEFORMATEX*)pWavFormato, SizeStructure);
+	Hr = MFInitMediaTypeFromWaveFormatEx(vi_pOutTipoMidia, (WAVEFORMATEX*)vi_pWavFormato, SizeStructure);
 
 	//Verifica se a função obteve sucesso
 	if (Sucesso(Hr))
@@ -1412,22 +1686,12 @@ CarenResult MediaFoundationFunctions::CA_MFInitMediaTypeFromWaveFormatEx(CA_WAVE
 		goto Done;
 	}
 
-	//Cria a interface e retorna ao usuário
-	Param_Out_TipoMidia = gcnew CarenMFMediaType();
-
-	//Chama o método para definir o ponteiro de trabalho
-	Param_Out_TipoMidia->AdicionarPonteiro(pTipoMidia);
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	//Define o ponteiro na interface de saida.
+	CarenSetPointerToICarenSafe(vi_pOutTipoMidia, Param_Out_TipoMidia, true);
 
 Done:;
 	//Libera a memoria da estrutura
-	if (ObjetoValido(pWavFormato))
-	{
-		//Libera a memoria da estrutura.
-		DeletarEstrutura(&pWavFormato);
-	}
+	DeletarEstruturaSafe(&vi_pWavFormato);
 
 	//Retorna o resultado
 	return Resultado;

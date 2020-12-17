@@ -51,6 +51,11 @@ public ref class CarenMFDXGIBuffer :public ICarenMFDXGIBuffer
 
 	//Contrutor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMFDXGIBuffer();
+
 	~CarenMFDXGIBuffer();
 
 

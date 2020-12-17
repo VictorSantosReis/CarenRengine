@@ -26,7 +26,7 @@ CarenWICMetadataBlockReader::~CarenWICMetadataBlockReader()
 //Construtores
 CarenWICMetadataBlockReader::CarenWICMetadataBlockReader()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

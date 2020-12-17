@@ -53,15 +53,12 @@ public:
 	CarenMFDLNASinkInit();
 
 	/// <summary>
-	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
-	/// </summary>
-	~CarenMFDLNASinkInit();
-
-	/// <summary>
 	/// Inicializa a classe e cria um ponteiro para a interface nativa (IMFDLNASinkInit). Permite especificar o contexto que vai gerencia a interface.
 	/// </summary>
-	/// <param name="Param_ContextoExecucao">Contexto no qual o código que gerencia o objeto recém-criado será executado. Os valores são retirados da enumeração CA_CLSCTX.</param>
-	CarenMFDLNASinkInit(CA_CLSCTX Param_ContextoExecucao);
+	/// <param name="Param_Context">Contexto no qual o código que gerencia o objeto recém-criado será executado. Os valores são retirados da enumeração CA_CLSCTX.</param>
+	CarenMFDLNASinkInit(CA_CLSCTX Param_Context);
+
+	~CarenMFDLNASinkInit();
 
 	//Variaveis Internas.
 internal:

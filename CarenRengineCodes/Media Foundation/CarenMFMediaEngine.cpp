@@ -26,7 +26,7 @@ CarenMFMediaEngine::~CarenMFMediaEngine()
 //Construtores
 CarenMFMediaEngine::CarenMFMediaEngine()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

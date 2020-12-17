@@ -1840,7 +1840,7 @@ namespace CarenRengine
 			/// <summary>
 			/// Contém todos os GUIDs de serviço utilizado pela biblioteca.
 			/// </summary>
-			public value struct GUIDs_MFInterfacesServico
+			public value struct GUIDs_MF_SERVICE_INTERFACES
 			{
 				/// <summary>
 				/// Interfaces: IMFMetadataProvider
@@ -4718,7 +4718,6 @@ namespace CarenRengine
 				MF_ATTRIBUTES_MATCH_SMALLER
 			};
 
-
 			/// <summary>
 			/// (tagSTATFLAG) - Os valores de enumeração indicam se o método deve tentar retornar um nome no membro pwcsName da estrutura CA_STATSTG. Os valores são usados nos 
 			/// métodos ICarenStream::Stat métodos para salvar a memória quando o membro do nome pwcs não for necessário.
@@ -4764,8 +4763,7 @@ namespace CarenRengine
 
 				CA_STGC_CONSOLIDATE = 8
 			};
-
-			
+		
 			/// <summary>
 			/// (tagSTREAM_SEEK) - Enumera valores que especificam a origem a partir da qual calcular o novo local de ponto de busca. Eles são usados para o parâmetro (Param_Origem) 
 			/// no método ICarenStream::Seek. A nova posição de busca é calculada usando esse valor e o parâmetro (Param_Deslocamento).
@@ -4871,6 +4869,80 @@ namespace CarenRengine
 				IUNKNOWN
 			};
 			
+			/// <summary>
+			/// (MF_FILE_ACCESSMODE) - Enumera valores que são utilizados para especificar o modo de acesso durante a abertura de um arquivo.
+			/// </summary>
+			public enum class CA_MF_FILE_ACCESSMODE
+			{
+				/// <summary>
+				/// Modo de leitura.
+				/// </summary>
+				MF_ACCESSMODE_READ = 1,
+
+				/// <summary>
+				/// Modo de gravação.
+				/// </summary>
+				MF_ACCESSMODE_WRITE = 2,
+
+				/// <summary>
+				/// Modo de leitura e gravação.
+				/// </summary>
+				MF_ACCESSMODE_READWRITE = 3
+			};
+	
+			/// <summary>
+			/// (CA_MF_FILE_OPENMODE) - Enumera valores que especificam como abrir ou criar um arquivo.
+			/// </summary>
+			public enum class CA_MF_FILE_OPENMODE
+			{
+				/// <summary>
+				/// Abra um arquivo existente. Falha se o arquivo não existir.
+				/// </summary>
+				MF_OPENMODE_FAIL_IF_NOT_EXIST = 0,
+
+				/// <summary>
+				/// Crie um novo arquivo. Falha se o arquivo já existir.
+				/// </summary>
+				MF_OPENMODE_FAIL_IF_EXIST = 1,
+
+				/// <summary>
+				/// Abra um arquivo existente e trunque-o, de modo que o tamanho seja zero bytes. Falha se o arquivo ainda não existir.
+				/// </summary>
+				MF_OPENMODE_RESET_IF_EXIST = 2,
+
+				/// <summary>
+				/// Se o arquivo não existir, crie um novo arquivo. Se o arquivo existir, abra-o.
+				/// </summary>
+				MF_OPENMODE_APPEND_IF_EXIST = 3,
+
+				/// <summary>
+				/// Crie um novo arquivo. Se o arquivo existir, substitua o arquivo.
+				/// </summary>
+				MF_OPENMODE_DELETE_IF_EXIST = 4
+			};
+			
+			/// <summary>
+			/// (MF_FILE_FLAGS) - Enumera valores que especificam o comportamento ao abrir um arquivo.
+			/// </summary>
+			[FlagsAttribute]
+			public enum class CA_MF_FILE_FLAGS
+			{
+				/// <summary>
+				/// Use o comportamento padrão.
+				/// </summary>
+				MF_FILEFLAGS_NONE = 0,
+
+				/// <summary>
+				/// Abra o arquivo sem cache de sistema.
+				/// </summary>
+				MF_FILEFLAGS_NOBUFFERING = 0x1,
+
+				/// <summary>
+				/// Operações abertas subsequentes podem ter acesso à gravação ao arquivo.
+				/// </summary>
+				MF_FILEFLAGS_ALLOW_WRITE_SHARING = 0x2
+			};
+
 			/// <summary>
 			/// (ORIGINAL)(FALTA DOCUMENTAR) - Enumera valores que especificam o alinhamento de memória para um buffer.
 			/// </summary>

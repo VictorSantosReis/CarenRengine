@@ -18,11 +18,17 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenMFDXGIBuffer.h"
 
+
 //Destruidor.
 CarenMFDXGIBuffer::~CarenMFDXGIBuffer()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
+}
+//Construtor
+CarenMFDXGIBuffer::CarenMFDXGIBuffer()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 //
@@ -414,7 +420,7 @@ void CarenMFDXGIBuffer::Finalizar()
 /// Você pode usar esse método para obter um ponteiro para a interface de ID3D11Texture2D da superfície. Se o buffer estiver bloqueado, o método retorna ER_MF_REQUISICAO_INVALIDA.
 /// </summary>
 /// <param name="Param_Guid">O identificador de interface (IID) da interface requisitada.</param>
-/// <param name="Param_Out_InterfaceRecurso">Recebe um ponteiro para a interface. O chamador deve liberar a interface.</param>
+/// <param name="Param_Out_InterfaceRecurso">Recebe um ponteiro para a interface. O chamador deve liberar a interface. O Usuário deve criar a interface antes de chamar este método.</param>
 CarenResult CarenMFDXGIBuffer::GetResource(String^ Param_Guid, ICaren^ Param_Out_InterfaceRecurso)
 {
 	//Variavel a ser retornada.
@@ -425,14 +431,14 @@ CarenResult CarenMFDXGIBuffer::GetResource(String^ Param_Guid, ICaren^ Param_Out
 
 	//Variaveis utilizadas no método.
 	Utilidades Util;
-	GUID GuidRecurso = GUID_NULL;
-	LPUNKNOWN pInterfaceRecurso = NULL;
+	GUID vi_GuidRecurso = GUID_NULL;
+	LPUNKNOWN vi_pOutResource = NULL;
 
 	//Cria o guid da interface de recurso.
-	GuidRecurso = Util.CreateGuidFromString(Param_Guid);
+	vi_GuidRecurso = Util.CreateGuidFromString(Param_Guid);
 
 	//Chama o método para realizar a operação
-	Hr = PonteiroTrabalho->GetResource(GuidRecurso, (LPVOID*)&pInterfaceRecurso);
+	Hr = PonteiroTrabalho->GetResource(vi_GuidRecurso, reinterpret_cast<void**>(&vi_pOutResource));
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -450,10 +456,7 @@ CarenResult CarenMFDXGIBuffer::GetResource(String^ Param_Guid, ICaren^ Param_Out
 	}
 
 	//Define o ponteiro de trabalho
-	Param_Out_InterfaceRecurso->AdicionarPonteiro(pInterfaceRecurso);
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	CarenSetPointerToICarenSafe(vi_pOutResource, Param_Out_InterfaceRecurso, true);
 
 Done:;
 	//Retorna o resultado
@@ -473,10 +476,10 @@ CarenResult CarenMFDXGIBuffer::GetSubresourceIndex([Out] UInt32% Param_Out_SubRe
 	ResultadoCOM  Hr = E_FAIL;
 
 	//Variaveis utilizadas no método.
-	UINT SubRecursoId = 0;
+	UINT vi_OutSubRecursoId = 0;
 
 	//Chama o método para realizar a operação
-	Hr = PonteiroTrabalho->GetSubresourceIndex(&SubRecursoId);
+	Hr = PonteiroTrabalho->GetSubresourceIndex(&vi_OutSubRecursoId);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -492,6 +495,9 @@ CarenResult CarenMFDXGIBuffer::GetSubresourceIndex([Out] UInt32% Param_Out_SubRe
 		//Sai do método
 		Sair;
 	}
+
+	//Define o id do sub-recurso.
+	Param_Out_SubResourceId = vi_OutSubRecursoId;
 
 Done:;
 	//Retorna o resultado

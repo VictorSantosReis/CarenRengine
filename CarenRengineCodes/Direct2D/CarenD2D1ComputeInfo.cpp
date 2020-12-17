@@ -26,7 +26,7 @@ CarenD2D1ComputeInfo::~CarenD2D1ComputeInfo()
 //Construtores
 CarenD2D1ComputeInfo::CarenD2D1ComputeInfo()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

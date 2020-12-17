@@ -24,9 +24,6 @@ limitations under the License.
 //Importa o namespace que contém as interfaces da Media Foundation.
 using namespace CarenRengine::MediaFoundation;
 
-//Enumeração de retorno de função.
-
-
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
@@ -37,7 +34,7 @@ using namespace CarenRengine::SDKBase::Interfaces;
 using namespace CarenRengine::SDKUtilidades;
 
 /// <summary>
-/// (Concluido - Fase de Testes) - Permite que dois segmentos de compartilhar o mesmo dispositivo Microsoft Direct3D 11.
+/// (Concluido - Fase de Testes) - Classe responsável por permitir que dois segmentos(Threads) de compartilhar o mesmo dispositivo Microsoft Direct3D 11.
 /// </summary>
 public ref class CarenMFDXGIDeviceManager :public ICarenMFDXGIDeviceManager
 {

@@ -26,7 +26,7 @@ CarenMFSourceOpenMonitor::~CarenMFSourceOpenMonitor()
 //Construtores
 CarenMFSourceOpenMonitor::CarenMFSourceOpenMonitor()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 
 	//Cria a interace a parti da classe nativa implementada internamente.
 	PonteiroTrabalho = new CLN_IMFSourceOpenMonitor();

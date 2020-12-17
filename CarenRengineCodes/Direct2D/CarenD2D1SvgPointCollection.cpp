@@ -26,7 +26,7 @@ CarenD2D1SvgPointCollection::~CarenD2D1SvgPointCollection()
 //Construtores
 CarenD2D1SvgPointCollection::CarenD2D1SvgPointCollection()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

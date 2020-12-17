@@ -26,7 +26,7 @@ CarenMFMediaEngineNotify::~CarenMFMediaEngineNotify()
 //Construtores
 CarenMFMediaEngineNotify::CarenMFMediaEngineNotify()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 
 	//Cria um ponteiro para a interface impelmentada internamente.
 	PonteiroTrabalho = new CLN_IMFMediaEngineNotify();

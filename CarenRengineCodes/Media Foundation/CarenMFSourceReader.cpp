@@ -448,7 +448,7 @@ CarenResult CarenMFSourceReader::GetCurrentMediaType(UInt32 Param_IdFluxo, [Out]
 	}
 
 	//Cria a interface gerenciada que vai conter o tipo da midia
-	MidiaTypeInterface = gcnew CarenMFMediaType();
+	MidiaTypeInterface = gcnew CarenMFMediaType(false);
 
 	//Chama o método que vai definir o ponteiro de trabalho na interface.
 	MidiaTypeInterface->AdicionarPonteiro(pTipoMidia);
@@ -501,7 +501,7 @@ CarenResult CarenMFSourceReader::GetNativeMediaType(UInt32 Param_IdFluxo, UInt32
 	}
 
 	//Cria a interface gerenciada que vai conter o tipo da midia
-	MidiaTypeInterface = gcnew CarenMFMediaType();
+	MidiaTypeInterface = gcnew CarenMFMediaType(false);
 
 	//Chama o método que vai definir o ponteiro de trabalho na interface.
 	MidiaTypeInterface->AdicionarPonteiro(pTipoMidia);

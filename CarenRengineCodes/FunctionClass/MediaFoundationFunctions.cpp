@@ -68,6 +68,49 @@ Done:;
 	return Resultado;
 }
 
+CarenResult MediaFoundationFunctions::_MFCreateSampleGrabberSinkActivate(ICarenMFMediaType^ Param_MediaType, ICaren^ Param_SampleGrabberCallback, ICarenMFActivate^ Param_Out_Activate)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	IMFMediaType* vi_pMediaType = Nulo;
+	IMFSampleGrabberSinkCallback* vi_pSampleCallback = Nulo;
+	IMFActivate* vi_pOutAtivador = Nulo;
+
+	//Recupera o ponteiro para o tipo de midia.
+	CarenGetPointerFromICarenSafe(Param_MediaType, vi_pMediaType);
+
+	//Recupera o ponteiro para o callback de samples.
+	CarenGetPointerFromICarenSafe(Param_SampleGrabberCallback, vi_pSampleCallback);
+
+	//Chama o método para realizar a operação.
+	Hr = MFCreateSampleGrabberSinkActivate(vi_pMediaType, vi_pSampleCallback, &vi_pOutAtivador);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o ponteiro na interface.
+	CarenSetPointerToICarenSafe(vi_pOutAtivador, Param_Out_Activate, true);
+
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
+
 CarenResult MediaFoundationFunctions::_MFCreateSampleCopierMFT(ICarenMFTransform^ Param_Out_CopierMFT)
 {
 	//Variavel a ser retornada.

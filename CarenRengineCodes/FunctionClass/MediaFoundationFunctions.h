@@ -55,6 +55,15 @@ public:
 	CarenResult _MFShutdown();
 
 	/// <summary>
+	/// Cria um objeto de ativação para o Sample Grabber Media Sink(Sink de captura de amostras).
+	/// </summary>
+	/// <param name="Param_MediaType">Um interface ICarenMFMediaType, definindo o tipo de mídia para o fluxo de entrada do Sample Grabber(Capturador de amostras).</param>
+	/// <param name="Param_SampleGrabberCallback">Uma interface IMFSampleGrabberSinkCallback[INTERFACE PENDENTE] para o callback. O usuário deve implementar esta interface.</param>
+	/// <param name="Param_Out_Activate">Retorna uma interface (ICarenMFActivate) para o ativador. Use esta interface para completar a criação do Sample Grabber(Capturador de amostras). O usuário é responsável por inicializar a interface antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _MFCreateSampleGrabberSinkActivate(ICarenMFMediaType^ Param_MediaType, ICaren^ Param_SampleGrabberCallback, ICarenMFActivate^ Param_Out_Activate);
+
+	/// <summary>
 	/// A copiadora de amostras é uma transformação da Media Foundation (MFT) que copia dados de amostras de entrada para amostras de saída sem modificar os dados. Os seguintes dados são copiados da amostra:
 	/// Todos os atributos da amostra | O carimbo de tempo e duração | Bandeiras de amostra (ver ICarenMFSample::SetSampleFlags) | Os dados nos buffers de mídia. Se a amostra de entrada contiver vários buffers, 
 	/// os dados são copiados em um único buffer na amostra de saída.

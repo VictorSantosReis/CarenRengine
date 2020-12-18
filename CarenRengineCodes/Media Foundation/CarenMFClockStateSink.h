@@ -39,7 +39,7 @@ using namespace CarenRengine::SDKUtilidades;
 /// <summary>
 /// (Concluido - Fase de Testes) - Classe responsável por receber notificações de alteração de estado do relógio de apresentação.
 /// </summary>
-public ref class CarenMFRelogioStateSink : public ICarenMFClockStateSink
+public ref class CarenMFClockStateSink : public ICarenMFClockStateSink
 {
 	/////////////////////////////////////////
 	//Objeto gerenciado por essa interface.//
@@ -53,9 +53,9 @@ public:
 	/// <summary>
 	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
 	/// </summary>
-	CarenMFRelogioStateSink();
+	CarenMFClockStateSink();
 
-	~CarenMFRelogioStateSink();
+	~CarenMFClockStateSink();
 
 
 	//Variaveis Internas.
@@ -204,7 +204,7 @@ public:
 		pCln_ClockState = new CLN_IMFClockStateSink();
 
 		//Cria a interface que vai conter o relogio de notificações.
-		InterfaceSolicitada = gcnew CarenMFRelogioStateSink();
+		InterfaceSolicitada = gcnew CarenMFClockStateSink();
 
 		//Chama o método para definir o ponteiro
 		InterfaceSolicitada->AdicionarPonteiro(pCln_ClockState);

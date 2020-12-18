@@ -48,7 +48,7 @@ public ref class CarenMFStreamSink :public ICarenMFStreamSink
 	//Ponteiro para a interface (IMFStreamSink).
 	IMFStreamSink* PonteiroTrabalho = NULL;
 
-	//Destruidor.
+	//Construtor e Destruidor.
 public:
 	~CarenMFStreamSink();
 

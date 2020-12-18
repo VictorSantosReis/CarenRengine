@@ -1,11 +1,44 @@
 ﻿#include "../pch.h"
 #include "CarenMFVideoMediaType.h"
 
+
 //Destruidor.
 CarenMFVideoMediaType::~CarenMFVideoMediaType()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
+}
+//Construtores
+CarenMFVideoMediaType::CarenMFVideoMediaType()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
+
+CarenMFVideoMediaType::CarenMFVideoMediaType(String^ Param_GuidAMSubtype)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	GUID vi_GuidVideoSubtype = GUID_NULL;
+	IMFVideoMediaType* vi_pOutVideoMediaType = Nulo;
+	
+	//Converte a string para o GUID.
+	vi_GuidVideoSubtype = Util.CreateGuidFromString(Param_GuidAMSubtype);
+
+	//Chama o método para criar a interface.
+	Hr = MFCreateVideoMediaTypeFromSubtype(const_cast<GUID*>(&vi_GuidVideoSubtype), &vi_pOutVideoMediaType);
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutVideoMediaType;
 }
 
 

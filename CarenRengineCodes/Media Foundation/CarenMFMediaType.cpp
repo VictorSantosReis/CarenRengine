@@ -124,6 +124,41 @@ CarenMFMediaType::CarenMFMediaType(String^ Param_GuidRepresentation, ICarenBuffe
 	PonteiroTrabalho = vi_pOutMediaType;
 }
 
+CarenMFMediaType::CarenMFMediaType(ICarenMFCollection^ Param_MediaTypesToMux)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IMFCollection* vi_pCollectionToMux = Nulo;
+	IMFMediaType* vi_pOutMediaType = Nulo;
+
+	//Verifica se a interface de coleção é valida
+	if (!ObjetoGerenciadoValido(Param_MediaTypesToMux))
+		throw gcnew NullReferenceException("A interface do parametro (Param_MediaTypesToMux) não pode ser NULA!");
+
+	//Recupera o ponteiro para a interface de coleção.
+	CarenResult ResultGetBuffer = RecuperarPonteiroCaren(Param_MediaTypesToMux, &vi_pCollectionToMux);
+
+	//Verifica se não houve erro
+	if (!CarenSucesso(ResultGetBuffer))
+		throw gcnew Exception("Falhou ao recuperar o ponteiro para a interface de coleção.");
+
+	//Chama o método para criar a interface.
+	Hr = MFCreateMuxStreamMediaType(vi_pCollectionToMux, &vi_pOutMediaType);
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutMediaType;
+}
+
 //
 // Métodos da interface ICaren
 //

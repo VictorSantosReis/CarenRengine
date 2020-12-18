@@ -49,7 +49,7 @@ public ref class CarenMFMediaSink : ICarenMFMediaSink
 	//Ponteiro para a interface (IMFMediaSink).
 	IMFMediaSink* PonteiroTrabalho = NULL;
 
-	//Destruidor.
+	//Construtor e Destruidor.
 public:
 	/// <summary>
 	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.

@@ -51,6 +51,13 @@ public:
 	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
 	/// </summary>
 	CarenMFNetProxyLocator();
+
+	/// <summary>
+	/// Inicializa e cria um localizador de proxy default. 
+	/// </summary>
+	/// <param name="Param_Protocol">Uma string para o nome do protocolo.</param>
+	/// <param name="Param_ProxyConfig">Uma interface ICarenPropertyStore de uma loja de propriedades que contém a configuração proxy na propriedade MFNETSOURCE_PROXYSETTINGS.</param>
+	CarenMFNetProxyLocator(String^ Param_Protocol, ICarenPropertyStore^ Param_ProxyConfig);
 	
 	~CarenMFNetProxyLocator();
 

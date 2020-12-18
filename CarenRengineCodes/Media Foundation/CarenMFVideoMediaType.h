@@ -21,8 +21,9 @@ using namespace CarenRengine::SDKUtilidades;
 
 
 /// <summary>
-/// (Concluida - Fase de Testes) - 
+/// (Concluida - Fase de Testes) - Classe responsável por representar uma descrição de um formato de vídeo.
 /// </summary>
+[ObsoleteAttribute("Está classe está preterida. Prefira a classe CarenMFAttributes.", false)]
 public ref class CarenMFVideoMediaType : public ICarenMFVideoMediaType
 {
 	/////////////////////////////////////////
@@ -33,8 +34,19 @@ public ref class CarenMFVideoMediaType : public ICarenMFVideoMediaType
 	IMFVideoMediaType* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMFVideoMediaType();
+
+	/// <summary>
+	/// Inicializa e cria um tipo de mídia de vídeo parcial com um subtipo especificado.
+	/// </summary>
+	/// <param name="Param_GuidAMSubtype">Uma string com um GUID que especifica o subtipo de vídeo da mídia. Consulte a estrutura GUIDs::GUIDs_MF_VIDEO_SUBTYPES para obter um valor para esse parametro.</param>
+	CarenMFVideoMediaType(String^ Param_GuidAMSubtype);
+
 	~CarenMFVideoMediaType();
 
 

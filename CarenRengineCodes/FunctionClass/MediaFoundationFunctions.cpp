@@ -68,6 +68,196 @@ Done:;
 	return Resultado;
 }
 
+CarenResult MediaFoundationFunctions::_MFCreateSampleCopierMFT(ICarenMFTransform^ Param_Out_CopierMFT)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	IMFTransform* vi_pOutTransformCopier = Nulo;
+
+	//Chama o método para realizar a operação.
+	Hr = MFCreateSampleCopierMFT(&vi_pOutTransformCopier);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o ponteiro na interface.
+	CarenSetPointerToICarenSafe(vi_pOutTransformCopier, Param_Out_CopierMFT, true);
+
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
+
+CarenResult MediaFoundationFunctions::_MFCreateTransformActivate(ICarenMFActivate^ Param_Out_Activate)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	IMFActivate* vi_pOutActivateMFT = Nulo;
+
+	//Chama o método para realizar a operação.
+	Hr = MFCreateTransformActivate(&vi_pOutActivateMFT);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o ponteiro na interface.
+	CarenSetPointerToICarenSafe(vi_pOutActivateMFT, Param_Out_Activate, true);
+
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
+
+CarenResult MediaFoundationFunctions::_MFCreateVideoMixer(ICaren^ Param_Owner, String^ Param_RIIDDevice, String^ Param_RIID, ICaren^ Param_Out_Objeto)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IUnknown* vi_pOwner = Nulo; //Pode ser nulo.
+	GUID vi_RIIDDevice = GUID_NULL;
+	GUID vi_RIID = GUID_NULL;
+	IUnknown* vi_pOutObject = Nulo;
+
+	//Recupera o ponteiro para o dono do objeto se fornecido.
+	if (ObjetoGerenciadoValido(Param_Owner))
+		CarenGetPointerFromICarenSafe(Param_Owner, vi_pOwner);
+
+	//Converte as string para o guids nativos.
+	vi_RIIDDevice = Util.CreateGuidFromString(Param_RIIDDevice);
+	vi_RIID = Util.CreateGuidFromString(Param_RIID);
+
+	//Chama o método para realizar a operação.
+	Hr = MFCreateVideoMixer(vi_pOwner, vi_RIIDDevice, vi_RIID, reinterpret_cast<void**>(&vi_pOutObject));
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o ponteiro na interface.
+	CarenSetPointerToICarenSafe(vi_pOutObject, Param_Out_Objeto, true);
+
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
+
+CarenResult MediaFoundationFunctions::_MFCreateProtectedEnvironmentAccess(ICaren^ Param_Out_Access)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IMFProtectedEnvironmentAccess* vi_pOutAccess = Nulo;
+
+	//Chama o método para realizar a operação.
+	Hr = MFCreateProtectedEnvironmentAccess(&vi_pOutAccess);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o ponteiro na interface.
+	CarenSetPointerToICarenSafe(vi_pOutAccess, Param_Out_Access, true);
+
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
+
+CarenResult MediaFoundationFunctions::_MFCreatePMPServer(CA_MFPMPSESSION_CREATION_FLAGS Param_Flags, ICaren^ Param_Out_PMPServer)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	DWORD vi_FlagsCreate = static_cast<DWORD>(Param_Flags);
+	IMFPMPServer* vi_pOutPMPServer = Nulo;
+
+	//Chama o método para realizar a operação.
+	Hr = MFCreatePMPServer(vi_FlagsCreate, &vi_pOutPMPServer);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o ponteiro na interface.
+	CarenSetPointerToICarenSafe(vi_pOutPMPServer, Param_Out_PMPServer, true);
+
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
+
 CarenResult MediaFoundationFunctions::_MFGetService(ICaren^ Param_Objeto, String^ Param_GuidService, String^ Param_RIID, ICaren^ Param_Out_InterfaceRequested)
 {
 	//Variavel a ser retornada.

@@ -54,6 +54,11 @@ public ref class CarenMFTransform : public ICarenMFTransform
 
 	//Contrutor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMFTransform();
+
 	~CarenMFTransform();
 
 

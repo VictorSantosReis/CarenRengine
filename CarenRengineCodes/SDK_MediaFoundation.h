@@ -416,8 +416,7 @@ namespace CarenRengine
 		};
 
 		/// <summary>
-		/// (IMFPresentationClock) - Interface responsável por representar uma relógio de apresentação que é usado para agendar
-		/// quando as amostras de mídia devem ser processadas e para sincronizar vários fluxos.
+		/// (IMFPresentationClock) - Interface responsável por representar uma relógio de apresentação que é usado para agendar quando as amostras de mídia devem ser processadas e para sincronizar vários fluxos.
 		/// </summary>
 		[CategoryAttribute("MF Interface")]
 		[Guid("5D331E43-DA1F-44DE-81ED-DF5A7F61CA4D")]
@@ -2244,6 +2243,7 @@ namespace CarenRengine
 		/// </summary>
 		[CategoryAttribute("MF Interface")]
 		[Guid("5C45B3A5-2B27-4C0D-AA9D-736AA765F9F0")]
+		[ObsoleteAttribute("Está interface está absoleta. Prefira a interace ICarenMFAttributes.", false)]
 		public interface class ICarenMFVideoMediaType : ICarenMFMediaType
 		{
 			/// <summary>
@@ -5274,7 +5274,7 @@ namespace CarenRengine
 			/// Obtém um atributo de nível de fluxo do recurso de mídia.
 			/// </summary>
 			/// <param name="Param_IdFluxo">O índice baseado em zero do fluxo. Para obter o número de fluxos, ligue para ICarenMFMediaEngineEx::ObterNumeroFluxos.</param>
-			/// <param name="Param_GuidMfAtributo">O atributo a ser consultado. Os valores possíveis estão presentes nas estruturas: GUIDs_MFAtributos_DescritorFluxo e GUIDs_MFAtributos_MediaType</param>
+			/// <param name="Param_GuidMfAtributo">O atributo a ser consultado. Os valores possíveis estão presentes nas estruturas: GUIDs_MFAtributos_DescritorFluxo e GUIDs_MF_MEDIATYPE_ATTRIBUTES</param>
 			/// <param name="Param_Out_ValorAtributo">>Retrona uma CA_PropVariant com os dados do atributo.</param>
 			CarenResult GetStreamAttribute(
 				UInt32 Param_IdFluxo, 

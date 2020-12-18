@@ -25,10 +25,124 @@ CarenMFByteStream::~CarenMFByteStream()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
-//Construtor
+//Construtores
 CarenMFByteStream::CarenMFByteStream()
 {
 	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
+
+CarenMFByteStream::CarenMFByteStream(ICarenStream^ Param_Stream)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Resultados de Caren.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IStream* vi_pStream = Nulo;
+	IMFByteStream* vi_pOutByteStream = Nulo;
+
+	//Verfifica se a interface do Stream é valida.
+	if (!ObjetoGerenciadoValido(Param_Stream))
+		throw gcnew NullReferenceException("A interface no parametro (Param_Stream) não pode ser NULA!");
+
+	//Tenta recuperar o ponteiro para a interface.
+	Resultado = RecuperarPonteiroCaren(Param_Stream, &vi_pStream);
+
+	//Verifica se não houve algum erro
+	if (!CarenSucesso(Resultado))
+		throw gcnew Exception("Falhou ao tentar recuperar o ponteiro para a interface do fluxo de bytes.");
+
+	//Chama o método para criar a interface.
+	Hr = MFCreateMFByteStreamOnStream(vi_pStream, &vi_pOutByteStream);
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutByteStream;
+}
+
+CarenMFByteStream::CarenMFByteStream(ICarenMFByteStream^ Param_MFStream)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Resultados de Caren.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IMFByteStream* vi_pByteStreamBase = Nulo;
+	IMFByteStream* vi_pOutByteStream = Nulo;
+
+	//Verfifica se a interface do fluxo de bytes original é valida.
+	if (!ObjetoGerenciadoValido(Param_MFStream))
+		throw gcnew NullReferenceException("A interface no parametro (Param_MFStream) não pode ser NULA!");
+
+	//Tenta recuperar o ponteiro para a interface.
+	Resultado = RecuperarPonteiroCaren(Param_MFStream, &vi_pByteStreamBase);
+
+	//Verifica se não houve algum erro
+	if (!CarenSucesso(Resultado))
+		throw gcnew Exception("Falhou ao tentar recuperar o ponteiro para a interface do fluxo de bytes.");
+
+	//Chama o método para criar a interface.
+	Hr = MFCreateMFByteStreamWrapper(vi_pByteStreamBase, &vi_pOutByteStream);
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutByteStream;
+}
+
+CarenMFByteStream::CarenMFByteStream(ICaren^ Param_UnkStream)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Resultados de Caren.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IUnknown* vi_pRandomStream = Nulo;
+	IMFByteStream* vi_pOutByteStream = Nulo;
+
+	//Verfifica se a interface do fluxo de bytes original é valida.
+	if (!ObjetoGerenciadoValido(Param_UnkStream))
+		throw gcnew NullReferenceException("A interface no parametro (Param_UnkStream) não pode ser NULA!");
+
+	//Tenta recuperar o ponteiro para a interface.
+	Resultado = RecuperarPonteiroCaren(Param_UnkStream, &vi_pRandomStream);
+
+	//Verifica se não houve algum erro
+	if (!CarenSucesso(Resultado))
+		throw gcnew Exception("Falhou ao tentar recuperar o ponteiro para a interface do fluxo de bytes.");
+
+	//Chama o método para criar a interface.
+	Hr = MFCreateMFByteStreamOnStreamEx(vi_pRandomStream, &vi_pOutByteStream);
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutByteStream;
 }
 
 //

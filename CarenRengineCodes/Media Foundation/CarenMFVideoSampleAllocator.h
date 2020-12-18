@@ -48,7 +48,7 @@ public ref class CarenMFVideoSampleAllocator : public ICarenMFVideoSampleAllocat
 	//Ponteiro para a interface (IMFVideoSampleAllocator).
 	IMFVideoSampleAllocatorEx* PonteiroTrabalho = NULL;
 
-	//Destruidor.
+	//Construtor e Destruidor.
 public:
 	~CarenMFVideoSampleAllocator();
 

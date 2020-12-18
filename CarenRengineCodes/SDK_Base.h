@@ -44,7 +44,7 @@ namespace CarenRengine
 			/// <summary>
 			/// Contém todos os GUIDs utilizados pela interface IMFMediaType.
 			/// </summary>
-			public value struct GUIDs_MFAtributos_MediaType
+			public value struct GUIDs_MF_MEDIATYPE_ATTRIBUTES
 			{
 
 				////////////////////////////////////////////////////////////////////
@@ -529,7 +529,7 @@ namespace CarenRengine
 			/// <summary>
 			/// Contém todos os GUIDs para os formatos de (Vídeo) identificaveis pelo Media Foundation.
 			/// </summary>
-			public value struct GUIDs_MFAtributos_FormatosVideo
+			public value struct GUIDs_MF_VIDEO_SUBTYPES
 			{
 				/// <summary>
 				/// Base.
@@ -4867,6 +4867,28 @@ namespace CarenRengine
 				/// Ponteiro desconhecido para um objeto.
 				/// </summary>
 				IUNKNOWN
+			};
+			
+			/// <summary>
+			/// (MFPMPSESSION_CREATION_FLAGS) - Enumera bandeiras que definem o comportamento da função MFCreatePMPMediaSession & _MFCreatePMPServer.
+			/// </summary>
+			public enum class CA_MFPMPSESSION_CREATION_FLAGS
+			{
+				/// <summary>
+				/// Utilizado para suporte. Não faz parte das contantes originais.
+				/// </summary>
+				Zero = 0x0,
+
+				/// <summary>
+				/// Se essa bandeira estiver definida, a Sessão de Mídia do Caminho de Mídia Protegida (PMP) será criada em um processo desprotegido. Você pode usar o processo desprotegido para reproduzir conteúdo claro, 
+				/// mas não protegido. Se essa bandeira não for definida, a Sessão de Mídia PMP será criada em um processo protegido. Nesse caso, o processo protegido é usado para conteúdo protegido e conteúdo claro.
+				/// </summary>
+				MFPMPSESSION_UNPROTECTED_PROCESS = 0x1,
+
+				/// <summary>
+				/// NÃO POSSUI DOCUMENTAÇÃO.
+				/// </summary>
+				MFPMPSESSION_IN_PROCESS = 0x2
 			};
 			
 			/// <summary>
@@ -20748,7 +20770,7 @@ MEReservedMax = 10000
 				String^ guidMajorType;
 
 				/// <summary>
-				/// Um GUID para o subtipo da midia. Consulte as estruturas GUIDs_MFAtributos_FormatosVideo e GUIDs_MFAtributos_FormatosAudio para obter esse guid.
+				/// Um GUID para o subtipo da midia. Consulte as estruturas GUIDs_MF_VIDEO_SUBTYPES e GUIDs_MFAtributos_FormatosAudio para obter esse guid.
 				/// </summary>
 				String^ guidSubtype;
 			};

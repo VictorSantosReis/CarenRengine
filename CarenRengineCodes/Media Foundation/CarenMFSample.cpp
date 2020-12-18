@@ -25,6 +25,113 @@ CarenMFSample::~CarenMFSample()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtores
+CarenMFSample::CarenMFSample(Boolean Param_CriarInterface)
+{
+	//Verifica se deve ou não criar uma interface.
+	if (Param_CriarInterface)
+	{
+		//Variavel que vai conter o resultado COM.
+		HRESULT Hr = E_FAIL;
+
+		//Variaveis utilizadas.
+		Utilidades Util;
+		IMFSample* vi_pOutSample = Nulo;
+
+		//Chama o método para criar a interface.
+		Hr = MFCreateSample(&vi_pOutSample);
+
+		//Verifica se não ocorreu erro no processo.
+		if (!Sucesso(Hr))
+		{
+			//Chama uma exceção para informar o error.
+			throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+		}
+
+		//Define a interface criada no ponteiro de trabalho
+		PonteiroTrabalho = vi_pOutSample;
+	}
+	else
+	{
+		//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+	}
+}
+
+CarenMFSample::CarenMFSample(ICarenMFCollection^ Param_SamplesToMux)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Resultados de Caren.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IMFCollection* vi_pCollectionSamples = Nulo;
+	IMFSample* vi_pOutSample = Nulo;
+
+	//Verfifica se a interface de coleção é válida.
+	if (!ObjetoGerenciadoValido(Param_SamplesToMux))
+		throw gcnew NullReferenceException("A interface no parametro (Param_SamplesToMux) não pode ser NULA!");
+
+	//Tenta recuperar o ponteiro para a interface.
+	Resultado = RecuperarPonteiroCaren(Param_SamplesToMux, &vi_pCollectionSamples);
+
+	//Verifica se não houve algum erro
+	if (!CarenSucesso(Resultado))
+		throw gcnew Exception("Falhou ao tentar recuperar o ponteiro para a coleção de amostras de mídia.");
+
+	//Chama o método para criar a interface.
+	Hr = MFCreateMuxStreamSample(vi_pCollectionSamples, &vi_pOutSample);
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutSample;
+}
+
+CarenMFSample::CarenMFSample(ICaren^ Param_UnkSurface)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Resultados de Caren.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IUnknown* vi_pSuperficeD3D = Nulo; //Pode ser NULA.
+	IMFSample* vi_pOutSample = Nulo;
+
+	//Verfifica se foi informada uma interface para a superfice do Direct3D e obtem o ponteiro.
+	if (!ObjetoGerenciadoValido(Param_UnkSurface))
+	{
+		//Tenta recuperar o ponteiro para a superfice.
+		Resultado = RecuperarPonteiroCaren(Param_UnkSurface, &vi_pSuperficeD3D);
+
+		//Verifica se não houve algum erro
+		if (!CarenSucesso(Resultado))
+			throw gcnew Exception("Falhou ao tentar recuperar o ponteiro para a superfice do Direct 3D.");		
+	}
+
+	//Chama o método para criar a interface.
+	Hr = MFCreateVideoSampleFromSurface(vi_pSuperficeD3D, &vi_pOutSample);
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutSample;
+}
 
 //
 // Métodos da interface ICaren

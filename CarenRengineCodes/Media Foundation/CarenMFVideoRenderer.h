@@ -48,7 +48,7 @@ public ref class CarenMFVideoRenderer : public ICarenMFVideoRenderer
 	//Ponteiro para a interface (IMFVideoRenderer).
 	IMFVideoRenderer* PonteiroTrabalho = NULL;
 
-	//Destruidor.
+	//Construtor e Destruidor.
 public:
 	~CarenMFVideoRenderer();
 

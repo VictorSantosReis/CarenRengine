@@ -18,13 +18,14 @@ limitations under the License.
 #pragma once
 #include "../SDK_MediaFoundation.h"
 #include "../SDK_Caren.h"
+#include "../SDK_Windows.h"
 #include "../SDK_Utilidades.h"
 
 //Importa o namespace que contém as interfaces da API primária.
 using namespace CarenRengine::MediaFoundation;
 
-//Enumeração de retorno de função.
-
+//Importa o namespace que contém as interface da API do Windows.
+using namespace CarenRengine::Windows;
 
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
@@ -55,6 +56,24 @@ public:
 	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
 	/// </summary>
 	CarenMFByteStream();
+
+	/// <summary>
+	/// Inicializa e cria um fluxo byte da Microsoft Media Foundation que envolve uma interface ICarenStream. 
+	/// </summary>
+	/// <param name="Param_Stream">Uma interface(ICarenStream) para o fluxo de bytes.</param>
+	CarenMFByteStream(ICarenStream^ Param_Stream);
+
+	/// <summary>
+	///Inicializa e cria um Wrapper para um fluxo de byte.
+	/// </summary>
+	/// <param name="Param_MFStream">Uma interface (ICarenMFByteStream) para o fluxo de bytes original.</param>
+	CarenMFByteStream(ICarenMFByteStream^ Param_MFStream);
+
+	/// <summary>
+	/// Inicializa e cria um fluxo byte da Microsoft Media Foundation que envolve um objeto IRandomAccessStream.
+	/// </summary>
+	/// <param name="Param_UnkStream">Um ponteiro para a interface IRandomAccessStream.</param>
+	CarenMFByteStream(ICaren^ Param_UnkStream);
 
 	~CarenMFByteStream();
 

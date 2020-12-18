@@ -72,6 +72,12 @@ public:
 	/// <param name="Param_BufferRepresentation">um buffer que contém a representação do formato para converter. O layout do buffer depende do valor no parametro (Param_GuidRepresentation).</param>
 	CarenMFMediaType(String^ Param_GuidRepresentation, ICarenBuffer^ Param_BufferRepresentation);
 
+	/// <summary>
+	/// Inicializa e cria a interface de atributos a parti de uma lista(ICarenMFCollection) que descrevem os tipos de mídia de substreams multiplexados.
+	/// </summary>
+	/// <param name="Param_MediaTypesToMux">Uma interface (ICarenMFCollection) que contém uma lista de ponteiros para as interfaces de atributos de cada substream multiplexado.</param>
+	CarenMFMediaType(ICarenMFCollection^ Param_MediaTypesToMux);
+
 	~CarenMFMediaType();
 
 

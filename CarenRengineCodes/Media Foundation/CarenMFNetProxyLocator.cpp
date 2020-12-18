@@ -17,6 +17,7 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenMFNetProxyLocator.h"
 
+
 //Destruidor.
 CarenMFNetProxyLocator::~CarenMFNetProxyLocator()
 {
@@ -27,6 +28,51 @@ CarenMFNetProxyLocator::~CarenMFNetProxyLocator()
 CarenMFNetProxyLocator::CarenMFNetProxyLocator()
 {
 	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
+
+CarenMFNetProxyLocator::CarenMFNetProxyLocator(String^ Param_Protocol, ICarenPropertyStore^ Param_ProxyConfig)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Resultados de Caren.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	PWSTR vi_pProtocolName = Nulo;
+	IPropertyStore* vi_pStoreConfig = Nulo;
+	IMFNetProxyLocator* vi_pOutNetProxyLocator = Nulo;
+
+	//Converte a string para o nome do protocolo.
+	vi_pProtocolName = Util.ConverterStringToWCHAR(Param_Protocol);
+
+	//Verfifica se a interface da loja de propriedades é valida.
+	if (!ObjetoGerenciadoValido(Param_ProxyConfig))
+		throw gcnew NullReferenceException("A interface no parametro (Param_ProxyConfig) não pode ser NULA!");
+
+	//Tenta recuperar o ponteiro para a interface.
+	Resultado = RecuperarPonteiroCaren(Param_ProxyConfig, &vi_pStoreConfig);
+
+	//Verifica se não houve algum erro
+	if (!CarenSucesso(Resultado))
+		throw gcnew Exception("Falhou ao tentar recuperar o ponteiro para a interface da loja de propriedades.");
+
+	//Chama o método para criar a interface.
+	Hr = MFCreateProxyLocator(const_cast<PWSTR>(vi_pProtocolName), vi_pStoreConfig, &vi_pOutNetProxyLocator);
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutNetProxyLocator;
+
+	//Libera a memória utilizada pela string.
+	DeletarStringAllocatedSafe(&vi_pProtocolName);
 }
 
 // Métodos da interface ICaren

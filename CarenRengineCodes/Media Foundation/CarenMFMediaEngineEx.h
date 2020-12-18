@@ -275,7 +275,7 @@ public:
 	/// Obtém um atributo de nível de fluxo do recurso de mídia.
 	/// </summary>
 	/// <param name="Param_IdFluxo">O índice baseado em zero do fluxo. Para obter o número de fluxos, ligue para ICarenMFMediaEngineEx::ObterNumeroFluxos.</param>
-	/// <param name="Param_GuidMfAtributo">O atributo a ser consultado. Os valores possíveis estão presentes nas estruturas: GUIDs_MFAtributos_DescritorFluxo e GUIDs_MFAtributos_MediaType</param>
+	/// <param name="Param_GuidMfAtributo">O atributo a ser consultado. Os valores possíveis estão presentes nas estruturas: GUIDs_MFAtributos_DescritorFluxo e GUIDs_MF_MEDIATYPE_ATTRIBUTES</param>
 	/// <param name="Param_Out_ValorAtributo">>Retrona uma CA_PropVariant com os dados do atributo.</param>
 	virtual CarenResult GetStreamAttribute(
 	UInt32 Param_IdFluxo, 

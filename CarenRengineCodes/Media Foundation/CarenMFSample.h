@@ -50,6 +50,25 @@ public ref class CarenMFSample : public ICarenMFSample
 
 	//Contrutor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a interface e permite que o usuário decida se a biblioteca deve criar a interface ou vai iniciar sem um ponteiro 
+	/// de trabalho. Se (Param_CriarInterface) for TRUE, o sistema cria uma nova amostra vazia para ser preenchida.
+	/// </summary>
+	/// <param name="Param_CriarInterface">Um valor booleano, TRUE indica que deve criar uma nova interface intermanete, caso contario, FALSE.</param>
+	CarenMFSample(Boolean Param_CriarInterface);
+
+	/// <summary>
+	/// Inicializa e cria uma ICarenMFSample contendo as amostras de substreams multiplexados. 
+	/// </summary>
+	/// <param name="Param_SamplesToMux">Uma interface(ICarenMFCollection) contendo a coleção de amostras (ICarenMFSample) para cada substream multiplexado.</param>
+	CarenMFSample(ICarenMFCollection^ Param_SamplesToMux);
+
+	/// <summary>
+	/// Inicializa e cria uma amostra de mídia que gerencia uma superfície do Direct3D.
+	/// </summary>
+	/// <param name="Param_UnkSurface">Um ponteiro para a interface IUnknown da superfície Direct3D. Este parâmetro pode ser NULO.</param>
+	CarenMFSample(ICaren^ Param_UnkSurface);
+
 	~CarenMFSample();
 
 

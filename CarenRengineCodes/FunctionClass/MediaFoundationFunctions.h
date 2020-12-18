@@ -19,7 +19,6 @@ limitations under the License.
 #include "../SDK_Base.h"
 #include "../Caren/Caren.h"
 #include "../SDK_Utilidades.h"
-#include "../Media Foundation/CarenMFMediaType.h"
 
 //Importa o SDK Base da Media Foundation.
 using namespace CarenRengine::MediaFoundation;
@@ -54,6 +53,47 @@ public:
 	/// Método responsável por desligar a Api do Media Foundation.
 	/// </summary>
 	CarenResult _MFShutdown();
+
+	/// <summary>
+	/// A copiadora de amostras é uma transformação da Media Foundation (MFT) que copia dados de amostras de entrada para amostras de saída sem modificar os dados. Os seguintes dados são copiados da amostra:
+	/// Todos os atributos da amostra | O carimbo de tempo e duração | Bandeiras de amostra (ver ICarenMFSample::SetSampleFlags) | Os dados nos buffers de mídia. Se a amostra de entrada contiver vários buffers, 
+	/// os dados são copiados em um único buffer na amostra de saída.
+	/// </summary>
+	/// <param name="Param_Out_CopierMFT">Recebe uma interface (ICarenMFTransform) para a transformação. O usuário é responsável por inicializar a interface antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _MFCreateSampleCopierMFT(ICarenMFTransform^ Param_Out_CopierMFT);
+
+	/// <summary>
+	/// Cria um objeto de ativação genérico para transformações da Media Foundation (MFTs).
+	/// </summary>
+	/// <param name="Param_Out_Activate">Recebe uma interface (ICarenMFActivate) para o ativador da transformação. O usuário é responsável por inicializar a interface antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _MFCreateTransformActivate(ICarenMFActivate^ Param_Out_Activate);
+
+	/// <summary>
+	/// Cria a misturadora de vídeo padrão para o renderizador de vídeo aprimorado (EVR).
+	/// </summary>
+	/// <param name="Param_Owner">Ponteiro para o dono deste objeto. Se o objeto for agregado, passe um ponteiro para a interface IUnknown do objeto agregador. Caso contrário, defina este parâmetro para NULO.</param>
+	/// <param name="Param_RIIDDevice">Identificador de interface (IID) da interface do dispositivo de vídeo que será usado para processar o vídeo. Atualmente, o único valor suportado é IID_IDirect3DDevice9.</param>
+	/// <param name="Param_RIID">IID da interface solicitada na mixer de vídeo. O mixer de vídeo expõe a interface ICarenMFTransform.</param>
+	/// <param name="Param_Out_Objeto">Recebe a interface solicitada. O usuário é responsável por inicializar a interface antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _MFCreateVideoMixer(ICaren^ Param_Owner, String^ Param_RIIDDevice, String^ Param_RIID, ICaren^ Param_Out_Objeto);
+
+	/// <summary>
+	/// Cria um objeto IMFProtectedEnvironmentAccess[NÃO IMPLEMENTADA PELA DLL] que permite que sistemas de proteção de conteúdo realizem um handshake(aperto de mão) com o ambiente protegido.
+	/// </summary>
+	/// <param name="Param_Out_Access">Retorna uma interface base (ICaren) para a interface (IMFProtectedEnvironmentAccess[NÃO IMPLEMENTADA PELA DLL]). O usuário é responsável por inicializar a interface antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _MFCreateProtectedEnvironmentAccess(ICaren^ Param_Out_Access);
+
+	/// <summary>
+	/// Cria o objeto PMP (Protected Media Path, Caminho de Mídia Protegida (PMP).
+	/// </summary>
+	/// <param name="Param_Flags">Um membro da enumeração CA_MFPMPSESSION_CREATION_FLAGS que especifica como criar a sessão PMP.</param>
+	/// <param name="Param_Out_PMPServer">Retorna uma interface base (ICaren) para a interface (IMFPMPServer[NÃO IMPLEMENTADA PELA DLL]). O usuário é responsável por inicializar a interface antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _MFCreatePMPServer(CA_MFPMPSESSION_CREATION_FLAGS Param_Flags, ICaren^ Param_Out_PMPServer);
 	
 	/// <summary>
 	/// Consulta um objeto para uma interface de serviço especificada.
@@ -62,7 +102,7 @@ public:
 	/// <param name="Param_Objeto">A interface do objeto a ser consultado.</param>
 	/// <param name="Param_GuidService">O identificador de serviço (SID) do serviço. Para obter uma lista de identificadores de serviço, consulte a estrutura (GUIDs::GUIDs_MF_SERVICE_INTERFACES)</param>
 	/// <param name="Param_RIID">O identificador de interface (IID) da interface que está sendo solicitada.</param>
-	/// <param name="Param_Out_InterfaceRequested">Retorna a interface solicitada se encontrada. O usuário é responsável por inicializar a interfaces antes de chamar este método.</param>
+	/// <param name="Param_Out_InterfaceRequested">Retorna a interface solicitada se encontrada. O usuário é responsável por inicializar a interface antes de chamar este método.</param>
 	/// <returns></returns>
 	CarenResult _MFGetService(
 		ICaren^ Param_Objeto, 
@@ -142,7 +182,7 @@ public:
 	/// <param name="Param_ActivatableClassId">O identificador de classe que está associado à classe de tempo de execução ativável.</param>
 	/// <param name="Param_Configuration">Um ponteiro para um objeto IPropertySet opcional, que é usado para configurar a classe do Windows Runtime. Este parâmetro pode ser NULO.</param>
 	/// <param name="Param_RIID">O identificador de interface(IID) da interface solicitada.O objeto de ativação criado por esta função suporta as seguintes interfaces: IClassFactory, ICarenMFActivate, ICarenPersisStream</param>
-	/// <param name="Param_Out_Objeto">Recebe a interface que foi solicitada. O usuário deve inicializar a interfaces antes de chamar este método.</param>
+	/// <param name="Param_Out_Objeto">Recebe a interface que foi solicitada. O usuário deve inicializar a interface antes de chamar este método.</param>
 	/// <returns></returns>
 	CarenResult _MFCreateMediaExtensionActivate(String^ Param_ActivatableClassId, ICaren^ Param_Configuration, String^ Param_RIID, ICaren^ Param_Out_Objeto);
 

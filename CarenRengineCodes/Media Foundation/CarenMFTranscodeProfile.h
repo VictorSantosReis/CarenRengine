@@ -47,12 +47,14 @@ public ref class CarenMFTranscodeProfile : public ICarenMFTranscodeProfile
 	IMFTranscodeProfile* PonteiroTrabalho = NULL;
 
 
-	//Contrutores e destuidor da classe.
+	//Contrutor e destuidor da classe.
 public:
 	/// <summary>
-	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// Inicializa a interface e permite que o usuário decida se a biblioteca deve criar a interface ou vai iniciar sem um ponteiro 
+	/// de trabalho. Se (Param_CriarInterface) for TRUE, o construtor cria um perfil de transcodificação vazio para ser configurado.
 	/// </summary>
-	CarenMFTranscodeProfile();
+	/// <param name="Param_CriarInterface">Um valor booleano, TRUE indica que deve criar uma nova interface intermanete, caso contario, FALSE.</param>
+	CarenMFTranscodeProfile(Boolean Param_CriarInterface);
 	
 	~CarenMFTranscodeProfile();
 

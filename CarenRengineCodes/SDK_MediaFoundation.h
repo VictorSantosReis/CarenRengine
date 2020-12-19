@@ -3192,7 +3192,7 @@ namespace CarenRengine
 			/// (GetNodeType) - Recupera o tipo de nó.
 			/// </summary>
 			/// <param name="Param_Out_TipoNode">Recebe um valor de enumeração que define o tipo do nó na topologia.</param>
-			CarenResult GetNodeType([Out] Enumeracoes::CA_TOPOLOGY_TYPE% Param_Out_TipoNode);
+			CarenResult GetNodeType([Out] Enumeracoes::CA_MF_TOPOLOGY_TYPE% Param_Out_TipoNode);
 
 			/// <summary>
 			/// (GetObject) - Obtém o objeto associado a este nó.

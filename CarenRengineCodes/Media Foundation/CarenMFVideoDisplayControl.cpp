@@ -25,6 +25,11 @@ CarenMFVideoDisplayControl::~CarenMFVideoDisplayControl()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor
+CarenMFVideoDisplayControl::CarenMFVideoDisplayControl()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 //
 // Métodos da interface ICaren

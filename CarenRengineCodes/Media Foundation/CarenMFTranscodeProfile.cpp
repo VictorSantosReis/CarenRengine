@@ -17,16 +17,43 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenMFTranscodeProfile.h"
 
+
 //Destruidor.
 CarenMFTranscodeProfile::~CarenMFTranscodeProfile()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
-//Construtores
-CarenMFTranscodeProfile::CarenMFTranscodeProfile()
+//Construtor
+CarenMFTranscodeProfile::CarenMFTranscodeProfile(Boolean Param_CriarInterface)
 {
-	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+	//Verifica se deve ou não criar uma interface.
+	if (Param_CriarInterface)
+	{
+		//Variavel que vai conter o resultado COM.
+		HRESULT Hr = E_FAIL;
+
+		//Variaveis utilizadas.
+		Utilidades Util;
+		IMFTranscodeProfile* vi_pOutTranscodeProfile = Nulo;
+		
+		//Chama o método para criar a interface.
+		Hr = MFCreateTranscodeProfile(&vi_pOutTranscodeProfile);
+
+		//Verifica se não ocorreu erro no processo.
+		if (!Sucesso(Hr))
+		{
+			//Chama uma exceção para informar o error.
+			throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+		}
+
+		//Define a interface criada no ponteiro de trabalho
+		PonteiroTrabalho = vi_pOutTranscodeProfile;
+	}
+	else
+	{
+		//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+	}
 }
 
 // Métodos da interface ICaren

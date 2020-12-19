@@ -10369,31 +10369,36 @@ MEReservedMax = 10000
 				/// </summary>
 				D3D11_FENCE_FLAG_NON_MONITORED = 0x8
 			};
-		
+			
 			/// <summary>
-			/// (MF_TOPOLOGY_TYPE)(FALTA DOCUMENTAR) - Enumera os tipos de nó em uma topologia.
+			/// (MF_TOPOLOGY_TYPE) - Enumera os tipos de nó em uma topologia.
 			/// </summary>
-			public enum class CA_TOPOLOGY_TYPE : Int64
+			public enum class CA_MF_TOPOLOGY_TYPE
 			{
 				/// <summary>
-				/// 
+				/// ‎Nó de saída. Representa um Media Sink na topologia.‎
 				/// </summary>
 				MF_TOPOLOGY_OUTPUT_NODE = 0,
 
 				/// <summary>
-				/// 
+				/// ‎Nó fonte. Representa um fluxo de mídia na topologia.‎
 				/// </summary>
 				MF_TOPOLOGY_SOURCESTREAM_NODE = (MF_TOPOLOGY_OUTPUT_NODE + 1),
 
 				/// <summary>
-				/// 
+				/// ‎Nó de transformação. Representa uma Transformação de Mídia (MFT) na topologia.‎
 				/// </summary>
 				MF_TOPOLOGY_TRANSFORM_NODE = (MF_TOPOLOGY_SOURCESTREAM_NODE + 1),
 
 				/// <summary>
-				/// 
+				/// Nó Tee. Um nó tee não contém um ponteiro para um objeto. Em vez disso, representa uma bifurcação no fluxo. Um nó tee tem uma entrada e várias saídas, e as amostras do nó upstream são entregues a todos os nós downstream.
 				/// </summary>
 				MF_TOPOLOGY_TEE_NODE = (MF_TOPOLOGY_TRANSFORM_NODE + 1),
+
+				/// <summary>
+				/// Reservado.
+				/// </summary>
+				MF_TOPOLOGY_MAX
 			};
 
 			/// <summary>

@@ -18,12 +18,43 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenMFTopologyNode.h"
 
+
 //Destruidor.
 CarenMFTopologyNode::~CarenMFTopologyNode()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Cosntrutores
+CarenMFTopologyNode::CarenMFTopologyNode()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
+
+CarenMFTopologyNode::CarenMFTopologyNode(CA_MF_TOPOLOGY_TYPE Param_TypeNode)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	MF_TOPOLOGY_TYPE vi_TypeNode = static_cast<MF_TOPOLOGY_TYPE>(Param_TypeNode);
+	IMFTopologyNode* vi_pOutNode = Nulo;
+
+	//Chama o método para criar a interface.
+	Hr = MFCreateTopologyNode(vi_TypeNode, &vi_pOutNode);
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutNode;
+}
+
 
 //
 // Métodos da interface ICaren
@@ -704,7 +735,7 @@ Done:;
 /// (GetNodeType) - Recupera o tipo de nó.
 /// </summary>
 /// <param name="Param_Out_TipoNode">Recebe um valor de enumeração que define o tipo do nó na topologia.</param>
-CarenResult CarenMFTopologyNode::GetNodeType([Out] Enumeracoes::CA_TOPOLOGY_TYPE% Param_Out_TipoNode)
+CarenResult CarenMFTopologyNode::GetNodeType([Out] Enumeracoes::CA_MF_TOPOLOGY_TYPE% Param_Out_TipoNode)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -734,7 +765,7 @@ CarenResult CarenMFTopologyNode::GetNodeType([Out] Enumeracoes::CA_TOPOLOGY_TYPE
 	}
 
 	//Define o tipo da topologia.
-	Param_Out_TipoNode = static_cast<CA_TOPOLOGY_TYPE>(TipoTopologia);
+	Param_Out_TipoNode = static_cast<CA_MF_TOPOLOGY_TYPE>(TipoTopologia);
 
 	//Define sucesso na operação.
 	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);

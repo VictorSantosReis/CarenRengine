@@ -74,7 +74,7 @@ public:
 	/// Inicializa e cria ‎uma topologia para transcodificação para um fluxo byte.‎
 	/// </summary>
 	/// <param name="Param_MediaSource">Uma fonte de mídia que encapsula o arquivo de origem a ser transcodificado. O objeto de origem de mídia expõe a interface ‎‎ICarenMFMediaSource‎‎ e pode ser criado usando o resolvedor de origem 
-	/// (ICarenMFSourceResolver)</param>
+	/// (ICarenMFSourceResolver).</param>
 	/// <param name="Param_OutputStream">Uma interface ‎‎ICarenMFByteStream‎‎ de um fluxo byte. A saída transcodificada será escrita para este fluxo byte.‎</param>
 	/// <param name="Param_TranscodeProfile">O perfil de transcodificação que contém as configurações de configuração para o fluxo de áudio, a transmissão de vídeo e o contêiner para o qual o arquivo é gravado.</param>
 	CarenMFTopology(ICarenMFMediaSource^ Param_MediaSource, ICarenMFByteStream^ Param_OutputStream, ICarenMFTranscodeProfile^ Param_TranscodeProfile);

@@ -873,7 +873,7 @@ CarenResult CarenMFTopology::GetOutputNodeCollection([Out] ICarenMFCollection^% 
 	}
 
 	//Cria a interface a ser retornada
-	Param_Out_ColecaoNoSaida = gcnew CarenMFCollection();
+	Param_Out_ColecaoNoSaida = gcnew CarenMFCollection(false);
 
 	//Define o ponteiro de trabalho
 	Param_Out_ColecaoNoSaida->AdicionarPonteiro(pColecaoNoSaida);
@@ -918,7 +918,7 @@ CarenResult CarenMFTopology::GetSourceNodeCollection([Out] ICarenMFCollection^% 
 	}
 
 	//Cria a interface a ser retornada
-	Param_Out_ColecaoNoOrigem = gcnew CarenMFCollection();
+	Param_Out_ColecaoNoOrigem = gcnew CarenMFCollection(false);
 
 	//Define o ponteiro de trabalho
 	Param_Out_ColecaoNoOrigem->AdicionarPonteiro(&pColecaoNoOrigem);

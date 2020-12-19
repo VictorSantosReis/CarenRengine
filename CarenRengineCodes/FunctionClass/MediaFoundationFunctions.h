@@ -30,7 +30,7 @@ using namespace CarenRengine::SDKBase::Estruturas;
 using namespace CarenRengine::SDKBase::Interfaces;
 
 /// <summary>
-/// Classe responsável por conter os métodos nativos utilizados pela Api do Media Foundation.
+/// Classe responsável por conter funções nativas utilizada pela Api do Microsoft Media Foundation.
 /// </summary>
 public ref class MediaFoundationFunctions
 {
@@ -429,7 +429,7 @@ public:
 	CarenResult _MFCreateDeviceSourceActivate(ICarenMFAttributes^ Param_Atributos, ICarenMFActivate^ Param_Out_DispositivoCaptura);
 
 	/// <summary>
-	/// Cria o objeto de ativação do coletor de transcodificação.
+	/// Cria o objeto de ativação para um Sink de Transcodificação.
 	/// O objeto de ativação do coletor de transcodificação pode ser usado para criar qualquer um dos seguintes coletores de arquivo: Coletor de arquivo 3GP, MP3 ou MP4.
 	/// </summary>
 	/// <param name="Param_Out_Transcode">Retorna uma interface ICarenMFActivate. Esta interface é usada para criar a instância do coletor de arquivos a partir do objeto de ativação. Antes de fazer isso, consulte o 

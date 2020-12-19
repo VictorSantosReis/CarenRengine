@@ -50,7 +50,7 @@ public ref class CarenD3D11View : public ICarenD3D11View
 	//Ponteiro para a interface (ID3D11View).
 	ID3D11View* PonteiroTrabalho = NULL;
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD3D11View();
 

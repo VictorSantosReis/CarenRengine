@@ -49,7 +49,7 @@ public ref class CarenMFVideoDisplayControl :public ICarenMFVideoDisplayControl
 	//Ponteiro para a interface (IMFVideoDisplayControl).
 	IMFVideoDisplayControl* PonteiroTrabalho = NULL;
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenMFVideoDisplayControl();
 

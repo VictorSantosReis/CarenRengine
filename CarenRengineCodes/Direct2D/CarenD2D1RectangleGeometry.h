@@ -44,7 +44,7 @@ public ref class CarenD2D1RectangleGeometry : public ICarenD2D1RectangleGeometry
 	ID2D1RectangleGeometry* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD2D1RectangleGeometry();
 

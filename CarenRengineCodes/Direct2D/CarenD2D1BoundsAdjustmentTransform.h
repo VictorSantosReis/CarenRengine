@@ -44,7 +44,7 @@ public ref class CarenD2D1BoundsAdjustmentTransform : public ICarenD2D1BoundsAdj
 	ID2D1BoundsAdjustmentTransform* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD2D1BoundsAdjustmentTransform();
 

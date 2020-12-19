@@ -47,7 +47,7 @@ public ref class CarenD3D11Counter : public ICarenD3D11Counter
 	//Ponteiro para a interface (ID3D11Counter).
 	ID3D11Counter* PonteiroTrabalho = NULL;
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD3D11Counter();
 

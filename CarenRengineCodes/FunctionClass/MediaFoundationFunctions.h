@@ -55,6 +55,14 @@ public:
 	CarenResult _MFShutdown();
 
 	/// <summary>
+	/// Cria a fonte do sequenciador.
+	/// </summary>
+	/// <param name="Param_Reservado">Reservado. Deve ser NULO.</param>
+	/// <param name="Param_Out_SequencerSource">Retorna a interface base (ICaren) para a interface (IMFSequencerSource[NÃO IMPLEMENTADA PELA DLL]) da fonte do sequenciador. O usuário é responsável por inicializar a interface antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _MFCreateSequencerSource(ICaren^ Param_Reservado, ICaren^ Param_Out_SequencerSource);
+
+	/// <summary>
 	/// Cria um objeto de ativação para o Sample Grabber Media Sink(Sink de captura de amostras).
 	/// </summary>
 	/// <param name="Param_MediaType">Um interface ICarenMFMediaType, definindo o tipo de mídia para o fluxo de entrada do Sample Grabber(Capturador de amostras).</param>

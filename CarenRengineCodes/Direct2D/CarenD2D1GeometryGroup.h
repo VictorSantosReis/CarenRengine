@@ -44,7 +44,7 @@ public ref class CarenD2D1GeometryGroup : public ICarenD2D1GeometryGroup
 	ID2D1GeometryGroup* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD2D1GeometryGroup();
 

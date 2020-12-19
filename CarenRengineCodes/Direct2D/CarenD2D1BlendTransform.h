@@ -44,7 +44,7 @@ public ref class CarenD2D1BlendTransform : public ICarenD2D1BlendTransform
 	ID2D1BlendTransform* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD2D1BlendTransform();
 

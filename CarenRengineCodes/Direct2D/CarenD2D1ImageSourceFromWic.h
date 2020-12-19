@@ -44,7 +44,7 @@ public ref class CarenD2D1ImageSourceFromWic : public ICarenD2D1ImageSourceFromW
 	ID2D1ImageSourceFromWic* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD2D1ImageSourceFromWic();
 

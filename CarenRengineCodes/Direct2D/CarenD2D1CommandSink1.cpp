@@ -23,7 +23,7 @@ CarenD2D1CommandSink1::~CarenD2D1CommandSink1()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
-//Contrutor.
+//Construtor.
 CarenD2D1CommandSink1::CarenD2D1CommandSink1()
 {
 	//Cria a interface que gerencia os eventos.

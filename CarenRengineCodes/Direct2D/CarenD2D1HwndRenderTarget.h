@@ -53,7 +53,7 @@ public ref class CarenD2D1HwndRenderTarget : public ICarenD2D1HwndRenderTarget
 	ID2D1HwndRenderTarget* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD2D1HwndRenderTarget();
 

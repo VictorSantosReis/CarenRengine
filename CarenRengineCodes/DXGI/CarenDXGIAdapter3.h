@@ -50,7 +50,7 @@ public ref class CarenDXGIAdapter3 : public ICarenDXGIAdapter3
 	IDXGIAdapter3* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenDXGIAdapter3();
 

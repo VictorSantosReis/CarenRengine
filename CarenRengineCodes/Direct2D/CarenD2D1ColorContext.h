@@ -44,7 +44,7 @@ public ref class CarenD2D1ColorContext : public ICarenD2D1ColorContext
 	ID2D1ColorContext* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD2D1ColorContext();
 

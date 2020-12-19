@@ -44,7 +44,7 @@ public ref class CarenD2D1Resource : public ICarenD2D1Resource
 	ID2D1Resource* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD2D1Resource();
 

@@ -49,7 +49,7 @@ public ref class CarenDXGIDeviceSubObject : public ICarenDXGIDeviceSubObject
 	IDXGIDeviceSubObject* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenDXGIDeviceSubObject();
 

@@ -55,7 +55,7 @@ public ref class CarenDXGIFactory2 : public ICarenDXGIFactory2
 	IDXGIFactory2* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenDXGIFactory2();
 

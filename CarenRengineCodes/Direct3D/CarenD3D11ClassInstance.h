@@ -49,7 +49,7 @@ public ref class CarenD3D11ClassInstance :public ICarenD3D11ClassInstance
 	 //Ponteiro para a interface (ID3D11ClassInstance).
 	ID3D11ClassInstance* PonteiroTrabalho = NULL;
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD3D11ClassInstance();
 

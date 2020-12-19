@@ -44,7 +44,7 @@ public ref class CarenD2D1GradientStopCollection : public ICarenD2D1GradientStop
 	ID2D1GradientStopCollection* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD2D1GradientStopCollection();
 

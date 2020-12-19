@@ -48,7 +48,7 @@ public ref class CarenD3D11ClassLinkage :public ICarenD3D11ClassLinkage
 	//Ponteiro para a interface (ID3D11ClassInstance).
 	ID3D11ClassLinkage* PonteiroTrabalho = NULL;
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD3D11ClassLinkage();
 

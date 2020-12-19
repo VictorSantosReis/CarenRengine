@@ -49,7 +49,7 @@ public ref class CarenD3D11PixelShader :public ICarenD3D11PixelShader
 	//Ponteiro para a interface (ID3D11PixelShader).
 	ID3D11PixelShader* PonteiroTrabalho = NULL;
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD3D11PixelShader();
 

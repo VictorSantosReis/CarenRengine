@@ -49,7 +49,7 @@ public ref class CarenMFAsyncCallback : public ICarenMFAsyncCallback
 	//Ponteiro para a interface (IMFAsyncCallback).
 	IMFAsyncCallback* PonteiroTrabalho = NULL;
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	/// <summary>
 	/// Inicializa a classe e permite que o usuário decida se vai inicializar com uma implementação interna ou vazia.

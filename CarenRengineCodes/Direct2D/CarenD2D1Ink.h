@@ -45,7 +45,7 @@ public ref class CarenD2D1Ink : public ICarenD2D1Ink
 	ID2D1Ink* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD2D1Ink();
 

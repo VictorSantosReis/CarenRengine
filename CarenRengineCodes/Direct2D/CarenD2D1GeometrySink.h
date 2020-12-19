@@ -44,7 +44,7 @@ public ref class CarenD2D1GeometrySink : public ICarenD2D1GeometrySink
 	ID2D1GeometrySink* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD2D1GeometrySink();
 

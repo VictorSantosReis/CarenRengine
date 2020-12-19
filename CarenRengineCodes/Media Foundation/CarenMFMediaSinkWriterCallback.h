@@ -51,7 +51,7 @@ public ref class CarenMFMediaSinkWriterCallback :public ICarenMFMediaSinkWriterC
 
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenMFMediaSinkWriterCallback();
 

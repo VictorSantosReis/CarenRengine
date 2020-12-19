@@ -46,7 +46,7 @@ public ref class CarenD2D1ImageBrush : public ICarenD2D1ImageBrush
 	ID2D1ImageBrush* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD2D1ImageBrush();
 

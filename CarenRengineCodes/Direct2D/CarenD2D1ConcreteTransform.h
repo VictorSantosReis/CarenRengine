@@ -44,7 +44,7 @@ public ref class CarenD2D1ConcreteTransform : public ICarenD2D1ConcreteTransform
 	ID2D1ConcreteTransform* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD2D1ConcreteTransform();
 

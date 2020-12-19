@@ -50,7 +50,7 @@ public ref class CarenMFMediaSourceEx :public ICarenMFMediaSourceEx
 	//Ponteiro para a interface (IMFSourceReader).
 	IMFMediaSourceEx* PonteiroTrabalho = NULL;
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenMFMediaSourceEx();
 

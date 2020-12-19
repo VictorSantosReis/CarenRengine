@@ -44,7 +44,7 @@ public ref class CarenD2D1BorderTransform : public ICarenD2D1BorderTransform
 	ID2D1BorderTransform* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD2D1BorderTransform();
 

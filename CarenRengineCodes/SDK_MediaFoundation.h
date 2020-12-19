@@ -1703,8 +1703,7 @@ namespace CarenRengine
 		};
 
 		/// <summary>
-		/// (IMFSinkWriter) - Implementado pelo objeto de gravador de coletor do Microsoft Media Foundation. Interface responsável por enviar os dados dos (Coletores de Mídia) para um Arquivo ou Hardware.
-		/// Essa é a interface responsável por enviar amostras de Áudio para o Hardware de destino que vai reproduzir o Som.
+		/// (IMFSinkWriter) - Interface responsável por enviar os dados dos (Coletores de Mídia) para um Arquivo ou Hardware. Essa é a interface responsável por enviar amostras de Áudio para o Hardware de destino que vai reproduzir o Som.
 		/// </summary>
 		[CategoryAttribute("MF Interface")]
 		[Guid("37386B09-9CCD-4F48-B5D3-8A71C8B098F1")]
@@ -1894,12 +1893,13 @@ namespace CarenRengine
 		};
 
 		/// <summary>
-		/// (IMFSourceReader) - Representa um leitor de midia. Essa interface é responsável por decodificar e ler as amostras de midia(IMFSample), que são representadas pela
-		/// interface (ICarenMFSample).
+		/// (IMFSourceReader) - Interface responsável por realizar a leitura de amostras de mídia de um Arquivo, Nuvem ou Câmera. Essa interface implementa um Media Source internamente para gerenciar a captura das amostras. 
+		/// O Source Reader(Leitor de Origem) também pode realizar algum processamento limitado de vídeo: conversão de cores de YUV para RGB-32, e desinterlacing de software, embora essas 
+		/// operações não sejam recomendadas para renderização de vídeo em tempo real.
 		/// </summary>
 		[CategoryAttribute("MF Interface")]
 		[Guid("70F77178-5F15-4279-8322-979DE274790E")]
-		public interface class ICarenMFSourceReader : ICaren, ICarenLeitorMidiaExtensões
+		public interface class ICarenMFSourceReader : ICaren
 		{
 			/// <summary>
 			/// Propriedade que define se a classe foi descartada.

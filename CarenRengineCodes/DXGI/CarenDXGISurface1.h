@@ -50,7 +50,7 @@ public ref class CarenDXGISurface1 : public ICarenDXGISurface1
 	IDXGISurface1* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenDXGISurface1();
 

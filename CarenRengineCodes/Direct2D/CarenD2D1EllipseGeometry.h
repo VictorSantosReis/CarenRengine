@@ -44,7 +44,7 @@ public ref class CarenD2D1EllipseGeometry : public ICarenD2D1EllipseGeometry
 	ID2D1EllipseGeometry* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD2D1EllipseGeometry();
 

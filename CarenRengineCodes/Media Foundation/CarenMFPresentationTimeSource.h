@@ -48,7 +48,7 @@ public ref class CarenMFPresentationTimeSource: public ICarenMFPresentationTimeS
 	//Ponteiro para a interface (IMFPresentationTimeSource).
 	IMFPresentationTimeSource* PonteiroTrabalho = NULL;
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenMFPresentationTimeSource();
 

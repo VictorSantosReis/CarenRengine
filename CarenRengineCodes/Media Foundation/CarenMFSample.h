@@ -48,7 +48,7 @@ public ref class CarenMFSample : public ICarenMFSample
 	IMFSample* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	/// <summary>
 	/// Inicializa a interface e permite que o usuário decida se a biblioteca deve criar a interface ou vai iniciar sem um ponteiro 

@@ -49,7 +49,7 @@ public ref class CarenD3D11DeviceChild : public ICarenD3D11DeviceChild
 	//Ponteiro para a interface (ID3D11DeviceChild).
 	ID3D11DeviceChild* PonteiroTrabalho = NULL;
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD3D11DeviceChild();
 

@@ -45,7 +45,7 @@ public ref class CarenWindowsEvent : public ICarenWindowsEvent
 	HANDLE PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenWindowsEvent();
 	CarenWindowsEvent();

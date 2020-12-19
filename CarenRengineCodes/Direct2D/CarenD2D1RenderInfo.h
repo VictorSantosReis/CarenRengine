@@ -44,7 +44,7 @@ public ref class CarenD2D1RenderInfo : public ICarenD2D1RenderInfo
 	ID2D1RenderInfo* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD2D1RenderInfo();
 

@@ -50,7 +50,7 @@ public ref class CarenMFMedia2DBuffer2 :public ICarenMFMedia2DBuffer2
 	IMF2DBuffer2* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	/// <summary>
 	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.

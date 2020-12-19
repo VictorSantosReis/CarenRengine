@@ -49,7 +49,7 @@ public ref class CarenMFTopologyNode :public ICarenMFTopologyNode
 	IMFTopologyNode* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenMFTopologyNode();
 

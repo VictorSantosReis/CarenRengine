@@ -44,7 +44,7 @@ public ref class CarenD2D1TessellationSink : public ICarenD2D1TessellationSink
 	ID2D1TessellationSink* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD2D1TessellationSink();
 

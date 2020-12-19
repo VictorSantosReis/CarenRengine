@@ -48,7 +48,7 @@ public ref class CarenD3D11RasterizerState : public ICarenD3D11RasterizerState
 	//Ponteiro para a interface (ID3D11RasterizerState).
 	ID3D11RasterizerState* PonteiroTrabalho = NULL;
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD3D11RasterizerState();
 

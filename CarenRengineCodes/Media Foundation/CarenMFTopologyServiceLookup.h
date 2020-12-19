@@ -49,7 +49,7 @@ public ref class CarenMFTopologyServiceLookup : public ICarenMFTopologyServiceLo
 	IMFTopologyServiceLookup* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenMFTopologyServiceLookup();
 

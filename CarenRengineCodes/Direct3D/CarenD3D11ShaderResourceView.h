@@ -50,7 +50,7 @@ public ref class CarenD3D11ShaderResourceView : public ICarenD3D11ShaderResource
 	//Ponteiro para a interface (ID3D11ShaderResourceView).
 	ID3D11ShaderResourceView* PonteiroTrabalho = NULL;
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD3D11ShaderResourceView();
 

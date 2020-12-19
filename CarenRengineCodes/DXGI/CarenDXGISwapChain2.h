@@ -52,7 +52,7 @@ public ref class CarenDXGISwapChain2 : public ICarenDXGISwapChain2
 	IDXGISwapChain2* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenDXGISwapChain2();
 

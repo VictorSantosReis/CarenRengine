@@ -44,7 +44,7 @@ public ref class CarenD2D1GradientMesh : public ICarenD2D1GradientMesh
 	ID2D1GradientMesh* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD2D1GradientMesh();
 

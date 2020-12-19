@@ -37,8 +37,7 @@ using namespace CarenRengine::SDKBase::Interfaces;
 using namespace CarenRengine::SDKUtilidades;
 
 /// <summary>
-/// Classe responsável por realizar a leitura de amostras de mídia de um Arquivo, Nuvem ou Camera.
-/// Essa classe implementa a interface(ICarenMFSourceReader), que implementa os métodos de IMFSourceReader.
+/// (Concluido - Fase de Testes) - Classe responsável por realizar a leitura de amostras de mídia de um Arquivo, Nuvem ou Câmera.
 /// </summary>
 public ref class CarenMFSourceReader : public ICarenMFSourceReader
 {
@@ -49,8 +48,35 @@ public ref class CarenMFSourceReader : public ICarenMFSourceReader
 	//Ponteiro para a interface (IMFSourceReader).
 	IMFSourceReader* PonteiroTrabalho = NULL;
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMFSourceReader();
+
+	/// <summary>
+	/// Inicializa e cria o Source Reader(Leitor de Origem) a partir de uma URL.‎
+	/// ‎Internamente, o Source Reader chama o método ‎‎ICarenMFSourceResolver::CreateObjectFromURL‎‎ para criar uma fonte de mídia a partir da URL.‎
+	/// </summary>
+	/// <param name="Param_Url">Uma string com a url para o arquivo de mídia a ser aberto.</param>
+	/// <param name="Param_Atributos">Uma interface com atributos. Você pode usar este parâmetro para configurar o Source Reader(Leitor de Origem). Este parâmetro pode ser NULO.</param>
+	CarenMFSourceReader(String^ Param_Url, ICarenMFAttributes^ Param_Atributos);
+
+	/// <summary>
+	/// ‎Inicializa e cria o Source Reader(Leitor de Origem) a partir de uma Media Source(Fonte de Mídia).‎
+	/// </summary>
+	/// <param name="Param_MediaSource">Uma interface (ICarenMFMediaSource) para a fonte de mídia a ser lida.</param>
+	/// <param name="Param_Atributos">Uma interface com atributos. Você pode usar este parâmetro para configurar o Source Reader(Leitor de Origem). Este parâmetro pode ser NULO.</param>
+	CarenMFSourceReader(ICarenMFMediaSource^ Param_MediaSource, ICarenMFAttributes^ Param_Atributos);
+
+	/// <summary>
+	/// ‎Inicializa e cria o Source Reader(Leitor de Origem) a partir de um Byte Stream.
+	/// </summary>
+	/// <param name="Param_ByteStream">Uma interface ‎‎ICarenMFByteStream‎‎ de um fluxo byte. Este fluxo byte fornecerá os dados de origem para o Source Reader(Leitor de Origem).‎</param>
+	/// <param name="Param_Atributos">Uma interface com atributos. Você pode usar este parâmetro para configurar o Source Reader(Leitor de Origem). Este parâmetro pode ser NULO.</param>
+	CarenMFSourceReader(ICarenMFByteStream^ Param_ByteStream, ICarenMFAttributes^ Param_Atributos);
+
 	~CarenMFSourceReader();
 
 

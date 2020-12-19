@@ -48,7 +48,7 @@ public ref class CarenD3D11ComputeShader :public ICarenD3D11ComputeShader
 	//Ponteiro para a interface (ID3D11ComputeShader).
 	ID3D11ComputeShader* PonteiroTrabalho = NULL;
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD3D11ComputeShader();
 

@@ -51,7 +51,7 @@ public ref class CarenD3D11ShaderResourceView1 : public ICarenD3D11ShaderResourc
 	ID3D11ShaderResourceView1* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD3D11ShaderResourceView1();
 

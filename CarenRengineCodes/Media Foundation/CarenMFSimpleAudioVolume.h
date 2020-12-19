@@ -49,7 +49,7 @@ public ref class CarenMFSimpleAudioVolume :public ICarenMFSimpleAudioVolume
 	IMFSimpleAudioVolume* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenMFSimpleAudioVolume();
 

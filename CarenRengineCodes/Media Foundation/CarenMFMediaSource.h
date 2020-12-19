@@ -50,7 +50,7 @@ public ref class CarenMFMediaSource : public ICarenMFMediaSource
 	//Ponteiro para a interface (IMFMediaSource).
 	IMFMediaSource* PonteiroTrabalho = NULL;
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	/// <summary>
 	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.

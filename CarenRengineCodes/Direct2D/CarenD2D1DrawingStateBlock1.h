@@ -46,7 +46,7 @@ public ref class CarenD2D1DrawingStateBlock1 : public ICarenD2D1DrawingStateBloc
 	ID2D1DrawingStateBlock1* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD2D1DrawingStateBlock1();
 

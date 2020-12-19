@@ -25,6 +25,160 @@ CarenMFSourceReader::~CarenMFSourceReader()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtores
+CarenMFSourceReader::CarenMFSourceReader()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
+
+CarenMFSourceReader::CarenMFSourceReader(String^ Param_Url, ICarenMFAttributes^ Param_Atributos)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Resultados de Caren.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	PWSTR vi_pUrl = Nulo; //Pode ser Nulo se vi_pByteStream não for
+	IMFAttributes* vi_pAttributes = Nulo; //Pode ser Nulo.
+	IMFSourceReader* vi_pOutSourceReader = Nulo;
+
+	//Verifica se a url foi informada e converte a string.
+	if (!StringObjetoValido(Param_Url))
+		throw gcnew NullReferenceException("A url para o arquivo no parâmetro (Param_Url) não pode ser NULA e nem vazia.");
+
+	//Converte a string com a url para o arquivo.
+	vi_pUrl = Util.ConverterStringToWCHAR(Param_Url);
+
+	//Recupera o ponteiro para a interface de atributos se informada
+	if (ObjetoGerenciadoValido(Param_Atributos))
+	{
+		//Tenta recuperar o ponteiro para a interface.
+		Resultado = RecuperarPonteiroCaren(Param_Atributos, &vi_pAttributes);
+
+		//Verifica se não houve algum erro
+		if (!CarenSucesso(Resultado))
+			throw gcnew Exception("Falhou ao tentar recuperar o ponteiro para a interface de atributos informada.");
+	}
+
+	//Chama o método para criar a interface.
+	Hr = MFCreateSourceReaderFromURL(const_cast<PWSTR>(vi_pUrl), vi_pAttributes, &vi_pOutSourceReader);
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutSourceReader;
+
+	//Libera a memória utilizada pela string se valida
+	DeletarStringAllocatedSafe(&vi_pUrl);
+}
+
+CarenMFSourceReader::CarenMFSourceReader(ICarenMFMediaSource^ Param_MediaSource, ICarenMFAttributes^ Param_Atributos)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Resultados de Caren.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IMFMediaSource* vi_pMediaSource = Nulo;
+	IMFAttributes* vi_pAttributes = Nulo; //Pode ser Nulo.
+	IMFSourceReader* vi_pOutSourceReader = Nulo;
+
+	//Verfifica se a interface do Media Source é valida.
+	if (!ObjetoGerenciadoValido(Param_MediaSource))
+		throw gcnew NullReferenceException("A interface no parâmetro (Param_MediaSource) não pode ser NULA!");
+
+	//Tenta recuperar o ponteiro para a interface.
+	Resultado = RecuperarPonteiroCaren(Param_MediaSource, &vi_pMediaSource);
+
+	//Verifica se não houve algum erro
+	if (!CarenSucesso(Resultado))
+		throw gcnew Exception("Falhou ao tentar recuperar o ponteiro para a interface da fonte de mídia(Media Source).");
+
+	//Recupera o ponteiro para a interface de atributos se informada
+	if (ObjetoGerenciadoValido(Param_Atributos))
+	{
+		//Tenta recuperar o ponteiro para a interface.
+		Resultado = RecuperarPonteiroCaren(Param_Atributos, &vi_pAttributes);
+
+		//Verifica se não houve algum erro
+		if (!CarenSucesso(Resultado))
+			throw gcnew Exception("Falhou ao tentar recuperar o ponteiro para a interface de atributos informada.");
+	}
+
+	//Chama o método para criar a interface.
+	Hr = MFCreateSourceReaderFromMediaSource(vi_pMediaSource, vi_pAttributes, &vi_pOutSourceReader);
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutSourceReader;
+}
+
+CarenMFSourceReader::CarenMFSourceReader(ICarenMFByteStream^ Param_ByteStream, ICarenMFAttributes^ Param_Atributos)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Resultados de Caren.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IMFByteStream* vi_pByteStream = Nulo;
+	IMFAttributes* vi_pAttributes = Nulo; //Pode ser Nulo.
+	IMFSourceReader* vi_pOutSourceReader = Nulo;
+
+	//Verfifica se a interface para o fluxo de bytes é válida.
+	if (!ObjetoGerenciadoValido(vi_pByteStream))
+		throw gcnew NullReferenceException("A interface no parâmetro (Param_ByteStream) não pode ser NULA!");
+
+	//Tenta recuperar o ponteiro para a interface.
+	Resultado = RecuperarPonteiroCaren(Param_ByteStream, &vi_pByteStream);
+
+	//Verifica se não houve algum erro
+	if (!CarenSucesso(Resultado))
+		throw gcnew Exception("Falhou ao tentar recuperar o ponteiro para a interface do fluxo de bytes.");
+
+	//Recupera o ponteiro para a interface de atributos se informada
+	if (ObjetoGerenciadoValido(Param_Atributos))
+	{
+		//Tenta recuperar o ponteiro para a interface.
+		Resultado = RecuperarPonteiroCaren(Param_Atributos, &vi_pAttributes);
+
+		//Verifica se não houve algum erro
+		if (!CarenSucesso(Resultado))
+			throw gcnew Exception("Falhou ao tentar recuperar o ponteiro para a interface de atributos informada.");
+	}
+
+	//Chama o método para criar a interface.
+	Hr = MFCreateSourceReaderFromByteStream(vi_pByteStream, vi_pAttributes, &vi_pOutSourceReader);
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutSourceReader;
+}
 
 //
 // Métodos da interface ICaren

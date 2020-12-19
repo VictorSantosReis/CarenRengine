@@ -49,7 +49,7 @@ public ref class CarenD3D11Query1 : public ICarenD3D11Query1
 	ID3D11Query1* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD3D11Query1();
 

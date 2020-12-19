@@ -51,7 +51,7 @@ public ref class CarenMFStreamDescriptor : public ICarenMFStreamDescriptor
 
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenMFStreamDescriptor();
 

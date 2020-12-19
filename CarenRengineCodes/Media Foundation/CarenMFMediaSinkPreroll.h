@@ -48,7 +48,7 @@ public ref class CarenMFMediaSinkPreroll : public ICarenMFMediaSinkPreroll
 	IMFMediaSinkPreroll* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenMFMediaSinkPreroll();
 

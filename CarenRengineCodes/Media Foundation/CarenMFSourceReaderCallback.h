@@ -51,7 +51,7 @@ public ref class CarenMFSourceReaderCallback : public ICarenMFSourceReaderCallba
 	//Ponteiro para a interface (IMFSourceReaderCallback).
 	IMFSourceReaderCallback* PonteiroTrabalho = NULL;
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenMFSourceReaderCallback();
 

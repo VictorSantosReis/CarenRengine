@@ -68,6 +68,46 @@ Done:;
 	return Resultado;
 }
 
+CarenResult MediaFoundationFunctions::_MFCreateSequencerSource(ICaren^ Param_Reservado, ICaren^ Param_Out_SequencerSource)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	IUnknown* vi_pReserved = Nulo;
+	IMFSequencerSource* vi_pOutSequencerSource = Nulo;
+
+	//Recupera o ponteiro para o parametro reservado se informado
+	if (ObjetoGerenciadoValido(Param_Reservado))
+		CarenGetPointerFromICarenSafe(Param_Reservado, vi_pOutSequencerSource);
+
+	//Chama o método para realizar a operação.
+	Hr = MFCreateSequencerSource(vi_pReserved, &vi_pOutSequencerSource);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o ponteiro na interface.
+	CarenSetPointerToICarenSafe(vi_pOutSequencerSource, Param_Out_SequencerSource, true);
+
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
+
 CarenResult MediaFoundationFunctions::_MFCreateSampleGrabberSinkActivate(ICarenMFMediaType^ Param_MediaType, ICaren^ Param_SampleGrabberCallback, ICarenMFActivate^ Param_Out_Activate)
 {
 	//Variavel a ser retornada.

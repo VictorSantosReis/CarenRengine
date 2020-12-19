@@ -36,7 +36,7 @@ using namespace CarenRengine::SDKBase::Interfaces;
 using namespace CarenRengine::SDKUtilidades;
 
 /// <summary>
-/// [Concluido - Fase de testes] - Falta documentar.
+/// (Concluido - Fase de Testes) - Classe responsável por manipular os tipos de midia entre as interfaces do Media Foundation. 
 /// </summary>
 public ref class CarenMFMediaTypeHandler : public ICarenMFMediaTypeHandler
 {
@@ -47,8 +47,15 @@ public ref class CarenMFMediaTypeHandler : public ICarenMFMediaTypeHandler
 	//Ponteiro para a interface (IMFMediaBuffer).
 	IMFMediaTypeHandler* PonteiroTrabalho = NULL;
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a interface e permite que o usuĂ¡rio decida se a biblioteca deve criar a interface ou vai iniciar sem um ponteiro 
+	/// de trabalho.
+	/// </summary>
+	/// <param name="Param_CriarInterface">Um valor booleano, TRUE indica que deve criar uma nova interface intermanete, caso contario, FALSE.</param>
+	CarenMFMediaTypeHandler(Boolean Param_CriarInterface);
+
 	~CarenMFMediaTypeHandler();
 
 	//Variaveis Internas.
@@ -73,81 +80,6 @@ public:
 			//Retorna o valor.
 			return Prop_DisposedClasse;
 		}
-	}
-
-public:
-	/// <summary>
-	/// Cria uma instância do gerenciador de tipo de mídia (IMFMediaTypeHandler), para definir os tipos em determinados objetos.
-	/// Essa classe é muito utilizada pelo ICarenMFStreamSink para reprodução de Vídeo ou Áudio.
-	/// </summary>
-	/// <param name="Param_Out_MidiaTypeHandler">Recebe o ponteiro para o ICarenMFMediaTypeHandler.</param>
-	static CarenResult CriarInstancia([Out] ICarenMFMediaTypeHandler^% Param_Out_MidiaTypeHandler)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Variavel que vai conter o resultado COM.
-		ResultadoCOM Hr;
-
-		//Variavel que vai conter o IMFMediaTypeHandler.
-		IMFMediaTypeHandler *pMediaTypeHand = NULL;
-
-		//Interface responsável pela classe atual.
-		ICarenMFMediaTypeHandler^ InterfaceMidiaTypeHand = nullptr;
-
-		//Chama o método para criar o IMFMediaTypeHandler.
-		Hr = MFCreateSimpleTypeHandler(&pMediaTypeHand);
-
-		//Verifica o resultado
-		if (Sucesso(Hr))
-		{
-			//Deixa o método continuar.
-		}
-		else
-		{
-			//Define falha.
-			Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-			//Sai do método
-			goto Done;
-		}
-
-		//Cria a instância da classe
-		InterfaceMidiaTypeHand = gcnew CarenMFMediaTypeHandler();
-
-		//Chama o método para definir o ponteiro de trabalho na interface a ser retornada.
-		Resultado = InterfaceMidiaTypeHand->AdicionarPonteiro(pMediaTypeHand);
-
-		//Verifica se não houve erro
-		if (Resultado.StatusCode != ResultCode::SS_OK)
-		{
-			//Houve uma falha.
-
-			//Falhou ao definir o ponteiro.
-			InterfaceMidiaTypeHand->LimparDados();
-			InterfaceMidiaTypeHand->Finalizar();
-			InterfaceMidiaTypeHand = nullptr;
-
-			//Descarta o ponteiro não gerenciado criado.
-			SafeReleasePointer(&pMediaTypeHand);
-
-			//Sai do método
-			goto Done;
-		}
-		else
-		{
-			//Deixa o método continuar.
-		}
-
-		//Define a interface de retorno.
-		Param_Out_MidiaTypeHandler = InterfaceMidiaTypeHand;
-
-		//Define sucesso
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	Done:;
-		//Retorna o resultado.
-		return Resultado;
 	}
 
 

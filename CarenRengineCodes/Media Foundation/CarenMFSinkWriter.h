@@ -36,7 +36,7 @@ using namespace CarenRengine::SDKBase::Interfaces;
 using namespace CarenRengine::SDKUtilidades;
 
 /// <summary>
-/// [Concluido - Fase de testes] - Falta documentar.
+/// (Concluido - Fase de Testes) - Classe responsável por enviar os dados de mídia dos (Coletores de Mídia) para um Arquivo ou Hardware. 
 /// </summary>
 public ref class CarenMFSinkWriter : public ICarenMFSinkWriter
 {
@@ -47,8 +47,29 @@ public ref class CarenMFSinkWriter : public ICarenMFSinkWriter
 	//Ponteiro para a interface (IMFSinkWriter).
 	IMFSinkWriter* PonteiroTrabalho = NULL;
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMFSinkWriter();
+
+	/// <summary>
+	/// Inicializa e cria o Sink Wiriter a parti de um Media Sink.
+	/// </summary>
+	/// <param name="Param_MediaSink">A interface para o sink de mídia a ser utilizado.</param>
+	/// <param name="Param_Atributos">Uma interface com atributos. Você pode usar este parâmetro para configurar o Sink Writer. Este parâmetro pode ser NULO.</param>
+	CarenMFSinkWriter(ICarenMFMediaSink^ Param_MediaSink, ICarenMFAttributes^ Param_Atributos);
+
+	/// <summary>
+	/// Inicializa e cria o Sink Writer a parti de uma URL ou um fluxo de bytes.
+	/// </summary>
+	/// <param name="Param_OutputUrl">Uma url para o arquivo de saida. Este parâmetro pode ser NULO.</param>
+	/// <param name="Param_Stream">Uma interface ICarenMFByteStream de um fluxo byte. Este parâmetro pode ser NULO. Se este parâmetro for válido, o Sink Writer escreve para o fluxo byte fornecido (O fluxo de byte deve suportar escrita). 
+	/// Caso contrário, se (Param_Stream) for NULO, o Sink Writer cria um novo arquivo chamado (Param_OutputUrl).</param>
+	/// <param name="Param_Atributos">Uma interface com atributos. Você pode usar este parâmetro para configurar o Sink Writer. Este parâmetro pode ser NULO.</param>
+	CarenMFSinkWriter(String^ Param_OutputUrl, ICarenMFByteStream^ Param_Stream, ICarenMFAttributes^ Param_Atributos);
+
 	~CarenMFSinkWriter();
 
 	//Variaveis Internas.
@@ -75,152 +96,6 @@ public:
 		}
 	}
 
-
-
-	//Cria uma instância dessa classe (Estático)
-public:
-	/// <summary>
-	/// Método responsável por criar uma instância do Escritor de Mídia a parti de um MidiaSink.
-	/// </summary>
-	/// <param name="Param_MidiaSink">O Midia Sink a ser utilizado para criar o SinkWriter.</param>
-	/// <param name="Param_Atributos">Uma interface com atributos para a criação desse escritor. Esse valor pode ser NULO.</param>
-	/// <param name="Param_Out_SinkWriter">Recebe a interface que contém o Escritor de mídia criado.</param>
-	static CarenResult CriarInstanciaFromCarenMediaSink(ICarenMFMediaSink^ Param_MidiaSink, ICarenMFAttributes^ Param_Atributos, [Out] ICarenMFSinkWriter^% Param_Out_SinkWriter)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Variavel COM
-		ResultadoCOM Hr = E_FAIL;
-
-		//Variaveis utilizadas no método
-		IMFMediaSink *pMediaSink = NULL;
-		IMFSinkWriter *pSinkWriter = NULL;
-		IMFAttributes *pAtributes = NULL;
-		ICarenMFSinkWriter^ InterfaceMediaSinkWriter = nullptr;
-
-		//Chama o método para recuperar o Media Sink que vai ser usado para criar a classe
-		Resultado = Param_MidiaSink->RecuperarPonteiro((LPVOID*)&pMediaSink);
-
-		//Verifica se não houve erro
-		if (Resultado.StatusCode != ResultCode::SS_OK)
-		{
-			//Sai do método
-			goto Done;
-		}
-
-		//Chama o método que vai recueprar os atributos se o usuário tiver definido.
-		//Este valor não é obrigatorio para criação do MediaSinkWriter.
-		if (Param_Atributos != nullptr)
-		{
-			//Recuper o ponteiro.
-			Param_Atributos->RecuperarPonteiro((LPVOID*)&pAtributes);
-		}
-
-		//Chama o método que vai criar o SinkWriter
-		Hr = MFCreateSinkWriterFromMediaSink(pMediaSink, pAtributes != NULL ? pAtributes : NULL, &pSinkWriter);
-
-		//Verifica o resultado
-		if (Sucesso(Hr))
-		{
-			//Deixa o método continuar.
-		}
-		else
-		{
-			//O método falhou
-			Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-			//Sai do método
-			goto Done;
-		}
-
-		//Cria a interface que vai conter o ponteiro
-		InterfaceMediaSinkWriter = gcnew CarenMFSinkWriter();
-
-		//Chama o método para determinar o ponteiro de trabalho
-		InterfaceMediaSinkWriter->AdicionarPonteiro(pSinkWriter);
-
-		//Define a interface no parametro de retorno.
-		Param_Out_SinkWriter = InterfaceMediaSinkWriter;
-
-		//Define sucesso na operação
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-		
-	Done:;
-		//Retorna o resultado
-		return Resultado;
-	}
-
-	/// <summary>
-	/// [Em Desenvolvimento] Método responsável por criar uma instância do Escritor de Mídia a parti de um MidiaSink.
-	/// </summary>
-	/// <param name="Param_OutputUrlMidia">Uma string para a url de saida do arquivo de mídia. Esse valor pode ser NULO.</param>
-	/// <param name="Param_ByteStream">[Atenção] - Interface não implementada ainda.</param>
-	/// <param name="Param_Atributos">Uma interface com atributos para a criação desse escritor. Esse valor pode ser NULO.</param>
-	/// <param name="Param_Out_SinkWriter">Recebe a interface que contém o Escritor de mídia criado.</param>
-	static CarenResult CriarInstanciaFromMidiaUrl(String^ Param_OutputUrlMidia, Object^ Param_ByteStream, ICarenMFAttributes^ Param_Atributos, [Out] ICarenMFSinkWriter^% Param_Out_SinkWriter)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Variavel COM
-		ResultadoCOM Hr = E_FAIL;
-
-		//Variaveis utilizadas no método
-		IMFSinkWriter *pSinkWriter = NULL;
-		IMFAttributes *pAtributes = NULL;
-		ICarenMFSinkWriter^ InterfaceMediaSinkWriter = nullptr;
-		Utilidades Util;
-		char* pBufferStringConvertido = NULL;
-		LPCWSTR pBufferWchar = NULL;
-
-		//Chama o método que vai criar a url para a midia de saida.
-		pBufferStringConvertido = Util.ConverterStringToChar(Param_OutputUrlMidia);
-
-		//Converte o char* para wchar*
-		pBufferWchar = Util.ConverterConstCharToConstWCHAR(pBufferStringConvertido);
-
-		//Chama o método que vai recueprar os atributos se o usuário tiver definido.
-		//Este valor não é obrigatorio para criação do MediaSinkWriter.
-		if (Param_Atributos != nullptr)
-		{
-			//Recupera o ponteiro.
-			Param_Atributos->RecuperarPonteiro((LPVOID*)&pAtributes);
-		}
-
-		//Chama o método que vai criar o SinkWriter
-		Hr = MFCreateSinkWriterFromURL(pBufferWchar, NULL, pAtributes ? pAtributes : NULL, &pSinkWriter);
-
-		//Verifica o resultado
-		if (Sucesso(Hr))
-		{
-			//Deixa o método continuar.
-		}
-		else
-		{
-			//O método falhou
-			Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-			//Sai do método
-			goto Done;
-		}
-
-		//Cria a interface que vai conter o ponteiro
-		InterfaceMediaSinkWriter = gcnew CarenMFSinkWriter();
-
-		//Chama o método para determinar o ponteiro de trabalho
-		InterfaceMediaSinkWriter->AdicionarPonteiro(pSinkWriter);
-
-		//Define a interface no parametro de retorno.
-		Param_Out_SinkWriter = InterfaceMediaSinkWriter;
-
-		//Define sucesso na operação
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	Done:;
-		//Retorna o resultado
-		return Resultado;
-	}
 
 	///////////////////////////////////////////////////////
 	//A parti daqui vai conter os métodos das interfaces.//

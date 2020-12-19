@@ -50,7 +50,7 @@ public ref class CarenD3DDeviceContextState : public ICarenD3DDeviceContextState
 	ID3DDeviceContextState* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD3DDeviceContextState();
 

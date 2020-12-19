@@ -83,7 +83,7 @@ public ref class CarenD3D11Device2 : public ICarenD3D11Device2
 	ID3D11Device2* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD3D11Device2();
 

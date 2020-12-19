@@ -51,7 +51,7 @@ public ref class CarenMFMediaStream :public ICarenMFMediaStream
 
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenMFMediaStream();
 

@@ -49,7 +49,7 @@ public ref class CarenD3D11Resource : public ICarenD3D11Resource
 	//Ponteiro para a interface (ID3D11Resource).
 	ID3D11Resource* PonteiroTrabalho = NULL;
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD3D11Resource();
 

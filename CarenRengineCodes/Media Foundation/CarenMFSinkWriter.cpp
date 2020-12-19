@@ -25,6 +25,119 @@ CarenMFSinkWriter::~CarenMFSinkWriter()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtores
+CarenMFSinkWriter::CarenMFSinkWriter()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
+
+CarenMFSinkWriter::CarenMFSinkWriter(ICarenMFMediaSink^ Param_MediaSink, ICarenMFAttributes^ Param_Atributos)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Resultados de Caren.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IMFMediaSink* vi_pMediaSink = Nulo;
+	IMFAttributes* vi_pAttributes = Nulo; //Pode ser Nulo.
+	IMFSinkWriter* vi_pOutSinkWriter = Nulo;
+
+	//Verfifica se a interface do Media Sink é valida.
+	if (!ObjetoGerenciadoValido(Param_MediaSink))
+		throw gcnew NullReferenceException("A interface no parâmetro (Param_MediaSink) não pode ser NULA!");
+
+	//Tenta recuperar o ponteiro para a interface.
+	Resultado = RecuperarPonteiroCaren(Param_MediaSink, &vi_pMediaSink);
+
+	//Verifica se não houve algum erro
+	if (!CarenSucesso(Resultado))
+		throw gcnew Exception("Falhou ao tentar recuperar o ponteiro para a interface do Media Sink.");
+
+	//Recupera o ponteiro para a interface de atributos se informada
+	if (ObjetoGerenciadoValido(Param_Atributos))
+	{
+		//Tenta recuperar o ponteiro para a interface.
+		Resultado = RecuperarPonteiroCaren(Param_Atributos, &vi_pAttributes);
+
+		//Verifica se não houve algum erro
+		if (!CarenSucesso(Resultado))
+			throw gcnew Exception("Falhou ao tentar recuperar o ponteiro para a interface de atributos informada.");
+	}
+
+	//Chama o método para criar a interface.
+	Hr = MFCreateSinkWriterFromMediaSink(vi_pMediaSink, vi_pAttributes, &vi_pOutSinkWriter);
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutSinkWriter;
+}
+
+CarenMFSinkWriter::CarenMFSinkWriter(String^ Param_OutputUrl, ICarenMFByteStream^ Param_Stream, ICarenMFAttributes^ Param_Atributos)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Resultados de Caren.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	PWSTR vi_pOutputUrl = Nulo; //Pode ser Nulo se vi_pByteStream não for
+	IMFByteStream* vi_pByteStream = Nulo; //Pode ser Nulo se vi_pOutputUrl não for.
+	IMFAttributes* vi_pAttributes = Nulo; //Pode ser Nulo.
+	IMFSinkWriter* vi_pOutSinkWriter = Nulo;
+
+	//Verifica se a url foi informada e converte a string.
+	if (StringObjetoValido(Param_OutputUrl))
+		vi_pOutputUrl = Util.ConverterStringToWCHAR(Param_OutputUrl);
+
+	//Verifica se o fluxo de bytes foi informado e obtem o ponteiro.
+	if (ObjetoGerenciadoValido(Param_Stream))
+	{
+		//Tenta recuperar o ponteiro para a interface.
+		Resultado = RecuperarPonteiroCaren(Param_Stream, &vi_pByteStream);
+
+		//Verifica se não houve algum erro
+		if (!CarenSucesso(Resultado))
+			throw gcnew Exception("Falhou ao tentar recuperar o ponteiro para a interface do fluxo de bytes.");
+	}
+
+	//Recupera o ponteiro para a interface de atributos se informada
+	if (ObjetoGerenciadoValido(Param_Atributos))
+	{
+		//Tenta recuperar o ponteiro para a interface.
+		Resultado = RecuperarPonteiroCaren(Param_Atributos, &vi_pAttributes);
+
+		//Verifica se não houve algum erro
+		if (!CarenSucesso(Resultado))
+			throw gcnew Exception("Falhou ao tentar recuperar o ponteiro para a interface de atributos informada.");
+	}
+
+	//Chama o método para criar a interface.
+	Hr = MFCreateSinkWriterFromURL(const_cast<PWSTR>(vi_pOutputUrl), vi_pByteStream, vi_pAttributes, &vi_pOutSinkWriter);
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutSinkWriter;
+
+	//Libera a memória utilizada pela string se valida
+	DeletarStringAllocatedSafe(&vi_pOutputUrl);
+}
 
 //
 // Métodos da interface ICaren

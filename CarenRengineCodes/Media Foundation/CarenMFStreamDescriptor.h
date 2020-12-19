@@ -51,8 +51,21 @@ public ref class CarenMFStreamDescriptor : public ICarenMFStreamDescriptor
 
 
 
-	//Construtor e destruidor da classe.
+	//Construtores e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMFStreamDescriptor();
+
+	/// <summary>
+	/// Inicializa e cria um novo Stream Descriptor(Descritor de fluxo).
+	/// </summary>
+	/// <param name="Param_StreamIndentifier">‎Identificador de fluxo.‎</param>
+	/// <param name="Param_CountMediaTypes">Número de elementos na matriz ‎‎(Param_ArrayMediaTypes).‎</param>
+	/// <param name="Param_ArrayMediaTypes">Uma matriz de ponteiros de interface da ICarenMFMediaType.‎‎ Esses ponteiros são usados para inicializar o manipulador de tipo de mídia para o descritor de fluxo.‎</param>
+	CarenMFStreamDescriptor(UInt32 Param_StreamIndentifier, UInt32 Param_CountMediaTypes, cli::array<ICarenMFMediaType^>^ Param_ArrayMediaTypes);
+
 	~CarenMFStreamDescriptor();
 
 

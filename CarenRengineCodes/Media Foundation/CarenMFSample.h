@@ -133,7 +133,7 @@ public:
 		}
 
 		//Cria está classe que vai conter o ponteiro.
-		Param_Out_Amostra = gcnew CarenMFSample();
+		Param_Out_Amostra = gcnew CarenMFSample(false);
 
 		//Define o ponteiro de trabalho
 		Param_Out_Amostra->AdicionarPonteiro(pAmostra);

@@ -446,7 +446,7 @@ CarenResult CarenMFVideoSampleAllocator::AllocateSample([Out] ICarenMFSample^% P
 	}
 
 	//Cria a interface que vai ser retornada com a amostra
-	Param_Out_AmostraVideo = gcnew CarenMFSample();
+	Param_Out_AmostraVideo = gcnew CarenMFSample(false);
 
 	//Chama o método para definir o ponteiro de trabalho.
 	Param_Out_AmostraVideo->AdicionarPonteiro(pAmosraRequisitada);

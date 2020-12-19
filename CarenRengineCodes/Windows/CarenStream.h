@@ -52,6 +52,12 @@ public:
 	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
 	/// </summary>
 	CarenStream();
+
+	/// <summary>
+	/// Cria e inicializa ‎‎a classe‎‎ que envolve um fluxo byte da Microsoft Media Foundation.‎
+	/// </summary>
+	/// <param name="Param_ByteStream">‎Uma interface ‎‎ICarenMFByteStream‎‎ do fluxo byte da Media Foundation.‎</param>
+	CarenStream(ICarenMFByteStream^ Param_ByteStream);
 	
 	~CarenStream();
 

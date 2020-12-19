@@ -55,6 +55,15 @@ public:
 	CarenResult _MFShutdown();
 
 	/// <summary>
+	/// ‎Cria um objeto ‎‎IRandomAccessStream‎‎ que envolve um fluxo byte da Microsoft Media Foundation.‎
+	/// </summary>
+	/// <param name="Param_ByteStream">Uma interface ICarenMFByteStream para o fluxode bytes da Media Foundation.</param>
+	/// <param name="Param_RIID">‎O identificador de interface (IID) da interface que está sendo solicitada.‎</param>
+	/// <param name="Param_Out_Stream">Retorna uma interface base (ICaren) para a interface IRandomAccessStream do fluxo de bytes para a (ICarenMFByteStream).</param>
+	/// <returns></returns>
+	CarenResult _MFCreateStreamOnMFByteStreamEx(ICarenMFByteStream^ Param_ByteStream, String^ Param_RIID, ICaren^ Param_Out_Stream);
+
+	/// <summary>
 	/// Cria a fonte do sequenciador.
 	/// </summary>
 	/// <param name="Param_Reservado">Reservado. Deve ser NULO.</param>
@@ -281,7 +290,6 @@ public:
 	/// <returns></returns>
 	CarenResult _MFCreateWICBitmapBuffer(String^ Param_RIID, ICaren^ Param_Surface, ICarenMFMediaBuffer^ Param_Out_Buffer);
 	
-
 	/// <summary>
 	/// Invoca um método de retorno para completar uma operação assíncrona.
 	/// </summary>

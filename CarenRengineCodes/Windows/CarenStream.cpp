@@ -17,6 +17,7 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenStream.h"
 
+
 //Destruidor.
 CarenStream::~CarenStream()
 {
@@ -27,6 +28,44 @@ CarenStream::~CarenStream()
 CarenStream::CarenStream()
 {
 	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
+
+CarenStream::CarenStream(ICarenMFByteStream^ Param_ByteStream)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Resultados de Caren.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IMFByteStream* vi_pByteStream = Nulo;
+	IStream* vi_pOutStream = Nulo;
+
+	//Verfifica se a interface do Stream é valida.
+	if (!ObjetoGerenciadoValido(Param_ByteStream))
+		throw gcnew NullReferenceException("A interface no parametro (Param_ByteStream) não pode ser NULA!");
+
+	//Tenta recuperar o ponteiro para a interface.
+	Resultado = RecuperarPonteiroCaren(Param_ByteStream, &vi_pByteStream);
+
+	//Verifica se não houve algum erro
+	if (!CarenSucesso(Resultado))
+		throw gcnew Exception("Falhou ao tentar recuperar o ponteiro para a interface do fluxo de bytes.");
+
+	//Chama o método para criar a interface.
+	Hr = MFCreateStreamOnMFByteStream(vi_pByteStream, &vi_pOutStream);
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutStream;
 }
 
 // Métodos da interface ICaren

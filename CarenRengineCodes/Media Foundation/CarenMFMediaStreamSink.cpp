@@ -587,7 +587,7 @@ CarenResult CarenMFStreamSink::GetMediaTypeHandler([Out] ICarenMFMediaTypeHandle
 	}
 
 	//Cria a interface que vai conter o ponteiro
-	InterfaceHandlerMidia = gcnew CarenMFMediaTypeHandler();
+	InterfaceHandlerMidia = gcnew CarenMFMediaTypeHandler(false);
 	
 	//Chama o método para definir o ponteiro
 	InterfaceHandlerMidia->AdicionarPonteiro(pHandlerMedia);

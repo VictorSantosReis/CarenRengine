@@ -18,11 +18,63 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenMFStreamDescriptor.h"
 
+
 //Destruidor.
 CarenMFStreamDescriptor::~CarenMFStreamDescriptor()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
+}
+//Construtores
+CarenMFStreamDescriptor::CarenMFStreamDescriptor()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
+
+CarenMFStreamDescriptor::CarenMFStreamDescriptor(UInt32 Param_StreamIndentifier, UInt32 Param_CountMediaTypes, cli::array<ICarenMFMediaType^>^ Param_ArrayMediaTypes)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Resultados de Caren.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	DWORD vi_StreamIdentifier = static_cast<DWORD>(Param_StreamIndentifier);
+	DWORD vi_CountMediaTypes = static_cast<DWORD>(Param_CountMediaTypes);
+	IMFMediaType** vi_pArrayMediaTypes = Nulo;
+	IMFStreamDescriptor* vi_pOutStreamDesc = Nulo;
+
+	//Verifica se a matriz fornecida é valida
+	if (!ObjetoGerenciadoValido(Param_ArrayMediaTypes))
+		throw gcnew NullReferenceException("A matriz de tipos de mídia no parâmetro (Param_ArrayMediaTypes) não pode ser NULA!");
+
+	//Verifica se a quantidade é valida
+	if (Param_CountMediaTypes <= 0)
+		throw gcnew IndexOutOfRangeException("O valor do parâmetro (Param_CountMediaTypes) é inválido.");
+
+	//Inicializa a matriz de ponteiros com a quantidade informada.
+	vi_pArrayMediaTypes = CriarMatrizPonteiros<IMFMediaType>(Param_CountMediaTypes);
+
+	//Copia os ponteiros da matriz gerenciada para a nativa.
+	Util.CopiarPonteirosGerenciado_ToNativo(vi_pArrayMediaTypes, Param_ArrayMediaTypes, Param_CountMediaTypes);
+
+	//Chama o método para realizar a operação.
+	Hr = MFCreateStreamDescriptor(vi_StreamIdentifier, vi_CountMediaTypes, vi_pArrayMediaTypes, &vi_pOutStreamDesc);
+	
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutStreamDesc;
+
+	//Libera a memória utilizada pela matriz de ponteiros.
+	DeletarMatrizPonteirosSafe(&vi_pArrayMediaTypes);
 }
 
 //
@@ -447,7 +499,7 @@ CarenResult CarenMFStreamDescriptor::GetMediaTypeHandler([Out] ICarenMFMediaType
 	}
 
 	//Cria a interface que vai conter o ponteiro
-	InterfaceHandlerMidia = gcnew CarenMFMediaTypeHandler();
+	InterfaceHandlerMidia = gcnew CarenMFMediaTypeHandler(false);
 
 	//Define o ponteiro de trabalho
 	InterfaceHandlerMidia->AdicionarPonteiro(pHandlerMidia);

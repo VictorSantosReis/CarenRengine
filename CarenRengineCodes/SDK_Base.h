@@ -4868,6 +4868,27 @@ namespace CarenRengine
 				/// </summary>
 				IUNKNOWN
 			};
+
+			/// <summary>
+			/// (ORIGINAL) - Enumera valores que definem com será a inicialização e criação da interface (ICarenMFQualityManager).
+			/// </summary>
+			public enum class CA_MF_QUALITY_MANAGER_CREATE_TYPE
+			{
+				/// <summary>
+				/// Indica que deve inicializar a classe mais não associar nenhum ponteiro a ela.
+				/// </summary>
+				MF_NULL = 0x0,
+
+				/// <summary>
+				/// Inidica que vai inicializar e criar um ponteiro default para o gerenciador de qualidade através do método (MFCreateStandardQualityManager ).
+				/// </summary>
+				MF_CREATE_TYPE_STANDARD,
+
+				/// <summary>
+				/// Inidica que vai inicializar e criar um ponteiro interno gerenciado pela biblioteca para receber eventos da interface.
+				/// </summary>
+				MF_CREATE_TYPE_INTERNAL
+			};
 			
 			/// <summary>
 			/// (MFPMPSESSION_CREATION_FLAGS) - Enumera bandeiras que definem o comportamento da função MFCreatePMPMediaSession & _MFCreatePMPServer.

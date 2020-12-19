@@ -320,9 +320,8 @@ namespace CarenRengine
 		};
 
 		/// <summary>
-		/// (IMFPresentationTimeSource) - Interface responsável por fornecer os tempos de relógio para o Tempo de apresentação(ICarenRelogioApresentaçãoMidia).
-		/// Essa é a interface que retorna o relogio real para as interfaces de tempo.
-		/// O relógio real é dado pela interface IMFClock -> ICarenMFClock.
+		/// (IMFPresentationTimeSource) - Interface responsável por fornecer os tempos de relógio para o Tempo de apresentação(ICarenMFPresentationClock).
+		/// Essa é a interface que retorna o relogio real para as interfaces de tempo. O relógio real é dado pela interface ICarenMFClock.
 		/// </summary>
 		[CategoryAttribute("MF Interface")]
 		[Guid("93D71DA6-8431-4F8C-91E5-B323A165BA70")]
@@ -339,8 +338,7 @@ namespace CarenRengine
 
 
 			/// <summary>
-			/// Recupera o relógio subjacente que a fonte de tempo de apresentação usa para 
-			/// gerar seus tempos de relógio.
+			/// Recupera o relógio subjacente que a fonte de tempo de apresentação usa para gerar seus tempos de relógio.
 			/// </summary>
 			/// <param name="Param_Out_Relogio">Recebe a interface ICarenMFClock que representa um Relógio. O chamador deve liberar a interface.</param>
 			CarenResult GetUnderlyingClock([Out] ICarenMFClock^% Param_Out_Relogio);

@@ -542,7 +542,7 @@ CarenResult CarenMFMediaSink::GetPresentationClock([Out] ICarenMFPresentationClo
 	}
 
 	//Cria a interface que vai armazenar o relogio.
-	Param_Out_RelogioApresentação = gcnew CarenMFPresentationClock();
+	Param_Out_RelogioApresentação = gcnew CarenMFPresentationClock(false);
 
 	//Define o ponteiro na interface
 	CarenSetPointerToICarenSafe(vi_pOutPresentationClock, Param_Out_RelogioApresentação, true);

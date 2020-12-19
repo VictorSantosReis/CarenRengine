@@ -54,10 +54,10 @@ public ref class CarenMFQualityManager : public ICarenMFQualityManager
 	//Contrutores e destuidor da classe.
 public:
 	/// <summary>
-	/// Inicializa a classe com uma implementação da interface nativa (IMFNetResourceFilter) criada internamente ou Nulo.
+	/// Inicializa e cria a classe com uma implementação da interface nativa (IMFQualityManager) criada internamente ou Nulo.
 	/// </summary>
-	/// <param name="Param_ImplInterno">Um valor booleano que indica se deve criar uma implementação interna nativa.</param>
-	CarenMFQualityManager(Boolean Param_ImplInterno);
+	/// <param name="Param_CreateType">Um valor da enumeração (CA_MF_QUALITY_MANAGER_CREATE_TYPE) que informa como deve ser criado a classe.</param>
+	CarenMFQualityManager(CA_MF_QUALITY_MANAGER_CREATE_TYPE Param_CreateType);
 	
 	~CarenMFQualityManager();
 
@@ -84,7 +84,6 @@ public:
 			return Prop_DisposedClasse;
 		}
 	}
-
 
 
 	//(EVENTOS)

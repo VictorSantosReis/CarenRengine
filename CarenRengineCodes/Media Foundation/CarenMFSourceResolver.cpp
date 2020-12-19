@@ -18,11 +18,43 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenMFSourceResolver.h"
 
+
 //Destruidor.
 CarenMFSourceResolver::~CarenMFSourceResolver()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
+}
+//Construtor
+CarenMFSourceResolver::CarenMFSourceResolver(Boolean Param_CriarInterface)
+{
+	//Verifica se deve ou não criar uma interface.
+	if (Param_CriarInterface)
+	{
+		//Variavel que vai conter o resultado COM.
+		HRESULT Hr = E_FAIL;
+
+		//Variaveis utilizadas.
+		Utilidades Util;
+		IMFSourceResolver* vi_pOutSourceResolver = Nulo;
+
+		//Chama o método para criar a interface.
+		Hr = MFCreateSourceResolver(&vi_pOutSourceResolver);
+
+		//Verifica se não ocorreu erro no processo.
+		if (!Sucesso(Hr))
+		{
+			//Chama uma exceção para informar o error.
+			throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+		}
+
+		//Define a interface criada no ponteiro de trabalho
+		PonteiroTrabalho = vi_pOutSourceResolver;
+	}
+	else
+	{
+		//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+	}
 }
 
 //

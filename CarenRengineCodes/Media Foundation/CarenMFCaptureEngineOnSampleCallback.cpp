@@ -468,7 +468,7 @@ HRESULT CarenMFCaptureEngineOnSampleCallback::EncaminharEvento_OnSample(_In_opt_
 	if (ObjetoValido(pSample))
 	{
 		//Cria a interface.
-		vi_SampleManaged = gcnew CarenMFSample();
+		vi_SampleManaged = gcnew CarenMFSample(false);
 
 		//Define o ponteiro na interface.
 		CarenSetPointerToICarenSafe(pSample, vi_SampleManaged, false);

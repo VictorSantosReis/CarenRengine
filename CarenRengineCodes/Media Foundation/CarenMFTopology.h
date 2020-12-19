@@ -50,8 +50,35 @@ public ref class CarenMFTopology :public ICarenMFTopology
 	IMFTopology* PonteiroTrabalho = NULL;
 
 
-	//Construtor e destruidor da classe.
+	//Construtores e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a interface e permite que o usuário decida se a biblioteca deve criar a interface ou vai iniciar sem um ponteiro 
+	/// de trabalho. Se (Param_CriarInterface) for TRUE, o método cria um novo objeto de topologia.
+	/// </summary>
+	/// <param name="Param_CriarInterface">Um valor booleano, TRUE indica que deve criar uma nova interface intermanete, caso contario, FALSE.</param>
+	CarenMFTopology(Boolean Param_CriarInterface);
+
+	/// <summary>
+	/// Inicializa e cria uma topologia transcodificação parcial.
+	/// ‎O construtor de topologia subjacente cria uma topologia parcial conectando os objetos de pepiline necessários: Source, Codificador e Sink. O codificador e o Sink são configurados de acordo com as configurações especificadas 
+	/// pelo chamador no perfil de transcodificação (Param_TranscodeProfile).‎
+	/// </summary>
+	/// <param name="Param_MediaSource">Uma fonte de mídia que encapsula o arquivo de origem a ser transcodificado. O objeto de origem de mídia expõe a interface ‎‎ICarenMFMediaSource‎‎ e pode ser criado usando o resolvedor de origem 
+	/// (ICarenMFSourceResolver).‎</param>
+	/// <param name="Param_OutputUrl">Uma string que contém o nome e o caminho do arquivo de saída a ser gerado.‎</param>
+	/// <param name="Param_TranscodeProfile">O perfil de transcodificação que contém as configurações de configuração para o fluxo de áudio, a transmissão de vídeo e o contêiner para o qual o arquivo é gravado.</param>
+	CarenMFTopology(ICarenMFMediaSource^ Param_MediaSource, String^ Param_OutputUrl, ICarenMFTranscodeProfile^ Param_TranscodeProfile);
+
+	/// <summary>
+	/// Inicializa e cria ‎uma topologia para transcodificação para um fluxo byte.‎
+	/// </summary>
+	/// <param name="Param_MediaSource">Uma fonte de mídia que encapsula o arquivo de origem a ser transcodificado. O objeto de origem de mídia expõe a interface ‎‎ICarenMFMediaSource‎‎ e pode ser criado usando o resolvedor de origem 
+	/// (ICarenMFSourceResolver)</param>
+	/// <param name="Param_OutputStream">Uma interface ‎‎ICarenMFByteStream‎‎ de um fluxo byte. A saída transcodificada será escrita para este fluxo byte.‎</param>
+	/// <param name="Param_TranscodeProfile">O perfil de transcodificação que contém as configurações de configuração para o fluxo de áudio, a transmissão de vídeo e o contêiner para o qual o arquivo é gravado.</param>
+	CarenMFTopology(ICarenMFMediaSource^ Param_MediaSource, ICarenMFByteStream^ Param_OutputStream, ICarenMFTranscodeProfile^ Param_TranscodeProfile);
+
 	~CarenMFTopology();
 
 
@@ -78,77 +105,6 @@ public:
 			return Prop_DisposedClasse;
 		}
 	}
-
-
-
-	//Cria uma instância dessa classe (Estático)
-public:
-	/// <summary>
-	/// Método responsável por criar uma Topologia.
-	/// </summary>
-	/// <param name="Param_Out_NovaTopologia">Recebe um ponteiro para o novo nó criado.</param>
-	static CarenResult CriarInstancia([Out] ICarenMFTopology^% Param_Out_NovaTopologia)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Variavel que contém o resultado COM.
-		HRESULT Hr = E_FAIL;
-
-		//Variaveis utilizadas no método.
-		IMFTopology* pNovaTopologia = NULL;
-
-		//Chama o método
-		Hr = MFCreateTopology(&pNovaTopologia);
-
-		//Verifica o resultado
-		if (Sucesso(Hr))
-		{
-			//Deixa o método continuar.
-		}
-		else
-		{
-			//Erro
-			Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-			//Sai do método
-			goto Done;
-		}
-
-		//Cria a ainterface
-		Param_Out_NovaTopologia = gcnew CarenMFTopology();
-
-		//Deifine o ponteiro
-		Param_Out_NovaTopologia->AdicionarPonteiro(pNovaTopologia);
-
-		//Define sucesso na operção.
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	Done:;
-		//Retorna o resultado.
-		return Resultado;
-	}
-
-	/// <summary>
-	/// Método responsável por criar uma instância vazia da classe. Chamadas para os métodos sem um ponteiro de trabalho definido
-	/// pode gerar comportamentos indefinidos.
-	/// </summary>
-	/// <param name="Param_Out_NovaTopologia">Recebe um ponteiro para a interface (Vazia).</param>
-	static CarenResult CriarInstanciaVazia([Out] ICarenMFTopology^% Param_Out_NovaTopologia)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Cria a interface
-		Param_Out_NovaTopologia = gcnew CarenMFTopology();
-
-		//Define sucesso
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-		//Retorna o resultado
-		return Resultado;
-	}
-
 
 
 	///////////////////////////////////////////////////////

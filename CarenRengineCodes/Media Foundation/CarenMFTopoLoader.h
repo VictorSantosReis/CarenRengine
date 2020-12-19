@@ -51,6 +51,13 @@ public ref class CarenMFTopoLoader :public ICarenMFTopoLoader
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a interface e permite que o usuário decida se a biblioteca deve criar a interface ou vai iniciar sem um ponteiro 
+	/// de trabalho.
+	/// </summary>
+	/// <param name="Param_CriarInterface">Um valor booleano, TRUE indica que deve criar uma nova interface intermanete, caso contario, FALSE.</param>
+	CarenMFTopoLoader(Boolean Param_CriarInterface);
+
 	~CarenMFTopoLoader();
 
 

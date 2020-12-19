@@ -68,6 +68,50 @@ Done:;
 	return Resultado;
 }
 
+CarenResult MediaFoundationFunctions::_MFCreateStreamOnMFByteStreamEx(ICarenMFByteStream^ Param_ByteStream, String^ Param_RIID, ICaren^ Param_Out_Stream)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IMFByteStream* vi_pByteStream = Nulo;
+	GUID vi_RIID = GUID_NULL;
+	IUnknown* vi_pOutObject = Nulo;
+
+	//Recupera o ponteiro para o fluxo de bytes da media foundation.
+	CarenGetPointerFromICarenSafe(Param_ByteStream, vi_pByteStream);	
+
+	//Converte o RIID da interface solicitada.
+	vi_RIID = Util.CreateGuidFromString(Param_RIID);
+
+	//Chama o método para realizar a operação.
+	Hr = MFCreateStreamOnMFByteStreamEx(vi_pByteStream, vi_RIID, reinterpret_cast<void**>(&vi_pOutObject));
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o ponteiro na interface.
+	CarenSetPointerToICarenSafe(vi_pOutObject, Param_Out_Stream, true);
+
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
+
 CarenResult MediaFoundationFunctions::_MFCreateSequencerSource(ICaren^ Param_Reservado, ICaren^ Param_Out_SequencerSource)
 {
 	//Variavel a ser retornada.

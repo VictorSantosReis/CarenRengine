@@ -17,6 +17,8 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenMFQualityManager.h"
 
+
+
 //Destruidor.
 CarenMFQualityManager::~CarenMFQualityManager()
 {
@@ -24,11 +26,43 @@ CarenMFQualityManager::~CarenMFQualityManager()
 	Prop_DisposedClasse = true;
 }
 //Construtores
-CarenMFQualityManager::CarenMFQualityManager(Boolean Param_ImplInterno)
+CarenMFQualityManager::CarenMFQualityManager(CA_MF_QUALITY_MANAGER_CREATE_TYPE Param_CreateType)
 {
-	//Verifica se deve criar uma implementação interna.
-	if (Param_ImplInterno)
-		PonteiroTrabalho = new CLN_IMFQualityManager(); //Cria uma implementação interna.
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IMFQualityManager* vi_pOutQualityManagerDefault = Nulo;
+
+	//Abre um switch para verificar e criar da forma solicitada a classe.
+	switch (Param_CreateType)
+	{
+	case CarenRengine::SDKBase::Enumeracoes::CA_MF_QUALITY_MANAGER_CREATE_TYPE::MF_NULL:
+		//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+		break;
+	case CarenRengine::SDKBase::Enumeracoes::CA_MF_QUALITY_MANAGER_CREATE_TYPE::MF_CREATE_TYPE_STANDARD:
+		//Chama o método para criar a interface.
+		Hr = MFCreateStandardQualityManager(&vi_pOutQualityManagerDefault);
+
+		//Verifica se não ocorreu erro no processo.
+		if (!Sucesso(Hr))
+		{
+			//Chama uma exceção para informar o error.
+			throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+		}
+
+		//Define a interface criada no ponteiro de trabalho
+		PonteiroTrabalho = vi_pOutQualityManagerDefault;
+		break;
+	case CarenRengine::SDKBase::Enumeracoes::CA_MF_QUALITY_MANAGER_CREATE_TYPE::MF_CREATE_TYPE_INTERNAL:
+		//Cria uma implementação interna.
+		PonteiroTrabalho = new CLN_IMFQualityManager(); 
+		break;
+	default:
+		throw gcnew Exception("Um valor desconhecido ou um erro interno impediram a criação da classe.");
+		break;
+	}
 }
 
 // Métodos da interface ICaren
@@ -546,7 +580,7 @@ HRESULT CarenMFQualityManager::EncaminharEvento_OnNotifyPresentationClock(IMFPre
 	if (ObjetoValido(pClock))
 	{
 		//Cria a interface.
-		vi_PresentationClockManaged = gcnew CarenMFPresentationClock();
+		vi_PresentationClockManaged = gcnew CarenMFPresentationClock(false);
 
 		//Define o ponteiro na interface.
 		CarenSetPointerToICarenSafe(pClock, vi_PresentationClockManaged, false);
@@ -582,7 +616,7 @@ HRESULT CarenMFQualityManager::EncaminharEvento_OnNotifyProcessInput(IMFTopology
 	if (ObjetoValido(pSample))
 	{
 		//Cria a interface.
-		vi_SampleManaged = gcnew CarenMFSample();
+		vi_SampleManaged = gcnew CarenMFSample(false);
 
 		//Define o ponteiro na interface.
 		CarenSetPointerToICarenSafe(pSample, vi_SampleManaged, false);
@@ -618,7 +652,7 @@ HRESULT CarenMFQualityManager::EncaminharEvento_OnNotifyProcessOutput(IMFTopolog
 	if (ObjetoValido(pSample))
 	{
 		//Cria a interface.
-		vi_SampleManaged = gcnew CarenMFSample();
+		vi_SampleManaged = gcnew CarenMFSample(false);
 
 		//Define o ponteiro na interface.
 		CarenSetPointerToICarenSafe(pSample, vi_SampleManaged, false);

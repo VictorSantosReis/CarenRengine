@@ -696,7 +696,7 @@ void CarenMFSourceReaderCallback::EncaminharEvento_OnReadSample(HRESULT Param_HR
 	//Se chegar aqui é porque a amostra de mídia é valida.
 
 	//Cria a interface que vai conter a amostra de mídia
-	InterfaceAmostra = gcnew CarenMFSample();
+	InterfaceAmostra = gcnew CarenMFSample(false);
 
 	//Chama o método para definir o ponteiro da amostra de midia.
 	ResultadoSetPointer = InterfaceAmostra->AdicionarPonteiro(Param_AmostraMidia);

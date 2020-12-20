@@ -25,9 +25,6 @@ limitations under the License.
 //Importa o namespace que contém as interfaces da Media Foundation.
 using namespace CarenRengine::MediaFoundation;
 
-//Enumeração de retorno de função.
-
-
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
@@ -52,10 +49,11 @@ public ref class CarenMFAsyncCallback : public ICarenMFAsyncCallback
 	//Construtor e destruidor da classe.
 public:
 	/// <summary>
-	/// Inicializa a classe e permite que o usuário decida se vai inicializar com uma implementação interna ou vazia.
+	/// Inicializa a interface e permite que o usuário decida se a biblioteca deve criar a interface ou vai iniciar sem um ponteiro 
+	/// de trabalho. Se (Param_CriarInterface) for TRUE, o construtor vai criar uma implementação interface da (IMFAsyncCallback).
 	/// </summary>
-	/// <param name="Param_CriarImplementacao">Um valor booleano que indica se deve criar uma implementação interna.</param>
-	CarenMFAsyncCallback(Boolean Param_CriarImplementacao);
+	/// <param name="Param_CriarInterface">Um valor booleano, TRUE indica que deve criar uma nova interface intermanete, caso contario, FALSE.</param>
+	CarenMFAsyncCallback(Boolean Param_CriarInterface);
 
 	~CarenMFAsyncCallback();
 
@@ -104,8 +102,6 @@ public:
 	/// </summary>
 	virtual event ICarenMFAsyncCallback::Delegate_Invoke^ OnInvoke;
 
-
-
 	//(DELEGATES)
 private:
 
@@ -139,10 +135,6 @@ private:
 
 
 
-
-	///////////////////////////////////////////////////////
-	//A parti daqui vai conter os métodos das interfaces.//
-	///////////////////////////////////////////////////////
 
 	///////////////////////////////////////////////////////
 	//A parti daqui vai conter os métodos das interfaces.//

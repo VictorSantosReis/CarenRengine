@@ -19,14 +19,10 @@ limitations under the License.
 #include "../SDK_MediaFoundation.h"
 #include "../Caren/Caren.h"
 #include "CarenMFMediaEvent.h"
-
 #include "../SDK_Utilidades.h"
 
 //Importa o namespace que contém as interfaces da Media Foundation.
 using namespace CarenRengine::MediaFoundation;
-
-//Enumeração de retorno de função.
-
 
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
@@ -38,7 +34,7 @@ using namespace CarenRengine::SDKBase::Interfaces;
 using namespace CarenRengine::SDKUtilidades;
 
 /// <summary>
-/// [Concluido - Fase de Testes]
+/// (Concluido - Fase de Testes) - Classe responsável por recuperar eventos de qualquer objeto do Media Foundation que gera eventos. 
 /// </summary>
 public ref class CarenMFMediaEventGenerator : public ICarenMFMediaEventGenerator
 {
@@ -50,9 +46,13 @@ public ref class CarenMFMediaEventGenerator : public ICarenMFMediaEventGenerator
 	IMFMediaEventGenerator* PonteiroTrabalho = NULL;
 
 
-
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMFMediaEventGenerator();
+
 	~CarenMFMediaEventGenerator();
 
 
@@ -84,11 +84,6 @@ public:
 	///////////////////////////////////////////////////////
 	//A parti daqui vai conter os métodos das interfaces.//
 	///////////////////////////////////////////////////////
-
-
-	//
-	// ICaren
-	//
 
 	//Métodos da interface (ICaren)
 public:

@@ -18,11 +18,17 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenMFTopologyServiceLookupClient.h"
 
+
 //Destruidor.
 CarenMFTopologyServiceLookupClient::~CarenMFTopologyServiceLookupClient()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
+}
+//Construtor
+CarenMFTopologyServiceLookupClient::CarenMFTopologyServiceLookupClient()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 //

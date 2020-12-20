@@ -50,9 +50,13 @@ public ref class CarenMFMediaStream :public ICarenMFMediaStream
 	IMFMediaStream* PonteiroTrabalho = NULL;
 
 
-
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMFMediaStream();
+
 	~CarenMFMediaStream();
 
 

@@ -49,9 +49,11 @@ public ref class CarenMFMediaEngineNotify : public ICarenMFMediaEngineNotify
 	//Contrutores e destuidor da classe.
 public:
 	/// <summary>
-	/// Inicializa a classe com uma implementação da interface nativa (IMFSourceBufferNotify) criada internamente.
+	/// Inicializa a interface e permite que o usuário decida se a biblioteca deve criar a interface ou vai iniciar sem um ponteiro 
+	/// de trabalho. Se (Param_CriarInterface) for TRUE, o construtor vai criar uma implementação interna da (IMFMediaEngineNotify).
 	/// </summary>
-	CarenMFMediaEngineNotify();
+	/// <param name="Param_CriarInterface">Um valor booleano, TRUE indica que deve criar uma nova interface intermanete, caso contario, FALSE.</param>
+	CarenMFMediaEngineNotify(Boolean Param_CriarInterface);
 	
 	~CarenMFMediaEngineNotify();
 

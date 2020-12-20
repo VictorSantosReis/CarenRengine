@@ -18,11 +18,17 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenMFVideoSampleAllocator.h"
 
+
 //Destruidor.
 CarenMFVideoSampleAllocator::~CarenMFVideoSampleAllocator()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
+}
+//Construtor
+CarenMFVideoSampleAllocator::CarenMFVideoSampleAllocator()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 //
@@ -478,57 +484,6 @@ CarenResult CarenMFVideoSampleAllocator::InitializeSampleAllocator(UInt32 Param_
 
 	//Verifica se não houve erro
 	if(Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Sai do método
-		goto Done;
-	}
-
-	//Chama o método que vai alocar a quantidade de amostras definidas com o tipo informado.
-	Hr = PonteiroTrabalho->InitializeSampleAllocator(Param_CountAmostra, pTipoMidia);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//retorna o resultado
-	return Resultado;
-}
-
-/// <summary>
-/// (InitializeSampleAllocatorEx) - Inicializa o alocador informando a quantidade de amostras para alocar e o tipo de mídia
-/// para cada amostra.
-/// As amostras alocadas devem ser compativeis com o DXGI - (D3D11).
-/// </summary>
-/// <param name="Param_CountAmostra">A quantidade de amostas para alocar.</param>
-/// <param name="Param_TipoAmostraVideo">Uma interface que contém o Tipo de mídia de vídeo que será alocada.</param>
-CarenResult CarenMFVideoSampleAllocator::InitializeSampleAllocatorEx(UInt32 Param_CountAmostra, ICarenMFMediaType^ Param_TipoAmostraVideo)
-{
-	//Variavel que vai retornar o resultado.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis utilizadas no método
-	IMFMediaType* pTipoMidia = NULL;
-
-	//Chama o método que vai recuperar o tipo de midia
-	Resultado = Param_TipoAmostraVideo->RecuperarPonteiro((LPVOID*)& pTipoMidia);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
 	{
 		//Sai do método
 		goto Done;

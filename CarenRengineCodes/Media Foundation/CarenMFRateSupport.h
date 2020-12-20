@@ -23,9 +23,6 @@ limitations under the License.
 //Importa o namespace que contém as interfaces da Media Foundation.
 using namespace CarenRengine::MediaFoundation;
 
-//Enumeração de retorno de função.
-
-
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
@@ -51,6 +48,11 @@ public ref class CarenMFRateSupport :public ICarenMFRateSupport
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMFRateSupport();
+
 	~CarenMFRateSupport();
 
 
@@ -77,31 +79,6 @@ public:
 			return Prop_DisposedClasse;
 		}
 	}
-
-
-
-	//Cria uma instância dessa classe (Estático)
-public:
-	/// <summary>
-	/// Método responsável por criar uma instância vazia da classe. Chamadas para os métodos sem um ponteiro de trabalho definido
-	/// pode gerar comportamentos indefinidos.
-	/// </summary>
-	/// <param name="Param_Out_RateSuporte">Recebe um ponteiro para a interface (Vazia).</param>
-	static CarenResult CriarInstanciaVazia([Out] ICarenMFRateSupport^% Param_Out_RateSuporte)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Cria a interface
-		Param_Out_RateSuporte = gcnew CarenMFRateSupport();
-
-		//Define sucesso
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-		//Retorna o resultado
-		return Resultado;
-	}
-
 
 
 	///////////////////////////////////////////////////////

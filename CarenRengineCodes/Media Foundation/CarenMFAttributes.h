@@ -47,7 +47,7 @@ public ref class CarenMFAttributes : public ICarenMFAttributes
 	IMFAttributes* PonteiroTrabalho = NULL;
 
 
-	//Construtor e destruidor da classe.
+	//Construtores e destruidor da classe.
 public:
 	/// <summary>
 	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
@@ -59,6 +59,12 @@ public:
 	/// </summary>
 	/// <param name="Param_QuantidadeAtributos">A quantidade de atributos iniciais que a interface vai conter.</param>
 	CarenMFAttributes(UInt32 Param_QuantidadeAtributos);
+
+	/// <summary>
+	/// Inicializa e cria um loja de atributos descrevendo o conteúdo de substreams multiplexados.
+	/// </summary>
+	/// <param name="Param_ColecaoAtributosMuxStream">A coleção contendo os (IMFAttributes) para cada substream multiplexado.</param>
+	CarenMFAttributes(ICarenMFCollection^ Param_ColecaoAtributosMuxStream);
 
 	~CarenMFAttributes();
 

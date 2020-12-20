@@ -534,9 +534,6 @@
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaSinkPreroll.h">
       <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
     </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaSinkWriterCallback.h">
-      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
-    </ClInclude>
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaSource.h">
       <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
     </ClInclude>
@@ -1443,6 +1440,9 @@
     <ClInclude Include="CarenRengineCodes\Windows\CarenPropertyBag2.h">
       <Filter>Arquivos de Cabeçalho\Classes\Windows</Filter>
     </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFSinkWriterCallback.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D10Multithread.cpp">
@@ -1782,9 +1782,6 @@
       <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaSinkPreroll.cpp">
-      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaSinkWriterCallback.cpp">
       <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaSource.cpp">
@@ -2695,6 +2692,9 @@
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Windows\CarenPropertyBag2.cpp">
       <Filter>Arquivos de Origem\Classes\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFSinkWriterCallback.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

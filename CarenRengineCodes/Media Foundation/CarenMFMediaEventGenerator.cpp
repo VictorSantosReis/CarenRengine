@@ -18,11 +18,17 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenMFMediaEventGenerator.h"
 
+
 //Destruidor.
 CarenMFMediaEventGenerator::~CarenMFMediaEventGenerator()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
+}
+//Construtor
+CarenMFMediaEventGenerator::CarenMFMediaEventGenerator()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 //

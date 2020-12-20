@@ -16,13 +16,21 @@ limitations under the License.
 
 
 #include "../pch.h"
-#include "CarenMFMediaSinkWriterCallback.h"
+#include "CarenMFSinkWriterCallback.h"
+
 
 //Destruidor.
-CarenMFMediaSinkWriterCallback::~CarenMFMediaSinkWriterCallback()
+CarenMFSinkWriterCallback::~CarenMFSinkWriterCallback()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
+}
+//Construtor
+CarenMFSinkWriterCallback::CarenMFSinkWriterCallback(Boolean Param_CriarInterface)
+{
+	//Verifica se deve ou não criar a classe.
+	if (Param_CriarInterface)
+		PonteiroTrabalho = new CLN_IMFSinkWriterCallback();
 }
 
 //
@@ -36,7 +44,7 @@ CarenMFMediaSinkWriterCallback::~CarenMFMediaSinkWriterCallback()
 /// </summary>
 /// <param name="Param_Guid">O IID(Identificador de Interface) ou GUID para a interface desejada.</param>
 /// <param name="Param_InterfaceSolicitada">A interface que vai receber o ponteiro nativo. O usuário deve inicializar a interface antes de chamar o método. Libere a interface quando não for mais usá-la.</param>
-CarenResult CarenMFMediaSinkWriterCallback::ConsultarInterface(String^ Param_Guid, ICaren^ Param_InterfaceSolicitada)
+CarenResult CarenMFSinkWriterCallback::ConsultarInterface(String^ Param_Guid, ICaren^ Param_InterfaceSolicitada)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -147,7 +155,7 @@ Done:;
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
 /// </summary>
 /// <param name="Param_PonteiroNativo">Variável (GERENCIADA) para o ponteiro nativo a ser adicionado.</param>
-CarenResult CarenMFMediaSinkWriterCallback::AdicionarPonteiro(IntPtr Param_PonteiroNativo)
+CarenResult CarenMFSinkWriterCallback::AdicionarPonteiro(IntPtr Param_PonteiroNativo)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -188,7 +196,7 @@ Done:;
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
 /// </summary>
 /// <param name="Param_PonteiroNativo">Variável (NATIVA) para o ponteiro nativo a ser adicionado.</param>
-CarenResult CarenMFMediaSinkWriterCallback::AdicionarPonteiro(LPVOID Param_PonteiroNativo)
+CarenResult CarenMFSinkWriterCallback::AdicionarPonteiro(LPVOID Param_PonteiroNativo)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -232,7 +240,7 @@ Done:;
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
 /// </summary>
 /// <param name="Param_Out_PonteiroNativo">Variável (GERENCIADA) que vai receber o ponteiro nativo.</param>
-CarenResult CarenMFMediaSinkWriterCallback::RecuperarPonteiro([Out] IntPtr% Param_Out_PonteiroNativo)
+CarenResult CarenMFSinkWriterCallback::RecuperarPonteiro([Out] IntPtr% Param_Out_PonteiroNativo)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -263,7 +271,7 @@ Done:;
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
 /// </summary>
 /// <param name="Param_Out_PonteiroNativo">Variável (NATIVA) que vai receber o ponteiro nativo.</param>
-CarenResult CarenMFMediaSinkWriterCallback::RecuperarPonteiro(LPVOID* Param_Out_PonteiroNativo)
+CarenResult CarenMFSinkWriterCallback::RecuperarPonteiro(LPVOID* Param_Out_PonteiroNativo)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -294,7 +302,7 @@ Done:;
 /// Método responsável por retornar a quantidade de referências do objeto COM atual.
 /// </summary>
 /// <param name="Param_Out_Referencias">Variável que vai receber a quantidade de referências do objeto.</param>
-CarenResult CarenMFMediaSinkWriterCallback::RecuperarReferencias([Out] UInt64% Param_Out_Referencias)
+CarenResult CarenMFSinkWriterCallback::RecuperarReferencias([Out] UInt64% Param_Out_Referencias)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -329,7 +337,7 @@ Done:;
 /// <summary>
 /// Método responsável por indicar se o ponteiro COM atual é válido.
 /// </summary>
-CarenResult CarenMFMediaSinkWriterCallback::StatusPonteiro()
+CarenResult CarenMFSinkWriterCallback::StatusPonteiro()
 {
 	return (ObjetoValido(PonteiroTrabalho) ? CarenResult(ResultCode::SS_OK, true) : CarenResult(ResultCode::ER_E_POINTER, false));
 }
@@ -338,7 +346,7 @@ CarenResult CarenMFMediaSinkWriterCallback::StatusPonteiro()
 /// Método responsável por retornar a variável que armazena o último código de erro desconhecido ou não documentado gerado pela classe.
 /// Esse método não chama o método nativo (GetLastError), apenas retorna o código de erro que foi armazenado na classe.
 /// </summary>
-Int32 CarenMFMediaSinkWriterCallback::ObterCodigoErro()
+Int32 CarenMFSinkWriterCallback::ObterCodigoErro()
 {
 	return Var_Glob_LAST_HRESULT;
 }
@@ -347,7 +355,7 @@ Int32 CarenMFMediaSinkWriterCallback::ObterCodigoErro()
 /// (AddRef) - Incrementa a contagem de referência para o ponteiro do objeto COM atual. Você deve chamar este método sempre que 
 /// você fazer uma cópia de um ponteiro de interface.
 /// </summary>
-void CarenMFMediaSinkWriterCallback::AdicionarReferencia()
+void CarenMFSinkWriterCallback::AdicionarReferencia()
 {
 	//Adiciona uma referência ao ponteiro
 	PonteiroTrabalho->AddRef();
@@ -356,7 +364,7 @@ void CarenMFMediaSinkWriterCallback::AdicionarReferencia()
 /// <summary>
 /// (Release) - 'Decrementa' a contagem de referência do objeto COM atual.
 /// </summary>
-void CarenMFMediaSinkWriterCallback::LiberarReferencia()
+void CarenMFSinkWriterCallback::LiberarReferencia()
 {
 	//Libera a referência e obtém a quantidade atual.
 	ULONG RefCount = PonteiroTrabalho->Release();
@@ -374,7 +382,7 @@ void CarenMFMediaSinkWriterCallback::LiberarReferencia()
 /// Método responsável por limpar os dados do objeto COM e códigos de erros gerados pelos métodos da classe.
 /// Este método não libera a referência do objeto COM atual, vai apenas anular o ponteiro.
 /// </summary>
-void CarenMFMediaSinkWriterCallback::LimparDados()
+void CarenMFSinkWriterCallback::LimparDados()
 {
 	//Verifica se o ponteiro é um objeto valido e limpa.
 	if (ObjetoValido(PonteiroTrabalho))
@@ -391,7 +399,7 @@ void CarenMFMediaSinkWriterCallback::LimparDados()
 /// Método responsável por chamar o finalizador da interface para realizar a limpeza e descarte de dados pendentes.
 /// Este método pode ser escrito de forma diferente para cada interface.
 /// </summary>
-void CarenMFMediaSinkWriterCallback::Finalizar()
+void CarenMFSinkWriterCallback::Finalizar()
 {
 	//////////////////////
 	//Código de descarte//
@@ -401,7 +409,7 @@ void CarenMFMediaSinkWriterCallback::Finalizar()
 	GC::SuppressFinalize(this);
 
 	//Chama o finalizador da classe
-	this->~CarenMFMediaSinkWriterCallback();
+	this->~CarenMFSinkWriterCallback();
 }
 
 
@@ -416,7 +424,7 @@ void CarenMFMediaSinkWriterCallback::Finalizar()
 /// <summary>
 /// Método responsável por registrar os eventos da interface.
 /// </summary>
-void CarenMFMediaSinkWriterCallback::RegistrarCallback()
+void CarenMFSinkWriterCallback::RegistrarCallback()
 {
 	//Variaveis utilizadas no método
 	Utilidades Util;
@@ -424,8 +432,8 @@ void CarenMFMediaSinkWriterCallback::RegistrarCallback()
 	//Configura os delegates.
 
 	//Cria todos os delegates.
-	Callback_OnFinalize = gcnew DelegateNativo_Evento_OnFinalize(this, &CarenMFMediaSinkWriterCallback::EncaminharEvento_OnFinalize);
-	Callback_OnMarker = gcnew DelegateNativo_Evento_OnMarker(this, &CarenMFMediaSinkWriterCallback::EncaminharEvento_OnMarker);
+	Callback_OnFinalize = gcnew DelegateNativo_Evento_OnFinalize(this, &CarenMFSinkWriterCallback::EncaminharEvento_OnFinalize);
+	Callback_OnMarker = gcnew DelegateNativo_Evento_OnMarker(this, &CarenMFSinkWriterCallback::EncaminharEvento_OnMarker);
 
 	//Converte os delegates para ponteiros do IntPtr
 	IntPtr Pointer_OnFinalize = Util.ConverterDelegateToPointer(Callback_OnFinalize);
@@ -443,7 +451,7 @@ void CarenMFMediaSinkWriterCallback::RegistrarCallback()
 /// <summary>
 /// Método responsável por liberar todos os registros de eventos resgistrados anteriormente. Chame esse método após uma chamada para (RegistrarCallback).
 /// </summary>
-void CarenMFMediaSinkWriterCallback::UnRegisterCallback()
+void CarenMFSinkWriterCallback::UnRegisterCallback()
 {
 	//Libera o ponteiro para todos os eventos
 	gHandle_Delegate_OnFinalize.Free();
@@ -473,7 +481,7 @@ void CarenMFMediaSinkWriterCallback::UnRegisterCallback()
 /// <summary>
 /// Método responsável por encaminhar o (Evento) nativo (OnFinalize) da classe (IMFSinkWriterCallback) para o usuário em classe gerenciada.
 /// </summary>
-void CarenMFMediaSinkWriterCallback::EncaminharEvento_OnFinalize(HRESULT Param_HResultCode)
+void CarenMFSinkWriterCallback::EncaminharEvento_OnFinalize(HRESULT Param_HResultCode)
 {
 	//Não é preciso verificar se o evento é uma referência valida.
 	//Em C++ CLI, caso o evento não seja valido, a função não será chamada.
@@ -486,7 +494,7 @@ void CarenMFMediaSinkWriterCallback::EncaminharEvento_OnFinalize(HRESULT Param_H
 /// <summary>
 ///Método responsável por encaminhar o (Evento) nativo (OnMarker) da classe (IMFSinkWriterCallback) para o usuário em classe gerenciada.
 /// </summary>
-void CarenMFMediaSinkWriterCallback::EncaminharEvento_OnMarker(DWORD Param_FluxoID, LPVOID Param_ObjetoContexto)
+void CarenMFSinkWriterCallback::EncaminharEvento_OnMarker(DWORD Param_FluxoID, LPVOID Param_ObjetoContexto)
 {
 	//Não é preciso verificar se o evento é uma referência valida.
 	//Em C++ CLI, caso o evento não seja valido, a função não será chamada.

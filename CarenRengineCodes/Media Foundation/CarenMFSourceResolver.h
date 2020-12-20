@@ -54,7 +54,8 @@ public ref class CarenMFSourceResolver : public ICarenMFSourceResolver
 public:
 	/// <summary>
 	/// Inicializa a interface e permite que o usuário decida se a biblioteca deve criar a interface ou vai iniciar sem um ponteiro 
-	/// de trabalho.
+	/// de trabalho. Se (Param_CriarInterface) for TRUE, o construtor ‎cria um resolvedor de origem, que é usado para criar uma fonte de 
+	/// mídia a partir de uma URL ou fluxo byte.‎
 	/// </summary>
 	/// <param name="Param_CriarInterface">Um valor booleano, TRUE indica que deve criar uma nova interface intermanete, caso contario, FALSE.</param>
 	CarenMFSourceResolver(Boolean Param_CriarInterface);

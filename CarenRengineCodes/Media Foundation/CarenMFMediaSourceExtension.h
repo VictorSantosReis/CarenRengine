@@ -47,7 +47,7 @@ public ref class CarenMFMediaSourceExtension : public ICarenMFMediaSourceExtensi
 	IMFMediaSourceExtension* PonteiroTrabalho = NULL;
 
 
-	//Contrutores e destuidor da classe.
+	//Contrutore e destuidor da classe.
 public:
 	/// <summary>
 	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.

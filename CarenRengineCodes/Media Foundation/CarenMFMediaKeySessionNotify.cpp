@@ -17,19 +17,19 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenMFMediaKeySessionNotify.h"
 
+
 //Destruidor.
 CarenMFMediaKeySessionNotify::~CarenMFMediaKeySessionNotify()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
-//Construtores
-CarenMFMediaKeySessionNotify::CarenMFMediaKeySessionNotify()
+//Construtor
+CarenMFMediaKeySessionNotify::CarenMFMediaKeySessionNotify(Boolean Param_CriarInterface)
 {
-	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
-
-	//Cria a interface que vai receber as notificações.
-	PonteiroTrabalho = new CLN_IMFMediaKeySessionNotify();
+	//Verifica se deve criar a interface ou não.
+	if (Param_CriarInterface)
+		PonteiroTrabalho = new CLN_IMFMediaKeySessionNotify();
 }
 
 // Métodos da interface ICaren

@@ -50,6 +50,11 @@ public ref class CarenMFVideoRenderer : public ICarenMFVideoRenderer
 
 	//Construtor e Destruidor.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMFVideoRenderer();
+
 	~CarenMFVideoRenderer();
 
 	//Variaveis Internas.

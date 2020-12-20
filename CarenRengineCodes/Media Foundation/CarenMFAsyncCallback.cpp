@@ -25,17 +25,11 @@ CarenMFAsyncCallback::~CarenMFAsyncCallback()
 	Prop_DisposedClasse = true;
 }
 //Construtor
-CarenMFAsyncCallback::CarenMFAsyncCallback(Boolean Param_CriarImplementacao)
+CarenMFAsyncCallback::CarenMFAsyncCallback(Boolean Param_CriarInterface)
 {
-	//Verifica se vai criar uma implementação interna ou não.
-	if (!Param_CriarImplementacao)
-		Sair; //Não foi solicitado que se crie uma implementação.. Pula para o fim.
-
-	//Cria a implementação interna.
-	PonteiroTrabalho = new CLN_IMFAsyncCallback();
-
-
-Done:;
+	//Verifica se deve criar a classe ou não.
+	if (Param_CriarInterface)
+		PonteiroTrabalho = new CLN_IMFAsyncCallback();
 }
 
 //

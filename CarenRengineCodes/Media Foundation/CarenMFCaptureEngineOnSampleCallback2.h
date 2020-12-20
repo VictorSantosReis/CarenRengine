@@ -51,10 +51,11 @@ public ref class CarenMFCaptureEngineOnSampleCallback2 : public ICarenMFCaptureE
 	//Contrutores e destuidor da classe.
 public:
 	/// <summary>
-	/// Inicializa a classe com uma implementação da interface nativa (IMFCaptureEngineOnSampleCallback2) criada internamente ou Nulo.
+	/// Inicializa a interface e permite que o usuário decida se a biblioteca deve criar a interface ou vai iniciar sem um ponteiro 
+	/// de trabalho. Se (Param_CriarInterface) for TRUE, o construtor vai criar uma implementação interna da (IMFCaptureEngineOnSampleCallback2).
 	/// </summary>
-	/// <param name="Param_ImplInterno">Um valor booleano que indica se deve criar uma implementação interna nativa.</param>
-	CarenMFCaptureEngineOnSampleCallback2(Boolean Param_ImplInterno);
+	/// <param name="Param_CriarInterface">Um valor booleano, TRUE indica que deve criar uma nova interface intermanete, caso contario, FALSE.</param>
+	CarenMFCaptureEngineOnSampleCallback2(Boolean Param_CriarInterface);
 	
 	~CarenMFCaptureEngineOnSampleCallback2();
 

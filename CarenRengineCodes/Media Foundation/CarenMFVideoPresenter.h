@@ -36,6 +36,11 @@ public ref class CarenMFVideoPresenter : public ICarenMFVideoPresenter
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMFVideoPresenter();
+
 	~CarenMFVideoPresenter();
 
 

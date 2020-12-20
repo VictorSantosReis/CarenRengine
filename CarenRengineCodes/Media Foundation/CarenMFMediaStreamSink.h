@@ -50,6 +50,11 @@ public ref class CarenMFStreamSink :public ICarenMFStreamSink
 
 	//Construtor e Destruidor.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMFStreamSink();
+
 	~CarenMFStreamSink();
 
 	//Variaveis Internas.

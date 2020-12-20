@@ -24,12 +24,11 @@ CarenMFMediaEngineNotify::~CarenMFMediaEngineNotify()
 	Prop_DisposedClasse = true;
 }
 //Construtores
-CarenMFMediaEngineNotify::CarenMFMediaEngineNotify()
+CarenMFMediaEngineNotify::CarenMFMediaEngineNotify(Boolean Param_CriarInterface)
 {
-	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
-
-	//Cria um ponteiro para a interface impelmentada internamente.
-	PonteiroTrabalho = new CLN_IMFMediaEngineNotify();
+	//Verifica se deve criar a classe ou não.
+	if (Param_CriarInterface)
+		PonteiroTrabalho = new CLN_IMFMediaEngineNotify();
 }
 
 // Métodos da interface ICaren

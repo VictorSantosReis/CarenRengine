@@ -18,11 +18,17 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenMFSimpleAudioVolume.h"
 
+
 //Destruidor.
 CarenMFSimpleAudioVolume::~CarenMFSimpleAudioVolume()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
+}
+//Construtor
+CarenMFSimpleAudioVolume::CarenMFSimpleAudioVolume()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 //

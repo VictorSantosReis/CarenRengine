@@ -97,56 +97,6 @@ public:
 	}
 
 
-
-	//Cria uma instância dessa classe (Estático)
-public:
-	/// <summary>
-	/// Método responsável por criar uma instância da classe de amostra de mídias(Áudio e Vídeo).
-	/// </summary>
-	/// <param name="Param_Out_Amostra">Recebe a interface que gerencia amostras de mídia.</param>
-	static CarenResult CriarInstancia([Out] ICarenMFSample^% Param_Out_Amostra)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Variavel COM
-		ResultadoCOM Hr = E_FAIL;
-
-		//Variaveis utilizadas pelo método.
-		IMFSample* pAmostra = NULL;
-
-		//Chama o método para criar a amostra
-		Hr = MFCreateSample(&pAmostra);
-
-		//Verifica se obteve sucesso
-		if (Sucesso(Hr))
-		{
-			//Deixa o método continuar.
-		}
-		else
-		{
-			//Define falha.
-			Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-			//Sai do método.
-			goto Done;
-		}
-
-		//Cria está classe que vai conter o ponteiro.
-		Param_Out_Amostra = gcnew CarenMFSample(false);
-
-		//Define o ponteiro de trabalho
-		Param_Out_Amostra->AdicionarPonteiro(pAmostra);
-
-		//Define sucesso na operação
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	Done:;
-		//Retorna o resultado
-		return Resultado;
-	}
-
-
 	///////////////////////////////////////////////////////
 	//A parti daqui vai conter os métodos das interfaces.//
 	///////////////////////////////////////////////////////

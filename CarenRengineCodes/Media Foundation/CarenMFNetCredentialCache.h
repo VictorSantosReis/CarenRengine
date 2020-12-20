@@ -50,7 +50,8 @@ public ref class CarenMFNetCredentialCache : public ICarenMFNetCredentialCache
 public:
 	/// <summary>
 	/// Inicializa a interface e permite que o usuário decida se a biblioteca deve criar a interface ou vai iniciar sem um ponteiro 
-	/// de trabalho.
+	/// de trabalho. Se (Param_CriarInterface) for TRUE, o construtor vai ‎criar um objeto de cache de credencial. Um aplicativo pode usar esse objeto para implementar um gerenciador 
+	/// de credenciais personalizado.‎
 	/// </summary>
 	/// <param name="Param_CriarInterface">Um valor booleano, TRUE indica que deve criar uma nova interface intermanete, caso contario, FALSE.</param>
 	CarenMFNetCredentialCache(Boolean Param_CriarInterface);

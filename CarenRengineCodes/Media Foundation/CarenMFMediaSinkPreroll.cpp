@@ -18,11 +18,17 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenMFMediaSinkPreroll.h"
 
+
 //Destruidor.
 CarenMFMediaSinkPreroll::~CarenMFMediaSinkPreroll()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
+}
+//Construtor
+CarenMFMediaSinkPreroll::CarenMFMediaSinkPreroll()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 //

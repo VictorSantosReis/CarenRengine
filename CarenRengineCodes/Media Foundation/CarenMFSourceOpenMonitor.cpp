@@ -17,19 +17,19 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenMFSourceOpenMonitor.h"
 
+
 //Destruidor.
 CarenMFSourceOpenMonitor::~CarenMFSourceOpenMonitor()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
-//Construtores
-CarenMFSourceOpenMonitor::CarenMFSourceOpenMonitor()
+//Construtor
+CarenMFSourceOpenMonitor::CarenMFSourceOpenMonitor(Boolean Param_CriarInterface)
 {
-	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
-
-	//Cria a interace a parti da classe nativa implementada internamente.
-	PonteiroTrabalho = new CLN_IMFSourceOpenMonitor();
+	//Verifica se deve criar a classe ou não.
+	if (Param_CriarInterface)
+		PonteiroTrabalho = new CLN_IMFSourceOpenMonitor();
 }
 
 // Métodos da interface ICaren

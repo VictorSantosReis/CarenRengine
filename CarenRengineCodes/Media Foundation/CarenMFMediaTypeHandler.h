@@ -51,7 +51,7 @@ public ref class CarenMFMediaTypeHandler : public ICarenMFMediaTypeHandler
 public:
 	/// <summary>
 	/// Inicializa a interface e permite que o usuĂ¡rio decida se a biblioteca deve criar a interface ou vai iniciar sem um ponteiro 
-	/// de trabalho.
+	/// de trabalho. Se (Param_CriarInterface) for TRUE, o construtor vai ‎criar um manipulador tipo de mídia que suporta um único tipo de mídia por vez.‎
 	/// </summary>
 	/// <param name="Param_CriarInterface">Um valor booleano, TRUE indica que deve criar uma nova interface intermanete, caso contario, FALSE.</param>
 	CarenMFMediaTypeHandler(Boolean Param_CriarInterface);

@@ -443,7 +443,7 @@
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaBuffer.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaSinkPreroll.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFSinkWriter.h" />
-    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaSinkWriterCallback.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFSinkWriterCallback.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaStream.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaStreamSink.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaType.h" />
@@ -858,7 +858,7 @@
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaBuffer.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaSinkPreroll.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFSinkWriter.cpp" />
-    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaSinkWriterCallback.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFSinkWriterCallback.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaStream.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaStreamSink.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaType.cpp" />

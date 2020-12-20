@@ -36,7 +36,7 @@ using namespace CarenRengine::SDKBase::Interfaces;
 using namespace CarenRengine::SDKUtilidades;
 
 /// <summary>
-/// [Concluido - Fase de testes] - Falta documentar
+/// (Concluido - Fase de Testes) - Classe responsável por permitir que um Media Sink receba amostras antes do relógio de apresentação ser iniciado.‎ 
 /// </summary>
 public ref class CarenMFMediaSinkPreroll : public ICarenMFMediaSinkPreroll
 {
@@ -50,6 +50,11 @@ public ref class CarenMFMediaSinkPreroll : public ICarenMFMediaSinkPreroll
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMFMediaSinkPreroll();
+
 	~CarenMFMediaSinkPreroll();
 
 

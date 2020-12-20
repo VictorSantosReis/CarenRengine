@@ -51,6 +51,11 @@ public ref class CarenMFTopologyServiceLookupClient : public ICarenMFTopologySer
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMFTopologyServiceLookupClient();
+
 	~CarenMFTopologyServiceLookupClient();
 
 

@@ -1,11 +1,17 @@
 ﻿#include "../pch.h"
 #include "CarenMFVideoPresenter.h"
 
+
 //Destruidor.
 CarenMFVideoPresenter::~CarenMFVideoPresenter()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
+}
+//Construtor
+CarenMFVideoPresenter::CarenMFVideoPresenter()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 

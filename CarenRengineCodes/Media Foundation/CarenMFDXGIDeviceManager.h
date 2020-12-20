@@ -86,57 +86,6 @@ public:
 	}
 
 
-	//Cria instâncias da classe
-public:
-	/// <summary>
-	/// Cria uma instância da classe atual com base na interface (IMFDXGIDeviceManager).
-	/// Nenhum dispositivo do Direct3D 11 é vinculado ao gerenciador durante a criação, você deve adicionar manualmente.
-	/// </summary>
-	/// <param name="Param_Out_TokenDispositivo">Recebe um (Token) que identifica esta instância do Gerenciador de dispositivo DXGI. Use esse token ao chamar o método (ICarenMFDXGIDeviceManager::ResetDevice).</param>
-	/// <param name="Param_Out_Interface">Recebe a interface responsável pelo gerenciador.</param>
-	static CarenResult CriarInstancia([Out] UInt32% Param_Out_TokenDispositivo, [Out] ICarenMFDXGIDeviceManager^% Param_Out_Interface)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Variveis utilizadas no método.
-		ResultadoCOM Hr = E_FAIL;
-		IMFDXGIDeviceManager* pGerenciadorD3D11 = NULL;
-		ICarenMFDXGIDeviceManager^ GerenciadorD3D11 = nullptr;
-		UINT TokenDevice;
-
-		//Chama o método para criar o gerenciador
-		Hr = MFCreateDXGIDeviceManager(&TokenDevice, &pGerenciadorD3D11);
-
-		//Processa o resultado da chamada.
-		Resultado.ProcessarCodigoOperacao(Hr);
-
-		//Verifica se obteve sucesso na operação.
-		if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-		{
-			//Falhou ao realizar a operação.
-
-			//Sai do método
-			Sair;
-		}
-
-		//Cria a interface que vai ser retornada.
-		GerenciadorD3D11 = gcnew CarenMFDXGIDeviceManager();
-
-		//Chama o método para definir o ponteiro do gerenciador.
-		GerenciadorD3D11->AdicionarPonteiro(pGerenciadorD3D11);
-
-		//Define a interface no parametro de saida.
-		Param_Out_Interface = GerenciadorD3D11;
-
-		//Define o Token no parametro de saida.
-		Param_Out_TokenDispositivo = TokenDevice;
-	Done:;
-		//Retorna o resultado
-		return Resultado;
-	}
-
-
 	///////////////////////////////////////////////////////
 	//A parti daqui vai conter os métodos das interfaces.//
 	///////////////////////////////////////////////////////

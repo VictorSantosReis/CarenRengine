@@ -23,9 +23,6 @@ limitations under the License.
 //Importa o namespace que contém as interfaces da Media Foundation.
 using namespace CarenRengine::MediaFoundation;
 
-//Enumeração de retorno de função.
-
-
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
@@ -92,7 +89,7 @@ public:
 	//A parti daqui vai conter os métodos das interfaces.//
 	///////////////////////////////////////////////////////
 
-		//Métodos da interface (ICaren)
+	//Métodos da interface (ICaren)
 public:
 	/// <summary>
 	/// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 

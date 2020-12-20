@@ -55,11 +55,34 @@ public:
 	CarenResult _MFShutdown();
 
 	/// <summary>
+	/// ‎Cria uma fila de eventos.‎
+	/// </summary>
+	/// <param name="Param_Out_EventQueue">Retorna uma interface base (ICaren) para a interface (IMFMediaEventQueue[NÃO IMPLEMENTADA PELA DLL]). O usuário é responsável por inicializar a interface antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _MFCreateEventQueue(ICaren^ Param_Out_EventQueue);
+	
+	/// <summary>
+	/// ‎Cria um objeto que aloca amostras de vídeo compatíveis com o Direct3D 9.
+	/// </summary>
+	/// <param name="Param_RIID">‎O identificador da interface para recuperar. Especifique um dos seguintes valores: IID_IUnknown, IID_IMFVideoSampleAllocator, IID_IMFVideoSampleAllocatorCallback.</param>
+	/// <param name="Param_Out_SampleAllocator">Recebe uma interface base (ICaren) para a interface requisitada. O usuário é responsável por inicializar a interface antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _MFCreateVideoSampleAllocator(String^ Param_RIID, ICaren^ Param_Out_SampleAllocator);
+
+	/// <summary>
+	/// ‎Cria um objeto que aloca amostras de vídeo compatíveis com o Microsoft DirectX Graphics Infrastructure (DXGI).‎
+	/// </summary>
+	/// <param name="Param_RIID">‎O identificador da interface para recuperar. Especifique um dos seguintes valores: IID_IUnknown, IID_IMFVideoSampleAllocator, IID_IMFVideoSampleAllocatorEx, IID_IMFVideoSampleAllocatorCallback.</param>
+	/// <param name="Param_Out_SampleAllocator">Recebe uma interface base (ICaren) para a interface requisitada. O usuário é responsável por inicializar a interface antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _MFCreateVideoSampleAllocatorEx(String^ Param_RIID, ICaren^ Param_Out_SampleAllocator);
+
+	/// <summary>
 	/// ‎Cria um objeto ‎‎IRandomAccessStream‎‎ que envolve um fluxo byte da Microsoft Media Foundation.‎
 	/// </summary>
 	/// <param name="Param_ByteStream">Uma interface ICarenMFByteStream para o fluxode bytes da Media Foundation.</param>
 	/// <param name="Param_RIID">‎O identificador de interface (IID) da interface que está sendo solicitada.‎</param>
-	/// <param name="Param_Out_Stream">Retorna uma interface base (ICaren) para a interface IRandomAccessStream do fluxo de bytes para a (ICarenMFByteStream).</param>
+	/// <param name="Param_Out_Stream">Retorna uma interface base (ICaren) para a interface IRandomAccessStream do fluxo de bytes para a (ICarenMFByteStream). O usuário é responsável por inicializar a interface antes de chamar este método.</param>
 	/// <returns></returns>
 	CarenResult _MFCreateStreamOnMFByteStreamEx(ICarenMFByteStream^ Param_ByteStream, String^ Param_RIID, ICaren^ Param_Out_Stream);
 

@@ -49,7 +49,6 @@ public ref class CarenMFAsyncResult : ICarenMFAsyncResult
 	IMFAsyncResult* PonteiroTrabalho = NULL;
 
 
-
 	//Construtor e destruidor da classe.
 public:
 	/// <summary>
@@ -99,7 +98,7 @@ public:
 	///////////////////////////////////////////////////////
 
 
-		//Métodos da interface (ICaren)
+	//Métodos da interface (ICaren)
 public:
 	/// <summary>
 	/// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 

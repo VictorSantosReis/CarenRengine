@@ -123,7 +123,8 @@ namespace CarenRengine
 		};
 
 		/// <summary>
-		/// (IMFMediaSinkPreroll) -  Falta documentar.
+		/// (IMFMediaSinkPreroll) - Interface responsável por permitir que um Media Sink receba amostras antes do relógio de apresentação ser iniciado.‎
+		/// Para recuperar um ponteiro para esta interface, chame o método ICaren::ConsultarInterface no Media Sink.
 		/// </summary>
 		[CategoryAttribute("MF Interface")]
 		[Guid("CE735A9F-4B0C-4725-AD46-B0AEC9FD1172")]
@@ -984,7 +985,7 @@ namespace CarenRengine
 		};
 
 		/// <summary>
-		/// (IMFMediaEventGenerator) - Recupera eventos de qualquer objeto do Media Foundation que gera eventos.
+		/// (IMFMediaEventGenerator) - Interface responsável por recuperar eventos de qualquer objeto do Media Foundation que gera eventos.
 		/// Um objeto que suporta essa interface mantém uma fila de eventos. O cliente do objeto pode recuperar os eventos de forma síncrona ou assíncrona. O método síncrono é (GetEvent). 
 		/// Os métodos assíncronos são BeginGetEvent e EndGetEvent.
 		/// </summary>
@@ -1443,9 +1444,7 @@ namespace CarenRengine
 
 		/// <summary>
 		/// (IMFVideoSampleAllocator) - Interface responsável por armazenar amostras de Vídeo para o coletor de mídia de Vídeo.
-		/// Essa interface é exposta como um serviço pelos Dissipadores de Fluxos que estão no EVR.
-		/// Os dissipadores de fluxo representa a interface (ICarenStreamSink).
-		/// Use o guid (MR_VIDEO_ACCELERATION_SERVICE) para obter essa interface atravez da ICarenMFGetService::GetService.
+		/// Essa interface é exposta como um serviço pelos Dissipadores de Fluxos que estão no EVR. Use o guid (MR_VIDEO_ACCELERATION_SERVICE) para obter essa interface atravez da ICarenMFGetService::GetService.
 		/// </summary>
 		[CategoryAttribute("MF Interface")]
 		[Guid("E7093167-4C8E-45A1-AA82-FD2F1FD08AB0")]
@@ -1474,15 +1473,6 @@ namespace CarenRengine
 			/// <param name="Param_CountAmostra">A quantidade de amostas para alocar.</param>
 			/// <param name="Param_TipoAmostraVideo">Uma interface que contém o Tipo de mídia de vídeo que será alocada.</param>
 			CarenResult InitializeSampleAllocator(UInt32 Param_CountAmostra, ICarenMFMediaType^ Param_TipoAmostraVideo);
-
-			/// <summary>
-			/// (InitializeSampleAllocatorEx) - Inicializa o alocador informando a quantidade de amostras para alocar e o tipo de mídia
-			/// para cada amostra.
-			/// As amostras alocadas devem ser compativeis com o DXGI - (D3D11).
-			/// </summary>
-			/// <param name="Param_CountAmostra">A quantidade de amostas para alocar.</param>
-			/// <param name="Param_TipoAmostraVideo">Uma interface que contém o Tipo de mídia de vídeo que será alocada.</param>
-			CarenResult InitializeSampleAllocatorEx(UInt32 Param_CountAmostra, ICarenMFMediaType^ Param_TipoAmostraVideo);
 
 			/// <summary>
 			/// (SetDirectXManager) - Especifica o dispositivo do gerenciamento do Direct3D para o coletor de mídia de vídeo utilizar.
@@ -1644,7 +1634,7 @@ namespace CarenRengine
 		/// </summary>
 		[CategoryAttribute("MF Interface")]
 		[Guid("1F2A9FB7-403A-477A-A781-A0F072FBE15C")]
-		public interface class ICarenMFMediaSinkWriterCallback : ICaren
+		public interface class ICarenMFSinkWriterCallback : ICaren
 		{
 			/// <summary>
 			/// Propriedade que define se a classe foi descartada.
@@ -1828,16 +1818,6 @@ namespace CarenRengine
 			property Boolean DisposedClasse
 			{
 				virtual Boolean get();
-			}
-
-			/// <summary>
-			/// Propriedade que vai força  o coletor de lixo agir para liberar interfaces em conclusões de eventos.
-			/// Por padrão, o valor é falso.
-			/// </summary>
-			property Boolean ColetarLixoEvento
-			{
-				virtual Boolean get();
-				virtual void set(Boolean value);
 			}
 
 

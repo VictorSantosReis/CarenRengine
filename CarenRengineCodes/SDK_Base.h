@@ -3665,7 +3665,7 @@ namespace CarenRengine
 				literal String^ GUID_CA_INTF_MFMidiaSinkWriter = "{37386B09-9CCD-4F48-B5D3-8A71C8B098F1}";
 
 				/// <summary>
-				/// Guid da interface: ICarenMFMediaSinkWriterCallback
+				/// Guid da interface: ICarenMFSinkWriterCallback
 				/// </summary>
 				literal String^ GUID_CA_INTF_MFMidiaSinkWriterCallback = "{1F2A9FB7-403A-477A-A781-A0F072FBE15C}";
 

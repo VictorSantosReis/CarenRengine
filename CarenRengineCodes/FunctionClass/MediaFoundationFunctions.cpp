@@ -68,6 +68,122 @@ Done:;
 	return Resultado;
 }
 
+CarenResult MediaFoundationFunctions::_MFCreateEventQueue(ICaren^ Param_Out_EventQueue)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IMFMediaEventQueue* vi_pOutEventQueue = Nulo;
+
+	//Chama o método para realizar a operação.
+	Hr = MFCreateEventQueue(&vi_pOutEventQueue);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o ponteiro na interface.
+	CarenSetPointerToICarenSafe(vi_pOutEventQueue, Param_Out_EventQueue, true);
+
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
+
+CarenResult MediaFoundationFunctions::_MFCreateVideoSampleAllocator(String^ Param_RIID, ICaren^ Param_Out_SampleAllocator)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	GUID vi_RIID = GUID_NULL;
+	IUnknown* vi_pOutObject = Nulo;
+
+	//Converte o RIID da interface solicitada.
+	vi_RIID = Util.CreateGuidFromString(Param_RIID);
+
+	//Chama o método para realizar a operação.
+	Hr = MFCreateVideoSampleAllocator(vi_RIID, reinterpret_cast<void**>(&vi_pOutObject));
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o ponteiro na interface.
+	CarenSetPointerToICarenSafe(vi_pOutObject, Param_Out_SampleAllocator, true);
+
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
+
+CarenResult MediaFoundationFunctions::_MFCreateVideoSampleAllocatorEx(String^ Param_RIID, ICaren^ Param_Out_SampleAllocator)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	GUID vi_RIID = GUID_NULL;
+	IUnknown* vi_pOutObject = Nulo;
+
+	//Converte o RIID da interface solicitada.
+	vi_RIID = Util.CreateGuidFromString(Param_RIID);
+
+	//Chama o método para realizar a operação.
+	Hr = MFCreateVideoSampleAllocatorEx(vi_RIID, reinterpret_cast<void**>(&vi_pOutObject));
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o ponteiro na interface.
+	CarenSetPointerToICarenSafe(vi_pOutObject, Param_Out_SampleAllocator, true);
+
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
+
 CarenResult MediaFoundationFunctions::_MFCreateStreamOnMFByteStreamEx(ICarenMFByteStream^ Param_ByteStream, String^ Param_RIID, ICaren^ Param_Out_Stream)
 {
 	//Variavel a ser retornada.

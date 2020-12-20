@@ -23,9 +23,6 @@ limitations under the License.
 //Importa o namespace que contém as interfaces da Media Foundation.
 using namespace CarenRengine::MediaFoundation;
 
-//Enumeração de retorno de função.
-
-
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
@@ -169,8 +166,6 @@ public:
 	virtual void Finalizar();
 
 
-
-
 	//Métodos da interface ICarenMFActivate
 public:
 	/// <summary>
@@ -200,7 +195,6 @@ public:
 	/// Portanto, a sessão de mídia, não o aplicativo, chama (ShutdownObject).
 	/// </summary>
 	virtual CarenResult ShutdownObject();
-
 
 
 	//Métodos da interface(ICarenMidiaAtribute)

@@ -54,6 +54,44 @@ CarenMFAttributes::CarenMFAttributes(UInt32 Param_QuantidadeAtributos)
 	PonteiroTrabalho = vi_pOutAtributos;
 }
 
+CarenMFAttributes::CarenMFAttributes(ICarenMFCollection^ Param_ColecaoAtributosMuxStream)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Variavel de resultado de Caren.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IMFCollection* vi_pCollectionMuxStreamAttributes = Nulo;
+	IMFAttributes* vi_pOutAtributos = Nulo;
+
+	//Verifica se a interface de coleção é valida
+	if (!ObjetoGerenciadoValido(Param_ColecaoAtributosMuxStream))
+		throw gcnew NullReferenceException("A interface no parâmetro (Param_ColecaoAtributosMuxStream) não pode ser NULA!");
+
+	//Tenta recuperar o ponteiro para a interface.
+	Resultado = RecuperarPonteiroCaren(Param_ColecaoAtributosMuxStream, &vi_pCollectionMuxStreamAttributes);
+
+	//Verifica se não houve erro
+	if (!CarenSucesso(Resultado))
+		throw gcnew Exception("Não foi possivel recuperar o ponteiro da interface com a coleção de atributos.");
+
+	//Chama o método para criar a interface.
+	Hr = MFCreateMuxStreamAttributes(vi_pCollectionMuxStreamAttributes, &vi_pOutAtributos);
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define o ponteiro criado no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutAtributos;
+}
+
 
 //
 // Métodos da interface ICaren

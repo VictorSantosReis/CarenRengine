@@ -26,9 +26,11 @@ CarenMFClockStateSink::~CarenMFClockStateSink()
 	Prop_DisposedClasse = true;
 }
 //Construtor
-CarenMFClockStateSink::CarenMFClockStateSink()
+CarenMFClockStateSink::CarenMFClockStateSink(Boolean Param_CriarInterface)
 {
-	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+	//Verifica se deve criar a classe ou não.
+	if (Param_CriarInterface)
+		PonteiroTrabalho = new CLN_IMFClockStateSink();
 }
 
 //

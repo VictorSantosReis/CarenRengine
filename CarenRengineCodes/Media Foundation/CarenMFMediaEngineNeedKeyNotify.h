@@ -49,9 +49,11 @@ public ref class CarenMFMediaEngineNeedKeyNotify : public ICarenMFMediaEngineNee
 	//Contrutores e destuidor da classe.
 public:
 	/// <summary>
-	/// Inicializa a classe com uma implementação da interface nativa (IMFMediaEngineNeedKeyNotify) criada internamente.
+	/// Inicializa a interface e permite que o usuário decida se a biblioteca deve criar a interface ou vai iniciar sem um ponteiro 
+	/// de trabalho. Se (Param_CriarInterface) for TRUE, o construtor vai criar uma implementação interna da (IMFMediaEngineNotify).
 	/// </summary>
-	CarenMFMediaEngineNeedKeyNotify();
+	/// <param name="Param_CriarInterface">Um valor booleano, TRUE indica que deve criar uma nova interface intermanete, caso contario, FALSE.</param>
+	CarenMFMediaEngineNeedKeyNotify(Boolean Param_CriarInterface);
 	
 	~CarenMFMediaEngineNeedKeyNotify();
 
@@ -87,7 +89,7 @@ public:
 	/////////////////////////////////////////////
 
 	/// <summary>
-	/// 
+	/// Evento chamado para notificar o aplicativo de que uma chave ou chaves são necessárias juntamente com quaisquer dados de inicialização.
 	/// </summary>
 	virtual event ICarenMFMediaEngineNeedKeyNotify::Delegate_OnNeedKeys^ OnNeedKeys;
 

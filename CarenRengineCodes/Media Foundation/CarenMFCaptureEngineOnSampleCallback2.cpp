@@ -23,12 +23,12 @@ CarenMFCaptureEngineOnSampleCallback2::~CarenMFCaptureEngineOnSampleCallback2()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
-//Construtores
-CarenMFCaptureEngineOnSampleCallback2::CarenMFCaptureEngineOnSampleCallback2(Boolean Param_ImplInterno)
+//Construtor
+CarenMFCaptureEngineOnSampleCallback2::CarenMFCaptureEngineOnSampleCallback2(Boolean Param_CriarInterface)
 {
-	//Verifica se deve criar uma implementação interna.
-	if (Param_ImplInterno)
-		PonteiroTrabalho = new CLN_IMFCaptureEngineOnSampleCallback2(); //Cria uma implementação interna.
+	//Verifica se deve criar a classe ou não.
+	if (Param_CriarInterface)
+		PonteiroTrabalho = new CLN_IMFCaptureEngineOnSampleCallback2();
 }
 
 // Métodos da interface ICaren

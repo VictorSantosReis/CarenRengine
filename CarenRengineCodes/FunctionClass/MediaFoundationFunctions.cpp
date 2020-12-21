@@ -68,6 +68,359 @@ Done:;
 	return Resultado;
 }
 
+CarenResult MediaFoundationFunctions::_MFAddPeriodicCallback(IntPtr Param_Callback, ICaren^ Param_Context, OutParam UInt32% Param_Out_Key)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	MFPERIODICCALLBACK vi_pCallback = Nulo;
+	IUnknown* vi_pObjectContext = Nulo; //Pode ser Nulo;
+	DWORD vi_OutKey = 0;
+
+	//Converte o int ptr para o callback.
+	vi_pCallback = Util.ConverterIntPtrTo<MFPERIODICCALLBACK>(Param_Callback);
+
+	//Verifica se forneceu uma interface de contexto e recupera o ponteiro.
+	if (ObjetoGerenciadoValido(Param_Context))
+		CarenGetPointerFromICarenSafe(Param_Context, vi_pObjectContext);
+
+	//Chama o método para realizar a operação.
+	Hr = MFAddPeriodicCallback(vi_pCallback, vi_pObjectContext, &vi_OutKey);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define a key gerada no parametro de saida.
+	Param_Out_Key = static_cast<UInt32>(vi_OutKey);
+
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
+
+CarenResult MediaFoundationFunctions::_MFRemovePeriodicCallback(UInt32 Param_Key)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	DWORD vi_Key = static_cast<DWORD>(Param_Key);
+
+	//Chama o método para realizar a operação.
+	Hr = MFRemovePeriodicCallback(vi_Key);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
+
+CarenResult MediaFoundationFunctions::_MFAverageTimePerFrameToFrameRate(UInt64 Param_AverageTimePerFrame, OutParam UInt32% Param_Out_Numerator, OutParam UInt32% Param_Out_Denominator)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	UINT32 vi_OutNumerator = 0;
+	UINT32 vi_OutDenominator = 0;
+
+	//Chama o método para realizar a operação.
+	Hr = MFAverageTimePerFrameToFrameRate(Param_AverageTimePerFrame, &vi_OutNumerator, &vi_OutDenominator);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define os dados nos parametros de saida.
+	Param_Out_Numerator = vi_OutNumerator;
+	Param_Out_Denominator = vi_OutDenominator;
+
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
+
+CarenResult MediaFoundationFunctions::_MFFrameRateToAverageTimePerFrame(UInt32 Param_Numerator, UInt32 Param_Denominator, OutParam UInt64% Param_Out_AverageTimePerFrame)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	UINT64 vi_OutAverageTimePerFrame = 0;
+
+	//Chama o método para realizar a operação.
+	Hr = MFFrameRateToAverageTimePerFrame(Param_Numerator, Param_Denominator, &vi_OutAverageTimePerFrame);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define os dados nos parametros de saida.
+	Param_Out_AverageTimePerFrame = vi_OutAverageTimePerFrame;
+
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
+
+CarenResult MediaFoundationFunctions::_MFCalculateBitmapImageSize(CA_BITMAPINFOHEADER^ Param_BmpHeader, UInt32 Param_Size, OutParam UInt32% Param_Out_SizeImage, OutParam Boolean% Param_Out_Known)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	PBITMAPINFOHEADER vi_pBitmapInfo = Nulo;
+	UINT32 vi_OutSizeImagem = 0;
+	BOOL vi_OutKnow = FALSE;
+
+	//Converte a estrutura gerenciada para a nativa.
+	vi_pBitmapInfo = Util.ConverterBITMAPINFOHEADERManaged_ToUnamaged(Param_BmpHeader);
+
+	//Chama o método para realizar a operação.
+	Hr = MFCalculateBitmapImageSize(const_cast<PBITMAPINFOHEADER>(vi_pBitmapInfo), Param_Size, &vi_OutSizeImagem, &vi_OutKnow);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define os dados nos parametros de saida.
+	Param_Out_SizeImage = vi_OutSizeImagem;
+	Param_Out_Known = vi_OutKnow ? true : false;
+
+Done:;
+	//Libera a memória utilizada pela estrutura.
+	DeletarEstruturaSafe(&vi_pBitmapInfo);
+
+	//Retorna o resultado
+	return Resultado;
+}
+
+CarenResult MediaFoundationFunctions::_MFCalculateImageSize(String^ Param_GuidSubtypeVideo, UInt32 Param_Width, UInt32 Param_Height, OutParam UInt32% Param_Out_SizeImage)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	GUID vi_GuidSubtype = GUID_NULL;
+	UINT32 vi_OutSizeImage = 0;
+
+	//Converte a string para o guid.
+	vi_GuidSubtype = Util.CreateGuidFromString(Param_GuidSubtypeVideo);
+
+	//Chama o método para realizar a operação.
+	Hr = MFCalculateImageSize(vi_GuidSubtype, Param_Width, Param_Height, &vi_OutSizeImage);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o dado no parametro de saida.
+	Param_Out_SizeImage = vi_OutSizeImage;
+
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
+
+Boolean MediaFoundationFunctions::_MFCompareFullToPartialMediaType(ICarenMFMediaType^ Param_TypeFull, ICarenMFMediaType^ Param_PartialType)
+{
+	//Variavel a ser retornada.
+	Boolean Resultado = false;
+
+	//Resultado de CarenResult.
+	CarenResult CrResult = CarenResult(E_FAIL, false);
+
+	//Variaveis utilizadas.
+	IMFMediaType* vi_pTypeFull = Nulo;
+	IMFMediaType* vi_pTypeParcial = Nulo;
+
+	//Recupera o ponteiro para o tipo de midia completo.
+	CrResult = RecuperarPonteiroCaren(Param_TypeFull, &vi_pTypeFull);
+	
+	//Verifica se não houve erro.
+	if (!CarenSucesso(CrResult))
+		throw gcnew Exception("Falhou ao recuperar o ponteiro para o tipo de mídia completo.");
+
+	//Recupera o ponteiro para o tipo de midia parcial.
+	CrResult = RecuperarPonteiroCaren(Param_PartialType, &vi_pTypeParcial);
+
+	//Verifica se não houve erro.
+	if (!CarenSucesso(CrResult))
+		throw gcnew Exception("Falhou ao recuperar o ponteiro para o tipo de mídia parcial.");
+
+	//Chama o método para realizar a operação.
+	Resultado = MFCompareFullToPartialMediaType(vi_pTypeFull, vi_pTypeParcial);
+
+	//Retorna o resultado
+	return Resultado;
+}
+
+CarenResult MediaFoundationFunctions::_MFConvertFromFP16Array(cli::array<float>^% Param_Ref_Dest, cli::array<UInt16>^ Param_Source, UInt32 Param_Count)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	pin_ptr<float> vi_pinToZeroIndexRefArrayDest = &Param_Ref_Dest[0]; //Pin para o buffer de destino que vai receber os dados para evitar copiar desnecessarias.
+	pin_ptr<WORD> vi_pinToZeroIndexArraySource = &Param_Source[0];
+	WORD* vi_ArraySourceTemp = reinterpret_cast<WORD*>(vi_pinToZeroIndexArraySource); //Array temporario até o pin sair do escopo.
+	DWORD vi_Count = static_cast<DWORD>(Param_Count);
+
+
+	//Chama o método para realizar a operação.
+	Hr = MFConvertFromFP16Array(reinterpret_cast<float*>(vi_pinToZeroIndexRefArrayDest), const_cast<WORD*>(vi_ArraySourceTemp), vi_Count);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
+
+CarenResult MediaFoundationFunctions::_MFConvertToFP16Array(cli::array<UInt16>^% Param_Ref_Dest, cli::array<float>^ Param_Source, UInt32 Param_Count)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	pin_ptr<WORD> vi_pinToZeroIndexRefArrayDest = &Param_Ref_Dest[0]; //Pin para o buffer de destino que vai receber os dados para evitar copias desnecessarias.
+	pin_ptr<float> vi_PintoZeroIndexArraySource = &Param_Source[0]; //Pin para o buffer de origem que vai ser convetido para evitar copias desnecessarias
+    float* vi_ArraySourceTemp = reinterpret_cast<float*>(vi_PintoZeroIndexArraySource);//Array temporario até o pin sair do escopo.
+	DWORD vi_Count = static_cast<DWORD>(Param_Count);
+
+	//Chama o método para realizar a operação.
+	Hr = MFConvertToFP16Array(reinterpret_cast<WORD*>(vi_pinToZeroIndexRefArrayDest), const_cast<float*>(vi_ArraySourceTemp), vi_Count);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 CarenResult MediaFoundationFunctions::_MFCreateEventQueue(ICaren^ Param_Out_EventQueue)
 {
 	//Variavel a ser retornada.

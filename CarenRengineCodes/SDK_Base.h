@@ -881,7 +881,7 @@ namespace CarenRengine
 			/// <summary>
 			/// Contém todos os GUIDs para os formatos de (Áudio) identificaveis pelo Media Foundation.
 			/// </summary>
-			public value struct GUIDs_MFAtributos_FormatosAudio
+			public value struct GUIDs_MF_AUDIO_SUBTYPES
 			{
 				/// <summary>
 				/// Áudio base.
@@ -4828,10 +4828,9 @@ namespace CarenRengine
 			};
 
 			/// <summary>
-			/// Define o tipo de dados para (Emparelhar) uma Chave/Valor.
-			/// Essa enumeração deriva da enumeração não gerenciada: _MF_ATTRIBUTE_TYPE
+			/// (_MF_ATTRIBUTE_TYPE) - Enumera valores que definem o tipo de dados para (Emparelhar) uma Chave/Valor.
 			/// </summary>
-			public enum class CA_ATTRIBUTE_TYPE
+			public enum class CA_MF_ATTRIBUTE_TYPE
 			{
 				/// <summary>
 				/// Valor inteiro não assinado de 32 Bits.
@@ -5200,7 +5199,7 @@ namespace CarenRengine
 			/// <summary>
 			/// Enumera o (Tipos Principais) de mídia. Essa biblioteca suporta apenas: Áudio e Vídeo. 
 			/// </summary>
-			public enum class CA_Midia_TipoPrincipal
+			public enum class CA_MAJOR_MEDIA_TYPES
 			{
 
 				/// <summary>
@@ -5224,7 +5223,7 @@ namespace CarenRengine
 			/// Enumera o (Subtipo) de mídia. Subtipo contém o formato do tipo principal.
 			/// Essa enumeração só contém os subtipos dos (Tipos Principais) suportados por essa biblioteca.
 			/// </summary>
-			public enum class CA_Midia_SubTipo
+			public enum class CA_MEDIA_SUBTYPES
 			{
 
 				//Essa parte contém os formatios de Áudio.
@@ -18507,77 +18506,77 @@ MEReservedMax = 10000
 			public ref struct CA_BITMAPINFOHEADER
 			{
 				/// <summary>
-				/// (biSize) - O número de bytes requeridos pela estrutura.
+				/// O número de bytes requeridos pela estrutura.
 				///</summary>
-				UInt32 BMP_BYTES_ESTRUTURA;
+				UInt32 biSize;
 
 				/// <summary>
-				/// (biWidth) - A largura do bitmap, em pixels.
-				/// Se BMP_TIPO_COMPACTACAO for BI_JPEG ou BI_PNG, o membro BMP_LARGURA especificará a largura do arquivo de imagem JPEG ou PNG descompactado, respectivamente.
+				/// A largura do bitmap, em pixels.
+				/// Se biCompression for BI_JPEG ou BI_PNG, o membro biWidth especificará a largura do arquivo de imagem JPEG ou PNG descompactado, respectivamente.
 				///</summary>
-				Int32 BMP_LARGURA;
+				Int32 biWidth;
 
 				/// <summary>
-				/// (biHeight) - A altura do bitmap, em pixels. Se BMP_ALTURA for positivo, o bitmap será um DIB ascendente e sua origem será o canto inferior esquerdo. Se BMP_ALTURA for 
+				/// A altura do bitmap, em pixels. Se biHeight for positivo, o bitmap será um DIB ascendente e sua origem será o canto inferior esquerdo. Se biHeight for 
 				/// negativo, o bitmap será um DIB de cima para baixo e sua origem será o canto superior esquerdo.
-				/// Se BMP_ALTURA for negativo, indicando um DIB de cima para baixo, o BMP_TIPO_COMPACTACAO deve ser BI_RGB ou BI_BITFIELDS .DIBs descendentes não podem ser compactados.
-				/// Se BMP_TIPO_COMPACTACAO for BI_JPEG ou BI_PNG, o membro BMP_ALTURA especificará a altura do arquivo de imagem JPEG ou PNG descompactado, respectivamente.
+				/// Se biHeight for negativo, indicando um DIB de cima para baixo, o biCompression deve ser BI_RGB ou BI_BITFIELDS .DIBs descendentes não podem ser compactados.
+				/// Se biCompression for BI_JPEG ou BI_PNG, o membro biHeight especificará a altura do arquivo de imagem JPEG ou PNG descompactado, respectivamente.
 				///</summary>
-				Int32 BMP_ALTURA;
+				Int32 biHeight;
 
 				/// <summary>
-				/// (biPlanes) - O número de planos para o dispositivo de destino. Este valor deve ser definido como 1.
+				/// O número de planos para o dispositivo de destino. Este valor deve ser definido como 1.
 				///</summary>
-				Int16 BMP_PLANOS;
+				Int16 biPlanes;
 
 				/// <summary>
-				/// (biBitCount) - O número de bits por pixel. O membro biBitCount da estrutura BITMAPINFOHEADER determina o número de bits que definem cada pixel e o número máximo de cores no bitmap. 
+				/// O número de bits por pixel. O membro biBitCount da estrutura BITMAPINFOHEADER determina o número de bits que definem cada pixel e o número máximo de cores no bitmap. 
 				/// Este membro deve ser um dos seguintes valores:
 				/// (0 - 1 - 4 - 8 - 16 - 24 - 32).
 				/// Veja os segifcados de vada valor na url: docs.microsoft.com/en-us/previous-versions/dd183376(v=vs.85)
 				///</summary>
-				Int16 BMP_BITS_POR_PIXEL;
+				Int16 biBitCount;
 
 				/// <summary>
-				/// (biCompression) - O tipo de compactação para um bitmap de baixo para cima compactado (DIBs de cima para baixo não podem ser compactados). 
+				/// O tipo de compactação para um bitmap de baixo para cima compactado (DIBs de cima para baixo não podem ser compactados). 
 				/// Esse membro pode ser um dos seguintes valores.
 				/// (BI_RGB - BI_RLE8 - BI_RLE4 - BI_BITFILEDS - BI_JPEG - BI_PNG).
 				/// Veja os significados de vada valor na url: docs.microsoft.com/en-us/previous-versions/dd183376(v=vs.85)
-				///</summary>
-				UInt32 BMP_TIPO_COMPACTACAO;
+				/// </summary>
+				UInt32 biCompression;
 
 				/// <summary>
-				/// (biSizeImage) - O tamanho, em bytes, da imagem. Isso pode ser definido como zero para os bitmaps BI_RGB.
-				/// Se BMP_TIPO_COMPACTACAO for BI_JPEG ou BI_PNG, BMP_SIZE_IMAGEM indicará o tamanho do buffer de imagem JPEG ou PNG, respectivamente.
+				/// O tamanho, em bytes, da imagem. Isso pode ser definido como zero para os bitmaps BI_RGB.
+				/// Se biCompression for BI_JPEG ou BI_PNG, biSizeImage indicará o tamanho do buffer de imagem JPEG ou PNG, respectivamente.
 				///</summary>
-				UInt32 BMP_SIZE_IMAGEM;
+				UInt32 biSizeImage;
 
 				/// <summary>
-				/// (biXPelsPerMeter) - A resolução horizontal, em pixels por metro, do dispositivo de destino para o bitmap. Um aplicativo pode usar esse valor para selecionar um bitmap de um grupo de 
+				/// A resolução horizontal, em pixels por metro, do dispositivo de destino para o bitmap. Um aplicativo pode usar esse valor para selecionar um bitmap de um grupo de 
 				/// recursos que melhor corresponda às características do dispositivo atual.
 				///</summary>
-				Int32 BMP_PIXEL_RESOLUCAO_HORIZONTAL_METROS;
+				Int32 biXPelsPerMeter;
 
 				/// <summary>
-				/// (biYPelsPerMeter) - A resolução vertical, em pixels por metro, do dispositivo de destino para o bitmap.
+				/// A resolução vertical, em pixels por metro, do dispositivo de destino para o bitmap.
 				///</summary>
-				Int32 BMP_PIXEL_RESOLUCAO_VERTICAL_METROS;
+				Int32 biYPelsPerMeter;
 
 				/// <summary>
-				/// (biClrUsed) - O número de índices de cores na tabela de cores que são realmente usados pelo bitmap. Se esse valor for zero, o bitmap usará o número máximo de cores correspondente ao valor 
-				/// do membro BMP_BITS_POR_PIXEL para o modo de compactação especificado por BMP_TIPO_COMPACTACAO.
-				/// Se BMP_VALUE_INDICES_CORES_TABELA for diferente de zero e o membro BMP_BITS_POR_PIXEL for menor que 16, o membro BMP_VALUE_INDICES_CORES_TABELA especificará o número real de cores acessadas pelo mecanismo de elementos 
-				/// gráficos ou pelo driver de dispositivo. Se BMP_BITS_POR_PIXEL tiver 16 ou mais, o membro biClrUsed especificará o tamanho da tabela de cores usada para otimizar o desempenho das paletas de cores do sistema. 
-				/// Se BMP_BITS_POR_PIXEL for igual a 16 ou 32, a paleta de cores ideal será iniciada imediatamente após as três máscaras UInt32 .
+				/// O número de índices de cores na tabela de cores que são realmente usados pelo bitmap. Se esse valor for zero, o bitmap usará o número máximo de cores correspondente ao valor 
+				/// do membro biBitCount para o modo de compactação especificado por biCompression.
+				/// Se biClrUsed for diferente de zero e o membro biBitCount for menor que 16, o membro biClrUsed especificará o número real de cores acessadas pelo mecanismo de elementos 
+				/// gráficos ou pelo driver de dispositivo. Se biBitCount tiver 16 ou mais, o membro biClrUsed especificará o tamanho da tabela de cores usada para otimizar o desempenho das paletas de cores do sistema. 
+				/// Se biBitCount for igual a 16 ou 32, a paleta de cores ideal será iniciada imediatamente após as três máscaras UInt32 .
 				/// Quando a matriz de bitmap segue imediatamente a estrutura BITMAPINFO , é um bitmap compactado. Bitmaps compactados são referenciados por um único ponteiro. Os bitmaps compactados exigem que o membro 
-				/// BMP_VALUE_INDICES_CORES_TABELA seja zero ou o tamanho real da tabela de cores.
+				/// biClrUsed seja zero ou o tamanho real da tabela de cores.
 				///</summary>
-				UInt32 BMP_VALUE_INDICES_CORES_TABELA;
+				UInt32 biClrUsed;
 
 				/// <summary>
-				/// (biClrImportant) - O número de índices de cores necessários para exibir o bitmap. Se esse valor for zero, todas as cores serão necessárias.
+				/// O número de índices de cores necessários para exibir o bitmap. Se esse valor for zero, todas as cores serão necessárias.
 				///</summary>
-				UInt32 BMP_VALUE_INDICES_CORES_NECESSARIOS;
+				UInt32 biClrImportant;
 
 			};
 
@@ -20129,9 +20128,9 @@ MEReservedMax = 10000
 				String^ GUID;
 
 				/// <summary>
-				/// (attrType) - Tipo de atributo, especificado como um membro da enumeração(CA_ATTRIBUTE_TYPE).
+				/// (attrType) - Tipo de atributo, especificado como um membro da enumeração(CA_MF_ATTRIBUTE_TYPE).
 				/// </summary>
-				Enumeracoes::CA_ATTRIBUTE_TYPE TipoAtributo;
+				Enumeracoes::CA_MF_ATTRIBUTE_TYPE TipoAtributo;
 
 				/// <summary>
 				/// (u32) - Valor do atributo (unsigned 32-bit inteiro). Esse membro é usado quando (TipoAtributo) é igual a MF_ATTRIBUTE_UINT32.
@@ -20796,7 +20795,7 @@ MEReservedMax = 10000
 				String^ guidMajorType;
 
 				/// <summary>
-				/// Um GUID para o subtipo da midia. Consulte as estruturas GUIDs_MF_VIDEO_SUBTYPES e GUIDs_MFAtributos_FormatosAudio para obter esse guid.
+				/// Um GUID para o subtipo da midia. Consulte as estruturas GUIDs_MF_VIDEO_SUBTYPES e GUIDs_MF_AUDIO_SUBTYPES para obter esse guid.
 				/// </summary>
 				String^ guidSubtype;
 			};

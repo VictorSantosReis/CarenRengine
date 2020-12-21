@@ -499,7 +499,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Out_GuidMidiaPrincipal">Retorna o GUID do tipo da mídia principal.</param>
 /// <param name="Param_Out_TipoPrincipal">Retorna a enumeração que define o tipo principal da mídia.</param>
-CarenResult CarenMFMediaTypeHandler::GetMajorType([Out] String^% Param_Out_GuidMidiaPrincipal, [Out] Enumeracoes::CA_Midia_TipoPrincipal% Param_Out_TipoPrincipal)
+CarenResult CarenMFMediaTypeHandler::GetMajorType([Out] String^% Param_Out_GuidMidiaPrincipal, [Out] Enumeracoes::CA_MAJOR_MEDIA_TYPES% Param_Out_TipoPrincipal)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -531,7 +531,7 @@ CarenResult CarenMFMediaTypeHandler::GetMajorType([Out] String^% Param_Out_GuidM
 	if (GuidTipoPrincipal == MFMediaType_Audio)
 	{
 		//O tipo principal da mídia é Áudio.
-		Param_Out_TipoPrincipal = CA_Midia_TipoPrincipal::TP_Audio;
+		Param_Out_TipoPrincipal = CA_MAJOR_MEDIA_TYPES::TP_Audio;
 	
 		//Define o Guid
 		Param_Out_GuidMidiaPrincipal = Util.ConverterGuidToString(MFMediaType_Audio);
@@ -539,7 +539,7 @@ CarenResult CarenMFMediaTypeHandler::GetMajorType([Out] String^% Param_Out_GuidM
 	else if (GuidTipoPrincipal == MFMediaType_Video)
 	{
 		//O tipo principal da mídia é Vídeo.
-		Param_Out_TipoPrincipal = CA_Midia_TipoPrincipal::TP_Video;
+		Param_Out_TipoPrincipal = CA_MAJOR_MEDIA_TYPES::TP_Video;
 	
 		//Define o Guid
 		Param_Out_GuidMidiaPrincipal = Util.ConverterGuidToString(MFMediaType_Video);
@@ -547,7 +547,7 @@ CarenResult CarenMFMediaTypeHandler::GetMajorType([Out] String^% Param_Out_GuidM
 	else
 	{
 		//Tipo desconhecido.
-		Param_Out_TipoPrincipal = CA_Midia_TipoPrincipal::TP_Desconhecido;
+		Param_Out_TipoPrincipal = CA_MAJOR_MEDIA_TYPES::TP_Desconhecido;
 	}
 
 	//Define sucesso na operação

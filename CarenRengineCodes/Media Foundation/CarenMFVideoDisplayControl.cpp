@@ -567,17 +567,17 @@ CarenResult CarenMFVideoDisplayControl::GetCurrentImage(
 	//Define os dados do bipmapheader.
 
 	//Deifne os dados na estrutura gerenciada.
-	BitmapHeader->BMP_BYTES_ESTRUTURA = bmpHeader.biSize;
-	BitmapHeader->BMP_SIZE_IMAGEM = bmpHeader.biSizeImage;
-	BitmapHeader->BMP_TIPO_COMPACTACAO = bmpHeader.biCompression;
-	BitmapHeader->BMP_ALTURA = bmpHeader.biHeight;
-	BitmapHeader->BMP_LARGURA = bmpHeader.biWidth;
-	BitmapHeader->BMP_PIXEL_RESOLUCAO_VERTICAL_METROS = bmpHeader.biYPelsPerMeter;
-	BitmapHeader->BMP_PIXEL_RESOLUCAO_HORIZONTAL_METROS = bmpHeader.biXPelsPerMeter;
-	BitmapHeader->BMP_PLANOS = bmpHeader.biPlanes;
-	BitmapHeader->BMP_BITS_POR_PIXEL = bmpHeader.biBitCount;
-	BitmapHeader->BMP_VALUE_INDICES_CORES_TABELA = bmpHeader.biClrUsed;
-	BitmapHeader->BMP_VALUE_INDICES_CORES_NECESSARIOS = bmpHeader.biClrImportant;
+	BitmapHeader->biSize = bmpHeader.biSize;
+	BitmapHeader->biSizeImage = bmpHeader.biSizeImage;
+	BitmapHeader->biCompression = bmpHeader.biCompression;
+	BitmapHeader->biHeight = bmpHeader.biHeight;
+	BitmapHeader->biWidth = bmpHeader.biWidth;
+	BitmapHeader->biYPelsPerMeter = bmpHeader.biYPelsPerMeter;
+	BitmapHeader->biXPelsPerMeter = bmpHeader.biXPelsPerMeter;
+	BitmapHeader->biPlanes = bmpHeader.biPlanes;
+	BitmapHeader->biBitCount = bmpHeader.biBitCount;
+	BitmapHeader->biClrUsed = bmpHeader.biClrUsed;
+	BitmapHeader->biClrImportant = bmpHeader.biClrImportant;
 	
 	//Define os dados nos parametros de retorno.
 	Param_Out_BimapInfoHeader = BitmapHeader;

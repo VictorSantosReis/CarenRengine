@@ -55,6 +55,148 @@ public:
 	CarenResult _MFShutdown();
 
 	/// <summary>
+	/// Define uma função de retorno de chamada a ser chamada em um intervalo fixo.
+	/// </summary>
+	/// <param name="Param_Callback">A função que será chamada periodicamente. A função deve ser do tipo: MFPERIODICCALLBACK.</param>
+	/// <param name="Param_Context">Um objeto fornecido por chamadas que implemente IUnknown, ou NULO. Este parâmetro é passado para a função de retorno de chamada.</param>
+	/// <param name="Param_Out_Key">Recebe uma chave que pode ser usada para cancelar o retorno de chamada. Para cancelar o retorno de chamada, ligue para 
+	/// MFRemovePeriodicCallback e passe esta key como parâmetro (Param_Key).</param>
+	/// <returns></returns>
+	CarenResult _MFAddPeriodicCallback(IntPtr Param_Callback, ICaren^ Param_Context, OutParam UInt32% Param_Out_Key);
+
+	/// <summary>
+	/// ‎Cancela uma função de retorno de chamada que foi definida pela função ‎‎MFAddPeriodicCallback.‎
+	/// </summary>
+	/// <param name="Param_Key">‎Chave que identifica o retorno da chamada. Este valor é recuperado pela função ‎‎MFAddPeriodicCallback.‎</param>
+	/// <returns></returns>
+	CarenResult _MFRemovePeriodicCallback(UInt32 Param_Key);
+
+	/// <summary>
+	/// ‎Calcula a taxa de frames, em frames por segundo, a partir da duração média de um quadro de vídeo.‎
+	/// </summary>
+	/// <param name="Param_AverageTimePerFrame">‎A duração média de um frame de vídeo, em unidades de 100 nanossegundos.‎</param>
+	/// <param name="Param_Out_Numerator">‎Recebe o numerador da taxa de frames.‎</param>
+	/// <param name="Param_Out_Denominator">‎Recebe o denominador da taxa de frames.</param>
+	/// <returns></returns>
+	CarenResult _MFAverageTimePerFrameToFrameRate(UInt64 Param_AverageTimePerFrame, OutParam UInt32% Param_Out_Numerator, OutParam UInt32% Param_Out_Denominator);
+
+	/// <summary>
+	/// ‎Converte uma taxa de frame de vídeo em uma duração de frame.‎
+	/// </summary>
+	/// <param name="Param_Numerator">‎O numerador da taxa de frames.‎</param>
+	/// <param name="Param_Denominator">‎O denominador da taxa de frames.‎</param>
+	/// <param name="Param_Out_AverageTimePerFrame">‎Recebe a duração média de um frame de vídeo, em unidades de 100 nanossegundos.‎</param>
+	/// <returns></returns>
+	CarenResult _MFFrameRateToAverageTimePerFrame(UInt32 Param_Numerator, UInt32 Param_Denominator, OutParam UInt64% Param_Out_AverageTimePerFrame);
+	
+	/// <summary>
+	/// ‎Recupera o tamanho da imagem para um formato de vídeo. Dada uma estrutura ‎‎CA_BITMAPINFOHEADER,‎‎ esta função calcula o valor correto do membro ‎‎(CA_BITMAPINFOHEADER->biSizeImage).‎
+	/// </summary>
+	/// <param name="Param_BmpHeader">Uma estrutura ‎‎BITMAPINFOHEADER‎‎ que descreve o formato.‎</param>
+	/// <param name="Param_Size">Defina como 0. Esse valor é definido internamente.</param>
+	/// <param name="Param_Out_SizeImage">Recebe o tamanho da imagem, em bytes.</param>
+	/// <param name="Param_Out_Known">‎Recebe o valor ‎‎TRUE‎‎ se a função reconhecer o formato de vídeo. Caso contrário, recebe o valor ‎‎FALSE‎‎.‎</param>
+	/// <returns></returns>
+	CarenResult _MFCalculateBitmapImageSize(CA_BITMAPINFOHEADER^ Param_BmpHeader, UInt32 Param_Size, OutParam UInt32% Param_Out_SizeImage, OutParam Boolean% Param_Out_Known);
+
+	/// <summary>
+	/// ‎Recupera o tamanho da imagem, em bytes, para um formato de vídeo não comprimido.‎
+	/// </summary>
+	/// <param name="Param_GuidSubtypeVideo">‎Subtipo de mídia para o formato de vídeo. Para obter uma lista de subtipos, consulta a estrutura: GUIDs_MF_AUDIO_SUBTYPES‎</param>
+	/// <param name="Param_Width">A Largura da imagem, em pixels.</param>
+	/// <param name="Param_Height">A Altura da imagem, em pixels.</param>
+	/// <param name="Param_Out_SizeImage">‎Recebe o tamanho de cada frame, em bytes. Se o formato for comprimido ou não for reconhecido, o valor é zero.‎</param>
+	/// <returns></returns>
+	CarenResult _MFCalculateImageSize(String^ Param_GuidSubtypeVideo, UInt32 Param_Width, UInt32 Param_Height, OutParam UInt32% Param_Out_SizeImage);
+	
+	/// <summary>
+	/// ‎Compara um tipo de mídia completo a um tipo de mídia parcial.‎
+	/// </summary>
+	/// <param name="Param_TypeFull">Uma interface (ICarenMFMediaType) para o tipo de mídia completo.</param>
+	/// <param name="Param_PartialType">Uma interface (ICarenMFMediaType) para o tipo de mídia parcial.</param>
+	/// <returns></returns>
+	Boolean _MFCompareFullToPartialMediaType(ICarenMFMediaType^ Param_TypeFull, ICarenMFMediaType^ Param_PartialType);
+
+	/// <summary>
+	/// Converte uma matriz de números de pontos flutuantes de 16 bits em uma matriz de números de pontos flutuantes de 32 bits.
+	/// </summary>
+	/// <param name="Param_Ref_Dest">Uma matriz de valores flutuantes. A matriz deve conter pelo menos elementos (Param_Count).</param>
+	/// <param name="Param_Source">Uma matriz de valores de ponto flutuante de 16 bits, digitado como valores WORD. A matriz deve conter pelo menos elementos (Param_Count).</param>
+	/// <param name="Param_Count">Número de elementos na matriz (Param_Src) para converter.</param>
+	/// <returns></returns>
+	CarenResult _MFConvertFromFP16Array(cli::array<float>^% Param_Ref_Dest, cli::array<UInt16>^ Param_Source, UInt32 Param_Count);
+
+	/// <summary>
+	/// Converte uma matriz de números de pontos flutuantes de 32 bits em uma matriz de números de pontos flutuantes de 16 bits.
+	/// </summary>
+	/// <param name="Param_Ref_Dest">Uma matriz de valores de ponto flutuante de 16 bits, digitado como valores WORD. A matriz deve conter pelo menos elementos (Param_Count).</param>
+	/// <param name="Param_Source">Uma matriz de valores flutuantes. A matriz deve conter pelo menos elementos (Param_Count).</param>
+	/// <param name="Param_Count">Número de elementos na matriz (Param_Src) para converter.</param>
+	/// <returns></returns>
+	CarenResult _MFConvertToFP16Array(cli::array<UInt16>^% Param_Ref_Dest, cli::array<float>^ Param_Source, UInt32 Param_Count);
+
+	/// <summary>
+	/// Copia uma imagem ou plano de imagem de um buffer para outro.
+	/// </summary>
+	/// <param name="Param_BufferDestino"></param>
+	/// <param name="Param_DestStride"></param>
+	/// <param name="Param_BufferOrigem"></param>
+	/// <param name="Param_SrcStride"></param>
+	/// <param name="Param_WidthInBytes"></param>
+	/// <param name="Param_Lines"></param>
+	/// <returns></returns>
+	CarenResult _MFCopyImage(
+		CarenBuffer^ Param_BufferDestino, 
+		Int32 Param_DestStride,
+		CarenBuffer^ Param_BufferOrigem, 
+		Int32 Param_SrcStride, 
+		UInt32 Param_WidthInBytes, 
+		UInt32 Param_Lines);
+
+	CarenResult _PathCreateFromUrlW();
+	CarenResult _MFCreatePropertiesFromMediaType();
+	CarenResult _MFTranscodeGetAudioOutputAvailableTypes();
+	CarenResult _MFSerializeAttributesToStream();
+	CarenResult _MFSerializePresentationDescriptor();
+	CarenResult _MFDeserializeAttributesFromStream();
+	CarenResult _MFDeserializePresentationDescriptor();
+	CarenResult _MFTranscodeGetAudioOutputAvailableTypes();
+	CarenResult _MFEnumDeviceSources();
+	CarenResult _MFGetStrideForBitmapInfoHeader();
+	CarenResult _MFGetSupportedMimeTypes();
+	CarenResult _MFGetSupportedSchemes();
+	CarenResult _MFGetSystemTime();
+	CarenResult _MFGetTopoNodeCurrentType();
+	CarenResult _MFGetUncompressedVideoFormat();
+	CarenResult _MFInitAttributesFromBlob();
+	CarenResult _MFGetLocalId();
+	CarenResult _MFGetMFTMerit();
+	CarenResult _MFGetPlaneSize();
+	CarenResult _MFIsContentProtectionDeviceSupported();
+	CarenResult _MFMapDXGIFormatToDX9Format();
+	CarenResult _MFRegisterLocalByteStreamHandler();
+	CarenResult _MFRegisterLocalSchemeHandler();
+	CarenResult _MFRequireProtectedEnvironment();
+	CarenResult _PackRatio();
+	CarenResult _PackSize();
+	CarenResult _UnpackRatio();
+	CarenResult _UnpackSize();
+	CarenResult _Unpack2UINT32AsUINT64();
+	CarenResult _MFShutdownObject();
+	CarenResult _MFTEnum();
+	CarenResult _MFTEnum2();
+	CarenResult _MFTEnumEx();
+	CarenResult _MFTRegister();
+	CarenResult _MFTRegisterLocal();
+	CarenResult _MFTRegisterLocalByCLSID();
+	CarenResult _MFTUnregister();
+	CarenResult _MFTUnregisterLocal();
+	CarenResult _MFTUnregisterLocalByCLSID();
+
+
+	CarenResult _MFCreateVideoMixerAndPresenter();
+
+	/// <summary>
 	/// ‎Cria uma fila de eventos.‎
 	/// </summary>
 	/// <param name="Param_Out_EventQueue">Retorna uma interface base (ICaren) para a interface (IMFMediaEventQueue[NÃO IMPLEMENTADA PELA DLL]). O usuário é responsável por inicializar a interface antes de chamar este método.</param>

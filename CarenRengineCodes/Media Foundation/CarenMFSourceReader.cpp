@@ -1334,7 +1334,7 @@ Done:;
 /// (Extensão) - Método responsável por retornar todos os tipos principais de mídia do arquivo carregado pelo leitor.
 /// </summary>
 /// <param name="Param_Out_TiposMidias">Recebe a lista, em ordem, com os tipos principais de mídia no fluxo carregado</param>
-CarenResult CarenMFSourceReader::ExRecuperarTiposMidia([Out] List<CA_Midia_TipoPrincipal>^% Param_Out_TiposMidias)
+CarenResult CarenMFSourceReader::ExRecuperarTiposMidia([Out] List<CA_MAJOR_MEDIA_TYPES>^% Param_Out_TiposMidias)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1348,7 +1348,7 @@ CarenResult CarenMFSourceReader::ExRecuperarTiposMidia([Out] List<CA_Midia_TipoP
 	int IdFluxo = 0;
 
 	//Cria a lista a ser retornada
-	List<CA_Midia_TipoPrincipal>^ ListaRetorno = gcnew List<CA_Midia_TipoPrincipal>(1);
+	List<CA_MAJOR_MEDIA_TYPES>^ ListaRetorno = gcnew List<CA_MAJOR_MEDIA_TYPES>(1);
 
 	//Abre um laço que vai obter os tipos de midia principal.
 	while (true)
@@ -1378,14 +1378,14 @@ CarenResult CarenMFSourceReader::ExRecuperarTiposMidia([Out] List<CA_Midia_TipoP
 				//O tipo da midia no fluxo id obtido é : Audio.
 
 				//Adiciona o tipo de mídia na lista.
-				ListaRetorno->Add(CA_Midia_TipoPrincipal::TP_Audio);
+				ListaRetorno->Add(CA_MAJOR_MEDIA_TYPES::TP_Audio);
 			}
 			else if (GUID_TipoPrincipalFluxo == MFMediaType_Video)
 			{
 				//O tipo da midia no fluxo id obtido é : Video.
 
 				//Adiciona o tipo de mídia na lista.
-				ListaRetorno->Add(CA_Midia_TipoPrincipal::TP_Video);
+				ListaRetorno->Add(CA_MAJOR_MEDIA_TYPES::TP_Video);
 			}
 			else
 			{

@@ -305,6 +305,6 @@ public:
 	/// (Extensão) - Método responsável por retornar todos os tipos principais de mídia do arquivo carregado pelo leitor.
 	/// </summary>
 	/// <param name="Param_Out_TiposMidias">Recebe a lista, em ordem, com os tipos principais de mídia no fluxo carregado</param>
-	virtual CarenResult ExRecuperarTiposMidia([Out] System::Collections::Generic::List<CA_Midia_TipoPrincipal>^% Param_Out_TiposMidias);
+	virtual CarenResult ExRecuperarTiposMidia([Out] System::Collections::Generic::List<CA_MAJOR_MEDIA_TYPES>^% Param_Out_TiposMidias);
 };
 

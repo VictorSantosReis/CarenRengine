@@ -68,6 +68,74 @@ CarenStream::CarenStream(ICarenMFByteStream^ Param_ByteStream)
 	PonteiroTrabalho = vi_pOutStream;
 }
 
+CarenStream::CarenStream(ICarenBuffer^ Param_BufferInicial, UInt32 Param_LarguraBuffer)
+{
+	//Resultados de Caren.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	GenPointer vi_pBufferInicial = DefaultGenPointer; //Pode ser NULO | 0
+	IStream* vi_pOutStream = Nulo;
+
+	//Verifica se forneceu dados iniciais para a criação do buffer.
+	if (ObjetoGerenciadoValido(Param_BufferInicial))
+		Param_BufferInicial->ObterPonteiroInterno(vi_pBufferInicial);
+
+	//Chama o método para criar a interface.
+	vi_pOutStream = SHCreateMemStream(
+		(vi_pBufferInicial != IntPtr::Zero)? const_cast<PBYTE>(Util.ConverterIntPtrTo<PBYTE>(vi_pBufferInicial)): Nulo,
+		Param_LarguraBuffer);
+
+	//Verifica se não ocorreu erro no processo.
+	if (!ObjetoValido(vi_pOutStream))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception("Ocorreu uma falha ao criar o Stream!");
+	}
+
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutStream;
+}
+
+CarenStream::CarenStream(MatrizBytes Param_BufferInicial, UInt32 Param_LarguraBuffer)
+{
+	//Resultados de Caren.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	PBYTE vi_pBufferInicial = Nulo; //Pode ser NULO
+	IStream* vi_pOutStream = Nulo;
+
+	//Verifica se forneceu dados iniciais para a criação do buffer.
+	if (ObjetoGerenciadoValido(Param_BufferInicial))
+	{
+		//Cria o buffer que vai conter os dados.
+		vi_pBufferInicial = CriarMatrizUnidimensional<BYTE>(static_cast<DWORD>(Param_LarguraBuffer));
+		
+		//Copia os dados da matriz gerenciada para a nativa.
+		Util.CopiarBufferGerenciado_ToNativo(Param_BufferInicial, vi_pBufferInicial, Param_LarguraBuffer);
+	}
+
+	//Chama o método para criar a interface.
+	vi_pOutStream = SHCreateMemStream(vi_pBufferInicial, Param_LarguraBuffer);
+
+	//Verifica se não ocorreu erro no processo.
+	if (!ObjetoValido(vi_pOutStream))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception("Ocorreu uma falha ao criar o Stream!");
+	}
+
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutStream;
+
+	//Libera a memória para o buffer.
+	DeletarMatrizUnidimensionalSafe(&vi_pBufferInicial);
+}
+
+
 // Métodos da interface ICaren
 
 

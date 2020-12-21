@@ -58,7 +58,25 @@ public:
 	/// </summary>
 	/// <param name="Param_ByteStream">‎Uma interface ‎‎ICarenMFByteStream‎‎ do fluxo byte da Media Foundation.‎</param>
 	CarenStream(ICarenMFByteStream^ Param_ByteStream);
+
+	/// <summary>
+	/// Cria e inicializa a classe do Stream que se baseia em um fluxo de memória. Este construtor permite criar o fluxo a aprti 
+	/// de dados iniciais.
+	/// </summary>
+	/// <param name="Param_BufferInicial">Uma interface (ICarenBuffer) para os dados iniciais. O conteúdo deste buffer é usado para definir o conteúdo inicial do fluxo de memória. 
+	/// Se este parâmetro for NULO, o fluxo de memória retornado não terá nenhum conteúdo inicial.</param>
+	/// <param name="Param_LarguraBuffer">O número de bytes no buffer apontado por (Param_BufferInicial). Se (Param_BufferInicial) estiver definido como NULO, (Param_LarguraBuffer) deve ser zero.</param>
+	CarenStream(ICarenBuffer^ Param_BufferInicial, UInt32 Param_LarguraBuffer);
 	
+	/// <summary>
+	/// Cria e inicializa a classe do Stream que se baseia em um fluxo de memória. Este construtor permite criar o fluxo a aprti 
+	/// de dados iniciais.
+	/// </summary>
+	/// <param name="Param_BufferInicial">Uma matriz de bytes para os dados iniciais. O conteúdo deste buffer é usado para definir o conteúdo inicial do fluxo de memória. 
+	/// Se este parâmetro for NULO, o fluxo de memória retornado não terá nenhum conteúdo inicial.</param>
+	/// <param name="Param_LarguraBuffer">O número de bytes no buffer apontado por (Param_BufferInicial). Se (Param_BufferInicial) estiver definido como NULO, (Param_LarguraBuffer) deve ser zero.</param>
+	CarenStream(MatrizBytes Param_BufferInicial, UInt32 Param_LarguraBuffer);
+
 	~CarenStream();
 
 	//Variaveis Internas.

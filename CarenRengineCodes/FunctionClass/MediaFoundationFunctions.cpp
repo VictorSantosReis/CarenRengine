@@ -408,13 +408,195 @@ Done:;
 	return Resultado;
 }
 
+CarenResult MediaFoundationFunctions::_MFCopyImage(
+	ICarenBuffer^ Param_BufferDestino,
+	Int32 Param_DestStride,
+	ICarenBuffer^ Param_BufferOrigem,
+	Int32 Param_SrcStride,
+	UInt32 Param_WidthInBytes,
+	UInt32 Param_Lines)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	GenPointer vi_pBufferDest = DefaultGenPointer;
+	GenPointer vi_pBufferSource = DefaultGenPointer;
+
+	//Recupera o ponteiro para o buffer de destino se valido.
+	CarenGetPointerFromICarenBufferSafe(Param_BufferDestino, vi_pBufferDest);
+
+	//Recupera o ponteiro para o buffer de origem se valido.
+	CarenGetPointerFromICarenBufferSafe(Param_BufferOrigem, vi_pBufferSource);
+
+	//Chama o método para realizar a operação.
+	Hr = MFCopyImage(
+		Util.ConverterIntPtrTo<PBYTE>(vi_pBufferDest),
+		Param_DestStride,
+		const_cast<PBYTE>(Util.ConverterIntPtrTo<PBYTE>(vi_pBufferSource)),
+		Param_SrcStride,
+		static_cast<DWORD>(Param_WidthInBytes),
+		static_cast<DWORD>(Param_Lines)
+	);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
 
 
+Done:;
 
+	//Retorna o resultado
+	return Resultado;
+}
 
+CarenResult MediaFoundationFunctions::_MFCreatePropertiesFromMediaType(ICarenMFMediaType^ Param_MediaType, String^ Param_RIID, ICaren^ Param_Out_Object)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
 
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
 
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IMFMediaType* vi_pMediaType = Nulo;
+	GUID vi_RIID = GUID_NULL;
+	IUnknown* vi_pOutObject = Nulo;
 
+	//Recupera o ponteiro para o Media Type
+	CarenGetPointerFromICarenSafe(Param_MediaType, vi_pMediaType);
+
+	//Converte a string para o riid da interface requisitada.
+	vi_RIID = Util.CreateGuidFromString(Param_RIID);
+
+	//Chama o método para realizar a operação.
+	Hr = MFCreatePropertiesFromMediaType(vi_pMediaType, vi_RIID, reinterpret_cast<void**>(&vi_pOutObject));
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
+
+CarenResult MediaFoundationFunctions::_MFTranscodeGetAudioOutputAvailableTypes(
+	String^ Param_GuidSubtype, 
+	CA_MFT_ENUM_FLAG Param_Flags, 
+	ICarenMFAttributes^ Param_Atributos, 
+	ICarenMFCollection^ Param_Out_Availebletypes)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	GUID vi_GuidAudioSubtype = GUID_NULL;
+	DWORD vi_Flags = static_cast<DWORD>(Param_Flags);
+	IMFAttributes* vi_pAttributes = Nulo; //Pode ser NULO.
+	IMFCollection* vi_pOutCollection = Nulo;
+
+	//Converte a string para o guid do subtipo do audio.
+	vi_GuidAudioSubtype = Util.CreateGuidFromString(Param_GuidSubtype);
+
+	//Verifica se forneceu a interface de atributos e obtém o ponteiro.
+	if (ObjetoGerenciadoValido(Param_Atributos))
+		CarenGetPointerFromICarenSafe(Param_Atributos, vi_pAttributes);
+
+	//Chama o método para realizar a operação.
+	Hr = MFTranscodeGetAudioOutputAvailableTypes(
+		vi_GuidAudioSubtype,
+		vi_Flags,
+		vi_pAttributes,
+		&vi_pOutCollection
+		);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o ponteiro na interface de saida.
+	CarenSetPointerToICarenSafe(vi_pOutCollection, Param_Out_Availebletypes, true);
+
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
+
+CarenResult MediaFoundationFunctions::_MFSerializeAttributesToStream(ICarenMFAttributes^ Param_AtributosSerialize, CA_MF_ATTRIBUTE_SERIALIZE_OPTIONS Param_Flags, ICarenStream^ Param_StreamDestino)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	IMFAttributes* vi_pAttributesToStream = Nulo;
+	IStream* vi_pStreamDestino = Nulo;
+	DWORD vi_Flags = static_cast<DWORD>(Param_Flags);
+
+	//Recupera o ponteiro para a interface de atributos.
+	CarenGetPointerFromICarenSafe(Param_AtributosSerialize, vi_pAttributesToStream);
+
+	//Recupera o ponteiro para o Fluxo que vai conter os dados serializados.
+	CarenGetPointerFromICarenSafe(Param_StreamDestino, vi_pStreamDestino);
+
+	//Chama o método para realizar a operação.
+	Hr = MFSerializeAttributesToStream(vi_pAttributesToStream, vi_Flags, vi_pStreamDestino);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
 
 
 

@@ -138,25 +138,54 @@ public:
 	/// <summary>
 	/// Copia uma imagem ou plano de imagem de um buffer para outro.
 	/// </summary>
-	/// <param name="Param_BufferDestino"></param>
-	/// <param name="Param_DestStride"></param>
-	/// <param name="Param_BufferOrigem"></param>
-	/// <param name="Param_SrcStride"></param>
-	/// <param name="Param_WidthInBytes"></param>
-	/// <param name="Param_Lines"></param>
+	/// <param name="Param_BufferDestino">Um ponteiro para o início da primeira linha de pixels no buffer de destino.‎</param>
+	/// <param name="Param_DestStride">‎O Stride do buffer de destino, em bytes.‎</param>
+	/// <param name="Param_BufferOrigem">‎Um ponteiro para o início da primeira linha de pixels na imagem de origem.‎</param>
+	/// <param name="Param_SrcStride">‎O Stride do buffer de origem, em bytes.‎</param>
+	/// <param name="Param_WidthInBytes">‎Largura da imagem, em bytes.‎</param>
+	/// <param name="Param_Lines">‎Número de linhas de pixels para copiar.‎</param>
 	/// <returns></returns>
 	CarenResult _MFCopyImage(
-		CarenBuffer^ Param_BufferDestino, 
+		ICarenBuffer^ Param_BufferDestino,
 		Int32 Param_DestStride,
-		CarenBuffer^ Param_BufferOrigem, 
+		ICarenBuffer^ Param_BufferOrigem,
 		Int32 Param_SrcStride, 
 		UInt32 Param_WidthInBytes, 
 		UInt32 Param_Lines);
 
-	CarenResult _PathCreateFromUrlW();
-	CarenResult _MFCreatePropertiesFromMediaType();
-	CarenResult _MFTranscodeGetAudioOutputAvailableTypes();
-	CarenResult _MFSerializeAttributesToStream();
+	/// <summary>
+	/// ‎Cria propriedades a partir de uma interface ‎‎ICarenMFMediaType‎‎.‎
+	/// </summary>
+	/// <param name="Param_MediaType">Uma interface ICarenMFMediaType.</param>
+	/// <param name="Param_RIID">‎O identificador de interface (IID) da interface que está sendo solicitada.‎</param>
+	/// <param name="Param_Out_Object">Retorna uma interface base (ICaren) para a interface solicitada. O usuário deve incializar a interface antes de chamar este método.</param>
+	/// <returns></returns> 
+	CarenResult _MFCreatePropertiesFromMediaType(ICarenMFMediaType^ Param_MediaType, String^ Param_RIID, ICaren^ Param_Out_Object);
+
+	/// <summary>
+	/// Obtém uma lista de formatos de saída de um codificador de áudio.
+	/// Esta função pressupõe que o codificador será usado em seu modo de codificação padrão, que é tipicamente codificação de taxa de bits constante (CBR). 
+	/// Portanto, os tipos retornados pela função podem não funcionar com outros modos, como codificação de taxa de bits variáveis (VBR).
+	/// </summary>
+	/// <param name="Param_GuidSubtype">Especifica o subtipo da mídia de saída. O codificador usa esse valor como filtro quando está enumerando os tipos de saída disponíveis. 
+	/// Consulte a estrutura (GUIDs_MF_AUDIO_SUBTYPES) para obter um valor para este parametro.</param>
+	/// <param name="Param_Flags">Bitwise OR de zero ou mais bandeiras da enumeração CA_MFT_ENUM_FLAG.</param>
+	/// <param name="Param_Atributos">Uma interface IMFAttributes de uma loja de atributos. A loja de atributos especifica as configurações do 
+	/// codificador. Este parâmetro pode ser NULO.</param>
+	/// <param name="Param_Out_Availebletypes">Recebe uma interface ICarenMFCollection de um objeto de coleta que contém uma lista de tipos de 
+	/// mídia de áudio preferidos. A coleção contém ponteiros ICarenMFMediaType. O usuário deve inicializar a interface antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _MFTranscodeGetAudioOutputAvailableTypes(String^ Param_GuidSubtype, CA_MFT_ENUM_FLAG Param_Flags, ICarenMFAttributes^ Param_Atributos, ICarenMFCollection^ Param_Out_Availebletypes);
+
+	/// <summary>
+	/// ‎Escreve o conteúdo de uma loja de atributos em um fluxo.‎
+	/// </summary>
+	/// <param name="Param_AtributosSerialize">Uma interface de atributos que será serializada para o fluxo.</param>
+	/// <param name="Param_Flags">‎Bitwise ‎‎OR‎‎ de zero ou mais bandeiras da enumeração ‎‎CA_MF_ATTRIBUTE_SERIALIZE_OPTIONS.‎</param>
+	/// <param name="Param_Stream">Uma interface ‎‎ICarenStream‎‎ do fluxo onde os atributos são salvos.‎</param>
+	/// <returns></returns>
+	CarenResult _MFSerializeAttributesToStream(ICarenMFAttributes^ Param_AtributosSerialize, CA_MF_ATTRIBUTE_SERIALIZE_OPTIONS Param_Flags, ICarenStream^ Param_StreamDestino);
+
 	CarenResult _MFSerializePresentationDescriptor();
 	CarenResult _MFDeserializeAttributesFromStream();
 	CarenResult _MFDeserializePresentationDescriptor();

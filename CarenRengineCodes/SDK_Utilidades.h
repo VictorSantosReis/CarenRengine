@@ -379,6 +379,17 @@ namespace CarenRengine
 				}
 			}
 
+			//(MÉTODO EXPERIMENTAL)
+			template<typename TipoInterfaceNativa, typename TipoInterfaceGerenciada>
+			void CopiarPonteirosNativo_ToGerenciado(cli::array<TipoInterfaceGerenciada^>^ Param_ArrayInterfacesDestino, TipoInterfaceNativa** Param_ArrayInterfacesNativas, UINT32 Param_Quantidade)
+			{
+				//Faz um for para definir os ponteiros nativos na interfaces gerenciadas.
+				for (UINT32 i = 0; i < Param_Quantidade; i++)
+				{
+					(reinterpret_cast<ICaren^>(Param_ArrayInterfacesDestino[i]))->AdicionarPonteiro(Param_ArrayInterfacesNativas[i]);
+				}
+			}
+
 			//Converte uma PropVariant Gerenciada para uma não gerenciada. O usuário é responsável por iniciar a PropVariant
 			bool ConvertPropVariantManagedToUnamaged(CA_PropVariant^ Param_PropVariantManaged, PROPVARIANT& Param_PropVariant)
 			{

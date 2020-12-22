@@ -596,7 +596,7 @@ public:
 	/// é suportado no dispositivo instalado. Os valores são ORed juntos.</param>
 	virtual CarenResult CheckFormatSupport(
 		Enumeracoes::CA_DXGI_FORMAT Param_Formato,
-		[Out] Enumeracoes::CA_D3D11_FORMATO_SUPORTE% Param_Out_RecursosSuportados);
+		[Out] Enumeracoes::CA_D3D11_FORMAT_SUPPORT% Param_Out_RecursosSuportados);
 
 	/// <summary>
 	/// (CheckMultisampleQualityLevels) - Obter o número de níveis de qualidade disponíveis durante multisampling completo.

@@ -598,11 +598,570 @@ Done:;
 	return Resultado;
 }
 
+CarenResult MediaFoundationFunctions::_MFSerializePresentationDescriptor(ICarenMFPresentationDescriptor^ Param_PD, OutParam UInt32% Param_Out_SizeBuffer, OutParam ICarenBuffer^% Param_Out_Buffer)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
 
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
 
+	//Variaveis utilizadas.
+	IMFPresentationDescriptor* vi_PDSerialize = Nulo;
+	DWORD vi_OutSizeBuffer = Nulo;
+	PBYTE vi_pOutBufferSerializado = Nulo; 
 
+	//Recupera o ponteiro para o descritor de apresentação
+	CarenGetPointerFromICarenSafe(Param_PD, vi_PDSerialize);
 
+	//Chama o método para realizar a operação.
+	Hr = MFSerializePresentationDescriptor(vi_PDSerialize, &vi_OutSizeBuffer, &vi_pOutBufferSerializado);
 
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define a largura dos dados no parametro de saida.
+	Param_Out_SizeBuffer = static_cast<UInt32>(vi_OutSizeBuffer);
+
+	//Cria a interface a ser retornada.
+	Param_Out_Buffer = gcnew CarenBuffer();
+
+	//Associa a matriz de bytes na interface de saida do buffer.
+	Resultado = Param_Out_Buffer->CriarBuffer(IntPtr(vi_pOutBufferSerializado), false, Param_Out_SizeBuffer, Param_Out_SizeBuffer);
+
+	//Verifica se não falhou e libera o buffer.
+	if (!CarenSucesso(Resultado))
+		CoTaskMemFree(vi_pOutBufferSerializado);
+
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
+
+CarenResult MediaFoundationFunctions::_MFDeserializeAttributesFromStream(ICarenMFAttributes^ Param_Atributos, CA_MF_ATTRIBUTE_SERIALIZE_OPTIONS Param_Flags, ICarenStream^ Param_Stream)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	IMFAttributes* vi_pAttributes = Nulo; //Não pode ser NULO.
+	IStream* vi_pStream = Nulo; //Não pode ser NULO.
+	DWORD vi_Flags = static_cast<DWORD>(Param_Flags);
+
+	//Recupera o ponteiro para a interface de atributos que vai receber os dados.
+	CarenGetPointerFromICarenSafe(Param_Atributos, vi_pAttributes);
+
+	//Recupera o ponteiro para o fluxo que contém os dados a serem deserializados.
+	CarenGetPointerFromICarenSafe(Param_Stream, vi_pStream);
+
+	//Chama o método para realizar a operação.
+	Hr = MFDeserializeAttributesFromStream(vi_pAttributes, vi_Flags, vi_pStream);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
+
+CarenResult MediaFoundationFunctions::_MFDeserializePresentationDescriptor(UInt32 Param_BufferSize, ICarenBuffer^ Param_Buffer, ICarenMFPresentationDescriptor^ Param_Out_PresentationDescriptor)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	DWORD vi_SizeBuffer = static_cast<DWORD>(Param_BufferSize);
+	GenPointer vi_pBuffer = DefaultGenPointer;
+	IMFPresentationDescriptor* vi_pOutPD = Nulo;
+
+	//Recupera o ponteiro para o buffer com os dados serializados.
+	CarenGetPointerFromICarenBufferSafe(Param_Buffer, vi_pBuffer);
+
+	//Chama o método para realizar a operação.
+	Hr = MFDeserializePresentationDescriptor(vi_SizeBuffer, Util.ConverterIntPtrTo<PBYTE>(vi_pBuffer), &vi_pOutPD);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o ponteiro da interface no parametro de saida.
+	CarenSetPointerToICarenSafe(vi_pOutPD, Param_Out_PresentationDescriptor, true);
+
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
+
+CarenResult MediaFoundationFunctions::_MFEnumDeviceSources(
+	ICarenMFAttributes^ Param_Atributos, 
+	OutParam cli::array<ICarenMFActivate^>^% Param_Out_ArraySourceActivate,
+	OutParam UInt32% Param_Out_SizeArray)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IMFAttributes* vi_pAttributes = Nulo;
+	IMFActivate** vi_pOutArraySourceActivate = Nulo; //Release CoTaskMemFree.
+	UINT32 vi_OutSizeArray = 0;
+
+	//Recupera o ponteiro para a interface de atributos.
+	CarenGetPointerFromICarenSafe(Param_Atributos, vi_pAttributes);
+
+	//Chama o método para realizar a operação.
+	Hr = MFEnumDeviceSources(vi_pAttributes, &vi_pOutArraySourceActivate, &vi_OutSizeArray);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Verifica se a quantidade retornada não é igual a ZERO e sai do método.
+	if (vi_OutSizeArray == 0)
+	{
+		//Define erro na operação.
+		Resultado.AdicionarCodigo(ResultCode::ER_FAIL,false);
+
+		//Sai do método
+		Sair;
+	}
+
+	//Cria o array que vai retornar as interfaces.
+	Param_Out_ArraySourceActivate = gcnew cli::array<ICarenMFActivate^>(vi_OutSizeArray);
+
+	//Faz um for para inicializar os dados e definir o ponteiro em cada interface
+	for (UINT32 i = 0; i < vi_OutSizeArray; i++)
+	{
+		//Cria a interface.
+		Param_Out_ArraySourceActivate[i] = gcnew CarenMFActivate();
+
+		//Define o ponteiro na interface.
+		Param_Out_ArraySourceActivate[i]->AdicionarPonteiro(vi_pOutArraySourceActivate[i]);
+	}
+
+	//Define a quantidade de interfaces na matriz.
+	Param_Out_SizeArray = vi_OutSizeArray;
+
+Done:;
+	//Libera a memória para o array de ponteiros.
+	//Vai apenas liberar a memória que o método (MFEnumDeviceSources) aloca internamente para definir os ponteiros.
+	//As interfaces são de responsabilidade do usuário liberá-las.
+	if (ObjetoValido(vi_pOutArraySourceActivate))
+		CoTaskMemFree(vi_pOutArraySourceActivate);
+
+	//Retorna o resultado
+	return Resultado;
+}
+
+CarenResult MediaFoundationFunctions::_MFGetStrideForBitmapInfoHeader(CA_D3DFORMAT Param_Format, UInt32 Param_Width, OutParam Int32% Param_Out_Stride)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	DWORD vi_Format = static_cast<DWORD>(Param_Format);
+	DWORD vi_Width = static_cast<DWORD>(Param_Width);
+	LONG vi_OutStride = 0;
+
+	//Chama o método para realizar a operação.
+	Hr = MFGetStrideForBitmapInfoHeader(vi_Format, vi_Width, &vi_OutStride);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o stride no parametro de saida.
+	Param_Out_Stride = vi_OutStride;
+
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
+CarenResult MediaFoundationFunctions::_MFGetSupportedMimeTypes(OutParam CA_PropVariant^% Param_Out_Mimes)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	PROPVARIANT* vi_pPropVar = Nulo;
+
+	//Inicializa a propvariant.
+	PropVariantInit(vi_pPropVar);
+
+	//Chama o método para realizar a operação.
+	Hr = MFGetSupportedMimeTypes(vi_pPropVar);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Converte a propvariant nativa para a gerenciada e define no parametro de saida.
+	Param_Out_Mimes = Util.ConvertPropVariantUnmanagedToManaged(*vi_pPropVar);
+
+Done:;
+	//Libera a memória utilizada pela propvariant.
+	if (ObjetoValido(vi_pPropVar))
+		PropVariantClear(vi_pPropVar);
+
+	//Retorna o resultado
+	return Resultado;
+}
+CarenResult MediaFoundationFunctions::_MFGetSupportedSchemes(OutParam CA_PropVariant^% Param_Out_Schemes)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	PROPVARIANT* vi_pPropVar = Nulo;
+
+	//Inicializa a propvariant.
+	PropVariantInit(vi_pPropVar);
+
+	//Chama o método para realizar a operação.
+	Hr = MFGetSupportedSchemes(vi_pPropVar);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Converte a propvariant nativa para a gerenciada e define no parametro de saida.
+	Param_Out_Schemes = Util.ConvertPropVariantUnmanagedToManaged(*vi_pPropVar);
+
+Done:;
+	//Libera a memória utilizada pela propvariant.
+	if (ObjetoValido(vi_pPropVar))
+		PropVariantClear(vi_pPropVar);
+
+	//Retorna o resultado
+	return Resultado;
+}
+Int64 MediaFoundationFunctions::_MFGetSystemTime()
+{
+	//Retorna o horario do sistema em unidades de 100 Nanosegundos.
+	return MFGetSystemTime();
+}
+CarenResult MediaFoundationFunctions::_MFGetTopoNodeCurrentType(ICarenMFTopologyNode^ Param_Node, UInt32 Param_StreamIndex, Boolean Param_Output, ICarenMFMediaType^ Param_Out_MediaType)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	IMFTopologyNode* vi_pNode = Nulo;
+	BOOL vi_Output = Param_Output ? TRUE : FALSE;
+	IMFMediaType* vi_pOutMediaType = Nulo;
+
+	//Recupera o ponteiro para o nó na topologia.
+	CarenGetPointerFromICarenSafe(Param_Node, vi_pNode);
+
+	//Chama o método para realizar a operação.
+	Hr = MFGetTopoNodeCurrentType(
+		vi_pNode,
+		static_cast<DWORD>(Param_StreamIndex),
+		vi_Output,
+		&vi_pOutMediaType
+	);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o ponteiro na interface de saida
+	CarenSetPointerToICarenSafe(vi_pOutMediaType, Param_Out_MediaType, true);
+
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
+CarenResult MediaFoundationFunctions::_MFGetAttributesAsBlobSize(ICarenMFAttributes^ Param_Atributos, OutParam UInt32% Param_Out_SizeBuffer)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	IMFMediaType* vi_pMediaType = Nulo;
+	UINT32 vi_OutSizeBuffer = 0;
+
+	//Recupera o ponteiro para a interface de atributos a obter o tamanho do buffer necessário.
+	CarenGetPointerFromICarenSafe(Param_Atributos, vi_pMediaType);
+
+	//Chama o método para realizar a operação.
+	Hr = MFGetAttributesAsBlobSize(vi_pMediaType, &vi_OutSizeBuffer);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o tamanho do buffer necessário.
+	Param_Out_SizeBuffer = static_cast<UInt32>(vi_OutSizeBuffer);
+
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
+CarenResult MediaFoundationFunctions::_MFGetAttributesAsBlob(ICarenMFAttributes^ Param_AtributosToBlob, ICarenBuffer^ Param_BufferDest, UInt32 Param_SizeBuffer)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IMFMediaType* vi_pMediaTypeSerialize = Nulo;
+	GenPointer vi_pBufferDest = DefaultGenPointer;
+
+	//Recupera o ponteiro para a interface de atributos a ser serializada.
+	CarenGetPointerFromICarenSafe(Param_AtributosToBlob, vi_pMediaTypeSerialize);
+
+	//Recupera o ponteiro para o buffer de destino.
+	CarenGetPointerFromICarenBufferSafe(Param_BufferDest, vi_pBufferDest);
+
+	//Chama o método para realizar a operação.
+	Hr = MFGetAttributesAsBlob(vi_pMediaTypeSerialize, Util.ConverterIntPtrTo<PBYTE>(vi_pBufferDest), Param_SizeBuffer);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
+CarenResult MediaFoundationFunctions::_MFInitAttributesFromBlob(ICarenMFAttributes^ Param_Atributos, ICarenBuffer^ Param_Buffer, UInt32 Param_SizeBuffer)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IMFMediaType* vi_pMediaType = Nulo;
+	GenPointer vi_pBufferSource = DefaultGenPointer;
+
+	//Recupera o ponteiro para a interface de atributos a ser preenchida com os dados.
+	CarenGetPointerFromICarenSafe(Param_Atributos, vi_pMediaType);
+
+	//Recupera o ponteiro para o buffer de destino.
+	CarenGetPointerFromICarenBufferSafe(Param_Buffer, vi_pBufferSource);
+
+	//Chama o método para realizar a operação.
+	Hr = MFInitAttributesFromBlob(vi_pMediaType, Util.ConverterIntPtrTo<PBYTE>(vi_pBufferSource), Param_SizeBuffer);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
+CarenResult MediaFoundationFunctions::_MFGetLocalId(ICarenBuffer^ Param_Verifier, UInt32 Param_Size, OutParam String^% Param_Out_ID)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	GenPointer vi_pBuffer = DefaultGenPointer;
+	LPWSTR vi_pOutID = Nulo;
+
+	//Recupera o ponteiro para o buffer.
+	CarenGetPointerFromICarenBufferSafe(Param_Verifier, vi_pBuffer);
+
+	//Chama o método para realizar a operação.
+	Hr = MFGetLocalId(const_cast<PBYTE>(Util.ConverterIntPtrTo<PBYTE>(vi_pBuffer)), Param_Size, &vi_pOutID);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o ID no parametro de saida.
+	Param_Out_ID = gcnew String(vi_pOutID);
+
+Done:;
+	//Libera a memória para a string se valida.
+	DeletarStringCoTaskSafe(&vi_pOutID);
+
+	//Retorna o resultado
+	return Resultado;
+}
+CarenResult MediaFoundationFunctions::_MFGetPlaneSize(CA_D3DFORMAT Param_VideoFormat, UInt32 Param_Width, UInt32 Param_Height, OutParam UInt32% Param_Out_PlaneSize)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	DWORD vi_Format = static_cast<DWORD>(Param_VideoFormat);
+	DWORD vi_Width = static_cast<DWORD>(Param_Width);
+	DWORD vi_Height = static_cast<DWORD>(Param_Height);
+	DWORD vi_OutPlaneSize = 0;
+
+	//Chama o método para realizar a operação.
+	Hr = MFGetPlaneSize(vi_Format, vi_Width, vi_Height, &vi_OutPlaneSize);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o tamanho do frame no parametro de saida. 
+	Param_Out_PlaneSize = static_cast<UInt32>(vi_OutPlaneSize);
+
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
 CarenResult MediaFoundationFunctions::_MFCreateEventQueue(ICaren^ Param_Out_EventQueue)
 {
 	//Variavel a ser retornada.

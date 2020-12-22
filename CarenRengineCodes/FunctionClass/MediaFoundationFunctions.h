@@ -19,6 +19,7 @@ limitations under the License.
 #include "../SDK_Base.h"
 #include "../Caren/Caren.h"
 #include "../SDK_Utilidades.h"
+#include "../Media Foundation/CarenMFActivate.h"
 
 //Importa o SDK Base da Media Foundation.
 using namespace CarenRengine::MediaFoundation;
@@ -173,7 +174,7 @@ public:
 	/// <param name="Param_Atributos">Uma interface IMFAttributes de uma loja de atributos. A loja de atributos especifica as configurações do 
 	/// codificador. Este parâmetro pode ser NULO.</param>
 	/// <param name="Param_Out_Availebletypes">Recebe uma interface ICarenMFCollection de um objeto de coleta que contém uma lista de tipos de 
-	/// mídia de áudio preferidos. A coleção contém ponteiros ICarenMFMediaType. O usuário deve inicializar a interface antes de chamar este método.</param>
+	/// mídia de áudio preferidos. A coleção contém ponteiros ICarenMFMediaType. O usuário é responsável por inicializar a interface antes de chamar este método.</param>
 	/// <returns></returns>
 	CarenResult _MFTranscodeGetAudioOutputAvailableTypes(String^ Param_GuidSubtype, CA_MFT_ENUM_FLAG Param_Flags, ICarenMFAttributes^ Param_Atributos, ICarenMFCollection^ Param_Out_Availebletypes);
 
@@ -186,21 +187,133 @@ public:
 	/// <returns></returns>
 	CarenResult _MFSerializeAttributesToStream(ICarenMFAttributes^ Param_AtributosSerialize, CA_MF_ATTRIBUTE_SERIALIZE_OPTIONS Param_Flags, ICarenStream^ Param_StreamDestino);
 
-	CarenResult _MFSerializePresentationDescriptor();
-	CarenResult _MFDeserializeAttributesFromStream();
-	CarenResult _MFDeserializePresentationDescriptor();
-	CarenResult _MFTranscodeGetAudioOutputAvailableTypes();
-	CarenResult _MFEnumDeviceSources();
-	CarenResult _MFGetStrideForBitmapInfoHeader();
-	CarenResult _MFGetSupportedMimeTypes();
-	CarenResult _MFGetSupportedSchemes();
-	CarenResult _MFGetSystemTime();
-	CarenResult _MFGetTopoNodeCurrentType();
-	CarenResult _MFGetUncompressedVideoFormat();
-	CarenResult _MFInitAttributesFromBlob();
-	CarenResult _MFGetLocalId();
-	CarenResult _MFGetMFTMerit();
-	CarenResult _MFGetPlaneSize();
+	/// <summary>
+	/// ‎Serializa um descritor de apresentação para uma matriz byte.‎
+	/// </summary>
+	/// <param name="Param_PD">Uma interface ‎‎ICarenMFPresentationDescriptor‎‎ do descritor de apresentação que será serializado. Esse parametro não pode ser NULO.‎</param>
+	/// <param name="Param_Out_SizeBuffer">Retorna o tamanho do buffer em (Param_Out_Buffer).</param>
+	/// <param name="Param_Out_Buffer">Retorna um buffer que contém o descritor de apresetação serializado. O usuário deve chamar (ReleaseBufferWithCoTaskMemFree) no buffer retornado quando não for mais usar.</param>
+	/// <returns></returns>
+	CarenResult _MFSerializePresentationDescriptor(ICarenMFPresentationDescriptor^ Param_PD, OutParam UInt32% Param_Out_SizeBuffer, OutParam ICarenBuffer^% Param_Out_Buffer);
+
+	/// <summary>
+	/// Carrega atributos de um fluxo em uma loja de atributos.
+	/// </summary>
+	/// <param name="Param_Atributos">Uma interface (ICarenMFAttributes) que ira receber os atributos deserializados. Esse parametro não pode ser NULO.</param>
+	/// <param name="Param_Flags">Bitwise OR de zero ou mais bandeiras da enumeração CA_MF_ATTRIBUTE_SERIALIZE_OPTIONS.</param>
+	/// <param name="Param_Stream">Um fluxo a parti do qual será lidos os atributos.</param>
+	/// <returns></returns>
+	CarenResult _MFDeserializeAttributesFromStream(ICarenMFAttributes^ Param_Atributos, CA_MF_ATTRIBUTE_SERIALIZE_OPTIONS Param_Flags, ICarenStream^ Param_Stream);
+
+	/// <summary>
+	/// Deserializa um descritor de apresentação de uma matriz byte.
+	/// </summary>
+	/// <param name="Param_BufferSize">O tamanho do buffer (Param_Buffer), em bytes.</param>
+	/// <param name="Param_Buffer">Um buffer que contém o descritor de apresetação serializado.</param>
+	/// <param name="Param_Out_PresentationDescriptor">Retorna a interface (ICarenMFPresentationDescriptor) do descritor de apresetação deserializado. O usuário é responsável por inicializar a interface antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _MFDeserializePresentationDescriptor(UInt32 Param_BufferSize, ICarenBuffer^ Param_Buffer, ICarenMFPresentationDescriptor^ Param_Out_PresentationDescriptor);
+
+	/// <summary>
+	/// Enumera uma lista de dispositivos de captura de áudio ou vídeo.
+	/// </summary>
+	/// <param name="Param_Atributos">uma interface (ICarenMFAttributes) para a loja de atributos que contém critérios de pesquisa. Este parametro não pode ser NULO.</param>
+	/// <param name="Param_Out_ArraySourceActivate">Recebe uma matriz de interface (ICarenMFActivate). Cada interface representa um objeto de ativação para uma fonte de mídia.</param>
+	/// <param name="Param_Out_SizeArray">Recebe o número de elementos no array (Param_Out_ArraySourceActivate). Se nenhum dispositivo de captura corresponder aos critérios de pesquisa, este parâmetro receberá o valor 0.</param>
+	/// <returns></returns>
+	CarenResult _MFEnumDeviceSources(ICarenMFAttributes^ Param_Atributos, OutParam cli::array<ICarenMFActivate^>^% Param_Out_ArraySourceActivate, OutParam UInt32% Param_Out_SizeArray);
+
+	/// <summary>
+	/// Calcula o stride mínimo da superfície para um formato de vídeo.
+	/// Esta função calcula o stride mínimo necessário para manter a imagem na memória. Use esta função se estiver alocando buffers na memória do sistema. 
+	/// Superfícies alocadas na memória de vídeo podem exigir um stride maior, dependendo da placa gráfica.
+	/// </summary>
+	/// <param name="Param_Format">Um valor CA_D3DFORMAT que especifica o formato de vídeo.</param>
+	/// <param name="Param_Width">Largura da imagem, em pixels.</param>
+	/// <param name="Param_Out_Stride">Recebe o stride mínimo da superfície, em pixels.</param>
+	/// <returns></returns>
+	CarenResult _MFGetStrideForBitmapInfoHeader(CA_D3DFORMAT Param_Format, UInt32 Param_Width, OutParam Int32% Param_Out_Stride);
+
+	/// <summary>
+	/// ‎Recupera os tipos MIME registrados para o Source Resolver.
+	/// </summary>
+	/// <param name="Param_Out_Mimes">Retorna uma (CA_PropVariant) que contém uma lista dos MIME Types.</param>
+	/// <returns></returns>
+	CarenResult _MFGetSupportedMimeTypes(OutParam CA_PropVariant^% Param_Out_Mimes);
+
+	/// <summary>
+	/// ‎Recupera os esquemas de URL registrados para o Source Resolver.
+	/// </summary>
+	/// <param name="Param_Out_Schemes">Retorna uma (CA_PropVariant) que contém uma lista das URL Schemes suportados.</param>
+	/// <returns></returns>
+	CarenResult _MFGetSupportedSchemes(OutParam CA_PropVariant^% Param_Out_Schemes);
+
+	/// <summary>
+	/// ‎Retorna o tempo do sistema, em unidades de 100 nanossegundos.‎
+	/// </summary>
+	/// <returns></returns>
+	Int64 _MFGetSystemTime();
+
+	/// <summary>
+	/// ‎Obtém o tipo de mídia para um fluxo associado a um nó de topologia.‎
+	/// ‎Esta função obtém o tipo de mídia real do objeto que está associado ao nó de topologia. O ‎‎parâmetro (Param_Node)‎‎ deve especificar um nó que pertence a uma topologia 
+	/// totalmente resolvida. Se o nó pertencer a uma topologia parcial, a função provavelmente falhará.‎
+	/// </summary>
+	/// <param name="Param_Node">Uma interface (ICarenMFTopologyNode) para o nó na topologia.</param>
+	/// <param name="Param_StreamIndex">O identificador do fluxo para consulta. Este parâmetro é interpretado da seguinte forma: 
+	/// Transform Nodes-> ‎O valor é o índice baseado em zero do fluxo de entrada ou saída.‎ | ‎Todos os outros tipos de nó‎-> ‎O valor deve ser zero.‎</param>
+	/// <param name="Param_Output">‎Se TRUE, ‎‎a função recebe um tipo de saída‎‎. Se FALSE, ‎‎a função recebe um tipo de entrada. ‎Este parâmetro é interpretado da seguinte forma:‎
+	/// Ouput Node: Valor deve ser TRUE | Source Node: Valor deve ser FALSE | Tee Node: Valor é ignorado | Transform Node: Se o valor for ‎‎TRUE, ‎‎o parâmetro ‎‎(Param_StreamIndex)‎‎ é o 
+	/// índice de um fluxo de saída. Caso contrário, ‎‎(Param_StreamIndex)‎‎ é o índice de um fluxo de entrada.‎</param>
+	/// <param name="Param_Out_MediaType">Retora a interface (ICarenMFMediaType) para o tipo de mídia no fluxo. O usuário é responsável por inicializar a interfaces antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _MFGetTopoNodeCurrentType(ICarenMFTopologyNode^ Param_Node, UInt32 Param_StreamIndex, Boolean Param_Output, ICarenMFMediaType^ Param_Out_MediaType);
+
+	/// <summary>
+	/// ‎Recupera o tamanho do buffer necessário para a função _‎‎MFGetAttributesAsBlob.‎
+	/// </summary>
+	/// <param name="Param_Atributos">A interface de atributos a ser verificada o tamanho necessário para o buffer.</param>
+	/// <param name="Param_Out_SizeBuffer">Recebe o tamanho do buffer necessário, em bytes.</param>
+	/// <returns></returns>
+	CarenResult _MFGetAttributesAsBlobSize(ICarenMFAttributes^ Param_Atributos, OutParam UInt32% Param_Out_SizeBuffer);
+
+	/// <summary>
+	/// Converte o conteúdo de uma loja de atributos em uma matriz byte.
+	/// </summary>
+	/// <param name="Param_AtributosToBlob">A interface (ICarenMFAttributes) que será convertida em uma matriz de bytes.</param>
+	/// <param name="Param_BufferDest">Uma interface de buffer que contém um ponteiro para a matriz de bytes de destino. Esse parametro não pode ser NULO.</param>
+	/// <param name="Param_SizeBuffer">O tamanho do buffer (Param_BufferDest), em bytes. Para obter esse tamanho ligue para o método (_MFGetAttributesAsBlobSize).</param>
+	/// <returns></returns>
+	CarenResult _MFGetAttributesAsBlob(ICarenMFAttributes^ Param_AtributosToBlob, ICarenBuffer^ Param_BufferDest, UInt32 Param_SizeBuffer);
+
+	/// <summary>
+	/// ‎Inicializa o conteúdo de uma loja de atributos a partir de uma matriz byte.‎
+	/// </summary>
+	/// <param name="Param_Atributos">A interface de atributos que vai receber os dados. O usuário deve criar a interface com ZERO atributos iniciais.</param>
+	/// <param name="Param_Buffer">O buffer que contém os dados serializados dos atributos.</param>
+	/// <param name="Param_SizeBuffer">O tamanho do buffer em (Param_Buffer), em bytes.</param>
+	/// <returns></returns>
+	CarenResult _MFInitAttributesFromBlob(ICarenMFAttributes^ Param_Atributos, ICarenBuffer^ Param_Buffer, UInt32 Param_SizeBuffer);
+
+	/// <summary>
+	/// Obtém a ID do sistema local.
+	/// </summary>
+	/// <param name="Param_Verifier">Um buffer com o valor do verificador específico do aplicativo.</param>
+	/// <param name="Param_Size">Comprimento em bytes de verificador.</param>
+	/// <param name="Param_Out_ID">Retorna uma string com o ID do sistema local.</param>
+	/// <returns></returns>
+	CarenResult _MFGetLocalId(ICarenBuffer^ Param_Verifier, UInt32 Param_Size, OutParam String^% Param_Out_ID);
+
+	/// <summary>
+	/// Recupera o tamanho da imagem, em bytes, para um formato de vídeo não comprimido.
+	/// </summary>
+	/// <param name="Param_VideoFormat">Um valor CA_D3DFORMAT que especifica o formato de vídeo.</param>
+	/// <param name="Param_Width">Largura da imagem, em pixels.</param>
+	/// <param name="Param_Height">Altura da imagem, em pixels</param>
+	/// <param name="Param_Out_PlaneSize">Recebe o tamanho de um frame, em bytes. Se o formato for comprimido ou não for reconhecido, esse valor é zero.</param>
+	/// <returns></returns>
+	CarenResult _MFGetPlaneSize(CA_D3DFORMAT Param_VideoFormat, UInt32 Param_Width, UInt32 Param_Height, OutParam UInt32% Param_Out_PlaneSize);
+
 	CarenResult _MFIsContentProtectionDeviceSupported();
 	CarenResult _MFMapDXGIFormatToDX9Format();
 	CarenResult _MFRegisterLocalByteStreamHandler();

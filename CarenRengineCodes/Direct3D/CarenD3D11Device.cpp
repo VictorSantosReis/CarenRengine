@@ -579,7 +579,7 @@ Done:;
 /// é suportado no dispositivo instalado. Os valores são ORed juntos.</param>
 CarenResult CarenD3D11Device::CheckFormatSupport(
 					Enumeracoes::CA_DXGI_FORMAT Param_Formato,
-					[Out] Enumeracoes::CA_D3D11_FORMATO_SUPORTE% Param_Out_RecursosSuportados)
+					[Out] Enumeracoes::CA_D3D11_FORMAT_SUPPORT% Param_Out_RecursosSuportados)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -611,7 +611,7 @@ CarenResult CarenD3D11Device::CheckFormatSupport(
 	}
 
 	//Converte o bitfield para sua enumeração correspondente.
-	Param_Out_RecursosSuportados = static_cast<CA_D3D11_FORMATO_SUPORTE>(pFormatoD3D11Suportado);
+	Param_Out_RecursosSuportados = static_cast<CA_D3D11_FORMAT_SUPPORT>(pFormatoD3D11Suportado);
 
 Done:;
 	//Retorna o resultado.

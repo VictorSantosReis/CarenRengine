@@ -9078,7 +9078,7 @@ MEReservedMax = 10000
 			/// (D3D11_FORMAT_SUPPORT)(FALTA DOCUMENTAR) - Enumera quais recursos são suportados por um determinado formato e dados dispositivo.
 			/// </summary>
 			[FlagsAttribute]
-			public enum class CA_D3D11_FORMATO_SUPORTE
+			public enum class CA_D3D11_FORMAT_SUPPORT
 			{
 				D3D11_FORMAT_SUPPORT_BUFFER = 0x1,
 				D3D11_FORMAT_SUPPORT_IA_VERTEX_BUFFER = 0x2,

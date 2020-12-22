@@ -27,9 +27,6 @@ limitations under the License.
 //Importa o namespace que contém as interfaces da Media Foundation.
 using namespace CarenRengine::MediaFoundation;
 
-//Enumeração de retorno de função.
-
-
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
@@ -70,7 +67,7 @@ public:
 	/// Inicializa e cria uma instância da Sessão de Mídia dentro de um processo PMP (Protected Media Path, caminho de mídia protegido).
 	/// </summary>
 	/// <param name="Param_Fags">Um membro da enumeração CA_MFPMPSESSION_CREATION_FLAGS que especifica como criar o objeto de sessão.</param>
-	/// <param name="Param_ConfigAtributos">Uma interface com os atributos de configuração para a Media Session.</param>
+	/// <param name="Param_ConfigAtributos">Uma interface com os atributos de configuração para a Media Session. Este parâmetro pode ser NULO.</param>
 	/// <param name="Param_Out_Ativador">Recebe a interface ICarenMFActivate ou o valor NULO. Se não-NULO, o chamador deve liberar a interface.</param>
 	CarenMFMediaSession(CA_PMPSESSION_CREATION_FLAGS Param_Fags, ICarenMFAttributes^ Param_ConfigAtributos, ICarenMFActivate^ Param_Out_Ativador);
 

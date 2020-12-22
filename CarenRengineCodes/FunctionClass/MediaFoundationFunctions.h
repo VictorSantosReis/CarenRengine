@@ -314,11 +314,48 @@ public:
 	/// <returns></returns>
 	CarenResult _MFGetPlaneSize(CA_D3DFORMAT Param_VideoFormat, UInt32 Param_Width, UInt32 Param_Height, OutParam UInt32% Param_Out_PlaneSize);
 
-	CarenResult _MFIsContentProtectionDeviceSupported();
-	CarenResult _MFMapDXGIFormatToDX9Format();
-	CarenResult _MFRegisterLocalByteStreamHandler();
-	CarenResult _MFRegisterLocalSchemeHandler();
-	CarenResult _MFRequireProtectedEnvironment();
+	/// <summary>
+	/// ‎Verifica se um processador de segurança de hardware é suportado para o sistema de proteção de mídia especificado.‎
+	/// </summary>
+	/// <param name="Param_ProtectionSystemID">‎O identificador do sistema de proteção que você deseja verificar.‎</param>
+	/// <param name="Param_Out_Suporte">Recebe ‎TRUE‎‎ se o processador de segurança de hardware for suportado para o sistema de proteção especificado; caso contrário ‎‎FALSE‎‎.‎</param>
+	/// <returns></returns>
+	CarenResult _MFIsContentProtectionDeviceSupported(String^ Param_ProtectionSystemID, OutParam Boolean% Param_Out_Suporte);
+
+	/// <summary>
+	/// C‎onverte um identificador de formato Microsoft DirectX Graphics Infrastructure (DXGI) para um identificador de formato Microsoft Direct3D 9.‎
+	/// </summary>
+	/// <param name="Param_Format">‎Um valor ‎‎CA_DXGI_FORMAT‎‎ para converter.‎</param>
+	/// <returns></returns>
+	CA_D3DFORMAT _MFMapDXGIFormatToDX9Format(CA_DXGI_FORMAT Param_Format);
+
+	/// <summary>
+	/// ‎Registra um manipulador de byte-stream no processo do chamador.‎
+	/// </summary>
+	/// <param name="Param_FileExtension">Uma String que contém a extensão do nome do arquivo para este manipulador.</param>
+	/// <param name="Param_MIMEType">Uma String que contém o tipo MIME para este manipulador.</param>
+	/// <param name="Param_Activate">Uma interface ICarenMFActivate de um objeto de ativação. O chamador implementa esta interface. ‎O ‎‎método ICarenMFActivate::ActivateObject‎‎ deve 
+	/// criar um manipulador de fluxo de byte. O manipulador byte-stream expõe a interface ‎‎ICarenMFByteStreamHandler.‎</param>
+	/// <returns></returns>
+	CarenResult _MFRegisterLocalByteStreamHandler(String^ Param_FileExtension, String^ Param_MIMEType, ICarenMFActivate^ Param_Activate);
+
+	/// <summary>
+	/// ‎Registra um manipulador de esquemas no processo do chamador.‎
+	/// </summary>
+	/// <param name="Param_Scheme">‎Uma String que contém o esquema. O esquema inclui o caractere ':'; por exemplo, "http:".‎</param>
+	/// <param name="Param_Activate">Uma interface ICarenMFActivate de um objeto de ativação. O chamador implementa esta interface. ‎O ‎‎método ICarenMFActivate::ActivateObject‎‎ deve 
+	/// criar um manipulador de esquema. O manipulador de esquema expõe a interface ‎‎IMFSchemeHandler[NÃO IMPLEMENTADA PELA DLL].</param>
+	/// <returns></returns>
+	CarenResult _MFRegisterLocalSchemeHandler(String^ Param_Scheme, ICarenMFActivate^ Param_Activate);
+
+	/// <summary>
+	/// Verifica se uma apresentação de mídia requer o PMP (Protected Media Path, Caminho de Mídia Protegida).
+	/// </summary>
+	/// <param name="Param_PresentationDesc">Uma interface ICarenMFPresentationDescriptor de um descritor de apresentação. O descritor de apresentação é criado pela fonte 
+	/// de mídia e descreve a apresentação.</param>
+	/// <returns></returns>
+	CarenResult _MFRequireProtectedEnvironment(ICarenMFPresentationDescriptor^ Param_PresentationDesc);
+
 	CarenResult _PackRatio();
 	CarenResult _PackSize();
 	CarenResult _UnpackRatio();

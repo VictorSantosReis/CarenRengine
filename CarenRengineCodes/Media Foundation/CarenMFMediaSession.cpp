@@ -69,7 +69,7 @@ CarenMFMediaSession::CarenMFMediaSession(CA_PMPSESSION_CREATION_FLAGS Param_Fags
 	DWORD vi_FlagsCreate = static_cast<DWORD>(Param_Fags);
 	IMFAttributes* vi_pAttributesConfig = Nulo; //Pode ser Nulo.
 	IMFMediaSession* vi_pOutMediaSession = Nulo;
-	IMFActivate* vi_pOutAtivador = Nulo; //Retorna apenas se a interface (IMFMediaSession) não pode ter sido criada.
+	IMFActivate* vi_pOutAtivador = Nulo; //Retorna apenas se a interface (IMFMediaSession) não poder ser criada.
 
 	//Recupera o ponteiro para a interface de atributos se fornecida
 	if (ObjetoGerenciadoValido(Param_ConfigAtributos))

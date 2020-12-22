@@ -1162,6 +1162,167 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
+CarenResult MediaFoundationFunctions::_MFIsContentProtectionDeviceSupported(String^ Param_ProtectionSystemID, OutParam Boolean% Param_Out_Suporte)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	GUID vi_GuidProtectionSystemID = GUID_NULL;
+	BOOL vi_OutSuporte = FALSE;
+
+	//Converte a string gerenciada para o ID.
+	vi_GuidProtectionSystemID = Util.CreateGuidFromString(Param_ProtectionSystemID);
+
+	//Chama o método para realizar a operação.
+	Hr = MFIsContentProtectionDeviceSupported(vi_GuidProtectionSystemID, &vi_OutSuporte);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define o resultado no parametro de saida.
+	Param_Out_Suporte = vi_OutSuporte ? true : false;
+
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
+CA_D3DFORMAT MediaFoundationFunctions::_MFMapDXGIFormatToDX9Format(CA_DXGI_FORMAT Param_Format)
+{
+	//Chama o método para realizar a operação.
+	DWORD vi_ConvertD3D9Format = MFMapDXGIFormatToDX9Format(static_cast<DXGI_FORMAT>(Param_Format));
+
+	//Retorna o formato
+	return static_cast<CA_D3DFORMAT>(vi_ConvertD3D9Format);
+}
+
+CarenResult MediaFoundationFunctions::_MFRegisterLocalByteStreamHandler(String^ Param_FileExtension, String^ Param_MIMEType, ICarenMFActivate^ Param_Activate)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	LPWSTR vi_pFileExtension = Nulo;
+	LPWSTR vi_pMIMEType = Nulo;
+	IMFActivate* vi_pActivate = Nulo;
+
+	//Converte as strings para os valores nativos.
+	vi_pFileExtension = Util.ConverterStringToWCHAR(Param_FileExtension);
+	vi_pMIMEType = Util.ConverterStringToWCHAR(Param_MIMEType);
+
+	//Recupera o ponteiro para o ativador.
+	CarenGetPointerFromICarenSafe(Param_Activate, vi_pActivate);
+
+	//Chama o método para realizar a operação.
+	Hr = MFRegisterLocalByteStreamHandler(vi_pFileExtension, vi_pMIMEType, vi_pActivate);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+Done:;
+	//Libera a memória utilizada pelas string.
+	DeletarStringAllocatedSafe(&vi_pFileExtension);
+	DeletarStringAllocatedSafe(&vi_pMIMEType);
+
+	//Retorna o resultado
+	return Resultado;
+}
+CarenResult MediaFoundationFunctions::_MFRegisterLocalSchemeHandler(String^ Param_Scheme, ICarenMFActivate^ Param_Activate)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	LPWSTR vi_pSheme = Nulo;
+	IMFActivate* vi_pActivate = Nulo;
+
+	//Converte as strings para os valores nativos.
+	vi_pSheme = Util.ConverterStringToWCHAR(Param_Scheme);
+
+	//Recupera o ponteiro para o ativador.
+	CarenGetPointerFromICarenSafe(Param_Activate, vi_pActivate);
+
+	//Chama o método para realizar a operação.
+	Hr = MFRegisterLocalSchemeHandler(vi_pSheme, vi_pActivate);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+Done:;
+	//Libera a memória utilizada pela string.
+	DeletarStringAllocatedSafe(&vi_pSheme);
+
+	//Retorna o resultado
+	return Resultado;
+}
+CarenResult MediaFoundationFunctions::_MFRequireProtectedEnvironment(ICarenMFPresentationDescriptor^ Param_PresentationDesc)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	IMFPresentationDescriptor* vi_pPD = Nulo;
+
+	//Recupera o ponteiro para o descritor de apresentação.
+	CarenGetPointerFromICarenSafe(Param_PresentationDesc, vi_pPD);
+
+	//Chama o método para realizar a operação.
+	Hr = MFRequireProtectedEnvironment(vi_pPD);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//NÃO VERIFICA O RESULTADO PORQUE NÃO É NECESSÁRIO NESSE CASO.
+	//A FUNÇÃO RETORNA UM HRESULT QUE REPRESENTA UM BOOLEANO(TRUE: SS_OK | FALSE: E_FAIL).
+
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
 CarenResult MediaFoundationFunctions::_MFCreateEventQueue(ICaren^ Param_Out_EventQueue)
 {
 	//Variavel a ser retornada.

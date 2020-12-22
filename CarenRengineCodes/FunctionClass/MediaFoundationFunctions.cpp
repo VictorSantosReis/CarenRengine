@@ -1323,6 +1323,88 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
+UInt64 MediaFoundationFunctions::_PackRatio(Int32 Param_Numerador, UInt32 Param_Denominador)
+{
+	return PackRatio(Param_Numerador, Param_Denominador);
+}
+UInt64 MediaFoundationFunctions::_PackSize(UInt32 Param_Width, UInt32 Param_Height)
+{
+	return PackSize(Param_Width, Param_Height);
+}
+void MediaFoundationFunctions::_UnpackRatio(UInt64 Param_UnPacked, OutParam Int32% Param_Out_Numerador, OutParam UInt32% Param_Out_Denominador)
+{
+	//Variaveis que vao receber os valores.
+	INT32 vi_OutNum = 0;
+	UINT32 vi_OutDeno = 0;
+
+	//Chama a função para realizar o processo.
+	UnpackRatio(Param_UnPacked, &vi_OutNum, &vi_OutDeno);
+
+	//Define nos parametros de saida.
+	Param_Out_Numerador = vi_OutNum;
+	Param_Out_Denominador = vi_OutDeno;
+}
+void MediaFoundationFunctions::_UnpackSize(UInt64 Param_UnPacked, OutParam UInt32% Param_Out_Width, OutParam UInt32% Param_Out_Height)
+{
+	//Variaveis que vao receber os valores.
+	UINT32 vi_OutWidth = 0;
+	UINT32 vi_OutHeight = 0;
+
+	//Chama a função para realizar o processo.
+	UnpackSize(Param_UnPacked, &vi_OutWidth, &vi_OutHeight);
+
+	//Define nos parametros de saida.
+	Param_Out_Width = vi_OutWidth;
+	Param_Out_Height = vi_OutHeight;
+}
+void MediaFoundationFunctions::_Unpack2UINT32AsUINT64(UInt64 Param_UnPacked, OutParam UInt32% Param_Out_High, OutParam UInt32% Param_Out_Low)
+{
+	//Variaveis que vao receber os valores.
+	UINT32 vi_OutHigh = 0;
+	UINT32 vi_OutLow = 0;
+
+	//Chama a função para realizar o processo.
+	Unpack2UINT32AsUINT64(Param_UnPacked, &vi_OutHigh, &vi_OutLow);
+
+	//Define nos parametros de saida.
+	Param_Out_High = vi_OutHigh;
+	Param_Out_Low = vi_OutLow;
+}
+CarenResult MediaFoundationFunctions::_MFShutdownObject(ICaren^ Param_Objeto)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	IUnknown* vi_pObject = Nulo;
+
+	//Recupera o ponteiro para a interface a ser desligada.
+	CarenGetPointerFromICarenSafe(Param_Objeto, vi_pObject);
+	
+	//Chama o método para realizar a operação.
+	Hr = MFShutdownObject(vi_pObject);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
 CarenResult MediaFoundationFunctions::_MFCreateEventQueue(ICaren^ Param_Out_EventQueue)
 {
 	//Variavel a ser retornada.

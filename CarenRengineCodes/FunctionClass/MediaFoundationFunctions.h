@@ -356,15 +356,86 @@ public:
 	/// <returns></returns>
 	CarenResult _MFRequireProtectedEnvironment(ICarenMFPresentationDescriptor^ Param_PresentationDesc);
 
-	CarenResult _PackRatio();
-	CarenResult _PackSize();
-	CarenResult _UnpackRatio();
-	CarenResult _UnpackSize();
-	CarenResult _Unpack2UINT32AsUINT64();
-	CarenResult _MFShutdownObject();
-	CarenResult _MFTEnum();
-	CarenResult _MFTEnum2();
+	/// <summary>
+	/// ‎Empacota dois valores UINT32, que representam uma razão, em um valor UINT64.‎
+	/// </summary>
+	/// <param name="Param_Numerador">O valor do numerador para ser armazenado como UINT32.‎</param>
+	/// <param name="Param_Denominador">O valor do denominador ‎‎UINT32 para ser armazenado</param>
+	/// <returns></returns>
+	UInt64 _PackRatio(Int32 Param_Numerador, UInt32 Param_Denominador);
+
+	/// <summary>
+	/// ‎Empacota um valor de largura UINT32 e um valor de altura UINT32 em um valor UINT64 que representa um tamanho.‎
+	/// </summary>
+	/// <param name="Param_Width">O valor UINT32 da largura a ser armazenada.</param>
+	/// <param name="Param_Height">O valor UINT32 da altura a ser armazenada.</param>
+	/// <returns></returns>
+	UInt64 _PackSize(UInt32 Param_Width, UInt32 Param_Height);
+
+	/// <summary>
+	/// ‎Obtém os valores ‎‎UINT32‎‎ de baixa ordem e alta ordem a partir de um valor ‎‎UINT64‎‎ que representa uma razão.‎
+	/// </summary>
+	/// <param name="Param_UnPacked">O valor a ser convertido.</param>
+	/// <param name="Param_Out_Numerador">‎Recebe o valor de alta ordem de 32 bits.‎</param>
+	/// <param name="Param_Out_Denominador">‎Recebe o valor de baixa ordem de 32 bits.‎</param>
+	void _UnpackRatio(UInt64 Param_UnPacked, OutParam Int32% Param_Out_Numerador, OutParam UInt32% Param_Out_Denominador);
+
+	/// <summary>
+	/// ‎Obtém os valores ‎‎UINT32‎‎ de baixa ordem e alta ordem a partir de um valor ‎‎UINT64‎‎ que representa um tamanho.‎
+	/// </summary>
+	/// <param name="Param_UnPacked">O valor a ser convertido.</param>
+	/// <param name="Param_Out_Width">‎Recebe o valor de alta ordem de 32 bits.‎</param>
+	/// <param name="Param_Out_Height">‎Recebe o valor de baixa ordem de 32 bits.</param>
+	void _UnpackSize(UInt64 Param_UnPacked, OutParam UInt32% Param_Out_Width, OutParam UInt32% Param_Out_Height);
+
+	/// <summary>
+	/// ‎Obtém os valores ‎‎UINT32‎‎ de baixa ordem e alta ordem a partir de um valor ‎‎UINT64.‎
+	/// </summary>
+	/// <param name="Param_UnPacked">O valor a ser convertido.</param>
+	/// <param name="Param_Out_High">Recebe o valor de alta ordem de 32 bits.</param>
+	/// <param name="Param_Out_Low">‎Recebe o valor de baixa ordem de 32 bits.</param>
+	/// <returns></returns>
+	void _Unpack2UINT32AsUINT64(UInt64 Param_UnPacked, OutParam UInt32% Param_Out_High, OutParam UInt32% Param_Out_Low);
+
+	/// <summary>
+	/// ‎Desliga um objeto da Media Foundation e libera todos os recursos associados ao objeto.‎
+	/// ‎Esta função é uma função de ajudante que envolve o método ‎‎IMFShutdown::Shutdown.‎‎ A função consulta o objeto para a interface ‎‎IMFShutdown‎‎ e,
+	/// se bem-sucedida, chama ‎‎de Shutdown‎‎ no objeto.‎
+	/// </summary>
+	/// <param name="Param_Objeto">Uma interface base que contém um ponteiro para a interface a ser desligada.</param>
+	/// <returns></returns>
+	CarenResult _MFShutdownObject(ICaren^ Param_Objeto);
+
+	/// <summary>
+	/// Recebe uma lista de transformações (MFTs) da Microsoft Media Foundation que correspondem aos critérios de pesquisa especificados. Essa 
+	/// função amplia a função _MFTEnumEx para permitir que aplicativos externos e componentes internos descubram os MFTs de hardware que 
+	/// correspondem a um adaptador de vídeo específico.
+	/// </summary>
+	/// <param name="Param_GuidCategory">Um GUID que especifica a categoria de CMTs para enumerar. Para obter uma lista de categorias MFT, 
+	/// consulte a estrutura (GUIDs::GUIDs_MFT_CATEGORY).</param>
+	/// <param name="Param_Flags">Um OR bitwise de zero ou mais bandeiras da enumeração CA_MFT_ENUM_FLAG.</param>
+	/// <param name="Param_InputType">uma estrutura CA_MFT_REGISTER_TYPE_INFO que especifica um tipo de mídia de entrada para combinar.
+	/// Este parâmetro pode ser NULO. Se NULO, todos os tipos de saída são combinados.</param>
+	/// <param name="Param_OutputType">Uma estrutura MFT_REGISTER_TYPE_INFO que especifica um tipo de mídia de saída para combinar.
+	/// Este parâmetro pode ser NULO. Se NULO, todos os tipos de saída ão combinados.</param>
+	/// <param name="Param_Atributos">Uma interface (ICarenMFAttributes) que permite o acesso à loja de atributos padrão. Para especificar um 
+	/// adaptador de hardware específico para o qual os MFTs são consultados, defina o atributo MFT_ENUM_ADAPTER_LUID ao LUID do adaptador. Se 
+	/// você fizer isso, você também deve especificar a MFT_ENUM_FLAG_HARDWARE bandeira ou ER_E_INVALIDARG é devolvida.</param>
+	/// <param name="Param_Out_ArrayMFTActivate">Recebe uma matriz de ponteiros de interface DO FMIActivate. Cada ponteiro representa um objeto de ativação de um MFT que corresponde aos critérios de pesquisa. A função aloca a memória para a matriz.</param>
+	/// <param name="Param_Out_CountMFTs"></param>
+	/// <returns></returns>
+	CarenResult _MFTEnum2(
+		String^ Param_GuidCategory,
+		CA_MFT_ENUM_FLAG Param_Flags,
+		CA_MFT_REGISTER_TYPE_INFO^ Param_InputType,
+		CA_MFT_REGISTER_TYPE_INFO^ Param_OutputType,
+		ICarenMFAttributes^ Param_Atributos,
+		OutParam cli::array<ICarenMFActivate^>^% Param_Out_ArrayMFTActivate,
+		OutParam UInt32% Param_Out_CountMFTs
+	);
+
 	CarenResult _MFTEnumEx();
+
 	CarenResult _MFTRegister();
 	CarenResult _MFTRegisterLocal();
 	CarenResult _MFTRegisterLocalByCLSID();

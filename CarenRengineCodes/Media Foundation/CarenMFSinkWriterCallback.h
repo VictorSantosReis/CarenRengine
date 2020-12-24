@@ -37,10 +37,10 @@ using namespace CarenRengine::SDKBase::Interfaces;
 using namespace CarenRengine::SDKUtilidades;
 
 /// <summary>
-/// [Concluido - Fase de Testes] - Classe responsável por conter os eventos chamados pelo coletor de Gravador para notificar o usuário sobre a conclusão
+/// (Concluido - Fase de Testes) - Classe responsável por conter os eventos chamados pelo coletor de Gravador para notificar o usuário sobre a conclusão
 /// dos métodos assincronos (Finalizar e PlaceMarker).
 /// </summary>
-public ref class CarenMFMediaSinkWriterCallback :public ICarenMFMediaSinkWriterCallback
+public ref class CarenMFSinkWriterCallback :public ICarenMFSinkWriterCallback
 {
 	/////////////////////////////////////////
 	//Objeto gerenciado por essa interface.//
@@ -50,10 +50,16 @@ public ref class CarenMFMediaSinkWriterCallback :public ICarenMFMediaSinkWriterC
 	IMFSinkWriterCallback* PonteiroTrabalho = NULL;
 
 
-
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
-	~CarenMFMediaSinkWriterCallback();
+	/// <summary>
+	/// Inicializa a interface e permite que o usuário decida se a biblioteca deve criar a interface ou vai iniciar sem um ponteiro 
+	/// de trabalho. Se (Param_CriarInterface) for TRUE, o construtor vai criar uma implementação interna da (IMFSinkWriterCallback).
+	/// </summary>
+	/// <param name="Param_CriarInterface">Um valor booleano, TRUE indica que deve criar uma nova interface intermanete, caso contario, FALSE.</param>
+	CarenMFSinkWriterCallback(Boolean Param_CriarInterface);
+
+	~CarenMFSinkWriterCallback();
 
 
 	//Variaveis Internas.
@@ -81,8 +87,6 @@ public:
 	}
 
 
-
-
 	//Eventos
 public:
 	/////////////////////////////////////////////
@@ -93,12 +97,12 @@ public:
 	/// <summary>
 	/// Evento chamado quando a operação assincrono do método (ICarenMFSinkWriter.Finalize) é conlcuido.
 	/// </summary>
-	virtual event ICarenMFMediaSinkWriterCallback::Delegate_OnFinalize^ OnFinalize;
+	virtual event ICarenMFSinkWriterCallback::Delegate_OnFinalize^ OnFinalize;
 
 	/// <summary>
 	/// Evento chamado quando a operação assincrono do método (ICarenMFSinkWriter.PlaceMarker) é conlcuido.
 	/// </summary>
-	virtual event ICarenMFMediaSinkWriterCallback::Delegate_OnMarker^ OnMarker;
+	virtual event ICarenMFSinkWriterCallback::Delegate_OnMarker^ OnMarker;
 
 
 
@@ -137,56 +141,9 @@ private:
 	GCHandle gHandle_Delegate_OnMarker;
 
 
-
-	//Cria uma instância dessa classe (Estático)
-public:
-	/// <summary>
-	/// Método responsável por criar uma instância da classe responsável por receber notificações de eventos gerados
-	/// pelo Gravador de Coletor(ICarenMFSinkWriter).
-	/// </summary>
-	/// <param name="Param_Out_Callback">Recebe a interface que possui a classe de notificação de eventos</param>
-	static CarenResult CriarInstanciaCallback([Out] ICarenMFMediaSinkWriterCallback^% Param_Out_Callback)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Variavel que contém o resultado COM.
-		HRESULT Hr = E_FAIL;
-
-		//Variaveis utilizadas no método.
-		IMFSinkWriterCallback* pCallback = NULL;
-		ICarenMFMediaSinkWriterCallback^ InterfaceCallback = nullptr;
-
-		//Cria o Callback 
-		pCallback = new CLN_IMFSinkWriterCallback();
-
-		//Cria a interface gerenciada que vai conter o Callback.
-		InterfaceCallback = gcnew CarenMFMediaSinkWriterCallback();
-
-		//Define o ponteiro do Callback na interface
-		InterfaceCallback->AdicionarPonteiro(pCallback);
-
-		//Define a interface no parametro de saida.
-		Param_Out_Callback = InterfaceCallback;
-		
-		//Define sucesso na operção.
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-		//Retorna o resultado.
-		return Resultado;
-	}
-
-
-
-
 	///////////////////////////////////////////////////////
 	//A parti daqui vai conter os métodos das interfaces.//
 	///////////////////////////////////////////////////////
-
-
-	//
-	// ICaren
-	//
 
 
 	//Métodos da interface (ICaren)
@@ -269,7 +226,6 @@ public:
 	virtual void Finalizar();
 
 
-
 	//Métodos da interface proprietaria.
 public:
 	/// <summary>
@@ -281,7 +237,6 @@ public:
 	/// Método responsável por liberar todos os registros de eventos resgistrados anteriormente. Chame esse método após uma chamada para (RegistrarCallback).
 	/// </summary>
 	virtual void UnRegisterCallback();
-
 
 
 	//Métodos que recebem os eventos da classe nativa (CLN_IMFSourceReaderCallback)

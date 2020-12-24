@@ -19,12 +19,19 @@ limitations under the License.
 #include "CarenMFMedia2DBuffer.h"
 
 
+
 //Destruidor.
 CarenMFMedia2DBuffer::~CarenMFMedia2DBuffer()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor.
+CarenMFMedia2DBuffer::CarenMFMedia2DBuffer()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
+	
 
 //
 // Métodos da interface ICaren

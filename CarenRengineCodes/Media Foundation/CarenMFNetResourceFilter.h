@@ -50,8 +50,10 @@ public ref class CarenMFNetResourceFilter : public ICarenMFNetResourceFilter
 	//Contrutores e destuidor da classe.
 public:
 	/// <summary>
-	/// Inicializa a classe com uma implementação da interface nativa (IMFNetResourceFilter) criada internamente.
+	/// Inicializa a interface e permite que o usuário decida se a biblioteca deve criar a interface ou vai iniciar sem um ponteiro 
+	/// de trabalho. Se (Param_CriarInterface) for TRUE, o construtor vai criar uma implementação interna da (IMFNetResourceFilter).
 	/// </summary>
+	/// <param name="Param_CriarInterface">Um valor booleano, TRUE indica que deve criar uma nova interface intermanete, caso contario, FALSE.</param>
 	CarenMFNetResourceFilter();
 	
 	~CarenMFNetResourceFilter();
@@ -131,7 +133,6 @@ private:
 	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnSendingRequest).
 	/// </summary>
 	GCHandle gHandle_Delegate_OnSendingRequest;
-
 
 
 	///////////////////////////////////////////////////////

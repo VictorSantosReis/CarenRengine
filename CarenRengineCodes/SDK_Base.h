@@ -19,7 +19,9 @@ limitations under the License.
 #include "pch.h"
 #include "Caren/CarenHMONITOR.h"
 #include "CarenGuids.h"
-#include "SDK_Caren.h" //Interfaces Base de Caren.
+#include "ParameterResolver/CarenParameterResolver.h"
+#include "SDK_Caren.h"
+
 
 //Importa o namespace base
 using namespace CarenRengine;
@@ -44,7 +46,7 @@ namespace CarenRengine
 			/// <summary>
 			/// Contém todos os GUIDs utilizados pela interface IMFMediaType.
 			/// </summary>
-			public value struct GUIDs_MFAtributos_MediaType
+			public value struct GUIDs_MF_MEDIATYPE_ATTRIBUTES
 			{
 
 				////////////////////////////////////////////////////////////////////
@@ -529,53 +531,53 @@ namespace CarenRengine
 			/// <summary>
 			/// Contém todos os GUIDs para os formatos de (Vídeo) identificaveis pelo Media Foundation.
 			/// </summary>
-			public value struct GUIDs_MFAtributos_FormatosVideo
+			public value struct GUIDs_MF_VIDEO_SUBTYPES
 			{
 				/// <summary>
 				/// Base.
 				/// </summary>
-				literal String^ FormatoVideo_Base = "{00000000-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_Base = "{00000000-0000-0010-8000-00AA00389B71}";
 
 				/// <summary>
 				/// Tipo: (RBG - Descompactado). 
 				/// Descrição: RGB, 8 bits por pixel (BPP). (Layout da mesma memória como D3DFMT_P8.)
 				/// </summary>
-				literal String^ FormatoVideo_RGB8 = "{00000029-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_RGB8 = "{00000029-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: (RBG - Descompactado). 
 				/// Descrição: RGB, 24 bpp.
 				/// </summary>
-				literal String^ FormatoVideo_RGB24 = "{00000014-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_RGB24 = "{00000014-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: (RBG - Descompactado). 
 				/// Descrição: RGB 555, 16 BPP. (Layout da mesma memória como D3DFMT_X1R5G5B5.)
 				/// </summary>
-				literal String^ FormatoVideo_RGB555 = "{00000018-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_RGB555 = "{00000018-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: (RBG - Descompactado). 
 				/// Descrição: RGB 565, 16 BPP. (Layout da mesma memória como D3DFMT_R5G6B5.)
 				/// </summary>
-				literal String^ FormatoVideo_RGB565 = "{00000017-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_RGB565 = "{00000017-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: (RBG - Descompactado). 
 				/// Descrição: RGB, 32 bpp.
 				/// </summary>
-				literal String^ FormatoVideo_RGB32 = "{00000016-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_RGB32 = "{00000016-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: (RBG - Descompactado). 
 				/// Descrição: RGB, 32 bpp com canal alfa.
 				/// </summary>
-				literal String^ FormatoVideo_ARGB32 = "{00000015-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_ARGB32 = "{00000015-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: (RBG - Descompactado). 
 				/// Descrição: RGB, 10 bpp para cada cor e 2 bpp para Alpha. (Layout da mesma memória como D3DFMT_A2B10G10R10)
 				/// </summary>
-				literal String^ FormatoVideo_A2R10G10B10 = "{0000001F-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_A2R10G10B10 = "{0000001F-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: (RBG - Descompactado). 
 				/// Descrição: RGB, 16 bpp com canal alfa. (Layout da mesma memória como D3DFMT_A16B16G16R16F)
 				/// </summary>
-				literal String^ FormatoVideo_A16B16G16R16F = "{00000071-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_A16B16G16R16F = "{00000071-0000-0010-8000-00AA00389B71}";
 
 
 
@@ -589,72 +591,72 @@ namespace CarenRengine
 				/// Tipo: YUV - Palettized. 
 				/// Descrição: Amostragem: 4:4:4 | Embalado ou Planar? Embalado
 				/// </summary>
-				literal String^ FormatoVideo_AI44 = "{34344941-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_AI44 = "{34344941-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: YUV - 8 Bits. 
 				/// Descrição: Amostragem: 4:4:4 | Embalado ou Planar? Embalado
 				/// </summary>
-				literal String^ FormatoVideo_AYUV = "{56555941-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_AYUV = "{56555941-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo:  YUV - 8 Bits. 
 				/// Descrição: Amostragem: 4:2:0 | Embalado ou Planar? Planar
 				/// </summary>
-				literal String^ FormatoVideo_I420 = "{30323449-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_I420 = "{30323449-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo:  YUV - 8 Bits. 
 				/// Descrição: Amostragem: 4:2:0 | Embalado ou Planar? Planar
 				/// </summary>
-				literal String^ FormatoVideo_IYUV = "{56555949-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_IYUV = "{56555949-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: YUV - 8 Bits. 
 				/// Descrição: Amostragem: 4:1:1 | Embalado ou Planar? Planar
 				/// </summary>
-				literal String^ FormatoVideo_NV11 = "{3131564E-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_NV11 = "{3131564E-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo:  YUV - 8 Bits. 
 				/// Descrição: Amostragem: 4:2:0 | Embalado ou Planar? Planar
 				/// </summary>
-				literal String^ FormatoVideo_NV12 = "{3231564E-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_NV12 = "{3231564E-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo:  YUV - 8 Bits. 
 				/// Descrição: Amostragem: 4:2:2 | Embalado ou Planar? Embalado
 				/// </summary>
-				literal String^ FormatoVideo_UYVY = "{59565955-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_UYVY = "{59565955-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo:  YUV - 8 Bits. 
 				/// Descrição: Amostragem: 4:1:1 | Embalado ou Planar? Planar
 				/// </summary>
-				literal String^ FormatoVideo_Y41P = "{50313459-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_Y41P = "{50313459-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo:  YUV - 8 Bits. 
 				/// Descrição: Amostragem: 4:1:1 | Embalado ou Planar? Embalado
 				/// </summary>
-				literal String^ FormatoVideo_Y41T = "{54313459-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_Y41T = "{54313459-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo:  YUV - 8 Bits. 
 				/// Descrição: Amostragem: 4:2:2 | Embalado ou Planar? Embalado
 				/// </summary>
-				literal String^ FormatoVideo_Y42T = "{54323459-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_Y42T = "{54323459-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo:  YUV - 8 Bits. 
 				/// Descrição: Amostragem: 4:2:2 | Embalado ou Planar? Embalado
 				/// </summary>
-				literal String^ FormatoVideo_YUY2 = "{32595559-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_YUY2 = "{32595559-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo:  YUV - 8 Bits. 
 				/// Descrição: Amostragem: 8:4:4 | Embalado ou Planar? Planar
 				/// </summary>
-				literal String^ FormatoVideo_YVU9 = "{39555659-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_YVU9 = "{39555659-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo:  YUV - 8 Bits. 
 				/// Descrição: Amostragem: 4:2:0 | Embalado ou Planar? Planar
 				/// </summary>
-				literal String^ FormatoVideo_YV12 = "{32315659-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_YV12 = "{32315659-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo:  YUV - 8 Bits. 
 				/// Descrição: Amostragem: 4:2:0 | Embalado ou Planar? Embalado
 				/// </summary>
-				literal String^ FormatoVideo_YVYU = "{55595659-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_YVYU = "{55595659-0000-0010-8000-00AA00389B71}";
 
 
 
@@ -666,57 +668,57 @@ namespace CarenRengine
 				/// Tipo: (YUV - 10 Bits). 
 				/// Descrição: Amostragem: 4:2:0 | Embalado ou Planar? Planar
 				/// </summary>
-				literal String^ FormatoVideo_P010 = "{30313050-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_P010 = "{30313050-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: YUV - 16 Bits). 
 				/// Descrição: Amostragem: 4:2:0 | Embalado ou Planar? Planar
 				/// </summary>
-				literal String^ FormatoVideo_P016 = "{36313276-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_P016 = "{36313276-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: (YUV - 10 Bits). 
 				/// Descrição: Amostragem: 4:2:2 | Embalado ou Planar? Planar
 				/// </summary>
-				literal String^ FormatoVideo_P210 = "{30313250-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_P210 = "{30313250-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: (YUV - 16 Bits). 
 				/// Descrição: Amostragem: 4:2:2 | Embalado ou Planar? Planar
 				/// </summary>
-				literal String^ FormatoVideo_P216 = "{36313250-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_P216 = "{36313250-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: YUV - 10 Bits). 
 				/// Descrição: Amostragem: 4:2:2 | Embalado ou Planar? Embalado
 				/// </summary>
-				literal String^ FormatoVideo_v210 = "{30313276-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_v210 = "{30313276-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: (YUV - 16 Bits). 
 				/// Descrição: Amostragem: 4:2:2 | Embalado ou Planar? Embalado
 				/// </summary>
-				literal String^ FormatoVideo_v216 = "{36313276-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_v216 = "{36313276-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: (YUV - 10 Bits). 
 				/// Descrição: Formato: v40 | Amostragem: 4:4:4 | Embalado ou Planar? Embalado
 				/// </summary>
-				literal String^ FormatoVideo_v410 = "{30313476-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_v410 = "{30313476-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: (YUV - 10 Bits). 
 				/// Descrição: Amostragem: 4:2:2 | Embalado ou Planar? Embalado
 				/// </summary>
-				literal String^ FormatoVideo_Y210 = "{30313259-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_Y210 = "{30313259-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: (YUV - 16 Bits). 
 				/// Descrição: Amostragem: 4:2:2 | Embalado ou Planar? Embalado
 				/// </summary>
-				literal String^ FormatoVideo_Y216 = "{36313259-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_Y216 = "{36313259-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: (YUV - 10 Bits). 
 				/// Descrição: Formato: Y40 | Amostragem: 4:4:4 | Embalado ou Planar? Embalado
 				/// </summary>
-				literal String^ FormatoVideo_Y410 = "{30313459-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_Y410 = "{30313459-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: (YUV - 16 Bits). 
 				/// Descrição: Amostragem: 4:2:2 | Embalado ou Planar? Embalado
 				/// </summary>
-				literal String^ FormatoVideo_Y416 = "{36313459-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_Y416 = "{36313459-0000-0010-8000-00AA00389B71}";
 
 
 
@@ -727,15 +729,15 @@ namespace CarenRengine
 				/// <summary>
 				/// Apenas luminância de 8 bits. (BPP). (Layout da mesma memória como D3DFMT_L8).
 				/// </summary>
-				literal String^ FormatoVideo_L8 = "{00000032-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_L8 = "{00000032-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Apenas luminância de 16 bits. (Layout da mesma memória como D3DFMT_L16).
 				/// </summary>
-				literal String^ FormatoVideo_L16 = "{00000051-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_L16 = "{00000051-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Profundidade de buffer de 16 bits z. (Layout da mesma memória como D3DFMT_D16).
 				/// </summary>
-				literal String^ FormatoVideo_D16 = "{00000050-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_D16 = "{00000050-0000-0010-8000-00AA00389B71}";
 
 
 
@@ -746,308 +748,308 @@ namespace CarenRengine
 				/// <summary>
 				/// Tipo: (Codificado - DVCPRO 25 (525-60 ou 625-50))
 				/// </summary>
-				literal String^ FormatoVideo_DV25 = "{35327664-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_DV25 = "{35327664-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: (Codificado - DVCPRO 50 (525-60 ou 625-50))
 				/// </summary>
-				literal String^ FormatoVideo_DV50 = "{30357664-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_DV50 = "{30357664-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: (Codificado - DVC/vídeo DV)
 				/// </summary>
-				literal String^ FormatoVideo_DVC = "{20637664-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_DVC = "{20637664-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: (Codificado - DVCPRO 100 (1080/60i, 1080/50i ou 720/60P))
 				/// </summary>
-				literal String^ FormatoVideo_DVH1 = "{31687664-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_DVH1 = "{31687664-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: (Codificado - HD-DVCR (1125-60 ou 1250-50))
 				/// </summary>
-				literal String^ FormatoVideo_DVHD = "{64687664-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_DVHD = "{64687664-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: (Codificado - SDL-DVCR (525-60 ou 625-50))
 				/// </summary>
-				literal String^ FormatoVideo_DVSD = "{64737664-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_DVSD = "{64737664-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: (Codificado - SD-DVCR (525-60 ou 625-50))
 				/// </summary>
-				literal String^ FormatoVideo_DVSL = "{6C737664-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_DVSL = "{6C737664-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: (Codificado - H.263 vídeo)
 				/// </summary>
-				literal String^ FormatoVideo_H263 = "{33363248-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_H263 = "{33363248-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: (Codificado - Vídeo H.264). 
 				/// Descrição: As amostras de mídia contêm dados de Bitstream H.264 com códigos de início e 
 				/// têm o SPS / PPS intercalados.Cada amostra contém uma imagem completa, ou um campo ou um quadro.
 				/// </summary>
-				literal String^ FormatoVideo_H264 = "{34363248-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_H264 = "{34363248-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: (Codificado - H.264 fluxo elementar). 
-				/// Descrição: Esse tipo de mídia é o mesmo que FormatoVideo_H264, exceto exemplos de
+				/// Descrição: Esse tipo de mídia é o mesmo que MFVideoFormat_H264, exceto exemplos de
 				/// mídia contêm um fluxo de bits H.264 fragmentado. Cada amostra pode conter uma imagem parcial; 
 				/// várias imagens completas; ou uma ou mais imagens completas mais uma imagem parcial.
 				/// </summary>
-				literal String^ FormatoVideo_H264_ES = "{3F40F4F0-5622-4FF8-B6D8-A17A584BEE5E}";
+				literal String^ MFVideoFormat_H264_ES = "{3F40F4F0-5622-4FF8-B6D8-A17A584BEE5E}";
 				/// <summary>
 				/// Tipo: (Codificado - Vídeo H. 265)
 				/// </summary>
-				literal String^ FormatoVideo_H265 = "{35363248-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_H265 = "{35363248-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: (Codificado). 
 				/// Descrição: O perfil principal do HEVC e o perfil de imagem imóvel principal.Cada amostra contém uma imagem completa.
 				///	Com suporte no Windows 8.1 e posterior.O perfil principal do HEVC e o principal Perfil de imagem ainda de fluxo elementar.
 				/// </summary>
-				literal String^ FormatoVideo_HEVC = "{43564548-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_HEVC = "{43564548-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: (Codificado). 
 				/// Descrição: Esse tipo de mídia é o mesmo que MFVideoFormat_HEVC, exceto amostras de mídia contêm um fluxo de bits 
 				/// HEVC fragmentado. Cada amostra pode conter uma imagem parcial; várias imagens completas; ou uma ou mais 
 				/// imagens completas mais uma imagem parcial. Com suporte no Windows 8.1 e posterior.
 				/// </summary>
-				literal String^ FormatoVideo_HEVC_ES = "{53564548-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_HEVC_ES = "{53564548-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: (Codificado - Vídeo MPEG-4 parte 2). 
 				/// </summary>
-				literal String^ FormatoVideo_M4S2 = "{3253344D-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_M4S2 = "{3253344D-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: (Codificado - Motion JPEG). 
 				/// </summary>
-				literal String^ FormatoVideo_MJPG = "{47504A4D-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_MJPG = "{47504A4D-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: (Codificado). 
 				/// Descrição: Microsoft MPEG 4 codec versão 3. Esse codec não é mais suportado.
 				/// </summary>
-				literal String^ FormatoVideo_MP43 = "{3334504D-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_MP43 = "{3334504D-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: (Codificado - ISO MPEG 4 codec versão 1). 
 				/// </summary>
-				literal String^ FormatoVideo_MP4S = "{5334504D-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_MP4S = "{5334504D-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: (Codificado - Vídeo MPEG-4 parte 2). 
 				/// </summary>
-				literal String^ FormatoVideo_MP4V = "{5634504D-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_MP4V = "{5634504D-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: (Codificado - Vídeo MPEG-2). 
 				/// </summary>
-				literal String^ FormatoVideo_MPEG2 = "{E06D8026-DB46-11CF-B4D1-00805F6CBBEA}";
+				literal String^ MFVideoFormat_MPEG2 = "{E06D8026-DB46-11CF-B4D1-00805F6CBBEA}";
 				/// <summary>
 				/// Tipo: (Codificado - VP8 vídeo). 
 				/// </summary>
-				literal String^ FormatoVideo_VP80 = "{30385056-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_VP80 = "{30385056-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: (Codificado - VP9 vídeo). 
 				/// </summary>
-				literal String^ FormatoVideo_VP90 = "{30395056-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_VP90 = "{30395056-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: (Codificado - Vídeo MPEG-1). 
 				/// </summary>
-				literal String^ FormatoVideo_MPG1 = "{3147504D-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_MPG1 = "{3147504D-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: (Codificado). 
 				/// Descrição: Windows Media Screen codec versão 1.
 				/// </summary>
-				literal String^ FormatoVideo_MSS1 = "{3153534D-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_MSS1 = "{3153534D-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: (Codificado). 
 				/// Descrição: Windows Media Video 9 Screen codec.
 				/// </summary>
-				literal String^ FormatoVideo_MSS2 = "{3253534D-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_MSS2 = "{3253534D-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: (Codificado). 
 				/// Descrição: Windows Media Video Codec versão 7.
 				/// </summary>
-				literal String^ FormatoVideo_WMV1 = "{31564D57-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_WMV1 = "{31564D57-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: (Codificado). 
 				/// Descrição: Codec Windows Media Video 8.
 				/// </summary>
-				literal String^ FormatoVideo_WMV2 = "{32564D57-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_WMV2 = "{32564D57-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: (Codificado). 
 				/// Descrição: Codec Windows Media Video 9.
 				/// </summary>
-				literal String^ FormatoVideo_WMV3 = "{33564D57-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_WMV3 = "{33564D57-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: (Codificado - SMPTE 421M ("VC-1")). 
 				/// </summary>
-				literal String^ FormatoVideo_WVC1 = "{31435657-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_WVC1 = "{31435657-0000-0010-8000-00AA00389B71}";
 				/// <summary>
 				/// Tipo: (Codificado). 
 				/// Descrição: 8-bit por canal planar YUV 4:2:0 vídeo
 				/// </summary>
-				literal String^ FormatoVideo_420O = "{4F303234-0000-0010-8000-00AA00389B71}";
+				literal String^ MFVideoFormat_420O = "{4F303234-0000-0010-8000-00AA00389B71}";
 			};
 
 			/// <summary>
 			/// Contém todos os GUIDs para os formatos de (Áudio) identificaveis pelo Media Foundation.
 			/// </summary>
-			public value struct GUIDs_MFAtributos_FormatosAudio
+			public value struct GUIDs_MF_AUDIO_SUBTYPES
 			{
 				/// <summary>
 				/// Áudio base.
 				/// </summary>
-				literal String^ FromatoAudio_Base = "{00000000-0000-0010-8000-00AA00389B71}";
+				literal String^ MFAudioFormat_Base = "{00000000-0000-0010-8000-00AA00389B71}";
 
 				/// <summary>
 				/// Codificação avançada de áudio (AAC).
 				/// Esse subtipo é usado para AAC contido em um arquivo AVI com uma marca de formato de áudio igual a 0x00FF.
 				/// Código FOURCC: WAVE_FORMAT_RAW_AAC1 (0x00FF)
 				///</summary>
-				literal String^ FormatoAudio_RAW_ACC1 = "{000000FF-0000-0010-8000-00AA00389B71}";
+				literal String^ MFAudioFormat_RAW_ACC1 = "{000000FF-0000-0010-8000-00AA00389B71}";
 
 				/// <summary>
 				/// Codificação avançada de áudio (AAC).
 				/// Nota: Equivalente a MEDIASUBTYPE_MPEG_HEAAC
 				/// Código FOURCC: WAVE_FORMAT_MPEG_HEAAC (0x1610)
 				/// </summary>
-				literal String^ FormatoAudio_AAC = "{00001610-0000-0010-8000-00AA00389B71}";
+				literal String^ MFAudioFormat_AAC = "{00001610-0000-0010-8000-00AA00389B71}";
 
 				/// <summary>
 				/// Apple Lossless Codec de áudio
 				/// (Com suporte no Windows 10 e posterior)
 				/// Código FOURCC: WAVE_FORMAT_ALAC (0x6C61)
 				/// </summary>
-				literal String^ FormatoAudio_ALAC = "{00006C61-0000-0010-8000-00AA00389B71}";
+				literal String^ MFAudioFormat_ALAC = "{00006C61-0000-0010-8000-00AA00389B71}";
 
 				/// <summary>
 				/// Adaptativo multi-taxa de áudio
 				/// (Com suporte no Windows 8.1 e posterior)
 				/// Código FOURCC: WAVE_FORMAT_AMR_NB
 				/// </summary>
-				literal String^ FormatoAudio_AMR_NB = "{00007361-0000-0010-8000-00AA00389B71}";
+				literal String^ MFAudioFormat_AMR_NB = "{00007361-0000-0010-8000-00AA00389B71}";
 
 				/// <summary>
 				/// Adaptativo multi-taxa de banda larga de áudio
 				/// (Com suporte no Windows 8.1 e posterior)
 				/// Código FOURCC: WAVE_FORMAT_AMR_WB
 				/// </summary>
-				literal String^ FormatoAudio_AMR_WB = "{00007362-0000-0010-8000-00AA00389B71}";
+				literal String^ MFAudioFormat_AMR_WB = "{00007362-0000-0010-8000-00AA00389B71}";
 
 				/// <summary>
 				/// (Com suporte no Windows 8.1 e posterior).
 				/// Código FOURCC: WAVE_FORMAT_AMR_WP
 				/// </summary>
-				literal String^ FormatoAudio_AMR_WP = "{00007363-0000-0010-8000-00AA00389B71}";
+				literal String^ MFAudioFormat_AMR_WP = "{00007363-0000-0010-8000-00AA00389B71}";
 
 				/// <summary>
 				/// Dolby Digital (AC-3).
 				/// Mesmo valor GUID como MEDIASUBTYPE_DOLBY_AC3.
 				/// Código FOURCC: Nenhum.
 				/// </summary>
-				literal String^ FormatoAudio_Dolby_AC3 = "{E06D802C-DB46-11CF-B4D1-00805F6CBBEA}";
+				literal String^ MFAudioFormat_Dolby_AC3 = "{E06D802C-DB46-11CF-B4D1-00805F6CBBEA}";
 
 				/// <summary>
 				/// Áudio Dolby AC-3 através da interface digital Sony/Philips (S/PDIF).
 				/// Código FOURCC: WAVE_FORMAT_DOLBY_AC3_SPDIF (0x0092)
 				/// </summary>
-				literal String^ FormatoAudio_Dolby_AC3_SPDIF = "{00000092-0000-0010-8000-00AA00389B71}";
+				literal String^ MFAudioFormat_Dolby_AC3_SPDIF = "{00000092-0000-0010-8000-00AA00389B71}";
 
 				/// <summary>
 				/// Dolby Digital Plus.
 				/// Código FOURCC: Nenhum
 				/// </summary>
-				literal String^ FormatoAudio_Dolby_DDPlus = "{A7FB87AF-2D02-42FB-A4D4-05CD93843BDD}";
+				literal String^ MFAudioFormat_Dolby_DDPlus = "{A7FB87AF-2D02-42FB-A4D4-05CD93843BDD}";
 
 				/// <summary>
 				/// Dados de áudio criptografados usados com o caminho de áudio seguro.
 				/// Código FOURCC: WAVE_FORMAT_DRM (0x0009)
 				/// </summary>
-				literal String^ FormatoAudio_DRM = "{00000009-0000-0010-8000-00AA00389B71}";
+				literal String^ MFAudioFormat_DRM = "{00000009-0000-0010-8000-00AA00389B71}";
 
 				/// <summary>
 				///	Digital Theater Systems (DTS) de áudio.
 				/// Código FOURCC: WAVE_FORMAT_DTS (0x0008)
 				/// </summary>
-				literal String^ FormatoAudio_DTS = "{00000008-0000-0010-8000-00AA00389B71}";
+				literal String^ MFAudioFormat_DTS = "{00000008-0000-0010-8000-00AA00389B71}";
 
 				/// <summary>
 				/// Free Lossless Codec de áudio
 				/// (Com suporte no Windows 10 e posterior)
 				/// Código FOURCC: WAVE_FORMAT_FLAC (0xF1AC)
 				/// </summary>
-				literal String^ FormatoAudio_FLAC = "{0000F1AC-0000-0010-8000-00AA00389B71}";
+				literal String^ MFAudioFormat_FLAC = "{0000F1AC-0000-0010-8000-00AA00389B71}";
 
 				/// <summary>
 				/// Áudio de ponto flutuante IEEE descompactado.
 				/// Código FOURCC: WAVE_FORMAT_IEEE_FLOAT (0x0003)
 				/// </summary>
-				literal String^ FormatoAudio_Float = "{00000003-0000-0010-8000-00AA00389B71}";
+				literal String^ MFAudioFormat_Float = "{00000003-0000-0010-8000-00AA00389B71}";
 
 				/// <summary>
 				/// Áudio de ponto flutuante IEEE descompactado.
 				///  Código FOURCC: Nenhum
 				/// </summary>
-				literal String^ FormatoAudio_Float_SpatialObjects = "{FA39CD94-BC64-4AB1-9B71-DCD09D5A7E7A}";
+				literal String^ MFAudioFormat_Float_SpatialObjects = "{FA39CD94-BC64-4AB1-9B71-DCD09D5A7E7A}";
 
 				/// <summary>
 				/// MPEG Audio Layer-3 (MP3).
 				/// Código FOURCC: WAVE_FORMAT_MPEGLAYER3 (0x0055)
 				/// </summary>
-				literal String^ FormatoAudio_MP3 = "{00000055-0000-0010-8000-00AA00389B71}";
+				literal String^ MFAudioFormat_MP3 = "{00000055-0000-0010-8000-00AA00389B71}";
 
 				/// <summary>
 				/// Payload de áudio MPEG-1.
 				/// Código FOURCC: WAVE_FORMAT_MPEG (0x0050)
 				/// </summary>
-				literal String^ FormatoAudio_MPEG = "{00000050-0000-0010-8000-00AA00389B71}";
+				literal String^ MFAudioFormat_MPEG = "{00000050-0000-0010-8000-00AA00389B71}";
 
 				/// <summary>
 				/// Codec de voz do Windows Media Audio 9.
 				/// Código FOURCC: WAVE_FORMAT_WMAVOICE9 (0x000A)
 				/// </summary>
-				literal String^ FormatoAudio_MSP1 = "{0000000A-0000-0010-8000-00AA00389B71}";
+				literal String^ MFAudioFormat_MSP1 = "{0000000A-0000-0010-8000-00AA00389B71}";
 
 				/// <summary>
 				/// Opus
 				/// (Com suporte no Windows 10 e posterior)
 				/// Código FOURCC: WAVE_FORMAT_OPUS (0x704F)
 				/// </summary>
-				literal String^ FormatoAudio_Opus = "{0000704F-0000-0010-8000-00AA00389B71}";
+				literal String^ MFAudioFormat_Opus = "{0000704F-0000-0010-8000-00AA00389B71}";
 
 				/// <summary>
 				/// Áudio PCM descompactado.
 				/// Código FOURCC: WAVE_FORMAT_PCM (1)
 				/// </summary>
-				literal String^ FormatoAudio_PCM = "{00000001-0000-0010-8000-00AA00389B71}";
+				literal String^ MFAudioFormat_PCM = "{00000001-0000-0010-8000-00AA00389B71}";
 
 				/// <summary>
 				/// {Não disponível}
-				/// QCELP (Qualcomm Code excitação linear Prediction) de áudio.
+				/// QCELP (Qualcomm Code Excited Linear Prediction) de áudio.
 				/// Nota: Não disponivel nessa plataforma.
 				/// Código FOURCC: Nenhum
 				/// </summary>
-				literal String^ FormatoAudio_QCELP = "";
+				literal String^ MFAudioFormat_QCELP = "";
 
 				/// <summary>
 				/// Windows Media Audio 9 Professional codec sobre S/PDIF.
 				/// Código FOURCC: WAVE_FORMAT_WMASPDIF (0x0164)
 				/// </summary>
-				literal String^ FormatoAudio_WMASPDIF = "{00000164-0000-0010-8000-00AA00389B71}";
+				literal String^ MFAudioFormat_WMASPDIF = "{00000164-0000-0010-8000-00AA00389B71}";
 
 				/// <summary>
 				/// Windows Media Audio 9 Lossless Codec ou Windows Media Audio 9.1 Codec.
 				/// Código FOURCC: WAVE_FORMAT_WMAUDIO_LOSSLESS (0x0163)
 				/// </summary>
-				literal String^ FormatoAudio_WMAudio_Lossless = "{00000163-0000-0010-8000-00AA00389B71}";
+				literal String^ MFAudioFormat_WMAudio_Lossless = "{00000163-0000-0010-8000-00AA00389B71}";
 
 				/// <summary>
 				/// Codec do Windows Media Audio 8, codec do Windows Media Audio 9 ou codec 
 				/// de 9.1 do Windows Media Audio.
 				/// Código FOURCC: WAVE_FORMAT_WMAUDIO2 (0x0161)
 				/// </summary>
-				literal String^ FormatoAudio_WMAudioV8 = "{00000161-0000-0010-8000-00AA00389B71}";
+				literal String^ MFAudioFormat_WMAudioV8 = "{00000161-0000-0010-8000-00AA00389B71}";
 
 				/// <summary>
 				/// Codec Windows Media Audio 9 Professional ou codec Windows Media Audio 9.1 Professional.
 				/// Código FOURCC: WAVE_FORMAT_WMAUDIO3 (0x0162)
 				/// </summary>
-				literal String^ FormatoAudio_WMAudioV9 = "{00000162-0000-0010-8000-00AA00389B71}";
+				literal String^ MFAudioFormat_WMAudioV9 = "{00000162-0000-0010-8000-00AA00389B71}";
 
 				/// <summary>
 				/// Não é usado.
 				/// Código FOURCC: WAVE_FORMAT_DTS (0x0008)
 				/// </summary>
-				literal String^ FormatoAudio_ADTS = "{00001600-0000-0010-8000-00AA00389B71}";
+				literal String^ MFAudioFormat_ADTS = "{00001600-0000-0010-8000-00AA00389B71}";
 			};
 
 			/// <summary>
@@ -1840,7 +1842,7 @@ namespace CarenRengine
 			/// <summary>
 			/// Contém todos os GUIDs de serviço utilizado pela biblioteca.
 			/// </summary>
-			public value struct GUIDs_MFInterfacesServico
+			public value struct GUIDs_MF_SERVICE_INTERFACES
 			{
 				/// <summary>
 				/// Interfaces: IMFMetadataProvider
@@ -3665,7 +3667,7 @@ namespace CarenRengine
 				literal String^ GUID_CA_INTF_MFMidiaSinkWriter = "{37386B09-9CCD-4F48-B5D3-8A71C8B098F1}";
 
 				/// <summary>
-				/// Guid da interface: ICarenMFMediaSinkWriterCallback
+				/// Guid da interface: ICarenMFSinkWriterCallback
 				/// </summary>
 				literal String^ GUID_CA_INTF_MFMidiaSinkWriterCallback = "{1F2A9FB7-403A-477A-A781-A0F072FBE15C}";
 
@@ -4718,7 +4720,6 @@ namespace CarenRengine
 				MF_ATTRIBUTES_MATCH_SMALLER
 			};
 
-
 			/// <summary>
 			/// (tagSTATFLAG) - Os valores de enumeração indicam se o método deve tentar retornar um nome no membro pwcsName da estrutura CA_STATSTG. Os valores são usados nos 
 			/// métodos ICarenStream::Stat métodos para salvar a memória quando o membro do nome pwcs não for necessário.
@@ -4764,8 +4765,7 @@ namespace CarenRengine
 
 				CA_STGC_CONSOLIDATE = 8
 			};
-
-			
+		
 			/// <summary>
 			/// (tagSTREAM_SEEK) - Enumera valores que especificam a origem a partir da qual calcular o novo local de ponto de busca. Eles são usados para o parâmetro (Param_Origem) 
 			/// no método ICarenStream::Seek. A nova posição de busca é calculada usando esse valor e o parâmetro (Param_Deslocamento).
@@ -4830,10 +4830,26 @@ namespace CarenRengine
 			};
 
 			/// <summary>
-			/// Define o tipo de dados para (Emparelhar) uma Chave/Valor.
-			/// Essa enumeração deriva da enumeração não gerenciada: _MF_ATTRIBUTE_TYPE
+			/// (MF_ATTRIBUTE_SERIALIZE_OPTIONS) - Enumera valores que ‎definem bandeiras para serializar e deseralizar lojas de atributos.‎
+			/// </summary>	
+			public enum class CA_MF_ATTRIBUTE_SERIALIZE_OPTIONS
+			{
+				/// <summary>
+				/// Utilizado para suporte. Não faz parte da enumeração original.
+				/// </summary>
+				Zero = 0x0,
+
+				/// <summary>
+				/// ‎Se esta bandeira estiver definida, os ponteiros ‎‎IUnknown‎‎ na loja de atributos ão empacotados de e para o fluxo. Se esta bandeira 
+				/// estiver ausente, os ponteiros ‎‎IUnknown‎‎ na loja de atributos não ão empacotados ou serializados.‎
+				/// </summary>
+				MF_ATTRIBUTE_SERIALIZE_UNKNOWN_BYREF = 0x1
+			};
+
+			/// <summary>
+			/// (_MF_ATTRIBUTE_TYPE) - Enumera valores que definem o tipo de dados para (Emparelhar) uma Chave/Valor.
 			/// </summary>
-			public enum class CA_ATTRIBUTE_TYPE
+			public enum class CA_MF_ATTRIBUTE_TYPE
 			{
 				/// <summary>
 				/// Valor inteiro não assinado de 32 Bits.
@@ -4869,6 +4885,182 @@ namespace CarenRengine
 				/// Ponteiro desconhecido para um objeto.
 				/// </summary>
 				IUNKNOWN
+			};
+
+			/// <summary>
+			/// (ORIGINAL) - Enumera valores que definem com será a inicialização e criação da interface (ICarenMFQualityManager).
+			/// </summary>
+			public enum class CA_MF_QUALITY_MANAGER_CREATE_TYPE
+			{
+				/// <summary>
+				/// Indica que deve inicializar a classe mais não associar nenhum ponteiro a ela.
+				/// </summary>
+				MF_NULL = 0x0,
+
+				/// <summary>
+				/// Inidica que vai inicializar e criar um ponteiro default para o gerenciador de qualidade através do método (MFCreateStandardQualityManager ).
+				/// </summary>
+				MF_CREATE_TYPE_STANDARD,
+
+				/// <summary>
+				/// Inidica que vai inicializar e criar um ponteiro interno gerenciado pela biblioteca para receber eventos da interface.
+				/// </summary>
+				MF_CREATE_TYPE_INTERNAL
+			};
+			
+			/// <summary>
+			/// (MFPMPSESSION_CREATION_FLAGS) - Enumera bandeiras que definem o comportamento da função MFCreatePMPMediaSession & _MFCreatePMPServer.
+			/// </summary>
+			public enum class CA_MFPMPSESSION_CREATION_FLAGS
+			{
+				/// <summary>
+				/// Utilizado para suporte. Não faz parte das contantes originais.
+				/// </summary>
+				Zero = 0x0,
+
+				/// <summary>
+				/// Se essa bandeira estiver definida, a Sessão de Mídia do Caminho de Mídia Protegida (PMP) será criada em um processo desprotegido. Você pode usar o processo desprotegido para reproduzir conteúdo claro, 
+				/// mas não protegido. Se essa bandeira não for definida, a Sessão de Mídia PMP será criada em um processo protegido. Nesse caso, o processo protegido é usado para conteúdo protegido e conteúdo claro.
+				/// </summary>
+				MFPMPSESSION_UNPROTECTED_PROCESS = 0x1,
+
+				/// <summary>
+				/// NÃO POSSUI DOCUMENTAÇÃO.
+				/// </summary>
+				MFPMPSESSION_IN_PROCESS = 0x2
+			};
+			
+			/// <summary>
+			/// (MF_FILE_ACCESSMODE) - Enumera valores que são utilizados para especificar o modo de acesso durante a abertura de um arquivo.
+			/// </summary>
+			public enum class CA_MF_FILE_ACCESSMODE
+			{
+				/// <summary>
+				/// Modo de leitura.
+				/// </summary>
+				MF_ACCESSMODE_READ = 1,
+
+				/// <summary>
+				/// Modo de gravação.
+				/// </summary>
+				MF_ACCESSMODE_WRITE = 2,
+
+				/// <summary>
+				/// Modo de leitura e gravação.
+				/// </summary>
+				MF_ACCESSMODE_READWRITE = 3
+			};
+	
+			/// <summary>
+			/// (CA_MF_FILE_OPENMODE) - Enumera valores que especificam como abrir ou criar um arquivo.
+			/// </summary>
+			public enum class CA_MF_FILE_OPENMODE
+			{
+				/// <summary>
+				/// Abra um arquivo existente. Falha se o arquivo não existir.
+				/// </summary>
+				MF_OPENMODE_FAIL_IF_NOT_EXIST = 0,
+
+				/// <summary>
+				/// Crie um novo arquivo. Falha se o arquivo já existir.
+				/// </summary>
+				MF_OPENMODE_FAIL_IF_EXIST = 1,
+
+				/// <summary>
+				/// Abra um arquivo existente e trunque-o, de modo que o tamanho seja zero bytes. Falha se o arquivo ainda não existir.
+				/// </summary>
+				MF_OPENMODE_RESET_IF_EXIST = 2,
+
+				/// <summary>
+				/// Se o arquivo não existir, crie um novo arquivo. Se o arquivo existir, abra-o.
+				/// </summary>
+				MF_OPENMODE_APPEND_IF_EXIST = 3,
+
+				/// <summary>
+				/// Crie um novo arquivo. Se o arquivo existir, substitua o arquivo.
+				/// </summary>
+				MF_OPENMODE_DELETE_IF_EXIST = 4
+			};
+			
+			/// <summary>
+			/// (MF_FILE_FLAGS) - Enumera valores que especificam o comportamento ao abrir um arquivo.
+			/// </summary>
+			[FlagsAttribute]
+			public enum class CA_MF_FILE_FLAGS
+			{
+				/// <summary>
+				/// Use o comportamento padrão.
+				/// </summary>
+				MF_FILEFLAGS_NONE = 0,
+
+				/// <summary>
+				/// Abra o arquivo sem cache de sistema.
+				/// </summary>
+				MF_FILEFLAGS_NOBUFFERING = 0x1,
+
+				/// <summary>
+				/// Operações abertas subsequentes podem ter acesso à gravação ao arquivo.
+				/// </summary>
+				MF_FILEFLAGS_ALLOW_WRITE_SHARING = 0x2
+			};
+
+			/// <summary>
+			/// (ORIGINAL)(FALTA DOCUMENTAR) - Enumera valores que especificam o alinhamento de memória para um buffer.
+			/// </summary>
+			public enum class CA_MF_BYTE_ALIGNMENT
+			{
+				/// <summary>
+				/// 
+				/// </summary>
+				CA_MF_1_BYTE_ALIGNMENT = 0x00000000,
+				/// <summary>
+				/// 
+				/// </summary>
+				CA_MF_2_BYTE_ALIGNMENT = 0x00000001,
+				/// <summary>
+				/// 
+				/// </summary>
+				CA_MF_4_BYTE_ALIGNMENT = 0x00000003,
+				/// <summary>
+				/// 
+				/// </summary>
+				CA_MF_8_BYTE_ALIGNMENT = 0x00000007,
+				/// <summary>
+				/// 
+				/// </summary>
+				CA_MF_16_BYTE_ALIGNMENT = 0x0000000f,
+				/// <summary>
+				/// 
+				/// </summary>
+				CA_MF_32_BYTE_ALIGNMENT = 0x0000001f,
+				/// <summary>
+				/// 
+				/// </summary>
+				CA_MF_64_BYTE_ALIGNMENT = 0x0000003f,
+				/// <summary>
+				/// 
+				/// </summary>
+				CA_MF_128_BYTE_ALIGNMENT = 0x0000007f,
+				/// <summary>
+				/// 
+				/// </summary>
+				CA_MF_256_BYTE_ALIGNMENT = 0x000000ff,
+				/// <summary>
+				/// 
+				/// </summary>
+				CA_MF_512_BYTE_ALIGNMENT = 0x000001ff,
+				/// <summary>
+				/// 
+				/// </summary>
+				CA_MF_1024_BYTE_ALIGNMENT = 0x000003ff,
+				/// <summary>
+				/// 
+				/// </summary>
+				CA_MF_2048_BYTE_ALIGNMENT = 0x000007ff,
+				/// <summary>
+				/// 
+				/// </summary>
+				CA_MF_4096_BYTE_ALIGNMENT = 0x00000fff
 			};
 
 			/// <summary>
@@ -5026,7 +5218,7 @@ namespace CarenRengine
 			/// <summary>
 			/// Enumera o (Tipos Principais) de mídia. Essa biblioteca suporta apenas: Áudio e Vídeo. 
 			/// </summary>
-			public enum class CA_Midia_TipoPrincipal
+			public enum class CA_MAJOR_MEDIA_TYPES
 			{
 
 				/// <summary>
@@ -5050,7 +5242,7 @@ namespace CarenRengine
 			/// Enumera o (Subtipo) de mídia. Subtipo contém o formato do tipo principal.
 			/// Essa enumeração só contém os subtipos dos (Tipos Principais) suportados por essa biblioteca.
 			/// </summary>
-			public enum class CA_Midia_SubTipo
+			public enum class CA_MEDIA_SUBTYPES
 			{
 
 				//Essa parte contém os formatios de Áudio.
@@ -5060,160 +5252,160 @@ namespace CarenRengine
 				/// Esse subtipo é usado para AAC contido em um arquivo AVI com uma marca de formato de áudio igual a 0x00FF.
 				/// Código FOURCC: WAVE_FORMAT_RAW_AAC1 (0x00FF)
 				///</summary>
-				FormatoAudio_RAW_ACC1 = 0,
+				MFAudioFormat_RAW_ACC1 = 0,
 
 				/// <summary>
 				/// Codificação avançada de áudio (AAC).
 				/// Nota: Equivalente a MEDIASUBTYPE_MPEG_HEAAC
 				/// Código FOURCC: WAVE_FORMAT_MPEG_HEAAC (0x1610)
 				/// </summary>
-				FormatoAudio_AAC,
+				MFAudioFormat_AAC,
 
 				/// <summary>
 				/// Apple Lossless Codec de áudio
 				/// (Com suporte no Windows 10 e posterior)
 				/// Código FOURCC: WAVE_FORMAT_ALAC (0x6C61)
 				/// </summary>
-				FormatoAudio_ALAC,
+				MFAudioFormat_ALAC,
 
 				/// <summary>
 				/// Adaptativo multi-taxa de áudio
 				/// (Com suporte no Windows 8.1 e posterior)
 				/// Código FOURCC: WAVE_FORMAT_AMR_NB
 				/// </summary>
-				FormatoAudio_AMR_NB,
+				MFAudioFormat_AMR_NB,
 
 				/// <summary>
 				/// Adaptativo multi-taxa de banda larga de áudio
 				/// (Com suporte no Windows 8.1 e posterior)
 				/// Código FOURCC: WAVE_FORMAT_AMR_WB
 				/// </summary>
-				FormatoAudio_AMR_WB,
+				MFAudioFormat_AMR_WB,
 
 				/// <summary>
 				/// (Com suporte no Windows 8.1 e posterior)
 				/// Código FOURCC: WAVE_FORMAT_AMR_WP
 				/// </summary>
-				FormatoAudio_AMR_WP,
+				MFAudioFormat_AMR_WP,
 
 				/// <summary>
 				/// Dolby Digital (AC-3).
 				/// Mesmo valor GUID como MEDIASUBTYPE_DOLBY_AC3.
 				/// Código FOURCC: Nenhum.
 				/// </summary>
-				FormatoAudio_Dolby_AC3,
+				MFAudioFormat_Dolby_AC3,
 
 				/// <summary>
 				/// Áudio Dolby AC-3 através da interface digital Sony/Philips (S/PDIF).
 				/// Código FOURCC: WAVE_FORMAT_DOLBY_AC3_SPDIF (0x0092)
 				/// </summary>
-				FormatoAudio_Dolby_AC3_SPDIF,
+				MFAudioFormat_Dolby_AC3_SPDIF,
 
 				/// <summary>
 				/// Dolby Digital Plus.
 				/// Código FOURCC: Nenhum
 				/// </summary>
-				FormatoAudio_Dolby_DDPlus,
+				MFAudioFormat_Dolby_DDPlus,
 
 				/// <summary>
 				/// Dados de áudio criptografados usados com o caminho de áudio seguro.
 				/// Código FOURCC: WAVE_FORMAT_DRM (0x0009)
 				/// </summary>
-				FormatoAudio_DRM,
+				MFAudioFormat_DRM,
 
 				/// <summary>
 				///	Digital Theater Systems (DTS) de áudio.
 				/// Código FOURCC: WAVE_FORMAT_DTS (0x0008)
 				/// </summary>
-				FormatoAudio_DTS,
+				MFAudioFormat_DTS,
 
 				/// <summary>
 				/// Free Lossless Codec de áudio
 				/// (Com suporte no Windows 10 e posterior)
 				/// Código FOURCC: WAVE_FORMAT_FLAC (0xF1AC)
 				/// </summary>
-				FormatoAudio_FLAC,
+				MFAudioFormat_FLAC,
 
 				/// <summary>
 				/// Áudio de ponto flutuante IEEE descompactado.
 				///  Código FOURCC: WAVE_FORMAT_IEEE_FLOAT (0x0003)
 				/// </summary>
-				FormatoAudio_Float,
+				MFAudioFormat_Float,
 
 				/// <summary>
 				/// Áudio de ponto flutuante IEEE descompactado.
 				///  Código FOURCC: Nenhum
 				/// </summary>
-				FormatoAudio_Float_SpatialObjects,
+				MFAudioFormat_Float_SpatialObjects,
 
 				/// <summary>
 				/// MPEG Audio Layer-3 (MP3).
 				/// Código FOURCC: WAVE_FORMAT_MPEGLAYER3 (0x0055)
 				/// </summary>
-				FormatoAudio_MP3,
+				MFAudioFormat_MP3,
 
 				/// <summary>
 				/// Payload de áudio MPEG-1.
 				/// Código FOURCC: WAVE_FORMAT_MPEG (0x0050)
 				/// </summary>
-				FormatoAudio_MPEG,
+				MFAudioFormat_MPEG,
 
 				/// <summary>
 				/// Codec de voz do Windows Media Audio 9.
 				/// Código FOURCC: WAVE_FORMAT_WMAVOICE9 (0x000A)
 				/// </summary>
-				FormatoAudio_MSP1,
+				MFAudioFormat_MSP1,
 
 				/// <summary>
 				/// Opus
 				/// (Com suporte no Windows 10 e posterior)
 				/// Código FOURCC: WAVE_FORMAT_OPUS (0x704F)
 				/// </summary>
-				FormatoAudio_Opus,
+				MFAudioFormat_Opus,
 
 				/// <summary>
 				/// Áudio PCM descompactado.
 				/// Código FOURCC: WAVE_FORMAT_PCM (1)
 				/// </summary>
-				FormatoAudio_PCM,
+				MFAudioFormat_PCM,
 
 				/// <summary>
 				/// QCELP (Qualcomm Code excitação linear Prediction) de áudio.
 				/// Nota: Não disponivel nessa plataforma.
 				/// Código FOURCC: Nenhum
 				/// </summary>
-				FormatoAudio_QCELP,
+				MFAudioFormat_QCELP,
 
 				/// <summary>
 				/// Windows Media Audio 9 Professional codec sobre S/PDIF.
 				/// Código FOURCC: WAVE_FORMAT_WMASPDIF (0x0164)
 				/// </summary>
-				FormatoAudio_WMASPDIF,
+				MFAudioFormat_WMASPDIF,
 
 				/// <summary>
 				/// Windows Media Audio 9 Lossless Codec ou Windows Media Audio 9.1 Codec.
 				/// Código FOURCC: WAVE_FORMAT_WMAUDIO_LOSSLESS (0x0163)
 				/// </summary>
-				FormatoAudio_WMAudio_Lossless,
+				MFAudioFormat_WMAudio_Lossless,
 
 				/// <summary>
 				/// Codec do Windows Media Audio 8, codec do Windows Media Audio 9 ou codec 
 				/// de 9.1 do Windows Media Audio.
 				/// Código FOURCC: WAVE_FORMAT_WMAUDIO2 (0x0161)
 				/// </summary>
-				FormatoAudio_WMAudioV8,
+				MFAudioFormat_WMAudioV8,
 
 				/// <summary>
 				/// Codec Windows Media Audio 9 Professional ou codec Windows Media Audio 9.1 Professional.
 				/// Código FOURCC: WAVE_FORMAT_WMAUDIO3 (0x0162)
 				/// </summary>
-				FormatoAudio_WMAudioV9,
+				MFAudioFormat_WMAudioV9,
 
 				/// <summary>
 				/// Não é usado.
 				/// Código FOURCC: WAVE_FORMAT_DTS (0x0008)
 				/// </summary>
-				FormatoAudio_ADTS,
+				MFAudioFormat_ADTS,
 
 
 
@@ -5227,44 +5419,44 @@ namespace CarenRengine
 				/// <summary>
 				/// (RBG - Descompactado) - RGB, 8 bits por pixel (BPP). (Layout da mesma memória como D3DFMT_P8.)
 				/// </summary>
-				FormatoVideo_RGB8,
+				MFVideoFormat_RGB8,
 
 				/// <summary>
 				/// (RBG - Descompactado) - RGB 555, 16 BPP. (Layout da mesma memória como D3DFMT_X1R5G5B5).
 				/// </summary>
-				FormatoVideo_RGB555,
+				MFVideoFormat_RGB555,
 
 				/// <summary>
 				/// (RBG - Descompactado) - RGB 565, 16 BPP. (Layout da mesma memória como D3DFMT_R5G6B5).
 				/// </summary>
-				FormatoVideo_RGB565,
+				MFVideoFormat_RGB565,
 
 				/// <summary>
 				/// (RBG - Descompactado) - RGB, 24 bpp.
 				/// </summary>
-				FormatoVideo_RGB24,
+				MFVideoFormat_RGB24,
 
 				/// <summary>
 				/// (RBG - Descompactado) - RGB, 32 bpp.
 				/// </summary>
-				FormatoVideo_RGB32,
+				MFVideoFormat_RGB32,
 
 				/// <summary>
 				/// (RBG - Descompactado) - RGB, 32 bpp com canal alfa.
 				/// </summary>
-				FormatoVideo_ARGB32,
+				MFVideoFormat_ARGB32,
 
 				/// <summary>
 				/// (RBG - Descompactado) - RGB, 10 bpp para cada cor e 2 bpp para Alpha. (Layout da mesma 
 				/// memória como D3DFMT_A2B10G10R10).
 				/// </summary>
-				FormatoVideo_A2R10G10B10,
+				MFVideoFormat_A2R10G10B10,
 
 				/// <summary>
 				/// (RBG - Descompactado) - RGB, 16 bpp com canal alfa. (Layout da mesma memória como 
 				/// D3DFMT_A16B16G16R16F).
 				/// </summary>
-				FormatoVideo_A16B16G16R16F,
+				MFVideoFormat_A16B16G16R16F,
 
 
 				//Tipos YUV de 8 Bits e (Palettized - apenas o primeiro)
@@ -5273,72 +5465,72 @@ namespace CarenRengine
 				/// <summary>
 				/// (YUV - Palettized) - Amostragem: 4:4:4 | Embalado ou Planar? Embalado
 				/// </summary>
-				FormatoVideo_AI44,
+				MFVideoFormat_AI44,
 
 				/// <summary>
 				/// (YUV - 8 Bits) - Amostragem: 4:4:4 | Embalado ou Planar? Embalado
 				/// </summary>
-				FormatoVideo_AYUV,
+				MFVideoFormat_AYUV,
 
 				/// <summary>
 				/// (YUV - 8 Bits) - Amostragem: 4:2:0 | Embalado ou Planar? Planar
 				/// </summary>
-				FormatoVideo_I420,
+				MFVideoFormat_I420,
 
 				/// <summary>
 				/// (YUV - 8 Bits) - Amostragem: 4:2:0 | Embalado ou Planar? Planar
 				/// </summary>
-				FormatoVideo_IYUV,
+				MFVideoFormat_IYUV,
 
 				/// <summary>
 				/// (YUV - 8 Bits) - Amostragem: 4:1:1 | Embalado ou Planar? Planar
 				/// </summary>
-				FormatoVideo_NV11,
+				MFVideoFormat_NV11,
 
 				/// <summary>
 				/// (YUV - 8 Bits) - Amostragem: 4:2:0 | Embalado ou Planar? Planar
 				/// </summary>
-				FormatoVideo_NV12,
+				MFVideoFormat_NV12,
 
 				/// <summary>
 				/// (YUV - 8 Bits) - Amostragem: 4:2:2 | Embalado ou Planar? Embalado
 				/// </summary>
-				FormatoVideo_UYVY,
+				MFVideoFormat_UYVY,
 
 				/// <summary>
 				/// (YUV - 8 Bits) - Amostragem: 4:1:1 | Embalado ou Planar? Planar
 				/// </summary>
-				FormatoVideo_Y41P,
+				MFVideoFormat_Y41P,
 
 				/// <summary>
 				/// (YUV - 8 Bits) - Amostragem: 4:1:1 | Embalado ou Planar? Embalado
 				/// </summary>
-				FormatoVideo_Y41T,
+				MFVideoFormat_Y41T,
 
 				/// <summary>
 				/// (YUV - 8 Bits) - Amostragem: 4:2:2 | Embalado ou Planar? Embalado
 				/// </summary>
-				FormatoVideo_Y42T,
+				MFVideoFormat_Y42T,
 
 				/// <summary>
 				/// (YUV - 8 Bits) - Amostragem: 4:2:2 | Embalado ou Planar? Embalado
 				/// </summary>
-				FormatoVideo_YUY2,
+				MFVideoFormat_YUY2,
 
 				/// <summary>
 				/// (YUV - 9 Bits) - Amostragem: 8:4:4 | Embalado ou Planar? Planar
 				/// </summary>
-				FormatoVideo_YVU9,
+				MFVideoFormat_YVU9,
 
 				/// <summary>
 				/// (YUV - 8 Bits) - Amostragem: 4:2:0 | Embalado ou Planar? Planar
 				/// </summary>
-				FormatoVideo_YV12,
+				MFVideoFormat_YV12,
 
 				/// <summary>
 				/// (YUV - 8 Bits) - Amostragem: 4:2:0 | Embalado ou Planar? Embalado
 				/// </summary>
-				FormatoVideo_YVYU,
+				MFVideoFormat_YVYU,
 
 
 
@@ -5348,57 +5540,57 @@ namespace CarenRengine
 				/// <summary>
 				/// (YUV - 10 Bits) Amostragem: 4:2:0 | Embalado ou Planar? Planar
 				/// </summary>
-				FormatoVideo_P010,
+				MFVideoFormat_P010,
 
 				/// <summary>
 				/// (YUV - 16 Bits) Amostragem: 4:2:0 | Embalado ou Planar? Planar
 				/// </summary>
-				FormatoVideo_P016,
+				MFVideoFormat_P016,
 
 				/// <summary>
 				/// (YUV - 10 Bits) Amostragem: 4:2:2 | Embalado ou Planar? Planar
 				/// </summary>
-				FormatoVideo_P210,
+				MFVideoFormat_P210,
 
 				/// <summary>
 				/// (YUV - 16 Bits) Amostragem: 4:2:2 | Embalado ou Planar? Planar
 				/// </summary>
-				FormatoVideo_P216,
+				MFVideoFormat_P216,
 
 				/// <summary>
 				/// (YUV - 10 Bits) Amostragem: 4:2:2 | Embalado ou Planar? Embalado
 				/// </summary>
-				FormatoVideo_v210,
+				MFVideoFormat_v210,
 
 				/// <summary>
 				/// (YUV - 16 Bits) Amostragem: 4:2:2 | Embalado ou Planar? Embalado
 				/// </summary>
-				FormatoVideo_v216,
+				MFVideoFormat_v216,
 
 				/// <summary>
 				/// (YUV - 10 Bits) Formato: v40 | Amostragem: 4:4:4 | Embalado ou Planar? Embalado
 				/// </summary>
-				FormatoVideo_v410,
+				MFVideoFormat_v410,
 
 				/// <summary>
 				/// (YUV - 10 Bits) Amostragem: 4:2:2 | Embalado ou Planar? Embalado
 				/// </summary>
-				FormatoVideo_Y210,
+				MFVideoFormat_Y210,
 
 				/// <summary>
 				/// (YUV - 16 Bits) Amostragem: 4:2:2 | Embalado ou Planar? Embalado
 				/// </summary>
-				FormatoVideo_Y216,
+				MFVideoFormat_Y216,
 
 				/// <summary>
 				/// (YUV - 10 Bits) Formato: Y40 | Amostragem: 4:4:4 | Embalado ou Planar? Embalado
 				/// </summary>
-				FormatoVideo_Y410,
+				MFVideoFormat_Y410,
 
 				/// <summary>
 				/// (YUV - 16 Bits) Amostragem: 4:2:2 | Embalado ou Planar? Embalado
 				/// </summary>
-				FormatoVideo_Y416,
+				MFVideoFormat_Y416,
 
 
 
@@ -5411,17 +5603,17 @@ namespace CarenRengine
 				/// <summary>
 				/// Apenas luminância de 8 bits. (BPP). (Layout da mesma memória como D3DFMT_L8).
 				/// </summary>
-				FormatoVideo_L8,
+				MFVideoFormat_L8,
 
 				/// <summary>
 				/// Apenas luminância de 16 bits. (Layout da mesma memória como D3DFMT_L16).
 				/// </summary>
-				FormatoVideo_L16,
+				MFVideoFormat_L16,
 
 				/// <summary>
 				/// Profundidade de buffer de 16 bits z. (Layout da mesma memória como D3DFMT_D16).
 				/// </summary>
-				FormatoVideo_D16,
+				MFVideoFormat_D16,
 
 
 
@@ -5434,77 +5626,77 @@ namespace CarenRengine
 				/// DVCPRO 25 (525-60 ou 625-50).
 				/// Código FOURCC: 'dv25' 
 				/// </summary>
-				FormatoVideo_DV25,
+				MFVideoFormat_DV25,
 
 				/// <summary>
 				/// DVCPRO 50 (525-60 ou 625-50).
 				/// Código FOURCC: 'dv50' 
 				/// </summary>
-				FormatoVideo_DV50,
+				MFVideoFormat_DV50,
 
 				/// <summary>
 				/// DVC/vídeo DV.
 				/// Código FOURCC: 'dvc' 
 				/// </summary>
-				FormatoVideo_DVC,
+				MFVideoFormat_DVC,
 
 				/// <summary>
 				/// DVCPRO 100 (1080/60i, 1080/50i ou 720/60P).
 				/// Código FOURCC: 'dvh1'
 				/// </summary>
-				FormatoVideo_DVH1,
+				MFVideoFormat_DVH1,
 
 				/// <summary>
 				/// HD-DVCR (1125-60 ou 1250-50).
 				/// Código FOURCC: 'dvhd'
 				/// </summary>
-				FormatoVideo_DVHD,
+				MFVideoFormat_DVHD,
 
 				/// <summary>
 				/// SDL-DVCR (525-60 ou 625-50).
 				/// Código FOURCC: 'dvsd'  
 				/// </summary>
-				FormatoVideo_DVSD,
+				MFVideoFormat_DVSD,
 
 				/// <summary>
 				/// SD-DVCR (525-60 ou 625-50).
 				/// Código FOURCC: 'dvsl' 
 				/// </summary>
-				FormatoVideo_DVSL,
+				MFVideoFormat_DVSL,
 
 				/// <summary>
 				/// H. 263 vídeo.
 				/// Código FOURCC: 'H263' 
 				/// </summary>
-				FormatoVideo_H263,
+				MFVideoFormat_H263,
 
 				/// <summary>
 				/// Vídeo H.264. As amostras de mídia contêm dados de Bitstream H.264 com códigos de início e 
 				/// têm o SPS / PPS intercalados.Cada amostra contém uma imagem completa, ou um campo ou um quadro.
 				/// Código FOURCC: 'H264'  
 				/// </summary>
-				FormatoVideo_H264,
+				MFVideoFormat_H264,
 
 				/// <summary>
-				/// H.264 fluxo elementar. Esse tipo de mídia é o mesmo que FormatoVideo_H264, exceto exemplos de
+				/// H.264 fluxo elementar. Esse tipo de mídia é o mesmo que MFVideoFormat_H264, exceto exemplos de
 				/// mídia contêm um fluxo de bits H.264 fragmentado. Cada amostra pode conter uma imagem parcial; 
 				/// várias imagens completas; ou uma ou mais imagens completas mais uma imagem parcial.
 				/// Código FOURCC: Não Aplicável
 				/// </summary>
-				FormatoVideo_H264_ES,
+				MFVideoFormat_H264_ES,
 
 				/// <summary>
 				/// Vídeo H. 265.
 				/// Código FOURCC: 'H265' 
 				/// </summary>
-				FormatoVideo_H265,
+				MFVideoFormat_H265,
 
 				/// <summary>
 				/// O perfil principal do HEVC e o perfil de imagem imóvel principal.Cada amostra contém uma imagem completa.
 				///	Com suporte no Windows 8.1 e posterior.O perfil principal do HEVC e o principal Perfil de imagem ainda de fluxo elementar.
 				/// Código FOURCC: 'HEVC'  
 				/// </summary>
-				FormatoVideo_HEVC,
+				MFVideoFormat_HEVC,
 
 				/// <summary>
 				/// Esse tipo de mídia é o mesmo que MFVideoFormat_HEVC, exceto amostras de mídia contêm um fluxo de bits 
@@ -5512,103 +5704,103 @@ namespace CarenRengine
 				/// imagens completas mais uma imagem parcial. Com suporte no Windows 8.1 e posterior.
 				/// Código FOURCC: 'HEVS'  
 				/// </summary>
-				FormatoVideo_HEVC_ES,
+				MFVideoFormat_HEVC_ES,
 
 				/// <summary>
 				/// Vídeo MPEG-4 parte 2.
 				/// Código FOURCC: 'M4S2' 
 				/// </summary>
-				FormatoVideo_M4S2,
+				MFVideoFormat_M4S2,
 
 				/// <summary>
 				/// Motion JPEG.
 				/// Código FOURCC: 'MJPG' 
 				/// </summary>
-				FormatoVideo_MJPG,
+				MFVideoFormat_MJPG,
 
 				/// <summary>
 				/// Microsoft MPEG 4 codec versão 3. Esse codec não é mais suportado.
 				/// Código FOURCC: 'MP43' 
 				/// </summary>
-				FormatoVideo_MP43,
+				MFVideoFormat_MP43,
 
 				/// <summary>
 				/// ISO MPEG 4 codec versão 1.
 				/// Código FOURCC: 'MP4S'	
 				/// </summary>
-				FormatoVideo_MP4S,
+				MFVideoFormat_MP4S,
 
 				/// <summary>
 				/// Vídeo MPEG-4 parte 2.
 				/// Código FOURCC: 'MP4V'
 				/// </summary>
-				FormatoVideo_MP4V,
+				MFVideoFormat_MP4V,
 
 				/// <summary>
 				/// Vídeo MPEG-2.
 				/// Código FOURCC: Não Aplicável
 				/// </summary>
-				FormatoVideo_MPEG2,
+				MFVideoFormat_MPEG2,
 
 				/// <summary>
 				/// VP8 vídeo.
 				/// Código FOURCC: 'MPG1'
 				/// </summary>
-				FormatoVideo_VP80,
+				MFVideoFormat_VP80,
 
 				/// <summary>
 				/// VP9 vídeo.
 				/// Código FOURCC: 'MPG1'
 				/// </summary>
-				FormatoVideo_VP90,
+				MFVideoFormat_VP90,
 
 				/// <summary>
 				/// Vídeo MPEG-1.
 				/// Código FOURCC: 'MPG1'
 				/// </summary>
-				FormatoVideo_MPG1,
+				MFVideoFormat_MPG1,
 
 				/// <summary>
 				/// Windows Media Screen codec versão 1.
 				/// Código FOURCC: 'MSS1'
 				/// </summary>
-				FormatoVideo_MSS1,
+				MFVideoFormat_MSS1,
 
 				/// <summary>
 				/// Windows Media Video 9 Screen codec.
 				/// Código FOURCC: 'MSS2'
 				/// </summary>
-				FormatoVideo_MSS2,
+				MFVideoFormat_MSS2,
 
 				/// <summary>
 				/// Windows Media Video Codec versão 7.
 				/// Código FOURCC:'WMV1'
 				/// </summary>
-				FormatoVideo_WMV1,
+				MFVideoFormat_WMV1,
 
 				/// <summary>
 				/// Codec Windows Media Video 8.
 				/// Código FOURCC: 'WMV2'
 				/// </summary>
-				FormatoVideo_WMV2,
+				MFVideoFormat_WMV2,
 
 				/// <summary>
 				/// Codec Windows Media Video 9.
 				/// Código FOURCC:'WMV3'
 				/// </summary>
-				FormatoVideo_WMV3,
+				MFVideoFormat_WMV3,
 
 				/// <summary>
 				/// SMPTE 421M ("VC-1").
 				/// Código FOURCC: 'WVC1'
 				/// </summary>
-				FormatoVideo_WVC1,
+				MFVideoFormat_WVC1,
 
 				/// <summary>
 				/// 8-bit por canal planar YUV 4:2:0 vídeo.
 				/// Código FOURCC: '420O'
 				/// </summary>
-				FormatoVideo_420O,
+				MFVideoFormat_420O,
 
 				/// <summary>
 				/// Formato da mídia é desconhecido.
@@ -7795,6 +7987,85 @@ MEReservedMax = 10000
 				/// </summary>
 				MF_OBJECT_INVALID = (MF_OBJECT_BYTESTREAM + 1)
 			};
+			
+			/// <summary>
+			/// (D3DFORMAT) - Enumera os vários tipos de formatos de superfície(D3D9).
+			/// </summary>
+			public enum class CA_D3DFORMAT
+			{
+				D3DFMT_UNKNOWN = 0,
+
+				D3DFMT_R8G8B8 = 20,
+				D3DFMT_A8R8G8B8 = 21,
+				D3DFMT_X8R8G8B8 = 22,
+				D3DFMT_R5G6B5 = 23,
+				D3DFMT_X1R5G5B5 = 24,
+				D3DFMT_A1R5G5B5 = 25,
+				D3DFMT_A4R4G4B4 = 26,
+				D3DFMT_R3G3B2 = 27,
+				D3DFMT_A8 = 28,
+				D3DFMT_A8R3G3B2 = 29,
+				D3DFMT_X4R4G4B4 = 30,
+				D3DFMT_A2B10G10R10 = 31,
+				D3DFMT_A8B8G8R8 = 32,
+				D3DFMT_X8B8G8R8 = 33,
+				D3DFMT_G16R16 = 34,
+				D3DFMT_A2R10G10B10 = 35,
+				D3DFMT_A16B16G16R16 = 36,
+
+				D3DFMT_A8P8 = 40,
+				D3DFMT_P8 = 41,
+
+				D3DFMT_L8 = 50,
+				D3DFMT_A8L8 = 51,
+				D3DFMT_A4L4 = 52,
+
+				D3DFMT_V8U8 = 60,
+				D3DFMT_L6V5U5 = 61,
+				D3DFMT_X8L8V8U8 = 62,
+				D3DFMT_Q8W8V8U8 = 63,
+				D3DFMT_V16U16 = 64,
+				D3DFMT_A2W10V10U10 = 67,
+
+				D3DFMT_UYVY = MAKEFOURCC('U', 'Y', 'V', 'Y'),
+				D3DFMT_R8G8_B8G8 = MAKEFOURCC('R', 'G', 'B', 'G'),
+				D3DFMT_YUY2 = MAKEFOURCC('Y', 'U', 'Y', '2'),
+				D3DFMT_G8R8_G8B8 = MAKEFOURCC('G', 'R', 'G', 'B'),
+				D3DFMT_DXT1 = MAKEFOURCC('D', 'X', 'T', '1'),
+				D3DFMT_DXT2 = MAKEFOURCC('D', 'X', 'T', '2'),
+				D3DFMT_DXT3 = MAKEFOURCC('D', 'X', 'T', '3'),
+				D3DFMT_DXT4 = MAKEFOURCC('D', 'X', 'T', '4'),
+				D3DFMT_DXT5 = MAKEFOURCC('D', 'X', 'T', '5'),
+
+				D3DFMT_D16_LOCKABLE = 70,
+				D3DFMT_D32 = 71,
+				D3DFMT_D15S1 = 73,
+				D3DFMT_D24S8 = 75,
+				D3DFMT_D24X8 = 77,
+				D3DFMT_D24X4S4 = 79,
+				D3DFMT_D16 = 80,
+
+				D3DFMT_D32F_LOCKABLE = 82,
+				D3DFMT_D24FS8 = 83,
+				D3DFMT_D32_LOCKABLE = 84,
+				D3DFMT_S8_LOCKABLE = 85,
+				D3DFMT_L16 = 81,
+				D3DFMT_VERTEXDATA = 100,
+				D3DFMT_INDEX16 = 101,
+				D3DFMT_INDEX32 = 102,
+				D3DFMT_Q16W16V16U16 = 110,
+				D3DFMT_MULTI2_ARGB8 = MAKEFOURCC('M', 'E', 'T', '1'),
+				D3DFMT_R16F = 111,
+				D3DFMT_G16R16F = 112,
+				D3DFMT_A16B16G16R16F = 113,
+				D3DFMT_R32F = 114,
+				D3DFMT_G32R32F = 115,
+				D3DFMT_A32B32G32R32F = 116,
+				D3DFMT_CxV8U8 = 117,
+				D3DFMT_A1 = 118,
+				D3DFMT_A2B10G10R10_XR_BIAS = 119,
+				D3DFMT_BINARYBUFFER = 199,
+			};
 
 			/// <summary>
 			/// (D3D_DRIVER_TYPE) - Enumera todas as opções de tipo de Driver para criação de um dispositovo D3D 11.
@@ -8312,7 +8583,6 @@ MEReservedMax = 10000
 				CA_DXGI_USAGE_UNORDERED_ACCESS = DXGI_USAGE_UNORDERED_ACCESS,
 			};
 
-
 			/// <summary>
 			/// (DXGI_SWAP_EFFECT)(FALTA DOCUMENTAR) - Enumera as opções para lidar com pixels em uma superfície de exibição depos de chamar ICarenDXGISwapChain1::Present1.
 			/// </summary>
@@ -8810,7 +9080,7 @@ MEReservedMax = 10000
 			/// (D3D11_FORMAT_SUPPORT)(FALTA DOCUMENTAR) - Enumera quais recursos são suportados por um determinado formato e dados dispositivo.
 			/// </summary>
 			[FlagsAttribute]
-			public enum class CA_D3D11_FORMATO_SUPORTE
+			public enum class CA_D3D11_FORMAT_SUPPORT
 			{
 				D3D11_FORMAT_SUPPORT_BUFFER = 0x1,
 				D3D11_FORMAT_SUPPORT_IA_VERTEX_BUFFER = 0x2,
@@ -10117,31 +10387,36 @@ MEReservedMax = 10000
 				/// </summary>
 				D3D11_FENCE_FLAG_NON_MONITORED = 0x8
 			};
-		
+			
 			/// <summary>
-			/// (MF_TOPOLOGY_TYPE)(FALTA DOCUMENTAR) - Enumera os tipos de nó em uma topologia.
+			/// (MF_TOPOLOGY_TYPE) - Enumera os tipos de nó em uma topologia.
 			/// </summary>
-			public enum class CA_TOPOLOGY_TYPE : Int64
+			public enum class CA_MF_TOPOLOGY_TYPE
 			{
 				/// <summary>
-				/// 
+				/// ‎Nó de saída. Representa um Media Sink na topologia.‎
 				/// </summary>
 				MF_TOPOLOGY_OUTPUT_NODE = 0,
 
 				/// <summary>
-				/// 
+				/// ‎Nó fonte. Representa um fluxo de mídia na topologia.‎
 				/// </summary>
 				MF_TOPOLOGY_SOURCESTREAM_NODE = (MF_TOPOLOGY_OUTPUT_NODE + 1),
 
 				/// <summary>
-				/// 
+				/// ‎Nó de transformação. Representa uma Transformação de Mídia (MFT) na topologia.‎
 				/// </summary>
 				MF_TOPOLOGY_TRANSFORM_NODE = (MF_TOPOLOGY_SOURCESTREAM_NODE + 1),
 
 				/// <summary>
-				/// 
+				/// Nó Tee. Um nó tee não contém um ponteiro para um objeto. Em vez disso, representa uma bifurcação no fluxo. Um nó tee tem uma entrada e várias saídas, e as amostras do nó upstream são entregues a todos os nós downstream.
 				/// </summary>
 				MF_TOPOLOGY_TEE_NODE = (MF_TOPOLOGY_TRANSFORM_NODE + 1),
+
+				/// <summary>
+				/// Reservado.
+				/// </summary>
+				MF_TOPOLOGY_MAX
 			};
 
 			/// <summary>
@@ -18250,77 +18525,77 @@ MEReservedMax = 10000
 			public ref struct CA_BITMAPINFOHEADER
 			{
 				/// <summary>
-				/// (biSize) - O número de bytes requeridos pela estrutura.
+				/// O número de bytes requeridos pela estrutura.
 				///</summary>
-				UInt32 BMP_BYTES_ESTRUTURA;
+				UInt32 biSize;
 
 				/// <summary>
-				/// (biWidth) - A largura do bitmap, em pixels.
-				/// Se BMP_TIPO_COMPACTACAO for BI_JPEG ou BI_PNG, o membro BMP_LARGURA especificará a largura do arquivo de imagem JPEG ou PNG descompactado, respectivamente.
+				/// A largura do bitmap, em pixels.
+				/// Se biCompression for BI_JPEG ou BI_PNG, o membro biWidth especificará a largura do arquivo de imagem JPEG ou PNG descompactado, respectivamente.
 				///</summary>
-				Int32 BMP_LARGURA;
+				Int32 biWidth;
 
 				/// <summary>
-				/// (biHeight) - A altura do bitmap, em pixels. Se BMP_ALTURA for positivo, o bitmap será um DIB ascendente e sua origem será o canto inferior esquerdo. Se BMP_ALTURA for 
+				/// A altura do bitmap, em pixels. Se biHeight for positivo, o bitmap será um DIB ascendente e sua origem será o canto inferior esquerdo. Se biHeight for 
 				/// negativo, o bitmap será um DIB de cima para baixo e sua origem será o canto superior esquerdo.
-				/// Se BMP_ALTURA for negativo, indicando um DIB de cima para baixo, o BMP_TIPO_COMPACTACAO deve ser BI_RGB ou BI_BITFIELDS .DIBs descendentes não podem ser compactados.
-				/// Se BMP_TIPO_COMPACTACAO for BI_JPEG ou BI_PNG, o membro BMP_ALTURA especificará a altura do arquivo de imagem JPEG ou PNG descompactado, respectivamente.
+				/// Se biHeight for negativo, indicando um DIB de cima para baixo, o biCompression deve ser BI_RGB ou BI_BITFIELDS .DIBs descendentes não podem ser compactados.
+				/// Se biCompression for BI_JPEG ou BI_PNG, o membro biHeight especificará a altura do arquivo de imagem JPEG ou PNG descompactado, respectivamente.
 				///</summary>
-				Int32 BMP_ALTURA;
+				Int32 biHeight;
 
 				/// <summary>
-				/// (biPlanes) - O número de planos para o dispositivo de destino. Este valor deve ser definido como 1.
+				/// O número de planos para o dispositivo de destino. Este valor deve ser definido como 1.
 				///</summary>
-				Int16 BMP_PLANOS;
+				Int16 biPlanes;
 
 				/// <summary>
-				/// (biBitCount) - O número de bits por pixel. O membro biBitCount da estrutura BITMAPINFOHEADER determina o número de bits que definem cada pixel e o número máximo de cores no bitmap. 
+				/// O número de bits por pixel. O membro biBitCount da estrutura BITMAPINFOHEADER determina o número de bits que definem cada pixel e o número máximo de cores no bitmap. 
 				/// Este membro deve ser um dos seguintes valores:
 				/// (0 - 1 - 4 - 8 - 16 - 24 - 32).
 				/// Veja os segifcados de vada valor na url: docs.microsoft.com/en-us/previous-versions/dd183376(v=vs.85)
 				///</summary>
-				Int16 BMP_BITS_POR_PIXEL;
+				Int16 biBitCount;
 
 				/// <summary>
-				/// (biCompression) - O tipo de compactação para um bitmap de baixo para cima compactado (DIBs de cima para baixo não podem ser compactados). 
+				/// O tipo de compactação para um bitmap de baixo para cima compactado (DIBs de cima para baixo não podem ser compactados). 
 				/// Esse membro pode ser um dos seguintes valores.
 				/// (BI_RGB - BI_RLE8 - BI_RLE4 - BI_BITFILEDS - BI_JPEG - BI_PNG).
 				/// Veja os significados de vada valor na url: docs.microsoft.com/en-us/previous-versions/dd183376(v=vs.85)
-				///</summary>
-				UInt32 BMP_TIPO_COMPACTACAO;
+				/// </summary>
+				UInt32 biCompression;
 
 				/// <summary>
-				/// (biSizeImage) - O tamanho, em bytes, da imagem. Isso pode ser definido como zero para os bitmaps BI_RGB.
-				/// Se BMP_TIPO_COMPACTACAO for BI_JPEG ou BI_PNG, BMP_SIZE_IMAGEM indicará o tamanho do buffer de imagem JPEG ou PNG, respectivamente.
+				/// O tamanho, em bytes, da imagem. Isso pode ser definido como zero para os bitmaps BI_RGB.
+				/// Se biCompression for BI_JPEG ou BI_PNG, biSizeImage indicará o tamanho do buffer de imagem JPEG ou PNG, respectivamente.
 				///</summary>
-				UInt32 BMP_SIZE_IMAGEM;
+				UInt32 biSizeImage;
 
 				/// <summary>
-				/// (biXPelsPerMeter) - A resolução horizontal, em pixels por metro, do dispositivo de destino para o bitmap. Um aplicativo pode usar esse valor para selecionar um bitmap de um grupo de 
+				/// A resolução horizontal, em pixels por metro, do dispositivo de destino para o bitmap. Um aplicativo pode usar esse valor para selecionar um bitmap de um grupo de 
 				/// recursos que melhor corresponda às características do dispositivo atual.
 				///</summary>
-				Int32 BMP_PIXEL_RESOLUCAO_HORIZONTAL_METROS;
+				Int32 biXPelsPerMeter;
 
 				/// <summary>
-				/// (biYPelsPerMeter) - A resolução vertical, em pixels por metro, do dispositivo de destino para o bitmap.
+				/// A resolução vertical, em pixels por metro, do dispositivo de destino para o bitmap.
 				///</summary>
-				Int32 BMP_PIXEL_RESOLUCAO_VERTICAL_METROS;
+				Int32 biYPelsPerMeter;
 
 				/// <summary>
-				/// (biClrUsed) - O número de índices de cores na tabela de cores que são realmente usados pelo bitmap. Se esse valor for zero, o bitmap usará o número máximo de cores correspondente ao valor 
-				/// do membro BMP_BITS_POR_PIXEL para o modo de compactação especificado por BMP_TIPO_COMPACTACAO.
-				/// Se BMP_VALUE_INDICES_CORES_TABELA for diferente de zero e o membro BMP_BITS_POR_PIXEL for menor que 16, o membro BMP_VALUE_INDICES_CORES_TABELA especificará o número real de cores acessadas pelo mecanismo de elementos 
-				/// gráficos ou pelo driver de dispositivo. Se BMP_BITS_POR_PIXEL tiver 16 ou mais, o membro biClrUsed especificará o tamanho da tabela de cores usada para otimizar o desempenho das paletas de cores do sistema. 
-				/// Se BMP_BITS_POR_PIXEL for igual a 16 ou 32, a paleta de cores ideal será iniciada imediatamente após as três máscaras UInt32 .
+				/// O número de índices de cores na tabela de cores que são realmente usados pelo bitmap. Se esse valor for zero, o bitmap usará o número máximo de cores correspondente ao valor 
+				/// do membro biBitCount para o modo de compactação especificado por biCompression.
+				/// Se biClrUsed for diferente de zero e o membro biBitCount for menor que 16, o membro biClrUsed especificará o número real de cores acessadas pelo mecanismo de elementos 
+				/// gráficos ou pelo driver de dispositivo. Se biBitCount tiver 16 ou mais, o membro biClrUsed especificará o tamanho da tabela de cores usada para otimizar o desempenho das paletas de cores do sistema. 
+				/// Se biBitCount for igual a 16 ou 32, a paleta de cores ideal será iniciada imediatamente após as três máscaras UInt32 .
 				/// Quando a matriz de bitmap segue imediatamente a estrutura BITMAPINFO , é um bitmap compactado. Bitmaps compactados são referenciados por um único ponteiro. Os bitmaps compactados exigem que o membro 
-				/// BMP_VALUE_INDICES_CORES_TABELA seja zero ou o tamanho real da tabela de cores.
+				/// biClrUsed seja zero ou o tamanho real da tabela de cores.
 				///</summary>
-				UInt32 BMP_VALUE_INDICES_CORES_TABELA;
+				UInt32 biClrUsed;
 
 				/// <summary>
-				/// (biClrImportant) - O número de índices de cores necessários para exibir o bitmap. Se esse valor for zero, todas as cores serão necessárias.
+				/// O número de índices de cores necessários para exibir o bitmap. Se esse valor for zero, todas as cores serão necessárias.
 				///</summary>
-				UInt32 BMP_VALUE_INDICES_CORES_NECESSARIOS;
+				UInt32 biClrImportant;
 
 			};
 
@@ -19872,9 +20147,9 @@ MEReservedMax = 10000
 				String^ GUID;
 
 				/// <summary>
-				/// (attrType) - Tipo de atributo, especificado como um membro da enumeração(CA_ATTRIBUTE_TYPE).
+				/// (attrType) - Tipo de atributo, especificado como um membro da enumeração(CA_MF_ATTRIBUTE_TYPE).
 				/// </summary>
-				Enumeracoes::CA_ATTRIBUTE_TYPE TipoAtributo;
+				Enumeracoes::CA_MF_ATTRIBUTE_TYPE TipoAtributo;
 
 				/// <summary>
 				/// (u32) - Valor do atributo (unsigned 32-bit inteiro). Esse membro é usado quando (TipoAtributo) é igual a MF_ATTRIBUTE_UINT32.
@@ -20539,7 +20814,7 @@ MEReservedMax = 10000
 				String^ guidMajorType;
 
 				/// <summary>
-				/// Um GUID para o subtipo da midia. Consulte as estruturas GUIDs_MFAtributos_FormatosVideo e GUIDs_MFAtributos_FormatosAudio para obter esse guid.
+				/// Um GUID para o subtipo da midia. Consulte as estruturas GUIDs_MF_VIDEO_SUBTYPES e GUIDs_MF_AUDIO_SUBTYPES para obter esse guid.
 				/// </summary>
 				String^ guidSubtype;
 			};

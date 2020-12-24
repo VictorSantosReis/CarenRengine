@@ -48,7 +48,7 @@ public ref class CarenAudioSessionEvents : public ICarenAudioSessionEvents
 	//Ponteiro para a interface (IAudioSessionEvents).
 	IAudioSessionEvents* PonteiroTrabalho = NULL;
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenAudioSessionEvents();
 

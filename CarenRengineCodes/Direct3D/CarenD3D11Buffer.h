@@ -48,7 +48,7 @@ public ref class CarenD3D11Buffer :public ICarenD3D11Buffer
 	//Ponteiro para a interface (ID3D11Buffer).
 	ID3D11Buffer* PonteiroTrabalho = NULL;
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD3D11Buffer();
 

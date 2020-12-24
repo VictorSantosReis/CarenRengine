@@ -18,11 +18,61 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenMFAsyncResult.h"
 
+
 //Destruidor.
 CarenMFAsyncResult::~CarenMFAsyncResult()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
+}
+//Construtores
+CarenMFAsyncResult::CarenMFAsyncResult()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
+
+CarenMFAsyncResult::CarenMFAsyncResult(ICaren^ Param_ObjetoDados, ICarenMFAsyncCallback^ Param_Callback, ICaren^ Param_ObjetoEstado)
+{
+	//Variavel que contém o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	
+	//Variaveis utilizadas no método.
+	Utilidades Util;
+	IUnknown* vi_pObjetoDados = NULL;
+	IMFAsyncCallback* vi_pAsyncCallback = NULL;
+	IUnknown* vi_pObjetoEstado = NULL;
+	IMFAsyncResult* vi_pOutAsyncResult = NULL;
+	CarenResult Resultado;
+
+	//Recupera o ponteiro para a interface do objeto de dados se informada.
+	if (ObjetoGerenciadoValido(Param_ObjetoDados))
+		RecuperarPonteiroCaren(Param_ObjetoDados, &vi_pObjetoDados);
+
+	//Verifica se o callback foi informado.
+	if (!ObjetoGerenciadoValido(Param_Callback))
+		throw gcnew NullReferenceException("O parametro (Param_Callback) não pode ser NULO!");
+
+	//Recupera o ponteiro para o callback.
+	Resultado = RecuperarPonteiroCaren(Param_Callback, &vi_pAsyncCallback);
+
+	//Verifica se não ocorreu erro durante o processo de captura do ponteiro.
+	if (Resultado.StatusCode != ResultCode::SS_OK)
+		throw gcnew Exception("O ponteiro para a interface (IMFAsyncCallback) era inválido!");
+
+	//Recupera o poneiro para um objeto de estado se fornecido.
+	if (ObjetoGerenciadoValido(Param_ObjetoEstado))
+		RecuperarPonteiroCaren(Param_ObjetoEstado, &vi_pObjetoEstado);
+
+	//Chama o método para criar o evento.
+	Hr = MFCreateAsyncResult(vi_pObjetoDados, vi_pAsyncCallback, vi_pObjetoEstado, &vi_pOutAsyncResult);
+
+	//Verifica o resultado da operação
+	if (!Sucesso(Hr))
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem de erro -> ", Util.TranslateCodeResult(Hr)));
+
+	//Define o ponteiro criado no ponteiro de trabalho da classe.
+	PonteiroTrabalho = vi_pOutAsyncResult;
 }
 
 //

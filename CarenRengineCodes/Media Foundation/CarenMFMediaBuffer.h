@@ -38,7 +38,7 @@ using namespace CarenRengine::SDKUtilidades;
 
 
 /// <summary>
-/// [Concluido - Fase de testes] - Falta documentar
+/// (Concluido - Fase de Testes) - Classe responsãvel por conter dados de midia. Os tipos podem ser Áudio ou Video.
 /// </summary>
 public ref class CarenMFMediaBuffer : public ICarenMFMediaBuffer
 {
@@ -51,8 +51,47 @@ public ref class CarenMFMediaBuffer : public ICarenMFMediaBuffer
 
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMFMediaBuffer();
+
+	/// <summary>
+	/// Inicializa a classe para gerenciar um buffer de mídia a parti de uma poção de memória alocada do sistema.
+	/// </summary>
+	/// <param name="Param_Lenght">O tamanho do buffer, em bytes. O valor é alocado da memória do sistema.</param>
+	CarenMFMediaBuffer(UInt32 Param_Lenght);
+
+	/// <summary>
+	/// Inicializa a classe como um objeto de buffer de memória do sistema para armazenar dados de imagem 2D.
+	/// </summary>
+	/// <param name="Param_Width">Largura da imagem, em pixels.</param>
+	/// <param name="Param_Height">Altura da imagem, em pixels.</param>
+	/// <param name="Param_D3DFormat">Um valor CA_D3DFORMAT que especifica o formato de vídeo.</param>
+	/// <param name="Param_BottomUp">Se TRUE, o método ICarenMF2DBuffer::ContiguousCopyTo copia o buffer em um formato de baixo para cima. O formato de baixo para cima é compatível com GDI para imagens RGB não compactadas. 
+	/// Se este parâmetro for FALSE, o método ContiguousCopyTo copia o buffer em um formato de cima para baixo, compatível com o DirectX.</param>
+	CarenMFMediaBuffer(UInt32 Param_Width, UInt32 Param_Height, CA_D3DFORMAT Param_D3DFormat, Boolean Param_BottomUp);
+
+	/// <summary>
+	/// Inicializa a classe como um objeto de buffer de memória do sistema para armazenar dados de imagem 2D.
+	/// </summary>
+	/// <param name="Param_Width">Largura da imagem, em pixels.</param>
+	/// <param name="Param_Height">Altura da imagem, em pixels.</param>
+	/// <param name="Param_D3DFormat">Um código FOURCC que especifica o formato de vídeo. Se você tiver um subtipo de vídeo GUID, você pode usar o primeiro DWORD do subtipo.</param>
+	/// <param name="Param_BottomUp">Se TRUE, o método ICarenMF2DBuffer::ContiguousCopyTo copia o buffer em um formato de baixo para cima. O formato de baixo para cima é compatível com GDI para imagens RGB não compactadas. 
+	/// Se este parâmetro for FALSE, o método ContiguousCopyTo copia o buffer em um formato de cima para baixo, compatível com o DirectX.</param>
+	CarenMFMediaBuffer(UInt32 Param_Width, UInt32 Param_Height, UInt32 Param_FourCC, Boolean Param_BottomUp);
+
+	/// <summary>
+	/// Inicializa a classe do buffer de mídia que envolve um buffer de mídia existente. O novo buffer de mídia aponta para a mesma memória do buffer de mídia original, ou para um deslocamento desde o início da memória.
+	/// </summary>
+	/// <param name="Param_Buffer">Uma interface ICarenMFMediaBuffer do buffer de mídia original.</param>
+	/// <param name="Param_Offset">O início do novo buffer, como um offset em bytes do início do buffer original.</param>
+	/// <param name="Param_Lenght">O tamanho do novo buffer. O valor de Param_Offset + Param_Lenght deve ser menor ou igual ao tamanho dos dados válidos do buffer original. (O tamanho dos dados válidos é retornado pelo método ICarenMFMediaBuffer::GetCurrentLength.)</param>
+	CarenMFMediaBuffer(ICarenMFMediaBuffer^ Param_Buffer, UInt32 Param_Offset, UInt32 Param_Lenght);
+
 	~CarenMFMediaBuffer();
 
 
@@ -78,76 +117,6 @@ public:
 			//Retorna o valor.
 			return Prop_DisposedClasse;
 		}
-	}
-
-
-
-	//Cria uma instância dessa classe (Estático)
-public:
-	/// <summary>
-	/// Método responsável por criar uma instância da classe de armazenamento de buffer de mídia.
-	/// Atenção: Utilize esse método apenas se você desejar criar manualmente um novo armazenamento e buffers de mídia.
-	/// </summary>
-	/// <param name="Param_TamanhoMaximoBuffer">Define o tamanho maximo deste buffer.</param>
-	/// <param name="Param_Out_MidiaBuffer">Recebe a interface que gerencia buffers de midia.</param>
-	static CarenResult CriarInstancia(UInt32 Param_TamanhoMaximoBuffer, [Out] ICarenMFMediaBuffer^% Param_Out_MidiaBuffer)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Variavel que vai conter o resultado COM.
-		ResultadoCOM Hr;
-
-		//Variavel que vai conter o Buffer.
-		IMFMediaBuffer *pBufferData = NULL;
-
-		//Instancia da classe atual
-		ICarenMFMediaBuffer^ MediaBufferInterface = nullptr;
-
-		//Chama o método para criar um buffer da memoria.
-		Hr = MFCreateMemoryBuffer(Param_TamanhoMaximoBuffer, &pBufferData);
-
-		//Processa o resultado da chamada.
-		Resultado.ProcessarCodigoOperacao(Hr);
-
-		//Verifica se obteve sucesso na operação.
-		if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-		{
-			//Falhou ao realizar a operação.
-
-			//Sai do método
-			Sair;
-		}
-		
-		//Cria a instância da classe
-		MediaBufferInterface = gcnew CarenMFMediaBuffer();
-
-		//Chama o método para definir o ponteiro de trabalho na interface a ser retornada.
-		Resultado = MediaBufferInterface->AdicionarPonteiro(pBufferData);	
-
-		//Verifica se não houve erro
-		if (Resultado.StatusCode != ResultCode::SS_OK)
-		{
-			//Houve uma falha.
-
-			//Descarta o ponteiro criado.
-			SafeReleasePointer(&pBufferData);
-
-			//Sai do método
-			goto Done;
-		}
-		else
-		{
-			//Deixa o método continuar.
-
-		}
-
-		//Define a interface de retorno.
-		Param_Out_MidiaBuffer = MediaBufferInterface;
-
-	Done:;
-		//Retorna o resultado.
-		return Resultado;
 	}
 
 

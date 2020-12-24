@@ -25,6 +25,11 @@ CarenMFMediaSink::~CarenMFMediaSink()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor
+CarenMFMediaSink::CarenMFMediaSink()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 //
 // Métodos da interface ICaren
@@ -537,7 +542,7 @@ CarenResult CarenMFMediaSink::GetPresentationClock([Out] ICarenMFPresentationClo
 	}
 
 	//Cria a interface que vai armazenar o relogio.
-	Param_Out_RelogioApresentação = gcnew CarenMFPresentationClock();
+	Param_Out_RelogioApresentação = gcnew CarenMFPresentationClock(false);
 
 	//Define o ponteiro na interface
 	CarenSetPointerToICarenSafe(vi_pOutPresentationClock, Param_Out_RelogioApresentação, true);

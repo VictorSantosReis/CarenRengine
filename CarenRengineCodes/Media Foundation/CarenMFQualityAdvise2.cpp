@@ -26,7 +26,7 @@ CarenMFQualityAdvise2::~CarenMFQualityAdvise2()
 //Construtores
 CarenMFQualityAdvise2::CarenMFQualityAdvise2()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

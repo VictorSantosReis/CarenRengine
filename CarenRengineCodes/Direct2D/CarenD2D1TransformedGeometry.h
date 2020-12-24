@@ -45,7 +45,7 @@ public ref class CarenD2D1TransformedGeometry : public ICarenD2D1TransformedGeom
 	ID2D1TransformedGeometry* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD2D1TransformedGeometry();
 

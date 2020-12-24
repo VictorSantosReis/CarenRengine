@@ -50,7 +50,7 @@ public ref class CarenAudioClient :public ICarenAudioClient
 
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenAudioClient();
 

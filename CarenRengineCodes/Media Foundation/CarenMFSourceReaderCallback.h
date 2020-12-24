@@ -26,9 +26,6 @@ limitations under the License.
 //Importa o namespace que contém as interfaces da Media Foundation.
 using namespace CarenRengine::MediaFoundation;
 
-//Enumeração de retorno de função.
-
-
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
@@ -51,8 +48,15 @@ public ref class CarenMFSourceReaderCallback : public ICarenMFSourceReaderCallba
 	//Ponteiro para a interface (IMFSourceReaderCallback).
 	IMFSourceReaderCallback* PonteiroTrabalho = NULL;
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a interface e permite que o usuário decida se a biblioteca deve criar a interface ou vai iniciar sem um ponteiro 
+	/// de trabalho. Se (Param_CriarInterface) for TRUE, o construtor vai criar uma implementação interna da (IMFSourceReaderCallback).
+	/// </summary>
+	/// <param name="Param_CriarInterface">Um valor booleano, TRUE indica que deve criar uma nova interface intermanete, caso contario, FALSE.</param>
+	CarenMFSourceReaderCallback(Boolean Param_CriarInterface);
+
 	~CarenMFSourceReaderCallback();
 
 
@@ -80,24 +84,6 @@ public:
 		{
 			//Retorna o valor.
 			return Prop_DisposedClasse;
-		}
-	}
-
-	/// <summary>
-	/// Propriedade que vai força  o coletor de lixo agir para liberar interfaces em conclusões de eventos.
-	/// </summary>
-	property Boolean ColetarLixoEvento
-	{
-		virtual Boolean get()
-		{
-			//Retorna o valor.
-			return Prop_ColetarEventLixo;
-		}
-
-		virtual void set(Boolean value)
-		{
-			//Define o valor.
-			Prop_ColetarEventLixo = value;
 		}
 	}
 
@@ -168,45 +154,6 @@ private:
 	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnFlush).
 	/// </summary>
 	GCHandle gHandle_Delegate_OnFlush;
-
-
-
-
-	//Cria uma instância dessa classe (Estático)
-public:
-	/// <summary>
-	/// Cria uma instância da interface responsável por notificar os eventos ocorrridos com o leitor de mídia.
-	/// </summary>
-	/// <param name="Param_Out_Callback">Recebe a interface que possui a classe de notificação de eventos.</param>
-	static CarenResult CriarInstanciaCallback([Out] ICarenMFSourceReaderCallback^% Param_Out_Callback)
-	{
-		//Variavel que vai retornar o resultado do método.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Variavel COM
-		ResultadoCOM Hr = E_FAIL;
-
-		//Variaveis utilizadas no método
-		CLN_IMFSourceReaderCallback *pPonteiroCallback = NULL;
-
-		//Cria o ponteiro da classe nativa
-		pPonteiroCallback = new CLN_IMFSourceReaderCallback();
-
-		//Cria a interface a ser retornada.
-		Param_Out_Callback = gcnew CarenMFSourceReaderCallback();
-
-		//Define o ponteiro nativo na interface.
-		Param_Out_Callback->AdicionarPonteiro(pPonteiroCallback);
-
-		//Define sucesso na operação
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-		//Retorna o resultado.
-		return Resultado;
-	}
-
-
-
 
 
 	///////////////////////////////////////////////////////

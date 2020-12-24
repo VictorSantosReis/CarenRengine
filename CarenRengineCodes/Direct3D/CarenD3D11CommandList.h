@@ -48,7 +48,7 @@ public ref class CarenD3D11CommandList :public ICarenD3D11CommandList
 	//Ponteiro para a interface (ID3D11CommandList).
 	ID3D11CommandList* PonteiroTrabalho = NULL;
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD3D11CommandList();
 

@@ -23,9 +23,6 @@ limitations under the License.
 //Importa o namespace que contém as interfaces da Media Foundation.
 using namespace CarenRengine::MediaFoundation;
 
-//Enumeração de retorno de função.
-
-
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
@@ -38,9 +35,6 @@ using namespace CarenRengine::SDKUtilidades;
 
 /// <summary>
 /// Classe responsável por conter um Objeto de ativação que é utilizado para ser criado por outro objeto de destino.
-/// Um objeto de ativação permite adiar a criação do objeto de destino, porque você pode segurar um ponteiro de (IMFActivate - Esta classe) 
-/// sem criar o objeto de destino. Objetos de ativação também podem ser serializado e, portanto, usado para criar o objeto 
-/// de destino em outro processo.
 /// </summary>
 public ref class CarenMFActivate :public ICarenMFActivate
 {
@@ -52,8 +46,13 @@ public ref class CarenMFActivate :public ICarenMFActivate
 	IMFActivate* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtores e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMFActivate();
+
 	~CarenMFActivate();
 
 
@@ -83,8 +82,8 @@ public:
 
 
 	///////////////////////////////////////////////////////
-//A parti daqui vai conter os métodos das interfaces.//
-///////////////////////////////////////////////////////
+	//A parti daqui vai conter os métodos das interfaces.//
+	///////////////////////////////////////////////////////
 
 
 	//Métodos da interface (ICaren)
@@ -167,8 +166,6 @@ public:
 	virtual void Finalizar();
 
 
-
-
 	//Métodos da interface ICarenMFActivate
 public:
 	/// <summary>
@@ -198,7 +195,6 @@ public:
 	/// Portanto, a sessão de mídia, não o aplicativo, chama (ShutdownObject).
 	/// </summary>
 	virtual CarenResult ShutdownObject();
-
 
 
 	//Métodos da interface(ICarenMidiaAtribute)
@@ -335,7 +331,7 @@ public:
 	/// </summary>
 	/// <param name="Param_GuidChave">O GUID para a chave a ser verificado o tipo do valor.</param>
 	/// <param name="Param_Out_TipoDado">O tipo do dado contido na chave solicitada.</param>
-	virtual CarenResult GetItemType(String^ Param_GuidChave, [Out] Enumeracoes::CA_ATTRIBUTE_TYPE% Param_Out_TipoDado);
+	virtual CarenResult GetItemType(String^ Param_GuidChave, [Out] Enumeracoes::CA_MF_ATTRIBUTE_TYPE% Param_Out_TipoDado);
 
 
 	/// <summary>

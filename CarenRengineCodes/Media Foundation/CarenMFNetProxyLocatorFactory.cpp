@@ -17,20 +17,21 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenMFNetProxyLocatorFactory.h"
 
+
 //Destruidor.
 CarenMFNetProxyLocatorFactory::~CarenMFNetProxyLocatorFactory()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
-//Construtores
-CarenMFNetProxyLocatorFactory::CarenMFNetProxyLocatorFactory()
+//Construtor
+CarenMFNetProxyLocatorFactory::CarenMFNetProxyLocatorFactory(Boolean Param_CriarInterface)
 {
-	//CÓDIGO DE CRIAÇÃO.
-
-	//Cria o ponteiro de trabalho com base na classe nativa criada internamente.
-	PonteiroTrabalho = new CLN_IMFNetProxyLocatorFactory();
+	//Verifica se deve ou não criar a classe
+	if (Param_CriarInterface)
+		PonteiroTrabalho = new CLN_IMFNetProxyLocatorFactory();
 }
+
 
 // Métodos da interface ICaren
 

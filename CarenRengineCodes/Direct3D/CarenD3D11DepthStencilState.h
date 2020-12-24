@@ -48,7 +48,7 @@ public ref class CarenD3D11DepthStencilState :public ICarenD3D11DepthStencilStat
 	//Ponteiro para a interface (ID3D11DepthStencilState).
 	ID3D11DepthStencilState* PonteiroTrabalho = NULL;
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD3D11DepthStencilState();
 

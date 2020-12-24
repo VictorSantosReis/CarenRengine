@@ -44,7 +44,7 @@ public ref class CarenD2D1SpriteBatch : public ICarenD2D1SpriteBatch
 	ID2D1SpriteBatch* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD2D1SpriteBatch();
 

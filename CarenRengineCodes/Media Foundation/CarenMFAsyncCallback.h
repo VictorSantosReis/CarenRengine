@@ -25,9 +25,6 @@ limitations under the License.
 //Importa o namespace que contém as interfaces da Media Foundation.
 using namespace CarenRengine::MediaFoundation;
 
-//Enumeração de retorno de função.
-
-
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
@@ -38,7 +35,7 @@ using namespace CarenRengine::SDKBase::Interfaces;
 using namespace CarenRengine::SDKUtilidades;
 
 /// <summary>
-/// [Concluido - Fase de Testes] - Falta documentar.
+/// (Concluido - Fase de Testes) - Classe responsável pelo retorno de chamada para notificar o aplicativo quando um método assíncrono for concluído.
 /// </summary>
 public ref class CarenMFAsyncCallback : public ICarenMFAsyncCallback
 {
@@ -49,8 +46,15 @@ public ref class CarenMFAsyncCallback : public ICarenMFAsyncCallback
 	//Ponteiro para a interface (IMFAsyncCallback).
 	IMFAsyncCallback* PonteiroTrabalho = NULL;
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a interface e permite que o usuário decida se a biblioteca deve criar a interface ou vai iniciar sem um ponteiro 
+	/// de trabalho. Se (Param_CriarInterface) for TRUE, o construtor vai criar uma implementação interface da (IMFAsyncCallback).
+	/// </summary>
+	/// <param name="Param_CriarInterface">Um valor booleano, TRUE indica que deve criar uma nova interface intermanete, caso contario, FALSE.</param>
+	CarenMFAsyncCallback(Boolean Param_CriarInterface);
+
 	~CarenMFAsyncCallback();
 
 
@@ -79,55 +83,6 @@ public:
 	}
 
 
-
-
-	//Método estático que vai criar uma instância dessa interface.
-public:
-	/// <summary>
-	/// Método responsável por criar um instância da classe de notificação de eventos para outras interfaces da biblioteca.
-	/// </summary>
-	/// <param name="Param_Out_CallbackInterface">Recebe a interface com o Callback criado para ser utilizado.</param>
-	static CarenResult CriarInstaciaCallback([Out] ICarenMFAsyncCallback^% Param_Out_CallbackInterface)
-	{
-		//Variavel que vai retornar o resultado.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Variaveis utilizadas
-		IMFAsyncCallback* pCallbackNativo;
-		ICarenMFAsyncCallback^ InterfaceSolicitada = nullptr;
-
-		//Cria a interface callbak
-		pCallbackNativo = new CLN_IMFAsyncCallback();
-
-		//Cria a interface gerenciada
-		InterfaceSolicitada = gcnew CarenMFAsyncCallback();
-
-		//Chama o método para definir o ponteiro
-		Resultado = InterfaceSolicitada->AdicionarPonteiro(pCallbackNativo);
-
-		//Verifica o resultado
-		if (Resultado.StatusCode != ResultCode::SS_OK)
-		{
-			//Limpa
-			pCallbackNativo = NULL;
-			InterfaceSolicitada = nullptr;
-
-			//Sai do método
-			goto Done;
-		}
-
-		//Define a interface criada no parametro de saida.
-		Param_Out_CallbackInterface = InterfaceSolicitada;
-
-		//Define sucesso na operação
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	Done:;
-		//Retorna o resultado
-		return Resultado;
-	}
-
-
 	//(EVENTOS)
 public:
 
@@ -146,8 +101,6 @@ public:
 	/// Evento chamado quando uma operação assincrona é concluida.
 	/// </summary>
 	virtual event ICarenMFAsyncCallback::Delegate_Invoke^ OnInvoke;
-
-
 
 	//(DELEGATES)
 private:
@@ -182,10 +135,6 @@ private:
 
 
 
-
-	///////////////////////////////////////////////////////
-	//A parti daqui vai conter os métodos das interfaces.//
-	///////////////////////////////////////////////////////
 
 	///////////////////////////////////////////////////////
 	//A parti daqui vai conter os métodos das interfaces.//

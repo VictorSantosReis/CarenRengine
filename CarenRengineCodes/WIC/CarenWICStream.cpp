@@ -26,7 +26,7 @@ CarenWICStream::~CarenWICStream()
 //Construtores
 CarenWICStream::CarenWICStream()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

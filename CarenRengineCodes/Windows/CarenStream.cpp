@@ -17,6 +17,7 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenStream.h"
 
+
 //Destruidor.
 CarenStream::~CarenStream()
 {
@@ -26,8 +27,114 @@ CarenStream::~CarenStream()
 //Construtores
 CarenStream::CarenStream()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
+
+CarenStream::CarenStream(ICarenMFByteStream^ Param_ByteStream)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Resultados de Caren.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IMFByteStream* vi_pByteStream = Nulo;
+	IStream* vi_pOutStream = Nulo;
+
+	//Verfifica se a interface do Stream é valida.
+	if (!ObjetoGerenciadoValido(Param_ByteStream))
+		throw gcnew NullReferenceException("A interface no parametro (Param_ByteStream) não pode ser NULA!");
+
+	//Tenta recuperar o ponteiro para a interface.
+	Resultado = RecuperarPonteiroCaren(Param_ByteStream, &vi_pByteStream);
+
+	//Verifica se não houve algum erro
+	if (!CarenSucesso(Resultado))
+		throw gcnew Exception("Falhou ao tentar recuperar o ponteiro para a interface do fluxo de bytes.");
+
+	//Chama o método para criar a interface.
+	Hr = MFCreateStreamOnMFByteStream(vi_pByteStream, &vi_pOutStream);
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutStream;
+}
+
+CarenStream::CarenStream(ICarenBuffer^ Param_BufferInicial, UInt32 Param_LarguraBuffer)
+{
+	//Resultados de Caren.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	GenPointer vi_pBufferInicial = DefaultGenPointer; //Pode ser NULO | 0
+	IStream* vi_pOutStream = Nulo;
+
+	//Verifica se forneceu dados iniciais para a criação do buffer.
+	if (ObjetoGerenciadoValido(Param_BufferInicial))
+		Param_BufferInicial->ObterPonteiroInterno(vi_pBufferInicial);
+
+	//Chama o método para criar a interface.
+	vi_pOutStream = SHCreateMemStream(
+		(vi_pBufferInicial != IntPtr::Zero)? const_cast<PBYTE>(Util.ConverterIntPtrTo<PBYTE>(vi_pBufferInicial)): Nulo,
+		Param_LarguraBuffer);
+
+	//Verifica se não ocorreu erro no processo.
+	if (!ObjetoValido(vi_pOutStream))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception("Ocorreu uma falha ao criar o Stream!");
+	}
+
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutStream;
+}
+
+CarenStream::CarenStream(MatrizBytes Param_BufferInicial, UInt32 Param_LarguraBuffer)
+{
+	//Resultados de Caren.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	PBYTE vi_pBufferInicial = Nulo; //Pode ser NULO
+	IStream* vi_pOutStream = Nulo;
+
+	//Verifica se forneceu dados iniciais para a criação do buffer.
+	if (ObjetoGerenciadoValido(Param_BufferInicial))
+	{
+		//Cria o buffer que vai conter os dados.
+		vi_pBufferInicial = CriarMatrizUnidimensional<BYTE>(static_cast<DWORD>(Param_LarguraBuffer));
+		
+		//Copia os dados da matriz gerenciada para a nativa.
+		Util.CopiarBufferGerenciado_ToNativo(Param_BufferInicial, vi_pBufferInicial, Param_LarguraBuffer);
+	}
+
+	//Chama o método para criar a interface.
+	vi_pOutStream = SHCreateMemStream(vi_pBufferInicial, Param_LarguraBuffer);
+
+	//Verifica se não ocorreu erro no processo.
+	if (!ObjetoValido(vi_pOutStream))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception("Ocorreu uma falha ao criar o Stream!");
+	}
+
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutStream;
+
+	//Libera a memória para o buffer.
+	DeletarMatrizUnidimensionalSafe(&vi_pBufferInicial);
+}
+
 
 // Métodos da interface ICaren
 

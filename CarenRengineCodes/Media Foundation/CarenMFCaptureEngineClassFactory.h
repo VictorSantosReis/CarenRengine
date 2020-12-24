@@ -33,7 +33,7 @@ using namespace CarenRengine::SDKUtilidades;
 
 
 /// <summary>
-/// (Em desenvolvimento) - 
+/// (Concluido - Fase de Testes) - Classe responsável por criar uma instância da engine de captura.
 /// </summary>
 public ref class CarenMFCaptureEngineClassFactory : public ICarenMFCaptureEngineClassFactory
 {
@@ -51,6 +51,12 @@ public:
 	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
 	/// </summary>
 	CarenMFCaptureEngineClassFactory();
+
+	/// <summary>
+	/// Inicializa e cria uma instância da engine de captura.
+	/// </summary>
+	/// <param name="Param_Context">Contexto no qual o código que gerencia o objeto recém-criado será executado. Os valores são retirados da enumeração CA_CLSCTX.</param>
+	CarenMFCaptureEngineClassFactory(CA_CLSCTX Param_Context);
 	
 	~CarenMFCaptureEngineClassFactory();
 

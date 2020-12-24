@@ -48,7 +48,7 @@ public ref class CarenMMDeviceCollection :public ICarenMMDeviceCollection
 	//Ponteiro para a interface (IMMDeviceCollection).
 	IMMDeviceCollection* PonteiroTrabalho = NULL;
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenMMDeviceCollection();
 

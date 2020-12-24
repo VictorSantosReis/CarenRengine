@@ -26,7 +26,7 @@ CarenD2D1SvgPathData::~CarenD2D1SvgPathData()
 //Construtores
 CarenD2D1SvgPathData::CarenD2D1SvgPathData()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

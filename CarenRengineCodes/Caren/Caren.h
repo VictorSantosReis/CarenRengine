@@ -35,7 +35,7 @@ public ref class Caren : public ICaren
 	LPVOID PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~Caren();
 

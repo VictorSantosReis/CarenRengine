@@ -49,8 +49,19 @@ public ref class CarenMFTopologyNode :public ICarenMFTopologyNode
 	IMFTopologyNode* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMFTopologyNode();
+
+	/// <summary>
+	/// Inicializa e cria um novo nó de topologia.
+	/// </summary>
+	/// <param name="Param_TypeNode">‎O tipo de nó a ser criado, especificado como membro da enumeração ‎‎(CA_MF_TOPOLOGY_TYPE).‎</param>
+	CarenMFTopologyNode(CA_MF_TOPOLOGY_TYPE Param_TypeNode);
+
 	~CarenMFTopologyNode();
 
 
@@ -77,79 +88,6 @@ public:
 			return Prop_DisposedClasse;
 		}
 	}
-
-
-
-	//Cria uma instância dessa classe (Estático)
-public:
-	/// <summary>
-	/// Método responsável por criar um nó de topologia.
-	/// </summary>
-	/// <param name="Param_TipoNo">O tipo do nó a ser criado.</param>
-	/// <param name="Param_Out_NovoNo">Recebe um ponteiro para o novo nó criado.</param>
-	static CarenResult CriarInstancia(Enumeracoes::CA_TOPOLOGY_TYPE Param_TipoNo, [Out] ICarenMFTopologyNode^% Param_Out_NovoNo)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Variavel que contém o resultado COM.
-		HRESULT Hr = E_FAIL;
-
-		//Variaveis utilizadas no método.
-		IMFTopologyNode* pNovoNo = NULL;
-		MF_TOPOLOGY_TYPE pTipoNo = static_cast<MF_TOPOLOGY_TYPE>(Param_TipoNo);
-
-		//Chama o método
-		Hr = MFCreateTopologyNode(pTipoNo, &pNovoNo);
-
-		//Verifica o resultado
-		if (Sucesso(Hr))
-		{
-			//Deixa o método continuar.
-		}
-		else
-		{
-			//Erro
-			Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-			//Sai do método
-			goto Done;
-		}
-
-		//Cria a ainterface
-		Param_Out_NovoNo = gcnew CarenMFTopologyNode();
-
-		//Deifine o ponteiro
-		Param_Out_NovoNo->AdicionarPonteiro(pNovoNo);
-
-		//Define sucesso na operção.
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	Done:;
-		//Retorna o resultado.
-		return Resultado;
-	}
-
-	/// <summary>
-	/// Método responsável por criar uma instância vazia da classe. Chamadas para os métodos sem um ponteiro de trabalho definido
-	/// pode gerar comportamentos indefinidos.
-	/// </summary>
-	/// <param name="Param_Out_NovoNo">Recebe um ponteiro para a interface (Vazia).</param>
-	static CarenResult CriarInstanciaVazia([Out] ICarenMFTopologyNode^% Param_Out_NovoNo)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Cria a interface
-		Param_Out_NovoNo = gcnew CarenMFTopologyNode();
-
-		//Define sucesso
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-		//Retorna o resultado
-		return Resultado;
-	}
-
 
 
 	///////////////////////////////////////////////////////
@@ -286,7 +224,7 @@ public:
 	/// (GetNodeType) - Recupera o tipo de nó.
 	/// </summary>
 	/// <param name="Param_Out_TipoNode">Recebe um valor de enumeração que define o tipo do nó na topologia.</param>
-	virtual CarenResult GetNodeType([Out] Enumeracoes::CA_TOPOLOGY_TYPE% Param_Out_TipoNode);
+	virtual CarenResult GetNodeType([Out] Enumeracoes::CA_MF_TOPOLOGY_TYPE% Param_Out_TipoNode);
 
 	/// <summary>
 	/// (GetObject) - Obtém o objeto associado a este nó.
@@ -486,7 +424,7 @@ public:
 	/// </summary>
 	/// <param name="Param_GuidChave">O GUID para a chave a ser verificado o tipo do valor.</param>
 	/// <param name="Param_Out_TipoDado">O tipo do dado contido na chave solicitada.</param>
-	virtual CarenResult GetItemType(String^ Param_GuidChave, [Out] Enumeracoes::CA_ATTRIBUTE_TYPE% Param_Out_TipoDado);
+	virtual CarenResult GetItemType(String^ Param_GuidChave, [Out] Enumeracoes::CA_MF_ATTRIBUTE_TYPE% Param_Out_TipoDado);
 
 
 	/// <summary>

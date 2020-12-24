@@ -26,7 +26,7 @@ CarenD2D1PathGeometry::~CarenD2D1PathGeometry()
 //Construtores
 CarenD2D1PathGeometry::CarenD2D1PathGeometry()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

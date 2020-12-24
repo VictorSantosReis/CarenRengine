@@ -18,11 +18,42 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenMFMediaTypeHandler.h"
 
+
 //Destruidor.
 CarenMFMediaTypeHandler::~CarenMFMediaTypeHandler()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
+}
+CarenMFMediaTypeHandler::CarenMFMediaTypeHandler(Boolean Param_CriarInterface)
+{
+	//Verifica se deve ou não criar uma interface.
+	if (Param_CriarInterface)
+	{
+		//Variavel que vai conter o resultado COM.
+		HRESULT Hr = E_FAIL;
+
+		//Variaveis utilizadas.
+		Utilidades Util;
+		IMFMediaTypeHandler* vi_pOutTypeHandler = Nulo;
+
+		//Chama o método para criar a interface.
+		Hr = MFCreateSimpleTypeHandler(&vi_pOutTypeHandler);
+
+		//Verifica se não ocorreu erro no processo.
+		if (!Sucesso(Hr))
+		{
+			//Chama uma exceção para informar o error.
+			throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+		}
+
+		//Define a interface criada no ponteiro de trabalho
+		PonteiroTrabalho = vi_pOutTypeHandler;
+	}
+	else
+	{
+		//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+	}
 }
 
 //
@@ -447,7 +478,7 @@ CarenResult CarenMFMediaTypeHandler::GetCurrentMediaType([Out] ICarenMFMediaType
 	}
 
 	//Cria a interface que vai conter o tipo de mídia.
-	InterfaceTipoMidia = gcnew CarenMFMediaType();
+	InterfaceTipoMidia = gcnew CarenMFMediaType(false);
 
 	//Chama o método para definir o ponteiro na interface.
 	InterfaceTipoMidia->AdicionarPonteiro(pTipoMidiaAtual);
@@ -468,7 +499,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Out_GuidMidiaPrincipal">Retorna o GUID do tipo da mídia principal.</param>
 /// <param name="Param_Out_TipoPrincipal">Retorna a enumeração que define o tipo principal da mídia.</param>
-CarenResult CarenMFMediaTypeHandler::GetMajorType([Out] String^% Param_Out_GuidMidiaPrincipal, [Out] Enumeracoes::CA_Midia_TipoPrincipal% Param_Out_TipoPrincipal)
+CarenResult CarenMFMediaTypeHandler::GetMajorType([Out] String^% Param_Out_GuidMidiaPrincipal, [Out] Enumeracoes::CA_MAJOR_MEDIA_TYPES% Param_Out_TipoPrincipal)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -500,7 +531,7 @@ CarenResult CarenMFMediaTypeHandler::GetMajorType([Out] String^% Param_Out_GuidM
 	if (GuidTipoPrincipal == MFMediaType_Audio)
 	{
 		//O tipo principal da mídia é Áudio.
-		Param_Out_TipoPrincipal = CA_Midia_TipoPrincipal::TP_Audio;
+		Param_Out_TipoPrincipal = CA_MAJOR_MEDIA_TYPES::TP_Audio;
 	
 		//Define o Guid
 		Param_Out_GuidMidiaPrincipal = Util.ConverterGuidToString(MFMediaType_Audio);
@@ -508,7 +539,7 @@ CarenResult CarenMFMediaTypeHandler::GetMajorType([Out] String^% Param_Out_GuidM
 	else if (GuidTipoPrincipal == MFMediaType_Video)
 	{
 		//O tipo principal da mídia é Vídeo.
-		Param_Out_TipoPrincipal = CA_Midia_TipoPrincipal::TP_Video;
+		Param_Out_TipoPrincipal = CA_MAJOR_MEDIA_TYPES::TP_Video;
 	
 		//Define o Guid
 		Param_Out_GuidMidiaPrincipal = Util.ConverterGuidToString(MFMediaType_Video);
@@ -516,7 +547,7 @@ CarenResult CarenMFMediaTypeHandler::GetMajorType([Out] String^% Param_Out_GuidM
 	else
 	{
 		//Tipo desconhecido.
-		Param_Out_TipoPrincipal = CA_Midia_TipoPrincipal::TP_Desconhecido;
+		Param_Out_TipoPrincipal = CA_MAJOR_MEDIA_TYPES::TP_Desconhecido;
 	}
 
 	//Define sucesso na operação
@@ -563,7 +594,7 @@ CarenResult CarenMFMediaTypeHandler::GetMediaTypeByIndex(UInt32 Param_Id, [Out] 
 	}
 
 	//Cria a interface que vai conter o tipo de mídia.
-	InterfaceTipoMidia = gcnew CarenMFMediaType();
+	InterfaceTipoMidia = gcnew CarenMFMediaType(false);
 
 	//Chama o método para definir o ponteiro na interface.
 	InterfaceTipoMidia->AdicionarPonteiro(pTipoMidiaAtual);
@@ -678,7 +709,7 @@ CarenResult  CarenMFMediaTypeHandler::IsMediaTypeSupported(ICarenMFMediaType^ Pa
 		{
 			//Um tipo de midia foi retornada pelo método
 			//Cria a interface que vai conter e retornar no parametro.
-			InterfaceTipoMidiaAproximada = gcnew CarenMFMediaType();
+			InterfaceTipoMidiaAproximada = gcnew CarenMFMediaType(false);
 
 			//Chama o método que vai definir o ponteiro de trabalho na interface.
 			InterfaceTipoMidiaAproximada->AdicionarPonteiro(pTipoMidiaAproximada);

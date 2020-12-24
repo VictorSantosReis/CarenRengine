@@ -26,7 +26,7 @@ CarenMFCaptureRecordSink::~CarenMFCaptureRecordSink()
 //Construtores
 CarenMFCaptureRecordSink::CarenMFCaptureRecordSink()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren
@@ -776,7 +776,7 @@ CarenResult CarenMFCaptureRecordSink::GetOutputMediaType(
 	}
 
 	//Cria a interface a ser retornada.
-	Param_Out_MediaType = gcnew CarenMFMediaType();
+	Param_Out_MediaType = gcnew CarenMFMediaType(false);
 
 	//Define o ponteiro na interface.
 	CarenSetPointerToICarenSafe(vi_pOutMediaType, Param_Out_MediaType, true);

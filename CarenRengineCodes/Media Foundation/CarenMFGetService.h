@@ -23,9 +23,6 @@ limitations under the License.
 //Importa o namespace que contém as interfaces da Media Foundation.
 using namespace CarenRengine::MediaFoundation;
 
-//Enumeração de retorno de função.
-
-
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
@@ -47,8 +44,19 @@ public ref class CarenMFGetService : public ICarenMFGetService
 	//Ponteiro para a interface (IMFGetService).
 	IMFGetService* PonteiroTrabalho = NULL;
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMFGetService();
+
+	/// <summary>
+	/// Inicializa e recupera a interface de serviço a parti de uma interface base.
+	/// </summary>
+	/// <param name="Param_InterfaceBase">A interface da qual será usada para recuperar a interface de serviço.</param>
+	CarenMFGetService(ICaren^ Param_InterfaceBase);
+
 	~CarenMFGetService();
 
 
@@ -81,7 +89,7 @@ public:
 	//A parti daqui vai conter os métodos das interfaces.//
 	///////////////////////////////////////////////////////
 
-		//Métodos da interface (ICaren)
+	//Métodos da interface (ICaren)
 public:
 	/// <summary>
 	/// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 
@@ -168,14 +176,11 @@ public:
 public:
 	/// <summary>
 	/// Método responsável por consultar e obter um determinado serviço(Interface) em um Componente especificado.
-	/// Pode retornar: SS_OK ou ER_SERVICO_NAO_SUPORTADO
+	/// Pode retornar: SS_OK ou ER_MF_E_UNSUPPORTED_SERVICE
 	/// </summary>
 	/// <param name="Param_SID">O GUID que expõe o (Identificador de Serviço) do serviço a ser obtido. Acesse (MFInterfacesServiço) para obter esse GUID.</param>
 	/// <param name="Param_IIDInterface">Define o GUID da interface que se quer obter do serviço solicitado.</param>
 	/// <param name="Param_Out_InterfaceSolicitada">Objeto que contém a interface solicitada se o método tiver sido bem sucedido.  O usuário deve criar a interfaces antes de chamar este método.</param>
 	virtual CarenResult GetService(String^ Param_SID, String^ Param_IIDInterface, ICaren^ Param_Out_InterfaceSolicitada);
-
-
-
 };
 

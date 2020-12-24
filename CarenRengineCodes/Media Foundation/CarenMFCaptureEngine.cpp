@@ -17,6 +17,7 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenMFCaptureEngine.h"
 
+
 //Destruidor.
 CarenMFCaptureEngine::~CarenMFCaptureEngine()
 {
@@ -26,7 +27,7 @@ CarenMFCaptureEngine::~CarenMFCaptureEngine()
 //Construtores
 CarenMFCaptureEngine::CarenMFCaptureEngine()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

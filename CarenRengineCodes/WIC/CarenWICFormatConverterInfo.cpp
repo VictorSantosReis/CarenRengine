@@ -26,7 +26,7 @@ CarenWICFormatConverterInfo::~CarenWICFormatConverterInfo()
 //Construtores
 CarenWICFormatConverterInfo::CarenWICFormatConverterInfo()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

@@ -49,7 +49,7 @@ public ref class CarenMMDeviceEnumerator : public ICarenMMDeviceEnumerator
 	//Ponteiro para a interface (IMMDevice).
 	IMMDeviceEnumerator* PonteiroTrabalho = NULL;
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenMMDeviceEnumerator();
 

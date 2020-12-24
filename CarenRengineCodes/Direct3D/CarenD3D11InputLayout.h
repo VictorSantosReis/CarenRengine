@@ -50,7 +50,7 @@ public ref class CarenD3D11InputLayout :public ICarenD3D11InputLayout
 	//Ponteiro para a interface (ID3D11InputLayout).
 	ID3D11InputLayout* PonteiroTrabalho = NULL;
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD3D11InputLayout();
 

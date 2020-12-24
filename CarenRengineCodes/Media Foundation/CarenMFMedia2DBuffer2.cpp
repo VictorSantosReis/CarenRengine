@@ -18,11 +18,17 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenMFMedia2DBuffer2.h"
 
+
 //Destruidor.
 CarenMFMedia2DBuffer2::~CarenMFMedia2DBuffer2()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
+}
+//Construtor
+CarenMFMedia2DBuffer2::CarenMFMedia2DBuffer2()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 //

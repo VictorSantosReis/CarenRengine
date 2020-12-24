@@ -26,7 +26,7 @@ CarenD2D1Properties::~CarenD2D1Properties()
 //Construtores
 CarenD2D1Properties::CarenD2D1Properties()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

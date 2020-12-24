@@ -45,8 +45,13 @@ public ref class CarenMFAudioStreamVolume :public ICarenMFAudioStreamVolume
 	IMFAudioStreamVolume* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMFAudioStreamVolume();
+
 	~CarenMFAudioStreamVolume();
 
 
@@ -73,6 +78,7 @@ public:
 			return Prop_DisposedClasse;
 		}
 	}
+
 
 	///////////////////////////////////////////////////////
 	//A parti daqui vai conter os métodos das interfaces.//

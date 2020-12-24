@@ -18,11 +18,19 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenMFClockStateSink.h"
 
+
 //Destruidor.
-CarenMFRelogioStateSink::~CarenMFRelogioStateSink()
+CarenMFClockStateSink::~CarenMFClockStateSink()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
+}
+//Construtor
+CarenMFClockStateSink::CarenMFClockStateSink(Boolean Param_CriarInterface)
+{
+	//Verifica se deve criar a classe ou não.
+	if (Param_CriarInterface)
+		PonteiroTrabalho = new CLN_IMFClockStateSink();
 }
 
 //
@@ -36,7 +44,7 @@ CarenMFRelogioStateSink::~CarenMFRelogioStateSink()
 /// </summary>
 /// <param name="Param_Guid">O IID(Identificador de Interface) ou GUID para a interface desejada.</param>
 /// <param name="Param_InterfaceSolicitada">A interface que vai receber o ponteiro nativo. O usuário deve inicializar a interface antes de chamar o método. Libere a interface quando não for mais usá-la.</param>
-CarenResult CarenMFRelogioStateSink::ConsultarInterface(String^ Param_Guid, ICaren^ Param_InterfaceSolicitada)
+CarenResult CarenMFClockStateSink::ConsultarInterface(String^ Param_Guid, ICaren^ Param_InterfaceSolicitada)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -147,7 +155,7 @@ Done:;
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
 /// </summary>
 /// <param name="Param_PonteiroNativo">Variável (GERENCIADA) para o ponteiro nativo a ser adicionado.</param>
-CarenResult CarenMFRelogioStateSink::AdicionarPonteiro(IntPtr Param_PonteiroNativo)
+CarenResult CarenMFClockStateSink::AdicionarPonteiro(IntPtr Param_PonteiroNativo)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -188,7 +196,7 @@ Done:;
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
 /// </summary>
 /// <param name="Param_PonteiroNativo">Variável (NATIVA) para o ponteiro nativo a ser adicionado.</param>
-CarenResult CarenMFRelogioStateSink::AdicionarPonteiro(LPVOID Param_PonteiroNativo)
+CarenResult CarenMFClockStateSink::AdicionarPonteiro(LPVOID Param_PonteiroNativo)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -232,7 +240,7 @@ Done:;
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
 /// </summary>
 /// <param name="Param_Out_PonteiroNativo">Variável (GERENCIADA) que vai receber o ponteiro nativo.</param>
-CarenResult CarenMFRelogioStateSink::RecuperarPonteiro([Out] IntPtr% Param_Out_PonteiroNativo)
+CarenResult CarenMFClockStateSink::RecuperarPonteiro([Out] IntPtr% Param_Out_PonteiroNativo)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -263,7 +271,7 @@ Done:;
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
 /// </summary>
 /// <param name="Param_Out_PonteiroNativo">Variável (NATIVA) que vai receber o ponteiro nativo.</param>
-CarenResult CarenMFRelogioStateSink::RecuperarPonteiro(LPVOID* Param_Out_PonteiroNativo)
+CarenResult CarenMFClockStateSink::RecuperarPonteiro(LPVOID* Param_Out_PonteiroNativo)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -294,7 +302,7 @@ Done:;
 /// Método responsável por retornar a quantidade de referências do objeto COM atual.
 /// </summary>
 /// <param name="Param_Out_Referencias">Variável que vai receber a quantidade de referências do objeto.</param>
-CarenResult CarenMFRelogioStateSink::RecuperarReferencias([Out] UInt64% Param_Out_Referencias)
+CarenResult CarenMFClockStateSink::RecuperarReferencias([Out] UInt64% Param_Out_Referencias)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -329,7 +337,7 @@ Done:;
 /// <summary>
 /// Método responsável por indicar se o ponteiro COM atual é válido.
 /// </summary>
-CarenResult CarenMFRelogioStateSink::StatusPonteiro()
+CarenResult CarenMFClockStateSink::StatusPonteiro()
 {
 	return (ObjetoValido(PonteiroTrabalho) ? CarenResult(ResultCode::SS_OK, true) : CarenResult(ResultCode::ER_E_POINTER, false));
 }
@@ -338,7 +346,7 @@ CarenResult CarenMFRelogioStateSink::StatusPonteiro()
 /// Método responsável por retornar a variável que armazena o último código de erro desconhecido ou não documentado gerado pela classe.
 /// Esse método não chama o método nativo (GetLastError), apenas retorna o código de erro que foi armazenado na classe.
 /// </summary>
-Int32 CarenMFRelogioStateSink::ObterCodigoErro()
+Int32 CarenMFClockStateSink::ObterCodigoErro()
 {
 	return Var_Glob_LAST_HRESULT;
 }
@@ -347,7 +355,7 @@ Int32 CarenMFRelogioStateSink::ObterCodigoErro()
 /// (AddRef) - Incrementa a contagem de referência para o ponteiro do objeto COM atual. Você deve chamar este método sempre que 
 /// você fazer uma cópia de um ponteiro de interface.
 /// </summary>
-void CarenMFRelogioStateSink::AdicionarReferencia()
+void CarenMFClockStateSink::AdicionarReferencia()
 {
 	//Adiciona uma referência ao ponteiro
 	PonteiroTrabalho->AddRef();
@@ -356,7 +364,7 @@ void CarenMFRelogioStateSink::AdicionarReferencia()
 /// <summary>
 /// (Release) - 'Decrementa' a contagem de referência do objeto COM atual.
 /// </summary>
-void CarenMFRelogioStateSink::LiberarReferencia()
+void CarenMFClockStateSink::LiberarReferencia()
 {
 	//Libera a referência e obtém a quantidade atual.
 	ULONG RefCount = PonteiroTrabalho->Release();
@@ -374,7 +382,7 @@ void CarenMFRelogioStateSink::LiberarReferencia()
 /// Método responsável por limpar os dados do objeto COM e códigos de erros gerados pelos métodos da classe.
 /// Este método não libera a referência do objeto COM atual, vai apenas anular o ponteiro.
 /// </summary>
-void CarenMFRelogioStateSink::LimparDados()
+void CarenMFClockStateSink::LimparDados()
 {
 	//Verifica se o ponteiro é um objeto valido e limpa.
 	if (ObjetoValido(PonteiroTrabalho))
@@ -391,7 +399,7 @@ void CarenMFRelogioStateSink::LimparDados()
 /// Método responsável por chamar o finalizador da interface para realizar a limpeza e descarte de dados pendentes.
 /// Este método pode ser escrito de forma diferente para cada interface.
 /// </summary>
-void CarenMFRelogioStateSink::Finalizar()
+void CarenMFClockStateSink::Finalizar()
 {
 	//////////////////////
 	//Código de descarte//
@@ -401,7 +409,7 @@ void CarenMFRelogioStateSink::Finalizar()
 	GC::SuppressFinalize(this);
 
 	//Chama o finalizador da classe
-	this->~CarenMFRelogioStateSink();
+	this->~CarenMFClockStateSink();
 }
 
 
@@ -417,7 +425,7 @@ void CarenMFRelogioStateSink::Finalizar()
 /// <summary>
 /// Método responsável por registrar os eventos da interface.
 /// </summary>
-void CarenMFRelogioStateSink::RegistrarCallback()
+void CarenMFClockStateSink::RegistrarCallback()
 {
 	//Variaveis utilizadas no método
 	Utilidades Util;
@@ -425,11 +433,11 @@ void CarenMFRelogioStateSink::RegistrarCallback()
 	//Configura os delegates.
 
 	//Cria todos os delegates.
-	Callback_OnClockStart = gcnew DelegateNativo_Evento_OnClockStart(this, &CarenMFRelogioStateSink::EncaminharEvento_OnClockStart);
-	Callback_OnClockPause = gcnew DelegateNativo_Evento_OnClockPause(this, &CarenMFRelogioStateSink::EncaminharEvento_OnClockPause);
-	Callback_OnClockRestart = gcnew DelegateNativo_Evento_OnClockRestart(this, &CarenMFRelogioStateSink::EncaminharEvento_OnClockRestart);
-	Callback_OnClockStop = gcnew DelegateNativo_Evento_OnClockStop(this, &CarenMFRelogioStateSink::EncaminharEvento_OnClockStop);
-	Callback_OnClockSetRate = gcnew DelegateNativo_Evento_OnClockSetRate(this, &CarenMFRelogioStateSink::EncaminharEvento_OnClockSetRate);
+	Callback_OnClockStart = gcnew DelegateNativo_Evento_OnClockStart(this, &CarenMFClockStateSink::EncaminharEvento_OnClockStart);
+	Callback_OnClockPause = gcnew DelegateNativo_Evento_OnClockPause(this, &CarenMFClockStateSink::EncaminharEvento_OnClockPause);
+	Callback_OnClockRestart = gcnew DelegateNativo_Evento_OnClockRestart(this, &CarenMFClockStateSink::EncaminharEvento_OnClockRestart);
+	Callback_OnClockStop = gcnew DelegateNativo_Evento_OnClockStop(this, &CarenMFClockStateSink::EncaminharEvento_OnClockStop);
+	Callback_OnClockSetRate = gcnew DelegateNativo_Evento_OnClockSetRate(this, &CarenMFClockStateSink::EncaminharEvento_OnClockSetRate);
 
 	//Converte os delegates para ponteiros do IntPtr
 	IntPtr Pointer_OnClockStart = Util.ConverterDelegateToPointer(Callback_OnClockStart);
@@ -458,7 +466,7 @@ void CarenMFRelogioStateSink::RegistrarCallback()
 /// <summary>
 /// Método responsável por liberar todos os registros de eventos resgistrados anteriormente. Chame esse método após uma chamada para (RegistrarCallback).
 /// </summary>
-void CarenMFRelogioStateSink::UnRegisterCallback()
+void CarenMFClockStateSink::UnRegisterCallback()
 {
 	//Libera todas as handles alocadas para os eventos.
 	gHandle_Delegate_OnClockStart.Free();
@@ -503,35 +511,35 @@ void CarenMFRelogioStateSink::UnRegisterCallback()
 //Métodos que recebem os eventos da classe nativa(CLN_IMFClockStateSink)
 //
 
-void CarenMFRelogioStateSink::EncaminharEvento_OnClockStart(MFTIME hnsSystemTime, LONGLONG llClockStartOffset)
+void CarenMFClockStateSink::EncaminharEvento_OnClockStart(MFTIME hnsSystemTime, LONGLONG llClockStartOffset)
 {
 	//Não é preciso verificar se o evento é uma referência valida.
 	//Em C++ CLI, caso o evento não seja valido, a função não será chamada.
 	OnClockStart(hnsSystemTime, llClockStartOffset);
 }
 
-void CarenMFRelogioStateSink::EncaminharEvento_OnClockStop(MFTIME hnsSystemTime)
+void CarenMFClockStateSink::EncaminharEvento_OnClockStop(MFTIME hnsSystemTime)
 {
 	//Não é preciso verificar se o evento é uma referência valida.
 	//Em C++ CLI, caso o evento não seja valido, a função não será chamada.
 	OnClockStop(hnsSystemTime);
 }
 
-void CarenMFRelogioStateSink::EncaminharEvento_OnClockPause(MFTIME hnsSystemTime)
+void CarenMFClockStateSink::EncaminharEvento_OnClockPause(MFTIME hnsSystemTime)
 {
 	//Não é preciso verificar se o evento é uma referência valida.
 	//Em C++ CLI, caso o evento não seja valido, a função não será chamada.
 	OnClockPause(hnsSystemTime);
 }
 
-void CarenMFRelogioStateSink::EncaminharEvento_OnClockRestart(MFTIME hnsSystemTime)
+void CarenMFClockStateSink::EncaminharEvento_OnClockRestart(MFTIME hnsSystemTime)
 {
 	//Não é preciso verificar se o evento é uma referência valida.
 	//Em C++ CLI, caso o evento não seja valido, a função não será chamada.
 	OnClockRestart(hnsSystemTime);
 }
 
-void CarenMFRelogioStateSink::EncaminharEvento_OnClockSetRate(MFTIME hnsSystemTime, float flRate)
+void CarenMFClockStateSink::EncaminharEvento_OnClockSetRate(MFTIME hnsSystemTime, float flRate)
 {
 	//Não é preciso verificar se o evento é uma referência valida.
 	//Em C++ CLI, caso o evento não seja valido, a função não será chamada.

@@ -26,7 +26,7 @@ CarenD2D1SvgGlyphStyle::~CarenD2D1SvgGlyphStyle()
 //Construtores
 CarenD2D1SvgGlyphStyle::CarenD2D1SvgGlyphStyle()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

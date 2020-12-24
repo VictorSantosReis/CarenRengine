@@ -91,7 +91,7 @@ public ref class CarenD3D11Device3 : public ICarenD3D11Device3
 	ID3D11Device3* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD3D11Device3();
 
@@ -576,7 +576,7 @@ public:
 	/// é suportado no dispositivo instalado. Os valores são ORed juntos.</param>
 	virtual CarenResult CheckFormatSupport(
 		Enumeracoes::CA_DXGI_FORMAT Param_Formato,
-		[Out] Enumeracoes::CA_D3D11_FORMATO_SUPORTE% Param_Out_RecursosSuportados);
+		[Out] Enumeracoes::CA_D3D11_FORMAT_SUPPORT% Param_Out_RecursosSuportados);
 
 	/// <summary>
 	/// (CheckMultisampleQualityLevels) - Obter o número de níveis de qualidade disponíveis durante multisampling completo.

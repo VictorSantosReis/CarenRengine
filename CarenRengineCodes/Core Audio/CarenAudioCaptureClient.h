@@ -49,7 +49,7 @@ public ref class CarenAudioCaptureClient : public ICarenAudioCaptureClient
 	IAudioCaptureClient* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenAudioCaptureClient();
 

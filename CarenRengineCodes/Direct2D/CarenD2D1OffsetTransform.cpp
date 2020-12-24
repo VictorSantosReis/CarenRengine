@@ -26,7 +26,7 @@ CarenD2D1OffsetTransform::~CarenD2D1OffsetTransform()
 //Construtores
 CarenD2D1OffsetTransform::CarenD2D1OffsetTransform()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

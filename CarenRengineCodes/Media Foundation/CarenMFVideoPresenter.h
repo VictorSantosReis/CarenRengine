@@ -8,9 +8,6 @@
 //Importa o namespace que contém as interfaces da API primária.
 using namespace CarenRengine::MediaFoundation;
 
-//Enumeração de retorno de função.
-
-
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
@@ -20,9 +17,8 @@ using namespace CarenRengine::SDKBase::Interfaces;
 //Importa o namespace de utilidades utilizado pelas classes
 using namespace CarenRengine::SDKUtilidades;
 
-
 /// <summary>
-/// (Concluida - Fase de Testes) - 
+/// (Concluida - Fase de Testes) - Classe responsável por representar um apresentador de vídeo.
 /// </summary>
 public ref class CarenMFVideoPresenter : public ICarenMFVideoPresenter
 {
@@ -34,8 +30,13 @@ public ref class CarenMFVideoPresenter : public ICarenMFVideoPresenter
 	IMFVideoPresenter* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMFVideoPresenter();
+
 	~CarenMFVideoPresenter();
 
 
@@ -161,30 +162,6 @@ private:
 	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnClockSetRate).
 	/// </summary>
 	GCHandle gHandle_Delegate_OnClockSetRate;
-
-
-
-	//Cria uma instância dessa classe (Estático)
-public:
-	/// <summary>
-	/// Método responsável por criar uma instância vazia da classe. Chamadas para os métodos sem um ponteiro de trabalho definido
-	/// pode gerar comportamentos indefinidos.
-	/// </summary>
-	/// <param name="Param_Out_CarenMFVideoPresenter">Recebe um ponteiro para a interface (Vazia).</param>
-	static CarenResult CriarInstanciaVazia([Out] ICarenMFVideoPresenter^% Param_Out_CarenMFVideoPresenter)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Cria a interface
-		Param_Out_CarenMFVideoPresenter = gcnew CarenMFVideoPresenter();
-
-		//Define sucesso
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-		//Retorna o resultado
-		return Resultado;
-	}
 
 
 	///////////////////////////////////////////////////////

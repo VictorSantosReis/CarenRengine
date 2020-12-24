@@ -48,8 +48,27 @@ public ref class CarenMFSample : public ICarenMFSample
 	IMFSample* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a interface e permite que o usuário decida se a biblioteca deve criar a interface ou vai iniciar sem um ponteiro 
+	/// de trabalho. Se (Param_CriarInterface) for TRUE, o sistema cria uma nova amostra vazia para ser preenchida.
+	/// </summary>
+	/// <param name="Param_CriarInterface">Um valor booleano, TRUE indica que deve criar uma nova interface intermanete, caso contario, FALSE.</param>
+	CarenMFSample(Boolean Param_CriarInterface);
+
+	/// <summary>
+	/// Inicializa e cria uma ICarenMFSample contendo as amostras de substreams multiplexados. 
+	/// </summary>
+	/// <param name="Param_SamplesToMux">Uma interface(ICarenMFCollection) contendo a coleção de amostras (ICarenMFSample) para cada substream multiplexado.</param>
+	CarenMFSample(ICarenMFCollection^ Param_SamplesToMux);
+
+	/// <summary>
+	/// Inicializa e cria uma amostra de mídia que gerencia uma superfície do Direct3D.
+	/// </summary>
+	/// <param name="Param_UnkSurface">Um ponteiro para a interface IUnknown da superfície Direct3D. Este parâmetro pode ser NULO.</param>
+	CarenMFSample(ICaren^ Param_UnkSurface);
+
 	~CarenMFSample();
 
 
@@ -75,56 +94,6 @@ public:
 			//Retorna o valor.
 			return Prop_DisposedClasse;
 		}
-	}
-
-
-
-	//Cria uma instância dessa classe (Estático)
-public:
-	/// <summary>
-	/// Método responsável por criar uma instância da classe de amostra de mídias(Áudio e Vídeo).
-	/// </summary>
-	/// <param name="Param_Out_Amostra">Recebe a interface que gerencia amostras de mídia.</param>
-	static CarenResult CriarInstancia([Out] ICarenMFSample^% Param_Out_Amostra)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Variavel COM
-		ResultadoCOM Hr = E_FAIL;
-
-		//Variaveis utilizadas pelo método.
-		IMFSample* pAmostra = NULL;
-
-		//Chama o método para criar a amostra
-		Hr = MFCreateSample(&pAmostra);
-
-		//Verifica se obteve sucesso
-		if (Sucesso(Hr))
-		{
-			//Deixa o método continuar.
-		}
-		else
-		{
-			//Define falha.
-			Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-			//Sai do método.
-			goto Done;
-		}
-
-		//Cria está classe que vai conter o ponteiro.
-		Param_Out_Amostra = gcnew CarenMFSample();
-
-		//Define o ponteiro de trabalho
-		Param_Out_Amostra->AdicionarPonteiro(pAmostra);
-
-		//Define sucesso na operação
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	Done:;
-		//Retorna o resultado
-		return Resultado;
 	}
 
 
@@ -444,7 +413,7 @@ public:
 	/// </summary>
 	/// <param name="Param_GuidChave">O GUID para a chave a ser verificado o tipo do valor.</param>
 	/// <param name="Param_Out_TipoDado">O tipo do dado contido na chave solicitada.</param>
-	virtual CarenResult GetItemType(String^ Param_GuidChave, [Out] Enumeracoes::CA_ATTRIBUTE_TYPE% Param_Out_TipoDado);
+	virtual CarenResult GetItemType(String^ Param_GuidChave, [Out] Enumeracoes::CA_MF_ATTRIBUTE_TYPE% Param_Out_TipoDado);
 
 
 	/// <summary>
@@ -620,14 +589,14 @@ public:
 	/// </summary>
 	/// <param name="Param_Out_TipoPrincipal">Recebe o tipo principal da mídia(Áudio ou Vídeo).</param>
 	/// <param name="Param_Out_Guid">Recebe o Guid do formato principal.</param>
-	virtual CarenResult ObterTipoPrincipalMidia([Out] Enumeracoes::CA_Midia_TipoPrincipal% Param_Out_TipoPrincipal, [Out] String^% Param_Out_Guid);
+	virtual CarenResult ObterTipoPrincipalMidia([Out] Enumeracoes::CA_MAJOR_MEDIA_TYPES% Param_Out_TipoPrincipal, [Out] String^% Param_Out_Guid);
 
 	/// <summary>
 	/// (Extensão) - Método responsável por retornar o formato do tipo principal da mídia. 
 	/// </summary>
 	/// <param name="Param_Out_FormatoMidia">Recebe o subtipo(Formato) da mídia principal.</param>
 	/// <param name="Param_Out_GuidFormato">Recebe o Guid do subtipo(Formato).</param>
-	virtual CarenResult ObterFormatoMidia([Out] Enumeracoes::CA_Midia_SubTipo% Param_Out_FormatoMidia, [Out] String^% Param_Out_GuidFormato);
+	virtual CarenResult ObterFormatoMidia([Out] Enumeracoes::CA_MEDIA_SUBTYPES% Param_Out_FormatoMidia, [Out] String^% Param_Out_GuidFormato);
 
 };
 

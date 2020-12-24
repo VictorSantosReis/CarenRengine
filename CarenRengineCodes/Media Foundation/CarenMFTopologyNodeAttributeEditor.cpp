@@ -18,11 +18,17 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenMFTopologyNodeAttributeEditor.h"
 
+
 //Destruidor.
 CarenMFTopologyNodeAttributeEditor::~CarenMFTopologyNodeAttributeEditor()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
+}
+//Construtor
+CarenMFTopologyNodeAttributeEditor::CarenMFTopologyNodeAttributeEditor()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 //

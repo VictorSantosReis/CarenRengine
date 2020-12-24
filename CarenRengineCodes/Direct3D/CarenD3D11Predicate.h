@@ -49,7 +49,7 @@ public ref class CarenD3D11Predicate : public ICarenD3D11Predicate
 	//Ponteiro para a interface (ID3D11Predicate).
 	ID3D11Predicate* PonteiroTrabalho = NULL;
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD3D11Predicate();
 

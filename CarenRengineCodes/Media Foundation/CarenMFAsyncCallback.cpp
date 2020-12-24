@@ -24,6 +24,13 @@ CarenMFAsyncCallback::~CarenMFAsyncCallback()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor
+CarenMFAsyncCallback::CarenMFAsyncCallback(Boolean Param_CriarInterface)
+{
+	//Verifica se deve criar a classe ou não.
+	if (Param_CriarInterface)
+		PonteiroTrabalho = new CLN_IMFAsyncCallback();
+}
 
 //
 // Métodos da interface ICaren

@@ -37,7 +37,7 @@ using namespace CarenRengine::SDKBase::Interfaces;
 using namespace CarenRengine::SDKUtilidades;
 
 /// <summary>
-/// [Concluido - Fase de testes].
+/// (Concluido - Fase de Testes) - Classe responsável por fornecer os tempos de relógio para o Tempo de apresentação(ICarenMFPresentationClock). 
 /// </summary>
 public ref class CarenMFPresentationTimeSource: public ICarenMFPresentationTimeSource
 {
@@ -48,8 +48,15 @@ public ref class CarenMFPresentationTimeSource: public ICarenMFPresentationTimeS
 	//Ponteiro para a interface (IMFPresentationTimeSource).
 	IMFPresentationTimeSource* PonteiroTrabalho = NULL;
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a interface e permite que o usuário decida se a biblioteca deve criar a interface ou vai iniciar sem um ponteiro 
+	/// de trabalho.
+	/// </summary>
+	/// <param name="Param_CriarInterface">Um valor booleano, TRUE indica que deve criar uma nova interface intermanete, caso contario, FALSE.</param>
+	CarenMFPresentationTimeSource(Boolean Param_CriarInterface);
+
 	~CarenMFPresentationTimeSource();
 
 
@@ -78,64 +85,12 @@ public:
 	}
 
 
-	//Cria uma instância da classe atual.
-public:
-	/// <summary>
-	/// Método responsável por criar uma instância da fonte de tempo para um relogio de apresentação.
-	/// </summary>
-	static CarenResult CriarInstancia([Out] ICarenMFPresentationTimeSource^% Param_Out_Interface)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Variavel COM
-		HRESULT Hr = E_FAIL;
-
-		//Variaveis utilizadas no método.
-		IMFPresentationTimeSource* pTimeSource = NULL;
-		ICarenMFPresentationTimeSource^ InterfaceSolicitada = nullptr;
-
-		//Chama o método para criar o Time Source do relogio de apresentação.
-		Hr = MFCreateSystemTimeSource(&pTimeSource);
-
-		//Verifica se não ocorreu algum erro
-		if(Sucesso(Hr))
-		{
-			//Deixa o método continuar.
-		}
-		else
-		{
-			//Define falha na operação.
-			Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-			//Sai do método
-			goto Done;
-		}
-
-
-		//Cria a interface da instância atual
-		InterfaceSolicitada = gcnew CarenMFPresentationTimeSource();
-
-		//Define o ponteiro de trabalho
-		InterfaceSolicitada->AdicionarPonteiro(pTimeSource);
-
-		//Define a interface criada no parametro de saida.
-		Param_Out_Interface = InterfaceSolicitada;
-
-		//Define sucesso na operção.
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	Done:;
-		//Retorna o resultado.
-		return Resultado;
-	}
-
 	///////////////////////////////////////////////////////
 	//A parti daqui vai conter os métodos das interfaces.//
 	///////////////////////////////////////////////////////
 
 
-		//Métodos da interface (ICaren)
+	//Métodos da interface (ICaren)
 public:
 	/// <summary>
 	/// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 
@@ -220,14 +175,10 @@ public:
 	//Métodos da interface (ICarenMFPresentationTimeSource)
 public:
 	/// <summary>
-	/// Recupera o relógio subjacente que a fonte de tempo de apresentação usa para 
-	/// gerar seus tempos de relógio.
+	/// Recupera o relógio subjacente que a fonte de tempo de apresentação usa para gerar seus tempos de relógio.
 	/// </summary>
 	/// <param name="Param_Out_Relogio">Recebe a interface ICarenMFClock que representa um Relógio. O chamador deve liberar a interface.</param>
 	virtual CarenResult GetUnderlyingClock([Out] ICarenMFClock^% Param_Out_Relogio);
-
-
-
 
 
 	//Métodos da interface (ICarenMFClock)

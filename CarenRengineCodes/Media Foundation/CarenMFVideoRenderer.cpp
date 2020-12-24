@@ -18,11 +18,17 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenMFVideoRenderer.h"
 
+
 //Destruidor.
 CarenMFVideoRenderer::~CarenMFVideoRenderer()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
+}
+//Cosntrutor
+CarenMFVideoRenderer::CarenMFVideoRenderer()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 

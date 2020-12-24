@@ -26,7 +26,7 @@ CarenD2D1DeviceContext1::~CarenD2D1DeviceContext1()
 //Construtores
 CarenD2D1DeviceContext1::CarenD2D1DeviceContext1()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

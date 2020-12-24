@@ -44,7 +44,7 @@ public ref class CarenD2D1Layer : public ICarenD2D1Layer
 	ID2D1Layer* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD2D1Layer();
 

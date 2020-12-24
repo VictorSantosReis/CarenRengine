@@ -28,7 +28,7 @@ using namespace CarenRengine::SDKBase::Estruturas;
 using namespace CarenRengine::SDKBase::Interfaces;
 
 /// <summary>
-/// (Concluido - Fase de Testes) - Expõe métodos usados para enumerar e manipular valores de propriedade.
+/// (Concluido - Fase de Testes) - Class responsável por expor métodos usados para enumerar e manipular valores de propriedade.
 /// </summary>
 public ref class CarenPropertyStore : public ICarenPropertyStore
 {
@@ -39,8 +39,19 @@ public ref class CarenPropertyStore : public ICarenPropertyStore
 	//Ponteiro para a interface (IPropertyStore).
 	IPropertyStore* PonteiroTrabalho = NULL;
 
-	//Destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenPropertyStore();
+
+	/// <summary>
+	/// Inicializa e cria uma loja de propriedades na memória.
+	/// </summary>
+	/// <param name="Param_RIID">Referência ao ID de interface solicitado. Está interface suporta atualmente o ID: IID_IPropertyStore</param>
+	CarenPropertyStore(String^ Param_RIID);
+
 	~CarenPropertyStore();
 
 
@@ -66,59 +77,6 @@ public:
 			//Retorna o valor.
 			return Prop_DisposedClasse;
 		}
-	}
-
-
-	//Cria uma instância da classe
-public:
-	/// <summary>
-	/// Método responsável por criar uma instância da classe atual.
-	/// </summary>
-	/// <param name="Param_Out_PropertyStore">Recebe a interface de armazenamento de propriedades na memória.</param>
-	static CarenResult CriarInstancia([Out]ICarenPropertyStore^% Param_Out_PropertyStore)
-	{
-		//Variavel que vai retornar o resultado do método.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Variavel COM
-		ResultadoCOM Hr = E_FAIL;
-
-		//Variaveis utilizadas no método
-		ICarenPropertyStore^ InterfaceSolicitada = nullptr;
-		IPropertyStore* pStore = NULL;
-
-		//Chama o método para criar um ponteiro para a interface.
-		Hr = PSCreateMemoryPropertyStore(IID_PPV_ARGS(&pStore));
-
-		//Verifica o resultado da operação
-		if (Sucesso(Hr))
-		{
-			//Deixa o método continuar.
-		}
-		else
-		{
-			//Define falha na operação.
-			Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-			//Sai do método
-			goto Done;
-		}
-
-		//Cria a interface que vai conter o ponteiro.
-		InterfaceSolicitada = gcnew CarenPropertyStore();
-
-		//Chama o método para definir o ponteiro.
-		InterfaceSolicitada->AdicionarPonteiro(pStore);
-
-		//Define a interface criada no parametro de saida.
-		Param_Out_PropertyStore = InterfaceSolicitada;
-
-		//Define sucesso na operação
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	Done:;
-		//Retorna o resultado.
-		return Resultado;
 	}
 
 

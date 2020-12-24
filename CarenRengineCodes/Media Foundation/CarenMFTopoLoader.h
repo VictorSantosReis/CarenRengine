@@ -49,8 +49,15 @@ public ref class CarenMFTopoLoader :public ICarenMFTopoLoader
 	IMFTopoLoader* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a interface e permite que o usuário decida se a biblioteca deve criar a interface ou vai iniciar sem um ponteiro 
+	/// de trabalho.
+	/// </summary>
+	/// <param name="Param_CriarInterface">Um valor booleano, TRUE indica que deve criar uma nova interface intermanete, caso contario, FALSE.</param>
+	CarenMFTopoLoader(Boolean Param_CriarInterface);
+
 	~CarenMFTopoLoader();
 
 
@@ -77,77 +84,6 @@ public:
 			return Prop_DisposedClasse;
 		}
 	}
-
-
-
-	//Cria uma instância dessa classe (Estático)
-public:
-	/// <summary>
-	/// Método responsável por criar o conversor de topologia.
-	/// </summary>
-	/// <param name="Param_Out_TopoLoader">Recebe um ponteiro para o conversor de topologia.</param>
-	static CarenResult CriarInstancia([Out] ICarenMFTopoLoader^% Param_Out_TopoLoader)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Variavel que contém o resultado COM.
-		HRESULT Hr = E_FAIL;
-
-		//Variaveis utilizadas no método.
-		IMFTopoLoader* pTopoLoader = NULL;
-
-		//Chama o método
-		Hr = MFCreateTopoLoader(&pTopoLoader);
-
-		//Verifica o resultado
-		if (Sucesso(Hr))
-		{
-			//Deixa o método continuar.
-		}
-		else
-		{
-			//Erro
-			Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-			//Sai do método
-			goto Done;
-		}
-
-		//Cria a interface.
-		Param_Out_TopoLoader = gcnew CarenMFTopoLoader();
-
-		//Deifine o ponteiro
-		Param_Out_TopoLoader->AdicionarPonteiro(pTopoLoader);
-
-		//Define sucesso na operção.
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	Done:;
-		//Retorna o resultado.
-		return Resultado;
-	}
-
-	/// <summary>
-	/// Método responsável por criar uma instância vazia da classe. Chamadas para os métodos sem um ponteiro de trabalho definido
-	/// pode gerar comportamentos indefinidos.
-	/// </summary>
-	/// <param name="Param_Out_TopoLoader">Recebe um ponteiro para a interface (Vazia).</param>
-	static CarenResult CriarInstanciaVazia([Out] ICarenMFTopoLoader^% Param_Out_TopoLoader)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Cria a interface
-		Param_Out_TopoLoader = gcnew CarenMFTopoLoader();
-
-		//Define sucesso
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-		//Retorna o resultado
-		return Resultado;
-	}
-
 
 
 	///////////////////////////////////////////////////////

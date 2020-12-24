@@ -18,11 +18,17 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenMFMediaSourceEx.h"
 
+
 //Destruidor.
 CarenMFMediaSourceEx::~CarenMFMediaSourceEx()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
+}
+//Construtor
+CarenMFMediaSourceEx::CarenMFMediaSourceEx()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 //

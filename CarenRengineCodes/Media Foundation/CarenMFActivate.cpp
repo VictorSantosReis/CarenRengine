@@ -18,11 +18,17 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenMFActivate.h"
 
+
 //Destruidor.
 CarenMFActivate::~CarenMFActivate()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
+}
+//Construtores
+CarenMFActivate::CarenMFActivate()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 //
@@ -1204,7 +1210,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave a ser verificado o tipo do valor.</param>
 /// <param name="Param_Out_TipoDado">O tipo do dado contido na chave solicitada.</param>
-CarenResult CarenMFActivate::GetItemType(String^ Param_GuidChave, [Out] CA_ATTRIBUTE_TYPE% Param_Out_TipoDado)
+CarenResult CarenMFActivate::GetItemType(String^ Param_GuidChave, [Out] CA_MF_ATTRIBUTE_TYPE% Param_Out_TipoDado)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1238,7 +1244,7 @@ CarenResult CarenMFActivate::GetItemType(String^ Param_GuidChave, [Out] CA_ATTRI
 		Sair;
 	}
 
-	//Converte o valor retornado para um gerenciado representado pela enumeração CA_ATTRIBUTE_TYPE.
+	//Converte o valor retornado para um gerenciado representado pela enumeração CA_MF_ATTRIBUTE_TYPE.
 	Param_Out_TipoDado = Util.ConverterMF_ATTRIBUTE_TYPEUnmanagedToManaged(ValorRequisitado);
 
 Done:;

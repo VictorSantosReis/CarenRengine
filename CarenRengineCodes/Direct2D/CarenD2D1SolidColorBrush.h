@@ -44,7 +44,7 @@ public ref class CarenD2D1SolidColorBrush : public ICarenD2D1SolidColorBrush
 	ID2D1SolidColorBrush* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD2D1SolidColorBrush();
 

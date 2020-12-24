@@ -39,7 +39,7 @@ using namespace CarenRengine::SDKBase::Interfaces;
 using namespace CarenRengine::SDKUtilidades;
 
 /// <summary>
-/// Estende a interface IMFMediaSource para fornecer recursos adicionais para uma fonte de mídia.
+/// Estende a interface ICarenMFMediaSource para fornecer recursos adicionais para uma fonte de mídia.
 /// </summary>
 public ref class CarenMFMediaSourceEx :public ICarenMFMediaSourceEx
 {
@@ -50,8 +50,13 @@ public ref class CarenMFMediaSourceEx :public ICarenMFMediaSourceEx
 	//Ponteiro para a interface (IMFSourceReader).
 	IMFMediaSourceEx* PonteiroTrabalho = NULL;
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMFMediaSourceEx();
+
 	~CarenMFMediaSourceEx();
 
 
@@ -184,7 +189,6 @@ public:
 	/// </summary>
 	/// <param name="Param_DXGIManager">O Gerenciador do DXGI que será utilizado.</param>
 	virtual CarenResult SetD3DManager(ICarenMFDXGIDeviceManager^ Param_DXGIManager);
-
 
 
 	//Métodos da interface ICarenMFMediaSource

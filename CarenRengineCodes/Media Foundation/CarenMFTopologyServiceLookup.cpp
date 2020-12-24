@@ -18,16 +18,22 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenMFTopologyServiceLookup.h"
 
+
 //Destruidor.
 CarenMFTopologyServiceLookup::~CarenMFTopologyServiceLookup()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor
+CarenMFTopologyServiceLookup::CarenMFTopologyServiceLookup()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
-//
+
 // Métodos da interface ICaren
-//
+
 
 /// <summary>
 /// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 

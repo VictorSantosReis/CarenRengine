@@ -45,7 +45,7 @@ public ref class CarenD2D1LinearGradientBrush : public ICarenD2D1LinearGradientB
 	ID2D1LinearGradientBrush* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD2D1LinearGradientBrush();
 

@@ -103,7 +103,7 @@ public:
 		else if (String::Equals(Param_GuidInterfaceDestino, GUIDs_CarenGuidInterfaces::GUID_CA_INTF_MFAmostra))
 		{
 			//Cria a interface.
-			InterfaceSolicitada = gcnew CarenMFSample();
+			InterfaceSolicitada = gcnew CarenMFSample(false);
 
 			//Define a interface
 			((ICaren^)InterfaceSolicitada)->AdicionarPonteiro(pInterface);
@@ -235,7 +235,7 @@ public:
 		else if (String::Equals(Param_GuidInterfaceDestino, GUIDs_CarenGuidInterfaces::GUID_CA_INTF_MFFonteTempoRelogioApresentação))
 		{
 			//Cria a interface.
-			InterfaceSolicitada = gcnew CarenMFPresentationTimeSource();
+			InterfaceSolicitada = gcnew CarenMFPresentationTimeSource(false);
 
 			//Define a interface
 			((ICaren^)InterfaceSolicitada)->AdicionarPonteiro(pInterface);

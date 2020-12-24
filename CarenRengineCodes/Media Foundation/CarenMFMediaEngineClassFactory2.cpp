@@ -26,7 +26,7 @@ CarenMFMediaEngineClassFactory2::~CarenMFMediaEngineClassFactory2()
 //Construtores
 CarenMFMediaEngineClassFactory2::CarenMFMediaEngineClassFactory2()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

@@ -18,7 +18,6 @@ limitations under the License.
 #pragma once
 #include "../SDK_MediaFoundation.h"
 #include "../Caren/Caren.h"
-
 #include "../SDK_Utilidades.h"
 #include "CarenMFActivate.h"
 #include "CarenMFClock.h"
@@ -27,9 +26,6 @@ limitations under the License.
 
 //Importa o namespace que contém as interfaces da Media Foundation.
 using namespace CarenRengine::MediaFoundation;
-
-//Enumeração de retorno de função.
-
 
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
@@ -54,8 +50,27 @@ public ref class CarenMFMediaSession :public ICarenMFMediaSession
 	IMFMediaSession* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMFMediaSession();
+
+	/// <summary>
+	/// Inicializa e cria a Sessão de Mídia no processo do aplicativo.
+	/// </summary>
+	/// <param name="Param_ConfigAtributos">Uma interface com os atributos de configuração para a Media Session. Este parâmetro pode ser NULO.</param>
+	CarenMFMediaSession(ICarenMFAttributes^ Param_ConfigAtributos);
+
+	/// <summary>
+	/// Inicializa e cria uma instância da Sessão de Mídia dentro de um processo PMP (Protected Media Path, caminho de mídia protegido).
+	/// </summary>
+	/// <param name="Param_Fags">Um membro da enumeração CA_MFPMPSESSION_CREATION_FLAGS que especifica como criar o objeto de sessão.</param>
+	/// <param name="Param_ConfigAtributos">Uma interface com os atributos de configuração para a Media Session. Este parâmetro pode ser NULO.</param>
+	/// <param name="Param_Out_Ativador">Recebe a interface ICarenMFActivate ou o valor NULO. Se não-NULO, o chamador deve liberar a interface.</param>
+	CarenMFMediaSession(CA_PMPSESSION_CREATION_FLAGS Param_Fags, ICarenMFAttributes^ Param_ConfigAtributos, ICarenMFActivate^ Param_Out_Ativador);
+
 	~CarenMFMediaSession();
 
 
@@ -82,182 +97,6 @@ public:
 			return Prop_DisposedClasse;
 		}
 	}
-
-
-
-	//Cria uma instância dessa classe (Estático)
-public:
-	/// <summary>
-	/// Método responsável por criar uma instância vazia da classe. Chamadas para os métodos sem um ponteiro de trabalho definido
-	/// pode gerar comportamentos indefinidos.
-	/// </summary>
-	/// <param name="Param_Out_MediaSession">Recebe um ponteiro para a interface (Vazia).</param>
-	static CarenResult CriarInstanciaVazia([Out] ICarenMFMediaSession^% Param_Out_MediaSession)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Cria a interface
-		Param_Out_MediaSession = gcnew CarenMFMediaSession();
-
-		//Define sucesso
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-		//Retorna o resultado
-		return Resultado;
-	}
-
-	/// <summary>
-	/// Método responsável por criar uma sessão de midia não PMP.
-	/// </summary>
-	/// <param name="Param_Atributos">Uma interface de atributos para adicionar configurações extras a criação da sessão de midia. Esse paramêtro pode ser NULO.</param>
-	/// <param name="Param_Out_MediaSession">Recebe um ponteiro para a interface de sessão de midia.</param>
-	static CarenResult CriarInstancia(ICarenMFAttributes^ Param_Atributos, [Out] ICarenMFMediaSession^% Param_Out_MediaSession)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//HResult
-		HRESULT Hr = E_FAIL;
-
-		//Variaveis utilizadas no método
-		IMFAttributes* pAtributosAdicionais = NULL;
-		IMFMediaSession* pMediaSession = NULL;
-
-		//Verifica se especificou atributos e obtém a interface nativa
-		if (Param_Atributos != nullptr)
-		{
-			//Recupera o ponteiro.
-			Resultado = Param_Atributos->RecuperarPonteiro((LPVOID*)&pAtributosAdicionais);
-
-			//Verifica o resultado
-			if (Resultado.StatusCode != ResultCode::SS_OK)
-			{
-				//Falhou...
-
-				//Sai do método
-				goto Done;
-			}
-		}
-
-		//Chama o método para realizar a operação
-		Hr = MFCreateMediaSession(ObjetoValido(pAtributosAdicionais) ? pAtributosAdicionais : NULL, &pMediaSession);
-
-		//Verifica o resultado
-		if (Sucesso(Hr))
-		{
-			//Deixa o método continuar.
-		}
-		else
-		{
-			//A operação falhou
-			Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-			//Sai do método
-			goto Done;
-		}
-
-		//Cria a interface a ser retornada.
-		Param_Out_MediaSession = gcnew CarenMFMediaSession();
-
-		//Define o ponteiro
-		Param_Out_MediaSession->AdicionarPonteiro(&pMediaSession);
-
-		//Define sucesso
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	Done:;
-		//Retorna o resultado
-		return Resultado;
-	}
-
-	/// <summary>
-	/// Método responsável por criar uma sessão de midia PMP. 
-	/// </summary>
-	/// <param name="Param_Flags"></param>
-	/// <param name="Param_Atributos">Uma interface de atributos para adicionar configurações extras a criação da sessão de midia. Esse paramêtro pode ser NULO.</param>
-	/// <param name="Param_Out_MediaSession">Recebe um ponteiro para a interface de sessão de midia. O chamador deve liberar a interface. Antes de liberar a última referência para a interface, 
-	/// o chamador deve chamar o método(Shutdown).</param>	
-	/// <param name="Param_Out_EnablerAtivador">Recebe um ponteiro para o ativador de objeto. Esse valor pode ser NULO. Se não NULO, o chamador deve liberar a interface.</param>
-	static CarenResult CriarInstanciaPMP(CA_PMPSESSION_CREATION_FLAGS Param_Flags, ICarenMFAttributes^ Param_Atributos, [Out] ICarenMFMediaSession^% Param_Out_MediaSession, [Out] ICarenMFActivate^% Param_Out_EnablerAtivador)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//HResult
-		HRESULT Hr = E_FAIL;
-
-		//Variaveis utilizadas no método
-		IMFAttributes* pAtributosAdicionais = NULL;
-		IMFMediaSession* pMediaSessionPMP = NULL;
-		IMFActivate* pEnablerAtivador = NULL;
-		MFPMPSESSION_CREATION_FLAGS FlagsCreateMediaSession = static_cast<MFPMPSESSION_CREATION_FLAGS>(Param_Flags);
-
-		//Verifica se especificou atributos e obtém a interface nativa
-		if (Param_Atributos != nullptr)
-		{
-			//Recupera o ponteiro.
-			Resultado = Param_Atributos->RecuperarPonteiro((LPVOID*)& pAtributosAdicionais);
-
-			//Verifica o resultado
-			if (Resultado.StatusCode != ResultCode::SS_OK)
-			{
-				//Falhou...
-
-				//Sai do método
-				goto Done;
-			}
-		}
-
-		//Chama o método para realizar a operação
-		Hr = MFCreatePMPMediaSession(FlagsCreateMediaSession, ObjetoValido(pAtributosAdicionais) ? pAtributosAdicionais : NULL, &pMediaSessionPMP, &pEnablerAtivador);
-
-		//Verifica o resultado
-		if (Sucesso(Hr))
-		{
-			//Deixa o método continuar.
-		}
-		else
-		{
-			//A operação falhou
-			Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-			//Sai do método
-			goto Done;
-		}
-
-		//Cria a interface a ser retornada.
-		Param_Out_MediaSession = gcnew CarenMFMediaSession();
-
-		//Define o ponteiro
-		Param_Out_MediaSession->AdicionarPonteiro(&pMediaSessionPMP);
-
-		//Verifica se o ativador é valido e define
-		if (ObjetoValido(pEnablerAtivador))
-		{
-			//Objeto é valido..
-
-			//Cria a interface do ativador.
-			Param_Out_EnablerAtivador = gcnew CarenMFActivate();
-
-			//Define o ponteiro
-			Param_Out_EnablerAtivador->AdicionarPonteiro(pEnablerAtivador);
-		}
-		else
-		{
-			//Define como NULO 
-			Param_Out_EnablerAtivador = nullptr;
-		}
-
-		//Define sucesso
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	Done:;
-		//Retorna o resultado
-		return Resultado;
-	}
-
-
 
 
 	///////////////////////////////////////////////////////

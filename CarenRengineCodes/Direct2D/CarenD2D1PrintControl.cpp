@@ -26,7 +26,7 @@ CarenD2D1PrintControl::~CarenD2D1PrintControl()
 //Construtores
 CarenD2D1PrintControl::CarenD2D1PrintControl()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

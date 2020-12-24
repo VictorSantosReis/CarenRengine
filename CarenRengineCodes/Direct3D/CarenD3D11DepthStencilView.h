@@ -49,7 +49,7 @@ public ref class CarenD3D11DepthStencilView :public ICarenD3D11DepthStencilView
 	//Ponteiro para a interface (ID3D11DepthStencilView).
 	ID3D11DepthStencilView* PonteiroTrabalho = NULL;
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD3D11DepthStencilView();
 

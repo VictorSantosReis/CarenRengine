@@ -53,7 +53,7 @@ public ref class CarenD2D1BitmapRenderTarget : public ICarenD2D1BitmapRenderTarg
 	ID2D1BitmapRenderTarget* PonteiroTrabalho = NULL;
 	
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD2D1BitmapRenderTarget();
 

@@ -26,7 +26,7 @@ CarenWICEnumMetadataItem::~CarenWICEnumMetadataItem()
 //Construtores
 CarenWICEnumMetadataItem::CarenWICEnumMetadataItem()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

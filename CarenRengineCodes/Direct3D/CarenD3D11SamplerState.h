@@ -49,7 +49,7 @@ public ref class CarenD3D11SamplerState :public ICarenD3D11SamplerState
 	//Ponteiro para a interface (ID3D11SamplerState).
 	ID3D11SamplerState* PonteiroTrabalho = NULL;
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD3D11SamplerState();
 

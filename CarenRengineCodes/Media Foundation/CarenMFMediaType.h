@@ -51,8 +51,33 @@ public ref class CarenMFMediaType: public ICarenMFMediaType
 
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a interface e permite que o usuário decida se a biblioteca deve criar a interface ou vai iniciar sem um ponteiro de trabalho.
+	/// </summary>
+	/// <param name="Param_CriarInterface">Um valor booleano, TRUE indica que deve criar uma nova interface intermanete, caso contario, FALSE.</param>
+	CarenMFMediaType(Boolean Param_CriarInterface);
+
+	/// <summary>
+	/// Inicializa a cria a interface a parti de uma interface de propriedades.
+	/// </summary>
+	/// <param name="Param_StreamProperties">Um ponteiro para as propriedades.</param>
+	CarenMFMediaType(ICaren^ Param_StreamProperties);
+
+	/// <summary>
+	/// Inicializa e cria um tipo de mídia da Media Foundation a partir de outra representação de formato.
+	/// </summary>
+	/// <param name="Param_GuidRepresentation">GUID que especifica qual representação de formato converter.</param>
+	/// <param name="Param_BufferRepresentation">um buffer que contém a representação do formato para converter. O layout do buffer depende do valor no parametro (Param_GuidRepresentation).</param>
+	CarenMFMediaType(String^ Param_GuidRepresentation, ICarenBuffer^ Param_BufferRepresentation);
+
+	/// <summary>
+	/// Inicializa e cria a interface de atributos a parti de uma lista(ICarenMFCollection) que descrevem os tipos de mídia de substreams multiplexados.
+	/// </summary>
+	/// <param name="Param_MediaTypesToMux">Uma interface (ICarenMFCollection) que contém uma lista de ponteiros para as interfaces de atributos de cada substream multiplexado.</param>
+	CarenMFMediaType(ICarenMFCollection^ Param_MediaTypesToMux);
+
 	~CarenMFMediaType();
 
 
@@ -78,51 +103,6 @@ public:
 			//Retorna o valor.
 			return Prop_DisposedClasse;
 		}
-	}
-
-
-
-	//Cria uma instância dessa classe (Estático)
-public:
-	/// <summary>
-	/// Método responsável por criar uma instância da classe de leitura de mídia.
-	/// </summary>
-	/// <param name="Param_Out_MidiaType">Recebe a interface que gerencia um tipo de mídia.</param>
-	static CarenResult CriarInstancia([Out] ICarenMFMediaType^% Param_Out_MidiaType)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Variavel que contém o resultado COM.
-		HRESULT Hr = E_FAIL;
-
-		//Variavel que vai conter o ponteiro de trabalho
-		IMFMediaType *pMediaType = NULL;
-
-		//Chama o método que vai criar o ponteiro.
-		Hr = MFCreateMediaType(&pMediaType);
-
-		//Processa o resultado da chamada.
-		Resultado.ProcessarCodigoOperacao(Hr);
-
-		//Verifica se obteve sucesso na operação.
-		if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-		{
-			//Falhou ao realizar a operação.
-
-			//Sai do método
-			Sair;
-		}
-
-		//Cria uma instancia da classe
-		Param_Out_MidiaType = gcnew CarenMFMediaType();
-
-		//Chama o método para definir o ponteiro de trabalho.
-		Param_Out_MidiaType->AdicionarPonteiro(pMediaType);
-
-	Done:;
-		//Retorna o resultado.
-		return Resultado;
 	}
 
 
@@ -220,7 +200,7 @@ public:
 	/// </summary>
 	/// <param name="Param_Out_GuidTipoMidia">Retorna o GUID do tipo principal da mídia.</param>
 	/// <param name="Param_Out_TipoPrincipal">Retorna a enumeração com o tipo principal da mídia.</param>
-	virtual CarenResult GetMajorType([Out] String^% Param_Out_GuidTipoMidia, [Out] Enumeracoes::CA_Midia_TipoPrincipal% Param_Out_TipoPrincipal);
+	virtual CarenResult GetMajorType([Out] String^% Param_Out_GuidTipoMidia, [Out] Enumeracoes::CA_MAJOR_MEDIA_TYPES% Param_Out_TipoPrincipal);
 
 	/// <summary>
 	/// (IsCompressedFormat) - Consulta se o tipo de mídia é um formato compactado(CompressedFormat).
@@ -374,7 +354,7 @@ public:
 	/// </summary>
 	/// <param name="Param_GuidChave">O GUID para a chave a ser verificado o tipo do valor.</param>
 	/// <param name="Param_Out_TipoDado">O tipo do dado contido na chave solicitada.</param>
-	virtual CarenResult GetItemType(String^ Param_GuidChave, [Out] Enumeracoes::CA_ATTRIBUTE_TYPE% Param_Out_TipoDado);
+	virtual CarenResult GetItemType(String^ Param_GuidChave, [Out] Enumeracoes::CA_MF_ATTRIBUTE_TYPE% Param_Out_TipoDado);
 
 
 	/// <summary>
@@ -551,13 +531,13 @@ public:
 	/// </summary>
 	/// <param name="Param_Out_TipoPrincipal">Recebe o tipo principal da mídia(Áudio ou Vídeo).</param>
 	/// <param name="Param_Out_Guid">Recebe o Guid do formato principal.</param>
-	virtual CarenResult ObterTipoPrincipalMidia([Out] Enumeracoes::CA_Midia_TipoPrincipal% Param_Out_TipoPrincipal, [Out] String^% Param_Out_Guid);
+	virtual CarenResult ObterTipoPrincipalMidia([Out] Enumeracoes::CA_MAJOR_MEDIA_TYPES% Param_Out_TipoPrincipal, [Out] String^% Param_Out_Guid);
 
 	/// <summary>
 	/// (Extensão) - Método responsável por retornar o formato do tipo principal da mídia. 
 	/// </summary>
 	/// <param name="Param_Out_FormatoMidia">Recebe o subtipo(Formato) da mídia principal.</param>
 	/// <param name="Param_Out_GuidFormato">Recebe o Guid do subtipo(Formato).</param>
-	virtual CarenResult ObterFormatoMidia([Out] Enumeracoes::CA_Midia_SubTipo% Param_Out_FormatoMidia, [Out] String^% Param_Out_GuidFormato);
+	virtual CarenResult ObterFormatoMidia([Out] Enumeracoes::CA_MEDIA_SUBTYPES% Param_Out_FormatoMidia, [Out] String^% Param_Out_GuidFormato);
 };
 

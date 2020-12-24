@@ -18,11 +18,44 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenDirect3DDeviceManager9.h"
 
+
 //Destruidor.
 CarenDirect3DDeviceManager9::~CarenDirect3DDeviceManager9()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
+}
+//Construtores
+CarenDirect3DDeviceManager9::CarenDirect3DDeviceManager9()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
+
+CarenDirect3DDeviceManager9::CarenDirect3DDeviceManager9(OutParam UInt32% Param_Out_Resetoken)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	UINT vi_OutResetToken = 0;
+	IDirect3DDeviceManager9* vi_pOutDirect3D9 = Nulo;
+
+	//Chama o método para realizar a operação.
+	Hr = DXVA2CreateDirect3DDeviceManager9(&vi_OutResetToken, &vi_pOutDirect3D9);
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define a interface criada no ponteiro de trabalho da classe.
+	PonteiroTrabalho = vi_pOutDirect3D9;
+
+	//Define o Token no parametro de saida.
+	Param_Out_Resetoken = vi_OutResetToken;
 }
 
 //

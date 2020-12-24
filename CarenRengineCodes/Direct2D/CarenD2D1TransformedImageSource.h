@@ -45,7 +45,7 @@ public ref class CarenD2D1TransformedImageSource : public ICarenD2D1TransformedI
 	ID2D1TransformedImageSource* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD2D1TransformedImageSource();
 

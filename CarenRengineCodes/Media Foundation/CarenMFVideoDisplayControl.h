@@ -38,7 +38,7 @@ using namespace CarenRengine::SDKUtilidades;
 
 
 /// <summary>
-/// (Concluido - Fase de Testes)
+/// (Concluido - Fase de Testes) - Classe responsável por controlar como o Vídeo é exbido pelo EVR (Renderizador de Vídeo Aprimorado). 
 /// </summary>
 public ref class CarenMFVideoDisplayControl :public ICarenMFVideoDisplayControl
 {
@@ -49,8 +49,13 @@ public ref class CarenMFVideoDisplayControl :public ICarenMFVideoDisplayControl
 	//Ponteiro para a interface (IMFVideoDisplayControl).
 	IMFVideoDisplayControl* PonteiroTrabalho = NULL;
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMFVideoDisplayControl();
+
 	~CarenMFVideoDisplayControl();
 
 

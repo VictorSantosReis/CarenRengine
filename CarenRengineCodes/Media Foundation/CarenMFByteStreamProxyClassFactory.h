@@ -48,9 +48,15 @@ public ref class CarenMFByteStreamProxyClassFactory : public ICarenMFByteStreamP
 	//Contrutores e destuidor da classe.
 public:
 	/// <summary>
-	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	///  Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
 	/// </summary>
 	CarenMFByteStreamProxyClassFactory();
+
+	/// <summary>
+	/// Inicializa e cria um proxy para um fluxo byte. 
+	/// </summary>
+	/// <param name="Param_Context">Contexto no qual o código que gerencia o objeto recém-criado será executado. Os valores são retirados da enumeração CA_CLSCTX.</param>
+	CarenMFByteStreamProxyClassFactory(CA_CLSCTX Param_Context);
 	
 	~CarenMFByteStreamProxyClassFactory();
 

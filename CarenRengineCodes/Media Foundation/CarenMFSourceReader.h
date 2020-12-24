@@ -24,9 +24,6 @@ limitations under the License.
 //Importa o namespace que contém as interfaces da Media Foundation.
 using namespace CarenRengine::MediaFoundation;
 
-//Enumeração de retorno de função.
-
-
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
@@ -37,8 +34,7 @@ using namespace CarenRengine::SDKBase::Interfaces;
 using namespace CarenRengine::SDKUtilidades;
 
 /// <summary>
-/// Classe responsável por realizar a leitura de amostras de mídia de um Arquivo, Nuvem ou Camera.
-/// Essa classe implementa a interface(ICarenMFSourceReader), que implementa os métodos de IMFSourceReader.
+/// (Concluido - Fase de Testes) - Classe responsável por realizar a leitura de amostras de mídia de um Arquivo, Nuvem ou Câmera.
 /// </summary>
 public ref class CarenMFSourceReader : public ICarenMFSourceReader
 {
@@ -49,8 +45,35 @@ public ref class CarenMFSourceReader : public ICarenMFSourceReader
 	//Ponteiro para a interface (IMFSourceReader).
 	IMFSourceReader* PonteiroTrabalho = NULL;
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMFSourceReader();
+
+	/// <summary>
+	/// Inicializa e cria o Source Reader(Leitor de Origem) a partir de uma URL.‎
+	/// ‎Internamente, o Source Reader chama o método ‎‎ICarenMFSourceResolver::CreateObjectFromURL‎‎ para criar uma fonte de mídia a partir da URL.‎
+	/// </summary>
+	/// <param name="Param_Url">Uma string com a url para o arquivo de mídia a ser aberto.</param>
+	/// <param name="Param_Atributos">Uma interface com atributos. Você pode usar este parâmetro para configurar o Source Reader(Leitor de Origem). Este parâmetro pode ser NULO.</param>
+	CarenMFSourceReader(String^ Param_Url, ICarenMFAttributes^ Param_Atributos);
+
+	/// <summary>
+	/// ‎Inicializa e cria o Source Reader(Leitor de Origem) a partir de uma Media Source(Fonte de Mídia).‎
+	/// </summary>
+	/// <param name="Param_MediaSource">Uma interface (ICarenMFMediaSource) para a fonte de mídia a ser lida.</param>
+	/// <param name="Param_Atributos">Uma interface com atributos. Você pode usar este parâmetro para configurar o Source Reader(Leitor de Origem). Este parâmetro pode ser NULO.</param>
+	CarenMFSourceReader(ICarenMFMediaSource^ Param_MediaSource, ICarenMFAttributes^ Param_Atributos);
+
+	/// <summary>
+	/// ‎Inicializa e cria o Source Reader(Leitor de Origem) a partir de um Byte Stream.
+	/// </summary>
+	/// <param name="Param_ByteStream">Uma interface ‎‎ICarenMFByteStream‎‎ de um fluxo byte. Este fluxo byte fornecerá os dados de origem para o Source Reader(Leitor de Origem).‎</param>
+	/// <param name="Param_Atributos">Uma interface com atributos. Você pode usar este parâmetro para configurar o Source Reader(Leitor de Origem). Este parâmetro pode ser NULO.</param>
+	CarenMFSourceReader(ICarenMFByteStream^ Param_ByteStream, ICarenMFAttributes^ Param_Atributos);
+
 	~CarenMFSourceReader();
 
 
@@ -76,145 +99,6 @@ public:
 			//Retorna o valor.
 			return Prop_DisposedClasse;
 		}
-	}
-
-	//Cria uma instância dessa classe (Estático)
-public:
-	/// <summary>
-	/// Cria uma instância do leitor de mídia(IMFSourceReader), utilizado para leitura de amostras e dados de Vídeo e Áudio.
-	/// A criação é default e não utiliza os atributos.
-	/// </summary>
-	/// <param name="Param_UrlMidia">A url para a mídia a ser carregada pelo leitor de mídia.</param>
-	/// <param name="Param_Out_LeitorMidia">Recebe o ponteiro para o leitor de mídia.</param>
-	static CarenResult CriarInstancia(String^ Param_UrlMidia, [Out] ICarenMFSourceReader^% Param_Out_LeitorMidia)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Variavel que vai conter o resultado COM.
-		ResultadoCOM Hr;
-
-		//Variavel que vai ser retornada.
-		IMFSourceReader *pSourceReader = NULL;
-
-		//Variaveis utilizadas pelo método.
-		Utilidades Util;
-		char* pBufferStringConvertido = NULL;
-		LPCWSTR pBufferWchar = NULL;
-
-		//Chama o método que vai criar a url para a mídia a ser aberta.
-		pBufferStringConvertido = Util.ConverterStringToChar(Param_UrlMidia);
-
-		//Converte o char* para wchar*
-		pBufferWchar = Util.ConverterConstCharToConstWCHAR(pBufferStringConvertido);
-
-		//Chama o método para criar o leitor de mídia.
-		Hr = MFCreateSourceReaderFromURL(pBufferWchar, NULL, &pSourceReader);
-
-		//Processa o resultado da chamada.
-		Resultado.ProcessarCodigoOperacao(Hr);
-
-		//Verifica se obteve sucesso na operação.
-		if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-		{
-			//Falhou ao realizar a operação.
-
-			//Sai do método
-			Sair;
-		}
-
-		//Cria a instância da classe
-		Param_Out_LeitorMidia = gcnew CarenMFSourceReader();
-
-		//Chama o método para definir o ponteiro de trabalho na interface a ser retornada.
-		Param_Out_LeitorMidia->AdicionarPonteiro(pSourceReader);
-
-	Done:;
-		//Deleta os buffers convertidos da string.
-		if (pBufferStringConvertido == NULL)
-		{
-			//Deleta o buffer de alocado.
-			delete pBufferStringConvertido;
-		}
-		if (pBufferWchar == NULL)
-		{
-			//Deleta o buffer de alocado.
-			delete pBufferWchar;
-		}
-
-		//Retorna o resultado.
-		return Resultado;
-	}
-
-	/// <summary>
-	/// Cria uma instância do leitor de mídia(IMFSourceReader), utilizado para leitura de amostras e dados de Vídeo e Áudio.
-	/// Permite especificar atributos para criação do leitor.
-	/// </summary>
-	/// <param name="Param_UrlMidia">A url para a mídia a ser carregada pelo leitor de mídia.</param>
-	/// <param name="Param_Atributos">A interface com os atributos para a criação do leitor de mídia.</param>
-	/// <param name="Param_Out_LeitorMidia">Recebe o ponteiro para o leitor de mídia.</param>
-	static CarenResult CriarInstancia(String^ Param_UrlMidia, ICarenMFAttributes^ Param_Atributos, [Out] ICarenMFSourceReader^% Param_Out_LeitorMidia)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Variavel que vai conter o resultado COM.
-		ResultadoCOM Hr;
-
-		//Variavel que vai conter o SourceReader.
-		IMFSourceReader *pSourceReader = NULL;
-
-		//Variaveis utilizadas pelo método.
-		Utilidades Util;
-		char* pBufferStringConvertido = NULL;
-		LPCWSTR pBufferWchar = NULL;
-		IMFAttributes *pAtributos = NULL;
-
-		//Chama o método que vai criar a url para a mídia a ser aberta.
-		pBufferStringConvertido = Util.ConverterStringToChar(Param_UrlMidia);
-
-		//Converte o char* para wchar*
-		pBufferWchar = Util.ConverterConstCharToConstWCHAR(pBufferStringConvertido);
-
-		//Obtém o ponteiro para os atributos.
-		Param_Atributos->RecuperarPonteiro((LPVOID*)&pAtributos);
-
-		//Chama o método para criar o leitor de mídia.
-		Hr = MFCreateSourceReaderFromURL(pBufferWchar, pAtributos, &pSourceReader);
-
-		//Processa o resultado da chamada.
-		Resultado.ProcessarCodigoOperacao(Hr);
-
-		//Verifica se obteve sucesso na operação.
-		if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-		{
-			//Falhou ao realizar a operação.
-
-			//Sai do método
-			Sair;
-		}
-
-		//Cria a instância da classe
-		Param_Out_LeitorMidia = gcnew CarenMFSourceReader();
-
-		//Chama o método para definir o ponteiro de trabalho na interface a ser retornada.
-		Param_Out_LeitorMidia->AdicionarPonteiro(pSourceReader);
-
-	Done:;
-		//Deleta os buffers convertidos da string.
-		if (pBufferStringConvertido == NULL)
-		{
-			//Deleta o buffer de alocado.
-			delete pBufferStringConvertido;
-		}
-		if (pBufferWchar == NULL)
-		{
-			//Deleta o buffer de alocado.
-			delete pBufferWchar;
-		}
-
-		//Retorna o resultado.
-		return Resultado;
 	}
 
 
@@ -421,6 +305,6 @@ public:
 	/// (Extensão) - Método responsável por retornar todos os tipos principais de mídia do arquivo carregado pelo leitor.
 	/// </summary>
 	/// <param name="Param_Out_TiposMidias">Recebe a lista, em ordem, com os tipos principais de mídia no fluxo carregado</param>
-	virtual CarenResult ExRecuperarTiposMidia([Out] System::Collections::Generic::List<CA_Midia_TipoPrincipal>^% Param_Out_TiposMidias);
+	virtual CarenResult ExRecuperarTiposMidia([Out] System::Collections::Generic::List<CA_MAJOR_MEDIA_TYPES>^% Param_Out_TiposMidias);
 };
 

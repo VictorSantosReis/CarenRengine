@@ -49,7 +49,7 @@ public ref class CarenD3D11VertexShader :public ICarenD3D11VertexShader
 	//Ponteiro para a interface (ID3D11VertexShader).
 	ID3D11VertexShader* PonteiroTrabalho = NULL;
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD3D11VertexShader();
 

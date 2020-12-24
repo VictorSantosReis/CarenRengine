@@ -26,7 +26,7 @@ CarenMFMediaEngineSrcElements::~CarenMFMediaEngineSrcElements()
 //Construtores
 CarenMFMediaEngineSrcElements::CarenMFMediaEngineSrcElements()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

@@ -49,7 +49,7 @@ public ref class CarenD3D11Texture1D :public ICarenD3D11Texture1D
 	//Ponteiro para a interface (ID3D11Texture1D).
 	ID3D11Texture1D* PonteiroTrabalho = NULL;
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD3D11Texture1D();
 

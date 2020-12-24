@@ -25,6 +25,11 @@ CarenMFStreamSink::~CarenMFStreamSink()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor
+CarenMFStreamSink::CarenMFStreamSink()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 //
 // Métodos da interface ICaren
@@ -587,7 +592,7 @@ CarenResult CarenMFStreamSink::GetMediaTypeHandler([Out] ICarenMFMediaTypeHandle
 	}
 
 	//Cria a interface que vai conter o ponteiro
-	InterfaceHandlerMidia = gcnew CarenMFMediaTypeHandler();
+	InterfaceHandlerMidia = gcnew CarenMFMediaTypeHandler(false);
 	
 	//Chama o método para definir o ponteiro
 	InterfaceHandlerMidia->AdicionarPonteiro(pHandlerMedia);

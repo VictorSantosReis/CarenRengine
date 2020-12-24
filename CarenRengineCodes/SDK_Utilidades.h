@@ -254,6 +254,42 @@ namespace CarenRengine
 				return RetornoDados;
 			}
 
+			//Método responsável por traduzir em mensagem o código de erro.
+			String^ TranslateCodeResult(HRESULT Param_HResultCode)
+			{
+				//Variavel que vai conter a mensagem.
+				LPCTSTR MensagemHResult = NULL;;
+				String^ MsgHResult = nullptr;
+
+				//Variavel que vai ser utilizada para obter a mensagem.
+				_com_error Err = (Param_HResultCode);
+
+				//Verifica se existe algum erro
+				if (Param_HResultCode == 0)
+				{
+					//Sai do método.
+					goto Done;
+				}
+
+				//Obtém a mensagem de erro.
+				MensagemHResult = Err.ErrorMessage();
+
+				//Verifica se é valida
+				if (MensagemHResult != NULL)
+				{
+					//Define a mensagem de retorno.
+					MsgHResult = gcnew String(MensagemHResult);
+				}
+				else
+				{
+					//Mensagem não disponivel.
+				}
+
+			Done:;
+				//Retorna o resultado.
+				return MsgHResult;
+			}
+
 			//Função que copia dados da memoria de um buffer para outro de destino. Essa função permite definir um Index onde será iniciado
 			//a copia dos dados para o buffer de destino.
 			template<typename T>
@@ -340,6 +376,17 @@ namespace CarenRengine
 				{
 					//Recupera o ponteiro para a interface.
 					RecuperarPonteiroCaren(reinterpret_cast<ICaren^>(Param_ArrayInterfacesGerenciado[i]), &(Param_ArrayDestinoNativo[i]));
+				}
+			}
+
+			//(MÉTODO EXPERIMENTAL)
+			template<typename TipoInterfaceNativa, typename TipoInterfaceGerenciada>
+			void CopiarPonteirosNativo_ToGerenciado(cli::array<TipoInterfaceGerenciada^>^ Param_ArrayInterfacesDestino, TipoInterfaceNativa** Param_ArrayInterfacesNativas, UINT32 Param_Quantidade)
+			{
+				//Faz um for para definir os ponteiros nativos na interfaces gerenciadas.
+				for (UINT32 i = 0; i < Param_Quantidade; i++)
+				{
+					(reinterpret_cast<ICaren^>(Param_ArrayInterfacesDestino[i]))->AdicionarPonteiro(Param_ArrayInterfacesNativas[i]);
 				}
 			}
 
@@ -1408,11 +1455,58 @@ namespace CarenRengine
 			}
 
 
-			//Converte uma enumeração nativa (_MF_ATTRIBUTE_TYPE) para sua correspondência gerenciada(CA_ATTRIBUTE_TYPE).
-			SDKBase::Enumeracoes::CA_ATTRIBUTE_TYPE ConverterMF_ATTRIBUTE_TYPEUnmanagedToManaged(_MF_ATTRIBUTE_TYPE Param_TipoAtributo)
+			//Converte a estrutura não gerenciada(BITMAPINFOHEADER) para sua correspondencia gerenciada(CA_BITMAPINFOHEADER).
+			CA_BITMAPINFOHEADER^ ConverterBITMAPINFOHEADERUnmanaged_ToManaged(BITMAPINFOHEADER* Param_Estrutura)
+			{
+				//Cria a estrutura a ser retornada.
+				CA_BITMAPINFOHEADER^ EstruturaRetorno = gcnew CA_BITMAPINFOHEADER();
+
+				//Define os dados da estrutura.
+				EstruturaRetorno->biSize = static_cast<UInt32>(Param_Estrutura->biSize);
+				EstruturaRetorno->biWidth = Param_Estrutura->biWidth;
+				EstruturaRetorno->biHeight = Param_Estrutura->biHeight;
+				EstruturaRetorno->biPlanes = Param_Estrutura->biPlanes;
+				EstruturaRetorno->biBitCount = Param_Estrutura->biBitCount;
+				EstruturaRetorno->biCompression = static_cast<UInt32>(Param_Estrutura->biCompression);
+				EstruturaRetorno->biSizeImage = static_cast<UInt32>(Param_Estrutura->biSizeImage);
+				EstruturaRetorno->biXPelsPerMeter = Param_Estrutura->biXPelsPerMeter;
+				EstruturaRetorno->biYPelsPerMeter = Param_Estrutura->biYPelsPerMeter;
+				EstruturaRetorno->biClrUsed = static_cast<UInt32>(Param_Estrutura->biClrUsed);
+				EstruturaRetorno->biClrImportant = static_cast<UInt32>(Param_Estrutura->biClrImportant);
+
+				//Retorna a estrutura
+				return EstruturaRetorno;
+			}
+
+			//Covnerte uma estrutura gerenciada(CA_BITMAPINFOHEADER) para sua correspondencia não gerenciada(BITMAPINFOHEADER).
+			BITMAPINFOHEADER* ConverterBITMAPINFOHEADERManaged_ToUnamaged(CA_BITMAPINFOHEADER^ Param_Estrutura)
+			{
+				//Estrutura que será retornada ao usuário.
+				BITMAPINFOHEADER* EstruturaRetorno = CriarEstrutura<BITMAPINFOHEADER>();
+
+				//Define os dados da estrutura.
+				EstruturaRetorno->biSize = static_cast<DWORD>(Param_Estrutura->biSize);
+				EstruturaRetorno->biWidth = Param_Estrutura->biWidth;
+				EstruturaRetorno->biHeight = Param_Estrutura->biHeight;
+				EstruturaRetorno->biPlanes = Param_Estrutura->biPlanes;
+				EstruturaRetorno->biBitCount = Param_Estrutura->biBitCount;
+				EstruturaRetorno->biCompression = static_cast<DWORD>(Param_Estrutura->biCompression);
+				EstruturaRetorno->biSizeImage = static_cast<DWORD>(Param_Estrutura->biSizeImage);
+				EstruturaRetorno->biXPelsPerMeter = Param_Estrutura->biXPelsPerMeter;
+				EstruturaRetorno->biYPelsPerMeter = Param_Estrutura->biYPelsPerMeter;
+				EstruturaRetorno->biClrUsed = static_cast<DWORD>(Param_Estrutura->biClrUsed);
+				EstruturaRetorno->biClrImportant = static_cast<DWORD>(Param_Estrutura->biClrImportant);
+
+				//Retorna a estrutura não gerenciada
+				return EstruturaRetorno;
+			}
+
+
+			//Converte uma enumeração nativa (_MF_ATTRIBUTE_TYPE) para sua correspondência gerenciada(CA_MF_ATTRIBUTE_TYPE).
+			SDKBase::Enumeracoes::CA_MF_ATTRIBUTE_TYPE ConverterMF_ATTRIBUTE_TYPEUnmanagedToManaged(_MF_ATTRIBUTE_TYPE Param_TipoAtributo)
 			{
 				//Variavel que vai retornar.
-				CA_ATTRIBUTE_TYPE Atributo;
+				CA_MF_ATTRIBUTE_TYPE Atributo;
 
 				//Abre um switch para verificar o tipo do atributo e definir na variavel de retorno.
 				switch (Param_TipoAtributo)
@@ -1420,49 +1514,49 @@ namespace CarenRengine
 				case MF_ATTRIBUTE_TYPE::MF_ATTRIBUTE_UINT32:
 				{
 					//Define o tipo do atributo.
-					Atributo = CA_ATTRIBUTE_TYPE::UINT32;
+					Atributo = CA_MF_ATTRIBUTE_TYPE::UINT32;
 				}
 				break;
 
 				case MF_ATTRIBUTE_TYPE::MF_ATTRIBUTE_UINT64:
 				{
 					//Define o tipo do atributo.
-					Atributo = CA_ATTRIBUTE_TYPE::UINT64;
+					Atributo = CA_MF_ATTRIBUTE_TYPE::UINT64;
 				}
 				break;
 
 				case MF_ATTRIBUTE_TYPE::MF_ATTRIBUTE_DOUBLE:
 				{
 					//Define o tipo do atributo.
-					Atributo = CA_ATTRIBUTE_TYPE::DOUBLE;
+					Atributo = CA_MF_ATTRIBUTE_TYPE::DOUBLE;
 				}
 				break;
 
 				case MF_ATTRIBUTE_TYPE::MF_ATTRIBUTE_GUID:
 				{
 					//Define o tipo do atributo.
-					Atributo = CA_ATTRIBUTE_TYPE::GUID;
+					Atributo = CA_MF_ATTRIBUTE_TYPE::GUID;
 				}
 				break;
 
 				case MF_ATTRIBUTE_TYPE::MF_ATTRIBUTE_STRING:
 				{
 					//Define o tipo do atributo.
-					Atributo = CA_ATTRIBUTE_TYPE::STRING;
+					Atributo = CA_MF_ATTRIBUTE_TYPE::STRING;
 				}
 				break;
 
 				case MF_ATTRIBUTE_TYPE::MF_ATTRIBUTE_BLOB:
 				{
 					//Define o tipo do atributo.
-					Atributo = CA_ATTRIBUTE_TYPE::BLOB;
+					Atributo = CA_MF_ATTRIBUTE_TYPE::BLOB;
 				}
 				break;
 
 				case MF_ATTRIBUTE_TYPE::MF_ATTRIBUTE_IUNKNOWN:
 				{
 					//Define o tipo do atributo.
-					Atributo = CA_ATTRIBUTE_TYPE::IUNKNOWN;
+					Atributo = CA_MF_ATTRIBUTE_TYPE::IUNKNOWN;
 				}
 				break;
 
@@ -1474,11 +1568,11 @@ namespace CarenRengine
 				return Atributo;
 			}
 
-			//Converte um GUID que define o subtipo de um midia principal para a enumeração gerenciada(CA_Midia_SubTipo).
-			SDKBase::Enumeracoes::CA_Midia_SubTipo ConverterGUIDSubtipoMidia_ToMidia_SubTipo(GUID Param_GuidSubTipoMidia)
+			//Converte um GUID que define o subtipo de um midia principal para a enumeração gerenciada(CA_MEDIA_SUBTYPES).
+			SDKBase::Enumeracoes::CA_MEDIA_SUBTYPES ConverterGUIDSubtipoMidia_ToMidia_SubTipo(GUID Param_GuidSubTipoMidia)
 			{
 				//Variavel que via conter o subtipo.
-				CA_Midia_SubTipo FormatoTipoPrincipal;
+				CA_MEDIA_SUBTYPES FormatoTipoPrincipal;
 
 				/////////////////////
 				//FORMATOS DE AUDIO//
@@ -1487,145 +1581,145 @@ namespace CarenRengine
 				if (MEDIASUBTYPE_RAW_AAC1 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoAudio_RAW_ACC1;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFAudioFormat_RAW_ACC1;
 
 				}
 				else if (MFAudioFormat_AAC == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoAudio_AAC;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFAudioFormat_AAC;
 
 				}
 				else if (MFAudioFormat_ADTS == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoAudio_ADTS;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFAudioFormat_ADTS;
 
 				}
 				else if (MFAudioFormat_ALAC == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoAudio_ALAC;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFAudioFormat_ALAC;
 
 				}
 				else if (MFAudioFormat_AMR_NB == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoAudio_AMR_NB;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFAudioFormat_AMR_NB;
 
 				}
 				else if (MFAudioFormat_AMR_WB == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoAudio_AMR_WB;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFAudioFormat_AMR_WB;
 
 				}
 				else if (MFAudioFormat_AMR_WP == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoAudio_AMR_WP;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFAudioFormat_AMR_WP;
 
 				}
 				else if (MFAudioFormat_Dolby_AC3 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoAudio_Dolby_AC3;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFAudioFormat_Dolby_AC3;
 
 				}
 				else if (MFAudioFormat_Dolby_AC3_SPDIF == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoAudio_Dolby_AC3_SPDIF;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFAudioFormat_Dolby_AC3_SPDIF;
 
 				}
 				else if (MFAudioFormat_Dolby_DDPlus == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoAudio_Dolby_DDPlus;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFAudioFormat_Dolby_DDPlus;
 
 				}
 				else if (MFAudioFormat_DRM == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoAudio_DRM;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFAudioFormat_DRM;
 
 				}
 				else if (MFAudioFormat_DTS == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoAudio_DTS;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFAudioFormat_DTS;
 
 				}
 				else if (MFAudioFormat_FLAC == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoAudio_FLAC;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFAudioFormat_FLAC;
 
 				}
 				else if (MFAudioFormat_Float == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoAudio_Float;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFAudioFormat_Float;
 
 				}
 				else if (MFAudioFormat_Float_SpatialObjects == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoAudio_Float_SpatialObjects;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFAudioFormat_Float_SpatialObjects;
 
 				}
 				else if (MFAudioFormat_MP3 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoAudio_MP3;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFAudioFormat_MP3;
 
 				}
 				else if (MFAudioFormat_MPEG == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoAudio_MPEG;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFAudioFormat_MPEG;
 
 				}
 				else if (MFAudioFormat_MSP1 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoAudio_MSP1;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFAudioFormat_MSP1;
 
 				}
 				else if (MFAudioFormat_Opus == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoAudio_Opus;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFAudioFormat_Opus;
 
 				}
 				else if (MFAudioFormat_PCM == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoAudio_PCM;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFAudioFormat_PCM;
 
 				}
 				else if (MFAudioFormat_WMASPDIF == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoAudio_WMASPDIF;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFAudioFormat_WMASPDIF;
 
 				}
 				else if (MFAudioFormat_WMAudio_Lossless == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoAudio_WMAudio_Lossless;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFAudioFormat_WMAudio_Lossless;
 
 				}
 				else if (MFAudioFormat_WMAudioV8 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoAudio_WMAudioV8;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFAudioFormat_WMAudioV8;
 
 				}
 				else if (MFAudioFormat_WMAudioV9 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoAudio_WMAudioV9;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFAudioFormat_WMAudioV9;
 
 				}
 
@@ -1638,397 +1732,397 @@ namespace CarenRengine
 				else if (MFVideoFormat_RGB8 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_RGB8;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_RGB8;
 
 				}
 				else if (MFVideoFormat_RGB555 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_RGB555;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_RGB555;
 
 				}
 				else if (MFVideoFormat_RGB565 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_RGB565;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_RGB565;
 
 				}
 				else if (MFVideoFormat_RGB24 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_RGB24;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_RGB24;
 
 				}
 				else if (MFVideoFormat_RGB32 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_RGB32;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_RGB32;
 
 				}
 				else if (MFVideoFormat_ARGB32 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_ARGB32;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_ARGB32;
 
 				}
 				else if (MFVideoFormat_A2R10G10B10 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_A2R10G10B10;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_A2R10G10B10;
 
 				}
 				else if (MFVideoFormat_A16B16G16R16F == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_A16B16G16R16F;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_A16B16G16R16F;
 
 				}
 				else if (MFVideoFormat_AI44 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_AI44;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_AI44;
 
 				}
 				else if (MFVideoFormat_AYUV == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_AYUV;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_AYUV;
 
 				}
 				else if (MFVideoFormat_I420 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_I420;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_I420;
 
 				}
 				else if (MFVideoFormat_IYUV == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_IYUV;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_IYUV;
 
 				}
 				else if (MFVideoFormat_NV11 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_NV11;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_NV11;
 
 				}
 				else if (MFVideoFormat_NV12 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_NV12;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_NV12;
 
 				}
 				else if (MFVideoFormat_UYVY == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_UYVY;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_UYVY;
 
 				}
 				else if (MFVideoFormat_Y41P == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_Y41P;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_Y41P;
 
 				}
 				else if (MFVideoFormat_Y41T == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_Y41T;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_Y41T;
 
 				}
 				else if (MFVideoFormat_Y42T == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_Y42T;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_Y42T;
 
 				}
 				else if (MFVideoFormat_YUY2 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_YUY2;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_YUY2;
 
 				}
 				else if (MFVideoFormat_YVU9 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_YVU9;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_YVU9;
 
 				}
 				else if (MFVideoFormat_YV12 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_YV12;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_YV12;
 
 				}
 				else if (MFVideoFormat_YVYU == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_YVYU;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_YVYU;
 
 				}
 				else if (MFVideoFormat_P010 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_P010;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_P010;
 
 				}
 				else if (MFVideoFormat_P016 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_P016;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_P016;
 
 				}
 				else if (MFVideoFormat_P210 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_P210;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_P210;
 
 				}
 				else if (MFVideoFormat_P216 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_P216;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_P216;
 
 				}
 				else if (MFVideoFormat_v210 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_v210;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_v210;
 
 				}
 				else if (MFVideoFormat_v216 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_v216;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_v216;
 
 				}
 				else if (MFVideoFormat_v410 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_v410;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_v410;
 
 				}
 				else if (MFVideoFormat_Y210 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_Y210;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_Y210;
 
 				}
 				else if (MFVideoFormat_Y216 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_Y216;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_Y216;
 
 				}
 				else if (MFVideoFormat_Y410 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_Y410;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_Y410;
 
 				}
 				else if (MFVideoFormat_Y416 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_Y416;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_Y416;
 
 				}
 				else if (MFVideoFormat_L8 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_L8;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_L8;
 
 				}
 				else if (MFVideoFormat_L16 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_L16;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_L16;
 
 				}
 				else if (MFVideoFormat_D16 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_D16;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_D16;
 
 				}
 				else if (MFVideoFormat_DV25 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_DV25;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_DV25;
 
 				}
 				else if (MFVideoFormat_DV50 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_DV50;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_DV50;
 
 				}
 				else if (MFVideoFormat_DVC == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_DVC;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_DVC;
 
 				}
 				else if (MFVideoFormat_DVH1 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_DVH1;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_DVH1;
 
 				}
 				else if (MFVideoFormat_DVHD == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_DVHD;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_DVHD;
 
 				}
 				else if (MFVideoFormat_DVSD == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_DVSD;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_DVSD;
 
 				}
 				else if (MFVideoFormat_DVSL == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_DVSL;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_DVSL;
 
 				}
 				else if (MFVideoFormat_H263 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_H263;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_H263;
 
 				}
 				else if (MFVideoFormat_H264 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_H264;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_H264;
 
 				}
 				else if (MFVideoFormat_H265 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_H265;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_H265;
 
 				}
 				else if (MFVideoFormat_H264_ES == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_H264_ES;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_H264_ES;
 
 				}
 				else if (MFVideoFormat_HEVC == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_HEVC;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_HEVC;
 
 				}
 				else if (MFVideoFormat_HEVC_ES == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_HEVC_ES;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_HEVC_ES;
 
 				}
 				else if (MFVideoFormat_M4S2 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_M4S2;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_M4S2;
 
 				}
 				else if (MFVideoFormat_MJPG == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_MJPG;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_MJPG;
 
 				}
 				else if (MFVideoFormat_MP43 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_MP43;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_MP43;
 
 				}
 				else if (MFVideoFormat_MP4S == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_MP4S;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_MP4S;
 
 				}
 				else if (MFVideoFormat_MP4V == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_MP4V;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_MP4V;
 
 				}
 				else if (MFVideoFormat_MPEG2 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_RGB8;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_RGB8;
 
 				}
 				else if (MFVideoFormat_VP80 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_VP80;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_VP80;
 
 				}
 				else if (MFVideoFormat_VP90 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_VP90;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_VP90;
 
 				}
 				else if (MFVideoFormat_MPG1 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_MPG1;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_MPG1;
 
 				}
 				else if (MFVideoFormat_MSS1 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_MSS1;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_MSS1;
 
 				}
 				else if (MFVideoFormat_MSS2 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_MSS2;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_MSS2;
 
 				}
 				else if (MFVideoFormat_WMV1 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_WMV1;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_WMV1;
 
 				}
 				else if (MFVideoFormat_WMV2 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_WMV2;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_WMV2;
 
 				}
 				else if (MFVideoFormat_WMV3 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_WMV3;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_WMV3;
 
 				}
 				else if (MFVideoFormat_WVC1 == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_WVC1;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_WVC1;
 
 				}
 				else if (MFVideoFormat_420O == Param_GuidSubTipoMidia)
 				{
 					//Define o formato principal da mídia e o seu Guid.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoVideo_420O;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::MFVideoFormat_420O;
 
 				}
 				else
 				{
 					//Formato desconhecido.
-					FormatoTipoPrincipal = CA_Midia_SubTipo::FormatoMidia_Desconhecido;
+					FormatoTipoPrincipal = CA_MEDIA_SUBTYPES::FormatoMidia_Desconhecido;
 				}
 
 				//Retorna o formato da midia principal.
@@ -2381,7 +2475,7 @@ namespace CarenRengine
 				CA_MFTOPONODE_ATTRIBUTE_UPDATE^ EstruturaConvertida = gcnew CA_MFTOPONODE_ATTRIBUTE_UPDATE();
 
 				//Define os valores
-				EstruturaConvertida->TipoAtributo = static_cast<SDKBase::Enumeracoes::CA_ATTRIBUTE_TYPE>(Param_EstruturaNativa->attrType);
+				EstruturaConvertida->TipoAtributo = static_cast<SDKBase::Enumeracoes::CA_MF_ATTRIBUTE_TYPE>(Param_EstruturaNativa->attrType);
 				EstruturaConvertida->GUID = ConverterGuidToString(Param_EstruturaNativa->guidAttributeKey);
 				EstruturaConvertida->NodeId = Param_EstruturaNativa->NodeId;
 				EstruturaConvertida->d = Param_EstruturaNativa->d;

@@ -26,7 +26,7 @@ CarenMFCaptureSource::~CarenMFCaptureSource()
 //Construtores
 CarenMFCaptureSource::CarenMFCaptureSource()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren
@@ -495,7 +495,7 @@ UInt32 Param_MediaTypeIndex,
 	}
 
 	//Cria a interface a ser retornada.
-	Param_Out_MediaType = gcnew CarenMFMediaType();
+	Param_Out_MediaType = gcnew CarenMFMediaType(false);
 
 	//Define o ponteiro na interface
 	CarenSetPointerToICarenSafe(vi_pOutMediaType, Param_Out_MediaType, true);
@@ -636,7 +636,7 @@ UInt32 Param_SourceStreamIndex,
 	}
 
 	//Cria a interface a ser retornada.
-	Param_Out_MediaType = gcnew CarenMFMediaType();
+	Param_Out_MediaType = gcnew CarenMFMediaType(false);
 
 	//Define o ponteiro na interface
 	CarenSetPointerToICarenSafe(vi_pOutMediaType, Param_Out_MediaType, true);

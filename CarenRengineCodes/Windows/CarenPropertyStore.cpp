@@ -18,11 +18,44 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenPropertyStore.h"
 
+
 //Destruidor.
 CarenPropertyStore::~CarenPropertyStore()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
+}
+//Construtores
+CarenPropertyStore::CarenPropertyStore()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
+
+CarenPropertyStore::CarenPropertyStore(String^ Param_RIID)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	GUID vi_Riid = GUID_NULL;
+	IPropertyStore* vi_pOutPropertyStore = Nulo;
+
+	//Cria o guid da interface solicitada.
+	vi_Riid = Util.CreateGuidFromString(Param_RIID);
+
+	//Chama o método para criar a interface.
+	Hr = PSCreateMemoryPropertyStore(vi_Riid, reinterpret_cast<void**>(&vi_pOutPropertyStore));
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define o ponteiro criado no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutPropertyStore;
 }
 
 //

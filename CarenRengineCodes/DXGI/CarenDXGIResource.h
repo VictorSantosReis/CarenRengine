@@ -49,7 +49,7 @@ public ref class CarenDXGIResource : public ICarenDXGIResource
 	IDXGIResource* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenDXGIResource();
 

@@ -26,7 +26,7 @@ CarenD2D1VertexBuffer::~CarenD2D1VertexBuffer()
 //Construtores
 CarenD2D1VertexBuffer::CarenD2D1VertexBuffer()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

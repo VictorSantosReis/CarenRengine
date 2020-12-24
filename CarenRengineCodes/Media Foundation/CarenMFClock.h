@@ -23,9 +23,6 @@ limitations under the License.
 //Importa o namespace que contém as interfaces da Media Foundation.
 using namespace CarenRengine::MediaFoundation;
 
-//Enumeração de retorno de função.
-
-
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
@@ -36,7 +33,7 @@ using namespace CarenRengine::SDKBase::Interfaces;
 using namespace CarenRengine::SDKUtilidades;
 
 /// <summary>
-/// [Concluido - Fase de testes] - Falta documentar.
+/// (Concluido - Fase de Testes) - Classe responsável por fornecer informações de tempo a partir de um relógio na Microsoft Media Foundation.
 /// </summary>
 public ref class CarenMFClock : public ICarenMFClock
 {
@@ -47,8 +44,13 @@ public ref class CarenMFClock : public ICarenMFClock
 	//Ponteiro para a interface (IMFClock).
 	IMFClock* PonteiroTrabalho = NULL;
 
-	//Destruidor.
+	//Construtor e Destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMFClock();
+
 	~CarenMFClock();
 
 	//Variaveis Internas.
@@ -74,7 +76,6 @@ public:
 			return Prop_DisposedClasse;
 		}
 	}
-
 
 
 

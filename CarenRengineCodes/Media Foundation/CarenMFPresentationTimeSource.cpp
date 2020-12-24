@@ -25,6 +25,37 @@ CarenMFPresentationTimeSource::~CarenMFPresentationTimeSource()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor
+CarenMFPresentationTimeSource::CarenMFPresentationTimeSource(Boolean Param_CriarInterface)
+{
+	//Verifica se deve ou não criar uma interface.
+	if (Param_CriarInterface)
+	{
+		//Variavel que vai conter o resultado COM.
+		HRESULT Hr = E_FAIL;
+
+		//Variaveis utilizadas.
+		Utilidades Util;
+		IMFPresentationTimeSource* vi_pOutTimeSource = Nulo;
+
+		//Chama o método para criar a interface.
+		Hr = MFCreateSystemTimeSource(&vi_pOutTimeSource);
+
+		//Verifica se não ocorreu erro no processo.
+		if (!Sucesso(Hr))
+		{
+			//Chama uma exceção para informar o error.
+			throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+		}
+
+		//Define a interface criada no ponteiro de trabalho
+		PonteiroTrabalho = vi_pOutTimeSource;
+	}
+	else
+	{
+		//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+	}
+}
 
 //
 // Métodos da interface ICaren
@@ -406,15 +437,13 @@ void CarenMFPresentationTimeSource::Finalizar()
 }
 
 
-//
+
 // Métodos da interface proprietaria
-//
 
 
 
 /// <summary>
-/// Recupera o relógio subjacente que a fonte de tempo de apresentação usa para 
-/// gerar seus tempos de relógio.
+/// Recupera o relógio subjacente que a fonte de tempo de apresentação usa para gerar seus tempos de relógio.
 /// </summary>
 /// <param name="Param_Out_Relogio">Recebe a interface ICarenMFClock que representa um Relógio. O chamador deve liberar a interface.</param>
 CarenResult CarenMFPresentationTimeSource::GetUnderlyingClock(ICarenMFClock ^% Param_Out_Relogio)
@@ -466,9 +495,8 @@ Done:;
 
 
 
-//
 // Métodos da interface ICarenMFClock
-//
+
 
 /// <summary>
 /// Recupera as características do relógio.

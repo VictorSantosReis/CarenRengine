@@ -26,6 +26,138 @@ CarenMFMediaType::~CarenMFMediaType()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtores
+CarenMFMediaType::CarenMFMediaType(Boolean Param_CriarInterface)
+{
+	//Verifica se deve ou não criar uma interface.
+	if (Param_CriarInterface)
+	{
+		//Variavel que vai conter o resultado COM.
+		HRESULT Hr = E_FAIL;
+
+		//Variaveis utilizadas.
+		Utilidades Util;
+		IMFMediaType* vi_pOutMediaType = Nulo;
+
+		//Chama o método para criar a interface.
+		Hr = MFCreateMediaType(&vi_pOutMediaType);
+
+		//Verifica se não ocorreu erro no processo.
+		if (!Sucesso(Hr))
+		{
+			//Chama uma exceção para informar o error.
+			throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+		}
+
+		//Define a interface criada no ponteiro de trabalho
+		PonteiroTrabalho = vi_pOutMediaType;
+	}
+	else
+	{
+		//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+	}
+}
+
+CarenMFMediaType::CarenMFMediaType(ICaren^ Param_StreamProperties)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IUnknown* vi_pStreamProps = Nulo;
+	IMFMediaType* vi_pOutMediaType = Nulo;
+
+	//Recupera o ponteiro para o stream com as propriedades.
+	CarenResult ResultGetProps = RecuperarPonteiroCaren(Param_StreamProperties, &vi_pStreamProps);
+
+	//Verifica se não houve erro
+	if (!CarenSucesso(ResultGetProps))
+		throw gcnew Exception("Não foi possivel recuperar o ponteiro ou a interface do parametro (Param_StreamProperties) é inválida.");
+
+	//Chama o método para criar a interface.
+	Hr = MFCreateMediaTypeFromProperties(vi_pStreamProps, &vi_pOutMediaType);
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutMediaType;
+}
+
+CarenMFMediaType::CarenMFMediaType(String^ Param_GuidRepresentation, ICarenBuffer^ Param_BufferRepresentation)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	GUID vi_GuidRepresentation = GUID_NULL;
+	GenPointer vi_pBuffer = DefaultGenPointer;
+	IMFMediaType* vi_pOutMediaType = Nulo;
+
+	//Converte a string para o guid.
+	vi_GuidRepresentation = Util.CreateGuidFromString(Param_GuidRepresentation);
+
+	//Recupera o ponteiro do buffer.
+	CarenResult ResultGetBuffer = Param_BufferRepresentation->ObterPonteiroInterno(vi_pBuffer);
+
+	//Verifica se não houve erro
+	if (!CarenSucesso(ResultGetBuffer))
+		throw gcnew Exception("Falhou ao recuperar o ponteiro para o buffer ou sua interface é inválida.");
+
+	//Chama o método para criar a interface.
+	Hr = MFCreateMediaTypeFromRepresentation(vi_GuidRepresentation, Util.ConverterIntPtrTo<LPVOID>(vi_pBuffer), &vi_pOutMediaType);
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutMediaType;
+}
+
+CarenMFMediaType::CarenMFMediaType(ICarenMFCollection^ Param_MediaTypesToMux)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IMFCollection* vi_pCollectionToMux = Nulo;
+	IMFMediaType* vi_pOutMediaType = Nulo;
+
+	//Verifica se a interface de coleção é valida
+	if (!ObjetoGerenciadoValido(Param_MediaTypesToMux))
+		throw gcnew NullReferenceException("A interface do parametro (Param_MediaTypesToMux) não pode ser NULA!");
+
+	//Recupera o ponteiro para a interface de coleção.
+	CarenResult ResultGetBuffer = RecuperarPonteiroCaren(Param_MediaTypesToMux, &vi_pCollectionToMux);
+
+	//Verifica se não houve erro
+	if (!CarenSucesso(ResultGetBuffer))
+		throw gcnew Exception("Falhou ao recuperar o ponteiro para a interface de coleção.");
+
+	//Chama o método para criar a interface.
+	Hr = MFCreateMuxStreamMediaType(vi_pCollectionToMux, &vi_pOutMediaType);
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutMediaType;
+}
 
 //
 // Métodos da interface ICaren
@@ -418,7 +550,7 @@ void CarenMFMediaType::Finalizar()
 /// </summary>
 /// <param name="Param_Out_GuidTipoMidia">Retorna o GUID do tipo principal da mídia.</param>
 /// <param name="Param_Out_TipoPrincipal">Retorna a enumeração com o tipo principal da mídia.</param>
-CarenResult CarenMFMediaType::GetMajorType([Out] String^% Param_Out_GuidTipoMidia, [Out] CA_Midia_TipoPrincipal% Param_Out_TipoPrincipal)
+CarenResult CarenMFMediaType::GetMajorType([Out] String^% Param_Out_GuidTipoMidia, [Out] CA_MAJOR_MEDIA_TYPES% Param_Out_TipoPrincipal)
 {
 	//Variavel que vai retornar o resultado do método.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -427,7 +559,7 @@ CarenResult CarenMFMediaType::GetMajorType([Out] String^% Param_Out_GuidTipoMidi
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis de retorno do método.
-	CA_Midia_TipoPrincipal TipoMidiaEnum;
+	CA_MAJOR_MEDIA_TYPES TipoMidiaEnum;
 
 	//Variaveis utilizadas no método.
 	GUID GuidTipoMidia = GUID_NULL;
@@ -457,21 +589,21 @@ CarenResult CarenMFMediaType::GetMajorType([Out] String^% Param_Out_GuidTipoMidi
 	if (GuidTipoMidia == MFMediaType_Audio)
 	{
 		//Fluxo de Áudio.
-		TipoMidiaEnum = CA_Midia_TipoPrincipal::TP_Audio;
+		TipoMidiaEnum = CA_MAJOR_MEDIA_TYPES::TP_Audio;
 	}
 
 	//Verifica se o tipo principal é vídeo.
 	else if (GuidTipoMidia == MFMediaType_Video)
 	{
 		//Fluxo de Vídeo.
-		TipoMidiaEnum = CA_Midia_TipoPrincipal::TP_Video;
+		TipoMidiaEnum = CA_MAJOR_MEDIA_TYPES::TP_Video;
 	}
 
 	//O tipo não é válido para essa biblioteca.
 	else
 	{
 		//Formato Desconhecido.
-		TipoMidiaEnum = CA_Midia_TipoPrincipal::TP_Desconhecido;
+		TipoMidiaEnum = CA_MAJOR_MEDIA_TYPES::TP_Desconhecido;
 	}
 
 	//Define os parametros de saida
@@ -1383,7 +1515,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave a ser verificado o tipo do valor.</param>
 /// <param name="Param_Out_TipoDado">O tipo do dado contido na chave solicitada.</param>
-CarenResult CarenMFMediaType::GetItemType(String^ Param_GuidChave, [Out] CA_ATTRIBUTE_TYPE% Param_Out_TipoDado)
+CarenResult CarenMFMediaType::GetItemType(String^ Param_GuidChave, [Out] CA_MF_ATTRIBUTE_TYPE% Param_Out_TipoDado)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1417,7 +1549,7 @@ CarenResult CarenMFMediaType::GetItemType(String^ Param_GuidChave, [Out] CA_ATTR
 		Sair;
 	}
 
-	//Converte o valor retornado para um gerenciado representado pela enumeração CA_ATTRIBUTE_TYPE.
+	//Converte o valor retornado para um gerenciado representado pela enumeração CA_MF_ATTRIBUTE_TYPE.
 	Param_Out_TipoDado = Util.ConverterMF_ATTRIBUTE_TYPEUnmanagedToManaged(ValorRequisitado);
 
 Done:;
@@ -2408,7 +2540,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Out_TipoPrincipal">Recebe o tipo principal da mídia(Áudio ou Vídeo).</param>
 /// <param name="Param_Out_Guid">Recebe o Guid do formato principal.</param>
-CarenResult CarenMFMediaType::ObterTipoPrincipalMidia([Out] Enumeracoes::CA_Midia_TipoPrincipal% Param_Out_TipoPrincipal, [Out] String^% Param_Out_Guid)
+CarenResult CarenMFMediaType::ObterTipoPrincipalMidia([Out] Enumeracoes::CA_MAJOR_MEDIA_TYPES% Param_Out_TipoPrincipal, [Out] String^% Param_Out_Guid)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -2440,21 +2572,21 @@ CarenResult CarenMFMediaType::ObterTipoPrincipalMidia([Out] Enumeracoes::CA_Midi
 	if (GuidTipoPrincipal == MFMediaType_Audio)
 	{
 		//O tipo principal da mídia é Áudio.
-		Param_Out_TipoPrincipal = CA_Midia_TipoPrincipal::TP_Audio;
+		Param_Out_TipoPrincipal = CA_MAJOR_MEDIA_TYPES::TP_Audio;
 		//Define o Guid
 		Param_Out_Guid = Util.ConverterGuidToString(MFMediaType_Audio);
 	}
 	else if (GuidTipoPrincipal == MFMediaType_Video)
 	{
 		//O tipo principal da mídia é Vídeo.
-		Param_Out_TipoPrincipal = CA_Midia_TipoPrincipal::TP_Video;
+		Param_Out_TipoPrincipal = CA_MAJOR_MEDIA_TYPES::TP_Video;
 		//Define o Guid
 		Param_Out_Guid = Util.ConverterGuidToString(MFMediaType_Video);
 	}
 	else
 	{
 		//Tipo desconhecido.
-		Param_Out_TipoPrincipal = CA_Midia_TipoPrincipal::TP_Desconhecido;
+		Param_Out_TipoPrincipal = CA_MAJOR_MEDIA_TYPES::TP_Desconhecido;
 	}
 
 Done:;
@@ -2468,7 +2600,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Out_FormatoMidia">Recebe o subtipo(Formato) da mídia principal.</param>
 /// <param name="Param_Out_GuidFormato">Recebe o Guid do subtipo(Formato).</param>
-CarenResult CarenMFMediaType::ObterFormatoMidia([Out] CA_Midia_SubTipo% Param_Out_FormatoMidia, [Out] String^% Param_Out_GuidFormato)
+CarenResult CarenMFMediaType::ObterFormatoMidia([Out] CA_MEDIA_SUBTYPES% Param_Out_FormatoMidia, [Out] String^% Param_Out_GuidFormato)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

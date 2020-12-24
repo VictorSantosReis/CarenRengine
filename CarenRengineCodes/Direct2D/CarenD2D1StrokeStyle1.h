@@ -44,7 +44,7 @@ public ref class CarenD2D1StrokeStyle1 : public ICarenD2D1StrokeStyle1
 	ID2D1StrokeStyle1* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD2D1StrokeStyle1();
 

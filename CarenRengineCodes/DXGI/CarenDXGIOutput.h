@@ -48,7 +48,7 @@ public ref class CarenDXGIOutput : public ICarenDXGIOutput
 	IDXGIOutput* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenDXGIOutput();
 

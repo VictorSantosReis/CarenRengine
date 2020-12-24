@@ -18,11 +18,19 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenMFSourceReaderCallback.h"
 
+
 //Destruidor.
 CarenMFSourceReaderCallback::~CarenMFSourceReaderCallback()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
+}
+//Construtor
+CarenMFSourceReaderCallback::CarenMFSourceReaderCallback(Boolean Param_CriarInterface)
+{
+	//Verifica se deve criar a interface ou não.
+	if (Param_CriarInterface)
+		PonteiroTrabalho = new CLN_IMFSourceReaderCallback();
 }
 
 //
@@ -696,7 +704,7 @@ void CarenMFSourceReaderCallback::EncaminharEvento_OnReadSample(HRESULT Param_HR
 	//Se chegar aqui é porque a amostra de mídia é valida.
 
 	//Cria a interface que vai conter a amostra de mídia
-	InterfaceAmostra = gcnew CarenMFSample();
+	InterfaceAmostra = gcnew CarenMFSample(false);
 
 	//Chama o método para definir o ponteiro da amostra de midia.
 	ResultadoSetPointer = InterfaceAmostra->AdicionarPonteiro(Param_AmostraMidia);
@@ -734,17 +742,6 @@ Done:;
 	{
 		//Exclui a interface.
 		InterfaceAmostra = nullptr;
-
-		//Verifica se deve forçar o GC a agir.
-		if (ColetarLixoEvento)
-		{
-			//O usuário definiu que deve forçar o GC a coletar o lixo.
-
-			//Libera os objetos.
-			GC::Collect();
-			GC::WaitForPendingFinalizers();
-			GC::Collect();
-		}
 	}
 }
 
@@ -773,17 +770,6 @@ void CarenMFSourceReaderCallback::EncaminharEvento_OnEvent(DWORD Param_FluxoID, 
 
 		//Deleta a interface.
 		LeitorEvento = nullptr;
-
-		//Verifica se deve forçar o GC a agir.
-		if (ColetarLixoEvento)
-		{
-			//O usuário definiu que deve forçar o GC a coletar o lixo.
-
-			//Libera os objetos.
-			GC::Collect();
-			GC::WaitForPendingFinalizers();
-			GC::Collect();
-		}
 	}
 	else
 	{

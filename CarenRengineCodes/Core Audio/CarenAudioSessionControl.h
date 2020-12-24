@@ -49,7 +49,7 @@ public ref class CarenAudioSessionControl : public ICarenAudioSessionControl
 	IAudioSessionControl* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenAudioSessionControl();
 

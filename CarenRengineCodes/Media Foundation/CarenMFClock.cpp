@@ -19,11 +19,17 @@ limitations under the License.
 #include "CarenMFClock.h"
 
 
+
 //Destruidor.
 CarenMFClock::~CarenMFClock()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
+}
+//Construtor
+CarenMFClock::CarenMFClock()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO.
 }
 
 //

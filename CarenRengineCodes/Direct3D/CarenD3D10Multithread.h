@@ -47,7 +47,7 @@ public ref class CarenD3D10Multithread : public ICarenD3D10Multithread
 	//Ponteiro para a interface (ID3D10Multithread).
 	ID3D10Multithread* PonteiroTrabalho = NULL;
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD3D10Multithread();
 

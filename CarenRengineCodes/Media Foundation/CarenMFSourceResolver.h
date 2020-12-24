@@ -50,8 +50,16 @@ public ref class CarenMFSourceResolver : public ICarenMFSourceResolver
 
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a interface e permite que o usuário decida se a biblioteca deve criar a interface ou vai iniciar sem um ponteiro 
+	/// de trabalho. Se (Param_CriarInterface) for TRUE, o construtor ‎cria um resolvedor de origem, que é usado para criar uma fonte de 
+	/// mídia a partir de uma URL ou fluxo byte.‎
+	/// </summary>
+	/// <param name="Param_CriarInterface">Um valor booleano, TRUE indica que deve criar uma nova interface intermanete, caso contario, FALSE.</param>
+	CarenMFSourceResolver(Boolean Param_CriarInterface);
+
 	~CarenMFSourceResolver();
 
 
@@ -77,60 +85,6 @@ public:
 			//Retorna o valor.
 			return Prop_DisposedClasse;
 		}
-	}
-
-
-
-	//Cria uma instância dessa classe (Estático)
-public:
-	/// <summary>
-	/// Método responsável por criar uma instância da interface de resolução de fontes.
-	/// </summary>
-	/// <param name="Param_Out_ResolvedorFonte">Recebe a interface do resolvedor de fontes.</param>
-	static CarenResult CriarInstancia([Out] ICarenMFSourceResolver^% Param_Out_ResolvedorFonte)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Variavel que contém o resultado COM.
-		HRESULT Hr = E_FAIL;
-
-		//Variavel que vai ser retornada.
-		IMFSourceResolver* pResolvedorFonte = NULL;
-		ICarenMFSourceResolver^ InterfaceResolvedorFonte = nullptr;
-
-		//Chama o método que vai criar o resolvedor de fonte
-		Hr = MFCreateSourceResolver(&pResolvedorFonte);
-
-		//Verifica se obteve sucesso
-		if (Sucesso(Hr))
-		{
-			//Deixa continuar.
-		}
-		else
-		{
-			//A operação falhou
-			Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-			//Sai do método
-			goto Done;
-		}
-
-		//Cria a interface que vai receber o ponteiro
-		InterfaceResolvedorFonte = gcnew CarenMFSourceResolver();
-
-		//Define a interface de trabalho.
-		InterfaceResolvedorFonte->AdicionarPonteiro(pResolvedorFonte);
-
-		//Define a interface no parametro de saida.
-		Param_Out_ResolvedorFonte = InterfaceResolvedorFonte;
-
-		//Define sucesso na operção.
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	Done:;
-		//Retorna o resultado.
-		return Resultado;
 	}
 
 

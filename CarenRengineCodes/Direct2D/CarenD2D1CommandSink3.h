@@ -56,7 +56,7 @@ public ref class CarenD2D1CommandSink3 : public ICarenD2D1CommandSink3
 	ID2D1CommandSink3* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD2D1CommandSink3();
 	/// <summary>

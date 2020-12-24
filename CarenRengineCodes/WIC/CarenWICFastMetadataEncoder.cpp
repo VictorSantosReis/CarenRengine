@@ -26,7 +26,7 @@ CarenWICFastMetadataEncoder::~CarenWICFastMetadataEncoder()
 //Construtores
 CarenWICFastMetadataEncoder::CarenWICFastMetadataEncoder()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

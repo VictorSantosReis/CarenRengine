@@ -26,7 +26,7 @@ CarenD2D1SvgDocument::~CarenD2D1SvgDocument()
 //Construtores
 CarenD2D1SvgDocument::CarenD2D1SvgDocument()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

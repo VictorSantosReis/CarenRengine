@@ -23,13 +23,12 @@ CarenMFMediaEngineNeedKeyNotify::~CarenMFMediaEngineNeedKeyNotify()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
-//Construtores
-CarenMFMediaEngineNeedKeyNotify::CarenMFMediaEngineNeedKeyNotify()
+//Construtor
+CarenMFMediaEngineNeedKeyNotify::CarenMFMediaEngineNeedKeyNotify(Boolean Param_CriarInterface)
 {
-	//CÓDIGO DE CRIAÇÃO.
-
-	//Cria um ponteiro para a interface impelmentada internamente.
-	PonteiroTrabalho = new CLN_IMFMediaEngineNeedKeyNotify();
+	//Verifica se deve criar a classe ou não
+	if (Param_CriarInterface)
+		PonteiroTrabalho = new CLN_IMFMediaEngineNeedKeyNotify();
 }
 
 // Métodos da interface ICaren

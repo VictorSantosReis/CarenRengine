@@ -18,11 +18,43 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenMFPresentationClock.h"
 
+
 //Destruidor.
 CarenMFPresentationClock::~CarenMFPresentationClock()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
+}
+//Construtor
+CarenMFPresentationClock::CarenMFPresentationClock(Boolean Param_CriarInterface)
+{
+	//Verifica se deve ou não criar uma interface.
+	if (Param_CriarInterface)
+	{
+		//Variavel que vai conter o resultado COM.
+		HRESULT Hr = E_FAIL;
+
+		//Variaveis utilizadas.
+		Utilidades Util;
+		IMFPresentationClock* vi_pOutPresentationClock = Nulo;
+
+		//Chama o método para criar a interface.
+		Hr = MFCreatePresentationClock(&vi_pOutPresentationClock);
+
+		//Verifica se não ocorreu erro no processo.
+		if (!Sucesso(Hr))
+		{
+			//Chama uma exceção para informar o error.
+			throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+		}
+
+		//Define a interface criada no ponteiro de trabalho
+		PonteiroTrabalho = vi_pOutPresentationClock;
+	}
+	else
+	{
+		//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+	}
 }
 
 //
@@ -539,7 +571,7 @@ CarenResult CarenMFPresentationClock::GetTimeSource([Out] ICarenMFPresentationTi
 	}
 
 	//Cria a interface que vai conter o relogio
-	InterfaceRequisitada = gcnew CarenMFPresentationTimeSource();
+	InterfaceRequisitada = gcnew CarenMFPresentationTimeSource(false);
 
 	//Chama o método para definir o ponteiro
 	InterfaceRequisitada->AdicionarPonteiro(pInterfaceRequisitada);

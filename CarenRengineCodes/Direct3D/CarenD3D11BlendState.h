@@ -49,7 +49,7 @@ public ref class CarenD3D11BlendState :public ICarenD3D11BlendState
 	//Ponteiro para a interface (ID3D11BlendState).
 	ID3D11BlendState* PonteiroTrabalho = NULL;
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD3D11BlendState();
 

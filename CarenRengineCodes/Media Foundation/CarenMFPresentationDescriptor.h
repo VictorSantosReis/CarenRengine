@@ -51,8 +51,22 @@ public ref class CarenMFPresentationDescriptor : public ICarenMFPresentationDesc
 
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMFPresentationDescriptor();
+
+	/// <summary>
+	/// Inicializa e cria um novo descritor de apresentação(Presentation Descriptor).
+	/// Se você estiver escrevendo uma fonte de mídia personalizada, você pode usar essa função para criar o descritor de apresentação de origem. O descritor de apresentação é criado sem fluxos selecionados. 
+	/// Geralmente, uma fonte de mídia deve selecionar pelo menos um fluxo por padrão. Para selecionar um fluxo, ligue para o ICarenMFPresentationDescriptor::SelectStream.
+	/// </summary>
+	/// <param name="Param_CountStreams">Número de elementos na matriz (Param_MatrizStreamsDescriptors).</param>
+	/// <param name="Param_MatrizStreamsDescriptors">Matriz de interface (ICarenMFStreamDescriptor). Cada interface representa um descritor de fluxo para um fluxo na apresentação.</param>
+	CarenMFPresentationDescriptor(UInt32 Param_CountStreams, cli::array<ICarenMFStreamDescriptor^>^ Param_MatrizStreamsDescriptors);
+
 	~CarenMFPresentationDescriptor();
 
 
@@ -78,81 +92,6 @@ public:
 			//Retorna o valor.
 			return Prop_DisposedClasse;
 		}
-	}
-
-
-
-	//Cria uma instância dessa classe (Estático)
-public:
-	/// <summary>
-	/// Método responsável por criar uma instância da classe atual do Descritor de apresentação.
-	/// </summary>
-	/// <param name="Param_QuantidadeDescritoresFluxo">A quantidade de descritores de fluxo no array.</param>
-	/// <param name="Param_ArrayDescritores">O array com os descritores de fluxo. Cada ponteiro representa um descritor de fluxo de um córrego na apresentação.</param>
-	/// <param name="Param_Out_DescritorApresentação">Recebe a interface do descritor de apresentação.</param>
-	static CarenResult CriarInstancia(UInt32 Param_QuantidadeDescritoresFluxo, cli::array<ICarenMFStreamDescriptor^>^ Param_ArrayDescritores, [Out] ICarenMFPresentationDescriptor^% Param_Out_DescritorApresentação)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Variavel que contém o resultado COM.
-		HRESULT Hr = E_FAIL;
-
-		//Variaveis utilizada no método
-		IMFPresentationDescriptor* pDescritor = NULL;
-		ICarenMFPresentationDescriptor^ InterfaceSolicitada = nullptr;
-		std::vector<IMFStreamDescriptor*> ArrayDescritoresFluxo;
-		IMFStreamDescriptor* pDescritorFluxo = NULL;
-
-		//Obtém todos os Descritores de fluxo no array.
-		for (DWORD i = 0; i < Param_QuantidadeDescritoresFluxo; i++)
-		{
-			//Obtém o ponteiro para o descritor de fluxo
-			Param_ArrayDescritores[i]->RecuperarPonteiro((LPVOID*)&pDescritorFluxo);
-
-			//Adiciona no array de descritores.
-			ArrayDescritoresFluxo.push_back(pDescritorFluxo);
-
-			//NULA
-			pDescritorFluxo = NULL;
-		}
-		
-		//Chama o método para criar o descritor de apresentação
-		Hr = MFCreatePresentationDescriptor(Param_QuantidadeDescritoresFluxo, ArrayDescritoresFluxo.data(), &pDescritor);
-
-		//Verifica se obteve sucesso
-		if (Sucesso(Hr))
-		{
-			//Deixa o método continuar.
-		}
-		else
-		{
-			//O método falhou
-			Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-			//Sai do método
-			goto Done;
-		}
-
-		//Cria a interface que vai conter o ponteiro
-		InterfaceSolicitada = gcnew CarenMFPresentationDescriptor();
-
-		//Define o ponteiro de trabalho
-		InterfaceSolicitada->AdicionarPonteiro(pDescritor);
-
-		//Define a interface no parametro de saida.
-		Param_Out_DescritorApresentação = InterfaceSolicitada;
-
-		//Define sucesso na operção.
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	Done:;
-		//Limpa o Vetor.
-		ArrayDescritoresFluxo.clear();
-		ArrayDescritoresFluxo.shrink_to_fit();
-
-		//Retorna o resultado.
-		return Resultado;
 	}
 
 
@@ -418,7 +357,7 @@ public:
 	/// </summary>
 	/// <param name="Param_GuidChave">O GUID para a chave a ser verificado o tipo do valor.</param>
 	/// <param name="Param_Out_TipoDado">O tipo do dado contido na chave solicitada.</param>
-	virtual CarenResult GetItemType(String^ Param_GuidChave, [Out] Enumeracoes::CA_ATTRIBUTE_TYPE% Param_Out_TipoDado);
+	virtual CarenResult GetItemType(String^ Param_GuidChave, [Out] Enumeracoes::CA_MF_ATTRIBUTE_TYPE% Param_Out_TipoDado);
 
 
 	/// <summary>

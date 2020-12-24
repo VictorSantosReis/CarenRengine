@@ -26,7 +26,7 @@ CarenWICPlanarBitmapSourceTransform::~CarenWICPlanarBitmapSourceTransform()
 //Construtores
 CarenWICPlanarBitmapSourceTransform::CarenWICPlanarBitmapSourceTransform()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

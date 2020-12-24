@@ -26,7 +26,7 @@ CarenMFMuxStreamSampleManager::~CarenMFMuxStreamSampleManager()
 //Construtores
 CarenMFMuxStreamSampleManager::CarenMFMuxStreamSampleManager()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren
@@ -447,7 +447,7 @@ UInt32 Param_MuxStreamIndex,
 	}
 
 	//Cria a interface a ser retornada.
-	Param_Out_Amostra = gcnew CarenMFSample();
+	Param_Out_Amostra = gcnew CarenMFSample(false);
 
 	//Define o ponteiro na interface.
 	CarenSetPointerToICarenSafe(vi_pOutAmostra, Param_Out_Amostra, true);

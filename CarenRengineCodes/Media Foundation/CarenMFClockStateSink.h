@@ -37,9 +37,9 @@ using namespace CarenRengine::SDKBase::Interfaces;
 using namespace CarenRengine::SDKUtilidades;
 
 /// <summary>
-/// (Concluido - Fase de Testes) - Falta documentar.
+/// (Concluido - Fase de Testes) - Classe responsável por receber notificações de alteração de estado do relógio de apresentação.
 /// </summary>
-public ref class CarenMFRelogioStateSink : public ICarenMFClockStateSink
+public ref class CarenMFClockStateSink : public ICarenMFClockStateSink
 {
 	/////////////////////////////////////////
 	//Objeto gerenciado por essa interface.//
@@ -48,9 +48,16 @@ public ref class CarenMFRelogioStateSink : public ICarenMFClockStateSink
 	//Ponteiro para a interface (IMFClockStateSink).
 	IMFClockStateSink* PonteiroTrabalho = NULL;
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
-	~CarenMFRelogioStateSink();
+	/// <summary>
+	/// Inicializa a interface e permite que o usuário decida se a biblioteca deve criar a interface ou vai iniciar sem um ponteiro 
+	/// de trabalho. Se (Param_CriarInterface) for TRUE, o construtor vai criar uma implementação interna da (IMFClockStateSink).
+	/// </summary>
+	/// <param name="Param_CriarInterface">Um valor booleano, TRUE indica que deve criar uma nova interface intermanete, caso contario, FALSE.</param>
+	CarenMFClockStateSink(Boolean Param_CriarInterface);
+
+	~CarenMFClockStateSink();
 
 
 	//Variaveis Internas.
@@ -174,48 +181,6 @@ private:
 	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnClockSetRate).
 	/// </summary>
 	GCHandle gHandle_Delegate_OnClockSetRate;
-
-
-
-	//Método estático que vai criar uma instância do relegio
-public:
-	/// <summary>
-	/// Método responsável por criar uma instância do relogio de notificação de mudança de estado da interface ICarenRelogioApresentação.
-	/// </summary>
-	/// <param name="Param_Out_RelogioStateSink">Recebe a interface com o relogio de notificação de estado.</param>
-	static CarenResult CriarInstancia([Out] ICarenMFClockStateSink^% Param_Out_RelogioStateSink)
-	{
-		//Variavel que vai retornar o resultado.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Variavel COM
-		ResultadoCOM Hr = E_FAIL;
-
-		//Variaveis utilizadas pelo método
-		ICarenMFClockStateSink^ InterfaceSolicitada = nullptr;
-		CLN_IMFClockStateSink* pCln_ClockState = NULL;
-
-		//Cria a classe que vai ser a base de recebimento das notificações
-		pCln_ClockState = new CLN_IMFClockStateSink();
-
-		//Cria a interface que vai conter o relogio de notificações.
-		InterfaceSolicitada = gcnew CarenMFRelogioStateSink();
-
-		//Chama o método para definir o ponteiro
-		InterfaceSolicitada->AdicionarPonteiro(pCln_ClockState);
-
-		//Define a interface criada no parametro de saida.
-		Param_Out_RelogioStateSink = InterfaceSolicitada;
-
-		//Define sucesso na operação
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-		//Retorna o resultado.
-		return Resultado;
-	}
-
-
-
 
 
 	///////////////////////////////////////////////////////

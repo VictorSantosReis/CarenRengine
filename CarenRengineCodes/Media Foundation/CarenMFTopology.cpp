@@ -18,11 +18,166 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenMFTopology.h"
 
+
 //Destruidor.
 CarenMFTopology::~CarenMFTopology()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
+}
+//Construtores
+CarenMFTopology::CarenMFTopology(Boolean Param_CriarInterface)
+{
+	//Verifica se deve ou não criar uma interface.
+	if (Param_CriarInterface)
+	{
+		//Variavel que vai conter o resultado COM.
+		HRESULT Hr = E_FAIL;
+
+		//Variaveis utilizadas.
+		Utilidades Util;
+		IMFTopology* vi_pOutTopology = Nulo;
+
+		//Chama o método para criar a interface.
+		Hr = MFCreateTopology(&vi_pOutTopology);
+
+		//Verifica se não ocorreu erro no processo.
+		if (!Sucesso(Hr))
+		{
+			//Chama uma exceção para informar o error.
+			throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+		}
+
+		//Define a interface criada no ponteiro de trabalho
+		PonteiroTrabalho = vi_pOutTopology;
+	}
+	else
+	{
+		//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+	}
+}
+
+CarenMFTopology::CarenMFTopology(ICarenMFMediaSource^ Param_MediaSource, ICarenMFByteStream^ Param_OutputStream, ICarenMFTranscodeProfile^ Param_TranscodeProfile)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Resultados de Caren.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IMFMediaSource* vi_pMediaSource = Nulo;
+	IMFByteStream* vi_pByteStream = Nulo;
+	IMFTranscodeProfile* vi_pTranscodeProfile = Nulo;
+	IMFTopology* vi_pOutTopology = Nulo;
+
+	//Verfifica se a interface a fonte de mídia é válida.
+	if (!ObjetoGerenciadoValido(Param_MediaSource))
+		throw gcnew NullReferenceException("A interface no parametro (Param_MediaSource) não pode ser NULA!");
+
+	//Tenta recuperar o ponteiro para a interface.
+	Resultado = RecuperarPonteiroCaren(Param_MediaSource, &vi_pMediaSource);
+
+	//Verifica se não houve algum erro
+	if (!CarenSucesso(Resultado))
+		throw gcnew Exception("Falhou ao tentar recuperar o ponteiro para a interface da fonte de mídia.");
+
+	//Verfifica se a interface para o fluxo de bytes de saida é válida.
+	if (!ObjetoGerenciadoValido(Param_MediaSource))
+		throw gcnew NullReferenceException("A interface no parametro (Param_OutputStream) não pode ser NULA!");
+
+	//Tenta recuperar o ponteiro para a interface.
+	Resultado = RecuperarPonteiroCaren(Param_OutputStream, &vi_pByteStream);
+
+	//Verifica se não houve algum erro
+	if (!CarenSucesso(Resultado))
+		throw gcnew Exception("Falhou ao tentar recuperar o ponteiro para a interface do fluxo de byte da media foundation.");
+
+	//Verfifica se a interface para o perfil de transcodifcação é valida.
+	if (!ObjetoGerenciadoValido(Param_TranscodeProfile))
+		throw gcnew NullReferenceException("A interface no parametro (Param_TranscodeProfile) não pode ser NULA!");
+
+	//Tenta recuperar o ponteiro para a interface.
+	Resultado = RecuperarPonteiroCaren(Param_TranscodeProfile, &vi_pTranscodeProfile);
+
+	//Verifica se não houve algum erro
+	if (!CarenSucesso(Resultado))
+		throw gcnew Exception("Falhou ao tentar recuperar o ponteiro para a interface do perfil de transcodificação.");
+
+	//Chama o método para criar a interface.
+	Hr = MFCreateTranscodeTopologyFromByteStream(vi_pMediaSource, vi_pByteStream, vi_pTranscodeProfile, &vi_pOutTopology);
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutTopology;
+}
+
+CarenMFTopology::CarenMFTopology(ICarenMFMediaSource^ Param_MediaSource, String^ Param_OutputUrl, ICarenMFTranscodeProfile^ Param_TranscodeProfile)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Resultados de Caren.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IMFMediaSource* vi_pMediaSource = Nulo;
+	PWSTR vi_pOutputUrl = Nulo;
+	IMFTranscodeProfile* vi_pTranscodeProfile = Nulo;
+	IMFTopology* vi_pOutTopology = Nulo;
+
+	//Verfifica se a interface a fonte de mídia é válida.
+	if (!ObjetoGerenciadoValido(Param_MediaSource))
+		throw gcnew NullReferenceException("A interface no parametro (Param_MediaSource) não pode ser NULA!");
+
+	//Tenta recuperar o ponteiro para a interface.
+	Resultado = RecuperarPonteiroCaren(Param_MediaSource, &vi_pMediaSource);
+
+	//Verifica se não houve algum erro
+	if (!CarenSucesso(Resultado))
+		throw gcnew Exception("Falhou ao tentar recuperar o ponteiro para a interface da fonte de mídia.");
+
+	//Verfifica se a url fornecida é valida e contém dados.
+	if (!StringObjetoValido(Param_OutputUrl))
+		throw gcnew NullReferenceException("A URL para o arquivo de destino no parâmetro (Param_OutputUrl) não pode ser vazia e nem nula!");
+
+	//Converte a string para a url de destino.
+	vi_pOutputUrl = Util.ConverterStringToWCHAR(Param_OutputUrl);
+	
+	//Verfifica se a interface para o perfil de transcodifcação é valida.
+	if (!ObjetoGerenciadoValido(Param_TranscodeProfile))
+		throw gcnew NullReferenceException("A interface no parametro (Param_TranscodeProfile) não pode ser NULA!");
+
+	//Tenta recuperar o ponteiro para a interface.
+	Resultado = RecuperarPonteiroCaren(Param_TranscodeProfile, &vi_pTranscodeProfile);
+
+	//Verifica se não houve algum erro
+	if (!CarenSucesso(Resultado))
+		throw gcnew Exception("Falhou ao tentar recuperar o ponteiro para a interface do perfil de transcodificação.");
+
+	//Chama o método para criar a interface.
+	Hr = MFCreateTranscodeTopology(vi_pMediaSource, const_cast<PWSTR>(vi_pOutputUrl), vi_pTranscodeProfile, &vi_pOutTopology);
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutTopology;
+
+	//Libera a memória utilizada pela string se valida
+	DeletarStringAllocatedSafe(&vi_pOutputUrl);
 }
 
 //
@@ -718,7 +873,7 @@ CarenResult CarenMFTopology::GetOutputNodeCollection([Out] ICarenMFCollection^% 
 	}
 
 	//Cria a interface a ser retornada
-	Param_Out_ColecaoNoSaida = gcnew CarenMFCollection();
+	Param_Out_ColecaoNoSaida = gcnew CarenMFCollection(false);
 
 	//Define o ponteiro de trabalho
 	Param_Out_ColecaoNoSaida->AdicionarPonteiro(pColecaoNoSaida);
@@ -763,7 +918,7 @@ CarenResult CarenMFTopology::GetSourceNodeCollection([Out] ICarenMFCollection^% 
 	}
 
 	//Cria a interface a ser retornada
-	Param_Out_ColecaoNoOrigem = gcnew CarenMFCollection();
+	Param_Out_ColecaoNoOrigem = gcnew CarenMFCollection(false);
 
 	//Define o ponteiro de trabalho
 	Param_Out_ColecaoNoOrigem->AdicionarPonteiro(&pColecaoNoOrigem);
@@ -1663,7 +1818,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave a ser verificado o tipo do valor.</param>
 /// <param name="Param_Out_TipoDado">O tipo do dado contido na chave solicitada.</param>
-CarenResult CarenMFTopology::GetItemType(String^ Param_GuidChave, [Out] CA_ATTRIBUTE_TYPE% Param_Out_TipoDado)
+CarenResult CarenMFTopology::GetItemType(String^ Param_GuidChave, [Out] CA_MF_ATTRIBUTE_TYPE% Param_Out_TipoDado)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1697,7 +1852,7 @@ CarenResult CarenMFTopology::GetItemType(String^ Param_GuidChave, [Out] CA_ATTRI
 		Sair;
 	}
 
-	//Converte o valor retornado para um gerenciado representado pela enumeração CA_ATTRIBUTE_TYPE.
+	//Converte o valor retornado para um gerenciado representado pela enumeração CA_MF_ATTRIBUTE_TYPE.
 	Param_Out_TipoDado = Util.ConverterMF_ATTRIBUTE_TYPEUnmanagedToManaged(ValorRequisitado);
 
 Done:;

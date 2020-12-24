@@ -18,11 +18,55 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenMFGetService.h"
 
+
 //Destruidor.
 CarenMFGetService::~CarenMFGetService()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
+}
+//Construtores
+CarenMFGetService::CarenMFGetService()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
+
+CarenMFGetService::CarenMFGetService(ICaren^ Param_InterfaceBase)
+{
+	//Variavel de resultados de caren
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IUnknown* vi_pInterfaceBase = Nulo;
+	IMFGetService* vi_pOutService = Nulo;
+
+	//Verifica se a interface base é valida e recupera o ponteiro.
+	if (!ObjetoGerenciadoValido(Param_InterfaceBase))
+		throw gcnew NullReferenceException("O parametro (Param_InterfaceBase) não pode ser NULO!");
+
+	//Recupera o ponteiro para a interface base.
+	Resultado = RecuperarPonteiroCaren(Param_InterfaceBase, &vi_pInterfaceBase);
+
+	//Verifica se não houve erro.
+	if (!CarenSucesso(Resultado))
+		throw gcnew Exception("Falhou ao recuperar o ponteiro para a interface base do parametro (Param_InterfaceBase).");
+
+	//Chama o método para recuperar o ponteiro para a interface de serviço.
+	Hr = vi_pInterfaceBase->QueryInterface(IID_IMFGetService, reinterpret_cast<void**>(&vi_pOutService));
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutService;
 }
 
 //
@@ -415,7 +459,7 @@ void CarenMFGetService::Finalizar()
 
 /// <summary>
 /// Método responsável por consultar e obter um determinado serviço(Interface) em um Componente especificado.
-/// Pode retornar: SS_OK ou ER_SERVICO_NAO_SUPORTADO
+/// Pode retornar: SS_OK ou ER_MF_E_UNSUPPORTED_SERVICE
 /// </summary>
 /// <param name="Param_SID">O GUID que expõe o (Identificador de Serviço) do serviço a ser obtido.</param>
 /// <param name="Param_IIDInterface">Define o GUID da interface que se quer obter do serviço solicitado.</param>
@@ -429,41 +473,17 @@ CarenResult CarenMFGetService::GetService(String^ Param_SID, String^ Param_IIDIn
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
-	LPVOID pInterfaceRetornada = NULL;
-	GUID Gd_SID = GUID_NULL;
-	GUID Gd_IID = GUID_NULL;
 	Utilidades Util;
+	GUID vi_SID = GUID_NULL;
+	GUID vi_IID = GUID_NULL;
+	IUnknown* vi_pOutServiceInterface = NULL;
 
-	//Cria os Guid necessários.
-
-	//Chama o método para obter o guid.
-	Gd_SID = Util.CreateGuidFromString(Param_SID);
-
-	//Verifica se o guid foi criado com sucesso
-	if (Gd_SID == GUID_NULL)
-	{
-		//O guid informado não é valido
-		Resultado.AdicionarCodigo(ResultCode::ER_GUID_INVALIDO, false);
-
-		//Sai do método.
-		goto Done;
-	}
-
-	//Chama o método para obter o guid.
-	Gd_IID = Util.CreateGuidFromString(Param_IIDInterface);
-
-	//Verifica se o guid foi criado com sucesso
-	if (Gd_IID == GUID_NULL)
-	{
-		//O guid informado não é valido
-		Resultado.AdicionarCodigo(ResultCode::ER_GUID_INVALIDO, false);
-
-		//Sai do método.
-		goto Done;
-	}
+	//Converte as strings para os guids nativos representantes.
+	vi_SID = Util.CreateGuidFromString(Param_SID);
+	vi_IID = Util.CreateGuidFromString(Param_IIDInterface);
 
 	//Chama o método para recuperar a interface requisitada.
-	Hr = PonteiroTrabalho->GetService(Gd_SID, Gd_IID, &pInterfaceRetornada);
+	Hr = PonteiroTrabalho->GetService(vi_SID, vi_IID, reinterpret_cast<void**>(&vi_pOutServiceInterface));
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -480,13 +500,11 @@ CarenResult CarenMFGetService::GetService(String^ Param_SID, String^ Param_IIDIn
 		Sair;
 	}
 
-	//Define o ponteiro obtido na interface
-	Param_Out_InterfaceSolicitada->AdicionarPonteiro(pInterfaceRetornada);
-	
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	//Define o ponteiro na interface de saida.
+	CarenSetPointerToICarenSafe(vi_pOutServiceInterface, Param_Out_InterfaceSolicitada, true);	
 
 Done:;
+
 	//Retorna o resultado da operação
 	return Resultado;
 }

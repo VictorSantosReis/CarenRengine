@@ -26,7 +26,7 @@ CarenMFMetadata::~CarenMFMetadata()
 //Construtores
 CarenMFMetadata::CarenMFMetadata()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

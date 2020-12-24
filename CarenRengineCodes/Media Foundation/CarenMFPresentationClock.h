@@ -38,7 +38,7 @@ using namespace CarenRengine::SDKUtilidades;
 
 
 /// <summary>
-/// [Concluido - Fase de testes] - Falta documentar.
+/// (Concluido - Fase de testes) - Classe responsável por representar uma relógio de apresentação que é usado para agendar quando as amostras de mídia devem ser processadas e para sincronizar vários fluxos. 
 /// </summary>
 public ref class CarenMFPresentationClock : public ICarenMFPresentationClock
 {
@@ -49,8 +49,15 @@ public ref class CarenMFPresentationClock : public ICarenMFPresentationClock
 	//Ponteiro para a interface (IMFPresentationClock).
 	IMFPresentationClock* PonteiroTrabalho = NULL;
 
-	//Destruidor.
+	//Construtor e Destruidor.
 public:
+	/// <summary>
+	/// Inicializa a interface e permite que o usuário decida se a biblioteca deve criar a interface ou vai iniciar sem um ponteiro 
+	/// de trabalho.
+	/// </summary>
+	/// <param name="Param_CriarInterface">Um valor booleano, TRUE indica que deve criar uma nova interface intermanete, caso contario, FALSE.</param>
+	CarenMFPresentationClock(Boolean Param_CriarInterface);
+
 	~CarenMFPresentationClock();
 
 	//Variaveis Internas.
@@ -75,55 +82,6 @@ public:
 			//Retorna o valor.
 			return Prop_DisposedClasse;
 		}
-	}
-
-	//Cria uma instância dessa classe (Estático)
-public:
-	/// <summary>
-	/// Método responsável por criar uma instância da classe atual.
-	/// </summary>
-	/// <param name="Param_Out_InterfaceSolicitada">Recebe a interface solicitada.</param>
-	static CarenResult CriarInstancia([Out] ICarenMFPresentationClock^% Param_Out_InterfaceSolicitada)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Variavel COM
-		ResultadoCOM Hr = E_FAIL;
-
-		//Variaveis utilizadas no método
-		IMFPresentationClock *pRelogioPresentation = NULL;
-		ICarenMFPresentationClock^ InterfaceSolicitada = nullptr;
-		
-		//Chama o método para criar o relogio de apresentação.
-		Hr = MFCreatePresentationClock(&pRelogioPresentation);
-
-		//Verifica o resultado
-		if (Sucesso(Hr))
-		{
-			//Deixa o método continuar.
-		}
-		else
-		{
-			//Sai do método
-			goto Done;
-		}
-
-		//Cria a interface que vai receber o ponteiro
-		InterfaceSolicitada = gcnew CarenMFPresentationClock();
-
-		//Chama o método para definir o ponteiro
-		InterfaceSolicitada->AdicionarPonteiro(pRelogioPresentation);
-
-		//Define a interface no parametro de retorno.
-		Param_Out_InterfaceSolicitada = InterfaceSolicitada;
-
-		//Deifne sucesso na operação
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	Done:;
-		//Retorna o resultado.
-		return Resultado;
 	}
 
 

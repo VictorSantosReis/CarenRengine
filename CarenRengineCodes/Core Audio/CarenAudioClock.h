@@ -48,7 +48,7 @@ public ref class CarenAudioClock : public ICarenAudioClock
 	IAudioClock* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenAudioClock();
 

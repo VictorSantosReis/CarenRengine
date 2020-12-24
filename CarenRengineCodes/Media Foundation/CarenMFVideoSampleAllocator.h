@@ -24,9 +24,6 @@ limitations under the License.
 //Importa o namespace que contém as interfaces da Media Foundation.
 using namespace CarenRengine::MediaFoundation;
 
-//Enumeração de retorno de função.
-
-
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
@@ -46,10 +43,15 @@ public ref class CarenMFVideoSampleAllocator : public ICarenMFVideoSampleAllocat
 	/////////////////////////////////////////
 
 	//Ponteiro para a interface (IMFVideoSampleAllocator).
-	IMFVideoSampleAllocatorEx* PonteiroTrabalho = NULL;
+	IMFVideoSampleAllocator* PonteiroTrabalho = NULL;
 
-	//Destruidor.
+	//Construtor e Destruidor.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMFVideoSampleAllocator();
+
 	~CarenMFVideoSampleAllocator();
 
 	//Variaveis Internas.
@@ -76,107 +78,6 @@ public:
 		}
 	}
 
-
-public:
-	/// <summary>
-	/// Método responsável por criar uma instância do alocador de amostras de vídeo compativeis do D3D9.
-	/// </summary>
-	/// <param name="Param_Out_Alocador">Recebe o ponteiro da instância do alocador de amostras de video.</param>
-	static CarenResult CriarInstanciaAlocadorD3D9([Out] ICarenMFVideoSampleAllocator^% Param_Out_Alocador)
-	{
-		//Variavel que vai retornar o resultado.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Variavel COM
-		ResultadoCOM Hr = E_FAIL;
-	
-		//Variaveis Utilizadas
-		LPVOID pInterface = NULL;
-		ICarenMFVideoSampleAllocator^ InterfaceSolictada = nullptr;
-
-		//Chama o método que vai criar o alocador.
-		Hr = MFCreateVideoSampleAllocator(IID_IMFVideoSampleAllocator, &pInterface);
-	
-		//Verifica o resultado da operação
-		if (Sucesso(Hr))
-		{
-			//Deixa o método continuar.
-		}
-		else
-		{
-			//Define falha na operação.
-			Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-			//Sai do método.
-			goto Done;
-		}
-
-		//Cria a interface que vai conter o ponteiro
-		InterfaceSolictada = gcnew CarenMFVideoSampleAllocator();
-
-		//Chama o método para definir o ponteiro
-		InterfaceSolictada->AdicionarPonteiro(pInterface);
-
-		//Define a interface criada no parametro de saida.
-		Param_Out_Alocador = InterfaceSolictada;
-
-		//Define sucesso na operação
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	Done:;
-		//Retorna o resultado.
-		return Resultado;
-	}
-
-	/// <summary>
-	/// Método responsável por criar uma instância do alocador de amostras de vídeo compativeis do D3D11.
-	/// </summary>
-	/// <param name="Param_Out_Alocador">Recebe o ponteiro da instância do alocador de amostras de video.</param>
-	static CarenResult CriarInstanciaAlocadorD3D11([Out] ICarenMFVideoSampleAllocator^% Param_Out_Alocador)
-	{
-		//Variavel que vai retornar o resultado.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Variavel COM
-		ResultadoCOM Hr = E_FAIL;
-
-		//Variaveis Utilizadas
-		LPVOID pInterface = NULL;
-		ICarenMFVideoSampleAllocator^ InterfaceSolictada = nullptr;
-
-		//Chama o método que vai criar o alocador de amostras do D3D11
-		Hr = MFCreateVideoSampleAllocatorEx(IID_IMFVideoSampleAllocatorEx, &pInterface);
-
-		//Verifica o resultado da operação
-		if (Sucesso(Hr))
-		{
-			//Deixa o método continuar.
-		}
-		else
-		{
-			//Define falha na operação.
-			Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-			//Sai do método.
-			goto Done;
-		}
-
-		//Cria a interface que vai conter o ponteiro
-		InterfaceSolictada = gcnew CarenMFVideoSampleAllocator();
-
-		//Chama o método para definir o ponteiro
-		InterfaceSolictada->AdicionarPonteiro(pInterface);
-
-		//Define a interface criada no parametro de saida.
-		Param_Out_Alocador = InterfaceSolictada;
-
-		//Define sucesso na operação
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	Done:;
-		//Retorna o resultado.
-		return Resultado;
-	}
 
 	///////////////////////////////////////////////////////
 	//A parti daqui vai conter os métodos das interfaces.//
@@ -263,9 +164,6 @@ public:
 	virtual void Finalizar();
 
 
-
-
-
 	//Métodos da Interface Proprietaria.
 public:
 	/// <summary>
@@ -284,15 +182,6 @@ public:
 	virtual CarenResult InitializeSampleAllocator(UInt32 Param_CountAmostra, ICarenMFMediaType^ Param_TipoAmostraVideo);
 
 	/// <summary>
-	/// (InitializeSampleAllocatorEx) - Inicializa o alocador informando a quantidade de amostras para alocar e o tipo de mídia
-	/// para cada amostra.
-	/// As amostras alocadas devem ser compativeis com o DXGI - (D3D11).
-	/// </summary>
-	/// <param name="Param_CountAmostra">A quantidade de amostas para alocar.</param>
-	/// <param name="Param_TipoAmostraVideo">Uma interface que contém o Tipo de mídia de vídeo que será alocada.</param>
-	virtual CarenResult InitializeSampleAllocatorEx(UInt32 Param_CountAmostra, ICarenMFMediaType^ Param_TipoAmostraVideo);
-
-	/// <summary>
 	/// (SetDirectXManager) - Especifica o dispositivo do gerenciamento do Direct3D para o coletor de mídia de vídeo utilizar.
 	/// O coletor de mídia usa o Gerenciador de dispositivos Direct3D para obter um ponteiro para o dispositivo Direct3D, que ele usa para alocar superfícies Direct3D. O Gerenciador de dispositivos 
 	/// habilita vários objetos no pipeline (como um processador de vídeo e um decodificador de vídeo) para compartilhar o mesmo dispositivo Direct3D.
@@ -304,6 +193,5 @@ public:
 	/// (UninitializeSampleAllocator) - Libera Todas as amostras de vídeo que tenham sido alocadas.
 	/// </summary>
 	virtual CarenResult UninitializeSampleAllocator();
-
 };
 

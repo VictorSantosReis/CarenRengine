@@ -26,7 +26,7 @@ CarenD2D1SvgAttribute::~CarenD2D1SvgAttribute()
 //Construtores
 CarenD2D1SvgAttribute::CarenD2D1SvgAttribute()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

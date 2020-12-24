@@ -18,13 +18,14 @@ limitations under the License.
 #pragma once
 #include "../SDK_MediaFoundation.h"
 #include "../SDK_Caren.h"
+#include "../SDK_Windows.h"
 #include "../SDK_Utilidades.h"
 
 //Importa o namespace que contém as interfaces da API primária.
 using namespace CarenRengine::MediaFoundation;
 
-//Enumeração de retorno de função.
-
+//Importa o namespace que contém as interface da API do Windows.
+using namespace CarenRengine::Windows;
 
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
@@ -49,8 +50,31 @@ public ref class CarenMFByteStream : public ICarenMFByteStream
 	IMFByteStream* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMFByteStream();
+
+	/// <summary>
+	/// Inicializa e cria um fluxo byte da Microsoft Media Foundation que envolve uma interface ICarenStream. 
+	/// </summary>
+	/// <param name="Param_Stream">Uma interface(ICarenStream) para o fluxo de bytes.</param>
+	CarenMFByteStream(ICarenStream^ Param_Stream);
+
+	/// <summary>
+	///Inicializa e cria um Wrapper para um fluxo de byte.
+	/// </summary>
+	/// <param name="Param_MFStream">Uma interface (ICarenMFByteStream) para o fluxo de bytes original.</param>
+	CarenMFByteStream(ICarenMFByteStream^ Param_MFStream);
+
+	/// <summary>
+	/// Inicializa e cria um fluxo byte da Microsoft Media Foundation que envolve um objeto IRandomAccessStream.
+	/// </summary>
+	/// <param name="Param_UnkStream">Um ponteiro para a interface IRandomAccessStream.</param>
+	CarenMFByteStream(ICaren^ Param_UnkStream);
+
 	~CarenMFByteStream();
 
 
@@ -76,30 +100,6 @@ public:
 			//Retorna o valor.
 			return Prop_DisposedClasse;
 		}
-	}
-
-
-
-	//Cria uma instância dessa classe (Estático)
-public:
-	/// <summary>
-	/// Método responsável por criar uma instância vazia da classe. Chamadas para os métodos sem um ponteiro de trabalho definido
-	/// pode gerar comportamentos indefinidos.
-	/// </summary>
-	/// <param name="Param_Out_CarenMFByteStream">Recebe um ponteiro para a interface (Vazia).</param>
-	static CarenResult CriarInstanciaVazia([Out] ICarenMFByteStream^% Param_Out_CarenMFByteStream)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Cria a interface
-		Param_Out_CarenMFByteStream = gcnew CarenMFByteStream();
-
-		//Define sucesso
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-		//Retorna o resultado
-		return Resultado;
 	}
 
 

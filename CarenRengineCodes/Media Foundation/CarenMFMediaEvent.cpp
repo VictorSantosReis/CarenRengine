@@ -18,11 +18,129 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenMFMediaEvent.h"
 
+
 //Destruidor.
 CarenMFMediaEvent::~CarenMFMediaEvent()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
+}
+//Construtores
+CarenMFMediaEvent::CarenMFMediaEvent()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
+
+CarenMFMediaEvent::CarenMFMediaEvent(CA_MediaEventType Param_TypeEvent, String^ Param_GuidExtendedType, CarenResult Param_HRStatus, CA_PropVariant^ Param_Valor)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	MediaEventType vi_EventType = static_cast<MediaEventType>(Param_TypeEvent);
+	GUID vi_GuidExtendido = GUID_NULL; //Pode ser GUID_NULL;
+	HRESULT vi_StatusEvent = static_cast<HRESULT>(Param_HRStatus.HResult);
+	PROPVARIANT* vi_pPropValue = Nulo; //Pode ser NULO.
+	IMFMediaEvent* vi_pOutMediaEvent = Nulo;
+
+
+	//Cria o guid se informado
+	if (StringObjetoValido(Param_GuidExtendedType))
+		vi_GuidExtendido = Util.CreateGuidFromString(Param_GuidExtendedType);
+
+	//Cria e inicia a propvariant.
+	if (ObjetoGerenciadoValido(Param_Valor))
+	{
+		//Inicializa a propvariant.
+		PropVariantInit(vi_pPropValue);
+
+		//Converte da gerenciada para a nativa.
+		bool vi_ConvertVariant = Util.ConvertPropVariantManagedToUnamaged(Param_Valor, *vi_pPropValue);
+
+		//Verifica se não houve erro.
+		if (!vi_ConvertVariant)
+		{
+			//Libera a PropVariant
+			PropVariantClear(vi_pPropValue);
+
+			//Chama uma exceção
+			throw gcnew Exception("Não foi possivel converter o parametro (Param_Valor). O tipo pode não ser suportado ou algum erro interno ocorreu.");
+		}
+	}
+
+	//Chama o método para criar a interface.
+	Hr = MFCreateMediaEvent(vi_EventType, vi_GuidExtendido, vi_StatusEvent, vi_pPropValue, &vi_pOutMediaEvent);
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutMediaEvent;
+
+	//Libera a memória utilizada pela propvariant.
+	if (ObjetoValido(vi_pPropValue))
+		PropVariantClear(vi_pPropValue);
+}
+
+CarenMFMediaEvent::CarenMFMediaEvent(CA_MediaEventType Param_TypeEvent, String^ Param_GuidExtendedType, int Param_HRStatus, CA_PropVariant^ Param_Valor)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	MediaEventType vi_EventType = static_cast<MediaEventType>(Param_TypeEvent);
+	GUID vi_GuidExtendido = GUID_NULL; //Pode ser GUID_NULL;
+	HRESULT vi_StatusEvent = static_cast<HRESULT>(Param_HRStatus);
+	PROPVARIANT* vi_pPropValue = Nulo; //Pode ser NULO.
+	IMFMediaEvent* vi_pOutMediaEvent = Nulo;
+
+
+	//Cria o guid se informado
+	if (StringObjetoValido(Param_GuidExtendedType))
+		vi_GuidExtendido = Util.CreateGuidFromString(Param_GuidExtendedType);
+
+	//Cria e inicia a propvariant.
+	if (ObjetoGerenciadoValido(Param_Valor))
+	{
+		//Inicializa a propvariant.
+		PropVariantInit(vi_pPropValue);
+
+		//Converte da gerenciada para a nativa.
+		bool vi_ConvertVariant = Util.ConvertPropVariantManagedToUnamaged(Param_Valor, *vi_pPropValue);
+
+		//Verifica se não houve erro.
+		if (!vi_ConvertVariant)
+		{
+			//Libera a PropVariant
+			PropVariantClear(vi_pPropValue);
+
+			//Chama uma exceção
+			throw gcnew Exception("Não foi possivel converter o parametro (Param_Valor). O tipo pode não ser suportado ou algum erro interno ocorreu.");
+		}
+	}
+
+	//Chama o método para criar a interface.
+	Hr = MFCreateMediaEvent(vi_EventType, vi_GuidExtendido, vi_StatusEvent, vi_pPropValue, &vi_pOutMediaEvent);
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutMediaEvent;
+
+	//Libera a memória utilizada pela propvariant.
+	if (ObjetoValido(vi_pPropValue))
+		PropVariantClear(vi_pPropValue);
 }
 
 //
@@ -1376,7 +1494,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave a ser verificado o tipo do valor.</param>
 /// <param name="Param_Out_TipoDado">O tipo do dado contido na chave solicitada.</param>
-CarenResult CarenMFMediaEvent::GetItemType(String^ Param_GuidChave, [Out] CA_ATTRIBUTE_TYPE% Param_Out_TipoDado)
+CarenResult CarenMFMediaEvent::GetItemType(String^ Param_GuidChave, [Out] CA_MF_ATTRIBUTE_TYPE% Param_Out_TipoDado)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1410,7 +1528,7 @@ CarenResult CarenMFMediaEvent::GetItemType(String^ Param_GuidChave, [Out] CA_ATT
 		Sair;
 	}
 
-	//Converte o valor retornado para um gerenciado representado pela enumeração CA_ATTRIBUTE_TYPE.
+	//Converte o valor retornado para um gerenciado representado pela enumeração CA_MF_ATTRIBUTE_TYPE.
 	Param_Out_TipoDado = Util.ConverterMF_ATTRIBUTE_TYPEUnmanagedToManaged(ValorRequisitado);
 
 Done:;

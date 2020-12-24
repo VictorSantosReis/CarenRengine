@@ -26,7 +26,7 @@ CarenWICBitmapClipper::~CarenWICBitmapClipper()
 //Construtores
 CarenWICBitmapClipper::CarenWICBitmapClipper()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

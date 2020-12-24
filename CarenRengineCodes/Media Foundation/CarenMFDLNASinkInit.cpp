@@ -26,27 +26,34 @@ CarenMFDLNASinkInit::~CarenMFDLNASinkInit()
 //Construtores
 CarenMFDLNASinkInit::CarenMFDLNASinkInit()
 {
-	
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 CarenMFDLNASinkInit::CarenMFDLNASinkInit(CA_CLSCTX Param_ContextoExecucao)
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
 
-	//Variavel de resultado
-	HRESULT Resultado = E_FAIL;
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IMFDLNASinkInit* vi_pOutDLNA = Nulo;
 
-	//Interface que será criada.
-	IMFDLNASinkInit *vi_pDLNASink = Nulo;
+	//Chama o método para criar a interface.
+	Hr = CoCreateInstance(
+		CLSID_MPEG2DLNASink,
+		Nulo,
+		static_cast<DWORD>(Param_ContextoExecucao),
+		IID_IMFDLNASinkInit,
+		reinterpret_cast<void**>(&vi_pOutDLNA));
 
-	//Chama o método (CoCreateInstance) para criar a interface (IMFDLNASinkInit).
-	Resultado = CoCreateInstance(CLSID_MPEG2DLNASink, Nulo, static_cast<DWORD>(Param_ContextoExecucao), IID_IMFDLNASinkInit, reinterpret_cast<LPVOID*>(&vi_pDLNASink));
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
 
-	//Verifica se ocorreu algum erro.
-	if (!SUCCEEDED(Resultado))
-		throw gcnew Exception(String::Format("Ocorreu uma falha ao criar a interface. Consulte o código de erro ({0}).", static_cast<Int32>(Resultado)));
-
-	//Define o ponteiro criado no ponteiro de trabalho da interface.
-	PonteiroTrabalho = vi_pDLNASink;
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutDLNA;
 }
 
 // Métodos da interface ICaren

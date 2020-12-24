@@ -49,7 +49,7 @@ public ref class CarenD3D11Multithread : public ICarenD3D11Multithread
 	ID3D11Multithread* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destruidor da classe.
+	//Construtor e destruidor da classe.
 public:
 	~CarenD3D11Multithread();
 

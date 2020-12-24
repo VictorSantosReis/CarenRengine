@@ -18,12 +18,53 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenMFPresentationDescriptor.h"
 
+
 //Destruidor.
 CarenMFPresentationDescriptor::~CarenMFPresentationDescriptor()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtores
+CarenMFPresentationDescriptor::CarenMFPresentationDescriptor()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
+
+CarenMFPresentationDescriptor::CarenMFPresentationDescriptor(UInt32 Param_CountStreams, cli::array<ICarenMFStreamDescriptor^>^ Param_MatrizStreamsDescriptors)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Resultados de Caren.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IMFStreamDescriptor** vi_pMatrizStreamDesc = CriarMatrizPonteiros<IMFStreamDescriptor>(Param_CountStreams);
+	IMFPresentationDescriptor* vi_pOutPresentationDesc = Nulo;
+
+	//Obtém os ponteiros da matriz gerenciada e define na matriz nativa.
+	Util.CopiarPonteirosGerenciado_ToNativo(vi_pMatrizStreamDesc, Param_MatrizStreamsDescriptors, Param_CountStreams);
+
+	//Chama o método para criar a interface.
+	Hr = MFCreatePresentationDescriptor(static_cast<DWORD>(Param_CountStreams), vi_pMatrizStreamDesc, &vi_pOutPresentationDesc);
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutPresentationDesc;
+
+	//Libera a memória utilizada pela matriz de ponteiros
+	if (ObjetoValido(vi_pMatrizStreamDesc))
+		DeletarMatrizPonteirosSafe(&vi_pMatrizStreamDesc);
+}
+
 
 //
 // Métodos da interface ICaren
@@ -1444,7 +1485,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave a ser verificado o tipo do valor.</param>
 /// <param name="Param_Out_TipoDado">O tipo do dado contido na chave solicitada.</param>
-CarenResult CarenMFPresentationDescriptor::GetItemType(String^ Param_GuidChave, [Out] CA_ATTRIBUTE_TYPE% Param_Out_TipoDado)
+CarenResult CarenMFPresentationDescriptor::GetItemType(String^ Param_GuidChave, [Out] CA_MF_ATTRIBUTE_TYPE% Param_Out_TipoDado)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1478,7 +1519,7 @@ CarenResult CarenMFPresentationDescriptor::GetItemType(String^ Param_GuidChave, 
 		Sair;
 	}
 
-	//Converte o valor retornado para um gerenciado representado pela enumeração CA_ATTRIBUTE_TYPE.
+	//Converte o valor retornado para um gerenciado representado pela enumeração CA_MF_ATTRIBUTE_TYPE.
 	Param_Out_TipoDado = Util.ConverterMF_ATTRIBUTE_TYPEUnmanagedToManaged(ValorRequisitado);
 
 Done:;

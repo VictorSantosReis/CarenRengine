@@ -26,7 +26,7 @@ CarenWICImagingFactory2::~CarenWICImagingFactory2()
 //Construtores
 CarenWICImagingFactory2::CarenWICImagingFactory2()
 {
-	//CÓDIGO DE CRIAÇÃO.
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 // Métodos da interface ICaren

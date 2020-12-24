@@ -571,7 +571,7 @@ CarenResult CarenMFPresentationClock::GetTimeSource([Out] ICarenMFPresentationTi
 	}
 
 	//Cria a interface que vai conter o relogio
-	InterfaceRequisitada = gcnew CarenMFPresentationTimeSource();
+	InterfaceRequisitada = gcnew CarenMFPresentationTimeSource(false);
 
 	//Chama o método para definir o ponteiro
 	InterfaceRequisitada->AdicionarPonteiro(pInterfaceRequisitada);

@@ -49,7 +49,7 @@ limitations under the License.
 #include "Media Foundation/CarenMFMediaSession.h"
 #include "Media Foundation/CarenMFMediaSink.h"
 #include "Media Foundation/CarenMFMediaSinkPreroll.h"
-#include "Media Foundation/CarenMFMediaSinkWriterCallback.h"
+#include "Media Foundation/CarenMFSinkWriterCallback.h"
 #include "Media Foundation/CarenMFMediaSource.h"
 #include "Media Foundation/CarenMFMediaSourceEx.h"
 #include "Media Foundation/CarenMFMediaStream.h"
@@ -188,4 +188,14 @@ limitations under the License.
 #include "Direct3D/CarenD3D11VertexShader.h"
 #include "Direct3D/CarenD3D11View.h"
 #include "Direct3D/CarenD3DDeviceContextState.h"
+
+//Interfaces Windows.
+#include "Windows/CarenEnumString.h"
+#include "Windows/CarenEnumUnknown.h"
+#include "Windows/CarenPersist.h"
+#include "Windows/CarenPersistStream.h"
+#include "Windows/CarenPropertyBag2.h"
+#include "Windows/CarenPropertyStore.h"
+#include "Windows/CarenStream.h"
+
 #endif//PCH_H

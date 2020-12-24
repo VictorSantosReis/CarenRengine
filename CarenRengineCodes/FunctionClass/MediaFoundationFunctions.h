@@ -407,6 +407,28 @@ public:
 	CarenResult _MFShutdownObject(ICaren^ Param_Objeto);
 
 	/// <summary>
+	/// Obtém informações do registro sobre uma transformação da Media Foundation (MFT).
+	/// </summary>
+	/// <param name="Param_ClsidMFT">O CLSID do MFT.</param>
+	/// <param name="Param_Out_NomeMFT">Recebe uma string contendo o nome amigável do MFT. Este parametro é opcional.</param>
+	/// <param name="Param_Out_ArrayInputTypes">Recebe uma matriz de estruturas CA_MFT_REGISTER_TYPE_INFO. Cada membro da matriz descreve um formato de entrada que o MFT suporta. Este parametro é opcional.</param>
+	/// <param name="Param_Out_CountArrayInputTypes">Recebe a quantidadede entradas na matriz (Param_Out_ArrayInputTypes). Retorna (0) se (Param_Out_ArrayInputTypes) for ignorado.</param>
+	/// <param name="Param_Out_ArrayOutputTypes">Recebe uma matriz de estruturas CA_MFT_REGISTER_TYPE_INFO. Cada membro da matriz descreve um formato de saída que o MFT suporta. Este parametro é opcional.</param>
+	/// <param name="Param_Out_CountArrayOutputTypes">Recebe a quantidadede entradas na matriz (Param_Out_ArrayOutputTypes). Retorna (0) se (Param_Out_ArrayOutputTypes) for ignorado.</param>
+	/// <param name="Param_Out_Atributos">Recebe uma interface ICarenMFAttributes de uma loja de atributos. A loja de atributos pode conter atributos armazenados no registro para o 
+	/// MFT especificado. Este parametro pode ser NULO. O usuário é responsável por inicializar a interfaces antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _MFTGetInfo(
+		String^ Param_ClsidMFT,
+		CarenParameterResolver<String^>% Param_Out_NomeMFT, //Ref Value
+		CarenParameterResolver<cli::array<CA_MFT_REGISTER_TYPE_INFO^>^>% Param_Out_ArrayInputTypes, //Ref Value
+		OutParam UInt32% Param_Out_CountArrayInputTypes,
+		CarenParameterResolver<cli::array<CA_MFT_REGISTER_TYPE_INFO^>^>% Param_Out_ArrayOutputTypes, //Ref Value
+		OutParam UInt32% Param_Out_CountArrayOutputTypes,
+		ICarenMFAttributes^ Param_Out_Atributos
+	);
+
+	/// <summary>
 	/// Recebe uma lista de transformações (MFTs) da Microsoft Media Foundation que correspondem aos critérios de pesquisa especificados. Essa 
 	/// função amplia a função _MFTEnumEx para permitir que aplicativos externos e componentes internos descubram os MFTs de hardware que 
 	/// correspondem a um adaptador de vídeo específico.
@@ -422,7 +444,7 @@ public:
 	/// adaptador de hardware específico para o qual os MFTs são consultados, defina o atributo MFT_ENUM_ADAPTER_LUID ao LUID do adaptador. Se 
 	/// você fizer isso, você também deve especificar a MFT_ENUM_FLAG_HARDWARE bandeira ou ER_E_INVALIDARG é devolvida.</param>
 	/// <param name="Param_Out_ArrayMFTActivate">Recebe uma matriz de ponteiros de interface DO FMIActivate. Cada ponteiro representa um objeto de ativação de um MFT que corresponde aos critérios de pesquisa. A função aloca a memória para a matriz.</param>
-	/// <param name="Param_Out_CountMFTs"></param>
+	/// <param name="Param_Out_CountMFTs">Retorna a quantidade de MFTs no array (Param_Out_ArrayMFTActivate). Se nenhum MFTs corresponder aos critérios de pesquisa, este parâmetro receberá o valor zero.‎</param>
 	/// <returns></returns>
 	CarenResult _MFTEnum2(
 		String^ Param_GuidCategory,
@@ -434,17 +456,153 @@ public:
 		OutParam UInt32% Param_Out_CountMFTs
 	);
 
-	CarenResult _MFTEnumEx();
+	/// <summary>
+	/// ‎Recebe uma lista de transformações (MFTs) da Microsoft Media Foundation que correspondem aos critérios de pesquisa especificados. Esta função estende a função ‎‎MFTEnum.‎
+	/// </summary>
+	/// <param name="Param_GuidCategory">Um GUID que especifica a categoria de CMTs para enumerar. Para obter uma lista de categorias MFT, consulte a estrutura 
+	/// (GUIDs::GUIDs_MFT_CATEGORY).</param>
+	/// <param name="Param_Flags">Um OR bitwise de zero ou mais bandeiras da enumeração CA_MFT_ENUM_FLAG.</param>
+	/// <param name="Param_InputType">uma estrutura CA_MFT_REGISTER_TYPE_INFO que especifica um tipo de mídia de entrada para combinar.
+	/// Este parâmetro pode ser NULO. Se NULO, todos os tipos de saída são combinados.</param>
+	/// <param name="Param_OutputType">Uma estrutura MFT_REGISTER_TYPE_INFO que especifica um tipo de mídia de saída para combinar.
+	/// Este parâmetro pode ser NULO. Se NULO, todos os tipos de saída ão combinados.</param>
+	/// <param name="Param_Out_ArrayMFTActivate">Recebe uma matriz de ponteiros de interface DO FMIActivate. Cada ponteiro representa um objeto de ativação de um MFT que corresponde aos critérios de pesquisa. A função aloca a memória para a matriz.</param>
+	/// <param name="Param_Out_CountMFTs"></param>
+	/// <returns></returns>
+	CarenResult _MFTEnumEx(
+		String^ Param_GuidCategory,
+		CA_MFT_ENUM_FLAG Param_Flags,
+		CA_MFT_REGISTER_TYPE_INFO^ Param_InputType,
+		CA_MFT_REGISTER_TYPE_INFO^ Param_OutputType,
+		OutParam cli::array<ICarenMFActivate^>^% Param_Out_ArrayMFTActivate,
+		OutParam UInt32% Param_Out_CountMFTs
+	);
 
-	CarenResult _MFTRegister();
-	CarenResult _MFTRegisterLocal();
-	CarenResult _MFTRegisterLocalByCLSID();
-	CarenResult _MFTUnregister();
-	CarenResult _MFTUnregisterLocal();
-	CarenResult _MFTUnregisterLocalByCLSID();
+	/// <summary>
+	/// Adiciona informações sobre uma transformação da Media Foundation (MFT) ao registro.
+	/// </summary>
+	/// <param name="Param_ClsidMFT">O CLSID do MFT. O MFT também deve ser registrado como um objeto COM usando o mesmo CLSID.</param>
+	/// <param name="Param_GuidCategory">GUID que especifica a categoria do MFT. Para obter uma lista de categorias MFT, consulte a estrutura (GUIDs::GUIDs_MFT_CATEGORY).</param>
+	/// <param name="Param_Name">O nome amigável do MFT.</param>
+	/// <param name="Param_Flags">Um OR bitwise de zero ou mais bandeiras da enumeração CA_MFT_ENUM_FLAG. Definir bandeiras a zero é equivalente à configuração da bandeira 
+	/// MFT_ENUM_FLAG_SYNCMFT. O modelo de processamento padrão para MFTs é o processamento síncrocro.</param>
+	/// <param name="Param_CountInputTypes">Número de elementos na matriz (Param_ArrayInputTypes).</param>
+	/// <param name="Param_ArrayInputTypes">Uma matriz de estruturas CA_MFT_REGISTER_TYPE_INFO. Cada membro da matriz especifica um formato de entrada que o MFT suporta. 
+	/// Este parâmetro pode ser NULO.</param>
+	/// <param name="Param_CountOutputTypes">Número de elementos na matriz (Param_ArrayOutputTypes).</param>
+	/// <param name="Param_ArrayOutputTypes">Uma matriz de estruturas CA_MFT_REGISTER_TYPE_INFO. Cada membro da matriz define um formato de saída que o MFT suporta.
+	/// Este parâmetro pode ser NULO.</param>
+	/// <param name="Param_Atributos">Uma interface ICarenMFAttributes de uma loja de atributos que contém informações adicionais de registro. Este parâmetro pode ser NULO. 
+	/// Se o parâmetro não for NULO, os atributos são escritos no registro como uma matriz de byte. Você pode usar a função _MFTGetInfo para recuperar os atributos.</param>
+	/// <returns></returns>
+	CarenResult _MFTRegister(
+		String^ Param_ClsidMFT,
+		String^ Param_GuidCategory,
+		String^ Param_Name,
+		CA_MFT_ENUM_FLAG Param_Flags,
+		UInt32 Param_CountInputTypes,
+		cli::array<CA_MFT_REGISTER_TYPE_INFO^>^ Param_ArrayInputTypes,
+		UInt32 Param_CountOutputTypes,
+		cli::array<CA_MFT_REGISTER_TYPE_INFO^>^ Param_ArrayOutputTypes,
+		ICarenMFAttributes^ Param_Atributos
+	);
 
+	/// <summary>
+	/// Registra uma transformação da Media Foundation (MFT) no processo do chamador.
+	/// </summary>
+	/// <param name="Param_ClassFactoryMFT">Uma interface base (ICaren) que contém um ponteiro para a interface IClassFactory de um objeto de fábrica de classe. A fábrica de classes cria o MFT.</param>
+	/// <param name="Param_GuidCategory">GUID que especifica a categoria do MFT. Para obter uma lista de categorias MFT, consulte a estrutura (GUIDs::GUIDs_MFT_CATEGORY).</param>
+	/// <param name="Param_Name">O nome amigável do MFT.</param>
+	/// <param name="Param_Flags">Um OR bitwise de zero ou mais bandeiras da enumeração CA_MFT_ENUM_FLAG. Definir bandeiras a zero é equivalente à configuração da bandeira 
+	/// MFT_ENUM_FLAG_SYNCMFT. O modelo de processamento padrão para MFTs é o processamento síncrocro.</param>
+	/// <param name="Param_CountInputTypes">Número de elementos na matriz (Param_ArrayInputTypes).</param>
+	/// <param name="Param_ArrayInputTypes">Uma matriz de estruturas CA_MFT_REGISTER_TYPE_INFO. Cada membro da matriz especifica um formato de entrada que o MFT suporta. 
+	/// Este parâmetro pode ser NULO.</param>
+	/// <param name="Param_CountOutputTypes">Número de elementos na matriz (Param_ArrayOutputTypes).</param>
+	/// <param name="Param_ArrayOutputTypes">Uma matriz de estruturas CA_MFT_REGISTER_TYPE_INFO. Cada membro da matriz define um formato de saída que o MFT suporta.
+	/// Este parâmetro pode ser NULO.</param>
+	/// <returns></returns>
+	CarenResult _MFTRegisterLocal(
+		ICaren^ Param_ClassFactoryMFT,
+		String^ Param_GuidCategory,
+		String^ Param_Name,
+		CA_MFT_ENUM_FLAG Param_Flags,
+		UInt32 Param_CountInputTypes,
+		cli::array<CA_MFT_REGISTER_TYPE_INFO^>^ Param_ArrayInputTypes,
+		UInt32 Param_CountOutputTypes,
+		cli::array<CA_MFT_REGISTER_TYPE_INFO^>^ Param_ArrayOutputTypes
+	);
 
-	CarenResult _MFCreateVideoMixerAndPresenter();
+	/// <summary>
+	/// Registra uma transformação da Media Foundation (MFT) no processo do chamador.
+	/// </summary>
+	/// <param name="Param_ClsidMFT">O CLSID do MFT.</param>
+	/// <param name="Param_GuidCategory">GUID que especifica a categoria do MFT. Para obter uma lista de categorias MFT, consulte a estrutura (GUIDs::GUIDs_MFT_CATEGORY).</param>
+	/// <param name="Param_Name">O nome amigável do MFT.</param>
+	/// <param name="Param_Flags">Um OR bitwise de zero ou mais bandeiras da enumeração CA_MFT_ENUM_FLAG. Definir bandeiras a zero é equivalente à configuração da bandeira 
+	/// MFT_ENUM_FLAG_SYNCMFT. O modelo de processamento padrão para MFTs é o processamento síncrocro.</param>
+	/// <param name="Param_CountInputTypes">Número de elementos na matriz (Param_ArrayInputTypes).</param>
+	/// <param name="Param_ArrayInputTypes">Uma matriz de estruturas CA_MFT_REGISTER_TYPE_INFO. Cada membro da matriz especifica um formato de entrada que o MFT suporta. 
+	/// Este parâmetro pode ser NULO.</param>
+	/// <param name="Param_CountOutputTypes">Número de elementos na matriz (Param_ArrayOutputTypes).</param>
+	/// <param name="Param_ArrayOutputTypes">Uma matriz de estruturas CA_MFT_REGISTER_TYPE_INFO. Cada membro da matriz define um formato de saída que o MFT suporta.
+	/// Este parâmetro pode ser NULO.</param>
+	/// <returns></returns>
+	CarenResult _MFTRegisterLocalByCLSID(
+		String^ Param_ClsidMFT,
+		String^ Param_GuidCategory,
+		String^ Param_Name,
+		CA_MFT_ENUM_FLAG Param_Flags,
+		UInt32 Param_CountInputTypes,
+		cli::array<CA_MFT_REGISTER_TYPE_INFO^>^ Param_ArrayInputTypes,
+		UInt32 Param_CountOutputTypes,
+		cli::array<CA_MFT_REGISTER_TYPE_INFO^>^ Param_ArrayOutputTypes
+	);
+
+	/// <summary>
+	/// Remove o registro de uma transformação da Media Foundation (MFT).
+	/// Esta função remove as entradas de registro criadas pela função _MFTRegister.
+	/// </summary>
+	/// <param name="Param_ClsidMFT">O CLSID do MFT.</param>
+	/// <returns></returns>
+	CarenResult _MFTUnregister(String^ Param_ClsidMFT);
+
+	/// <summary>
+	/// Remove o registro de uma ou mais transformações da Media Foundation (MFTs) do processo do chamador.
+	/// Use esta função para não registrar um MFT local que foi previamente registrado através da função _MFTRegisterLocal.
+	/// </summary>
+	/// <param name="Param_ClassFactoryMFT">Uma interface base (ICaren) que contém um ponteiro para a interface IClassFactory de um objeto de fábrica de classe. 
+	/// Este parâmetro pode ser NULO.</param>
+	/// <returns></returns>
+	CarenResult _MFTUnregisterLocal(ICaren^ Param_ClassFactoryMFT);
+	
+	/// <summary>
+	/// Remove o registro de uma ou mais transformações da Media Foundation (MFTs) do processo do chamador.
+	/// </summary>
+	/// <param name="Param_ClsidMFT">O CLSID do MFT.</param>
+	/// <returns></returns>
+	CarenResult _MFTUnregisterLocalByCLSID(String^ Param_ClsidMFT);
+
+	/// <summary>
+	/// Cria o mix de vídeo padrão e o apresentador de vídeo para o renderizador de vídeo aprimorado (EVR).
+	/// </summary>
+	/// <param name="Param_MixerOwner">Uma interface base (ICaren) para o dono do Mixer. Se o mixer for agregado, passe uma interface IUnknown do objeto agregador. 
+	/// Caso contrário, defina este parâmetro para NULO.</param>
+	/// <param name="Param_PresenterOwner">Uma interface base (ICaren) para o dono do apresentador de video. Se o apresentador for agregado, passe uma interface IUnknown do objeto 
+	/// agregador. Caso contrário, defina este parâmetro para NULO.</param>
+	/// <param name="Param_RiidMixer">Identificador de interface (IID) da interface solicitada no mixador de vídeo. O mixer de vídeo expõe a interface ICarenMFTransform.</param>
+	/// <param name="Param_Out_Mixer">Retorna a interface solicitada do Mixer. O usuário é responsável por inicializar a interface antes de chamar este método.</param>
+	/// <param name="Param_RiidPresenter">IID da interface solicitada no apresentador de vídeo. O apresentador de vídeo expõe a interface ICarenMFVideoPresenter.</param>
+	/// <param name="Param_Out_Presenter">Retorna a interface solicitada do apresentador. O usuário é responsável por inicializar a interface antes de chamar este método.</param>
+	/// <returns></returns>
+	CarenResult _MFCreateVideoMixerAndPresenter(
+		ICaren^ Param_MixerOwner, 
+		ICaren^ Param_PresenterOwner, 
+		String^ Param_RiidMixer,
+		ICaren^ Param_Out_Mixer,
+		String^ Param_RiidPresenter,
+		ICaren^ Param_Out_Presenter
+		);
 
 	/// <summary>
 	/// ‎Cria uma fila de eventos.‎

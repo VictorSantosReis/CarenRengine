@@ -511,7 +511,7 @@ CarenResult CarenMFTopoLoader::Load(ICarenMFTopology^ Param_TopologiaParcial, [O
 	}
 
 	//Cria a interface que vai ser retornada.
-	Param_Out_TopologiaCompleta = gcnew CarenMFTopology();
+	Param_Out_TopologiaCompleta = gcnew CarenMFTopology(false);
 
 	//Define o ponteiro de trabalho
 	Param_Out_TopologiaCompleta->AdicionarPonteiro(pTopologiaCompleta);

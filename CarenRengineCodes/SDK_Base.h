@@ -19,7 +19,9 @@ limitations under the License.
 #include "pch.h"
 #include "Caren/CarenHMONITOR.h"
 #include "CarenGuids.h"
-#include "SDK_Caren.h" //Interfaces Base de Caren.
+#include "ParameterResolver/CarenParameterResolver.h"
+#include "SDK_Caren.h"
+
 
 //Importa o namespace base
 using namespace CarenRengine;

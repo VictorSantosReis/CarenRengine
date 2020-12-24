@@ -235,7 +235,7 @@ public:
 		else if (String::Equals(Param_GuidInterfaceDestino, GUIDs_CarenGuidInterfaces::GUID_CA_INTF_MFFonteTempoRelogioApresentação))
 		{
 			//Cria a interface.
-			InterfaceSolicitada = gcnew CarenMFPresentationTimeSource();
+			InterfaceSolicitada = gcnew CarenMFPresentationTimeSource(false);
 
 			//Define a interface
 			((ICaren^)InterfaceSolicitada)->AdicionarPonteiro(pInterface);

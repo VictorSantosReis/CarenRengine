@@ -555,7 +555,7 @@ HRESULT CarenMFQualityManager::EncaminharEvento_OnNotifyTopology(IMFTopology* pT
 	if (ObjetoValido(pTopology))
 	{
 		//Cria a interface.
-		vi_TopologyManaged = gcnew CarenMFTopology();
+		vi_TopologyManaged = gcnew CarenMFTopology(false);
 
 		//Define o ponteiro na interface.
 		CarenSetPointerToICarenSafe(pTopology, vi_TopologyManaged, false);

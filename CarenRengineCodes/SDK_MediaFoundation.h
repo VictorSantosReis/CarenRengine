@@ -2238,7 +2238,7 @@ namespace CarenRengine
 		};
 
 		/// <summary>
-		/// (IMFVideoPresenter) - Interface responsável por representar um apresentador de vídeo. Está interface recebe quadros de vídeo, normalmente de um mixer de 
+		/// (IMFVideoPresenter) - Interface responsável por representar um apresentador de vídeo. Está interface recebe frames de vídeo, normalmente de um mixer de 
 		/// vídeo, e os apresenta de alguma forma, geralmente exibindo-os no visor. O renderizador de vídeo aprimorado (EVR) fornece um apresentador de vídeo padrão e os aplicativos podem 
 		/// implementar apresentadores personalizados. Geralmente, o usuário não cria essa interface diretamente. Consulte essa interface no EVR.
 		/// </summary>

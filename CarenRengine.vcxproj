@@ -413,6 +413,7 @@
     <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFQualityManager.h" />
     <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFSourceOpenMonitor.h" />
     <ClInclude Include="CarenRengineCodes\Nativas\CLN_IWICDevelopRawNotificationCallback.h" />
+    <ClInclude Include="CarenRengineCodes\ParameterResolver\CarenParameterResolver.h" />
     <ClInclude Include="CarenRengineCodes\SDK_Base.h" />
     <ClInclude Include="CarenRengineCodes\SDK_Caren.h" />
     <ClInclude Include="CarenRengineCodes\SDK_Direct2D.h" />

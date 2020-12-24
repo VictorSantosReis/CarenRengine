@@ -19,6 +19,7 @@ limitations under the License.
 #pragma comment(lib, "Mfplat.lib")
 #pragma comment(lib, "mfuuid.lib")
 #pragma comment(lib, "Mf.lib")
+#pragma comment(lib, "MFSRCSNK.lib")
 #pragma comment(lib, "mfreadwrite.lib")
 #pragma comment(lib, "Strmiids.lib")
 #pragma comment(lib, "Ole32.lib")

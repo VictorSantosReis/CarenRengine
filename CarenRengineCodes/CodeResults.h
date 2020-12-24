@@ -14,9 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-
 #pragma once
-
 using namespace System;
 
 //Declara o namespace principal.
@@ -117,7 +115,7 @@ namespace CarenRengine
 
 
 			///////////////////////////////////////////////////////////////////////////////////////////////////
-			//ENUMS DE ERROS COMUNS EM CHAMADAS `COM` E DE API`S NĂO ULTILIZADAS DIRETAMENTE PELA BIBLIOTECA.//
+			//ENUMS DE ERROS COMUNS EM CHAMADAS 'COM' E DE API'S NĂO ULTILIZADAS DIRETAMENTE PELA BIBLIOTECA.//
 			///////////////////////////////////////////////////////////////////////////////////////////////////
 
 

@@ -650,7 +650,7 @@ Done:;
 	}
 
 	 //Cria a interface que será retornada no parametro.
-	 Param_Out_TopologiaCompleta = gcnew CarenMFTopology();
+	 Param_Out_TopologiaCompleta = gcnew CarenMFTopology(false);
 
 	 //Define o ponteiro de trabalho
 	 Param_Out_TopologiaCompleta->AdicionarPonteiro(pTopologiaCompleta);

@@ -148,6 +148,9 @@
     <Filter Include="Arquivos de Origem\Classes\Sistema">
       <UniqueIdentifier>{2c6b857a-547c-49a4-be8c-e84aa8a69575}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Arquivos de Cabeçalho\ParameterResolver">
+      <UniqueIdentifier>{83ed951f-ecf4-4342-b970-b0e2148c5f39}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CarenRengineCodes\pch.h">
@@ -1442,6 +1445,9 @@
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFSinkWriterCallback.h">
       <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\ParameterResolver\CarenParameterResolver.h">
+      <Filter>Arquivos de Cabeçalho\ParameterResolver</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

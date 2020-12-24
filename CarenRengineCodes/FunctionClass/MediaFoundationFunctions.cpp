@@ -42,7 +42,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFShutdown()
 {
 	//Variavel a ser retornada.
@@ -67,7 +66,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFAddPeriodicCallback(IntPtr Param_Callback, ICaren^ Param_Context, OutParam UInt32% Param_Out_Key)
 {
 	//Variavel a ser retornada.
@@ -112,7 +110,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFRemovePeriodicCallback(UInt32 Param_Key)
 {
 	//Variavel a ser retornada.
@@ -145,7 +142,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFAverageTimePerFrameToFrameRate(UInt64 Param_AverageTimePerFrame, OutParam UInt32% Param_Out_Numerator, OutParam UInt32% Param_Out_Denominator)
 {
 	//Variavel a ser retornada.
@@ -182,7 +178,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFFrameRateToAverageTimePerFrame(UInt32 Param_Numerator, UInt32 Param_Denominator, OutParam UInt64% Param_Out_AverageTimePerFrame)
 {
 	//Variavel a ser retornada.
@@ -217,7 +212,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCalculateBitmapImageSize(CA_BITMAPINFOHEADER^ Param_BmpHeader, UInt32 Param_Size, OutParam UInt32% Param_Out_SizeImage, OutParam Boolean% Param_Out_Known)
 {
 	//Variavel a ser retornada.
@@ -261,7 +255,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCalculateImageSize(String^ Param_GuidSubtypeVideo, UInt32 Param_Width, UInt32 Param_Height, OutParam UInt32% Param_Out_SizeImage)
 {
 	//Variavel a ser retornada.
@@ -301,7 +294,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 Boolean MediaFoundationFunctions::_MFCompareFullToPartialMediaType(ICarenMFMediaType^ Param_TypeFull, ICarenMFMediaType^ Param_PartialType)
 {
 	//Variavel a ser retornada.
@@ -334,7 +326,6 @@ Boolean MediaFoundationFunctions::_MFCompareFullToPartialMediaType(ICarenMFMedia
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFConvertFromFP16Array(cli::array<float>^% Param_Ref_Dest, cli::array<UInt16>^ Param_Source, UInt32 Param_Count)
 {
 	//Variavel a ser retornada.
@@ -371,7 +362,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFConvertToFP16Array(cli::array<UInt16>^% Param_Ref_Dest, cli::array<float>^ Param_Source, UInt32 Param_Count)
 {
 	//Variavel a ser retornada.
@@ -407,7 +397,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCopyImage(
 	ICarenBuffer^ Param_BufferDestino,
 	Int32 Param_DestStride,
@@ -461,7 +450,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCreatePropertiesFromMediaType(ICarenMFMediaType^ Param_MediaType, String^ Param_RIID, ICaren^ Param_Out_Object)
 {
 	//Variavel a ser retornada.
@@ -502,7 +490,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFTranscodeGetAudioOutputAvailableTypes(
 	String^ Param_GuidSubtype, 
 	CA_MFT_ENUM_FLAG Param_Flags, 
@@ -557,7 +544,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFSerializeAttributesToStream(ICarenMFAttributes^ Param_AtributosSerialize, CA_MF_ATTRIBUTE_SERIALIZE_OPTIONS Param_Flags, ICarenStream^ Param_StreamDestino)
 {
 	//Variavel a ser retornada.
@@ -597,7 +583,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFSerializePresentationDescriptor(ICarenMFPresentationDescriptor^ Param_PD, OutParam UInt32% Param_Out_SizeBuffer, OutParam ICarenBuffer^% Param_Out_Buffer)
 {
 	//Variavel a ser retornada.
@@ -647,7 +632,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFDeserializeAttributesFromStream(ICarenMFAttributes^ Param_Atributos, CA_MF_ATTRIBUTE_SERIALIZE_OPTIONS Param_Flags, ICarenStream^ Param_Stream)
 {
 	//Variavel a ser retornada.
@@ -687,7 +671,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFDeserializePresentationDescriptor(UInt32 Param_BufferSize, ICarenBuffer^ Param_Buffer, ICarenMFPresentationDescriptor^ Param_Out_PresentationDescriptor)
 {
 	//Variavel a ser retornada.
@@ -728,7 +711,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFEnumDeviceSources(
 	ICarenMFAttributes^ Param_Atributos, 
 	OutParam cli::array<ICarenMFActivate^>^% Param_Out_ArraySourceActivate,
@@ -800,7 +782,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFGetStrideForBitmapInfoHeader(CA_D3DFORMAT Param_Format, UInt32 Param_Width, OutParam Int32% Param_Out_Stride)
 {
 	//Variavel a ser retornada.
@@ -1209,7 +1190,6 @@ CA_D3DFORMAT MediaFoundationFunctions::_MFMapDXGIFormatToDX9Format(CA_DXGI_FORMA
 	//Retorna o formato
 	return static_cast<CA_D3DFORMAT>(vi_ConvertD3D9Format);
 }
-
 CarenResult MediaFoundationFunctions::_MFRegisterLocalByteStreamHandler(String^ Param_FileExtension, String^ Param_MIMEType, ICarenMFActivate^ Param_Activate)
 {
 	//Variavel a ser retornada.
@@ -1325,10 +1305,12 @@ Done:;
 }
 UInt64 MediaFoundationFunctions::_PackRatio(Int32 Param_Numerador, UInt32 Param_Denominador)
 {
+	//Chama a função para realizar o processo.
 	return PackRatio(Param_Numerador, Param_Denominador);
 }
 UInt64 MediaFoundationFunctions::_PackSize(UInt32 Param_Width, UInt32 Param_Height)
 {
+	//Chama a função para realizar o processo.
 	return PackSize(Param_Width, Param_Height);
 }
 void MediaFoundationFunctions::_UnpackRatio(UInt64 Param_UnPacked, OutParam Int32% Param_Out_Numerador, OutParam UInt32% Param_Out_Denominador)
@@ -1399,6 +1381,791 @@ CarenResult MediaFoundationFunctions::_MFShutdownObject(ICaren^ Param_Objeto)
 		Sair;
 	}
 
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
+CarenResult MediaFoundationFunctions::_MFTGetInfo(
+	String^ Param_ClsidMFT,
+	CarenParameterResolver<String^>% Param_Out_NomeMFT, //Ref Value
+	CarenParameterResolver<cli::array<CA_MFT_REGISTER_TYPE_INFO^>^>% Param_Out_ArrayInputTypes, //Ref Value
+	OutParam UInt32% Param_Out_CountArrayInputTypes,
+	CarenParameterResolver<cli::array<CA_MFT_REGISTER_TYPE_INFO^>^>% Param_Out_ArrayOutputTypes, //Ref Value
+	OutParam UInt32% Param_Out_CountArrayOutputTypes,
+	ICarenMFAttributes^ Param_Out_Atributos
+)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	GUID vi_ClsidMFT = GUID_NULL;
+	PWSTR vi_pOutName = Nulo; //Opcional.
+	MFT_REGISTER_TYPE_INFO* vi_pOutArrayInput = Nulo; //Opcional.
+	UINT32 vi_OutCountArrayInput = 0;
+	MFT_REGISTER_TYPE_INFO* vi_pOutArrayOutput = Nulo; //Opcional.
+	UINT32 vi_OutCountArrayOutput = 0;
+	IMFAttributes* vi_pOutAtributes = Nulo; //Opcional.
+
+	//Cria o CLSID do MFT.
+	vi_ClsidMFT = Util.CreateGuidFromString(Param_ClsidMFT);
+
+	//Chama o método para realizar a operação.
+	Hr = MFTGetInfo(
+		vi_ClsidMFT,
+		Param_Out_NomeMFT.IgnoreParameter ? Nulo : &vi_pOutName,
+		Param_Out_ArrayInputTypes.IgnoreParameter ? Nulo : &vi_pOutArrayInput,
+		&vi_OutCountArrayInput,
+		Param_Out_ArrayOutputTypes.IgnoreParameter ? Nulo : &vi_pOutArrayOutput,
+		&vi_OutCountArrayOutput,
+		ObjetoGerenciadoValido(Param_Out_Atributos) ? &vi_pOutAtributes : Nulo
+	);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Cria a string que vai retornar o nome amigavel do MFT se desejado.
+	if (!Param_Out_NomeMFT.IgnoreParameter)
+		Param_Out_NomeMFT.ObjetoParametro = gcnew String(vi_pOutName);
+
+	//Cria o array com os tipos de entrada se desejado.
+	if (!Param_Out_ArrayInputTypes.IgnoreParameter && vi_OutCountArrayInput > 0)
+	{
+		//Cria o array a ser retornado ao usuário.
+		Param_Out_ArrayInputTypes.ObjetoParametro = gcnew cli::array<CA_MFT_REGISTER_TYPE_INFO^>(vi_OutCountArrayInput);
+
+		//Abre um for para converter os dados nativos e definir no array gerenciado.
+		for (UINT32 i = 0; i < vi_OutCountArrayInput; i++)
+		{
+			//Converte e define o resultado no index da estrutura.
+			Param_Out_ArrayInputTypes.ObjetoParametro[i] = Util.ConverterMFT_REGISTER_TYPE_INFOUnamaged_ToManaged(&vi_pOutArrayInput[i]);		
+		}
+	}
+
+	//Define a quantidade de tipos de entrada no array
+	Param_Out_CountArrayInputTypes = vi_OutCountArrayInput;
+
+	//Cria o array com os tipos de saida se desejado.
+	if (!Param_Out_ArrayOutputTypes.IgnoreParameter && vi_OutCountArrayOutput > 0)
+	{
+		//Cria o array a ser retornado ao usuário.
+		Param_Out_ArrayOutputTypes.ObjetoParametro = gcnew cli::array<CA_MFT_REGISTER_TYPE_INFO^>(vi_OutCountArrayOutput);
+
+		//Abre um for para converter os dados nativos e definir no array gerenciado.
+		for (UINT32 i = 0; i < vi_OutCountArrayOutput; i++)
+		{
+			//Converte e define o resultado no index da estrutura.
+			Param_Out_ArrayOutputTypes.ObjetoParametro[i] = Util.ConverterMFT_REGISTER_TYPE_INFOUnamaged_ToManaged(&vi_pOutArrayOutput[i]);
+		}
+	}
+
+	//Define a quantidade de tipos de saida no array
+	Param_Out_CountArrayOutputTypes = vi_OutCountArrayInput;
+
+	//Define o ponteiro na interface se desejado
+	if (ObjetoGerenciadoValido(Param_Out_Atributos) && ObjetoValido(vi_pOutAtributes))
+		CarenSetPointerToICarenSafe(vi_pOutAtributes, Param_Out_Atributos, true);
+Done:;
+	//Libera a memória utilizada pelos arrays
+	if (ObjetoValido(vi_pOutArrayInput))
+		CoTaskMemFree(vi_pOutArrayInput); // By MSDN Documentation.
+	if (ObjetoValido(vi_pOutArrayOutput))
+		CoTaskMemFree(vi_pOutArrayOutput); // By MSDN Documentation.
+
+	//Retorna o resultado
+	return Resultado;
+}
+CarenResult MediaFoundationFunctions::_MFTEnum2(
+	String^ Param_GuidCategory,
+	CA_MFT_ENUM_FLAG Param_Flags, 
+	CA_MFT_REGISTER_TYPE_INFO^ Param_InputType, 
+	CA_MFT_REGISTER_TYPE_INFO^ Param_OutputType, 
+	ICarenMFAttributes^ Param_Atributos, 
+	OutParam cli::array<ICarenMFActivate^>^% Param_Out_ArrayMFTActivate, 
+	OutParam UInt32% Param_Out_CountMFTs)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	GUID vi_GuidCategory = GUID_NULL;
+	UINT32 vi_Flags = static_cast<UINT32>(Param_Flags);
+	MFT_REGISTER_TYPE_INFO* vi_pInputType = Nulo; //Pode ser NULO.
+	MFT_REGISTER_TYPE_INFO* vi_pOutputType = Nulo; //Pode ser NULO.
+	IMFAttributes* vi_pAttributes = Nulo;
+	IMFActivate** vi_pOutArrayMFTs = Nulo; //Alocado pela função atraves do CoTaskMemAlloc.
+	UINT32 vi_OutCountMFTs = 0;
+
+	//Converte a string para o guid nativo
+	vi_GuidCategory = Util.CreateGuidFromString(Param_GuidCategory);
+
+	//Converte a estrutura que indica o tipo de entrada se informada.
+	if (ObjetoGerenciadoValido(Param_InputType))
+		vi_pInputType = Util.ConverterMFT_REGISTER_TYPE_INFOManaged_ToUnamaged(Param_InputType);
+
+	//Converte a estrutura que indica otipo de saida se informada
+	if(ObjetoGerenciadoValido(Param_OutputType))
+		vi_pOutputType = Util.ConverterMFT_REGISTER_TYPE_INFOManaged_ToUnamaged(Param_OutputType);
+
+	//Recupera o ponteiro para a interface de atributos se valida
+	if (ObjetoGerenciadoValido(Param_Atributos))
+		CarenGetPointerFromICarenSafe(Param_Atributos, vi_pAttributes);
+
+	//Chama o método para realizar a operação.
+	Hr = MFTEnum2(
+		vi_GuidCategory,
+		vi_Flags,
+		ObjetoValido(vi_pInputType)? const_cast<MFT_REGISTER_TYPE_INFO*>(vi_pInputType): Nulo,
+		ObjetoValido(vi_pOutputType) ? const_cast<MFT_REGISTER_TYPE_INFO*>(vi_pOutputType) : Nulo,
+		vi_pAttributes,
+		&vi_pOutArrayMFTs,
+		&vi_OutCountMFTs
+	);
+	
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define a quantidade de MFTs listados no parametro de saida.
+	Param_Out_CountMFTs = vi_OutCountMFTs;
+
+	//Verifica se a quantiade de MFTs listado não é zero e sai da função.
+	if (vi_OutCountMFTs == 0)
+		Sair;
+
+	//Cria o array que será retornado para o usuário.
+	Param_Out_ArrayMFTActivate = gcnew cli::array<ICarenMFActivate^>(vi_OutCountMFTs);
+
+	//Faz um for para criar as interfaces e adicionar os ponteiros.
+	for (UINT32 i = 0; i < vi_OutCountMFTs; i++)
+	{
+		//Cria a interface no index especificado.
+		Param_Out_ArrayMFTActivate[i] = gcnew CarenMFActivate();
+
+		//Define o ponteiro na interface
+		Param_Out_ArrayMFTActivate[i]->AdicionarPonteiro(vi_pOutArrayMFTs[i]);
+	}
+	
+Done:;
+	//Libera a memória utilizada pela função para criar o array de ponteiros.
+	//vai apenas liberar a memória do array. Os ponteiros é de responsábilidade do usuário.
+	if (ObjetoValido(vi_pOutArrayMFTs))
+		CoTaskMemFree(vi_pOutArrayMFTs);
+
+	//Retorna o resultado
+	return Resultado;
+}
+CarenResult MediaFoundationFunctions::_MFTEnumEx(
+	String^ Param_GuidCategory, 
+	CA_MFT_ENUM_FLAG Param_Flags, 
+	CA_MFT_REGISTER_TYPE_INFO^ Param_InputType, 
+	CA_MFT_REGISTER_TYPE_INFO^ Param_OutputType, 
+	OutParam cli::array<ICarenMFActivate^>^% Param_Out_ArrayMFTActivate, 
+	OutParam UInt32% Param_Out_CountMFTs)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	GUID vi_GuidCategory = GUID_NULL;
+	UINT32 vi_Flags = static_cast<UINT32>(Param_Flags);
+	MFT_REGISTER_TYPE_INFO* vi_pInputType = Nulo; //Pode ser NULO.
+	MFT_REGISTER_TYPE_INFO* vi_pOutputType = Nulo; //Pode ser NULO.
+	IMFActivate** vi_pOutArrayMFTs = Nulo; //Alocado pela função atraves do CoTaskMemAlloc.
+	UINT32 vi_OutCountMFTs = 0;
+
+	//Converte a string para o guid nativo
+	vi_GuidCategory = Util.CreateGuidFromString(Param_GuidCategory);
+
+	//Converte a estrutura que indica o tipo de entrada se informada.
+	if (ObjetoGerenciadoValido(Param_InputType))
+		vi_pInputType = Util.ConverterMFT_REGISTER_TYPE_INFOManaged_ToUnamaged(Param_InputType);
+
+	//Converte a estrutura que indica otipo de saida se informada
+	if (ObjetoGerenciadoValido(Param_OutputType))
+		vi_pOutputType = Util.ConverterMFT_REGISTER_TYPE_INFOManaged_ToUnamaged(Param_OutputType);
+
+	//Chama o método para realizar a operação.
+	Hr = MFTEnumEx(
+		vi_GuidCategory,
+		vi_Flags,
+		ObjetoValido(vi_pInputType) ? const_cast<MFT_REGISTER_TYPE_INFO*>(vi_pInputType) : Nulo,
+		ObjetoValido(vi_pOutputType) ? const_cast<MFT_REGISTER_TYPE_INFO*>(vi_pOutputType) : Nulo,
+		&vi_pOutArrayMFTs,
+		&vi_OutCountMFTs
+	);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define a quantidade de MFTs listados no parametro de saida.
+	Param_Out_CountMFTs = vi_OutCountMFTs;
+
+	//Verifica se a quantiade de MFTs listado não é zero e sai da função.
+	if (vi_OutCountMFTs == 0)
+		Sair;
+
+	//Cria o array que será retornado para o usuário.
+	Param_Out_ArrayMFTActivate = gcnew cli::array<ICarenMFActivate^>(vi_OutCountMFTs);
+
+	//Faz um for para criar as interfaces e adicionar os ponteiros.
+	for (UINT32 i = 0; i < vi_OutCountMFTs; i++)
+	{
+		//Cria a interface no index especificado.
+		Param_Out_ArrayMFTActivate[i] = gcnew CarenMFActivate();
+
+		//Define o ponteiro na interface
+		Param_Out_ArrayMFTActivate[i]->AdicionarPonteiro(vi_pOutArrayMFTs[i]);
+	}
+
+Done:;
+	//Libera a memória utilizada pela função para criar o array de ponteiros.
+	//vai apenas liberar a memória do array. Os ponteiros é de responsábilidade do usuário.
+	if (ObjetoValido(vi_pOutArrayMFTs))
+		CoTaskMemFree(vi_pOutArrayMFTs);
+
+	//Retorna o resultado
+	return Resultado;
+}
+CarenResult MediaFoundationFunctions::_MFTRegister(
+	String^ Param_ClsidMFT,
+	String^ Param_GuidCategory,
+	String^ Param_Name,
+	CA_MFT_ENUM_FLAG Param_Flags,
+	UInt32 Param_CountInputTypes,
+	cli::array<CA_MFT_REGISTER_TYPE_INFO^>^ Param_ArrayInputTypes,
+	UInt32 Param_CountOutputTypes,
+	cli::array<CA_MFT_REGISTER_TYPE_INFO^>^ Param_ArrayOutputTypes,
+	ICarenMFAttributes^ Param_Atributos
+)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	GUID vi_ClsidMFT = GUID_NULL;
+	GUID vi_GuidCategory = GUID_NULL;
+	PWSTR vi_pNameMFT = Nulo;
+	UINT32 vi_Flags = static_cast<UINT32>(Param_Flags);
+	MFT_REGISTER_TYPE_INFO* vi_pArrayInputType = Nulo; //Pode ser NULO.
+	MFT_REGISTER_TYPE_INFO* vi_pArrayOutputType = Nulo; //Pode ser NULO.
+	MFT_REGISTER_TYPE_INFO* vi_pAuxiliar = Nulo;
+	IMFAttributes* vi_pAttributes = Nulo;
+
+	//Converte as string para os guids nativos.
+	vi_ClsidMFT = Util.CreateGuidFromString(Param_ClsidMFT);
+	vi_GuidCategory = Util.CreateGuidFromString(Param_GuidCategory);
+
+	//Converte a string com o nome amigavel no MFT.
+	vi_pNameMFT = Util.ConverterStringToWCHAR(Param_Name);
+
+	//Verifica se forneceu o array com os tipos de entrada e converte para os dados nativos.
+	if (ObjetoGerenciadoValido(Param_ArrayInputTypes))
+	{
+		//Cria a matriz nativa que vai conter os dados.
+		vi_pArrayInputType = CriarMatrizEstruturas<MFT_REGISTER_TYPE_INFO>(Param_CountInputTypes);
+
+		//Faz um for para converter os dados gerenciados e definir na matriz.
+		for (UINT32 i = 0; i < Param_CountInputTypes; i++)
+		{
+			//Converte a estrutura.
+			vi_pAuxiliar = Util.ConverterMFT_REGISTER_TYPE_INFOManaged_ToUnamaged(Param_ArrayInputTypes[i]);
+
+			//Define os dados na matriz no indice especificado.
+			vi_pArrayInputType[i] = *vi_pAuxiliar;
+
+			//Libera a memória para a estrutura.
+			DeletarEstruturaSafe(&vi_pAuxiliar);
+		}
+	}
+
+	//Verifica se forneceu o array com os tipos de saida e converte para os dados nativos.
+	if (ObjetoGerenciadoValido(Param_ArrayOutputTypes))
+	{
+		//Cria a matriz nativa que vai conter os dados.
+		vi_pArrayOutputType = CriarMatrizEstruturas<MFT_REGISTER_TYPE_INFO>(Param_CountOutputTypes);
+
+		//Faz um for para converter os dados gerenciados e definir na matriz.
+		for (UINT32 i = 0; i < Param_CountOutputTypes; i++)
+		{
+			//Converte a estrutura.
+			vi_pAuxiliar = Util.ConverterMFT_REGISTER_TYPE_INFOManaged_ToUnamaged(Param_ArrayOutputTypes[i]);
+
+			//Define os dados na matriz no indice especificado.
+			vi_pArrayOutputType[i] = *vi_pAuxiliar;
+
+			//Libera a memória para a estrutura.
+			DeletarEstruturaSafe(&vi_pAuxiliar);
+		}
+	}
+
+	//Recupera o ponteiro para a interface de atributos se fornecida
+	if (ObjetoGerenciadoValido(Param_Atributos))
+		CarenGetPointerFromICarenSafe(Param_Atributos, vi_pAttributes);
+
+	//Chama o método para realizar a operação.
+	Hr = MFTRegister(
+		vi_ClsidMFT,
+		vi_GuidCategory,
+		vi_pNameMFT,
+		vi_Flags,
+		Param_CountInputTypes,
+		vi_pArrayInputType,
+		Param_CountOutputTypes,
+		vi_pArrayOutputType,
+		vi_pAttributes
+	);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+Done:;
+	//Libera a memória utilizado pelo nome amigavel do mft se valido.
+	DeletarStringAllocatedSafe(&vi_pNameMFT);
+
+	//Libera a memória utilizada para criar o array das estruturas
+	DeletarMatrizEstruturasSafe(&vi_pArrayInputType);
+	DeletarMatrizEstruturasSafe(&vi_pArrayOutputType);
+
+	//Retorna o resultado
+	return Resultado;
+}
+CarenResult MediaFoundationFunctions::_MFTRegisterLocal(
+	ICaren^ Param_ClassFactoryMFT, 
+	String^ Param_GuidCategory, 
+	String^ Param_Name, 
+	CA_MFT_ENUM_FLAG Param_Flags, 
+	UInt32 Param_CountInputTypes, 
+	cli::array<CA_MFT_REGISTER_TYPE_INFO^>^ Param_ArrayInputTypes, 
+	UInt32 Param_CountOutputTypes, 
+	cli::array<CA_MFT_REGISTER_TYPE_INFO^>^ Param_ArrayOutputTypes)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IClassFactory* vi_pFactoryMFT = Nulo;
+	GUID vi_GuidCategory = GUID_NULL;
+	PWSTR vi_pNameMFT = Nulo;
+	UINT32 vi_Flags = static_cast<UINT32>(Param_Flags);
+	MFT_REGISTER_TYPE_INFO* vi_pArrayInputType = Nulo; //Pode ser NULO.
+	MFT_REGISTER_TYPE_INFO* vi_pArrayOutputType = Nulo; //Pode ser NULO.
+	MFT_REGISTER_TYPE_INFO* vi_pAuxiliar = Nulo;
+
+	//Recupera o ponteiro para a Class Factory responsável por criar o MFT.
+	CarenGetPointerFromICarenSafe(Param_ClassFactoryMFT, vi_pFactoryMFT);
+
+	//Converte a string com a categoria do mft para o guid.
+	vi_GuidCategory = Util.CreateGuidFromString(Param_GuidCategory);
+
+	//Converte a string com o nome amigavel no MFT.
+	vi_pNameMFT = Util.ConverterStringToWCHAR(Param_Name);
+
+	//Verifica se forneceu o array com os tipos de entrada e converte para os dados nativos.
+	if (ObjetoGerenciadoValido(Param_ArrayInputTypes))
+	{
+		//Cria a matriz nativa que vai conter os dados.
+		vi_pArrayInputType = CriarMatrizEstruturas<MFT_REGISTER_TYPE_INFO>(Param_CountInputTypes);
+
+		//Faz um for para converter os dados gerenciados e definir na matriz.
+		for (UINT32 i = 0; i < Param_CountInputTypes; i++)
+		{
+			//Converte a estrutura.
+			vi_pAuxiliar = Util.ConverterMFT_REGISTER_TYPE_INFOManaged_ToUnamaged(Param_ArrayInputTypes[i]);
+
+			//Define os dados na matriz no indice especificado.
+			vi_pArrayInputType[i] = *vi_pAuxiliar;
+
+			//Libera a memória para a estrutura.
+			DeletarEstruturaSafe(&vi_pAuxiliar);
+		}
+	}
+
+	//Verifica se forneceu o array com os tipos de saida e converte para os dados nativos.
+	if (ObjetoGerenciadoValido(Param_ArrayOutputTypes))
+	{
+		//Cria a matriz nativa que vai conter os dados.
+		vi_pArrayOutputType = CriarMatrizEstruturas<MFT_REGISTER_TYPE_INFO>(Param_CountOutputTypes);
+
+		//Faz um for para converter os dados gerenciados e definir na matriz.
+		for (UINT32 i = 0; i < Param_CountOutputTypes; i++)
+		{
+			//Converte a estrutura.
+			vi_pAuxiliar = Util.ConverterMFT_REGISTER_TYPE_INFOManaged_ToUnamaged(Param_ArrayOutputTypes[i]);
+
+			//Define os dados na matriz no indice especificado.
+			vi_pArrayOutputType[i] = *vi_pAuxiliar;
+
+			//Libera a memória para a estrutura.
+			DeletarEstruturaSafe(&vi_pAuxiliar);
+		}
+	}
+
+	//Chama o método para realizar a operação.
+	Hr = MFTRegisterLocal(
+		vi_pFactoryMFT,
+		const_cast<GUID&>(vi_GuidCategory),
+		vi_pNameMFT,
+		vi_Flags,
+		Param_CountInputTypes,
+		ObjetoValido(vi_pArrayInputType)? const_cast<MFT_REGISTER_TYPE_INFO*>(vi_pArrayInputType): Nulo,
+		Param_CountOutputTypes,
+		ObjetoValido(vi_pArrayOutputType) ? const_cast<MFT_REGISTER_TYPE_INFO*>(vi_pArrayOutputType) : Nulo
+	);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+Done:;
+	//Libera a memória utilizado pelo nome amigavel do mft se valido.
+	DeletarStringAllocatedSafe(&vi_pNameMFT);
+
+	//Libera a memória utilizada para criar o array das estruturas
+	DeletarMatrizEstruturasSafe(&vi_pArrayInputType);
+	DeletarMatrizEstruturasSafe(&vi_pArrayOutputType);
+
+	//Retorna o resultado
+	return Resultado;
+}
+CarenResult MediaFoundationFunctions::_MFTRegisterLocalByCLSID(
+	String^ Param_ClsidMFT,
+	String^ Param_GuidCategory,
+	String^ Param_Name,
+	CA_MFT_ENUM_FLAG Param_Flags,
+	UInt32 Param_CountInputTypes,
+	cli::array<CA_MFT_REGISTER_TYPE_INFO^>^ Param_ArrayInputTypes,
+	UInt32 Param_CountOutputTypes,
+	cli::array<CA_MFT_REGISTER_TYPE_INFO^>^ Param_ArrayOutputTypes)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	GUID vi_ClsidMFT = GUID_NULL;
+	GUID vi_GuidCategory = GUID_NULL;
+	PWSTR vi_pNameMFT = Nulo;
+	UINT32 vi_Flags = static_cast<UINT32>(Param_Flags);
+	MFT_REGISTER_TYPE_INFO* vi_pArrayInputType = Nulo; //Pode ser NULO.
+	MFT_REGISTER_TYPE_INFO* vi_pArrayOutputType = Nulo; //Pode ser NULO.
+	MFT_REGISTER_TYPE_INFO* vi_pAuxiliar = Nulo;
+
+	//Converte as string para os guids nativos.
+	vi_ClsidMFT = Util.CreateGuidFromString(Param_ClsidMFT);
+	vi_GuidCategory = Util.CreateGuidFromString(Param_GuidCategory);
+
+	//Converte a string com o nome amigavel no MFT.
+	vi_pNameMFT = Util.ConverterStringToWCHAR(Param_Name);
+
+	//Verifica se forneceu o array com os tipos de entrada e converte para os dados nativos.
+	if (ObjetoGerenciadoValido(Param_ArrayInputTypes))
+	{
+		//Cria a matriz nativa que vai conter os dados.
+		vi_pArrayInputType = CriarMatrizEstruturas<MFT_REGISTER_TYPE_INFO>(Param_CountInputTypes);
+
+		//Faz um for para converter os dados gerenciados e definir na matriz.
+		for (UINT32 i = 0; i < Param_CountInputTypes; i++)
+		{
+			//Converte a estrutura.
+			vi_pAuxiliar = Util.ConverterMFT_REGISTER_TYPE_INFOManaged_ToUnamaged(Param_ArrayInputTypes[i]);
+
+			//Define os dados na matriz no indice especificado.
+			vi_pArrayInputType[i] = *vi_pAuxiliar;
+
+			//Libera a memória para a estrutura.
+			DeletarEstruturaSafe(&vi_pAuxiliar);
+		}
+	}
+
+	//Verifica se forneceu o array com os tipos de saida e converte para os dados nativos.
+	if (ObjetoGerenciadoValido(Param_ArrayOutputTypes))
+	{
+		//Cria a matriz nativa que vai conter os dados.
+		vi_pArrayOutputType = CriarMatrizEstruturas<MFT_REGISTER_TYPE_INFO>(Param_CountOutputTypes);
+
+		//Faz um for para converter os dados gerenciados e definir na matriz.
+		for (UINT32 i = 0; i < Param_CountOutputTypes; i++)
+		{
+			//Converte a estrutura.
+			vi_pAuxiliar = Util.ConverterMFT_REGISTER_TYPE_INFOManaged_ToUnamaged(Param_ArrayOutputTypes[i]);
+
+			//Define os dados na matriz no indice especificado.
+			vi_pArrayOutputType[i] = *vi_pAuxiliar;
+
+			//Libera a memória para a estrutura.
+			DeletarEstruturaSafe(&vi_pAuxiliar);
+		}
+	}
+
+	//Chama o método para realizar a operação.
+	Hr = MFTRegisterLocalByCLSID(
+		const_cast<GUID&>(vi_ClsidMFT),
+		const_cast<GUID&>(vi_GuidCategory),
+		vi_pNameMFT,
+		vi_Flags,
+		Param_CountInputTypes,
+		ObjetoValido(vi_pArrayInputType) ? const_cast<MFT_REGISTER_TYPE_INFO*>(vi_pArrayInputType) : Nulo,
+		Param_CountOutputTypes,
+		ObjetoValido(vi_pArrayOutputType) ? const_cast<MFT_REGISTER_TYPE_INFO*>(vi_pArrayOutputType) : Nulo
+	);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+Done:;
+	//Libera a memória utilizado pelo nome amigavel do mft se valido.
+	DeletarStringAllocatedSafe(&vi_pNameMFT);
+
+	//Libera a memória utilizada para criar o array das estruturas
+	DeletarMatrizEstruturasSafe(&vi_pArrayInputType);
+	DeletarMatrizEstruturasSafe(&vi_pArrayOutputType);
+
+	//Retorna o resultado
+	return Resultado;
+}
+CarenResult MediaFoundationFunctions::_MFTUnregister(String^ Param_ClsidMFT)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	GUID vi_ClsidMFT = GUID_NULL;
+
+	//Converte a string para o guid.
+	vi_ClsidMFT = Util.CreateGuidFromString(Param_ClsidMFT);
+
+	//Chama o método para realizar a operação.
+	Hr = MFTUnregister(vi_ClsidMFT);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
+CarenResult MediaFoundationFunctions::_MFTUnregisterLocal(ICaren^ Param_ClassFactoryMFT)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IClassFactory* vi_pClassFactory = Nulo; //Pode ser NULO.
+
+	//Verifica se forneceu a interface de criação de classe.
+	if (ObjetoGerenciadoValido(Param_ClassFactoryMFT))
+		CarenGetPointerFromICarenSafe(Param_ClassFactoryMFT, vi_pClassFactory);
+
+	//Chama o método para realizar a operação.
+	Hr = MFTUnregisterLocal(vi_pClassFactory);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
+CarenResult MediaFoundationFunctions::_MFTUnregisterLocalByCLSID(String^ Param_ClsidMFT)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	GUID vi_ClsidMFT = GUID_NULL;
+
+	//Converte a string para o guid.
+	vi_ClsidMFT = Util.CreateGuidFromString(Param_ClsidMFT);
+
+	//Chama o método para realizar a operação.
+	Hr = MFTUnregisterLocalByCLSID(vi_ClsidMFT);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
+CarenResult MediaFoundationFunctions::_MFCreateVideoMixerAndPresenter(
+	ICaren^ Param_MixerOwner, 
+	ICaren^ Param_PresenterOwner, 
+	String^ Param_RiidMixer, 
+	ICaren^ Param_Out_Mixer, 
+	String^ Param_RiidPresenter, 
+	ICaren^ Param_Out_Presenter)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IUnknown* vi_pMixerOwner = Nulo; //Pode ser Nulo;
+	IUnknown* vi_pPresenterOwner = Nulo; //Pode ser Nulo;
+	GUID vi_RiidMixer = GUID_NULL;
+	GUID vi_RiidPresenter = GUID_NULL;
+	IUnknown* vi_pOutMixer = Nulo;
+	IUnknown* vi_pOutPresenter = Nulo;
+
+	//Recupera o ponteiro para o dono do mixer se informado
+	if (ObjetoGerenciadoValido(Param_MixerOwner))
+		CarenGetPointerFromICarenSafe(Param_MixerOwner, vi_pMixerOwner);
+
+	//Recupera o ponteiro para o dono do apresentador se informado.
+	if (ObjetoGerenciadoValido(Param_PresenterOwner))
+		CarenGetPointerFromICarenSafe(Param_PresenterOwner, vi_pPresenterOwner);
+
+	//Converte as strings para os guids nativos.
+	vi_RiidMixer = Util.CreateGuidFromString(Param_RiidMixer);
+	vi_RiidPresenter = Util.CreateGuidFromString(Param_RiidPresenter);
+
+	//Chama o método para realizar a operação.
+	Hr = MFCreateVideoMixerAndPresenter(
+		vi_pMixerOwner,
+		vi_pPresenterOwner,
+		const_cast<GUID&>(vi_RiidMixer),
+		reinterpret_cast<void**>(&vi_pOutMixer),
+		const_cast<GUID&>(vi_RiidPresenter),
+		reinterpret_cast<void**>(&vi_pOutPresenter)
+	);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define os ponteiros nos parametros de saida.
+	CarenSetPointerToICarenSafe(vi_pOutMixer, Param_Out_Mixer, true);
+	CarenSetPointerToICarenSafe(vi_pOutPresenter, Param_Out_Presenter, true);
 
 Done:;
 
@@ -1440,7 +2207,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCreateVideoSampleAllocator(String^ Param_RIID, ICaren^ Param_Out_SampleAllocator)
 {
 	//Variavel a ser retornada.
@@ -1480,7 +2246,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCreateVideoSampleAllocatorEx(String^ Param_RIID, ICaren^ Param_Out_SampleAllocator)
 {
 	//Variavel a ser retornada.
@@ -1520,7 +2285,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCreateStreamOnMFByteStreamEx(ICarenMFByteStream^ Param_ByteStream, String^ Param_RIID, ICaren^ Param_Out_Stream)
 {
 	//Variavel a ser retornada.
@@ -1564,7 +2328,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCreateSequencerSource(ICaren^ Param_Reservado, ICaren^ Param_Out_SequencerSource)
 {
 	//Variavel a ser retornada.
@@ -1604,7 +2367,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCreateSampleGrabberSinkActivate(ICarenMFMediaType^ Param_MediaType, ICaren^ Param_SampleGrabberCallback, ICarenMFActivate^ Param_Out_Activate)
 {
 	//Variavel a ser retornada.
@@ -1647,7 +2409,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCreateSampleCopierMFT(ICarenMFTransform^ Param_Out_CopierMFT)
 {
 	//Variavel a ser retornada.
@@ -1682,7 +2443,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCreateTransformActivate(ICarenMFActivate^ Param_Out_Activate)
 {
 	//Variavel a ser retornada.
@@ -1717,7 +2477,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCreateVideoMixer(ICaren^ Param_Owner, String^ Param_RIIDDevice, String^ Param_RIID, ICaren^ Param_Out_Objeto)
 {
 	//Variavel a ser retornada.
@@ -1764,7 +2523,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCreateProtectedEnvironmentAccess(ICaren^ Param_Out_Access)
 {
 	//Variavel a ser retornada.
@@ -1800,7 +2558,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCreatePMPServer(CA_MFPMPSESSION_CREATION_FLAGS Param_Flags, ICaren^ Param_Out_PMPServer)
 {
 	//Variavel a ser retornada.
@@ -1837,7 +2594,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFGetService(ICaren^ Param_Objeto, String^ Param_GuidService, String^ Param_RIID, ICaren^ Param_Out_InterfaceRequested)
 {
 	//Variavel a ser retornada.
@@ -1883,7 +2639,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCreateTempFile(CA_MF_FILE_ACCESSMODE Param_AccessMode, CA_MF_FILE_OPENMODE Param_OpenMode, CA_MF_FILE_FLAGS Param_Flags, ICarenMFByteStream^ Param_Out_ByteStream)
 {
 	//Variavel a ser retornada.
@@ -1925,7 +2680,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCreateFile(CA_MF_FILE_ACCESSMODE Param_AccessMode, CA_MF_FILE_OPENMODE Param_OpenMode, CA_MF_FILE_FLAGS Param_Flags, String^ Param_Url, ICarenMFByteStream^ Param_Out_ByteStream)
 {
 	//Variavel a ser retornada.
@@ -1975,7 +2729,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFBeginCreateFile(CA_MF_FILE_ACCESSMODE Param_AccessMode, CA_MF_FILE_OPENMODE Param_OpenMode, CA_MF_FILE_FLAGS Param_Flags, String^ Param_Url, ICarenMFAsyncCallback^ Param_Callback, ICaren^ Param_ObjectState, ICaren^ Param_Out_CancelCookie)
 {
 	//Variavel a ser retornada.
@@ -2037,7 +2790,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFEndCreateFile(ICarenMFAsyncResult^ Param_Result, ICarenMFByteStream^ Param_Out_ByteStream)
 {
 	//Variavel a ser retornada.
@@ -2076,7 +2828,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCancelCreateFile(ICaren^ Param_CancelCookie)
 {
 	//Variavel a ser retornada.
@@ -2111,7 +2862,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCreateMediaExtensionActivate(String^ Param_ActivatableClassId, ICaren^ Param_Configuration, String^ Param_RIID, ICaren^ Param_Out_Objeto)
 {
 	//Variavel a ser retornada.
@@ -2162,7 +2912,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCreateContentDecryptorContext(String^ Param_GuidMediaProtectionSystem, ICarenMFDXGIDeviceManager^ Param_DXGIManager, ICaren^ Param_ProtectionDevice, ICaren^ Param_Out_ContentDecryptorContext)
 {
 	//Variavel a ser retornada.
@@ -2209,7 +2958,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCreateContentProtectionDevice(String^ Param_GuidMediaProtectionSystem, ICaren^ Param_Out_ContentProtectionDevice)
 {
 	//Variavel a ser retornada.
@@ -2248,7 +2996,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_DXVA2CreateVideoService(ICaren^ Param_Direct3DDevice9, String^ Param_RIID, ICaren^ Param_Out_VideoService)
 {
 	//Variavel a ser retornada.
@@ -2291,7 +3038,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCreateAlignedMemoryBuffer(UInt32 Param_MaxLenght, CA_MF_BYTE_ALIGNMENT Param_Aligment, ICarenMFMediaBuffer^ Param_Out_Buffer)
 {
 	//Variavel a ser retornada.
@@ -2323,7 +3069,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCreateDXGISurfaceBuffer(String^ Param_RIID, ICaren^ Param_SuperficeDXGI, UInt32 Param_SubresourceIndex, Boolean Param_BottomUpWhenLinear, ICarenMFMediaBuffer^ Param_Out_Buffer)
 {
 	//Variavel a ser retornada.
@@ -2366,7 +3111,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCreateDXSurfaceBuffer(String^ Param_RIID, ICaren^ Param_SurfaceDX, Boolean Param_BottomUpWhenLinear, ICarenMFMediaBuffer^ Param_Out_Buffer)
 {
 	//Variavel a ser retornada.
@@ -2409,7 +3153,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCreateMediaBufferFromMediaType(ICarenMFMediaType^ Param_MediaType, Int64 Param_Duration, UInt32 Param_MinLenght, UInt32 Param_MinAligment, ICarenMFMediaBuffer^ Param_Out_Buffer)
 {
 	//Variavel a ser retornada.
@@ -2447,7 +3190,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCreateWICBitmapBuffer(String^ Param_RIID, ICaren^ Param_Surface, ICarenMFMediaBuffer^ Param_Out_Buffer)
 {
 	//Variavel a ser retornada.
@@ -2490,7 +3232,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFInvokeCallback(ICarenMFAsyncResult^ Param_AsyncResult)
 {
 	//Variavel a ser retornada.
@@ -2521,7 +3262,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCreateMuxStreamAttributes(ICarenMFCollection^ Param_ColecaoAtributosMuxStream, ICarenMFAttributes^ Param_Out_Atributos)
 {
 	//Variavel a ser retornada.
@@ -2566,7 +3306,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCreateAudioRendererActivate(ICarenMFActivate^ Param_Out_StreamingAudioRender)
 {
 	//Variavel a ser retornada.
@@ -2597,7 +3336,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCreateVideoRendererActivate(IntPtr Param_Hwnd, ICarenMFActivate^ Param_Out_EnhancedVideoRenderer)
 {
 	//Variavel a ser retornada.
@@ -2629,7 +3367,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCreateAudioRenderer(ICarenMFAttributes^ Param_AudioAtributos, ICarenMFMediaSink^ Param_Out_MediaSink)
 {
 	//Variavel a ser retornada.
@@ -2668,7 +3405,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCreateVideoRenderer(String^ Param_RIID, ICaren^ Param_Out_VideoRenderer)
 {
 	//Variavel a ser retornada.
@@ -2707,7 +3443,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCreate3GPMediaSink(ICarenMFByteStream^ Param_ByteStream, ICarenMFMediaType^ Param_VideoType, ICarenMFMediaType^ Param_AudioType, ICarenMFMediaSink^ Param_Out_MediaSink)
 {
 	//Variavel a ser retornada.
@@ -2755,7 +3490,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCreateAC3MediaSink(ICarenMFByteStream^ Param_ByteStream, ICarenMFMediaType^ Param_AudioType, ICarenMFMediaSink^ Param_Out_MediaSink)
 {
 	//Variavel a ser retornada.
@@ -2797,7 +3531,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCreateADTSMediaSink(ICarenMFByteStream^ Param_ByteStream, ICarenMFMediaType^ Param_AudioType, ICarenMFMediaSink^ Param_Out_MediaSink)
 {
 	//Variavel a ser retornada.
@@ -2839,7 +3572,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCreateWAVEMediaSink(ICarenMFByteStream^ Param_ByteStream, ICarenMFMediaType^ Param_AudioType, ICarenMFMediaSink^ Param_Out_MediaSink)
 {
 	//Variavel a ser retornada.
@@ -2881,7 +3613,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCreateMP3MediaSink(ICarenMFByteStream^ Param_ByteStream, ICarenMFMediaSink^ Param_Out_MediaSink)
 {
 	//Variavel a ser retornada.
@@ -2919,7 +3650,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCreateFMPEG4MediaSink(ICarenMFByteStream^ Param_ByteStream, ICarenMFMediaType^ Param_VideoType, ICarenMFMediaType^ Param_AudioType, ICarenMFMediaSink^ Param_Out_MediaSink)
 {
 	//Variavel a ser retornada.
@@ -2967,7 +3697,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCreateMPEG4MediaSink(ICarenMFByteStream^ Param_ByteStream, ICarenMFMediaType^ Param_VideoType, ICarenMFMediaType^ Param_AudioType, ICarenMFMediaSink^ Param_Out_MediaSink)
 {
 	//Variavel a ser retornada.
@@ -3015,7 +3744,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCreateAVIMediaSink(ICarenMFByteStream^ Param_ByteStream, ICarenMFMediaType^ Param_VideoType, ICarenMFMediaType^ Param_AudioType, ICarenMFMediaSink^ Param_Out_MediaSink)
 {
 	//Variavel a ser retornada.
@@ -3063,7 +3791,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCreateMuxSink(String^ Param_GuidOutputSubtype, ICarenMFAttributes^ Param_OutputAttributes, ICarenMFByteStream^ Param_OutputByteStream, ICarenMFMediaSink^ Param_Out_MediaSink)
 {
 	//Variavel a ser retornada.
@@ -3112,7 +3839,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCreateDeviceSourceActivate(ICarenMFAttributes^ Param_Atributos, ICarenMFActivate^ Param_Out_DispositivoCaptura)
 {
 	//Variavel a ser retornada.
@@ -3151,7 +3877,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCreateTranscodeSinkActivate(CarenMFActivate^ Param_Out_Transcode)
 {
 	//Variavel a ser retornada.
@@ -3185,7 +3910,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCreateWMAEncoderActivate(ICarenMFMediaType^ Param_MediaType, ICarenPropertyStore^ Param_EncodingProperties, ICarenMFActivate^ Param_Out_Codificador)
 {
 	//Variavel a ser retornada.
@@ -3228,7 +3952,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCreateWMVEncoderActivate(ICarenMFMediaType^ Param_MediaType, ICarenPropertyStore^ Param_EncodingProperties, ICarenMFActivate^ Param_Out_Codificador)
 {
 	//Variavel a ser retornada.
@@ -3271,7 +3994,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCreateWaveFormatExFromMFMediaType(ICarenMFMediaType^ Param_TipoMidia, CA_MFWaveFormatExConvertFlags Param_FlagsConversão, CA_WAVEFORMATEXEXTENSIBLE^% Param_Out_WavFormato, UInt32% Param_Out_Size)
 {
 	//Variavel que vai retornar o resultado.
@@ -3334,7 +4056,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::_MFCreateWaveFormatExFromMFMediaType(ICarenMFMediaType^ Param_TipoMidia, CA_MFWaveFormatExConvertFlags Param_FlagsConversão, CA_WAVEFORMATEX^% Param_Out_WavFormato, UInt32% Param_Out_Size)
 {
 	//Variavel que vai retornar o resultado.
@@ -3404,7 +4125,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 CarenResult MediaFoundationFunctions::CA_MFInitMediaTypeFromWaveFormatEx(CA_WAVEFORMATEXEXTENSIBLE^% Param_WavFormato, UInt32 Param_SizeEstrutura, ICarenMFMediaType^ Param_Out_TipoMidia)
 {
 	//Variavel que vai retornar o resultado.

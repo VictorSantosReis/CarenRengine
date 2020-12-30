@@ -524,7 +524,6 @@
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFTopologyNodeAttributeEditor.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFTopologyServiceLookup.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFTopologyServiceLookupClient.h" />
-    <ClInclude Include="CarenRengineCodes\Caren\CastInterface.h" />
     <ClInclude Include="CarenRengineCodes\Nativas\CLN_IAudioSessionEvents.h" />
     <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFAsyncCallback.h" />
     <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFSinkWriterCallback.h" />
@@ -947,7 +946,6 @@
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFTopologyServiceLookup.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFTopologyServiceLookupClient.cpp" />
     <ClCompile Include="CarenRengineCodes\Caren\CarenWindowsEvent.cpp" />
-    <ClCompile Include="CarenRengineCodes\Caren\CastInterface.cpp" />
     <ClCompile Include="CarenRengineCodes\Nativas\CLN_IAudioSessionEvents.cpp" />
     <ClCompile Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink2.cpp" />
     <ClCompile Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink3.cpp" />

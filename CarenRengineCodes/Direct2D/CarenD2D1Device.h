@@ -47,12 +47,19 @@ public ref class CarenD2D1Device : public ICarenD2D1Device
 	ID2D1Device* PonteiroTrabalho = NULL;
 
 
-	//Contrutor e destuidor da classe.
+	//Contrutores e destuidor da classe.
 public:
 	/// <summary>
 	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
 	/// </summary>
 	CarenD2D1Device();
+
+	/// <summary>
+	/// Inicializa e cria um novo dispositivo Direct2D associado ao dispositivo DXGI fornecido.
+	/// </summary>
+	/// <param name="Param_DXGIDevice">O dispositivo DXGI com o que o dispositivo Direct2D está associado.</param>
+	/// <param name="Param_PropsCreate">As propriedades a serem aplicadas ao dispositivo Direct2D.</param>
+	CarenD2D1Device(ICarenDXGIDevice^ Param_DXGIDevice, CA_D2D1_CREATION_PROPERTIES^ Param_PropsCreate);
 
 	~CarenD2D1Device();
 

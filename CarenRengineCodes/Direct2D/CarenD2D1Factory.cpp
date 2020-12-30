@@ -17,6 +17,7 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenD2D1Factory.h"
 
+
 //Destruidor.
 CarenD2D1Factory::~CarenD2D1Factory()
 {
@@ -27,6 +28,49 @@ CarenD2D1Factory::~CarenD2D1Factory()
 CarenD2D1Factory::CarenD2D1Factory()
 {
 	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
+CarenD2D1Factory::CarenD2D1Factory(CA_D2D1_FACTORY_TYPE Param_FactoryType, String^ Param_RIID, CA_D2D1_FACTORY_OPTIONS^ Param_FactoryOptions)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Resultados de Caren.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	GUID vi_RIID = GUID_NULL;
+	D2D1_FACTORY_OPTIONS* vi_pFactoryOptions = Nulo;
+	ID2D1Factory* vi_pOutFactory = Nulo;
+
+	//Cria o RIID para a interface solicitada.
+	vi_RIID = Util.CreateGuidFromString(Param_RIID);
+
+	//Converte a estrutura gerenciada para a nativa.
+	vi_pFactoryOptions = Util.ConverterD2D1_FACTORY_OPTIONSManagedToUnmanaged(Param_FactoryOptions);
+
+	//Chama o método para criar a interface.
+	Hr = D2D1CreateFactory(
+		static_cast<D2D1_FACTORY_TYPE>(Param_FactoryType), 
+		vi_RIID, 
+		const_cast<D2D1_FACTORY_OPTIONS*>(vi_pFactoryOptions), 
+		reinterpret_cast<void**>(&vi_pOutFactory));
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Libera a memória utilizada pela estrutura.
+		DeletarEstruturaSafe(&vi_pFactoryOptions);
+
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutFactory;
+
+	//Libera a memória utilizada pela estrutura.
+	DeletarEstruturaSafe(&vi_pFactoryOptions);
 }
 
 // Métodos da interface ICaren

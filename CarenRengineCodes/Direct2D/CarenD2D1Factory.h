@@ -67,6 +67,14 @@ public:
 	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
 	/// </summary>
 	CarenD2D1Factory();
+
+	/// <summary>
+	/// Inicializa e cria um objeto de fábrica que pode ser usado para criar recursos Direct2D. 
+	/// </summary>
+	/// <param name="Param_FactoryType">‎O modelo de threading da fábrica e os recursos que ele cria.‎</param>
+	/// <param name="Param_RIID">Uma string contendo o RIID da interface solicitada. Esse valor deve ser o IID_ID2D1Factory encontrado em (GUIDs_InterfacesDirect2D).</param>
+	/// <param name="Param_FactoryOptions">O nível de detalhe fornecido à camada de depuração.</param>
+	CarenD2D1Factory(CA_D2D1_FACTORY_TYPE Param_FactoryType, String^ Param_RIID, CA_D2D1_FACTORY_OPTIONS^ Param_FactoryOptions);
 	
 	~CarenD2D1Factory();
 

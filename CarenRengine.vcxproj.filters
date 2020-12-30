@@ -145,11 +145,8 @@
     <Filter Include="Arquivos de Origem\Classes Nativas\WIC">
       <UniqueIdentifier>{0bbe8735-4632-4f26-9f00-12f3e4e47806}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Arquivos de Origem\Classes\Sistema">
+    <Filter Include="Arquivos de Cabeçalho\Sistema">
       <UniqueIdentifier>{2c6b857a-547c-49a4-be8c-e84aa8a69575}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Arquivos de Cabeçalho\ParameterResolver">
-      <UniqueIdentifier>{83ed951f-ecf4-4342-b970-b0e2148c5f39}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -646,13 +643,10 @@
       <Filter>Arquivos de Cabeçalho\Classes\Caren</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Caren\CarenHMONITOR.h">
-      <Filter>Arquivos de Origem\Classes\Sistema</Filter>
+      <Filter>Arquivos de Cabeçalho\Sistema</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Caren\CarenWindowsEvent.h">
       <Filter>Arquivos de Cabeçalho\Classes\Caren</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Caren\CastInterface.h">
-      <Filter>Arquivos de Origem\Classes\Sistema</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Windows\CarenPropertyStore.h">
       <Filter>Arquivos de Cabeçalho\Classes\Windows</Filter>
@@ -1447,7 +1441,7 @@
       <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\ParameterResolver\CarenParameterResolver.h">
-      <Filter>Arquivos de Cabeçalho\ParameterResolver</Filter>
+      <Filter>Arquivos de Cabeçalho\Sistema</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1903,9 +1897,6 @@
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Caren\CarenWindowsEvent.cpp">
       <Filter>Arquivos de Origem\Classes\Caren</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Caren\CastInterface.cpp">
-      <Filter>Arquivos de Origem\Sistema</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Windows\CarenPropertyStore.cpp">
       <Filter>Arquivos de Origem\Classes\Windows</Filter>

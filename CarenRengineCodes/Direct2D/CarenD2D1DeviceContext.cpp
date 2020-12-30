@@ -17,6 +17,7 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenD2D1DeviceContext.h"
 
+
 //Destruidor.
 CarenD2D1DeviceContext::~CarenD2D1DeviceContext()
 {
@@ -27,6 +28,53 @@ CarenD2D1DeviceContext::~CarenD2D1DeviceContext()
 CarenD2D1DeviceContext::CarenD2D1DeviceContext()
 {
 	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
+CarenD2D1DeviceContext::CarenD2D1DeviceContext(ICarenDXGISurface^ Param_DXGISurface, CA_D2D1_CREATION_PROPERTIES^ Param_PropsCreate)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Resultados de Caren.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IDXGISurface* vi_pDXGISurface = Nulo;
+	D2D1_CREATION_PROPERTIES* vi_pPropsCreate = Nulo;
+	ID2D1DeviceContext* vi_pOutD2D1DeviceContext = Nulo;
+
+	//Verfifica se a interface da superfice do DXGI é valida.
+	if (!ObjetoGerenciadoValido(Param_DXGISurface))
+		throw gcnew NullReferenceException("A interface no parametro (Param_DXGISurface) não pode ser NULA!");
+
+	//Tenta recuperar o ponteiro para a interface.
+	Resultado = RecuperarPonteiroCaren(Param_DXGISurface, &vi_pDXGISurface);
+
+	//Verifica se não houve algum erro
+	if (!CarenSucesso(Resultado))
+		throw gcnew Exception("Falhou ao tentar recuperar o ponteiro para a interface da superfice DXGI.");
+
+	//Converte a estrutura gerenciada para a nativa.
+	vi_pPropsCreate = Util.ConverterD2D1_CREATION_PROPERTIESManagedToUnmanaged(Param_PropsCreate);
+
+	//Chama o método para criar a interface.
+	Hr = D2D1CreateDeviceContext(vi_pDXGISurface, const_cast<D2D1_CREATION_PROPERTIES*>(vi_pPropsCreate), &vi_pOutD2D1DeviceContext);
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Libera a memória utilizada pela estrutura.
+		DeletarEstruturaSafe(&vi_pPropsCreate);
+
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutD2D1DeviceContext;
+
+	//Libera a memória utilizada pela estrutura.
+	DeletarEstruturaSafe(&vi_pPropsCreate);
 }
 
 // Métodos da interface ICaren

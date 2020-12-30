@@ -4441,6 +4441,14 @@ namespace CarenRengine
 		namespace Constantes
 		{
 
+			//////////////
+			// DXGI API //
+			//////////////
+
+			
+
+
+
 			//////////////////
 			// DIRECT2D API //
 			//////////////////

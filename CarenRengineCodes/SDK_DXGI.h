@@ -1650,7 +1650,7 @@ namespace CarenRengine
 		};
 
 		/// <summary>
-		/// (IDXGIFactory5) - Interface responsável pot permitir que um único método verifque o suporte a displays de taxa de atualização variável.
+		/// (IDXGIFactory5) - Interface responsável por permitir que um único método verifque o suporte a displays de taxa de atualização variável.
 		/// </summary>
 		[CategoryAttribute("Interface DXGI")]
 		[DescriptionAttribute("Representa uma fabrica que gera objetos DXGI.")]

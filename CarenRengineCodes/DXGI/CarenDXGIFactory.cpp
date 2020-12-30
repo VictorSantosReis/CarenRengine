@@ -24,10 +24,41 @@ CarenDXGIFactory::~CarenDXGIFactory()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor
+CarenDXGIFactory::CarenDXGIFactory(Boolean Param_CriarInterface)
+{
+	//Verifica se deve ou não criar uma interface.
+	if (Param_CriarInterface)
+	{
+		//Variavel que vai conter o resultado COM.
+		HRESULT Hr = E_FAIL;
 
-//
+		//Variaveis utilizadas.
+		Utilidades Util;
+		IDXGIFactory* vi_pOutFactory = Nulo;
+
+		//Chama o método para criar a interface.
+		Hr = CreateDXGIFactory(__uuidof(IDXGIFactory), reinterpret_cast<void**>(&vi_pOutFactory));
+
+		//Verifica se não ocorreu erro no processo.
+		if (!Sucesso(Hr))
+		{
+			//Chama uma exceção para informar o error.
+			throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+		}
+
+		//Define a interface criada no ponteiro de trabalho
+		PonteiroTrabalho = vi_pOutFactory;
+	}
+	else
+	{
+		//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+	}
+}
+
+
 // Métodos da interface ICaren
-//
+
 
 /// <summary>
 /// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 
@@ -59,7 +90,7 @@ CarenResult CarenDXGIFactory::ConsultarInterface(String^ Param_Guid, ICaren^ Par
 		const char* DadosConvertidos = NULL;
 
 		//Verifica se a string é valida.
-		if (Param_Guid != nullptr && !String::IsNullOrEmpty(Param_Guid))
+		if (!String::IsNullOrEmpty(Param_Guid))
 		{
 			//Obtém a largura da String.
 			LarguraString = Param_Guid->Length + 1;

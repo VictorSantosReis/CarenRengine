@@ -70,7 +70,7 @@ Done:;
 }
 
 /// <summary>
-/// Método responsávelpor verificar se um objeto generico é valido para um determinado tipo de destino.
+/// Método responsável por verificar se um objeto generico é valido para um determinado tipo de destino.
 /// </summary>
 /// <typeparam name="T">O tipo do objeto de destino esperado.</typeparam>
 /// <param name="Param_Objeto">O objeto a ser verificado.</param>

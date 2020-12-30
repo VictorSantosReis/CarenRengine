@@ -24,9 +24,6 @@ limitations under the License.
 //Importa o namespace que contém as interfaces do Microsoft Direct 3D.
 using namespace CarenRengine::Direct3D11;
 
-//Enumeração de retorno de função.
-
-
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;

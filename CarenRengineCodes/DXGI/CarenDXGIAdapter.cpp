@@ -18,11 +18,17 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenDXGIAdapter.h"
 
+
 //Destruidor.
 CarenDXGIAdapter::~CarenDXGIAdapter()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
+}
+//Construtor
+CarenDXGIAdapter::CarenDXGIAdapter()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 //
@@ -59,7 +65,7 @@ CarenResult CarenDXGIAdapter::ConsultarInterface(String^ Param_Guid, ICaren^ Par
 		const char* DadosConvertidos = NULL;
 
 		//Verifica se a string é valida.
-		if (Param_Guid != nullptr && !String::IsNullOrEmpty(Param_Guid))
+		if (!String::IsNullOrEmpty(Param_Guid))
 		{
 			//Obtém a largura da String.
 			LarguraString = Param_Guid->Length + 1;

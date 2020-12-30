@@ -18,11 +18,17 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenDXGIFactory5.h"
 
+
 //Destruidor.
 CarenDXGIFactory5::~CarenDXGIFactory5()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
+}
+//Construtor.
+CarenDXGIFactory5::CarenDXGIFactory5()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
 //
@@ -59,7 +65,7 @@ CarenResult CarenDXGIFactory5::ConsultarInterface(String^ Param_Guid, ICaren^ Pa
 		const char* DadosConvertidos = NULL;
 
 		//Verifica se a string é valida.
-		if (Param_Guid != nullptr && !String::IsNullOrEmpty(Param_Guid))
+		if (!String::IsNullOrEmpty(Param_Guid))
 		{
 			//Obtém a largura da String.
 			LarguraString = Param_Guid->Length + 1;

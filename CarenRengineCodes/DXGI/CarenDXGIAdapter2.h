@@ -24,9 +24,6 @@ limitations under the License.
 //Importa o namespace que contém as interfaces da API primária.
 using namespace CarenRengine::DXGI;
 
-//Enumeração de retorno de função.
-
-
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
@@ -52,6 +49,11 @@ public ref class CarenDXGIAdapter2 : public ICarenDXGIAdapter2
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenDXGIAdapter2();
+
 	~CarenDXGIAdapter2();
 
 

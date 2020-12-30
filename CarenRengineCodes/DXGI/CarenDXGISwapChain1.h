@@ -24,9 +24,6 @@ limitations under the License.
 //Importa o namespace que contém as interfaces do Microsoft DirectX Graphics Infrastructure(DXGI).
 using namespace CarenRengine::DXGI;
 
-//Enumeração de retorno de função.
-
-
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
@@ -52,6 +49,11 @@ public ref class CarenDXGISwapChain1 : public ICarenDXGISwapChain1
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenDXGISwapChain1();
+
 	~CarenDXGISwapChain1();
 
 
@@ -77,30 +79,6 @@ public:
 			//Retorna o valor.
 			return Prop_DisposedClasse;
 		}
-	}
-
-
-
-	//Cria uma instância dessa classe (Estático)
-public:
-	/// <summary>
-	/// Método responsável por criar uma instância vazia da classe. Chamadas para os métodos sem um ponteiro de trabalho definido
-	/// pode gerar comportamentos indefinidos.
-	/// </summary>
-	/// <param name="Param_Out_CarenDXGISwapChain1">Recebe um ponteiro para a interface (Vazia).</param>
-	static CarenResult CriarInstanciaVazia([Out] ICarenDXGISwapChain1^% Param_Out_CarenDXGISwapChain1)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Cria a interface
-		Param_Out_CarenDXGISwapChain1 = gcnew CarenDXGISwapChain1();
-
-		//Define sucesso
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-		//Retorna o resultado
-		return Resultado;
 	}
 
 

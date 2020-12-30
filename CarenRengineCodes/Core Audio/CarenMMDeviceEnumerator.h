@@ -25,9 +25,6 @@ limitations under the License.
 //Importa o namespace que contém as interfaces da Core Audio Api
 using namespace CarenRengine::CoreAudio;
 
-//Enumeração de retorno de função.
-
-
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;

@@ -23,6 +23,11 @@ CarenD2D1RenderTarget::~CarenD2D1RenderTarget()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor.
+CarenD2D1RenderTarget::CarenD2D1RenderTarget()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 
 // Métodos da interface ICaren

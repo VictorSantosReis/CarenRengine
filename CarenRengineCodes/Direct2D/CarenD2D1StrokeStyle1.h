@@ -46,6 +46,11 @@ public ref class CarenD2D1StrokeStyle1 : public ICarenD2D1StrokeStyle1
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenD2D1StrokeStyle1();
+
 	~CarenD2D1StrokeStyle1();
 
 

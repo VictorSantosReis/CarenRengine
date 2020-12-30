@@ -47,6 +47,11 @@ public ref class CarenD2D1Ink : public ICarenD2D1Ink
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenD2D1Ink();
+
 	~CarenD2D1Ink();
 
 

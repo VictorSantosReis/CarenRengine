@@ -23,6 +23,11 @@ CarenD2D1DrawingStateBlock::~CarenD2D1DrawingStateBlock()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor.
+CarenD2D1DrawingStateBlock::CarenD2D1DrawingStateBlock()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 
 // Métodos da interface ICaren

@@ -47,6 +47,11 @@ public ref class CarenD2D1TransformedImageSource : public ICarenD2D1TransformedI
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenD2D1TransformedImageSource();
+
 	~CarenD2D1TransformedImageSource();
 
 

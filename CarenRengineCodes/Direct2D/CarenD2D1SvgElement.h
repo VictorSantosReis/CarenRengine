@@ -52,12 +52,13 @@ public ref class CarenD2D1SvgElement : public ICarenD2D1SvgElement
 	ID2D1SvgElement* PonteiroTrabalho = NULL;
 
 
-	//Contrutores e destuidor da classe.
+	//Construtor e destuidor da classe.
 public:
-	CarenD2D1SvgElement();
 	/// <summary>
 	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
 	/// </summary>
+	CarenD2D1SvgElement();
+
 	~CarenD2D1SvgElement();
 
 	//Variaveis Internas.

@@ -45,12 +45,13 @@ public ref class CarenD2D1SvgAttribute : public ICarenD2D1SvgAttribute
 	ID2D1SvgAttribute* PonteiroTrabalho = NULL;
 
 
-	//Contrutores e destuidor da classe.
+	//Construtor e destuidor da classe.
 public:
-	CarenD2D1SvgAttribute();
 	/// <summary>
 	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
 	/// </summary>
+	CarenD2D1SvgAttribute();
+
 	~CarenD2D1SvgAttribute();
 
 	//Variaveis Internas.

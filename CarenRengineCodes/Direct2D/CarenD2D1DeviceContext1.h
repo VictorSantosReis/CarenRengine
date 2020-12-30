@@ -62,12 +62,13 @@ public ref class CarenD2D1DeviceContext1 : public ICarenD2D1DeviceContext1
 	ID2D1DeviceContext1* PonteiroTrabalho = NULL;
 
 
-	//Contrutores e destuidor da classe.
+	//Construtor e destuidor da classe.
 public:
-	CarenD2D1DeviceContext1();
 	/// <summary>
 	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
 	/// </summary>
+	CarenD2D1DeviceContext1();
+
 	~CarenD2D1DeviceContext1();
 
 	//Variaveis Internas.

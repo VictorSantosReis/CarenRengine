@@ -23,6 +23,11 @@ CarenD2D1CommandList::~CarenD2D1CommandList()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor.
+CarenD2D1CommandList::CarenD2D1CommandList()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 
 // Métodos da interface ICaren

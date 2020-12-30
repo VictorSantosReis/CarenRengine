@@ -23,6 +23,11 @@ CarenD2D1BlendTransform::~CarenD2D1BlendTransform()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor.
+CarenD2D1BlendTransform::CarenD2D1BlendTransform()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 
 // Métodos da interface ICaren

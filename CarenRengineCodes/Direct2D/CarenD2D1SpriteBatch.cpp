@@ -23,6 +23,11 @@ CarenD2D1SpriteBatch::~CarenD2D1SpriteBatch()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor.
+CarenD2D1SpriteBatch::CarenD2D1SpriteBatch()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 
 // Métodos da interface ICaren

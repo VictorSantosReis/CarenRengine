@@ -47,6 +47,11 @@ public ref class CarenD2D1Mesh : public ICarenD2D1Mesh
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenD2D1Mesh();
+
 	~CarenD2D1Mesh();
 
 

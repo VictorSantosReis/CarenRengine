@@ -23,6 +23,11 @@ CarenD2D1ColorContext::~CarenD2D1ColorContext()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor.
+CarenD2D1ColorContext::CarenD2D1ColorContext()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 
 // Métodos da interface ICaren

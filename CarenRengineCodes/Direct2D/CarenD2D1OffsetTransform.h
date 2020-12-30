@@ -44,12 +44,13 @@ public ref class CarenD2D1OffsetTransform : public ICarenD2D1OffsetTransform
 	ID2D1OffsetTransform* PonteiroTrabalho = NULL;
 
 
-	//Contrutores e destuidor da classe.
+	//Construtor e destuidor da classe.
 public:
-	CarenD2D1OffsetTransform();
 	/// <summary>
 	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
 	/// </summary>
+	CarenD2D1OffsetTransform();
+	
 	~CarenD2D1OffsetTransform();
 
 	//Variaveis Internas.

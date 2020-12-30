@@ -23,6 +23,11 @@ CarenD2D1Layer::~CarenD2D1Layer()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor.
+CarenD2D1Layer::CarenD2D1Layer()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 
 // Métodos da interface ICaren

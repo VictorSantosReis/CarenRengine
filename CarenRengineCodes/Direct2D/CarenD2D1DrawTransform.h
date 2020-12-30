@@ -45,12 +45,13 @@ public ref class CarenD2D1DrawTransform : public ICarenD2D1DrawTransform
 	ID2D1DrawTransform* PonteiroTrabalho = NULL;
 
 
-	//Contrutores e destuidor da classe.
+	//Contrutor e destuidor da classe.
 public:
-	CarenD2D1DrawTransform();
 	/// <summary>
 	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
 	/// </summary>
+	CarenD2D1DrawTransform();
+	
 	~CarenD2D1DrawTransform();
 
 	//Variaveis Internas.

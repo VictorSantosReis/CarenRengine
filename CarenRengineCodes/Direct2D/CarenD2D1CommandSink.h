@@ -55,11 +55,12 @@ public ref class CarenD2D1CommandSink : public ICarenD2D1CommandSink
 
 	//Construtor e destruidor da classe.
 public:
-	~CarenD2D1CommandSink();
 	/// <summary>
-	/// Inicializa a classe com um manipulador de eventos default da CarenRengine.
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
 	/// </summary>
 	CarenD2D1CommandSink();
+
+	~CarenD2D1CommandSink();
 
 	//Variaveis Internas.
 internal:

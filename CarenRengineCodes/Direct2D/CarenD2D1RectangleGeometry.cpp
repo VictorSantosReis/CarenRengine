@@ -23,6 +23,11 @@ CarenD2D1RectangleGeometry::~CarenD2D1RectangleGeometry()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor.
+CarenD2D1RectangleGeometry::CarenD2D1RectangleGeometry()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 
 // Métodos da interface ICaren

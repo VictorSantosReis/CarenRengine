@@ -46,6 +46,9 @@ public ref class CarenD2D1Bitmap : public ICarenD2D1Bitmap
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.	/// </summary>
+	CarenD2D1Bitmap();
+
 	~CarenD2D1Bitmap();
 
 

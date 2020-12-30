@@ -46,12 +46,13 @@ public ref class CarenD2D1SvgPaint : public ICarenD2D1SvgPaint
 	ID2D1SvgPaint* PonteiroTrabalho = NULL;
 
 
-	//Contrutores e destuidor da classe.
+	//Construtor e destuidor da classe.
 public:
-	CarenD2D1SvgPaint();
 	/// <summary>
 	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
 	/// </summary>
+	CarenD2D1SvgPaint();
+
 	~CarenD2D1SvgPaint();
 
 	//Variaveis Internas.

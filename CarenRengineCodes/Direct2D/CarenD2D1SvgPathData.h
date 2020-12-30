@@ -47,12 +47,13 @@ public ref class CarenD2D1SvgPathData : public ICarenD2D1SvgPathData
 	ID2D1SvgPathData* PonteiroTrabalho = NULL;
 
 
-	//Contrutores e destuidor da classe.
+	//Construtor e destuidor da classe.
 public:
-	CarenD2D1SvgPathData();
 	/// <summary>
 	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
 	/// </summary>
+	CarenD2D1SvgPathData();
+
 	~CarenD2D1SvgPathData();
 
 	//Variaveis Internas.

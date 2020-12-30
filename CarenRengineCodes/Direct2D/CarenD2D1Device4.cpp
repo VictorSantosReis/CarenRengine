@@ -23,7 +23,7 @@ CarenD2D1Device4::~CarenD2D1Device4()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
-//Construtores
+//Construtor.
 CarenD2D1Device4::CarenD2D1Device4()
 {
 	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.

@@ -23,6 +23,11 @@ CarenD2D1LinearGradientBrush::~CarenD2D1LinearGradientBrush()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor.
+CarenD2D1LinearGradientBrush::CarenD2D1LinearGradientBrush()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 
 // Métodos da interface ICaren

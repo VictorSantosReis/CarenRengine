@@ -23,6 +23,11 @@ CarenD2D1ConcreteTransform::~CarenD2D1ConcreteTransform()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor.
+CarenD2D1ConcreteTransform::CarenD2D1ConcreteTransform()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 
 // Métodos da interface ICaren

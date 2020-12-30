@@ -23,6 +23,11 @@ CarenD2D1TransformedGeometry::~CarenD2D1TransformedGeometry()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor.
+CarenD2D1TransformedGeometry::CarenD2D1TransformedGeometry()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 
 // Métodos da interface ICaren

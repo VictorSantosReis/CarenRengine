@@ -45,12 +45,13 @@ public ref class CarenD2D1EffectImpl : public ICarenD2D1EffectImpl
 	ID2D1EffectImpl* PonteiroTrabalho = NULL;
 
 
-	//Contrutores e destuidor da classe.
+	//Construtor e destuidor da classe.
 public:
-	CarenD2D1EffectImpl();
 	/// <summary>
 	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
 	/// </summary>
+	CarenD2D1EffectImpl();
+	
 	~CarenD2D1EffectImpl();
 
 	//Variaveis Internas.

@@ -23,6 +23,11 @@ CarenD2D1Mesh::~CarenD2D1Mesh()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor.
+CarenD2D1Mesh::CarenD2D1Mesh()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 
 // Métodos da interface ICaren

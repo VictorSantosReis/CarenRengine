@@ -46,6 +46,11 @@ public ref class CarenD2D1GradientMesh : public ICarenD2D1GradientMesh
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenD2D1GradientMesh();
+
 	~CarenD2D1GradientMesh();
 
 

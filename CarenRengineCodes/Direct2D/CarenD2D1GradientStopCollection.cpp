@@ -23,6 +23,11 @@ CarenD2D1GradientStopCollection::~CarenD2D1GradientStopCollection()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor.
+CarenD2D1GradientStopCollection::CarenD2D1GradientStopCollection()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 
 // Métodos da interface ICaren

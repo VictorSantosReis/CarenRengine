@@ -46,6 +46,11 @@ public ref class CarenD2D1Resource : public ICarenD2D1Resource
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenD2D1Resource();
+
 	~CarenD2D1Resource();
 
 

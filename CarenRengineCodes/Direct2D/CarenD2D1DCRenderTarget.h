@@ -55,6 +55,11 @@ public ref class CarenD2D1DCRenderTarget : public ICarenD2D1DCRenderTarget
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenD2D1DCRenderTarget();
+
 	~CarenD2D1DCRenderTarget();
 
 

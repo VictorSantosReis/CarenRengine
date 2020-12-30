@@ -45,12 +45,13 @@ public ref class CarenD2D1PrintControl : public ICarenD2D1PrintControl
 	ID2D1PrintControl* PonteiroTrabalho = NULL;
 
 
-	//Contrutores e destuidor da classe.
+	//Construtor e destuidor da classe.
 public:
-	CarenD2D1PrintControl();
 	/// <summary>
 	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
 	/// </summary>
+	CarenD2D1PrintControl();
+
 	~CarenD2D1PrintControl();
 
 	//Variaveis Internas.

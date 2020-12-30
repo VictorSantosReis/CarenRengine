@@ -23,6 +23,11 @@ CarenD2D1GeometrySink::~CarenD2D1GeometrySink()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor.
+CarenD2D1GeometrySink::CarenD2D1GeometrySink()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 
 // Métodos da interface ICaren

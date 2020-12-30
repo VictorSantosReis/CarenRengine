@@ -46,6 +46,11 @@ public ref class CarenD2D1RectangleGeometry : public ICarenD2D1RectangleGeometry
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenD2D1RectangleGeometry();
+
 	~CarenD2D1RectangleGeometry();
 
 

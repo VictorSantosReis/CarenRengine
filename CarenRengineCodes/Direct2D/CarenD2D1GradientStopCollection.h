@@ -46,6 +46,11 @@ public ref class CarenD2D1GradientStopCollection : public ICarenD2D1GradientStop
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenD2D1GradientStopCollection();
+
 	~CarenD2D1GradientStopCollection();
 
 

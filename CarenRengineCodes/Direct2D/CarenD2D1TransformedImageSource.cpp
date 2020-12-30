@@ -23,6 +23,11 @@ CarenD2D1TransformedImageSource::~CarenD2D1TransformedImageSource()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor.
+CarenD2D1TransformedImageSource::CarenD2D1TransformedImageSource()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 
 // Métodos da interface ICaren

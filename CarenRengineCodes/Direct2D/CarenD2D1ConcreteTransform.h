@@ -46,6 +46,11 @@ public ref class CarenD2D1ConcreteTransform : public ICarenD2D1ConcreteTransform
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenD2D1ConcreteTransform();
+
 	~CarenD2D1ConcreteTransform();
 
 

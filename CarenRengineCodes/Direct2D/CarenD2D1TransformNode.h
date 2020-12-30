@@ -46,6 +46,11 @@ public ref class CarenD2D1TransformNode : public ICarenD2D1TransformNode
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenD2D1TransformNode();
+
 	~CarenD2D1TransformNode();
 
 

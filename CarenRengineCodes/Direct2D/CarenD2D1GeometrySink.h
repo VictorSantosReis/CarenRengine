@@ -46,6 +46,11 @@ public ref class CarenD2D1GeometrySink : public ICarenD2D1GeometrySink
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenD2D1GeometrySink();
+
 	~CarenD2D1GeometrySink();
 
 

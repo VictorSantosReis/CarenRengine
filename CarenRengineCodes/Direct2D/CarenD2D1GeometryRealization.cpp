@@ -23,6 +23,11 @@ CarenD2D1GeometryRealization::~CarenD2D1GeometryRealization()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor.
+CarenD2D1GeometryRealization::CarenD2D1GeometryRealization()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 
 // Métodos da interface ICaren

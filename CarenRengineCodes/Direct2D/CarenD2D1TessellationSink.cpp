@@ -23,6 +23,11 @@ CarenD2D1TessellationSink::~CarenD2D1TessellationSink()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor.
+CarenD2D1TessellationSink::CarenD2D1TessellationSink()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 
 // Métodos da interface ICaren

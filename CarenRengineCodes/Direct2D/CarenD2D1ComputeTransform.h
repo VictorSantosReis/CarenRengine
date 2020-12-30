@@ -46,12 +46,13 @@ public ref class CarenD2D1ComputeTransform : public ICarenD2D1ComputeTransform
 	ID2D1ComputeTransform* PonteiroTrabalho = NULL;
 
 
-	//Contrutores e destuidor da classe.
+	//Construtor e destuidor da classe.
 public:
-	CarenD2D1ComputeTransform();
 	/// <summary>
 	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
 	/// </summary>
+	CarenD2D1ComputeTransform();
+	
 	~CarenD2D1ComputeTransform();
 
 	//Variaveis Internas.

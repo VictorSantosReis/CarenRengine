@@ -46,6 +46,11 @@ public ref class CarenD2D1Image : public ICarenD2D1Image
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenD2D1Image();
+
 	~CarenD2D1Image();
 
 

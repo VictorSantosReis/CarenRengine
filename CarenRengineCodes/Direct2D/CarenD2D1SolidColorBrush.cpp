@@ -23,6 +23,11 @@ CarenD2D1SolidColorBrush::~CarenD2D1SolidColorBrush()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor.
+CarenD2D1SolidColorBrush::CarenD2D1SolidColorBrush()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 
 // Métodos da interface ICaren

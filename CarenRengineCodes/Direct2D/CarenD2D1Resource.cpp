@@ -23,6 +23,11 @@ CarenD2D1Resource::~CarenD2D1Resource()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor.
+CarenD2D1Resource::CarenD2D1Resource()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 
 // Métodos da interface ICaren

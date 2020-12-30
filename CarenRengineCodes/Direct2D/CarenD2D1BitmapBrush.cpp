@@ -23,6 +23,11 @@ CarenD2D1BitmapBrush::~CarenD2D1BitmapBrush()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor.
+CarenD2D1BitmapBrush::CarenD2D1BitmapBrush()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 
 // Métodos da interface ICaren

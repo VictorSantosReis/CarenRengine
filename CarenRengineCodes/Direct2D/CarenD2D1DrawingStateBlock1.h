@@ -48,6 +48,11 @@ public ref class CarenD2D1DrawingStateBlock1 : public ICarenD2D1DrawingStateBloc
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenD2D1DrawingStateBlock1();
+
 	~CarenD2D1DrawingStateBlock1();
 
 

@@ -23,6 +23,11 @@ CarenD2D1InkStyle::~CarenD2D1InkStyle()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor.
+CarenD2D1InkStyle::CarenD2D1InkStyle()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 
 // Métodos da interface ICaren

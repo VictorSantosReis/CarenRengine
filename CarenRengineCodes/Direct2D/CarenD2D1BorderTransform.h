@@ -46,6 +46,11 @@ public ref class CarenD2D1BorderTransform : public ICarenD2D1BorderTransform
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenD2D1BorderTransform();
+
 	~CarenD2D1BorderTransform();
 
 

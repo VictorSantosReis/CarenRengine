@@ -44,12 +44,13 @@ public ref class CarenD2D1VertexBuffer : public ICarenD2D1VertexBuffer
 	ID2D1VertexBuffer* PonteiroTrabalho = NULL;
 
 
-	//Contrutores e destuidor da classe.
+	//Construtor e destuidor da classe.
 public:
-	CarenD2D1VertexBuffer();
 	/// <summary>
 	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
 	/// </summary>
+	CarenD2D1VertexBuffer();
+
 	~CarenD2D1VertexBuffer();
 
 	//Variaveis Internas.

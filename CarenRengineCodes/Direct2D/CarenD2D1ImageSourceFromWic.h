@@ -46,6 +46,11 @@ public ref class CarenD2D1ImageSourceFromWic : public ICarenD2D1ImageSourceFromW
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenD2D1ImageSourceFromWic();
+
 	~CarenD2D1ImageSourceFromWic();
 
 

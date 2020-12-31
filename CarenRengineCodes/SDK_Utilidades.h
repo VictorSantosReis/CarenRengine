@@ -3054,8 +3054,8 @@ namespace CarenRengine
 				//Retorna o resultado
 				return EstruturaRetorno;
 			}
-		
-				
+
+			
 			//Converte uma estrutura gerenciada(CA_D2D1_RECT_U) para sua correspondencia não gerenciada(D2D1_RECT_U).
 			D2D1_RECT_U* ConverterD2D1_RECT_UManagedToUnmanaged(CA_D2D1_RECT_U^ Param_Estrutura)
 			{

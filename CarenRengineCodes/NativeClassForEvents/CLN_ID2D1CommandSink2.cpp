@@ -17,7 +17,7 @@ limitations under the License.
 
 #pragma once
 #include "../pch.h"
-#include "../Nativas/CLN_ID2D1CommandSink2.h"
+#include "../NativeClassForEvents/CLN_ID2D1CommandSink2.h"
 
 
 //Métodos da interface ID2D1CommandSink2

@@ -19,7 +19,7 @@ limitations under the License.
 #include "../SDK_Caren.h"
 #include "../SDK_Utilidades.h"
 #include "../FunctionClass/GlobalFuncs.h"
-#include "../Nativas/CLN_IWICDevelopRawNotificationCallback.h"
+#include "../NativeClassForEvents/CLN_IWICDevelopRawNotificationCallback.h"
 
 //Importa o namespace que contém as interfaces da API primária.
 using namespace CarenRengine::WIC;

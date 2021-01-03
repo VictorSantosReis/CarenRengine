@@ -17,7 +17,7 @@ limitations under the License.
 
 #pragma once
 #include "../pch.h"
-#include "../Nativas/CLN_IMFMediaEngineNotify.h"
+#include "../NativeClassForEvents/CLN_IMFMediaEngineNotify.h"
 
 HRESULT __stdcall CLN_IMFMediaEngineNotify::EventNotify(DWORD evento, DWORD_PTR param1, DWORD param2)
 {

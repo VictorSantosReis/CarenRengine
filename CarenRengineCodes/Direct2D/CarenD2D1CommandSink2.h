@@ -28,7 +28,7 @@ limitations under the License.
 #include "CarenD2D1GradientMesh.h"
 #include "CarenD2D1Ink.h"
 #include "CarenD2D1InkStyle.h"
-#include "../Nativas/CLN_ID2D1CommandSink2.h"
+#include "../NativeClassForEvents/CLN_ID2D1CommandSink2.h"
 
 //Importa o namespace que contém as interfaces da API primária.
 using namespace CarenRengine::Direct2D;

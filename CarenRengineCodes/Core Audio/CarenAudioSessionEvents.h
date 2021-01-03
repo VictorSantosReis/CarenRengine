@@ -18,7 +18,7 @@ limitations under the License.
 #pragma once
 #include "../SDK_CoreAudio.h"
 #include "../Caren/Caren.h"
-#include "../Nativas/CLN_IAudioSessionEvents.h"
+#include "../NativeClassForEvents/CLN_IAudioSessionEvents.h"
 #include "../SDK_Utilidades.h"
 
 //Importa o namespace que contém as interfaces da WSAPI.

@@ -17,7 +17,7 @@ limitations under the License.
 
 #pragma once
 #include "../pch.h"
-#include "../Nativas/CLN_IMFMediaEngineNeedKeyNotify.h"
+#include "../NativeClassForEvents/CLN_IMFMediaEngineNeedKeyNotify.h"
 
 void __stdcall CLN_IMFMediaEngineNeedKeyNotify::NeedKey(const BYTE* initData, DWORD cb)
 {

@@ -18,7 +18,7 @@ limitations under the License.
 #pragma once
 #include "../SDK_MediaFoundation.h"
 #include "../Caren/Caren.h"
-#include "../Nativas/CLN_IMFAsyncCallback.h"
+#include "../NativeClassForEvents/CLN_IMFAsyncCallback.h"
 #include "CarenMFAsyncResult.h"
 #include "../SDK_Utilidades.h"
 

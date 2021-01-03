@@ -29,7 +29,7 @@ limitations under the License.
 #include "CarenD2D1Ink.h"
 #include "CarenD2D1InkStyle.h"
 #include "CarenD2D1SpriteBatch.h"
-#include "../Nativas/CLN_ID2D1CommandSink3.h"
+#include "../NativeClassForEvents/CLN_ID2D1CommandSink3.h"
 
 //Importa o namespace que contém as interfaces da API primária.
 using namespace CarenRengine::Direct2D;

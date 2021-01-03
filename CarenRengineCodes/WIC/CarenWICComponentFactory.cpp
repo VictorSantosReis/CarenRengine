@@ -17,6 +17,7 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenWICComponentFactory.h"
 
+
 //Destruidor.
 CarenWICComponentFactory::~CarenWICComponentFactory()
 {

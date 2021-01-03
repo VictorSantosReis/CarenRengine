@@ -24,10 +24,18 @@ CarenWICDevelopRawNotificationCallback::~CarenWICDevelopRawNotificationCallback(
 	Prop_DisposedClasse = true;
 }
 //Construtores
-CarenWICDevelopRawNotificationCallback::CarenWICDevelopRawNotificationCallback()
+CarenWICDevelopRawNotificationCallback::CarenWICDevelopRawNotificationCallback(Boolean Param_CriarInterface)
 {
-	//Cria um ponteiro para a classe nativa que gerencia o recebimento dos eventos.
-	PonteiroTrabalho = new CLN_IWICDevelopRawNotificationCallback();
+	//Verifica se deve ou não criar uma interface.
+	if (Param_CriarInterface)
+	{
+		//Cria a implementação da interface
+		PonteiroTrabalho = new CLN_IWICDevelopRawNotificationCallback();
+	}
+	else
+	{
+		//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+	}
 }
 
 // Métodos da interface ICaren

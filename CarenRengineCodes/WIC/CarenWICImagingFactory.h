@@ -66,6 +66,12 @@ public:
 	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
 	/// </summary>
 	CarenWICImagingFactory();
+
+	/// <summary>
+	/// Inicializa a classe e cria um ponteiro para a interface nativa (IWICImagingFactory). Permite especificar o contexto que vai gerencia a interface.
+	/// </summary>
+	/// <param name="Param_Context">Contexto no qual o código que gerencia o objeto recém-criado será executado. Os valores são retirados da enumeração CA_CLSCTX.</param>
+	CarenWICImagingFactory(CA_CLSCTX Param_Context);
 	
 	~CarenWICImagingFactory();
 

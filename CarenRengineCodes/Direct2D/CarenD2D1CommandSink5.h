@@ -59,9 +59,11 @@ public ref class CarenD2D1CommandSink5 : ICarenD2D1CommandSink5
 	//Construtor e destruidor da classe.
 public:
 	/// <summary>
-	/// Inicializa a classe com um manipulador de eventos default da CarenRengine.
+	/// Inicializa a interface e permite que o usuário decida se a biblioteca deve criar a interface ou vai iniciar sem um ponteiro 
+	/// de trabalho. Se (Param_CriarInterface) for TRUE, o construtor vai criar uma implementação interface da ().
 	/// </summary>
-	CarenD2D1CommandSink5();
+	/// <param name="Param_CriarInterface">Um valor booleano, TRUE indica que deve criar uma nova interface intermanete, caso contario, FALSE.</param>
+	CarenD2D1CommandSink5(Boolean Param_CriarInterface);
 
 	~CarenD2D1CommandSink5();
 

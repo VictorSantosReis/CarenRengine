@@ -58,9 +58,11 @@ public ref class CarenD2D1CommandSink2 : public ICarenD2D1CommandSink2
 	//Construtor e destruidor da classe.
 public:
 	/// <summary>
-	/// Inicializa a classe com um manipulador de eventos default da CarenRengine.
+	/// Inicializa a interface e permite que o usuário decida se a biblioteca deve criar a interface ou vai iniciar sem um ponteiro 
+	/// de trabalho. Se (Param_CriarInterface) for TRUE, o construtor vai criar uma implementação interface da (ID2D1CommandSink2).
 	/// </summary>
-	CarenD2D1CommandSink2();
+	/// <param name="Param_CriarInterface">Um valor booleano, TRUE indica que deve criar uma nova interface intermanete, caso contario, FALSE.</param>
+	CarenD2D1CommandSink2(Boolean Param_CriarInterface);
 
 	~CarenD2D1CommandSink2();
 
@@ -650,28 +652,6 @@ private:
 	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnSetUnitMode).
 	/// </summary>
 	GCHandle gHandle_Delegate_OnSetUnitMode;
-
-	//Cria uma instância dessa classe (Estático)
-public:
-	/// <summary>
-	/// Método responsável por criar uma instância vazia da classe. Chamadas para os métodos sem um ponteiro de trabalho definido
-	/// pode gerar comportamentos indefinidos.
-	/// </summary>
-	/// <param name="Param_Out_CarenD2D1CommandSink2">Recebe um ponteiro para a interface (Vazia).</param>
-	static CarenResult CriarInstanciaVazia([Out] ICarenD2D1CommandSink2^% Param_Out_CarenD2D1CommandSink2)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
-
-		//Cria a interface
-		Param_Out_CarenD2D1CommandSink2 = gcnew CarenD2D1CommandSink2();
-
-		//Define sucesso
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-		//Retorna o resultado
-		return Resultado;
-	}
 
 
 	///////////////////////////////////////////////////////

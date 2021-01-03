@@ -24,10 +24,18 @@ CarenD2D1CommandSink3::~CarenD2D1CommandSink3()
 	Prop_DisposedClasse = true;
 }
 //Construtor.
-CarenD2D1CommandSink3::CarenD2D1CommandSink3()
+CarenD2D1CommandSink3::CarenD2D1CommandSink3(Boolean Param_CriarInterface)
 {
-	//Cria a interface que gerencia os eventos.
-	PonteiroTrabalho = new CLN_ID2D1CommandSink3();
+	//Verifica se deve ou não criar uma interface.
+	if (Param_CriarInterface)
+	{
+		//Cria a implementação da interface
+		PonteiroTrabalho = new CLN_ID2D1CommandSink3();
+	}
+	else
+	{
+		//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+	}
 }
 
 

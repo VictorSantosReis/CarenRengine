@@ -1,0 +1,2 @@
+Esta pasta contém classes gerenciadas que representam as classes nativas (Matrix) do namespace
+(D2D1) que servem para auxiliar o usuário.

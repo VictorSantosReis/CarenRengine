@@ -749,28 +749,6 @@ private:
 	/// </summary>
 	GCHandle gHandle_Delegate_OnSetUnitMode;
 
-	//Cria uma instância dessa classe (Estático)
-public:
-	/// <summary>
-	/// Método responsável por criar uma instância vazia da classe. Chamadas para os métodos sem um ponteiro de trabalho definido
-	/// pode gerar comportamentos indefinidos.
-	/// </summary>
-	/// <param name="Param_Out_CarenD2D1CommandSink5">Recebe um ponteiro para a interface (Vazia).</param>
-	static CarenResult CriarInstanciaVazia([Out] ICarenD2D1CommandSink5^% Param_Out_CarenD2D1CommandSink5)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
-
-		//Cria a interface
-		Param_Out_CarenD2D1CommandSink5 = gcnew CarenD2D1CommandSink5();
-
-		//Define sucesso
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-		//Retorna o resultado
-		return Resultado;
-	}
-
 
 	///////////////////////////////////////////////////////
 	//A parti daqui vai conter os métodos das interfaces.//

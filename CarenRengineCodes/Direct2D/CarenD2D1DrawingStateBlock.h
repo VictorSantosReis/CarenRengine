@@ -81,30 +81,6 @@ public:
 	}
 
 
-
-	//Cria uma instância dessa classe (Estático)
-public:
-	/// <summary>
-	/// Método responsável por criar uma instância vazia da classe. Chamadas para os métodos sem um ponteiro de trabalho definido
-	/// pode gerar comportamentos indefinidos.
-	/// </summary>
-	/// <param name="Param_Out_CarenD2D1DrawingStateBlock">Recebe um ponteiro para a interface (Vazia).</param>
-	static CarenResult CriarInstanciaVazia([Out] ICarenD2D1DrawingStateBlock^% Param_Out_CarenD2D1DrawingStateBlock)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
-
-		//Cria a interface
-		Param_Out_CarenD2D1DrawingStateBlock = gcnew CarenD2D1DrawingStateBlock();
-
-		//Define sucesso
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-		//Retorna o resultado
-		return Resultado;
-	}
-
-
 	///////////////////////////////////////////////////////
 	//A parti daqui vai conter os métodos das interfaces.//
 	///////////////////////////////////////////////////////

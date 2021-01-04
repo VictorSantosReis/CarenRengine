@@ -231,6 +231,7 @@
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1TransformGraph.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1TransformNode.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1VertexBuffer.h" />
+    <ClInclude Include="CarenRengineCodes\FunctionClass\WICFunctions.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFAsyncCallback.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFAsyncResult.h" />
     <ClInclude Include="CarenRengineCodes\Core Audio\CarenChannelAudioVolume.h" />
@@ -667,6 +668,7 @@
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1TransformGraph.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1TransformNode.cpp" />
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1VertexBuffer.cpp" />
+    <ClCompile Include="CarenRengineCodes\FunctionClass\WICFunctions.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFAsyncCallback.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFAsyncResult.cpp" />
     <ClCompile Include="CarenRengineCodes\Core Audio\CarenChannelAudioVolume.cpp" />

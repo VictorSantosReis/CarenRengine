@@ -12524,10 +12524,6 @@ MEReservedMax = 10000
 				/// 
 				/// </summary>
 				WICSectionAccessLevelReadWrite = 0x3,
-				/// <summary>
-				/// 
-				/// </summary>
-				WICSectionAccessLevel_FORCE_DWORD = 0x7fffffff
 			};
 
 			/// <summary> 

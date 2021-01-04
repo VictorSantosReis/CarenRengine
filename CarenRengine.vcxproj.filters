@@ -1452,6 +1452,9 @@
     <ClInclude Include="CarenRengineCodes\Direct2D Matrix Class\Direct2D_MatrixClass.h">
       <Filter>Arquivos de Cabeçalho\Classes\Direct2D Matrixs</Filter>
     </ClInclude>
+    <ClInclude Include="CarenRengineCodes\FunctionClass\WICFunctions.h">
+      <Filter>Arquivos de Cabeçalho\Classes de Funções</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D10Multithread.cpp">
@@ -2704,6 +2707,9 @@
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Direct2D Matrix Class\Direct2D_MatrixClass.cpp">
       <Filter>Arquivos de Origem\Classes\Direct2D Matrixs</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\FunctionClass\WICFunctions.cpp">
+      <Filter>Arquivos de Origem\Classes de Funções</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

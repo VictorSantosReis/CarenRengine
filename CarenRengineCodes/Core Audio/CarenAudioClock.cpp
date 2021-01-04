@@ -24,6 +24,11 @@ CarenAudioClock::~CarenAudioClock()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor
+CarenAudioClock::CarenAudioClock()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 //
 // Métodos da interface ICaren

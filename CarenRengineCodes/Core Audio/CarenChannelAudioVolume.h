@@ -47,6 +47,11 @@ public ref class CarenChannelAudioVolume : public ICarenChannelAudioVolume
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenChannelAudioVolume();
+
 	~CarenChannelAudioVolume();
 
 

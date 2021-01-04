@@ -48,6 +48,11 @@ public ref class CarenMMDevice :public ICarenMMDevice
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMMDevice();
+
 	~CarenMMDevice();
 
 	

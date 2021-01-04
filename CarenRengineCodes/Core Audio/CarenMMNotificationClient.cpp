@@ -18,16 +18,31 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenMMNotificationClient.h"
 
+
 //Destruidor.
 CarenMMNotificationClient::~CarenMMNotificationClient()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor
+CarenMMNotificationClient::CarenMMNotificationClient(Boolean Param_CriarInterface)
+{
+	//Verifica se deve ou não criar uma interface.
+	if (Param_CriarInterface)
+	{
+		//Cria a implementação da interface
+		PonteiroTrabalho = new CLN_IMMNotificationClient();
+	}
+	else
+	{
+		//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+	}
+}
 
-//
+
 // Métodos da interface ICaren
-//
+
 
 /// <summary>
 /// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 

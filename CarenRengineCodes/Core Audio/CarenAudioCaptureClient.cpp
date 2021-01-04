@@ -18,12 +18,19 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenAudioCaptureClient.h"
 
+
 //Destruidor.
 CarenAudioCaptureClient::~CarenAudioCaptureClient()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor
+CarenAudioCaptureClient::CarenAudioCaptureClient()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
+
 
 //
 // Métodos da interface ICaren

@@ -59,7 +59,7 @@ public ref class CarenD2D1CommandSink2 : public ICarenD2D1CommandSink2
 public:
 	/// <summary>
 	/// Inicializa a interface e permite que o usuário decida se a biblioteca deve criar a interface ou vai iniciar sem um ponteiro 
-	/// de trabalho. Se (Param_CriarInterface) for TRUE, o construtor vai criar uma implementação interface da (ID2D1CommandSink2).
+	/// de trabalho. Se (Param_CriarInterface) for TRUE, o construtor vai criar uma implementação da interface(ID2D1CommandSink2).
 	/// </summary>
 	/// <param name="Param_CriarInterface">Um valor booleano, TRUE indica que deve criar uma nova interface intermanete, caso contario, FALSE.</param>
 	CarenD2D1CommandSink2(Boolean Param_CriarInterface);

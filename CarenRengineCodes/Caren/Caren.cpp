@@ -18,13 +18,18 @@ limitations under the License.
 #include "../pch.h"
 #include "Caren.h"
 
+
 //Destruidor.
 Caren::~Caren()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
-
+//Construtor
+Caren::Caren()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 // Métodos da interface ICaren
 

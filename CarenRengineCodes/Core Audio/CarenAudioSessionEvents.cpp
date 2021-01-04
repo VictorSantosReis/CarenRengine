@@ -18,11 +18,26 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenAudioSessionEvents.h"
 
+
 //Destruidor.
 CarenAudioSessionEvents::~CarenAudioSessionEvents()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
+}
+//Construtor
+CarenAudioSessionEvents::CarenAudioSessionEvents(Boolean Param_CriarInterface)
+{
+	//Verifica se deve ou não criar uma interface.
+	if (Param_CriarInterface)
+	{
+		//Cria a implementação da interface
+		PonteiroTrabalho = new CLN_IAudioSessionEvents();
+	}
+	else
+	{
+		//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+	}
 }
 
 //

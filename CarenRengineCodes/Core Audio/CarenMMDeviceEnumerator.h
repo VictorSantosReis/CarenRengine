@@ -46,8 +46,19 @@ public ref class CarenMMDeviceEnumerator : public ICarenMMDeviceEnumerator
 	//Ponteiro para a interface (IMMDevice).
 	IMMDeviceEnumerator* PonteiroTrabalho = NULL;
 
-	//Construtor e destruidor da classe.
+	//Construtores e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMMDeviceEnumerator();
+
+	/// <summary>
+	/// Inicializa e cria uma nova classe de enumeração de dispositivos multimedia do sistema.
+	/// </summary>
+	/// <param name="Param_Context">O contexto a qual o objeto vai ser criado.</param>
+	CarenMMDeviceEnumerator(CA_CLSCTX Param_Context);
+
 	~CarenMMDeviceEnumerator();
 
 

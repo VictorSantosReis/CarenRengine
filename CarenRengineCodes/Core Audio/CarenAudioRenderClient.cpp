@@ -18,16 +18,22 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenAudioRenderClient.h"
 
+
 //Destruidor.
 CarenAudioRenderClient::~CarenAudioRenderClient()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor
+CarenAudioRenderClient::CarenAudioRenderClient()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
-//
+
 // Métodos da interface ICaren
-//
+
 
 /// <summary>
 /// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 

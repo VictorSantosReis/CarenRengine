@@ -18,16 +18,22 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenMMDevice.h"
 
+
 //Destruidor.
 CarenMMDevice::~CarenMMDevice()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor
+CarenMMDevice::CarenMMDevice()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
-//
+
 // Métodos da interface ICaren
-//
+
 
 /// <summary>
 /// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 

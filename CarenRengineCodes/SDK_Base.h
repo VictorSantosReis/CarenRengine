@@ -8780,7 +8780,7 @@ MEReservedMax = 10000
 			/// para CoRegisterClassObject para indicar o conjunto de contextos de execução em que um objeto de classe é para ser feito disponível para solicitações construir instâncias.
 			/// </summary>
 			[FlagsAttribute]
-			public enum class CA_CLSCTX : Int64
+			public enum class CA_CLSCTX
 			{
 				/// <summary>
 				/// 

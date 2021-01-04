@@ -47,6 +47,11 @@ public ref class CarenMMDeviceCollection :public ICarenMMDeviceCollection
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenMMDeviceCollection();
+
 	~CarenMMDeviceCollection();
 
 
@@ -72,28 +77,6 @@ public:
 			//Retorna o valor.
 			return Prop_DisposedClasse;
 		}
-	}
-
-
-	//Cria uma instância da classe
-public:
-	/// <summary>
-	/// Cria uma instância vazia da classe. Chamadas para qualquer um dos métodos sem definir um ponteiro de trabalho pode gerar uma exceção.
-	/// </summary>
-	/// <param name="Param_Out_Interface">Recebe a interface solicitada.</param>
-	CarenResult CriarInstanciaVazia([Out] ICarenMMDeviceCollection^% Param_Out_Interface)
-	{
-		//Variavel que vai retornar o resultado.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Cria a interface a ser retornado pelo parametro.
-		Param_Out_Interface = gcnew CarenMMDeviceCollection();
-
-		//Define sucesso na operação
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-		//Retorna o resultado
-		return Resultado;
 	}
 
 

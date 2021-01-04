@@ -482,7 +482,7 @@ CarenResult CarenD3D11BlendState1::GetDesc([Out] Estruturas::CA_D3D11_BLEND_DESC
 /// <summary>
 /// (GetDevice) - Obtém um ponteiro para o dispositivo que criou essa interface.
 /// </summary>
-/// <param name="Param_Out_DispositivoD3D11">Retorna o dispositivo D3D11 que criou essa interface. O usuário deve criar a interface antes de chamar este método.</param>
+/// <param name="Param_Out_DispositivoD3D11">Retorna o dispositivo D3D11 que criou essa interface. O usuário deve inicializar a interface antes de chamar este método.</param>
 CarenResult CarenD3D11BlendState1::GetDevice(ICaren^ Param_Out_DispositivoD3D11)
 {
 	//Variavel a ser retornada.

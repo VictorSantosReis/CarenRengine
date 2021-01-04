@@ -154,6 +154,18 @@
     <Filter Include="Arquivos de Origem\Classes\Direct2D Matrixs">
       <UniqueIdentifier>{2c0915d8-dce3-4c6c-b048-b4598805d047}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Classes\Extend Interfaces">
+      <UniqueIdentifier>{ee1fbbc0-c4d8-4e90-929c-ad3297be35d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Classes\Extend Interfaces">
+      <UniqueIdentifier>{b92ac5c0-ff45-4e0d-b088-902c1bba4514}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Classes\Extend Interfaces\Media Foundation">
+      <UniqueIdentifier>{2689c4be-ac60-445f-b96d-bd257174d547}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Classes\Extend Interfaces\Media Foundation">
+      <UniqueIdentifier>{a5663704-a64a-491b-865b-755b4a900d7a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CarenRengineCodes\pch.h">
@@ -1454,6 +1466,9 @@
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\FunctionClass\WICFunctions.h">
       <Filter>Arquivos de Cabeçalho\Classes de Funções</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\SDK_MediaFoundationExtend.h">
+      <Filter>Arquivos de Cabeçalho\SDKs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

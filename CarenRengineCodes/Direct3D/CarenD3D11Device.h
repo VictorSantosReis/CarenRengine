@@ -692,7 +692,7 @@ public:
 	/// </summary>
 	/// <param name="Param_Handle">Um identificador de recurso.</param>
 	/// <param name="Param_GuidInterface">O identificador globalmente exclusivo (GUID) para a interface do recurso.</param>
-	/// <param name="Param_Out_InterfaceSolicitada">Recebe a interface do recurso que foi ganhado acesso. O usuário deve criar a interface antes de chamar este método.</param>
+	/// <param name="Param_Out_InterfaceSolicitada">Recebe a interface do recurso que foi ganhado acesso. O usuário deve inicializar a interface antes de chamar este método.</param>
 	virtual CarenResult OpenSharedResource(
 					IntPtr Param_Handle, 
 					String^ Param_GuidInterface, 

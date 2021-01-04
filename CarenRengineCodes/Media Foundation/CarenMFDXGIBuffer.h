@@ -186,8 +186,8 @@ public:
 	/// </summary>
 	/// <param name="Param_GuidInterface">O identificador do ponteiro IUnknown.</param>
 	/// <param name="Param_IID">O identificador de interface (IID) da interface requisitada.</param>
-	/// <param name="Param_Ref_InterfaceRequisitada">Recebe um ponteiro para o objeto anteriormente definido. O chamador é responsável por criar e liberar a interface.param>
-	virtual CarenResult GetUnknown(String^ Param_GuidInterface, String^ Param_IID, ICaren^ Param_Ref_InterfaceRequisitada);
+	/// <param name="Param_Out_InterfaceRequisitada">Recebe um ponteiro para o objeto anteriormente definido. O chamador é responsável por inicializar a interface antes de chamar este método.</param>
+	virtual CarenResult GetUnknown(String^ Param_GuidInterface, String^ Param_IID, ICaren^ Param_Out_InterfaceRequisitada);
 
 	/// <summary>
 	/// Armazena um ponteiro IUnknown arbitrário em objeto de reserva de meios de comunicação.  

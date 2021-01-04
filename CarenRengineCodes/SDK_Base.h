@@ -5118,24 +5118,24 @@ namespace CarenRengine
 			
 			/// <summary>
 			/// Enumera os (Valores) que podem ser usado para acessar um Stream no Leitor de mídia(ICarenMFSourceReader).
-			/// Você pode usar os valores abaixo, convertendo por boxing (uint) para obter o valor da enumeração.
+			/// Você pode usar os valores abaixo, convertendo para (uint) para obter o valor da enumeração.
 			/// </summary>
 			public enum class CA_SOURCE_READER_ID : UInt32
 			{
 				/// <summary>
 				/// Indica que deve obter o (Primeiro Fluxo de Áudio) na lista de Streams.
 				/// </summary>
-				ID_PRIMEIRO_FLUXO_AUDIO = 0xFFFFFFFD,
+				ID_MF_SOURCE_READER_FIRST_AUDIO_STREAM = 0xFFFFFFFD,
 
 				/// <summary>
 				/// Indica que deve obter o (Primeiro Fluxo de Vídeo) na lista de Streams.
 				/// </summary>
-				ID_PRIMEIRO_FLUXO_VIDEO = 0xFFFFFFFC,
+				ID_MF_SOURCE_READER_FIRST_VIDEO_STREAM = 0xFFFFFFFC,
 
 				/// <summary>
 				/// Indica que deve obter ou ler qual quer fluxo que estiver disponível.
 				/// </summary>
-				ID_QUALQUER_FLUXO = 0xFFFFFFFE,
+				ID_MF_SOURCE_READER_ANY_STREAM = 0xFFFFFFFE,
 
 				/// <summary>
 				/// Indica que deve obter a (Fonte de mídia).
@@ -5150,10 +5150,16 @@ namespace CarenRengine
 			};
 
 			/// <summary>
-			/// Contém sinalizadores para o método ICarenMFSample.ReadSample.
+			/// (MF_SOURCE_READER_CONTROL_FLAG) - Contém sinalizadores para o método ICarenMFSample.ReadSample.
 			/// </summary>
-			public enum class CA_SOURCE_READER_CONTROL_FLAG
+			public enum class CA_MF_SOURCE_READER_CONTROL_FLAG
 			{
+				/// <summary>
+				/// Utilizado para suporte, não faz parte da enumeração original.
+				/// </summary>
+				Zero = 0x0,
+
+
 				/// <summary>
 				/// Recupere quaisquer amostras pendentes, mas não solicite mais amostras da fonte de mídia. 
 				/// Para obter todos as amostras pendentes, chame (ReadSample) com esse sinalizador até que o método 
@@ -5161,12 +5167,12 @@ namespace CarenRengine
 				/// </summary>
 				MF_SOURCE_READER_CONTROLF_DRAIN = 0x1
 			};
-
+			
 			/// <summary>
-			/// Contém sinalizadores que indcam o status de uma chamada para o método ICarenMFSample.ReadSample.
+			/// (MF_SOURCE_READER_FLAG) - Contém sinalizadores que indcam o status de uma chamada para o método ICarenMFSample.ReadSample.
 			/// </summary>
 			[FlagsAttribute]
-			public enum class CA_SOURCE_READER_FLAGS
+			public enum class CA_MF_SOURCE_READER_FLAG
 			{
 				/// <summary>
 				/// Indica que não houve nenhum erro, e que não é necessário nenhuma ação para esse flag.
@@ -5177,13 +5183,13 @@ namespace CarenRengine
 				/// <summary>
 				/// Ocorreu um erro durante a realização da chamada para a interface (ICarenMFSourceReader). Não chame novamente o método para Read uma proxima amostra.
 				/// </summary>
-				LEITURA_ERROR = 0x1,
+				MF_SOURCE_READERF_ERROR = 0x1,
 
 
 				/// <summary>
 				/// O leitor de mídia alcançou o final do fluxo.
 				/// </summary>
-				LEITURA_FIM_FLUXO = 0x2,
+				MF_SOURCE_READERF_ENDOFSTREAM = 0x2,
 
 
 				/// <summary>
@@ -5191,26 +5197,26 @@ namespace CarenRengine
 				/// > Defina os tipos de saída nos novos fluxos.
 				/// > Atualize a seleção de fluxo selecionando ou desmarcando fluxos.
 				/// </summary>
-				LEITURA_NOVO_FLUXO = 0x4,
+				MF_SOURCE_READERF_NEWSTREAM = 0x4,
 
 
 				/// <summary>
 				/// O (Formato Nativo) foi alterado para um ou mais fluxos. O (Formato Nativo) é o formato fornecido pela fonte de mídia 
 				/// antes de qualquer decodificadores serem inseridos.
 				/// </summary>
-				LEITURA_TIPO_NATIVO_MODIFICADO = 0x10,
+				MF_SOURCE_READERF_NATIVEMEDIATYPECHANGED = 0x10,
 
 
 				/// <summary>
 				/// A mídia atual tem o tipo alterado para um ou mais fluxos. Para obter o tipo de mídia atual, chame o  método ICarenMFSourceReader.GetCurrentMediaType.
 				/// </summary>
-				LEITURA_TIPO_ATUAL_MODIFICADO = 0x20,
+				MF_SOURCE_READERF_CURRENTMEDIATYPECHANGED = 0x20,
 
 
 				/// <summary>
 				/// Há uma lacuna no fluxo. Este sinalizador corresponde a um evento MEStreamTick da (Fonte de Mídia).
 				/// </summary>
-				LEITURA_LACUNA_FLUXO = 0x100,
+				MF_SOURCE_READERF_STREAMTICK = 0x100,
 
 
 				/// <summary>
@@ -5218,7 +5224,7 @@ namespace CarenRengine
 				/// formato dinâmico de uma fonte ou decodificador que impede que as transformações personalizadas sejam usadas porque eles não podem 
 				/// manipular o novo tipo de mídia.
 				/// </summary>
-				LEITURA_MFTS_REMOVIDOS = 0x200
+				MF_SOURCE_READERF_ALLEFFECTSREMOVED = 0x200
 			};
 
 			/// <summary>
@@ -5508,58 +5514,58 @@ namespace CarenRengine
 			};
 
 			/// <summary>
-			/// Enumera as possiveis características de um Coletor de Midia.
+			/// (MFSTREAMSINK_MARKER_TYPE) - Enumera as possiveis características de um Coletor de Midia.
 			/// </summary>
-			public enum class CA_MIDIA_STREAM_SINK_MARCADORES
+			public enum class CA_MFSTREAMSINK_MARKER_TYPE
 			{
 				/// <summary>
 				/// Este marcador é para uso do aplicativo e não transmite qualquer informação 
 				/// para o coletor de fluxo.
 				/// </summary>
-				MARCADOR_DEFAULT = 0,
+				MFSTREAMSINK_MARKER_DEFAULT = 0,
 
 				/// <summary>
 				/// Este marcador indica o fim de um segmento dentro de uma apresentação. Pode haver uma 
 				/// lacuna no fluxo até que o próximo segmento seja iniciado. Não há nenhum dado associado 
 				/// a este marcador.
 				/// </summary>
-				MARCADOR_FIM_SEGMENTO = (MARCADOR_DEFAULT + 1),
+				MFSTREAMSINK_MARKER_ENDOFSEGMENT = (MFSTREAMSINK_MARKER_DEFAULT + 1),
 
 				/// <summary>
 				/// Esse marcador indica que há uma lacuna no fluxo. Os dados do marcador são um valor (Int64 - VT_I8) 
 				/// que especifica o tempo para a amostra ausente. A próxima amostra recebida após este marcador terá o
 				/// sinalizador de descontinuidade. Este marcador corresponde a um evento Mestreamtick do fluxo.
 				/// </summary>
-				MARCADOR_LACUNA_FLUXO = (MARCADOR_FIM_SEGMENTO + 1),
+				MFSTREAMSINK_MARKER_TICK = (MFSTREAMSINK_MARKER_ENDOFSEGMENT + 1),
 
 				/// <summary>
 				/// Este marcador contém um evento de mídia. Os dados do marcador são um ponteiro para a interface 
 				/// IMFMediaEvent do evento (VT_UNKNOWN).
 				/// </summary>
-				MARCADOR_EVENTO = (MARCADOR_LACUNA_FLUXO + 1)
+				MFSTREAMSINK_MARKER_EVENT = (MFSTREAMSINK_MARKER_TICK + 1)
 
 			};
 
 			/// <summary>
-			/// Enumera as possiveis caracteristicas da (ICarenMFClock)
+			/// (_MFCLOCK_CHARACTERISTICS_FLAGS) - Enumera as possiveis caracteristicas da (ICarenMFClock)
 			/// </summary>
-			public enum class CA_CLOCK_CARACTERISTICAS
+			public enum class CA_MFCLOCK_CHARACTERISTICS_FLAGS
 			{
 				/// <summary>
 				/// Os tempos de relógio retornados pelo método (ICarenMFClock.GetCorrelatedTime) estão em unidades de 100 nanoseconds. Se este sinalizador estiver 
 				/// ausente, chame o método (ICarenMFClock.GetProperties) para obter a freqüência de clock. A freqüência de Clock é fornecida na (RL_FREQUENCIA_RELOGIO)
 				/// membro da estrutura CA_MFCLOCK_PROPERTIES.
 				/// </summary>
-				CH_CLOCK_FREQUENCIA_10MHZ = 0x2,
+				MFCLOCK_CHARACTERISTICS_FLAG_FREQUENCY_10MHZ = 0x2,
 				/// <summary>
 				/// O relógio está sempre em execução. Se este sinalizador estiver presente, o relógio não pode ser
 				/// pausado ou interrompido. Se este sinalizador estiver ausente, chame o método (ICarenMFClock.GetState) para obter o estado atual.
 				/// </summary>
-				CH_CLOCK_SEMPRE_EXECUCAO = 0x4,
+				MFCLOCK_CHARACTERISTICS_FLAG_ALWAYS_RUNNING = 0x4,
 				/// <summary>
 				/// Os tempos de relógio são gerados a partir do relógio do sistema.
 				/// </summary>
-				CH_CLOCK_RELOGIO_SISTEMA = 0x8,
+				MFCLOCK_CHARACTERISTICS_FLAG_IS_SYSTEM_CLOCK = 0x8,
 			};
 
 			/// <summary>
@@ -5575,9 +5581,9 @@ namespace CarenRengine
 			};
 
 			/// <summary>
-			/// Enumera os possiveis estados do Relógio.
+			/// (MFCLOCK_STATE) - Enumera os possiveis estados do Relógio.
 			/// </summary>
-			public enum class CA_CLOCK_ESTADO
+			public enum class CA_MFCLOCK_STATE
 			{
 				/// <summary>
 				/// O relógio é inválido. Um relógio pode ser inválido por vários motivos. Alguns relógios retornam esse estado
@@ -17644,7 +17650,7 @@ MEReservedMax = 10000
 				/// <summary>
 				/// A frequência do relógio em Hz. Um valor de MFCLOCK_FREQUENCY_HNS significa que o relógio tem uma frequência de 10 MHz 
 				/// (ticks de 100 nanossegundos), que é a unidade de tempo (MFTIME -> Int64) padrão no Media Foundation. Se o
-				/// o método (ICarenMFClock.GetClockCharacteristics) devolver o sinalizador CH_CLOCK_FREQUENCIA_10MHZ , o valor
+				/// o método (ICarenMFClock.GetClockCharacteristics) devolver o sinalizador MFCLOCK_CHARACTERISTICS_FLAG_FREQUENCY_10MHZ , o valor
 				/// deste campo deve ser MFCLOCK_FREQUENCY_HNS.
 				///</summary>
 				UInt64 RL_FREQUENCIA_CLOCK;

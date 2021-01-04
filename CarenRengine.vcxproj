@@ -556,6 +556,7 @@
     <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFSourceBufferNotify.h" />
     <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFMediaEngineNeedKeyNotify.h" />
     <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFMediaEngineNotify.h" />
+    <ClInclude Include="CarenRengineCodes\SDK_MediaFoundationExtend.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CarenRengineCodes\Classes Auxiliares\CarenPD2D1_PROPERTY_FUNCTIONS.cpp" />

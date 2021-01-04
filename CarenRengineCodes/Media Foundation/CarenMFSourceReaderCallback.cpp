@@ -499,7 +499,7 @@ void CarenMFSourceReaderCallback::EncaminharEvento_OnReadSample(HRESULT Param_HR
 
 	//Variveis utilizadas no método.
 	ICarenMFSample^ InterfaceAmostra = nullptr;
-	CA_SOURCE_READER_FLAGS FlagsLeitura = (CA_SOURCE_READER_FLAGS)Param_FluxoFlgs;
+	CA_MF_SOURCE_READER_FLAG FlagsLeitura = (CA_MF_SOURCE_READER_FLAG)Param_FluxoFlgs;
 	CA_SAMPLE_READ_RESULT ResultadoLeitura = CA_SAMPLE_READ_RESULT::Erro;
 	ResultCode Resultado = ResultCode::SS_FALSE;
 	CarenResult ResultadoSetPointer;

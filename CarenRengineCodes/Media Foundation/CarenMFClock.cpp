@@ -421,7 +421,7 @@ void CarenMFClock::Finalizar()
 /// Recupera as características do relógio.
 /// </summary>
 /// <param name="Param_Out_CaracteristicasClock">Recebe os flags com as características do relógio.</param>
-CarenResult CarenMFClock::GetClockCharacteristics([Out] Enumeracoes::CA_CLOCK_CARACTERISTICAS% Param_Out_CaracteristicasClock)
+CarenResult CarenMFClock::GetClockCharacteristics([Out] Enumeracoes::CA_MFCLOCK_CHARACTERISTICS_FLAGS% Param_Out_CaracteristicasClock)
 {
 	//Variavel que vai retorna o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -451,7 +451,7 @@ CarenResult CarenMFClock::GetClockCharacteristics([Out] Enumeracoes::CA_CLOCK_CA
 	}
 
 	//Define o valor no parametro de saida
-	Param_Out_CaracteristicasClock = (CA_CLOCK_CARACTERISTICAS)safe_cast<UInt32>(CaracteristicasClock);
+	Param_Out_CaracteristicasClock = (CA_MFCLOCK_CHARACTERISTICS_FLAGS)safe_cast<UInt32>(CaracteristicasClock);
 
 	//Define sucesso na operação
 	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
@@ -615,7 +615,7 @@ Done:;
 /// </summary>
 /// <param name="Param_ValorReservado">Valor reservado. Deve ser zero.</param>
 /// <param name="Param_Out_EstadoRelogio">Retorna o valor da enumeração que define o estado atual do relógio.</param>
-CarenResult CarenMFClock::GetState(UInt32 Param_ValorReservado, [Out] Enumeracoes::CA_CLOCK_ESTADO% Param_Out_EstadoRelogio)
+CarenResult CarenMFClock::GetState(UInt32 Param_ValorReservado, [Out] Enumeracoes::CA_MFCLOCK_STATE% Param_Out_EstadoRelogio)
 {
 	//Variavel que vai retorna o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -625,7 +625,7 @@ CarenResult CarenMFClock::GetState(UInt32 Param_ValorReservado, [Out] Enumeracoe
 
 	//Variaveis utilizadas pelo método
 	MFCLOCK_STATE StateRelogio;
-	CA_CLOCK_ESTADO EstadoRelogioRetorno;
+	CA_MFCLOCK_STATE EstadoRelogioRetorno;
 
 	//Chama o método para obter o estado do relogio.
 	Hr = PonteiroTrabalho->GetState(Param_ValorReservado, &StateRelogio);
@@ -650,22 +650,22 @@ CarenResult CarenMFClock::GetState(UInt32 Param_ValorReservado, [Out] Enumeracoe
 	{
 	case MFCLOCK_STATE_INVALID:
 		//Define o estado do relógio.
-		EstadoRelogioRetorno = CA_CLOCK_ESTADO::CLOCK_INVALIDO;
+		EstadoRelogioRetorno = CA_MFCLOCK_STATE::CLOCK_INVALIDO;
 		break;
 
 	case MFCLOCK_STATE_RUNNING:
 		//Define o estado do relógio.
-		EstadoRelogioRetorno = CA_CLOCK_ESTADO::CLOCK_RODANDO;
+		EstadoRelogioRetorno = CA_MFCLOCK_STATE::CLOCK_RODANDO;
 		break;
 
 	case MFCLOCK_STATE_STOPPED:
 		//Define o estado do relógio.
-		EstadoRelogioRetorno = CA_CLOCK_ESTADO::CLOCK_PARADO;
+		EstadoRelogioRetorno = CA_MFCLOCK_STATE::CLOCK_PARADO;
 		break;
 
 	case MFCLOCK_STATE_PAUSED:
 		//Define o estado do relógio.
-		EstadoRelogioRetorno = CA_CLOCK_ESTADO::CLOCK_PAUSADO;
+		EstadoRelogioRetorno = CA_MFCLOCK_STATE::CLOCK_PAUSADO;
 		break;
 	}
 

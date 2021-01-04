@@ -186,20 +186,20 @@ public:
 	/// (GetObject) - Retorna um objeto associado à operação assíncrona. O tipo de objeto, se houver, depende do método assíncrono que foi chamado.
 	/// </summary>
 	/// <param name="Param_Out_Objeto">Recebe a interface com o objeto desconhecido. Se nenhum objeto estiver associado à operação, esse parâmetro receberá o valor NULO. 
-	/// Se o valor não for NULO, o chamador deverá liberar a interface. O usuário deve criar a interface antes de chamar este método.</param>
+	/// Se o valor não for NULO, o chamador deverá liberar a interface. O usuário deve inicializar a interface antes de chamar este método.</param>
 	virtual CarenResult GetObject(ICaren^ Param_Out_Objeto);
 
 	/// <summary>
 	/// (GetState) - Retorna o objeto de estado especificado pelo chamador no método Begin assíncrono.
 	/// O chamador do método assíncrono especifica o objeto de estado e pode usá-lo para qualquer finalidade definida pelo responsável da chamada. O objeto de estado pode ser NULO.
 	/// </summary>
-	/// <param name="Param_Out_ObjetoEstado">Recebe a interface com o objeto desconhecido. Se o valor não for NULO, o chamador deverá liberar a interface. O usuário deve criar a interface antes de chamar este método.</param>
+	/// <param name="Param_Out_ObjetoEstado">Recebe a interface com o objeto desconhecido. Se o valor não for NULO, o chamador deverá liberar a interface. O usuário deve inicializar a interface antes de chamar este método.</param>
 	virtual CarenResult GetState(ICaren^ Param_Out_ObjetoEstado);
 
 	/// <summary>
 	/// (GetStateNoAddRef) - Retorna o objeto de estado especificado pelo chamador no método assíncrono Begin, sem incrementar a contagem de referência do objeto.
 	/// </summary>
-	/// <param name="Param_Out_ObjetoEstado">Recebe a interface com o objeto desconhecido. Se o valor não for NULO, o chamador deverá liberar a interface. O usuário deve criar a interface antes de chamar este método.</param>
+	/// <param name="Param_Out_ObjetoEstado">Recebe a interface com o objeto desconhecido. Se o valor não for NULO, o chamador deverá liberar a interface. O usuário deve inicializar a interface antes de chamar este método.</param>
 	virtual CarenResult GetStateNoAddRef(ICaren^ Param_Out_ObjetoEstado);
 
 	/// <summary>

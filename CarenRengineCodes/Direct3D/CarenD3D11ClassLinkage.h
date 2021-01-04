@@ -197,7 +197,7 @@ public:
 	/// <param name="Param_DeslocamentoVetorConstante">O deslocamento de quatro componentes vetor desde o início do buffer constante onde os dados de classe vão começar. Consequentemente, isto não é um deslocamento de byte.</param>
 	/// <param name="Param_DeslocamentoTextura">O slot de textura para a primeira textura; pode haver múltiplas texturas seguindo o deslocamento.</param>
 	/// <param name="Param_DeslocamentoAmostrador">O slot de amostra para o primeiro sampler; pode haver vários amostradores seguindo o deslocamento.</param>
-	/// <param name="Param_Out_ClasseInstance">Recebe um ponteiro para a interface (ICarenD3D11ClassInstance) para ser inicializada. O usuário deve criar a interface antes de chamar este método.</param>
+	/// <param name="Param_Out_ClasseInstance">Recebe um ponteiro para a interface (ICarenD3D11ClassInstance) para ser inicializada. O usuário deve inicializar a interface antes de chamar este método.</param>
 	virtual CarenResult CreateClassInstance(
 		String^ Para_NomeTipoClasse,
 		UInt32 Param_DeslocamentoBufferConstante,
@@ -211,7 +211,7 @@ public:
 	/// </summary>
 	/// <param name="Param_NomeInstanciaClasse">O nome de uma classe para o qual deseja obter a instância de classe.</param>
 	/// <param name="Param_IndiceInstancia">O índice da instância da classe.</param>
-	/// <param name="Param_Out_InstanceClasse">Recebe um ponteiro para a interface (ICarenD3D11ClassInstance) para ser inicializada. O usuário deve criar a interface antes de chamar este método.</param>
+	/// <param name="Param_Out_InstanceClasse">Recebe um ponteiro para a interface (ICarenD3D11ClassInstance) para ser inicializada. O usuário deve inicializar a interface antes de chamar este método.</param>
 	virtual CarenResult GetClassInstance(String^ Param_NomeInstanciaClasse, UInt32 Param_IndiceInstancia, ICaren^ Param_Out_InstanceClasse);
 
 

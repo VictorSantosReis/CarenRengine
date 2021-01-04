@@ -207,7 +207,7 @@ public:
 	/// <summary>
 	/// (GetDevice) - Obtém um ponteiro para o dispositivo que criou essa interface.
 	/// </summary>
-	/// <param name="Param_Out_DispositivoD3D11">Retorna o dispositivo D3D11 que criou essa interface. O usuário deve criar a interface antes de chamar este método.</param>
+	/// <param name="Param_Out_DispositivoD3D11">Retorna o dispositivo D3D11 que criou essa interface. O usuário deve inicializar a interface antes de chamar este método.</param>
 	virtual CarenResult GetDevice(ICaren^ Param_Out_DispositivoD3D11);
 
 	/// <summary>

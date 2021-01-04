@@ -610,14 +610,14 @@ Done:;
 
 /// <summary>
 /// Coloca um marcador no fluxo.
-/// O método placemarker coloca um marcador no fluxo entre amostras. O CA_MIDIA_STREAM_SINK_MARCADORES enumeração define o 
+/// O método placemarker coloca um marcador no fluxo entre amostras. O CA_MFSTREAMSINK_MARKER_TYPE enumeração define o 
 /// tipo de marcador e o tipo de informações associadas com o marcador.
 /// </summary>
-/// <param name="Param_Marcador">Especifica o tipo de marcador, como um membro da enumeração: CA_MIDIA_STREAM_SINK_MARCADORES</param>
+/// <param name="Param_Marcador">Especifica o tipo de marcador, como um membro da enumeração: CA_MFSTREAMSINK_MARKER_TYPE</param>
 /// <param name="Param_ValorAdicional">Um valor que contém informações adicionais relacionadas ao marcador. Esse parâmetro pode ser (NULO).</param>
 /// <param name="Param_DadosAnexoEvento">Valor que é anexado junto ao evento(MEStreamSinkMarker). Chame o método (GetValue) na interface 
 /// de evento para obter esse valor. Esse parâmetro pode ser (NULO).</param>
-CarenResult CarenMFStreamSink::PlaceMarker(Enumeracoes::CA_MIDIA_STREAM_SINK_MARCADORES Param_Marcador, Estruturas::CA_PropVariant^ Param_ValorAdicional, Estruturas::CA_PropVariant^ Param_DadosAnexoEvento)
+CarenResult CarenMFStreamSink::PlaceMarker(Enumeracoes::CA_MFSTREAMSINK_MARKER_TYPE Param_Marcador, Estruturas::CA_PropVariant^ Param_ValorAdicional, Estruturas::CA_PropVariant^ Param_DadosAnexoEvento)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -635,22 +635,22 @@ CarenResult CarenMFStreamSink::PlaceMarker(Enumeracoes::CA_MIDIA_STREAM_SINK_MAR
 	//Verifica se define na variavel o marcador definido pelo usuario
 	switch (Param_Marcador)
 	{
-	case CarenRengine::SDKBase::Enumeracoes::CA_MIDIA_STREAM_SINK_MARCADORES::MARCADOR_DEFAULT:
+	case CarenRengine::SDKBase::Enumeracoes::CA_MFSTREAMSINK_MARKER_TYPE::MFSTREAMSINK_MARKER_DEFAULT:
 		//Define o marcador.
 		Marcador = MFSTREAMSINK_MARKER_DEFAULT;
 		break;
 
-	case CarenRengine::SDKBase::Enumeracoes::CA_MIDIA_STREAM_SINK_MARCADORES::MARCADOR_FIM_SEGMENTO:
+	case CarenRengine::SDKBase::Enumeracoes::CA_MFSTREAMSINK_MARKER_TYPE::MFSTREAMSINK_MARKER_ENDOFSEGMENT:
 		//Define o marcador.
 		Marcador = MFSTREAMSINK_MARKER_ENDOFSEGMENT;
 		break;
 
-	case CarenRengine::SDKBase::Enumeracoes::CA_MIDIA_STREAM_SINK_MARCADORES::MARCADOR_LACUNA_FLUXO:
+	case CarenRengine::SDKBase::Enumeracoes::CA_MFSTREAMSINK_MARKER_TYPE::MFSTREAMSINK_MARKER_TICK:
 		//Define o marcador.
 		Marcador = MFSTREAMSINK_MARKER_TICK;
 		break;
 
-	case CarenRengine::SDKBase::Enumeracoes::CA_MIDIA_STREAM_SINK_MARCADORES::MARCADOR_EVENTO:
+	case CarenRengine::SDKBase::Enumeracoes::CA_MFSTREAMSINK_MARKER_TYPE::MFSTREAMSINK_MARKER_EVENT:
 		//Define o marcador.
 		Marcador = MFSTREAMSINK_MARKER_EVENT;
 		break;

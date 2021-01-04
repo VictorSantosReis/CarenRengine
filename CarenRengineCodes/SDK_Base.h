@@ -395,13 +395,13 @@ namespace CarenRengine
 				literal String^ MF_MT_PIXEL_ASPECT_RATIO = "{c6376a1e-8d0a-4027-be45-6d9a0ad39bb6}";
 				/// <summary>
 				/// Tipo do valor: UInt32.
-				/// O valor desse atributo é um membro da enumeração: CA_VIDEO_TAXA_PROPORCAO_PRETENDIDA.
+				/// O valor desse atributo é um membro da enumeração: CA_MFVideoSrcContentHintFlags.
 				/// </summary>
 				literal String^ MF_MT_SOURCE_CONTENT_HINT = "{68ACA3CC-22D0-44E6-85F8-28167197FA38}";
 				/// <summary>
 				/// Tipo do valor: UInt32.
 				/// Especifica a função de conversão de RGB para R'G'B' para um tipo de mídia de vídeo.
-				/// O valor desse atributo é um membro da enumeração: CA_VIDEO_FUCAO_CONVERSAO_RGB_LINEAR
+				/// O valor desse atributo é um membro da enumeração: CA_MFVideoTransferFunction
 				/// </summary>
 				literal String^ MF_MT_TRANSFER_FUNCTION = "{5FB0FCE9-BE5C-4935-A811-EC838F8EED93}";
 				/// <summary>
@@ -414,36 +414,36 @@ namespace CarenRengine
 				/// <summary>
 				/// Tipo do valor: UInt32.
 				/// Descreve como o croma foi amostrado para um tipo de mídia de vídeo de Y'Cb'Cr'.
-				/// O valor desse atributo é um bit a bit ou de sinalizadores da enumeração: CA_VIDEO_CHROMA_SUB_SAMPLING
+				/// O valor desse atributo é um bit a bit ou de sinalizadores da enumeração: CA_MFVideoChromaSubsampling
 				/// </summary>
 				literal String^ MF_MT_VIDEO_CHROMA_SITING = "{65DF2370-C773-4C33-AA64-843E068EFB0C}";
 				/// <summary>
 				/// Tipo do valor: UInt32.
 				/// Especifica as condições de iluminação ideais para um tipo de mídia de vídeo.
-				///  O valor desse atributo é um membro da enumeração: CA_VIDEO_LIGHTING.
+				///  O valor desse atributo é um membro da enumeração: CA_MFVideoLighting.
 				/// </summary>
 				literal String^ MF_MT_VIDEO_LIGHTING = "{53A0529C-890B-4216-8BF9-599367AD6D20}";
 				/// <summary>
 				/// Tipo do valor: UInt32.
 				/// Especifica o intervalo nominal das informações de cor em um tipo de mídia de vídeo.
-				/// O valor desse atributo é um membro da enumeração: CA_NOMINAL_RANGE
+				/// O valor desse atributo é um membro da enumeração: CA_MFNominalRange
 				/// Codificadores H. 264/AVC:
 				/// No tipo de mídia de saída, MF_MT_VIDEO_NOMINAL_RANGE pode ser definido com MFNominalRange_0_255 e MFNominalRange_16_235.
 				/// Codificador H. 264 / AVC deve tratar MFNominalRange_Unknown como MFNominalRange_16_235.
 				/// Codificador H. 264 / AVC deve rejeitar um tipo de mídia de saída quando MF_MT_VIDEO_NOMINAL_RANGE é definido como MFNominalRange_48_208, 
-				/// MFNominalRange_64_127, ou quaisquer outros valores não definidos em CA_NOMINAL_RANGE.
+				/// MFNominalRange_64_127, ou quaisquer outros valores não definidos em CA_MFNominalRange.
 				/// </summary>
 				literal String^ MF_MT_VIDEO_NOMINAL_RANGE = "{C21B8EE5-B956-4071-8DAF-325EDF5CAB11}";
 				/// <summary>
 				/// {Pendente} Tipo do valor: UInt32.
 				/// Especifica as primárias de cores para um tipo de mídia de vídeo.
-				/// O valor desse atributo é um membro da enumeração: CA_VIDEO_CORES_PRIMARIAS
+				/// O valor desse atributo é um membro da enumeração: CA_MFVideoPrimaries
 				/// </summary>
 				literal String^ MF_MT_VIDEO_PRIMARIES = "{DBFBE4D7-0740-4EE0-8192-850AB0E21935}";
 				/// <summary>
 				/// Tipo do valor: UInt32.
 				/// Especifica a rotação de uma moldura de vídeo no sentido anti-horário.
-				/// O valor desse atributo é um membro da enumeração: CA_VIDEO_ROTACAO_FORMATO
+				/// O valor desse atributo é um membro da enumeração: CA_MFVideoRotationFormat
 				/// O vídeo de um dispositivo portátil, como um telemóvel, é frequentemente girado por 90, 180 ou 270 graus. Se a câmera armazena a orientação como 
 				/// metadados no arquivo de vídeo, a imagem pode ser ajustada no momento da reprodução.
 				/// Se este atributo definido como MFVideoRotationFormat_90, significa que o conteúdo foi girado 90 graus no sentido anti-horário. Se o conteúdo foi 
@@ -453,7 +453,7 @@ namespace CarenRengine
 				/// <summary>
 				/// Tipo do valor: UInt32.
 				/// Para tipos de mídia YUV, define a matriz de conversão do espaço de cores Y'Cb'Cr' para o espaço de cores R'G'B'.
-				/// O valor desse atributo é um membro da enumeração: CA_VIDEO_MATRIZ_CONVERSAO
+				/// O valor desse atributo é um membro da enumeração: CA_MFVideoTransferMatrix
 				/// </summary>
 				literal String^ MF_MT_YUV_MATRIX = "{3E23D450-2C75-4D25-A00E-B91670D12327}";
 				/// <summary>
@@ -5117,7 +5117,7 @@ namespace CarenRengine
 			};
 			
 			/// <summary>
-			/// Enumera os (Valores) que podem ser usado para acessar um Stream no Leitor de mídia(ICarenMFSourceReader).
+			/// (Original) - Enumera os (Valores) que podem ser usado para acessar um Stream no Leitor de mídia(ICarenMFSourceReader).
 			/// Você pode usar os valores abaixo, convertendo para (uint) para obter o valor da enumeração.
 			/// </summary>
 			public enum class CA_SOURCE_READER_ID : UInt32
@@ -5181,16 +5181,14 @@ namespace CarenRengine
 
 
 				/// <summary>
-				/// Ocorreu um erro durante a realização da chamada para a interface (ICarenMFSourceReader). Não chame novamente o método para Read uma proxima amostra.
+				/// Ocorreu um erro durante a realização da chamada para a interface (ICarenMFSourceReader). Não chame novamente o método para ler uma proxima amostra.
 				/// </summary>
 				MF_SOURCE_READERF_ERROR = 0x1,
-
 
 				/// <summary>
 				/// O leitor de mídia alcançou o final do fluxo.
 				/// </summary>
 				MF_SOURCE_READERF_ENDOFSTREAM = 0x2,
-
 
 				/// <summary>
 				/// Um ou mais novos fluxos foram criados. Responda a esse sinalizador fazendo pelo menos um dos seguintes procedimentos: 
@@ -5199,25 +5197,21 @@ namespace CarenRengine
 				/// </summary>
 				MF_SOURCE_READERF_NEWSTREAM = 0x4,
 
-
 				/// <summary>
 				/// O (Formato Nativo) foi alterado para um ou mais fluxos. O (Formato Nativo) é o formato fornecido pela fonte de mídia 
 				/// antes de qualquer decodificadores serem inseridos.
 				/// </summary>
 				MF_SOURCE_READERF_NATIVEMEDIATYPECHANGED = 0x10,
 
-
 				/// <summary>
 				/// A mídia atual tem o tipo alterado para um ou mais fluxos. Para obter o tipo de mídia atual, chame o  método ICarenMFSourceReader.GetCurrentMediaType.
 				/// </summary>
 				MF_SOURCE_READERF_CURRENTMEDIATYPECHANGED = 0x20,
 
-
 				/// <summary>
 				/// Há uma lacuna no fluxo. Este sinalizador corresponde a um evento MEStreamTick da (Fonte de Mídia).
 				/// </summary>
 				MF_SOURCE_READERF_STREAMTICK = 0x100,
-
 
 				/// <summary>
 				/// Todas as transformações inseridas pelo aplicativo foram removidas para um fluxo específico. Isso pode ser devido a uma alteração de 
@@ -5228,7 +5222,7 @@ namespace CarenRengine
 			};
 
 			/// <summary>
-			/// Define o comportamento do resolvedor de origem(ICarenMFSourceResolver). Esses sinalizadores também são usados por manipuladores de esquema e manipuladores de fluxo de bytes.
+			/// (Original) - Define o comportamento do resolvedor de origem(ICarenMFSourceResolver). Esses sinalizadores também são usados por manipuladores de esquema e manipuladores de fluxo de bytes.
 			/// </summary>
 			[FlagsAttribute]
 			public enum class CA_SOURCE_RESOLVER_FLAGS
@@ -5589,39 +5583,39 @@ namespace CarenRengine
 				/// O relógio é inválido. Um relógio pode ser inválido por vários motivos. Alguns relógios retornam esse estado
 				/// antes do primeiro início. Esse estado também pode ocorrer se o dispositivo subjacente for perdido.
 				/// </summary>
-				CLOCK_INVALIDO = 0,
+				MFCLOCK_STATE_INVALID = 0,
 
 				/// <summary>
 				/// O relógio está em execução. Enquanto o relógio está em execução, o tempo avança na frequência do relógio 
 				/// e a taxa atual.
 				/// </summary>
-				CLOCK_RODANDO = (CLOCK_INVALIDO + 1),
+				MFCLOCK_STATE_RUNNING = (MFCLOCK_STATE_INVALID + 1),
 
 				/// <summary>
 				/// O relógio está parado. Enquanto parado, o relógio relata um tempo de 0.
 				/// </summary>
-				CLOCK_PARADO = (CLOCK_RODANDO + 1),
+				MFCLOCK_STATE_STOPPED = (MFCLOCK_STATE_RUNNING + 1),
 
 				/// <summary>
 				/// O relógio está em pausa. Enquanto pausado, o relógio informa o tempo em que foi pausado.
 				/// </summary>
-				CLOCK_PAUSADO = (CLOCK_PARADO + 1)
+				MFCLOCK_STATE_PAUSED = (MFCLOCK_STATE_STOPPED + 1)
 			};
 
 			/// <summary>
-			/// Enumera os modos de relação de aspecto do vídeo.
+			/// (MFVideoAspectRatioMode) - Enumera os modos de relação de aspecto do vídeo.
 			/// </summary>
-			public enum class CA_VIDEO_DISPLAY_ASPECT_RATIO_MODE
+			public enum class CA_MFVideoAspectRatioMode
 			{
 				/// <summary>
 				/// Não mantenha a proporção do vídeo. Alongue o vídeo para caber no retângulo de saída.
 				/// </summary>
-				VD_ARMode_None = 0,
+				MFVideoARMode_None = 0,
 
 				/// <summary>
 				/// Preserve a taxa de proporção do vídeo por Letterboxing ou dentro do retângulo de saída.
 				/// </summary>
-				VD_ARMode_PreservarImagem = 0x1,
+				MFVideoARMode_PreservePicture = 0x1,
 
 				/// <summary>
 				/// (EVR Ignora esse sinalizador).
@@ -5629,7 +5623,7 @@ namespace CarenRengine
 				/// Por exemplo, se a resolução nativa do monitor for 1600 por 1200 (4:3), mas a resolução de exibição for 1280 por 1024 
 				/// (5:4), o monitor exibirá pixels não quadrados.
 				/// </summary>
-				VD_ARModePreservarPixel = 0x2,
+				MFVideoARMode_PreservePixel = 0x2,
 
 				/// <summary>
 				/// Aplique um trecho horizontal não linear se a taxa de proporção do retângulo de destino não corresponder à taxa de 
@@ -5639,14 +5633,14 @@ namespace CarenRengine
 				/// em um display 16:9, em vez de pilar-boxing. Não-linear esticar vertical não é suportada, porque os resultados 
 				/// visuais são geralmente pobres.
 				/// Esse modo pode causar degradação do desempenho.
-				/// Se este sinalizador estiver definido, você também deve definir o VD_ARModePreservarPixel e VD_ARMode_PreservarImagem sinalizadores.
+				/// Se este sinalizador estiver definido, você também deve definir o MFVideoARMode_PreservePixel e MFVideoARMode_PreservePicture sinalizadores.
 				/// </summary>
-				VD_ARModeNonLinearStretch = 0x4,
+				MFVideoARMode_NonLinearStretch = 0x4,
 
 				/// <summary>
 				/// Bitmask para validar valores de sinalizador. Esse valor não é um sinalizador válido.
 				/// </summary>
-				VD_ARMode_Mask = 0x7
+				MFVideoARMode_Mask = 0x7
 			};
 
 			/// <summary>
@@ -5795,7 +5789,7 @@ namespace CarenRengine
 			/// Enumera o level de encodificação de video H.264.
 			/// Esses valores são usados com o atributo MF_MT_MPEG2_LEVEL.
 			/// </summary>
-			public enum class  CA_ENCODE_NIVEL_eAVEncH264V : int
+			public enum class  CA_ENCODE_NIVEL_eAVEncH264V
 			{
 				/// <summary>
 				/// Nível 1.
@@ -6011,7 +6005,7 @@ namespace CarenRengine
 			/// proporção especificada.
 			/// Use esses sinalizadores com o atributo MF_MT_SOURCE_CONTENT_HINT.
 			/// </summary>
-			public enum class CA_VIDEO_TAXA_PROPORCAO_PRETENDIDA
+			public enum class CA_MFVideoSrcContentHintFlags
 			{
 				/// <summary>
 				/// A proporção é desconhecida.
@@ -6031,7 +6025,7 @@ namespace CarenRengine
 			/// (MFVideoTransferFunction) - Enumera as funções de conversão de RGB linear para RGB não linear(R'G'B').
 			/// Esses sinalizadores são usados com o atributo MF_MT_TRANSFER_FUNCTION.
 			/// </summary>
-			public enum class CA_VIDEO_FUCAO_CONVERSAO_RGB_LINEAR
+			public enum class CA_MFVideoTransferFunction
 			{
 				/// <summary>
 				/// Desconhecido. Trate como MFVideoTransFunc_709.
@@ -6126,7 +6120,7 @@ namespace CarenRengine
 			/// Chroma para Y'Cb'Cr' dados.
 			/// Esses sinalizadores são usados com o atributo MF_MT_VIDEO_CHROMA_SITING.
 			/// </summary>
-			public enum class CA_VIDEO_CHROMA_SUB_SAMPLING
+			public enum class CA_MFVideoChromaSubsampling
 			{
 				/// <summary>
 				/// Esquema de codificação desconhecido.
@@ -6186,7 +6180,7 @@ namespace CarenRengine
 			/// (MFVideoLighting) - Enumera a iluminação ideal para exibir um determinado conjunto de conteúdo de vídeo.
 			/// Essa enumeração é usada com o atributo MF_MT_VIDEO_LIGHTING.
 			/// </summary>
-			public enum class CA_VIDEO_LIGHTING
+			public enum class CA_MFVideoLighting
 			{
 				/// <summary>
 				/// A iluminação ideal é desconhecida.
@@ -6224,7 +6218,7 @@ namespace CarenRengine
 			/// ("mais negro do que o preto").
 			/// Essa enumeração é usada com o atributo MF_MT_VIDEO_NOMINAL_RANGE.
 			/// </summary>
-			public enum class CA_NOMINAL_RANGE
+			public enum class CA_MFNominalRange
 			{
 				/// <summary>
 				/// Faixa nominal desconhecida.
@@ -6274,7 +6268,7 @@ namespace CarenRengine
 			/// converter cores do espaço de cores RGB para o espaço de cores CIE XYZ.
 			/// Essa enumeração é usada com o atributo MF_MT_VIDEO_PRIMARIES.
 			/// </summary>
-			public enum class CA_VIDEO_CORES_PRIMARIAS
+			public enum class CA_MFVideoPrimaries
 			{
 				/// <summary>
 				/// As cores primárias são desconhecidas.
@@ -6347,7 +6341,7 @@ namespace CarenRengine
 			/// (_MFVideoRotationFormat) - Enumera as rotações da imagem de vídeo no sentido anti-horário.
 			/// Essa enumeração é usada com o atributo MF_MT_VIDEO_ROTATION.
 			/// </summary>
-			public enum class CA_VIDEO_ROTACAO_FORMATO
+			public enum class CA_MFVideoRotationFormat
 			{
 				/// <summary>
 				/// A imagem não é girada.
@@ -6372,7 +6366,7 @@ namespace CarenRengine
 			/// e Studio R'G'B'.
 			/// Essa enumeração é usada com o atributo MF_MT_YUV_MATRIX.
 			/// </summary>
-			public enum class CA_VIDEO_MATRIZ_CONVERSAO
+			public enum class CA_MFVideoTransferMatrix
 			{
 				/// <summary>
 				/// Matriz de transferência desconhecida. Trate como MFVideoTransferMatrix_BT709.
@@ -6409,7 +6403,7 @@ namespace CarenRengine
 			};
 			
 			/// <summary>
-			/// (MediaEventType) - [Falta documentar os eventos] Enumera todos os tipos de eventos do Media Foundation. Alguns eventos podem não ter suporte.
+			/// (MediaEventType)[FALTA DOCUMENTAR] - Enumera todos os tipos de eventos do Media Foundation. Alguns eventos podem não ter suporte.
 			/// </summary>
 			public enum class CA_MediaEventType
 			{
@@ -6418,25 +6412,21 @@ namespace CarenRengine
 				/// Descrição: 
 				/// </summary>
 				MEUnknown = 0,
-
 				/// <summary>
 				/// Tipo do valor no evento: 
 				/// Descrição: 
 				/// </summary>
 				MEError = 1,
-
 				/// <summary>
 				/// Tipo do valor no evento: 
 				/// Descrição: 
 				/// </summary>
 				MEExtendedType = 2,
-
 				/// <summary>
 				/// Tipo do valor no evento: 
 				/// Descrição: 
 				/// </summary>
 				MENonFatalError = 3,
-
 				/// <summary>
 				/// Tipo do valor no evento: 
 				/// Descrição: 
@@ -6748,291 +6738,291 @@ namespace CarenRengine
 				/// </summary>
 				MEStreamSinkRequestSample = 305,
 				/// <summary>
-			/// Tipo do valor no evento: 
-			/// Descrição: 
-			/// </summary>
-			MEStreamSinkMarker = 306,
-			/// <summary>
-		/// Tipo do valor no evento: 
-		/// Descrição: 
-		/// </summary>
-		MEStreamSinkPrerolled = 307,
-		/// <summary>
-	/// Tipo do valor no evento: 
-	/// Descrição: 
-	/// </summary>
-	MEStreamSinkScrubSampleComplete = 308,
-	/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-MEStreamSinkFormatChanged = 309,
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-MEStreamSinkDeviceChanged = 310,
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-MEQualityNotify = 311,
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-MESinkInvalidated = 312,
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-MEAudioSessionNameChanged = 313,
-/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEStreamSinkMarker = 306,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEStreamSinkPrerolled = 307,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEStreamSinkScrubSampleComplete = 308,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEStreamSinkFormatChanged = 309,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEStreamSinkDeviceChanged = 310,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEQualityNotify = 311,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MESinkInvalidated = 312,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEAudioSessionNameChanged = 313,
+				/// <summary>
 				/// Tipo do valor no evento: 
 				/// Descrição: 
 				/// </summary>
 				MEAudioSessionVolumeChanged = 314,
 				/// <summary>
-								/// Tipo do valor no evento: 
-								/// Descrição: 
-								/// </summary>
-								MEAudioSessionDeviceRemoved = 315,
-								/// <summary>
-												/// Tipo do valor no evento: 
-												/// Descrição: 
-												/// </summary>
-												MEAudioSessionServerShutdown = 316,
-												/// <summary>
-																/// Tipo do valor no evento: 
-																/// Descrição: 
-																/// </summary>
-																MEAudioSessionGroupingParamChanged = 317,
-																/// <summary>
-																				/// Tipo do valor no evento: 
-																				/// Descrição: 
-																				/// </summary>
-																				MEAudioSessionIconChanged = 318,
-																				/// <summary>
-																			/// Tipo do valor no evento: 
-																			/// Descrição: 
-																			/// </summary>
-																			MEAudioSessionFormatChanged = 319,
-																			/// <summary>
-																		/// Tipo do valor no evento: 
-																		/// Descrição: 
-																		/// </summary>
-																		MEAudioSessionDisconnected = 320,
-																		/// <summary>
-																	/// Tipo do valor no evento: 
-																	/// Descrição: 
-																	/// </summary>
-																	MEAudioSessionExclusiveModeOverride = 321,
-																	/// <summary>
-																/// Tipo do valor no evento: 
-																/// Descrição: 
-																/// </summary>
-																MESinkV1Anchor = MEAudioSessionExclusiveModeOverride,
-																/// <summary>
-															/// Tipo do valor no evento: 
-															/// Descrição: 
-															/// </summary>
-															MECaptureAudioSessionVolumeChanged = 322,
-															/// <summary>
-														/// Tipo do valor no evento: 
-														/// Descrição: 
-														/// </summary>
-														MECaptureAudioSessionDeviceRemoved = 323,
-														/// <summary>
-													/// Tipo do valor no evento: 
-													/// Descrição: 
-													/// </summary>
-													MECaptureAudioSessionFormatChanged = 324,
-													/// <summary>
-												/// Tipo do valor no evento: 
-												/// Descrição: 
-												/// </summary>
-												MECaptureAudioSessionDisconnected = 325,
-												/// <summary>
-											/// Tipo do valor no evento: 
-											/// Descrição: 
-											/// </summary>
-											MECaptureAudioSessionExclusiveModeOverride = 326,
-											/// <summary>
-										/// Tipo do valor no evento: 
-										/// Descrição: 
-										/// </summary>
-										MECaptureAudioSessionServerShutdown = 327,
-										/// <summary>
-									/// Tipo do valor no evento: 
-									/// Descrição: 
-									/// </summary>
-									MESinkV2Anchor = MECaptureAudioSessionServerShutdown,
-									/// <summary>
-								/// Tipo do valor no evento: 
-								/// Descrição: 
-								/// </summary>
-								METrustUnknown = 400,
-								/// <summary>
-							/// Tipo do valor no evento: 
-							/// Descrição: 
-							/// </summary>
-							MEPolicyChanged = 401,
-							/// <summary>
-						/// Tipo do valor no evento: 
-						/// Descrição: 
-						/// </summary>
-						MEContentProtectionMessage = 402,
-						/// <summary>
-					/// Tipo do valor no evento: 
-					/// Descrição: 
-					/// </summary>
-					MEPolicySet = 403,
-					/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEAudioSessionDeviceRemoved = 315,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEAudioSessionServerShutdown = 316,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEAudioSessionGroupingParamChanged = 317,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEAudioSessionIconChanged = 318,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEAudioSessionFormatChanged = 319,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEAudioSessionDisconnected = 320,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEAudioSessionExclusiveModeOverride = 321,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MESinkV1Anchor = MEAudioSessionExclusiveModeOverride,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MECaptureAudioSessionVolumeChanged = 322,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MECaptureAudioSessionDeviceRemoved = 323,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MECaptureAudioSessionFormatChanged = 324,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MECaptureAudioSessionDisconnected = 325,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MECaptureAudioSessionExclusiveModeOverride = 326,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MECaptureAudioSessionServerShutdown = 327,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MESinkV2Anchor = MECaptureAudioSessionServerShutdown,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				METrustUnknown = 400,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEPolicyChanged = 401,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEContentProtectionMessage = 402,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEPolicySet = 403,
+				/// <summary>
 				/// Tipo do valor no evento: 
 				/// Descrição: 
 				/// </summary>
 				METrustV1Anchor = MEPolicySet,
 				/// <summary>
-			/// Tipo do valor no evento: 
-			/// Descrição: 
-			/// </summary>
-			MEWMDRMLicenseBackupCompleted = 500,
-			/// <summary>
-		/// Tipo do valor no evento: 
-		/// Descrição: 
-		/// </summary>
-		MEWMDRMLicenseBackupProgress = 501,
-		/// <summary>
-	/// Tipo do valor no evento: 
-	/// Descrição: 
-	/// </summary>
-	MEWMDRMLicenseRestoreCompleted = 502,
-	/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-MEWMDRMLicenseRestoreProgress = 503,
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-MEWMDRMLicenseAcquisitionCompleted = 506,
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-MEWMDRMIndividualizationCompleted = 508,
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-MEWMDRMIndividualizationProgress = 513,
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-MEWMDRMProximityCompleted = 514,
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-MEWMDRMLicenseStoreCleaned = 515,
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-MEWMDRMRevocationDownloadCompleted = 516,
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-MEWMDRMV1Anchor = MEWMDRMRevocationDownloadCompleted,
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-METransformUnknown = 600,
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-METransformNeedInput = (METransformUnknown + 1),
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-METransformHaveOutput = (METransformNeedInput + 1),
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-METransformDrainComplete = (METransformHaveOutput + 1),
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-METransformMarker = (METransformDrainComplete + 1),
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-METransformInputStreamStateChanged = (METransformMarker + 1),
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-MEByteStreamCharacteristicsChanged = 700,
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-MEVideoCaptureDeviceRemoved = 800,
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-MEVideoCaptureDevicePreempted = 801,
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-MEStreamSinkFormatInvalidated = 802,
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-MEEncodingParameters = 803,
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-MEContentProtectionMetadata = 900,
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-MEDeviceThermalStateChanged = 950,
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-MEReservedMax = 10000
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEWMDRMLicenseBackupCompleted = 500,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEWMDRMLicenseBackupProgress = 501,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEWMDRMLicenseRestoreCompleted = 502,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEWMDRMLicenseRestoreProgress = 503,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEWMDRMLicenseAcquisitionCompleted = 506,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEWMDRMIndividualizationCompleted = 508,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEWMDRMIndividualizationProgress = 513,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEWMDRMProximityCompleted = 514,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEWMDRMLicenseStoreCleaned = 515,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEWMDRMRevocationDownloadCompleted = 516,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEWMDRMV1Anchor = MEWMDRMRevocationDownloadCompleted,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				METransformUnknown = 600,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				METransformNeedInput = (METransformUnknown + 1),
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				METransformHaveOutput = (METransformNeedInput + 1),
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				METransformDrainComplete = (METransformHaveOutput + 1),
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				METransformMarker = (METransformDrainComplete + 1),
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				METransformInputStreamStateChanged = (METransformMarker + 1),
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEByteStreamCharacteristicsChanged = 700,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEVideoCaptureDeviceRemoved = 800,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEVideoCaptureDevicePreempted = 801,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEStreamSinkFormatInvalidated = 802,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEEncodingParameters = 803,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEContentProtectionMetadata = 900,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEDeviceThermalStateChanged = 950,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEReservedMax = 10000
 			};
 
 			/// <summary>
-			/// Enumera as possibilidades para se recuperar um evento do gerador de eventos de forma síncrona.
+			/// (Original) - Enumera as possibilidades para se recuperar um evento do gerador de eventos de forma síncrona.
 			/// </summary>
-			public enum class CA_FLAGS_OBTER_EVENTO
+			public enum class CA_MF_GET_FLAGS_EVENT
 			{
 				/// <summary>
 				/// O método bloqueia até que o gerador de eventos enfileire um evento.
 				/// </summary>
-				Bloquear = 0,
+				Block = 0,
 
 				/// <summary>
 				/// O método retorna imediatamente.
 				/// </summary>
-				NaoAguardar = MF_EVENT_FLAG_NO_WAIT,
+				CA_MF_EVENT_FLAG_NO_WAIT = MF_EVENT_FLAG_NO_WAIT,
 			};
 
 			/// <summary>
@@ -8972,7 +8962,7 @@ MEReservedMax = 10000
 			/// (_MF2DBuffer_LockFlags) - Enumera os sinalizadores para o método de IMF2DBuffer2::Lock2DSize.
 			/// </summary>
 			[FlagsAttribute]
-			public enum class CA_2DBUFFER_LOCK_FLAGS
+			public enum class CA_MF2DBuffer_LockFlags
 			{
 				/// <summary>
 				/// Reservado.

@@ -990,7 +990,7 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_Flags">Especifica como deve obter o evento.</param>
 			/// <param name="Param_Out_MidiaEvent">Recebe a interface que contém as informações da operação assincrona para o evento notificado. O chamador deve liberar a interface.</param>
-			CarenResult GetEvent(Enumeracoes::CA_FLAGS_OBTER_EVENTO Param_Flags, OutParam ICarenMFMediaEvent^% Param_Out_MidiaEvent);
+			CarenResult GetEvent(Enumeracoes::CA_MF_GET_FLAGS_EVENT Param_Flags, OutParam ICarenMFMediaEvent^% Param_Out_MidiaEvent);
 
 			/// <summary>
 			/// (BeginGetEvent) - Inicia uma solicitação assíncrona para o próximo evento na fila.
@@ -1292,14 +1292,14 @@ namespace CarenRengine
 			/// <summary>
 			/// (Lock2DSize) - Fornece o acesso do chamador para a memória no buffer.
 			/// </summary>
-			/// <param name="Param_LockBufferFlags">Um membro da enumeração (CA_2DBUFFER_LOCK_FLAGS) que especifica se deseja bloquear o buffer para leitura, gravação ou ambos.</param>
+			/// <param name="Param_LockBufferFlags">Um membro da enumeração (CA_MF2DBuffer_LockFlags) que especifica se deseja bloquear o buffer para leitura, gravação ou ambos.</param>
 			/// <param name="Param_Out_BufferPBScanline0">Recebe um ponteiro para o primeiro byte da linha superior de pixels na imagem. A linha superior é definida como a linha superior quando 
 			/// a imagem é apresentada ao visualizador e pode não ser a primeira linha na memória.</param>
 			/// <param name="Param_Out_StrideSuperfice">Recebe o passo de superfície, em bytes. A passada pode ser negativa, indicando que a imagem é orientada de baixo para cima na memória.</param>
 			/// <param name="Param_Out_BufferStart">Recebe um ponteiro para o início do buffer acessível na memória.</param>
 			/// <param name="Param_Out_LarguraBuffer">Recebe o comprimento do buffer, em bytes.</param>
 			CarenResult Lock2DSize(
-				Enumeracoes::CA_2DBUFFER_LOCK_FLAGS Param_LockBufferFlags,
+				Enumeracoes::CA_MF2DBuffer_LockFlags Param_LockBufferFlags,
 				OutParam ICarenBuffer^% Param_Out_BufferPBScanline0,
 				OutParam Int64% Param_Out_StrideSuperfice,
 				OutParam ICarenBuffer^% Param_Out_BufferStart,
@@ -1913,14 +1913,17 @@ namespace CarenRengine
 			CarenResult GetStreamSelection(UInt32 Param_IdFluxo, OutParam Boolean% Param_Out_ResultadoFluxoSelecionado);
 
 			/// <summary>
-			/// 
+			/// ‎Lê a próxima amostra disponivel da fonte de mídia.‎ 
+			/// ‎Este método pode completar de forma sincrona ou assincrona. Se você fornecer um ponteiro de retorno de chamada(ICarenMFSourceReaderCallback) ao criar o leitor de origem, o método será assincrono. 
+			/// Caso contrário, o método é sincrono.
+			/// Para realizar uma chamada Assincrona, Ignore todos os parametros de saida(que contém o Out no nome). Caso contrario, o método retorna ER_E_INVALIDARG
 			/// </summary>
-			/// <param name="Param_StreamIndex"></param>
-			/// <param name="Param_ControlFlags"></param>
-			/// <param name="Param_Out_ActualStreamIndex"></param>
-			/// <param name="Param_Out_StreamFlags"></param>
-			/// <param name="Param_Out_Timestamp"></param>
-			/// <param name="Param_Out_Sample"></param>
+			/// <param name="Param_StreamIndex">O index para o fluxo a ser extraido a amostra. Esse valor pode ser um UInt32 para um ID de fluxo valido ou um dos valores da enumeração (CA_SOURCE_READER_ID).</param>
+			/// <param name="Param_ControlFlags">Um ‎‎Bitwise‎‎ OR de zero ou mais bandeiras da enumeração ‎‎(CA_MF_SOURCE_READER_CONTROL_FLAG).‎</param>
+			/// <param name="Param_Out_ActualStreamIndex">Retorna o index baseado em zero para o fluxo atual.</param>
+			/// <param name="Param_Out_StreamFlags">Retorna um ‎‎Bitwise‎‎ OR de zero ou mais bandeiras da enumeração ‎‎(‎‎MF_SOURCE_READER_FLAG) que indicam o status da chamada.</param>
+			/// <param name="Param_Out_Timestamp">‎Retorna o carimbo de hora(Timestamp) da amostra ou a hora do evento de fluxo indicado em ‎‎(Param_Out_StreamFlags)‎‎. O tempo é dado em unidades de 100 nanossegundos.‎</param>
+			/// <param name="Param_Out_Sample">Retorna uma interface (ICarenMFSample) ou (NULO). Se este parametro nao for NULO, o usuário é responsável por liberar a interface. O usuário é responsável por inicializar a interface antes de chamar este método.</param>
 			/// <returns></returns>
 			CarenResult ReadSample
 			(
@@ -2293,8 +2296,8 @@ namespace CarenRengine
 			/// <summary>
 			/// (GetAspectRatioMode) - Consulta como o processador de vídeo avançado (EVR) lida com a relação de aspecto da fonte de vídeo.
 			/// </summary>
-			/// <param name="Param_Out_AspectRatio">Recebe um ou mais bit de sinalizadores da enumeração: CA_VIDEO_DISPLAY_ASPECT_RATIO_MODE</param>
-			CarenResult GetAspectRatioMode(OutParam Enumeracoes::CA_VIDEO_DISPLAY_ASPECT_RATIO_MODE% Param_Out_AspectRatio);
+			/// <param name="Param_Out_AspectRatio">Recebe um ou mais bit de sinalizadores da enumeração: CA_MFVideoAspectRatioMode</param>
+			CarenResult GetAspectRatioMode(OutParam Enumeracoes::CA_MFVideoAspectRatioMode% Param_Out_AspectRatio);
 
 			/// <summary>
 			/// (GetBorderColor) - Obtém a cor da borda para o vídeo.
@@ -2373,8 +2376,8 @@ namespace CarenRengine
 			/// (SetAspectRatioMode) - Especifica como o processador de vídeo avançado (EVR) lida com a relação de aspecto 
 			/// da fonte de vídeo.
 			/// </summary>
-			/// <param name="Param_AspectRatio">Bit a bit ou de um ou mais sinalizadores da enumeração: CA_VIDEO_DISPLAY_ASPECT_RATIO_MODE</param>
-			CarenResult SetAspectRatioMode(Enumeracoes::CA_VIDEO_DISPLAY_ASPECT_RATIO_MODE Param_AspectRatio);
+			/// <param name="Param_AspectRatio">Bit a bit ou de um ou mais sinalizadores da enumeração: CA_MFVideoAspectRatioMode</param>
+			CarenResult SetAspectRatioMode(Enumeracoes::CA_MFVideoAspectRatioMode Param_AspectRatio);
 
 			/// <summary>
 			/// (SetBorderColor) - Define a cor da borda para o vídeo.

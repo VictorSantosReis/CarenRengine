@@ -650,22 +650,22 @@ CarenResult CarenMFClock::GetState(UInt32 Param_ValorReservado, [Out] Enumeracoe
 	{
 	case MFCLOCK_STATE_INVALID:
 		//Define o estado do relógio.
-		EstadoRelogioRetorno = CA_MFCLOCK_STATE::CLOCK_INVALIDO;
+		EstadoRelogioRetorno = CA_MFCLOCK_STATE::MFCLOCK_STATE_INVALID;
 		break;
 
 	case MFCLOCK_STATE_RUNNING:
 		//Define o estado do relógio.
-		EstadoRelogioRetorno = CA_MFCLOCK_STATE::CLOCK_RODANDO;
+		EstadoRelogioRetorno = CA_MFCLOCK_STATE::MFCLOCK_STATE_RUNNING;
 		break;
 
 	case MFCLOCK_STATE_STOPPED:
 		//Define o estado do relógio.
-		EstadoRelogioRetorno = CA_MFCLOCK_STATE::CLOCK_PARADO;
+		EstadoRelogioRetorno = CA_MFCLOCK_STATE::MFCLOCK_STATE_STOPPED;
 		break;
 
 	case MFCLOCK_STATE_PAUSED:
 		//Define o estado do relógio.
-		EstadoRelogioRetorno = CA_MFCLOCK_STATE::CLOCK_PAUSADO;
+		EstadoRelogioRetorno = CA_MFCLOCK_STATE::MFCLOCK_STATE_PAUSED;
 		break;
 	}
 

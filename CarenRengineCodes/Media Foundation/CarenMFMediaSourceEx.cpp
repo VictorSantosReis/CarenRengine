@@ -425,7 +425,7 @@ CarenResult CarenMFMediaSourceEx::GetSourceAttributes([Out] ICarenMFAttributes^%
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
 
-	//Resultados Com.
+	//Resultado COM.
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
@@ -477,7 +477,7 @@ CarenResult CarenMFMediaSourceEx::GetStreamAttributes(UInt32 Param_Identificador
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
 
-	//Resultados Com.
+	//Resultado COM.
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
@@ -528,7 +528,7 @@ CarenResult CarenMFMediaSourceEx::SetD3DManager(ICarenMFDXGIDeviceManager^ Param
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
 
-	//Resultados Com.
+	//Resultado COM.
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
@@ -581,7 +581,7 @@ CarenResult CarenMFMediaSourceEx::CreatePresentationDescriptor([Out] ICarenMFPre
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
 
-	//Resultados Com.
+	//Resultado COM.
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
@@ -632,7 +632,7 @@ CarenResult CarenMFMediaSourceEx::GetCharacteristics([Out] Enumeracoes::CA_MFMED
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
 
-	//Resultados Com.
+	//Resultado COM.
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
@@ -681,7 +681,7 @@ CarenResult CarenMFMediaSourceEx::Start(ICarenMFPresentationDescriptor^ Param_De
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
 
-	//Resultados Com.
+	//Resultado COM.
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
@@ -752,7 +752,7 @@ CarenResult CarenMFMediaSourceEx::Pause()
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
 
-	//Resultados Com.
+	//Resultado COM.
 	ResultadoCOM Hr = E_FAIL;
 
 	//Chama o método para pausar
@@ -786,7 +786,7 @@ CarenResult CarenMFMediaSourceEx::Stop()
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
 
-	//Resultados Com.
+	//Resultado COM.
 	ResultadoCOM Hr = E_FAIL;
 
 	//Chama o método para desligado.
@@ -820,7 +820,7 @@ CarenResult CarenMFMediaSourceEx::Shutdown()
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
 
-	//Resultados Com.
+	//Resultado COM.
 	ResultadoCOM Hr = E_FAIL;
 
 	//Chama o método para desligado.
@@ -860,7 +860,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Flags">Especifica como deve obter o evento.</param>
 /// <param name="Param_Out_MidiaEvent">Recebe a interface que contém as informações da operação assincrona para o evento notificado. O chamador deve liberar a interface.</param>
-CarenResult CarenMFMediaSourceEx::GetEvent(CA_FLAGS_OBTER_EVENTO Param_Flags, [Out] ICarenMFMediaEvent^% Param_Out_MidiaEvent)
+CarenResult CarenMFMediaSourceEx::GetEvent(CA_MF_GET_FLAGS_EVENT Param_Flags, [Out] ICarenMFMediaEvent^% Param_Out_MidiaEvent)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

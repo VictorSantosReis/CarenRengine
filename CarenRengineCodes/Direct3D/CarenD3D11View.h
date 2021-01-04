@@ -49,6 +49,11 @@ public ref class CarenD3D11View : public ICarenD3D11View
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenD3D11View();
+
 	~CarenD3D11View();
 
 

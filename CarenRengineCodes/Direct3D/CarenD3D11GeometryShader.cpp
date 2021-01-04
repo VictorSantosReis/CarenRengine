@@ -24,6 +24,11 @@ CarenD3D11GeometryShader::~CarenD3D11GeometryShader()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor.
+CarenD3D11GeometryShader::CarenD3D11GeometryShader()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 //
 // Métodos da interface ICaren

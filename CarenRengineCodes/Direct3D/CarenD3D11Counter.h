@@ -46,6 +46,11 @@ public ref class CarenD3D11Counter : public ICarenD3D11Counter
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenD3D11Counter();
+
 	~CarenD3D11Counter();
 
 

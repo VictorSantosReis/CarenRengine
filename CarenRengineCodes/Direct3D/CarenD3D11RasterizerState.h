@@ -47,6 +47,11 @@ public ref class CarenD3D11RasterizerState : public ICarenD3D11RasterizerState
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenD3D11RasterizerState();
+
 	~CarenD3D11RasterizerState();
 
 

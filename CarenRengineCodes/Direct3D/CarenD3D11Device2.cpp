@@ -24,6 +24,11 @@ CarenD3D11Device2::~CarenD3D11Device2()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor.
+CarenD3D11Device2::CarenD3D11Device2()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 //
 // Métodos da interface ICaren
@@ -737,11 +742,11 @@ Done:;
 /// <param name="Param_Out_EstadoContextoDispositivo">Recebe um ponteiro para um objeto ICarenD3DDeviceContextState que representa o estado de um dispositivo Direct3D.</param>
 CarenResult CarenD3D11Device2::CreateDeviceContextState(
 	CA_D3D11_1_CREATE_DEVICE_CONTEXT_STATE_FLAG Param_Flags,
-	cli::array<CA_D3D_NIVEL_RECURSO>^ Param_NiveisRecurso,
+	cli::array<CA_D3D_FEATURE_LEVEL>^ Param_NiveisRecurso,
 	UInt32 Param_QuantidadeNiveisRecurso,
 	UInt32 Param_VersaoSDK,
 	String^ Param_RIIDInterfaceEmulada,
-	[Out] CA_D3D_NIVEL_RECURSO% Param_Out_NivelRecursoDefinido,
+	[Out] CA_D3D_FEATURE_LEVEL% Param_Out_NivelRecursoDefinido,
 	[Out] ICarenD3DDeviceContextState^% Param_Out_EstadoContextoDispositivo)
 {
 	//Variavel a ser retornada.
@@ -783,7 +788,7 @@ CarenResult CarenD3D11Device2::CreateDeviceContextState(
 	}
 
 	//Define o nivel de recurso que foi usado.
-	Param_Out_NivelRecursoDefinido = static_cast<CA_D3D_NIVEL_RECURSO>(OutNivelRecursoDefinido);
+	Param_Out_NivelRecursoDefinido = static_cast<CA_D3D_FEATURE_LEVEL>(OutNivelRecursoDefinido);
 
 	//Cria a interface a ser retornada
 	Param_Out_EstadoContextoDispositivo = gcnew CarenD3DDeviceContextState();
@@ -3505,14 +3510,14 @@ Done:;
 /// <summary>
 /// (GetCreationFlags) - Se os sinalizadores usados durante a chamada para criar o dispositivo com D3D11CreateDevice.
 /// </summary>
-/// <param name="Param_Out_Flags">Recebe um flags de bit a bits da enumerção (CA_D3D11_CRIACAO_DISPOSITIVO_FLAGS) que contém o modo de criaçã do dispositivo.</param>
-CarenResult CarenD3D11Device2::GetCreationFlags([Out] Enumeracoes::CA_D3D11_CRIACAO_DISPOSITIVO_FLAGS% Param_Out_Flags)
+/// <param name="Param_Out_Flags">Recebe um flags de bit a bits da enumerção (CA_D3D11_CREATE_DEVICE_FLAG) que contém o modo de criaçã do dispositivo.</param>
+CarenResult CarenD3D11Device2::GetCreationFlags([Out] Enumeracoes::CA_D3D11_CREATE_DEVICE_FLAG% Param_Out_Flags)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
 
 	//Chama o método para realizar a operação.
-	Param_Out_Flags = static_cast<Enumeracoes::CA_D3D11_CRIACAO_DISPOSITIVO_FLAGS>(PonteiroTrabalho->GetCreationFlags());
+	Param_Out_Flags = static_cast<Enumeracoes::CA_D3D11_CREATE_DEVICE_FLAG>(PonteiroTrabalho->GetCreationFlags());
 
 	//Define sucesso por default a operação.
 	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
@@ -3579,7 +3584,7 @@ CarenResult CarenD3D11Device2::GetExceptionMode([Out] Enumeracoes::CA_D3D11_RAIS
 /// (GetFeatureLevel) - Obtém o nível de funcionalidade de dispositivo de hardware.
 /// </summary>
 /// <param name="Param_Out_NivelRecurso">Recebe um flag de bits a bits de um ou mais sinlizadores de niveis de recuso do dispositivo de hardware.</param>
-CarenResult CarenD3D11Device2::GetFeatureLevel([Out] Enumeracoes::CA_D3D_NIVEL_RECURSO% Param_Out_NivelRecurso)
+CarenResult CarenD3D11Device2::GetFeatureLevel([Out] Enumeracoes::CA_D3D_FEATURE_LEVEL% Param_Out_NivelRecurso)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -3591,7 +3596,7 @@ CarenResult CarenD3D11Device2::GetFeatureLevel([Out] Enumeracoes::CA_D3D_NIVEL_R
 	NivelRecursoHardware = PonteiroTrabalho->GetFeatureLevel();
 
 	//Define o nivel de recurso no parametro de saida
-	Param_Out_NivelRecurso = static_cast<Enumeracoes::CA_D3D_NIVEL_RECURSO>(NivelRecursoHardware);
+	Param_Out_NivelRecurso = static_cast<Enumeracoes::CA_D3D_FEATURE_LEVEL>(NivelRecursoHardware);
 
 	//Define sucesso por default a operação.
 	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);

@@ -24,6 +24,11 @@ CarenD3D11ClassInstance::~CarenD3D11ClassInstance()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor.
+CarenD3D11ClassInstance::CarenD3D11ClassInstance()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 //
 // Métodos da interface ICaren

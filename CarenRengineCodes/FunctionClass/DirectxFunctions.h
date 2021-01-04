@@ -16,13 +16,38 @@ limitations under the License.
 
 
 #pragma once
+#include "../SDK_Base.h"
+#include "../SDK_Utilidades.h"
+
+//Importa o namespace (BASE) e suas demais dependências
+using namespace CarenRengine::SDKBase;
+using namespace CarenRengine::SDKBase::Enumeracoes;
+using namespace CarenRengine::SDKBase::Estruturas;
+
+/// <summary>
+/// Classe responsável por conter funções auxiliares para a Api do DirectX.
+/// </summary>
 public ref class DirectxFunctions
 {
-
-	//Métodos do D3D que devem ser criados.
-	//Os métodos estão com	'//' para poder compilar enquanto não são implementados.
+	//Construtor & Destruidor.
 public:
-	//virtual void D3DCompilerFromFile();
+	DirectxFunctions() {};
+	~DirectxFunctions() {};
+
+	//Métodos
+public:
+	/// <summary>
+	/// Calcula um índice de subrecurso para uma textura.
+	/// </summary>
+	/// <param name="Param_MipSlice">Um índice baseado em zero para o nível mipmap para endereçamento; 0 indica o primeiro e mais detalhado nível mipmap.</param>
+	/// <param name="Param_ArraySlice">O índice baseado em zero para o nível de matriz a ser abordado; use sempre 0 para texturas de volume (3D).</param>
+	/// <param name="Param_MipLevels">Número de níveis de mipmap no recurso.</param>
+	/// <returns></returns>
+	UInt32 _D3D11CalcSubresource(
+		UInt32 Param_MipSlice,
+		UInt32 Param_ArraySlice,
+		UInt32 Param_MipLevels
+	);
 
 };
 

@@ -90,6 +90,11 @@ public ref class CarenD3D11Device4 : public ICarenD3D11Device4
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenD3D11Device4();
+
 	~CarenD3D11Device4();
 
 
@@ -115,30 +120,6 @@ public:
 			//Retorna o valor.
 			return Prop_DisposedClasse;
 		}
-	}
-
-
-
-	//Cria uma instância dessa classe (Estático)
-public:
-	/// <summary>
-	/// Método responsável por criar uma instância vazia da classe. Chamadas para os métodos sem um ponteiro de trabalho definido
-	/// pode gerar comportamentos indefinidos.
-	/// </summary>
-	/// <param name="Param_Out_CarenD3D11Device4">Recebe um ponteiro para a interface (Vazia).</param>
-	static CarenResult CriarInstanciaVazia([Out] ICarenD3D11Device4^% Param_Out_CarenD3D11Device4)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Cria a interface
-		Param_Out_CarenD3D11Device4 = gcnew CarenD3D11Device4();
-
-		//Define sucesso
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-		//Retorna o resultado
-		return Resultado;
 	}
 
 
@@ -488,11 +469,11 @@ public:
 	/// <param name="Param_Out_EstadoContextoDispositivo">Recebe um ponteiro para um objeto ICarenD3DDeviceContextState que representa o estado de um dispositivo Direct3D.</param>
 	virtual CarenResult CreateDeviceContextState(
 		CA_D3D11_1_CREATE_DEVICE_CONTEXT_STATE_FLAG Param_Flags,
-		cli::array<CA_D3D_NIVEL_RECURSO>^ Param_NiveisRecurso,
+		cli::array<CA_D3D_FEATURE_LEVEL>^ Param_NiveisRecurso,
 		UInt32 Param_QuantidadeNiveisRecurso,
 		UInt32 Param_VersaoSDK,
 		String^ Param_RIIDInterfaceEmulada,
-		[Out] CA_D3D_NIVEL_RECURSO% Param_Out_NivelRecursoDefinido,
+		[Out] CA_D3D_FEATURE_LEVEL% Param_Out_NivelRecursoDefinido,
 		[Out] ICarenD3DDeviceContextState^% Param_Out_EstadoContextoDispositivo);
 
 	/// <summary>
@@ -948,8 +929,8 @@ public:
 	/// <summary>
 	/// (GetCreationFlags) - Se os sinalizadores usados durante a chamada para criar o dispositivo com D3D11CreateDevice.
 	/// </summary>
-	/// <param name="Param_Out_Flags">Recebe um flags de bit a bits da enumerção (CA_D3D11_CRIACAO_DISPOSITIVO_FLAGS) que contém o modo de criaçã do dispositivo.</param>
-	virtual CarenResult GetCreationFlags([Out] Enumeracoes::CA_D3D11_CRIACAO_DISPOSITIVO_FLAGS% Param_Out_Flags);
+	/// <param name="Param_Out_Flags">Recebe um flags de bit a bits da enumerção (CA_D3D11_CREATE_DEVICE_FLAG) que contém o modo de criaçã do dispositivo.</param>
+	virtual CarenResult GetCreationFlags([Out] Enumeracoes::CA_D3D11_CREATE_DEVICE_FLAG% Param_Out_Flags);
 
 	/// <summary>
 	/// (GetDeviceRemovedReason) - A razão por que o dispositivo foi removido. Esse método retorna um (ResultCode) informando o motivo.
@@ -967,7 +948,7 @@ public:
 	/// (GetFeatureLevel) - Obtém o nível de funcionalidade de dispositivo de hardware.
 	/// </summary>
 	/// <param name="Param_Out_NivelRecurso">Recebe um flag de bits a bits de um ou mais sinlizadores de niveis de recuso do dispositivo de hardware.</param>
-	virtual CarenResult GetFeatureLevel([Out] Enumeracoes::CA_D3D_NIVEL_RECURSO% Param_Out_NivelRecurso);
+	virtual CarenResult GetFeatureLevel([Out] Enumeracoes::CA_D3D_FEATURE_LEVEL% Param_Out_NivelRecurso);
 
 	/// <summary>
 	/// (GetImmediateContext) - Obtém um contexto imediato, que pode reproduzir listas de comando.

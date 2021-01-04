@@ -25,6 +25,11 @@ CarenD3D11VertexShader::~CarenD3D11VertexShader()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor.
+CarenD3D11VertexShader::CarenD3D11VertexShader()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 //
 // Métodos da interface ICaren

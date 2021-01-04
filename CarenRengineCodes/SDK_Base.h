@@ -7226,7 +7226,7 @@ MEReservedMax = 10000
 			/// <summary>
 			/// (D3D_DRIVER_TYPE) - Enumera todas as opções de tipo de Driver para criação de um dispositovo D3D 11.
 			/// </summary>
-			public enum class CA_D3D_TIPO_DRIVER
+			public enum class CA_D3D_DRIVER_TYPE
 			{
 				/// <summary>
 				/// O tipo de driver é desconhecido.
@@ -7273,7 +7273,7 @@ MEReservedMax = 10000
 			/// <summary>
 			/// (D3D_FEATURE_LEVEL) - Descreve o conjunto de recursos orientados por um dispositivo Direct3D.
 			/// </summary>
-			public enum class CA_D3D_NIVEL_RECURSO
+			public enum class CA_D3D_FEATURE_LEVEL
 			{
 				/// <summary>
 				/// Características de alvos suportadas pelo [recurso level](/windows/desktop/direct3d11/overviews-direct3d-11-devices-downlevel-intro) 9.1, incluindo (Shader Model 2.
@@ -7326,7 +7326,7 @@ MEReservedMax = 10000
 			/// (D3D11_CREATE_DEVICE_FLAG) - Descreve os parâmetros que são usados para criar um dispositivo.
 			/// </summary>
 			[FlagsAttribute]
-			public enum class CA_D3D11_CRIACAO_DISPOSITIVO_FLAGS
+			public enum class CA_D3D11_CREATE_DEVICE_FLAG
 			{
 				/// <summary>
 				/// Define que não vai utilizar nenhum flag dessa enumeração.

@@ -24,6 +24,11 @@ CarenD3D11HullShader::~CarenD3D11HullShader()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor.
+CarenD3D11HullShader::CarenD3D11HullShader()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 //
 // Métodos da interface ICaren

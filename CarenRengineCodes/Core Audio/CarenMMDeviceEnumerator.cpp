@@ -41,13 +41,15 @@ CarenMMDeviceEnumerator::CarenMMDeviceEnumerator(CA_CLSCTX Param_Context)
 	//Variaveis utilizadas.
 	Utilidades Util;
 	IMMDeviceEnumerator* vi_pOutDeviceEnumerator = Nulo;
+	const CLSID vi_ClsidDeviceEnumerator = __uuidof(MMDeviceEnumerator);
+	const GUID vi_RiidEnumerator = __uuidof(IMMDeviceEnumerator);
 
 	//Chama o método para criar a interface.
 	Hr = CoCreateInstance(
-		CLSID_MMDeviceEnumerator,
+		vi_ClsidDeviceEnumerator,
 		Nulo,
 		static_cast<DWORD>(Param_Context),
-		IID_IMMDeviceEnumerator,
+		vi_RiidEnumerator,
 		reinterpret_cast<void**>(&vi_pOutDeviceEnumerator)
 	);
 

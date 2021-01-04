@@ -48,6 +48,11 @@ public ref class CarenD3D11Predicate : public ICarenD3D11Predicate
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenD3D11Predicate();
+
 	~CarenD3D11Predicate();
 
 

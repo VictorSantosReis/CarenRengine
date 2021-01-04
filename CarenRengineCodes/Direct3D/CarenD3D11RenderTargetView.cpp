@@ -24,6 +24,11 @@ CarenD3D11RenderTargetView::~CarenD3D11RenderTargetView()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor.
+CarenD3D11RenderTargetView::CarenD3D11RenderTargetView()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 //
 // Métodos da interface ICaren

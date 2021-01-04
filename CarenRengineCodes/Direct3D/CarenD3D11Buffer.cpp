@@ -24,6 +24,11 @@ CarenD3D11Buffer::~CarenD3D11Buffer()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor.
+CarenD3D11Buffer::CarenD3D11Buffer()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 //
 // Métodos da interface ICaren

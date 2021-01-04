@@ -360,9 +360,9 @@ public:
 	/// <param name="Param_QuantidadeNiveis">A contagem de níveis de recursos fornecidos pelo aplicativo</param>
 	/// <param name="Param_Out_NivelRecursoMaximo">O nível máximo de recurso da lista (Param_NiveisRecurso), que é suportado pelo dispositivo D2D.</param>
 	virtual CarenResult GetMaximumSupportedFeatureLevel(
-	cli::array<CA_D3D_NIVEL_RECURSO>^ Param_NiveisRecurso,
+	cli::array<CA_D3D_FEATURE_LEVEL>^ Param_NiveisRecurso,
 	UInt32 Param_QuantidadeNiveis,
-	[Out] CA_D3D_NIVEL_RECURSO% Param_Out_NivelRecursoMaximo);
+	[Out] CA_D3D_FEATURE_LEVEL% Param_Out_NivelRecursoMaximo);
 
 	/// <summary>
 	/// Indica se a precisão do buffer é suportada pelo dispositivo Direct2D subjacente.

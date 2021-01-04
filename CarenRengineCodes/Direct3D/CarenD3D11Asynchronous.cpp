@@ -24,6 +24,11 @@ CarenD3D11Asynchronous::~CarenD3D11Asynchronous()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor.
+CarenD3D11Asynchronous::CarenD3D11Asynchronous()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 //
 // Métodos da interface ICaren

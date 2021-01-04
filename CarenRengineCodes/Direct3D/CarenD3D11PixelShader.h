@@ -48,6 +48,11 @@ public ref class CarenD3D11PixelShader :public ICarenD3D11PixelShader
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenD3D11PixelShader();
+
 	~CarenD3D11PixelShader();
 
 

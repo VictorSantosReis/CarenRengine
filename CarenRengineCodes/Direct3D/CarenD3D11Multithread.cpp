@@ -24,6 +24,11 @@ CarenD3D11Multithread::~CarenD3D11Multithread()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor.
+CarenD3D11Multithread::CarenD3D11Multithread()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 //
 // Métodos da interface ICaren

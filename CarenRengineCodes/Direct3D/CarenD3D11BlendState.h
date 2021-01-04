@@ -48,6 +48,11 @@ public ref class CarenD3D11BlendState :public ICarenD3D11BlendState
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenD3D11BlendState();
+
 	~CarenD3D11BlendState();
 
 

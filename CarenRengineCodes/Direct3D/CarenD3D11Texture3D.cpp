@@ -24,6 +24,11 @@ CarenD3D11Texture3D::~CarenD3D11Texture3D()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor.
+CarenD3D11Texture3D::CarenD3D11Texture3D()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 //
 // Métodos da interface ICaren

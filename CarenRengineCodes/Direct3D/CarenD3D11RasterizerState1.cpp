@@ -24,6 +24,11 @@ CarenD3D11RasterizerState1::~CarenD3D11RasterizerState1()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor.
+CarenD3D11RasterizerState1::CarenD3D11RasterizerState1()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 //
 // Métodos da interface ICaren

@@ -49,6 +49,11 @@ public ref class CarenD3D11InputLayout :public ICarenD3D11InputLayout
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenD3D11InputLayout();
+
 	~CarenD3D11InputLayout();
 
 

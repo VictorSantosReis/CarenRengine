@@ -24,6 +24,11 @@ CarenD3D11UnorderedAccessView::~CarenD3D11UnorderedAccessView()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor.
+CarenD3D11UnorderedAccessView::CarenD3D11UnorderedAccessView()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 //
 // Métodos da interface ICaren

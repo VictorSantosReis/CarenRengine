@@ -74,7 +74,7 @@ public:
 			AddRef();
 			return S_OK;
 		}
-		else if (guid == IID_IMMNotificationClient)
+		else if (guid == __uuidof(IMMNotificationClient))
 		{
 			*pObj = this;
 			AddRef();

@@ -24,6 +24,11 @@ CarenD3D11ComputeShader::~CarenD3D11ComputeShader()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor.
+CarenD3D11ComputeShader::CarenD3D11ComputeShader()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 //
 // Métodos da interface ICaren

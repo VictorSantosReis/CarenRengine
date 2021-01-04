@@ -25,6 +25,11 @@ CarenD3D11CommandList::~CarenD3D11CommandList()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor.
+CarenD3D11CommandList::CarenD3D11CommandList()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 //
 // Métodos da interface ICaren

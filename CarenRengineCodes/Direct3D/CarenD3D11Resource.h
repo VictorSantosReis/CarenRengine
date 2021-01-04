@@ -48,6 +48,11 @@ public ref class CarenD3D11Resource : public ICarenD3D11Resource
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenD3D11Resource();
+
 	~CarenD3D11Resource();
 
 

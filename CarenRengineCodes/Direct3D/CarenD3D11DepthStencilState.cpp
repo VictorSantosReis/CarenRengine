@@ -24,6 +24,11 @@ CarenD3D11DepthStencilState::~CarenD3D11DepthStencilState()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor.
+CarenD3D11DepthStencilState::CarenD3D11DepthStencilState()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 //
 // Métodos da interface ICaren

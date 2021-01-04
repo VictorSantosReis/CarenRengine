@@ -3429,8 +3429,8 @@ namespace CarenRengine
 			/// <summary>
 			/// (GetCreationFlags) - Se os sinalizadores usados durante a chamada para criar o dispositivo com D3D11CreateDevice.
 			/// </summary>
-			/// <param name="Param_Out_Flags">Recebe um flags de bit a bits da enumerção (CA_D3D11_CRIACAO_DISPOSITIVO_FLAGS) que contém o modo de criaçã do dispositivo.</param>
-			CarenResult GetCreationFlags([Out] Enumeracoes::CA_D3D11_CRIACAO_DISPOSITIVO_FLAGS% Param_Out_Flags);
+			/// <param name="Param_Out_Flags">Recebe um flags de bit a bits da enumerção (CA_D3D11_CREATE_DEVICE_FLAG) que contém o modo de criaçã do dispositivo.</param>
+			CarenResult GetCreationFlags([Out] Enumeracoes::CA_D3D11_CREATE_DEVICE_FLAG% Param_Out_Flags);
 
 			/// <summary>
 			/// (GetDeviceRemovedReason) - A razão por que o dispositivo foi removido. Esse método retorna um (ResultCode) informando o motivo.
@@ -3448,7 +3448,7 @@ namespace CarenRengine
 			/// (GetFeatureLevel) - Obtém o nível de funcionalidade de dispositivo de hardware.
 			/// </summary>
 			/// <param name="Param_Out_NivelRecurso">Recebe um flag de bits a bits de um ou mais sinlizadores de niveis de recuso do dispositivo de hardware.</param>
-			CarenResult GetFeatureLevel([Out] Enumeracoes::CA_D3D_NIVEL_RECURSO% Param_Out_NivelRecurso);
+			CarenResult GetFeatureLevel([Out] Enumeracoes::CA_D3D_FEATURE_LEVEL% Param_Out_NivelRecurso);
 
 			/// <summary>
 			/// (GetImmediateContext) - Obtém um contexto imediato, que pode reproduzir listas de comando.
@@ -3562,11 +3562,11 @@ namespace CarenRengine
 			/// <param name="Param_Out_EstadoContextoDispositivo">Recebe um ponteiro para um objeto ICarenD3DDeviceContextState que representa o estado de um dispositivo Direct3D.</param>
 			CarenResult CreateDeviceContextState(
 				CA_D3D11_1_CREATE_DEVICE_CONTEXT_STATE_FLAG Param_Flags, 
-				cli::array<CA_D3D_NIVEL_RECURSO>^ Param_NiveisRecurso,
+				cli::array<CA_D3D_FEATURE_LEVEL>^ Param_NiveisRecurso,
 				UInt32 Param_QuantidadeNiveisRecurso,
 				UInt32 Param_VersaoSDK,
 				String^ Param_RIIDInterfaceEmulada,
-				[Out] CA_D3D_NIVEL_RECURSO% Param_Out_NivelRecursoDefinido,
+				[Out] CA_D3D_FEATURE_LEVEL% Param_Out_NivelRecursoDefinido,
 				[Out] ICarenD3DDeviceContextState^% Param_Out_EstadoContextoDispositivo);
 
 			/// <summary>

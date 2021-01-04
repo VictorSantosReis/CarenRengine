@@ -24,6 +24,11 @@ CarenD3D11ClassLinkage::~CarenD3D11ClassLinkage()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor.
+CarenD3D11ClassLinkage::CarenD3D11ClassLinkage()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 //
 // Métodos da interface ICaren

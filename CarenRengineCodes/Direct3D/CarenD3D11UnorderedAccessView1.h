@@ -49,6 +49,11 @@ public ref class CarenD3D11UnorderedAccessView1 : public ICarenD3D11UnorderedAcc
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenD3D11UnorderedAccessView1();
+
 	~CarenD3D11UnorderedAccessView1();
 
 
@@ -74,30 +79,6 @@ public:
 			//Retorna o valor.
 			return Prop_DisposedClasse;
 		}
-	}
-
-
-
-	//Cria uma instância dessa classe (Estático)
-public:
-	/// <summary>
-	/// Método responsável por criar uma instância vazia da classe. Chamadas para os métodos sem um ponteiro de trabalho definido
-	/// pode gerar comportamentos indefinidos.
-	/// </summary>
-	/// <param name="Param_Out_CarenD3D11UnorderedAccessView1">Recebe um ponteiro para a interface (Vazia).</param>
-	static CarenResult CriarInstanciaVazia([Out] ICarenD3D11UnorderedAccessView1^% Param_Out_CarenD3D11UnorderedAccessView1)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Cria a interface
-		Param_Out_CarenD3D11UnorderedAccessView1 = gcnew CarenD3D11UnorderedAccessView1();
-
-		//Define sucesso
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-		//Retorna o resultado
-		return Resultado;
 	}
 
 

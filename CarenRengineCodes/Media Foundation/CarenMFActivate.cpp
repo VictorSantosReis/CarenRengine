@@ -412,7 +412,7 @@ void CarenMFActivate::Finalizar()
 
 
 //
-//Métodos da interface ICarenMidiaAtribute
+//Métodos da interface ICarenMFAttributes
 //
 
 

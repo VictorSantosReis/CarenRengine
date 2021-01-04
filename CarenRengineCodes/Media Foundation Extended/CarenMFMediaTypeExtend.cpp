@@ -1,46 +1,33 @@
-﻿#include "../pch.h"
-#include "CarenMFVideoMediaType.h"
+﻿/*
+Copyright 2020 Victor Santos Reis
 
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+	http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+#include "../pch.h"
+#include "CarenMFMediaTypeExtend.h"
 
 //Destruidor.
-CarenMFVideoMediaType::~CarenMFVideoMediaType()
+CarenMFMediaTypeExtend::~CarenMFMediaTypeExtend()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
-//Construtores
-CarenMFVideoMediaType::CarenMFVideoMediaType()
+//Construtor
+CarenMFMediaTypeExtend::CarenMFMediaTypeExtend()
 {
 	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
-
-CarenMFVideoMediaType::CarenMFVideoMediaType(String^ Param_GuidAMSubtype)
-{
-	//Variavel que vai conter o resultado COM.
-	HRESULT Hr = E_FAIL;
-
-	//Variaveis utilizadas.
-	Utilidades Util;
-	GUID vi_GuidVideoSubtype = GUID_NULL;
-	IMFVideoMediaType* vi_pOutVideoMediaType = Nulo;
-	
-	//Converte a string para o GUID.
-	vi_GuidVideoSubtype = Util.CreateGuidFromString(Param_GuidAMSubtype);
-
-	//Chama o método para criar a interface.
-	Hr = MFCreateVideoMediaTypeFromSubtype(const_cast<GUID*>(&vi_GuidVideoSubtype), &vi_pOutVideoMediaType);
-
-	//Verifica se não ocorreu erro no processo.
-	if (!Sucesso(Hr))
-	{
-		//Chama uma exceção para informar o error.
-		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
-	}
-
-	//Define a interface criada no ponteiro de trabalho
-	PonteiroTrabalho = vi_pOutVideoMediaType;
-}
-
 
 // Métodos da interface ICaren
 
@@ -51,11 +38,11 @@ CarenMFVideoMediaType::CarenMFVideoMediaType(String^ Param_GuidAMSubtype)
 /// interface depois de adicionar uma nova referência(AddRef).
 /// </summary>
 /// <param name="Param_Guid">O IID(Identificador de Interface) ou GUID para a interface desejada.</param>
-/// <param name="Param_InterfaceSolicitada">A interface que vai receber o ponteiro nativo. O cliente é responsável por liberar a interface.</param>
-CarenResult CarenMFVideoMediaType::ConsultarInterface(String^ Param_Guid, ICaren^ Param_InterfaceSolicitada)
+/// <param name="Param_InterfaceSolicitada">A interface que vai receber o ponteiro nativo. O usuário deve inicializar a interface antes de chamar o método. Libere a interface quando não for mais usá-la.</param>
+CarenResult CarenMFMediaTypeExtend::ConsultarInterface(String^ Param_Guid, ICaren^ Param_InterfaceSolicitada)
 {
 	//Variavel que vai retornar o resultado.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
 
 	//Resultado COM
 	HRESULT Hr = E_FAIL;
@@ -75,7 +62,7 @@ CarenResult CarenMFVideoMediaType::ConsultarInterface(String^ Param_Guid, ICaren
 		const char* DadosConvertidos = NULL;
 
 		//Verifica se a string é valida.
-		if (!String::IsNullOrEmpty(Param_Guid))
+		if (Param_Guid != nullptr && !String::IsNullOrEmpty(Param_Guid))
 		{
 			//Obtém a largura da String.
 			LarguraString = Param_Guid->Length + 1;
@@ -114,7 +101,7 @@ CarenResult CarenMFVideoMediaType::ConsultarInterface(String^ Param_Guid, ICaren
 	}
 
 	//Chama o método para realizara operação
-	Hr = (reinterpret_cast<IMFVideoMediaType*>(PonteiroTrabalho))->QueryInterface(GuidInterface, (LPVOID*)&pInterfaceSolcitada);
+	Hr = PonteiroTrabalho->QueryInterface(GuidInterface, (LPVOID*)&pInterfaceSolcitada);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -133,7 +120,15 @@ CarenResult CarenMFVideoMediaType::ConsultarInterface(String^ Param_Guid, ICaren
 
 	//Define o ponteiro na interface solicitada.
 	//A interface deve ter sido incializada pelo usuário.
-	Param_InterfaceSolicitada->AdicionarPonteiro(pInterfaceSolcitada);
+	Resultado = Param_InterfaceSolicitada->AdicionarPonteiro(pInterfaceSolcitada);
+
+	//Verifica o resultado da operação.
+	if (Resultado.StatusCode != ResultCode::SS_OK)
+	{
+		//Libera a referência obtida a parti do QueryInterface.
+		((IUnknown*)pInterfaceSolcitada)->Release();
+		pInterfaceSolcitada = NULL;
+	}
 
 Done:;
 	//Verifica se o OLECHAR é valido e destroi
@@ -144,17 +139,18 @@ Done:;
 	}
 
 	//Retorna o resultado
-	return Resultado;}
+	return Resultado;
+}
 
 /// <summary>
 /// Método responsável por adicionar um novo ponteiro nativo a classe atual.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
 /// </summary>
 /// <param name="Param_PonteiroNativo">Variável (GERENCIADA) para o ponteiro nativo a ser adicionado.</param>
-CarenResult CarenMFVideoMediaType::AdicionarPonteiro(IntPtr Param_PonteiroNativo)
+CarenResult CarenMFMediaTypeExtend::AdicionarPonteiro(IntPtr Param_PonteiroNativo)
 {
 	//Variavel que vai retornar o resultado.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
 
 	//Verifica se o objeto é valido
 	if (Param_PonteiroNativo == IntPtr::Zero)
@@ -167,7 +163,7 @@ CarenResult CarenMFVideoMediaType::AdicionarPonteiro(IntPtr Param_PonteiroNativo
 	}
 
 	//Converte o ponteiro para o tipo especifico da classe.
-	PonteiroTrabalho = reinterpret_cast<IMFVideoMediaType*>(Param_PonteiroNativo.ToPointer());
+	PonteiroTrabalho = reinterpret_cast<IMFMediaType*>(Param_PonteiroNativo.ToPointer());
 
 	//Verifica o ponteiro
 	if (ObjetoValido(PonteiroTrabalho))
@@ -192,10 +188,10 @@ Done:;
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
 /// </summary>
 /// <param name="Param_PonteiroNativo">Variável (NATIVA) para o ponteiro nativo a ser adicionado.</param>
-CarenResult CarenMFVideoMediaType::AdicionarPonteiro(LPVOID Param_PonteiroNativo)
+CarenResult CarenMFMediaTypeExtend::AdicionarPonteiro(LPVOID Param_PonteiroNativo)
 {
 	//Variavel que vai retornar o resultado.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
 
 	//Verifica se o objeto é valido
 	if (!ObjetoValido(Param_PonteiroNativo))
@@ -208,7 +204,7 @@ CarenResult CarenMFVideoMediaType::AdicionarPonteiro(LPVOID Param_PonteiroNativo
 	}
 
 	//Converte o ponteiro para o tipo especifico da classe.
-	PonteiroTrabalho = reinterpret_cast<IMFVideoMediaType*>(Param_PonteiroNativo);
+	PonteiroTrabalho = reinterpret_cast<IMFMediaType*>(Param_PonteiroNativo);
 
 	//Verifica se o ponteiro é valido
 	if (ObjetoValido(PonteiroTrabalho))
@@ -236,10 +232,10 @@ Done:;
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
 /// </summary>
 /// <param name="Param_Out_PonteiroNativo">Variável (GERENCIADA) que vai receber o ponteiro nativo.</param>
-CarenResult CarenMFVideoMediaType::RecuperarPonteiro([Out] IntPtr% Param_Out_PonteiroNativo)
+CarenResult CarenMFMediaTypeExtend::RecuperarPonteiro([Out] IntPtr% Param_Out_PonteiroNativo)
 {
 	//Variavel que vai retornar o resultado.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
 
 	//Verifica se o ponteiro é valido
 	if (!ObjetoValido(PonteiroTrabalho))
@@ -267,10 +263,10 @@ Done:;
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
 /// </summary>
 /// <param name="Param_Out_PonteiroNativo">Variável (NATIVA) que vai receber o ponteiro nativo.</param>
-CarenResult CarenMFVideoMediaType::RecuperarPonteiro(LPVOID* Param_Out_PonteiroNativo)
+CarenResult CarenMFMediaTypeExtend::RecuperarPonteiro(LPVOID* Param_Out_PonteiroNativo)
 {
 	//Variavel que vai retornar o resultado.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
 
 	//Verifica se o ponteiro é valido
 	if (!ObjetoValido(PonteiroTrabalho))
@@ -298,13 +294,10 @@ Done:;
 /// Método responsável por retornar a quantidade de referências do objeto COM atual.
 /// </summary>
 /// <param name="Param_Out_Referencias">Variável que vai receber a quantidade de referências do objeto.</param>
-CarenResult CarenMFVideoMediaType::RecuperarReferencias([Out] UInt64% Param_Out_Referencias)
+CarenResult CarenMFMediaTypeExtend::RecuperarReferencias([Out] UInt64% Param_Out_Referencias)
 {
 	//Variavel que vai retornar o resultado.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Ponteiro de trabalho convertido.
-	IUnknown* pInterface = NULL;
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
 
 	//Verifica se o ponteiro é valido
 	if (!ObjetoValido(PonteiroTrabalho))
@@ -316,14 +309,11 @@ CarenResult CarenMFVideoMediaType::RecuperarReferencias([Out] UInt64% Param_Out_
 		goto Done;
 	}
 
-	//Converte para a interface COM base.
-	pInterface = reinterpret_cast<IUnknown*>(PonteiroTrabalho);
-
 	//Adiciona uma referência ao ponteiro
-	ULONG CountRefs = pInterface->AddRef();
+	ULONG CountRefs = PonteiroTrabalho->AddRef();
 
 	//Libera a referência adicional
-	pInterface->Release();
+	PonteiroTrabalho->Release();
 
 	//Decrementa o valor da quantidade de referência retornada em (-1) e define no parametro de saida.
 	Param_Out_Referencias = static_cast<UInt64>(CountRefs - 1);
@@ -332,12 +322,6 @@ CarenResult CarenMFVideoMediaType::RecuperarReferencias([Out] UInt64% Param_Out_
 	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
 
 Done:;
-	//Nula a conversão
-	if (ObjetoValido(pInterface))
-	{
-		//Zera.
-		pInterface = NULL;
-	}
 
 	//Retorna o resultado
 	return Resultado;
@@ -346,7 +330,7 @@ Done:;
 /// <summary>
 /// Método responsável por indicar se o ponteiro COM atual é válido.
 /// </summary>
-CarenResult CarenMFVideoMediaType::StatusPonteiro()
+CarenResult CarenMFMediaTypeExtend::StatusPonteiro()
 {
 	return (ObjetoValido(PonteiroTrabalho) ? CarenResult(ResultCode::SS_OK, true) : CarenResult(ResultCode::ER_E_POINTER, false));
 }
@@ -355,7 +339,7 @@ CarenResult CarenMFVideoMediaType::StatusPonteiro()
 /// Método responsável por retornar a variável que armazena o último código de erro desconhecido ou não documentado gerado pela classe.
 /// Esse método não chama o método nativo (GetLastError), apenas retorna o código de erro que foi armazenado na classe.
 /// </summary>
-Int32 CarenMFVideoMediaType::ObterCodigoErro()
+Int32 CarenMFMediaTypeExtend::ObterCodigoErro()
 {
 	return Var_Glob_LAST_HRESULT;
 }
@@ -364,19 +348,19 @@ Int32 CarenMFVideoMediaType::ObterCodigoErro()
 /// (AddRef) - Incrementa a contagem de referência para o ponteiro do objeto COM atual. Você deve chamar este método sempre que 
 /// você fazer uma cópia de um ponteiro de interface.
 /// </summary>
-void CarenMFVideoMediaType::AdicionarReferencia()
+void CarenMFMediaTypeExtend::AdicionarReferencia()
 {
 	//Adiciona uma referência ao ponteiro
-	(reinterpret_cast<IMFVideoMediaType*>(PonteiroTrabalho))->AddRef();
+	PonteiroTrabalho->AddRef();
 }
 
 /// <summary>
 /// (Release) - 'Decrementa' a contagem de referência do objeto COM atual.
 /// </summary>
-void CarenMFVideoMediaType::LiberarReferencia()
+void CarenMFMediaTypeExtend::LiberarReferencia()
 {
 	//Libera a referência e obtém a quantidade atual.
-	ULONG RefCount = (reinterpret_cast<IMFVideoMediaType*>(PonteiroTrabalho))->Release();
+	ULONG RefCount = PonteiroTrabalho->Release();
 
 	//Verifica se a quantidade é zero e se o ponteiro ainda é valido.
 	//Se sim, vai deletar o ponteiro.
@@ -391,7 +375,7 @@ void CarenMFVideoMediaType::LiberarReferencia()
 /// Método responsável por limpar os dados do objeto COM e códigos de erros gerados pelos métodos da classe.
 /// Este método não libera a referência do objeto COM atual, vai apenas anular o ponteiro.
 /// </summary>
-void CarenMFVideoMediaType::LimparDados()
+void CarenMFMediaTypeExtend::LimparDados()
 {
 	//Verifica se o ponteiro é um objeto valido e limpa.
 	if (ObjetoValido(PonteiroTrabalho))
@@ -408,7 +392,7 @@ void CarenMFVideoMediaType::LimparDados()
 /// Método responsável por chamar o finalizador da interface para realizar a limpeza e descarte de dados pendentes.
 /// Este método pode ser escrito de forma diferente para cada interface.
 /// </summary>
-void CarenMFVideoMediaType::Finalizar()
+void CarenMFMediaTypeExtend::Finalizar()
 {
 	//////////////////////
 	//Código de descarte//
@@ -418,7 +402,123 @@ void CarenMFVideoMediaType::Finalizar()
 	GC::SuppressFinalize(this);
 
 	//Chama o finalizador da classe
-	this->~CarenMFVideoMediaType();
+	this->~CarenMFMediaTypeExtend();
+}
+
+
+
+// Métodos da interface proprietária(ICarenMFMediaTypeExtend)
+
+/// <summary>
+/// (Extensão) - Método responsável por obter o tipo principal da mídia. 
+/// </summary>
+/// <param name="Param_Out_TipoPrincipal">Recebe o tipo principal da mídia(Áudio ou Vídeo).</param>
+/// <param name="Param_Out_Guid">Recebe o Guid do formato principal.</param>
+CarenResult CarenMFMediaTypeExtend::ExGetMajorMediaType(OutParam Enumeracoes::CA_MAJOR_MEDIA_TYPES% Param_Out_TipoPrincipal, OutParam String^% Param_Out_Guid)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM.
+	ResultadoCOM  Hr = E_FAIL;
+
+	//Variaveis a serem utilizadas.
+	Utilidades Util;
+	GUID vi_OutGuidTipoPrincipal = GUID_NULL;
+
+	//Obtém o guid o formato principal da mídia.
+	Hr = PonteiroTrabalho->GetGUID(MF_MT_MAJOR_TYPE, &vi_OutGuidTipoPrincipal);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Define o código na classe.
+		Var_Glob_LAST_HRESULT = Hr;
+
+		//Sai do método
+		Sair;
+	}
+
+	//Verifica o tipo principal da midia
+	if (vi_OutGuidTipoPrincipal == MFMediaType_Audio)
+	{
+		//Define o tipo principal da midia.
+		Param_Out_TipoPrincipal = CA_MAJOR_MEDIA_TYPES::TP_Audio;
+	
+		//Define o Guid
+		Param_Out_Guid = Util.ConverterGuidToString(MFMediaType_Audio);
+	}
+	else if (vi_OutGuidTipoPrincipal == MFMediaType_Video)
+	{
+		//Define o tipo principal da midia.
+		Param_Out_TipoPrincipal = CA_MAJOR_MEDIA_TYPES::TP_Video;
+		
+		//Define o Guid
+		Param_Out_Guid = Util.ConverterGuidToString(MFMediaType_Video);
+	}
+	else
+	{
+		//Tipo desconhecido.
+		Param_Out_TipoPrincipal = CA_MAJOR_MEDIA_TYPES::TP_Desconhecido;
+	}
+
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
+
+/// <summary>
+/// (Extensão) - Método responsável por retornar o formato do tipo principal da mídia. 
+/// </summary>
+/// <param name="Param_Out_FormatoMidia">Recebe o subtipo(Formato) da mídia principal.</param>
+/// <param name="Param_Out_GuidFormato">Recebe o Guid do subtipo(Formato).</param>
+CarenResult CarenMFMediaTypeExtend::ExGetFormatSubtype(OutParam Enumeracoes::CA_MEDIA_SUBTYPES% Param_Out_FormatoMidia, OutParam String^% Param_Out_GuidFormato)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM.
+	ResultadoCOM  Hr = E_FAIL;
+
+	//Variaveis a serem utilizadas.
+	Utilidades Util;
+	GUID vi_OutGuidSubtype = GUID_NULL;
+
+	//Obtém o guid para o Subtipo da midia
+	//O subtipo é o formato da mídia principal.
+	Hr = PonteiroTrabalho->GetGUID(MF_MT_SUBTYPE, &vi_OutGuidSubtype);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Define o código na classe.
+		Var_Glob_LAST_HRESULT = Hr;
+
+		//Sai do método
+		Sair;
+	}
+
+	//Obtém o formato de midia.
+	Param_Out_FormatoMidia = Util.ConverterGUIDSubtipoMidia_ToMidia_SubTipo(vi_OutGuidSubtype);
+
+	//Converte o GUID do formato para String
+	Param_Out_GuidFormato = Util.ConverterGuidToString(vi_OutGuidSubtype);
+
+Done:;
+
+	//Retorna o valor
+	return Resultado;
 }
 
 
@@ -432,7 +532,7 @@ void CarenMFVideoMediaType::Finalizar()
 /// </summary>
 /// <param name="Param_Out_GuidTipoMidia">Retorna o GUID do tipo principal da mídia.</param>
 /// <param name="Param_Out_TipoPrincipal">Retorna a enumeração com o tipo principal da mídia.</param>
-CarenResult CarenMFVideoMediaType::GetMajorType([Out] String^% Param_Out_GuidTipoMidia, [Out] CA_MAJOR_MEDIA_TYPES% Param_Out_TipoPrincipal)
+CarenResult CarenMFMediaTypeExtend::GetMajorType([Out] String^% Param_Out_GuidTipoMidia, [Out] CA_MAJOR_MEDIA_TYPES% Param_Out_TipoPrincipal)
 {
 	//Variavel que vai retornar o resultado do método.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -504,7 +604,7 @@ Done:;
 /// (IsCompressedFormat) - Consulta se o tipo de mídia é um formato compactado(CompressedFormat).
 /// </summary>
 /// <param name="Param_Out_FormatoCompactado">Retorna se o formato da mídia está compactado.</param>
-CarenResult CarenMFVideoMediaType::IsCompressedFormat([Out] Boolean% Param_Out_FormatoCompactado)
+CarenResult CarenMFMediaTypeExtend::IsCompressedFormat([Out] Boolean% Param_Out_FormatoCompactado)
 {
 	//Variavel que vai retornar o resultado do método.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -549,7 +649,7 @@ Done:;
 /// </summary>
 /// <param name="Param_MidiaCompare">A interface a ser comparada com a atual.</param>
 /// <param name="Param_Out_ResultadoCompare">O resultado da comparação dos objetos.</param>
-CarenResult CarenMFVideoMediaType::IsEqual(ICarenMFMediaType^ Param_MidiaCompare, [Out] CA_MEDIA_TYPE_EQUAL% Param_Out_ResultadoCompare)
+CarenResult CarenMFMediaTypeExtend::IsEqual(ICarenMFMediaType^ Param_MidiaCompare, [Out] CA_MEDIA_TYPE_EQUAL% Param_Out_ResultadoCompare)
 {
 	//Variavel que vai retornar o resultado do método.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -605,7 +705,7 @@ Done:;
 /// <param name="Param_InterfaceCompare">A interface que vai ter todos os atributos comparado com a interface atual.</param>
 /// <param name="Param_TipoComparação">O tipo de comparação a ser realizada.</param>
 /// <param name="Param_Out_Resultado">O resultado da comparação segundo o parametro (Param_TipoComparação).</param>
-CarenResult CarenMFVideoMediaType::Compare(ICarenMFAttributes^ Param_InterfaceCompare, CA_ATTRIBUTES_MATCH_TYPE Param_TipoComparação, [Out] Boolean% Param_Out_Resultado)
+CarenResult CarenMFMediaTypeExtend::Compare(ICarenMFAttributes^ Param_InterfaceCompare, CA_ATTRIBUTES_MATCH_TYPE Param_TipoComparação, [Out] Boolean% Param_Out_Resultado)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -660,7 +760,7 @@ Done:;
 /// <param name="Param_GuidChave">Define o Guid do atributo a ter seu valor comparado com o valor da PropVariant informada.</param>
 /// <param name="Param_Valor">O valor a ser comparado com o Atributo especificado.</param>
 /// <param name="Param_Out_Resultado">O resultado da comparação do atributo.</param>
-CarenResult CarenMFVideoMediaType::CompareItem(String^ Param_GuidChave, CA_PropVariant^ Param_Valor, [Out] Boolean% Param_Out_Resultado)
+CarenResult CarenMFMediaTypeExtend::CompareItem(String^ Param_GuidChave, CA_PropVariant^ Param_Valor, [Out] Boolean% Param_Out_Resultado)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -754,7 +854,7 @@ Done:;
 /// para o exemplo de destino. Você deve copiar esses valores para a nova amostra manualmente.
 /// </summary>
 /// <param name="Param_Out_InterfaceDestino">A interface de destino que vai receber os itens dessa interface.</param>
-CarenResult CarenMFVideoMediaType::CopyAllItems(ICarenMFAttributes^ Param_Out_InterfaceDestino)
+CarenResult CarenMFMediaTypeExtend::CopyAllItems(ICarenMFAttributes^ Param_Out_InterfaceDestino)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -811,6 +911,9 @@ CarenResult CarenMFVideoMediaType::CopyAllItems(ICarenMFAttributes^ Param_Out_In
 		Sair;
 	}
 
+	//Define sucesso na operação.
+	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+
 Done:;
 	//Retorna o resultado.
 	return Resultado;
@@ -819,7 +922,7 @@ Done:;
 /// <summary>
 /// Remove todos os pares chave/valor da lista de atributos do objeto.
 /// </summary>
-CarenResult CarenMFVideoMediaType::DeleteAllItems()
+CarenResult CarenMFMediaTypeExtend::DeleteAllItems()
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -855,7 +958,7 @@ Done:;
 /// Se a chave especificada não existir, o método retornar (SS_OK) da mesma forma.
 /// </summary>
 /// <param name="Param_GuidChave">O Guid da chave a ser deletada.</param>
-CarenResult CarenMFVideoMediaType::DeleteItem(String^ Param_GuidChave)
+CarenResult CarenMFMediaTypeExtend::DeleteItem(String^ Param_GuidChave)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -915,7 +1018,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para chave que contém o Blob a ser obtido.</param>
 /// <param name="Param_Out_Buffer">O buffer que contém os dados da matriz bytes do valor da chave solicitada.</param>
-CarenResult CarenMFVideoMediaType::GetAllocatedBlob(String^ Param_GuidChave, [Out] Estruturas::CA_BlobData^% Param_Out_Buffer)
+CarenResult CarenMFMediaTypeExtend::GetAllocatedBlob(String^ Param_GuidChave, [Out] Estruturas::CA_BlobData^% Param_Out_Buffer)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -925,7 +1028,7 @@ CarenResult CarenMFVideoMediaType::GetAllocatedBlob(String^ Param_GuidChave, [Ou
 
 	//Variaveis utilizadas pelo método
 	Utilidades Util;
-	UINT8 *pBuffDados = NULL;
+	UINT8* pBuffDados = NULL;
 	UINT32 LarguraBuffer = 0;
 	GUID GuidChave = GUID_NULL;
 
@@ -978,7 +1081,7 @@ Done:;
 /// <param name="Param_GuidChave">O GUID para chave que contém o Blob a ser obtido. O tipo de atributo deve ser MF_ATTRIBUTE_STRING.</param>
 /// <param name="Param_Out_String">Retorna a string com os dados do valor da chave solicitada.</param>
 /// <param name="Param_Out_LarguraString">Retorna a largura em bytes da matriz que continha a String.</param>
-CarenResult CarenMFVideoMediaType::GetAllocatedString(String^ Param_GuidChave, [Out] String^% Param_Out_String, [Out] UInt32% Param_Out_LarguraString)
+CarenResult CarenMFMediaTypeExtend::GetAllocatedString(String^ Param_GuidChave, [Out] String^% Param_Out_String, [Out] UInt32% Param_Out_LarguraString)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1035,7 +1138,7 @@ Done:;
 /// <param name="Param_GuidChave">O GUID para chave que contém o Blob a ser obtido.</param>
 /// <param name="Param_Out_Buffer">O buffer que contém os dados da matriz bytes do valor da chave solicitada.</param>
 /// <param name="Param_TamanhoBuffer">Define o tamanho da matriz em bytes do valor da chave a ser obtido. Chame o método (GetBlobSize) para obter o valor para esse parametro.</param>
-CarenResult CarenMFVideoMediaType::GetBlob(String^ Param_GuidChave, UInt32 Param_TamanhoBuffer, [Out] Estruturas::CA_BlobData^% Param_Out_Buffer)
+CarenResult CarenMFMediaTypeExtend::GetBlob(String^ Param_GuidChave, UInt32 Param_TamanhoBuffer, [Out] Estruturas::CA_BlobData^% Param_Out_Buffer)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1045,7 +1148,7 @@ CarenResult CarenMFVideoMediaType::GetBlob(String^ Param_GuidChave, UInt32 Param
 
 	//Variaveis utilizadas pelo método
 	Utilidades Util;
-	UINT8 *pBuffDados = NULL;
+	UINT8* pBuffDados = NULL;
 	GUID GuidChave = GUID_NULL;
 
 	//Chama o método para obter o guid.
@@ -1080,7 +1183,7 @@ CarenResult CarenMFVideoMediaType::GetBlob(String^ Param_GuidChave, UInt32 Param
 
 	//Cria a interface que vai conter os dados.
 	Param_Out_Buffer->BufferDados = gcnew CarenBuffer();
-	
+
 	//Copia os dados para a interface do buffer.
 	Param_Out_Buffer->BufferDados->CriarBuffer(IntPtr(pBuffDados), true, Param_Out_Buffer->SizeData, Param_Out_Buffer->SizeData);
 
@@ -1097,7 +1200,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para chave que contém o Blob a ser obtido. O tipo de atributo deve ser MF_ATTRIBUTE_BLOB.</param>
 /// <param name="Param_TamanhoBuffer">Recebe o tamanho da matriz que contem o valor da chave solicitada.</param>
-CarenResult CarenMFVideoMediaType::GetBlobSize(String^ Param_GuidChave, [Out] UInt32% Param_Out_TamanhoBuffer)
+CarenResult CarenMFMediaTypeExtend::GetBlobSize(String^ Param_GuidChave, [Out] UInt32% Param_Out_TamanhoBuffer)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1143,7 +1246,7 @@ Done:;
 /// Recupera o número de atributos que são definidos neste objeto.
 /// </summary>
 /// <param name="Param_QuantidadeAtributos">Recebe a quantidade de atributos na interface.</param>
-CarenResult CarenMFVideoMediaType::GetCount([Out] UInt32% Param_QuantidadeAtributos)
+CarenResult CarenMFMediaTypeExtend::GetCount([Out] UInt32% Param_QuantidadeAtributos)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1175,6 +1278,9 @@ CarenResult CarenMFVideoMediaType::GetCount([Out] UInt32% Param_QuantidadeAtribu
 	//Define o valor de retorno.
 	Param_QuantidadeAtributos = CountAtributos;
 
+	//Define sucesso na operação
+	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+
 Done:;
 	//Retorna o resultado.
 	return Resultado;
@@ -1185,7 +1291,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (Double) obtido.</param>
 /// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-CarenResult CarenMFVideoMediaType::GetDouble(String^ Param_GuidChave, [Out] Double% Param_Out_Valor)
+CarenResult CarenMFMediaTypeExtend::GetDouble(String^ Param_GuidChave, [Out] Double% Param_Out_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1232,7 +1338,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (GUID) obtido.</param>
 /// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-CarenResult CarenMFVideoMediaType::GetGUID(String^ Param_GuidChave, [Out] String^% Param_Out_Valor)
+CarenResult CarenMFMediaTypeExtend::GetGUID(String^ Param_GuidChave, [Out] String^% Param_Out_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1279,7 +1385,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (CA_PropVariant) obtido.</param>
 /// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-CarenResult CarenMFVideoMediaType::GetItem(String^ Param_GuidChave, [Out] CA_PropVariant^% Param_Out_Valor)
+CarenResult CarenMFMediaTypeExtend::GetItem(String^ Param_GuidChave, [Out] CA_PropVariant^% Param_Out_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1291,7 +1397,7 @@ CarenResult CarenMFVideoMediaType::GetItem(String^ Param_GuidChave, [Out] CA_Pro
 	Utilidades Util;
 	GUID GuidChave = GUID_NULL;
 	PROPVARIANT PropVar;
-	
+
 
 	//Chama o método para obter o guid.
 	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
@@ -1320,6 +1426,9 @@ CarenResult CarenMFVideoMediaType::GetItem(String^ Param_GuidChave, [Out] CA_Pro
 	//Converte e define a estrutura no parametro de saida.
 	Param_Out_Valor = Util.ConvertPropVariantUnmanagedToManaged(PropVar);
 
+	//Define sucesso na operação
+	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+
 Done:;
 	//Limpa a PropVariant.
 	PropVariantClear(&PropVar);
@@ -1334,7 +1443,7 @@ Done:;
 /// <param name="Param_Out_GuidChave">Recebe o guid associado a chave obtida pelo id.</param>
 /// <param name="Param_IdItem">O Id do item a ter o seu valor obtido.</param>
 /// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-CarenResult CarenMFVideoMediaType::GetItemByIndex(UInt32 Param_IdItem, [Out] String^% Param_Out_GuidChave, [Out] CA_PropVariant^% Param_Out_Valor)
+CarenResult CarenMFMediaTypeExtend::GetItemByIndex(UInt32 Param_IdItem, [Out] String^% Param_Out_GuidChave, [Out] CA_PropVariant^% Param_Out_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1346,7 +1455,7 @@ CarenResult CarenMFVideoMediaType::GetItemByIndex(UInt32 Param_IdItem, [Out] Str
 	Utilidades Util;
 	GUID GuidChave = GUID_NULL;
 	PROPVARIANT PropVar;
-	
+
 
 	//Inicializa a PropVariant.
 	PropVariantInit(&PropVar);
@@ -1388,7 +1497,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave a ser verificado o tipo do valor.</param>
 /// <param name="Param_Out_TipoDado">O tipo do dado contido na chave solicitada.</param>
-CarenResult CarenMFVideoMediaType::GetItemType(String^ Param_GuidChave, [Out] CA_MF_ATTRIBUTE_TYPE% Param_Out_TipoDado)
+CarenResult CarenMFMediaTypeExtend::GetItemType(String^ Param_GuidChave, [Out] CA_MF_ATTRIBUTE_TYPE% Param_Out_TipoDado)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1436,7 +1545,7 @@ Done:;
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (String) obtido. O tipo de atributo deve ser MF_ATTRIBUTE_STRING.</param>
 /// <param name="Param_Out_Valor">A largura da string a ser recebida. Some +1 a esse valor. Para obter esse valor, chame o método: GetStringLength</param>
 /// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada.</param>
-CarenResult CarenMFVideoMediaType::GetString(String^ Param_GuidChave, UInt32 Param_LagruraString, [Out] String^% Param_Out_Valor)
+CarenResult CarenMFMediaTypeExtend::GetString(String^ Param_GuidChave, UInt32 Param_LagruraString, [Out] String^% Param_Out_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1494,7 +1603,7 @@ Done:;
 /// <param name="Param_GuidChave">O GUID para a chave a ser consultada a largura da String. O tipo de atributo deve ser MF_ATTRIBUTE_STRING.</param>
 /// <param name="Param_Out_Largura">Se a chave for encontrada e o valor é um tipo de sequência de caracteres, esse parâmetro recebe o número de caracteres na 
 /// sequência de caracteres, não incluindo o caractere nulo de terminação</param>
-CarenResult CarenMFVideoMediaType::GetStringLength(String^ Param_GuidChave, [Out] UInt32% Param_Out_Largura)
+CarenResult CarenMFMediaTypeExtend::GetStringLength(String^ Param_GuidChave, [Out] UInt32% Param_Out_Largura)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1541,7 +1650,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (UInt32) obtido.</param>
 /// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-CarenResult CarenMFVideoMediaType::GetUINT32(String^ Param_GuidChave, [Out] UInt32% Param_Out_Valor)
+CarenResult CarenMFMediaTypeExtend::GetUINT32(String^ Param_GuidChave, [Out] UInt32% Param_Out_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1588,7 +1697,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (UInt64) obtido.</param>
 /// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-CarenResult CarenMFVideoMediaType::GetUINT64(String^ Param_GuidChave, [Out] UInt64% Param_Out_Valor)
+CarenResult CarenMFMediaTypeExtend::GetUINT64(String^ Param_GuidChave, [Out] UInt64% Param_Out_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1638,7 +1747,7 @@ Done:;
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (UINT64) obtido.</param>
 /// <param name="Param_Out_Numerador">Recebe o valor referente ao: Numerador</param>
 /// <param name="Param_Out_Denominador">Recebe o valor referente ao: Denominador</param>
-CarenResult CarenMFVideoMediaType::_MFGetAttributeRatio(String^ Param_GuidChave, [Out] UInt32% Param_Out_Numerador, [Out] UInt32% Param_Out_Denominador)
+CarenResult CarenMFMediaTypeExtend::_MFGetAttributeRatio(String^ Param_GuidChave, [Out] UInt32% Param_Out_Numerador, [Out] UInt32% Param_Out_Denominador)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1688,7 +1797,7 @@ Done:;
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor obtido. O atribute deve ser do tipo: UInt64</param>
 /// <param name="Param_Out_Largura">Recebe a largura em pixels.</param>
 /// <param name="Param_Out_Altura">Recebe a altura em pixels.</param>
-CarenResult CarenMFVideoMediaType::_MFGetAttributeSize(String^ Param_GuidChave, [Out] UInt32% Param_Out_Largura, [Out] UInt32% Param_Out_Altura)
+CarenResult CarenMFMediaTypeExtend::_MFGetAttributeSize(String^ Param_GuidChave, [Out] UInt32% Param_Out_Largura, [Out] UInt32% Param_Out_Altura)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1738,7 +1847,7 @@ Done:;
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (Desconhecido) obtido.</param>
 /// <param name="Param_GuidInterfaceSolicitada">O GUID para a interface a ser obtida da chave. Este GUID é um (IID).</param>
 /// <param name="Param_Out_InterfaceDesconhecida">Recebe a interface com o ponteiro par ao objeto desconhecido. O usuário deve inicializar a interface antes de chamar este método.</param>
-CarenResult CarenMFVideoMediaType::GetUnknown(String^ Param_GuidChave, String^ Param_GuidInterfaceSolicitada, ICaren^ Param_Out_InterfaceDesconhecida)
+CarenResult CarenMFMediaTypeExtend::GetUnknown(String^ Param_GuidChave, String^ Param_GuidInterfaceSolicitada, ICaren^ Param_Out_InterfaceDesconhecida)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1795,7 +1904,7 @@ Done:;
 /// <summary>
 /// Bloqueia o armazenamento de atributo para que nenhum outro thread possa acessá-lo.
 /// </summary>
-CarenResult CarenMFVideoMediaType::LockStore()
+CarenResult CarenMFMediaTypeExtend::LockStore()
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1827,12 +1936,14 @@ CarenResult CarenMFVideoMediaType::LockStore()
 //Métodos (SET) da interface IMFAttributes.
 
 
+
+
 /// <summary>
 /// (SetBlob) - Associa uma (Matriz de Byte) com uma chave.
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 /// <param name="Param_Buffer">A matriz de bytes a ser associada a chave especificada.</param>
-CarenResult CarenMFVideoMediaType::SetBlob(String^ Param_GuidChave, cli::array<Byte>^ Param_Buffer)
+CarenResult CarenMFMediaTypeExtend::SetBlob(String^ Param_GuidChave, cli::array<Byte>^ Param_Buffer)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1896,7 +2007,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 /// <param name="Param_Valor">O valor a ser definido na chave especificada.</param>
-CarenResult CarenMFVideoMediaType::SetDouble(String^ Param_GuidChave, Double Param_Valor)
+CarenResult CarenMFMediaTypeExtend::SetDouble(String^ Param_GuidChave, Double Param_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1939,7 +2050,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 /// <param name="Param_Valor">O valor a ser definido na chave especificada.</param>
-CarenResult CarenMFVideoMediaType::SetGUID(String^ Param_GuidChave, String^ Param_Valor)
+CarenResult CarenMFMediaTypeExtend::SetGUID(String^ Param_GuidChave, String^ Param_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1984,7 +2095,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 /// <param name="Param_PropVariantValor">A PropVariant que contém o valor a ser definido na chave especificada.</param>
-CarenResult CarenMFVideoMediaType::SetItem(String^ Param_GuidChave, Estruturas::CA_PropVariant^ Param_PropVariantValor)
+CarenResult CarenMFMediaTypeExtend::SetItem(String^ Param_GuidChave, Estruturas::CA_PropVariant^ Param_PropVariantValor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -2066,7 +2177,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 /// <param name="Param_Valor">O valor a ser definido na chave especificada.</param>
-CarenResult CarenMFVideoMediaType::SetString(String^ Param_GuidChave, String^ Param_Valor)
+CarenResult CarenMFMediaTypeExtend::SetString(String^ Param_GuidChave, String^ Param_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -2130,7 +2241,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 /// <param name="Param_Valor">O valor a ser definido na chave especificada.</param>
-CarenResult CarenMFVideoMediaType::SetUINT32(String^ Param_GuidChave, UInt32 Param_Valor)
+CarenResult CarenMFMediaTypeExtend::SetUINT32(String^ Param_GuidChave, UInt32 Param_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -2173,7 +2284,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 /// <param name="Param_Valor">O valor a ser definido na chave especificada.</param>
-CarenResult CarenMFVideoMediaType::SetUINT64(String^ Param_GuidChave, UInt64 Param_Valor)
+CarenResult CarenMFMediaTypeExtend::SetUINT64(String^ Param_GuidChave, UInt64 Param_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -2219,7 +2330,7 @@ Done:;
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor. O tipo do atributo deve ser: UInt64</param>
 /// <param name="Param_Numerador">Define o valor do: Numerador</param>
 /// <param name="Param_Denominador">Define o valor do: Denominador</param>
-CarenResult CarenMFVideoMediaType::_MFSetAttributeRatio(String^ Param_GuidChave, UInt32 Param_Numerador, UInt32 Param_Denominador)
+CarenResult CarenMFMediaTypeExtend::_MFSetAttributeRatio(String^ Param_GuidChave, UInt32 Param_Numerador, UInt32 Param_Denominador)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -2265,7 +2376,7 @@ Done:;
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor. O tipo do atributo deve ser: UInt64</param>
 /// <param name="Param_Largura">A Largura do vídeo em pixels.</param>
 /// <param name="Param_Altura">A Altura do vídeo em pixels.</param>
-CarenResult CarenMFVideoMediaType::_MFSetAttributeSize(String^ Param_GuidChave, UInt32 Param_Largura, UInt32 Param_Altura)
+CarenResult CarenMFMediaTypeExtend::_MFSetAttributeSize(String^ Param_GuidChave, UInt32 Param_Largura, UInt32 Param_Altura)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -2308,7 +2419,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 /// <param name="Param_InterfaceDesconhecida">A interface desconhecida a ser definida no valor da chave solicitada.</param>
-CarenResult CarenMFVideoMediaType::SetUnknown(String^ Param_GuidChave, ICaren^ Param_InterfaceDesconhecida)
+CarenResult CarenMFMediaTypeExtend::SetUnknown(String^ Param_GuidChave, ICaren^ Param_InterfaceDesconhecida)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -2367,7 +2478,7 @@ Done:;
 /// (UnlockStore) - Desbloqueia o armazenamento de atributo após uma chamada para o método (BloquearAtributo). 
 /// Enquanto o objeto é desbloqueado, Múltiplos threads podem acessar atributos do objeto.
 /// </summary>
-CarenResult CarenMFVideoMediaType::UnlockStore()
+CarenResult CarenMFMediaTypeExtend::UnlockStore()
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -2395,118 +2506,5 @@ CarenResult CarenMFVideoMediaType::UnlockStore()
 
 Done:;
 	//Retorna o resultado.
-	return Resultado;
-}
-
-
-
-
-
-// Métodos da interface ICarenMidiaExtensões
-
-
-
-/// <summary>
-/// (Extensão) - Método responsável por obter o tipo principal da mídia. 
-/// </summary>
-/// <param name="Param_Out_TipoPrincipal">Recebe o tipo principal da mídia(Áudio ou Vídeo).</param>
-/// <param name="Param_Out_Guid">Recebe o Guid do formato principal.</param>
-CarenResult CarenMFVideoMediaType::ObterTipoPrincipalMidia([Out] Enumeracoes::CA_MAJOR_MEDIA_TYPES% Param_Out_TipoPrincipal, [Out] String^% Param_Out_Guid)
-{
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis utilizadas no método
-	ResultadoCOM  Hr = E_FAIL;
-	GUID GuidTipoPrincipal = GUID_NULL;
-	Utilidades Util;
-
-	//Obtém o guid o formato principal da mídia.
-	Hr = PonteiroTrabalho->GetGUID(MF_MT_MAJOR_TYPE, &GuidTipoPrincipal);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-	//Verifica o tipo principal da midia
-	if (GuidTipoPrincipal == MFMediaType_Audio)
-	{
-		//O tipo principal da mídia é Áudio.
-		Param_Out_TipoPrincipal = CA_MAJOR_MEDIA_TYPES::TP_Audio;
-		//Define o Guid
-		Param_Out_Guid = Util.ConverterGuidToString(MFMediaType_Audio);
-	}
-	else if (GuidTipoPrincipal == MFMediaType_Video)
-	{
-		//O tipo principal da mídia é Vídeo.
-		Param_Out_TipoPrincipal = CA_MAJOR_MEDIA_TYPES::TP_Video;
-		//Define o Guid
-		Param_Out_Guid = Util.ConverterGuidToString(MFMediaType_Video);
-	}
-	else
-	{
-		//Tipo desconhecido.
-		Param_Out_TipoPrincipal = CA_MAJOR_MEDIA_TYPES::TP_Desconhecido;
-	}
-
-Done:;
-	//Retorna o resultado
-	return Resultado;
-}
-
-
-/// <summary>
-/// (Extensão) - Método responsável por retornar o formato do tipo principal da mídia. 
-/// </summary>
-/// <param name="Param_Out_FormatoMidia">Recebe o subtipo(Formato) da mídia principal.</param>
-/// <param name="Param_Out_GuidFormato">Recebe o Guid do subtipo(Formato).</param>
-CarenResult CarenMFVideoMediaType::ObterFormatoMidia([Out] CA_MEDIA_SUBTYPES% Param_Out_FormatoMidia, [Out] String^% Param_Out_GuidFormato)
-{
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis utilizadas no método
-	ResultadoCOM  Hr = E_FAIL;
-	GUID GuidFormatoMidia = GUID_NULL;
-	Utilidades Util;
-
-	//Obtém o guid para o Subtipo da midia
-	//O subtipo é o formato da mídia principal.
-	Hr = PonteiroTrabalho->GetGUID(MF_MT_SUBTYPE, &GuidFormatoMidia);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-	//Obtém o formato de midia.
-	Param_Out_FormatoMidia = Util.ConverterGUIDSubtipoMidia_ToMidia_SubTipo(GuidFormatoMidia);
-
-	//Converte o GUID do formato para String
-	Param_Out_GuidFormato = Util.ConverterGuidToString(GuidFormatoMidia);
-
-Done:;
-	//Retorna o valor
 	return Resultado;
 }

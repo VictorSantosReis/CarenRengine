@@ -14,19 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-
 #pragma once
-#include "../SDK_MediaFoundation.h"
-#include "../Caren/Caren.h"
+#include "../SDK_MediaFoundationExtend.h"
+#include "../SDK_Caren.h"
 #include "../SDK_Utilidades.h"
 
-
-//Importa o namespace que contém as interfaces da Media Foundation.
-using namespace CarenRengine::MediaFoundation;
+//Importa o namespace que contém as interfaces da API primária.
+using namespace CarenRengine::MediaFoundationExtended;
 
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
-using namespace CarenRengine::SDKBase::Enumeracoes;
 using namespace CarenRengine::SDKBase::Estruturas;
 using namespace CarenRengine::SDKBase::Interfaces;
 
@@ -35,9 +32,9 @@ using namespace CarenRengine::SDKUtilidades;
 
 
 /// <summary>
-/// (Concluido - Fase de Testes) - Classe responsável por representar um tipo de mídia que descreve o formato de um fluxo de mídia. 
+/// Classe responsável por estender os métodos da interface (ICarenMFMediaType), adicionado métodos para obter o tipo principal da mídia e seu subtipo(Formato).
 /// </summary>
-public ref class CarenMFMediaType: public ICarenMFMediaType
+public ref class CarenMFMediaTypeExtend : public ICarenMFMediaTypeExtend
 {
 	/////////////////////////////////////////
 	//Objeto gerenciado por essa interface.//
@@ -47,36 +44,14 @@ public ref class CarenMFMediaType: public ICarenMFMediaType
 	IMFMediaType* PonteiroTrabalho = NULL;
 
 
-
-	//Construtor e destruidor da classe.
+	//Contrutor e destuidor da classe.
 public:
 	/// <summary>
-	/// Inicializa a interface e permite que o usuário decida se a biblioteca deve criar a interface ou vai iniciar sem um ponteiro de trabalho.
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
 	/// </summary>
-	/// <param name="Param_CriarInterface">Um valor booleano, TRUE indica que deve criar uma nova interface intermanete, caso contario, FALSE.</param>
-	CarenMFMediaType(Boolean Param_CriarInterface);
-
-	/// <summary>
-	/// Inicializa a cria a interface a parti de uma interface de propriedades.
-	/// </summary>
-	/// <param name="Param_StreamProperties">Um ponteiro para as propriedades.</param>
-	CarenMFMediaType(ICaren^ Param_StreamProperties);
-
-	/// <summary>
-	/// Inicializa e cria um tipo de mídia da Media Foundation a partir de outra representação de formato.
-	/// </summary>
-	/// <param name="Param_GuidRepresentation">GUID que especifica qual representação de formato converter.</param>
-	/// <param name="Param_BufferRepresentation">um buffer que contém a representação do formato para converter. O layout do buffer depende do valor no parametro (Param_GuidRepresentation).</param>
-	CarenMFMediaType(String^ Param_GuidRepresentation, ICarenBuffer^ Param_BufferRepresentation);
-
-	/// <summary>
-	/// Inicializa e cria a interface de atributos a parti de uma lista(ICarenMFCollection) que descrevem os tipos de mídia de substreams multiplexados.
-	/// </summary>
-	/// <param name="Param_MediaTypesToMux">Uma interface (ICarenMFCollection) que contém uma lista de ponteiros para as interfaces de atributos de cada substream multiplexado.</param>
-	CarenMFMediaType(ICarenMFCollection^ Param_MediaTypesToMux);
-
-	~CarenMFMediaType();
-
+	CarenMFMediaTypeExtend();
+	
+	~CarenMFMediaTypeExtend();
 
 	//Variaveis Internas.
 internal:
@@ -188,6 +163,21 @@ public:
 	virtual void Finalizar();
 
 
+	//Métodos da interface(ICarenMFMediaTypeExtend)
+public:
+	/// <summary>
+	/// (Extensão) - Método responsável por obter o tipo principal da mídia. 
+	/// </summary>
+	/// <param name="Param_Out_TipoPrincipal">Recebe o tipo principal da mídia(Áudio ou Vídeo).</param>
+	/// <param name="Param_Out_Guid">Recebe o Guid do formato principal.</param>
+	virtual CarenResult ExGetMajorMediaType(OutParam Enumeracoes::CA_MAJOR_MEDIA_TYPES% Param_Out_TipoPrincipal, OutParam String^% Param_Out_Guid);
+
+	/// <summary>
+	/// (Extensão) - Método responsável por retornar o formato do tipo principal da mídia. 
+	/// </summary>
+	/// <param name="Param_Out_FormatoMidia">Recebe o subtipo(Formato) da mídia principal.</param>
+	/// <param name="Param_Out_GuidFormato">Recebe o Guid do subtipo(Formato).</param>
+	virtual CarenResult ExGetFormatSubtype(OutParam Enumeracoes::CA_MEDIA_SUBTYPES% Param_Out_FormatoMidia, OutParam String^% Param_Out_GuidFormato);
 
 
 	//Métodos da interface(ICarenMFMediaType)
@@ -515,4 +505,3 @@ public:
 	/// </summary>
 	virtual CarenResult UnlockStore();
 };
-

@@ -14,175 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-
 #include "../pch.h"
-#include "CarenMFSourceReader.h"
-
+#include "CarenMFSourceReaderExtend.h"
 
 //Destruidor.
-CarenMFSourceReader::~CarenMFSourceReader()
+CarenMFSourceReaderExtend::~CarenMFSourceReaderExtend()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
-//Construtores
-CarenMFSourceReader::CarenMFSourceReader()
+//Construtor
+CarenMFSourceReaderExtend::CarenMFSourceReaderExtend()
 {
 	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
-CarenMFSourceReader::CarenMFSourceReader(String^ Param_Url, ICarenMFAttributes^ Param_Atributos)
-{
-	//Variavel que vai conter o resultado COM.
-	HRESULT Hr = E_FAIL;
-
-	//Resultados de Caren.
-	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
-
-	//Variaveis utilizadas.
-	Utilidades Util;
-	PWSTR vi_pUrl = Nulo; //Pode ser Nulo se vi_pByteStream não for
-	IMFAttributes* vi_pAttributes = Nulo; //Pode ser Nulo.
-	IMFSourceReader* vi_pOutSourceReader = Nulo;
-
-	//Verifica se a url foi informada e converte a string.
-	if (!StringObjetoValido(Param_Url))
-		throw gcnew NullReferenceException("A url para o arquivo no parâmetro (Param_Url) não pode ser NULA e nem vazia.");
-
-	//Converte a string com a url para o arquivo.
-	vi_pUrl = Util.ConverterStringToWCHAR(Param_Url);
-
-	//Recupera o ponteiro para a interface de atributos se informada
-	if (ObjetoGerenciadoValido(Param_Atributos))
-	{
-		//Tenta recuperar o ponteiro para a interface.
-		Resultado = RecuperarPonteiroCaren(Param_Atributos, &vi_pAttributes);
-
-		//Verifica se não houve algum erro
-		if (!CarenSucesso(Resultado))
-			throw gcnew Exception("Falhou ao tentar recuperar o ponteiro para a interface de atributos informada.");
-	}
-
-	//Chama o método para criar a interface.
-	Hr = MFCreateSourceReaderFromURL(const_cast<PWSTR>(vi_pUrl), vi_pAttributes, &vi_pOutSourceReader);
-
-	//Verifica se não ocorreu erro no processo.
-	if (!Sucesso(Hr))
-	{
-		//Chama uma exceção para informar o error.
-		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
-	}
-
-	//Define a interface criada no ponteiro de trabalho
-	PonteiroTrabalho = vi_pOutSourceReader;
-
-	//Libera a memória utilizada pela string se valida
-	DeletarStringAllocatedSafe(&vi_pUrl);
-}
-
-CarenMFSourceReader::CarenMFSourceReader(ICarenMFMediaSource^ Param_MediaSource, ICarenMFAttributes^ Param_Atributos)
-{
-	//Variavel que vai conter o resultado COM.
-	HRESULT Hr = E_FAIL;
-
-	//Resultados de Caren.
-	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
-
-	//Variaveis utilizadas.
-	Utilidades Util;
-	IMFMediaSource* vi_pMediaSource = Nulo;
-	IMFAttributes* vi_pAttributes = Nulo; //Pode ser Nulo.
-	IMFSourceReader* vi_pOutSourceReader = Nulo;
-
-	//Verfifica se a interface do Media Source é valida.
-	if (!ObjetoGerenciadoValido(Param_MediaSource))
-		throw gcnew NullReferenceException("A interface no parâmetro (Param_MediaSource) não pode ser NULA!");
-
-	//Tenta recuperar o ponteiro para a interface.
-	Resultado = RecuperarPonteiroCaren(Param_MediaSource, &vi_pMediaSource);
-
-	//Verifica se não houve algum erro
-	if (!CarenSucesso(Resultado))
-		throw gcnew Exception("Falhou ao tentar recuperar o ponteiro para a interface da fonte de mídia(Media Source).");
-
-	//Recupera o ponteiro para a interface de atributos se informada
-	if (ObjetoGerenciadoValido(Param_Atributos))
-	{
-		//Tenta recuperar o ponteiro para a interface.
-		Resultado = RecuperarPonteiroCaren(Param_Atributos, &vi_pAttributes);
-
-		//Verifica se não houve algum erro
-		if (!CarenSucesso(Resultado))
-			throw gcnew Exception("Falhou ao tentar recuperar o ponteiro para a interface de atributos informada.");
-	}
-
-	//Chama o método para criar a interface.
-	Hr = MFCreateSourceReaderFromMediaSource(vi_pMediaSource, vi_pAttributes, &vi_pOutSourceReader);
-
-	//Verifica se não ocorreu erro no processo.
-	if (!Sucesso(Hr))
-	{
-		//Chama uma exceção para informar o error.
-		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
-	}
-
-	//Define a interface criada no ponteiro de trabalho
-	PonteiroTrabalho = vi_pOutSourceReader;
-}
-
-CarenMFSourceReader::CarenMFSourceReader(ICarenMFByteStream^ Param_ByteStream, ICarenMFAttributes^ Param_Atributos)
-{
-	//Variavel que vai conter o resultado COM.
-	HRESULT Hr = E_FAIL;
-
-	//Resultados de Caren.
-	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
-
-	//Variaveis utilizadas.
-	Utilidades Util;
-	IMFByteStream* vi_pByteStream = Nulo;
-	IMFAttributes* vi_pAttributes = Nulo; //Pode ser Nulo.
-	IMFSourceReader* vi_pOutSourceReader = Nulo;
-
-	//Verfifica se a interface para o fluxo de bytes é válida.
-	if (!ObjetoGerenciadoValido(vi_pByteStream))
-		throw gcnew NullReferenceException("A interface no parâmetro (Param_ByteStream) não pode ser NULA!");
-
-	//Tenta recuperar o ponteiro para a interface.
-	Resultado = RecuperarPonteiroCaren(Param_ByteStream, &vi_pByteStream);
-
-	//Verifica se não houve algum erro
-	if (!CarenSucesso(Resultado))
-		throw gcnew Exception("Falhou ao tentar recuperar o ponteiro para a interface do fluxo de bytes.");
-
-	//Recupera o ponteiro para a interface de atributos se informada
-	if (ObjetoGerenciadoValido(Param_Atributos))
-	{
-		//Tenta recuperar o ponteiro para a interface.
-		Resultado = RecuperarPonteiroCaren(Param_Atributos, &vi_pAttributes);
-
-		//Verifica se não houve algum erro
-		if (!CarenSucesso(Resultado))
-			throw gcnew Exception("Falhou ao tentar recuperar o ponteiro para a interface de atributos informada.");
-	}
-
-	//Chama o método para criar a interface.
-	Hr = MFCreateSourceReaderFromByteStream(vi_pByteStream, vi_pAttributes, &vi_pOutSourceReader);
-
-	//Verifica se não ocorreu erro no processo.
-	if (!Sucesso(Hr))
-	{
-		//Chama uma exceção para informar o error.
-		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
-	}
-
-	//Define a interface criada no ponteiro de trabalho
-	PonteiroTrabalho = vi_pOutSourceReader;
-}
-
-//
 // Métodos da interface ICaren
-//
+
 
 /// <summary>
 /// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 
@@ -191,10 +39,10 @@ CarenMFSourceReader::CarenMFSourceReader(ICarenMFByteStream^ Param_ByteStream, I
 /// </summary>
 /// <param name="Param_Guid">O IID(Identificador de Interface) ou GUID para a interface desejada.</param>
 /// <param name="Param_InterfaceSolicitada">A interface que vai receber o ponteiro nativo. O usuário deve inicializar a interface antes de chamar o método. Libere a interface quando não for mais usá-la.</param>
-CarenResult CarenMFSourceReader::ConsultarInterface(String^ Param_Guid, ICaren^ Param_InterfaceSolicitada)
+CarenResult CarenMFSourceReaderExtend::ConsultarInterface(String^ Param_Guid, ICaren^ Param_InterfaceSolicitada)
 {
 	//Variavel que vai retornar o resultado.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
 
 	//Resultado COM
 	HRESULT Hr = E_FAIL;
@@ -214,7 +62,7 @@ CarenResult CarenMFSourceReader::ConsultarInterface(String^ Param_Guid, ICaren^ 
 		const char* DadosConvertidos = NULL;
 
 		//Verifica se a string é valida.
-		if (!String::IsNullOrEmpty(Param_Guid))
+		if (Param_Guid != nullptr && !String::IsNullOrEmpty(Param_Guid))
 		{
 			//Obtém a largura da String.
 			LarguraString = Param_Guid->Length + 1;
@@ -277,9 +125,6 @@ CarenResult CarenMFSourceReader::ConsultarInterface(String^ Param_Guid, ICaren^ 
 	//Verifica o resultado da operação.
 	if (Resultado.StatusCode != ResultCode::SS_OK)
 	{
-		//A operação falhou.
-		
-
 		//Libera a referência obtida a parti do QueryInterface.
 		((IUnknown*)pInterfaceSolcitada)->Release();
 		pInterfaceSolcitada = NULL;
@@ -293,19 +138,19 @@ Done:;
 		delete[] DadosGuid;
 	}
 
-
 	//Retorna o resultado
-	return Resultado;}
+	return Resultado;
+}
 
 /// <summary>
 /// Método responsável por adicionar um novo ponteiro nativo a classe atual.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
 /// </summary>
 /// <param name="Param_PonteiroNativo">Variável (GERENCIADA) para o ponteiro nativo a ser adicionado.</param>
-CarenResult CarenMFSourceReader::AdicionarPonteiro(IntPtr Param_PonteiroNativo)
+CarenResult CarenMFSourceReaderExtend::AdicionarPonteiro(IntPtr Param_PonteiroNativo)
 {
 	//Variavel que vai retornar o resultado.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
 
 	//Verifica se o objeto é valido
 	if (Param_PonteiroNativo == IntPtr::Zero)
@@ -343,10 +188,10 @@ Done:;
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
 /// </summary>
 /// <param name="Param_PonteiroNativo">Variável (NATIVA) para o ponteiro nativo a ser adicionado.</param>
-CarenResult CarenMFSourceReader::AdicionarPonteiro(LPVOID Param_PonteiroNativo)
+CarenResult CarenMFSourceReaderExtend::AdicionarPonteiro(LPVOID Param_PonteiroNativo)
 {
 	//Variavel que vai retornar o resultado.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
 
 	//Verifica se o objeto é valido
 	if (!ObjetoValido(Param_PonteiroNativo))
@@ -387,10 +232,10 @@ Done:;
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
 /// </summary>
 /// <param name="Param_Out_PonteiroNativo">Variável (GERENCIADA) que vai receber o ponteiro nativo.</param>
-CarenResult CarenMFSourceReader::RecuperarPonteiro([Out] IntPtr% Param_Out_PonteiroNativo)
+CarenResult CarenMFSourceReaderExtend::RecuperarPonteiro([Out] IntPtr% Param_Out_PonteiroNativo)
 {
 	//Variavel que vai retornar o resultado.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
 
 	//Verifica se o ponteiro é valido
 	if (!ObjetoValido(PonteiroTrabalho))
@@ -418,10 +263,10 @@ Done:;
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
 /// </summary>
 /// <param name="Param_Out_PonteiroNativo">Variável (NATIVA) que vai receber o ponteiro nativo.</param>
-CarenResult CarenMFSourceReader::RecuperarPonteiro(LPVOID* Param_Out_PonteiroNativo)
+CarenResult CarenMFSourceReaderExtend::RecuperarPonteiro(LPVOID* Param_Out_PonteiroNativo)
 {
 	//Variavel que vai retornar o resultado.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
 
 	//Verifica se o ponteiro é valido
 	if (!ObjetoValido(PonteiroTrabalho))
@@ -449,10 +294,10 @@ Done:;
 /// Método responsável por retornar a quantidade de referências do objeto COM atual.
 /// </summary>
 /// <param name="Param_Out_Referencias">Variável que vai receber a quantidade de referências do objeto.</param>
-CarenResult CarenMFSourceReader::RecuperarReferencias([Out] UInt64% Param_Out_Referencias)
+CarenResult CarenMFSourceReaderExtend::RecuperarReferencias([Out] UInt64% Param_Out_Referencias)
 {
 	//Variavel que vai retornar o resultado.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
 
 	//Verifica se o ponteiro é valido
 	if (!ObjetoValido(PonteiroTrabalho))
@@ -474,9 +319,10 @@ CarenResult CarenMFSourceReader::RecuperarReferencias([Out] UInt64% Param_Out_Re
 	Param_Out_Referencias = static_cast<UInt64>(CountRefs - 1);
 
 	//Define o resultado
-	Resultado.AdicionarCodigo(ResultCode::SS_OK,true);
+	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
 
 Done:;
+
 	//Retorna o resultado
 	return Resultado;
 }
@@ -484,7 +330,7 @@ Done:;
 /// <summary>
 /// Método responsável por indicar se o ponteiro COM atual é válido.
 /// </summary>
-CarenResult CarenMFSourceReader::StatusPonteiro()
+CarenResult CarenMFSourceReaderExtend::StatusPonteiro()
 {
 	return (ObjetoValido(PonteiroTrabalho) ? CarenResult(ResultCode::SS_OK, true) : CarenResult(ResultCode::ER_E_POINTER, false));
 }
@@ -493,7 +339,7 @@ CarenResult CarenMFSourceReader::StatusPonteiro()
 /// Método responsável por retornar a variável que armazena o último código de erro desconhecido ou não documentado gerado pela classe.
 /// Esse método não chama o método nativo (GetLastError), apenas retorna o código de erro que foi armazenado na classe.
 /// </summary>
-Int32 CarenMFSourceReader::ObterCodigoErro()
+Int32 CarenMFSourceReaderExtend::ObterCodigoErro()
 {
 	return Var_Glob_LAST_HRESULT;
 }
@@ -502,7 +348,7 @@ Int32 CarenMFSourceReader::ObterCodigoErro()
 /// (AddRef) - Incrementa a contagem de referência para o ponteiro do objeto COM atual. Você deve chamar este método sempre que 
 /// você fazer uma cópia de um ponteiro de interface.
 /// </summary>
-void CarenMFSourceReader::AdicionarReferencia()
+void CarenMFSourceReaderExtend::AdicionarReferencia()
 {
 	//Adiciona uma referência ao ponteiro
 	PonteiroTrabalho->AddRef();
@@ -511,7 +357,7 @@ void CarenMFSourceReader::AdicionarReferencia()
 /// <summary>
 /// (Release) - 'Decrementa' a contagem de referência do objeto COM atual.
 /// </summary>
-void CarenMFSourceReader::LiberarReferencia()
+void CarenMFSourceReaderExtend::LiberarReferencia()
 {
 	//Libera a referência e obtém a quantidade atual.
 	ULONG RefCount = PonteiroTrabalho->Release();
@@ -529,7 +375,7 @@ void CarenMFSourceReader::LiberarReferencia()
 /// Método responsável por limpar os dados do objeto COM e códigos de erros gerados pelos métodos da classe.
 /// Este método não libera a referência do objeto COM atual, vai apenas anular o ponteiro.
 /// </summary>
-void CarenMFSourceReader::LimparDados()
+void CarenMFSourceReaderExtend::LimparDados()
 {
 	//Verifica se o ponteiro é um objeto valido e limpa.
 	if (ObjetoValido(PonteiroTrabalho))
@@ -546,7 +392,7 @@ void CarenMFSourceReader::LimparDados()
 /// Método responsável por chamar o finalizador da interface para realizar a limpeza e descarte de dados pendentes.
 /// Este método pode ser escrito de forma diferente para cada interface.
 /// </summary>
-void CarenMFSourceReader::Finalizar()
+void CarenMFSourceReaderExtend::Finalizar()
 {
 	//////////////////////
 	//Código de descarte//
@@ -556,13 +402,127 @@ void CarenMFSourceReader::Finalizar()
 	GC::SuppressFinalize(this);
 
 	//Chama o finalizador da classe
-	this->~CarenMFSourceReader();
+	this->~CarenMFSourceReaderExtend();
+}
+
+
+
+// Métodos da interface proprietária(ICarenMFSourceReaderExtend)
+
+
+/// <summary>
+/// (Extensão) - Método responsável por retornar a quantidade de fluxos na mídia carregada pelo leitor.
+/// </summary>
+/// <param name="Param_Out_QuantidadeFluxos">Recebe a quantidade de fluxos na mídia carregada.</param>
+CarenResult CarenMFSourceReaderExtend::ExGetCountStreams(OutParam UInt32% Param_Out_QuantidadeFluxos)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM.
+	ResultadoCOM Hr = E_FAIL;
+
+	//Variaveis utilizados no método.
+	UInt32 vi_CountStreams = 0;
+	DWORD vi_IdStreamActual = 0;
+	IMFMediaType* vi_pOutMediaType = Nulo; //Media Type que será usado para pecorrer o fluxo.
+
+	//Abre um laço para ficar obtendo os tipos de midia para calcular a quantidade de Fluxos.
+	while (true)
+	{
+		//Chama o método para realizar a operação.
+		Hr = PonteiroTrabalho->GetCurrentMediaType(vi_IdStreamActual, &vi_pOutMediaType);
+
+		//Processa o resultado.
+		Resultado.ProcessarCodigoOperacao(Hr);
+
+		//Verifica se obteve sucesso na operação.
+		if(CarenSucesso(Resultado))
+		{
+			//Tipo obtido com sucesso.
+			//Libera a amostra e adiciona +1 a quantidade de fluxos e ao ID.
+
+
+			//Libera a amostra.
+			vi_pOutMediaType->Release();
+			vi_pOutMediaType = Nulo;
+
+			//Incrementa a quantidade de fluxos.
+			++vi_CountStreams;
+
+			//Incrementa o ID do stream.
+			++vi_IdStreamActual;
+		}
+		else if (Resultado.StatusCode == ResultCode::ER_MF_E_INVALIDSTREAMNUMBER)
+		{
+			//Final do fluxo. Não incrementa mais.
+
+			//Define sucesso na operação.
+			Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+
+			//Sai do laço.
+			break;
+		}
+		else
+		{
+			//Ocorreu uma falha não esperada.
+
+			//Sai do método
+			Sair;
+		}
+	}
+
+	//Define a quantidade de fluxos no parametro de saida.
+	Param_Out_QuantidadeFluxos = vi_CountStreams;
+
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
+
+/// <summary>
+/// (Extensão) - Método responsável por retornar todos os tipos principais de mídia do arquivo carregado pelo leitor.
+/// </summary>
+/// <param name="Param_Out_TiposMidias">Recebe a lista, em ordem, com os tipos principais de mídia no fluxo carregado</param>
+CarenResult CarenMFSourceReaderExtend::ExGetAllMediaTypesStream(OutParam List<Enumeracoes::CA_MAJOR_MEDIA_TYPES>^% Param_Out_TiposMidias)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Resultado COM.
+	ResultadoCOM Hr = E_FAIL;
+
+	//Variaveis a serem utilizadas.
+	Utilidades Util;
+
+
+	//Chama o método para realizar a operação.
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Define o código na classe.
+		Var_Glob_LAST_HRESULT = Hr;
+
+		//Sai do método
+		Sair;
+	}
+
+Done:;
+	//Retorna o resultado.
+	return Resultado;
 }
 
 
 
 
-// Métodos da interface proprietaria
+// Métodos da interface ICarenMFSourceReader
 
 
 
@@ -571,7 +531,7 @@ void CarenMFSourceReader::Finalizar()
 /// </summary>
 /// <param name="Param_IdFluxo">O fluxo de consulta. Você pode utilizar a enumeração (CA_SOURCE_READER_ID) para força o Leitor a obter o primeiro fluxo de áudio ou vídeo na lista.</param>
 /// <param name="Param_Out_TipoMidia">Retorna o tipo da midia no Id especificado.</param>
-CarenResult CarenMFSourceReader::GetCurrentMediaType(UInt32 Param_IdFluxo, [Out] ICarenMFMediaType^% Param_Out_TipoMidia)
+CarenResult CarenMFSourceReaderExtend::GetCurrentMediaType(UInt32 Param_IdFluxo, [Out] ICarenMFMediaType^% Param_Out_TipoMidia)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -580,7 +540,7 @@ CarenResult CarenMFSourceReader::GetCurrentMediaType(UInt32 Param_IdFluxo, [Out]
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas pelo método
-	IMFMediaType *pTipoMidia = NULL;
+	IMFMediaType* pTipoMidia = NULL;
 	ICarenMFMediaType^ MidiaTypeInterface = nullptr;
 
 	//Chama o método que vai obter o tipo da midia atual.
@@ -624,7 +584,7 @@ Done:;
 /// <param name="Param_IdFluxo">O fluxo de consulta. Você pode utilizar a enumeração (CA_SOURCE_READER_ID) para força o Leitor a obter o primeiro fluxo de áudio ou vídeo na lista.</param>
 /// <param name="Param_IdMediaTypeIndice">O Id para o tipo de mídia na lista a ser obtida. O valor pode ser qualquer um dos seguintes. Indice baseado em 0 ou o valor: 0xffffffff que representa o tipo da mídia nativa atual. </param>
 /// <param name="Param_Out_TipoMidia">Retorna o tipo da midia no Id especificado.</param>
-CarenResult CarenMFSourceReader::GetNativeMediaType(UInt32 Param_IdFluxo, UInt32 Param_IdMediaTypeIndice, [Out] ICarenMFMediaType^% Param_Out_TipoMidia)
+CarenResult CarenMFSourceReaderExtend::GetNativeMediaType(UInt32 Param_IdFluxo, UInt32 Param_IdMediaTypeIndice, [Out] ICarenMFMediaType^% Param_Out_TipoMidia)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -633,7 +593,7 @@ CarenResult CarenMFSourceReader::GetNativeMediaType(UInt32 Param_IdFluxo, UInt32
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas pelo método
-	IMFMediaType *pTipoMidia = NULL;
+	IMFMediaType* pTipoMidia = NULL;
 	ICarenMFMediaType^ MidiaTypeInterface = nullptr;
 
 	//Chama o método que vai obter o tipo da midia atual.
@@ -676,7 +636,7 @@ Done:;
 /// Param_GuidAtributo pode especificar os atributos de: MFAtributos_DescritorApresentação, MF_SOURCE_READER_MEDIASOURCE_CHARACTERISTICS.
 /// Se Param_IdFluxo espeficifica um Fluxo, Param_GuidAtributo deve especificar um atributo do Descritor de Fluxo(GUIDs_MFAtributos_DescritorFluxo) </param>
 /// <param name="Param_Out_ValorAtributo">Retorna o valor do atributo solicitado</param>
-CarenResult CarenMFSourceReader::GetPresentationAttribute(UInt32 Param_IdFluxo, String^ Param_GuidAtributo, [Out] Estruturas::CA_PropVariant^% Param_Out_ValorAtributo)
+CarenResult CarenMFSourceReaderExtend::GetPresentationAttribute(UInt32 Param_IdFluxo, String^ Param_GuidAtributo, [Out] Estruturas::CA_PropVariant^% Param_Out_ValorAtributo)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -688,7 +648,7 @@ CarenResult CarenMFSourceReader::GetPresentationAttribute(UInt32 Param_IdFluxo, 
 	Utilidades Util;
 	GUID GuidChave = GUID_NULL;
 	PROPVARIANT PropVar;
-	
+
 
 	//Chama o método para obter o guid.
 	GuidChave = Util.CreateGuidFromString(Param_GuidAtributo);
@@ -747,7 +707,7 @@ Done:;
 /// o método chama (ConsultarInterface) para obter a interface solicitada. Caso contrário, o método chama o ICarenMFGetService.ObterServiço.</param>
 /// <param name="Param_GuidInterface">O identificador de interface (IID) da interface que está sendo solicitada..</param>
 /// <param name="Param_Out_InterfaceDesconhecida">Recebe a interface que foi solicitada. O usuário deve inicializar a interface antes de chamar este método.</param>
-CarenResult CarenMFSourceReader::GetServiceForStream(UInt32 Param_IdFluxo, String^ Param_GuidServiço, String^ Param_GuidInterface, ICaren^ Param_Out_InterfaceDesconhecida)
+CarenResult CarenMFSourceReaderExtend::GetServiceForStream(UInt32 Param_IdFluxo, String^ Param_GuidServiço, String^ Param_GuidInterface, ICaren^ Param_Out_InterfaceDesconhecida)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -804,7 +764,7 @@ CarenResult CarenMFSourceReader::GetServiceForStream(UInt32 Param_IdFluxo, Strin
 	{
 		//Deixa o método continuar.
 	}
-	
+
 	else
 	{
 		//Define falha no método.
@@ -831,7 +791,7 @@ Done:;
 /// <param name="Param_IdFluxo">O Fluxo para consulta. Você pode utilizar a enumeração(CA_SOURCE_READER_ID).</param>
 /// <param name="Param_Out_ResultadoFluxoSelecionado">Recebe true se o fluxo é selecionado e irá gerar dados. Recebe false se o fluxo não está selecionado 
 /// e não irá gerar dados.</param>
-CarenResult CarenMFSourceReader::GetStreamSelection(UInt32 Param_IdFluxo, [Out] Boolean% Param_Out_ResultadoFluxoSelecionado)
+CarenResult CarenMFSourceReaderExtend::GetStreamSelection(UInt32 Param_IdFluxo, [Out] Boolean% Param_Out_ResultadoFluxoSelecionado)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -878,7 +838,7 @@ Done:;
 /// <param name="Param_Out_Timestamp">‎Retorna o carimbo de hora(Timestamp) da amostra ou a hora do evento de fluxo indicado em ‎‎(Param_Out_StreamFlags)‎‎. O tempo é dado em unidades de 100 nanossegundos.‎</param>
 /// <param name="Param_Out_Sample">Retorna uma interface (ICarenMFSample) ou (NULO). Se este parametro nao for NULO, o usuário é responsável por liberar a interface. O usuário é responsável por inicializar a interface antes de chamar este método.</param>
 /// <returns></returns>
-CarenResult CarenMFSourceReader::ReadSample
+CarenResult CarenMFSourceReaderExtend::ReadSample
 (
 	UInt32 Param_StreamIndex,
 	CA_MF_SOURCE_READER_CONTROL_FLAG Param_ControlFlags,
@@ -905,7 +865,7 @@ CarenResult CarenMFSourceReader::ReadSample
 	Hr = PonteiroTrabalho->ReadSample(
 		static_cast<DWORD>(Param_StreamIndex),
 		static_cast<DWORD>(Param_ControlFlags),
-		Param_Out_ActualStreamIndex.IgnoreParameter? Nulo: &vi_OutActualStreamIndex,
+		Param_Out_ActualStreamIndex.IgnoreParameter ? Nulo : &vi_OutActualStreamIndex,
 		Param_Out_StreamFlags.IgnoreParameter ? Nulo : &vi_OutStreamFlags,
 		Param_Out_Timestamp.IgnoreParameter ? Nulo : &vi_OutTimestamp,
 		Param_Out_Sample.IgnoreParameter ? Nulo : &vi_pOutSample
@@ -954,7 +914,7 @@ Done:;
 /// <param name="Param_IdFluxo">O Id para o fluxo a ter o tipo de mídia definido. Você pode utilizar a enumeração(CA_SOURCE_READER_ID).</param>
 /// <param name="Param_ValorReservado">Valor reservado. Define como: 0</param>
 /// <param name="Param_TipoMidia">A interface com o (Tipo Mídia) a ser definida como o tipo atual.</param>
-CarenResult CarenMFSourceReader::SetCurrentMediaType(UInt32 Param_IdFluxo, UInt32 Param_ValorReservado, ICarenMFMediaType^ Param_TipoMidia)
+CarenResult CarenMFSourceReaderExtend::SetCurrentMediaType(UInt32 Param_IdFluxo, UInt32 Param_ValorReservado, ICarenMFMediaType^ Param_TipoMidia)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -963,7 +923,7 @@ CarenResult CarenMFSourceReader::SetCurrentMediaType(UInt32 Param_IdFluxo, UInt3
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas pelo método
-	IMFMediaType *pTipoMidia = NULL;
+	IMFMediaType* pTipoMidia = NULL;
 
 	//Chama o método que vai obter a interface não gerenciada (IMFMediaTypes).
 	Resultado = Param_TipoMidia->RecuperarPonteiro((LPVOID*)&pTipoMidia);
@@ -1006,7 +966,7 @@ Done:;
 /// Define uma nova posição para ler as amostras de midia com base no tempo da apresentação.
 /// </summary>
 /// <param name="Param_PosiçãoNanoSegundos">A posição para leitura dos dados. O valor é dado em unidades de 100 nanosegundos.</param>
-CarenResult CarenMFSourceReader::SetCurrentPosition(Int64 Param_PosiçãoNanoSegundos)
+CarenResult CarenMFSourceReaderExtend::SetCurrentPosition(Int64 Param_PosiçãoNanoSegundos)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1063,7 +1023,7 @@ Done:;
 /// </summary>
 /// <param name="Param_IdFluxo">O Id para o fluxo a ser selecionado. Você pode utilizar a enumeração(CA_SOURCE_READER_ID).</param>
 /// <param name="Param_EstadoSeleção">Define se deve (Selecionar) ou (Desselecionar) o fluxo especificado.</param>
-CarenResult CarenMFSourceReader::SetStreamSelection(UInt32 Param_IdFluxo, Boolean Param_EstadoSeleção)
+CarenResult CarenMFSourceReaderExtend::SetStreamSelection(UInt32 Param_IdFluxo, Boolean Param_EstadoSeleção)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1098,7 +1058,7 @@ Done:;
 /// Libera um ou mais fluxos.
 /// </summary>
 /// <param name="Param_IdFluxo">O Id para o fluxo a ser (Liberado). Você pode utilizar a enumeração(CA_SOURCE_READER_ID).</param>
-CarenResult CarenMFSourceReader::Flush(UInt32 Param_IdFluxo)
+CarenResult CarenMFSourceReaderExtend::Flush(UInt32 Param_IdFluxo)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

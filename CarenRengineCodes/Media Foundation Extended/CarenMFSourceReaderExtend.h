@@ -14,29 +14,27 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-
 #pragma once
-#include "../SDK_MediaFoundation.h"
-#include "CarenMFMediaType.h"
-#include "CarenMFSample.h"
+#include "../SDK_MediaFoundationExtend.h"
+#include "../SDK_Caren.h"
 #include "../SDK_Utilidades.h"
 
-//Importa o namespace que contém as interfaces da Media Foundation.
-using namespace CarenRengine::MediaFoundation;
+//Importa o namespace que contém as interfaces da API primária.
+using namespace CarenRengine::MediaFoundationExtended;
 
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
-using namespace CarenRengine::SDKBase::Enumeracoes;
 using namespace CarenRengine::SDKBase::Estruturas;
 using namespace CarenRengine::SDKBase::Interfaces;
 
 //Importa o namespace de utilidades utilizado pelas classes
 using namespace CarenRengine::SDKUtilidades;
 
+
 /// <summary>
-/// (Concluido - Fase de Testes) - Classe responsável por realizar a leitura de amostras de mídia de um Arquivo, Nuvem ou Câmera.
+/// Classe responsável por estender os métodos da interface (ICarenMFSourceReader), adicionando métodos para obter a quantidade de Fluxos e seus tipos na mídia carregada.
 /// </summary>
-public ref class CarenMFSourceReader : public ICarenMFSourceReader
+public ref class CarenMFSourceReaderExtend : public ICarenMFSourceReaderExtend
 {
 	/////////////////////////////////////////
 	//Objeto gerenciado por essa interface.//
@@ -45,37 +43,15 @@ public ref class CarenMFSourceReader : public ICarenMFSourceReader
 	//Ponteiro para a interface (IMFSourceReader).
 	IMFSourceReader* PonteiroTrabalho = NULL;
 
-	//Construtor e destruidor da classe.
+
+	//Contrutor e destuidor da classe.
 public:
 	/// <summary>
 	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
 	/// </summary>
-	CarenMFSourceReader();
-
-	/// <summary>
-	/// Inicializa e cria o Source Reader(Leitor de Origem) a partir de uma URL.‎
-	/// ‎Internamente, o Source Reader chama o método ‎‎ICarenMFSourceResolver::CreateObjectFromURL‎‎ para criar uma fonte de mídia a partir da URL.‎
-	/// </summary>
-	/// <param name="Param_Url">Uma string com a url para o arquivo de mídia a ser aberto.</param>
-	/// <param name="Param_Atributos">Uma interface com atributos. Você pode usar este parâmetro para configurar o Source Reader(Leitor de Origem). Este parâmetro pode ser NULO.</param>
-	CarenMFSourceReader(String^ Param_Url, ICarenMFAttributes^ Param_Atributos);
-
-	/// <summary>
-	/// ‎Inicializa e cria o Source Reader(Leitor de Origem) a partir de uma Media Source(Fonte de Mídia).‎
-	/// </summary>
-	/// <param name="Param_MediaSource">Uma interface (ICarenMFMediaSource) para a fonte de mídia a ser lida.</param>
-	/// <param name="Param_Atributos">Uma interface com atributos. Você pode usar este parâmetro para configurar o Source Reader(Leitor de Origem). Este parâmetro pode ser NULO.</param>
-	CarenMFSourceReader(ICarenMFMediaSource^ Param_MediaSource, ICarenMFAttributes^ Param_Atributos);
-
-	/// <summary>
-	/// ‎Inicializa e cria o Source Reader(Leitor de Origem) a partir de um Byte Stream.
-	/// </summary>
-	/// <param name="Param_ByteStream">Uma interface ‎‎ICarenMFByteStream‎‎ de um fluxo byte. Este fluxo byte fornecerá os dados de origem para o Source Reader(Leitor de Origem).‎</param>
-	/// <param name="Param_Atributos">Uma interface com atributos. Você pode usar este parâmetro para configurar o Source Reader(Leitor de Origem). Este parâmetro pode ser NULO.</param>
-	CarenMFSourceReader(ICarenMFByteStream^ Param_ByteStream, ICarenMFAttributes^ Param_Atributos);
-
-	~CarenMFSourceReader();
-
+	CarenMFSourceReaderExtend();
+	
+	~CarenMFSourceReaderExtend();
 
 	//Variaveis Internas.
 internal:
@@ -105,6 +81,7 @@ public:
 	///////////////////////////////////////////////////////
 	//A parti daqui vai conter os métodos das interfaces.//
 	///////////////////////////////////////////////////////
+
 
 	//Métodos da interface (ICaren)
 public:
@@ -186,7 +163,19 @@ public:
 	virtual void Finalizar();
 
 
+	//Métodos da interface(ICarenMFSourceReaderExtend)
+public:
+	/// <summary>
+	/// (Extensão) - Método responsável por retornar a quantidade de fluxos na mídia carregada pelo leitor.
+	/// </summary>
+	/// <param name="Param_Out_QuantidadeFluxos">Recebe a quantidade de fluxos na mídia carregada.</param>
+	virtual CarenResult ExGetCountStreams(OutParam UInt32% Param_Out_QuantidadeFluxos);
 
+	/// <summary>
+	/// (Extensão) - Método responsável por retornar todos os tipos principais de mídia do arquivo carregado pelo leitor.
+	/// </summary>
+	/// <param name="Param_Out_TiposMidias">Recebe a lista, em ordem, com os tipos principais de mídia no fluxo carregado</param>
+	virtual CarenResult ExGetAllMediaTypesStream(OutParam List<Enumeracoes::CA_MAJOR_MEDIA_TYPES>^% Param_Out_TiposMidias);
 
 
 	//Métodos da interface ICarenMFSourceReader
@@ -286,10 +275,10 @@ public:
 	/// <param name="Param_EstadoSeleção">Define se deve (Selecionar) ou (Desselecionar) o fluxo especificado.</param>
 	virtual CarenResult SetStreamSelection(UInt32 Param_IdFluxo, Boolean Param_EstadoSeleção);
 
+
 	/// <summary>
 	/// Libera um ou mais fluxos.
 	/// </summary>
 	/// <param name="Param_IdFluxo">O Id para o fluxo a ser (Liberado). Você pode utilizar a enumeração(CA_SOURCE_READER_ID).</param>
 	virtual CarenResult Flush(UInt32 Param_IdFluxo);
 };
-

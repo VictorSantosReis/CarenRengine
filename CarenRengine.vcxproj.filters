@@ -1470,6 +1470,12 @@
     <ClInclude Include="CarenRengineCodes\SDK_MediaFoundationExtend.h">
       <Filter>Arquivos de Cabeçalho\SDKs</Filter>
     </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation Extended\CarenMFMediaTypeExtend.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Extend Interfaces\Media Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation Extended\CarenMFSourceReaderExtend.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Extend Interfaces\Media Foundation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D10Multithread.cpp">
@@ -2725,6 +2731,12 @@
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\FunctionClass\WICFunctions.cpp">
       <Filter>Arquivos de Origem\Classes de Funções</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation Extended\CarenMFMediaTypeExtend.cpp">
+      <Filter>Arquivos de Origem\Classes\Extend Interfaces\Media Foundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation Extended\CarenMFSourceReaderExtend.cpp">
+      <Filter>Arquivos de Origem\Classes\Extend Interfaces\Media Foundation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

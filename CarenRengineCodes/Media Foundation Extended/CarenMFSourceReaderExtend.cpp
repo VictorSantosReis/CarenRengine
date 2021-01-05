@@ -467,6 +467,9 @@ CarenResult CarenMFSourceReaderExtend::ExGetCountStreams(OutParam UInt32% Param_
 		{
 			//Ocorreu uma falha não esperada.
 
+			//Define o código de erro na classe.
+			Var_Glob_LAST_HRESULT = Hr;
+
 			//Sai do método
 			Sair;
 		}
@@ -488,34 +491,85 @@ Done:;
 CarenResult CarenMFSourceReaderExtend::ExGetAllMediaTypesStream(OutParam List<Enumeracoes::CA_MAJOR_MEDIA_TYPES>^% Param_Out_TiposMidias)
 {
 	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+	CarenResult Resultado = CarenResult(E_FAIL, false);
 
-	//Resultado COM.
+	//Resultados Com.
 	ResultadoCOM Hr = E_FAIL;
 
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
+	//Variaveis utilizadas no método
+	GUID vi_GuidMajorType = GUID_NULL;
+	DWORD vi_IdStreamActual = 0;
+	IMFMediaType* vi_pOutMediaType = Nulo; //Media Type que será usado para pecorrer o fluxo.
 
-
-	//Chama o método para realizar a operação.
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	//Abre um laço que vai obter os tipos de midia principal.
+	while (true)
 	{
-		//Falhou ao realizar a operação.
+		//Chama o método para realizar a operação.
+		Hr = PonteiroTrabalho->GetCurrentMediaType(vi_IdStreamActual, &vi_pOutMediaType);
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
+		//Processa o resultado.
+		Resultado.ProcessarCodigoOperacao(Hr);
 
-		//Sai do método
-		Sair;
+		//Verifica se obteve sucesso na operação.
+		if (CarenSucesso(Resultado))
+		{
+			//Tipo obtido com sucesso.
+			
+			//Obtém o guid do tipo principal.
+			Hr = vi_pOutMediaType->GetMajorType(&vi_GuidMajorType);
+
+			//Verifica se não houve erro
+			if (!Sucesso(Hr))
+			{
+				//Processa o resultado.
+				Resultado.ProcessarCodigoOperacao(Hr);
+				
+				//Sai do método
+				break;
+			}
+
+			//Cria a lista se ela não tiver sido criada ainda.
+			if (!ObjetoGerenciadoValido(Param_Out_TiposMidias))
+				Param_Out_TiposMidias = gcnew List<CA_MAJOR_MEDIA_TYPES>(1); //Cria a lista com no minimo 1 entrada.
+
+			//Verifica o tipo principal e adiciona na lista.
+			if (vi_GuidMajorType == MFMediaType_Audio)
+				Param_Out_TiposMidias->Add(CA_MAJOR_MEDIA_TYPES::TP_Audio); //Adiciona que é do tipo Audio
+			if (vi_GuidMajorType == MFMediaType_Video)
+				Param_Out_TiposMidias->Add(CA_MAJOR_MEDIA_TYPES::TP_Video); //Adiciona que é do tipo Video.
+
+			//Libera o Media Type obtido.
+			vi_pOutMediaType->Release();
+			vi_pOutMediaType = Nulo;
+
+			//Incrementa o ID do stream.
+			++vi_IdStreamActual;
+		}
+		else if (Resultado.StatusCode == ResultCode::ER_MF_E_INVALIDSTREAMNUMBER)
+		{
+			//Final do fluxo. Não incrementa mais.
+
+			//Define sucesso na operação.
+			Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+
+			//Sai do laço.
+			break;
+		}
+		else
+		{
+			//Ocorreu uma falha não esperada.
+
+			//Define o código de erro na classe.
+			Var_Glob_LAST_HRESULT = Hr;
+
+			//Sai do método
+			Sair;
+		}
 	}
 
 Done:;
-	//Retorna o resultado.
+
+	//Retorna o resultado
 	return Resultado;
 }
 

@@ -24,9 +24,6 @@ limitations under the License.
 //Importa o namespace que contém as interfaces da Media Foundation.
 using namespace CarenRengine::MediaFoundation;
 
-//Enumeração de retorno de função.
-
-
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
@@ -405,7 +402,7 @@ public:
 	/// </summary>
 	/// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (Desconhecido) obtido.</param>
 	/// <param name="Param_GuidInterfaceSolicitada">O GUID para a interface a ser obtida da chave. Este GUID é um (IID).</param>
-	/// <param name="Param_Out_InterfaceDesconhecida">Recebe a interface com o ponteiro para o objeto desconhecido. O usuário deve criar a interface antes de chamar este método.</param>
+	/// <param name="Param_Out_InterfaceDesconhecida">Recebe a interface com o ponteiro para o objeto desconhecido. O usuário deve inicializar a interface antes de chamar este método.</param>
 	virtual CarenResult GetUnknown(String^ Param_GuidChave, String^ Param_GuidInterfaceSolicitada, ICaren^ Param_Out_InterfaceDesconhecida);
 
 	/// <summary>
@@ -517,27 +514,5 @@ public:
 	/// Enquanto o objeto é desbloqueado, Múltiplos threads podem acessar atributos do objeto.
 	/// </summary>
 	virtual CarenResult UnlockStore();
-
-
-
-	//
-	// Métodos da interface ICarenMidiaExtensões
-	//
-
-
-public:
-	/// <summary>
-	/// (Extensão) - Método responsável por obter o tipo principal da mídia. 
-	/// </summary>
-	/// <param name="Param_Out_TipoPrincipal">Recebe o tipo principal da mídia(Áudio ou Vídeo).</param>
-	/// <param name="Param_Out_Guid">Recebe o Guid do formato principal.</param>
-	virtual CarenResult ObterTipoPrincipalMidia([Out] Enumeracoes::CA_MAJOR_MEDIA_TYPES% Param_Out_TipoPrincipal, [Out] String^% Param_Out_Guid);
-
-	/// <summary>
-	/// (Extensão) - Método responsável por retornar o formato do tipo principal da mídia. 
-	/// </summary>
-	/// <param name="Param_Out_FormatoMidia">Recebe o subtipo(Formato) da mídia principal.</param>
-	/// <param name="Param_Out_GuidFormato">Recebe o Guid do subtipo(Formato).</param>
-	virtual CarenResult ObterFormatoMidia([Out] Enumeracoes::CA_MEDIA_SUBTYPES% Param_Out_FormatoMidia, [Out] String^% Param_Out_GuidFormato);
 };
 

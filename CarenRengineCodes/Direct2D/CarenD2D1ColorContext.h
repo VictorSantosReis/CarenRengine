@@ -46,6 +46,11 @@ public ref class CarenD2D1ColorContext : public ICarenD2D1ColorContext
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenD2D1ColorContext();
+
 	~CarenD2D1ColorContext();
 
 
@@ -75,27 +80,7 @@ public:
 
 
 
-	//Cria uma instância dessa classe (Estático)
-public:
-	/// <summary>
-	/// Método responsável por criar uma instância vazia da classe. Chamadas para os métodos sem um ponteiro de trabalho definido
-	/// pode gerar comportamentos indefinidos.
-	/// </summary>
-	/// <param name="Param_Out_CarenD2D1ColorContext">Recebe um ponteiro para a interface (Vazia).</param>
-	static CarenResult CriarInstanciaVazia([Out] ICarenD2D1ColorContext^% Param_Out_CarenD2D1ColorContext)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
 
-		//Cria a interface
-		Param_Out_CarenD2D1ColorContext = gcnew CarenD2D1ColorContext();
-
-		//Define sucesso
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-		//Retorna o resultado
-		return Resultado;
-	}
 
 
 	///////////////////////////////////////////////////////

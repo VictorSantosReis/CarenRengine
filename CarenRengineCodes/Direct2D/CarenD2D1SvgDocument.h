@@ -49,12 +49,13 @@ public ref class CarenD2D1SvgDocument : public ICarenD2D1SvgDocument
 	ID2D1SvgDocument* PonteiroTrabalho = NULL;
 
 
-	//Contrutores e destuidor da classe.
+	//Construtor e destuidor da classe.
 public:
-	CarenD2D1SvgDocument();
 	/// <summary>
 	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
 	/// </summary>
+	CarenD2D1SvgDocument();
+	
 	~CarenD2D1SvgDocument();
 
 	//Variaveis Internas.

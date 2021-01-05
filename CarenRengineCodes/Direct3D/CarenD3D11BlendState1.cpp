@@ -24,6 +24,11 @@ CarenD3D11BlendState1::~CarenD3D11BlendState1()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor.
+CarenD3D11BlendState1::CarenD3D11BlendState1()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 //
 // Métodos da interface ICaren
@@ -59,7 +64,7 @@ CarenResult CarenD3D11BlendState1::ConsultarInterface(String^ Param_Guid, ICaren
 		const char* DadosConvertidos = NULL;
 
 		//Verifica se a string é valida.
-		if (Param_Guid != nullptr && !String::IsNullOrEmpty(Param_Guid))
+		if (!String::IsNullOrEmpty(Param_Guid))
 		{
 			//Obtém a largura da String.
 			LarguraString = Param_Guid->Length + 1;
@@ -477,7 +482,7 @@ CarenResult CarenD3D11BlendState1::GetDesc([Out] Estruturas::CA_D3D11_BLEND_DESC
 /// <summary>
 /// (GetDevice) - Obtém um ponteiro para o dispositivo que criou essa interface.
 /// </summary>
-/// <param name="Param_Out_DispositivoD3D11">Retorna o dispositivo D3D11 que criou essa interface. O usuário deve criar a interface antes de chamar este método.</param>
+/// <param name="Param_Out_DispositivoD3D11">Retorna o dispositivo D3D11 que criou essa interface. O usuário deve inicializar a interface antes de chamar este método.</param>
 CarenResult CarenD3D11BlendState1::GetDevice(ICaren^ Param_Out_DispositivoD3D11)
 {
 	//Variavel a ser retornada.

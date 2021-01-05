@@ -23,9 +23,6 @@ limitations under the License.
 //Importa o namespace que contém as interfaces do Microsoft Direct 3D.
 using namespace CarenRengine::Direct3D11;
 
-//Enumeração de retorno de função.
-
-
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
@@ -49,6 +46,11 @@ public ref class CarenD3D10Multithread : public ICarenD3D10Multithread
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenD3D10Multithread();
+
 	~CarenD3D10Multithread();
 
 
@@ -75,32 +77,6 @@ public:
 			return Prop_DisposedClasse;
 		}
 	}
-
-
-
-	//Cria uma instância dessa classe (Estático)
-public:
-	/// <summary>
-	/// Método responsável por criar uma instância vazia da classe. Chamadas para os métodos sem um ponteiro de trabalho definido
-	/// pode gerar comportamentos indefinidos.
-	/// </summary>
-	/// <param name="Param_Out_CarenD3D10Multithread">Recebe um ponteiro para a interface (Vazia).</param>
-	static CarenResult CriarInstanciaVazia([Out] ICarenD3D10Multithread^% Param_Out_CarenD3D10Multithread)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Cria a interface
-		Param_Out_CarenD3D10Multithread = gcnew CarenD3D10Multithread();
-
-		//Define sucesso
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-		//Retorna o resultado
-		return Resultado;
-	}
-
-
 
 
 	///////////////////////////////////////////////////////

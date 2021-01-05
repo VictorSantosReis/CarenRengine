@@ -18,13 +18,18 @@ limitations under the License.
 #include "../pch.h"
 #include "Caren.h"
 
+
 //Destruidor.
 Caren::~Caren()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
-
+//Construtor
+Caren::Caren()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 // Métodos da interface ICaren
 
@@ -59,7 +64,7 @@ CarenResult Caren::ConsultarInterface(String^ Param_Guid, ICaren^ Param_Interfac
 		const char* DadosConvertidos = NULL;
 
 		//Verifica se a string é valida.
-		if (Param_Guid != nullptr && !String::IsNullOrEmpty(Param_Guid))
+		if (!String::IsNullOrEmpty(Param_Guid))
 		{
 			//Obtém a largura da String.
 			LarguraString = Param_Guid->Length + 1;

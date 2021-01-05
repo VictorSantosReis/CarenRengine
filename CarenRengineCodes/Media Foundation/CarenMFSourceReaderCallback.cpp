@@ -67,7 +67,7 @@ CarenResult CarenMFSourceReaderCallback::ConsultarInterface(String^ Param_Guid, 
 		const char* DadosConvertidos = NULL;
 
 		//Verifica se a string é valida.
-		if (Param_Guid != nullptr && !String::IsNullOrEmpty(Param_Guid))
+		if (!String::IsNullOrEmpty(Param_Guid))
 		{
 			//Obtém a largura da String.
 			LarguraString = Param_Guid->Length + 1;
@@ -499,7 +499,7 @@ void CarenMFSourceReaderCallback::EncaminharEvento_OnReadSample(HRESULT Param_HR
 
 	//Variveis utilizadas no método.
 	ICarenMFSample^ InterfaceAmostra = nullptr;
-	CA_SOURCE_READER_FLAGS FlagsLeitura = (CA_SOURCE_READER_FLAGS)Param_FluxoFlgs;
+	CA_MF_SOURCE_READER_FLAG FlagsLeitura = (CA_MF_SOURCE_READER_FLAG)Param_FluxoFlgs;
 	CA_SAMPLE_READ_RESULT ResultadoLeitura = CA_SAMPLE_READ_RESULT::Erro;
 	ResultCode Resultado = ResultCode::SS_FALSE;
 	CarenResult ResultadoSetPointer;

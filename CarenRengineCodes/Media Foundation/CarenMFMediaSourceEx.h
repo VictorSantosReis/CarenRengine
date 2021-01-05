@@ -26,9 +26,6 @@ limitations under the License.
 //Importa o namespace que contém as interfaces da Media Foundation.
 using namespace CarenRengine::MediaFoundation;
 
-//Enumeração de retorno de função.
-
-
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
@@ -242,7 +239,7 @@ public:
 	/// </summary>
 	/// <param name="Param_Flags">Especifica como deve obter o evento.</param>
 	/// <param name="Param_Out_MidiaEvent">Recebe a interface que contém as informações da operação assincrona para o evento notificado. O chamador deve liberar a interface.</param>
-	virtual CarenResult GetEvent(Enumeracoes::CA_FLAGS_OBTER_EVENTO Param_Flags, [Out] ICarenMFMediaEvent^% Param_Out_MidiaEvent);
+	virtual CarenResult GetEvent(Enumeracoes::CA_MF_GET_FLAGS_EVENT Param_Flags, [Out] ICarenMFMediaEvent^% Param_Out_MidiaEvent);
 
 	/// <summary>
 	/// (BeginGetEvent) - Inicia uma solicitação assíncrona para o próximo evento na fila.

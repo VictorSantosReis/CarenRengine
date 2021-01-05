@@ -53,12 +53,13 @@ public ref class CarenD2D1Device4 : public ICarenD2D1Device4
 	ID2D1Device4* PonteiroTrabalho = NULL;
 
 
-	//Contrutores e destuidor da classe.
+	//Contrutor e destuidor da classe.
 public:
-	CarenD2D1Device4();
 	/// <summary>
 	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
 	/// </summary>
+	CarenD2D1Device4();
+
 	~CarenD2D1Device4();
 
 	//Variaveis Internas.

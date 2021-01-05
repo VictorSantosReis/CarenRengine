@@ -24,9 +24,6 @@ limitations under the License.
 //Importa o namespace que contém as interfaces da Media Foundation.
 using namespace CarenRengine::MediaFoundation;
 
-//Enumeração de retorno de função.
-
-
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
@@ -187,7 +184,7 @@ public:
 	/// Recupera as características do relógio.
 	/// </summary>
 	/// <param name="Param_Out_CaracteristicasClock">Recebe os flags com as características do relógio.</param>
-	virtual CarenResult GetClockCharacteristics([Out] Enumeracoes::CA_CLOCK_CARACTERISTICAS% Param_Out_CaracteristicasClock);
+	virtual CarenResult GetClockCharacteristics([Out] Enumeracoes::CA_MFCLOCK_CHARACTERISTICS_FLAGS% Param_Out_CaracteristicasClock);
 
 	/// <summary>
 	/// (Não Suportado) - Recupera a chave de continuidade do relógio.
@@ -214,7 +211,7 @@ public:
 	/// </summary>
 	/// <param name="Param_ValorReservado">Valor reservado. Deve ser zero.</param>
 	/// <param name="Param_Out_EstadoRelogio">Retorna o valor da enumeração que define o estado atual do relógio.</param>
-	virtual CarenResult GetState(UInt32 Param_ValorReservado, [Out] Enumeracoes::CA_CLOCK_ESTADO% Param_Out_EstadoRelogio);
+	virtual CarenResult GetState(UInt32 Param_ValorReservado, [Out] Enumeracoes::CA_MFCLOCK_STATE% Param_Out_EstadoRelogio);
 
 };
 

@@ -321,7 +321,7 @@ namespace CarenRengine
 			/// <param name="Param_DeslocamentoVetorConstante">O deslocamento de quatro componentes vetor desde o início do buffer constante onde os dados de classe vão começar. Consequentemente, isto não é um deslocamento de byte.</param>
 			/// <param name="Param_DeslocamentoTextura">O slot de textura para a primeira textura; pode haver múltiplas texturas seguindo o deslocamento.</param>
 			/// <param name="Param_DeslocamentoAmostrador">O slot de amostra para o primeiro sampler; pode haver vários amostradores seguindo o deslocamento.</param>
-			/// <param name="Param_Out_ClasseInstance">Recebe um ponteiro para a interface (ICarenD3D11ClassInstance) para ser inicializada. O usuário deve criar a interface antes de chamar este método.</param>
+			/// <param name="Param_Out_ClasseInstance">Recebe um ponteiro para a interface (ICarenD3D11ClassInstance) para ser inicializada. O usuário deve inicializar a interface antes de chamar este método.</param>
 			CarenResult CreateClassInstance(
 				String^ Para_NomeTipoClasse,
 				UInt32 Param_DeslocamentoBufferConstante,
@@ -335,7 +335,7 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_NomeInstanciaClasse">O nome de uma classe para o qual deseja obter a instância de classe.</param>
 			/// <param name="Param_IndiceInstancia">O índice da instância da classe.</param>
-			/// <param name="Param_Out_InstanceClasse">Recebe um ponteiro para a interface (ICarenD3D11ClassInstance) para ser inicializada. O usuário deve criar a interface antes de chamar este método.</param>
+			/// <param name="Param_Out_InstanceClasse">Recebe um ponteiro para a interface (ICarenD3D11ClassInstance) para ser inicializada. O usuário deve inicializar a interface antes de chamar este método.</param>
 			CarenResult GetClassInstance(String^ Param_NomeInstanciaClasse, UInt32 Param_IndiceInstancia, ICaren^ Param_Out_InstanceClasse);
 		};
 
@@ -3429,8 +3429,8 @@ namespace CarenRengine
 			/// <summary>
 			/// (GetCreationFlags) - Se os sinalizadores usados durante a chamada para criar o dispositivo com D3D11CreateDevice.
 			/// </summary>
-			/// <param name="Param_Out_Flags">Recebe um flags de bit a bits da enumerção (CA_D3D11_CRIACAO_DISPOSITIVO_FLAGS) que contém o modo de criaçã do dispositivo.</param>
-			CarenResult GetCreationFlags([Out] Enumeracoes::CA_D3D11_CRIACAO_DISPOSITIVO_FLAGS% Param_Out_Flags);
+			/// <param name="Param_Out_Flags">Recebe um flags de bit a bits da enumerção (CA_D3D11_CREATE_DEVICE_FLAG) que contém o modo de criaçã do dispositivo.</param>
+			CarenResult GetCreationFlags([Out] Enumeracoes::CA_D3D11_CREATE_DEVICE_FLAG% Param_Out_Flags);
 
 			/// <summary>
 			/// (GetDeviceRemovedReason) - A razão por que o dispositivo foi removido. Esse método retorna um (ResultCode) informando o motivo.
@@ -3448,7 +3448,7 @@ namespace CarenRengine
 			/// (GetFeatureLevel) - Obtém o nível de funcionalidade de dispositivo de hardware.
 			/// </summary>
 			/// <param name="Param_Out_NivelRecurso">Recebe um flag de bits a bits de um ou mais sinlizadores de niveis de recuso do dispositivo de hardware.</param>
-			CarenResult GetFeatureLevel([Out] Enumeracoes::CA_D3D_NIVEL_RECURSO% Param_Out_NivelRecurso);
+			CarenResult GetFeatureLevel([Out] Enumeracoes::CA_D3D_FEATURE_LEVEL% Param_Out_NivelRecurso);
 
 			/// <summary>
 			/// (GetImmediateContext) - Obtém um contexto imediato, que pode reproduzir listas de comando.
@@ -3474,7 +3474,7 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_Handle">Um identificador de recurso.</param>
 			/// <param name="Param_GuidInterface">O identificador globalmente exclusivo (GUID) para a interface do recurso.</param>
-			/// <param name="Param_Out_InterfaceSolicitada">Recebe a interface do recurso que foi ganhado acesso. O usuário deve criar a interface antes de chamar este método.</param>
+			/// <param name="Param_Out_InterfaceSolicitada">Recebe a interface do recurso que foi ganhado acesso. O usuário deve inicializar a interface antes de chamar este método.</param>
 			CarenResult OpenSharedResource(
 				IntPtr Param_Handle,
 				String^ Param_GuidInterface,
@@ -3562,11 +3562,11 @@ namespace CarenRengine
 			/// <param name="Param_Out_EstadoContextoDispositivo">Recebe um ponteiro para um objeto ICarenD3DDeviceContextState que representa o estado de um dispositivo Direct3D.</param>
 			CarenResult CreateDeviceContextState(
 				CA_D3D11_1_CREATE_DEVICE_CONTEXT_STATE_FLAG Param_Flags, 
-				cli::array<CA_D3D_NIVEL_RECURSO>^ Param_NiveisRecurso,
+				cli::array<CA_D3D_FEATURE_LEVEL>^ Param_NiveisRecurso,
 				UInt32 Param_QuantidadeNiveisRecurso,
 				UInt32 Param_VersaoSDK,
 				String^ Param_RIIDInterfaceEmulada,
-				[Out] CA_D3D_NIVEL_RECURSO% Param_Out_NivelRecursoDefinido,
+				[Out] CA_D3D_FEATURE_LEVEL% Param_Out_NivelRecursoDefinido,
 				[Out] ICarenD3DDeviceContextState^% Param_Out_EstadoContextoDispositivo);
 
 			/// <summary>
@@ -4047,14 +4047,14 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_HandleDirect3D">Um identificador para um dispositivo Direct3D. Para obter um identificador dispositivo, chame o método: OpenDeviceHandle</param>
 			/// <param name="Param_IIDInterface">O GUID da interface a ser obtida. Essa interface suporta os Seguintes IDs: IID_IDirectXVideoDecoderService, IID_IDirectXVideoProcessorService</param>
-			/// <param name="Param_Out_InterfaceSolicitada">Objeto que contém a interface solicitada se o método tiver sido bem sucedido. O usuário deve criar a interface antes de chamar este método.</param>
+			/// <param name="Param_Out_InterfaceSolicitada">Objeto que contém a interface solicitada se o método tiver sido bem sucedido. O usuário deve inicializar a interface antes de chamar este método.</param>
 			virtual CarenResult GetVideoService(IntPtr Param_HandleDirect3D, String^ Param_IIDInterface, ICaren^ Param_Out_InterfaceSolicitada);
 
 			/// <summary>
 			/// Obtém acesso exclusivo ao dispositivo Direct3D.
 			/// </summary>
 			/// <param name="Param_Handle">Um identificador para o dispositivo Direct3D. Para obter o identificador do dispositivo, chame o método: OpenDeviceHandle</param>
-			/// <param name="Param_Out_Dispositivo">Recebe a interface IDirect3DDevice9[NAO IMPLEMENTADA PELA BIBLIOTECA]. O usuário deve criar a interface antes de chamar este método.</param>
+			/// <param name="Param_Out_Dispositivo">Recebe a interface IDirect3DDevice9[NAO IMPLEMENTADA PELA BIBLIOTECA]. O usuário deve inicializar a interface antes de chamar este método.</param>
 			/// <param name="Param_AguardarBloqueio">Especifica se deve aguardar o bloqueio do dispositivo. Se o dispositivo já está bloqueado e esse parâmetro é true, 
 			/// o método bloqueia até que o dispositivo é desbloqueado. Caso contrário, se o dispositivo está bloqueado e este bloco é false, o método retorna imediatamente com o código de erro ER_DXVA2_VIDEO_DEVICE_LOCKED.</param>
 			virtual CarenResult LockDevice(IntPtr Param_Handle, Boolean Param_AguardarBloqueio, ICaren^ Param_Out_Dispositivo);

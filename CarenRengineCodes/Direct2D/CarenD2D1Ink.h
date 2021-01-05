@@ -47,6 +47,11 @@ public ref class CarenD2D1Ink : public ICarenD2D1Ink
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenD2D1Ink();
+
 	~CarenD2D1Ink();
 
 
@@ -72,30 +77,6 @@ public:
 			//Retorna o valor.
 			return Prop_DisposedClasse;
 		}
-	}
-
-
-
-	//Cria uma instância dessa classe (Estático)
-public:
-	/// <summary>
-	/// Método responsável por criar uma instância vazia da classe. Chamadas para os métodos sem um ponteiro de trabalho definido
-	/// pode gerar comportamentos indefinidos.
-	/// </summary>
-	/// <param name="Param_Out_CarenD2D1Ink">Recebe um ponteiro para a interface (Vazia).</param>
-	static CarenResult CriarInstanciaVazia([Out] ICarenD2D1Ink^% Param_Out_CarenD2D1Ink)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
-
-		//Cria a interface
-		Param_Out_CarenD2D1Ink = gcnew CarenD2D1Ink();
-
-		//Define sucesso
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-		//Retorna o resultado
-		return Resultado;
 	}
 
 

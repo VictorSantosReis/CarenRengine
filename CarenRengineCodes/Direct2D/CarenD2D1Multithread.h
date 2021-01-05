@@ -46,12 +46,13 @@ public ref class CarenD2D1Multithread : public ICarenD2D1Multithread
 	ID2D1Multithread* PonteiroTrabalho = NULL;
 
 
-	//Contrutores e destuidor da classe.
+	//Construtor e destuidor da classe.
 public:
-	CarenD2D1Multithread();
 	/// <summary>
 	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
 	/// </summary>
+	CarenD2D1Multithread();
+	
 	~CarenD2D1Multithread();
 
 	//Variaveis Internas.

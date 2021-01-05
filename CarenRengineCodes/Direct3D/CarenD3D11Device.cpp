@@ -18,12 +18,206 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenD3D11Device.h"
 
+
 //Destruidor.
 CarenD3D11Device::~CarenD3D11Device()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtores
+CarenD3D11Device::CarenD3D11Device()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
+CarenD3D11Device::CarenD3D11Device(
+	ICarenDXGIAdapter^ Param_Adaptador,
+	cli::array<CA_D3D_FEATURE_LEVEL>^ Param_NiveisRecurso,
+	CA_D3D_DRIVER_TYPE Param_TipoDriver,
+	CA_D3D11_CREATE_DEVICE_FLAG Param_FlagsCreateDevice,
+	OutParam CA_D3D_FEATURE_LEVEL% Param_Out_NivelRecursoAceito,
+	CarenParameterResolver<ICarenD3D11DeviceContext^>% Param_Out_ContextoDispositivo
+)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Resultados de Caren.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IDXGIAdapter* vi_pAdaptador = Nulo; //Pode ser Nulo.
+	D3D_DRIVER_TYPE vi_TipoDriver = static_cast<D3D_DRIVER_TYPE>(Param_TipoDriver);
+	UINT vi_Flags = static_cast<UINT>(Param_FlagsCreateDevice);
+	D3D_FEATURE_LEVEL* vi_pArrayNiveisRecurso = Nulo; //Pode ser Nulo.
+	UINT32 CountNiveisRecurso = static_cast<UInt32>(Param_NiveisRecurso->Length);
+	ID3D11Device* vi_pOutDevice = Nulo;
+	ID3D11DeviceContext* vi_pOutDeviceContext = Nulo;
+	D3D_FEATURE_LEVEL vi_OutNivelRecursoAceito;
+	
+	//Recupera o ponteiro para o adaptador se fornecido.
+	if (ObjetoGerenciadoValido(Param_Adaptador))
+	{
+		//Recupera o ponteiro para o adpatador.
+		Resultado = RecuperarPonteiroCaren(Param_Adaptador, &vi_pAdaptador);
+
+		//Verifica se não houve erro.
+		if (!CarenSucesso(Resultado))
+			throw gcnew Exception("Falhou ao tentar recuperar o ponteiro para o adaptador fornecido!");
+	}
+
+	//Verifica se forneceu os niveis de recurso.
+	if (ObjetoGerenciadoValido(Param_NiveisRecurso))
+	{
+		//Obtém a quantidade de itens no array
+		CountNiveisRecurso = Param_NiveisRecurso->Length;
+
+		//Cria o array de niveis de recurso.
+		vi_pArrayNiveisRecurso = CriarMatrizUnidimensional<D3D_FEATURE_LEVEL>(CountNiveisRecurso);
+
+		//Copia os dados para a matriz.
+		Util.CopiarItensTo_ArrayNativo<D3D_FEATURE_LEVEL>(&vi_pArrayNiveisRecurso, Param_NiveisRecurso, CountNiveisRecurso);
+	}
+
+	//Chama o método para realizar a operação.
+	Hr = D3D11CreateDevice(
+		vi_pAdaptador,
+		vi_TipoDriver,
+		Nulo,
+		vi_Flags,
+		vi_pArrayNiveisRecurso,
+		CountNiveisRecurso,
+		D3D11_SDK_VERSION,
+		&vi_pOutDevice,
+		&vi_OutNivelRecursoAceito,
+		Param_Out_ContextoDispositivo.IgnoreParameter? Nulo: &vi_pOutDeviceContext
+	);
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Libera a memória para a matriz.
+		DeletarMatrizUnidimensionalSafe(&vi_pArrayNiveisRecurso);
+
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define a interface criada no ponteiro de trabalho da classe.
+	PonteiroTrabalho = vi_pOutDevice;
+
+	//Define os parametros de saida.
+	Param_Out_NivelRecursoAceito = static_cast<CA_D3D_FEATURE_LEVEL>(vi_OutNivelRecursoAceito);
+	
+	//Define o contexto se requisitado.
+	if (ObjetoValido(vi_pOutDeviceContext))
+		Param_Out_ContextoDispositivo.ObjetoParametro->AdicionarPonteiro(vi_pOutDeviceContext);
+}
+CarenD3D11Device::CarenD3D11Device(
+	ICarenDXGIAdapter^ Param_Adaptador,
+	cli::array<CA_D3D_FEATURE_LEVEL>^ Param_NiveisRecurso,
+	CA_D3D_DRIVER_TYPE Param_TipoDriver,
+	CA_D3D11_CREATE_DEVICE_FLAG Param_FlagsCreateDevice,
+	CA_DXGI_SWAP_CHAIN_DESC^ Param_DescSwapChain,
+	OutParam CA_D3D_FEATURE_LEVEL% Param_Out_NivelRecursoAceito,
+	CarenParameterResolver<ICarenDXGISwapChain^>% Param_Out_SwapChain,
+	CarenParameterResolver<ICarenD3D11DeviceContext^>% Param_Out_ContextoDispositivo
+)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Resultados de Caren.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IDXGIAdapter* vi_pAdaptador = Nulo; //Pode ser Nulo.
+	D3D_DRIVER_TYPE vi_TipoDriver = static_cast<D3D_DRIVER_TYPE>(Param_TipoDriver);
+	UINT vi_Flags = static_cast<UINT>(Param_FlagsCreateDevice);
+	DXGI_SWAP_CHAIN_DESC* vi_pDescSwapChain = Nulo;
+	D3D_FEATURE_LEVEL* vi_pArrayNiveisRecurso = Nulo; //Pode ser Nulo.
+	UINT32 CountNiveisRecurso = static_cast<UInt32>(Param_NiveisRecurso->Length);
+	ID3D11Device* vi_pOutDevice = Nulo;
+	ID3D11DeviceContext* vi_pOutDeviceContext = Nulo;
+	IDXGISwapChain* vi_pOutSwapChain = Nulo;
+	D3D_FEATURE_LEVEL vi_OutNivelRecursoAceito;
+
+	//Recupera o ponteiro para o adaptador se fornecido.
+	if (ObjetoGerenciadoValido(Param_Adaptador))
+	{
+		//Recupera o ponteiro para o adpatador.
+		Resultado = RecuperarPonteiroCaren(Param_Adaptador, &vi_pAdaptador);
+
+		//Verifica se não houve erro.
+		if (!CarenSucesso(Resultado))
+			throw gcnew Exception("Falhou ao tentar recuperar o ponteiro para o adaptador fornecido!");
+	}
+
+	//Verifica se forneceu os niveis de recurso.
+	if (ObjetoGerenciadoValido(Param_NiveisRecurso))
+	{
+		//Obtém a quantidade de itens no array
+		CountNiveisRecurso = Param_NiveisRecurso->Length;
+
+		//Cria o array de niveis de recurso.
+		vi_pArrayNiveisRecurso = CriarMatrizUnidimensional<D3D_FEATURE_LEVEL>(CountNiveisRecurso);
+
+		//Copia os dados para a matriz.
+		Util.CopiarItensTo_ArrayNativo<D3D_FEATURE_LEVEL>(&vi_pArrayNiveisRecurso, Param_NiveisRecurso, CountNiveisRecurso);
+	}
+
+	//Converte a estrutura gerenciada para a nativa.
+	vi_pDescSwapChain = Util.ConverterDXGI_SWAP_CHAIN_DESCManaged_ToUnManaged(Param_DescSwapChain);
+
+	//Chama o método para realizar a operação.
+	Hr = D3D11CreateDeviceAndSwapChain(
+		vi_pAdaptador,
+		vi_TipoDriver,
+		Nulo,
+		vi_Flags,
+		vi_pArrayNiveisRecurso,
+		CountNiveisRecurso,
+		D3D11_SDK_VERSION,
+		vi_pDescSwapChain,
+		Param_Out_SwapChain.IgnoreParameter? Nulo: &vi_pOutSwapChain,
+		&vi_pOutDevice,
+		&vi_OutNivelRecursoAceito,
+		Param_Out_ContextoDispositivo.IgnoreParameter ? Nulo : &vi_pOutDeviceContext
+	);
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Libera a memória para a matriz.
+		DeletarMatrizUnidimensionalSafe(&vi_pArrayNiveisRecurso);
+
+		//Libera a memória utilizada pela estrutura.
+		DeletarEstruturaSafe(&vi_pDescSwapChain);
+
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define a interface criada no ponteiro de trabalho da classe.
+	PonteiroTrabalho = vi_pOutDevice;
+
+	//Define os parametros de saida.
+	Param_Out_NivelRecursoAceito = static_cast<CA_D3D_FEATURE_LEVEL>(vi_OutNivelRecursoAceito);
+
+	//Define o contexto se requisitado.
+	if (ObjetoValido(vi_pOutDeviceContext))
+		Param_Out_ContextoDispositivo.ObjetoParametro->AdicionarPonteiro(vi_pOutDeviceContext);
+
+	//Define o Swap Chainse requisitado.
+	if (ObjetoValido(vi_pOutSwapChain))
+		Param_Out_ContextoDispositivo.ObjetoParametro->AdicionarPonteiro(vi_pOutSwapChain);
+
+	//Libera a memória utilizada pela estrutura.
+	DeletarEstruturaSafe(&vi_pDescSwapChain);
+}
+
 
 //
 // Métodos da interface ICaren
@@ -59,7 +253,7 @@ CarenResult CarenD3D11Device::ConsultarInterface(String^ Param_Guid, ICaren^ Par
 		const char* DadosConvertidos = NULL;
 
 		//Verifica se a string é valida.
-		if (Param_Guid != nullptr && !String::IsNullOrEmpty(Param_Guid))
+		if (!String::IsNullOrEmpty(Param_Guid))
 		{
 			//Obtém a largura da String.
 			LarguraString = Param_Guid->Length + 1;
@@ -2915,14 +3109,14 @@ Done:;
 /// <summary>
 /// (GetCreationFlags) - Se os sinalizadores usados durante a chamada para criar o dispositivo com D3D11CreateDevice.
 /// </summary>
-/// <param name="Param_Out_Flags">Recebe um flags de bit a bits da enumerção (CA_D3D11_CRIACAO_DISPOSITIVO_FLAGS) que contém o modo de criaçã do dispositivo.</param>
-CarenResult CarenD3D11Device::GetCreationFlags([Out] Enumeracoes::CA_D3D11_CRIACAO_DISPOSITIVO_FLAGS% Param_Out_Flags)
+/// <param name="Param_Out_Flags">Recebe um flags de bit a bits da enumerção (CA_D3D11_CREATE_DEVICE_FLAG) que contém o modo de criaçã do dispositivo.</param>
+CarenResult CarenD3D11Device::GetCreationFlags([Out] Enumeracoes::CA_D3D11_CREATE_DEVICE_FLAG% Param_Out_Flags)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
 
 	//Chama o método para realizar a operação.
-	Param_Out_Flags = static_cast<Enumeracoes::CA_D3D11_CRIACAO_DISPOSITIVO_FLAGS>(PonteiroTrabalho->GetCreationFlags());
+	Param_Out_Flags = static_cast<Enumeracoes::CA_D3D11_CREATE_DEVICE_FLAG>(PonteiroTrabalho->GetCreationFlags());
 
 	//Define sucesso por default a operação.
 	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
@@ -2989,7 +3183,7 @@ CarenResult CarenD3D11Device::GetExceptionMode([Out] Enumeracoes::CA_D3D11_RAISE
 /// (GetFeatureLevel) - Obtém o nível de funcionalidade de dispositivo de hardware.
 /// </summary>
 /// <param name="Param_Out_NivelRecurso">Recebe um flag de bits a bits de um ou mais sinlizadores de niveis de recuso do dispositivo de hardware.</param>
-CarenResult CarenD3D11Device::GetFeatureLevel([Out] Enumeracoes::CA_D3D_NIVEL_RECURSO% Param_Out_NivelRecurso)
+CarenResult CarenD3D11Device::GetFeatureLevel([Out] Enumeracoes::CA_D3D_FEATURE_LEVEL% Param_Out_NivelRecurso)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -3001,7 +3195,7 @@ CarenResult CarenD3D11Device::GetFeatureLevel([Out] Enumeracoes::CA_D3D_NIVEL_RE
 	NivelRecursoHardware = PonteiroTrabalho->GetFeatureLevel();
 
 	//Define o nivel de recurso no parametro de saida
-	Param_Out_NivelRecurso = static_cast<Enumeracoes::CA_D3D_NIVEL_RECURSO>(NivelRecursoHardware);
+	Param_Out_NivelRecurso = static_cast<Enumeracoes::CA_D3D_FEATURE_LEVEL>(NivelRecursoHardware);
 
 	//Define sucesso por default a operação.
 	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);

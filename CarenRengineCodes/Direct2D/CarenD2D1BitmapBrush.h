@@ -47,6 +47,11 @@ public ref class CarenD2D1BitmapBrush : public ICarenD2D1BitmapBrush
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenD2D1BitmapBrush();
+
 	~CarenD2D1BitmapBrush();
 
 
@@ -72,30 +77,6 @@ public:
 			//Retorna o valor.
 			return Prop_DisposedClasse;
 		}
-	}
-
-
-
-	//Cria uma instância dessa classe (Estático)
-public:
-	/// <summary>
-	/// Método responsável por criar uma instância vazia da classe. Chamadas para os métodos sem um ponteiro de trabalho definido
-	/// pode gerar comportamentos indefinidos.
-	/// </summary>
-	/// <param name="Param_Out_CarenD2D1BitmapBrush">Recebe um ponteiro para a interface (Vazia).</param>
-	static CarenResult CriarInstanciaVazia([Out] ICarenD2D1BitmapBrush^% Param_Out_CarenD2D1BitmapBrush)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
-
-		//Cria a interface
-		Param_Out_CarenD2D1BitmapBrush = gcnew CarenD2D1BitmapBrush();
-
-		//Define sucesso
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-		//Retorna o resultado
-		return Resultado;
 	}
 
 

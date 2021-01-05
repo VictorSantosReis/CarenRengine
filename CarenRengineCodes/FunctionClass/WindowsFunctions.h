@@ -92,5 +92,7 @@ public:
 	/// <param name="Param_Out_PeriodoMinimo">Recebe a resolução mínima suportada, em milissegundos.</param>
 	/// <param name="Param_Out_PeriodoMaximo">Recebe a resolução máxima suportada, em milissegundos.</param>
 	CarenResult CA_TimeGetDevCaps([Out] UInt32% Param_Out_PeriodoMinimo, [Out] UInt32% Param_Out_PeriodoMaximo);
+
+	//CarenResult _CreateFileMappingW(); //Pendente.
 };
 

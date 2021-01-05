@@ -19,7 +19,7 @@ limitations under the License.
 #include "../SDK_Caren.h"
 #include "../SDK_Utilidades.h"
 #include "../FunctionClass/GlobalFuncs.h"
-#include "../Nativas/CLN_IMFCaptureEngineOnSampleCallback2.h"
+#include "../NativeClassForEvents/CLN_IMFCaptureEngineOnSampleCallback2.h"
 #include "CarenMFSample.h"
 #include "CarenMFMediaEvent.h"
 

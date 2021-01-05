@@ -24,9 +24,6 @@ limitations under the License.
 //Importa o namespace que contém as interfaces da Media Foundation.
 using namespace CarenRengine::MediaFoundation;
 
-//Enumeração de retorno de função.
-
-
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
@@ -213,11 +210,11 @@ public:
 	/// O método placemarker coloca um marcador no fluxo entre amostras. O MFSTREAMSINK_MARKER_TYPE enumeração define o 
 	/// tipo de marcador e o tipo de informações associadas com o marcador.
 	/// </summary>
-	/// <param name="Param_Marcador">Especifica o tipo de marcador, como um membro da enumeração: CA_MIDIA_STREAM_SINK_MARCADORES</param>
+	/// <param name="Param_Marcador">Especifica o tipo de marcador, como um membro da enumeração: CA_MFSTREAMSINK_MARKER_TYPE</param>
 	/// <param name="Param_ValorAdicional">Um valor que contém informações adicionais relacionadas ao marcador. Esse parâmetro pode ser (NULO).</param>
 	/// <param name="Param_DadosAnexoEvento">Valor que é anexado junto ao evento(MEStreamSinkMarker). Chame o método (GetValue) na interface 
 	/// de evento para obter esse valor. Esse parâmetro pode ser (NULO).</param>
-	virtual CarenResult PlaceMarker(Enumeracoes::CA_MIDIA_STREAM_SINK_MARCADORES Param_Marcador, Estruturas::CA_PropVariant^ Param_ValorAdicional, Estruturas::CA_PropVariant^ Param_DadosAnexoEvento);
+	virtual CarenResult PlaceMarker(Enumeracoes::CA_MFSTREAMSINK_MARKER_TYPE Param_Marcador, Estruturas::CA_PropVariant^ Param_ValorAdicional, Estruturas::CA_PropVariant^ Param_DadosAnexoEvento);
 
 	/// <summary>
 	/// Faz com que o coletor de fluxo para descartar todas as amostras que ele 
@@ -244,7 +241,7 @@ public:
 	/// </summary>
 	/// <param name="Param_Flags">Especifica como deve obter o evento.</param>
 	/// <param name="Param_Out_MidiaEvent">Recebe a interface que contém as informações da operação assincrona para o evento notificado. O chamador deve liberar a interface.</param>
-	virtual CarenResult GetEvent(Enumeracoes::CA_FLAGS_OBTER_EVENTO Param_Flags, [Out] ICarenMFMediaEvent^% Param_Out_MidiaEvent);
+	virtual CarenResult GetEvent(Enumeracoes::CA_MF_GET_FLAGS_EVENT Param_Flags, [Out] ICarenMFMediaEvent^% Param_Out_MidiaEvent);
 
 	/// <summary>
 	/// (BeginGetEvent) - Inicia uma solicitação assíncrona para o próximo evento na fila.

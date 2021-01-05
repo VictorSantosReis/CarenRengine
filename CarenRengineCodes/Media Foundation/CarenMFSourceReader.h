@@ -227,7 +227,7 @@ public:
 	/// <param name="Param_GuidServiço">Um identificador de serviço GUID, consulte a estrutura(MFInterfacesServiço) para  obter um GUID. Se o valor for (NULO), 
 	/// o método chama (ConsultarInterface) para obter a interface solicitada. Caso contrário, o método chama o ICarenMFGetService.ObterServiço.</param>
 	/// <param name="Param_GuidInterface">O identificador de interface (IID) da interface que está sendo solicitada..</param>
-	/// <param name="Param_Out_InterfaceDesconhecida">Recebe a interface que foi solicitada. O usuário deve criar a interface antes de chamar este método.</param>
+	/// <param name="Param_Out_InterfaceDesconhecida">Recebe a interface que foi solicitada. O usuário deve inicializar a interface antes de chamar este método.</param>
 	virtual CarenResult GetServiceForStream(UInt32 Param_IdFluxo, String^ Param_GuidServiço, String^ Param_GuidInterface, ICaren^ Param_Out_InterfaceDesconhecida);
 
 	/// <summary>
@@ -239,25 +239,26 @@ public:
 	virtual CarenResult GetStreamSelection(UInt32 Param_IdFluxo, [Out] Boolean% Param_Out_ResultadoFluxoSelecionado);
 
 	/// <summary>
-	/// Método responsável por ler a proxima amostra de mídia disponivel na fonte de mídia. Defina todos os parametros (out) ou (ref) como 0 e Nulo para chamar o método em modo assincrono.
-	/// Esse método pode retornar (Sucesso) e ainda assim retornar uma amostra de mídia (NULA).
-	/// Consulte o resultado do parametro (Param_Out_FlagsLeituraAmostra) que vai indicar o resultado da leitura e o que se deve fazer.
+	/// ‎Lê a próxima amostra disponivel da fonte de mídia.‎ 
+	/// ‎Este método pode completar de forma sincrona ou assincrona. Se você fornecer um ponteiro de retorno de chamada(ICarenMFSourceReaderCallback) ao criar o leitor de origem, o método será assincrono. 
+	/// Caso contrário, o método é sincrono.
+	/// Para realizar uma chamada Assincrona, Ignore todos os parametros de saida(que contém o Out no nome). Caso contrario, o método retorna ER_E_INVALIDARG
 	/// </summary>
-	/// <param name="Param_IdFluxo">O Id do fluxo que vai extrair os dados de mídia. Você pode utilizar a enumeração(CA_SOURCE_READER_ID).</param>
-	/// <param name="Param_ControlFlag">Um flag para realizar a leitura da amostra de mídia. Pode deixar Zero, ou definir um valor da enumeração(CA_SOURCE_READER_CONTROL_FLAG)</param>
-	/// <param name="Param_Out_ResultadoLeitura">Retorna o resultado da leitura de uma amostra.</param>
-	/// <param name="Param_Out_IdFluxoLido">Retorna o Id do fluxo que foi extraido a amostra de mídia.</param>
-	/// <param name="Param_Out_FlagsLeituraAmostra">Retorna um (Flag) que indca um resultado adicional a leitura da amostra. Utilize essa valor para decidir como deve processar o resultado do método.</param>
-	/// <param name="Param_Out_TimSpanAmostra">Retorna o (TimeSpan) da amostra de mídia lida. TimeSpan indica a Data/Hora que deve iniciar uma amostra. Esse valor é dado em (unidades de 100 Nanosegundos).</param>
-	/// <param name="Param_Ref_Amostra">Retorna a interface que contém a amostra de mídia que foi lida. O usuário deve inicializar a interface antes de chamar o método em modo sincrono.</param>
+	/// <param name="Param_StreamIndex">O index para o fluxo a ser extraido a amostra. Esse valor pode ser um UInt32 para um ID de fluxo valido ou um dos valores da enumeração (CA_SOURCE_READER_ID).</param>
+	/// <param name="Param_ControlFlags">Um ‎‎Bitwise‎‎ OR de zero ou mais bandeiras da enumeração ‎‎(CA_MF_SOURCE_READER_CONTROL_FLAG).‎</param>
+	/// <param name="Param_Out_ActualStreamIndex">Retorna o index baseado em zero para o fluxo atual.</param>
+	/// <param name="Param_Out_StreamFlags">Retorna um ‎‎Bitwise‎‎ OR de zero ou mais bandeiras da enumeração ‎‎(‎‎MF_SOURCE_READER_FLAG) que indicam o status da chamada.</param>
+	/// <param name="Param_Out_Timestamp">‎Retorna o carimbo de hora(Timestamp) da amostra ou a hora do evento de fluxo indicado em ‎‎(Param_Out_StreamFlags)‎‎. O tempo é dado em unidades de 100 nanossegundos.‎</param>
+	/// <param name="Param_Out_Sample">Retorna uma interface (ICarenMFSample) ou (NULO). Se este parametro nao for NULO, o usuário é responsável por liberar a interface. O usuário é responsável por inicializar a interface antes de chamar este método.</param>
+	/// <returns></returns>
 	virtual CarenResult ReadSample
 	(
-		UInt32 Param_IdFluxo, 
-		UInt32 Param_ControlFlag, 
-		[Out] Enumeracoes::CA_SAMPLE_READ_RESULT% Param_Out_ResultadoLeitura, 
-		[Out] UInt32% Param_Out_IdFluxoLido, [Out] Enumeracoes::CA_SOURCE_READER_FLAGS% Param_Out_FlagsLeituraAmostra, 
-		[Out] Int64% Param_Out_TimSpanAmostra, 
-		ICarenMFSample^% Param_Ref_Amostra
+		UInt32 Param_StreamIndex,
+		CA_MF_SOURCE_READER_CONTROL_FLAG Param_ControlFlags,
+		CarenParameterResolver<UInt32> Param_Out_ActualStreamIndex,
+		CarenParameterResolver<CA_MF_SOURCE_READER_FLAG> Param_Out_StreamFlags,
+		CarenParameterResolver<Int64> Param_Out_Timestamp,
+		CarenParameterResolver<ICarenMFSample^> Param_Out_Sample
 	);
 
 	/// <summary>
@@ -285,26 +286,10 @@ public:
 	/// <param name="Param_EstadoSeleção">Define se deve (Selecionar) ou (Desselecionar) o fluxo especificado.</param>
 	virtual CarenResult SetStreamSelection(UInt32 Param_IdFluxo, Boolean Param_EstadoSeleção);
 
-
 	/// <summary>
 	/// Libera um ou mais fluxos.
 	/// </summary>
 	/// <param name="Param_IdFluxo">O Id para o fluxo a ser (Liberado). Você pode utilizar a enumeração(CA_SOURCE_READER_ID).</param>
 	virtual CarenResult Flush(UInt32 Param_IdFluxo);
-
-
-	//Métodos da interface de (Extensão) ICarenLeitorMidiaExtensões
-public:
-	/// <summary>
-	/// (Extensão) - Método responsável por retornar a quantidade de fluxos na mídia carregada pelo leitor.
-	/// </summary>
-	/// <param name="Param_Out_QuantidadeFluxos">Recebe a quantidade de fluxos na mídia carregada.</param>
-	virtual CarenResult ExRecuperarQuantidadeFluxos([Out] UInt32% Param_Out_QuantidadeFluxos);
-
-	/// <summary>
-	/// (Extensão) - Método responsável por retornar todos os tipos principais de mídia do arquivo carregado pelo leitor.
-	/// </summary>
-	/// <param name="Param_Out_TiposMidias">Recebe a lista, em ordem, com os tipos principais de mídia no fluxo carregado</param>
-	virtual CarenResult ExRecuperarTiposMidia([Out] System::Collections::Generic::List<CA_MAJOR_MEDIA_TYPES>^% Param_Out_TiposMidias);
 };
 

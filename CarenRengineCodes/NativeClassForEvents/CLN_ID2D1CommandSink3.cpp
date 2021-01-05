@@ -17,12 +17,46 @@ limitations under the License.
 
 #pragma once
 #include "../pch.h"
-#include "../Nativas/CLN_ID2D1CommandSink2.h"
+#include "../NativeClassForEvents/CLN_ID2D1CommandSink3.h"
+
+
+//Métodos da interface ID2D1CommandSink3
+
+METODODELC CLN_ID2D1CommandSink3::DrawSpriteBatch(_In_ ID2D1SpriteBatch* spriteBatch, UINT32 startIndex, UINT32 spriteCount, _In_ ID2D1Bitmap* bitmap, D2D1_BITMAP_INTERPOLATION_MODE interpolationMode, D2D1_SPRITE_OPTIONS spriteOptions)
+{
+	//Entra na sessão critica de codígo.
+	EnterCriticalSection(&SessaoCritica);
+
+	//Variavel que vai retornar o resultado.
+	HRESULT Resultado = E_NOTIMPL;
+
+	//Verifica se o evento é valido
+	if (ObjetoValido(Evento_DrawSpriteBatch))
+	{
+		//Evento valido.
+		//Chama o evento para notificar a classe gerenciada base.
+		Evento_DrawSpriteBatch(spriteBatch, startIndex, spriteCount, bitmap, interpolationMode, spriteOptions);
+
+		//Define sucesso
+		Resultado = S_OK;
+	}
+	else
+	{
+		//Define que o método não foi implementado.
+		Resultado = E_NOTIMPL;
+	}
+
+	//Sai da sessão critica.
+	LeaveCriticalSection(&SessaoCritica);
+
+	//Retorna o resultado.
+	return Resultado;
+}
 
 
 //Métodos da interface ID2D1CommandSink2
 
-METODODELC CLN_ID2D1CommandSink2::DrawInk(_In_ ID2D1Ink* ink, _In_ ID2D1Brush* brush, _In_opt_ ID2D1InkStyle* inkStyle)
+METODODELC CLN_ID2D1CommandSink3::DrawInk(_In_ ID2D1Ink* ink, _In_ ID2D1Brush* brush, _In_opt_ ID2D1InkStyle* inkStyle)
 {
 	//Entra na sessão critica de codígo.
 	EnterCriticalSection(&SessaoCritica);
@@ -53,7 +87,7 @@ METODODELC CLN_ID2D1CommandSink2::DrawInk(_In_ ID2D1Ink* ink, _In_ ID2D1Brush* b
 	return Resultado;
 }
 
-METODODELC CLN_ID2D1CommandSink2::DrawGradientMesh(_In_ ID2D1GradientMesh* gradientMesh)
+METODODELC CLN_ID2D1CommandSink3::DrawGradientMesh(_In_ ID2D1GradientMesh* gradientMesh)
 {
 	//Entra na sessão critica de codígo.
 	EnterCriticalSection(&SessaoCritica);
@@ -84,7 +118,7 @@ METODODELC CLN_ID2D1CommandSink2::DrawGradientMesh(_In_ ID2D1GradientMesh* gradi
 	return Resultado;
 }
 
-METODODELC CLN_ID2D1CommandSink2::DrawGdiMetafile(_In_ ID2D1GdiMetafile* gdiMetafile, _In_opt_ CONST D2D1_RECT_F* destinationRectangle, _In_opt_ CONST D2D1_RECT_F* sourceRectangle)
+METODODELC CLN_ID2D1CommandSink3::DrawGdiMetafile(_In_ ID2D1GdiMetafile* gdiMetafile, _In_opt_ CONST D2D1_RECT_F* destinationRectangle, _In_opt_ CONST D2D1_RECT_F* sourceRectangle)
 {
 	//Entra na sessão critica de codígo.
 	EnterCriticalSection(&SessaoCritica);
@@ -119,7 +153,7 @@ METODODELC CLN_ID2D1CommandSink2::DrawGdiMetafile(_In_ ID2D1GdiMetafile* gdiMeta
 
 //Métodos da interface ID2D1CommandSink1
 
-METODODELC CLN_ID2D1CommandSink2::SetPrimitiveBlend1(D2D1_PRIMITIVE_BLEND primitiveBlend)
+METODODELC CLN_ID2D1CommandSink3::SetPrimitiveBlend1(D2D1_PRIMITIVE_BLEND primitiveBlend)
 {
 	//Entra na sessão critica de codígo.
 	EnterCriticalSection(&SessaoCritica);
@@ -155,7 +189,7 @@ METODODELC CLN_ID2D1CommandSink2::SetPrimitiveBlend1(D2D1_PRIMITIVE_BLEND primit
 
 //Métodos da interface ID2D1CommandSink
 
-METODODELC CLN_ID2D1CommandSink2::BeginDraw()
+METODODELC CLN_ID2D1CommandSink3::BeginDraw()
 {
 	//Entra na sessão critica de codígo.
 	EnterCriticalSection(&SessaoCritica);
@@ -186,7 +220,7 @@ METODODELC CLN_ID2D1CommandSink2::BeginDraw()
 	return Resultado;
 }
 
-METODODELC CLN_ID2D1CommandSink2::EndDraw()
+METODODELC CLN_ID2D1CommandSink3::EndDraw()
 {
 	//Entra na sessão critica de codígo.
 	EnterCriticalSection(&SessaoCritica);
@@ -217,7 +251,7 @@ METODODELC CLN_ID2D1CommandSink2::EndDraw()
 	return Resultado;
 }
 
-METODODELC CLN_ID2D1CommandSink2::SetAntialiasMode(D2D1_ANTIALIAS_MODE antialiasMode)
+METODODELC CLN_ID2D1CommandSink3::SetAntialiasMode(D2D1_ANTIALIAS_MODE antialiasMode)
 {
 	//Entra na sessão critica de codígo.
 	EnterCriticalSection(&SessaoCritica);
@@ -248,7 +282,7 @@ METODODELC CLN_ID2D1CommandSink2::SetAntialiasMode(D2D1_ANTIALIAS_MODE antialias
 	return Resultado;
 }
 
-METODODELC CLN_ID2D1CommandSink2::SetTags(
+METODODELC CLN_ID2D1CommandSink3::SetTags(
 	D2D1_TAG tag1,
 	D2D1_TAG tag2)
 {
@@ -281,7 +315,7 @@ METODODELC CLN_ID2D1CommandSink2::SetTags(
 	return Resultado;
 }
 
-METODODELC CLN_ID2D1CommandSink2::SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE textAntialiasMode)
+METODODELC CLN_ID2D1CommandSink3::SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE textAntialiasMode)
 {
 	//Entra na sessão critica de codígo.
 	EnterCriticalSection(&SessaoCritica);
@@ -312,7 +346,7 @@ METODODELC CLN_ID2D1CommandSink2::SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE 
 	return Resultado;
 }
 
-METODODELC CLN_ID2D1CommandSink2::SetTextRenderingParams(_In_opt_ IDWriteRenderingParams* textRenderingParams)
+METODODELC CLN_ID2D1CommandSink3::SetTextRenderingParams(_In_opt_ IDWriteRenderingParams* textRenderingParams)
 {
 	//Entra na sessão critica de codígo.
 	EnterCriticalSection(&SessaoCritica);
@@ -343,7 +377,7 @@ METODODELC CLN_ID2D1CommandSink2::SetTextRenderingParams(_In_opt_ IDWriteRenderi
 	return Resultado;
 }
 
-METODODELC CLN_ID2D1CommandSink2::SetTransform(_In_ CONST D2D1_MATRIX_3X2_F* transform)
+METODODELC CLN_ID2D1CommandSink3::SetTransform(_In_ CONST D2D1_MATRIX_3X2_F* transform)
 {
 	//Entra na sessão critica de codígo.
 	EnterCriticalSection(&SessaoCritica);
@@ -374,7 +408,7 @@ METODODELC CLN_ID2D1CommandSink2::SetTransform(_In_ CONST D2D1_MATRIX_3X2_F* tra
 	return Resultado;
 }
 
-METODODELC CLN_ID2D1CommandSink2::SetPrimitiveBlend(D2D1_PRIMITIVE_BLEND primitiveBlend)
+METODODELC CLN_ID2D1CommandSink3::SetPrimitiveBlend(D2D1_PRIMITIVE_BLEND primitiveBlend)
 {
 	//Entra na sessão critica de codígo.
 	EnterCriticalSection(&SessaoCritica);
@@ -405,7 +439,7 @@ METODODELC CLN_ID2D1CommandSink2::SetPrimitiveBlend(D2D1_PRIMITIVE_BLEND primiti
 	return Resultado;
 }
 
-METODODELC CLN_ID2D1CommandSink2::SetUnitMode(D2D1_UNIT_MODE unitMode)
+METODODELC CLN_ID2D1CommandSink3::SetUnitMode(D2D1_UNIT_MODE unitMode)
 {
 	//Entra na sessão critica de codígo.
 	EnterCriticalSection(&SessaoCritica);
@@ -436,7 +470,7 @@ METODODELC CLN_ID2D1CommandSink2::SetUnitMode(D2D1_UNIT_MODE unitMode)
 	return Resultado;
 }
 
-METODODELC CLN_ID2D1CommandSink2::Clear(_In_opt_ CONST D2D1_COLOR_F* color)
+METODODELC CLN_ID2D1CommandSink3::Clear(_In_opt_ CONST D2D1_COLOR_F* color)
 {
 	//Entra na sessão critica de codígo.
 	EnterCriticalSection(&SessaoCritica);
@@ -467,7 +501,7 @@ METODODELC CLN_ID2D1CommandSink2::Clear(_In_opt_ CONST D2D1_COLOR_F* color)
 	return Resultado;
 }
 
-METODODELC CLN_ID2D1CommandSink2::DrawGlyphRun(
+METODODELC CLN_ID2D1CommandSink3::DrawGlyphRun(
 	D2D1_POINT_2F baselineOrigin,
 	_In_ CONST DWRITE_GLYPH_RUN* glyphRun,
 	_In_opt_ CONST DWRITE_GLYPH_RUN_DESCRIPTION* glyphRunDescription,
@@ -509,7 +543,7 @@ METODODELC CLN_ID2D1CommandSink2::DrawGlyphRun(
 	return Resultado;
 }
 
-METODODELC CLN_ID2D1CommandSink2::DrawLine(
+METODODELC CLN_ID2D1CommandSink3::DrawLine(
 	D2D1_POINT_2F point0,
 	D2D1_POINT_2F point1,
 	_In_ ID2D1Brush* brush,
@@ -551,7 +585,7 @@ METODODELC CLN_ID2D1CommandSink2::DrawLine(
 	return Resultado;
 }
 
-METODODELC CLN_ID2D1CommandSink2::DrawGeometry(
+METODODELC CLN_ID2D1CommandSink3::DrawGeometry(
 	_In_ ID2D1Geometry* geometry,
 	_In_ ID2D1Brush* brush,
 	FLOAT strokeWidth,
@@ -591,7 +625,7 @@ METODODELC CLN_ID2D1CommandSink2::DrawGeometry(
 	return Resultado;
 }
 
-METODODELC CLN_ID2D1CommandSink2::DrawRectangle(
+METODODELC CLN_ID2D1CommandSink3::DrawRectangle(
 	_In_ CONST D2D1_RECT_F* rect,
 	_In_ ID2D1Brush* brush,
 	FLOAT strokeWidth,
@@ -631,7 +665,7 @@ METODODELC CLN_ID2D1CommandSink2::DrawRectangle(
 	return Resultado;
 }
 
-METODODELC CLN_ID2D1CommandSink2::DrawBitmap(
+METODODELC CLN_ID2D1CommandSink3::DrawBitmap(
 	_In_ ID2D1Bitmap* bitmap,
 	_In_opt_ CONST D2D1_RECT_F* destinationRectangle,
 	FLOAT opacity,
@@ -675,7 +709,7 @@ METODODELC CLN_ID2D1CommandSink2::DrawBitmap(
 	return Resultado;
 }
 
-METODODELC CLN_ID2D1CommandSink2::DrawImage(
+METODODELC CLN_ID2D1CommandSink3::DrawImage(
 	_In_ ID2D1Image* image,
 	_In_opt_ CONST D2D1_POINT_2F* targetOffset,
 	_In_opt_ CONST D2D1_RECT_F* imageRectangle,
@@ -717,7 +751,7 @@ METODODELC CLN_ID2D1CommandSink2::DrawImage(
 	return Resultado;
 }
 
-METODODELC CLN_ID2D1CommandSink2::DrawGdiMetafile(
+METODODELC CLN_ID2D1CommandSink3::DrawGdiMetafile(
 	_In_ ID2D1GdiMetafile* gdiMetafile,
 	_In_opt_ CONST D2D1_POINT_2F* targetOffset)
 {
@@ -753,7 +787,7 @@ METODODELC CLN_ID2D1CommandSink2::DrawGdiMetafile(
 	return Resultado;
 }
 
-METODODELC CLN_ID2D1CommandSink2::FillMesh(
+METODODELC CLN_ID2D1CommandSink3::FillMesh(
 	_In_ ID2D1Mesh* mesh,
 	_In_ ID2D1Brush* brush)
 {
@@ -788,7 +822,7 @@ METODODELC CLN_ID2D1CommandSink2::FillMesh(
 	return Resultado;
 }
 
-METODODELC CLN_ID2D1CommandSink2::FillOpacityMask(
+METODODELC CLN_ID2D1CommandSink3::FillOpacityMask(
 	_In_ ID2D1Bitmap* opacityMask,
 	_In_ ID2D1Brush* brush,
 	_In_opt_ CONST D2D1_RECT_F* destinationRectangle,
@@ -828,7 +862,7 @@ METODODELC CLN_ID2D1CommandSink2::FillOpacityMask(
 	return Resultado;
 }
 
-METODODELC CLN_ID2D1CommandSink2::FillGeometry(
+METODODELC CLN_ID2D1CommandSink3::FillGeometry(
 	_In_ ID2D1Geometry* geometry,
 	_In_ ID2D1Brush* brush,
 	_In_opt_ ID2D1Brush* opacityBrush)
@@ -866,7 +900,7 @@ METODODELC CLN_ID2D1CommandSink2::FillGeometry(
 	return Resultado;
 }
 
-METODODELC CLN_ID2D1CommandSink2::FillRectangle(
+METODODELC CLN_ID2D1CommandSink3::FillRectangle(
 	_In_ CONST D2D1_RECT_F* rect,
 	_In_ ID2D1Brush* brush)
 {
@@ -902,7 +936,7 @@ METODODELC CLN_ID2D1CommandSink2::FillRectangle(
 	return Resultado;
 }
 
-METODODELC CLN_ID2D1CommandSink2::PushAxisAlignedClip(
+METODODELC CLN_ID2D1CommandSink3::PushAxisAlignedClip(
 	_In_ CONST D2D1_RECT_F* clipRect,
 	D2D1_ANTIALIAS_MODE antialiasMode)
 {
@@ -938,7 +972,7 @@ METODODELC CLN_ID2D1CommandSink2::PushAxisAlignedClip(
 	return Resultado;
 }
 
-METODODELC CLN_ID2D1CommandSink2::PushLayer(
+METODODELC CLN_ID2D1CommandSink3::PushLayer(
 	_In_ CONST D2D1_LAYER_PARAMETERS1* layerParameters1,
 	_In_opt_ ID2D1Layer* layer)
 {
@@ -974,7 +1008,7 @@ METODODELC CLN_ID2D1CommandSink2::PushLayer(
 	return Resultado;
 }
 
-METODODELC CLN_ID2D1CommandSink2::PopAxisAlignedClip()
+METODODELC CLN_ID2D1CommandSink3::PopAxisAlignedClip()
 {
 	//Entra na sessão critica de codígo.
 	EnterCriticalSection(&SessaoCritica);
@@ -1005,7 +1039,7 @@ METODODELC CLN_ID2D1CommandSink2::PopAxisAlignedClip()
 	return Resultado;
 }
 
-METODODELC CLN_ID2D1CommandSink2::PopLayer()
+METODODELC CLN_ID2D1CommandSink3::PopLayer()
 {
 	//Entra na sessão critica de codígo.
 	EnterCriticalSection(&SessaoCritica);
@@ -1035,3 +1069,4 @@ METODODELC CLN_ID2D1CommandSink2::PopLayer()
 	//Retorna o resultado.
 	return Resultado;
 }
+

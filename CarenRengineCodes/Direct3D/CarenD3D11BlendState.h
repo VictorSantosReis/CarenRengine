@@ -24,9 +24,6 @@ limitations under the License.
 //Importa o namespace que contém as interfaces do Microsoft Direct 3D.
 using namespace CarenRengine::Direct3D11;
 
-//Enumeração de retorno de função.
-
-
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
@@ -51,6 +48,11 @@ public ref class CarenD3D11BlendState :public ICarenD3D11BlendState
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenD3D11BlendState();
+
 	~CarenD3D11BlendState();
 
 
@@ -205,7 +207,7 @@ public:
 	/// <summary>
 	/// (GetDevice) - Obtém um ponteiro para o dispositivo que criou essa interface.
 	/// </summary>
-	/// <param name="Param_Out_DispositivoD3D11">Retorna o dispositivo D3D11 que criou essa interface. O usuário deve criar a interface antes de chamar este método.</param>
+	/// <param name="Param_Out_DispositivoD3D11">Retorna o dispositivo D3D11 que criou essa interface. O usuário deve inicializar a interface antes de chamar este método.</param>
 	virtual CarenResult GetDevice(ICaren^ Param_Out_DispositivoD3D11);
 
 	/// <summary>

@@ -17,3 +17,9 @@ limitations under the License.
 
 #include "../pch.h"
 #include "DirectxFunctions.h"
+
+UInt32 DirectxFunctions::_D3D11CalcSubresource(UInt32 Param_MipSlice, UInt32 Param_ArraySlice, UInt32 Param_MipLevels)
+{
+	//Chama o método para realizar a função e retorna.
+	return D3D11CalcSubresource(Param_MipSlice, Param_ArraySlice, Param_MipLevels);
+}

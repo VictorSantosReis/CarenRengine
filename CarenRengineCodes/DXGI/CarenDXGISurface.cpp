@@ -24,10 +24,15 @@ CarenDXGISurface::~CarenDXGISurface()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor.
+CarenDXGISurface::CarenDXGISurface()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
-//
+
 // Métodos da interface ICaren
-//
+
 
 /// <summary>
 /// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 
@@ -59,7 +64,7 @@ CarenResult CarenDXGISurface::ConsultarInterface(String^ Param_Guid, ICaren^ Par
 		const char* DadosConvertidos = NULL;
 
 		//Verifica se a string é valida.
-		if (Param_Guid != nullptr && !String::IsNullOrEmpty(Param_Guid))
+		if (!String::IsNullOrEmpty(Param_Guid))
 		{
 			//Obtém a largura da String.
 			LarguraString = Param_Guid->Length + 1;

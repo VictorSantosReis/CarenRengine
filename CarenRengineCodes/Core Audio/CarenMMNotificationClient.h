@@ -18,14 +18,11 @@ limitations under the License.
 #pragma once
 #include "../Caren/Caren.h"
 #include "../SDK_CoreAudio.h"
-#include "../Nativas/CLN_IMMNotificationClient.h"
+#include "../NativeClassForEvents/CLN_IMMNotificationClient.h"
 #include "../SDK_Utilidades.h"
 
 //Importa o namespace que contém as interfaces da Core Audio Api
 using namespace CarenRengine::CoreAudio;
-
-//Enumeração de retorno de função.
-
 
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
@@ -51,6 +48,13 @@ public ref class CarenMMNotificationClient : public ICarenMMNotificationClient
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a interface e permite que o usuário decida se a biblioteca deve criar a interface ou vai iniciar sem um ponteiro 
+	/// de trabalho. Se (Param_CriarInterface) for TRUE, o construtor vai criar uma implementação da interface(IMMNotificationClient).
+	/// </summary>
+	/// <param name="Param_CriarInterface">Um valor booleano, TRUE indica que deve criar uma nova interface intermanete, caso contario, FALSE.</param>
+	CarenMMNotificationClient(Boolean Param_CriarInterface);
+
 	~CarenMMNotificationClient();
 
 
@@ -76,29 +80,6 @@ public:
 			//Retorna o valor.
 			return Prop_DisposedClasse;
 		}
-	}
-
-
-	//Cria instância da classe atual.
-public:
-	/// <summary>
-	/// Cria uma instância vazia da classe de notificação de dispositivos de áudio.
-	/// </summary>
-	/// <param name="Param_Out_Interface">Retorna a interface vazia. Chamadas para está interface vai resultar em exceção
-	/// se nenhum ponteiro for definido.</param>
-	static CarenResult CriarInstanciaVazia([Out] CarenMMNotificationClient^% Param_Out_Interface)
-	{
-		//Variavel que vai retornar o resultado.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Cria a interface e retorna ao usuário.
-		Param_Out_Interface = gcnew CarenMMNotificationClient();
-
-		//Define sucesso
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-		//Retorna o resultado
-		return Resultado;
 	}
 
 

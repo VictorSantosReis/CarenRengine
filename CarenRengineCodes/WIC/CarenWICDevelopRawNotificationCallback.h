@@ -19,7 +19,7 @@ limitations under the License.
 #include "../SDK_Caren.h"
 #include "../SDK_Utilidades.h"
 #include "../FunctionClass/GlobalFuncs.h"
-#include "../Nativas/CLN_IWICDevelopRawNotificationCallback.h"
+#include "../NativeClassForEvents/CLN_IWICDevelopRawNotificationCallback.h"
 
 //Importa o namespace que contém as interfaces da API primária.
 using namespace CarenRengine::WIC;
@@ -50,9 +50,11 @@ public ref class CarenWICDevelopRawNotificationCallback : public ICarenWICDevelo
 	//Contrutores e destuidor da classe.
 public:
 	/// <summary>
-	/// Inicializa a classe e cria um Callback para receber os eventos.
+	/// Inicializa a interface e permite que o usuário decida se a biblioteca deve criar a interface ou vai iniciar sem um ponteiro 
+	/// de trabalho. Se (Param_CriarInterface) for TRUE, o construtor vai criar uma implementação da interface().
 	/// </summary>
-	CarenWICDevelopRawNotificationCallback();
+	/// <param name="Param_CriarInterface">Um valor booleano, TRUE indica que deve criar uma nova interface intermanete, caso contario, FALSE.</param>
+	CarenWICDevelopRawNotificationCallback(Boolean Param_CriarInterface);
 	
 	~CarenWICDevelopRawNotificationCallback();
 

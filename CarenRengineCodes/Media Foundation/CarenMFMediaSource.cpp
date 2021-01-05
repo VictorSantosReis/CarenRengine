@@ -135,7 +135,7 @@ CarenResult CarenMFMediaSource::ConsultarInterface(String^ Param_Guid, ICaren^ P
 		const char* DadosConvertidos = NULL;
 
 		//Verifica se a string é valida.
-		if (Param_Guid != nullptr && !String::IsNullOrEmpty(Param_Guid))
+		if (!String::IsNullOrEmpty(Param_Guid))
 		{
 			//Obtém a largura da String.
 			LarguraString = Param_Guid->Length + 1;
@@ -496,7 +496,7 @@ CarenResult CarenMFMediaSource::CreatePresentationDescriptor([Out] ICarenMFPrese
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
 
-	//Resultados Com.
+	//Resultado COM.
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
@@ -547,7 +547,7 @@ CarenResult CarenMFMediaSource::GetCharacteristics([Out] Enumeracoes::CA_MFMEDIA
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
 
-	//Resultados Com.
+	//Resultado COM.
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
@@ -596,7 +596,7 @@ CarenResult CarenMFMediaSource::Start(ICarenMFPresentationDescriptor^ Param_Desc
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
 
-	//Resultados Com.
+	//Resultado COM.
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
@@ -667,7 +667,7 @@ CarenResult CarenMFMediaSource::Pause()
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
 
-	//Resultados Com.
+	//Resultado COM.
 	ResultadoCOM Hr = E_FAIL;
 
 	//Chama o método para pausar
@@ -701,7 +701,7 @@ CarenResult CarenMFMediaSource::Stop()
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
 
-	//Resultados Com.
+	//Resultado COM.
 	ResultadoCOM Hr = E_FAIL;
 
 	//Chama o método para desligado.
@@ -735,7 +735,7 @@ CarenResult CarenMFMediaSource::Shutdown()
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
 
-	//Resultados Com.
+	//Resultado COM.
 	ResultadoCOM Hr = E_FAIL;
 
 	//Chama o método para desligado.
@@ -775,7 +775,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Flags">Especifica como deve obter o evento.</param>
 /// <param name="Param_Out_MidiaEvent">Recebe a interface que contém as informações da operação assincrona para o evento notificado. O chamador deve liberar a interface.</param>
-CarenResult CarenMFMediaSource::GetEvent(CA_FLAGS_OBTER_EVENTO Param_Flags, [Out] ICarenMFMediaEvent^% Param_Out_MidiaEvent)
+CarenResult CarenMFMediaSource::GetEvent(CA_MF_GET_FLAGS_EVENT Param_Flags, [Out] ICarenMFMediaEvent^% Param_Out_MidiaEvent)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

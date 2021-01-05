@@ -55,12 +55,13 @@ public ref class CarenD2D1EffectContext1 : public ICarenD2D1EffectContext1
 	ID2D1EffectContext1* PonteiroTrabalho = NULL;
 
 
-	//Contrutores e destuidor da classe.
+	//Construtor e destuidor da classe.
 public:
-	CarenD2D1EffectContext1();
 	/// <summary>
 	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
 	/// </summary>
+	CarenD2D1EffectContext1();
+	
 	~CarenD2D1EffectContext1();
 
 	//Variaveis Internas.
@@ -382,9 +383,9 @@ public:
 	/// <param name="Param_QuantidadeNiveis">A contagem de níveis de recursos fornecidos pelo aplicativo</param>
 	/// <param name="Param_Out_NivelRecursoMaximo">O nível máximo de recurso da lista (Param_NiveisRecurso), que é suportado pelo dispositivo D2D.</param>
 	virtual CarenResult GetMaximumSupportedFeatureLevel(
-		cli::array<CA_D3D_NIVEL_RECURSO>^ Param_NiveisRecurso,
+		cli::array<CA_D3D_FEATURE_LEVEL>^ Param_NiveisRecurso,
 		UInt32 Param_QuantidadeNiveis,
-		[Out] CA_D3D_NIVEL_RECURSO% Param_Out_NivelRecursoMaximo);
+		[Out] CA_D3D_FEATURE_LEVEL% Param_Out_NivelRecursoMaximo);
 
 	/// <summary>
 	/// Indica se a precisão do buffer é suportada pelo dispositivo Direct2D subjacente.

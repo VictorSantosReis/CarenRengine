@@ -23,6 +23,11 @@ CarenD2D1EllipseGeometry::~CarenD2D1EllipseGeometry()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor.
+CarenD2D1EllipseGeometry::CarenD2D1EllipseGeometry()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 
 // Métodos da interface ICaren
@@ -58,7 +63,7 @@ CarenResult CarenD2D1EllipseGeometry::ConsultarInterface(String^ Param_Guid, ICa
 		const char* DadosConvertidos = NULL;
 
 		//Verifica se a string é valida.
-		if (Param_Guid != nullptr && !String::IsNullOrEmpty(Param_Guid))
+		if (!String::IsNullOrEmpty(Param_Guid))
 		{
 			//Obtém a largura da String.
 			LarguraString = Param_Guid->Length + 1;

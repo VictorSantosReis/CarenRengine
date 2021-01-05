@@ -45,12 +45,13 @@ public ref class CarenD2D1ResourceTexture : public ICarenD2D1ResourceTexture
 	ID2D1ResourceTexture* PonteiroTrabalho = NULL;
 
 
-	//Contrutores e destuidor da classe.
+	//Construtor e destuidor da classe.
 public:
-	CarenD2D1ResourceTexture();
 	/// <summary>
 	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
 	/// </summary>
+	CarenD2D1ResourceTexture();
+
 	~CarenD2D1ResourceTexture();
 
 	//Variaveis Internas.

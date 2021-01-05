@@ -65,7 +65,7 @@ CarenResult CarenMFMedia2DBuffer2::ConsultarInterface(String^ Param_Guid, ICaren
 		const char* DadosConvertidos = NULL;
 
 		//Verifica se a string é valida.
-		if (Param_Guid != nullptr && !String::IsNullOrEmpty(Param_Guid))
+		if (!String::IsNullOrEmpty(Param_Guid))
 		{
 			//Obtém a largura da String.
 			LarguraString = Param_Guid->Length + 1;
@@ -420,13 +420,13 @@ void CarenMFMedia2DBuffer2::Finalizar()
 /// <summary>
 /// (Lock2DSize) - Fornece o acesso do chamador para a memória no buffer.
 /// </summary>
-/// <param name="Param_LockBufferFlags">Um membro da enumeração (CA_2DBUFFER_LOCK_FLAGS) que especifica se deseja bloquear o buffer para leitura, gravação ou ambos.</param>
+/// <param name="Param_LockBufferFlags">Um membro da enumeração (CA_MF2DBuffer_LockFlags) que especifica se deseja bloquear o buffer para leitura, gravação ou ambos.</param>
 /// <param name="Param_Out_BufferPBScanline0">Recebe um ponteiro para o primeiro byte da linha superior de pixels na imagem. A linha superior é definida como a linha superior quando 
 /// a imagem é apresentada ao visualizador e pode não ser a primeira linha na memória.</param>
 /// <param name="Param_Out_StrideSuperfice">Recebe o passo de superfície, em bytes. A passada pode ser negativa, indicando que a imagem é orientada de baixo para cima na memória.</param>
 /// <param name="Param_Out_BufferStart">Recebe um ponteiro para o início do buffer acessível na memória.</param>
 /// <param name="Param_Out_LarguraBuffer">Recebe o comprimento do buffer, em bytes.</param>
-CarenResult CarenMFMedia2DBuffer2::Lock2DSize(Enumeracoes::CA_2DBUFFER_LOCK_FLAGS Param_LockBufferFlags, [Out] ICarenBuffer^% Param_Out_BufferPBScanline0, [Out] Int64% Param_Out_StrideSuperfice, [Out] ICarenBuffer^% Param_Out_BufferStart, [Out] UInt32% Param_Out_LarguraBuffer)
+CarenResult CarenMFMedia2DBuffer2::Lock2DSize(Enumeracoes::CA_MF2DBuffer_LockFlags Param_LockBufferFlags, [Out] ICarenBuffer^% Param_Out_BufferPBScanline0, [Out] Int64% Param_Out_StrideSuperfice, [Out] ICarenBuffer^% Param_Out_BufferStart, [Out] UInt32% Param_Out_LarguraBuffer)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

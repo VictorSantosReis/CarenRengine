@@ -3,7 +3,7 @@
 #include "../SDK_Caren.h"
 #include "../SDK_Utilidades.h"
 #include "CarenMFVideoMediaType.h"
-#include "../Nativas/CLN_IMFClockStateSink.h"
+#include "../NativeClassForEvents/CLN_IMFClockStateSink.h"
 
 //Importa o namespace que contém as interfaces da API primária.
 using namespace CarenRengine::MediaFoundation;

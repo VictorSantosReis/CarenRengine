@@ -74,7 +74,7 @@ public:
 			AddRef();
 			return S_OK;
 		}
-		else if (guid == IID_IMMNotificationClient)
+		else if (guid == __uuidof(IMMNotificationClient))
 		{
 			*pObj = this;
 			AddRef();
@@ -108,21 +108,21 @@ public:
 public:
 	virtual HRESULT STDMETHODCALLTYPE OnDeviceStateChanged(
 		_In_  LPCWSTR pwstrDeviceId,
-		_In_  DWORD dwNewState) = 0;
+		_In_  DWORD dwNewState);
 
 	virtual HRESULT STDMETHODCALLTYPE OnDeviceAdded(
-		_In_  LPCWSTR pwstrDeviceId) = 0;
+		_In_  LPCWSTR pwstrDeviceId);
 
 	virtual HRESULT STDMETHODCALLTYPE OnDeviceRemoved(
-		_In_  LPCWSTR pwstrDeviceId) = 0;
+		_In_  LPCWSTR pwstrDeviceId);
 
 	virtual HRESULT STDMETHODCALLTYPE OnDefaultDeviceChanged(
 		_In_  EDataFlow flow,
 		_In_  ERole role,
-		_In_  LPCWSTR pwstrDefaultDeviceId) = 0;
+		_In_  LPCWSTR pwstrDefaultDeviceId);
 
 	virtual HRESULT STDMETHODCALLTYPE OnPropertyValueChanged(
 		_In_  LPCWSTR pwstrDeviceId,
-		_In_  const PROPERTYKEY key) = 0;
+		_In_  const PROPERTYKEY key);
 };
 

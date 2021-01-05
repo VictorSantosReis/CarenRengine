@@ -24,10 +24,18 @@ CarenWICDevelopRawNotificationCallback::~CarenWICDevelopRawNotificationCallback(
 	Prop_DisposedClasse = true;
 }
 //Construtores
-CarenWICDevelopRawNotificationCallback::CarenWICDevelopRawNotificationCallback()
+CarenWICDevelopRawNotificationCallback::CarenWICDevelopRawNotificationCallback(Boolean Param_CriarInterface)
 {
-	//Cria um ponteiro para a classe nativa que gerencia o recebimento dos eventos.
-	PonteiroTrabalho = new CLN_IWICDevelopRawNotificationCallback();
+	//Verifica se deve ou não criar uma interface.
+	if (Param_CriarInterface)
+	{
+		//Cria a implementação da interface
+		PonteiroTrabalho = new CLN_IWICDevelopRawNotificationCallback();
+	}
+	else
+	{
+		//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+	}
 }
 
 // Métodos da interface ICaren
@@ -63,7 +71,7 @@ CarenResult CarenWICDevelopRawNotificationCallback::ConsultarInterface(String^ P
 		const char* DadosConvertidos = NULL;
 
 		//Verifica se a string é valida.
-		if (Param_Guid != nullptr && !String::IsNullOrEmpty(Param_Guid))
+		if (!String::IsNullOrEmpty(Param_Guid))
 		{
 			//Obtém a largura da String.
 			LarguraString = Param_Guid->Length + 1;

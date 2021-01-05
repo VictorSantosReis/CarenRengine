@@ -45,12 +45,13 @@ public ref class CarenD2D1TransformGraph : public ICarenD2D1TransformGraph
 	ID2D1TransformGraph* PonteiroTrabalho = NULL;
 
 
-	//Contrutores e destuidor da classe.
+	//Construtor e destuidor da classe.
 public:
-	CarenD2D1TransformGraph();
 	/// <summary>
 	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
 	/// </summary>
+	CarenD2D1TransformGraph();
+
 	~CarenD2D1TransformGraph();
 
 	//Variaveis Internas.

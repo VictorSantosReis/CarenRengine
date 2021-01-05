@@ -65,7 +65,7 @@ CarenResult CarenMFVideoDisplayControl::ConsultarInterface(String^ Param_Guid, I
 		const char* DadosConvertidos = NULL;
 
 		//Verifica se a string é valida.
-		if (Param_Guid != nullptr && !String::IsNullOrEmpty(Param_Guid))
+		if (!String::IsNullOrEmpty(Param_Guid))
 		{
 			//Obtém a largura da String.
 			LarguraString = Param_Guid->Length + 1;
@@ -423,8 +423,8 @@ void CarenMFVideoDisplayControl::Finalizar()
 /// <summary>
 /// (GetAspectRatioMode) - Consulta como o processador de vídeo avançado (EVR) lida com a relação de aspecto da fonte de vídeo.
 /// </summary>
-/// <param name="Param_Out_AspectRatio">Recebe um ou mais bit de sinalizadores da enumeração: CA_VIDEO_DISPLAY_ASPECT_RATIO_MODE</param>
-CarenResult CarenMFVideoDisplayControl::GetAspectRatioMode([Out] Enumeracoes::CA_VIDEO_DISPLAY_ASPECT_RATIO_MODE% Param_Out_AspectRatio)
+/// <param name="Param_Out_AspectRatio">Recebe um ou mais bit de sinalizadores da enumeração: CA_MFVideoAspectRatioMode</param>
+CarenResult CarenMFVideoDisplayControl::GetAspectRatioMode([Out] Enumeracoes::CA_MFVideoAspectRatioMode% Param_Out_AspectRatio)
 {
 	//Variavel que vai retorna o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -454,7 +454,7 @@ CarenResult CarenMFVideoDisplayControl::GetAspectRatioMode([Out] Enumeracoes::CA
 	}
 
 	//Define o modo do Aspect Ratio no parametro de retorno.
-	Param_Out_AspectRatio = (CA_VIDEO_DISPLAY_ASPECT_RATIO_MODE)safe_cast<UInt32>(AspectRatioMode);
+	Param_Out_AspectRatio = (CA_MFVideoAspectRatioMode)safe_cast<UInt32>(AspectRatioMode);
 
 Done:;
 	//Retorna o resultado
@@ -940,8 +940,8 @@ Done:;
 /// (SetAspectRatioMode) - Especifica como o processador de vídeo avançado (EVR) lida com a relação de aspecto 
 /// da fonte de vídeo.
 /// </summary>
-/// <param name="Param_AspectRatio">Bit a bit ou de um ou mais sinalizadores da enumeração: CA_VIDEO_DISPLAY_ASPECT_RATIO_MODE</param>
-CarenResult CarenMFVideoDisplayControl::SetAspectRatioMode(Enumeracoes::CA_VIDEO_DISPLAY_ASPECT_RATIO_MODE Param_AspectRatio) {
+/// <param name="Param_AspectRatio">Bit a bit ou de um ou mais sinalizadores da enumeração: CA_MFVideoAspectRatioMode</param>
+CarenResult CarenMFVideoDisplayControl::SetAspectRatioMode(Enumeracoes::CA_MFVideoAspectRatioMode Param_AspectRatio) {
 	//Variavel que vai retorna o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
 

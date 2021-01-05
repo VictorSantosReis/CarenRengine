@@ -28,9 +28,6 @@ limitations under the License.
 //Importa o namespace que contém as interfaces do Microsoft DirectX Graphics Infrastructure(DXGI).
 using namespace CarenRengine::DXGI;
 
-//Enumeração de retorno de função.
-
-
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
@@ -57,6 +54,17 @@ public ref class CarenDXGIFactory2 : public ICarenDXGIFactory2
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenDXGIFactory2();
+
+	/// <summary>
+	/// Inicializa a classe e cria uma nova interface de Fabrica do DXGI 1.3 que serve para criar objetos DXGI.
+	/// </summary>
+	/// <param name="Param_Flags">Esse valor inclui a DXGI_CREATE_FACTORY_DEBUG(0x01) ou ZERO(0). Defina 0x01 para para solicitar a DXGIDebug; o DLL será carregado se estiver presente no sistema.</param>
+	CarenDXGIFactory2(UInt32 Param_Flags);
+
 	~CarenDXGIFactory2();
 
 
@@ -82,75 +90,6 @@ public:
 			//Retorna o valor.
 			return Prop_DisposedClasse;
 		}
-	}
-
-
-
-	//Cria uma instância dessa classe (Estático)
-public:
-	/// <summary>
-	/// Método responsável por criar uma instância vazia da classe. Chamadas para os métodos sem um ponteiro de trabalho definido
-	/// pode gerar comportamentos indefinidos.
-	/// </summary>
-	/// <param name="Param_Out_CarenDXGIFactory2">Recebe um ponteiro para a interface (Vazia).</param>
-	static CarenResult CriarInstanciaVazia([Out] ICarenDXGIFactory2^% Param_Out_CarenDXGIFactory2)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Cria a interface
-		Param_Out_CarenDXGIFactory2 = gcnew CarenDXGIFactory2();
-
-		//Define sucesso
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-		//Retorna o resultado
-		return Resultado;
-	}
-
-	/// <summary>
-	/// Método responsável por criar uma instância da classe de fabrica de objetos DXGI.
-	/// </summary>
-	/// <param name="Param_Out_CarenDXGIFactory2">Recebe um ponteiro para a interface.</param>
-	static CarenResult CriarInstancia([Out] ICarenDXGIFactory2^% Param_Out_CarenDXGIFactory2)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Resultado COM
-		ResultadoCOM Hr = E_FAIL;
-
-		//Variaveis
-		IDXGIFactory2* pFabrica2 = NULL;
-
-		//Chama o método para criar a Fabrica.
-		Hr = CreateDXGIFactory1(__uuidof(IDXGIFactory2), (void**)&pFabrica2);
-
-		//Verifica se obteve sucesso
-		if (Sucesso(Hr))
-		{
-			//Deixa o método continuar.
-		}
-		else
-		{
-			//Falhou...
-
-			//Sai do método
-			Sair;
-		}
-
-		//Cria a interface que vai ser retornada no parametro.
-		Param_Out_CarenDXGIFactory2 = gcnew CarenDXGIFactory2();
-
-		//Define o ponteiro de trabalho
-		Param_Out_CarenDXGIFactory2->AdicionarPonteiro(pFabrica2);
-
-		//Define sucesso
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	Done:;
-		//Retorna o resultado
-		return Resultado;
 	}
 
 

@@ -395,13 +395,13 @@ namespace CarenRengine
 				literal String^ MF_MT_PIXEL_ASPECT_RATIO = "{c6376a1e-8d0a-4027-be45-6d9a0ad39bb6}";
 				/// <summary>
 				/// Tipo do valor: UInt32.
-				/// O valor desse atributo é um membro da enumeração: CA_VIDEO_TAXA_PROPORCAO_PRETENDIDA.
+				/// O valor desse atributo é um membro da enumeração: CA_MFVideoSrcContentHintFlags.
 				/// </summary>
 				literal String^ MF_MT_SOURCE_CONTENT_HINT = "{68ACA3CC-22D0-44E6-85F8-28167197FA38}";
 				/// <summary>
 				/// Tipo do valor: UInt32.
 				/// Especifica a função de conversão de RGB para R'G'B' para um tipo de mídia de vídeo.
-				/// O valor desse atributo é um membro da enumeração: CA_VIDEO_FUCAO_CONVERSAO_RGB_LINEAR
+				/// O valor desse atributo é um membro da enumeração: CA_MFVideoTransferFunction
 				/// </summary>
 				literal String^ MF_MT_TRANSFER_FUNCTION = "{5FB0FCE9-BE5C-4935-A811-EC838F8EED93}";
 				/// <summary>
@@ -414,36 +414,36 @@ namespace CarenRengine
 				/// <summary>
 				/// Tipo do valor: UInt32.
 				/// Descreve como o croma foi amostrado para um tipo de mídia de vídeo de Y'Cb'Cr'.
-				/// O valor desse atributo é um bit a bit ou de sinalizadores da enumeração: CA_VIDEO_CHROMA_SUB_SAMPLING
+				/// O valor desse atributo é um bit a bit ou de sinalizadores da enumeração: CA_MFVideoChromaSubsampling
 				/// </summary>
 				literal String^ MF_MT_VIDEO_CHROMA_SITING = "{65DF2370-C773-4C33-AA64-843E068EFB0C}";
 				/// <summary>
 				/// Tipo do valor: UInt32.
 				/// Especifica as condições de iluminação ideais para um tipo de mídia de vídeo.
-				///  O valor desse atributo é um membro da enumeração: CA_VIDEO_LIGHTING.
+				///  O valor desse atributo é um membro da enumeração: CA_MFVideoLighting.
 				/// </summary>
 				literal String^ MF_MT_VIDEO_LIGHTING = "{53A0529C-890B-4216-8BF9-599367AD6D20}";
 				/// <summary>
 				/// Tipo do valor: UInt32.
 				/// Especifica o intervalo nominal das informações de cor em um tipo de mídia de vídeo.
-				/// O valor desse atributo é um membro da enumeração: CA_NOMINAL_RANGE
+				/// O valor desse atributo é um membro da enumeração: CA_MFNominalRange
 				/// Codificadores H. 264/AVC:
 				/// No tipo de mídia de saída, MF_MT_VIDEO_NOMINAL_RANGE pode ser definido com MFNominalRange_0_255 e MFNominalRange_16_235.
 				/// Codificador H. 264 / AVC deve tratar MFNominalRange_Unknown como MFNominalRange_16_235.
 				/// Codificador H. 264 / AVC deve rejeitar um tipo de mídia de saída quando MF_MT_VIDEO_NOMINAL_RANGE é definido como MFNominalRange_48_208, 
-				/// MFNominalRange_64_127, ou quaisquer outros valores não definidos em CA_NOMINAL_RANGE.
+				/// MFNominalRange_64_127, ou quaisquer outros valores não definidos em CA_MFNominalRange.
 				/// </summary>
 				literal String^ MF_MT_VIDEO_NOMINAL_RANGE = "{C21B8EE5-B956-4071-8DAF-325EDF5CAB11}";
 				/// <summary>
 				/// {Pendente} Tipo do valor: UInt32.
 				/// Especifica as primárias de cores para um tipo de mídia de vídeo.
-				/// O valor desse atributo é um membro da enumeração: CA_VIDEO_CORES_PRIMARIAS
+				/// O valor desse atributo é um membro da enumeração: CA_MFVideoPrimaries
 				/// </summary>
 				literal String^ MF_MT_VIDEO_PRIMARIES = "{DBFBE4D7-0740-4EE0-8192-850AB0E21935}";
 				/// <summary>
 				/// Tipo do valor: UInt32.
 				/// Especifica a rotação de uma moldura de vídeo no sentido anti-horário.
-				/// O valor desse atributo é um membro da enumeração: CA_VIDEO_ROTACAO_FORMATO
+				/// O valor desse atributo é um membro da enumeração: CA_MFVideoRotationFormat
 				/// O vídeo de um dispositivo portátil, como um telemóvel, é frequentemente girado por 90, 180 ou 270 graus. Se a câmera armazena a orientação como 
 				/// metadados no arquivo de vídeo, a imagem pode ser ajustada no momento da reprodução.
 				/// Se este atributo definido como MFVideoRotationFormat_90, significa que o conteúdo foi girado 90 graus no sentido anti-horário. Se o conteúdo foi 
@@ -453,7 +453,7 @@ namespace CarenRengine
 				/// <summary>
 				/// Tipo do valor: UInt32.
 				/// Para tipos de mídia YUV, define a matriz de conversão do espaço de cores Y'Cb'Cr' para o espaço de cores R'G'B'.
-				/// O valor desse atributo é um membro da enumeração: CA_VIDEO_MATRIZ_CONVERSAO
+				/// O valor desse atributo é um membro da enumeração: CA_MFVideoTransferMatrix
 				/// </summary>
 				literal String^ MF_MT_YUV_MATRIX = "{3E23D450-2C75-4D25-A00E-B91670D12327}";
 				/// <summary>
@@ -3486,7 +3486,7 @@ namespace CarenRengine
 			/// <summary>
 			/// Estrutura que contém os IID de todas as interfaces disponiveis nessa biblioteca que fazem parte da API do Direct2D 11.
 			/// </summary>
-			public value struct GUIDs_InterfacesDirect2D11
+			public value struct GUIDs_InterfacesDirect2D
 			{};
 
 			/// <summary>
@@ -3582,864 +3582,20 @@ namespace CarenRengine
 				/// IID da interface nativa: IAudioSessionManager
 				/// </summary>
 				literal String^ IID_IAudioSessionManager = "{BFA971F1-4D5E-40BB-935E-967039BFBEE4}";
-			};
-			
-
-
-			//GERENCIADAS
-
-			/// <summary>
-			/// Contém todos os GUIDs das interfaces de Caren.
-			/// </summary>
-			public value struct GUIDs_CarenGuidInterfaces
-			{
-
-				//Guids das APIs base de Caren.
-
-				/// <summary>
-				/// Guid da interface: ICaren
-				/// </summary>
-				literal String^ GUID_CA_INTF_Caren = "{7E4D91F6-7189-4837-B279-E3E23AFCA893}";
-
-				/// <summary>
-				/// Guid da interface: ICarenBuffer
-				/// </summary>
-				literal String^ GUID_CA_INTF_Buffer = "{91BD1C14-F6F6-4121-B5AD-48756EDD603E}";
-
-
-
-
-				//Guids das interface da API do Media Foundation.
-
-				/// <summary>
-				/// Guid da interface: ICarenMidiaAtribute
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFMidiaAtribute = "{FA2D7457-E082-410A-A38D-9FBE47F62AC2}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMidiaTypeHandle
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFMidiaTypeHandle = "{4F53961B-71F3-4190-9530-63060FDBE567}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMFMediaType
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFMidiaType = "{B3D4DF6C-271E-4509-9E11-627518A65ED9}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMFMediaBuffer
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFMidiaBuffer = "{124E1685-0A18-442A-A0C7-6EA86C274F4D}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMFMedia2DBuffer
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFMidia2DBuffer = "{B3902CBD-7049-4A7E-AA78-3E66CE9AA524}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMFMedia2DBuffer2
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFMidia2DBuffer2 = "{5E6AA0AA-0E58-42E7-9FC3-EF516E52C134}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMFDXGIBuffer
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFDXGIBuffer = "{056177DE-2F4B-44BD-AA80-FEAA66638B37}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMFSample
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFAmostra = "{06BFA703-3BFF-4878-A2E9-C45EDCF4EB20}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMFMediaSink
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFMidiaSink = "{C8514E08-756F-4C42-AB65-C9FFEEACD7CD}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMFStreamSink
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFMidiaStreamSink = "{4442A91B-3521-4E0A-9F65-2BEFB93DA6E4}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMFSinkWriter
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFMidiaSinkWriter = "{37386B09-9CCD-4F48-B5D3-8A71C8B098F1}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMFSinkWriterCallback
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFMidiaSinkWriterCallback = "{1F2A9FB7-403A-477A-A781-A0F072FBE15C}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMFSourceReader
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFLeitorMidia = "{70F77178-5F15-4279-8322-979DE274790E}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMFSourceReaderCallback
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFLeitorMidiaCallback = "{B62DD692-4317-4D5C-8DDF-FB53E7C13A93}";
-
-				/// <summary>
-				/// Guid da interface: CarenMFVideoRenderer
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFRenderizadorVideo = "{E23C9042-83C2-4B7F-B237-F888C3DE84E1}";
-
-				/// <summary>
-				/// Guid da interface: ICarenAtivador
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFAtivador = "{A86D1E72-CD70-4602-B35C-DD3A0D5B57C3}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMFGetService
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFObterServico = "{7BF636C4-5B5C-4304-BAA1-86B712DEE90A}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMFVideoDisplayControl
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFControladorVideo = "{494723EC-8E10-4E29-BCF9-9A9F072ADE51}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMFVideoSampleAllocator
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFAlocadorAmostrasVideo = "{E7093167-4C8E-45A1-AA82-FD2F1FD08AB0}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMFDXGIDeviceManager
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFDXGIDeviceManager = "{1E2795CA-AC98-4481-A387-69AE862DB9CA}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMFClock
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFRelogio = "{8CE7A5EE-9C2F-40C3-A394-CE0C542696FC}";
-
-				/// <summary>
-				/// Guid da interface: ICarenRelogioApresentaçãoMidia
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFRelogioApresentação = "{5D331E43-DA1F-44DE-81ED-DF5A7F61CA4D}";
-
-				/// <summary>
-				/// Guid da interface: ICarenFonteTempoRelogioApresentação
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFFonteTempoRelogioApresentação = "{93D71DA6-8431-4F8C-91E5-B323A165BA70}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMFTransform
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFTransform = "{D443AE42-007A-4866-8174-8EE4EAC215AF}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMFVideoPresenter
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFApresentadorVideo = "{C2FA308B-3962-4F6F-8CC7-C2D2641E3BFA}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMFClockStateSink
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFRelogioStateSink = "{A9FAE071-9C80-413F-AD9B-E71386810EA6}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMFMediaEvent
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFCarenMidiaEvent = "{0EDC6D22-20F5-44D7-B6B9-EA8A2A321D49}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMFAsyncCallback
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFAsyncCallback = "{A9EE4C92-7062-4D1A-8468-A9FCD269DDA1}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMFAsyncResult
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFAsyncResult = "{CAC9CAC9-B241-43DC-8DA8-94EB8A08EB78}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMFGeradorEventosMidia
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFGeradorEventosMidia = "{266CD5F0-C874-4BCA-8CE4-1440A35CB816}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMFMediaSinkPreroll
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFMidiaSinkPreroll = "{CE735A9F-4B0C-4725-AD46-B0AEC9FD1172}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMFByteStream
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFByteStreamMidia = "{6B3BB243-D012-4703-9C6E-4C7EE4B68C77}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMFMediaSource
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFFonteMidia = "{380D3681-BFE5-4408-BADC-D952A88EB52F}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMFMediaSourceEx
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFFonteMidiaEx = "{B6073936-21AF-402C-96EE-FA56BB7E6BF8}";
-
-				/// <summary>
-				/// Guid da interface: ICarenPropertyStore
-				/// </summary>
-				literal String^ GUID_CA_INTF_PropertyStore = "{73C75E1E-92A5-483B-8EA2-89E7879E0176}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMFSourceResolver
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFResolvedorOrigem = "{94A89CF7-7DE7-46B6-A9B6-4F74B9D7C02C}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMFStreamDescriptor
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFDescritorFluxo = "{AACE49BC-AF53-4AE9-A2BC-D0A58A33401F}";
-
-				/// <summary>
-				/// Guid da interface: ICarenDescritorApresentação
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFDescritorApresentação = "{D6085D8F-2AB7-4513-B464-68EF19270CE4}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMFMediaStream
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFMidiaStream = "{1B7C719B-C391-4C38-91C4-7D47E0BC669C}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMFAudioStreamVolume
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFControladorAudioFluxo = "{CE0A8168-5D19-4A9B-A558-9F356C36EC51}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMFSimpleAudioVolume
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFControladorAudioSimples = "{87D01DE6-1E2F-446E-B734-9B0FE5CAF540}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMFCollection
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFCollection = "{4C627299-4D4A-4948-BF0D-DA88D7A81AC0}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMFTopologyNode
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFTopologyNode = "{313763D6-9C55-4879-8BC0-55B052436249}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMFTopology
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFTopology = "{4A272C13-FDE3-489E-9FB2-9C1D2981E3F7}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMFTopoLoader
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFTopoLoader = "{FA3945D6-0F34-4EA4-AE63-567436B0B3E3}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMFTopologyNodeAttributeEditor
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFTopologyNodeAttributeEditor = "{2E5FC788-616F-4D4F-BC4F-CACBE26071E0}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMFTopologyServiceLookup
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFTopologyServiceLookup = "{C81258EB-DA90-49DF-B965-956F17AD3E15}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMFTopologyServiceLookupClient
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFTopologyServiceLookupClient = "{5717881A-5013-4EB0-86A3-7354728AA877}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMFRateSupport
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFRateSupport = "{8B12498B-5B50-4151-B550-B18CD0E0C6E2}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMFRateControl
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFRateControl = "{1BC89272-01B3-4342-B04D-057BE0EED163}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMFMediaSession
-				/// </summary>
-				literal String^ GUID_CA_INTF_MFMediaSession = "{6B506B17-C575-4D0E-AE80-C490199B3984}";
-
-
-
-
-
-				//Guids das interfaces da APIs Direct 3D 9
-
-				/// <summary>
-				/// Guid da interface: ICarenDirect3DDeviceManager9
-				/// </summary>
-				literal String^ GUID_CA_INTF_Direct3DDeviceManager9 = "{2A4465A5-A6F0-467F-AAEE-673705EB1467}";
-
-
-
-
-
-				//Guids das interfaces da APIs Direct 3D 10
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D10Multithread
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D10Multithread = "{398B3F3F-5062-478E-8E6B-AE1E3E2E1291}";
-
-
-
-
-
-				//Guids das interfaces da APIs Direct 3D 11
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11Device
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11Device = "{BE9C630E-DE6E-4C19-8AF3-F24238B9C381}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11Device1
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11Device1 = "{6BA1CD08-8CEA-45CF-80CB-43AEC30A6F13}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11Device2
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11Device2 = "{DB5B3C4A-F2D5-4400-ABD4-12E5BDBE48A6}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11Device3
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11Device3 = "{561668D2-6281-44BF-93C9-B6EF9DBA4FA5}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11Device4
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11Device4 = "{D2706E04-BFB2-48A4-AF28-181C62294D56}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11Device4
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11Device5 = "{C497E621-030F-4CEA-AAD2-F3D41BABA516}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3DDeviceContextState
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11DeviceContextState = "{833B07E5-E209-4164-977C-2C2CA0D7BBDD}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11DeviceContext
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11DeviceContext = "{8526B1B8-8FB8-4AE6-9E8E-A27A249F8A81}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11DeviceContext1
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11DeviceContext1 = "{FB873D13-9A02-47CD-BD88-E616AE96E1AE}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11DeviceContext2
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11DeviceContext2 = "{B62157D4-65D2-4BAC-BEAD-0AF193015CC7}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11DeviceContext3
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11DeviceContext3 = "{7163CB91-6DA2-4A0D-A67A-486952F70AF5}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11DeviceContext4
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11DeviceContext4 = "{A7E2D5DA-B61D-4A0D-96C7-3C3A9CE07EDD}";
-
-				/// <summary>
-			   /// Guid da interface: ICarenD3D11VertexShader
-			   /// </summary>
-				literal String^ GUID_CA_INTF_D3D11VertexShader = "{60D8DB27-B58F-48CC-A939-60744EA137A4}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11Texture1D
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11Texture1D = "{DA903CD4-062B-46E2-9BB1-074A2B734CDD}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11Texture2D
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11Texture2D = "{06D50069-5E46-4550-ABF7-FC2975D5B3F2}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11Texture2D1
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11Texture2D1 = "{1EB09630-211F-44E1-8C65-0F7DA0B2DB1F}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11Texture3D
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11Texture3D = "{18279842-D923-4B61-8350-C9C4732B6048}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11Texture3D1
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11Texture3D1 = "{8405B02A-6879-4268-8CB6-53BAAE7FDB88}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11RasterizerState
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11RasterizerState = "{523852A4-D4B1-4B49-88CD-B7F17EEE9DDA}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11RasterizerState1
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11RasterizerState1 = "{41B8C43A-A011-49EC-AB5B-0E155837E815}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11RasterizerState2
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11RasterizerState2 = "{1A82D929-D807-453E-9B31-063684210319}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11Query
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11Query = "{1F2F4246-B0A1-429B-B6A5-2E8F9D97F824}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11Query1
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11Query1 = "{CAD59A9E-F320-4A2E-B04D-A93A5C51F9BD}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11Predicate
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11Predicate = "{366AFE2C-D22D-44F5-8CDC-0BB6CC8E1A79}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11PixelShader
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11PixelShader = "{191FB8C2-D346-40D6-8590-E215681AA77A}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11InputLayout
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11InputLayout = "{C93436FD-AEBA-4A42-B32B-66640C16A88A}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11HullShader
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11HullShader = "{637F96F8-1F75-4A3F-ABC5-4A44795AD6FC}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11GeometryShader
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11GeometryShader = "{27A2ABDF-DB9D-4B90-B58D-5105B5E62339}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11DomainShader
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11DomainShader = "{EC3EDB9C-323C-452D-9111-733267861A29}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11ShaderResourceView
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11ShaderResourceView = "{F8FF9012-B8A1-469C-A278-1BBDDB366110}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11ShaderResourceView1
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11ShaderResourceView1 = "{812B0E84-BB67-41E0-BD90-40ABF3BDD1AC}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11SamplerState
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11SamplerState = "{858230B7-F03E-4715-8A55-E174684F1598}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11UnorderedAccessView
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11UnorderedAccessView = "{C2C20D02-E15A-44AF-8D33-5B13E3F4B80F}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11UnorderedAccessView1
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11UnorderedAccessView1 = "{38FA8027-FEB5-467E-B2B7-C8E487E77B3F}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11RenderTargetView
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11RenderTargetView = "{EF960687-1261-490A-83DB-EB0242448F14}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11RenderTargetView1
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11RenderTargetView1 = "{E24326AA-8BCC-409E-85B3-9240A181744F}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11DepthStencilView
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11DepthStencilView = "{272D89C1-1256-4B67-A410-0D03BDB3FBC5}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11DepthStencilState
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11DepthStencilState = "{B6E5942B-D4D6-4692-9090-39EB562BDC83}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11Asynchronous
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11Asynchronous = "{05F9D4F6-07F5-46BC-99A4-7F906463966B}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11Counter
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11Counter = "{5F66F518-FD6F-4C31-88EF-B1C537598A39}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11ComputeShader
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11ComputeShader = "{473DFA94-D339-4DB6-B0A7-F4988E161593}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11ClassLinkage
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11ClassLinkage = "{899CE190-23B6-41E0-9B5D-69C5B5D5ADA6}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11ClassInstance
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11ClassInstance = "{3B9047F8-B294-400C-902D-333EB012959E}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11BlendState
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11BlendState = "{C5C2DDA2-1FEA-4426-ABEF-6A9CDB110FF0}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11BlendState
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11BlendState1 = "{99981A6B-28AA-4227-A8F6-0C798176A20A}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11Buffer
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11Buffer = "{8DB85178-0EDF-40D6-AB13-5CC870DE78BB}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11Resource
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11Resource = "{710A96E2-6DAC-4735-8E6B-494353EDFA53}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11View
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11View = "{176416BD-1354-4AF5-8CA3-E87E4FAD63E3}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11DeviceChild
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11DeviceChild = "{94683637-081E-4955-99C9-FBF6A2D8953B}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11CommandList
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11CommandList = "{6EFF8E15-F195-45CB-ACAB-C3270F0C4A41}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11Fence
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11Fence = "{70F0630F-A113-4F82-AA14-F9A8ED16F836}";
-
-				/// <summary>
-				/// Guid da interface: ICarenD3D11Multithread
-				/// </summary>
-				literal String^ GUID_CA_INTF_D3D11Multithread = "{6AB993AA-3048-4E03-8E46-462C532963EB}";
-				
-
-
-
-				//Guids das interfaces da API do DXGI
-
-				/// <summary>
-				/// Guid da interface: ICarenDXGIObject
-				/// </summary>
-				literal String^ GUID_CA_INTF_DXGIObject = "{0A3A8723-DA55-44F1-A912-3055F9BEA6E4}";
-
-				/// <summary>
-				/// Guid da interface: ICarenDXGIDeviceSubObject
-				/// </summary>
-				literal String^ GUID_CA_INTF_DXGIDeviceSubObject = "{DC74E569-D95A-4AE8-9F0C-412DEBD95792}";
-
-				/// <summary>
-				/// Guid da interface: ICarenDXGIResource
-				/// </summary>
-				literal String^ GUID_CA_INTF_DXGIResource = "{39858A42-1671-443D-858B-ECEF57F9ACD2}";
-
-				/// <summary>
-				/// Guid da interface: ICarenDXGIResource1
-				/// </summary>
-				literal String^ GUID_CA_INTF_DXGIResource1 = "{AE64A18D-9A54-49FD-BEA8-7735E91DFAEF}";
-
-				/// <summary>
-				/// Guid da interface: ICarenDXGISurface
-				/// </summary>
-				literal String^ GUID_CA_INTF_DXGISurface = "{19BADCEE-6074-4DF0-B6D8-CFADACFDD367}";
-
-				/// <summary>
-				/// Guid da interface: ICarenDXGISurface1
-				/// </summary>
-				literal String^ GUID_CA_INTF_DXGISurface1 = "{8E0EDE31-EA20-463A-988B-C670BE104A06}";
-
-				/// <summary>
-				/// Guid da interface: ICarenDXGISurface2
-				/// </summary>
-				literal String^ GUID_CA_INTF_DXGISurface2 = "{4C85474A-81D3-4F7F-B43F-7420A9BA44FA}";
-
-				/// <summary>
-				/// Guid da interface: ICarenDXGIOutputDuplication
-				/// </summary>
-				literal String^ GUID_CA_INTF_DXGIOutputDuplication = "{7ED62634-50F3-4827-8C4E-3479FD4FDD93}";
-
-				/// <summary>
-				/// Guid da interface: ICarenDXGIOutput
-				/// </summary>
-				literal String^ GUID_CA_INTF_DXGIOutput = "{55B6B862-E3AF-4759-A376-0B8F500B0DD0}";
-
-				/// <summary>
-				/// Guid da interface: ICarenDXGIOutput1
-				/// </summary>
-				literal String^ GUID_CA_INTF_DXGIOutput1 = "{257056E1-0601-4411-B201-F6ECDE6ECC89}";
-
-				/// <summary>
-				/// Guid da interface: ICarenDXGIOutput2
-				/// </summary>
-				literal String^ GUID_CA_INTF_DXGIOutput2 = "{802A77EB-B023-4414-B14C-97A26CDF30E0}";
-
-				/// <summary>
-				/// Guid da interface: ICarenDXGIOutput3
-				/// </summary>
-				literal String^ GUID_CA_INTF_DXGIOutput3 = "{B84DBF7C-5DE4-424F-BE3E-8F04E163E633}";
-
-				/// <summary>
-				/// Guid da interface: ICarenDXGIOutput4
-				/// </summary>
-				literal String^ GUID_CA_INTF_DXGIOutput4 = "{EECDE14C-FA4D-47D2-BD18-6768EDFAB701}";
-
-				/// <summary>
-				/// Guid da interface: ICarenDXGIOutput5
-				/// </summary>
-				literal String^ GUID_CA_INTF_DXGIOutput5 = "{519304AE-2C56-448F-8D5F-F9E94AE9CBB2}";
-
-				/// <summary>
-				/// Guid da interface: ICarenDXGIOutput6
-				/// </summary>
-				literal String^ GUID_CA_INTF_DXGIOutput6 = "{F65C6B2A-A2F2-45BA-9321-BD45138CCB84}";
-
-				/// <summary>
-				/// Guid da interface: ICarenDXGIAdapter
-				/// </summary>
-				literal String^ GUID_CA_INTF_DXGIAdapter = "{201BFF3D-BF69-4AE8-9A09-B92D6A663895}";
-
-				/// <summary>
-				/// Guid da interface: ICarenDXGIAdapter1
-				/// </summary>
-				literal String^ GUID_CA_INTF_DXGIAdapter1 = "{E7DFDC56-B104-434C-AE8C-75D31921F8B7}";
-
-				/// <summary>
-				/// Guid da interface: ICarenDXGIAdapter2
-				/// </summary>
-				literal String^ GUID_CA_INTF_DXGIAdapter2 = "{77589733-91B2-4886-BB1B-1F3D543414FA}";
-
-				/// <summary>
-				/// Guid da interface: ICarenDXGIAdapter3
-				/// </summary>
-				literal String^ GUID_CA_INTF_DXGIAdapter3 = "{A3C19C98-7943-4F3E-9035-A31C447A987C}";
-
-				/// <summary>
-				/// Guid da interface: ICarenDXGIAdapter4
-				/// </summary>
-				literal String^ GUID_CA_INTF_DXGIAdapter4 = "{54318C46-2D2E-4B07-8689-6E2B659376B7}";
-
-				/// <summary>
-				/// Guid da interface: ICarenDXGISwapChain
-				/// </summary>
-				literal String^ GUID_CA_INTF_DXGISwapChain = "{327EAE57-8309-4FAE-B98D-4D863E393799}";
-
-				/// <summary>
-				/// Guid da interface: ICarenDXGISwapChain1
-				/// </summary>
-				literal String^ GUID_CA_INTF_DXGISwapChain1 = "{CCB4AB47-075B-4441-A57A-ACB137C2AB00}";
-
-				/// <summary>
-				/// Guid da interface: ICarenDXGISwapChain2
-				/// </summary>
-				literal String^ GUID_CA_INTF_DXGISwapChain2 = "{8F2F18C5-E079-4037-8A55-99015A592023}";
-
-				/// <summary>
-				/// Guid da interface: ICarenDXGISwapChain3
-				/// </summary>
-				literal String^ GUID_CA_INTF_DXGISwapChain3 = "{6C400DD0-14B9-42E7-AF28-86DB32D2CDE3}";
-
-				/// <summary>
-				/// Guid da interface: ICarenDXGISwapChain4
-				/// </summary>
-				literal String^ GUID_CA_INTF_DXGISwapChain4 = "{BD3F55DE-853A-4B26-8824-F93B8184C6C8}";
-
-				/// <summary>
-				/// Guid da interface: ICarenDXGIFactory
-				/// </summary>
-				literal String^ GUID_CA_INTF_DXGIFactory = "{CE36B162-C863-481D-91CF-496FE9300709}";
-
-				/// <summary>
-				/// Guid da interface: ICarenDXGIFactory1
-				/// </summary>
-				literal String^ GUID_CA_INTF_DXGIFactory1 = "{1C0E40FA-10FD-4690-ACA8-9E44C7230934}";
-
-				/// <summary>
-				/// Guid da interface: ICarenDXGIFactory2
-				/// </summary>
-				literal String^ GUID_CA_INTF_DXGIFactory2 = "{A9988070-4AB2-4F03-B4D9-2038F1602B34}";
-
-				/// <summary>
-				/// Guid da interface: ICarenDXGIFactory3
-				/// </summary>
-				literal String^ GUID_CA_INTF_DXGIFactory3 = "{8A65A0D9-5701-4A0A-9538-9FEE1A37F280}";
-
-				/// <summary>
-				/// Guid da interface: ICarenDXGIFactory4
-				/// </summary>
-				literal String^ GUID_CA_INTF_DXGIFactory4 = "{439EA390-CF3D-4BF5-9D92-BF9309A17105}";
-
-				/// <summary>
-				/// Guid da interface: ICarenDXGIFactory5
-				/// </summary>
-				literal String^ GUID_CA_INTF_DXGIFactory5 = "{4F61D54D-CD2B-4EF3-811A-F841CE3B8ABA}";
-
-				/// <summary>
-				/// Guid da interface: ICarenDXGIFactory6
-				/// </summary>
-				literal String^ GUID_CA_INTF_DXGIFactory6 = "{6104659D-9287-4C74-BF53-A0F16CC7BCFC}";
-
-				/// <summary>
-				/// Guid da interface: ICarenDXGIFactory7
-				/// </summary>
-				literal String^ GUID_CA_INTF_DXGIFactory7 = "{FBC0D0DB-8007-4DE6-822A-1FCDA9B87334}";
-
-				/// <summary>
-				/// Guid da interface: ICarenDXGIDevice
-				/// </summary>
-				literal String^ GUID_CA_INTF_DXGIDevice = "{097B7DAB-A49E-4644-9277-0566B7E80B30}";
-
-				/// <summary>
-				/// Guid da interface: ICarenDXGIDevice1
-				/// </summary>
-				literal String^ GUID_CA_INTF_DXGIDevice1 = "{9BB5D6A6-FDA0-4B27-A6A4-4738C5EEE438}";
-
-				/// <summary>
-				/// Guid da interface: ICarenDXGIDevice2
-				/// </summary>
-				literal String^ GUID_CA_INTF_DXGIDevice2 = "{2B7FD3A5-11B4-42F3-984F-5E5EF1E5DB31}";
-
-				/// <summary>
-				/// Guid da interface: ICarenDXGIDevice3
-				/// </summary>
-				literal String^ GUID_CA_INTF_DXGIDevice3 = "{152B0A4D-1FDF-4C3D-A53D-CFD8D9E4F479}";
-
-				/// <summary>
-				/// Guid da interface: ICarenDXGIDevice4
-				/// </summary>
-				literal String^ GUID_CA_INTF_DXGIDevice4 = "{4F4697D0-5D8E-4447-A77D-5B1E231E1A07}";
-
-
-
-
-
-				//Guids da CoreAudio Api
-
-				/// <summary>
-				/// Guid da interface: ICarenMMDevice
-				/// </summary>
-				literal String^ GUID_CA_INTF_MMDevice = "{B7FD481F-1413-47F9-887D-3D78E98AAEC}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMMColeçãoDispositivosAudio
-				/// </summary>
-				literal String^ GUID_CA_INTF_MMDeviceCollection = "{71718D05-C46B-4543-B2FA-38C8BD603493}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMMDeviceEnumerator
-				/// </summary>
-				literal String^ GUID_CA_INTF_MMDeviceEnumerator = "{EF8A8894-93C7-42D2-B629-D8C7696844A2}";
-
-				/// <summary>
-				/// Guid da interface: ICarenMMNotificaçãoDispositivoAudioCliente
-				/// </summary>
-				literal String^ GUID_CA_INTF_MMNotificationCliente = "{A9336FC5-E130-4300-81FC-3421A7D22C57}";
-
-				/// <summary>
-				/// Guid da interface: ICarenAudioClient
-				/// </summary>
-				literal String^ GUID_CA_INTF_AudioCliente = "{74DCD6D6-9B5E-4660-A183-77038A11DFCE}";
-
-				/// <summary>
-				/// Guid da interface: ICarenAudioRenderClient
-				/// </summary>
-				literal String^ GUID_CA_INTF_AudioRenderCliente = "{A45F14E9-05F9-497A-91E1-E2903B0DFAC0}";
-
-				/// <summary>
-				/// Guid da interface: ICarenAudioAudioCaptureCliente
-				/// </summary>
-				literal String^ GUID_CA_INTF_AudioAudioCaptureCliente = "{C7E7CBD3-4090-4C06-BBA8-FD209BD34DA1}";
-
-				/// <summary>
-				/// Guid da interface: ICarenAudioClock
-				/// </summary>
-				literal String^ GUID_CA_INTF_AudioRelogio = "{DE941B25-B610-4698-9303-DCBE7D37AE74}";
-
-				/// <summary>
-				/// Guid da interface: ICarenAudioClock2
-				/// </summary>
-				literal String^ GUID_CA_INTF_AudioRelogio2 = "{525FB789-3E55-4677-90A0-84E779B9B6F2}";
-
-				/// <summary>
-				/// Guid da interface: ICarenAudioSessionEvents
-				/// </summary>
-				literal String^ GUID_CA_INTF_AudioEventosSessao = "{5F54DD3A-B886-4DCA-BB24-10C7A93E2FAE}";
-
-				/// <summary>
-				/// Guid da interface: ICarenSimpleAudioVolume
-				/// </summary>
-				literal String^ GUID_CA_INTF_AudioSimplesVolume = "{933A6F1F-5FF4-4143-9073-EF71819CE384}";
-
-				/// <summary>
-				/// Guid da interface: ICarenChannelAudioVolume
-				/// </summary>
-				literal String^ GUID_CA_INTF_AudioCanalVolume = "{9ADFEBCF-FED0-4AB3-9F00-CF6B63D04C32}";
-
-				/// <summary>
-				/// Guid da interface: ICarenAudioSessionManager
-				/// </summary>
-				literal String^ GUID_CA_INTF_AudioGerenciadorSessao = "{14BBF8B3-68FE-42A5-8E3E-D0576F4BBA26}";
-
-
-
-				//GUID das interfaces de extensão.
-
-
-				/// <summary>
-				/// Guid da interface: ICarenMidiaExtensões
-				/// </summary>
-				literal String^ GUID_CA_INTF_MidiaExtensões = "{F3044D42-12B4-46C6-9B15-7E54A025242D}";
-
-				/// <summary>
-				/// Guid da interface: ICarenLeitorMidiaExtensões
-				/// </summary>
-				literal String^ GUID_CA_INTF_LeitorMidiaExtensões = "{8E3B80BC-2993-4D7D-AAA0-D460B06ACE22}";
-			};
+			};		
 		}
 
 		//Namespace que contém todas as contantes utilizadas pelas diversas bibliotecas presentes nesta biblioteca.
 		namespace Constantes
 		{
+
+			//////////////
+			// DXGI API //
+			//////////////
+
+			
+
+
 
 			//////////////////
 			// DIRECT2D API //
@@ -5961,25 +5117,25 @@ namespace CarenRengine
 			};
 			
 			/// <summary>
-			/// Enumera os (Valores) que podem ser usado para acessar um Stream no Leitor de mídia(ICarenMFSourceReader).
-			/// Você pode usar os valores abaixo, convertendo por boxing (uint) para obter o valor da enumeração.
+			/// (Original) - Enumera os (Valores) que podem ser usado para acessar um Stream no Leitor de mídia(ICarenMFSourceReader).
+			/// Você pode usar os valores abaixo, convertendo para (uint) para obter o valor da enumeração.
 			/// </summary>
 			public enum class CA_SOURCE_READER_ID : UInt32
 			{
 				/// <summary>
 				/// Indica que deve obter o (Primeiro Fluxo de Áudio) na lista de Streams.
 				/// </summary>
-				ID_PRIMEIRO_FLUXO_AUDIO = 0xFFFFFFFD,
+				ID_MF_SOURCE_READER_FIRST_AUDIO_STREAM = 0xFFFFFFFD,
 
 				/// <summary>
 				/// Indica que deve obter o (Primeiro Fluxo de Vídeo) na lista de Streams.
 				/// </summary>
-				ID_PRIMEIRO_FLUXO_VIDEO = 0xFFFFFFFC,
+				ID_MF_SOURCE_READER_FIRST_VIDEO_STREAM = 0xFFFFFFFC,
 
 				/// <summary>
 				/// Indica que deve obter ou ler qual quer fluxo que estiver disponível.
 				/// </summary>
-				ID_QUALQUER_FLUXO = 0xFFFFFFFE,
+				ID_MF_SOURCE_READER_ANY_STREAM = 0xFFFFFFFE,
 
 				/// <summary>
 				/// Indica que deve obter a (Fonte de mídia).
@@ -5994,10 +5150,16 @@ namespace CarenRengine
 			};
 
 			/// <summary>
-			/// Contém sinalizadores para o método ICarenMFSample.ReadSample.
+			/// (MF_SOURCE_READER_CONTROL_FLAG) - Contém sinalizadores para o método ICarenMFSample.ReadSample.
 			/// </summary>
-			public enum class CA_SOURCE_READER_CONTROL_FLAG
+			public enum class CA_MF_SOURCE_READER_CONTROL_FLAG
 			{
+				/// <summary>
+				/// Utilizado para suporte, não faz parte da enumeração original.
+				/// </summary>
+				Zero = 0x0,
+
+
 				/// <summary>
 				/// Recupere quaisquer amostras pendentes, mas não solicite mais amostras da fonte de mídia. 
 				/// Para obter todos as amostras pendentes, chame (ReadSample) com esse sinalizador até que o método 
@@ -6005,12 +5167,12 @@ namespace CarenRengine
 				/// </summary>
 				MF_SOURCE_READER_CONTROLF_DRAIN = 0x1
 			};
-
+			
 			/// <summary>
-			/// Contém sinalizadores que indcam o status de uma chamada para o método ICarenMFSample.ReadSample.
+			/// (MF_SOURCE_READER_FLAG) - Contém sinalizadores que indcam o status de uma chamada para o método ICarenMFSample.ReadSample.
 			/// </summary>
 			[FlagsAttribute]
-			public enum class CA_SOURCE_READER_FLAGS
+			public enum class CA_MF_SOURCE_READER_FLAG
 			{
 				/// <summary>
 				/// Indica que não houve nenhum erro, e que não é necessário nenhuma ação para esse flag.
@@ -6019,54 +5181,48 @@ namespace CarenRengine
 
 
 				/// <summary>
-				/// Ocorreu um erro durante a realização da chamada para a interface (ICarenMFSourceReader). Não chame novamente o método para Read uma proxima amostra.
+				/// Ocorreu um erro durante a realização da chamada para a interface (ICarenMFSourceReader). Não chame novamente o método para ler uma proxima amostra.
 				/// </summary>
-				LEITURA_ERROR = 0x1,
-
+				MF_SOURCE_READERF_ERROR = 0x1,
 
 				/// <summary>
 				/// O leitor de mídia alcançou o final do fluxo.
 				/// </summary>
-				LEITURA_FIM_FLUXO = 0x2,
-
+				MF_SOURCE_READERF_ENDOFSTREAM = 0x2,
 
 				/// <summary>
 				/// Um ou mais novos fluxos foram criados. Responda a esse sinalizador fazendo pelo menos um dos seguintes procedimentos: 
 				/// > Defina os tipos de saída nos novos fluxos.
 				/// > Atualize a seleção de fluxo selecionando ou desmarcando fluxos.
 				/// </summary>
-				LEITURA_NOVO_FLUXO = 0x4,
-
+				MF_SOURCE_READERF_NEWSTREAM = 0x4,
 
 				/// <summary>
 				/// O (Formato Nativo) foi alterado para um ou mais fluxos. O (Formato Nativo) é o formato fornecido pela fonte de mídia 
 				/// antes de qualquer decodificadores serem inseridos.
 				/// </summary>
-				LEITURA_TIPO_NATIVO_MODIFICADO = 0x10,
-
+				MF_SOURCE_READERF_NATIVEMEDIATYPECHANGED = 0x10,
 
 				/// <summary>
 				/// A mídia atual tem o tipo alterado para um ou mais fluxos. Para obter o tipo de mídia atual, chame o  método ICarenMFSourceReader.GetCurrentMediaType.
 				/// </summary>
-				LEITURA_TIPO_ATUAL_MODIFICADO = 0x20,
-
+				MF_SOURCE_READERF_CURRENTMEDIATYPECHANGED = 0x20,
 
 				/// <summary>
 				/// Há uma lacuna no fluxo. Este sinalizador corresponde a um evento MEStreamTick da (Fonte de Mídia).
 				/// </summary>
-				LEITURA_LACUNA_FLUXO = 0x100,
-
+				MF_SOURCE_READERF_STREAMTICK = 0x100,
 
 				/// <summary>
 				/// Todas as transformações inseridas pelo aplicativo foram removidas para um fluxo específico. Isso pode ser devido a uma alteração de 
 				/// formato dinâmico de uma fonte ou decodificador que impede que as transformações personalizadas sejam usadas porque eles não podem 
 				/// manipular o novo tipo de mídia.
 				/// </summary>
-				LEITURA_MFTS_REMOVIDOS = 0x200
+				MF_SOURCE_READERF_ALLEFFECTSREMOVED = 0x200
 			};
 
 			/// <summary>
-			/// Define o comportamento do resolvedor de origem(ICarenMFSourceResolver). Esses sinalizadores também são usados por manipuladores de esquema e manipuladores de fluxo de bytes.
+			/// (Original) - Define o comportamento do resolvedor de origem(ICarenMFSourceResolver). Esses sinalizadores também são usados por manipuladores de esquema e manipuladores de fluxo de bytes.
 			/// </summary>
 			[FlagsAttribute]
 			public enum class CA_SOURCE_RESOLVER_FLAGS
@@ -6352,58 +5508,58 @@ namespace CarenRengine
 			};
 
 			/// <summary>
-			/// Enumera as possiveis características de um Coletor de Midia.
+			/// (MFSTREAMSINK_MARKER_TYPE) - Enumera as possiveis características de um Coletor de Midia.
 			/// </summary>
-			public enum class CA_MIDIA_STREAM_SINK_MARCADORES
+			public enum class CA_MFSTREAMSINK_MARKER_TYPE
 			{
 				/// <summary>
 				/// Este marcador é para uso do aplicativo e não transmite qualquer informação 
 				/// para o coletor de fluxo.
 				/// </summary>
-				MARCADOR_DEFAULT = 0,
+				MFSTREAMSINK_MARKER_DEFAULT = 0,
 
 				/// <summary>
 				/// Este marcador indica o fim de um segmento dentro de uma apresentação. Pode haver uma 
 				/// lacuna no fluxo até que o próximo segmento seja iniciado. Não há nenhum dado associado 
 				/// a este marcador.
 				/// </summary>
-				MARCADOR_FIM_SEGMENTO = (MARCADOR_DEFAULT + 1),
+				MFSTREAMSINK_MARKER_ENDOFSEGMENT = (MFSTREAMSINK_MARKER_DEFAULT + 1),
 
 				/// <summary>
 				/// Esse marcador indica que há uma lacuna no fluxo. Os dados do marcador são um valor (Int64 - VT_I8) 
 				/// que especifica o tempo para a amostra ausente. A próxima amostra recebida após este marcador terá o
 				/// sinalizador de descontinuidade. Este marcador corresponde a um evento Mestreamtick do fluxo.
 				/// </summary>
-				MARCADOR_LACUNA_FLUXO = (MARCADOR_FIM_SEGMENTO + 1),
+				MFSTREAMSINK_MARKER_TICK = (MFSTREAMSINK_MARKER_ENDOFSEGMENT + 1),
 
 				/// <summary>
 				/// Este marcador contém um evento de mídia. Os dados do marcador são um ponteiro para a interface 
 				/// IMFMediaEvent do evento (VT_UNKNOWN).
 				/// </summary>
-				MARCADOR_EVENTO = (MARCADOR_LACUNA_FLUXO + 1)
+				MFSTREAMSINK_MARKER_EVENT = (MFSTREAMSINK_MARKER_TICK + 1)
 
 			};
 
 			/// <summary>
-			/// Enumera as possiveis caracteristicas da (ICarenMFClock)
+			/// (_MFCLOCK_CHARACTERISTICS_FLAGS) - Enumera as possiveis caracteristicas da (ICarenMFClock)
 			/// </summary>
-			public enum class CA_CLOCK_CARACTERISTICAS
+			public enum class CA_MFCLOCK_CHARACTERISTICS_FLAGS
 			{
 				/// <summary>
 				/// Os tempos de relógio retornados pelo método (ICarenMFClock.GetCorrelatedTime) estão em unidades de 100 nanoseconds. Se este sinalizador estiver 
 				/// ausente, chame o método (ICarenMFClock.GetProperties) para obter a freqüência de clock. A freqüência de Clock é fornecida na (RL_FREQUENCIA_RELOGIO)
 				/// membro da estrutura CA_MFCLOCK_PROPERTIES.
 				/// </summary>
-				CH_CLOCK_FREQUENCIA_10MHZ = 0x2,
+				MFCLOCK_CHARACTERISTICS_FLAG_FREQUENCY_10MHZ = 0x2,
 				/// <summary>
 				/// O relógio está sempre em execução. Se este sinalizador estiver presente, o relógio não pode ser
 				/// pausado ou interrompido. Se este sinalizador estiver ausente, chame o método (ICarenMFClock.GetState) para obter o estado atual.
 				/// </summary>
-				CH_CLOCK_SEMPRE_EXECUCAO = 0x4,
+				MFCLOCK_CHARACTERISTICS_FLAG_ALWAYS_RUNNING = 0x4,
 				/// <summary>
 				/// Os tempos de relógio são gerados a partir do relógio do sistema.
 				/// </summary>
-				CH_CLOCK_RELOGIO_SISTEMA = 0x8,
+				MFCLOCK_CHARACTERISTICS_FLAG_IS_SYSTEM_CLOCK = 0x8,
 			};
 
 			/// <summary>
@@ -6419,47 +5575,47 @@ namespace CarenRengine
 			};
 
 			/// <summary>
-			/// Enumera os possiveis estados do Relógio.
+			/// (MFCLOCK_STATE) - Enumera os possiveis estados do Relógio.
 			/// </summary>
-			public enum class CA_CLOCK_ESTADO
+			public enum class CA_MFCLOCK_STATE
 			{
 				/// <summary>
 				/// O relógio é inválido. Um relógio pode ser inválido por vários motivos. Alguns relógios retornam esse estado
 				/// antes do primeiro início. Esse estado também pode ocorrer se o dispositivo subjacente for perdido.
 				/// </summary>
-				CLOCK_INVALIDO = 0,
+				MFCLOCK_STATE_INVALID = 0,
 
 				/// <summary>
 				/// O relógio está em execução. Enquanto o relógio está em execução, o tempo avança na frequência do relógio 
 				/// e a taxa atual.
 				/// </summary>
-				CLOCK_RODANDO = (CLOCK_INVALIDO + 1),
+				MFCLOCK_STATE_RUNNING = (MFCLOCK_STATE_INVALID + 1),
 
 				/// <summary>
 				/// O relógio está parado. Enquanto parado, o relógio relata um tempo de 0.
 				/// </summary>
-				CLOCK_PARADO = (CLOCK_RODANDO + 1),
+				MFCLOCK_STATE_STOPPED = (MFCLOCK_STATE_RUNNING + 1),
 
 				/// <summary>
 				/// O relógio está em pausa. Enquanto pausado, o relógio informa o tempo em que foi pausado.
 				/// </summary>
-				CLOCK_PAUSADO = (CLOCK_PARADO + 1)
+				MFCLOCK_STATE_PAUSED = (MFCLOCK_STATE_STOPPED + 1)
 			};
 
 			/// <summary>
-			/// Enumera os modos de relação de aspecto do vídeo.
+			/// (MFVideoAspectRatioMode) - Enumera os modos de relação de aspecto do vídeo.
 			/// </summary>
-			public enum class CA_VIDEO_DISPLAY_ASPECT_RATIO_MODE
+			public enum class CA_MFVideoAspectRatioMode
 			{
 				/// <summary>
 				/// Não mantenha a proporção do vídeo. Alongue o vídeo para caber no retângulo de saída.
 				/// </summary>
-				VD_ARMode_None = 0,
+				MFVideoARMode_None = 0,
 
 				/// <summary>
 				/// Preserve a taxa de proporção do vídeo por Letterboxing ou dentro do retângulo de saída.
 				/// </summary>
-				VD_ARMode_PreservarImagem = 0x1,
+				MFVideoARMode_PreservePicture = 0x1,
 
 				/// <summary>
 				/// (EVR Ignora esse sinalizador).
@@ -6467,7 +5623,7 @@ namespace CarenRengine
 				/// Por exemplo, se a resolução nativa do monitor for 1600 por 1200 (4:3), mas a resolução de exibição for 1280 por 1024 
 				/// (5:4), o monitor exibirá pixels não quadrados.
 				/// </summary>
-				VD_ARModePreservarPixel = 0x2,
+				MFVideoARMode_PreservePixel = 0x2,
 
 				/// <summary>
 				/// Aplique um trecho horizontal não linear se a taxa de proporção do retângulo de destino não corresponder à taxa de 
@@ -6477,14 +5633,14 @@ namespace CarenRengine
 				/// em um display 16:9, em vez de pilar-boxing. Não-linear esticar vertical não é suportada, porque os resultados 
 				/// visuais são geralmente pobres.
 				/// Esse modo pode causar degradação do desempenho.
-				/// Se este sinalizador estiver definido, você também deve definir o VD_ARModePreservarPixel e VD_ARMode_PreservarImagem sinalizadores.
+				/// Se este sinalizador estiver definido, você também deve definir o MFVideoARMode_PreservePixel e MFVideoARMode_PreservePicture sinalizadores.
 				/// </summary>
-				VD_ARModeNonLinearStretch = 0x4,
+				MFVideoARMode_NonLinearStretch = 0x4,
 
 				/// <summary>
 				/// Bitmask para validar valores de sinalizador. Esse valor não é um sinalizador válido.
 				/// </summary>
-				VD_ARMode_Mask = 0x7
+				MFVideoARMode_Mask = 0x7
 			};
 
 			/// <summary>
@@ -6633,7 +5789,7 @@ namespace CarenRengine
 			/// Enumera o level de encodificação de video H.264.
 			/// Esses valores são usados com o atributo MF_MT_MPEG2_LEVEL.
 			/// </summary>
-			public enum class  CA_ENCODE_NIVEL_eAVEncH264V : int
+			public enum class  CA_ENCODE_NIVEL_eAVEncH264V
 			{
 				/// <summary>
 				/// Nível 1.
@@ -6849,7 +6005,7 @@ namespace CarenRengine
 			/// proporção especificada.
 			/// Use esses sinalizadores com o atributo MF_MT_SOURCE_CONTENT_HINT.
 			/// </summary>
-			public enum class CA_VIDEO_TAXA_PROPORCAO_PRETENDIDA
+			public enum class CA_MFVideoSrcContentHintFlags
 			{
 				/// <summary>
 				/// A proporção é desconhecida.
@@ -6869,7 +6025,7 @@ namespace CarenRengine
 			/// (MFVideoTransferFunction) - Enumera as funções de conversão de RGB linear para RGB não linear(R'G'B').
 			/// Esses sinalizadores são usados com o atributo MF_MT_TRANSFER_FUNCTION.
 			/// </summary>
-			public enum class CA_VIDEO_FUCAO_CONVERSAO_RGB_LINEAR
+			public enum class CA_MFVideoTransferFunction
 			{
 				/// <summary>
 				/// Desconhecido. Trate como MFVideoTransFunc_709.
@@ -6964,7 +6120,7 @@ namespace CarenRengine
 			/// Chroma para Y'Cb'Cr' dados.
 			/// Esses sinalizadores são usados com o atributo MF_MT_VIDEO_CHROMA_SITING.
 			/// </summary>
-			public enum class CA_VIDEO_CHROMA_SUB_SAMPLING
+			public enum class CA_MFVideoChromaSubsampling
 			{
 				/// <summary>
 				/// Esquema de codificação desconhecido.
@@ -7024,7 +6180,7 @@ namespace CarenRengine
 			/// (MFVideoLighting) - Enumera a iluminação ideal para exibir um determinado conjunto de conteúdo de vídeo.
 			/// Essa enumeração é usada com o atributo MF_MT_VIDEO_LIGHTING.
 			/// </summary>
-			public enum class CA_VIDEO_LIGHTING
+			public enum class CA_MFVideoLighting
 			{
 				/// <summary>
 				/// A iluminação ideal é desconhecida.
@@ -7062,7 +6218,7 @@ namespace CarenRengine
 			/// ("mais negro do que o preto").
 			/// Essa enumeração é usada com o atributo MF_MT_VIDEO_NOMINAL_RANGE.
 			/// </summary>
-			public enum class CA_NOMINAL_RANGE
+			public enum class CA_MFNominalRange
 			{
 				/// <summary>
 				/// Faixa nominal desconhecida.
@@ -7112,7 +6268,7 @@ namespace CarenRengine
 			/// converter cores do espaço de cores RGB para o espaço de cores CIE XYZ.
 			/// Essa enumeração é usada com o atributo MF_MT_VIDEO_PRIMARIES.
 			/// </summary>
-			public enum class CA_VIDEO_CORES_PRIMARIAS
+			public enum class CA_MFVideoPrimaries
 			{
 				/// <summary>
 				/// As cores primárias são desconhecidas.
@@ -7185,7 +6341,7 @@ namespace CarenRengine
 			/// (_MFVideoRotationFormat) - Enumera as rotações da imagem de vídeo no sentido anti-horário.
 			/// Essa enumeração é usada com o atributo MF_MT_VIDEO_ROTATION.
 			/// </summary>
-			public enum class CA_VIDEO_ROTACAO_FORMATO
+			public enum class CA_MFVideoRotationFormat
 			{
 				/// <summary>
 				/// A imagem não é girada.
@@ -7210,7 +6366,7 @@ namespace CarenRengine
 			/// e Studio R'G'B'.
 			/// Essa enumeração é usada com o atributo MF_MT_YUV_MATRIX.
 			/// </summary>
-			public enum class CA_VIDEO_MATRIZ_CONVERSAO
+			public enum class CA_MFVideoTransferMatrix
 			{
 				/// <summary>
 				/// Matriz de transferência desconhecida. Trate como MFVideoTransferMatrix_BT709.
@@ -7247,7 +6403,7 @@ namespace CarenRengine
 			};
 			
 			/// <summary>
-			/// (MediaEventType) - [Falta documentar os eventos] Enumera todos os tipos de eventos do Media Foundation. Alguns eventos podem não ter suporte.
+			/// (MediaEventType)[FALTA DOCUMENTAR] - Enumera todos os tipos de eventos do Media Foundation. Alguns eventos podem não ter suporte.
 			/// </summary>
 			public enum class CA_MediaEventType
 			{
@@ -7256,25 +6412,21 @@ namespace CarenRengine
 				/// Descrição: 
 				/// </summary>
 				MEUnknown = 0,
-
 				/// <summary>
 				/// Tipo do valor no evento: 
 				/// Descrição: 
 				/// </summary>
 				MEError = 1,
-
 				/// <summary>
 				/// Tipo do valor no evento: 
 				/// Descrição: 
 				/// </summary>
 				MEExtendedType = 2,
-
 				/// <summary>
 				/// Tipo do valor no evento: 
 				/// Descrição: 
 				/// </summary>
 				MENonFatalError = 3,
-
 				/// <summary>
 				/// Tipo do valor no evento: 
 				/// Descrição: 
@@ -7586,291 +6738,291 @@ namespace CarenRengine
 				/// </summary>
 				MEStreamSinkRequestSample = 305,
 				/// <summary>
-			/// Tipo do valor no evento: 
-			/// Descrição: 
-			/// </summary>
-			MEStreamSinkMarker = 306,
-			/// <summary>
-		/// Tipo do valor no evento: 
-		/// Descrição: 
-		/// </summary>
-		MEStreamSinkPrerolled = 307,
-		/// <summary>
-	/// Tipo do valor no evento: 
-	/// Descrição: 
-	/// </summary>
-	MEStreamSinkScrubSampleComplete = 308,
-	/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-MEStreamSinkFormatChanged = 309,
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-MEStreamSinkDeviceChanged = 310,
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-MEQualityNotify = 311,
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-MESinkInvalidated = 312,
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-MEAudioSessionNameChanged = 313,
-/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEStreamSinkMarker = 306,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEStreamSinkPrerolled = 307,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEStreamSinkScrubSampleComplete = 308,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEStreamSinkFormatChanged = 309,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEStreamSinkDeviceChanged = 310,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEQualityNotify = 311,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MESinkInvalidated = 312,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEAudioSessionNameChanged = 313,
+				/// <summary>
 				/// Tipo do valor no evento: 
 				/// Descrição: 
 				/// </summary>
 				MEAudioSessionVolumeChanged = 314,
 				/// <summary>
-								/// Tipo do valor no evento: 
-								/// Descrição: 
-								/// </summary>
-								MEAudioSessionDeviceRemoved = 315,
-								/// <summary>
-												/// Tipo do valor no evento: 
-												/// Descrição: 
-												/// </summary>
-												MEAudioSessionServerShutdown = 316,
-												/// <summary>
-																/// Tipo do valor no evento: 
-																/// Descrição: 
-																/// </summary>
-																MEAudioSessionGroupingParamChanged = 317,
-																/// <summary>
-																				/// Tipo do valor no evento: 
-																				/// Descrição: 
-																				/// </summary>
-																				MEAudioSessionIconChanged = 318,
-																				/// <summary>
-																			/// Tipo do valor no evento: 
-																			/// Descrição: 
-																			/// </summary>
-																			MEAudioSessionFormatChanged = 319,
-																			/// <summary>
-																		/// Tipo do valor no evento: 
-																		/// Descrição: 
-																		/// </summary>
-																		MEAudioSessionDisconnected = 320,
-																		/// <summary>
-																	/// Tipo do valor no evento: 
-																	/// Descrição: 
-																	/// </summary>
-																	MEAudioSessionExclusiveModeOverride = 321,
-																	/// <summary>
-																/// Tipo do valor no evento: 
-																/// Descrição: 
-																/// </summary>
-																MESinkV1Anchor = MEAudioSessionExclusiveModeOverride,
-																/// <summary>
-															/// Tipo do valor no evento: 
-															/// Descrição: 
-															/// </summary>
-															MECaptureAudioSessionVolumeChanged = 322,
-															/// <summary>
-														/// Tipo do valor no evento: 
-														/// Descrição: 
-														/// </summary>
-														MECaptureAudioSessionDeviceRemoved = 323,
-														/// <summary>
-													/// Tipo do valor no evento: 
-													/// Descrição: 
-													/// </summary>
-													MECaptureAudioSessionFormatChanged = 324,
-													/// <summary>
-												/// Tipo do valor no evento: 
-												/// Descrição: 
-												/// </summary>
-												MECaptureAudioSessionDisconnected = 325,
-												/// <summary>
-											/// Tipo do valor no evento: 
-											/// Descrição: 
-											/// </summary>
-											MECaptureAudioSessionExclusiveModeOverride = 326,
-											/// <summary>
-										/// Tipo do valor no evento: 
-										/// Descrição: 
-										/// </summary>
-										MECaptureAudioSessionServerShutdown = 327,
-										/// <summary>
-									/// Tipo do valor no evento: 
-									/// Descrição: 
-									/// </summary>
-									MESinkV2Anchor = MECaptureAudioSessionServerShutdown,
-									/// <summary>
-								/// Tipo do valor no evento: 
-								/// Descrição: 
-								/// </summary>
-								METrustUnknown = 400,
-								/// <summary>
-							/// Tipo do valor no evento: 
-							/// Descrição: 
-							/// </summary>
-							MEPolicyChanged = 401,
-							/// <summary>
-						/// Tipo do valor no evento: 
-						/// Descrição: 
-						/// </summary>
-						MEContentProtectionMessage = 402,
-						/// <summary>
-					/// Tipo do valor no evento: 
-					/// Descrição: 
-					/// </summary>
-					MEPolicySet = 403,
-					/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEAudioSessionDeviceRemoved = 315,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEAudioSessionServerShutdown = 316,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEAudioSessionGroupingParamChanged = 317,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEAudioSessionIconChanged = 318,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEAudioSessionFormatChanged = 319,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEAudioSessionDisconnected = 320,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEAudioSessionExclusiveModeOverride = 321,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MESinkV1Anchor = MEAudioSessionExclusiveModeOverride,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MECaptureAudioSessionVolumeChanged = 322,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MECaptureAudioSessionDeviceRemoved = 323,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MECaptureAudioSessionFormatChanged = 324,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MECaptureAudioSessionDisconnected = 325,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MECaptureAudioSessionExclusiveModeOverride = 326,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MECaptureAudioSessionServerShutdown = 327,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MESinkV2Anchor = MECaptureAudioSessionServerShutdown,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				METrustUnknown = 400,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEPolicyChanged = 401,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEContentProtectionMessage = 402,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEPolicySet = 403,
+				/// <summary>
 				/// Tipo do valor no evento: 
 				/// Descrição: 
 				/// </summary>
 				METrustV1Anchor = MEPolicySet,
 				/// <summary>
-			/// Tipo do valor no evento: 
-			/// Descrição: 
-			/// </summary>
-			MEWMDRMLicenseBackupCompleted = 500,
-			/// <summary>
-		/// Tipo do valor no evento: 
-		/// Descrição: 
-		/// </summary>
-		MEWMDRMLicenseBackupProgress = 501,
-		/// <summary>
-	/// Tipo do valor no evento: 
-	/// Descrição: 
-	/// </summary>
-	MEWMDRMLicenseRestoreCompleted = 502,
-	/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-MEWMDRMLicenseRestoreProgress = 503,
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-MEWMDRMLicenseAcquisitionCompleted = 506,
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-MEWMDRMIndividualizationCompleted = 508,
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-MEWMDRMIndividualizationProgress = 513,
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-MEWMDRMProximityCompleted = 514,
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-MEWMDRMLicenseStoreCleaned = 515,
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-MEWMDRMRevocationDownloadCompleted = 516,
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-MEWMDRMV1Anchor = MEWMDRMRevocationDownloadCompleted,
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-METransformUnknown = 600,
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-METransformNeedInput = (METransformUnknown + 1),
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-METransformHaveOutput = (METransformNeedInput + 1),
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-METransformDrainComplete = (METransformHaveOutput + 1),
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-METransformMarker = (METransformDrainComplete + 1),
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-METransformInputStreamStateChanged = (METransformMarker + 1),
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-MEByteStreamCharacteristicsChanged = 700,
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-MEVideoCaptureDeviceRemoved = 800,
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-MEVideoCaptureDevicePreempted = 801,
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-MEStreamSinkFormatInvalidated = 802,
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-MEEncodingParameters = 803,
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-MEContentProtectionMetadata = 900,
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-MEDeviceThermalStateChanged = 950,
-/// <summary>
-/// Tipo do valor no evento: 
-/// Descrição: 
-/// </summary>
-MEReservedMax = 10000
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEWMDRMLicenseBackupCompleted = 500,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEWMDRMLicenseBackupProgress = 501,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEWMDRMLicenseRestoreCompleted = 502,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEWMDRMLicenseRestoreProgress = 503,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEWMDRMLicenseAcquisitionCompleted = 506,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEWMDRMIndividualizationCompleted = 508,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEWMDRMIndividualizationProgress = 513,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEWMDRMProximityCompleted = 514,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEWMDRMLicenseStoreCleaned = 515,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEWMDRMRevocationDownloadCompleted = 516,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEWMDRMV1Anchor = MEWMDRMRevocationDownloadCompleted,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				METransformUnknown = 600,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				METransformNeedInput = (METransformUnknown + 1),
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				METransformHaveOutput = (METransformNeedInput + 1),
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				METransformDrainComplete = (METransformHaveOutput + 1),
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				METransformMarker = (METransformDrainComplete + 1),
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				METransformInputStreamStateChanged = (METransformMarker + 1),
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEByteStreamCharacteristicsChanged = 700,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEVideoCaptureDeviceRemoved = 800,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEVideoCaptureDevicePreempted = 801,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEStreamSinkFormatInvalidated = 802,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEEncodingParameters = 803,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEContentProtectionMetadata = 900,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEDeviceThermalStateChanged = 950,
+				/// <summary>
+				/// Tipo do valor no evento: 
+				/// Descrição: 
+				/// </summary>
+				MEReservedMax = 10000
 			};
 
 			/// <summary>
-			/// Enumera as possibilidades para se recuperar um evento do gerador de eventos de forma síncrona.
+			/// (Original) - Enumera as possibilidades para se recuperar um evento do gerador de eventos de forma síncrona.
 			/// </summary>
-			public enum class CA_FLAGS_OBTER_EVENTO
+			public enum class CA_MF_GET_FLAGS_EVENT
 			{
 				/// <summary>
 				/// O método bloqueia até que o gerador de eventos enfileire um evento.
 				/// </summary>
-				Bloquear = 0,
+				Block = 0,
 
 				/// <summary>
 				/// O método retorna imediatamente.
 				/// </summary>
-				NaoAguardar = MF_EVENT_FLAG_NO_WAIT,
+				CA_MF_EVENT_FLAG_NO_WAIT = MF_EVENT_FLAG_NO_WAIT,
 			};
 
 			/// <summary>
@@ -8070,7 +7222,7 @@ MEReservedMax = 10000
 			/// <summary>
 			/// (D3D_DRIVER_TYPE) - Enumera todas as opções de tipo de Driver para criação de um dispositovo D3D 11.
 			/// </summary>
-			public enum class CA_D3D_TIPO_DRIVER
+			public enum class CA_D3D_DRIVER_TYPE
 			{
 				/// <summary>
 				/// O tipo de driver é desconhecido.
@@ -8117,7 +7269,7 @@ MEReservedMax = 10000
 			/// <summary>
 			/// (D3D_FEATURE_LEVEL) - Descreve o conjunto de recursos orientados por um dispositivo Direct3D.
 			/// </summary>
-			public enum class CA_D3D_NIVEL_RECURSO
+			public enum class CA_D3D_FEATURE_LEVEL
 			{
 				/// <summary>
 				/// Características de alvos suportadas pelo [recurso level](/windows/desktop/direct3d11/overviews-direct3d-11-devices-downlevel-intro) 9.1, incluindo (Shader Model 2.
@@ -8170,7 +7322,7 @@ MEReservedMax = 10000
 			/// (D3D11_CREATE_DEVICE_FLAG) - Descreve os parâmetros que são usados para criar um dispositivo.
 			/// </summary>
 			[FlagsAttribute]
-			public enum class CA_D3D11_CRIACAO_DISPOSITIVO_FLAGS
+			public enum class CA_D3D11_CREATE_DEVICE_FLAG
 			{
 				/// <summary>
 				/// Define que não vai utilizar nenhum flag dessa enumeração.
@@ -9624,7 +8776,7 @@ MEReservedMax = 10000
 			/// para CoRegisterClassObject para indicar o conjunto de contextos de execução em que um objeto de classe é para ser feito disponível para solicitações construir instâncias.
 			/// </summary>
 			[FlagsAttribute]
-			public enum class CA_CLSCTX : Int64
+			public enum class CA_CLSCTX
 			{
 				/// <summary>
 				/// 
@@ -9810,7 +8962,7 @@ MEReservedMax = 10000
 			/// (_MF2DBuffer_LockFlags) - Enumera os sinalizadores para o método de IMF2DBuffer2::Lock2DSize.
 			/// </summary>
 			[FlagsAttribute]
-			public enum class CA_2DBUFFER_LOCK_FLAGS
+			public enum class CA_MF2DBuffer_LockFlags
 			{
 				/// <summary>
 				/// Reservado.
@@ -13368,10 +12520,6 @@ MEReservedMax = 10000
 				/// 
 				/// </summary>
 				WICSectionAccessLevelReadWrite = 0x3,
-				/// <summary>
-				/// 
-				/// </summary>
-				WICSectionAccessLevel_FORCE_DWORD = 0x7fffffff
 			};
 
 			/// <summary> 
@@ -18492,7 +17640,7 @@ MEReservedMax = 10000
 				/// <summary>
 				/// A frequência do relógio em Hz. Um valor de MFCLOCK_FREQUENCY_HNS significa que o relógio tem uma frequência de 10 MHz 
 				/// (ticks de 100 nanossegundos), que é a unidade de tempo (MFTIME -> Int64) padrão no Media Foundation. Se o
-				/// o método (ICarenMFClock.GetClockCharacteristics) devolver o sinalizador CH_CLOCK_FREQUENCIA_10MHZ , o valor
+				/// o método (ICarenMFClock.GetClockCharacteristics) devolver o sinalizador MFCLOCK_CHARACTERISTICS_FLAG_FREQUENCY_10MHZ , o valor
 				/// deste campo deve ser MFCLOCK_FREQUENCY_HNS.
 				///</summary>
 				UInt64 RL_FREQUENCIA_CLOCK;

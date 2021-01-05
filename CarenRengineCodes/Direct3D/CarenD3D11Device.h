@@ -51,9 +51,6 @@ limitations under the License.
 //Importa o namespace que contém as interfaces do Microsoft Direct 3D.
 using namespace CarenRengine::Direct3D11;
 
-//Enumeração de retorno de função.
-
-
 //DXGI namespace
 using namespace CarenRengine::DXGI;
 
@@ -79,8 +76,55 @@ public ref class CarenD3D11Device : public ICarenD3D11Device
 	ID3D11Device* PonteiroTrabalho = NULL;
 
 
-	//Construtor e destruidor da classe.
+	//Construtores e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenD3D11Device();
+
+	/// <summary>
+	/// Inicializa e cria uma instância de um dispositivo do Direct3D11 e fornece a possibilidade de retorna o seu Contexto Imediato.
+	/// </summary>
+	/// <param name="Param_Adaptador">Um ponteiro para o adaptador de vídeo para usar ao criar um dispositivo. Passe NULO para usar o adaptador padrão, que é o primeiro adaptador que é enumerado por 
+	/// ICarenDXGIFactory1::EnumAdapters.</param>
+	/// <param name="Param_NiveisRecurso">Um array com os niveis de recurso que seram suportados pelo dispositivo.</param>
+	/// <param name="Param_TipoDriver">O tipo do driver do dispositivo a ser criado.</param>
+	/// <param name="Param_FlagsCreateDevice">Os flags utilizados para criar o dispositivo D3D 11.</param>
+	/// <param name="Param_Out_NivelRecursoAceito">Recebe a enumeração que define o Nivel de recurso utilizado para criar o dispositivo.</param>
+	/// <param name="Param_Out_ContextoDispositivo">Recebe a interface de contexto imediato do dispositivo criado. Ignore esse parametro se não deseja receber essa interface. O usuário é responsável por inicializar antes de chamar este método.</param>
+	CarenD3D11Device(
+		ICarenDXGIAdapter^ Param_Adaptador,
+		cli::array<CA_D3D_FEATURE_LEVEL>^ Param_NiveisRecurso,
+		CA_D3D_DRIVER_TYPE Param_TipoDriver,
+		CA_D3D11_CREATE_DEVICE_FLAG Param_FlagsCreateDevice,
+		OutParam CA_D3D_FEATURE_LEVEL% Param_Out_NivelRecursoAceito,
+		CarenParameterResolver<ICarenD3D11DeviceContext^>% Param_Out_ContextoDispositivo
+	);
+
+	/// <summary>
+	/// Inicializa e cria uma instância de um dispositivo do Direct3D11 e fornece as interfaces: Cadeia de troca(SwapChain) e o Contexto Imediato(DeviceContext).
+	/// </summary>
+	/// <param name="Param_Adaptador">Um ponteiro para o adaptador de vídeo para usar ao criar um dispositivo. Passe NULO para usar o adaptador padrão, que é o primeiro adaptador que é enumerado por 
+	/// ICarenDXGIFactory1::EnumAdapters.</param>
+	/// <param name="Param_NiveisRecurso">Um array com os niveis de recurso que seram suportados pelo dispositivo.</param>
+	/// <param name="Param_TipoDriver">O tipo do driver do dispositivo a ser criado.</param>
+	/// <param name="Param_FlagsCreateDevice">Os flags utilizados para criar o dispositivo D3D 11.</param>
+	/// <param name="Param_DescSwapChain">uma descrição da cadeia de swap que contém parâmetros de inicialização para a cadeia</param>
+	/// <param name="Param_Out_NivelRecursoAceito">Recebe a enumeração que define o Nivel de recurso utilizado para criar o dispositivo.</param>
+	/// <param name="Param_Out_SwapChain">Recebe a interface da cadeia de troca(Swap). Ignore esse parametro se não deseja receber essa interface. O usuário é responsável por inicializar antes de chamar este método.</param>
+	/// <param name="Param_Out_ContextoDispositivo">Recebe a interface de contexto imediato do dispositivo criado. Ignore esse parametro se não deseja receber essa interface. O usuário é responsável por inicializar antes de chamar este método.</param>
+	CarenD3D11Device(
+		ICarenDXGIAdapter^ Param_Adaptador,
+		cli::array<CA_D3D_FEATURE_LEVEL>^ Param_NiveisRecurso,
+		CA_D3D_DRIVER_TYPE Param_TipoDriver,
+		CA_D3D11_CREATE_DEVICE_FLAG Param_FlagsCreateDevice,
+		CA_DXGI_SWAP_CHAIN_DESC^ Param_DescSwapChain,
+		OutParam CA_D3D_FEATURE_LEVEL% Param_Out_NivelRecursoAceito,
+		CarenParameterResolver<ICarenDXGISwapChain^>% Param_Out_SwapChain,
+		CarenParameterResolver<ICarenD3D11DeviceContext^>% Param_Out_ContextoDispositivo
+	);
+
 	~CarenD3D11Device();
 
 
@@ -106,307 +150,6 @@ public:
 			//Retorna o valor.
 			return Prop_DisposedClasse;
 		}
-	}
-
-
-
-	//Cria uma instância dessa classe (Estático)
-public:
-	/// <summary>
-	/// Método responsável por criar uma instância vazia da classe. Chamadas para os métodos sem um ponteiro de trabalho definido
-	/// pode gerar comportamentos indefinidos.
-	/// </summary>
-	/// <param name="Param_Out_CarenD3D11Device">Recebe um ponteiro para a interface (Vazia).</param>
-	static CarenResult CriarInstanciaVazia([Out] ICarenD3D11Device^% Param_Out_CarenD3D11Device)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Cria a interface
-		Param_Out_CarenD3D11Device = gcnew CarenD3D11Device();
-
-		//Define sucesso
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-		//Retorna o resultado
-		return Resultado;
-	}
-
-	/// <summary>
-	/// Cria a instância de um dispositivo do Direct3D11.
-	/// </summary>
-	/// <param name="Param_Adaptador">Um ponteiro para o adaptador de vídeo para usar ao criar um dispositivo. Passe NULO para usar o adaptador padrão, que é o primeiro adaptador que é enumerado por ICarenDXGIFactory1::EnumAdapters.</param>
-	/// <param name="Param_NiveisRecurso">Um array com os niveis de recurso que seram suportados pelo dispositivo.</param>
-	/// <param name="Param_TipoDriver">O tipo do driver do dispositivo a ser criado.</param>
-	/// <param name="Param_FlagsCreateDevice">Os flags utilizados para criar o dispositivo D3D 11.</param>
-	/// <param name="Param_Out_NivelRecursoAceito">Recebe a enumeração que define o Nivel de recurso utilizado para criar o dispositivo.</param>
-	/// <param name="Param_Out_Interface">Recebe a interface solicitada.</param>
-	static CarenResult CriarInstancia(
-		ICarenDXGIAdapter^ Param_Adaptador,
-		cli::array<CA_D3D_NIVEL_RECURSO>^ Param_NiveisRecurso, 
-		CA_D3D_TIPO_DRIVER Param_TipoDriver, 
-		CA_D3D11_CRIACAO_DISPOSITIVO_FLAGS Param_FlagsCreateDevice, 
-		[Out] CA_D3D_NIVEL_RECURSO% Param_Out_NivelRecursoAceito,
-		[Out] ICarenD3D11Device^% Param_Out_Interface)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Variveis utilizadas no método.
-		Utilidades Util;
-		IDXGIAdapter* pAdaptador = NULL;
-		ID3D11Device* pInterfaceD3D = NULL;
-		int TotalFlagsCreateDevice = (int)Param_FlagsCreateDevice;
-		D3D11_CREATE_DEVICE_FLAG FlagCreateDevice = (D3D11_CREATE_DEVICE_FLAG)TotalFlagsCreateDevice;
-		D3D_DRIVER_TYPE TipoDriver = (D3D_DRIVER_TYPE)Param_TipoDriver;
-		int CountNiveisRecurso = Param_NiveisRecurso->Length;
-		D3D_FEATURE_LEVEL* pNiveisRecurso = NULL;
-		D3D_FEATURE_LEVEL NivelRecursoAceito;
-
-		//Verifica se forneceu um adpatador de video.
-		if (ObjetoGerenciadoValido(Param_Adaptador))
-		{
-			//Chama o método para recupera o ponteiro.
-			Param_Adaptador->RecuperarPonteiro((LPVOID*)&pAdaptador);
-		}
-
-		//Verifica se forneceu os niveis de recurso.
-		if (ObjetoGerenciadoValido(Param_NiveisRecurso))
-		{
-			//Obtém a quantidade de itens no array
-			CountNiveisRecurso = Param_NiveisRecurso->Length;
-
-			//Cria o array de niveis de recurso.
-			pNiveisRecurso = CriarMatrizEstruturas<D3D_FEATURE_LEVEL>(CountNiveisRecurso);
-
-			//Copia os dados para a matriz.
-			Util.CopiarItensTo_ArrayNativo<D3D_FEATURE_LEVEL>(&pNiveisRecurso, Param_NiveisRecurso, CountNiveisRecurso);
-		}
-
-		//Chama o método que vai criar o dispositivo D3D 11
-		ResultadoCOM Hr = D3D11CreateDevice(pAdaptador ? pAdaptador : NULL, TipoDriver, NULL, FlagCreateDevice, pNiveisRecurso? pNiveisRecurso: NULL, CountNiveisRecurso, D3D11_SDK_VERSION, &pInterfaceD3D, &NivelRecursoAceito, NULL);
-
-		//Processa o resultado da chamada.
-		Resultado.ProcessarCodigoOperacao(Hr);
-
-		//Verifica se obteve sucesso na operação.
-		if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-		{
-			//Falhou ao realizar a operação.
-
-			//Sai do método
-			Sair;
-		}
-
-		//Cria a interface que vai conter o ponteiro
-		Param_Out_Interface = gcnew CarenD3D11Device();
-
-		//Chama o método para definir o ponteiro
-		Param_Out_Interface->AdicionarPonteiro(pInterfaceD3D);
-
-		//Define o nivel de recurso que foi utilizado para criar o dispositivo.
-		Param_Out_NivelRecursoAceito = static_cast<CA_D3D_NIVEL_RECURSO>(NivelRecursoAceito);
-
-	Done:;
-		//Deleta o array com os niveis de recurso.
-		
-
-		//Retorna o resultado
-		return Resultado;
-	}
-
-	/// <summary>
-	/// Cria a instância de um dispositivo do Direct3D11 e fornece a possibilidade de retorna o seu Contexto Imediato.
-	/// </summary>
-	/// <param name="Param_Adaptador">Um ponteiro para o adaptador de vídeo para usar ao criar um dispositivo. Passe NULO para usar o adaptador padrão, que é o primeiro adaptador que é enumerado por ICarenDXGIFactory1::EnumAdapters.</param>
-	/// <param name="Param_NiveisRecurso">Um array com os niveis de recurso que seram suportados pelo dispositivo.</param>
-	/// <param name="Param_TipoDriver">O tipo do driver do dispositivo a ser criado.</param>
-	/// <param name="Param_FlagsCreateDevice">Os flags utilizados para criar o dispositivo D3D 11.</param>
-	/// <param name="Param_Out_NivelRecursoAceito">Recebe a enumeração que define o Nivel de recurso utilizado para criar o dispositivo.</param>
-	/// <param name="Param_Out_ContextoDispositivo">Recebe a interface de contexto imediato do dispositivo criado.</param>
-	/// <param name="Param_Out_Dispositivo">Recebe a interface solicitada.</param>
-	static CarenResult CriarInstancia(
-		ICarenDXGIAdapter^ Param_Adaptador,
-		cli::array<CA_D3D_NIVEL_RECURSO>^ Param_NiveisRecurso, 
-		CA_D3D_TIPO_DRIVER Param_TipoDriver, 
-		CA_D3D11_CRIACAO_DISPOSITIVO_FLAGS Param_FlagsCreateDevice, 
-		[Out] CA_D3D_NIVEL_RECURSO% Param_Out_NivelRecursoAceito,
-		[Out] ICarenD3D11DeviceContext^% Param_Out_ContextoDispositivo, 
-		[Out] ICarenD3D11Device^% Param_Out_Dispositivo)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Variveis utilizadas no método.
-		Utilidades Util;
-		IDXGIAdapter* pAdaptador = NULL;
-		ID3D11Device* pInterfaceD3D = NULL;
-		ID3D11DeviceContext* pDeviceContext = NULL;
-		int TotalFlagsCreateDevice = (int)Param_FlagsCreateDevice;
-		D3D11_CREATE_DEVICE_FLAG FlagCreateDevice = (D3D11_CREATE_DEVICE_FLAG)TotalFlagsCreateDevice;
-		D3D_DRIVER_TYPE TipoDriver = (D3D_DRIVER_TYPE)Param_TipoDriver;
-		int CountNiveisRecurso = Param_NiveisRecurso->Length;
-		D3D_FEATURE_LEVEL* pNiveisRecurso = NULL;
-		D3D_FEATURE_LEVEL NivelRecursoAceito;
-
-		//Verifica se forneceu um adpatador de video.
-		if (ObjetoGerenciadoValido(Param_Adaptador))
-		{
-			//Chama o método para recupera o ponteiro.
-			Param_Adaptador->RecuperarPonteiro((LPVOID*)&pAdaptador);
-		}
-
-		//Verifica se forneceu os niveis de recurso.
-		if (ObjetoGerenciadoValido(Param_NiveisRecurso))
-		{
-			//Obtém a quantidade de itens no array
-			CountNiveisRecurso = Param_NiveisRecurso->Length;
-
-			//Cria o array de niveis de recurso.
-			pNiveisRecurso = CriarMatrizEstruturas<D3D_FEATURE_LEVEL>(CountNiveisRecurso);
-
-			//Copia os dados para a matriz.
-			Util.CopiarItensTo_ArrayNativo<D3D_FEATURE_LEVEL>(&pNiveisRecurso, Param_NiveisRecurso, CountNiveisRecurso);
-		}
-
-		//Chama o método que vai criar o dispositivo D3D 11
-		ResultadoCOM Hr = D3D11CreateDevice(pAdaptador ? pAdaptador : NULL, TipoDriver, NULL, FlagCreateDevice, pNiveisRecurso ? pNiveisRecurso : NULL, CountNiveisRecurso, D3D11_SDK_VERSION, &pInterfaceD3D, &NivelRecursoAceito, &pDeviceContext);
-
-		//Processa o resultado da chamada.
-		Resultado.ProcessarCodigoOperacao(Hr);
-
-		//Verifica se obteve sucesso na operação.
-		if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-		{
-			//Falhou ao realizar a operação.
-
-			//Sai do método
-			Sair;
-		}
-
-		//Cria as interfaces a serem retornadas.
-		Param_Out_Dispositivo = gcnew CarenD3D11Device();
-		Param_Out_ContextoDispositivo = gcnew CarenD3D11DeviceContext();
-
-		//Define os ponteiros de trabalho.
-		Param_Out_Dispositivo->AdicionarPonteiro(pInterfaceD3D);
-		Param_Out_ContextoDispositivo->AdicionarPonteiro(pDeviceContext);
-
-		//Define o nivel de recurso utilizado para criar com sucesso o dispositivo.
-		Param_Out_NivelRecursoAceito = static_cast<CA_D3D_NIVEL_RECURSO>(NivelRecursoAceito);
-
-	Done:;
-		//Libera a memoria para o array de recursos.
-		DeletarMatrizEstruturasSafe(&pNiveisRecurso);
-
-		//Retorna o resultado
-		return Resultado;
-	}
-
-	/// <summary>
-	/// Cria a instância de um dispositivo do D3D11 e fornece as interfaces: Cadeia de troca(SwapChain) e o Contexto Imediato(DeviceContext).
-	/// </summary>
-	/// <param name="Param_Adaptador">Um ponteiro para o adaptador de vídeo para usar ao criar um dispositivo. Passe NULO para usar o adaptador padrão, que é o primeiro adaptador que é enumerado por ICarenDXGIFactory1::EnumAdapters.</param>
-	/// <param name="Param_NiveisRecurso">Um array com os niveis de recurso que seram suportados pelo dispositivo.</param>
-	/// <param name="Param_TipoDriver">O tipo do driver do dispositivo a ser criado.</param>
-	/// <param name="Param_FlagsCreateDevice">Os flags utilizados para criar o dispositivo D3D 11.</param>
-	/// <param name="Param_Out_NivelRecursoAceito">Recebe a enumeração que define o Nivel de recurso utilizado para criar o dispositivo.</param>
-	/// <param name="Param_Out_ContextoDispositivo">Recebe a interface de contexto imediato do dispositivo criado.</param>
-	/// <param name="Param_Out_Dispositivo">Recebe a interface solicitada.</param>
-	static CarenResult CriarInstanciaDispotivoESwapChain(
-		ICarenDXGIAdapter^ Param_Adaptador,
-		cli::array<CA_D3D_NIVEL_RECURSO>^ Param_NiveisRecurso,
-		CA_D3D_TIPO_DRIVER Param_TipoDriver,
-		CA_D3D11_CRIACAO_DISPOSITIVO_FLAGS Param_FlagsCreateDevice,
-		CA_DXGI_SWAP_CHAIN_DESC^ Param_DescSwapChain,
-		[Out] CA_D3D_NIVEL_RECURSO% Param_Out_NivelRecursoAceito,
-		[Out] ICarenDXGISwapChain^% Param_Out_SwapChain,
-		[Out] ICarenD3D11DeviceContext^% Param_Out_ContextoDispositivo,
-		[Out] ICarenD3D11Device^% Param_Out_Dispositivo)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Variveis utilizadas no método.
-		Utilidades Util;
-		IDXGIAdapter* pAdaptador = NULL; //Pode ser NULO.
-		ID3D11Device* pInterfaceD3D = NULL;
-		ID3D11DeviceContext* pDeviceContext = NULL;
-		IDXGISwapChain* pSwapChain = NULL;
-		DXGI_SWAP_CHAIN_DESC* pDescSwapChain = NULL;
-		int TotalFlagsCreateDevice = (int)Param_FlagsCreateDevice;
-		D3D11_CREATE_DEVICE_FLAG FlagCreateDevice = (D3D11_CREATE_DEVICE_FLAG)TotalFlagsCreateDevice;
-		D3D_DRIVER_TYPE TipoDriver = (D3D_DRIVER_TYPE)Param_TipoDriver;
-		int CountNiveisRecurso = 0;
-		D3D_FEATURE_LEVEL* pNiveisRecurso = NULL; //Pode ser NULO.
-		D3D_FEATURE_LEVEL NivelRecursoAceito;
-
-		//Verifica se forneceu um adpatador de video.
-		if (ObjetoGerenciadoValido(Param_Adaptador))
-		{
-			//Chama o método para recupera o ponteiro.
-			Param_Adaptador->RecuperarPonteiro((LPVOID*)&pAdaptador);
-		}
-
-		//Verifica se forneceu os niveis de recurso.
-		if(ObjetoGerenciadoValido(Param_NiveisRecurso))
-		{
-			//Obtém a quantidade de itens no array
-			CountNiveisRecurso = Param_NiveisRecurso->Length;
-
-			//Cria o array de niveis de recurso.
-			pNiveisRecurso = CriarMatrizEstruturas<D3D_FEATURE_LEVEL>(CountNiveisRecurso);
-
-			//Copia os dados para a matriz.
-			Util.CopiarItensTo_ArrayNativo<D3D_FEATURE_LEVEL>(&pNiveisRecurso, Param_NiveisRecurso, CountNiveisRecurso);
-		}
-
-		//Converte a estrutura do SwapChain.
-		pDescSwapChain = Util.ConverterDXGI_SWAP_CHAIN_DESCManaged_ToUnManaged(Param_DescSwapChain);
-
-		//Chama o método que vai criar o dispositivo e a interface de cadeia de troca.
-		ResultadoCOM Hr = D3D11CreateDeviceAndSwapChain(pAdaptador? pAdaptador: NULL, 
-			TipoDriver, 
-			NULL, 
-			FlagCreateDevice, 
-			pNiveisRecurso? pNiveisRecurso: NULL, 
-			CountNiveisRecurso, 
-			D3D11_SDK_VERSION, 
-			pDescSwapChain, 
-			&pSwapChain, &pInterfaceD3D, &NivelRecursoAceito, &pDeviceContext);
-
-		//Processa o resultado da chamada.
-		Resultado.ProcessarCodigoOperacao(Hr);
-
-		//Verifica se obteve sucesso na operação.
-		if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-		{
-			//Falhou ao realizar a operação.
-
-			//Sai do método
-			Sair;
-		}
-
-		//Cria as interfaces a serem retornadas.
-		Param_Out_Dispositivo = gcnew CarenD3D11Device();
-		Param_Out_ContextoDispositivo = gcnew CarenD3D11DeviceContext();
-		Param_Out_SwapChain = gcnew CarenDXGISwapChain();
-
-		//Define os ponteiros de trabalho.
-		Param_Out_Dispositivo->AdicionarPonteiro(pInterfaceD3D);
-		Param_Out_ContextoDispositivo->AdicionarPonteiro(pDeviceContext);
-		Param_Out_SwapChain->AdicionarPonteiro(pSwapChain);
-
-		//Define o nivel de recurso utilizado para criar com sucesso o dispositivo.
-		Param_Out_NivelRecursoAceito = static_cast<CA_D3D_NIVEL_RECURSO>(NivelRecursoAceito);
-
-	Done:;
-		//Libera a memoria para o array de recursos.
-		DeletarMatrizEstruturasSafe(&pNiveisRecurso);
-		DeletarEstruturaSafe(&pDescSwapChain);
-
-		//Retorna o resultado
-		return Resultado;
 	}
 
 
@@ -904,8 +647,8 @@ public:
 	/// <summary>
 	/// (GetCreationFlags) - Se os sinalizadores usados durante a chamada para criar o dispositivo com D3D11CreateDevice.
 	/// </summary>
-	/// <param name="Param_Out_Flags">Recebe um flags de bit a bits da enumerção (CA_D3D11_CRIACAO_DISPOSITIVO_FLAGS) que contém o modo de criaçã do dispositivo.</param>
-	virtual CarenResult GetCreationFlags([Out] Enumeracoes::CA_D3D11_CRIACAO_DISPOSITIVO_FLAGS% Param_Out_Flags);
+	/// <param name="Param_Out_Flags">Recebe um flags de bit a bits da enumerção (CA_D3D11_CREATE_DEVICE_FLAG) que contém o modo de criaçã do dispositivo.</param>
+	virtual CarenResult GetCreationFlags([Out] Enumeracoes::CA_D3D11_CREATE_DEVICE_FLAG% Param_Out_Flags);
 
 	/// <summary>
 	/// (GetDeviceRemovedReason) - A razão por que o dispositivo foi removido. Esse método retorna um (ResultCode) informando o motivo.
@@ -923,7 +666,7 @@ public:
 	/// (GetFeatureLevel) - Obtém o nível de funcionalidade de dispositivo de hardware.
 	/// </summary>
 	/// <param name="Param_Out_NivelRecurso">Recebe um flag de bits a bits de um ou mais sinlizadores de niveis de recuso do dispositivo de hardware.</param>
-	virtual CarenResult GetFeatureLevel([Out] Enumeracoes::CA_D3D_NIVEL_RECURSO% Param_Out_NivelRecurso);
+	virtual CarenResult GetFeatureLevel([Out] Enumeracoes::CA_D3D_FEATURE_LEVEL% Param_Out_NivelRecurso);
 
 	/// <summary>
 	/// (GetImmediateContext) - Obtém um contexto imediato, que pode reproduzir listas de comando.
@@ -949,7 +692,7 @@ public:
 	/// </summary>
 	/// <param name="Param_Handle">Um identificador de recurso.</param>
 	/// <param name="Param_GuidInterface">O identificador globalmente exclusivo (GUID) para a interface do recurso.</param>
-	/// <param name="Param_Out_InterfaceSolicitada">Recebe a interface do recurso que foi ganhado acesso. O usuário deve criar a interface antes de chamar este método.</param>
+	/// <param name="Param_Out_InterfaceSolicitada">Recebe a interface do recurso que foi ganhado acesso. O usuário deve inicializar a interface antes de chamar este método.</param>
 	virtual CarenResult OpenSharedResource(
 					IntPtr Param_Handle, 
 					String^ Param_GuidInterface, 

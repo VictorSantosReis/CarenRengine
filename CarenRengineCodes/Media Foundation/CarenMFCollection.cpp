@@ -91,7 +91,7 @@ CarenResult CarenMFCollection::ConsultarInterface(String^ Param_Guid, ICaren^ Pa
 		const char* DadosConvertidos = NULL;
 
 		//Verifica se a string é valida.
-		if (Param_Guid != nullptr && !String::IsNullOrEmpty(Param_Guid))
+		if (!String::IsNullOrEmpty(Param_Guid))
 		{
 			//Obtém a largura da String.
 			LarguraString = Param_Guid->Length + 1;
@@ -498,7 +498,7 @@ Done:;
 /// (GetElement) - Recupera um objeto na coleção.
 /// </summary>
 /// <param name="Param_IndexElemento">O index do elemento a ser obtido.</param>
-/// <param name="Param_Out_Elemento">Retorna um ponteiro para o elemento especificado. O usuário deve criar a interface antes de chamar este método.</param>
+/// <param name="Param_Out_Elemento">Retorna um ponteiro para o elemento especificado. O usuário deve inicializar a interface antes de chamar este método.</param>
 CarenResult CarenMFCollection::GetElement(UInt32 Param_IndexElemento, ICaren^ Param_Out_Elemento)
 {
 	//Variavel a ser retornada.

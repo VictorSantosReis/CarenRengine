@@ -19,7 +19,7 @@ limitations under the License.
 #include "../SDK_Caren.h"
 #include "../SDK_Utilidades.h"
 #include "../FunctionClass/GlobalFuncs.h"
-#include "../Nativas/CLN_IMFQualityManager.h"
+#include "../NativeClassForEvents/CLN_IMFQualityManager.h"
 #include "CarenMFSample.h"
 #include "CarenMFTopology.h"
 #include "CarenMFTopologyNode.h"

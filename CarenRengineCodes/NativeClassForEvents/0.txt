@@ -1,0 +1,3 @@
+Esta pasta contém interfaces nativas que são implementadas para serem utilizadas por suas respectivas gerenciadas.
+Servem para receber eventos de código nativo. Esses eventos são vinculados na interface gerenciada e transmitidos
+para o usuário em código gerenciado.

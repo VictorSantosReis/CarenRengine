@@ -19,13 +19,10 @@ limitations under the License.
 #include "../SDK_MediaFoundation.h"
 #include "../Caren/Caren.h"
 #include "../SDK_Utilidades.h"
-#include "../Nativas/CLN_IMFSinkWriterCallback.h"
+#include "../NativeClassForEvents/CLN_IMFSinkWriterCallback.h"
 
 //Importa o namespace que contém as interfaces da Media Foundation.
 using namespace CarenRengine::MediaFoundation;
-
-//Enumeração de retorno de função.
-
 
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;

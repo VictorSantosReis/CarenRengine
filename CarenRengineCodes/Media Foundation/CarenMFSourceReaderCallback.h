@@ -17,7 +17,7 @@ limitations under the License.
 
 #pragma once
 #include "../SDK_MediaFoundation.h"
-#include "../Nativas/CLN_IMFSourceReaderCallback.h"
+#include "../NativeClassForEvents/CLN_IMFSourceReaderCallback.h"
 #include "../Caren/Caren.h"
 #include "CarenMFMediaEvent.h"
 #include "CarenMFSample.h"

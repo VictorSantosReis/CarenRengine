@@ -1,4 +1,4 @@
-ï»¿/*
+/*
 Copyright 2020 Victor Santos Reis
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,5 +15,21 @@ limitations under the License.
 */
 
 
+#pragma once
 #include "../pch.h"
-#include "CastInterface.h"
+#include "../NativeClassForEvents/CLN_IMFMediaEngineNotify.h"
+
+HRESULT __stdcall CLN_IMFMediaEngineNotify::EventNotify(DWORD evento, DWORD_PTR param1, DWORD param2)
+{
+	//Variavel que vai retornar o resultado.
+	HRESULT Resultado = E_FAIL;
+
+	//Verifica se o evento é valido e chama
+	if (ObjetoValido(Evento_OnEventNotify))
+		Resultado = Evento_OnEventNotify(evento, param1, param2);
+	else
+		Resultado = E_NOTIMPL;
+
+	//Retorna o resultado.
+	return Resultado;
+}

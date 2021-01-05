@@ -145,11 +145,26 @@
     <Filter Include="Arquivos de Origem\Classes Nativas\WIC">
       <UniqueIdentifier>{0bbe8735-4632-4f26-9f00-12f3e4e47806}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Arquivos de Origem\Classes\Sistema">
+    <Filter Include="Arquivos de Cabeçalho\Sistema">
       <UniqueIdentifier>{2c6b857a-547c-49a4-be8c-e84aa8a69575}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Arquivos de Cabeçalho\ParameterResolver">
-      <UniqueIdentifier>{83ed951f-ecf4-4342-b970-b0e2148c5f39}</UniqueIdentifier>
+    <Filter Include="Arquivos de Cabeçalho\Classes\Direct2D Matrixs">
+      <UniqueIdentifier>{b3e1e31c-1d2b-4e5c-8e66-256ca8122979}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Classes\Direct2D Matrixs">
+      <UniqueIdentifier>{2c0915d8-dce3-4c6c-b048-b4598805d047}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Classes\Extend Interfaces">
+      <UniqueIdentifier>{ee1fbbc0-c4d8-4e90-929c-ad3297be35d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Classes\Extend Interfaces">
+      <UniqueIdentifier>{b92ac5c0-ff45-4e0d-b088-902c1bba4514}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Classes\Extend Interfaces\Media Foundation">
+      <UniqueIdentifier>{2689c4be-ac60-445f-b96d-bd257174d547}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Classes\Extend Interfaces\Media Foundation">
+      <UniqueIdentifier>{a5663704-a64a-491b-865b-755b4a900d7a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -646,13 +661,10 @@
       <Filter>Arquivos de Cabeçalho\Classes\Caren</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Caren\CarenHMONITOR.h">
-      <Filter>Arquivos de Origem\Classes\Sistema</Filter>
+      <Filter>Arquivos de Cabeçalho\Sistema</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Caren\CarenWindowsEvent.h">
       <Filter>Arquivos de Cabeçalho\Classes\Caren</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Caren\CastInterface.h">
-      <Filter>Arquivos de Origem\Classes\Sistema</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Windows\CarenPropertyStore.h">
       <Filter>Arquivos de Cabeçalho\Classes\Windows</Filter>
@@ -699,40 +711,40 @@
     <ClInclude Include="CarenRengineCodes\Core Audio\CarenAudioClock.h">
       <Filter>Arquivos de Cabeçalho\Classes\CoreAudio_WASAPI</Filter>
     </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink.h">
+    <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_ID2D1CommandSink.h">
       <Filter>Arquivos de Cabeçalho\Classes Nativas\Direct2D</Filter>
     </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink1.h">
+    <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_ID2D1CommandSink1.h">
       <Filter>Arquivos de Cabeçalho\Classes Nativas\Direct2D</Filter>
     </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink2.h">
+    <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_ID2D1CommandSink2.h">
       <Filter>Arquivos de Cabeçalho\Classes Nativas\Direct2D</Filter>
     </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink3.h">
+    <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_ID2D1CommandSink3.h">
       <Filter>Arquivos de Cabeçalho\Classes Nativas\Direct2D</Filter>
     </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink4.h">
+    <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_ID2D1CommandSink4.h">
       <Filter>Arquivos de Cabeçalho\Classes Nativas\Direct2D</Filter>
     </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink5.h">
+    <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_ID2D1CommandSink5.h">
       <Filter>Arquivos de Cabeçalho\Classes Nativas\Direct2D</Filter>
     </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IAudioSessionEvents.h">
+    <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IAudioSessionEvents.h">
       <Filter>Arquivos de Cabeçalho\Classes Nativas\CoreAudio</Filter>
     </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFSourceReaderCallback.h">
+    <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFSourceReaderCallback.h">
       <Filter>Arquivos de Cabeçalho\Classes Nativas\Media Foundation</Filter>
     </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFAsyncCallback.h">
+    <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFAsyncCallback.h">
       <Filter>Arquivos de Cabeçalho\Classes Nativas\Media Foundation</Filter>
     </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFClockStateSink.h">
+    <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFClockStateSink.h">
       <Filter>Arquivos de Cabeçalho\Classes Nativas\Media Foundation</Filter>
     </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFSinkWriterCallback.h">
+    <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFSinkWriterCallback.h">
       <Filter>Arquivos de Cabeçalho\Classes Nativas\Media Foundation</Filter>
     </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMMNotificationClient.h">
+    <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IMMNotificationClient.h">
       <Filter>Arquivos de Cabeçalho\Classes Nativas\CoreAudio</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Classes Auxiliares\CarenPD2D1_PROPERTY_FUNCTIONS.h">
@@ -1053,7 +1065,7 @@
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1VertexBuffer.h">
       <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
     </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Nativas\CLN_WicBitmapProgress.h">
+    <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_WicBitmapProgress.h">
       <Filter>Arquivos de Cabeçalho\Classes Nativas\WIC</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Windows\CarenEnumString.h">
@@ -1071,7 +1083,7 @@
     <ClInclude Include="CarenRengineCodes\Windows\CarenStream.h">
       <Filter>Arquivos de Cabeçalho\Classes\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IWICDevelopRawNotificationCallback.h">
+    <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IWICDevelopRawNotificationCallback.h">
       <Filter>Arquivos de Cabeçalho\Classes Nativas\WIC</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\WIC\CarenWICStream.h">
@@ -1227,25 +1239,25 @@
     <ClInclude Include="CarenRengineCodes\WIC\CarenWICProgressiveLevelControl.h">
       <Filter>Arquivos de Cabeçalho\Classes\WIC</Filter>
     </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFSourceOpenMonitor.h">
+    <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFSourceOpenMonitor.h">
       <Filter>Arquivos de Cabeçalho\Classes Nativas\Media Foundation</Filter>
     </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFNetProxyLocatorFactory.h">
+    <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFNetProxyLocatorFactory.h">
       <Filter>Arquivos de Cabeçalho\Classes Nativas\Media Foundation</Filter>
     </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFNetResourceFilter.h">
+    <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFNetResourceFilter.h">
       <Filter>Arquivos de Cabeçalho\Classes Nativas\Media Foundation</Filter>
     </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFMediaKeySessionNotify.h">
+    <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFMediaKeySessionNotify.h">
       <Filter>Arquivos de Cabeçalho\Classes Nativas\Media Foundation</Filter>
     </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFSourceBufferNotify.h">
+    <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFSourceBufferNotify.h">
       <Filter>Arquivos de Cabeçalho\Classes Nativas\Media Foundation</Filter>
     </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFMediaEngineNotify.h">
+    <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFMediaEngineNotify.h">
       <Filter>Arquivos de Cabeçalho\Classes Nativas\Media Foundation</Filter>
     </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFMediaEngineNeedKeyNotify.h">
+    <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFMediaEngineNeedKeyNotify.h">
       <Filter>Arquivos de Cabeçalho\Classes Nativas\Media Foundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFByteStreamHandler.h">
@@ -1428,16 +1440,16 @@
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFQualityAdviseLimits.h">
       <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
     </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFQualityManager.h">
+    <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFQualityManager.h">
       <Filter>Arquivos de Cabeçalho\Classes Nativas\Media Foundation</Filter>
     </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFCaptureEngineOnEventCallback.h">
+    <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFCaptureEngineOnEventCallback.h">
       <Filter>Arquivos de Cabeçalho\Classes Nativas\Media Foundation</Filter>
     </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFCaptureEngineOnSampleCallback.h">
+    <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFCaptureEngineOnSampleCallback.h">
       <Filter>Arquivos de Cabeçalho\Classes Nativas\Media Foundation</Filter>
     </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Nativas\CLN_IMFCaptureEngineOnSampleCallback2.h">
+    <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFCaptureEngineOnSampleCallback2.h">
       <Filter>Arquivos de Cabeçalho\Classes Nativas\Media Foundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Windows\CarenPropertyBag2.h">
@@ -1447,7 +1459,22 @@
       <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\ParameterResolver\CarenParameterResolver.h">
-      <Filter>Arquivos de Cabeçalho\ParameterResolver</Filter>
+      <Filter>Arquivos de Cabeçalho\Sistema</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Direct2D Matrix Class\Direct2D_MatrixClass.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Direct2D Matrixs</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\FunctionClass\WICFunctions.h">
+      <Filter>Arquivos de Cabeçalho\Classes de Funções</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\SDK_MediaFoundationExtend.h">
+      <Filter>Arquivos de Cabeçalho\SDKs</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation Extended\CarenMFMediaTypeExtend.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Extend Interfaces\Media Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation Extended\CarenMFSourceReaderExtend.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Extend Interfaces\Media Foundation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1904,9 +1931,6 @@
     <ClCompile Include="CarenRengineCodes\Caren\CarenWindowsEvent.cpp">
       <Filter>Arquivos de Origem\Classes\Caren</Filter>
     </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Caren\CastInterface.cpp">
-      <Filter>Arquivos de Origem\Sistema</Filter>
-    </ClCompile>
     <ClCompile Include="CarenRengineCodes\Windows\CarenPropertyStore.cpp">
       <Filter>Arquivos de Origem\Classes\Windows</Filter>
     </ClCompile>
@@ -2273,40 +2297,40 @@
     <ClCompile Include="CarenRengineCodes\Direct2D\CarenD2D1VertexBuffer.cpp">
       <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
     </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IAudioSessionEvents.cpp">
+    <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IAudioSessionEvents.cpp">
       <Filter>Arquivos de Origem\Classes Nativas\CoreAudio</Filter>
     </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink.cpp">
+    <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_ID2D1CommandSink.cpp">
       <Filter>Arquivos de Origem\Classes Nativas\Direct2D</Filter>
     </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink1.cpp">
+    <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_ID2D1CommandSink1.cpp">
       <Filter>Arquivos de Origem\Classes Nativas\Direct2D</Filter>
     </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink2.cpp">
+    <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_ID2D1CommandSink2.cpp">
       <Filter>Arquivos de Origem\Classes Nativas\Direct2D</Filter>
     </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink3.cpp">
+    <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_ID2D1CommandSink3.cpp">
       <Filter>Arquivos de Origem\Classes Nativas\Direct2D</Filter>
     </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink4.cpp">
+    <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_ID2D1CommandSink4.cpp">
       <Filter>Arquivos de Origem\Classes Nativas\Direct2D</Filter>
     </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Nativas\CLN_ID2D1CommandSink5.cpp">
+    <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_ID2D1CommandSink5.cpp">
       <Filter>Arquivos de Origem\Classes Nativas\Direct2D</Filter>
     </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFAsyncCallback.cpp">
+    <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFAsyncCallback.cpp">
       <Filter>Arquivos de Origem\Classes Nativas\MediaFoundation</Filter>
     </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFClockStateSink.cpp">
+    <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFClockStateSink.cpp">
       <Filter>Arquivos de Origem\Classes Nativas\MediaFoundation</Filter>
     </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFSinkWriterCallback.cpp">
+    <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFSinkWriterCallback.cpp">
       <Filter>Arquivos de Origem\Classes Nativas\MediaFoundation</Filter>
     </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMMNotificationClient.cpp">
+    <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IMMNotificationClient.cpp">
       <Filter>Arquivos de Origem\Classes Nativas\CoreAudio</Filter>
     </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Nativas\CLN_WicBitmapProgress.cpp">
+    <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_WicBitmapProgress.cpp">
       <Filter>Arquivos de Origem\Classes Nativas\WIC</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Windows\CarenEnumString.cpp">
@@ -2324,7 +2348,7 @@
     <ClCompile Include="CarenRengineCodes\Windows\CarenPersistStream.cpp">
       <Filter>Arquivos de Origem\Classes\Windows</Filter>
     </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IWICDevelopRawNotificationCallback.cpp">
+    <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IWICDevelopRawNotificationCallback.cpp">
       <Filter>Arquivos de Origem\Classes Nativas\WIC</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\WIC\CarenWICStream.cpp">
@@ -2480,28 +2504,28 @@
     <ClCompile Include="CarenRengineCodes\WIC\CarenWICProgressiveLevelControl.cpp">
       <Filter>Arquivos de Origem\Classes\WIC</Filter>
     </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFSourceOpenMonitor.cpp">
+    <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFSourceOpenMonitor.cpp">
       <Filter>Arquivos de Origem\Classes Nativas\MediaFoundation</Filter>
     </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFNetProxyLocatorFactory.cpp">
+    <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFNetProxyLocatorFactory.cpp">
       <Filter>Arquivos de Origem\Classes Nativas\MediaFoundation</Filter>
     </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFNetResourceFilter.cpp">
+    <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFNetResourceFilter.cpp">
       <Filter>Arquivos de Origem\Classes Nativas\MediaFoundation</Filter>
     </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFMediaKeySessionNotify.cpp">
+    <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFMediaKeySessionNotify.cpp">
       <Filter>Arquivos de Origem\Classes Nativas\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\CppResources\pch.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFSourceBufferNotify.cpp">
+    <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFSourceBufferNotify.cpp">
       <Filter>Arquivos de Origem\Classes Nativas\MediaFoundation</Filter>
     </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFMediaEngineNotify.cpp">
+    <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFMediaEngineNotify.cpp">
       <Filter>Arquivos de Origem\Classes Nativas\MediaFoundation</Filter>
     </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFMediaEngineNeedKeyNotify.cpp">
+    <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFMediaEngineNeedKeyNotify.cpp">
       <Filter>Arquivos de Origem\Classes Nativas\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFTranscodeSinkInfoProvider.cpp">
@@ -2684,16 +2708,16 @@
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFQualityAdviseLimits.cpp">
       <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
     </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFQualityManager.cpp">
+    <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFQualityManager.cpp">
       <Filter>Arquivos de Origem\Classes Nativas\MediaFoundation</Filter>
     </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFCaptureEngineOnEventCallback.cpp">
+    <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFCaptureEngineOnEventCallback.cpp">
       <Filter>Arquivos de Origem\Classes Nativas\MediaFoundation</Filter>
     </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFCaptureEngineOnSampleCallback.cpp">
+    <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFCaptureEngineOnSampleCallback.cpp">
       <Filter>Arquivos de Origem\Classes Nativas\MediaFoundation</Filter>
     </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Nativas\CLN_IMFCaptureEngineOnSampleCallback2.cpp">
+    <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFCaptureEngineOnSampleCallback2.cpp">
       <Filter>Arquivos de Origem\Classes Nativas\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Windows\CarenPropertyBag2.cpp">
@@ -2701,6 +2725,18 @@
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFSinkWriterCallback.cpp">
       <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Direct2D Matrix Class\Direct2D_MatrixClass.cpp">
+      <Filter>Arquivos de Origem\Classes\Direct2D Matrixs</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\FunctionClass\WICFunctions.cpp">
+      <Filter>Arquivos de Origem\Classes de Funções</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation Extended\CarenMFMediaTypeExtend.cpp">
+      <Filter>Arquivos de Origem\Classes\Extend Interfaces\Media Foundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation Extended\CarenMFSourceReaderExtend.cpp">
+      <Filter>Arquivos de Origem\Classes\Extend Interfaces\Media Foundation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

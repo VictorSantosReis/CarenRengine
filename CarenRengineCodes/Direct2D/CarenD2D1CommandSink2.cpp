@@ -24,10 +24,18 @@ CarenD2D1CommandSink2::~CarenD2D1CommandSink2()
 	Prop_DisposedClasse = true;
 }
 //Construtor.
-CarenD2D1CommandSink2::CarenD2D1CommandSink2()
+CarenD2D1CommandSink2::CarenD2D1CommandSink2(Boolean Param_CriarInterface)
 {
-	//Cria a interface que gerencia o evento.
-	PonteiroTrabalho = new CLN_ID2D1CommandSink2();
+	//Verifica se deve ou não criar uma interface.
+	if (Param_CriarInterface)
+	{
+		//Cria a implementação da interface
+		PonteiroTrabalho = new CLN_ID2D1CommandSink2();
+	}
+	else
+	{
+		//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+	}
 }
 
 
@@ -64,7 +72,7 @@ CarenResult CarenD2D1CommandSink2::ConsultarInterface(String^ Param_Guid, ICaren
 		const char* DadosConvertidos = NULL;
 
 		//Verifica se a string é valida.
-		if (Param_Guid != nullptr && !String::IsNullOrEmpty(Param_Guid))
+		if (!String::IsNullOrEmpty(Param_Guid))
 		{
 			//Obtém a largura da String.
 			LarguraString = Param_Guid->Length + 1;

@@ -46,12 +46,13 @@ public ref class CarenD2D1SvgStrokeDashArray : public ICarenD2D1SvgStrokeDashArr
 	ID2D1SvgStrokeDashArray* PonteiroTrabalho = NULL;
 
 
-	//Contrutores e destuidor da classe.
+	//Construtor e destuidor da classe.
 public:
-	CarenD2D1SvgStrokeDashArray();
 	/// <summary>
 	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
 	/// </summary>
+	CarenD2D1SvgStrokeDashArray();
+
 	~CarenD2D1SvgStrokeDashArray();
 
 	//Variaveis Internas.

@@ -18,11 +18,42 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenDXGIFactory2.h"
 
+
 //Destruidor.
 CarenDXGIFactory2::~CarenDXGIFactory2()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
+}
+//Construtores
+CarenDXGIFactory2::CarenDXGIFactory2()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
+CarenDXGIFactory2::CarenDXGIFactory2(UInt32 Param_Flags)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Resultados de Caren.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IDXGIFactory2* vi_pOutFactory= Nulo;
+
+	//Chama o método para criar a interface.
+	Hr = CreateDXGIFactory2(Param_Flags,__uuidof(IDXGIFactory2), reinterpret_cast<void**>(&vi_pOutFactory));
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutFactory;
 }
 
 //
@@ -59,7 +90,7 @@ CarenResult CarenDXGIFactory2::ConsultarInterface(String^ Param_Guid, ICaren^ Pa
 		const char* DadosConvertidos = NULL;
 
 		//Verifica se a string é valida.
-		if (Param_Guid != nullptr && !String::IsNullOrEmpty(Param_Guid))
+		if (!String::IsNullOrEmpty(Param_Guid))
 		{
 			//Obtém a largura da String.
 			LarguraString = Param_Guid->Length + 1;

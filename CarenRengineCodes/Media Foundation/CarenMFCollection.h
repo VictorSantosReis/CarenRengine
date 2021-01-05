@@ -181,7 +181,7 @@ public:
 	/// Recupera um objeto na coleção. Este método não remove o objeto da coleção.
 	/// </summary>
 	/// <param name="Param_IndexElemento">O index do elemento a ser obtido.</param>
-	/// <param name="Param_Out_Elemento">Retorna um ponteiro para o elemento especificado. O usuário deve criar a interface antes de chamar este método.</param>
+	/// <param name="Param_Out_Elemento">Retorna um ponteiro para o elemento especificado. O usuário deve inicializar a interface antes de chamar este método.</param>
 	virtual CarenResult GetElement(UInt32 Param_IndexElemento, ICaren^ Param_Out_Elemento);
 
 	/// <summary>
@@ -207,7 +207,7 @@ public:
 	/// </summary>
 	/// <param name="Param_Indice">O (Indice) para o elemento que será removido da coleção.</param>
 	/// <param name="Param_Out_Elemento">Recebe um ponteiro para o elemento removido da lista. O chamado que deve liberar
-	/// a referência para o ponteiro. Esse parametro pode retornar NULO. O usuário deve criar a interface antes de chamar este método.</param>
+	/// a referência para o ponteiro. Esse parametro pode retornar NULO. O usuário deve inicializar a interface antes de chamar este método.</param>
 	virtual CarenResult RemoveElement(UInt32 Param_Indice, ICaren^ Param_Out_Elemento);
 };
 

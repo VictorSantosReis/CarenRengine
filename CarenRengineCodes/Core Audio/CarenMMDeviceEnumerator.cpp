@@ -18,16 +18,56 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenMMDeviceEnumerator.h"
 
+
 //Destruidor.
 CarenMMDeviceEnumerator::~CarenMMDeviceEnumerator()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtores
+CarenMMDeviceEnumerator::CarenMMDeviceEnumerator()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
+CarenMMDeviceEnumerator::CarenMMDeviceEnumerator(CA_CLSCTX Param_Context)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
 
-//
+	//Resultados de Caren.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IMMDeviceEnumerator* vi_pOutDeviceEnumerator = Nulo;
+	const CLSID vi_ClsidDeviceEnumerator = __uuidof(MMDeviceEnumerator);
+	const GUID vi_RiidEnumerator = __uuidof(IMMDeviceEnumerator);
+
+	//Chama o método para criar a interface.
+	Hr = CoCreateInstance(
+		vi_ClsidDeviceEnumerator,
+		Nulo,
+		static_cast<DWORD>(Param_Context),
+		vi_RiidEnumerator,
+		reinterpret_cast<void**>(&vi_pOutDeviceEnumerator)
+	);
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutDeviceEnumerator;
+}
+
+
+
 // Métodos da interface ICaren
-//
+
 
 /// <summary>
 /// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 
@@ -59,7 +99,7 @@ CarenResult CarenMMDeviceEnumerator::ConsultarInterface(String^ Param_Guid, ICar
 		const char* DadosConvertidos = NULL;
 
 		//Verifica se a string é valida.
-		if (Param_Guid != nullptr && !String::IsNullOrEmpty(Param_Guid))
+		if (!String::IsNullOrEmpty(Param_Guid))
 		{
 			//Obtém a largura da String.
 			LarguraString = Param_Guid->Length + 1;

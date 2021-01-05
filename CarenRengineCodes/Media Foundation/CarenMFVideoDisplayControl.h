@@ -24,9 +24,6 @@ limitations under the License.
 //Importa o namespace que contém as interfaces da Media Foundation.
 using namespace CarenRengine::MediaFoundation;
 
-//Enumeração de retorno de função.
-
-
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
@@ -177,8 +174,8 @@ public:
 	/// <summary>
 	/// (GetAspectRatioMode) - Consulta como o processador de vídeo avançado (EVR) lida com a relação de aspecto da fonte de vídeo.
 	/// </summary>
-	/// <param name="Param_Out_AspectRatio">Recebe um ou mais bit de sinalizadores da enumeração: CA_VIDEO_DISPLAY_ASPECT_RATIO_MODE</param>
-	virtual CarenResult GetAspectRatioMode([Out] Enumeracoes::CA_VIDEO_DISPLAY_ASPECT_RATIO_MODE% Param_Out_AspectRatio);
+	/// <param name="Param_Out_AspectRatio">Recebe um ou mais bit de sinalizadores da enumeração: CA_MFVideoAspectRatioMode</param>
+	virtual CarenResult GetAspectRatioMode([Out] Enumeracoes::CA_MFVideoAspectRatioMode% Param_Out_AspectRatio);
 
 	/// <summary>
 	/// (GetBorderColor) - Obtém a cor da borda para o vídeo.
@@ -257,8 +254,8 @@ public:
 	/// (SetAspectRatioMode) - Especifica como o processador de vídeo avançado (EVR) lida com a relação de aspecto 
 	/// da fonte de vídeo.
 	/// </summary>
-	/// <param name="Param_AspectRatio">Bit a bit ou de um ou mais sinalizadores da enumeração: CA_VIDEO_DISPLAY_ASPECT_RATIO_MODE</param>
-	virtual CarenResult SetAspectRatioMode(Enumeracoes::CA_VIDEO_DISPLAY_ASPECT_RATIO_MODE Param_AspectRatio);
+	/// <param name="Param_AspectRatio">Bit a bit ou de um ou mais sinalizadores da enumeração: CA_MFVideoAspectRatioMode</param>
+	virtual CarenResult SetAspectRatioMode(Enumeracoes::CA_MFVideoAspectRatioMode Param_AspectRatio);
 
 	/// <summary>
 	/// (SetBorderColor) - Define a cor da borda para o vídeo.

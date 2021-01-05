@@ -18,14 +18,11 @@ limitations under the License.
 #pragma once
 #include "../SDK_CoreAudio.h"
 #include "../Caren/Caren.h"
-#include "../Nativas/CLN_IAudioSessionEvents.h"
+#include "../NativeClassForEvents/CLN_IAudioSessionEvents.h"
 #include "../SDK_Utilidades.h"
 
 //Importa o namespace que contém as interfaces da WSAPI.
 using namespace CarenRengine::CoreAudio;
-
-//Enumeração de retorno de função.
-
 
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
@@ -50,6 +47,13 @@ public ref class CarenAudioSessionEvents : public ICarenAudioSessionEvents
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a interface e permite que o usuário decida se a biblioteca deve criar a interface ou vai iniciar sem um ponteiro 
+	/// de trabalho. Se (Param_CriarInterface) for TRUE, o construtor vai criar uma implementação da interface ().
+	/// </summary>
+	/// <param name="Param_CriarInterface">Um valor booleano, TRUE indica que deve criar uma nova interface intermanete, caso contario, FALSE.</param>
+	CarenAudioSessionEvents(Boolean Param_CriarInterface);
+
 	~CarenAudioSessionEvents();
 
 
@@ -212,58 +216,6 @@ private:
 	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnStateChanged).
 	/// </summary>
 	GCHandle gHandle_Delegate_OnStateChanged;
-
-
-
-	//Cria uma instância dessa classe (Estático)
-public:
-	/// <summary>
-	/// Método responsável por criar uma instância vazia da classe. Chamadas para os métodos sem um ponteiro de trabalho definido
-	/// pode gerar comportamentos indefinidos.
-	/// </summary>
-	/// <param name="Param_Out_CarenAudioEventosSessao">Recebe um ponteiro para a interface (Vazia).</param>
-	static CarenResult CriarInstanciaVazia([Out] ICarenAudioSessionEvents^% Param_Out_CarenAudioEventosSessao)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Cria a interface
-		Param_Out_CarenAudioEventosSessao = gcnew CarenAudioSessionEvents();
-
-		//Define sucesso
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-		//Retorna o resultado
-		return Resultado;
-	}
-
-	/// <summary>
-	/// Método responsável por criar uma instância da classe atual que implementa a interface (ICarenAudioSessionEvents).
-	/// </summary>
-	/// <param name="Param_Out_CarenAudioEventosSessao">Recebe um ponteiro para a interface que gera eventos da sessão de áudio.</param>
-	static CarenResult CriarInstancia([Out] ICarenAudioSessionEvents^% Param_Out_CarenAudioEventosSessao)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Variaveis
-		IAudioSessionEvents* pPonteiroTrabalho = NULL;
-
-		//Cria a interface nativa
-		pPonteiroTrabalho = new CLN_IAudioSessionEvents();
-
-		//Cria a interface gerenciada que vai receber o ponteiro.
-		Param_Out_CarenAudioEventosSessao = gcnew CarenAudioSessionEvents();
-
-		//Define o ponteiro de trabalho a interface gerenciada.
-		Param_Out_CarenAudioEventosSessao->AdicionarPonteiro(pPonteiroTrabalho);
-		
-		//Define sucesso
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-		//Retorna o resultado
-		return Resultado;
-	}
 
 
 	///////////////////////////////////////////////////////

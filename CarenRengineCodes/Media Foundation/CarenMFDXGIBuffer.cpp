@@ -65,7 +65,7 @@ CarenResult CarenMFDXGIBuffer::ConsultarInterface(String^ Param_Guid, ICaren^ Pa
 		const char* DadosConvertidos = NULL;
 
 		//Verifica se a string é valida.
-		if (Param_Guid != nullptr && !String::IsNullOrEmpty(Param_Guid))
+		if (!String::IsNullOrEmpty(Param_Guid))
 		{
 			//Obtém a largura da String.
 			LarguraString = Param_Guid->Length + 1;
@@ -455,7 +455,7 @@ CarenResult CarenMFDXGIBuffer::GetResource(String^ Param_Guid, ICaren^ Param_Out
 		Sair;
 	}
 
-	//Define o ponteiro de trabalho
+	//Define o ponteiro da interface no parametro de siada.
 	CarenSetPointerToICarenSafe(vi_pOutResource, Param_Out_InterfaceRecurso, true);
 
 Done:;
@@ -509,8 +509,8 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidInterface">O identificador do ponteiro IUnknown.</param>
 /// <param name="Param_IID">O identificador de interface (IID) da interface requisitada.</param>
-/// <param name="Param_Ref_InterfaceRequisitada">Recebe um ponteiro para o objeto anteriormente definido. O chamador é responsável por criar e liberar a interface.param>
-CarenResult CarenMFDXGIBuffer::GetUnknown(String^ Param_GuidInterface, String^ Param_IID, ICaren^ Param_Ref_InterfaceRequisitada)
+/// <param name="Param_Out_InterfaceRequisitada">Recebe um ponteiro para o objeto anteriormente definido. O chamador é responsável por inicializar a interface antes de chamar este método.</param>
+CarenResult CarenMFDXGIBuffer::GetUnknown(String^ Param_GuidInterface, String^ Param_IID, ICaren^ Param_Out_InterfaceRequisitada)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -522,14 +522,14 @@ CarenResult CarenMFDXGIBuffer::GetUnknown(String^ Param_GuidInterface, String^ P
 	Utilidades Util;
 	GUID GuidInterface = GUID_NULL;
 	GUID RidInterfaceRequisitada = GUID_NULL;
-	LPVOID pInterfaceRequested = NULL;
+	LPVOID vi_pOutInterface = NULL;
 
 	//Obtém os dados dos guids
 	GuidInterface = Util.CreateGuidFromString(Param_GuidInterface);
 	RidInterfaceRequisitada = Util.CreateGuidFromString(Param_IID);
 
 	//Chama o método para realizar a operação
-	Hr = PonteiroTrabalho->GetUnknown(GuidInterface, RidInterfaceRequisitada, &pInterfaceRequested);
+	Hr = PonteiroTrabalho->GetUnknown(GuidInterface, RidInterfaceRequisitada, &vi_pOutInterface);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -546,13 +546,11 @@ CarenResult CarenMFDXGIBuffer::GetUnknown(String^ Param_GuidInterface, String^ P
 		Sair;
 	}
 
-	//Define o ponteiro de trabalho.
-	Param_Ref_InterfaceRequisitada->AdicionarPonteiro(pInterfaceRequested);
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	//Define o ponteiro da interface no parametro de saida.
+	CarenSetPointerToICarenSafe(reinterpret_cast<IUnknown*>(vi_pOutInterface), Param_Out_InterfaceRequisitada, true);
 
 Done:;
+
 	//Retorna o resultado
 	return Resultado;
 }
@@ -573,25 +571,16 @@ CarenResult CarenMFDXGIBuffer::SetUnknown(String^ Param_GuidInterface, ICaren^ P
 	//Variaveis utilizadas no método.
 	Utilidades Util;
 	GUID GuidInterface = GUID_NULL;
-	LPVOID pInterface = NULL;
+	IUnknown* vi_pOutInterface = NULL;
 
 	//Obtém o Guid.
 	GuidInterface = Util.CreateGuidFromString(Param_GuidInterface);
 
 	//Obtém o ponteiro para a interface nativa.
-	Resultado = Param_Interface->RecuperarPonteiro(&pInterface);
-
-	//Verifica se não houve erro
-	if(Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou
-
-		//Sai do método
-		goto Done;
-	}
+	CarenGetPointerFromICarenSafe(Param_Interface, vi_pOutInterface);
 
 	//Chama o método para realizar a função
-	Hr = PonteiroTrabalho->SetUnknown(GuidInterface, (IUnknown*)pInterface);
+	Hr = PonteiroTrabalho->SetUnknown(GuidInterface, vi_pOutInterface);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);

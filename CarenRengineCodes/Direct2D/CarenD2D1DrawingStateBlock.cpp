@@ -23,6 +23,11 @@ CarenD2D1DrawingStateBlock::~CarenD2D1DrawingStateBlock()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor.
+CarenD2D1DrawingStateBlock::CarenD2D1DrawingStateBlock()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 
 // Métodos da interface ICaren
@@ -58,7 +63,7 @@ CarenResult CarenD2D1DrawingStateBlock::ConsultarInterface(String^ Param_Guid, I
 		const char* DadosConvertidos = NULL;
 
 		//Verifica se a string é valida.
-		if (Param_Guid != nullptr && !String::IsNullOrEmpty(Param_Guid))
+		if (!String::IsNullOrEmpty(Param_Guid))
 		{
 			//Obtém a largura da String.
 			LarguraString = Param_Guid->Length + 1;

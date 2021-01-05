@@ -25,6 +25,11 @@ CarenD3D11ShaderResourceView::~CarenD3D11ShaderResourceView()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor.
+CarenD3D11ShaderResourceView::CarenD3D11ShaderResourceView()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
 //
 // Métodos da interface ICaren
@@ -60,7 +65,7 @@ CarenResult CarenD3D11ShaderResourceView::ConsultarInterface(String^ Param_Guid,
 		const char* DadosConvertidos = NULL;
 
 		//Verifica se a string é valida.
-		if (Param_Guid != nullptr && !String::IsNullOrEmpty(Param_Guid))
+		if (!String::IsNullOrEmpty(Param_Guid))
 		{
 			//Obtém a largura da String.
 			LarguraString = Param_Guid->Length + 1;

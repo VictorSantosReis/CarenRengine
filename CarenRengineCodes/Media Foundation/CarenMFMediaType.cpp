@@ -193,7 +193,7 @@ CarenResult CarenMFMediaType::ConsultarInterface(String^ Param_Guid, ICaren^ Par
 		const char* DadosConvertidos = NULL;
 
 		//Verifica se a string é valida.
-		if (Param_Guid != nullptr && !String::IsNullOrEmpty(Param_Guid))
+		if (!String::IsNullOrEmpty(Param_Guid))
 		{
 			//Obtém a largura da String.
 			LarguraString = Param_Guid->Length + 1;
@@ -714,7 +714,7 @@ Done:;
 
 
 //
-//Métodos da interface ICarenMidiaAtribute
+//Métodos da interface ICarenMFAttributes
 //
 
 /// <summary>
@@ -1864,7 +1864,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (Desconhecido) obtido.</param>
 /// <param name="Param_GuidInterfaceSolicitada">O GUID para a interface a ser obtida da chave. Este GUID é um (IID).</param>
-/// <param name="Param_Out_InterfaceDesconhecida">Recebe a interface com o ponteiro par ao objeto desconhecido. O usuário deve criar a interface antes de chamar este método.</param>
+/// <param name="Param_Out_InterfaceDesconhecida">Recebe a interface com o ponteiro par ao objeto desconhecido. O usuário deve inicializar a interface antes de chamar este método.</param>
 CarenResult CarenMFMediaType::GetUnknown(String^ Param_GuidChave, String^ Param_GuidInterfaceSolicitada, ICaren^ Param_Out_InterfaceDesconhecida)
 {
 	//Variavel a ser retornada.
@@ -2524,118 +2524,5 @@ CarenResult CarenMFMediaType::UnlockStore()
 
 Done:;
 	//Retorna o resultado.
-	return Resultado;
-}
-
-
-
-
-//
-// Métodos da interface ICarenMidiaExtensões
-//
-
-
-/// <summary>
-/// (Extensão) - Método responsável por obter o tipo principal da mídia. 
-/// </summary>
-/// <param name="Param_Out_TipoPrincipal">Recebe o tipo principal da mídia(Áudio ou Vídeo).</param>
-/// <param name="Param_Out_Guid">Recebe o Guid do formato principal.</param>
-CarenResult CarenMFMediaType::ObterTipoPrincipalMidia([Out] Enumeracoes::CA_MAJOR_MEDIA_TYPES% Param_Out_TipoPrincipal, [Out] String^% Param_Out_Guid)
-{
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis utilizadas no método
-	ResultadoCOM  Hr = E_FAIL;
-	GUID GuidTipoPrincipal = GUID_NULL;
-	Utilidades Util;
-
-	//Obtém o guid o formato principal da mídia.
-	Hr = PonteiroTrabalho->GetGUID(MF_MT_MAJOR_TYPE, &GuidTipoPrincipal);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-	//Verifica o tipo principal da midia
-	if (GuidTipoPrincipal == MFMediaType_Audio)
-	{
-		//O tipo principal da mídia é Áudio.
-		Param_Out_TipoPrincipal = CA_MAJOR_MEDIA_TYPES::TP_Audio;
-		//Define o Guid
-		Param_Out_Guid = Util.ConverterGuidToString(MFMediaType_Audio);
-	}
-	else if (GuidTipoPrincipal == MFMediaType_Video)
-	{
-		//O tipo principal da mídia é Vídeo.
-		Param_Out_TipoPrincipal = CA_MAJOR_MEDIA_TYPES::TP_Video;
-		//Define o Guid
-		Param_Out_Guid = Util.ConverterGuidToString(MFMediaType_Video);
-	}
-	else
-	{
-		//Tipo desconhecido.
-		Param_Out_TipoPrincipal = CA_MAJOR_MEDIA_TYPES::TP_Desconhecido;
-	}
-
-Done:;
-	//Retorna o resultado
-	return Resultado;
-}
-
-
-/// <summary>
-/// (Extensão) - Método responsável por retornar o formato do tipo principal da mídia. 
-/// </summary>
-/// <param name="Param_Out_FormatoMidia">Recebe o subtipo(Formato) da mídia principal.</param>
-/// <param name="Param_Out_GuidFormato">Recebe o Guid do subtipo(Formato).</param>
-CarenResult CarenMFMediaType::ObterFormatoMidia([Out] CA_MEDIA_SUBTYPES% Param_Out_FormatoMidia, [Out] String^% Param_Out_GuidFormato)
-{
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis utilizadas no método
-	ResultadoCOM  Hr = E_FAIL;
-	GUID GuidFormatoMidia = GUID_NULL;
-	Utilidades Util;
-
-	//Obtém o guid para o Subtipo da midia
-	//O subtipo é o formato da mídia principal.
-	Hr = PonteiroTrabalho->GetGUID(MF_MT_SUBTYPE, &GuidFormatoMidia);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-		//Obtém o formato de midia.
-	Param_Out_FormatoMidia = Util.ConverterGUIDSubtipoMidia_ToMidia_SubTipo(GuidFormatoMidia);
-
-	//Converte o GUID do formato para String
-	Param_Out_GuidFormato = Util.ConverterGuidToString(GuidFormatoMidia);
-
-Done:;
-	//Retorna o valor
 	return Resultado;
 }

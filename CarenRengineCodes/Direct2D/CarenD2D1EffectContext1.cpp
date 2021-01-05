@@ -62,7 +62,7 @@ CarenResult CarenD2D1EffectContext1::ConsultarInterface(String^ Param_Guid, ICar
 		const char* DadosConvertidos = NULL;
 
 		//Verifica se a string é valida.
-		if (Param_Guid != nullptr && !String::IsNullOrEmpty(Param_Guid))
+		if (!String::IsNullOrEmpty(Param_Guid))
 		{
 			//Obtém a largura da String.
 			LarguraString = Param_Guid->Length + 1;
@@ -1352,9 +1352,9 @@ void CarenD2D1EffectContext1::GetDpi(
 /// <param name="Param_QuantidadeNiveis">A contagem de níveis de recursos fornecidos pelo aplicativo</param>
 /// <param name="Param_Out_NivelRecursoMaximo">O nível máximo de recurso da lista (Param_NiveisRecurso), que é suportado pelo dispositivo D2D.</param>
 CarenResult CarenD2D1EffectContext1::GetMaximumSupportedFeatureLevel(
-	cli::array<CA_D3D_NIVEL_RECURSO>^ Param_NiveisRecurso,
+	cli::array<CA_D3D_FEATURE_LEVEL>^ Param_NiveisRecurso,
 	UInt32 Param_QuantidadeNiveis,
-	[Out] CA_D3D_NIVEL_RECURSO% Param_Out_NivelRecursoMaximo)
+	[Out] CA_D3D_FEATURE_LEVEL% Param_Out_NivelRecursoMaximo)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -1389,7 +1389,7 @@ CarenResult CarenD2D1EffectContext1::GetMaximumSupportedFeatureLevel(
 	}
 
 	//Define o nivel de recurso mais alto no parametro de saida.
-	Param_Out_NivelRecursoMaximo = static_cast<CA_D3D_NIVEL_RECURSO>(OutNivelRecurso);
+	Param_Out_NivelRecursoMaximo = static_cast<CA_D3D_FEATURE_LEVEL>(OutNivelRecurso);
 
 Done:;
 	//Libera a memória para a matriz

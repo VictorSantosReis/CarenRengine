@@ -19,7 +19,7 @@ limitations under the License.
 #include "../SDK_Caren.h"
 #include "../SDK_Utilidades.h"
 #include "../FunctionClass/GlobalFuncs.h"
-#include "../Nativas/CLN_IMFNetResourceFilter.h"
+#include "../NativeClassForEvents/CLN_IMFNetResourceFilter.h"
 
 //Importa o namespace que contém as interfaces da API primária.
 using namespace CarenRengine::MediaFoundation;

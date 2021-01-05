@@ -16,7 +16,7 @@ limitations under the License.
 
 
 #include "../pch.h"
-#include "../Nativas/CLN_IMFAsyncCallback.h"
+#include "../NativeClassForEvents/CLN_IMFAsyncCallback.h"
 
 //
 // Métodos da Interface IMFAsyncCallback

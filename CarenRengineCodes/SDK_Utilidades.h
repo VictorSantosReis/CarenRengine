@@ -1198,7 +1198,6 @@ namespace CarenRengine
 				return EstruturaRetorno;
 			}
 
-
 			//Converte um ponteiro gerenciado para um ponteiro nativo.
 			LPVOID ConverterPonteiroGerenciadorParaNativo(IntPtr Param_Ponteiro)
 			{
@@ -1454,7 +1453,6 @@ namespace CarenRengine
 				return pWaveFormatoEx;
 			}
 
-
 			//Converte a estrutura não gerenciada(BITMAPINFOHEADER) para sua correspondencia gerenciada(CA_BITMAPINFOHEADER).
 			CA_BITMAPINFOHEADER^ ConverterBITMAPINFOHEADERUnmanaged_ToManaged(BITMAPINFOHEADER* Param_Estrutura)
 			{
@@ -1500,7 +1498,6 @@ namespace CarenRengine
 				//Retorna a estrutura não gerenciada
 				return EstruturaRetorno;
 			}
-
 
 			//Converte uma enumeração nativa (_MF_ATTRIBUTE_TYPE) para sua correspondência gerenciada(CA_MF_ATTRIBUTE_TYPE).
 			SDKBase::Enumeracoes::CA_MF_ATTRIBUTE_TYPE ConverterMF_ATTRIBUTE_TYPEUnmanagedToManaged(_MF_ATTRIBUTE_TYPE Param_TipoAtributo)
@@ -2129,7 +2126,6 @@ namespace CarenRengine
 				return FormatoTipoPrincipal;
 			}
 
-
 			//Converte a estrutura não gerenciada(PROPBAG2) para sua correspondencia gerenciada(CA_PROPBAG2).
 			CA_PROPBAG2^ ConverterPROPBAG2UnmanagedToManaged(PROPBAG2* Param_Estrutura)
 			{
@@ -2165,8 +2161,6 @@ namespace CarenRengine
 				//Retorna a estrutura não gerenciada
 				return EstruturaRetorno;
 			}
-
-
 
 			//Converte a estrutura não gerenciada(SECURITY_ATTRIBUTES) para sua correspondencia gerenciada(CA_ATRIBUTOS_SEGURANCA).
 			CA_ATRIBUTOS_SEGURANCA^ ConverterSECURITY_ATTRIBUTESUnmanagedToManaged(SECURITY_ATTRIBUTES* Param_AttrSeguranca)
@@ -3060,8 +3054,8 @@ namespace CarenRengine
 				//Retorna o resultado
 				return EstruturaRetorno;
 			}
-		
-				
+
+			
 			//Converte uma estrutura gerenciada(CA_D2D1_RECT_U) para sua correspondencia não gerenciada(D2D1_RECT_U).
 			D2D1_RECT_U* ConverterD2D1_RECT_UManagedToUnmanaged(CA_D2D1_RECT_U^ Param_Estrutura)
 			{
@@ -4838,7 +4832,6 @@ namespace CarenRengine
 			}
 
 
-
 			//Converte uma estrutura gerenciada(CA_D2D1_BLEND_DESCRIPTION) para sua correspondencia não gerenciada(D2D1_BLEND_DESCRIPTION).
 			D2D1_BLEND_DESCRIPTION* ConverterD2D1_BLEND_DESCRIPTIONManagedToUnmanaged(CA_D2D1_BLEND_DESCRIPTION^ Param_Estrutura)
 			{
@@ -5012,7 +5005,6 @@ namespace CarenRengine
 			}
 
 
-
 			//Converte uma estrutura gerenciada(CA_D2D1_VERTEX_RANGE) para sua correspondencia não gerenciada(D2D1_VERTEX_RANGE).
 			D2D1_VERTEX_RANGE* ConverterD2D1_VERTEX_RANGEManagedToUnmanaged(CA_D2D1_VERTEX_RANGE^ Param_Estrutura)
 			{
@@ -5042,7 +5034,6 @@ namespace CarenRengine
 				//Retorna o resultado
 				return EstruturaRetorno;
 			}
-
 
 
 			//Converte uma estrutura gerenciada(CA_D2D1_RESOURCE_TEXTURE_PROPERTIES) para sua correspondencia não gerenciada(D2D1_RESOURCE_TEXTURE_PROPERTIES).
@@ -5092,7 +5083,6 @@ namespace CarenRengine
 			}
 
 
-
 			//Converte uma estrutura gerenciada(CA_D2D1_INPUT_ELEMENT_DESC) para sua correspondencia não gerenciada(D2D1_INPUT_ELEMENT_DESC).
 			D2D1_INPUT_ELEMENT_DESC* ConverterD2D1_INPUT_ELEMENT_DESCManagedToUnmanaged(CA_D2D1_INPUT_ELEMENT_DESC^ Param_Estrutura)
 			{
@@ -5128,7 +5118,6 @@ namespace CarenRengine
 				//Retorna o resultado
 				return EstruturaRetorno;
 			}
-
 
 
 			//Converte uma estrutura gerenciada(CA_D2D1_VERTEX_BUFFER_PROPERTIES) para sua correspondencia não gerenciada(D2D1_VERTEX_BUFFER_PROPERTIES).
@@ -5175,7 +5164,6 @@ namespace CarenRengine
 				//Retorna o resultado
 				return EstruturaRetorno;
 			}
-
 
 
 			//Converte uma estrutura gerenciada(CA_D2D1_CUSTOM_VERTEX_BUFFER_PROPERTIES) para sua correspondencia não gerenciada(D2D1_CUSTOM_VERTEX_BUFFER_PROPERTIES).
@@ -5243,7 +5231,6 @@ namespace CarenRengine
 			}
 
 
-
 			//Converte uma estrutura gerenciada(CA_D2D1_SVG_LENGTH) para sua correspondencia não gerenciada(D2D1_SVG_LENGTH).
 			D2D1_SVG_LENGTH* ConverterD2D1_SVG_LENGTHManagedToUnmanaged(CA_D2D1_SVG_LENGTH^ Param_Estrutura)
 			{
@@ -5273,7 +5260,6 @@ namespace CarenRengine
 				//Retorna o resultado
 				return EstruturaRetorno;
 			}
-
 
 
 			//Converte uma estrutura gerenciada(CA_D2D1_SVG_PRESERVE_ASPECT_RATIO) para sua correspondencia não gerenciada(D2D1_SVG_PRESERVE_ASPECT_RATIO).
@@ -5307,7 +5293,6 @@ namespace CarenRengine
 				//Retorna o resultado
 				return EstruturaRetorno;
 			}
-
 
 
 			//Converte uma estrutura gerenciada(CA_D2D1_GRADIENT_STOP) para sua correspondencia não gerenciada(D2D1_GRADIENT_STOP).
@@ -5348,7 +5333,6 @@ namespace CarenRengine
 				//Retorna o resultado
 				return EstruturaRetorno;
 			}
-
 
 
 			//Converte uma estrutura gerenciada(CA_D2D1_IMAGE_BRUSH_PROPERTIES) para sua correspondencia não gerenciada(D2D1_IMAGE_BRUSH_PROPERTIES).
@@ -5393,7 +5377,6 @@ namespace CarenRengine
 				//Retorna o resultado
 				return EstruturaRetorno;
 			}
-
 
 
 			//Converte uma estrutura gerenciada(CA_D2D1_EFFECT_INPUT_DESCRIPTION) para sua correspondencia não gerenciada(D2D1_EFFECT_INPUT_DESCRIPTION).
@@ -5445,7 +5428,6 @@ namespace CarenRengine
 			}
 
 
-
 			//Converte uma estrutura gerenciada(CA_D2D1_RENDERING_CONTROLS) para sua correspondencia não gerenciada(D2D1_RENDERING_CONTROLS).
 			D2D1_RENDERING_CONTROLS* ConverterD2D1_RENDERING_CONTROLSManagedToUnmanaged(CA_D2D1_RENDERING_CONTROLS^ Param_Estrutura)
 			{
@@ -5486,8 +5468,6 @@ namespace CarenRengine
 			}
 
 
-
-
 			//Converte uma estrutura gerenciada(CA_D2D1_PRINT_CONTROL_PROPERTIES) para sua correspondencia não gerenciada(D2D1_PRINT_CONTROL_PROPERTIES).
 			D2D1_PRINT_CONTROL_PROPERTIES* ConverterD2D1_PRINT_CONTROL_PROPERTIESManagedToUnmanaged(CA_D2D1_PRINT_CONTROL_PROPERTIES^ Param_Estrutura)
 			{
@@ -5519,8 +5499,6 @@ namespace CarenRengine
 				//Retorna o resultado
 				return EstruturaRetorno;
 			}
-
-
 
 
 			//Converte uma estrutura gerenciada(CA_D2D1_STROKE_STYLE_PROPERTIES) para sua correspondencia não gerenciada(D2D1_STROKE_STYLE_PROPERTIES).
@@ -5562,8 +5540,6 @@ namespace CarenRengine
 				//Retorna o resultado
 				return EstruturaRetorno;
 			}
-
-
 
 
 			//Converte uma estrutura gerenciada(CA_D2D1_STROKE_STYLE_PROPERTIES1) para sua correspondencia não gerenciada(D2D1_STROKE_STYLE_PROPERTIES1).
@@ -5609,8 +5585,6 @@ namespace CarenRengine
 			}
 
 
-
-
 			//Converte uma estrutura gerenciada(CA_D2D1_PROPERTY_BINDING) para sua correspondencia não gerenciada(D2D1_PROPERTY_BINDING).
 			D2D1_PROPERTY_BINDING* ConverterD2D1_PROPERTY_BINDINGManagedToUnmanaged(CA_D2D1_PROPERTY_BINDING^ Param_Estrutura, PD2D1_PROPERTY_SET_FUNCTION Param_SetFunc, PD2D1_PROPERTY_GET_FUNCTION Param_GetFunc)
 			{
@@ -5643,6 +5617,66 @@ namespace CarenRengine
 			}
 
 
+			//Converte uma estrutura gerenciada(CA_D2D1_CREATION_PROPERTIES) para sua correspondencia não gerenciada(D2D1_CREATION_PROPERTIES).
+			D2D1_CREATION_PROPERTIES* ConverterD2D1_CREATION_PROPERTIESManagedToUnmanaged(CA_D2D1_CREATION_PROPERTIES^ Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				D2D1_CREATION_PROPERTIES* EstruturaRetorno = CriarEstrutura<D2D1_CREATION_PROPERTIES>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(D2D1_CREATION_PROPERTIES));
+
+				//Define os dados.
+				EstruturaRetorno->debugLevel = static_cast<D2D1_DEBUG_LEVEL>(Param_Estrutura->debugLevel);
+				EstruturaRetorno->options = static_cast<D2D1_DEVICE_CONTEXT_OPTIONS>(Param_Estrutura->options);
+				EstruturaRetorno->threadingMode = static_cast<D2D1_THREADING_MODE>(Param_Estrutura->threadingMode);
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+			//Converte uma estrutura não gerenciada(D2D1_CREATION_PROPERTIES) para sua correspondencia gerenciada(CA_D2D1_CREATION_PROPERTIES).
+			CA_D2D1_CREATION_PROPERTIES^ ConverterD2D1_CREATION_PROPERTIESUnmanagedToManaged(D2D1_CREATION_PROPERTIES* Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				CA_D2D1_CREATION_PROPERTIES^ EstruturaRetorno = gcnew CA_D2D1_CREATION_PROPERTIES();
+
+				//Define os dados.
+				EstruturaRetorno->debugLevel = static_cast<CA_D2D1_DEBUG_LEVEL>(Param_Estrutura->debugLevel);
+				EstruturaRetorno->options = static_cast<CA_D2D1_DEVICE_CONTEXT_OPTIONS>(Param_Estrutura->options);
+				EstruturaRetorno->threadingMode = static_cast<CA_D2D1_THREADING_MODE>(Param_Estrutura->threadingMode);
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+
+
+			//Converte uma estrutura gerenciada(CA_D2D1_FACTORY_OPTIONS) para sua correspondencia não gerenciada(D2D1_FACTORY_OPTIONS).
+			D2D1_FACTORY_OPTIONS* ConverterD2D1_FACTORY_OPTIONSManagedToUnmanaged(CA_D2D1_FACTORY_OPTIONS^ Param_Estrutura)
+			{
+				//Estrutura a ser retornada.
+				D2D1_FACTORY_OPTIONS* EstruturaRetorno = CriarEstrutura<D2D1_FACTORY_OPTIONS>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(D2D1_FACTORY_OPTIONS));
+
+				//Define os dados.
+				EstruturaRetorno->debugLevel = static_cast<D2D1_DEBUG_LEVEL>(Param_Estrutura->debugLevel);
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
+			//Converte uma estrutura não gerenciada(D2D1_FACTORY_OPTIONS) para sua correspondencia gerenciada(CA_D2D1_FACTORY_OPTIONS).
+			CA_D2D1_FACTORY_OPTIONS^ ConverterD2D1_FACTORY_OPTIONSUnmanagedToManaged(D2D1_FACTORY_OPTIONS* Param_Estrutura, Object^ Param_PropertyFuncs)
+			{
+				//Estrutura a ser retornada.
+				CA_D2D1_FACTORY_OPTIONS^ EstruturaRetorno = gcnew CA_D2D1_FACTORY_OPTIONS();
+
+				//Define os dados.
+				EstruturaRetorno->debugLevel = static_cast<CA_D2D1_DEBUG_LEVEL>(Param_Estrutura->debugLevel);
+
+				//Retorna o resultado
+				return EstruturaRetorno;
+			}
 
 
 

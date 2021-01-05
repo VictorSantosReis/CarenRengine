@@ -25,7 +25,7 @@ limitations under the License.
 #include "CarenD2D1Image.h"
 #include "CarenD2D1Mesh.h"
 #include "CarenD2D1Layer.h"
-#include "../Nativas/CLN_ID2D1CommandSink1.h"
+#include "../NativeClassForEvents/CLN_ID2D1CommandSink1.h"
 
 //Importa o namespace que contém as interfaces da API primária.
 using namespace CarenRengine::Direct2D;
@@ -54,11 +54,15 @@ public ref class CarenD2D1CommandSink1 : public ICarenD2D1CommandSink1
 
 	//Construtor e destruidor da classe.
 public:
-	~CarenD2D1CommandSink1();
 	/// <summary>
-	/// Inicializa a classe com um manipulador de eventos default da CarenRengine.
+	/// Inicializa a interface e permite que o usuário decida se a biblioteca deve criar a interface ou vai iniciar sem um ponteiro 
+	/// de trabalho. Se (Param_CriarInterface) for TRUE, o construtor vai criar uma implementação da interface(ID2D1CommandSink1).
 	/// </summary>
-	CarenD2D1CommandSink1();
+	/// <param name="Param_CriarInterface">Um valor booleano, TRUE indica que deve criar uma nova interface intermanete, caso contario, FALSE.</param>
+	CarenD2D1CommandSink1(Boolean Param_CriarInterface);
+
+	~CarenD2D1CommandSink1();
+
 
 	//Variaveis Internas.
 internal:
@@ -583,30 +587,6 @@ private:
 	/// Contém a Handle alocada para o delegate (DelegateNativo_Evento_OnSetUnitMode).
 	/// </summary>
 	GCHandle gHandle_Delegate_OnSetUnitMode;
-
-
-
-	//Cria uma instância dessa classe (Estático)
-public:
-	/// <summary>
-	/// Método responsável por criar uma instância vazia da classe. Chamadas para os métodos sem um ponteiro de trabalho definido
-	/// pode gerar comportamentos indefinidos.
-	/// </summary>
-	/// <param name="Param_Out_CarenD2D1CommandSink1">Recebe um ponteiro para a interface (Vazia).</param>
-	static CarenResult CriarInstanciaVazia([Out] ICarenD2D1CommandSink1^% Param_Out_CarenD2D1CommandSink1)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
-
-		//Cria a interface
-		Param_Out_CarenD2D1CommandSink1 = gcnew CarenD2D1CommandSink1();
-
-		//Define sucesso
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-		//Retorna o resultado
-		return Resultado;
-	}
 
 
 	///////////////////////////////////////////////////////

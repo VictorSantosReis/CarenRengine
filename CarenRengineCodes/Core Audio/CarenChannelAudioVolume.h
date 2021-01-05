@@ -23,9 +23,6 @@ limitations under the License.
 //Importa o namespace que contém as interfaces da WSAPI.
 using namespace CarenRengine::CoreAudio;
 
-//Enumeração de retorno de função.
-
-
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
@@ -50,6 +47,11 @@ public ref class CarenChannelAudioVolume : public ICarenChannelAudioVolume
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenChannelAudioVolume();
+
 	~CarenChannelAudioVolume();
 
 

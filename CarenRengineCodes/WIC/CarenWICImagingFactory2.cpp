@@ -17,6 +17,7 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenWICImagingFactory2.h"
 
+
 //Destruidor.
 CarenWICImagingFactory2::~CarenWICImagingFactory2()
 {
@@ -27,6 +28,33 @@ CarenWICImagingFactory2::~CarenWICImagingFactory2()
 CarenWICImagingFactory2::CarenWICImagingFactory2()
 {
 	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
+CarenWICImagingFactory2::CarenWICImagingFactory2(CA_CLSCTX Param_Context)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	IWICImagingFactory2* vi_pOutImagingFactory = Nulo;
+
+	//Chama o método para criar a interface.
+	Hr = CoCreateInstance(
+		CLSID_WICImagingFactory2,
+		Nulo,
+		static_cast<DWORD>(Param_Context),
+		IID_IWICImagingFactory2,
+		reinterpret_cast<void**>(&vi_pOutImagingFactory));
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutImagingFactory;
 }
 
 // Métodos da interface ICaren
@@ -62,7 +90,7 @@ CarenResult CarenWICImagingFactory2::ConsultarInterface(String^ Param_Guid, ICar
 		const char* DadosConvertidos = NULL;
 
 		//Verifica se a string é valida.
-		if (Param_Guid != nullptr && !String::IsNullOrEmpty(Param_Guid))
+		if (!String::IsNullOrEmpty(Param_Guid))
 		{
 			//Obtém a largura da String.
 			LarguraString = Param_Guid->Length + 1;

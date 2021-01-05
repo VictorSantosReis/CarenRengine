@@ -24,9 +24,6 @@ limitations under the License.
 //Importa o namespace que contém as interfaces da WSAPI.
 using namespace CarenRengine::CoreAudio;
 
-//Enumeração de retorno de função.
-
-
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
@@ -52,6 +49,11 @@ public ref class CarenAudioRenderClient :public ICarenAudioRenderClient
 
 	//Construtor e destruidor da classe.
 public:
+	/// <summary>
+	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
+	/// </summary>
+	CarenAudioRenderClient();
+
 	~CarenAudioRenderClient();
 
 
@@ -77,30 +79,6 @@ public:
 			//Retorna o valor.
 			return Prop_DisposedClasse;
 		}
-	}
-
-
-
-	//Cria uma instância dessa classe (Estático)
-public:
-	/// <summary>
-	/// Cria uma instância vazia do Renderizador de audio do cliente.
-	/// </summary>
-	/// <param name="Param_Out_Interface">Retorna a interface vazia. Chamadas para está interface vai resultar em exceção
-	/// se nenhum ponteiro for definido.</param>
-	static CarenResult CriarInstanciaVazia([Out] ICarenAudioRenderClient^% Param_Out_Interface)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Cria a interface vazia
-		Param_Out_Interface = gcnew CarenAudioRenderClient();
-
-		//Define sucesso na operção.
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-		//Retorna o resultado.
-		return Resultado;
 	}
 
 

@@ -66,7 +66,7 @@ public ref class CarenD2D1Factory3 : public ICarenD2D1Factory3
 	ID2D1Factory3* PonteiroTrabalho = NULL;
 
 
-	//Contrutores e destuidor da classe.
+	//Construtor e destuidor da classe.
 public:
 	/// <summary>
 	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.

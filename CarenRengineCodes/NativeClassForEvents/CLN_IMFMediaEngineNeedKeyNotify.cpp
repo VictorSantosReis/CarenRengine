@@ -17,19 +17,17 @@ limitations under the License.
 
 #pragma once
 #include "../pch.h"
-#include "../Nativas/CLN_IMFMediaEngineNotify.h"
+#include "../NativeClassForEvents/CLN_IMFMediaEngineNeedKeyNotify.h"
 
-HRESULT __stdcall CLN_IMFMediaEngineNotify::EventNotify(DWORD evento, DWORD_PTR param1, DWORD param2)
+void __stdcall CLN_IMFMediaEngineNeedKeyNotify::NeedKey(const BYTE* initData, DWORD cb)
 {
-	//Variavel que vai retornar o resultado.
-	HRESULT Resultado = E_FAIL;
+	//Entra na sessão critica de código.
+	EnterCriticalSection(&SessaoCritica);
 
 	//Verifica se o evento é valido e chama
-	if (ObjetoValido(Evento_OnEventNotify))
-		Resultado = Evento_OnEventNotify(evento, param1, param2);
-	else
-		Resultado = E_NOTIMPL;
+	if (ObjetoValido(Evento_OnNeedKeys))
+		Evento_OnNeedKeys(initData, cb);
 
-	//Retorna o resultado.
-	return Resultado;
+	//Sai da sessão critica.
+	LeaveCriticalSection(&SessaoCritica);
 }

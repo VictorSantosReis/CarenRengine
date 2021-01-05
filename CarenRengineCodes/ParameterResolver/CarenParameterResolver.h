@@ -34,9 +34,9 @@ namespace CarenRengine
 			//Construtor
 		public:
 			/// <summary>
-			/// Inicializa a estrutura passando informações sobre o resultado de uma operação.
+			/// Inicializa a estrutura passando os dados do parametro.
 			/// </summary>
-			/// <param name="Param_Objeto">O objeto original a ser passado para o método ou </param>
+			/// <param name="Param_Objeto">O objeto original a ser passado para o método.</param>
 			/// <param name="Param_IgnoreParameter">Um valor booleano que define se o parametro será ignorado ou não.</param>
 			CarenParameterResolver(TypeObject Param_Objeto, Boolean Param_IgnoreParameter)
 			{
@@ -67,7 +67,6 @@ namespace CarenRengine
 
 			/// <summary>
 			/// Propriedade que indica se deve igonorar o parametro ou não.
-			/// Este valor é utilizado internamente para decidir se o usuário quer um determinado valor ou não.
 			/// </summary>
 			property Boolean IgnoreParameter
 			{

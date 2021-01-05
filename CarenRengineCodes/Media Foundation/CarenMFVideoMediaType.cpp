@@ -75,7 +75,7 @@ CarenResult CarenMFVideoMediaType::ConsultarInterface(String^ Param_Guid, ICaren
 		const char* DadosConvertidos = NULL;
 
 		//Verifica se a string é valida.
-		if (Param_Guid != nullptr && !String::IsNullOrEmpty(Param_Guid))
+		if (!String::IsNullOrEmpty(Param_Guid))
 		{
 			//Obtém a largura da String.
 			LarguraString = Param_Guid->Length + 1;
@@ -596,7 +596,7 @@ Done:;
 
 
 
-//Métodos da interface ICarenMidiaAtribute
+//Métodos da interface ICarenMFAttributes
 
 
 /// <summary>
@@ -1737,7 +1737,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (Desconhecido) obtido.</param>
 /// <param name="Param_GuidInterfaceSolicitada">O GUID para a interface a ser obtida da chave. Este GUID é um (IID).</param>
-/// <param name="Param_Out_InterfaceDesconhecida">Recebe a interface com o ponteiro par ao objeto desconhecido. O usuário deve criar a interface antes de chamar este método.</param>
+/// <param name="Param_Out_InterfaceDesconhecida">Recebe a interface com o ponteiro par ao objeto desconhecido. O usuário deve inicializar a interface antes de chamar este método.</param>
 CarenResult CarenMFVideoMediaType::GetUnknown(String^ Param_GuidChave, String^ Param_GuidInterfaceSolicitada, ICaren^ Param_Out_InterfaceDesconhecida)
 {
 	//Variavel a ser retornada.

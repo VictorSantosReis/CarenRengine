@@ -65,7 +65,7 @@ CarenResult CarenMFStreamSink::ConsultarInterface(String^ Param_Guid, ICaren^ Pa
 		const char* DadosConvertidos = NULL;
 
 		//Verifica se a string é valida.
-		if (Param_Guid != nullptr && !String::IsNullOrEmpty(Param_Guid))
+		if (!String::IsNullOrEmpty(Param_Guid))
 		{
 			//Obtém a largura da String.
 			LarguraString = Param_Guid->Length + 1;
@@ -610,14 +610,14 @@ Done:;
 
 /// <summary>
 /// Coloca um marcador no fluxo.
-/// O método placemarker coloca um marcador no fluxo entre amostras. O CA_MIDIA_STREAM_SINK_MARCADORES enumeração define o 
+/// O método placemarker coloca um marcador no fluxo entre amostras. O CA_MFSTREAMSINK_MARKER_TYPE enumeração define o 
 /// tipo de marcador e o tipo de informações associadas com o marcador.
 /// </summary>
-/// <param name="Param_Marcador">Especifica o tipo de marcador, como um membro da enumeração: CA_MIDIA_STREAM_SINK_MARCADORES</param>
+/// <param name="Param_Marcador">Especifica o tipo de marcador, como um membro da enumeração: CA_MFSTREAMSINK_MARKER_TYPE</param>
 /// <param name="Param_ValorAdicional">Um valor que contém informações adicionais relacionadas ao marcador. Esse parâmetro pode ser (NULO).</param>
 /// <param name="Param_DadosAnexoEvento">Valor que é anexado junto ao evento(MEStreamSinkMarker). Chame o método (GetValue) na interface 
 /// de evento para obter esse valor. Esse parâmetro pode ser (NULO).</param>
-CarenResult CarenMFStreamSink::PlaceMarker(Enumeracoes::CA_MIDIA_STREAM_SINK_MARCADORES Param_Marcador, Estruturas::CA_PropVariant^ Param_ValorAdicional, Estruturas::CA_PropVariant^ Param_DadosAnexoEvento)
+CarenResult CarenMFStreamSink::PlaceMarker(Enumeracoes::CA_MFSTREAMSINK_MARKER_TYPE Param_Marcador, Estruturas::CA_PropVariant^ Param_ValorAdicional, Estruturas::CA_PropVariant^ Param_DadosAnexoEvento)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -635,22 +635,22 @@ CarenResult CarenMFStreamSink::PlaceMarker(Enumeracoes::CA_MIDIA_STREAM_SINK_MAR
 	//Verifica se define na variavel o marcador definido pelo usuario
 	switch (Param_Marcador)
 	{
-	case CarenRengine::SDKBase::Enumeracoes::CA_MIDIA_STREAM_SINK_MARCADORES::MARCADOR_DEFAULT:
+	case CarenRengine::SDKBase::Enumeracoes::CA_MFSTREAMSINK_MARKER_TYPE::MFSTREAMSINK_MARKER_DEFAULT:
 		//Define o marcador.
 		Marcador = MFSTREAMSINK_MARKER_DEFAULT;
 		break;
 
-	case CarenRengine::SDKBase::Enumeracoes::CA_MIDIA_STREAM_SINK_MARCADORES::MARCADOR_FIM_SEGMENTO:
+	case CarenRengine::SDKBase::Enumeracoes::CA_MFSTREAMSINK_MARKER_TYPE::MFSTREAMSINK_MARKER_ENDOFSEGMENT:
 		//Define o marcador.
 		Marcador = MFSTREAMSINK_MARKER_ENDOFSEGMENT;
 		break;
 
-	case CarenRengine::SDKBase::Enumeracoes::CA_MIDIA_STREAM_SINK_MARCADORES::MARCADOR_LACUNA_FLUXO:
+	case CarenRengine::SDKBase::Enumeracoes::CA_MFSTREAMSINK_MARKER_TYPE::MFSTREAMSINK_MARKER_TICK:
 		//Define o marcador.
 		Marcador = MFSTREAMSINK_MARKER_TICK;
 		break;
 
-	case CarenRengine::SDKBase::Enumeracoes::CA_MIDIA_STREAM_SINK_MARCADORES::MARCADOR_EVENTO:
+	case CarenRengine::SDKBase::Enumeracoes::CA_MFSTREAMSINK_MARKER_TYPE::MFSTREAMSINK_MARKER_EVENT:
 		//Define o marcador.
 		Marcador = MFSTREAMSINK_MARKER_EVENT;
 		break;
@@ -793,7 +793,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Flags">Especifica como deve obter o evento.</param>
 /// <param name="Param_Out_MidiaEvent">Recebe a interface que contém as informações da operação assincrona para o evento notificado. O chamador deve liberar a interface.</param>
-CarenResult CarenMFStreamSink::GetEvent(CA_FLAGS_OBTER_EVENTO Param_Flags, [Out] ICarenMFMediaEvent^% Param_Out_MidiaEvent)
+CarenResult CarenMFStreamSink::GetEvent(CA_MF_GET_FLAGS_EVENT Param_Flags, [Out] ICarenMFMediaEvent^% Param_Out_MidiaEvent)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

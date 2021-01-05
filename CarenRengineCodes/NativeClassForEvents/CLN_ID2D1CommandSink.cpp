@@ -17,7 +17,7 @@ limitations under the License.
 
 #pragma once
 #include "../pch.h"
-#include "../Nativas/CLN_ID2D1CommandSink.h"
+#include "../NativeClassForEvents/CLN_ID2D1CommandSink.h"
 
 METODODELC CLN_ID2D1CommandSink::BeginDraw()
 {

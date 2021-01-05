@@ -18,16 +18,22 @@ limitations under the License.
 #include "../pch.h"
 #include "CarenAudioSessionManager.h"
 
+
 //Destruidor.
 CarenAudioSessionManager::~CarenAudioSessionManager()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+//Construtor
+CarenAudioSessionManager::CarenAudioSessionManager()
+{
+	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
 
-//
+
 // Métodos da interface ICaren
-//
+
 
 /// <summary>
 /// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 
@@ -59,7 +65,7 @@ CarenResult CarenAudioSessionManager::ConsultarInterface(String^ Param_Guid, ICa
 		const char* DadosConvertidos = NULL;
 
 		//Verifica se a string é valida.
-		if (Param_Guid != nullptr && !String::IsNullOrEmpty(Param_Guid))
+		if (!String::IsNullOrEmpty(Param_Guid))
 		{
 			//Obtém a largura da String.
 			LarguraString = Param_Guid->Length + 1;

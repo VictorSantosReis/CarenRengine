@@ -175,10 +175,61 @@ public:
 	virtual void LiberarReferencia();
 
 	/// <summary>
-	/// Método responsável por limpar os dados do objeto COM e códigos de erros gerados pelos métodos da classe.
-	/// Este método não libera a referência do objeto COM atual, vai apenas anular o ponteiro.
+	/// Método responsável por converter a interface atual em outra interface que impelemente ICaren.
+	/// Retorna NULO se o ponteiro nativo atual for invalido ou a classe que implementa a interface de destino não poder ser criada.
 	/// </summary>
-	virtual void LimparDados();
+	/// <typeparam name="TypeClass">A classe concreta que implementa a interface definida em (TypeInterface).</typeparam>
+	/// <typeparam name="TypeInterface">A interface que será retornada ao chamador.</typeparam>
+	/// <param name="Param_Args">Uma lista de objetos para a inicialização do construtor da classe concreta de destino. Se não houver, deixe este parametro como NULO.</param>
+	generic <typename TypeClass, typename TypeInterface>
+	virtual TypeInterface As(cli::array<Object^>^ Param_Args)
+	{
+		//Variavel que vai ser retornada.
+		TypeInterface CastedInterface;
+
+		//Variaveis a serem utilizadas.
+		Type^ vi_TypeClassDest = nullptr; //Contém o tipo croncreto da interface para criar uma instância.
+		Object^ vi_NewInstance = nullptr; //Vai conter a nova instância concreta da interface de destino.
+
+		//Verifica se o ponteiro de trabalho da instância atual é valido, se não, não vai converter.
+		if (!ObjetoValido(PonteiroTrabalho))
+			Sair; //O ponteiro na interface atual não é valido.
+
+		//Obtém o tipo da classe concreta da interface de destino.
+		vi_TypeClassDest = TypeClass::typeid;
+
+		//Abre um try para tentar criar uma instância do tipo solicitiado.
+		try
+		{
+			//Tenta criar uma instância da classe de destino.
+			vi_NewInstance = Activator::CreateInstance(vi_TypeClassDest, Param_Args);
+
+			//Verifica se não é nula
+			if (!ObjetoGerenciadoValido(vi_NewInstance))
+				Sair; //O objeto não foi criado com sucesso.
+		}
+		catch (const std::exception&)
+		{
+			//Manda uma mensagem para o console.
+			System::Console::WriteLine(String::Concat(ICarenD3D11Texture2D::typeid->Name, " - O método (As<>) falhou ao tentar criar uma instância para o tipo de destino solicitado => ", TypeInterface::typeid->Name));
+
+			//Sai do método
+			Sair;
+		}
+
+		//Tenta converter a nova instância da classe para sua interface representante.
+		CastedInterface = reinterpret_cast<TypeInterface>(vi_NewInstance);
+
+		//Define o ponteiro nativo na interface de saida.
+		reinterpret_cast<ICaren^>(CastedInterface)->AdicionarPonteiro(PonteiroTrabalho);
+
+	Done:;
+		//Limpa.
+		vi_TypeClassDest = nullptr;
+
+		//Retorna o resultado.
+		return CastedInterface;
+	}
 
 	/// <summary>
 	/// Método responsável por chamar o finalizador da interface para realizar a limpeza e descarte de dados pendentes.

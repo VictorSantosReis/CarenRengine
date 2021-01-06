@@ -244,7 +244,7 @@
     <ClInclude Include="CarenRengineCodes\Core Audio\CarenAudioSessionManager.h" />
     <ClInclude Include="CarenRengineCodes\Core Audio\CarenAudioClock.h" />
     <ClInclude Include="CarenRengineCodes\Core Audio\CarenAudioRenderClient.h" />
-    <ClInclude Include="CarenRengineCodes\Core Audio\CarenAudioSimplesVolume.h" />
+    <ClInclude Include="CarenRengineCodes\Core Audio\CarenSimpleAudioVolume.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFByteStream.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFAudioStreamVolume.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFByteStreamBuffering.h" />
@@ -450,7 +450,7 @@
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFSinkWriter.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFSinkWriterCallback.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaStream.h" />
-    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaStreamSink.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFStreamSink.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaType.h" />
     <ClInclude Include="CarenRengineCodes\Core Audio\CarenMMDeviceCollection.h" />
     <ClInclude Include="CarenRengineCodes\Core Audio\CarenMMDevice.h" />
@@ -684,7 +684,7 @@
     <ClCompile Include="CarenRengineCodes\Core Audio\CarenAudioSessionManager.cpp" />
     <ClCompile Include="CarenRengineCodes\Core Audio\CarenAudioClock.cpp" />
     <ClCompile Include="CarenRengineCodes\Core Audio\CarenAudioRenderClient.cpp" />
-    <ClCompile Include="CarenRengineCodes\Core Audio\CarenAudioSimplesVolume.cpp" />
+    <ClCompile Include="CarenRengineCodes\Core Audio\CarenSimpleAudioVolume.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFByteStream.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFAudioStreamVolume.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFByteStreamBuffering.cpp" />
@@ -869,7 +869,7 @@
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFSinkWriter.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFSinkWriterCallback.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaStream.cpp" />
-    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaStreamSink.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFStreamSink.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaType.cpp" />
     <ClCompile Include="CarenRengineCodes\Core Audio\CarenMMDeviceCollection.cpp" />
     <ClCompile Include="CarenRengineCodes\Core Audio\CarenMMDevice.cpp" />

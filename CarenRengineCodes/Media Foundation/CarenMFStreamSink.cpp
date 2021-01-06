@@ -16,7 +16,7 @@ limitations under the License.
 
 
 #include "../pch.h"
-#include "CarenMFMediaStreamSink.h"
+#include "CarenMFStreamSink.h"
 
 
 //Destruidor.
@@ -31,9 +31,9 @@ CarenMFStreamSink::CarenMFStreamSink()
 	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
-//
+
 // Métodos da interface ICaren
-//
+
 
 /// <summary>
 /// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 
@@ -376,22 +376,6 @@ void CarenMFStreamSink::LiberarReferencia()
 	}
 }
 
-/// <summary>
-/// Método responsável por limpar os dados do objeto COM e códigos de erros gerados pelos métodos da classe.
-/// Este método não libera a referência do objeto COM atual, vai apenas anular o ponteiro.
-/// </summary>
-void CarenMFStreamSink::LimparDados()
-{
-	//Verifica se o ponteiro é um objeto valido e limpa.
-	if (ObjetoValido(PonteiroTrabalho))
-	{
-		//NULA o ponteiro.
-		PonteiroTrabalho = NULL;
-	}
-
-	//Zera o código de erro
-	Var_Glob_LAST_HRESULT = 0;
-}
 
 /// <summary>
 /// Método responsável por chamar o finalizador da interface para realizar a limpeza e descarte de dados pendentes.

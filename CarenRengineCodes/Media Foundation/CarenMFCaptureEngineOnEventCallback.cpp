@@ -373,22 +373,6 @@ void CarenMFCaptureEngineOnEventCallback::LiberarReferencia()
 	}
 }
 
-/// <summary>
-/// Método responsável por limpar os dados do objeto COM e códigos de erros gerados pelos métodos da classe.
-/// Este método não libera a referência do objeto COM atual, vai apenas anular o ponteiro.
-/// </summary>
-void CarenMFCaptureEngineOnEventCallback::LimparDados()
-{
-	//Verifica se o ponteiro é um objeto valido e limpa.
-	if (ObjetoValido(PonteiroTrabalho))
-	{
-		//NULA o ponteiro.
-		PonteiroTrabalho = NULL;
-	}
-
-	//Zera o código de erro
-	Var_Glob_LAST_HRESULT = 0;
-}
 
 /// <summary>
 /// Método responsável por chamar o finalizador da interface para realizar a limpeza e descarte de dados pendentes.

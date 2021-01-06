@@ -489,9 +489,6 @@
     <ClInclude Include="CarenRengineCodes\DXGI\CarenDXGISwapChain4.h">
       <Filter>Arquivos de Cabeçalho\Classes\DXGI</Filter>
     </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Core Audio\CarenAudioSimplesVolume.h">
-      <Filter>Arquivos de Cabeçalho\Classes\CoreAudio_WASAPI</Filter>
-    </ClInclude>
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFActivate.h">
       <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
     </ClInclude>
@@ -559,9 +556,6 @@
       <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaStream.h">
-      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaStreamSink.h">
       <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaType.h">
@@ -1476,6 +1470,12 @@
     <ClInclude Include="CarenRengineCodes\Media Foundation Extended\CarenMFSourceReaderExtend.h">
       <Filter>Arquivos de Cabeçalho\Classes\Extend Interfaces\Media Foundation</Filter>
     </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFStreamSink.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Core Audio\CarenSimpleAudioVolume.h">
+      <Filter>Arquivos de Cabeçalho\Classes\CoreAudio_WASAPI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D10Multithread.cpp">
@@ -1754,9 +1754,6 @@
     <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGISwapChain4.cpp">
       <Filter>Arquivos de Origem\Classes\DXGI</Filter>
     </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Core Audio\CarenAudioSimplesVolume.cpp">
-      <Filter>Arquivos de Origem\Classes\WASAPI</Filter>
-    </ClCompile>
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFActivate.cpp">
       <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
     </ClCompile>
@@ -1824,9 +1821,6 @@
       <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaStream.cpp">
-      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaStreamSink.cpp">
       <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaType.cpp">
@@ -2737,6 +2731,12 @@
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Media Foundation Extended\CarenMFSourceReaderExtend.cpp">
       <Filter>Arquivos de Origem\Classes\Extend Interfaces\Media Foundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFStreamSink.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Core Audio\CarenSimpleAudioVolume.cpp">
+      <Filter>Arquivos de Origem\Classes\WASAPI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

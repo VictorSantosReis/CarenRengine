@@ -1,12 +1,9 @@
-/*
+Ôªø/*
 Copyright 2020 Victor Santos Reis
-
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
-
 	http://www.apache.org/licenses/LICENSE-2.0
-
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,14 +16,14 @@ limitations under the License.
 #include "../SDK_Base.h"
 #include "../SDK_Utilidades.h"
 
-//Importa o namespace (BASE) e suas demais dependÍncias
+//Importa o namespace (BASE) e suas demais depend√™ncias
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
 using namespace CarenRengine::SDKBase::Estruturas;
 using namespace CarenRengine::SDKBase::Interfaces;
 
 /// <summary>
-/// Classe respons·vel por conter funÁıes nativas auxiliares da biblioteca da Api do Direct2D.
+/// Classe respons√°vel por conter fun√ß√µes nativas auxiliares da biblioteca da Api do Direct2D.
 /// </summary>
 public ref class Direct2DFunctions
 {
@@ -36,12 +33,12 @@ public:
 	~Direct2DFunctions() {};
 
 
-	//MÈtodos
+	//M√©todos
 public:
 	/// <summary>
-	/// Calcula o fator m·ximo pelo qual uma determinada transformaÁ„o pode esticar qualquer vetor.
+	/// Calcula o fator m√°ximo pelo qual uma determinada transforma√ß√£o pode esticar qualquer vetor.
 	/// </summary>
-	/// <param name="Param_Matrix">A Matrix de transformaÁ„o de entrada.</param>
+	/// <param name="Param_Matrix">A Matrix de transforma√ß√£o de entrada.</param>
 	/// <returns></returns>
 	float _D2D1ComputeMaximumScaleFactor(CA_D2D1_MATRIX_3X2_F^ Param_Matrix);
 
@@ -53,29 +50,29 @@ public:
 	Boolean _D2D1InvertMatrix(CA_D2D1_MATRIX_3X2_F^% Param_Ref_Matrix);
 
 	/// <summary>
-	/// Verifica se a Matrix especificada È invertÌvel.
+	/// Verifica se a Matrix especificada √© invert√≠vel.
 	/// </summary>
 	/// <param name="Param_Matrix">A Matrix para verificar.</param>
 	/// <returns></returns>
 	Boolean _D2D1IsMatrixInvertible(CA_D2D1_MATRIX_3X2_F^ Param_Matrix);
 
 	/// <summary>
-	/// Cria uma transformaÁ„o de rotaÁ„o que gira pelo ‚ngulo especificado sobre o ponto especificado.
+	/// Cria uma transforma√ß√£o de rota√ß√£o que gira pelo √¢ngulo especificado sobre o ponto especificado.
 	/// </summary>
-	/// <param name="Param_Angulo">O ‚ngulo de rotaÁ„o no sentido hor·rio, em graus.</param>
+	/// <param name="Param_Angulo">O √¢ngulo de rota√ß√£o no sentido hor√°rio, em graus.</param>
 	/// <param name="Param_Center">O ponto sobre o qual girar.</param>
-	/// <param name="Param_Out_Matrix">Retorna a Matrix contendo a nova transformaÁ„o de rotaÁ„o.</param>
+	/// <param name="Param_Out_Matrix">Retorna a Matrix contendo a nova transforma√ß√£o de rota√ß√£o.</param>
 	void _D2D1MakeRotateMatrix(
 		float Param_Angulo, CA_D2D1_POINT_2F^ Param_Center, 
 		OutParam CA_D2D1_MATRIX_3X2_F^% Param_Out_Matrix);
 
 	/// <summary>
-	/// Cria uma transformaÁ„o de inclinaÁ„o que tem o ‚ngulo de eixo x especificado, ‚ngulo do eixo y e ponto central.
+	/// Cria uma transforma√ß√£o de inclina√ß√£o que tem o √¢ngulo de eixo x especificado, √¢ngulo do eixo y e ponto central.
 	/// </summary>
-	/// <param name="Param_AnguloX">O ‚ngulo de inclinaÁ„o do eixo x, que È medido em graus anti-hor·rio do eixo y.</param>
-	/// <param name="Param_AnguloY">O ‚ngulo de inclinaÁ„o do eixo y, que È medido em graus anti-hor·rio do eixo x.</param>
-	/// <param name="Param_Center">O ponto central da operaÁ„o de distorÁ„o.</param>
-	/// <param name="Param_Out_Matrix">Retorna a Matrix contendo a nova transformaÁ„o de rotaÁ„o.</param>
+	/// <param name="Param_AnguloX">O √¢ngulo de inclina√ß√£o do eixo x, que √© medido em graus anti-hor√°rio do eixo y.</param>
+	/// <param name="Param_AnguloY">O √¢ngulo de inclina√ß√£o do eixo y, que √© medido em graus anti-hor√°rio do eixo x.</param>
+	/// <param name="Param_Center">O ponto central da opera√ß√£o de distor√ß√£o.</param>
+	/// <param name="Param_Out_Matrix">Retorna a Matrix contendo a nova transforma√ß√£o de rota√ß√£o.</param>
 	void _D2D1MakeSkewMatrix(
 		float Param_AnguloX, 
 		float Param_AnguloY, 
@@ -83,10 +80,10 @@ public:
 		OutParam CA_D2D1_MATRIX_3X2_F^% Param_Out_Matrix);
 
 	/// <summary>
-	/// Converte a cor dada de um espaÁo de cor para outro.
+	/// Converte a cor dada de um espa√ßo de cor para outro.
 	/// </summary>
-	/// <param name="Param_SourceColorSpace">O espaÁo de cores de origem.</param>
-	/// <param name="Param_DestinationColorSpace">O espaÁo de cores do destino.</param>
+	/// <param name="Param_SourceColorSpace">O espa√ßo de cores de origem.</param>
+	/// <param name="Param_DestinationColorSpace">O espa√ßo de cores do destino.</param>
 	/// <param name="Param_Color">A cor de origem.</param>
 	/// <returns></returns>
 	CA_D2D1_COLOR_F^ _D2D1ConvertColorSpace(
@@ -95,20 +92,20 @@ public:
 		CA_D2D1_COLOR_F^ Param_Color);
 
 	/// <summary>
-	/// Retorna o seno e cosseno de um ‚ngulo.
+	/// Retorna o seno e cosseno de um √¢ngulo.
 	/// </summary>
-	/// <param name="Param_Angulo">O ‚ngulo para calcular.</param>
-	/// <param name="Param_Out_Seno">Retorna o seno do ‚ngulo.</param>
-	/// <param name="Param_Out_Cosseno">Retorna o cosseno do ‚ngulo.</param>
+	/// <param name="Param_Angulo">O √¢ngulo para calcular.</param>
+	/// <param name="Param_Out_Seno">Retorna o seno do √¢ngulo.</param>
+	/// <param name="Param_Out_Cosseno">Retorna o cosseno do √¢ngulo.</param>
 	void _D2D1SinCos(
 		float Param_Angulo, 
 		OutParam float% Param_Out_Seno, 
 		OutParam float% Param_Out_Cosseno);
 
 	/// <summary>
-	/// Retorna a tangente de um ‚ngulo.
+	/// Retorna a tangente de um √¢ngulo.
 	/// </summary>
-	/// <param name="Param_Angulo">O ‚ngulo para calcular a tangente.</param>
+	/// <param name="Param_Angulo">O √¢ngulo para calcular a tangente.</param>
 	/// <returns></returns>
 	float _D2D1Tan(float Param_Angulo);
 
@@ -124,4 +121,3 @@ public:
 		float Param_Y,
 		float Param_Z);
 };
-

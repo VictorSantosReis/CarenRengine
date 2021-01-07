@@ -27,7 +27,6 @@ using namespace CarenRengine;
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
 using namespace CarenRengine::SDKBase::Estruturas;
-using namespace CarenRengine::SDKBase::Interfaces;
 using namespace CarenRengine::SDKBase::Constantes;
       
 //Namespace principal do sistema.
@@ -43,6 +42,7 @@ namespace CarenRengine
 		public:
 			Utilidades()
 			{
+
 			}
 
 			~Utilidades()
@@ -586,7 +586,7 @@ namespace CarenRengine
 						throw gcnew NullReferenceException("O membro (BufferDados) em (Var_Blob) na PropVariant deve ser valido e conter dados.");
 
 					//Obtém o ponteiro para os dados.
-					Param_PropVariantManaged->Var_Blob->BufferDados->ObterPonteiroInterno(vi_pBufferBlob);
+					static_cast<ICarenBuffer^>(Param_PropVariantManaged->Var_Blob->BufferDados)->ObterPonteiroInterno(vi_pBufferBlob);
 				
 					//Copia os dados para o buffer da estrutura do blob.
 					std::copy(ConverterIntPtrTo<PBYTE>(vi_pBufferBlob), BlobData.pBlobData + BlobData.cbSize, BlobData.pBlobData);
@@ -635,7 +635,7 @@ namespace CarenRengine
 					Param_PropVariant.vt = VT_UNKNOWN;
 
 					//Obtem o potneiro para a interface desconhecida.
-					EstruturaRetornoCode = Param_PropVariantManaged->Var_ICaren->RecuperarPonteiro((LPVOID*)&pInterfaceDesconhecida);
+					EstruturaRetornoCode = static_cast<ICaren^>(Param_PropVariantManaged->Var_ICaren)->RecuperarPonteiro((LPVOID*)&pInterfaceDesconhecida);
 
 					//Verifica se obteve com sucesso
 					if (EstruturaRetornoCode.StatusCode == ResultCode::SS_OK)
@@ -936,7 +936,7 @@ namespace CarenRengine
 					BlobBuffer->BufferDados = gcnew CarenBuffer();
 
 					//Copia os dados para o buffer
-					BlobBuffer->BufferDados->CriarBuffer(IntPtr(Param_PropVariant.blob.pBlobData), true, BlobBuffer->SizeData, BlobBuffer->SizeData);
+					static_cast<ICarenBuffer^>(BlobBuffer->BufferDados)->CriarBuffer(IntPtr(Param_PropVariant.blob.pBlobData), true, BlobBuffer->SizeData, BlobBuffer->SizeData);
 					break;
 				case VT_STREAM:
 					break;
@@ -2162,12 +2162,12 @@ namespace CarenRengine
 				return EstruturaRetorno;
 			}
 
-			//Converte a estrutura não gerenciada(SECURITY_ATTRIBUTES) para sua correspondencia gerenciada(CA_ATRIBUTOS_SEGURANCA).
-			CA_ATRIBUTOS_SEGURANCA^ ConverterSECURITY_ATTRIBUTESUnmanagedToManaged(SECURITY_ATTRIBUTES* Param_AttrSeguranca)
+			//Converte a estrutura não gerenciada(SECURITY_ATTRIBUTES) para sua correspondencia gerenciada(CA_SECURITY_ATTRIBUTES).
+			CA_SECURITY_ATTRIBUTES^ ConverterSECURITY_ATTRIBUTESUnmanagedToManaged(SECURITY_ATTRIBUTES* Param_AttrSeguranca)
 			{
 				//Cria a estrutura a ser retornada.
-				CA_ATRIBUTOS_SEGURANCA^ EstruturaRetorno = gcnew CA_ATRIBUTOS_SEGURANCA();
-				CA_DESCRITOR_SEGURANCA^ DescritorSegurança = nullptr;
+				CA_SECURITY_ATTRIBUTES^ EstruturaRetorno = gcnew CA_SECURITY_ATTRIBUTES();
+				CA_SECURITY_DESCRIPTOR^ DescritorSegurança = nullptr;
 
 				//Preenche os dados da estrutura principal
 				EstruturaRetorno->bInheritHandle = Param_AttrSeguranca->bInheritHandle;
@@ -2177,7 +2177,7 @@ namespace CarenRengine
 				if (ObjetoValido(Param_AttrSeguranca->lpSecurityDescriptor))
 				{
 					//Cria a estrutura do descritor de segurança
-					DescritorSegurança = gcnew CA_DESCRITOR_SEGURANCA();
+					DescritorSegurança = gcnew CA_SECURITY_DESCRIPTOR();
 
 					//Prenche os dados base
 					DescritorSegurança->Control = ((SECURITY_DESCRIPTOR*)Param_AttrSeguranca->lpSecurityDescriptor)->Control;
@@ -2230,8 +2230,8 @@ namespace CarenRengine
 				return EstruturaRetorno;
 			}
 
-			//Covnerte uma estrutura gerenciada(CA_ATRIBUTOS_SEGURANCA) para sua correspondencia não gerenciada(SECURITY_ATTRIBUTES).
-			SECURITY_ATTRIBUTES* ConverterSECURITY_ATTRIBUTESManagedToUnamaged(CA_ATRIBUTOS_SEGURANCA^ Param_AttrSeguranca)
+			//Covnerte uma estrutura gerenciada(CA_SECURITY_ATTRIBUTES) para sua correspondencia não gerenciada(SECURITY_ATTRIBUTES).
+			SECURITY_ATTRIBUTES* ConverterSECURITY_ATTRIBUTESManagedToUnamaged(CA_SECURITY_ATTRIBUTES^ Param_AttrSeguranca)
 			{
 				//Estrutura que será retornada ao usuário.
 				SECURITY_ATTRIBUTES* pAtributosSeguranca = CriarEstrutura<SECURITY_ATTRIBUTES>();
@@ -2422,7 +2422,7 @@ namespace CarenRengine
 					IMFSample* pAmostra = NULL;
 
 					//Recupera o ponteiro
-					Param_Estrutura->AmostraMidia->RecuperarPonteiro((LPVOID*)&pAmostra);
+					reinterpret_cast<ICaren^>(Param_Estrutura->AmostraMidia)->RecuperarPonteiro((LPVOID*)&pAmostra);
 
 					//Define na estrutura.
 					EstruturaRetorno->pSample = pAmostra;
@@ -2433,7 +2433,7 @@ namespace CarenRengine
 					IMFCollection* pCollection = NULL;
 
 					//Recupera o ponteiro
-					Param_Estrutura->ColecaoEventos->RecuperarPonteiro((LPVOID*)&pCollection);
+					static_cast<ICaren^>(Param_Estrutura->ColecaoEventos)->RecuperarPonteiro((LPVOID*)&pCollection);
 
 					//Define na estrutura.
 					EstruturaRetorno->pEvents = pCollection;
@@ -2552,12 +2552,12 @@ namespace CarenRengine
 				if (ObjetoGerenciadoValido(Param_Estrutura->pVideoMediaType))
 				{
 					//Recupera o ponteiro dos atributos para o video.
-					Param_Estrutura->pVideoMediaType->RecuperarPonteiro((LPVOID*)&EstruturaRetorno->pVideoMediaType);
+					static_cast<ICaren^>(Param_Estrutura->pVideoMediaType)->RecuperarPonteiro((LPVOID*)&EstruturaRetorno->pVideoMediaType);
 				}
 				if (ObjetoGerenciadoValido(Param_Estrutura->pAudioMediaType))
 				{
 					//Recupera o ponteiro dos atributos para o video.
-					Param_Estrutura->pAudioMediaType->RecuperarPonteiro((LPVOID*)&EstruturaRetorno->pAudioMediaType);
+					static_cast<ICaren^>(Param_Estrutura->pAudioMediaType)->RecuperarPonteiro((LPVOID*)&EstruturaRetorno->pAudioMediaType);
 				}
 
 				//Retorna a estrutura.
@@ -2581,7 +2581,7 @@ namespace CarenRengine
 					EstruturaRetorno->pVideoMediaType = gcnew Caren();
 
 					//Define o ponteiro na interface
-					EstruturaRetorno->pVideoMediaType->AdicionarPonteiro(Param_Estrutura->pVideoMediaType);
+					static_cast<ICaren^>(EstruturaRetorno->pVideoMediaType)->AdicionarPonteiro(Param_Estrutura->pVideoMediaType);
 				}
 				if (ObjetoValido(Param_Estrutura->pAudioMediaType))
 				{
@@ -2589,7 +2589,7 @@ namespace CarenRengine
 					EstruturaRetorno->pAudioMediaType = gcnew Caren();
 
 					//Define o ponteiro na interface
-					EstruturaRetorno->pAudioMediaType->AdicionarPonteiro(Param_Estrutura->pAudioMediaType);
+					static_cast<ICaren^>(EstruturaRetorno->pAudioMediaType)->AdicionarPonteiro(Param_Estrutura->pAudioMediaType);
 				}
 
 				//Retorna a estrutura.
@@ -3500,7 +3500,7 @@ namespace CarenRengine
 				if (ObjetoGerenciadoValido(Param_Estrutura->bits))
 				{
 					//Tenta obter o buffer.
-					Resultado = Param_Estrutura->bits->ObterPonteiroInterno(IntptrBuffer);
+					Resultado = static_cast<ICarenBuffer^>(Param_Estrutura->bits)->ObterPonteiroInterno(IntptrBuffer);
 					
 					//Verifica se obteve sucesso
 					if (!CarenSucesso(Resultado))
@@ -3530,7 +3530,7 @@ namespace CarenRengine
 					EstruturaRetorno->bits = gcnew CarenBuffer();
 
 					//Cria o buffer com base no ponteiro.
-					EstruturaRetorno->bits->CriarBuffer(IntPtr(Param_Estrutura->bits), false, 0, 0);
+					static_cast<ICarenBuffer^>(EstruturaRetorno->bits)->CriarBuffer(IntPtr(Param_Estrutura->bits), false, 0, 0);
 				}
 				
 				//Retorna o resultado
@@ -4383,7 +4383,7 @@ namespace CarenRengine
 				if (ObjetoGerenciadoValido(Param_Estrutura->colorContext))
 				{
 					//Recupera o ponteiro para a interface.
-					Param_Estrutura->colorContext->RecuperarPonteiro((LPVOID*)&pColorContext);
+					static_cast<ICaren^>(Param_Estrutura->colorContext)->RecuperarPonteiro((LPVOID*)&pColorContext);
 				}
 
 				//Define os dados.
@@ -4726,8 +4726,8 @@ namespace CarenRengine
 				pMatrix = ConverterD2D1_MATRIX_3X2_FManagedToUnmanaged(Param_Estrutura->maskTransform);
 
 				//Recupera os ponteiros.
-				Param_Estrutura->geometricMask->RecuperarPonteiro((LPVOID*)&pGeometryMask);
-				Param_Estrutura->opacityBrush->RecuperarPonteiro((LPVOID*)&pBrushOpacity);
+				static_cast<ICaren^>(Param_Estrutura->geometricMask)->RecuperarPonteiro((LPVOID*)&pGeometryMask);
+				static_cast<ICaren^>(Param_Estrutura->opacityBrush)->RecuperarPonteiro((LPVOID*)&pBrushOpacity);
 
 				//Define os dados.
 				EstruturaRetorno->contentBounds = *pRectF;
@@ -4761,8 +4761,8 @@ namespace CarenRengine
 				EstruturaRetorno->layerOptions = static_cast<CA_D2D1_LAYER_OPTIONS>(Param_Estrutura->layerOptions);
 
 				//Define os ponteiros nativos.
-				EstruturaRetorno->geometricMask->AdicionarPonteiro(Param_Estrutura->geometricMask);
-				EstruturaRetorno->opacityBrush->AdicionarPonteiro(Param_Estrutura->opacityBrush);
+				static_cast<ICaren^>(EstruturaRetorno->geometricMask)->AdicionarPonteiro(Param_Estrutura->geometricMask);
+				static_cast<ICaren^>(EstruturaRetorno->opacityBrush)->AdicionarPonteiro(Param_Estrutura->opacityBrush);
 
 				//Retorna o resultado
 				return EstruturaRetorno;
@@ -4789,8 +4789,8 @@ namespace CarenRengine
 				pMatrix = ConverterD2D1_MATRIX_3X2_FManagedToUnmanaged(Param_Estrutura->maskTransform);
 
 				//Recupera os ponteiros.
-				Param_Estrutura->geometricMask->RecuperarPonteiro((LPVOID*)&pGeometryMask);
-				Param_Estrutura->opacityBrush->RecuperarPonteiro((LPVOID*)&pBrushOpacity);
+				static_cast<ICaren^>(Param_Estrutura->geometricMask)->RecuperarPonteiro((LPVOID*)&pGeometryMask);
+				static_cast<ICaren^>(Param_Estrutura->opacityBrush)->RecuperarPonteiro((LPVOID*)&pBrushOpacity);
 
 				//Define os dados.
 				EstruturaRetorno->contentBounds = *pRectF;
@@ -4824,8 +4824,8 @@ namespace CarenRengine
 				EstruturaRetorno->layerOptions = static_cast<CA_D2D1_LAYER_OPTIONS1>(Param_Estrutura->layerOptions);
 
 				//Define os ponteiros nativos.
-				EstruturaRetorno->geometricMask->AdicionarPonteiro(Param_Estrutura->geometricMask);
-				EstruturaRetorno->opacityBrush->AdicionarPonteiro(Param_Estrutura->opacityBrush);
+				static_cast<ICaren^>(EstruturaRetorno->geometricMask)->AdicionarPonteiro(Param_Estrutura->geometricMask);
+				static_cast<ICaren^>(EstruturaRetorno->opacityBrush)->AdicionarPonteiro(Param_Estrutura->opacityBrush);
 
 				//Retorna o resultado
 				return EstruturaRetorno;
@@ -5138,7 +5138,7 @@ namespace CarenRengine
 				EstruturaRetorno->byteWidth = Param_Estrutura->byteWidth;
 
 				//Recupera o ponteiro para o buffer.
-				Param_Estrutura->data->ObterPonteiroInterno(pBufferDados);
+				static_cast<ICarenBuffer^>(Param_Estrutura->data)->ObterPonteiroInterno(pBufferDados);
 
 				//Define o ponteiro na estrutura.
 				EstruturaRetorno->data = ConverterIntPtrTo<PBYTE>(pBufferDados);
@@ -5159,7 +5159,7 @@ namespace CarenRengine
 				EstruturaRetorno->data = gcnew CarenBuffer();
 
 				//Define os dados no buffer.
-				EstruturaRetorno->data->CriarBuffer(IntPtr(const_cast<PBYTE>(Param_Estrutura->data)), false, EstruturaRetorno->byteWidth, EstruturaRetorno->byteWidth);
+				static_cast<ICarenBuffer^>(EstruturaRetorno->data)->CriarBuffer(IntPtr(const_cast<PBYTE>(Param_Estrutura->data)), false, EstruturaRetorno->byteWidth, EstruturaRetorno->byteWidth);
 				
 				//Retorna o resultado
 				return EstruturaRetorno;
@@ -5393,7 +5393,7 @@ namespace CarenRengine
 				D2D1_RECT_F* pInputRect = NULL;
 
 				//Recupera o ponteiro para o efeito.
-				Param_Estrutura->effect->RecuperarPonteiro((LPVOID*)&pMyEfeito);
+				static_cast<ICaren^>(Param_Estrutura->effect)->RecuperarPonteiro((LPVOID*)&pMyEfeito);
 
 				//Converte a estrutura.
 				pInputRect = ConverterD2D1_RECT_FManagedToUnmanaged(Param_Estrutura->inputRectangle);
@@ -5421,7 +5421,7 @@ namespace CarenRengine
 				EstruturaRetorno->inputRectangle = ConverterD2D1_RECT_FUnmanagedToManaged(&Param_Estrutura->inputRectangle);
 
 				//Define o ponteiro do efeito na interface.
-				EstruturaRetorno->effect->AdicionarPonteiro(Param_Estrutura->effect);
+				static_cast<ICaren^>(EstruturaRetorno->effect)->AdicionarPonteiro(Param_Estrutura->effect);
 
 				//Retorna o resultado
 				return EstruturaRetorno;
@@ -5699,7 +5699,7 @@ namespace CarenRengine
 				DWRITE_GLYPH_OFFSET* pMatrizGlyphOffset = CriarMatrizEstruturas<DWRITE_GLYPH_OFFSET>(Param_Estrutura->glyphCount);
 
 				//Recupera o ponteiro para a interface.
-				CarenResult Resultado = Param_Estrutura->fontFace->RecuperarPonteiro((LPVOID*)&pDwriteFontFace);
+				CarenResult Resultado = static_cast<ICaren^>(Param_Estrutura->fontFace)->RecuperarPonteiro((LPVOID*)&pDwriteFontFace);
 
 				//Verifica se não falhou
 				if (!CarenSucesso(Resultado))
@@ -5749,7 +5749,7 @@ namespace CarenRengine
 				EstruturaRetorno->glyphOffsets = gcnew cli::array<CA_DWRITE_GLYPH_OFFSET^>(Param_Estrutura->glyphCount);
 
 				//Define o ponteiro.
-				CarenResult Resultado = EstruturaRetorno->fontFace->AdicionarPonteiro(Param_Estrutura->fontFace);
+				CarenResult Resultado = static_cast<ICaren^>(EstruturaRetorno->fontFace)->AdicionarPonteiro(Param_Estrutura->fontFace);
 
 				//Copia os dados das matrizes simples.
 				CopiarItensTo_ArrayGerenciado(EstruturaRetorno->glyphIndices, Param_Estrutura->glyphIndices, Param_Estrutura->glyphCount);
@@ -5920,7 +5920,7 @@ namespace CarenRengine
 					//Contém dados inicias.
 
 					//Obtém o ponteiro (Void*) para os dados.
-					Param_Estrutura->SysMemoria->RecuperarPonteiro(&InitData);
+					static_cast<ICaren^>(Param_Estrutura->SysMemoria)->RecuperarPonteiro(&InitData);
 
 					//Define o ponteiro no parametro
 					EstruturaDestino->pSysMem = InitData;
@@ -9536,7 +9536,7 @@ namespace CarenRengine
 				if (ObjetoGerenciadoValido(Param_Estrutura->Buffer))
 				{
 					//Recupera o ponteiro do buffer para a estrutura.
-					Param_Estrutura->Buffer->ObterPonteiroInterno(PointeiroBuffer);
+					static_cast<ICarenBuffer^>(Param_Estrutura->Buffer)->ObterPonteiroInterno(PointeiroBuffer);
 
 					//Define o ponteiro.
 					EstruturaRetorno->pBits = (BYTE*)PointeiroBuffer.ToPointer();
@@ -9562,10 +9562,10 @@ namespace CarenRengine
 					EstruturaRetorno->Buffer = gcnew CarenBuffer();
 
 					//Cria e associa o ponteiro da estrutura a interface.
-					EstruturaRetorno->Buffer->CriarBuffer(IntPtr(Param_Estrutura->pBits), false, (unsigned int)EstruturaRetorno->Largura, (unsigned int)EstruturaRetorno->Largura);
+					static_cast<ICarenBuffer^>(EstruturaRetorno->Buffer)->CriarBuffer(IntPtr(Param_Estrutura->pBits), false, (unsigned int)EstruturaRetorno->Largura, (unsigned int)EstruturaRetorno->Largura);
 
 					//Define a posição para zero
-					EstruturaRetorno->Buffer->DefinirPosicao(0);
+					static_cast<ICarenBuffer^>(EstruturaRetorno->Buffer)->DefinirPosicao(0);
 				}
 				
 				//Retorna a variavel.
@@ -9859,8 +9859,8 @@ namespace CarenRengine
 				GenPointer pBufferMask = DefaultGenPointer;
 
 				//Recupera o ponteiro dos buffers acima.
-				Param_Estrutura->Pattern->ObterPonteiroInterno(pBufferPattern);
-				Param_Estrutura->Mask->ObterPonteiroInterno(pBufferMask);
+				static_cast<ICarenBuffer^>(Param_Estrutura->Pattern)->ObterPonteiroInterno(pBufferPattern);
+				static_cast<ICarenBuffer^>(Param_Estrutura->Mask)->ObterPonteiroInterno(pBufferMask);
 
 				//Define os dados na estrutura
 				EstruturaRetorno->Length = static_cast<ULONG>(Param_Estrutura->Length);
@@ -9887,8 +9887,8 @@ namespace CarenRengine
 				EstruturaRetorno->EndOfStream = Param_Estrutura->EndOfStream ? TRUE : FALSE;
 				
 				//Define os dados no buffer.
-				EstruturaRetorno->Pattern->CriarBuffer(IntPtr(Param_Estrutura->Pattern), false, safe_cast<UInt32>(EstruturaRetorno->Length), safe_cast<UInt32>(EstruturaRetorno->Length));
-				EstruturaRetorno->Mask->CriarBuffer(IntPtr(Param_Estrutura->Mask), false, 0, 0);
+				static_cast<ICarenBuffer^>(EstruturaRetorno->Pattern)->CriarBuffer(IntPtr(Param_Estrutura->Pattern), false, safe_cast<UInt32>(EstruturaRetorno->Length), safe_cast<UInt32>(EstruturaRetorno->Length));
+				static_cast<ICarenBuffer^>(EstruturaRetorno->Mask)->CriarBuffer(IntPtr(Param_Estrutura->Mask), false, 0, 0);
 
 				//Retorna a variavel.
 				return EstruturaRetorno;
@@ -10359,7 +10359,7 @@ namespace CarenRengine
 				GenPointer pBuffer = DefaultGenPointer;
 
 				//Recupera o ponteiro para o buffer.
-				Param_Estrutura->pbBuffer->ObterPonteiroInterno(pBuffer);
+				static_cast<ICarenBuffer^>(Param_Estrutura->pbBuffer)->ObterPonteiroInterno(pBuffer);
 
 				//Define os dados.
 				EstruturaRetorno->Format = CreateGuidFromString(Param_Estrutura->Format);
@@ -10386,7 +10386,7 @@ namespace CarenRengine
 				EstruturaRetorno->pbBuffer = gcnew CarenBuffer();
 
 				//Define o ponteiro na interface.
-				EstruturaRetorno->pbBuffer->CriarBuffer(IntPtr(Param_Estrutura->pbBuffer), Param_CopyBuffer, EstruturaRetorno->cbBufferSize, EstruturaRetorno->cbBufferSize);
+				static_cast<ICarenBuffer^>(EstruturaRetorno->pbBuffer)->CriarBuffer(IntPtr(Param_Estrutura->pbBuffer), Param_CopyBuffer, EstruturaRetorno->cbBufferSize, EstruturaRetorno->cbBufferSize);
 
 				//Retorna o resultado
 				return EstruturaRetorno;

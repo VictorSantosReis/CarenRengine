@@ -16,7 +16,13 @@ limitations under the License.
 
 
 #pragma once
-#include "pch.h"
+#include "Header.h"
+#include "SDK_Base.h"
+
+//Importa os namespaces base.
+using namespace CarenRengine::SDKBase;
+using namespace CarenRengine::SDKBase::Enumeracoes;
+using namespace CarenRengine::SDKBase::Estruturas;
 
 //Abre o namespace principal
 namespace CarenRengine
@@ -115,6 +121,47 @@ namespace CarenRengine
 		/// Este método pode ser escrito de forma diferente para cada interface.
 		/// </summary>
 		void Finalizar();
+	};
+
+	/// <summary>
+	/// (INACarenObjectState) - Interface responsável por representar um objeto de estado que pode ser utilizadas por métodos nativos para operações assincronas.
+	/// </summary>
+	[CategoryAttribute("Caren Interface")]
+	[Guid("F26DDE8E-4E7C-416D-A05B-0B81CB9B17BE")] //IGUAL AO DA NATIVA.
+	public interface class ICarenObjectState : ICaren
+	{
+		/// <summary>
+		/// Propriedade que define se a classe foi descartada.
+		/// </summary>
+		property Boolean DisposedClasse
+		{
+			virtual Boolean get();
+		}
+
+
+		//Métodos
+
+		/// <summary>
+		/// Retorna o nome do objeto de estado atual se válido.
+		/// </summary>
+		/// <param name="Param_Out_NomeObjeto">Recebe o nome do objeto atual.</param>
+		/// <returns></returns>
+		CarenResult GetName(OutParam String^% Param_Out_NomeObjeto);
+
+		/// <summary>
+		/// Retorna a largura do nome do objeto de estado atual.
+		/// </summary>
+		/// <param name="Param_Out_Size">Recebe a largura da string.</param>
+		/// <returns></returns>
+		CarenResult GetNameLenght(OutParam UInt32% Param_Out_Size);
+
+		/// <summary>
+		///  Define um novo nome para o objeto de estado atual.
+		/// </summary>
+		/// <param name="Param_Nome">O novo nome do objeto.</param>
+		/// <param name="Param_SizeNome">A largura do novo nome.</param>
+		/// <returns></returns>
+		CarenResult SetName(String^ Param_Nome, UInt32 Param_SizeNome);
 	};
 
 	/// <summary>
@@ -355,5 +402,126 @@ namespace CarenRengine
 		/// </summary>
 		/// <returns></returns>
 		void ReleaseBufferWithCoTaskMemFree();
+	};
+
+	/// <summary>
+	/// Interface responsável por criar e gerenciar um evento nativo do Windows.
+	/// </summary>
+	[CategoryAttribute("Caren Interface")]
+	[Guid("CCC5A485-8664-474D-A88D-B9DE3512AE0D")]
+	public interface class ICarenWindowsEvent
+	{
+		/// <summary>
+		/// Propriedade que define se a classe foi descartada.
+		/// </summary>
+		property Boolean DisposedClasse
+		{
+			virtual Boolean get();
+		}
+
+
+		//Métodos
+
+		/// <summary>
+		/// (CreateEventW) - Cria ou abre um objeto de evento nomeado ou sem nome.
+		/// </summary>
+		/// <param name="Param_AtributosEvento">Uma estrutura CA_SECURITY_ATTRIBUTES. Se este parâmetro é NULO, o evento não pode 
+		/// ser herdado por um processo filho.
+		/// A estrutura especifica um descritor de segurança para o novo evento. Sendo NULO, o evento recebe um descritor de 
+		/// segurança padrão. Os ACLs no descritor de segurança padrão para um evento vêm do símbolo primário ou de representação 
+		/// do criador.</param>
+		/// <param name="Param_ManualReset">Se este parâmetro for TRUE,a função cria um objeto de evento de redefinição manual,
+		/// que requer o uso da função (ResetarEvento) para definir o estado do evento para não sinalizado. Se este parâmetro for 
+		/// FALSE, a função cria um objeto de evento de redefinição automática e o sistema redefine automaticamente o estado do evento
+		/// para não sinalizado após a lançamento de um único thread.</param>
+		/// <param name="Param_EstadoInicial">Se este parâmetro é TRUE,o estado inicial do objeto do evento é sinalizado; caso contrário, não é sinalizado.</param>
+		/// <param name="Param_NomeObjetoEvento">O nome do objeto do evento. O nome é limitado a 260(MAX_PATH) caracteres. A comparação do nome é sensível ao caso(Case-Sensitive).
+		/// Se o (Param_NomeObjetoEvento) corresponde ao nome de um objeto de evento nomeado existente, esta função solicita o 
+		/// EVENT_ALL_ACCESS direito de acesso. Neste caso, os parâmetros (Param_ManualReset) e (Param_EstadoInicial) são ignorados porque já foram definidos pelo processo de criação. 
+		/// Se o parâmetro (Param_AtributosEvento) não é NULO, ele determina se o identificador pode ser herdado, mas seu membro descritor de segurança é ignorado.
+		/// Se o parâmetro (Param_NomeObjetoEvento) corresponde ao nome de outro tipo de objeto no mesmo espaço de nome (como um semáforo existente, mutex, temporâmico, trabalho ou 
+		/// objeto de mapeamento de arquivos), a função falha.</param>
+		CarenResult CriarEvento(
+			CA_SECURITY_ATTRIBUTES^ Param_AtributosEvento,
+			Boolean Param_ManualReset,
+			Boolean Param_EstadoInicial,
+			String^ Param_NomeObjetoEvento);
+
+		/// <summary>
+		/// (CreateEventExW) - Cria ou abre um objeto de evento nomeado ou sem nome. Permite especificar a mascara de acesso para o objeto.
+		/// </summary>
+		/// <param name="Param_AtributosEvento">Uma estrutura CA_SECURITY_ATTRIBUTES. Se este parâmetro é NULO, o evento não pode 
+		/// ser herdado por um processo filho.
+		/// A estrutura especifica um descritor de segurança para o novo evento. Sendo NULO, o evento recebe um descritor de 
+		/// segurança padrão. Os ACLs no descritor de segurança padrão para um evento vêm do símbolo primário ou de representação 
+		/// do criador.</param>
+		/// <param name="Param_NomeObjetoEvento">O nome do objeto do evento. O nome é limitado a 260(MAX_PATH) caracteres. A comparação do nome é sensível ao caso(Case-Sensitive).
+		/// Se o (Param_NomeObjetoEvento) corresponde ao nome de um objeto de evento nomeado existente, esta função solicita o 
+		/// EVENT_ALL_ACCESS direito de acesso. Neste caso, os parâmetros (Param_ManualReset) e (Param_EstadoInicial) são ignorados porque já foram definidos pelo processo de criação. 
+		/// Se o parâmetro (Param_AtributosEvento) não é NULO, ele determina se o identificador pode ser herdado, mas seu membro descritor de segurança é ignorado.
+		/// Se o parâmetro (Param_NomeObjetoEvento) corresponde ao nome de outro tipo de objeto no mesmo espaço de nome (como um semáforo existente, mutex, temporâmico, trabalho ou 
+		/// objeto de mapeamento de arquivos), a função falha.</param>
+		/// <param name="Param_Flags">Flags para criação do evento.</param>
+		/// <param name="Param_MascaraAcesso">A máscara de acesso para o objeto do evento. Consulte o (Synchronization Object Security and Access Rights) para saber os possiveis valores
+		/// para esse paramêtro.</param>
+		CarenResult CriarEventoEx(
+			CA_SECURITY_ATTRIBUTES^ Param_AtributosEvento,
+			String^ Param_NomeObjetoEvento,
+			CA_WIN_EVENT_FLAGS Param_Flags,
+			UInt32 Param_MascaraAcesso);
+
+		/// <summary>
+		/// Associa um determinado evento a classe atual.
+		/// O método vai retornar o código de erro(ER_FALHA), se um evento já existir.
+		/// </summary>
+		/// <param name="Param_PonteiroEvento">O ponteiro para um evento já criado.</param>
+		CarenResult AssociarEvento(IntPtr Param_PonteiroEvento);
+
+		/// <summary>
+		/// Recupera o evento atual da classe. Se o evento não for um objeto valido, o método retorna ER_PONTEIRO.
+		/// </summary>
+		/// <param name="Param_Out_Evento">O ponteiro para um evento já criado.</param>
+		CarenResult RecuperarEvento([Out] IntPtr% Param_Out_Evento);
+
+		/// <summary>
+		/// Recupera o evento atual da classe. Se o evento não for um objeto valido, o método retorna ER_PONTEIRO.
+		/// </summary>
+		/// <param name="Param_Out_Evento">O ponteiro para a handle do evento.</param>
+		CarenResult RecuperarEvento(LPVOID* Param_Out_Evento);
+
+		/// <summary>
+		/// (WaitForSingleObject) - Espera até que o objeto especificado esteja no estado sinalizado ou o intervalo do intervalo do tempo limite decorra.
+		/// </summary>
+		/// <param name="Param_TempoMilliseconds">O intervalo de tempo, em milissegundos. Se um valor não zero for especificado, a função aguarda até que o objeto seja sinalizado ou o intervalo 
+		/// decorra. Se (Param_TempoMilliseconds) é zero, a função não entra em um estado de espera se o objeto não for sinalizado; ele sempre retorna imediatamente. Se Param_TempoMilliseconds é 
+		/// infinito(1e+300 * 1e+300), a função retornará somente quando o objeto é sinalizado.</param>
+		CarenResult AguardarObjetoUnico(UInt32 Param_TempoMilliseconds);
+
+		/// <summary>
+		/// (WaitForSingleObjectEx) - Espera até que o objeto especificado está no estado sinalizado, uma rotina de conclusão I / O ou chamada procedimento assíncrono (APC) é enfileirado para o 
+		/// segmento(Thread), ou o intervalo de intervalo de tempo decorrido.
+		/// </summary>
+		/// <param name="Param_TempoMilliseconds">O intervalo de tempo, em milissegundos. Se um valor não zero for especificado, a função aguarda até que o objeto seja sinalizado ou o intervalo 
+		/// decorra. Se (Param_TempoMilliseconds) é zero, a função não entra em um estado de espera se o objeto não for sinalizado; ele sempre retorna imediatamente. Se Param_TempoMilliseconds é 
+		/// infinito(1e+300 * 1e+300), a função retornará somente quando o objeto é sinalizado.</param>
+		/// <param name="Param_Alertavel">Se este parâmetro é TRUE e a linha está no estado de espera, a função retorna quando o sistema enfileira uma rotina da conclusão de I/O ou Um APC, e a 
+		/// linha funciona a rotina ou a função. Caso contrário, a função não retorna, e a rotina de conclusão ou a função APC não é executada.
+		/// Uma rotina de conclusão é enfileirada quando a função ReadFileEx ou WriteFileEx na qual foi especificada foi concluída. </param>
+		CarenResult AguardarObjetoUnicoEx(UInt32 Param_TempoMilliseconds, Boolean Param_Alertavel);
+
+		/// <summary>
+		/// (ResetEvent) - Define o objeto de evento da classe atual para o estado não sinalizado.
+		/// </summary>
+		CarenResult ResetarEvento();
+
+		/// <summary>
+		/// (SetEvent) - Define o objeto do evento da classe atual para o estado sinalizado.
+		/// </summary>
+		CarenResult SinalizarEvento();
+
+		/// <summary>
+		/// (CloseHandle) - Fecha a alça do evento criado ou aberto anteriormente.
+		/// </summary>
+		CarenResult LiberarEvento();
 	};
 }

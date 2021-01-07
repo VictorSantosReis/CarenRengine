@@ -123,8 +123,10 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CarenRengineCodes\Caren\CarenObjectState.h" />
     <ClInclude Include="CarenRengineCodes\Classes Auxiliares\CarenPD2D1_PROPERTY_FUNCTIONS.h" />
     <ClInclude Include="CarenRengineCodes\Caren\CarenBuffer.h" />
+    <ClInclude Include="CarenRengineCodes\Classes Nativas\CLN_CarenObjectState.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D Matrix Class\Direct2D_MatrixClass.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Bitmap.h" />
     <ClInclude Include="CarenRengineCodes\Direct2D\CarenD2D1Bitmap1.h" />
@@ -432,7 +434,7 @@
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFCollection.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFDXGIBuffer.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFDXGIDeviceManager.h" />
-    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMedia2DBuffer.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMF2DBuffer.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFVideoSampleAllocator.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFSample.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFActivate.h" />
@@ -442,7 +444,7 @@
     <ClInclude Include="CarenRengineCodes\CarenGuids.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFSourceReader.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFAttributes.h" />
-    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMedia2DBuffer2.h" />
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMF2DBuffer2.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaEvent.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaSink.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaBuffer.h" />
@@ -561,7 +563,9 @@
     <ClInclude Include="CarenRengineCodes\SDK_MediaFoundationExtend.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CarenRengineCodes\Caren\CarenObjectState.cpp" />
     <ClCompile Include="CarenRengineCodes\Classes Auxiliares\CarenPD2D1_PROPERTY_FUNCTIONS.cpp" />
+    <ClCompile Include="CarenRengineCodes\Classes Nativas\CLN_CarenObjectState.cpp" />
     <ClCompile Include="CarenRengineCodes\CppResources\AssemblyInfo.cpp" />
     <ClCompile Include="CarenRengineCodes\Caren\Caren.cpp" />
     <ClCompile Include="CarenRengineCodes\Caren\CarenBuffer.cpp" />
@@ -850,7 +854,7 @@
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFTranscodeProfile.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFTranscodeSinkInfoProvider.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFTransform.cpp" />
-    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMedia2DBuffer.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMF2DBuffer.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFVideoMediaType.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFVideoPresenter.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFVideoSampleAllocator.cpp" />
@@ -861,7 +865,7 @@
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFPresentationTimeSource.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFSourceReader.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFAttributes.cpp" />
-    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMedia2DBuffer2.cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMF2DBuffer2.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaEvent.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaSink.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaBuffer.cpp" />

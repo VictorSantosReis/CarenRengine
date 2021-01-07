@@ -24,10 +24,6 @@ limitations under the License.
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
 using namespace CarenRengine::SDKBase::Estruturas;
-using namespace CarenRengine::SDKBase::Interfaces;
-
-//Enumeração de retorno de função.
-
 
 //Importa o namespace de utilidades utilizado pelas classes
 using namespace CarenRengine::SDKUtilidades;
@@ -81,7 +77,7 @@ public:
 	/// <summary>
 	/// (CreateEventW) - Cria ou abre um objeto de evento nomeado ou sem nome.
 	/// </summary>
-	/// <param name="Param_AtributosEvento">Uma estrutura CA_ATRIBUTOS_SEGURANCA. Se este parâmetro é NULO, o evento não pode 
+	/// <param name="Param_AtributosEvento">Uma estrutura CA_SECURITY_ATTRIBUTES. Se este parâmetro é NULO, o evento não pode 
 	/// ser herdado por um processo filho.
 	/// A estrutura especifica um descritor de segurança para o novo evento. Sendo NULO, o evento recebe um descritor de 
 	/// segurança padrão. Os ACLs no descritor de segurança padrão para um evento vêm do símbolo primário ou de representação 
@@ -98,7 +94,7 @@ public:
 	/// Se o parâmetro (Param_NomeObjetoEvento) corresponde ao nome de outro tipo de objeto no mesmo espaço de nome (como um semáforo existente, mutex, temporâmico, trabalho ou 
 	/// objeto de mapeamento de arquivos), a função falha.</param>
 	virtual CarenResult CriarEvento(
-		Estruturas::CA_ATRIBUTOS_SEGURANCA^ Param_AtributosEvento,
+		Estruturas::CA_SECURITY_ATTRIBUTES^ Param_AtributosEvento,
 		Boolean Param_ManualReset,
 		Boolean Param_EstadoInicial,
 		String^ Param_NomeObjetoEvento);
@@ -106,7 +102,7 @@ public:
 	/// <summary>
 	/// (CreateEventExW) - Cria ou abre um objeto de evento nomeado ou sem nome. Permite especificar a mascara de acesso para o objeto.
 	/// </summary>
-	/// <param name="Param_AtributosEvento">Uma estrutura CA_ATRIBUTOS_SEGURANCA. Se este parâmetro é NULO, o evento não pode 
+	/// <param name="Param_AtributosEvento">Uma estrutura CA_SECURITY_ATTRIBUTES. Se este parâmetro é NULO, o evento não pode 
 	/// ser herdado por um processo filho.
 	/// A estrutura especifica um descritor de segurança para o novo evento. Sendo NULO, o evento recebe um descritor de 
 	/// segurança padrão. Os ACLs no descritor de segurança padrão para um evento vêm do símbolo primário ou de representação 
@@ -121,7 +117,7 @@ public:
 	/// <param name="Param_MascaraAcesso">A máscara de acesso para o objeto do evento. Consulte o (Synchronization Object Security and Access Rights) para saber os possiveis valores
 	/// para esse paramêtro.</param>
 	virtual CarenResult CriarEventoEx(
-		Estruturas::CA_ATRIBUTOS_SEGURANCA^ Param_AtributosEvento,
+		Estruturas::CA_SECURITY_ATTRIBUTES^ Param_AtributosEvento,
 		String^ Param_NomeObjetoEvento,
 		Enumeracoes::CA_WIN_EVENT_FLAGS Param_Flags,
 		UInt32 Param_MascaraAcesso);
@@ -180,4 +176,3 @@ public:
 	/// </summary>
 	virtual CarenResult LiberarEvento();
 };
-

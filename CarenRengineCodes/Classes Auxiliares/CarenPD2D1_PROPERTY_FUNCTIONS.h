@@ -1,4 +1,4 @@
-/*
+ï»¿/*
 Copyright 2020 Victor Santos Reis
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,17 +20,16 @@ limitations under the License.
 #include "../SDK_Utilidades.h"
 #include "../FunctionClass/GlobalFuncs.h"
 
-//Importa o namespace (BASE) e suas demais dependências
+//Importa o namespace (BASE) e suas demais dependï¿½ncias
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Estruturas;
-using namespace CarenRengine::SDKBase::Interfaces;
 
 //Importa o namespace de utilidades utilizado pelas classes
 using namespace CarenRengine::SDKUtilidades;
 
 
 /// <summary>
-/// (Concluida - Fase de Testes) - Em fase de verificação.
+/// (Concluida - Fase de Testes) - Em fase de verificaï¿½ï¿½o.
 /// </summary>
 public ref class CarenPD2D1_PROPERTY_FUNCTIONS
 {
@@ -53,15 +52,15 @@ public:
 
 	//Variaveis Internas.
 internal:
-	//Variavel que contém o valor da propriedade (DisposedClasse)
+	//Variavel que contï¿½m o valor da propriedade (DisposedClasse)
 	Boolean Prop_DisposedClasse = false;
 
 
 	//Variaveis publicas
 public:
 	/// <summary>
-	/// Propriedade que contém a varivel que define se a classe for descartada ou não.
-	/// Por padrão, o valor é falso.
+	/// Propriedade que contï¿½m a varivel que define se a classe for descartada ou nï¿½o.
+	/// Por padrï¿½o, o valor ï¿½ falso.
 	/// </summary>
 	property Boolean DisposedClasse
 	{
@@ -87,12 +86,12 @@ public:
 
 
 	/// <summary>
-	/// (PD2D1_PROPERTY_SET_FUNCTION) - Evento chamado para notificar ao usuário que o Direct2D está informando os dados a serem escritos para uma propriedade.
+	/// (PD2D1_PROPERTY_SET_FUNCTION) - Evento chamado para notificar ao usuï¿½rio que o Direct2D estï¿½ informando os dados a serem escritos para uma propriedade.
 	/// </summary>
 	event DelegateOnPropertySetFunction^ OnPropertySetFunction;
 
 	/// <summary>
-	/// (PD2D1_PROPERTY_GET_FUNCTION) - Evento chamado para notificar ao usuário que o Direct2D está requsitando dados para uma propriedade.
+	/// (PD2D1_PROPERTY_GET_FUNCTION) - Evento chamado para notificar ao usuï¿½rio que o Direct2D estï¿½ requsitando dados para uma propriedade.
 	/// </summary>
 	event DelegateOnPropertyGetFunction^ OnPropertyGetFunction;
 
@@ -103,7 +102,7 @@ private:
 	//Delegates
 
 	/// <summary>
-	/// Delegate nativo que vai receber a função PD2D1_PROPERTY_SET_FUNCTION.
+	/// Delegate nativo que vai receber a funï¿½ï¿½o PD2D1_PROPERTY_SET_FUNCTION.
 	/// </summary>
 	delegate HRESULT DelegateNativo_Evento_OnPropertySetFunction(
 		_In_ IUnknown* effect,
@@ -112,7 +111,7 @@ private:
 	DelegateNativo_Evento_OnPropertySetFunction^ Callback_OnPropertySetFunction = nullptr;
 
 	/// <summary>
-	/// Delegate nativo que vai receber a função PD2D1_PROPERTY_GET_FUNCTION.
+	/// Delegate nativo que vai receber a funï¿½ï¿½o PD2D1_PROPERTY_GET_FUNCTION.
 	/// </summary>
 	delegate HRESULT DelegateNativo_Evento_OnPropertyGetFunction(
 		_In_ const IUnknown* effect,
@@ -126,34 +125,34 @@ private:
 	// Handles para os delegates
 
 	/// <summary>
-	/// Contém a Handle alocada para o delegate (Callback_OnPropertySetFunction).
+	/// Contï¿½m a Handle alocada para o delegate (Callback_OnPropertySetFunction).
 	/// </summary>
 	GCHandle gHandle_Delegate_OnPropertySetFunction;
 
 	/// <summary>
-	/// Contém a Handle alocada para o delegate (Callback_OnPropertyGetFunction).
+	/// Contï¿½m a Handle alocada para o delegate (Callback_OnPropertyGetFunction).
 	/// </summary>
 	GCHandle gHandle_Delegate_OnPropertyGetFunction;
 
 
 
-	//Métodos publicos da classe.
+	//Mï¿½todos publicos da classe.
 public:
 	/// <summary>
-	/// Método responsável por registrar os eventos da interface.
+	/// Mï¿½todo responsï¿½vel por registrar os eventos da interface.
 	/// </summary>
 	virtual void RegistrarCallback();
 
 	/// <summary>
-	/// Método responsável por liberar todos os registros de eventos resgistrados anteriormente. Chame esse método após uma chamada para (RegistrarCallback).
+	/// Mï¿½todo responsï¿½vel por liberar todos os registros de eventos resgistrados anteriormente. Chame esse mï¿½todo apï¿½s uma chamada para (RegistrarCallback).
 	/// </summary>
 	virtual void UnRegisterCallback();
 
 
-	//Métodos internos utilizados pela biblioteca.
+	//Mï¿½todos internos utilizados pela biblioteca.
 internal:
 
-	//Métodos para recuperar as funções GET e SET.
+	//Mï¿½todos para recuperar as funï¿½ï¿½es GET e SET.
 
 	virtual PD2D1_PROPERTY_SET_FUNCTION RecuperarSetFunction();
 
@@ -163,7 +162,7 @@ internal:
 
 	virtual void DefinirGetFunction(PD2D1_PROPERTY_GET_FUNCTION* Param_GetFunc);
 
-	//Métodos de encaminhamento dos eventos.
+	//Mï¿½todos de encaminhamento dos eventos.
 	virtual HRESULT EncaminharEvento_OnPropertySetFunction(
 		_In_ IUnknown* effect,
 		_In_reads_(dataSize) const BYTE* data,

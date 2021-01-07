@@ -17,13 +17,15 @@ limitations under the License.
 
 #pragma once
 #include "SDK_Base.h"
+#include "SDK_Windows.h"
 
 //Importa os namespaces do SDK BASE do sistema.
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
 using namespace CarenRengine::SDKBase::Estruturas;
-using namespace CarenRengine::SDKBase::Interfaces;
 
+//Importa o namespace das interfaces do Windows
+using namespace CarenRengine::Windows;
 
 /////////////////////////////////////
 // MF - MICROSOFT MEDIA FOUNDATION //
@@ -1126,7 +1128,7 @@ namespace CarenRengine
 		/// <summary>
 		/// (IMFMediaBuffer) - Interface responsãvel por conter dados de midia. Os tipos podem ser Áudio ou Video.
 		/// Se o buffer conter dados de Imagem 2D (Quadros de vídeo Descompactados), Consulte o Buffer
-		/// para a interface (IDirect3DSurface9) ou (IMF2DBuffer), representada pela Interface (ICarenDirect3DSurface9) e (ICarenMFMedia2DBuffer). 
+		/// para a interface (IDirect3DSurface9) ou (IMF2DBuffer), representada pela Interface (ICarenDirect3DSurface9) e (ICarenMF2DBuffer). 
 		/// Chamadas para Lock, sendo que o Buffer contém (Imagems 2D), pode gerar um aumento de memória interna desnecessária.
 		/// </summary>
 		[CategoryAttribute("MF Interface")]
@@ -1197,7 +1199,7 @@ namespace CarenRengine
 		/// </summary>
 		[CategoryAttribute("MF Interface")]
 		[Guid("B3902CBD-7049-4A7E-AA78-3E66CE9AA524")]
-		public interface class ICarenMFMedia2DBuffer : ICaren
+		public interface class ICarenMF2DBuffer : ICaren
 		{
 			/// <summary>
 			/// Propriedade que define se a classe foi descartada.
@@ -1267,11 +1269,11 @@ namespace CarenRengine
 
 		/// <summary>
 		/// (IMF2DBuffer2) - Interface responsável por representar um buffer que contém uma superfície bidimensional, como um quadro de vídeo.
-		/// Essa interface extende os métodos da interface base (ICarenMFMedia2DBuffer) e adiciona uma versão mais segura do método (Lock2D).
+		/// Essa interface extende os métodos da interface base (ICarenMF2DBuffer) e adiciona uma versão mais segura do método (Lock2D).
 		/// </summary>
 		[CategoryAttribute("MF Interface")]
 		[Guid("5E6AA0AA-0E58-42E7-9FC3-EF516E52C134")]
-		public interface class ICarenMFMedia2DBuffer2 : ICarenMFMedia2DBuffer
+		public interface class ICarenMF2DBuffer2 : ICarenMF2DBuffer
 		{
 			/// <summary>
 			/// Propriedade que define se a classe foi descartada.
@@ -1287,7 +1289,7 @@ namespace CarenRengine
 			/// (Copy2DTo) - Copia o buffer para outro objeto de buffer 2D.
 			/// </summary>
 			/// <param name="Param_Interface2DBufferDestino">A interface de destino que vai receber o buffer.</param>
-			CarenResult Copy2DTo(ICarenMFMedia2DBuffer2^% Param_Interface2DBufferDestino);
+			CarenResult Copy2DTo(ICarenMF2DBuffer2^% Param_Interface2DBufferDestino);
 
 			/// <summary>
 			/// (Lock2DSize) - Fornece o acesso do chamador para a memória no buffer.
@@ -1887,7 +1889,7 @@ namespace CarenRengine
 			/// Obtém um determinado atributo da fonte de mídia atual.
 			/// </summary>
 			/// <param name="Param_IdFluxo">O fluxo ou objeto de consulta. Você pode utilizar a enumeração(CA_SOURCE_READER_ID) para espeficar um valor padrão ao sistema.</param>
-			/// <param name="Param_GuidAtributo">Um GUID que identifica o atributo para recuperar. Se o Param_IdFluxo parâmetro é igual a ID_FONTE_MIDIA, 
+			/// <param name="Param_GuidAtributo">Um GUID que identifica o atributo para recuperar. Se o Param_IdFluxo parâmetro é igual a ID_MF_SOURCE_READER_MEDIASOURCE, 
 			/// Param_GuidAtributo pode especificar os atributos de: MFAtributos_DescritorApresentação, MF_SOURCE_READER_MEDIASOURCE_CHARACTERISTICS.
 			/// Se Param_IdFluxo espeficifica um Fluxo, Param_GuidAtributo deve especificar um atributo do Descritor de Fluxo(GUIDs_MFAtributos_DescritorFluxo) </param>
 			/// <param name="Param_Out_ValorAtributo">Retorna o valor do atributo solicitado</param>
@@ -1896,7 +1898,7 @@ namespace CarenRengine
 			/// <summary>
 			/// Consulta a fonte subjacente de mídia ou decodificador para uma interface.
 			/// </summary>
-			/// <param name="Param_IdFluxo">O fluxo ou objeto para consulta. Você pode utilizar a enumeração(CA_SOURCE_READER_ID). Se o valor for ID_FONTE_MIDIA, 
+			/// <param name="Param_IdFluxo">O fluxo ou objeto para consulta. Você pode utilizar a enumeração(CA_SOURCE_READER_ID). Se o valor for ID_MF_SOURCE_READER_MEDIASOURCE, 
 			/// o método consultará a fonte de mídia. Caso contrário, ele consulta o decodificador que está associado com o fluxo especificado.</param>
 			/// <param name="Param_GuidServiço">Um identificador de serviço GUID, consulte a estrutura(MFInterfacesServiço) para  obter um GUID. Se o valor for (NULO), 
 			/// o método chama (ConsultarInterface) para obter a interface solicitada. Caso contrário, o método chama o ICarenMFGetService.GetService.</param>

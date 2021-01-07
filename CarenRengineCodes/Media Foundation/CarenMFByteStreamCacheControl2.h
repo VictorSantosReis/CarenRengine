@@ -26,7 +26,6 @@ using namespace CarenRengine::MediaFoundation;
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Estruturas;
-using namespace CarenRengine::SDKBase::Interfaces;
 
 //Importa o namespace de utilidades utilizado pelas classes
 using namespace CarenRengine::SDKUtilidades;
@@ -53,6 +52,31 @@ public:
 	CarenMFByteStreamCacheControl2();
 	
 	~CarenMFByteStreamCacheControl2();
+
+
+	//Conversões implicitas
+public:
+	static operator CarenMFByteStreamCacheControl2^ (IntPtr Param_Pointer)
+	{
+		//Variavel a ser retornada.
+		CarenMFByteStreamCacheControl2^ ClassResultado = nullptr;
+
+		//Verifica se o ponteiro não é invalido.
+		if (Param_Pointer == IntPtr::Zero)
+			Sair; // O ponteiro não é valido.
+
+		//Cria a classe para definir o ponteiro.
+		ClassResultado = gcnew CarenMFByteStreamCacheControl2();
+
+		//Define o ponteiro na classe.
+		ClassResultado->PonteiroTrabalho = reinterpret_cast<IMFByteStreamCacheControl2*>(Param_Pointer.ToPointer());
+
+	Done:;
+
+		//Retorna o resultado.
+		return ClassResultado;
+	}
+
 
 	//Variaveis Internas.
 internal:

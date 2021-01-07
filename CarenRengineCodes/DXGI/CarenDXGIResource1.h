@@ -27,7 +27,6 @@ using namespace CarenRengine::DXGI;
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
 using namespace CarenRengine::SDKBase::Estruturas;
-using namespace CarenRengine::SDKBase::Interfaces;
 
 //Importa o namespace de utilidades utilizado pelas classes
 using namespace CarenRengine::SDKUtilidades;
@@ -55,6 +54,30 @@ public:
 	CarenDXGIResource1();
 
 	~CarenDXGIResource1();
+
+
+	//Conversões implicitas
+public:
+	static operator CarenDXGIResource1^ (IntPtr Param_Pointer)
+	{
+		//Variavel a ser retornada.
+		CarenDXGIResource1^ ClassResultado = nullptr;
+
+		//Verifica se o ponteiro não é invalido.
+		if (Param_Pointer == IntPtr::Zero)
+			Sair; // O ponteiro não é valido.
+
+		//Cria a classe para definir o ponteiro.
+		ClassResultado = gcnew CarenDXGIResource1();
+
+		//Define o ponteiro na classe.
+		ClassResultado->PonteiroTrabalho = reinterpret_cast<IDXGIResource1*>(Param_Pointer.ToPointer());
+
+	Done:;
+
+		//Retorna o resultado.
+		return ClassResultado;
+	}
 
 
 	//Variaveis Internas.
@@ -223,7 +246,7 @@ public:
 	/// <summary>
 	/// (CreateSharedHandle) - Cria uma Handle para um recurso compartilhado. Em seguida, você pode usar a Handle devolvida com vários dispositivos Direct3D.
 	/// </summary>
-	/// <param name="Param_Atributos">Uma estrutura CA_ATRIBUTOS_SEGURANCA que contém dois membros de dados separados, mas relacionados: um descritor de segurança opcional e 
+	/// <param name="Param_Atributos">Uma estrutura CA_SECURITY_ATTRIBUTES que contém dois membros de dados separados, mas relacionados: um descritor de segurança opcional e 
 	/// um valor booleano que determina se os processos crianças podem herdar a Handle devolvida.
 	/// Defina esse parâmetro para NULO se desejar que os processos filhos que o aplicativo possa criar não herdem a Handle retornado por CreateSharedHandle e se 
 	/// desejar que o recurso associado ao identificador retornado obtenha um descritor de segurança padrão.</param>
@@ -235,7 +258,7 @@ public:
 	/// <param name="Param_Out_Handle">Recebe o ponteiro para uma variável que recebe o valor NT HANDLE para o recurso para compartilhar. Você pode usar esta Handle em 
 	/// chamadas para acessar o recurso.</param>
 	virtual CarenResult CreateSharedHandle(
-		CA_ATRIBUTOS_SEGURANCA^ Param_Atributos,
+		CA_SECURITY_ATTRIBUTES^ Param_Atributos,
 		UInt64 Param_Acesso,
 		String^ Param_Nome,
 		[Out] IntPtr% Param_Out_Handle);

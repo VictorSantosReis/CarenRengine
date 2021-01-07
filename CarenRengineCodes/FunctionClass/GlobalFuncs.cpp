@@ -1,4 +1,4 @@
-/*
+ï»¿/*
 Copyright 2020 Victor Santos Reis
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,31 +18,31 @@ limitations under the License.
 #include "../FunctionClass/GlobalFuncs.h"
 
 
-#pragma region FUNÇÕES GLOBAIS
+#pragma region FUNÃ‡Ã•ES GLOBAIS
 CarenResult DefinirPonteiroInterface(IUnknown* Param_NativePointer, ICaren^ Param_Destino, bool Param_ReleasePointerOnErro)
 {
 	//Variavel que retorna o resultado.
 	CarenResultado Resultado = CarenResult(ResultCode::ER_FAIL, false);
 
-	//Verifica se as interfaces são validas.
+	//Verifica se as interfaces sÃ£o validas.
 	if (!ObjetoGerenciadoValido(Param_Destino))
 	{
 		//Libera o ponteiro nativo se solicitado.
 		if (Param_ReleasePointerOnErro)
 			Param_NativePointer->Release(); Param_NativePointer = Nulo;
 
-		//Define erro na operação.
+		//Define erro na operaÃ§Ã£o.
 		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
 
-		//Sai do método
+		//Sai do mÃ©todo
 		Sair;
 	}
 	if (!ObjetoValido(Param_NativePointer))
 	{
-		//Define erro na operação.
+		//Define erro na operaÃ§Ã£o.
 		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
 
-		//Sai do método
+		//Sai do mÃ©todo
 		Sair;
 	}
 

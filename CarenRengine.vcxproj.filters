@@ -40,12 +40,6 @@
     <Filter Include="Arquivos de Cabeçalho\Classes\Caren">
       <UniqueIdentifier>{e81f8702-3212-499b-8d18-af7fe17bf7d8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Arquivos de Cabeçalho\Classes\CoreAudio_MMDevice">
-      <UniqueIdentifier>{24b2b313-d205-40b9-b5a3-60e4bfe913cc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Arquivos de Cabeçalho\Classes\CoreAudio_WASAPI">
-      <UniqueIdentifier>{7ef5dd96-384d-40af-9d6a-99acab2f5f55}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Arquivos de Cabeçalho\Classes\Direct3D11">
       <UniqueIdentifier>{c327fc64-6590-4167-8185-555597853430}</UniqueIdentifier>
     </Filter>
@@ -115,35 +109,11 @@
     <Filter Include="Arquivos de Cabeçalho\Funcoes Globais">
       <UniqueIdentifier>{6e74b9f2-2af7-4e0b-af26-8b802869f9db}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Arquivos de Cabeçalho\Classes Nativas\Media Foundation">
-      <UniqueIdentifier>{426cb267-c71e-4896-91e1-0dc43a96fb37}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Arquivos de Cabeçalho\Classes Nativas\CoreAudio">
-      <UniqueIdentifier>{95dc1aa6-5694-4e9f-9766-e21b00fcb0f5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Arquivos de Cabeçalho\Classes Nativas\Direct2D">
-      <UniqueIdentifier>{1bbe7c0d-4c4a-4a2b-a931-30d5fcdb8460}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Arquivos de Cabeçalho\Classes\Auxiliares">
       <UniqueIdentifier>{9819d017-d5a8-4c72-a97f-21a0567da352}</UniqueIdentifier>
     </Filter>
     <Filter Include="Arquivos de Origem\Classes\Auxiliares">
       <UniqueIdentifier>{ea56c565-4b07-4002-a67d-670b37460a87}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Arquivos de Cabeçalho\Classes Nativas\WIC">
-      <UniqueIdentifier>{ac30c3dd-013c-41b3-8521-bd00a554f141}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Arquivos de Origem\Classes Nativas\CoreAudio">
-      <UniqueIdentifier>{187b0aa0-9044-4cf6-b774-6672ac1435fd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Arquivos de Origem\Classes Nativas\MediaFoundation">
-      <UniqueIdentifier>{243e97c0-3452-41cd-af01-915b619f5937}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Arquivos de Origem\Classes Nativas\Direct2D">
-      <UniqueIdentifier>{be51db61-d67b-4eaa-8398-9a9219dde4b0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Arquivos de Origem\Classes Nativas\WIC">
-      <UniqueIdentifier>{0bbe8735-4632-4f26-9f00-12f3e4e47806}</UniqueIdentifier>
     </Filter>
     <Filter Include="Arquivos de Cabeçalho\Sistema">
       <UniqueIdentifier>{2c6b857a-547c-49a4-be8c-e84aa8a69575}</UniqueIdentifier>
@@ -165,6 +135,54 @@
     </Filter>
     <Filter Include="Arquivos de Origem\Classes\Extend Interfaces\Media Foundation">
       <UniqueIdentifier>{a5663704-a64a-491b-865b-755b4a900d7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Classes\WASAPI">
+      <UniqueIdentifier>{7ef5dd96-384d-40af-9d6a-99acab2f5f55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Classes\MMDevice">
+      <UniqueIdentifier>{24b2b313-d205-40b9-b5a3-60e4bfe913cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Classes Nativas\ForEvents">
+      <UniqueIdentifier>{a3c863ec-80bf-4e74-a24d-88d5da666832}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Classes Nativas\ForEvents\WIC">
+      <UniqueIdentifier>{ac30c3dd-013c-41b3-8521-bd00a554f141}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Classes Nativas\ForEvents\Media Foundation">
+      <UniqueIdentifier>{426cb267-c71e-4896-91e1-0dc43a96fb37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Classes Nativas\ForEvents\Direct2D">
+      <UniqueIdentifier>{1bbe7c0d-4c4a-4a2b-a931-30d5fcdb8460}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Classes Nativas\ForEvents\CoreAudio">
+      <UniqueIdentifier>{95dc1aa6-5694-4e9f-9766-e21b00fcb0f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Classes Nativas\Classes">
+      <UniqueIdentifier>{be03a9d9-bc88-45e3-b2d7-2e3f817ea95e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Classes Nativas\Classes\Caren Api">
+      <UniqueIdentifier>{1a0147c0-0d79-411d-bd8a-1ebd20b7f723}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Classes Nativas\ForEvents">
+      <UniqueIdentifier>{3e3a91ed-133e-4b52-845b-118d45312294}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Classes Nativas\ForEvents\WIC">
+      <UniqueIdentifier>{0bbe8735-4632-4f26-9f00-12f3e4e47806}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Classes Nativas\ForEvents\MediaFoundation">
+      <UniqueIdentifier>{243e97c0-3452-41cd-af01-915b619f5937}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Classes Nativas\ForEvents\Direct2D">
+      <UniqueIdentifier>{be51db61-d67b-4eaa-8398-9a9219dde4b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Classes Nativas\ForEvents\CoreAudio">
+      <UniqueIdentifier>{187b0aa0-9044-4cf6-b774-6672ac1435fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Classes Nativas\Classes">
+      <UniqueIdentifier>{28fa5633-5fa3-4f18-b268-f26f83289979}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Classes Nativas\Classes\Caren Api">
+      <UniqueIdentifier>{0cb74aa9-db4b-4b0d-8724-4960fb35da69}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -525,12 +543,6 @@
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFGetService.h">
       <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
     </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMedia2DBuffer.h">
-      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
-    </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMedia2DBuffer2.h">
-      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
-    </ClInclude>
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFMediaBuffer.h">
       <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
     </ClInclude>
@@ -637,16 +649,16 @@
       <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Core Audio\CarenMMDevice.h">
-      <Filter>Arquivos de Cabeçalho\Classes\CoreAudio_MMDevice</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes\MMDevice</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Core Audio\CarenMMDeviceCollection.h">
-      <Filter>Arquivos de Cabeçalho\Classes\CoreAudio_MMDevice</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes\MMDevice</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Core Audio\CarenMMDeviceEnumerator.h">
-      <Filter>Arquivos de Cabeçalho\Classes\CoreAudio_MMDevice</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes\MMDevice</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Core Audio\CarenMMNotificationClient.h">
-      <Filter>Arquivos de Cabeçalho\Classes\CoreAudio_MMDevice</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes\MMDevice</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Caren\Caren.h">
       <Filter>Arquivos de Cabeçalho\Classes\Caren</Filter>
@@ -682,64 +694,64 @@
       <Filter>Arquivos de Cabeçalho\Classes de Funções</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Core Audio\CarenChannelAudioVolume.h">
-      <Filter>Arquivos de Cabeçalho\Classes\CoreAudio_WASAPI</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes\WASAPI</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Core Audio\CarenAudioCaptureClient.h">
-      <Filter>Arquivos de Cabeçalho\Classes\CoreAudio_WASAPI</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes\WASAPI</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Core Audio\CarenAudioClient.h">
-      <Filter>Arquivos de Cabeçalho\Classes\CoreAudio_WASAPI</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes\WASAPI</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Core Audio\CarenAudioSessionControl.h">
-      <Filter>Arquivos de Cabeçalho\Classes\CoreAudio_WASAPI</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes\WASAPI</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Core Audio\CarenAudioSessionEvents.h">
-      <Filter>Arquivos de Cabeçalho\Classes\CoreAudio_WASAPI</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes\WASAPI</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Core Audio\CarenAudioSessionManager.h">
-      <Filter>Arquivos de Cabeçalho\Classes\CoreAudio_WASAPI</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes\WASAPI</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Core Audio\CarenAudioRenderClient.h">
-      <Filter>Arquivos de Cabeçalho\Classes\CoreAudio_WASAPI</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes\WASAPI</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Core Audio\CarenAudioClock.h">
-      <Filter>Arquivos de Cabeçalho\Classes\CoreAudio_WASAPI</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes\WASAPI</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_ID2D1CommandSink.h">
-      <Filter>Arquivos de Cabeçalho\Classes Nativas\Direct2D</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\ForEvents\Direct2D</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_ID2D1CommandSink1.h">
-      <Filter>Arquivos de Cabeçalho\Classes Nativas\Direct2D</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\ForEvents\Direct2D</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_ID2D1CommandSink2.h">
-      <Filter>Arquivos de Cabeçalho\Classes Nativas\Direct2D</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\ForEvents\Direct2D</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_ID2D1CommandSink3.h">
-      <Filter>Arquivos de Cabeçalho\Classes Nativas\Direct2D</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\ForEvents\Direct2D</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_ID2D1CommandSink4.h">
-      <Filter>Arquivos de Cabeçalho\Classes Nativas\Direct2D</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\ForEvents\Direct2D</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_ID2D1CommandSink5.h">
-      <Filter>Arquivos de Cabeçalho\Classes Nativas\Direct2D</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\ForEvents\Direct2D</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IAudioSessionEvents.h">
-      <Filter>Arquivos de Cabeçalho\Classes Nativas\CoreAudio</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\ForEvents\CoreAudio</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFSourceReaderCallback.h">
-      <Filter>Arquivos de Cabeçalho\Classes Nativas\Media Foundation</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\ForEvents\Media Foundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFAsyncCallback.h">
-      <Filter>Arquivos de Cabeçalho\Classes Nativas\Media Foundation</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\ForEvents\Media Foundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFClockStateSink.h">
-      <Filter>Arquivos de Cabeçalho\Classes Nativas\Media Foundation</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\ForEvents\Media Foundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFSinkWriterCallback.h">
-      <Filter>Arquivos de Cabeçalho\Classes Nativas\Media Foundation</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\ForEvents\Media Foundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IMMNotificationClient.h">
-      <Filter>Arquivos de Cabeçalho\Classes Nativas\CoreAudio</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\ForEvents\CoreAudio</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Classes Auxiliares\CarenPD2D1_PROPERTY_FUNCTIONS.h">
       <Filter>Arquivos de Cabeçalho\Classes\Auxiliares</Filter>
@@ -1060,7 +1072,7 @@
       <Filter>Arquivos de Cabeçalho\Classes\Direct2D</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_WicBitmapProgress.h">
-      <Filter>Arquivos de Cabeçalho\Classes Nativas\WIC</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\ForEvents\WIC</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Windows\CarenEnumString.h">
       <Filter>Arquivos de Cabeçalho\Classes\Windows</Filter>
@@ -1078,7 +1090,7 @@
       <Filter>Arquivos de Cabeçalho\Classes\Windows</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IWICDevelopRawNotificationCallback.h">
-      <Filter>Arquivos de Cabeçalho\Classes Nativas\WIC</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\ForEvents\WIC</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\WIC\CarenWICStream.h">
       <Filter>Arquivos de Cabeçalho\Classes\WIC</Filter>
@@ -1234,25 +1246,25 @@
       <Filter>Arquivos de Cabeçalho\Classes\WIC</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFSourceOpenMonitor.h">
-      <Filter>Arquivos de Cabeçalho\Classes Nativas\Media Foundation</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\ForEvents\Media Foundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFNetProxyLocatorFactory.h">
-      <Filter>Arquivos de Cabeçalho\Classes Nativas\Media Foundation</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\ForEvents\Media Foundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFNetResourceFilter.h">
-      <Filter>Arquivos de Cabeçalho\Classes Nativas\Media Foundation</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\ForEvents\Media Foundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFMediaKeySessionNotify.h">
-      <Filter>Arquivos de Cabeçalho\Classes Nativas\Media Foundation</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\ForEvents\Media Foundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFSourceBufferNotify.h">
-      <Filter>Arquivos de Cabeçalho\Classes Nativas\Media Foundation</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\ForEvents\Media Foundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFMediaEngineNotify.h">
-      <Filter>Arquivos de Cabeçalho\Classes Nativas\Media Foundation</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\ForEvents\Media Foundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFMediaEngineNeedKeyNotify.h">
-      <Filter>Arquivos de Cabeçalho\Classes Nativas\Media Foundation</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\ForEvents\Media Foundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFByteStreamHandler.h">
       <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
@@ -1435,16 +1447,16 @@
       <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFQualityManager.h">
-      <Filter>Arquivos de Cabeçalho\Classes Nativas\Media Foundation</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\ForEvents\Media Foundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFCaptureEngineOnEventCallback.h">
-      <Filter>Arquivos de Cabeçalho\Classes Nativas\Media Foundation</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\ForEvents\Media Foundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFCaptureEngineOnSampleCallback.h">
-      <Filter>Arquivos de Cabeçalho\Classes Nativas\Media Foundation</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\ForEvents\Media Foundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFCaptureEngineOnSampleCallback2.h">
-      <Filter>Arquivos de Cabeçalho\Classes Nativas\Media Foundation</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\ForEvents\Media Foundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Windows\CarenPropertyBag2.h">
       <Filter>Arquivos de Cabeçalho\Classes\Windows</Filter>
@@ -1474,7 +1486,19 @@
       <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Core Audio\CarenSimpleAudioVolume.h">
-      <Filter>Arquivos de Cabeçalho\Classes\CoreAudio_WASAPI</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes\WASAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMF2DBuffer.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMF2DBuffer2.h">
+      <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Classes Nativas\CLN_CarenObjectState.h">
+      <Filter>Arquivos de Cabeçalho\Classes Nativas\Classes\Caren Api</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Caren\CarenObjectState.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Caren</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1788,12 +1812,6 @@
       <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFGetService.cpp">
-      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMedia2DBuffer.cpp">
-      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMedia2DBuffer2.cpp">
       <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaBuffer.cpp">
@@ -2292,40 +2310,40 @@
       <Filter>Arquivos de Origem\Classes\Direct2D</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IAudioSessionEvents.cpp">
-      <Filter>Arquivos de Origem\Classes Nativas\CoreAudio</Filter>
+      <Filter>Arquivos de Origem\Classes Nativas\ForEvents\CoreAudio</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_ID2D1CommandSink.cpp">
-      <Filter>Arquivos de Origem\Classes Nativas\Direct2D</Filter>
+      <Filter>Arquivos de Origem\Classes Nativas\ForEvents\Direct2D</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_ID2D1CommandSink1.cpp">
-      <Filter>Arquivos de Origem\Classes Nativas\Direct2D</Filter>
+      <Filter>Arquivos de Origem\Classes Nativas\ForEvents\Direct2D</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_ID2D1CommandSink2.cpp">
-      <Filter>Arquivos de Origem\Classes Nativas\Direct2D</Filter>
+      <Filter>Arquivos de Origem\Classes Nativas\ForEvents\Direct2D</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_ID2D1CommandSink3.cpp">
-      <Filter>Arquivos de Origem\Classes Nativas\Direct2D</Filter>
+      <Filter>Arquivos de Origem\Classes Nativas\ForEvents\Direct2D</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_ID2D1CommandSink4.cpp">
-      <Filter>Arquivos de Origem\Classes Nativas\Direct2D</Filter>
+      <Filter>Arquivos de Origem\Classes Nativas\ForEvents\Direct2D</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_ID2D1CommandSink5.cpp">
-      <Filter>Arquivos de Origem\Classes Nativas\Direct2D</Filter>
+      <Filter>Arquivos de Origem\Classes Nativas\ForEvents\Direct2D</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFAsyncCallback.cpp">
-      <Filter>Arquivos de Origem\Classes Nativas\MediaFoundation</Filter>
+      <Filter>Arquivos de Origem\Classes Nativas\ForEvents\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFClockStateSink.cpp">
-      <Filter>Arquivos de Origem\Classes Nativas\MediaFoundation</Filter>
+      <Filter>Arquivos de Origem\Classes Nativas\ForEvents\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFSinkWriterCallback.cpp">
-      <Filter>Arquivos de Origem\Classes Nativas\MediaFoundation</Filter>
+      <Filter>Arquivos de Origem\Classes Nativas\ForEvents\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IMMNotificationClient.cpp">
-      <Filter>Arquivos de Origem\Classes Nativas\CoreAudio</Filter>
+      <Filter>Arquivos de Origem\Classes Nativas\ForEvents\CoreAudio</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_WicBitmapProgress.cpp">
-      <Filter>Arquivos de Origem\Classes Nativas\WIC</Filter>
+      <Filter>Arquivos de Origem\Classes Nativas\ForEvents\WIC</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Windows\CarenEnumString.cpp">
       <Filter>Arquivos de Origem\Classes\Windows</Filter>
@@ -2343,7 +2361,7 @@
       <Filter>Arquivos de Origem\Classes\Windows</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IWICDevelopRawNotificationCallback.cpp">
-      <Filter>Arquivos de Origem\Classes Nativas\WIC</Filter>
+      <Filter>Arquivos de Origem\Classes Nativas\ForEvents\WIC</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\WIC\CarenWICStream.cpp">
       <Filter>Arquivos de Origem\Classes\WIC</Filter>
@@ -2499,28 +2517,28 @@
       <Filter>Arquivos de Origem\Classes\WIC</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFSourceOpenMonitor.cpp">
-      <Filter>Arquivos de Origem\Classes Nativas\MediaFoundation</Filter>
+      <Filter>Arquivos de Origem\Classes Nativas\ForEvents\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFNetProxyLocatorFactory.cpp">
-      <Filter>Arquivos de Origem\Classes Nativas\MediaFoundation</Filter>
+      <Filter>Arquivos de Origem\Classes Nativas\ForEvents\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFNetResourceFilter.cpp">
-      <Filter>Arquivos de Origem\Classes Nativas\MediaFoundation</Filter>
+      <Filter>Arquivos de Origem\Classes Nativas\ForEvents\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFMediaKeySessionNotify.cpp">
-      <Filter>Arquivos de Origem\Classes Nativas\MediaFoundation</Filter>
+      <Filter>Arquivos de Origem\Classes Nativas\ForEvents\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\CppResources\pch.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFSourceBufferNotify.cpp">
-      <Filter>Arquivos de Origem\Classes Nativas\MediaFoundation</Filter>
+      <Filter>Arquivos de Origem\Classes Nativas\ForEvents\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFMediaEngineNotify.cpp">
-      <Filter>Arquivos de Origem\Classes Nativas\MediaFoundation</Filter>
+      <Filter>Arquivos de Origem\Classes Nativas\ForEvents\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFMediaEngineNeedKeyNotify.cpp">
-      <Filter>Arquivos de Origem\Classes Nativas\MediaFoundation</Filter>
+      <Filter>Arquivos de Origem\Classes Nativas\ForEvents\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFTranscodeSinkInfoProvider.cpp">
       <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
@@ -2703,16 +2721,16 @@
       <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFQualityManager.cpp">
-      <Filter>Arquivos de Origem\Classes Nativas\MediaFoundation</Filter>
+      <Filter>Arquivos de Origem\Classes Nativas\ForEvents\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFCaptureEngineOnEventCallback.cpp">
-      <Filter>Arquivos de Origem\Classes Nativas\MediaFoundation</Filter>
+      <Filter>Arquivos de Origem\Classes Nativas\ForEvents\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFCaptureEngineOnSampleCallback.cpp">
-      <Filter>Arquivos de Origem\Classes Nativas\MediaFoundation</Filter>
+      <Filter>Arquivos de Origem\Classes Nativas\ForEvents\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFCaptureEngineOnSampleCallback2.cpp">
-      <Filter>Arquivos de Origem\Classes Nativas\MediaFoundation</Filter>
+      <Filter>Arquivos de Origem\Classes Nativas\ForEvents\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Windows\CarenPropertyBag2.cpp">
       <Filter>Arquivos de Origem\Classes\Windows</Filter>
@@ -2737,6 +2755,18 @@
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Core Audio\CarenSimpleAudioVolume.cpp">
       <Filter>Arquivos de Origem\Classes\WASAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMF2DBuffer.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMF2DBuffer2.cpp">
+      <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Classes Nativas\CLN_CarenObjectState.cpp">
+      <Filter>Arquivos de Origem\Classes Nativas\Classes\Caren Api</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Caren\CarenObjectState.cpp">
+      <Filter>Arquivos de Origem\Classes\Caren</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

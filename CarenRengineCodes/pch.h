@@ -28,6 +28,22 @@ limitations under the License.
 #include "Header.h"
 
 
+//Funções globais
+#include "FunctionClass/GlobalFuncs.h"
+
+
+//Interfaces da Api base CAREN
+#include "Caren/Caren.h"
+#include "Caren/CarenBuffer.h"
+#include "Caren/CarenWindowsEvent.h"
+#include "Caren/CarenHMONITOR.h"
+#include "Caren/CarenObjectState.h"
+
+
+//Codigos de resultados da api
+#include "CodeResults.h"
+
+
 //Interface da MEDIA FOUNDATION
 #include "Media Foundation/CarenMFActivate.h"
 #include "Media Foundation/CarenMFAsyncCallback.h"
@@ -41,8 +57,8 @@ limitations under the License.
 #include "Media Foundation/CarenMFDXGIBuffer.h"
 #include "Media Foundation/CarenMFDXGIDeviceManager.h"
 #include "Media Foundation/CarenMFGetService.h"
-#include "Media Foundation/CarenMFMedia2DBuffer.h"
-#include "Media Foundation/CarenMFMedia2DBuffer2.h"
+#include "Media Foundation/CarenMF2DBuffer.h"
+#include "Media Foundation/CarenMF2DBuffer2.h"
 #include "Media Foundation/CarenMFMediaBuffer.h"
 #include "Media Foundation/CarenMFMediaEvent.h"
 #include "Media Foundation/CarenMFMediaEventGenerator.h"
@@ -80,7 +96,6 @@ limitations under the License.
 #include "Media Foundation/CarenMFVideoPresenter.h"
 #include "Media Foundation/CarenMFVideoRenderer.h"
 #include "Media Foundation/CarenMFVideoSampleAllocator.h"
-
 
 
 //Interfaces do DXGI
@@ -124,15 +139,12 @@ limitations under the License.
 #include "DXGI/CarenDXGISwapChain4.h"
 
 
-
 //Interface do D3D9
 #include "Direct3D/CarenDirect3DDeviceManager9.h"
 
 
-
 //Interfaces do D3D10
 #include "Direct3D/CarenD3D10Multithread.h"
-
 
 
 //Interfaces do D3D11
@@ -188,6 +200,7 @@ limitations under the License.
 #include "Direct3D/CarenD3D11VertexShader.h"
 #include "Direct3D/CarenD3D11View.h"
 #include "Direct3D/CarenD3DDeviceContextState.h"
+
 
 //Interfaces Windows.
 #include "Windows/CarenEnumString.h"

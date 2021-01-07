@@ -16,12 +16,13 @@ limitations under the License.
 
 
 #pragma once
-#include "pch.h"
+#include "Header.h"
 #include "Caren/CarenHMONITOR.h"
 #include "CarenGuids.h"
 #include "ParameterResolver/CarenParameterResolver.h"
-#include "SDK_Caren.h"
 
+//Importa o namespace do sistema
+using namespace System;
 
 //Importa o namespace base
 using namespace CarenRengine;
@@ -462,7 +463,7 @@ namespace CarenRengine
 				/// Se esse atributo for true, o processador de vídeo espera que as texturas de saída sejam alocadas pelo chamador, mesmo quando operando no modo DXVA 
 				/// (DirectX Video Acceleration). Se esse atributo for false, o processador de vídeo alocará as texturas de saída ao operar no modo DXVA e falhará se 
 				/// as texturas de saída fornecidas pelo chamador forem fornecidas.
-				/// Para definir esse atributo obtenha um (ICarenMidiaAttribute) da interface (ICarenMFT) no processador de vídeo.
+				/// Para definir esse atributo obtenha um (ICarenMFAttributes) da interface (ICarenMFTransform) no processador de vídeo.
 				/// </summary>
 				literal String^ MF_XVP_CALLER_ALLOCATES_OUTPUT = "{04A2CABC-0CAB-40B1-A1B9-75BC3658F000}";
 				/// <summary>
@@ -470,7 +471,7 @@ namespace CarenRengine
 				/// Desativa a conversão de taxa de quadros no (processador de vídeo MFT).
 				/// Se esse atributo for true, o processador de vídeo não executará a conversão de taxa de quadros. Por padrão, o processador de vídeo converterá a 
 				/// taxa de quadros para corresponder ao tipo de mídia de saída.
-				/// Para definir esse atributo obtenha um (ICarenMidiaAttribute) da interface (ICarenMFT) no processador de vídeo.
+				/// Para definir esse atributo obtenha um (ICarenMFAttributes) da interface (ICarenMFTransform) no processador de vídeo.
 				/// </summary>
 				literal String^ MF_XVP_DISABLE_FRC = "{2C0AFA19-7A97-4D5A-9EE8-16D4FC518D8C}";
 
@@ -5140,12 +5141,12 @@ namespace CarenRengine
 				/// <summary>
 				/// Indica que deve obter a (Fonte de mídia).
 				/// </summary>
-				ID_FONTE_MIDIA = 0xFFFFFFFF,
+				ID_MF_SOURCE_READER_MEDIASOURCE = 0xFFFFFFFF,
 
 				/// <summary>
 				/// Indica que deve ler ou selecionar todos os fluxos.
 				/// </summary>
-				ID_TODOS_FLUXOS = 0xFFFFFFFE,
+				ID_MF_SOURCE_READER_ALL_STREAMS = 0xFFFFFFFE,
 
 			};
 
@@ -17365,7 +17366,7 @@ namespace CarenRengine
 				/// <summary>
 				/// O buffer com os dados.
 				/// </summary>
-				ICarenBuffer^ BufferDados;
+				Object^ BufferDados;
 			};
 
 			/// <summary>
@@ -17442,7 +17443,7 @@ namespace CarenRengine
 				/// <summary>
 				/// Especifica que está armzenando um valor: VT_UNKNOWN -> ICaren
 				/// </summary>
-				ICaren^ Var_ICaren;
+				Object^ Var_ICaren;
 			};
 
 			/// <summary>
@@ -17485,10 +17486,10 @@ namespace CarenRengine
 				CA_CY^ cyVal;
 				double date;
 				String^ bstrVal;
-				ICaren^ punkVal;
-				ICaren^ pdispVal;
-				ICaren^ parray;
-				ICarenBuffer^ pbVal;
+				Object^ punkVal;
+				Object^ pdispVal;
+				Object^ parray;
+				Object^ pbVal;
 				cli::array<short>^ piVal;
 				cli::array<long>^ plVal;
 				cli::array<long long>^ pllVal;
@@ -17500,11 +17501,11 @@ namespace CarenRengine
 				CA_CY^ pcyVal;
 				cli::array<double>^ pdate;
 				String^ pbstrVal;
-				ICaren^ ppunkVal;
-				ICaren^ ppdispVal;
-				ICaren^ pparray;
+				Object^ ppunkVal;
+				Object^ ppdispVal;
+				Object^ pparray;
 				CA_VARIANT^ pvarVal;
-				ICaren^ byref;
+				Object^ byref;
 				char cVal;
 				UInt16 uiVal;
 				UInt32 ulVal;
@@ -17519,8 +17520,8 @@ namespace CarenRengine
 				cli::array<int>^ pintVal;
 				cli::array<unsigned int>^ puintVal;
 
-				ICaren^ pvRecord;
-				ICaren^ pRecInfo;
+				Object^ pvRecord;
+				Object^ pRecInfo;
 			};
 
 			/// <summary>
@@ -18163,7 +18164,7 @@ namespace CarenRengine
 				/// <summary>
 				/// (pSysMem) - Contém um ponteiro para os dados de inicialização.
 				/// </summary>
-				ICaren^ SysMemoria;
+				Object^ SysMemoria;
 
 				/// <summary>
 				/// (SysMemPitch) - A distância (em bytes) desde o início de uma linha de uma textura para a próxima linha. Passo de memória do sistema é usado apenas para 2D e dados de textura 3D como é não 
@@ -18810,7 +18811,7 @@ namespace CarenRengine
 				/// <summary>
 				/// (pBits) - Um ponteiro para o buffer que contém a superfice da imagem para leitura ou gravação.
 				///</summary>
-				ICarenBuffer^ Buffer;
+				Object^ Buffer;
 			};
 
 			/// <summary>
@@ -19496,6 +19497,9 @@ namespace CarenRengine
 				CA_RECT^ DesktopCoordinates;
 				Boolean                            AttachedToDesktop;
 				Enumeracoes::CA_DXGI_MODE_ROTATION Rotation;
+				/// <summary>
+				/// Uma i
+				/// </summary>
 				CarenHMONITOR^ Monitor;
 			};
 
@@ -19759,7 +19763,7 @@ namespace CarenRengine
 			/// <summary>
 			/// (SECURITY_DESCRIPTOR)(FALTA DOCUMENTAR) - ontém as informações de segurança associadas a um objeto. Os aplicativos usam essa estrutura para definir e consultar o status de segurança de um objeto.
 			/// </summary>
-			public ref struct CA_DESCRITOR_SEGURANCA
+			public ref struct CA_SECURITY_DESCRIPTOR
 			{
 				/// <summary>
 				/// (Revision) - 
@@ -19800,7 +19804,7 @@ namespace CarenRengine
 			/// <summary>
 			/// (SECURITY_ATTRIBUTES)(FALTA DOCUMENTAR) - Contém o descritor de segurança para um objeto e especifica se o identificador recuperado especificando essa estrutura é hereditário. Esta estrutura fornece configurações de segurança para objetos criados por várias funções.
 			/// </summary>
-			public ref struct CA_ATRIBUTOS_SEGURANCA
+			public ref struct CA_SECURITY_ATTRIBUTES
 			{
 				/// <summary>
 				/// (nLength) - Contém o Size(Tamanho) da estrutura nativa. Esse valor é definido internamente e não precisa ser preenchido.
@@ -19810,7 +19814,7 @@ namespace CarenRengine
 				/// <summary>
 				/// (lpSecurityDescriptor) - 
 				/// </summary>
-				CA_DESCRITOR_SEGURANCA^ lpSecurityDescriptor;
+				CA_SECURITY_DESCRIPTOR^ lpSecurityDescriptor;
 
 				/// <summary>
 				/// (bInheritHandle) - 
@@ -19896,7 +19900,7 @@ namespace CarenRengine
 				/// <summary>
 				/// (pSample)(Representa a interface ICarenMFSample) - Ponteiro para a interface ICarenMFSample. Antes de chamar o ProcessOutput, defina este membro igual a um ponteiro de amostra ou NULO.
 				/// </summary>
-				ICaren^ AmostraMidia;
+				Object^ AmostraMidia;
 
 				/// <summary>
 				/// (dwStatus) - Antes de ligar para o ProcessOutput, defina este membro para zero. Quando o método retorna, o MFT pode definir o membro igual a um valor 
@@ -19910,7 +19914,7 @@ namespace CarenRengine
 			    /// ICarenMFCollection:GetElement e obtenha o ponteiro para ICarenMFMediaEvent. Quando o método ProcessOutput retorna, o chamador é responsável 
 				/// por liberar o ponteiro ICarenMFCollection se o ponteiro não for NULO.
 				/// </summary>
-				ICaren^ ColecaoEventos;
+				Object^ ColecaoEventos;
 			};
 
 			/// <summary>
@@ -19925,7 +19929,7 @@ namespace CarenRengine
 				/// <summary>
 				/// Uma interface ICarenMFMediaType que contém o tipo de mídia para a fluxo de vídeo. Este membro pode ser NULO.
 				/// </summary>
-				ICaren^ pVideoMediaType;
+				Object^ pVideoMediaType;
 				/// <summary>
 				/// 
 				/// </summary>
@@ -19933,7 +19937,7 @@ namespace CarenRengine
 				/// <summary>
 				/// Uma interface ICarenMFMediaType que contém o tipo de mídia para a fluxo de áudio. Este membro pode ser NULO.
 				/// </summary>
-				ICaren^ pAudioMediaType;
+				Object^ pAudioMediaType;
 			};
 
 			/// <summary>
@@ -20725,7 +20729,7 @@ namespace CarenRengine
 				// <summary>
 				// 
 				// </summary>
-				ICaren^ colorContext;
+				Object^ colorContext;
 			};
 
 			/// <summary> 
@@ -20946,7 +20950,7 @@ namespace CarenRengine
 				// <summary>
 				// 
 				// </summary>
-				ICaren^ effect;
+				Object^ effect;
 
 				// <summary>
 				// 
@@ -21269,7 +21273,7 @@ namespace CarenRengine
 				// <summary>
 				// 
 				// </summary>
-				ICaren^ geometricMask;
+				Object^ geometricMask;
 
 				// <summary>
 				  // 
@@ -21289,7 +21293,7 @@ namespace CarenRengine
 				// <summary>
 				  // 
 				  // </summary>
-				ICaren^ opacityBrush;
+				Object^ opacityBrush;
 
 				// <summary>
 				  // 
@@ -21309,7 +21313,7 @@ namespace CarenRengine
 				// <summary>
 				// 
 				// </summary>
-				ICaren^ geometricMask;
+				Object^ geometricMask;
 				// <summary>
 				  // 
 				  // </summary>
@@ -21325,7 +21329,7 @@ namespace CarenRengine
 				// <summary>
 				  // 
 				  // </summary>
-				ICaren^ opacityBrush;
+				Object^ opacityBrush;
 				// <summary>
 				  // 
 				  // </summary>
@@ -21362,7 +21366,7 @@ namespace CarenRengine
 				// <summary>
 				// 
 				// </summary>
-				ICarenBuffer^ bits;
+				Object^ bits;
 			};
 
 			/// <summary> 
@@ -21854,7 +21858,7 @@ namespace CarenRengine
 				// <summary>
 				  // 
 				  // </summary>
-				ICarenBuffer^ data;
+				Object^ data;
 
 				// <summary>
 				  // 
@@ -21944,11 +21948,11 @@ namespace CarenRengine
 				/// <summary>
 				/// 
 				/// </summary>  
-				ICarenBuffer^ Pattern;
+				Object^ Pattern;
 				/// <summary>
 				/// 
 				/// </summary>  
-				ICarenBuffer^ Mask;
+				Object^ Mask;
 				/// <summary>
 				/// 
 				/// </summary>  
@@ -21967,7 +21971,7 @@ namespace CarenRengine
 				/// <summary>
 				/// 
 				/// </summary>  
-				ICarenBuffer^ pbBuffer;
+				Object^ pbBuffer;
 				/// <summary>
 				/// 
 				/// </summary>  
@@ -22328,9 +22332,9 @@ namespace CarenRengine
 			public ref struct CA_DWRITE_GLYPH_RUN
 			{
 				/// <summary>
-				/// Uma interface que contém o ponteiro para a (IDWriteFontFace).
+				/// Uma interface base que contém o ponteiro para a (IDWriteFontFace).
 				/// </summary>
-				ICaren^ fontFace;
+				Object^ fontFace;
 				float                     fontEmSize;
 				UInt32                    glyphCount;
 				cli::array<UInt16>^  glyphIndices;
@@ -22371,179 +22375,7 @@ namespace CarenRengine
 		//Contém interfaces comuns as demais bibliotecas
 		namespace Interfaces
 		{
-			/// <summary>
-			/// Interface responsável por criar e gerenciar um evento nativo do Windows.
-			/// </summary>
-			[CategoryAttribute("Caren Interface")]
-			[Guid("CCC5A485-8664-474D-A88D-B9DE3512AE0D")]
-			public interface class ICarenWindowsEvent
-			{
-				/// <summary>
-				/// Propriedade que define se a classe foi descartada.
-				/// </summary>
-				property Boolean DisposedClasse
-				{
-					virtual Boolean get();
-				}
 
-
-				//Métodos
-
-				/// <summary>
-				/// (CreateEventW) - Cria ou abre um objeto de evento nomeado ou sem nome.
-				/// </summary>
-				/// <param name="Param_AtributosEvento">Uma estrutura CA_ATRIBUTOS_SEGURANCA. Se este parâmetro é NULO, o evento não pode 
-				/// ser herdado por um processo filho.
-				/// A estrutura especifica um descritor de segurança para o novo evento. Sendo NULO, o evento recebe um descritor de 
-				/// segurança padrão. Os ACLs no descritor de segurança padrão para um evento vêm do símbolo primário ou de representação 
-				/// do criador.</param>
-				/// <param name="Param_ManualReset">Se este parâmetro for TRUE,a função cria um objeto de evento de redefinição manual,
-				/// que requer o uso da função (ResetarEvento) para definir o estado do evento para não sinalizado. Se este parâmetro for 
-				/// FALSE, a função cria um objeto de evento de redefinição automática e o sistema redefine automaticamente o estado do evento
-				/// para não sinalizado após a lançamento de um único thread.</param>
-				/// <param name="Param_EstadoInicial">Se este parâmetro é TRUE,o estado inicial do objeto do evento é sinalizado; caso contrário, não é sinalizado.</param>
-				/// <param name="Param_NomeObjetoEvento">O nome do objeto do evento. O nome é limitado a 260(MAX_PATH) caracteres. A comparação do nome é sensível ao caso(Case-Sensitive).
-				/// Se o (Param_NomeObjetoEvento) corresponde ao nome de um objeto de evento nomeado existente, esta função solicita o 
-				/// EVENT_ALL_ACCESS direito de acesso. Neste caso, os parâmetros (Param_ManualReset) e (Param_EstadoInicial) são ignorados porque já foram definidos pelo processo de criação. 
-				/// Se o parâmetro (Param_AtributosEvento) não é NULO, ele determina se o identificador pode ser herdado, mas seu membro descritor de segurança é ignorado.
-				/// Se o parâmetro (Param_NomeObjetoEvento) corresponde ao nome de outro tipo de objeto no mesmo espaço de nome (como um semáforo existente, mutex, temporâmico, trabalho ou 
-				/// objeto de mapeamento de arquivos), a função falha.</param>
-				CarenResult CriarEvento(
-					Estruturas::CA_ATRIBUTOS_SEGURANCA^ Param_AtributosEvento,
-					Boolean Param_ManualReset,
-					Boolean Param_EstadoInicial,
-					String^ Param_NomeObjetoEvento);
-
-				/// <summary>
-				/// (CreateEventExW) - Cria ou abre um objeto de evento nomeado ou sem nome. Permite especificar a mascara de acesso para o objeto.
-				/// </summary>
-				/// <param name="Param_AtributosEvento">Uma estrutura CA_ATRIBUTOS_SEGURANCA. Se este parâmetro é NULO, o evento não pode 
-				/// ser herdado por um processo filho.
-				/// A estrutura especifica um descritor de segurança para o novo evento. Sendo NULO, o evento recebe um descritor de 
-				/// segurança padrão. Os ACLs no descritor de segurança padrão para um evento vêm do símbolo primário ou de representação 
-				/// do criador.</param>
-				/// <param name="Param_NomeObjetoEvento">O nome do objeto do evento. O nome é limitado a 260(MAX_PATH) caracteres. A comparação do nome é sensível ao caso(Case-Sensitive).
-				/// Se o (Param_NomeObjetoEvento) corresponde ao nome de um objeto de evento nomeado existente, esta função solicita o 
-				/// EVENT_ALL_ACCESS direito de acesso. Neste caso, os parâmetros (Param_ManualReset) e (Param_EstadoInicial) são ignorados porque já foram definidos pelo processo de criação. 
-				/// Se o parâmetro (Param_AtributosEvento) não é NULO, ele determina se o identificador pode ser herdado, mas seu membro descritor de segurança é ignorado.
-				/// Se o parâmetro (Param_NomeObjetoEvento) corresponde ao nome de outro tipo de objeto no mesmo espaço de nome (como um semáforo existente, mutex, temporâmico, trabalho ou 
-				/// objeto de mapeamento de arquivos), a função falha.</param>
-				/// <param name="Param_Flags">Flags para criação do evento.</param>
-				/// <param name="Param_MascaraAcesso">A máscara de acesso para o objeto do evento. Consulte o (Synchronization Object Security and Access Rights) para saber os possiveis valores
-				/// para esse paramêtro.</param>
-				CarenResult CriarEventoEx(
-					Estruturas::CA_ATRIBUTOS_SEGURANCA^ Param_AtributosEvento,
-					String^ Param_NomeObjetoEvento,
-					Enumeracoes::CA_WIN_EVENT_FLAGS Param_Flags,
-					UInt32 Param_MascaraAcesso);
-
-				/// <summary>
-				/// Associa um determinado evento a classe atual.
-				/// O método vai retornar o código de erro(ER_FALHA), se um evento já existir.
-				/// </summary>
-				/// <param name="Param_PonteiroEvento">O ponteiro para um evento já criado.</param>
-				CarenResult AssociarEvento(IntPtr Param_PonteiroEvento);
-
-				/// <summary>
-				/// Recupera o evento atual da classe. Se o evento não for um objeto valido, o método retorna ER_PONTEIRO.
-				/// </summary>
-				/// <param name="Param_Out_Evento">O ponteiro para um evento já criado.</param>
-				CarenResult RecuperarEvento([Out] IntPtr% Param_Out_Evento);
-
-				/// <summary>
-				/// Recupera o evento atual da classe. Se o evento não for um objeto valido, o método retorna ER_PONTEIRO.
-				/// </summary>
-				/// <param name="Param_Out_Evento">O ponteiro para a handle do evento.</param>
-				CarenResult RecuperarEvento(LPVOID* Param_Out_Evento);
-
-				/// <summary>
-				/// (WaitForSingleObject) - Espera até que o objeto especificado esteja no estado sinalizado ou o intervalo do intervalo do tempo limite decorra.
-				/// </summary>
-				/// <param name="Param_TempoMilliseconds">O intervalo de tempo, em milissegundos. Se um valor não zero for especificado, a função aguarda até que o objeto seja sinalizado ou o intervalo 
-				/// decorra. Se (Param_TempoMilliseconds) é zero, a função não entra em um estado de espera se o objeto não for sinalizado; ele sempre retorna imediatamente. Se Param_TempoMilliseconds é 
-				/// infinito(1e+300 * 1e+300), a função retornará somente quando o objeto é sinalizado.</param>
-				CarenResult AguardarObjetoUnico(UInt32 Param_TempoMilliseconds);
-
-				/// <summary>
-				/// (WaitForSingleObjectEx) - Espera até que o objeto especificado está no estado sinalizado, uma rotina de conclusão I / O ou chamada procedimento assíncrono (APC) é enfileirado para o 
-				/// segmento(Thread), ou o intervalo de intervalo de tempo decorrido.
-				/// </summary>
-				/// <param name="Param_TempoMilliseconds">O intervalo de tempo, em milissegundos. Se um valor não zero for especificado, a função aguarda até que o objeto seja sinalizado ou o intervalo 
-				/// decorra. Se (Param_TempoMilliseconds) é zero, a função não entra em um estado de espera se o objeto não for sinalizado; ele sempre retorna imediatamente. Se Param_TempoMilliseconds é 
-				/// infinito(1e+300 * 1e+300), a função retornará somente quando o objeto é sinalizado.</param>
-				/// <param name="Param_Alertavel">Se este parâmetro é TRUE e a linha está no estado de espera, a função retorna quando o sistema enfileira uma rotina da conclusão de I/O ou Um APC, e a 
-				/// linha funciona a rotina ou a função. Caso contrário, a função não retorna, e a rotina de conclusão ou a função APC não é executada.
-				/// Uma rotina de conclusão é enfileirada quando a função ReadFileEx ou WriteFileEx na qual foi especificada foi concluída. </param>
-				CarenResult AguardarObjetoUnicoEx(UInt32 Param_TempoMilliseconds, Boolean Param_Alertavel);
-
-				/// <summary>
-				/// (ResetEvent) - Define o objeto de evento da classe atual para o estado não sinalizado.
-				/// </summary>
-				CarenResult ResetarEvento();
-
-				/// <summary>
-				/// (SetEvent) - Define o objeto do evento da classe atual para o estado sinalizado.
-				/// </summary>
-				CarenResult SinalizarEvento();
-
-				/// <summary>
-				/// (CloseHandle) - Fecha a alça do evento criado ou aberto anteriormente.
-				/// </summary>
-				CarenResult LiberarEvento();
-			};
-
-			/// <summary>
-			/// (IPropertyStore) - Interface responsável por expor métodos utilizados para enumerar e manipular valores de propriedade.
-			/// </summary>
-			[CategoryAttribute("Windows Interface")]
-			[Guid("73C75E1E-92A5-483B-8EA2-89E7879E0176")]
-			public interface class ICarenPropertyStore : ICaren
-			{
-				/// <summary>
-				/// Propriedade que define se a classe foi descartada.
-				/// </summary>
-				property Boolean DisposedClasse
-				{
-					virtual Boolean get();
-				}
-
-
-
-				//Métodos
-
-				/// <summary>
-				/// (Commit) - Depois que uma alteração foi feita, esse método salva as alterações.
-				/// </summary>
-				CarenResult SalvarConfigurações();
-
-				/// <summary>
-				/// (GetAt) - Obtém uma chave de propriedade da matriz de propriedades de um item.
-				/// </summary>
-				/// <param name="Param_Id">O índice da chave Propriedade na matriz de estruturas CA_PROPERTYKEY. Este é um índice baseado em zero.</param>
-				/// <param name="Param_Out_PropKey">TBD.</param>
-				CarenResult ObterKeyFromID(UInt32 Param_Id, [Out] Estruturas::CA_PROPERTYKEY^% Param_Out_PropKey);
-
-				/// <summary>
-				/// (GetCount) - Esse método retorna uma contagem do número de propriedades anexadas ao arquivo.
-				/// </summary>
-				/// <param name="Param_Out_CountProps">Retorna a contagem de propriedades.</param>
-				CarenResult ObterQuantidade([Out] UInt32% Param_Out_CountProps);
-
-				/// <summary>
-				/// (GetValue) - Este método recupera os dados para uma propriedade específica.
-				/// </summary>
-				/// <param name="Param_PropKey">TBD.</param>
-				/// <param name="Param_Out_Valor">Depois que o método retorna com êxito, este parâmetro retorna a estrutura CA_PropVariant que contém dados sobre a propriedade.</param>
-				CarenResult GetValue(Estruturas::CA_PROPERTYKEY^% Param_PropKey, [Out] Estruturas::CA_PropVariant^% Param_Out_Valor);
-
-				/// <summary>
-				/// (SetValue) - Este método define um valor de propriedade ou substitui ou remove um valor existente.
-				/// </summary>
-				/// <param name="Param_PropKey">TBD.</param>
-				/// <param name="Param_PropValor">TBD.</param>
-				CarenResult DefinirValor(Estruturas::CA_PROPERTYKEY^% Param_PropKey, Estruturas::CA_PropVariant^ Param_PropValor);
-
-			};
 		}
 	}
 }

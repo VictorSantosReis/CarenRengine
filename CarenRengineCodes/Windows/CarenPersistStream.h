@@ -15,18 +15,17 @@ limitations under the License.
 */
 
 #pragma once
-#include "../SDK_WIC.h"
 #include "../SDK_Caren.h"
+#include "../SDK_Windows.h"
 #include "../SDK_Utilidades.h"
 #include "../FunctionClass/GlobalFuncs.h"
 
 //Importa o namespace que contém as interfaces da API primária.
-using namespace CarenRengine::WIC;
+using namespace CarenRengine::Windows;
 
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Estruturas;
-using namespace CarenRengine::SDKBase::Interfaces;
 
 //Importa o namespace de utilidades utilizado pelas classes
 using namespace CarenRengine::SDKUtilidades;
@@ -53,6 +52,31 @@ public:
 	CarenPersistStream();
 	
 	~CarenPersistStream();
+
+
+	//Conversões implicitas
+public:
+	static operator CarenPersistStream^ (IntPtr Param_Pointer)
+	{
+		//Variavel a ser retornada.
+		CarenPersistStream^ ClassResultado = nullptr;
+
+		//Verifica se o ponteiro não é invalido.
+		if (Param_Pointer == IntPtr::Zero)
+			Sair; // O ponteiro não é valido.
+
+		//Cria a classe para definir o ponteiro.
+		ClassResultado = gcnew CarenPersistStream();
+
+		//Define o ponteiro na classe.
+		ClassResultado->PonteiroTrabalho = reinterpret_cast<IPersistStream*>(Param_Pointer.ToPointer());
+
+	Done:;
+
+		//Retorna o resultado.
+		return ClassResultado;
+	}
+
 
 	//Variaveis Internas.
 internal:

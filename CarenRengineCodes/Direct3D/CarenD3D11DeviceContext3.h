@@ -48,7 +48,6 @@ using namespace CarenRengine::Direct3D11;
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
 using namespace CarenRengine::SDKBase::Estruturas;
-using namespace CarenRengine::SDKBase::Interfaces;
 
 //Importa o namespace de utilidades utilizado pelas classes
 using namespace CarenRengine::SDKUtilidades;
@@ -76,6 +75,30 @@ public:
 	CarenD3D11DeviceContext3();
 
 	~CarenD3D11DeviceContext3();
+
+
+	//Conversões implicitas
+public:
+	static operator CarenD3D11DeviceContext3^ (IntPtr Param_Pointer)
+	{
+		//Variavel a ser retornada.
+		CarenD3D11DeviceContext3^ ClassResultado = nullptr;
+
+		//Verifica se o ponteiro não é invalido.
+		if (Param_Pointer == IntPtr::Zero)
+			Sair; // O ponteiro não é valido.
+
+		//Cria a classe para definir o ponteiro.
+		ClassResultado = gcnew CarenD3D11DeviceContext3();
+
+		//Define o ponteiro na classe.
+		ClassResultado->PonteiroTrabalho = reinterpret_cast<ID3D11DeviceContext3*>(Param_Pointer.ToPointer());
+
+	Done:;
+
+		//Retorna o resultado.
+		return ClassResultado;
+	}
 
 
 	//Variaveis Internas.

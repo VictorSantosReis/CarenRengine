@@ -31,7 +31,6 @@ using namespace CarenRengine::Windows;
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
 using namespace CarenRengine::SDKBase::Estruturas;
-using namespace CarenRengine::SDKBase::Interfaces;
 
 //Importa o namespace de utilidades utilizado pelas classes
 using namespace CarenRengine::SDKUtilidades;
@@ -76,6 +75,30 @@ public:
 	CarenMFByteStream(ICaren^ Param_UnkStream);
 
 	~CarenMFByteStream();
+
+
+	//Conversões implicitas
+public:
+	static operator CarenMFByteStream^ (IntPtr Param_Pointer)
+	{
+		//Variavel a ser retornada.
+		CarenMFByteStream^ ClassResultado = nullptr;
+
+		//Verifica se o ponteiro não é invalido.
+		if (Param_Pointer == IntPtr::Zero)
+			Sair; // O ponteiro não é valido.
+
+		//Cria a classe para definir o ponteiro.
+		ClassResultado = gcnew CarenMFByteStream();
+
+		//Define o ponteiro na classe.
+		ClassResultado->PonteiroTrabalho = reinterpret_cast<IMFByteStream*>(Param_Pointer.ToPointer());
+
+	Done:;
+
+		//Retorna o resultado.
+		return ClassResultado;
+	}
 
 
 	//Variaveis Internas.

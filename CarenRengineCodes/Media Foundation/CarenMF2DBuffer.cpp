@@ -16,20 +16,22 @@ limitations under the License.
 
 
 #include "../pch.h"
-#include "CarenMFMedia2DBuffer2.h"
+#include "CarenMF2DBuffer.h"
+
 
 
 //Destruidor.
-CarenMFMedia2DBuffer2::~CarenMFMedia2DBuffer2()
+CarenMF2DBuffer::~CarenMF2DBuffer()
 {
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
-//Construtor
-CarenMFMedia2DBuffer2::CarenMFMedia2DBuffer2()
+//Construtor.
+CarenMF2DBuffer::CarenMF2DBuffer()
 {
 	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
+	
 
 //
 // Métodos da interface ICaren
@@ -42,7 +44,7 @@ CarenMFMedia2DBuffer2::CarenMFMedia2DBuffer2()
 /// </summary>
 /// <param name="Param_Guid">O IID(Identificador de Interface) ou GUID para a interface desejada.</param>
 /// <param name="Param_InterfaceSolicitada">A interface que vai receber o ponteiro nativo. O usuário deve inicializar a interface antes de chamar o método. Libere a interface quando não for mais usá-la.</param>
-CarenResult CarenMFMedia2DBuffer2::ConsultarInterface(String^ Param_Guid, ICaren^ Param_InterfaceSolicitada)
+CarenResult CarenMF2DBuffer::ConsultarInterface(String^ Param_Guid, ICaren^ Param_InterfaceSolicitada)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -153,7 +155,7 @@ Done:;
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
 /// </summary>
 /// <param name="Param_PonteiroNativo">Variável (GERENCIADA) para o ponteiro nativo a ser adicionado.</param>
-CarenResult CarenMFMedia2DBuffer2::AdicionarPonteiro(IntPtr Param_PonteiroNativo)
+CarenResult CarenMF2DBuffer::AdicionarPonteiro(IntPtr Param_PonteiroNativo)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -169,7 +171,7 @@ CarenResult CarenMFMedia2DBuffer2::AdicionarPonteiro(IntPtr Param_PonteiroNativo
 	}
 
 	//Converte o ponteiro para o tipo especifico da classe.
-	PonteiroTrabalho = reinterpret_cast<IMF2DBuffer2*>(Param_PonteiroNativo.ToPointer());
+	PonteiroTrabalho = reinterpret_cast<IMF2DBuffer*>(Param_PonteiroNativo.ToPointer());
 
 	//Verifica o ponteiro
 	if (ObjetoValido(PonteiroTrabalho))
@@ -194,7 +196,7 @@ Done:;
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
 /// </summary>
 /// <param name="Param_PonteiroNativo">Variável (NATIVA) para o ponteiro nativo a ser adicionado.</param>
-CarenResult CarenMFMedia2DBuffer2::AdicionarPonteiro(LPVOID Param_PonteiroNativo)
+CarenResult CarenMF2DBuffer::AdicionarPonteiro(LPVOID Param_PonteiroNativo)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -210,7 +212,7 @@ CarenResult CarenMFMedia2DBuffer2::AdicionarPonteiro(LPVOID Param_PonteiroNativo
 	}
 
 	//Converte o ponteiro para o tipo especifico da classe.
-	PonteiroTrabalho = reinterpret_cast<IMF2DBuffer2*>(Param_PonteiroNativo);
+	PonteiroTrabalho = reinterpret_cast<IMF2DBuffer*>(Param_PonteiroNativo);
 
 	//Verifica se o ponteiro é valido
 	if (ObjetoValido(PonteiroTrabalho))
@@ -238,7 +240,7 @@ Done:;
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
 /// </summary>
 /// <param name="Param_Out_PonteiroNativo">Variável (GERENCIADA) que vai receber o ponteiro nativo.</param>
-CarenResult CarenMFMedia2DBuffer2::RecuperarPonteiro([Out] IntPtr% Param_Out_PonteiroNativo)
+CarenResult CarenMF2DBuffer::RecuperarPonteiro([Out] IntPtr% Param_Out_PonteiroNativo)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -269,7 +271,7 @@ Done:;
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
 /// </summary>
 /// <param name="Param_Out_PonteiroNativo">Variável (NATIVA) que vai receber o ponteiro nativo.</param>
-CarenResult CarenMFMedia2DBuffer2::RecuperarPonteiro(LPVOID* Param_Out_PonteiroNativo)
+CarenResult CarenMF2DBuffer::RecuperarPonteiro(LPVOID* Param_Out_PonteiroNativo)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -300,7 +302,7 @@ Done:;
 /// Método responsável por retornar a quantidade de referências do objeto COM atual.
 /// </summary>
 /// <param name="Param_Out_Referencias">Variável que vai receber a quantidade de referências do objeto.</param>
-CarenResult CarenMFMedia2DBuffer2::RecuperarReferencias([Out] UInt64% Param_Out_Referencias)
+CarenResult CarenMF2DBuffer::RecuperarReferencias([Out] UInt64% Param_Out_Referencias)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -335,7 +337,7 @@ Done:;
 /// <summary>
 /// Método responsável por indicar se o ponteiro COM atual é válido.
 /// </summary>
-CarenResult CarenMFMedia2DBuffer2::StatusPonteiro()
+CarenResult CarenMF2DBuffer::StatusPonteiro()
 {
 	return (ObjetoValido(PonteiroTrabalho) ? CarenResult(ResultCode::SS_OK, true) : CarenResult(ResultCode::ER_E_POINTER, false));
 }
@@ -344,7 +346,7 @@ CarenResult CarenMFMedia2DBuffer2::StatusPonteiro()
 /// Método responsável por retornar a variável que armazena o último código de erro desconhecido ou não documentado gerado pela classe.
 /// Esse método não chama o método nativo (GetLastError), apenas retorna o código de erro que foi armazenado na classe.
 /// </summary>
-Int32 CarenMFMedia2DBuffer2::ObterCodigoErro()
+Int32 CarenMF2DBuffer::ObterCodigoErro()
 {
 	return Var_Glob_LAST_HRESULT;
 }
@@ -353,7 +355,7 @@ Int32 CarenMFMedia2DBuffer2::ObterCodigoErro()
 /// (AddRef) - Incrementa a contagem de referência para o ponteiro do objeto COM atual. Você deve chamar este método sempre que 
 /// você fazer uma cópia de um ponteiro de interface.
 /// </summary>
-void CarenMFMedia2DBuffer2::AdicionarReferencia()
+void CarenMF2DBuffer::AdicionarReferencia()
 {
 	//Adiciona uma referência ao ponteiro
 	PonteiroTrabalho->AddRef();
@@ -362,7 +364,7 @@ void CarenMFMedia2DBuffer2::AdicionarReferencia()
 /// <summary>
 /// (Release) - 'Decrementa' a contagem de referência do objeto COM atual.
 /// </summary>
-void CarenMFMedia2DBuffer2::LiberarReferencia()
+void CarenMF2DBuffer::LiberarReferencia()
 {
 	//Libera a referência e obtém a quantidade atual.
 	ULONG RefCount = PonteiroTrabalho->Release();
@@ -381,7 +383,7 @@ void CarenMFMedia2DBuffer2::LiberarReferencia()
 /// Método responsável por chamar o finalizador da interface para realizar a limpeza e descarte de dados pendentes.
 /// Este método pode ser escrito de forma diferente para cada interface.
 /// </summary>
-void CarenMFMedia2DBuffer2::Finalizar()
+void CarenMF2DBuffer::Finalizar()
 {
 	//////////////////////
 	//Código de descarte//
@@ -391,126 +393,13 @@ void CarenMFMedia2DBuffer2::Finalizar()
 	GC::SuppressFinalize(this);
 
 	//Chama o finalizador da classe
-	this->~CarenMFMedia2DBuffer2();
+	this->~CarenMF2DBuffer();
 }
 
 
 
-
 //
-// Métodos da interface Proprietario
-//
-
-/// <summary>
-/// (Lock2DSize) - Fornece o acesso do chamador para a memória no buffer.
-/// </summary>
-/// <param name="Param_LockBufferFlags">Um membro da enumeração (CA_MF2DBuffer_LockFlags) que especifica se deseja bloquear o buffer para leitura, gravação ou ambos.</param>
-/// <param name="Param_Out_BufferPBScanline0">Recebe um ponteiro para o primeiro byte da linha superior de pixels na imagem. A linha superior é definida como a linha superior quando 
-/// a imagem é apresentada ao visualizador e pode não ser a primeira linha na memória.</param>
-/// <param name="Param_Out_StrideSuperfice">Recebe o passo de superfície, em bytes. A passada pode ser negativa, indicando que a imagem é orientada de baixo para cima na memória.</param>
-/// <param name="Param_Out_BufferStart">Recebe um ponteiro para o início do buffer acessível na memória.</param>
-/// <param name="Param_Out_LarguraBuffer">Recebe o comprimento do buffer, em bytes.</param>
-CarenResult CarenMFMedia2DBuffer2::Lock2DSize(Enumeracoes::CA_MF2DBuffer_LockFlags Param_LockBufferFlags, [Out] ICarenBuffer^% Param_Out_BufferPBScanline0, [Out] Int64% Param_Out_StrideSuperfice, [Out] ICarenBuffer^% Param_Out_BufferStart, [Out] UInt32% Param_Out_LarguraBuffer)
-{
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variavel COM
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis utilizadas no método
-	PBYTE pPBScanLine0 = NULL;
-	PBYTE pBufferData = NULL;
-	LONG StrideBuffer = 0;
-	DWORD LarguraBuffer = 0;
-	MF2DBuffer_LockFlags LockFlags = (MF2DBuffer_LockFlags)Param_LockBufferFlags;
-
-	//Chama o método para prender o buffer.
-	Hr = PonteiroTrabalho->Lock2DSize(LockFlags, &pPBScanLine0, &StrideBuffer, &pBufferData, &LarguraBuffer);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria a interface que vai conter o buffer obtido
-	Param_Out_BufferPBScanline0 = gcnew CarenBuffer();
-	Param_Out_BufferStart = gcnew CarenBuffer();
-
-	//Define os buffers em cada interface de saida.
-	Param_Out_BufferPBScanline0->CriarBuffer(IntPtr(pPBScanLine0), false, 0, 0);
-	Param_Out_BufferStart->CriarBuffer(IntPtr(pBufferData), false, 0, 0);
-
-	//Define os dados nos parametros de saida
-	Param_Out_StrideSuperfice = StrideBuffer;
-	Param_Out_LarguraBuffer = LarguraBuffer;
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
-}
-
-
-/// <summary>
-/// (Copy2DTo) - Copia o buffer para outro objeto de buffer 2D.
-/// </summary>
-/// <param name="Param_Interface2DBufferDestino">A interface de destino que vai receber o buffer.</param>
-CarenResult CarenMFMedia2DBuffer2::Copy2DTo(ICarenMFMedia2DBuffer2^% Param_Interface2DBufferDestino)
-{
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variavel COM
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis que seram utilizadas no método.
-	IMF2DBuffer2* pBuffer2Dest = NULL;
-
-	//Obtém o buffer
-	Resultado = Param_Interface2DBufferDestino->RecuperarPonteiro((LPVOID*)&pBuffer2Dest);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Sai do método
-		goto Done;
-	}
-
-	//Chama o método para copiar os dados.
-	Hr = PonteiroTrabalho->Copy2DTo(pBuffer2Dest);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
-}
-
-//
-// Métodos da interface ICarenMFMedia2DBuffer
+// Métodos da interface proprietaria
 //
 
 /// <summary>
@@ -518,7 +407,7 @@ Done:;
 /// </summary>
 /// <param name="Param_BufferContiguo">A interface que contém um buffer com os dados contiguou a serem copiados.</param>
 /// <param name="Param_LarguraBuffer">A largura do buffer a ser copiado.</param>
-CarenResult CarenMFMedia2DBuffer2::ContiguousCopyFrom(ICarenBuffer^ Param_BufferContiguo, UInt32 Param_LarguraBuffer)
+CarenResult CarenMF2DBuffer::ContiguousCopyFrom(ICarenBuffer^ Param_BufferContiguo, UInt32 Param_LarguraBuffer)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -540,7 +429,7 @@ CarenResult CarenMFMedia2DBuffer2::ContiguousCopyFrom(ICarenBuffer^ Param_Buffer
 	}
 
 	//Chama o método para copiar os dados do buffer para este.
-	Hr = PonteiroTrabalho->ContiguousCopyFrom((PBYTE)PonteiroDados.ToPointer(), Param_LarguraBuffer);
+	Hr = PonteiroTrabalho->ContiguousCopyFrom((PBYTE)PonteiroDados.ToPointer() , Param_LarguraBuffer);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -567,7 +456,7 @@ Done:;
 /// </summary>
 /// <param name="Param_DestinoBufferContiguou">A interface que vai receber o buffer de dados do objeto atual.</param>
 /// <param name="Param_LarguraBufferDestino">O tamanho do buffer de destino. Obtenha esse valor chamando o método (GetContiguousLength).</param>
-CarenResult CarenMFMedia2DBuffer2::ContiguousCopyTo(ICarenBuffer^% Param_DestinoBufferContiguou, UInt32 Param_LarguraBufferDestino)
+CarenResult CarenMF2DBuffer::ContiguousCopyTo(ICarenBuffer^% Param_DestinoBufferContiguou, UInt32 Param_LarguraBufferDestino)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -616,7 +505,7 @@ Done:;
 /// em formato contíguo.
 /// </summary>
 /// <param name="Param_Out_LarguraBufferContiguou">Recebe a largura do Buffer Contiguou.</param>
-CarenResult CarenMFMedia2DBuffer2::GetContiguousLength([Out] UInt32% Param_Out_LarguraBufferContiguou)
+CarenResult CarenMF2DBuffer::GetContiguousLength([Out] UInt32% Param_Out_LarguraBufferContiguou)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -660,7 +549,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Out_ByteBufferPrimeiraLinha">Recebe uma Interface de buffer para o primeiro byte da linha superior de pixels na imagem.</param>
 /// <param name="Param_Out_Stride">Recebe o stride, em bytes.</param>
-CarenResult CarenMFMedia2DBuffer2::GetScanline0AndPitch([Out] ICarenBuffer^% Param_Out_ByteBufferPrimeiraLinha, [Out] Int64% Param_Out_Stride)
+CarenResult CarenMF2DBuffer::GetScanline0AndPitch([Out] ICarenBuffer^% Param_Out_ByteBufferPrimeiraLinha, [Out] Int64% Param_Out_Stride)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -694,7 +583,7 @@ CarenResult CarenMFMedia2DBuffer2::GetScanline0AndPitch([Out] ICarenBuffer^% Par
 	Param_Out_ByteBufferPrimeiraLinha = gcnew CarenBuffer();
 
 	//Define o ponteiro de trabalho na interface.
-	Resultado = Param_Out_ByteBufferPrimeiraLinha->CriarBuffer(IntPtr(pBufferScanLine), false, 0, 0);
+	Param_Out_ByteBufferPrimeiraLinha->CriarBuffer(IntPtr(pBufferScanLine), false, 0, 0);
 
 	//Define o Stride no parametro de saida.
 	Param_Out_Stride = StrideValue;
@@ -708,7 +597,7 @@ Done:;
 /// (IsContiguousFormat) - Consulta se o buffer é contíguo em seu (formato nativo).
 /// </summary>
 /// <param name="Param_Out_BufferContiguou">Retorna true se o formato nativo deste buffer é: Contiguou.</param>
-CarenResult CarenMFMedia2DBuffer2::IsContiguousFormat([Out] Boolean% Param_Out_BufferContiguou)
+CarenResult CarenMF2DBuffer::IsContiguousFormat([Out] Boolean% Param_Out_BufferContiguou)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -752,7 +641,7 @@ Done:;
 /// linha superior quando a imagem é apresentada ao visualizador e pode não ser a primeira linha na memória.</param>
 /// <param name="Param_Out_Stride">Recebe a passada de superfície, em bytes. O passo pode ser negativo, indicando que a 
 /// imagem é orientada de baixo para cima na memória.</param>
-CarenResult CarenMFMedia2DBuffer2::Lock2D([Out] ICarenBuffer^% Param_Out_Buffer, [Out] Int64% Param_Out_Stride)
+CarenResult CarenMF2DBuffer::Lock2D([Out] ICarenBuffer^% Param_Out_Buffer, [Out] Int64% Param_Out_Stride)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -786,19 +675,7 @@ CarenResult CarenMFMedia2DBuffer2::Lock2D([Out] ICarenBuffer^% Param_Out_Buffer,
 	Param_Out_Buffer = gcnew CarenBuffer();
 
 	//Define o ponteiro de trabalho na interface.
-	Resultado = Param_Out_Buffer->CriarBuffer(IntPtr(pBuffer), false, 0, 0);
-
-	//Verifica se obteve sucesso
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou ao criar a classe para armazenar o buffer retornado.
-
-		//Libera o buffer novamente.
-		PonteiroTrabalho->Unlock2D();
-
-		//Sai do método
-		Sair;
-	}
+	Param_Out_Buffer->CriarBuffer(IntPtr(pBuffer), false, 0, 0);
 
 	//Define o Stride no parametro de saida.
 	Param_Out_Stride = StrideBuffer;
@@ -812,7 +689,7 @@ Done:;
 /// (Unlock2D) - Desbloqueia um buffer que foi bloqueado anteriormente. 
 /// Chame esse método uma vez para cada chamada para o método Lock2D.
 /// </summary>
-CarenResult CarenMFMedia2DBuffer2::Unlock2D()
+CarenResult CarenMF2DBuffer::Unlock2D()
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

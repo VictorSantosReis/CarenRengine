@@ -1,4 +1,4 @@
-#include "../pch.h"
+ï»¿#include "../pch.h"
 #include "Direct2DFunctions.h"
 
 float Direct2DFunctions::_D2D1ComputeMaximumScaleFactor(CA_D2D1_MATRIX_3X2_F^ Param_Matrix)
@@ -13,10 +13,10 @@ float Direct2DFunctions::_D2D1ComputeMaximumScaleFactor(CA_D2D1_MATRIX_3X2_F^ Pa
     //Converte a estrutura gerenciada para a nativa.
     vi_pMatrix = Util.ConverterD2D1_MATRIX_3X2_FManagedToUnmanaged(Param_Matrix);
 
-    //Realiza a operação.
+    //Realiza a operaÃ§Äƒo.
     Resultado = D2D1ComputeMaximumScaleFactor(const_cast<D2D1_MATRIX_3X2_F*>(vi_pMatrix));
 
-    //Libera a memória utilizada pela estrutura.
+    //Libera a memÃ³ria utilizada pela estrutura.
     DeletarEstruturaSafe(&vi_pMatrix);
 
     //Retorna o resultado.
@@ -35,14 +35,14 @@ Boolean Direct2DFunctions::_D2D1InvertMatrix(CA_D2D1_MATRIX_3X2_F^% Param_Ref_Ma
     //Converte a estrutura gerenciada para a nativa.
     vi_pInOutMatrix = Util.ConverterD2D1_MATRIX_3X2_FManagedToUnmanaged(Param_Ref_Matrix);
 
-    //Realiza a operação.
+    //Realiza a operaÃ§Äƒo.
     Resultado = static_cast<Boolean>(D2D1InvertMatrix(vi_pInOutMatrix));
 
     //Verifica se teve sucesso e define na matrix de referencia do parametro.
     if (Resultado)
         Param_Ref_Matrix = Util.ConverterD2D1_MATRIX_3X2_FUnmanagedToManaged(vi_pInOutMatrix);
 
-    //Libera a memória utilizada pela estrutura.
+    //Libera a memÃ³ria utilizada pela estrutura.
     DeletarEstruturaSafe(&vi_pInOutMatrix);
 
     //Retorna o resultado.
@@ -61,10 +61,10 @@ Boolean Direct2DFunctions::_D2D1IsMatrixInvertible(CA_D2D1_MATRIX_3X2_F^ Param_M
     //Converte a estrutura gerenciada para a nativa.
     vi_pMatrix = Util.ConverterD2D1_MATRIX_3X2_FManagedToUnmanaged(Param_Matrix);
 
-    //Realiza a operação.
+    //Realiza a operaÃ§Äƒo.
     Resultado = static_cast<Boolean>(D2D1IsMatrixInvertible(vi_pMatrix));
 
-    //Libera a memória utilizada pela estrutura.
+    //Libera a memÃ³ria utilizada pela estrutura.
     DeletarEstruturaSafe(&vi_pMatrix);
 
     //Retorna o resultado.
@@ -79,18 +79,18 @@ void Direct2DFunctions::_D2D1MakeRotateMatrix(
     //Variaveis a serem utilizadas.
     Utilidades Util;
     D2D1_POINT_2F* vi_pPointCenter = Nulo;
-    D2D1_MATRIX_3X2_F *vi_pOutMatrix = CriarEstrutura<D2D1_MATRIX_3X2_F>(); //Aloca memória para a Matrix.
+    D2D1_MATRIX_3X2_F *vi_pOutMatrix = CriarEstrutura<D2D1_MATRIX_3X2_F>(); //Aloca memÃ³ria para a Matrix.
 
     //Converte a estrutura de ponto.
     vi_pPointCenter = Util.ConverterD2D1_POINT_2FManagedToUnmanaged(Param_Center);
 
-    //Realiza a operação.
+    //Realiza a operaÃ§Äƒo.
     D2D1MakeRotateMatrix(Param_Angulo, *vi_pPointCenter, vi_pOutMatrix);
 
     //Converte a estrutura nativa para a gerenciada e define no parametro de saida.
     Param_Out_Matrix = Util.ConverterD2D1_MATRIX_3X2_FUnmanagedToManaged(vi_pOutMatrix);
 
-    //Libera a memória utilizada pelas estruturas.
+    //Libera a memÃ³ria utilizada pelas estruturas.
     DeletarEstruturaSafe(&vi_pPointCenter);
     DeletarEstruturaSafe(&vi_pOutMatrix);
 }
@@ -104,18 +104,18 @@ void Direct2DFunctions::_D2D1MakeSkewMatrix(
     //Variaveis a serem utilizadas.
     Utilidades Util;
     D2D1_POINT_2F* vi_pPointCenter = Nulo;
-    D2D1_MATRIX_3X2_F *vi_pOutMatrix = CriarEstrutura<D2D1_MATRIX_3X2_F>(); //Aloca memória para a Matrix.
+    D2D1_MATRIX_3X2_F *vi_pOutMatrix = CriarEstrutura<D2D1_MATRIX_3X2_F>(); //Aloca memÃ³ria para a Matrix.
 
     //Converte a estrutura de ponto.
     vi_pPointCenter = Util.ConverterD2D1_POINT_2FManagedToUnmanaged(Param_Center);
 
-    //Realiza a operação.
+    //Realiza a operaÃ§Äƒo.
     D2D1MakeSkewMatrix(Param_AnguloX, Param_AnguloY, *vi_pPointCenter, vi_pOutMatrix);
 
     //Converte a estrutura nativa para a gerenciada e define no parametro de saida.
     Param_Out_Matrix = Util.ConverterD2D1_MATRIX_3X2_FUnmanagedToManaged(vi_pOutMatrix);
 
-    //Libera a memória utilizada pelas estruturas.
+    //Libera a memÃ³ria utilizada pelas estruturas.
     DeletarEstruturaSafe(&vi_pPointCenter);
     DeletarEstruturaSafe(&vi_pOutMatrix);
 }
@@ -136,7 +136,7 @@ CA_D2D1_COLOR_F^ Direct2DFunctions::_D2D1ConvertColorSpace(
     //Converte a estrutura com a cor de destino.
     vi_pColor = Util.ConverterD2D1_COLOR_FManagedToUnmanaged(Param_Color);
 
-    //Realiza a operação.
+    //Realiza a operaÃ§Äƒo.
     vi_OutColor = D2D1ConvertColorSpace(
         static_cast<D2D1_COLOR_SPACE>(Param_SourceColorSpace),
         static_cast<D2D1_COLOR_SPACE>(Param_DestinationColorSpace),
@@ -145,7 +145,7 @@ CA_D2D1_COLOR_F^ Direct2DFunctions::_D2D1ConvertColorSpace(
     //Converte a estrutura criada para a gerenciada.
     Resultado = Util.ConverterD2D1_COLOR_FUnmanagedToManaged(&vi_OutColor);
 
-    //Libera a memória utilizada pela estrutura.
+    //Libera a memÃ³ria utilizada pela estrutura.
     DeletarEstruturaSafe(&vi_pColor);
 
     //Retorna o resultado.
@@ -160,7 +160,7 @@ void Direct2DFunctions::_D2D1SinCos(
     //Variaveis a serem utilizadas.
     float vi_OutSeno = 0.0f, vi_OutCosseno = 0.0f;
 
-    //Realiza a operação.
+    //Realiza a operaÃ§Äƒo.
     D2D1SinCos(Param_Angulo, &vi_OutSeno, &vi_OutCosseno);
 
     //Define os dados nos parametros de saida.
@@ -170,12 +170,12 @@ void Direct2DFunctions::_D2D1SinCos(
 
 float Direct2DFunctions::_D2D1Tan(float Param_Angulo)
 {
-    //Realiza a operação e retorna.
+    //Realiza a operaÃ§Äƒo e retorna.
     return D2D1Tan(Param_Angulo);
 }
 
 float Direct2DFunctions::_D2D1Vec3Length(float Param_X, float Param_Y, float Param_Z)
 {
-    //Realiza a operação e retorna.
+    //Realiza a operaÃ§Äƒo e retorna.
     return D2D1Vec3Length(Param_X, Param_Y, Param_Z);
 }

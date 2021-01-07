@@ -29,7 +29,6 @@ using namespace CarenRengine::WIC;
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Estruturas;
-using namespace CarenRengine::SDKBase::Interfaces;
 
 //Importa o namespace de utilidades utilizado pelas classes
 using namespace CarenRengine::SDKUtilidades;
@@ -57,6 +56,31 @@ public:
 	CarenWICMetadataBlockWriter();
 	
 	~CarenWICMetadataBlockWriter();
+
+
+	//Conversões implicitas
+public:
+	static operator CarenWICMetadataBlockWriter^ (IntPtr Param_Pointer)
+	{
+		//Variavel a ser retornada.
+		CarenWICMetadataBlockWriter^ ClassResultado = nullptr;
+
+		//Verifica se o ponteiro não é invalido.
+		if (Param_Pointer == IntPtr::Zero)
+			Sair; // O ponteiro não é valido.
+
+		//Cria a classe para definir o ponteiro.
+		ClassResultado = gcnew CarenWICMetadataBlockWriter();
+
+		//Define o ponteiro na classe.
+		ClassResultado->PonteiroTrabalho = reinterpret_cast<IWICMetadataBlockWriter*>(Param_Pointer.ToPointer());
+
+	Done:;
+
+		//Retorna o resultado.
+		return ClassResultado;
+	}
+
 
 	//Variaveis Internas.
 internal:

@@ -26,7 +26,6 @@ using namespace CarenRengine::Direct2D;
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Estruturas;
-using namespace CarenRengine::SDKBase::Interfaces;
 
 //Importa o namespace de utilidades utilizado pelas classes
 using namespace CarenRengine::SDKUtilidades;
@@ -53,6 +52,31 @@ public:
 	CarenD2D1ResourceTexture();
 
 	~CarenD2D1ResourceTexture();
+
+
+	//Conversões implicitas
+public:
+	static operator CarenD2D1ResourceTexture^ (IntPtr Param_Pointer)
+	{
+		//Variavel a ser retornada.
+		CarenD2D1ResourceTexture^ ClassResultado = nullptr;
+
+		//Verifica se o ponteiro não é invalido.
+		if (Param_Pointer == IntPtr::Zero)
+			Sair; // O ponteiro não é valido.
+
+		//Cria a classe para definir o ponteiro.
+		ClassResultado = gcnew CarenD2D1ResourceTexture();
+
+		//Define o ponteiro na classe.
+		ClassResultado->PonteiroTrabalho = reinterpret_cast<ID2D1ResourceTexture*>(Param_Pointer.ToPointer());
+
+	Done:;
+
+		//Retorna o resultado.
+		return ClassResultado;
+	}
+
 
 	//Variaveis Internas.
 internal:

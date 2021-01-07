@@ -23,7 +23,6 @@ limitations under the License.
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
 using namespace CarenRengine::SDKBase::Estruturas;
-using namespace CarenRengine::SDKBase::Interfaces;
 using namespace CarenRengine::Windows;
 
 //Namespace principal do sistema.

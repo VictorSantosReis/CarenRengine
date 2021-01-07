@@ -28,7 +28,6 @@ using namespace CarenRengine::DXGI;
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
 using namespace CarenRengine::SDKBase::Estruturas;
-using namespace CarenRengine::SDKBase::Interfaces;
 
 //Importa o namespace de utilidades utilizado pelas classes
 using namespace CarenRengine::SDKUtilidades;
@@ -56,6 +55,30 @@ public:
 	CarenDXGIOutput2();
 
 	~CarenDXGIOutput2();
+
+
+	//Conversões implicitas
+public:
+	static operator CarenDXGIOutput2^ (IntPtr Param_Pointer)
+	{
+		//Variavel a ser retornada.
+		CarenDXGIOutput2^ ClassResultado = nullptr;
+
+		//Verifica se o ponteiro não é invalido.
+		if (Param_Pointer == IntPtr::Zero)
+			Sair; // O ponteiro não é valido.
+
+		//Cria a classe para definir o ponteiro.
+		ClassResultado = gcnew CarenDXGIOutput2();
+
+		//Define o ponteiro na classe.
+		ClassResultado->PonteiroTrabalho = reinterpret_cast<IDXGIOutput2*>(Param_Pointer.ToPointer());
+
+	Done:;
+
+		//Retorna o resultado.
+		return ClassResultado;
+	}
 
 
 	//Variaveis Internas.

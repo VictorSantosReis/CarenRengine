@@ -28,7 +28,6 @@ using namespace CarenRengine::MediaFoundation;
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
 using namespace CarenRengine::SDKBase::Estruturas;
-using namespace CarenRengine::SDKBase::Interfaces;
 
 /// <summary>
 /// Classe responsável por conter funções nativas utilizada pela Api do Microsoft Media Foundation.

@@ -28,7 +28,6 @@ using namespace CarenRengine::MediaFoundation;
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
 using namespace CarenRengine::SDKBase::Estruturas;
-using namespace CarenRengine::SDKBase::Interfaces;
 
 //Importa o namespace de utilidades utilizado pelas classes
 using namespace CarenRengine::SDKUtilidades;
@@ -59,6 +58,30 @@ public:
 	CarenMFDXGIDeviceManager(OutParam UInt32% Param_Out_ResetToken);
 
 	~CarenMFDXGIDeviceManager();
+
+
+	//Conversões implicitas
+public:
+	static operator CarenMFDXGIDeviceManager^ (IntPtr Param_Pointer)
+	{
+		//Variavel a ser retornada.
+		CarenMFDXGIDeviceManager^ ClassResultado = nullptr;
+
+		//Verifica se o ponteiro não é invalido.
+		if (Param_Pointer == IntPtr::Zero)
+			Sair; // O ponteiro não é valido.
+
+		//Cria a classe para definir o ponteiro.
+		ClassResultado = gcnew CarenMFDXGIDeviceManager();
+
+		//Define o ponteiro na classe.
+		ClassResultado->PonteiroTrabalho = reinterpret_cast<IMFDXGIDeviceManager*>(Param_Pointer.ToPointer());
+
+	Done:;
+
+		//Retorna o resultado.
+		return ClassResultado;
+	}
 
 
 	//Variaveis Internas.

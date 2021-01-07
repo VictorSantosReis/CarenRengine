@@ -17,10 +17,10 @@ limitations under the License.
 
 #pragma once
 #include "../SDK_Base.h"
+#include "../SDK_Caren.h"
 
 //Importa o namespace que contém o namespace base de ICaren.
 using namespace CarenRengine;
-
 
 /// <summary>
 /// Classe responsável por representar a base de todas as demais interfaces da biblioteca. Espelha a interface nativa IUnknown.
@@ -43,6 +43,30 @@ public:
 	Caren();
 
 	~Caren();
+
+
+	//Conversões implicitas
+public:
+	static operator Caren^ (IntPtr Param_Pointer)
+	{
+		//Variavel a ser retornada.
+		Caren^ ClassResultado = nullptr;
+		
+		//Verifica se o ponteiro não é invalido.
+		if (Param_Pointer == IntPtr::Zero)
+			Sair; // O ponteiro não é valido.
+
+		//Cria a classe para definir o ponteiro.
+		ClassResultado = gcnew Caren();
+
+		//Define o ponteiro na classe.
+		ClassResultado->PonteiroTrabalho = Param_Pointer.ToPointer();
+
+	Done:;
+
+		//Retorna o resultado.
+		return ClassResultado;
+	}
 
 
 	//Variaveis Internas.

@@ -41,7 +41,6 @@ using namespace CarenRengine::Direct2D;
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Estruturas;
-using namespace CarenRengine::SDKBase::Interfaces;
 
 //Importa o namespace de utilidades utilizado pelas classes
 using namespace CarenRengine::SDKUtilidades;
@@ -77,6 +76,31 @@ public:
 	CarenD2D1Factory(CA_D2D1_FACTORY_TYPE Param_FactoryType, String^ Param_RIID, CA_D2D1_FACTORY_OPTIONS^ Param_FactoryOptions);
 	
 	~CarenD2D1Factory();
+
+
+	//Conversões implicitas
+public:
+	static operator CarenD2D1Factory^ (IntPtr Param_Pointer)
+	{
+		//Variavel a ser retornada.
+		CarenD2D1Factory^ ClassResultado = nullptr;
+
+		//Verifica se o ponteiro não é invalido.
+		if (Param_Pointer == IntPtr::Zero)
+			Sair; // O ponteiro não é valido.
+
+		//Cria a classe para definir o ponteiro.
+		ClassResultado = gcnew CarenD2D1Factory();
+
+		//Define o ponteiro na classe.
+		ClassResultado->PonteiroTrabalho = reinterpret_cast<ID2D1Factory*>(Param_Pointer.ToPointer());
+
+	Done:;
+
+		//Retorna o resultado.
+		return ClassResultado;
+	}
+
 
 	//Variaveis Internas.
 internal:

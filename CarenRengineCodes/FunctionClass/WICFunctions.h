@@ -25,7 +25,6 @@ limitations under the License.
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
 using namespace CarenRengine::SDKBase::Estruturas;
-using namespace CarenRengine::SDKBase::Interfaces;
 
 //Importa o SDK do WIC.
 using namespace CarenRengine::WIC;

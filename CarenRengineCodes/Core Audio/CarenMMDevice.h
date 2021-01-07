@@ -29,7 +29,6 @@ using namespace CarenRengine::CoreAudio;
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
 using namespace CarenRengine::SDKBase::Estruturas;
-using namespace CarenRengine::SDKBase::Interfaces;
 
 //Importa o namespace de utilidades utilizado pelas classes
 using namespace CarenRengine::SDKUtilidades;
@@ -55,7 +54,31 @@ public:
 
 	~CarenMMDevice();
 
+
+	//Conversões implicitas
+public:
+	static operator CarenMMDevice^ (IntPtr Param_Pointer)
+	{
+		//Variavel a ser retornada.
+		CarenMMDevice^ ClassResultado = nullptr;
+
+		//Verifica se o ponteiro não é invalido.
+		if (Param_Pointer == IntPtr::Zero)
+			Sair; // O ponteiro não é valido.
+
+		//Cria a classe para definir o ponteiro.
+		ClassResultado = gcnew CarenMMDevice();
+
+		//Define o ponteiro na classe.
+		ClassResultado->PonteiroTrabalho = reinterpret_cast<IMMDevice*>(Param_Pointer.ToPointer());
+
+	Done:;
+
+		//Retorna o resultado.
+		return ClassResultado;
+	}
 	
+
 	//Variaveis Internas.
 internal:
 	//Variavel que contém o valor da propriedade (DisposedClasse)
@@ -78,29 +101,6 @@ public:
 			//Retorna o valor.
 			return Prop_DisposedClasse;
 		}
-	}
-
-
-	//Cria uma instância da classe
-public:
-	/// <summary>
-	/// Cria uma instância vazia do dispositivo de audio.
-	/// </summary>
-	/// <param name="Param_Out_Interface">Retorna a interface vazia. Chamadas para está interface vai resultar em exceção
-	/// se nenhum ponteiro for definido.</param>
-	static CarenResult CriarInstanciaVazia([Out] ICarenMMDevice^%  Param_Out_Interface)
-	{
-		//Variavel que vai retornar o resultado.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Cria a interface e retorna ao usuário.
-		Param_Out_Interface = gcnew CarenMMDevice();
-
-		//Define sucesso
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-		//Retorna o resultado
-		return Resultado;
 	}
 
 

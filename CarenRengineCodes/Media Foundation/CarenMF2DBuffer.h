@@ -28,23 +28,21 @@ using namespace CarenRengine::MediaFoundation;
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
 using namespace CarenRengine::SDKBase::Estruturas;
-using namespace CarenRengine::SDKBase::Interfaces;
 
 //Importa o namespace de utilidades utilizado pelas classes
 using namespace CarenRengine::SDKUtilidades;
 
 /// <summary>
-/// Classe responsável por representar um buffer que contém uma superfície bidimensional, como um quadro de vídeo. 
-/// Essa é uma extensão da classe(CarenMFMedia2DBuffer).
+/// Representa um buffer que contém uma superfície bidimensional, como um quadro de vídeo.
 /// </summary>
-public ref class CarenMFMedia2DBuffer2 :public ICarenMFMedia2DBuffer2
+public ref class CarenMF2DBuffer : public ICarenMF2DBuffer
 {
 	/////////////////////////////////////////
 	//Objeto gerenciado por essa interface.//
 	/////////////////////////////////////////
 
-	//Ponteiro para a interface (IMF2DBuffer2).
-	IMF2DBuffer2* PonteiroTrabalho = NULL;
+	//Ponteiro para a interface (IMF2DBuffer).
+	IMF2DBuffer* PonteiroTrabalho = NULL;
 
 
 	//Construtor e destruidor da classe.
@@ -52,9 +50,33 @@ public:
 	/// <summary>
 	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
 	/// </summary>
-	CarenMFMedia2DBuffer2();
+	CarenMF2DBuffer();
 
-	~CarenMFMedia2DBuffer2();
+	~CarenMF2DBuffer();
+
+
+	//Conversões implicitas
+public:
+	static operator CarenMF2DBuffer^ (IntPtr Param_Pointer)
+	{
+		//Variavel a ser retornada.
+		CarenMF2DBuffer^ ClassResultado = nullptr;
+
+		//Verifica se o ponteiro não é invalido.
+		if (Param_Pointer == IntPtr::Zero)
+			Sair; // O ponteiro não é valido.
+
+		//Cria a classe para definir o ponteiro.
+		ClassResultado = gcnew CarenMF2DBuffer();
+
+		//Define o ponteiro na classe.
+		ClassResultado->PonteiroTrabalho = reinterpret_cast<IMF2DBuffer*>(Param_Pointer.ToPointer());
+
+	Done:;
+
+		//Retorna o resultado.
+		return ClassResultado;
+	}
 
 
 	//Variaveis Internas.
@@ -191,7 +213,7 @@ public:
 		catch (const std::exception&)
 		{
 			//Manda uma mensagem para o console.
-			System::Console::WriteLine(String::Concat(ICarenMFMedia2DBuffer2::typeid->Name, " - O método (As<>) falhou ao tentar criar uma instância para o tipo de destino solicitado => ", TypeInterface::typeid->Name));
+			System::Console::WriteLine(String::Concat(ICarenMF2DBuffer::typeid->Name, " - O método (As<>) falhou ao tentar criar uma instância para o tipo de destino solicitado => ", TypeInterface::typeid->Name));
 
 			//Sai do método
 			Sair;
@@ -218,33 +240,9 @@ public:
 	virtual void Finalizar();
 
 
-	//Métodos da interface(ICarenMFMedia2DBuffer2)
-public:
-	/// <summary>
-	/// (Copy2DTo) - Copia o buffer para outro objeto de buffer 2D.
-	/// </summary>
-	/// <param name="Param_Interface2DBufferDestino">A interface de destino que vai receber o buffer.</param>
-	virtual CarenResult Copy2DTo(ICarenMFMedia2DBuffer2^% Param_Interface2DBufferDestino);
-
-	/// <summary>
-	/// (Lock2DSize) - Fornece o acesso do chamador para a memória no buffer.
-	/// </summary>
-	/// <param name="Param_LockBufferFlags">Um membro da enumeração (CA_MF2DBuffer_LockFlags) que especifica se deseja bloquear o buffer para leitura, gravação ou ambos.</param>
-	/// <param name="Param_Out_BufferPBScanline0">Recebe um ponteiro para o primeiro byte da linha superior de pixels na imagem. A linha superior é definida como a linha superior quando 
-	/// a imagem é apresentada ao visualizador e pode não ser a primeira linha na memória.</param>
-	/// <param name="Param_Out_StrideSuperfice">Recebe o passo de superfície, em bytes. A passada pode ser negativa, indicando que a imagem é orientada de baixo para cima na memória.</param>
-	/// <param name="Param_Out_BufferStart">Recebe um ponteiro para o início do buffer acessível na memória.</param>
-	/// <param name="Param_Out_LarguraBuffer">Recebe o comprimento do buffer, em bytes.</param>
-	virtual CarenResult Lock2DSize(
-		Enumeracoes::CA_MF2DBuffer_LockFlags Param_LockBufferFlags,
-		[Out] ICarenBuffer^% Param_Out_BufferPBScanline0,
-		[Out] Int64% Param_Out_StrideSuperfice,
-		[Out] ICarenBuffer^% Param_Out_BufferStart,
-		[Out] UInt32% Param_Out_LarguraBuffer);
 
 
-
-	//Métodos da interface(ICarenMFMedia2DBuffer)
+	//Métodos da interface(ICarenMF2DBuffer)
 public:
 	/// <summary>
 	/// (ContiguousCopyFrom) - Copia dados para esse buffer de um buffer que tem um formato contíguo(Único).
@@ -260,14 +258,12 @@ public:
 	/// <param name="Param_LarguraBufferDestino">O tamanho do buffer de destino. Obtenha esse valor chamando o método (GetContiguousLength).</param>
 	virtual CarenResult ContiguousCopyTo(ICarenBuffer^% Param_DestinoBufferContiguou, UInt32 Param_LarguraBufferDestino);
 
-
 	/// <summary>
 	/// (GetContiguousLength) - Recupera o número de bytes necessários para armazenar os dados do buffer 
 	/// em formato contíguo.
 	/// </summary>
 	/// <param name="Param_Out_LarguraBufferContiguou">Recebe a largura do Buffer Contiguou.</param>
 	virtual CarenResult GetContiguousLength([Out] UInt32% Param_Out_LarguraBufferContiguou);
-
 
 	/// <summary>
 	/// (GetScanline0AndPitch) - Recupera um ponteiro para a memória de buffer e o Stride da superfície do quadro de vídeo.
@@ -278,13 +274,11 @@ public:
 	/// <param name="Param_Out_Stride">Recebe o stride, em bytes.</param>
 	virtual CarenResult GetScanline0AndPitch([Out] ICarenBuffer^% Param_Out_ByteBufferPrimeiraLinha, [Out] Int64% Param_Out_Stride);
 
-
 	/// <summary>
 	/// (IsContiguousFormat) - Consulta se o buffer é contíguo em seu (formato nativo).
 	/// </summary>
 	/// <param name="Param_Out_BufferContiguou">Retorna true se o formato nativo deste buffer é: Contiguou.</param>
 	virtual CarenResult IsContiguousFormat([Out] Boolean% Param_Out_BufferContiguou);
-
 
 	/// <summary>
 	/// (Lock2D) - Fornece o acesso do chamador para a memória no buffer.
@@ -294,7 +288,6 @@ public:
 	/// <param name="Param_Out_Stride">Recebe a passada de superfície, em bytes. O passo pode ser negativo, indicando que a 
 	/// imagem é orientada de baixo para cima na memória.</param>
 	virtual CarenResult Lock2D([Out] ICarenBuffer^% Param_Out_Buffer, [Out] Int64% Param_Out_Stride);
-
 
 	/// <summary>
 	/// (Unlock2D) - Desbloqueia um buffer que foi bloqueado anteriormente. 

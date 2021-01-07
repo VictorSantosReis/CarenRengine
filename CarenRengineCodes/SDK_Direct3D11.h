@@ -22,7 +22,6 @@ limitations under the License.
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
 using namespace CarenRengine::SDKBase::Estruturas;
-using namespace CarenRengine::SDKBase::Interfaces;
 
 //Namespace principal do sistema.
 namespace CarenRengine
@@ -208,9 +207,9 @@ namespace CarenRengine
 			/// <summary>
 			/// (CreateSharedHandle) - Cria uma Handle compartilhada em um objeto de Fence.
 			/// </summary>
-			/// <param name="Param_AtributosSec">Uma estrutura CA_ATRIBUTOS_SEGURANCA que contém dois membros de dados separados, mas relacionados: um descritor de segurança opcional e um valor booleanoque determina se os
+			/// <param name="Param_AtributosSec">Uma estrutura CA_SECURITY_ATTRIBUTES que contém dois membros de dados separados, mas relacionados: um descritor de segurança opcional e um valor booleanoque determina se os
 			/// processos filho podem herdar a Handle retornada. Defina esse parâmetro como NULO se quiser processos filho que o aplicativo pode criar para não herdar a Handle devolvida pelo (CreateSharedHandle) se você 
-			/// quiser que o recurso associado à Handle retornada obtenha um descritor de segurança padrão. O membro do lpSecurityDescriptor da estrutura especifica um CA_DESCRITOR_SEGURANCA para o recurso. Defina esse membro como 
+			/// quiser que o recurso associado à Handle retornada obtenha um descritor de segurança padrão. O membro do lpSecurityDescriptor da estrutura especifica um CA_SECURITY_DESCRIPTOR para o recurso. Defina esse membro como 
 			/// NULO se quiser que o tempo de execução atribua um descritor de segurança padrão ao recurso associado à Handle retornada. As ACLs no descritor de segurança padrão para o recurso vêm do token principal ou de 
 			/// personificação do criador.</param>
 			/// <param name="Param_TipoAcesso">Atualmente, o único valor que este parâmetro aceita é GENERIC_ALL(CA_ACCESS_RIGHTS::CA_ACR_GENERIC_ALL)</param>
@@ -218,7 +217,7 @@ namespace CarenRengine
 			/// e minúsculas.</param>
 			/// <param name="Param_Out_SharedHandle">Recebe o valor NT HANDLE para o recurso a compartilhar. Você pode usar está Handle em chamadas para acessar o recurso.</param>
 			CarenResult CreateSharedHandle(
-				CA_ATRIBUTOS_SEGURANCA^ Param_AtributosSec, 
+				CA_SECURITY_ATTRIBUTES^ Param_AtributosSec, 
 				UInt32 Param_TipoAcesso, 
 				String^ Param_Nome, 
 				[Out] IntPtr% Param_Out_SharedHandle);

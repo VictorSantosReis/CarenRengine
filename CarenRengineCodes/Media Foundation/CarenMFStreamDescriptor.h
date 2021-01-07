@@ -29,7 +29,6 @@ using namespace CarenRengine::MediaFoundation;
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
 using namespace CarenRengine::SDKBase::Estruturas;
-using namespace CarenRengine::SDKBase::Interfaces;
 
 //Importa o namespace de utilidades utilizado pelas classes
 using namespace CarenRengine::SDKUtilidades;
@@ -64,6 +63,30 @@ public:
 	CarenMFStreamDescriptor(UInt32 Param_StreamIndentifier, UInt32 Param_CountMediaTypes, cli::array<ICarenMFMediaType^>^ Param_ArrayMediaTypes);
 
 	~CarenMFStreamDescriptor();
+
+
+	//Conversões implicitas
+public:
+	static operator CarenMFStreamDescriptor^ (IntPtr Param_Pointer)
+	{
+		//Variavel a ser retornada.
+		CarenMFStreamDescriptor^ ClassResultado = nullptr;
+
+		//Verifica se o ponteiro não é invalido.
+		if (Param_Pointer == IntPtr::Zero)
+			Sair; // O ponteiro não é valido.
+
+		//Cria a classe para definir o ponteiro.
+		ClassResultado = gcnew CarenMFStreamDescriptor();
+
+		//Define o ponteiro na classe.
+		ClassResultado->PonteiroTrabalho = reinterpret_cast<IMFStreamDescriptor*>(Param_Pointer.ToPointer());
+
+	Done:;
+
+		//Retorna o resultado.
+		return ClassResultado;
+	}
 
 
 	//Variaveis Internas.

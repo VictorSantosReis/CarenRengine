@@ -28,7 +28,6 @@ using namespace CarenRengine::MediaFoundation;
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
 using namespace CarenRengine::SDKBase::Estruturas;
-using namespace CarenRengine::SDKBase::Interfaces;
 
 //Importa o namespace de utilidades utilizado pelas classes
 using namespace CarenRengine::SDKUtilidades;
@@ -72,6 +71,30 @@ public:
 	CarenMFMediaEvent(CA_MediaEventType Param_TypeEvent, String^ Param_GuidExtendedType, int Param_HRStatus, CA_PropVariant^ Param_Valor);
 
 	~CarenMFMediaEvent();
+
+
+	//Conversões implicitas
+public:
+	static operator CarenMFMediaEvent^ (IntPtr Param_Pointer)
+	{
+		//Variavel a ser retornada.
+		CarenMFMediaEvent^ ClassResultado = nullptr;
+
+		//Verifica se o ponteiro não é invalido.
+		if (Param_Pointer == IntPtr::Zero)
+			Sair; // O ponteiro não é valido.
+
+		//Cria a classe para definir o ponteiro.
+		ClassResultado = gcnew CarenMFMediaEvent();
+
+		//Define o ponteiro na classe.
+		ClassResultado->PonteiroTrabalho = reinterpret_cast<IMFMediaEvent*>(Param_Pointer.ToPointer());
+
+	Done:;
+
+		//Retorna o resultado.
+		return ClassResultado;
+	}
 
 
 	//Variaveis Internas.

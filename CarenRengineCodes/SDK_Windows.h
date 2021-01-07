@@ -22,7 +22,6 @@ limitations under the License.
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
 using namespace CarenRengine::SDKBase::Estruturas;
-using namespace CarenRengine::SDKBase::Interfaces;
 
 //Abre o namespace principal
 namespace CarenRengine
@@ -387,6 +386,59 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_QuantidadeSkip">O número de itens a serem ignorados.</param>
 			CarenResult Skip(UInt32 Param_QuantidadeSkip);
+		};
+
+		/// <summary>
+		/// (IPropertyStore) - Interface responsável por expor métodos utilizados para enumerar e manipular valores de propriedade.
+		/// </summary>
+		[CategoryAttribute("Windows Interface")]
+		[Guid("73C75E1E-92A5-483B-8EA2-89E7879E0176")]
+		public interface class ICarenPropertyStore : ICaren
+		{
+			/// <summary>
+			/// Propriedade que define se a classe foi descartada.
+			/// </summary>
+			property Boolean DisposedClasse
+			{
+				virtual Boolean get();
+			}
+
+
+
+			//Métodos
+
+			/// <summary>
+			/// (Commit) - Depois que uma alteração foi feita, esse método salva as alterações.
+			/// </summary>
+			CarenResult SalvarConfigurações();
+
+			/// <summary>
+			/// (GetAt) - Obtém uma chave de propriedade da matriz de propriedades de um item.
+			/// </summary>
+			/// <param name="Param_Id">O índice da chave Propriedade na matriz de estruturas CA_PROPERTYKEY. Este é um índice baseado em zero.</param>
+			/// <param name="Param_Out_PropKey">TBD.</param>
+			CarenResult ObterKeyFromID(UInt32 Param_Id, [Out] Estruturas::CA_PROPERTYKEY^% Param_Out_PropKey);
+
+			/// <summary>
+			/// (GetCount) - Esse método retorna uma contagem do número de propriedades anexadas ao arquivo.
+			/// </summary>
+			/// <param name="Param_Out_CountProps">Retorna a contagem de propriedades.</param>
+			CarenResult ObterQuantidade([Out] UInt32% Param_Out_CountProps);
+
+			/// <summary>
+			/// (GetValue) - Este método recupera os dados para uma propriedade específica.
+			/// </summary>
+			/// <param name="Param_PropKey">TBD.</param>
+			/// <param name="Param_Out_Valor">Depois que o método retorna com êxito, este parâmetro retorna a estrutura CA_PropVariant que contém dados sobre a propriedade.</param>
+			CarenResult GetValue(Estruturas::CA_PROPERTYKEY^% Param_PropKey, [Out] Estruturas::CA_PropVariant^% Param_Out_Valor);
+
+			/// <summary>
+			/// (SetValue) - Este método define um valor de propriedade ou substitui ou remove um valor existente.
+			/// </summary>
+			/// <param name="Param_PropKey">TBD.</param>
+			/// <param name="Param_PropValor">TBD.</param>
+			CarenResult DefinirValor(Estruturas::CA_PROPERTYKEY^% Param_PropKey, Estruturas::CA_PropVariant^ Param_PropValor);
+
 		};
 
 		/// <summary>

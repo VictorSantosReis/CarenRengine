@@ -25,7 +25,6 @@ using namespace CarenRengine;
 //Importa o namespace (BASE) e suas demais dependências
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Estruturas;
-using namespace CarenRengine::SDKBase::Interfaces;
 
 //Importa o namespace de utilidades utilizado pelas classes
 using namespace CarenRengine::SDKUtilidades;

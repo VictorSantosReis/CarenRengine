@@ -20,7 +20,6 @@ limitations under the License.
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
 using namespace CarenRengine::SDKBase::Estruturas;
-using namespace CarenRengine::SDKBase::Interfaces;
 
 /// <summary>
 /// Classe responsável por conter funções nativas auxiliares da biblioteca da Api do Direct2D.

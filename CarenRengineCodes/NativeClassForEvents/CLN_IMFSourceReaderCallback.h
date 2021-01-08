@@ -21,8 +21,6 @@ limitations under the License.
 
 //CLN -> Classe Nativa.
 
-using namespace CarenRengine::SDKBase::Interfaces;
-
 //Typedefs dos eventos gerados pela classe.
 
 typedef void(__stdcall* CLN_IMFSourceReaderCallback_EventoNativo_OnReadSample)(HRESULT, DWORD, DWORD, LONGLONG, IMFSample*);

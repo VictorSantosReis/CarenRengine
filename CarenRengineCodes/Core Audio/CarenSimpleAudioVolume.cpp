@@ -388,6 +388,9 @@ void CarenSimpleAudioVolume::Finalizar()
 
 	//Informa ao GC que a classe já foi limpa e pode ser descartada.
 	GC::SuppressFinalize(this);
+	
+	//Nula o ponteiro de trabalho da classe.
+	PonteiroTrabalho = Nulo;
 
 	//Chama o finalizador da classe
 	this->~CarenSimpleAudioVolume();

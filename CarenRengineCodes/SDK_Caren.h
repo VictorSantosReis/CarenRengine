@@ -37,7 +37,6 @@ namespace CarenRengine
 	/// nativas a uma interface específica da biblioteca.
 	/// </summary>
 	[CategoryAttribute("Caren Interface")]
-	[DescriptionAttribute("Interface base da biblioteca de Mulitimédia.")]
 	[Guid("7E4D91F6-7189-4837-B279-E3E23AFCA893")]
 	public interface class ICaren
 	{
@@ -124,7 +123,7 @@ namespace CarenRengine
 	};
 
 	/// <summary>
-	/// (INACarenObjectState) - Interface responsável por representar um objeto de estado que pode ser utilizadas por métodos nativos para operações assincronas.
+	/// (INACarenObjectState) - Interface responsável por representar um objeto de estado que pode ser utilizado por métodos nativos para operações assincronas.
 	/// </summary>
 	[CategoryAttribute("Caren Interface")]
 	[Guid("F26DDE8E-4E7C-416D-A05B-0B81CB9B17BE")] //IGUAL AO DA NATIVA.
@@ -165,12 +164,21 @@ namespace CarenRengine
 	};
 
 	/// <summary>
-	/// [TESTE] - Nova interface de Buffer.
+	/// Interface responsável por representar o Buffer utilizado pela API para operações em array de bytes e ponteiros de dados entre a biblioteca
+	/// e o código nativo. Esse buffer representa um (PBYTE) internamente e pode ser utilizado para qualquer operação que necessite.
 	/// </summary>
 	[CategoryAttribute("Caren Interface")]
 	[Guid("2587F0D9-6A15-4901-BB55-42B36C3BCBAF")]
 	public interface class ICarenBuffer : System::Collections::IEnumerable
 	{
+			/// <summary>
+		/// Propriedade que informa se a interface foi descartada.
+		/// </summary>
+		property Boolean DisposedClasse
+		{
+			virtual Boolean get();
+		}
+
 		/// <summary>
 		/// Propriedade que contém a posição atual do buffer.
 		/// </summary>
@@ -197,31 +205,21 @@ namespace CarenRengine
 			virtual void set(UInt32);
 		}
 
-		/// <summary>
-		/// Propriedade que informa se a interface foi descartada.
-		/// </summary>
-		property Boolean DisposedClasse
-		{
-			virtual Boolean get();
-		}
-
 		//Indexador para acessar e gravar diretamente no buffer.
-#pragma region Indexador
 		property Byte default[int]
 		{
 			virtual Byte get(int p_Index);
 			virtual void set(int, Byte);
 		}
-#pragma endregion
 
 
-			//Métodos
+		//Métodos
 
-			/// <summary>
-			/// Método responsável por alocar um novo buffer de tamanho especificado.
-			/// </summary>
-			/// <param name="Param_TamanhoBuffer">O tamanho do buffer a ser criado.</param>
-			/// <returns></returns>
+		/// <summary>
+		/// Método responsável por alocar um novo buffer de tamanho especificado.
+		/// </summary>
+		/// <param name="Param_TamanhoBuffer">O tamanho do buffer a ser criado.</param>
+		/// <returns></returns>
 		CarenResult CriarBuffer(UInt32 Param_TamanhoBuffer);
 
 		/// <summary>

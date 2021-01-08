@@ -22371,11 +22371,5 @@ namespace CarenRengine
 				String^ clsid;
 			};
 		}
-
-		//Contém interfaces comuns as demais bibliotecas
-		namespace Interfaces
-		{
-
-		}
 	}
 }

@@ -403,7 +403,6 @@ void CarenPropertyStore::LiberarReferencia()
 	}
 }
 
-
 /// <summary>
 /// Método responsável por chamar o finalizador da interface para realizar a limpeza e descarte de dados pendentes.
 /// Este método pode ser escrito de forma diferente para cada interface.
@@ -416,6 +415,9 @@ void CarenPropertyStore::Finalizar()
 
 	//Informa ao GC que a classe já foi limpa e pode ser descartada.
 	GC::SuppressFinalize(this);
+	
+	//Nula o ponteiro de trabalho da classe.
+	PonteiroTrabalho = Nulo;
 
 	//Chama o finalizador da classe
 	this->~CarenPropertyStore();

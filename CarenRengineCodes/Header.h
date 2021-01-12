@@ -42,6 +42,7 @@ limitations under the License.
 #pragma comment(lib, "Uuid.lib")
 #pragma comment(lib, "Winmm.lib")
 #pragma comment(lib, "Shlwapi.lib")
+#pragma comment(lib, "OleAut32.lib")
 
 
 
@@ -88,6 +89,7 @@ limitations under the License.
 #include <avrt.h>
 #include <synchapi.h>
 #include <inspectable.h>
+#include <oleauto.h>
 
 //Errros Hresult
 #include <comdef.h>

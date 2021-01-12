@@ -3890,6 +3890,80 @@ namespace CarenRengine
 
 				CA_STATFLAG_NOOPEN = 2
 			};
+			
+			/// <summary>
+			/// (ORIGINAL) - Enumera flags que são utilizadas por uma matriz segura(SAFEARRAY) que descreve os tipos de matrizes
+			/// que a estrutura contém.
+			/// </summary>
+			[FlagsAttribute]
+			public enum class CA_FADF_FLAGS
+			{
+				/// <summary>
+				/// Utilizado para suporte. Não faz parte da enumeração original.
+				/// </summary>
+				Zero = 0x0,
+
+
+				/// <summary>
+				/// Uma matriz que está alocada na Stack.
+				/// </summary>
+				CA_FADF_AUTO = 0x1,
+
+				/// <summary>
+				/// Uma matriz que está estaticamente alocada.
+				/// </summary>
+				CA_FADF_STATIC = 0x02,
+
+				/// <summary>
+				/// Uma matriz que está embutida em uma estrutura.
+				/// </summary>
+				CA_FADF_EMBEDDED = 0x04,
+
+				/// <summary>
+				/// Uma matriz que pode não ser redimensionada ou realocada.
+				/// </summary>
+				CA_FADF_FIXEDSIZE = 0x10,
+
+				/// <summary>
+				/// Uma matriz que contém registros. Quando definido, haverá um ponteiro para a interface IRecordInfo com deslocamento negativo 4 no descritor de matriz.
+				/// </summary>
+				CA_FADF_RECORD = 0x20,
+
+				/// <summary>
+				/// Uma matriz que tem uma interface de identificação IID. Quando definido, haverá um GUID em deslocamento negativo 16 no descritor de matriz segura. A bandeira é definida somente quando FADF_DISPATCH ou FADF_UNKNOWN também é definida.
+				/// </summary>
+				CA_FADF_HAVEIID = 0x40,
+
+				/// <summary>
+				/// Uma matriz que tem um tipo de variante.
+				/// </summary>
+				CA_FADF_HAVEVARTYPE = 0x80,
+
+				/// <summary>
+				/// Uma matriz de BSTRs.
+				/// </summary>
+				CA_FADF_BSTR = 0x100,
+
+				/// <summary>
+				/// Uma matriz de interfaces IUnknown representadas como ICaren.
+				/// </summary>
+				CA_FADF_UNKNOWN = 0x200,
+
+				/// <summary>
+				/// Uma matriz de interfaces IDispatch representadas como ICaren.
+				/// </summary>
+				CA_FADF_DISPATCH = 0x400,
+
+				/// <summary>
+				/// Uma matriz de variantes.
+				/// </summary>
+				CA_FADF_VARIANT = 0x800,
+
+				/// <summary>
+				/// Bits reservados para uso futuro.
+				/// </summary>
+				CA_FADF_RESERVED = 0xf008
+			};
 
 			/// <summary>
 			/// (tagLOCKTYPE) - Enumera os tipos de bloqueio solicitado para a faixa especificada de bytes. Os valores são usados nos métodos ICarenStream::LockRegion.
@@ -3897,6 +3971,9 @@ namespace CarenRengine
 			[FlagsAttribute]
 			public enum class CA_LOCKTYPE
 			{
+				/// <summary>
+				/// Utilizado para suporte. Não faz parte da enumeração original.
+				/// </summary>
 				Zero = 0,
 
 				CA_LOCK_WRITE = 1,
@@ -3943,6 +4020,9 @@ namespace CarenRengine
 			/// </summary>
 			public enum class CA_STGTY
 			{
+				/// <summary>
+				/// Utilizado para suporte. Não faz parte da enumeração original.
+				/// </summary>
 				Zero = 0,
 
 				CA_STGTY_STORAGE = 1,
@@ -17457,27 +17537,158 @@ namespace CarenRengine
 			};
 
 			/// <summary>
-			/// (tagSAFEARRAYBOUND) - 
+			/// (tagSAFEARRAYBOUND) - Estrutura responsável por descrever os limites de uma matriz segura(CA_SAFEARRAY).
+			/// Utiliza-se essa estrutura para informar os limites de cada dimensão em um array.
 			/// </summary>
-			public ref struct CA_SAFEARRAYBOUND
+			public value struct CA_SAFEARRAYBOUND
 			{
+				/// <summary>
+				/// Esse membro representa a quantidade de elementos na matriz.
+				/// </summary>
 				UInt32              cElements;
+
+				/// <summary>
+				/// Esse membro armazena o limite inferior da matriz segura, ou seja, o índice do primeiro elemento da matriz.
+				/// </summary>
 				Int32               lLbound;
 			};
 			
 
 			/// <summary>
-			/// (tagSAFEARRAY) - 
+			/// (tagSAFEARRAY)(AUTO-IMPLEMENTADA) - 
 			/// </summary>
-			generic <typename CarenBufferType>
+			generic <typename BufferType>
 			public ref struct CA_SAFEARRAY
 			{
-				USHORT             cDims;
-				USHORT             fFeatures;
-				ULONG              cbElements;
-				ULONG              cLocks;
+				//Ponteiro nativo para os dados.
+				SAFEARRAY* PonteiroTrabalho = Nulo;
 
-				CarenBufferType    pvData;
+				//Construtor & Destruidor
+			public:
+				CA_SAFEARRAY(Enumeracoes::CA_VARTYPE Param_vt, UInt32 Param_CountDim, cli::array<CA_SAFEARRAYBOUND>^ Param_Rgsabound)
+				{
+					//Variaveis retornadas.
+					SAFEARRAYBOUND vi_OutSafeBound;
+
+					//Cria o safe array.
+					PonteiroTrabalho = SafeArrayCreate(static_cast<VARTYPE>(Param_vt), Param_CountDim, &);
+				}
+				~CA_SAFEARRAY()
+				{
+					//Destroi os dados do safe array se valido.
+					if (ObjetoValido(PonteiroTrabalho))
+					{
+						///Destroi o safearray
+						SafeArrayDestroy(PonteiroTrabalho);
+
+						//Nula o ponteiro
+						PonteiroTrabalho = Nulo;
+					}
+				}
+
+
+				//Propriedades publicas.
+			public:
+				/// <summary>
+				/// Membro responsável por conter a quantidade de dimensões do array.
+				/// esse valor representa a quantidade de elementos no membro (rgsabound).
+				/// </summary>
+				property USHORT                         cDims
+				{
+					USHORT get() 
+					{
+						return PonteiroTrabalho->cDims;
+					}
+				}
+
+				/// <summary>
+				/// Um conjunto de flags ou ZERO que descrevem como a matriz foi lançada, alocada e o seu tipo de dado.
+				/// </summary>
+				property Enumeracoes::CA_FADF_FLAGS     fFeatures
+				{
+					Enumeracoes::CA_FADF_FLAGS get()
+					{
+						return static_cast<Enumeracoes::CA_FADF_FLAGS>(PonteiroTrabalho->fFeatures);
+					}
+
+					void set(Enumeracoes::CA_FADF_FLAGS Param_Value)
+					{
+						PonteiroTrabalho->fFeatures = static_cast<USHORT>(Param_Value);
+					}
+				}
+
+				/// <summary>
+				/// Membro que define o tamanho de apenas um elemento na matriz.
+				/// </summary>
+				property ULONG                           cbElements
+				{
+					ULONG get()
+					{
+						return PonteiroTrabalho->cbElements;
+					}
+
+					void set(ULONG Param_value)
+					{
+						PonteiroTrabalho->cbElements = Param_value;
+					}
+				}
+				
+				/// <summary>
+				/// O número de vezes que a matriz foi bloqueada sem um desbloqueio correspondente.
+				/// </summary>
+				property ULONG                           cLocks
+				{
+					ULONG get()
+					{
+						return PonteiroTrabalho->cLocks;
+					}
+				}
+
+				/// <summary>
+				/// Os dados associados a está estrutura.
+				/// </summary>
+				cli::array<BufferType>^         pvData;
+
+				/// <summary>
+				/// Um array com a descrição de cada dimensão.
+				/// </summary>
+				property cli::array<CA_SAFEARRAYBOUND>^ rgsabound
+				{
+					cli::array<CA_SAFEARRAYBOUND>^ get() 
+					{
+						//Variavel a ser retornada.
+						cli::array<CA_SAFEARRAYBOUND>^ vi_SafeBoundArray = nullptr;
+
+						//Variaveis a serem utilizadas
+						USHORT vi_CountDim = 0; //Quantidade de dimensões.
+
+						//Verifica se o ponteiro para o safe array não é invalido.
+						if (!ObjetoValido(PonteiroTrabalho))
+							Sair;				
+
+						//Obtém a quantidade de dimensoes
+						vi_CountDim = PonteiroTrabalho->cDims;
+
+						//Cria a matriz que vai conter os dados.
+						vi_SafeBoundArray = gcnew cli::array<CA_SAFEARRAYBOUND>(vi_CountDim);
+
+						//Faz um for para definir os dados no array
+						for (size_t i = 0; i < vi_CountDim; i++)
+						{
+							//Cria a estrutura de valor.
+							vi_SafeBoundArray[i] = CA_SAFEARRAYBOUND();
+
+							//Define os dados na estrutura.
+							vi_SafeBoundArray[i].cElements = PonteiroTrabalho->rgsabound[i].cElements;
+							vi_SafeBoundArray[i].lLbound = PonteiroTrabalho->rgsabound[i].lLbound;
+						}
+
+					Done:;
+
+						//Retorna o array.
+						return vi_SafeBoundArray;
+					}
+				}
 			};
 
 			/// <summary>
@@ -17902,7 +18113,7 @@ namespace CarenRengine
 			/// <summary>
 			/// (PROPVARIANT) - 
 			/// </summary>
-			generic <typename CarenBufferType, typename ICarenType>
+			generic <typename ICarenBufferType, typename ICarenType, typename SafeArrayType>
 			public ref struct CA_PROPVARIANT
 			{
 				/// <summary>
@@ -17930,9 +18141,9 @@ namespace CarenRengine
 				DOUBLE date;
 				CA_FILETIME^ filetime;
 				String^ puuid;
-				CA_CLIPDATA<CarenBufferType>^ pclipdata;
+				CA_CLIPDATA<ICarenBufferType>^ pclipdata;
 				String^ bstrVal;
-				CA_BlobData<CarenBufferType>^ blob;
+				CA_BlobData<ICarenBufferType>^ blob;
 				String^ pszVal;
 				String^ pwszVal;
 				ICarenType punkVal;
@@ -17940,10 +18151,10 @@ namespace CarenRengine
 				ICarenType pStream;
 				ICarenType pStorage;
 				CA_VersionedStream<ICarenType>^ pVersionedStream;
-				CA_SAFEARRAY<CarenBufferType>^ parray;
+				CA_SAFEARRAY<SafeArrayType>^ parray;
 
 
-				//Matrizes Contadas
+				//Matrizes Contadas | VT_VECTOR
 
 				CA_CAC^ cac;
 				CA_CAUB^ caub;
@@ -17961,14 +18172,14 @@ namespace CarenRengine
 				CA_CADATE^ cadate;
 				CA_CAFILETIME^ cafiletime;
 				CA_CACLSID^ cauuid;
-				CA_CACLIPDATA<CarenBufferType>^ caclipdata;
+				CA_CACLIPDATA<ICarenBufferType>^ caclipdata;
 				CA_CABSTR^ cabstr;
-				CA_CABSTRBLOB<CarenBufferType>^ cabstrblob;
+				CA_CABSTRBLOB<ICarenBufferType>^ cabstrblob;
 				CA_CALPSTR^ calpstr;
 				CA_CALPWSTR^ calpwstr;
 				CA_CAPROPVARIANT^ capropvar;
 
-				//Ponteiros.
+				//Ponteiros | VT_BYREF
 
 				CHAR* pcVal;
 				UCHAR* pbVal;

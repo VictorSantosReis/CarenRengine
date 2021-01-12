@@ -1500,6 +1500,9 @@
     <ClInclude Include="CarenRengineCodes\Caren\CarenObjectState.h">
       <Filter>Arquivos de Cabeçalho\Classes\Caren</Filter>
     </ClInclude>
+    <ClInclude Include="CarenRengineCodes\PropVariantManager\PropVariantManager.h">
+      <Filter>Arquivos de Cabeçalho\Sistema</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D10Multithread.cpp">
@@ -2767,6 +2770,9 @@
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Caren\CarenObjectState.cpp">
       <Filter>Arquivos de Origem\Classes\Caren</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\PropVariantManager\PropVariantManager.cpp">
+      <Filter>Arquivos de Origem\Sistema</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

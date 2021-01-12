@@ -743,10 +743,10 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidMFAtributos">O atributo a ser consultado. Para obter uma lista de atributos de apresentação, consulte a estrutura: 
 /// GUIDs_MFAtributos_DescritorApresentacao</param>
-/// <param name="Param_Out_ValorAtributo">Retrona uma CA_PropVariant com os dados do atributo.</param>
+/// <param name="Param_Out_ValorAtributo">Retrona uma CA_PROPVARIANT com os dados do atributo.</param>
 CarenResult CarenMFMediaEngineEx::GetPresentationAttribute(
 String^ Param_GuidMFAtributos, 
-[Out] CA_PropVariant^% Param_Out_ValorAtributo)
+[Out] CA_PROPVARIANT^% Param_Out_ValorAtributo)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -880,10 +880,10 @@ Done:;
 /// Obtém uma estatística de reprodução do Media Engine.
 /// </summary>
 /// <param name="Param_TipoEstatistica">Um membro da enumeração CA_MF_MEDIA_ENGINE_STATISTIC que identifica a estatística a obter.</param>
-/// <param name="Param_Out_ValorEstatistica">Retrona uma CA_PropVariant com os dados da estatitisca requisitada.</param>
+/// <param name="Param_Out_ValorEstatistica">Retrona uma CA_PROPVARIANT com os dados da estatitisca requisitada.</param>
 CarenResult CarenMFMediaEngineEx::GetStatistics(
 CA_MF_MEDIA_ENGINE_STATISTIC Param_TipoEstatistica, 
-[Out] CA_PropVariant^% Param_Out_ValorEstatistica)
+[Out] CA_PROPVARIANT^% Param_Out_ValorEstatistica)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -1014,11 +1014,11 @@ Done:;
 /// </summary>
 /// <param name="Param_IdFluxo">O índice baseado em zero do fluxo. Para obter o número de fluxos, ligue para ICarenMFMediaEngineEx::ObterNumeroFluxos.</param>
 /// <param name="Param_GuidMfAtributo">O atributo a ser consultado. Os valores possíveis estão presentes nas estruturas: GUIDs_MFAtributos_DescritorFluxo e GUIDs_MF_MEDIATYPE_ATTRIBUTES</param>
-/// <param name="Param_Out_ValorAtributo">>Retrona uma CA_PropVariant com os dados do atributo.</param>
+/// <param name="Param_Out_ValorAtributo">>Retrona uma CA_PROPVARIANT com os dados do atributo.</param>
 CarenResult CarenMFMediaEngineEx::GetStreamAttribute(
 UInt32 Param_IdFluxo, 
 String^ Param_GuidMfAtributo, 
-[Out] CA_PropVariant^% Param_Out_ValorAtributo)
+[Out] CA_PROPVARIANT^% Param_Out_ValorAtributo)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);

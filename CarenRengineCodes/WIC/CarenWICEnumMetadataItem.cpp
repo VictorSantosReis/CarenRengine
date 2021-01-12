@@ -450,9 +450,9 @@ Done:;
 /// <param name="Param_Out_QuantRecuperados">O número de itens que foram recuperados. Esse valor é sempre menor ou igual ao número de itens solicitados.</param>
 CarenResult CarenWICEnumMetadataItem::Next(
 UInt64 Param_Quantidade,
-cli::array<CA_PropVariant^>^% Param_Ref_ArraySchemas,
-[Out] cli::array<CA_PropVariant^>^% Param_Out_ArrayIds,
-cli::array<CA_PropVariant^>^% Param_Ref_ArrayValores,
+cli::array<CA_PROPVARIANT^>^% Param_Ref_ArraySchemas,
+[Out] cli::array<CA_PROPVARIANT^>^% Param_Out_ArrayIds,
+cli::array<CA_PROPVARIANT^>^% Param_Ref_ArrayValores,
 [Out] UInt64% Param_Out_QuantRecuperados)
 {
 	//Variavel a ser retornada.
@@ -509,7 +509,7 @@ cli::array<CA_PropVariant^>^% Param_Ref_ArrayValores,
 	}
 
 	//Cria a matriz de IDs que é a obrigatoria a retornar.
-	Param_Out_ArrayIds = gcnew cli::array<CA_PropVariant^>(OutCountRecuperada);
+	Param_Out_ArrayIds = gcnew cli::array<CA_PROPVARIANT^>(OutCountRecuperada);
 
 	//Faz um for definir os dados.
 	for (ULONG i = 0; i < OutCountRecuperada; i++)
@@ -522,7 +522,7 @@ cli::array<CA_PropVariant^>^% Param_Ref_ArrayValores,
 	if (ObjetoGerenciadoValido(Param_Ref_ArraySchemas))
 	{
 		//Cria a matriz
-		Param_Ref_ArraySchemas = gcnew cli::array<CA_PropVariant^>(OutCountRecuperada);
+		Param_Ref_ArraySchemas = gcnew cli::array<CA_PROPVARIANT^>(OutCountRecuperada);
 
 		//Faz um for definir os dados.
 		for (ULONG i = 0; i < OutCountRecuperada; i++)
@@ -536,7 +536,7 @@ cli::array<CA_PropVariant^>^% Param_Ref_ArrayValores,
 	if (ObjetoGerenciadoValido(Param_Ref_ArrayValores))
 	{
 		//Cria a matriz
-		Param_Ref_ArrayValores = gcnew cli::array<CA_PropVariant^>(OutCountRecuperada);
+		Param_Ref_ArrayValores = gcnew cli::array<CA_PROPVARIANT^>(OutCountRecuperada);
 
 		//Faz um for definir os dados.
 		for (ULONG i = 0; i < OutCountRecuperada; i++)

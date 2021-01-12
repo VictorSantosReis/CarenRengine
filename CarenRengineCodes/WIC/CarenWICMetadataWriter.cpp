@@ -402,8 +402,8 @@ void CarenWICMetadataWriter::Finalizar()
 /// <param name="Param_Schema">Uma estrutura para a propriedade do esquema de metadados.</param>
 /// <param name="Param_Id">Uma estrutura para a propriedade de id metadata.</param>
 CarenResult CarenWICMetadataWriter::RemoveValue(
-CA_PropVariant^ Param_Schema,
-CA_PropVariant^ Param_Id)
+CA_PROPVARIANT^ Param_Schema,
+CA_PROPVARIANT^ Param_Id)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -495,9 +495,9 @@ Done:;
 /// <param name="Param_Id">Estrutura para o id do item metadados.</param>
 /// <param name="Param_Valor">Estrutura que contém o valor dos metadados.</param>
 CarenResult CarenWICMetadataWriter::SetValue(
-CA_PropVariant^ Param_Schema,
-CA_PropVariant^ Param_Id,
-CA_PropVariant^ Param_Valor)
+CA_PROPVARIANT^ Param_Schema,
+CA_PROPVARIANT^ Param_Id,
+CA_PROPVARIANT^ Param_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -560,9 +560,9 @@ Done:;
 /// <param name="Param_Valor">Estrutura que contém o valor dos metadados.</param>
 CarenResult CarenWICMetadataWriter::SetValueByIndex(
 UInt32 Param_Index,
-CA_PropVariant^ Param_Schema,
-CA_PropVariant^ Param_Id,
-CA_PropVariant^ Param_Valor)
+CA_PROPVARIANT^ Param_Schema,
+CA_PROPVARIANT^ Param_Id,
+CA_PROPVARIANT^ Param_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -798,9 +798,9 @@ Done:;
 /// <param name="Param_Id">Estrutura para o id do item metadados.</param>
 /// <param name="Param_Out_Valor">Retorna uma estrutura que contém o valor dos metadados.</param>
 CarenResult CarenWICMetadataWriter::GetValue(
-	CA_PropVariant^ Param_Schema,
-	CA_PropVariant^ Param_Id,
-	[Out] CA_PropVariant^% Param_Out_Valor)
+	CA_PROPVARIANT^ Param_Schema,
+	CA_PROPVARIANT^ Param_Id,
+	[Out] CA_PROPVARIANT^% Param_Out_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -863,9 +863,9 @@ Done:;
 /// <param name="Param_Out_Valor">Retorna uma estrutura que contém o valor dos metadados.</param>
 CarenResult CarenWICMetadataWriter::GetValueByIndex(
 	UInt32 Param_Index,
-	[Out] CA_PropVariant^% Param_Out_Schema,
-	[Out] CA_PropVariant^% Param_Out_Id,
-	[Out] CA_PropVariant^% Param_Out_Valor)
+	[Out] CA_PROPVARIANT^% Param_Out_Schema,
+	[Out] CA_PROPVARIANT^% Param_Out_Id,
+	[Out] CA_PROPVARIANT^% Param_Out_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);

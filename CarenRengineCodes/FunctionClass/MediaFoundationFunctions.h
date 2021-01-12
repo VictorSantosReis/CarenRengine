@@ -236,16 +236,16 @@ public:
 	/// <summary>
 	/// ‎Recupera os tipos MIME registrados para o Source Resolver.
 	/// </summary>
-	/// <param name="Param_Out_Mimes">Retorna uma (CA_PropVariant) que contém uma lista dos MIME Types.</param>
+	/// <param name="Param_Out_Mimes">Retorna uma (CA_PROPVARIANT) que contém uma lista dos MIME Types.</param>
 	/// <returns></returns>
-	CarenResult _MFGetSupportedMimeTypes(OutParam CA_PropVariant^% Param_Out_Mimes);
+	CarenResult _MFGetSupportedMimeTypes(OutParam CA_PROPVARIANT^% Param_Out_Mimes);
 
 	/// <summary>
 	/// ‎Recupera os esquemas de URL registrados para o Source Resolver.
 	/// </summary>
-	/// <param name="Param_Out_Schemes">Retorna uma (CA_PropVariant) que contém uma lista das URL Schemes suportados.</param>
+	/// <param name="Param_Out_Schemes">Retorna uma (CA_PROPVARIANT) que contém uma lista das URL Schemes suportados.</param>
 	/// <returns></returns>
-	CarenResult _MFGetSupportedSchemes(OutParam CA_PropVariant^% Param_Out_Schemes);
+	CarenResult _MFGetSupportedSchemes(OutParam CA_PROPVARIANT^% Param_Out_Schemes);
 
 	/// <summary>
 	/// ‎Retorna o tempo do sistema, em unidades de 100 nanossegundos.‎

@@ -257,9 +257,9 @@ public:
 	/// <param name="Param_Out_QuantRecuperados">O número de itens que foram recuperados. Esse valor é sempre menor ou igual ao número de itens solicitados.</param>
 	virtual CarenResult Next(
 	UInt64 Param_Quantidade,
-	cli::array<CA_PropVariant^>^% Param_Ref_ArraySchemas,
-	[Out] cli::array<CA_PropVariant^>^% Param_Out_ArrayIds,
-	cli::array<CA_PropVariant^>^% Param_Ref_ArrayValores,
+	cli::array<CA_PROPVARIANT^>^% Param_Ref_ArraySchemas,
+	[Out] cli::array<CA_PROPVARIANT^>^% Param_Out_ArrayIds,
+	cli::array<CA_PROPVARIANT^>^% Param_Ref_ArrayValores,
 	[Out] UInt64% Param_Out_QuantRecuperados);
 
 	/// <summary>

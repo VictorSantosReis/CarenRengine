@@ -574,9 +574,9 @@ Done:;
 /// <param name="Param_Id">Estrutura para o id do item metadados.</param>
 /// <param name="Param_Out_Valor">Retorna uma estrutura que contém o valor dos metadados.</param>
 CarenResult CarenWICMetadataReader::GetValue(
-CA_PropVariant^ Param_Schema,
-CA_PropVariant^ Param_Id,
-[Out] CA_PropVariant^% Param_Out_Valor)
+CA_PROPVARIANT^ Param_Schema,
+CA_PROPVARIANT^ Param_Id,
+[Out] CA_PROPVARIANT^% Param_Out_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -639,9 +639,9 @@ Done:;
 /// <param name="Param_Out_Valor">Retorna uma estrutura que contém o valor dos metadados.</param>
 CarenResult CarenWICMetadataReader::GetValueByIndex(
 UInt32 Param_Index,
-[Out] CA_PropVariant^% Param_Out_Schema,
-[Out] CA_PropVariant^% Param_Out_Id,
-[Out] CA_PropVariant^% Param_Out_Valor)
+[Out] CA_PROPVARIANT^% Param_Out_Schema,
+[Out] CA_PROPVARIANT^% Param_Out_Id,
+[Out] CA_PROPVARIANT^% Param_Out_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);

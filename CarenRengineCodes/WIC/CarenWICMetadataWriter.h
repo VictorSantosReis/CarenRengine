@@ -250,8 +250,8 @@ public:
 	/// <param name="Param_Schema">Uma estrutura para a propriedade do esquema de metadados.</param>
 	/// <param name="Param_Id">Uma estrutura para a propriedade de id metadata.</param>
 	virtual CarenResult RemoveValue(
-	CA_PropVariant^ Param_Schema,
-	CA_PropVariant^ Param_Id);
+	CA_PROPVARIANT^ Param_Schema,
+	CA_PROPVARIANT^ Param_Id);
 
 	/// <summary>
 	/// Remove o item metadados no índice especificado. 
@@ -268,9 +268,9 @@ public:
 	/// <param name="Param_Id">Estrutura para o id do item metadados.</param>
 	/// <param name="Param_Valor">Estrutura que contém o valor dos metadados.</param>
 	virtual CarenResult SetValue(
-	CA_PropVariant^ Param_Schema,
-	CA_PropVariant^ Param_Id,
-	CA_PropVariant^ Param_Valor);
+	CA_PROPVARIANT^ Param_Schema,
+	CA_PROPVARIANT^ Param_Id,
+	CA_PROPVARIANT^ Param_Valor);
 
 	/// <summary>
 	/// Define o item metadados no índice especificado.
@@ -283,9 +283,9 @@ public:
 	/// <param name="Param_Valor">Estrutura que contém o valor dos metadados.</param>
 	virtual CarenResult SetValueByIndex(
 	UInt32 Param_Index,
-	CA_PropVariant^ Param_Schema,
-	CA_PropVariant^ Param_Id,
-	CA_PropVariant^ Param_Valor);
+	CA_PROPVARIANT^ Param_Schema,
+	CA_PROPVARIANT^ Param_Id,
+	CA_PROPVARIANT^ Param_Valor);
 
 
 	//Métodos da interface(ICarenWICMetadataReader)
@@ -321,9 +321,9 @@ public:
 	/// <param name="Param_Id">Estrutura para o id do item metadados.</param>
 	/// <param name="Param_Out_Valor">Retorna uma estrutura que contém o valor dos metadados.</param>
 	virtual CarenResult GetValue(
-		CA_PropVariant^ Param_Schema,
-		CA_PropVariant^ Param_Id,
-		[Out] CA_PropVariant^% Param_Out_Valor);
+		CA_PROPVARIANT^ Param_Schema,
+		CA_PROPVARIANT^ Param_Id,
+		[Out] CA_PROPVARIANT^% Param_Out_Valor);
 
 	/// <summary>
 	/// Obtém o item metadados no índice dado.
@@ -334,7 +334,7 @@ public:
 	/// <param name="Param_Out_Valor">Retorna uma estrutura que contém o valor dos metadados.</param>
 	virtual CarenResult GetValueByIndex(
 		UInt32 Param_Index,
-		[Out] CA_PropVariant^% Param_Out_Schema,
-		[Out] CA_PropVariant^% Param_Out_Id,
-		[Out] CA_PropVariant^% Param_Out_Valor);
+		[Out] CA_PROPVARIANT^% Param_Out_Schema,
+		[Out] CA_PROPVARIANT^% Param_Out_Id,
+		[Out] CA_PROPVARIANT^% Param_Out_Valor);
 };

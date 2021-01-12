@@ -276,8 +276,8 @@ public:
 	/// o primeiro bloco de metadados ou item encontrado será devolvido.
 	/// </summary>
 	/// <param name="Param_Nome">A expressão de consulta ao bloco ou item de metadados solicitados.</param>
-	/// <param name="Param_Out_Valor">Retorna uma estrutura(CA_PropVariant) que armazena o bloco de metadados ou item solicitado.</param>
+	/// <param name="Param_Out_Valor">Retorna uma estrutura(CA_PROPVARIANT) que armazena o bloco de metadados ou item solicitado.</param>
 	virtual CarenResult GetMetadataByName(
 	String^ Param_Nome,
-	[Out] CA_PropVariant^% Param_Out_Valor);
+	[Out] CA_PROPVARIANT^% Param_Out_Valor);
 };

@@ -818,7 +818,7 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-CarenResult MediaFoundationFunctions::_MFGetSupportedMimeTypes(OutParam CA_PropVariant^% Param_Out_Mimes)
+CarenResult MediaFoundationFunctions::_MFGetSupportedMimeTypes(OutParam CA_PROPVARIANT^% Param_Out_Mimes)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -859,7 +859,7 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-CarenResult MediaFoundationFunctions::_MFGetSupportedSchemes(OutParam CA_PropVariant^% Param_Out_Schemes)
+CarenResult MediaFoundationFunctions::_MFGetSupportedSchemes(OutParam CA_PROPVARIANT^% Param_Out_Schemes)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

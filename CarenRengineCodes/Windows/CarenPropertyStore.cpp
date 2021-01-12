@@ -557,8 +557,8 @@ Done:;
 /// (GetValue) - Este método recupera os dados para uma propriedade específica.
 /// </summary>
 /// <param name="Param_PropKey">TBD.</param>
-/// <param name="Param_Out_Valor">Depois que o método retorna com êxito, este parâmetro retorna a estrutura CA_PropVariant que contém dados sobre a propriedade.</param>
-CarenResult CarenPropertyStore::GetValue(Estruturas::CA_PROPERTYKEY^% Param_PropKey, [Out] Estruturas::CA_PropVariant^% Param_Out_Valor)
+/// <param name="Param_Out_Valor">Depois que o método retorna com êxito, este parâmetro retorna a estrutura CA_PROPVARIANT que contém dados sobre a propriedade.</param>
+CarenResult CarenPropertyStore::GetValue(Estruturas::CA_PROPERTYKEY^% Param_PropKey, [Out] Estruturas::CA_PROPVARIANT^% Param_Out_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -612,7 +612,7 @@ Done:;
 /// </summary>
 /// <param name="Param_PropKey">TBD.</param>
 /// <param name="Param_PropValor">TBD.</param>
-CarenResult CarenPropertyStore::DefinirValor(Estruturas::CA_PROPERTYKEY^% Param_PropKey, Estruturas::CA_PropVariant^ Param_PropValor)
+CarenResult CarenPropertyStore::DefinirValor(Estruturas::CA_PROPERTYKEY^% Param_PropKey, Estruturas::CA_PROPVARIANT^ Param_PropValor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

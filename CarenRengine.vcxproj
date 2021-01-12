@@ -420,6 +420,7 @@
     <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFSourceOpenMonitor.h" />
     <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IWICDevelopRawNotificationCallback.h" />
     <ClInclude Include="CarenRengineCodes\ParameterResolver\CarenParameterResolver.h" />
+    <ClInclude Include="CarenRengineCodes\PropVariantManager\PropVariantManager.h" />
     <ClInclude Include="CarenRengineCodes\SDK_Base.h" />
     <ClInclude Include="CarenRengineCodes\SDK_Caren.h" />
     <ClInclude Include="CarenRengineCodes\SDK_Direct2D.h" />
@@ -887,6 +888,7 @@
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFQualityManager.cpp" />
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFSourceOpenMonitor.cpp" />
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IWICDevelopRawNotificationCallback.cpp" />
+    <ClCompile Include="CarenRengineCodes\PropVariantManager\PropVariantManager.cpp" />
     <ClCompile Include="CarenRengineCodes\WIC\CarenWICBitmap.cpp" />
     <ClCompile Include="CarenRengineCodes\WIC\CarenWICBitmapClipper.cpp" />
     <ClCompile Include="CarenRengineCodes\WIC\CarenWICBitmapCodecInfo.cpp" />

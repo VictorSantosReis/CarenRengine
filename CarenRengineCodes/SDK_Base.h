@@ -4219,157 +4219,222 @@ namespace CarenRengine
 				/// </summary>
 				CA_MF_4096_BYTE_ALIGNMENT = 0x00000fff
 			};
-
+		
 			/// <summary>
-			/// (VARTYPE) - (PRECISA SER ATUALIZADA COM MAIS TIPOS SUPORTADOS E ADICIONAR OS RESTANDO NÃO SUPORTADO)Especifica o tipo de dados que está armazenado na PropVariant.
+			/// (VARTYPE) - Enumera valores que especificam o tipo de dados que está armazenado na PROPVARIANT.
 			/// </summary>
+			[FlagsAttribute]
 			public enum class CA_VARTYPE
 			{
-
-				//Tipos não suportados:
-
 				/// <summary>
-				/// Não suportado.
+				/// 
 				/// </summary>
-				TP_CY = -1,
-
+				VT_EMPTY = 0,
 				/// <summary>
-				/// Não suportado.
+				/// Tipo: 
+				/// Armazena dados na variavel: 
 				/// </summary>
-				TP_DISPATCH = -2,
-
+				VT_NULL = 1,
 				/// <summary>
-				/// Não suportado.
+				/// Tipo: 
 				/// </summary>
-				TP_VARIANT = -3,
-
+				VT_I2 = 2,
 				/// <summary>
-				/// Não suportado.
+				/// Tipo: 
 				/// </summary>
-				TP_DECIMAL = -4,
-
+				VT_I4 = 3,
 				/// <summary>
-				/// Não suportado. Utilizado pelo sistema.
+				/// 
 				/// </summary>
-				TP_BSTR_BLOB = -5,
-
+				VT_R4 = 4,
 				/// <summary>
-				/// Não suportado.
+				/// 
 				/// </summary>
-				TP_VOID = -6,
-
-
-				//Tipos Suportados:
-
-
+				VT_R8 = 5,
 				/// <summary>
-				/// Indica que o valor na PropVariant é Zero, o valor é vazio.
+				/// 
 				/// </summary>
-				TP_EMPTY = 0,
-
+				VT_CY = 6,
 				/// <summary>
-				/// Indica que o valor na PropVariant é NULO.
+				/// 
 				/// </summary>
-				TP_NULL,
-
-
-
+				VT_DATE = 7,
 				/// <summary>
-				/// Especifica que a PropVariant armazena um valor do tipo: String
+				/// 
 				/// </summary>
-				TP_String,
-
+				VT_BSTR = 8,
 				/// <summary>
-				/// Especifica que a PropVariant armazena um valor do tipo: Int16
+				/// 
 				/// </summary>
-				TP_Int16,
-
+				VT_DISPATCH = 9,
 				/// <summary>
-				/// Especifica que a PropVariant armazena um valor do tipo: Int32
+				/// 
 				/// </summary>
-				TP_Int32,
-
+				VT_ERROR = 10,
 				/// <summary>
-				/// Especifica que a PropVariant armazena um valor do tipo: Int64
+				/// 
 				/// </summary>
-				TP_Int64,
-
+				VT_BOOL = 11,
 				/// <summary>
-				/// Especifica que a PropVariant armazena um valor do tipo: UInt16
+				/// 
 				/// </summary>
-				TP_UInt16,
-
+				VT_VARIANT = 12,
 				/// <summary>
-				/// Especifica que a PropVariant armazena um valor do tipo: UInt32
+				/// 
 				/// </summary>
-				TP_UInt32,
-
+				VT_UNKNOWN = 13,
 				/// <summary>
-				/// Especifica que a PropVariant armazena um valor do tipo: UInt64
+				/// 
 				/// </summary>
-				TP_UInt64,
-
+				VT_DECIMAL = 14,
 				/// <summary>
-				/// Especifica que a PropVariant armazena um valor do tipo: Float
+				/// 
 				/// </summary>
-				TP_Float,
-
+				VT_I1 = 16,
 				/// <summary>
-				/// Especifica que a PropVariant armazena um valor do tipo: Double
+				/// 
 				/// </summary>
-				TP_Double,
-
+				VT_UI1 = 17,
 				/// <summary>
-				/// Especifica que a PropVariant armazena um valor do tipo: Boleano
+				/// 
 				/// </summary>
-				TP_Bool,
-
+				VT_UI2 = 18,
 				/// <summary>
-				/// Especifica que a PropVariant armazena um valor do tipo: Byte -> inteiro não assinado de 1 Byte.
+				/// 
 				/// </summary>
-				TP_Byte,
-
+				VT_UI4 = 19,
 				/// <summary>
-				/// Especifica que a PropVariant armazena um valor do tipo: SByte-> inteiro assinado de 1 Byte.
+				/// 
 				/// </summary>
-				TP_SByte,
-
+				VT_I8 = 20,
 				/// <summary>
-				/// Especifica que a PropVariant armazena um valor do tipo: Blob -> Array de bytes.
+				/// 
 				/// </summary>
-				TP_Blob,
-
+				VT_UI8 = 21,
 				/// <summary>
-				/// Especifica que a PropVariant armazena um valor do tipo: String
+				/// 
 				/// </summary>
-				TP_Guid,
-
+				VT_INT = 22,
 				/// <summary>
-				/// Especifica que a PropVariant armazena um valor do tipo: Data.
-				/// O valor é representado por um Double.
+				/// 
 				/// </summary>
-				TP_Data,
-
+				VT_UINT = 23,
 				/// <summary>
-				/// Especifica que a PropVariant armazena um valor do tipo: UInt32
+				/// 
 				/// </summary>
-				TP_ERROR,
-
+				VT_VOID = 24,
 				/// <summary>
-				/// O valor armazenado pela PropVariant para esse valor é (HRESULT).
-				/// Tenta obter um Int32.
+				/// 
 				/// </summary>
-				TP_HRESULT,
-
+				VT_HRESULT = 25,
 				/// <summary>
-				/// Especifica que a PropVariant armazena um valor do tipo: ICaren(IUnkown)
+				/// 
 				/// </summary>
-				TP_PonteiroDesconhecido,
-
+				VT_PTR = 26,
 				/// <summary>
-				/// Indica que o valor na PropVariant é desconhecido.
+				/// 
 				/// </summary>
-				TP_Desconhecido,
+				VT_SAFEARRAY = 27,
+				/// <summary>
+				/// 
+				/// </summary>
+				VT_CARRAY = 28,
+				/// <summary>
+				/// 
+				/// </summary>
+				VT_USERDEFINED = 29,
+				/// <summary>
+				/// 
+				/// </summary>
+				VT_LPSTR = 30,
+				/// <summary>
+				/// 
+				/// </summary>
+				VT_LPWSTR = 31,
+				/// <summary>
+				/// 
+				/// </summary>
+				VT_RECORD = 36,
+				/// <summary>
+				/// 
+				/// </summary>
+				VT_INT_PTR = 37,
+				/// <summary>
+				/// 
+				/// </summary>
+				VT_UINT_PTR = 38,
+				/// <summary>
+				/// 
+				/// </summary>
+				VT_FILETIME = 64,
+				/// <summary>
+				/// 
+				/// </summary>
+				VT_BLOB = 65,
+				/// <summary>
+				/// 
+				/// </summary>
+				VT_STREAM = 66,
+				/// <summary>
+				/// 
+				/// </summary>
+				VT_STORAGE = 67,
+				/// <summary>
+				/// 
+				/// </summary>
+				VT_STREAMED_OBJECT = 68,
+				/// <summary>
+				/// 
+				/// </summary>
+				VT_STORED_OBJECT = 69,
+				/// <summary>
+				/// 
+				/// </summary>
+				VT_BLOB_OBJECT = 70,
+				/// <summary>
+				/// 
+				/// </summary>
+				VT_CF = 71,
+				/// <summary>
+				/// 
+				/// </summary>
+				VT_CLSID = 72,
+				/// <summary>
+				/// 
+				/// </summary>
+				VT_VERSIONED_STREAM = 73,
+				/// <summary>
+				/// 
+				/// </summary>
+				VT_BSTR_BLOB = 0xfff,
+				/// <summary>
+				/// 
+				/// </summary>
+				VT_VECTOR = 0x1000,
+				/// <summary>
+				/// 
+				/// </summary>
+				VT_ARRAY = 0x2000,
+				/// <summary>
+				/// 
+				/// </summary>
+				VT_BYREF = 0x4000,
+				/// <summary>
+				/// 
+				/// </summary>
+				VT_RESERVED = 0x8000,
+				/// <summary>
+				/// 
+				/// </summary>
+				VT_ILLEGAL = 0xffff,
+				/// <summary>
+				/// 
+				/// </summary>
+				VT_ILLEGALMASKED = 0xfff,
+				/// <summary>
+				/// 
+				/// </summary>
+				VT_TYPEMASK = 0xfff
 			};
 
 			/// <summary>
@@ -17356,6 +17421,7 @@ namespace CarenRengine
 			/// <summary>
 			/// (tagBLOB) - Estrutura que contém um Blob(Byte Array) com os dados requisitados.
 			/// </summary>
+			generic <typename CarenBufferType>
 			public ref struct CA_BlobData
 			{
 				/// <summary>
@@ -17364,104 +17430,566 @@ namespace CarenRengine
 				UInt32 SizeData;
 
 				/// <summary>
-				/// O buffer com os dados.
+				/// O buffer com os dados. Esse membro deve ser do tipo (ICarenBuffer).
 				/// </summary>
-				Object^ BufferDados;
+				CarenBufferType BufferDados;
 			};
 
 			/// <summary>
-			/// (PROPVARIANT)(Fase de Testes) - Está estrutura é um Wrapper da estrutura não gerenciada (PropVariant) para passar diversos tipos de valores em métodos.
-			/// Você deve definir o tipo de dados que está contido na PropVariant.
+			/// (tagCY) - 
 			/// </summary>
-			public ref struct CA_PropVariant
+			public ref struct CA_CY
+			{
+				UInt64      Lo;
+				Int64       Hi;
+			};
+
+			/// <summary>
+			/// (tagDEC)
+			/// </summary>
+			public ref struct CA_DEC
+			{
+				USHORT        wReserved;
+				BYTE          scale;
+				BYTE          sign;
+				UInt32        Hi32;
+				UInt64        Lo64;
+			};
+
+			/// <summary>
+			/// (tagSAFEARRAYBOUND) - 
+			/// </summary>
+			public ref struct CA_SAFEARRAYBOUND
+			{
+				UInt32              cElements;
+				Int32               lLbound;
+			};
+			
+
+			/// <summary>
+			/// (tagSAFEARRAY) - 
+			/// </summary>
+			generic <typename CarenBufferType>
+			public ref struct CA_SAFEARRAY
+			{
+				USHORT             cDims;
+				USHORT             fFeatures;
+				ULONG              cbElements;
+				ULONG              cLocks;
+
+				CarenBufferType    pvData;
+			};
+
+			/// <summary>
+			/// (tagCLIPDATA) - 
+			/// </summary>
+			generic <typename CarenBufferType>
+			public ref struct CA_CLIPDATA
+			{
+				UInt32          cbSize;
+				Int32           ulClipFmt;
+				CarenBufferType pClipData;
+			};
+			
+			/// <summary>
+			/// (tagVersionedStream) - 
+			/// </summary>
+			generic <typename ICarenStreamType>
+			public ref struct CA_VersionedStream
+			{
+				Guid guidVersion;
+				ICarenStreamType pStream;
+			};
+
+			/// <summary>
+			/// (LARGE_INTEGER) - 
+			/// </summary>
+			public ref struct CA_LARGE_INTEGER
+			{
+				UInt32 LowPart;
+				Int32 HighPart;
+				Int64 QuadPart;
+			};
+			
+			/// <summary>
+			/// (ULARGE_INTEGER) - 
+			/// </summary>
+			public ref struct CA_ULARGE_INTEGER
+			{
+				UInt32 LowPart;
+				UInt32 HighPart;
+				UInt64 QuadPart;
+			};
+
+			/// <summary>
+			/// (tagCAC) - Estrutura que representa uma matriz contada do tipo: CHAR
+			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
+			/// </summary>
+			public ref struct CA_CAC
+			{
+				/// <summary>
+				/// Variavel que informa a quantidade de items no membro (pElems).
+				/// </summary>
+				UInt32 cElems;
+
+				/// <summary>
+				/// Array que contém os elementos contados da estrutura.
+				/// </summary>
+				cli::array<char>^ pElems;
+			};
+
+			/// <summary>
+			/// (tagCAUB) - Estrutura que representa uma matriz contada do tipo: UCHAR
+			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
+			/// </summary>
+			public ref struct CA_CAUB
+			{
+				/// <summary>
+				/// Variavel que informa a quantidade de items no membro (pElems).
+				/// </summary>
+				UInt32 cElems;
+
+				/// <summary>
+				/// Array que contém os elementos contados da estrutura.
+				/// </summary>
+				cli::array<UCHAR>^ pElems;
+			};
+
+			/// <summary>
+			/// (tagCAI) - Estrutura que representa uma matriz contada do tipo: SHORT
+			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
+			/// </summary>
+			public ref struct CA_CAI
+			{
+				/// <summary>
+				/// Variavel que informa a quantidade de items no membro (pElems).
+				/// </summary>
+				UInt32 cElems;
+
+				/// <summary>
+				/// Array que contém os elementos contados da estrutura.
+				/// </summary>
+				cli::array<short>^ pElems;
+			};
+
+			/// <summary>
+			/// (tagCAUI) - Estrutura que representa uma matriz contada do tipo: USHORT
+			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
+			/// </summary>
+			public ref struct CA_CAUI
+			{
+				/// <summary>
+				/// Variavel que informa a quantidade de items no membro (pElems).
+				/// </summary>
+				UInt32 cElems;
+
+				/// <summary>
+				/// Array que contém os elementos contados da estrutura.
+				/// </summary>
+				cli::array<USHORT>^ pElems;
+			};
+
+			/// <summary>
+			/// (tagCAL) - Estrutura que representa uma matriz contada do tipo: Int32
+			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
+			/// </summary>
+			public ref struct CA_CAL
+			{
+				/// <summary>
+				/// Variavel que informa a quantidade de items no membro (pElems).
+				/// </summary>
+				UInt32 cElems;
+
+				/// <summary>
+				/// Array que contém os elementos contados da estrutura.
+				/// </summary>
+				cli::array<Int32>^ pElems;
+			};
+
+			/// <summary>
+			/// (tagCAUL) - Estrutura que representa uma matriz contada do tipo: UInt32
+			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
+			/// </summary>
+			public ref struct CA_CAUL
+			{
+				/// <summary>
+				/// Variavel que informa a quantidade de items no membro (pElems).
+				/// </summary>
+				UInt32 cElems;
+
+				/// <summary>
+				/// Array que contém os elementos contados da estrutura.
+				/// </summary>
+				cli::array<UInt32>^ pElems;
+			};
+
+			/// <summary>
+			/// (tagCAFLT) - Estrutura que representa uma matriz contada do tipo: FLOAT
+			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
+			/// </summary>
+			public ref struct CA_CAFLT
+			{
+				/// <summary>
+				/// Variavel que informa a quantidade de items no membro (pElems).
+				/// </summary>
+				UInt32 cElems;
+
+				/// <summary>
+				/// Array que contém os elementos contados da estrutura.
+				/// </summary>
+				cli::array<float>^ pElems;
+			};
+
+			/// <summary>
+			/// (tagCADBL) - Estrutura que representa uma matriz contada do tipo: DOUBLE
+			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
+			/// </summary>
+			public ref struct CA_CADBL
+			{
+				/// <summary>
+				/// Variavel que informa a quantidade de items no membro (pElems).
+				/// </summary>
+				UInt32 cElems;
+
+				/// <summary>
+				/// Array que contém os elementos contados da estrutura.
+				/// </summary>
+				cli::array<double>^ pElems;
+			};
+
+			/// <summary>
+			/// (tagCACY) - Estrutura que representa uma matriz contada do tipo: CA_CY
+			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
+			/// </summary>
+			public ref struct CA_CACY
+			{
+				/// <summary>
+				/// Variavel que informa a quantidade de items no membro (pElems).
+				/// </summary>
+				UInt32 cElems;
+
+				/// <summary>
+				/// Array que contém os elementos contados da estrutura.
+				/// </summary>
+				cli::array<CA_CY^>^ pElems;
+			};
+
+			/// <summary>
+			/// (tagCADATE) - Estrutura que representa uma matriz contada do tipo: DATA - DOUBLE
+			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
+			/// </summary>
+			public ref struct CA_CADATE
+			{
+				/// <summary>
+				/// Variavel que informa a quantidade de items no membro (pElems).
+				/// </summary>
+				UInt32 cElems;
+
+				/// <summary>
+				/// Array que contém os elementos contados da estrutura.
+				/// </summary>
+				cli::array<double>^ pElems;
+			};
+
+			/// <summary>
+			/// (tagCABSTR) - Estrutura que representa uma matriz contada do tipo: STRING
+			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
+			/// </summary>
+			public ref struct CA_CABSTR
+			{
+				/// <summary>
+				/// Variavel que informa a quantidade de items no membro (pElems).
+				/// </summary>
+				UInt32 cElems;
+
+				/// <summary>
+				/// Array que contém os elementos contados da estrutura.
+				/// </summary>
+				cli::array<String^>^ pElems;
+			};
+
+			/// <summary>
+			/// (tagCABSTRBLOB) - Estrutura que representa uma matriz contada do tipo: CA_BlobData
+			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
+			/// </summary>
+			/// <typeparam name="ICarenBufferType">O tipo ICarenBuffer.</typeparam>
+			generic <typename ICarenBufferType>
+			public ref struct CA_CABSTRBLOB
+			{
+				/// <summary>
+				/// Variavel que informa a quantidade de items no membro (pElems).
+				/// </summary>
+				UInt32 cElems;
+
+				/// <summary>
+				/// Array que contém os elementos contados da estrutura.
+				/// </summary>
+				cli::array<CA_BlobData<ICarenBufferType>^>^ pElems;
+			};
+
+			/// <summary>
+			/// (tagCABOOL) - Estrutura que representa uma matriz contada do tipo: BOOLEAN
+			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
+			/// </summary>
+			public ref struct CA_CABOOL
+			{
+				/// <summary>
+				/// Variavel que informa a quantidade de items no membro (pElems).
+				/// </summary>
+				UInt32 cElems;
+
+				/// <summary>
+				/// Array que contém os elementos contados da estrutura.
+				/// </summary>
+				cli::array<Boolean>^ pElems;
+			};
+
+			/// <summary>
+			/// (tagCASCODE) - Estrutura que representa uma matriz contada do tipo: UInt32 - HRESULTs
+			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
+			/// </summary>
+			public ref struct CA_CASCODE
+			{
+				/// <summary>
+				/// Variavel que informa a quantidade de items no membro (pElems).
+				/// </summary>
+				UInt32 cElems;
+
+				/// <summary>
+				/// Array que contém os elementos contados da estrutura.
+				/// </summary>
+				cli::array<UInt32>^ pElems;
+			};
+
+			/// <summary>
+			/// (tagCAPROPVARIANT) - Estrutura que representa uma matriz contada do tipo: CA_PROPVARIANT
+			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
+			/// </summary>
+			public ref struct CA_CAPROPVARIANT
+			{
+				/// <summary>
+				/// Variavel que informa a quantidade de items no membro (pElems).
+				/// </summary>
+				UInt32 cElems;
+
+				/// <summary>
+				/// Array que contém os elementos contados da estrutura.
+				/// </summary>
+				cli::array<Object^>^ pElems;
+			};
+
+			/// <summary>
+			/// (tagCAH) - Estrutura que representa uma matriz contada do tipo: CA_LARGE_INTEGER
+			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
+			/// </summary>
+			public ref struct CA_CAH
+			{
+				/// <summary>
+				/// Variavel que informa a quantidade de items no membro (pElems).
+				/// </summary>
+				UInt32 cElems;
+
+				/// <summary>
+				/// Array que contém os elementos contados da estrutura.
+				/// </summary>
+				cli::array<CA_LARGE_INTEGER^>^ pElems;
+			};
+
+			/// <summary>
+			/// (tagCAUH) - Estrutura que representa uma matriz contada do tipo: CA_ULARGE_INTEGER
+			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
+			/// </summary>
+			public ref struct CA_CAUH
+			{
+				/// <summary>
+				/// Variavel que informa a quantidade de items no membro (pElems).
+				/// </summary>
+				UInt32 cElems;
+
+				/// <summary>
+				/// Array que contém os elementos contados da estrutura.
+				/// </summary>
+				cli::array<CA_ULARGE_INTEGER^>^ pElems;
+			};
+			
+			/// <summary>
+			/// (tagCALPSTR) - Estrutura que representa uma matriz contada do tipo: STRING
+			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
+			/// </summary>
+			public ref struct CA_CALPSTR
+			{
+				/// <summary>
+				/// Variavel que informa a quantidade de items no membro (pElems).
+				/// </summary>
+				UInt32 cElems;
+
+				/// <summary>
+				/// Array que contém os elementos contados da estrutura.
+				/// </summary>
+				cli::array<String^>^ pElems;
+			};
+
+			/// <summary>
+			/// (tagCALPWSTR) - Estrutura que representa uma matriz contada do tipo: STRING
+			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
+			/// </summary>
+			public ref struct CA_CALPWSTR
+			{
+				/// <summary>
+				/// Variavel que informa a quantidade de items no membro (pElems).
+				/// </summary>
+				UInt32 cElems;
+
+				/// <summary>
+				/// Array que contém os elementos contados da estrutura.
+				/// </summary>
+				cli::array<String^>^ pElems;
+			};
+
+			/// <summary>
+			/// (tagCAFILETIME) - Estrutura que representa uma matriz contada do tipo: CA_FILETIME
+			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
+			/// </summary>
+			public ref struct CA_CAFILETIME
+			{
+				/// <summary>
+				/// Variavel que informa a quantidade de items no membro (pElems).
+				/// </summary>
+				UInt32 cElems;
+
+				/// <summary>
+				/// Array que contém os elementos contados da estrutura.
+				/// </summary>
+				cli::array<CA_FILETIME^>^ pElems;
+			};
+
+			/// <summary>
+			/// (tagCACLIPDATA) - Estrutura que representa uma matriz contada do tipo: CA_CLIPDATA
+			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
+			/// </summary>
+			/// <typeparam name="ICarenBufferType">O tipo ICarenBuffer.</typeparam>
+			generic <typename ICarenBufferType>
+			public ref struct CA_CACLIPDATA
+			{
+				/// <summary>
+				/// Variavel que informa a quantidade de items no membro (pElems).
+				/// </summary>
+				UInt32 cElems;
+
+				/// <summary>
+				/// Array que contém os elementos contados da estrutura.
+				/// </summary>
+				cli::array<CA_CLIPDATA<ICarenBufferType>^>^ pElems;
+			};
+
+			/// <summary>
+			/// (tagCACLSID) - Estrutura que representa uma matriz contada do tipo: STRING - CLSID
+			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
+			/// </summary>
+			public ref struct CA_CACLSID
+			{
+				/// <summary>
+				/// Variavel que informa a quantidade de items no membro (pElems).
+				/// </summary>
+				UInt32 cElems;
+
+				/// <summary>
+				/// Array que contém os elementos contados da estrutura.
+				/// </summary>
+				cli::array<String^>^ pElems;
+			};
+
+			/// <summary>
+			/// (PROPVARIANT) - 
+			/// </summary>
+			generic <typename CarenBufferType, typename ICarenType>
+			public ref struct CA_PROPVARIANT
 			{
 				/// <summary>
 				/// Especifica o tipo de valor que essa estrutua está contendo.
 				/// </summary>
-				Enumeracoes::CA_VARTYPE _TipoDados;
+				Enumeracoes::CA_VARTYPE vt;
 
-				/// <summary>
-				/// Especifica que está armzenando um valor: Char
-				/// </summary>
-				CHAR Var_Char;
-				/// <summary>
-				/// Especifica que está armzenando um valor: String -> BSTR | LPWSTR | LPSTR
-				/// </summary>
-				String^ Var_String;
-				/// <summary>
-				/// Especifica que está armzenando um valor: Int16
-				/// </summary>
-				INT16 Var_Int16;
-				/// <summary>
-				/// Especifica que está armzenando um valor: Int32
-				/// </summary>
-				INT32 Var_Int32;
-				/// <summary>
-				/// Especifica que está armzenando um valor: Int64
-				/// </summary>
-				INT64 Var_Int64;
-				/// <summary>
-				/// Especifica que está armzenando um valor: UInt16
-				/// </summary>
-				UINT16 Var_UInt16;
-				/// <summary>
-				/// Especifica que está armzenando um valor:  UInt32
-				/// </summary>
-				UINT32 Var_UInt32;
-				/// <summary>
-				/// Especifica que está armzenando um valor: UInt64
-				/// </summary>
-				UINT64 Var_UInt64;
-				/// <summary>
-				/// Especifica que está armzenando um valor: Float
-				/// </summary>
-				FLOAT Var_Float;
-				/// <summary>
-				/// Especifica que está armzenando um valor:  Double
-				/// </summary>
-				DOUBLE Var_Double;
-				/// <summary>
-				/// Especifica que está armzenando um valor: Bool
-				/// </summary>
-				Boolean Var_Bool;
-				/// <summary>
-				/// Especifica que está armzenando um valor: Byte (uint8)
-				/// </summary>
-				Byte Var_Byte;
-				/// <summary>
-				/// Especifica que está armzenando um valor: SByte (int8)
-				/// </summary>
-				SByte Var_SByte;
-				/// <summary>
-				/// Especifica que está armzenando um valor: VT_CLSID 
-				/// </summary>
-				String^ Var_Guid;
-				/// <summary>
-				/// Especifica que está armzenando um array de bytes.
-				/// </summary>
-				CA_BlobData^ Var_Blob;
-				/// <summary>
-				/// Especifica que está armzenando um valor: VT_UNKNOWN -> ICaren
-				/// </summary>
-				Object^ Var_ICaren;
-			};
+				//Tipos simples.
 
-			/// <summary>
-			/// (tagCY) - Estrutura que 
-			/// </summary>
-			public ref struct CA_CY
-			{
-				UInt32 Lo;
-				Int32 Hi;
-				Int64 int64;
-			};
+				char cVal;
+				UCHAR bVal;
+				SHORT iVal;
+				USHORT uiVal;
+				Int32 lVal;
+				UInt32 ulVal;
+				Int32 intVal;
+				UInt32 uintVal;
+				CA_LARGE_INTEGER^ hVal;
+				CA_ULARGE_INTEGER^ uhVal;
+				FLOAT fltVal;
+				DOUBLE dblVal;
+				Boolean boolVal;
+				UInt32 scode;
+				CA_CY^ cyVal;
+				DOUBLE date;
+				CA_FILETIME^ filetime;
+				String^ puuid;
+				CA_CLIPDATA<CarenBufferType>^ pclipdata;
+				String^ bstrVal;
+				CA_BlobData<CarenBufferType>^ blob;
+				String^ pszVal;
+				String^ pwszVal;
+				ICarenType punkVal;
+				ICarenType pdispVal;
+				ICarenType pStream;
+				ICarenType pStorage;
+				CA_VersionedStream<ICarenType>^ pVersionedStream;
+				CA_SAFEARRAY<CarenBufferType>^ parray;
 
-			/// <summary>
-			/// (tagDEC) - Estrutura que 
-			/// </summary>
-			public ref struct CA_DECIMAL
-			{
 
+				//Matrizes Contadas
+
+				CA_CAC^ cac;
+				CA_CAUB^ caub;
+				CA_CAI^ cai;
+				CA_CAUI^ caui;
+				CA_CAL^ cal;
+				CA_CAUL^ caul;
+				CA_CAH^ cah;
+				CA_CAUH^ cauh;
+				CA_CAFLT^ caflt;
+				CA_CADBL^ cadbl;
+				CA_CABOOL^ cabool;
+				CA_CASCODE^ cascode;
+				CA_CACY^ cacy;
+				CA_CADATE^ cadate;
+				CA_CAFILETIME^ cafiletime;
+				CA_CACLSID^ cauuid;
+				CA_CACLIPDATA<CarenBufferType>^ caclipdata;
+				CA_CABSTR^ cabstr;
+				CA_CABSTRBLOB<CarenBufferType>^ cabstrblob;
+				CA_CALPSTR^ calpstr;
+				CA_CALPWSTR^ calpwstr;
+				CA_CAPROPVARIANT^ capropvar;
+
+				//Ponteiros.
+
+				CHAR* pcVal;
+				UCHAR* pbVal;
+				SHORT* piVal;
+				USHORT* puiVal;
+				LONG* plVal;
+				ULONG* pulVal;
+				INT* pintVal;
+				UINT* puintVal;
+				FLOAT* pfltVal;
+				DOUBLE* pdblVal;
+				VARIANT_BOOL* pboolVal;
+				DECIMAL* pdecVal;
+				SCODE* pscode;
+				CY* pcyVal;
+				DATE* pdate;
+				BSTR* pbstrVal;
+				IUnknown** ppunkVal;
+				IDispatch** ppdispVal;
+				LPSAFEARRAY* pparray;
+				PROPVARIANT* pvarVal;
 			};
 		
 			/// <summary>
@@ -17512,7 +18040,7 @@ namespace CarenRengine
 				UInt64 ullVal;
 				Int32 intVal;
 				UInt32 uintVal;
-				CA_DECIMAL^ pdecVal;
+				CA_DEC^ pdecVal;
 				cli::array<char>^ pcVal;
 				cli::array<unsigned short>^ puiVal;
 				cli::array<unsigned long>^ pulVal;

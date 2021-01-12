@@ -532,15 +532,15 @@ namespace CarenRengine
 			CarenResult Compare(ICarenMFAttributes^ Param_InterfaceCompare, Enumeracoes::CA_ATTRIBUTES_MATCH_TYPE Param_TipoComparação, OutParam Boolean% Param_Out_Resultado);
 
 			/// <summary>
-			/// Consulta se um valor de atributo armazenado é igual ao valor que está armazenado numa CA_PropVariant.
-			/// CA_PropVariant é um Wrapper da PropVariant não gerenciada.
-			/// O método pode retornar (False) para comparação nos seguintes casos: Atributo Não Encontrado, O Tipo do (Valor) na (CA_PropVariant) é diferente do (Valor) no Atributo,
+			/// Consulta se um valor de atributo armazenado é igual ao valor que está armazenado numa CA_PROPVARIANT.
+			/// CA_PROPVARIANT é um Wrapper da PropVariant não gerenciada.
+			/// O método pode retornar (False) para comparação nos seguintes casos: Atributo Não Encontrado, O Tipo do (Valor) na (CA_PROPVARIANT) é diferente do (Valor) no Atributo,
 			/// O (Valor) do (Atributo) não coincide com o (Valor) passado, método falha.
 			/// </summary>
 			/// <param name="Param_GuidChave">Define o Guid do atributo a ter seu valor comparado com o valor da PropVariant informada.</param>
 			/// <param name="Param_Valor">O valor a ser comparado com o Atributo especificado.</param>
 			/// <param name="Param_Out_Resultado">O resultado da comparação do atributo.</param>
-			CarenResult CompareItem(String^ Param_GuidChave, CA_PropVariant^ Param_Valor, OutParam Boolean% Param_Out_Resultado);
+			CarenResult CompareItem(String^ Param_GuidChave, CA_PROPVARIANT^ Param_Valor, OutParam Boolean% Param_Out_Resultado);
 
 			/// <summary>
 			/// (CopyAllItems) - Copia todos os atributos deste objeto em outro armazenamento de atributo.
@@ -625,9 +625,9 @@ namespace CarenRengine
 			/// <summary>
 			/// Recupera o valor desconhecido associado a uma chave.
 			/// </summary>
-			/// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (CA_PropVariant) obtido.</param>
+			/// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (CA_PROPVARIANT) obtido.</param>
 			/// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-			CarenResult GetItem(String^ Param_GuidChave, OutParam CA_PropVariant^% Param_Out_Valor);
+			CarenResult GetItem(String^ Param_GuidChave, OutParam CA_PROPVARIANT^% Param_Out_Valor);
 
 			/// <summary>
 			/// Recupera um atributo no índice especificado.
@@ -635,7 +635,7 @@ namespace CarenRengine
 			/// <param name="Param_Out_GuidChave">Recebe o guid associado a chave obtida pelo id.</param>
 			/// <param name="Param_IdItem">O Id do item a ter o seu valor obtido.</param>
 			/// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-			CarenResult GetItemByIndex(UInt32 Param_IdItem, OutParam String^% Param_Out_GuidChave, OutParam CA_PropVariant^% Param_Out_Valor);
+			CarenResult GetItemByIndex(UInt32 Param_IdItem, OutParam String^% Param_Out_GuidChave, OutParam CA_PROPVARIANT^% Param_Out_Valor);
 
 			/// <summary>
 			/// Recupera o tipo de dados do valor associado a uma chave.
@@ -739,7 +739,7 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 			/// <param name="Param_PropVariantValor">A PropVariant que contém o valor a ser definido na chave especificada.</param>
-			CarenResult SetItem(String^ Param_GuidChave, CA_PropVariant^ Param_PropVariantValor);
+			CarenResult SetItem(String^ Param_GuidChave, CA_PROPVARIANT^ Param_PropVariantValor);
 
 			/// <summary>
 			/// Associa uma seqüência de caracteres largos com uma chave.
@@ -956,11 +956,11 @@ namespace CarenRengine
 			CarenResult GetExtendedType(OutParam String^% Param_Out_GuidExtendedType);
 
 			/// <summary>
-			/// (GetValue) - Recupera o valor associado ao evento, se houver. O valor é recuperado como uma estrutura CA_PropVariant. O tipo de dados real e o significado do valor 
+			/// (GetValue) - Recupera o valor associado ao evento, se houver. O valor é recuperado como uma estrutura CA_PROPVARIANT. O tipo de dados real e o significado do valor 
 			/// dependem do evento.
 			/// </summary>
 			/// <param name="Param_Out_ValorEvento">Recebe a PropVariant que contém o valor associado ao evento. Nem todos eventos possuem valores.</param>
-			CarenResult GetValue(OutParam CA_PropVariant^% Param_Out_ValorEvento);
+			CarenResult GetValue(OutParam CA_PROPVARIANT^% Param_Out_ValorEvento);
 		};
 
 		/// <summary>
@@ -1016,8 +1016,8 @@ namespace CarenRengine
 			/// <param name="Param_TipoEvento">Especifica o tipo do evento. O tipo do evento é retornado pelo método (ICarenMFMediaEvent.GetType).</param>
 			/// <param name="Param_GuidExtendedType">O tipo estendido. Se o evento não tiver um tipo estendido, defina como NULO. O tipo estendido é retornado pelo método (ICarenMFMediaEvent.GetExtendedType) do evento.</param>
 			/// <param name="Param_HResultCode">Um código de sucesso ou falha indicando o status do evento. Esse valor é retornado pelo método (ICarenMFMediaEvent.GetStatus) do evento.</param>
-			/// <param name="Param_Dados">uma CA_PropVariant que contém o valor do evento. Este parâmetro pode ser NULO. Esse valor é retornado pelo método (ICarenMFMediaEvent.GetValue) do evento.</param>
-			CarenResult InserirEventoFila(Enumeracoes::CA_MediaEventType Param_TipoEvento, String^ Param_GuidExtendedType, Int32 Param_HResultCode, CA_PropVariant^ Param_Dados);
+			/// <param name="Param_Dados">uma CA_PROPVARIANT que contém o valor do evento. Este parâmetro pode ser NULO. Esse valor é retornado pelo método (ICarenMFMediaEvent.GetValue) do evento.</param>
+			CarenResult InserirEventoFila(Enumeracoes::CA_MediaEventType Param_TipoEvento, String^ Param_GuidExtendedType, Int32 Param_HResultCode, CA_PROPVARIANT^ Param_Dados);
 		};
 
 		/// <summary>
@@ -1522,7 +1522,7 @@ namespace CarenRengine
 			/// <param name="Param_ValorAdicional">Um valor que contém informações adicionais relacionadas ao marcador. Esse parâmetro pode ser (NULO).</param>
 			/// <param name="Param_DadosAnexoEvento">Valor que é anexado junto ao evento(MEStreamSinkMarker). Chame o método (GetValue) na interface 
 			/// de evento para obter esse valor. Esse parâmetro pode ser (NULO).</param>
-			CarenResult PlaceMarker(Enumeracoes::CA_MFSTREAMSINK_MARKER_TYPE Param_Marcador, CA_PropVariant^ Param_ValorAdicional, CA_PropVariant^ Param_DadosAnexoEvento);
+			CarenResult PlaceMarker(Enumeracoes::CA_MFSTREAMSINK_MARKER_TYPE Param_Marcador, CA_PROPVARIANT^ Param_ValorAdicional, CA_PROPVARIANT^ Param_DadosAnexoEvento);
 
 			/// <summary>
 			/// Faz com que o coletor de fluxo para descartar todas as amostras que ele 
@@ -1893,7 +1893,7 @@ namespace CarenRengine
 			/// Param_GuidAtributo pode especificar os atributos de: MFAtributos_DescritorApresentação, MF_SOURCE_READER_MEDIASOURCE_CHARACTERISTICS.
 			/// Se Param_IdFluxo espeficifica um Fluxo, Param_GuidAtributo deve especificar um atributo do Descritor de Fluxo(GUIDs_MFAtributos_DescritorFluxo) </param>
 			/// <param name="Param_Out_ValorAtributo">Retorna o valor do atributo solicitado</param>
-			CarenResult GetPresentationAttribute(UInt32 Param_IdFluxo, String^ Param_GuidAtributo, OutParam CA_PropVariant^% Param_Out_ValorAtributo);
+			CarenResult GetPresentationAttribute(UInt32 Param_IdFluxo, String^ Param_GuidAtributo, OutParam CA_PROPVARIANT^% Param_Out_ValorAtributo);
 
 			/// <summary>
 			/// Consulta a fonte subjacente de mídia ou decodificador para uma interface.
@@ -2751,8 +2751,8 @@ namespace CarenRengine
 			/// <param name="Param_GuidTimeFormato">Um GUID que especifica o formato de hora. O formato de hora define as unidades para o parâmetro Param_PosiçãoInicio. Se o valor é NULL, o formato é definido como unidades de 100 nanossegundos. Algumas fontes de 
 			/// mídia podem oferecer suporte o formato de hora adicional. Este parâmetro pode ser nulo. Se o valor for nulo, é equivalente a GUID_NULL.</param>
 			/// <param name="Param_PosiçãoInicio">Especifica onde iniciar a reprodução. As unidades deste parâmetro são indicadas pelo formato tempo dado em Param_GuidTimeFormato. Se o formato de hora é GUID_NULL, o tipo de variante deve ser VT_I8 ou VT_EMPTY. Use VT_I8 
-			/// para especificar uma nova posição inicial, em unidades de 100 nanossegundos. Use VT_EMPTY para começar a partir da posição atual. Outros formatos de hora podem usar outros tipos CA_PropVariant.</param>
-			CarenResult Start(ICarenMFPresentationDescriptor^ Param_DescritorApresentação, String^ Param_GuidTimeFormato, CA_PropVariant^ Param_PosiçãoInicio);
+			/// para especificar uma nova posição inicial, em unidades de 100 nanossegundos. Use VT_EMPTY para começar a partir da posição atual. Outros formatos de hora podem usar outros tipos CA_PROPVARIANT.</param>
+			CarenResult Start(ICarenMFPresentationDescriptor^ Param_DescritorApresentação, String^ Param_GuidTimeFormato, CA_PROPVARIANT^ Param_PosiçãoInicio);
 
 			/// <summary>
 			/// (Pause) - Pausa todos os fluxos ativos na fonte de mídia.
@@ -3592,9 +3592,9 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_GuidFormatoTempo">um GUID que especifica o formato de hora para o (Param_PosicaoInicio) parâmetro. Este parâmetro pode ser NULO. O valor NULO é equivalente 
 			/// a passar em GUID_NULL.</param>
-			/// <param name="Param_PosicaoInicio">Uma CA_PropVariant que especifica a posição inicial para reprodução. O significado e o tipo de dados desse parâmetro são indicados pelo 
+			/// <param name="Param_PosicaoInicio">Uma CA_PROPVARIANT que especifica a posição inicial para reprodução. O significado e o tipo de dados desse parâmetro são indicados pelo 
 			/// (Param_GuidFormatoTempo) parâmetro.</param>
-			CarenResult Start(String^ Param_GuidFormatoTempo, CA_PropVariant^ Param_PosicaoInicio);
+			CarenResult Start(String^ Param_GuidFormatoTempo, CA_PROPVARIANT^ Param_PosicaoInicio);
 
 			/// <summary>
 			/// (Stop) - Interrompe a sessão de mídia.
@@ -3780,16 +3780,16 @@ namespace CarenRengine
 			/// <summary>
 			/// Obtém uma lista dos idiomas em que os metadados estão disponíveis.
 			/// </summary>
-			/// <param name="Param_Out_ListaIdiomas">Retorna uma CA_PropVariant com uma lista de idiomas. A lista é devolvida como uma matriz de seqüência de sequências de caracteres amplos. Cada string na matriz 
+			/// <param name="Param_Out_ListaIdiomas">Retorna uma CA_PROPVARIANT com uma lista de idiomas. A lista é devolvida como uma matriz de seqüência de sequências de caracteres amplos. Cada string na matriz 
 			/// é uma tag de idioma compatível com RFC 1766.</param>
-			CarenResult GetAllLanguages(OutParam CA_PropVariant^% Param_Out_ListaIdiomas);
+			CarenResult GetAllLanguages(OutParam CA_PROPVARIANT^% Param_Out_ListaIdiomas);
 
 			/// <summary>
 			/// Obtém uma lista de todos os nomes de propriedade de metadados neste objeto.
 			/// </summary>
-			/// <param name="Param_Out_ListaNomesProps">Retorna uma CA_PropVariant com os nomes de todas as propriedades. Se não houver propriedades disponíveis, o tipo CA_PropVariant será VT_EMPTY. Caso contrário,
-			///  o tipo CA_PropVariant é VT_VECTOR | VT_LPWSTR. </param>
-			CarenResult GetAllPropertyNames(OutParam CA_PropVariant^% Param_Out_ListaNomesProps);
+			/// <param name="Param_Out_ListaNomesProps">Retorna uma CA_PROPVARIANT com os nomes de todas as propriedades. Se não houver propriedades disponíveis, o tipo CA_PROPVARIANT será VT_EMPTY. Caso contrário,
+			///  o tipo CA_PROPVARIANT é VT_VECTOR | VT_LPWSTR. </param>
+			CarenResult GetAllPropertyNames(OutParam CA_PROPVARIANT^% Param_Out_ListaNomesProps);
 
 			/// <summary>
 			/// Obtém a configuração atual do idioma.
@@ -3801,9 +3801,9 @@ namespace CarenRengine
 			/// Obtém o valor de uma propriedade de metadados.
 			/// </summary>
 			/// <param name="Param_NomePropriedade">Uma string que contém o nome da propriedade a ser recuperada o valor.</param>
-			/// <param name="Param_Out_Valor">Recebe uma estrutura CA_PropVariant contendo o valor. O tipo CA_PropVariant depende da propriedade. Para propriedades multivalorizadas, o CA_PropVariant é 
+			/// <param name="Param_Out_Valor">Recebe uma estrutura CA_PROPVARIANT contendo o valor. O tipo CA_PROPVARIANT depende da propriedade. Para propriedades multivalorizadas, o CA_PROPVARIANT é 
 			/// um tipo VT_VECTOR.</param>
-			CarenResult GetProperty(String^ Param_NomePropriedade, OutParam CA_PropVariant^% Param_Out_Valor);
+			CarenResult GetProperty(String^ Param_NomePropriedade, OutParam CA_PROPVARIANT^% Param_Out_Valor);
 
 			/// <summary>
 			/// Define o idioma para definir e recuperar metadados.
@@ -3815,8 +3815,8 @@ namespace CarenRengine
 			/// Define o valor de uma propriedade de metadados.
 			/// </summary>
 			/// <param name="Param_NomePropriedade">Uma string com o nome da propriedade.</param>
-			/// <param name="Param_Valor">Uma CA_PropVariant que contém o valor da propriedade. Para propriedades multivalorizadas, use um CA_PropVariant com um tipo de VT_VECTOR.</param>
-			CarenResult SetProperty(String^ Param_NomePropriedade, CA_PropVariant^ Param_Valor);
+			/// <param name="Param_Valor">Uma CA_PROPVARIANT que contém o valor da propriedade. Para propriedades multivalorizadas, use um CA_PROPVARIANT com um tipo de VT_VECTOR.</param>
+			CarenResult SetProperty(String^ Param_NomePropriedade, CA_PROPVARIANT^ Param_Valor);
 		};
 
 		/// <summary>
@@ -5189,10 +5189,10 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_GuidMFAtributos">O atributo a ser consultado. Para obter uma lista de atributos de apresentação, consulte a estrutura: 
 			/// GUIDs_MFAtributos_DescritorApresentacao</param>
-			/// <param name="Param_Out_ValorAtributo">Retrona uma CA_PropVariant com os dados do atributo.</param>
+			/// <param name="Param_Out_ValorAtributo">Retrona uma CA_PROPVARIANT com os dados do atributo.</param>
 			CarenResult GetPresentationAttribute(
 				String^ Param_GuidMFAtributos, 
-				OutParam CA_PropVariant^% Param_Out_ValorAtributo);
+				OutParam CA_PROPVARIANT^% Param_Out_ValorAtributo);
 
 			/// <summary>
 			/// Obtém o modo em tempo real usado para a próxima chamada para SetSource ou Load.
@@ -5210,10 +5210,10 @@ namespace CarenRengine
 			/// Obtém uma estatística de reprodução do Media Engine.
 			/// </summary>
 			/// <param name="Param_TipoEstatistica">Um membro da enumeração CA_MF_MEDIA_ENGINE_STATISTIC que identifica a estatística a obter.</param>
-			/// <param name="Param_Out_ValorEstatistica">Retrona uma CA_PropVariant com os dados da estatitisca requisitada.</param>
+			/// <param name="Param_Out_ValorEstatistica">Retrona uma CA_PROPVARIANT com os dados da estatitisca requisitada.</param>
 			CarenResult GetStatistics(
 				CA_MF_MEDIA_ENGINE_STATISTIC Param_TipoEstatistica, 
-				OutParam CA_PropVariant^% Param_Out_ValorEstatistica);
+				OutParam CA_PROPVARIANT^% Param_Out_ValorEstatistica);
 
 			/// <summary>
 			/// Para vídeo 3D estereoscópico, obtém o layout das duas visualizações dentro de um quadro de vídeo.
@@ -5232,11 +5232,11 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_IdFluxo">O índice baseado em zero do fluxo. Para obter o número de fluxos, ligue para ICarenMFMediaEngineEx::ObterNumeroFluxos.</param>
 			/// <param name="Param_GuidMfAtributo">O atributo a ser consultado. Os valores possíveis estão presentes nas estruturas: GUIDs_MFAtributos_DescritorFluxo e GUIDs_MF_MEDIATYPE_ATTRIBUTES</param>
-			/// <param name="Param_Out_ValorAtributo">>Retrona uma CA_PropVariant com os dados do atributo.</param>
+			/// <param name="Param_Out_ValorAtributo">>Retrona uma CA_PROPVARIANT com os dados do atributo.</param>
 			CarenResult GetStreamAttribute(
 				UInt32 Param_IdFluxo, 
 				String^ Param_GuidMfAtributo, 
-				OutParam CA_PropVariant^% Param_Out_ValorAtributo);
+				OutParam CA_PROPVARIANT^% Param_Out_ValorAtributo);
 
 			/// <summary>
 			/// Verifica se um fluxo está selecionado para reprodução.

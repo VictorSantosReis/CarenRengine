@@ -250,16 +250,16 @@ public:
 	/// <summary>
 	/// Obtém uma lista dos idiomas em que os metadados estão disponíveis.
 	/// </summary>
-	/// <param name="Param_Out_ListaIdiomas">Retorna uma CA_PropVariant com uma lista de idiomas. A lista é devolvida como uma matriz de seqüência de sequências de caracteres amplos. Cada string na matriz 
+	/// <param name="Param_Out_ListaIdiomas">Retorna uma CA_PROPVARIANT com uma lista de idiomas. A lista é devolvida como uma matriz de seqüência de sequências de caracteres amplos. Cada string na matriz 
 	/// é uma tag de idioma compatível com RFC 1766.</param>
-	virtual CarenResult GetAllLanguages([Out] CA_PropVariant^% Param_Out_ListaIdiomas);
+	virtual CarenResult GetAllLanguages([Out] CA_PROPVARIANT^% Param_Out_ListaIdiomas);
 
 	/// <summary>
 	/// Obtém uma lista de todos os nomes de propriedade de metadados neste objeto.
 	/// </summary>
-	/// <param name="Param_Out_ListaNomesProps">Retorna uma CA_PropVariant com os nomes de todas as propriedades. Se não houver propriedades disponíveis, o tipo CA_PropVariant será VT_EMPTY. Caso contrário,
-	///  o tipo CA_PropVariant é VT_VECTOR | VT_LPWSTR. </param>
-	virtual CarenResult GetAllPropertyNames([Out] CA_PropVariant^% Param_Out_ListaNomesProps);
+	/// <param name="Param_Out_ListaNomesProps">Retorna uma CA_PROPVARIANT com os nomes de todas as propriedades. Se não houver propriedades disponíveis, o tipo CA_PROPVARIANT será VT_EMPTY. Caso contrário,
+	///  o tipo CA_PROPVARIANT é VT_VECTOR | VT_LPWSTR. </param>
+	virtual CarenResult GetAllPropertyNames([Out] CA_PROPVARIANT^% Param_Out_ListaNomesProps);
 
 	/// <summary>
 	/// Obtém a configuração atual do idioma.
@@ -271,9 +271,9 @@ public:
 	/// Obtém o valor de uma propriedade de metadados.
 	/// </summary>
 	/// <param name="Param_NomePropriedade">Uma string que contém o nome da propriedade a ser recuperada o valor.</param>
-	/// <param name="Param_Out_Valor">Recebe uma estrutura CA_PropVariant contendo o valor. O tipo CA_PropVariant depende da propriedade. Para propriedades multivalorizadas, o CA_PropVariant é 
+	/// <param name="Param_Out_Valor">Recebe uma estrutura CA_PROPVARIANT contendo o valor. O tipo CA_PROPVARIANT depende da propriedade. Para propriedades multivalorizadas, o CA_PROPVARIANT é 
 	/// um tipo VT_VECTOR.</param>
-	virtual CarenResult GetProperty(String^ Param_NomePropriedade, [Out] CA_PropVariant^% Param_Out_Valor);
+	virtual CarenResult GetProperty(String^ Param_NomePropriedade, [Out] CA_PROPVARIANT^% Param_Out_Valor);
 
 	/// <summary>
 	/// Define o idioma para definir e recuperar metadados.
@@ -285,6 +285,6 @@ public:
 	/// Define o valor de uma propriedade de metadados.
 	/// </summary>
 	/// <param name="Param_NomePropriedade">Uma string com o nome da propriedade.</param>
-	/// <param name="Param_Valor">Uma CA_PropVariant que contém o valor da propriedade. Para propriedades multivalorizadas, use um CA_PropVariant com um tipo de VT_VECTOR.</param>
-	virtual CarenResult SetProperty(String^ Param_NomePropriedade, CA_PropVariant^ Param_Valor);
+	/// <param name="Param_Valor">Uma CA_PROPVARIANT que contém o valor da propriedade. Para propriedades multivalorizadas, use um CA_PROPVARIANT com um tipo de VT_VECTOR.</param>
+	virtual CarenResult SetProperty(String^ Param_NomePropriedade, CA_PROPVARIANT^ Param_Valor);
 };

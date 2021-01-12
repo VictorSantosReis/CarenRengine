@@ -953,10 +953,10 @@ namespace CarenRengine
 			/// o primeiro bloco de metadados ou item encontrado será devolvido.
 			/// </summary>
 			/// <param name="Param_Nome">A expressão de consulta ao bloco ou item de metadados solicitados.</param>
-			/// <param name="Param_Out_Valor">Retorna uma estrutura(CA_PropVariant) que armazena o bloco de metadados ou item solicitado.</param>
+			/// <param name="Param_Out_Valor">Retorna uma estrutura(CA_PROPVARIANT) que armazena o bloco de metadados ou item solicitado.</param>
 			CarenResult GetMetadataByName(
 				String^ Param_Nome,
-				[Out] CA_PropVariant^% Param_Out_Valor);
+				[Out] CA_PROPVARIANT^% Param_Out_Valor);
 		};
 
 		/// <summary>
@@ -994,10 +994,10 @@ namespace CarenRengine
 			/// A encomenda de itens de metadados fica a critério do autor de consulta, uma vez que os locais relativos não são especificados.
 			/// </summary>
 			/// <param name="Param_Nome">O nome do item metadados.</param>
-			/// <param name="Param_Valor">Uma estrutura(CA_PropVariant) que contém o valor dos metadados para definir.</param>
+			/// <param name="Param_Valor">Uma estrutura(CA_PROPVARIANT) que contém o valor dos metadados para definir.</param>
 			CarenResult SetMetadataByName(
 				String^ Param_Nome,
-				CA_PropVariant^ Param_Valor);
+				CA_PROPVARIANT^ Param_Valor);
 		};
 
 		/// <summary>
@@ -1653,9 +1653,9 @@ namespace CarenRengine
 			/// <param name="Param_Out_QuantRecuperados">O número de itens que foram recuperados. Esse valor é sempre menor ou igual ao número de itens solicitados.</param>
 			CarenResult Next(
 				UInt64 Param_Quantidade,
-				cli::array<CA_PropVariant^>^% Param_Ref_ArraySchemas,
-				[Out] cli::array<CA_PropVariant^>^% Param_Out_ArrayIds,
-				cli::array<CA_PropVariant^>^% Param_Ref_ArrayValores,
+				cli::array<CA_PROPVARIANT^>^% Param_Ref_ArraySchemas,
+				[Out] cli::array<CA_PROPVARIANT^>^% Param_Out_ArrayIds,
+				cli::array<CA_PROPVARIANT^>^% Param_Ref_ArrayValores,
 				[Out] UInt64% Param_Out_QuantRecuperados);
 
 			/// <summary>
@@ -1802,9 +1802,9 @@ namespace CarenRengine
 			/// <param name="Param_Id">Estrutura para o id do item metadados.</param>
 			/// <param name="Param_Out_Valor">Retorna uma estrutura que contém o valor dos metadados.</param>
 			CarenResult GetValue(
-				CA_PropVariant^ Param_Schema,
-				CA_PropVariant^ Param_Id,
-				[Out] CA_PropVariant^% Param_Out_Valor);
+				CA_PROPVARIANT^ Param_Schema,
+				CA_PROPVARIANT^ Param_Id,
+				[Out] CA_PROPVARIANT^% Param_Out_Valor);
 
 			/// <summary>
 			/// Obtém o item metadados no índice dado.
@@ -1815,9 +1815,9 @@ namespace CarenRengine
 			/// <param name="Param_Out_Valor">Retorna uma estrutura que contém o valor dos metadados.</param>
 			CarenResult GetValueByIndex(
 				UInt32 Param_Index,
-				[Out] CA_PropVariant^% Param_Out_Schema,
-				[Out] CA_PropVariant^% Param_Out_Id,
-				[Out] CA_PropVariant^% Param_Out_Valor);
+				[Out] CA_PROPVARIANT^% Param_Out_Schema,
+				[Out] CA_PROPVARIANT^% Param_Out_Id,
+				[Out] CA_PROPVARIANT^% Param_Out_Valor);
 		};
 
 		/// <summary>
@@ -1848,8 +1848,8 @@ namespace CarenRengine
 			/// <param name="Param_Schema">Uma estrutura para a propriedade do esquema de metadados.</param>
 			/// <param name="Param_Id">Uma estrutura para a propriedade de id metadata.</param>
 			CarenResult RemoveValue(
-				CA_PropVariant^ Param_Schema,
-				CA_PropVariant^ Param_Id);
+				CA_PROPVARIANT^ Param_Schema,
+				CA_PROPVARIANT^ Param_Id);
 
 			/// <summary>
 			/// Remove o item metadados no índice especificado. 
@@ -1866,9 +1866,9 @@ namespace CarenRengine
 			/// <param name="Param_Id">Estrutura para o id do item metadados.</param>
 			/// <param name="Param_Valor">Estrutura que contém o valor dos metadados.</param>
 			CarenResult SetValue(
-				CA_PropVariant^ Param_Schema,
-				CA_PropVariant^ Param_Id,
-				CA_PropVariant^ Param_Valor);
+				CA_PROPVARIANT^ Param_Schema,
+				CA_PROPVARIANT^ Param_Id,
+				CA_PROPVARIANT^ Param_Valor);
 
 			/// <summary>
 			/// Define o item metadados no índice especificado.
@@ -1881,9 +1881,9 @@ namespace CarenRengine
 			/// <param name="Param_Valor">Estrutura que contém o valor dos metadados.</param>
 			CarenResult SetValueByIndex(
 				UInt32 Param_Index,
-				CA_PropVariant^ Param_Schema,
-				CA_PropVariant^ Param_Id,
-				CA_PropVariant^ Param_Valor);
+				CA_PROPVARIANT^ Param_Schema,
+				CA_PROPVARIANT^ Param_Id,
+				CA_PROPVARIANT^ Param_Valor);
 		};
 
 		/// <summary>

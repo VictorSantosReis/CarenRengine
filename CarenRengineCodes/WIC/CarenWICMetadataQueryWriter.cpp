@@ -449,10 +449,10 @@ Done:;
 /// A encomenda de itens de metadados fica a critério do autor de consulta, uma vez que os locais relativos não são especificados.
 /// </summary>
 /// <param name="Param_Nome">O nome do item metadados.</param>
-/// <param name="Param_Valor">Uma estrutura(CA_PropVariant) que contém o valor dos metadados para definir.</param>
+/// <param name="Param_Valor">Uma estrutura(CA_PROPVARIANT) que contém o valor dos metadados para definir.</param>
 CarenResult CarenWICMetadataQueryWriter::SetMetadataByName(
 String^ Param_Nome,
-CA_PropVariant^ Param_Valor)
+CA_PROPVARIANT^ Param_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
@@ -680,10 +680,10 @@ Done:;
 /// o primeiro bloco de metadados ou item encontrado será devolvido.
 /// </summary>
 /// <param name="Param_Nome">A expressão de consulta ao bloco ou item de metadados solicitados.</param>
-/// <param name="Param_Out_Valor">Retorna uma estrutura(CA_PropVariant) que armazena o bloco de metadados ou item solicitado.</param>
+/// <param name="Param_Out_Valor">Retorna uma estrutura(CA_PROPVARIANT) que armazena o bloco de metadados ou item solicitado.</param>
 CarenResult CarenWICMetadataQueryWriter::GetMetadataByName(
 	String^ Param_Nome,
-	[Out] CA_PropVariant^% Param_Out_Valor)
+	[Out] CA_PROPVARIANT^% Param_Out_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);

@@ -20,6 +20,7 @@ limitations under the License.
 #include "Caren/CarenHMONITOR.h"
 #include "CarenGuids.h"
 #include "ParameterResolver/CarenParameterResolver.h"
+#define UNICODE 1
 
 //Importa o namespace do sistema
 using namespace System;
@@ -4067,7 +4068,7 @@ namespace CarenRengine
 			};
 
 			/// <summary>
-			/// (MF_ATTRIBUTE_SERIALIZE_OPTIONS) - Enumera valores que ‎definem bandeiras para serializar e deseralizar lojas de atributos.‎
+			/// (MF_ATTRIBUTE_SERIALIZE_OPTIONS) - Enumera valores que definem bandeiras para serializar e deseralizar lojas de atributos.
 			/// </summary>	
 			public enum class CA_MF_ATTRIBUTE_SERIALIZE_OPTIONS
 			{
@@ -4077,8 +4078,8 @@ namespace CarenRengine
 				Zero = 0x0,
 
 				/// <summary>
-				/// ‎Se esta bandeira estiver definida, os ponteiros ‎‎IUnknown‎‎ na loja de atributos ão empacotados de e para o fluxo. Se esta bandeira 
-				/// estiver ausente, os ponteiros ‎‎IUnknown‎‎ na loja de atributos não ão empacotados ou serializados.‎
+				/// Se esta bandeira estiver definida, os ponteiros IUnknown na loja de atributos ão empacotados de e para o fluxo. Se esta bandeira 
+				/// estiver ausente, os ponteiros IUnknown na loja de atributos não ão empacotados ou serializados.
 				/// </summary>
 				MF_ATTRIBUTE_SERIALIZE_UNKNOWN_BYREF = 0x1
 			};
@@ -9692,17 +9693,17 @@ namespace CarenRengine
 			public enum class CA_MF_TOPOLOGY_TYPE
 			{
 				/// <summary>
-				/// ‎Nó de saída. Representa um Media Sink na topologia.‎
+				/// Nó de saída. Representa um Media Sink na topologia.
 				/// </summary>
 				MF_TOPOLOGY_OUTPUT_NODE = 0,
 
 				/// <summary>
-				/// ‎Nó fonte. Representa um fluxo de mídia na topologia.‎
+				/// Nó fonte. Representa um fluxo de mídia na topologia.
 				/// </summary>
 				MF_TOPOLOGY_SOURCESTREAM_NODE = (MF_TOPOLOGY_OUTPUT_NODE + 1),
 
 				/// <summary>
-				/// ‎Nó de transformação. Representa uma Transformação de Mídia (MFT) na topologia.‎
+				/// Nó de transformação. Representa uma Transformação de Mídia (MFT) na topologia.?
 				/// </summary>
 				MF_TOPOLOGY_TRANSFORM_NODE = (MF_TOPOLOGY_SOURCESTREAM_NODE + 1),
 
@@ -17501,7 +17502,6 @@ namespace CarenRengine
 			/// <summary>
 			/// (tagBLOB) - Estrutura que contém um Blob(Byte Array) com os dados requisitados.
 			/// </summary>
-			generic <typename CarenBufferType>
 			public ref struct CA_BlobData
 			{
 				/// <summary>
@@ -17512,7 +17512,7 @@ namespace CarenRengine
 				/// <summary>
 				/// O buffer com os dados. Esse membro deve ser do tipo (ICarenBuffer).
 				/// </summary>
-				CarenBufferType BufferDados;
+				Object^ BufferDados;
 			};
 
 			/// <summary>
@@ -17557,7 +17557,6 @@ namespace CarenRengine
 			/// <summary>
 			/// (tagSAFEARRAY)(AUTO-IMPLEMENTADA) - 
 			/// </summary>
-			generic <typename BufferType>
 			public ref struct CA_SAFEARRAY
 			{
 				//Ponteiro nativo para os dados.
@@ -17565,13 +17564,33 @@ namespace CarenRengine
 
 				//Construtor & Destruidor
 			public:
-				CA_SAFEARRAY(Enumeracoes::CA_VARTYPE Param_vt, UInt32 Param_CountDim, cli::array<CA_SAFEARRAYBOUND>^ Param_Rgsabound)
+				CA_SAFEARRAY() {}
+				CA_SAFEARRAY(const SAFEARRAY& Param_SafeArray)
 				{
-					//Variaveis retornadas.
-					SAFEARRAYBOUND vi_OutSafeBound;
+					//Define o safe array no ponteiro de trabalho.
+					*PonteiroTrabalho = Param_SafeArray;
+				}
+				CA_SAFEARRAY(Enumeracoes::CA_VARTYPE Param_vt, UInt32 Param_CountDim, cli::array<CA_SAFEARRAYBOUND>^ Param_Limites)
+				{
+					//Variaveis a serem utilizadas.
+					SAFEARRAYBOUND *vi_pSafeBound = CriarMatrizEstruturas<SAFEARRAYBOUND>(Param_CountDim);
+
+					//Faz um for para preencher a matriz de estruturas descritivas.
+					for (UINT32 i = 0; i < Param_CountDim; i++)
+					{
+						//Inicializa
+						vi_pSafeBound[i] = { };
+
+						//Define os dados na estrutura.
+						vi_pSafeBound[i].cElements = Param_Limites[i].cElements;
+						vi_pSafeBound[i].lLbound = Param_Limites[i].lLbound;
+					}
 
 					//Cria o safe array.
-					PonteiroTrabalho = SafeArrayCreate(static_cast<VARTYPE>(Param_vt), Param_CountDim, &);
+					PonteiroTrabalho = SafeArrayCreate(static_cast<VARTYPE>(Param_vt), Param_CountDim, vi_pSafeBound);
+
+					//Libera a memória utilizada para criar o SafeArrayBound.
+					DeletarMatrizEstruturasSafe(&vi_pSafeBound);
 				}
 				~CA_SAFEARRAY()
 				{
@@ -17645,11 +17664,6 @@ namespace CarenRengine
 				}
 
 				/// <summary>
-				/// Os dados associados a está estrutura.
-				/// </summary>
-				cli::array<BufferType>^         pvData;
-
-				/// <summary>
 				/// Um array com a descrição de cada dimensão.
 				/// </summary>
 				property cli::array<CA_SAFEARRAYBOUND>^ rgsabound
@@ -17673,7 +17687,7 @@ namespace CarenRengine
 						vi_SafeBoundArray = gcnew cli::array<CA_SAFEARRAYBOUND>(vi_CountDim);
 
 						//Faz um for para definir os dados no array
-						for (size_t i = 0; i < vi_CountDim; i++)
+						for (int i = 0; i < vi_CountDim; i++)
 						{
 							//Cria a estrutura de valor.
 							vi_SafeBoundArray[i] = CA_SAFEARRAYBOUND();
@@ -17689,27 +17703,618 @@ namespace CarenRengine
 						return vi_SafeBoundArray;
 					}
 				}
+
+				//Métodos.
+			public:
+				/// <summary>
+				/// Método responsável por retornar os dados do ponteiro (pvData) 
+				/// </summary>
+				/// <typeparam name="BufferType">O tipo do buffer que está armazenado no safearray.</typeparam>
+				/// <returns></returns>
+				generic <typename BufferType>
+					cli::array<BufferType>^ GetPvData()
+					{
+						//Variavel a ser retornada.
+						cli::array<BufferType>^ BufferPvData = nullptr;
+
+						//Variaveis utilizadas.
+						HRESULT Hr = E_FAIL;
+						VARENUM vi_TipoVar = VARENUM::VT_NULL;
+
+						//Recupera o tipo do safe array.
+						Hr = SafeArrayGetVartype(PonteiroTrabalho, reinterpret_cast<VARTYPE*>(&vi_TipoVar));
+
+						//Verifica se não houve erro.
+						if (!Sucesso(Hr))
+							Sair; //Falhou ao obter o tipo do SAFEARRAY.
+
+						//Abre um swtich para verifica o tipo do SAFEARRAY. Os valores informados aqui são tirados da documentação do PROPVARIANT sobre os tipos que um SafeArray carrega a parti
+						//de uma PROPVARIANT.
+						//https://docs.microsoft.com/en-us/windows/win32/api/propidlbase/ns-propidlbase-propvariant
+						//https://docs.microsoft.com/en-us/windows/win32/api/wtypes/ne-wtypes-varenum
+						switch (vi_TipoVar)
+						{
+							//Tipo : CHAR - 1 Caracter
+						case VARENUM::VT_I1:
+						{
+							//Cria um array com o tipo especificado para ser retornado.
+
+							//Variaveis a serem utilizadas.
+							UINT32 vi_CountItens = PonteiroTrabalho->rgsabound[0].cElements;
+							cli::array<Char>^ vi_ArrayDados = nullptr;
+							char* vi_pBufferOrigem = Nulo; //Buffer origem do SAFEARRAY
+							wchar_t* vi_pBufferDestino = Nulo; //Buffer temporario utilizado pelo PinPtr.
+
+							//Cria a matriz gerenciada a ser retornada.
+							vi_ArrayDados = gcnew cli::array<Char>(vi_CountItens);
+
+							//Abre um lock para copiar os dados.
+							SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferOrigem));
+
+							//Cria um pin para o buffer gerenciado.
+							pin_ptr<Char> PinToIndexZeroBuffer = &vi_ArrayDados[0];
+
+							//Converte o pinptr para um buffer do tipo de destino.
+							vi_pBufferDestino = reinterpret_cast<wchar_t*>(PinToIndexZeroBuffer);
+
+							//Verifica se é valido
+							if (!ObjetoValido(vi_pBufferDestino))
+								throw gcnew NullReferenceException("(CA_SAFEARRAY->GetPvData) - Houve uma falha ao criar uma ligação para o buffer de destino gerenciado através do (pin_ptr).");
+
+							//Copia os dados para o buffer de destino gerenciado.
+							std::copy(vi_pBufferOrigem, (vi_pBufferOrigem) + vi_CountItens, vi_pBufferDestino);
+													
+							//Libera o SAFEARRAY.
+							SafeArrayUnaccessData(PonteiroTrabalho);
+
+							//Define o array criado no array que será retornado.
+							BufferPvData = (cli::array<BufferType>^)vi_ArrayDados;
+						}
+						break;
+
+						//Tipo : BYTE - 1 Caracter não assinado.
+						case VARENUM::VT_UI1:
+						{
+							//Cria um array com o tipo especificado para ser retornado.
+
+							//Variaveis a serem utilizadas.
+							UINT32 vi_CountItens = PonteiroTrabalho->rgsabound[0].cElements;
+							cli::array<Byte>^ vi_ArrayDados = nullptr;
+							BYTE* vi_pBufferPvData = reinterpret_cast<BYTE*>(PonteiroTrabalho->pvData); //Buffer contido no SafeArray.
+
+							//Cria a matriz gerenciada a ser retornada.
+							vi_ArrayDados = gcnew cli::array<Byte>(vi_CountItens);
+
+							//Abre um lock para copiar os dados.
+							SafeArrayLock(PonteiroTrabalho);
+
+
+							//Cria um pin para o buffer gerenciado.
+							pin_ptr<Byte> PinToIndexZeroBuffer = &vi_ArrayDados[0];
+
+							//Converte o pinptr para um buffer do tipo de destino.
+							BYTE* pBufferDestino = reinterpret_cast<BYTE*>(PinToIndexZeroBuffer);
+
+							//Verifica se é valido
+							if (!ObjetoValido(pBufferDestino))
+								throw gcnew NullReferenceException("(CA_SAFEARRAY->GetPvData) - Houve uma falha ao criar uma ligação para o buffer de destino gerenciado através do (pin_ptr).");
+
+							//Copia os dados do nativo para o gerenciado.
+							std::copy(vi_pBufferPvData, (vi_pBufferPvData)+vi_CountItens, pBufferDestino);
+
+
+							//Libera o SAFEARRAY.
+							SafeArrayUnlock(PonteiroTrabalho);
+
+							//Define o array criado no array que será retornado.
+							BufferPvData = (cli::array<BufferType>^)vi_ArrayDados;
+						}
+						break;
+
+						//Tipo : Int16 - 2 Bytes assinados
+						case VARENUM::VT_I2:
+						{
+
+						}
+						break;
+
+						//Tipo : UInt16 - 2 Bytes não assinado
+						case VARENUM::VT_UI2:
+						{
+
+						}
+						break;
+
+						//Tipo : Int32 - 4 Bytes assinados.
+						case VARENUM::VT_I4:
+						{
+
+						}
+						break;
+
+						//Tipo : UInt32 - 4 Bytes não assinados.
+						case VARENUM::VT_UI4:
+						{
+
+						}
+						break;
+
+						//Tipo : INT -> Int32
+						case VARENUM::VT_INT:
+						{
+
+						}
+						break;
+
+						//Tipo : UINT -> UInt32
+						case VARENUM::VT_UINT:
+						{
+
+						}
+						break;
+
+						//Tipo : FLOAT - 4 Bytes reais
+						case VARENUM::VT_R4:
+						{
+
+						}
+						break;
+
+						//Tipo : DOUBLE - 8 Bytes reais
+						case VARENUM::VT_R8:
+						{
+
+						}
+						break;
+
+						//Tipo : BOOLEAN -> SHORT (-1 = TRUE) | (0 = FALSE)
+						case VARENUM::VT_BOOL:
+						{
+
+						}
+						break;
+
+						//Tipo : DECIMAL -> 16 Bytes fixed
+						case VARENUM::VT_DECIMAL:
+						{
+
+						}
+						break;
+
+						//Tipo : SCODE -> 4 Bytes assinados (Int32)
+						case VARENUM::VT_ERROR:
+						{
+
+						}
+						break;
+
+						//Tipo : CA_CY -> 2 dados de 8 Bytes.
+						case VARENUM::VT_CY:
+						{
+
+						}
+						break;
+
+						//Tipo : DOUBLE -> 8 Bytes Reais
+						case VARENUM::VT_DATE:
+						{
+
+						}
+						break;
+
+						//Tipo : String
+						case VARENUM::VT_BSTR:
+						{
+							//Cria um array com o tipo especificado para ser retornado.
+
+							//Variaveis a serem utilizadas.
+							UINT32 vi_CountItens = PonteiroTrabalho->rgsabound[0].cElements;
+							cli::array<String^>^ vi_ArrayDados = nullptr;
+							BSTR vi_pTempBSTR = Nulo;
+							long lb, ub = 0; //Variaveis para pecorrer o safearray.
+
+							//Cria a matriz gerenciada a ser retornada.
+							vi_ArrayDados = gcnew cli::array<String^>(vi_CountItens);
+
+							//Obtém os dados dos: lb & ub
+							SafeArrayGetLBound(PonteiroTrabalho, PonteiroTrabalho->cDims, &lb);
+							SafeArrayGetUBound(PonteiroTrabalho, PonteiroTrabalho->cDims, &ub);
+
+							//Faz um for para acessar os dados.
+							for (long i = lb; i < ub; i++)
+							{
+								//Recupera o ponteiro para o BSTR.
+								Hr = SafeArrayGetElement(PonteiroTrabalho, &i, &vi_pTempBSTR);
+
+								//Verifica se não houve erro
+								if (!Sucesso(Hr))
+									continue; //Pula para o proximo.
+
+								//Verifica se o BSTR é valido
+								if (!ObjetoValido(vi_pTempBSTR))
+									continue; //Pula para o proximo.
+
+								//Converte o BSTR para uma string gerenciada e define no array.
+								vi_ArrayDados[i] = gcnew String(vi_pTempBSTR);
+
+								//Libere a copia da BSTR obtida pelo método (SafeArrayGetElement).
+								DeletarStringBSTRSafe(&vi_pTempBSTR);
+							}
+
+							//Define o array criado no array que será retornado.
+							BufferPvData = (cli::array<BufferType>^)vi_ArrayDados;
+						}
+						break;
+
+						//Tipo : IDispath Interface (Representada por ICaren)
+						case VARENUM::VT_DISPATCH:
+						{
+
+						}
+						break;
+
+						//Tipo : IUnknown Interface (Representada por ICaren)
+						case VARENUM::VT_UNKNOWN:
+						{
+
+						}
+						break;
+
+						//Tipo : CA_VARIANT
+						case VARENUM::VT_VARIANT:
+						{
+
+						}
+						break;
+
+						default:
+							//Tipo desconhecido ou não suportado.
+							Sair;
+							break;
+						}
+
+					Done:;
+
+						//Retorna o buffer.
+						return BufferPvData;
+					}
+
+				/// <summary>
+				/// Método responsável por retornar os dados ponteiro (pvData) em um ReadOnlySpan com o tipo definido pelo usuário.
+				/// Estruturas, Interfaces e Strings não são suportados por esse método.
+				/// </summary>
+				/// <typeparam name="BufferType">O tipo do buffer que está armazenado no safearray.</typeparam>
+				/// <returns></returns>
+				generic<typename BufferType> 
+					ReadOnlySpan<BufferType> GetReadOnlyPvData()
+					{
+						//Variavel a ser retornada.
+						ReadOnlySpan<BufferType> BufferPvData = nullptr;
+
+						//Verifica se os dados são validos.
+						if (!(ObjetoValido(PonteiroTrabalho) && ObjetoValido(PonteiroTrabalho->pvData)))
+							Sair; //O SAFEARRAY ou os seus dados associados não são validos.
+
+						//Associa um ReadOnlySpan ao Index 0 do buffer no safe array.
+						BufferPvData = ReadOnlySpan<BufferType>(PonteiroTrabalho->pvData, PonteiroTrabalho->rgsabound[0].cElements);
+
+					Done:;
+
+						//Retorna o buffer.
+						return BufferPvData;
+					}
+
+				/// <summary>
+				/// Método responsável por retornar os dados ponteiro (pvData) em um Span com o tipo definido pelo usuário que pode ser modificado.
+				/// Estruturas, Interfaces e Strings não são suportados por esse método.
+				/// </summary>
+				/// <typeparam name="BufferType">O tipo do buffer que está armazenado no safearray.</typeparam>
+				/// <returns></returns>
+				generic<typename BufferType>
+					Span<BufferType> GetSpanPvData()
+					{
+						//Variavel a ser retornada.
+						Span<BufferType> BufferPvData = nullptr;
+
+						//Variaveis utilizadas.
+						HRESULT Hr = E_FAIL;
+						VARENUM vi_TipoVar = VARENUM::VT_NULL;
+
+						//Recupera o tipo do safe array.
+						Hr = SafeArrayGetVartype(PonteiroTrabalho, reinterpret_cast<VARTYPE*>(&vi_TipoVar));
+
+						//Verifica se não houve erro.
+						if (!Sucesso(Hr))
+							Sair; //Falhou ao obter o tipo do SAFEARRAY.
+
+						//Associa um Span ao Index 0 do buffer no safe array.
+						BufferPvData = Span<BufferType>(PonteiroTrabalho->pvData, PonteiroTrabalho->rgsabound[0].cElements);
+
+					Done:;
+
+						//Retorna o buffer.
+						return BufferPvData;
+					}
+
+				/// <summary>
+				/// Retorna um IntPtr que é um ponteiro para os dados do safearray (void**)
+				/// </summary>
+				/// <returns></returns>
+				IntPtr GetPointerBuffer()
+				{
+					return IntPtr(PonteiroTrabalho->pvData);
+				}
+
+				/// <summary>
+				/// Método responsável por retornar um valor booleano que indica se o SafeArray na estrutura é valido.
+				/// </summary>
+				/// <returns></returns>
+				Boolean GetStatusSafeArray()
+				{
+					return ObjetoValido(PonteiroTrabalho) ? true : false;
+				}
+
+				/// <summary>
+				/// Retorna o tipo de dados armazenados por essa instância do SAFEARRAY.
+				/// </summary>
+				/// <returns></returns>
+				Enumeracoes::CA_VARTYPE GetVarType()
+				{
+					//Variavel a ser retornada.
+					Enumeracoes::CA_VARTYPE Resultado = Enumeracoes::CA_VARTYPE::VT_EMPTY;
+
+					//Variaveis a serem utilizadas.
+					HRESULT Hr = E_FAIL;
+					VARTYPE vi_TypeSafeArray = 0;
+
+					//Chama o método para obter o tipo de dados do safe array.
+					Hr = SafeArrayGetVartype(PonteiroTrabalho, &vi_TypeSafeArray);
+
+					//Verifica se não houve erro
+					if (!Sucesso(Hr))
+						Sair;
+
+					//Define o resultado na variavel de saida.
+					Resultado = static_cast<Enumeracoes::CA_VARTYPE>(vi_TypeSafeArray);
+
+				Done:;
+					//Retorna o resultado.
+					return Resultado;
+				}
+
+				/// <summary>
+				/// Método responsável por adicionar um novo dado em um index especificado ao SafeArray. O dado deve ser do mesmo que o Vartype do SAFEARRAY.
+				/// Chame o método (GetVarType) para saber o tipo dos dados no SAFEARRAY.
+				/// </summary>
+				/// <typeparam name="BufferType">o tipo do dado a ser adicionado no safearray.</typeparam>
+				/// <param name="Param_Dados">Os dados a serem definidos.</param>
+				generic<typename BufferType>
+				CarenResult SetDataOnPvDataIndex(BufferType Param_Dados, UInt32 Param_Id)
+				{
+					//Variavel que vai retornar o resultado.
+					CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+					//Variaveis a serem utilizadas.
+					HRESULT Hr = E_FAIL;
+					VARENUM vi_TipoVar = VARENUM::VT_NULL;
+					LONG vi_Id[1] = { Param_Id }; //Vai trabalhar apenas com uma dimensão.
+
+					//Recupera o tipo do safe array.
+					Hr = SafeArrayGetVartype(PonteiroTrabalho, reinterpret_cast<VARTYPE*>(&vi_TipoVar));
+
+					//Verifica se não houve erro.
+					if (!Sucesso(Hr))
+						Sair; //Falhou ao obter o tipo do SAFEARRAY.
+
+					//Abre um swtich para verifica o tipo do SAFEARRAY. Os valores informados aqui são tirados da documentação do PROPVARIANT sobre os tipos que um SafeArray carrega a parti
+					//de uma PROPVARIANT.
+					//https://docs.microsoft.com/en-us/windows/win32/api/propidlbase/ns-propidlbase-propvariant
+					//https://docs.microsoft.com/en-us/windows/win32/api/wtypes/ne-wtypes-varenum
+					switch (vi_TipoVar)
+					{
+						//Tipo : CHAR - 1 Caracter
+					case VARENUM::VT_I1:
+					{
+						//Variaveis a serem utilizadas.
+						short vi_WcharValue = Convert::ToInt16(Param_Dados);
+
+						//Chama o método para definir os dados. 
+						Hr = SafeArrayPutElement(PonteiroTrabalho, vi_Id, &vi_WcharValue); //Já chama um Lock internamente.
+
+						//Processo o resultado.
+						Resultado.ProcessarCodigoOperacao(Hr);
+					}
+					break;
+
+					//Tipo : BYTE - 1 Caracter não assinado.
+					case VARENUM::VT_UI1:
+					{
+						
+					}
+					break;
+
+					//Tipo : Int16 - 2 Bytes assinados
+					case VARENUM::VT_I2:
+					{
+
+					}
+					break;
+
+					//Tipo : UInt16 - 2 Bytes não assinado
+					case VARENUM::VT_UI2:
+					{
+
+					}
+					break;
+
+					//Tipo : Int32 - 4 Bytes assinados.
+					case VARENUM::VT_I4:
+					{
+
+					}
+					break;
+
+					//Tipo : UInt32 - 4 Bytes não assinados.
+					case VARENUM::VT_UI4:
+					{
+
+					}
+					break;
+
+					//Tipo : INT -> Int32
+					case VARENUM::VT_INT:
+					{
+
+					}
+					break;
+
+					//Tipo : UINT -> UInt32
+					case VARENUM::VT_UINT:
+					{
+
+					}
+					break;
+
+					//Tipo : FLOAT - 4 Bytes reais
+					case VARENUM::VT_R4:
+					{
+
+					}
+					break;
+
+					//Tipo : DOUBLE - 8 Bytes reais
+					case VARENUM::VT_R8:
+					{
+
+					}
+					break;
+
+					//Tipo : BOOLEAN -> SHORT (-1 = TRUE) | (0 = FALSE)
+					case VARENUM::VT_BOOL:
+					{
+
+					}
+					break;
+
+					//Tipo : DECIMAL -> 16 Bytes fixed
+					case VARENUM::VT_DECIMAL:
+					{
+
+					}
+					break;
+
+					//Tipo : SCODE -> 4 Bytes assinados (Int32)
+					case VARENUM::VT_ERROR:
+					{
+
+					}
+					break;
+
+					//Tipo : CA_CY -> 2 dados de 8 Bytes.
+					case VARENUM::VT_CY:
+					{
+
+					}
+					break;
+
+					//Tipo : DOUBLE -> 8 Bytes Reais
+					case VARENUM::VT_DATE:
+					{
+
+					}
+					break;
+
+					//Tipo : String
+					case VARENUM::VT_BSTR:
+					{
+
+					}
+					break;
+
+					//Tipo : IDispath Interface (Representada por ICaren)
+					case VARENUM::VT_DISPATCH:
+					{
+
+					}
+					break;
+
+					//Tipo : IUnknown Interface (Representada por ICaren)
+					case VARENUM::VT_UNKNOWN:
+					{
+
+					}
+					break;
+
+					//Tipo : CA_VARIANT
+					case VARENUM::VT_VARIANT:
+					{
+
+					}
+					break;
+
+					default:
+						//Tipo desconhecido ou não suportado.
+						Sair;
+						break;
+					}
+
+				Done:;
+					//Retorna o resultado
+					return Resultado;
+				}
+
+				generic<typename BufferType>
+				CarenResult SetDataArrayOnPvData(cli::array<BufferType>^ Param_BufferDados, UInt32 Param_CountData)
+				{
+					//Variavel que vai retornar o resultado.
+					CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+					//Cria um pin para os dados.
+					pin_ptr<BufferType> vi_PinToIndex0 = &Param_BufferDados[0];
+
+					//Converte o pinptr para o buffer de origem.
+					CHAR* pBufferOrigem = reinterpret_cast<CHAR*>(vi_PinToIndex0);
+
+					//Faz um lock para prender o safe array e escrever os dados nele.
+					SafeArrayLock(PonteiroTrabalho);
+
+					//Copia os dados para o SafeArray.
+					std::copy(pBufferOrigem, (pBufferOrigem) + Param_CountData, reinterpret_cast<char*>(PonteiroTrabalho->pvData));
+
+					//Libera a trava para o safe array.
+					SafeArrayUnlock(PonteiroTrabalho);
+
+				Done:;
+					//Retorna o resultado
+					return Resultado;
+				}
 			};
 
 			/// <summary>
 			/// (tagCLIPDATA) - 
 			/// </summary>
-			generic <typename CarenBufferType>
 			public ref struct CA_CLIPDATA
 			{
 				UInt32          cbSize;
 				Int32           ulClipFmt;
-				CarenBufferType pClipData;
+				
+				/// <summary>
+				/// Deve representar uma interface ICarenBuffer.
+				/// </summary>
+				Object^         pClipData;
 			};
 			
 			/// <summary>
 			/// (tagVersionedStream) - 
 			/// </summary>
-			generic <typename ICarenStreamType>
 			public ref struct CA_VersionedStream
 			{
 				Guid guidVersion;
-				ICarenStreamType pStream;
+			
+				/// <summary>
+				/// Deve representar uma interface ICarenStream
+				/// </summary>
+				Object^ pStream;
 			};
 
 			/// <summary>
@@ -17923,8 +18528,6 @@ namespace CarenRengine
 			/// (tagCABSTRBLOB) - Estrutura que representa uma matriz contada do tipo: CA_BlobData
 			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
 			/// </summary>
-			/// <typeparam name="ICarenBufferType">O tipo ICarenBuffer.</typeparam>
-			generic <typename ICarenBufferType>
 			public ref struct CA_CABSTRBLOB
 			{
 				/// <summary>
@@ -17935,7 +18538,7 @@ namespace CarenRengine
 				/// <summary>
 				/// Array que contém os elementos contados da estrutura.
 				/// </summary>
-				cli::array<CA_BlobData<ICarenBufferType>^>^ pElems;
+				cli::array<CA_BlobData^>^ pElems;
 			};
 
 			/// <summary>
@@ -18078,8 +18681,6 @@ namespace CarenRengine
 			/// (tagCACLIPDATA) - Estrutura que representa uma matriz contada do tipo: CA_CLIPDATA
 			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
 			/// </summary>
-			/// <typeparam name="ICarenBufferType">O tipo ICarenBuffer.</typeparam>
-			generic <typename ICarenBufferType>
 			public ref struct CA_CACLIPDATA
 			{
 				/// <summary>
@@ -18090,7 +18691,7 @@ namespace CarenRengine
 				/// <summary>
 				/// Array que contém os elementos contados da estrutura.
 				/// </summary>
-				cli::array<CA_CLIPDATA<ICarenBufferType>^>^ pElems;
+				cli::array<CA_CLIPDATA^>^ pElems;
 			};
 
 			/// <summary>
@@ -18113,7 +18714,6 @@ namespace CarenRengine
 			/// <summary>
 			/// (PROPVARIANT) - 
 			/// </summary>
-			generic <typename ICarenBufferType, typename ICarenType, typename SafeArrayType>
 			public ref struct CA_PROPVARIANT
 			{
 				/// <summary>
@@ -18141,17 +18741,17 @@ namespace CarenRengine
 				DOUBLE date;
 				CA_FILETIME^ filetime;
 				String^ puuid;
-				CA_CLIPDATA<ICarenBufferType>^ pclipdata;
+				CA_CLIPDATA^ pclipdata;
 				String^ bstrVal;
-				CA_BlobData<ICarenBufferType>^ blob;
+				CA_BlobData^ blob;
 				String^ pszVal;
 				String^ pwszVal;
-				ICarenType punkVal;
-				ICarenType pdispVal;
-				ICarenType pStream;
-				ICarenType pStorage;
-				CA_VersionedStream<ICarenType>^ pVersionedStream;
-				CA_SAFEARRAY<SafeArrayType>^ parray;
+				Object^ punkVal;
+				Object^ pdispVal;
+				Object^ pStream;
+				Object^ pStorage;
+				CA_VersionedStream^ pVersionedStream;
+				CA_SAFEARRAY^ parray;
 
 
 				//Matrizes Contadas | VT_VECTOR
@@ -18172,15 +18772,16 @@ namespace CarenRengine
 				CA_CADATE^ cadate;
 				CA_CAFILETIME^ cafiletime;
 				CA_CACLSID^ cauuid;
-				CA_CACLIPDATA<ICarenBufferType>^ caclipdata;
+				CA_CACLIPDATA^ caclipdata;
 				CA_CABSTR^ cabstr;
-				CA_CABSTRBLOB<ICarenBufferType>^ cabstrblob;
+				CA_CABSTRBLOB^ cabstrblob;
 				CA_CALPSTR^ calpstr;
 				CA_CALPWSTR^ calpwstr;
 				CA_CAPROPVARIANT^ capropvar;
 
 				//Ponteiros | VT_BYREF
 
+				/*
 				CHAR* pcVal;
 				UCHAR* pbVal;
 				SHORT* piVal;
@@ -18201,6 +18802,7 @@ namespace CarenRengine
 				IDispatch** ppdispVal;
 				LPSAFEARRAY* pparray;
 				PROPVARIANT* pvarVal;
+				*/
 			};
 		
 			/// <summary>

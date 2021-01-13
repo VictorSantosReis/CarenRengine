@@ -137,7 +137,7 @@ namespace CarenRengine
 			{
 				//Converte para char*
 				char* Data01 = ConverterStringToChar(Param_Valor);
-
+			
 				//Converte para WCHAR*
 				WCHAR* DadosConvertidos = ConverterConstCharToWCHAR(Data01);
 

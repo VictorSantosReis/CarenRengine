@@ -20,7 +20,6 @@ limitations under the License.
 #include "Caren/CarenHMONITOR.h"
 #include "CarenGuids.h"
 #include "ParameterResolver/CarenParameterResolver.h"
-#define UNICODE 1
 
 //Importa o namespace do sistema
 using namespace System;
@@ -17520,8 +17519,9 @@ namespace CarenRengine
 			/// </summary>
 			public value struct CA_CY
 			{
-				UInt64      Lo;
-				Int64       Hi;
+				UInt32      Lo;
+				Int32       Hi;
+				Int64       int64;
 			};
 			
 			/// <summary>
@@ -17818,37 +17818,42 @@ namespace CarenRengine
 						//https://docs.microsoft.com/en-us/windows/win32/api/wtypes/ne-wtypes-varenum
 						switch (vi_TipoVar)
 						{
-							//Tipo : CHAR - 1 Caracter
+						//Tipo : CHAR - 1 Caracter
 						case VARENUM::VT_I1:
 						{
 							//Cria um array com o tipo especificado para ser retornado.
 
 							//Variaveis a serem utilizadas.
 							UINT32 vi_CountItens = PonteiroTrabalho->rgsabound[0].cElements;
-							cli::array<Char>^ vi_ArrayDados = nullptr;
-							char* vi_pBufferOrigem = Nulo; //Buffer origem do SAFEARRAY
-							wchar_t* vi_pBufferDestino = Nulo; //Buffer temporario utilizado pelo PinPtr.
+							cli::array<WCHAR>^ vi_ArrayDados = nullptr;
+							CHAR* vi_pBufferOrigem = Nulo; //Buffer origem do SAFEARRAY
+							WCHAR* vi_pBufferOrigemCovnertedToUTF8 = Nulo;
 
 							//Cria a matriz gerenciada a ser retornada.
-							vi_ArrayDados = gcnew cli::array<Char>(vi_CountItens);
+							vi_ArrayDados = gcnew cli::array<WCHAR>(vi_CountItens);
 
 							//Abre um lock para copiar os dados.
-							SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferOrigem));
+							Hr = SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferOrigem));
 
+							//Verifica se não houve erro e sai do método.
+							if (!Sucesso(Hr))
+								Sair;
 
 							//Cria um pin para o buffer gerenciado.
-							pin_ptr<Char> PinToIndexZeroBuffer = &vi_ArrayDados[0];
+							pin_ptr<Char> vi_PinToIndexZeroBuffer = &vi_ArrayDados[0];
 
-							//Converte o pinptr para um buffer do tipo de destino.
-							vi_pBufferDestino = reinterpret_cast<wchar_t*>(PinToIndexZeroBuffer);
+							//Converte o buffer em ANSI para UTF8.
+							vi_pBufferOrigemCovnertedToUTF8 = ReinterpretarCharsToUTF8_W(const_cast<char*>(vi_pBufferOrigem));
 
 							//Verifica se é valido
-							if (!ObjetoValido(vi_pBufferDestino))
-								throw gcnew NullReferenceException("(CA_SAFEARRAY->GetPvData-I1) - Houve uma falha ao criar uma ligação para o buffer de destino gerenciado através do (pin_ptr).");
+							if (!ObjetoValido(vi_pBufferOrigemCovnertedToUTF8))
+								throw gcnew NullReferenceException("(CA_SAFEARRAY->GetPvData-UI1) - Houve uma falha ao tentar converter o buffer ANSI para UTF8.");
+						
+							//Copia os dados para o buffer gerenciado.
+							std::copy(vi_pBufferOrigemCovnertedToUTF8, vi_pBufferOrigemCovnertedToUTF8 + vi_CountItens, reinterpret_cast<WCHAR*>(vi_PinToIndexZeroBuffer));
 
-							//Copia os dados para o buffer de destino gerenciado.
-							std::copy(vi_pBufferOrigem, (vi_pBufferOrigem) + vi_CountItens, vi_pBufferDestino);
-								
+							//Libera a memória utilizada pelo buffer convertido.
+							DeletarStringAllocatedSafe(&vi_pBufferOrigemCovnertedToUTF8);
 
 							//Libera o SAFEARRAY.
 							SafeArrayUnaccessData(PonteiroTrabalho);
@@ -17873,8 +17878,11 @@ namespace CarenRengine
 							vi_ArrayDados = gcnew cli::array<Byte>(vi_CountItens);
 
 							//Abre um lock para copiar os dados.
-							SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferOrigem));
+							Hr = SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferOrigem));
 
+							//Verifica se não houve erro e sai do método.
+							if (!Sucesso(Hr))
+								Sair;
 
 							//Cria um pin para o buffer gerenciado.
 							pin_ptr<Byte> PinToIndexZeroBuffer = &vi_ArrayDados[0];
@@ -17911,8 +17919,11 @@ namespace CarenRengine
 							vi_ArrayDados = gcnew cli::array<Int16>(vi_CountItens);
 
 							//Abre um lock para copiar os dados.
-							SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferOrigem));
+							Hr = SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferOrigem));
 
+							//Verifica se não houve erro e sai do método.
+							if (!Sucesso(Hr))
+								Sair;
 
 							//Cria um pin para o buffer gerenciado.
 							pin_ptr<Int16> PinToIndexZeroBuffer = &vi_ArrayDados[0];
@@ -17949,8 +17960,11 @@ namespace CarenRengine
 							vi_ArrayDados = gcnew cli::array<UInt16>(vi_CountItens);
 
 							//Abre um lock para copiar os dados.
-							SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferOrigem));
+							Hr = SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferOrigem));
 
+							//Verifica se não houve erro e sai do método.
+							if (!Sucesso(Hr))
+								Sair;
 
 							//Cria um pin para o buffer gerenciado.
 							pin_ptr<UInt16> PinToIndexZeroBuffer = &vi_ArrayDados[0];
@@ -17987,8 +18001,11 @@ namespace CarenRengine
 							vi_ArrayDados = gcnew cli::array<Int32>(vi_CountItens);
 
 							//Abre um lock para copiar os dados.
-							SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferOrigem));
+							Hr = SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferOrigem));
 
+							//Verifica se não houve erro e sai do método.
+							if (!Sucesso(Hr))
+								Sair;
 
 							//Cria um pin para o buffer gerenciado.
 							pin_ptr<Int32> PinToIndexZeroBuffer = &vi_ArrayDados[0];
@@ -18025,8 +18042,11 @@ namespace CarenRengine
 							vi_ArrayDados = gcnew cli::array<UInt32>(vi_CountItens);
 
 							//Abre um lock para copiar os dados.
-							SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferOrigem));
+							Hr = SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferOrigem));
 
+							//Verifica se não houve erro e sai do método.
+							if (!Sucesso(Hr))
+								Sair;
 
 							//Cria um pin para o buffer gerenciado.
 							pin_ptr<UInt32> PinToIndexZeroBuffer = &vi_ArrayDados[0];
@@ -18063,8 +18083,11 @@ namespace CarenRengine
 							vi_ArrayDados = gcnew cli::array<Int32>(vi_CountItens);
 
 							//Abre um lock para copiar os dados.
-							SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferOrigem));
+							Hr = SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferOrigem));
 
+							//Verifica se não houve erro e sai do método.
+							if (!Sucesso(Hr))
+								Sair;
 
 							//Cria um pin para o buffer gerenciado.
 							pin_ptr<Int32> PinToIndexZeroBuffer = &vi_ArrayDados[0];
@@ -18101,8 +18124,11 @@ namespace CarenRengine
 							vi_ArrayDados = gcnew cli::array<UInt32>(vi_CountItens);
 
 							//Abre um lock para copiar os dados.
-							SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferOrigem));
+							Hr = SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferOrigem));
 
+							//Verifica se não houve erro e sai do método.
+							if (!Sucesso(Hr))
+								Sair;
 
 							//Cria um pin para o buffer gerenciado.
 							pin_ptr<UInt32> PinToIndexZeroBuffer = &vi_ArrayDados[0];
@@ -18116,7 +18142,6 @@ namespace CarenRengine
 
 							//Copia os dados do nativo para o gerenciado.
 							std::copy(vi_pBufferOrigem, (vi_pBufferOrigem)+vi_CountItens, vi_pBufferDestino);
-
 
 							//Libera o SAFEARRAY.
 							SafeArrayUnaccessData(PonteiroTrabalho);
@@ -18139,8 +18164,11 @@ namespace CarenRengine
 							vi_ArrayDados = gcnew cli::array<float>(vi_CountItens);
 
 							//Abre um lock para copiar os dados.
-							SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferOrigem));
+							Hr = SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferOrigem));
 
+							//Verifica se não houve erro e sai do método.
+							if (!Sucesso(Hr))
+								Sair;
 
 							//Cria um pin para o buffer gerenciado.
 							pin_ptr<float> PinToIndexZeroBuffer = &vi_ArrayDados[0];
@@ -18177,8 +18205,11 @@ namespace CarenRengine
 							vi_ArrayDados = gcnew cli::array<double>(vi_CountItens);
 
 							//Abre um lock para copiar os dados.
-							SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferOrigem));
+							Hr = SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferOrigem));
 
+							//Verifica se não houve erro e sai do método.
+							if (!Sucesso(Hr))
+								Sair;
 
 							//Cria um pin para o buffer gerenciado.
 							pin_ptr<double> PinToIndexZeroBuffer = &vi_ArrayDados[0];
@@ -18214,8 +18245,11 @@ namespace CarenRengine
 							vi_ArrayDados = gcnew cli::array<Boolean>(vi_CountItens);
 
 							//Abre um lock para copiar os dados.
-							SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferOrigem));
+							Hr = SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferOrigem));
 
+							//Verifica se não houve erro e sai do método.
+							if (!Sucesso(Hr))
+								Sair;
 
 							//Faz um laço para definir os dados.
 							for (UINT32 i = 0; i < vi_CountItens; i++)
@@ -18245,8 +18279,11 @@ namespace CarenRengine
 							vi_ArrayDados = gcnew cli::array<CA_DEC>(vi_CountItens);
 
 							//Abre um lock para copiar os dados.
-							SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferOrigem));
+							Hr = SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferOrigem));
 
+							//Verifica se não houve erro e sai do método.
+							if (!Sucesso(Hr))
+								Sair;
 
 							//Abre um for para converter e definir no array.
 							for (UINT32 i = 0; i < vi_CountItens; i++)
@@ -18286,8 +18323,11 @@ namespace CarenRengine
 							vi_ArrayDados = gcnew cli::array<Int32>(vi_CountItens);
 
 							//Abre um lock para copiar os dados.
-							SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferOrigem));
+							Hr = SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferOrigem));
 
+							//Verifica se não houve erro e sai do método.
+							if (!Sucesso(Hr))
+								Sair;
 
 							//Cria um pin para o buffer gerenciado.
 							pin_ptr<Int32> PinToIndexZeroBuffer = &vi_ArrayDados[0];
@@ -18323,8 +18363,11 @@ namespace CarenRengine
 							vi_ArrayDados = gcnew cli::array<CA_CY>(vi_CountItens);
 
 							//Abre um lock para copiar os dados.
-							SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferOrigem));
+							Hr = SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferOrigem));
 
+							//Verifica se não houve erro e sai do método.
+							if (!Sucesso(Hr))
+								Sair;
 
 							//Abre um for para converter e definir no array.
 							for (UINT32 i = 0; i < vi_CountItens; i++)
@@ -18335,6 +18378,7 @@ namespace CarenRengine
 								//Define os dados na estrutura.
 								vi_ArrayDados[i].Hi = vi_pBufferOrigem[i].Hi;
 								vi_ArrayDados[i].Lo = vi_pBufferOrigem[i].Lo;
+								vi_ArrayDados[i].int64 = vi_pBufferOrigem[i].int64;
 							}
 
 
@@ -18359,8 +18403,11 @@ namespace CarenRengine
 							vi_ArrayDados = gcnew cli::array<double>(vi_CountItens);
 
 							//Abre um lock para copiar os dados.
-							SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferOrigem));
+							Hr = SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferOrigem));
 
+							//Verifica se não houve erro e sai do método.
+							if (!Sucesso(Hr))
+								Sair;
 
 							//Cria um pin para o buffer gerenciado.
 							pin_ptr<double> PinToIndexZeroBuffer = &vi_ArrayDados[0];
@@ -18522,8 +18569,11 @@ namespace CarenRengine
 							vi_ArrayDados = gcnew cli::array<CA_VARIANT^>(vi_CountItens);
 
 							//Abre um lock para copiar os dados.
-							SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pArrayVariants));
+							Hr = SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pArrayVariants));
 
+							//Verifica se não houve erro e sai do método.
+							if (!Sucesso(Hr))
+								Sair;
 
 							//Faz um for para pecorrer todas as variantes e definir na estrutura.
 							for (UINT32 i = 0; i < vi_CountItens; i++)
@@ -18534,7 +18584,6 @@ namespace CarenRengine
 								//Define a variante no ponteiro de trabalho.
 								vi_ArrayDados[i]->PonteiroTrabalho = &vi_pArrayVariants[i];
 							}
-
 
 							//Libera o SAFEARRAY.
 							SafeArrayUnaccessData(PonteiroTrabalho);
@@ -18614,7 +18663,7 @@ namespace CarenRengine
 					}
 
 				/// <summary>
-				/// Método responsável por adicionar um novo dado unico em um index especificado ao SafeArray. O dado deve ser do mesmo que o Vartype do SAFEARRAY.
+				/// (VT_VARIANT PENDENTE) - Método responsável por adicionar um novo dado unico em um index especificado ao SafeArray. O dado deve ser do mesmo que o Vartype do SAFEARRAY.
 				/// Chame o método (GetVarType) para saber o tipo dos dados no SAFEARRAY.
 				/// </summary>
 				/// <typeparam name="BufferType">o tipo do dado a ser adicionado no safearray.</typeparam>
@@ -18643,7 +18692,7 @@ namespace CarenRengine
 						//https://docs.microsoft.com/en-us/windows/win32/api/wtypes/ne-wtypes-varenum
 						switch (vi_TipoVar)
 						{
-							//Tipo : CHAR - 1 Caracter
+						//Tipo : CHAR - 1 Caracter
 						case VARENUM::VT_I1:
 						{
 							//Variaveis a serem utilizadas.
@@ -18824,49 +18873,109 @@ namespace CarenRengine
 						//Tipo : SCODE -> 4 Bytes assinados (Int32)
 						case VARENUM::VT_ERROR:
 						{
+							//Variaveis a serem utilizadas.
+							INT32 vi_Dado = Convert::ToInt32(Param_Dados);
 
+							//Chama o método para definir os dados. 
+							Hr = SafeArrayPutElement(PonteiroTrabalho, vi_Id, &vi_Dado); //Já chama um Lock internamente.
+
+							//Processo o resultado.
+							Resultado.ProcessarCodigoOperacao(Hr);
 						}
 						break;
 
 						//Tipo : CA_CY -> 2 dados de 8 Bytes.
 						case VARENUM::VT_CY:
 						{
+							//Variaveis a serem utilizadas.
+							CY vi_Dado = { 0 }; //Variavel nativa.
+							CA_CY vi_DadoGen = (CA_CY)((Object^)Param_Dados);
 
+							//Define os dados na estrutura nativa.
+							vi_Dado.Hi = vi_DadoGen.Hi;
+							vi_Dado.Lo = vi_DadoGen.Lo;
+							vi_Dado.int64 = vi_DadoGen.int64;
+
+							//Chama o método para definir os dados. 
+							Hr = SafeArrayPutElement(PonteiroTrabalho, vi_Id, &vi_Dado); //Já chama um Lock internamente.
+
+							//Processo o resultado.
+							Resultado.ProcessarCodigoOperacao(Hr);
 						}
 						break;
 
 						//Tipo : DOUBLE -> 8 Bytes Reais
 						case VARENUM::VT_DATE:
 						{
+							//Variaveis a serem utilizadas.
+							DOUBLE vi_Dado = Convert::ToDouble(Param_Dados);
 
+							//Chama o método para definir os dados. 
+							Hr = SafeArrayPutElement(PonteiroTrabalho, vi_Id, &vi_Dado); //Já chama um Lock internamente.
+
+							//Processo o resultado.
+							Resultado.ProcessarCodigoOperacao(Hr);
 						}
 						break;
 
 						//Tipo : String
 						case VARENUM::VT_BSTR:
 						{
+							//Variaveis a serem utilizadas.
+							BSTR vi_Dado = Nulo;
+							String^ vi_DadosGen = Convert::ToString(Param_Dados);
 
+							//Aloca os dados na BSTR.
+							vi_Dado = static_cast<BSTR>(Marshal::StringToBSTR(vi_DadosGen).ToPointer());
+
+							//Chama o método para definir os dados. 
+							Hr = SafeArrayPutElement(PonteiroTrabalho, vi_Id, &vi_Dado); //Já chama um Lock internamente.
+
+							//Processo o resultado.
+							Resultado.ProcessarCodigoOperacao(Hr);
 						}
 						break;
 
 						//Tipo : IDispath Interface (Representado por IntPtr)
 						case VARENUM::VT_DISPATCH:
 						{
+							//Variaveis a serem utilizadas.
+							void* vi_Dado = Nulo;
+							IntPtr vi_DadosGen = (IntPtr)((Object^)Param_Dados);
 
+							//Define o ponteiro.
+							vi_Dado = vi_DadosGen.ToPointer();
+
+							//Chama o método para definir os dados. 
+							Hr = SafeArrayPutElement(PonteiroTrabalho, vi_Id, vi_Dado); //Já chama um Lock internamente.
+
+							//Processo o resultado.
+							Resultado.ProcessarCodigoOperacao(Hr);
 						}
 						break;
 
 						//Tipo : IUnknown Interface (Representado por IntPtr)
 						case VARENUM::VT_UNKNOWN:
 						{
+							//Variaveis a serem utilizadas.
+							void* vi_Dado = Nulo;
+							IntPtr vi_DadosGen = (IntPtr)((Object^)Param_Dados);
 
+							//Define o ponteiro.
+							vi_Dado = vi_DadosGen.ToPointer();
+
+							//Chama o método para definir os dados. 
+							Hr = SafeArrayPutElement(PonteiroTrabalho, vi_Id, vi_Dado); //Já chama um Lock internamente.
+
+							//Processo o resultado.
+							Resultado.ProcessarCodigoOperacao(Hr);
 						}
 						break;
 
 						//Tipo : CA_VARIANT
 						case VARENUM::VT_VARIANT:
 						{
-
+							//PENDENTE.
 						}
 						break;
 
@@ -18882,7 +18991,7 @@ namespace CarenRengine
 					}
 
 				/// <summary>
-				/// 
+				/// (VT_VARIANT PENDENTE) - 
 				/// </summary>
 				/// <typeparam name="BufferType"></typeparam>
 				/// <param name="Param_BufferDados"></param>
@@ -18894,20 +19003,199 @@ namespace CarenRengine
 						//Variavel que vai retornar o resultado.
 						CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
 
-						//Cria um pin para os dados.
-						pin_ptr<BufferType> vi_PinToIndex0 = &Param_BufferDados[0];
+						//Variaveis a serem utilizadas.
+						HRESULT Hr = E_FAIL;
+						VARENUM vi_TipoVar = VARENUM::VT_NULL;
+						ULONG vi_CountElementsInSafeArray = PonteiroTrabalho->rgsabound[0].cElements;
 
-						//Converte o pinptr para o buffer de origem.
-						CHAR* pBufferOrigem = reinterpret_cast<CHAR*>(vi_PinToIndex0);
+						//Verifica se a quantidade fornecida não é maior do que a do SafeArray.
+						if (Param_CountData > vi_CountElementsInSafeArray)
+							throw gcnew IndexOutOfRangeException("A quantidade de dados informado ultrapssava o limite permitido pelo SafeArray.");
 
-						//Faz um lock para prender o safe array e escrever os dados nele.
-						SafeArrayLock(PonteiroTrabalho);
+						//Recupera o tipo do safe array.
+						Hr = SafeArrayGetVartype(PonteiroTrabalho, reinterpret_cast<VARTYPE*>(&vi_TipoVar));
 
-						//Copia os dados para o SafeArray.
-						std::copy(pBufferOrigem, (pBufferOrigem)+Param_CountData, reinterpret_cast<char*>(PonteiroTrabalho->pvData));
+						//Verifica se não houve erro.
+						if (!Sucesso(Hr))
+							Sair; //Falhou ao obter o tipo do SAFEARRAY.
 
-						//Libera a trava para o safe array.
-						SafeArrayUnlock(PonteiroTrabalho);
+						//Abre um swtich para verifica o tipo do SAFEARRAY.Os valores informados aqui são tirados da documentação do PROPVARIANT sobre os tipos que um SafeArray carrega a parti
+						//de uma PROPVARIANT.
+						//https://docs.microsoft.com/en-us/windows/win32/api/propidlbase/ns-propidlbase-propvariant
+						//https://docs.microsoft.com/en-us/windows/win32/api/wtypes/ne-wtypes-varenum
+						switch (vi_TipoVar)
+						{
+							//Tipo : CHAR - 1 Caracter
+						case VARENUM::VT_I1:
+						{
+							//Variaveis a serem utilizadas.
+							CHAR* vi_pBufferDestino = Nulo; //Buffer do SAFEARRAY.
+							cli::array<wchar_t>^ vi_BufferGen = (cli::array<wchar_t>^)Param_BufferDados; //Variavel com o buffer gerenciado.
+							CHAR* vi_pBufferGenConvertedToAnsi = Nulo;
+
+							//Tenta acessar os dados no safearray para definir.
+							Hr = SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferDestino));
+
+							//Processa o resultado.
+							Resultado.ProcessarCodigoOperacao(Hr);
+
+							//Verifica se não houve erro
+							if (Resultado.StatusCode != ResultCode::SS_OK)
+								Sair;
+
+							//Cria um pin para o buffer gerenciado.
+							pin_ptr<wchar_t> vi_PinToIndex0BufferGen = &vi_BufferGen[0];
+							
+							//Converte o buffer de dados para um buffer Ansi.
+							vi_pBufferGenConvertedToAnsi = ReinterpretarCharsToANSI_A(const_cast<WCHAR*>(reinterpret_cast<WCHAR*>(vi_PinToIndex0BufferGen)));
+
+							//Verifica se é valido
+							if (!ObjetoValido(vi_pBufferGenConvertedToAnsi))
+								throw gcnew NullReferenceException("(CA_SAFEARRAY->GetPvData-UI1) - Houve uma falha ao tentar converter o buffer UTF8 para ANSI.");
+							
+							//Realiza a copia dos dados para o SAFEARRAY.
+							std::copy(vi_pBufferGenConvertedToAnsi, vi_pBufferGenConvertedToAnsi + vi_CountElementsInSafeArray, vi_pBufferDestino);
+
+							//Libera a memória utilizada pelo buffer convertido.
+							DeletarStringAllocatedSafe(&vi_pBufferGenConvertedToAnsi);
+
+							//Libera o acesso ao array.
+							SafeArrayUnaccessData(PonteiroTrabalho);
+						}
+						break;
+
+						//Tipo : BYTE - 1 Caracter não assinado.
+						case VARENUM::VT_UI1:
+						{
+							
+						}
+						break;
+
+						//Tipo : Int16 - 2 Bytes assinados
+						case VARENUM::VT_I2:
+						{
+							
+						}
+						break;
+
+						//Tipo : UInt16 - 2 Bytes não assinado
+						case VARENUM::VT_UI2:
+						{
+							
+						}
+						break;
+
+						//Tipo : Int32 - 4 Bytes assinados.
+						case VARENUM::VT_I4:
+						{
+							
+						}
+						break;
+
+						//Tipo : UInt32 - 4 Bytes não assinados.
+						case VARENUM::VT_UI4:
+						{
+							
+						}
+						break;
+
+						//Tipo : INT -> Int32
+						case VARENUM::VT_INT:
+						{
+							
+						}
+						break;
+
+						//Tipo : UINT -> UInt32
+						case VARENUM::VT_UINT:
+						{
+							
+						}
+						break;
+
+						//Tipo : FLOAT - 4 Bytes reais
+						case VARENUM::VT_R4:
+						{
+							
+						}
+						break;
+
+						//Tipo : DOUBLE - 8 Bytes reais
+						case VARENUM::VT_R8:
+						{
+							
+						}
+						break;
+
+						//Tipo : BOOLEAN -> SHORT (-1 = TRUE) | (0 = FALSE)
+						case VARENUM::VT_BOOL:
+						{
+							
+						}
+						break;
+
+						//Tipo : DECIMAL -> 16 Bytes fixed
+						case VARENUM::VT_DECIMAL:
+						{
+							
+						}
+						break;
+
+						//Tipo : SCODE -> 4 Bytes assinados (Int32)
+						case VARENUM::VT_ERROR:
+						{
+							
+						}
+						break;
+
+						//Tipo : CA_CY -> 2 dados de 8 Bytes.
+						case VARENUM::VT_CY:
+						{
+							
+						}
+						break;
+
+						//Tipo : DOUBLE -> 8 Bytes Reais
+						case VARENUM::VT_DATE:
+						{
+							
+						}
+						break;
+
+						//Tipo : String
+						case VARENUM::VT_BSTR:
+						{
+							
+							
+						}
+						break;
+
+						//Tipo : IDispath Interface (Representado por IntPtr)
+						case VARENUM::VT_DISPATCH:
+						{
+							
+						}
+						break;
+
+						//Tipo : IUnknown Interface (Representado por IntPtr)
+						case VARENUM::VT_UNKNOWN:
+						{
+							
+						}
+						break;
+
+						//Tipo : CA_VARIANT
+						case VARENUM::VT_VARIANT:
+						{
+							//PENDENTE.
+						}
+						break;
+
+						default:
+							//Tipo desconhecido ou não suportado.
+							Sair;
+							break;
+						}
 
 					Done:;
 						//Retorna o resultado

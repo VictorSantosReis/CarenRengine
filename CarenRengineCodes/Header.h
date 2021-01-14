@@ -90,6 +90,7 @@ limitations under the License.
 #include <synchapi.h>
 #include <inspectable.h>
 #include <oleauto.h>
+#include <stringapiset.h>
 
 //Errros Hresult
 #include <comdef.h>
@@ -479,4 +480,84 @@ inline void DeletarEstruturaGerenciadaSafe(Object^% Param_Objeto)
 		//Deleta a estrutura.
 		Param_Objeto = nullptr;
 	}
+}
+inline WCHAR* ReinterpretarCharsToUTF8_W(const char* Param_Chars)
+{
+	//Variavel que será retornado com os dados reinterpretados.
+	WCHAR* Resultado = Nulo;
+
+	//Variaveis a serem utilizadas.
+	int vi_CountCharsRequest = 0;
+
+	//Chama o método para calcular o tamanho necessário para conter os dados.
+	vi_CountCharsRequest = MultiByteToWideChar(CP_UTF8, 0, Param_Chars, -1, NULL, 0);
+
+	//Aloca memória para conter os dados.
+	Resultado = new WCHAR[vi_CountCharsRequest];
+
+	//Converte os dados.
+	MultiByteToWideChar(CP_UTF8, 0, Param_Chars, -1, Resultado, vi_CountCharsRequest);
+
+	//Retorna.
+	return Resultado;
+}
+inline WCHAR* ReinterpretarCharsToANSI_W(const char* Param_Chars)
+{
+	//Variavel que será retornado com os dados reinterpretados.
+	WCHAR* Resultado = Nulo;
+
+	//Variaveis a serem utilizadas.
+	int vi_CountCharsRequest = 0;
+
+	//Chama o método para calcular o tamanho necessário para conter os dados.
+	vi_CountCharsRequest = MultiByteToWideChar(CP_ACP, 0, Param_Chars, -1, NULL, 0);
+
+	//Aloca memória para conter os dados.
+	Resultado = new WCHAR[vi_CountCharsRequest];
+
+	//Converte os dados.
+	MultiByteToWideChar(CP_ACP, 0, Param_Chars, -1, Resultado, vi_CountCharsRequest);
+
+	//Retorna.
+	return Resultado;
+}
+inline CHAR* ReinterpretarCharsToUTF8_A(const WCHAR* Param_Chars)
+{
+	//Variavel que será retornado com os dados reinterpretados.
+	CHAR* Resultado = Nulo;
+
+	//Variaveis a serem utilizadas.
+	int vi_CountCharsRequest = 0;
+
+	//Chama o método para calcular o tamanho necessário para conter os dados.
+	vi_CountCharsRequest = WideCharToMultiByte(CP_UTF8, 0, Param_Chars, -1, Nulo, 0, Nulo, Nulo);
+
+	//Aloca memória para conter os dados.
+	Resultado = new CHAR[vi_CountCharsRequest];
+
+	//Converte os dados.
+	WideCharToMultiByte(CP_UTF8, 0, Param_Chars, -1, Resultado, vi_CountCharsRequest, Nulo, Nulo);
+
+	//Retorna.
+	return Resultado;
+}
+inline CHAR* ReinterpretarCharsToANSI_A(const WCHAR* Param_Chars)
+{
+	//Variavel que será retornado com os dados reinterpretados.
+	CHAR* Resultado = Nulo;
+
+	//Variaveis a serem utilizadas.
+	int vi_CountCharsRequest = 0;
+
+	//Chama o método para calcular o tamanho necessário para conter os dados.
+	vi_CountCharsRequest = WideCharToMultiByte(CP_ACP, 0, Param_Chars, -1, Nulo, 0, Nulo, Nulo);
+
+	//Aloca memória para conter os dados.
+	Resultado = new CHAR[vi_CountCharsRequest];
+
+	//Converte os dados.
+	WideCharToMultiByte(CP_ACP, 0, Param_Chars, -1, Resultado, vi_CountCharsRequest, Nulo, Nulo);
+
+	//Retorna.
+	return Resultado;
 }

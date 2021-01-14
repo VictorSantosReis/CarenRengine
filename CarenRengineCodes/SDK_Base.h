@@ -18993,9 +18993,9 @@ namespace CarenRengine
 				/// <summary>
 				/// (VT_VARIANT PENDENTE) - 
 				/// </summary>
-				/// <typeparam name="BufferType"></typeparam>
-				/// <param name="Param_BufferDados"></param>
-				/// <param name="Param_CountData"></param>
+				/// <typeparam name="BufferType">o tipo do dado a ser adicionado no safearray.</typeparam>
+				/// <param name="Param_BufferDados">O Array com os dados a serem adicionados.</param>
+				/// <param name="Param_CountData">A quantidade de dados.</param>
 				/// <returns></returns>
 				generic<typename BufferType>
 					CarenResult SetDataArrayOnPvData(cli::array<BufferType>^ Param_BufferDados, UInt32 Param_CountData)
@@ -19051,7 +19051,7 @@ namespace CarenRengine
 
 							//Verifica se é valido
 							if (!ObjetoValido(vi_pBufferGenConvertedToAnsi))
-								throw gcnew NullReferenceException("(CA_SAFEARRAY->GetPvData-UI1) - Houve uma falha ao tentar converter o buffer UTF8 para ANSI.");
+								throw gcnew NullReferenceException("(CA_SAFEARRAY->GetPvData-I1) - Houve uma falha ao tentar converter o buffer UTF8 para ANSI.");
 							
 							//Realiza a copia dos dados para o SAFEARRAY.
 							std::copy(vi_pBufferGenConvertedToAnsi, vi_pBufferGenConvertedToAnsi + vi_CountElementsInSafeArray, vi_pBufferDestino);
@@ -19067,120 +19067,487 @@ namespace CarenRengine
 						//Tipo : BYTE - 1 Caracter não assinado.
 						case VARENUM::VT_UI1:
 						{
-							
+							//Variaveis a serem utilizadas.
+							BYTE* vi_pBufferDestino = Nulo; //Buffer do SAFEARRAY.
+							cli::array<Byte>^ vi_BufferGen = (cli::array<Byte>^)Param_BufferDados;  //Variavel com o buffer gerenciado.
+
+							//Tenta acessar os dados no safearray para definir.
+							Hr = SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferDestino));
+
+							//Processa o resultado.
+							Resultado.ProcessarCodigoOperacao(Hr);
+
+							//Verifica se não houve erro
+							if (Resultado.StatusCode != ResultCode::SS_OK)
+								Sair;
+
+							//Cria um pin para o buffer gerenciado.
+							pin_ptr<Byte> vi_PinToIndex0BufferGen = &vi_BufferGen[0];
+
+							//Realiza a copia dos dados para o SAFEARRAY.
+							std::copy(vi_pBufferDestino, vi_pBufferDestino + vi_CountElementsInSafeArray, reinterpret_cast<BYTE*>(vi_PinToIndex0BufferGen));
+
+							//Libera o acesso ao array.
+							SafeArrayUnaccessData(PonteiroTrabalho);
 						}
 						break;
 
 						//Tipo : Int16 - 2 Bytes assinados
 						case VARENUM::VT_I2:
 						{
-							
+							//Variaveis a serem utilizadas.
+							INT16* vi_pBufferDestino = Nulo; //Buffer do SAFEARRAY.
+							cli::array<Int16>^ vi_BufferGen = (cli::array<Int16>^)Param_BufferDados;  //Variavel com o buffer gerenciado.
+
+							//Tenta acessar os dados no safearray para definir.
+							Hr = SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferDestino));
+
+							//Processa o resultado.
+							Resultado.ProcessarCodigoOperacao(Hr);
+
+							//Verifica se não houve erro
+							if (Resultado.StatusCode != ResultCode::SS_OK)
+								Sair;
+
+							//Cria um pin para o buffer gerenciado.
+							pin_ptr<Int16> vi_PinToIndex0BufferGen = &vi_BufferGen[0];
+
+							//Realiza a copia dos dados para o SAFEARRAY.
+							std::copy(vi_pBufferDestino, vi_pBufferDestino + vi_CountElementsInSafeArray, reinterpret_cast<INT16*>(vi_PinToIndex0BufferGen));
+
+							//Libera o acesso ao array.
+							SafeArrayUnaccessData(PonteiroTrabalho);
 						}
 						break;
 
 						//Tipo : UInt16 - 2 Bytes não assinado
 						case VARENUM::VT_UI2:
 						{
-							
+							//Variaveis a serem utilizadas.
+							UINT16* vi_pBufferDestino = Nulo; //Buffer do SAFEARRAY.
+							cli::array<UInt16>^ vi_BufferGen = (cli::array<UInt16>^)Param_BufferDados;  //Variavel com o buffer gerenciado.
+
+							//Tenta acessar os dados no safearray para definir.
+							Hr = SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferDestino));
+
+							//Processa o resultado.
+							Resultado.ProcessarCodigoOperacao(Hr);
+
+							//Verifica se não houve erro
+							if (Resultado.StatusCode != ResultCode::SS_OK)
+								Sair;
+
+							//Cria um pin para o buffer gerenciado.
+							pin_ptr<UInt16> vi_PinToIndex0BufferGen = &vi_BufferGen[0];
+
+							//Realiza a copia dos dados para o SAFEARRAY.
+							std::copy(vi_pBufferDestino, vi_pBufferDestino + vi_CountElementsInSafeArray, reinterpret_cast<UINT16*>(vi_PinToIndex0BufferGen));
+
+							//Libera o acesso ao array.
+							SafeArrayUnaccessData(PonteiroTrabalho);
 						}
 						break;
 
 						//Tipo : Int32 - 4 Bytes assinados.
 						case VARENUM::VT_I4:
 						{
-							
+							//Variaveis a serem utilizadas.
+							INT32* vi_pBufferDestino = Nulo; //Buffer do SAFEARRAY.
+							cli::array<Int32>^ vi_BufferGen = (cli::array<Int32>^)Param_BufferDados;  //Variavel com o buffer gerenciado.
+
+							//Tenta acessar os dados no safearray para definir.
+							Hr = SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferDestino));
+
+							//Processa o resultado.
+							Resultado.ProcessarCodigoOperacao(Hr);
+
+							//Verifica se não houve erro
+							if (Resultado.StatusCode != ResultCode::SS_OK)
+								Sair;
+
+							//Cria um pin para o buffer gerenciado.
+							pin_ptr<Int32> vi_PinToIndex0BufferGen = &vi_BufferGen[0];
+
+							//Realiza a copia dos dados para o SAFEARRAY.
+							std::copy(vi_pBufferDestino, vi_pBufferDestino + vi_CountElementsInSafeArray, reinterpret_cast<INT32*>(vi_PinToIndex0BufferGen));
+
+							//Libera o acesso ao array.
+							SafeArrayUnaccessData(PonteiroTrabalho);
 						}
 						break;
 
 						//Tipo : UInt32 - 4 Bytes não assinados.
 						case VARENUM::VT_UI4:
 						{
-							
+							//Variaveis a serem utilizadas.
+							UINT32* vi_pBufferDestino = Nulo; //Buffer do SAFEARRAY.
+							cli::array<UInt32>^ vi_BufferGen = (cli::array<UInt32>^)Param_BufferDados;  //Variavel com o buffer gerenciado.
+
+							//Tenta acessar os dados no safearray para definir.
+							Hr = SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferDestino));
+
+							//Processa o resultado.
+							Resultado.ProcessarCodigoOperacao(Hr);
+
+							//Verifica se não houve erro
+							if (Resultado.StatusCode != ResultCode::SS_OK)
+								Sair;
+
+							//Cria um pin para o buffer gerenciado.
+							pin_ptr<UInt32> vi_PinToIndex0BufferGen = &vi_BufferGen[0];
+
+							//Realiza a copia dos dados para o SAFEARRAY.
+							std::copy(vi_pBufferDestino, vi_pBufferDestino + vi_CountElementsInSafeArray, reinterpret_cast<UINT32*>(vi_PinToIndex0BufferGen));
+
+							//Libera o acesso ao array.
+							SafeArrayUnaccessData(PonteiroTrabalho);
 						}
 						break;
 
 						//Tipo : INT -> Int32
 						case VARENUM::VT_INT:
 						{
-							
+							//Variaveis a serem utilizadas.
+							INT32* vi_pBufferDestino = Nulo; //Buffer do SAFEARRAY.
+							cli::array<Int32>^ vi_BufferGen = (cli::array<Int32>^)Param_BufferDados;  //Variavel com o buffer gerenciado.
+
+							//Tenta acessar os dados no safearray para definir.
+							Hr = SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferDestino));
+
+							//Processa o resultado.
+							Resultado.ProcessarCodigoOperacao(Hr);
+
+							//Verifica se não houve erro
+							if (Resultado.StatusCode != ResultCode::SS_OK)
+								Sair;
+
+							//Cria um pin para o buffer gerenciado.
+							pin_ptr<Int32> vi_PinToIndex0BufferGen = &vi_BufferGen[0];
+
+							//Realiza a copia dos dados para o SAFEARRAY.
+							std::copy(vi_pBufferDestino, vi_pBufferDestino + vi_CountElementsInSafeArray, reinterpret_cast<INT32*>(vi_PinToIndex0BufferGen));
+
+							//Libera o acesso ao array.
+							SafeArrayUnaccessData(PonteiroTrabalho);
 						}
 						break;
 
 						//Tipo : UINT -> UInt32
 						case VARENUM::VT_UINT:
 						{
-							
+							//Variaveis a serem utilizadas.
+							UINT32* vi_pBufferDestino = Nulo; //Buffer do SAFEARRAY.
+							cli::array<UInt32>^ vi_BufferGen = (cli::array<UInt32>^)Param_BufferDados;  //Variavel com o buffer gerenciado.
+
+							//Tenta acessar os dados no safearray para definir.
+							Hr = SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferDestino));
+
+							//Processa o resultado.
+							Resultado.ProcessarCodigoOperacao(Hr);
+
+							//Verifica se não houve erro
+							if (Resultado.StatusCode != ResultCode::SS_OK)
+								Sair;
+
+							//Cria um pin para o buffer gerenciado.
+							pin_ptr<UInt32> vi_PinToIndex0BufferGen = &vi_BufferGen[0];
+
+							//Realiza a copia dos dados para o SAFEARRAY.
+							std::copy(vi_pBufferDestino, vi_pBufferDestino + vi_CountElementsInSafeArray, reinterpret_cast<UINT32*>(vi_PinToIndex0BufferGen));
+
+							//Libera o acesso ao array.
+							SafeArrayUnaccessData(PonteiroTrabalho);
 						}
 						break;
 
 						//Tipo : FLOAT - 4 Bytes reais
 						case VARENUM::VT_R4:
 						{
-							
+							//Variaveis a serem utilizadas.
+							FLOAT* vi_pBufferDestino = Nulo; //Buffer do SAFEARRAY.
+							cli::array<float>^ vi_BufferGen = (cli::array<float>^)Param_BufferDados;  //Variavel com o buffer gerenciado.
+
+							//Tenta acessar os dados no safearray para definir.
+							Hr = SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferDestino));
+
+							//Processa o resultado.
+							Resultado.ProcessarCodigoOperacao(Hr);
+
+							//Verifica se não houve erro
+							if (Resultado.StatusCode != ResultCode::SS_OK)
+								Sair;
+
+							//Cria um pin para o buffer gerenciado.
+							pin_ptr<float> vi_PinToIndex0BufferGen = &vi_BufferGen[0];
+
+							//Realiza a copia dos dados para o SAFEARRAY.
+							std::copy(vi_pBufferDestino, vi_pBufferDestino + vi_CountElementsInSafeArray, reinterpret_cast<FLOAT*>(vi_PinToIndex0BufferGen));
+
+							//Libera o acesso ao array.
+							SafeArrayUnaccessData(PonteiroTrabalho);
 						}
 						break;
 
 						//Tipo : DOUBLE - 8 Bytes reais
 						case VARENUM::VT_R8:
 						{
-							
+							//Variaveis a serem utilizadas.
+							DOUBLE* vi_pBufferDestino = Nulo; //Buffer do SAFEARRAY.
+							cli::array<double>^ vi_BufferGen = (cli::array<double>^)Param_BufferDados;  //Variavel com o buffer gerenciado.
+
+							//Tenta acessar os dados no safearray para definir.
+							Hr = SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferDestino));
+
+							//Processa o resultado.
+							Resultado.ProcessarCodigoOperacao(Hr);
+
+							//Verifica se não houve erro
+							if (Resultado.StatusCode != ResultCode::SS_OK)
+								Sair;
+
+							//Cria um pin para o buffer gerenciado.
+							pin_ptr<double> vi_PinToIndex0BufferGen = &vi_BufferGen[0];
+
+							//Realiza a copia dos dados para o SAFEARRAY.
+							std::copy(vi_pBufferDestino, vi_pBufferDestino + vi_CountElementsInSafeArray, reinterpret_cast<DOUBLE*>(vi_PinToIndex0BufferGen));
+
+							//Libera o acesso ao array.
+							SafeArrayUnaccessData(PonteiroTrabalho);
 						}
 						break;
 
 						//Tipo : BOOLEAN -> SHORT (-1 = TRUE) | (0 = FALSE)
 						case VARENUM::VT_BOOL:
 						{
-							
+							//Variaveis a serem utilizadas.
+							SHORT* vi_pBufferDestino = Nulo; //Buffer do SAFEARRAY.
+							cli::array<Boolean>^ vi_BufferGen = (cli::array<Boolean>^)Param_BufferDados;  //Variavel com o buffer gerenciado.
+
+							//Tenta acessar os dados no safearray para definir.
+							Hr = SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferDestino));
+
+							//Processa o resultado.
+							Resultado.ProcessarCodigoOperacao(Hr);
+
+							//Verifica se não houve erro
+							if (Resultado.StatusCode != ResultCode::SS_OK)
+								Sair;
+
+							//Faz um for para converter de Boolean para Short como é interpretado internamente.
+							for (ULONG i = 0; i < vi_CountElementsInSafeArray; i++)
+							{
+								//Define e converte no array de destino.
+								vi_pBufferDestino[i] = vi_BufferGen[i] == true ? -1 : 0;
+							}
+
+							//Libera o acesso ao array.
+							SafeArrayUnaccessData(PonteiroTrabalho);
 						}
 						break;
 
 						//Tipo : DECIMAL -> 16 Bytes fixed
 						case VARENUM::VT_DECIMAL:
 						{
-							
+							//Variaveis a serem utilizadas.
+							DECIMAL* vi_pBufferDestino = Nulo; //Buffer do SAFEARRAY.
+							cli::array<CA_DEC>^ vi_BufferGen = (cli::array<CA_DEC>^)Param_BufferDados;  //Variavel com o buffer gerenciado.
+
+							//Tenta acessar os dados no safearray para definir.
+							Hr = SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferDestino));
+
+							//Processa o resultado.
+							Resultado.ProcessarCodigoOperacao(Hr);
+
+							//Verifica se não houve erro
+							if (Resultado.StatusCode != ResultCode::SS_OK)
+								Sair;
+
+							//Faz um for para converter de Boolean para Short como é interpretado internamente.
+							for (ULONG i = 0; i < vi_CountElementsInSafeArray; i++)
+							{
+								//Inicializa os dados.
+								vi_pBufferDestino[i] = {};
+
+								//Define no safearray.
+								vi_pBufferDestino[i].Hi32 = vi_BufferGen[i].Hi32;
+								vi_pBufferDestino[i].Mid32 = vi_BufferGen[i].Mid32;
+								vi_pBufferDestino[i].Lo32 = vi_BufferGen[i].Lo32;
+								vi_pBufferDestino[i].Lo64 = vi_BufferGen[i].Lo64;
+								vi_pBufferDestino[i].scale = vi_BufferGen[i].scale;
+								vi_pBufferDestino[i].sign = vi_BufferGen[i].sign;
+								vi_pBufferDestino[i].signscale = vi_BufferGen[i].signscale;
+							}
+
+							//Libera o acesso ao array.
+							SafeArrayUnaccessData(PonteiroTrabalho);
 						}
 						break;
 
 						//Tipo : SCODE -> 4 Bytes assinados (Int32)
 						case VARENUM::VT_ERROR:
 						{
-							
+							//Variaveis a serem utilizadas.
+							INT32* vi_pBufferDestino = Nulo; //Buffer do SAFEARRAY.
+							cli::array<Int32>^ vi_BufferGen = (cli::array<Int32>^)Param_BufferDados;  //Variavel com o buffer gerenciado.
+
+							//Tenta acessar os dados no safearray para definir.
+							Hr = SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferDestino));
+
+							//Processa o resultado.
+							Resultado.ProcessarCodigoOperacao(Hr);
+
+							//Verifica se não houve erro
+							if (Resultado.StatusCode != ResultCode::SS_OK)
+								Sair;
+
+							//Cria um pin para o buffer gerenciado.
+							pin_ptr<Int32> vi_PinToIndex0BufferGen = &vi_BufferGen[0];
+
+							//Realiza a copia dos dados para o SAFEARRAY.
+							std::copy(vi_pBufferDestino, vi_pBufferDestino + vi_CountElementsInSafeArray, reinterpret_cast<INT32*>(vi_PinToIndex0BufferGen));
+
+							//Libera o acesso ao array.
+							SafeArrayUnaccessData(PonteiroTrabalho);
 						}
 						break;
 
 						//Tipo : CA_CY -> 2 dados de 8 Bytes.
 						case VARENUM::VT_CY:
 						{
-							
+							//Variaveis a serem utilizadas.
+							CY* vi_pBufferDestino = Nulo; //Buffer do SAFEARRAY.
+							cli::array<CA_CY>^ vi_BufferGen = (cli::array<CA_CY>^)Param_BufferDados;  //Variavel com o buffer gerenciado.
+
+							//Tenta acessar os dados no safearray para definir.
+							Hr = SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferDestino));
+
+							//Processa o resultado.
+							Resultado.ProcessarCodigoOperacao(Hr);
+
+							//Verifica se não houve erro
+							if (Resultado.StatusCode != ResultCode::SS_OK)
+								Sair;
+
+							//Faz um for para converter de Boolean para Short como é interpretado internamente.
+							for (ULONG i = 0; i < vi_CountElementsInSafeArray; i++)
+							{
+								//Inicializa os dados.
+								vi_pBufferDestino[i] = {};
+
+								//Define no safearray.
+								vi_pBufferDestino[i].Hi = vi_BufferGen[i].Hi;
+								vi_pBufferDestino[i].int64 = vi_BufferGen[i].int64;
+								vi_pBufferDestino[i].Lo = vi_BufferGen[i].Lo;
+							}
+
+							//Libera o acesso ao array.
+							SafeArrayUnaccessData(PonteiroTrabalho);
 						}
 						break;
 
 						//Tipo : DOUBLE -> 8 Bytes Reais
 						case VARENUM::VT_DATE:
 						{
-							
+							//Variaveis a serem utilizadas.
+							DOUBLE* vi_pBufferDestino = Nulo; //Buffer do SAFEARRAY.
+							cli::array<double>^ vi_BufferGen = (cli::array<double>^)Param_BufferDados;  //Variavel com o buffer gerenciado.
+
+							//Tenta acessar os dados no safearray para definir.
+							Hr = SafeArrayAccessData(PonteiroTrabalho, reinterpret_cast<void**>(&vi_pBufferDestino));
+
+							//Processa o resultado.
+							Resultado.ProcessarCodigoOperacao(Hr);
+
+							//Verifica se não houve erro
+							if (Resultado.StatusCode != ResultCode::SS_OK)
+								Sair;
+
+							//Cria um pin para o buffer gerenciado.
+							pin_ptr<double> vi_PinToIndex0BufferGen = &vi_BufferGen[0];
+
+							//Realiza a copia dos dados para o SAFEARRAY.
+							std::copy(vi_pBufferDestino, vi_pBufferDestino + vi_CountElementsInSafeArray, reinterpret_cast<DOUBLE*>(vi_PinToIndex0BufferGen));
+
+							//Libera o acesso ao array.
+							SafeArrayUnaccessData(PonteiroTrabalho);
 						}
 						break;
 
 						//Tipo : String
 						case VARENUM::VT_BSTR:
 						{
-							
-							
+							//Variaveis a serem utilizadas.
+							cli::array<String^>^ vi_BufferGen = (cli::array<String^>^)Param_BufferDados;  //Variavel com o buffer gerenciado.
+							BSTR vi_pBSTRTemp = Nulo; //Ponteiro que vai conter a BSTR temporaria.
+							long lb, ub = 0;
+
+							//Obtém os dados dos: lb & ub
+							SafeArrayGetLBound(PonteiroTrabalho, PonteiroTrabalho->cDims, &lb);
+							SafeArrayGetUBound(PonteiroTrabalho, PonteiroTrabalho->cDims, &ub);
+
+							//Cria um for para definir os ponteiros BSTR.
+							for (long i = lb; i < ub; i++)
+							{
+								//O método abaixo é responsável por criar uma copia da BSTR passada.
+								//O método também libera os dados já existente, se houverem.
+
+
+								//Cria a BSTR que será passada para o método.
+								vi_pBSTRTemp = static_cast<BSTR>(Marshal::StringToBSTR(vi_BufferGen[i]).ToPointer());
+
+								//Chama um método para definir os dados no index.
+								SafeArrayPutElement(PonteiroTrabalho, &i, vi_pBSTRTemp);
+
+								//Libera a BSTR temporaria.
+								DeletarStringBSTRSafe(&vi_pBSTRTemp);
+
+								//Nula
+								vi_pBSTRTemp = Nulo;
+							}			
 						}
 						break;
 
 						//Tipo : IDispath Interface (Representado por IntPtr)
 						case VARENUM::VT_DISPATCH:
 						{
-							
+							//Variaveis a serem utilizadas.
+							cli::array<IntPtr>^ vi_BufferGen = (cli::array<IntPtr>^)Param_BufferDados;  //Variavel com o buffer gerenciado.
+							long lb, ub = 0;
+
+							//Obtém os dados dos: lb & ub
+							SafeArrayGetLBound(PonteiroTrabalho, PonteiroTrabalho->cDims, &lb);
+							SafeArrayGetUBound(PonteiroTrabalho, PonteiroTrabalho->cDims, &ub);
+
+							//Cria um for para definir os ponteiros.
+							for (long i = lb; i < ub; i++)
+							{
+								//O método abaixo já é responsável por incriementar a contagem de referencias da interface(AddRef).
+
+								//Chama o método para definir o ponteiro no index.
+								SafeArrayPutElement(PonteiroTrabalho, &i, vi_BufferGen[i].ToPointer());
+							}
 						}
 						break;
 
 						//Tipo : IUnknown Interface (Representado por IntPtr)
 						case VARENUM::VT_UNKNOWN:
 						{
-							
+							//Variaveis a serem utilizadas.
+							cli::array<IntPtr>^ vi_BufferGen = (cli::array<IntPtr>^)Param_BufferDados;  //Variavel com o buffer gerenciado.
+							long lb, ub = 0;
+
+							//Obtém os dados dos: lb & ub
+							SafeArrayGetLBound(PonteiroTrabalho, PonteiroTrabalho->cDims, &lb);
+							SafeArrayGetUBound(PonteiroTrabalho, PonteiroTrabalho->cDims, &ub);
+
+							//Cria um for para definir os ponteiros.
+							for (long i = lb; i < ub; i++)
+							{
+								//O método abaixo já é responsável por incriementar a contagem de referencias da interface(AddRef).
+
+								//Chama o método para definir o ponteiro no index.
+								SafeArrayPutElement(PonteiroTrabalho, &i, vi_BufferGen[i].ToPointer());
+							}
 						}
 						break;
 

@@ -17553,6 +17553,23 @@ namespace CarenRengine
 				{
 					//Construtor Default
 				}
+				CA_VARIANT(IntPtr Param_Pointer)
+				{
+					//Converte o IntPtr para uma estrutura VARIANT
+					PonteiroTrabalho = static_cast<VARIANT*>(Param_Pointer.ToPointer());
+				}
+				CA_VARIANT(Enumeracoes::CA_VARTYPE Param_Vartype)
+				{
+					//Inicializa a variante.
+					VariantInit(PonteiroTrabalho);
+
+					//Verifica se não houve erro ao criar.
+					if (!ObjetoValido(PonteiroTrabalho))
+						throw gcnew Exception("Ocorreu uma falha desconhecida ao tentar criar uma variante.");
+
+					//Define o tipo da variante.
+					PonteiroTrabalho->vt = static_cast<VARTYPE>(Param_Vartype);
+				}
 				CA_VARIANT(const VARIANT*& Param_Variant)
 				{
 					//Define a variante no ponteiro de trabalho.
@@ -17563,62 +17580,580 @@ namespace CarenRengine
 					//Verifica se o objeto é valido e libera.
 					if(ObjetoValido(PonteiroTrabalho))
 						VariantClear(PonteiroTrabalho);
+
+					//Nula
+					PonteiroTrabalho = Nulo;
 				}
 
 				//Membros
 			public:
-				Enumeracoes::CA_VARTYPE vt;
-				UInt16 wReserved1;
-				UInt16 wReserved2;
-				UInt16 wReserved3;
+				property Enumeracoes::CA_VARTYPE vt
+				{
+					Enumeracoes::CA_VARTYPE get()
+					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro válido.");
 
-				Int64 llVal;
-				Int32 lVal;
-				Byte bVal;
-				Int16 iVal;
-				float fltVal;
-				double dblVal;
-				Boolean boolVal;
-				Boolean __OBSOLETE__VARIANT_BOOL;
-				Int32 scode;
-				CA_CY^ cyVal;
-				double date;
-				String^ bstrVal;
-				Object^ punkVal;
-				Object^ pdispVal;
-				Object^ parray;
-				Object^ pbVal;
-				cli::array<short>^ piVal;
-				cli::array<long>^ plVal;
-				cli::array<long long>^ pllVal;
-				cli::array<float>^ pfltVal;
-				cli::array<double>^ pdblVal;
-				cli::array<short>^ pboolVal;
-				cli::array<long>^ pscode;
-				CA_CY^ pcyVal;
-				cli::array<double>^ pdate;
-				String^ pbstrVal;
-				Object^ ppunkVal;
-				Object^ ppdispVal;
-				Object^ pparray;
-				CA_VARIANT^ pvarVal;
-				Object^ byref;
-				char cVal;
-				UInt16 uiVal;
-				UInt32 ulVal;
-				UInt64 ullVal;
-				Int32 intVal;
-				UInt32 uintVal;
-				CA_DEC^ pdecVal;
-				cli::array<char>^ pcVal;
-				cli::array<unsigned short>^ puiVal;
-				cli::array<unsigned long>^ pulVal;
-				cli::array<unsigned long long>^ pullVal;
-				cli::array<int>^ pintVal;
-				cli::array<unsigned int>^ puintVal;
+						//Retorna o vartype
+						return static_cast<Enumeracoes::CA_VARTYPE>(PonteiroTrabalho->vt);
+					}
+					void set(Enumeracoes::CA_VARTYPE Param_Value)
+					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro válido.");
 
-				Object^ pvRecord;
-				Object^ pRecInfo;
+						//Define o novo valor.
+						PonteiroTrabalho->vt = static_cast<VARTYPE>(Param_Value);
+					}
+				}
+
+				property Int64 llVal
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+
+				property Int32 lVal
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+
+				property Byte bVal
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+
+				property Int16 iVal
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+
+				property float fltVal
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+
+				property double dblVal
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+
+				property Boolean boolVal
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+
+				property Int32 scode
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+
+				property CA_CY cyVal
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+
+				property double date
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+
+				property String^ bstrVal
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+
+				property IntPtr punkVal
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+
+				property IntPtr pdispVal
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+
+				property IntPtr parray
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+
+				property Int32 pbVal
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+
+				property Int32 piVal
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+
+				property Int32 plVal
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+
+				property Int32 pllVal
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+
+				property Int32 pfltVal
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+
+				property Int32 pdblVal
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+
+				property Int32 pboolVal
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+
+				property Int32 pscode
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+
+				property Int32 pcyVal
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+
+				property Int32 pdate
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+
+				property Int32 pbstrVal
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+
+				property Int32 ppunkVal
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+
+				property Int32 ppdispVal
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+
+				property Int32 pparray
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+
+				property Int32 pvarVal
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+
+				property Int32 byref
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+
+				property Int32 cVal
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+
+				property Int32 uiVal
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+
+				property Int32 ulVal
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+
+				property Int32 ullVal
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+
+				property Int32 intVal
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+
+				property Int32 uintVal
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+
+				property Int32 pdecVal
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+
+				property Int32 pcVal
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+
+				property Int32 puiVal
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+
+				property Int32 pulVal
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+				property Int32 pullVal
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+				property Int32 pintVal
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+				property Int32 puintVal
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+				property Int32 pvRecord
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+				property Int32 pRecInfo
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
+				property Int32 decVal
+				{
+					Int32 get()
+					{
+						return 0;
+					}
+					void set(Int32 Param_Value)
+					{
+
+					}
+				}
 			};
 
 			/// <summary>

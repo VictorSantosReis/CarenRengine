@@ -17529,7 +17529,6 @@ namespace CarenRengine
 			/// </summary>
 			public value struct CA_DEC
 			{
-				USHORT        wReserved;
 				USHORT        signscale;
 				BYTE          scale;
 				BYTE          sign;
@@ -17585,8 +17584,46 @@ namespace CarenRengine
 					PonteiroTrabalho = Nulo;
 				}
 
-				//Membros
+				//Conversão implicita por IntPtr.
 			public:
+				static operator CA_VARIANT^ (IntPtr Param_Pointer)
+				{
+					//Variavel a ser retornada.
+					CA_VARIANT^ Resultado = nullptr;
+
+					//Ponteiro Nativo.
+					VARIANT* vi_pVariant = Nulo;
+
+					//Verifica se o ponteiro é valido
+					if (Param_Pointer == IntPtr::Zero)
+						Sair; //Ponteiro Invalido.
+
+					//Tenta converter o ponteiro para uma VARIANT.
+					vi_pVariant = reinterpret_cast<VARIANT*>(Param_Pointer.ToPointer());
+
+					//Verifica se converteu com sucesso.
+					if (!ObjetoValido(vi_pVariant))
+						Sair; // Conversão falhou
+
+					//Cria a variante
+					Resultado = gcnew CA_VARIANT();
+
+					//Define o ponteiro.
+					Resultado->PonteiroTrabalho = vi_pVariant;
+
+				Done:;
+					//Retorna a estrutura.
+					return Resultado;
+				}
+
+				//Propriedades
+			public:
+
+				//TIPO DA VARIANT.
+
+				/// <summary>
+				/// Propriedade que indica o tipo de dados nesta VARIANTE.
+				/// </summary>
 				property Enumeracoes::CA_VARTYPE vt
 				{
 					Enumeracoes::CA_VARTYPE get()
@@ -17609,549 +17646,1393 @@ namespace CarenRengine
 					}
 				}
 
+
+
+				//TIPOS SIMPLES
+
+				/// <summary>
+				/// (VT_I8) - Propriedade que armazena um valor simples de 8 bytes assinado.
+				/// </summary>
 				property Int64 llVal
 				{
-					Int32 get()
+					Int64 get()
 					{
-						return 0;
-					}
-					void set(Int32 Param_Value)
-					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro válido.");
 
+						//Retorna os dados.
+						return PonteiroTrabalho->llVal;
+					}
+					void set(Int64 Param_Value)
+					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro válido.");
+
+						//Define os dados.
+						PonteiroTrabalho->llVal = Param_Value;
 					}
 				}
-
+				/// <summary>
+				/// (VT_I4) - Propriedade que armazena um valor simples de 4 bytes assinado.
+				/// </summary>
 				property Int32 lVal
 				{
 					Int32 get()
 					{
-						return 0;
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro válido.");
+
+						//Retorna os dados.
+						return PonteiroTrabalho->lVal;
 					}
 					void set(Int32 Param_Value)
 					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro válido.");
 
+						//Define os dados.
+						PonteiroTrabalho->lVal = Param_Value;
 					}
 				}
-
+				/// <summary>
+				/// (VT_UI1) - Propriedade que armazena um valor simples de 1 byte não assinado.
+				/// </summary>
 				property Byte bVal
 				{
-					Int32 get()
+					Byte get()
 					{
-						return 0;
-					}
-					void set(Int32 Param_Value)
-					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro válido.");
 
+						//Define os dados.
+						return PonteiroTrabalho->bVal;
+					}
+					void set(Byte Param_Value)
+					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro válido.");
+
+						//Define os dados.
+						PonteiroTrabalho->bVal = Param_Value;
 					}
 				}
-
+				/// <summary>
+				/// (VT_I2) - Propriedade que armazena um valor simples de 2 bytes assinado.
+				/// </summary>
 				property Int16 iVal
 				{
-					Int32 get()
+					Int16 get()
 					{
-						return 0;
-					}
-					void set(Int32 Param_Value)
-					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro válido.");
 
+						//Retorna os dados.
+						return PonteiroTrabalho->iVal;
+					}
+					void set(Int16 Param_Value)
+					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro válido.");
+
+						//Define os dados.
+						PonteiroTrabalho->iVal = Param_Value;
 					}
 				}
-
+				/// <summary>
+				/// (VT_R4) - Propriedade que armazena um valor simples de 4 bytes reais.
+				/// </summary>
 				property float fltVal
 				{
-					Int32 get()
+					float get()
 					{
-						return 0;
-					}
-					void set(Int32 Param_Value)
-					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro válido.");
 
+						//Retorna os dados.
+						return PonteiroTrabalho->fltVal;
+					}
+					void set(float Param_Value)
+					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro válido.");
+
+						//Define os dados.
+						PonteiroTrabalho->fltVal = Param_Value;
 					}
 				}
-
+				/// <summary>
+				/// (VT_R8) - Propriedade que armazena um valor simples de 8 bytes reais.
+				/// </summary>
 				property double dblVal
 				{
-					Int32 get()
+					double get()
 					{
-						return 0;
-					}
-					void set(Int32 Param_Value)
-					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro válido.");
 
+						//Retorna os dados.
+						return PonteiroTrabalho->dblVal;
+					}
+					void set(double Param_Value)
+					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro válido.");
+						
+						//Define os dados.
+						PonteiroTrabalho->dblVal = Param_Value;
 					}
 				}
-
+				/// <summary>
+				/// (VT_BOOL) - Propriedade que armazena um valor simples do tipo Booleano.
+				/// </summary>
 				property Boolean boolVal
 				{
-					Int32 get()
+					Boolean get()
 					{
-						return 0;
-					}
-					void set(Int32 Param_Value)
-					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro válido.");
 
+						//Retorna os dados.
+						return PonteiroTrabalho->boolVal == -1? true: false;
+					}
+					void set(Boolean Param_Value)
+					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro válido.");
+						
+						//Define os dados.
+						PonteiroTrabalho->boolVal = Param_Value == true ? -1 : 0;
 					}
 				}
-
+				/// <summary>
+				/// (VT_ERROR) - Propriedade que armazena um valor simples de 4 bytes assinado.
+				/// </summary>
 				property Int32 scode
 				{
 					Int32 get()
 					{
-						return 0;
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro válido.");
+
+						//Retorna os dados.
+						return PonteiroTrabalho->scode;
 					}
 					void set(Int32 Param_Value)
 					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro válido.");
 
+						//Define os dados.
+						PonteiroTrabalho->scode = static_cast<LONG>(Param_Value);
 					}
 				}
-
+				/// <summary>
+				/// (VT_CY) - Propriedade que armazena uma estrutura CA_CY.
+				/// </summary>
 				property CA_CY cyVal
 				{
-					Int32 get()
+					CA_CY get()
 					{
-						return 0;
-					}
-					void set(Int32 Param_Value)
-					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro válido.");
 
+						//Variavel a ser retornada.
+						CA_CY vi_Dados = CA_CY();
+
+						//Define os dados.
+						vi_Dados.Hi = PonteiroTrabalho->cyVal.Hi;
+						vi_Dados.Lo = PonteiroTrabalho->cyVal.Lo;
+						vi_Dados.int64 = PonteiroTrabalho->cyVal.int64;
+
+						//Retorna os dados.
+						return vi_Dados;
+					}
+					void set(CA_CY Param_Value)
+					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro válido.");
+
+						//Define os dados.
+						PonteiroTrabalho->cyVal.Hi = Param_Value.Hi;
+						PonteiroTrabalho->cyVal.Lo = Param_Value.Lo;
+						PonteiroTrabalho->cyVal.int64 = Param_Value.int64;
 					}
 				}
-
+				/// <summary>
+				/// (VT_DATE) - Propriedade que armazena um valor simples de de 8 bytes reais.
+				/// </summary>
 				property double date
 				{
-					Int32 get()
+					double get()
 					{
-						return 0;
-					}
-					void set(Int32 Param_Value)
-					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro válido.");
 
+						//Retorna os dados.
+						return PonteiroTrabalho->date;
+					}
+					void set(double Param_Value)
+					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro válido.");
+
+						//Define os dados.
+						PonteiroTrabalho->date = Param_Value;
 					}
 				}
-
+				/// <summary>
+				/// (VT_BSTR) - Propriedade que armazena um valor simples do tipo String.
+				/// </summary>
 				property String^ bstrVal
 				{
-					Int32 get()
+					String^ get()
 					{
-						return 0;
-					}
-					void set(Int32 Param_Value)
-					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro válido.");
 
+						//Variavel a ser retornada.
+						String^ vi_DadosBstr = nullptr;
+
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho->bstrVal))
+							Sair; //A BSTR é invalida.
+
+					Done:;
+						//Retorna os dados.
+						return vi_DadosBstr;
+					}
+					void set(String^ Param_Value)
+					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro válido.");
+
+						//Libera o antigo valor se válido
+						if (ObjetoValido(PonteiroTrabalho->bstrVal))
+							DeletarStringBSTRSafe(&PonteiroTrabalho->bstrVal);
+
+						//Define os novos dados.
+						PonteiroTrabalho->bstrVal = reinterpret_cast<BSTR>(Marshal::StringToBSTR(Param_Value).ToPointer());
 					}
 				}
-
+				/// <summary>
+				/// (VT_UNKNOWN) - Propriedade que armazena um ponteiro para uma interface IUnknown.
+				/// </summary>
 				property IntPtr punkVal
 				{
-					Int32 get()
+					IntPtr get()
 					{
-						return 0;
-					}
-					void set(Int32 Param_Value)
-					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro válido.");
 
+						//Verifica se o ponteiro é valido
+						if (!ObjetoValido(PonteiroTrabalho->punkVal))
+							throw gcnew NullReferenceException("O membro (punkVal) não é um objeto válido.");
+
+						//Retorna os dados.
+						return IntPtr(PonteiroTrabalho->punkVal);
+					}
+					void set(IntPtr Param_Value)
+					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro válido.");
+
+						//Define os dados.
+						PonteiroTrabalho->punkVal = reinterpret_cast<IUnknown*>(Param_Value.ToPointer());
 					}
 				}
-
+				/// <summary>
+				/// (VT_DISPATCH) - Propriedade que armazena um ponteiro para uma interface IDispatch.
+				/// </summary>
 				property IntPtr pdispVal
 				{
-					Int32 get()
+					IntPtr get()
 					{
-						return 0;
-					}
-					void set(Int32 Param_Value)
-					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro válido.");
 
+						//Verifica se o ponteiro é valido
+						if (!ObjetoValido(PonteiroTrabalho->pdispVal))
+							throw gcnew NullReferenceException("O membro (pdispVal) não é um objeto válido.");
+
+						//Retorna os dados.
+						return IntPtr(PonteiroTrabalho->pdispVal);
+					}
+					void set(IntPtr Param_Value)
+					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro válido.");
+
+						//Define os dados.
+						PonteiroTrabalho->pdispVal = reinterpret_cast<IDispatch*>(Param_Value.ToPointer());
 					}
 				}
-
+				/// <summary>
+				/// (VT_ARRAY) - Propriedade que armazena um ponteiro para uma estrutura SAFEARRAY que pode ser gerenciada pela CA_SAFEARRAY.
+				/// </summary>
 				property IntPtr parray
 				{
-					Int32 get()
+					IntPtr get()
 					{
-						return 0;
-					}
-					void set(Int32 Param_Value)
-					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro válido.");
 
+						//Verifica se o ponteiro é valido
+						if (!ObjetoValido(PonteiroTrabalho->parray))
+							throw gcnew NullReferenceException("O membro (parray) não é um objeto válido.");
+
+						//Retorna os dados.
+						return IntPtr(static_cast<void*>(PonteiroTrabalho->parray));
+					}
+					void set(IntPtr Param_Value)
+					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro válido.");
+
+						//Define os dados.
+						PonteiroTrabalho->parray = reinterpret_cast<SAFEARRAY*>(Param_Value.ToPointer());
 					}
 				}
 
-				property Int32 pbVal
+
+
+				//TIPOS DE REFERÊNCIA ASSINADOS = VT_BYREF|TIPO DADO
+
+				/// <summary>
+				/// (VT_BYREF | VT_UI1) - Propriedade que armzena uma referência para um valor de 1 Byte não assinado.
+				/// </summary>
+				property Byte pbVal
 				{
-					Int32 get()
+					Byte get()
 					{
-						return 0;
-					}
-					void set(Int32 Param_Value)
-					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
 
+						//Verifica se o ponteiro é valido
+						if (!ObjetoValido(PonteiroTrabalho->pbVal))
+							throw gcnew NullReferenceException("O ponteiro para o dado não era valido.");
+
+						//Retorna os dados.
+						return *PonteiroTrabalho->pbVal;
+					}
+					void set(Byte Param_Value)
+					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
+
+						//Verifica se o ponteiro é invalido e cria.
+						if (!ObjetoValido(PonteiroTrabalho->pbVal))
+							PonteiroTrabalho->pbVal = new BYTE();
+
+						//Define o dado no ponteiro.
+						*PonteiroTrabalho->pbVal = Param_Value;
 					}
 				}
-
-				property Int32 piVal
+				/// <summary>
+				/// (VT_BYREF | VT_I2) - Propriedade que armzena uma referência para um valor de 2 Bytes assinado. 
+				/// </summary>
+				property Int16 piVal
 				{
-					Int32 get()
+					Int16 get()
 					{
-						return 0;
-					}
-					void set(Int32 Param_Value)
-					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
 
+						//Verifica se o ponteiro é valido
+						if (!ObjetoValido(PonteiroTrabalho->piVal))
+							throw gcnew NullReferenceException("O ponteiro para o dado não era valido.");
+
+						//Retorna os dados.
+						return *PonteiroTrabalho->piVal;
+					}
+					void set(Int16 Param_Value)
+					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
+
+						//Verifica se o ponteiro é invalido e cria.
+						if (!ObjetoValido(PonteiroTrabalho->piVal))
+							PonteiroTrabalho->piVal = new SHORT();
+
+						//Define o dado no ponteiro.
+						*PonteiroTrabalho->piVal = Param_Value;
 					}
 				}
-
+				/// <summary>
+				/// (VT_BYREF | VT_I4) - Propriedade que armzena uma referência para um valor de 4 Bytes assinado.
+				/// </summary>
 				property Int32 plVal
 				{
 					Int32 get()
 					{
-						return 0;
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
+
+						//Verifica se o ponteiro é valido
+						if (!ObjetoValido(PonteiroTrabalho->plVal))
+							throw gcnew NullReferenceException("O ponteiro para o dado não era valido.");
+
+						//Retorna os dados.
+						return *PonteiroTrabalho->plVal;
 					}
 					void set(Int32 Param_Value)
 					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
 
+						//Verifica se o ponteiro é invalido e cria.
+						if (!ObjetoValido(PonteiroTrabalho->plVal))
+							PonteiroTrabalho->plVal = new LONG();
+
+						//Define o dado no ponteiro.
+						*PonteiroTrabalho->plVal = static_cast<LONG>(Param_Value);
 					}
 				}
-
-				property Int32 pllVal
+				/// <summary>
+				/// (VT_BYREF | VT_I8) - Propriedade que armzena uma referência para um valor de 8 Bytes assinado.
+				/// </summary>
+				property Int64 pllVal
 				{
-					Int32 get()
+					Int64 get()
 					{
-						return 0;
-					}
-					void set(Int32 Param_Value)
-					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
 
+						//Verifica se o ponteiro é valido
+						if (!ObjetoValido(PonteiroTrabalho->pllVal))
+							throw gcnew NullReferenceException("O ponteiro para o dado não era valido.");
+
+						//Retorna os dados.
+						return *PonteiroTrabalho->pllVal;
+					}
+					void set(Int64 Param_Value)
+					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
+
+						//Verifica se o ponteiro é invalido e cria.
+						if (!ObjetoValido(PonteiroTrabalho->pllVal))
+							PonteiroTrabalho->pllVal = new LONGLONG();
+
+						//Define o dado no ponteiro.
+						*PonteiroTrabalho->pllVal = Param_Value;
 					}
 				}
-
-				property Int32 pfltVal
+				/// <summary>
+				/// (VT_BYREF | VT_R4) - Propriedade que armzena uma referência para um valor de 4 Bytes reais.
+				/// </summary>
+				property float pfltVal
 				{
-					Int32 get()
+					float get()
 					{
-						return 0;
-					}
-					void set(Int32 Param_Value)
-					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
 
+						//Verifica se o ponteiro é valido
+						if (!ObjetoValido(PonteiroTrabalho->pfltVal))
+							throw gcnew NullReferenceException("O ponteiro para o dado não era valido.");
+
+						//Retorna os dados.
+						return *PonteiroTrabalho->pfltVal;
+					}
+					void set(float Param_Value)
+					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
+
+						//Verifica se o ponteiro é invalido e cria.
+						if (!ObjetoValido(PonteiroTrabalho->pfltVal))
+							PonteiroTrabalho->pfltVal = new FLOAT();
+
+						//Define o dado no ponteiro.
+						*PonteiroTrabalho->pfltVal = Param_Value;
 					}
 				}
-
-				property Int32 pdblVal
+				/// <summary>
+				/// (VT_BYREF | VT_R8) - Propriedade que armzena uma referência para um valor de 8 Bytes reais.
+				/// </summary>
+				property double pdblVal
 				{
-					Int32 get()
+					double get()
 					{
-						return 0;
-					}
-					void set(Int32 Param_Value)
-					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
 
+						//Verifica se o ponteiro é valido
+						if (!ObjetoValido(PonteiroTrabalho->pdblVal))
+							throw gcnew NullReferenceException("O ponteiro para o dado não era valido.");
+
+						//Retorna os dados.
+						return *PonteiroTrabalho->pdblVal;
 					}
+					void set(double Param_Value)
+					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
+
+						//Verifica se o ponteiro é invalido e cria.
+						if (!ObjetoValido(PonteiroTrabalho->pdblVal))
+							PonteiroTrabalho->pdblVal = new DOUBLE();
+
+						//Define o dado no ponteiro.
+						*PonteiroTrabalho->pdblVal = Param_Value;
+					}
+					
 				}
-
-				property Int32 pboolVal
+				/// <summary>
+				/// (VT_BYREF | VT_BOOL) - Propriedade que armzena uma referência para um valor Booleano.
+				/// </summary>
+				property Boolean pboolVal
 				{
-					Int32 get()
+					Boolean get()
 					{
-						return 0;
-					}
-					void set(Int32 Param_Value)
-					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
 
+						//Verifica se o ponteiro é valido
+						if (!ObjetoValido(PonteiroTrabalho->pboolVal))
+							throw gcnew NullReferenceException("O ponteiro para o dado não era valido.");
+
+						//Retorna os dados.
+						return (*PonteiroTrabalho->pboolVal) == -1 ? true : false;
+					}
+					void set(Boolean Param_Value)
+					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
+
+						//Verifica se o ponteiro é invalido e cria.
+						if (!ObjetoValido(PonteiroTrabalho->pboolVal))
+							PonteiroTrabalho->pboolVal = new VARIANT_BOOL();
+
+						//Define o dado no ponteiro.
+						*PonteiroTrabalho->pboolVal = Param_Value == true ? -1 : 0;
 					}
 				}
-
+				/// <summary>
+				/// (VT_BYREF | VT_ERROR) - Propriedade que armzena uma referência para um valor de 4 Bytes assinado.
+				/// </summary>
 				property Int32 pscode
 				{
 					Int32 get()
 					{
-						return 0;
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
+
+						//Verifica se o ponteiro é valido
+						if (!ObjetoValido(PonteiroTrabalho->pscode))
+							throw gcnew NullReferenceException("O ponteiro para o dado não era valido.");
+
+						//Retorna os dados.
+						return *PonteiroTrabalho->pscode;
 					}
 					void set(Int32 Param_Value)
 					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
 
+						//Verifica se o ponteiro é invalido e cria.
+						if (!ObjetoValido(PonteiroTrabalho->pscode))
+							PonteiroTrabalho->pscode = new SCODE();
+
+						//Define o dado no ponteiro.
+						*PonteiroTrabalho->pscode = static_cast<SCODE>(Param_Value);
 					}
 				}
-
-				property Int32 pcyVal
+				/// <summary>
+				/// (VT_BYREF | VT_CY) - Propriedade que armzena uma referência para uma estrutura CA_CY.
+				/// </summary>
+				property CA_CY pcyVal
 				{
-					Int32 get()
+					CA_CY get()
 					{
-						return 0;
-					}
-					void set(Int32 Param_Value)
-					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
 
+						//Verifica se o ponteiro é valido
+						if (!ObjetoValido(PonteiroTrabalho->pcyVal))
+							throw gcnew NullReferenceException("O ponteiro para o dado não era valido.");
+
+						//Variavel a ser retornada.
+						CA_CY vi_CY = CA_CY();
+
+						//Define os dados.
+						vi_CY.Hi = PonteiroTrabalho->pcyVal->Hi;
+						vi_CY.Lo = PonteiroTrabalho->pcyVal->Lo;
+						vi_CY.int64 = PonteiroTrabalho->pcyVal->int64;
+
+						//Retorna os dados.
+						return vi_CY;
+					}
+					void set(CA_CY Param_Value)
+					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
+
+						//Verifica se o ponteiro é invalido e cria.
+						if (!ObjetoValido(PonteiroTrabalho->pcyVal))
+							PonteiroTrabalho->pcyVal = new CY();
+
+						//Define os dados.
+						PonteiroTrabalho->pcyVal->Hi = Param_Value.Hi;
+						PonteiroTrabalho->pcyVal->Lo = Param_Value.Lo;
+						PonteiroTrabalho->pcyVal->int64 = Param_Value.int64;
 					}
 				}
-
-				property Int32 pdate
+				/// <summary>
+				/// (VT_BYREF | VT_DATE) - Propriedade que armzena uma referência para um valor de 8 bytes reais.
+				/// </summary>
+				property double pdate
 				{
-					Int32 get()
+					double get()
 					{
-						return 0;
-					}
-					void set(Int32 Param_Value)
-					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
 
+						//Verifica se o ponteiro é valido
+						if (!ObjetoValido(PonteiroTrabalho->pdate))
+							throw gcnew NullReferenceException("O ponteiro para o dado não era valido.");
+
+						//Retorna os dados.
+						return *PonteiroTrabalho->pdate;
+					}
+					void set(double Param_Value)
+					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
+
+						//Verifica se o ponteiro é invalido e cria.
+						if (!ObjetoValido(PonteiroTrabalho->pdate))
+							PonteiroTrabalho->pdate = new DOUBLE();
+
+						//Define o dado no ponteiro.
+						*PonteiroTrabalho->pdate = Param_Value;
 					}
 				}
-
-				property Int32 pbstrVal
+				/// <summary>
+				/// (VT_BYREF | VT_BSTR) - Propriedade que armzena uma referência para uma String.
+				/// </summary>
+				property String^ pbstrVal
 				{
-					Int32 get()
+					String^ get()
 					{
-						return 0;
-					}
-					void set(Int32 Param_Value)
-					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
 
+						//Verifica se o ponteiro é valido
+						if (!ObjetoValido(PonteiroTrabalho->pbstrVal))
+							throw gcnew NullReferenceException("O ponteiro para o dado não era valido.");
+
+						//Retorna os dados.
+						return gcnew String((*PonteiroTrabalho->pbstrVal));
+					}
+					void set(String^ Param_Value)
+					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
+
+						//Verifica se o ponteiro é invalido e cria.
+						if (!ObjetoValido(PonteiroTrabalho->pbstrVal))
+							PonteiroTrabalho->pbstrVal = new BSTR();
+
+						//Define o dado no ponteiro.
+						*PonteiroTrabalho->pbstrVal = static_cast<BSTR>(Marshal::StringToBSTR(Param_Value).ToPointer());
 					}
 				}
-
-				property Int32 ppunkVal
+				/// <summary>
+				/// (VT_BYREF | VT_UNKNOWN) - Propriedade que armzena uma referência para um ponteiro da interface IUnknown.
+				/// </summary>
+				property IntPtr ppunkVal
 				{
-					Int32 get()
+					IntPtr get()
 					{
-						return 0;
-					}
-					void set(Int32 Param_Value)
-					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
 
+						//Verifica se o ponteiro é valido
+						if (!ObjetoValido(PonteiroTrabalho->ppunkVal))
+							throw gcnew NullReferenceException("O ponteiro para o dado não era valido.");
+
+						//Retorna os dados.
+						return IntPtr(*PonteiroTrabalho->ppunkVal);
+					}
+					void set(IntPtr Param_Value)
+					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
+
+						//Variavel que vai conter o ponteiro.
+						IUnknown* vi_pPointerOfPointer = static_cast<IUnknown*>(Param_Value.ToPointer());
+
+						//Define o dado no ponteiro.
+						PonteiroTrabalho->ppunkVal = static_cast<IUnknown**>(&vi_pPointerOfPointer);
 					}
 				}
-
-				property Int32 ppdispVal
+				/// <summary>
+				/// (VT_BYREF | VT_DISPATCH) - Propriedade que armzena uma referência para um ponteiro da interface IDispatch.
+				/// </summary>
+				property IntPtr ppdispVal
 				{
-					Int32 get()
+					IntPtr get()
 					{
-						return 0;
-					}
-					void set(Int32 Param_Value)
-					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
 
+						//Verifica se o ponteiro é valido
+						if (!ObjetoValido(PonteiroTrabalho->ppdispVal))
+							throw gcnew NullReferenceException("O ponteiro para o dado não era valido.");
+
+						//Retorna os dados.
+						return IntPtr(*PonteiroTrabalho->ppdispVal);
+					}
+					void set(IntPtr Param_Value)
+					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
+
+						//Variavel que vai conter o ponteiro.
+						IDispatch* vi_pPointerOfPointer = static_cast<IDispatch*>(Param_Value.ToPointer());
+
+						//Define o dado no ponteiro.
+						PonteiroTrabalho->ppdispVal = static_cast<IDispatch**>(&vi_pPointerOfPointer);
 					}
 				}
-
-				property Int32 pparray
+				/// <summary>
+				/// (VT_BYREF | VT_ARRAY) - Propriedade que armzena uma referência para um ponteiro que representa uma estrutura SAFEARRAY.
+				/// </summary>
+				property IntPtr pparray
 				{
-					Int32 get()
+					IntPtr get()
 					{
-						return 0;
-					}
-					void set(Int32 Param_Value)
-					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
 
+						//Verifica se o ponteiro é valido
+						if (!ObjetoValido(PonteiroTrabalho->pparray))
+							throw gcnew NullReferenceException("O ponteiro para o dado não era valido.");
+
+						//Retorna os dados.
+						return IntPtr(*PonteiroTrabalho->pparray);
+					}
+					void set(IntPtr Param_Value)
+					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
+
+						//Variavel que vai conter o ponteiro.
+						SAFEARRAY* vi_pPointerOfPointer = static_cast<SAFEARRAY*>(Param_Value.ToPointer());
+
+						//Define o dado no ponteiro.
+						PonteiroTrabalho->pparray = static_cast<SAFEARRAY**>(&vi_pPointerOfPointer);
 					}
 				}
-
-				property Int32 pvarVal
+				/// <summary>
+				/// (VT_BYREF | VT_VARIANT) - Propriedade que armzena uma referência para uma estrutura CA_VARIANT.
+				/// </summary>
+				property IntPtr pvarVal
 				{
-					Int32 get()
+					IntPtr get()
 					{
-						return 0;
-					}
-					void set(Int32 Param_Value)
-					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
 
+						//Verifica se o ponteiro é valido
+						if (!ObjetoValido(PonteiroTrabalho->pvarVal))
+							throw gcnew NullReferenceException("O ponteiro para o dado não era valido.");
+
+						//Retorna os dados.
+						return IntPtr(PonteiroTrabalho->pvarVal);
+					}
+					void set(IntPtr Param_Value)
+					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
+
+						//Define o dado no ponteiro.
+						PonteiroTrabalho->pvarVal = static_cast<VARIANT*>(Param_Value.ToPointer());
 					}
 				}
-
-				property Int32 byref
+				/// <summary>
+				/// (VT_BYREF | Generic ByRef) - Propriedade que armzena uma referência para um valor generico (VOID).
+				/// </summary>
+				property IntPtr byref
 				{
-					Int32 get()
+					IntPtr get()
 					{
-						return 0;
-					}
-					void set(Int32 Param_Value)
-					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
 
+						//Verifica se o ponteiro é valido
+						if (!ObjetoValido(PonteiroTrabalho->byref))
+							throw gcnew NullReferenceException("O ponteiro para o dado não era valido.");
+
+						//Retorna os dados.
+						return IntPtr(PonteiroTrabalho->byref);
+					}
+					void set(IntPtr Param_Value)
+					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
+
+						//Define o dado no ponteiro.
+						PonteiroTrabalho->byref = Param_Value.ToPointer();
 					}
 				}
 
-				property Int32 cVal
+
+
+				//TIPOS SIMPLES NÃO ASSINADOS
+
+				/// <summary>
+				/// (VT_I1) - Propriedade que armazena um valor simples de 1 byte assinado.
+				/// </summary>
+				property char cVal
 				{
-					Int32 get()
+					char get()
 					{
-						return 0;
-					}
-					void set(Int32 Param_Value)
-					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro válido.");
 
+						//Retorna os dados.
+						return PonteiroTrabalho->cVal;
+					}
+					void set(char Param_Value)
+					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro válido.");
+
+						//Define os dados.
+						PonteiroTrabalho->cVal = Param_Value;
 					}
 				}
-
-				property Int32 uiVal
+				/// <summary>
+				/// (VT_UI2) - Propriedade que armazena um valor simples de 2 bytes não assinado.
+				/// </summary>
+				property UInt16 uiVal
 				{
-					Int32 get()
+					UInt16 get()
 					{
-						return 0;
-					}
-					void set(Int32 Param_Value)
-					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro válido.");
 
+						//Retorna os dados.
+						return PonteiroTrabalho->uiVal;
+					}
+					void set(UInt16 Param_Value)
+					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro válido.");
+
+						//Define os dados.
+						PonteiroTrabalho->uiVal = Param_Value;
 					}
 				}
-
-				property Int32 ulVal
+				/// <summary>
+				/// (VT_UI4) - Propriedade que armazena um valor simples de 4 bytes não assinado.
+				/// </summary>
+				property UInt32 ulVal
 				{
-					Int32 get()
+					UInt32 get()
 					{
-						return 0;
-					}
-					void set(Int32 Param_Value)
-					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro válido.");
 
+						//Retorna os dados.
+						return static_cast<UInt32>(PonteiroTrabalho->ulVal);
+					}
+					void set(UInt32 Param_Value)
+					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro válido.");
+
+						//Define os dados.
+						PonteiroTrabalho->ulVal = static_cast<ULONG>(Param_Value);
 					}
 				}
-
-				property Int32 ullVal
+				/// <summary>
+				/// (VT_UI8) - Propriedade que armazena um valor simples de 8 bytes não assinado.
+				/// </summary>
+				property UInt64 ullVal
 				{
-					Int32 get()
+					UInt64 get()
 					{
-						return 0;
-					}
-					void set(Int32 Param_Value)
-					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro válido.");
 
+						//Retorna os dados.
+						return PonteiroTrabalho->ullVal;
+					}
+					void set(UInt64 Param_Value)
+					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro válido.");
+
+						//Define os dados.
+						PonteiroTrabalho->ullVal = Param_Value;
 					}
 				}
-
+				/// <summary>
+				/// (VT_INT) - Propriedade que armazena um valor simples de 4 bytes assinado.
+				/// </summary>
 				property Int32 intVal
 				{
 					Int32 get()
 					{
-						return 0;
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro válido.");
+
+						//Retorna os dados.
+						return static_cast<Int32>(PonteiroTrabalho->intVal);
 					}
 					void set(Int32 Param_Value)
 					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro válido.");
 
+						//Define os dados.
+						PonteiroTrabalho->intVal = static_cast<INT>(Param_Value);
 					}
 				}
-
-				property Int32 uintVal
+				/// <summary>
+				/// (VT_UINT) - Propriedade que armazena um valor simples de 4 bytes não assinado.
+				/// </summary>
+				property UInt32 uintVal
 				{
-					Int32 get()
+					UInt32 get()
 					{
-						return 0;
-					}
-					void set(Int32 Param_Value)
-					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro válido.");
 
+						//Retorna os dados.
+						return static_cast<UInt32>(PonteiroTrabalho->uintVal);
+					}
+					void set(UInt32 Param_Value)
+					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro válido.");
+
+						//Define os dados.
+						PonteiroTrabalho->uintVal = static_cast<UINT>(Param_Value);
 					}
 				}
 
-				property Int32 pdecVal
+
+
+				//TIPOS DE REFERÊNCIA NÃO ASSINADOS = VT_BYREF|TIPO DADO
+
+				/// <summary>
+				/// (VT_BYREF | VT_DECIMAL) - Propriedade que armzena uma referência para um valor de 
+				/// </summary>
+				property CA_DEC pdecVal
 				{
-					Int32 get()
+					CA_DEC get()
 					{
-						return 0;
-					}
-					void set(Int32 Param_Value)
-					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
 
+						//Verifica se o ponteiro é valido
+						if (!ObjetoValido(PonteiroTrabalho->pdecVal))
+							throw gcnew NullReferenceException("O ponteiro para o dado não era valido.");
+
+						//Variavel a ser retornada.
+						CA_DEC vi_DEC = CA_DEC();
+
+						//Define os dados.
+						vi_DEC.Hi32 = PonteiroTrabalho->pdecVal->Hi32;
+						vi_DEC.Mid32 = PonteiroTrabalho->pdecVal->Mid32;
+						vi_DEC.Lo32 = PonteiroTrabalho->pdecVal->Lo32;
+						vi_DEC.Lo64 = PonteiroTrabalho->pdecVal->Lo64;
+						vi_DEC.scale = PonteiroTrabalho->pdecVal->scale;
+						vi_DEC.sign = PonteiroTrabalho->pdecVal->sign;
+						vi_DEC.signscale = PonteiroTrabalho->pdecVal->signscale;
+
+						//Retorna os dados.
+						return vi_DEC;
+					}
+					void set(CA_DEC Param_Value)
+					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
+
+						//Verifica se o ponteiro é invalido e cria.
+						if (!ObjetoValido(PonteiroTrabalho->pcyVal))
+							PonteiroTrabalho->pdecVal = new DECIMAL();
+
+						//Define os dados.
+						PonteiroTrabalho->pdecVal->Hi32 = Param_Value.Hi32;
+						PonteiroTrabalho->pdecVal->Mid32 = Param_Value.Mid32;
+						PonteiroTrabalho->pdecVal->Lo32 = Param_Value.Lo32;
+						PonteiroTrabalho->pdecVal->Lo64 = Param_Value.Lo64;
+						PonteiroTrabalho->pdecVal->scale = Param_Value.scale;
+						PonteiroTrabalho->pdecVal->sign = Param_Value.sign;
+						PonteiroTrabalho->pdecVal->signscale = Param_Value.signscale;
 					}
 				}
-
-				property Int32 pcVal
+				/// <summary>
+				/// (VT_BYREF | VT_I1) - Propriedade que armzena uma referência para um valor de 
+				/// </summary>
+				property char pcVal
 				{
-					Int32 get()
+					char get()
 					{
-						return 0;
-					}
-					void set(Int32 Param_Value)
-					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
 
+						//Verifica se o ponteiro é valido
+						if (!ObjetoValido(PonteiroTrabalho->pcVal))
+							throw gcnew NullReferenceException("O ponteiro para o dado não era valido.");
+
+						//Retorna os dados.
+						return *PonteiroTrabalho->pcVal;
+					}
+					void set(char Param_Value)
+					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
+
+						//Verifica se o ponteiro é invalido e cria.
+						if (!ObjetoValido(PonteiroTrabalho->pcVal))
+							PonteiroTrabalho->pcVal = new CHAR();
+
+						//Define o dado no ponteiro.
+						*PonteiroTrabalho->pcVal = Param_Value;
 					}
 				}
-
-				property Int32 puiVal
+				/// <summary>
+				/// (VT_BYREF | VT_UI2) - Propriedade que armzena uma referência para um valor de 
+				/// </summary>
+				property UInt16 puiVal
 				{
-					Int32 get()
+					UInt16 get()
 					{
-						return 0;
-					}
-					void set(Int32 Param_Value)
-					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
 
+						//Verifica se o ponteiro é valido
+						if (!ObjetoValido(PonteiroTrabalho->puiVal))
+							throw gcnew NullReferenceException("O ponteiro para o dado não era valido.");
+
+						//Retorna os dados.
+						return *PonteiroTrabalho->puiVal;
+					}
+					void set(UInt16 Param_Value)
+					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
+
+						//Verifica se o ponteiro é invalido e cria.
+						if (!ObjetoValido(PonteiroTrabalho->puiVal))
+							PonteiroTrabalho->puiVal = new USHORT();
+
+						//Define o dado no ponteiro.
+						*PonteiroTrabalho->puiVal = Param_Value;
 					}
 				}
-
-				property Int32 pulVal
+				/// <summary>
+				/// (VT_BYREF | VT_UI4) - Propriedade que armzena uma referência para um valor de 
+				/// </summary>
+				property UInt32 pulVal
 				{
-					Int32 get()
+					UInt32 get()
 					{
-						return 0;
-					}
-					void set(Int32 Param_Value)
-					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
 
+						//Verifica se o ponteiro é valido
+						if (!ObjetoValido(PonteiroTrabalho->pulVal))
+							throw gcnew NullReferenceException("O ponteiro para o dado não era valido.");
+
+						//Retorna os dados.
+						return static_cast<UInt32>(*PonteiroTrabalho->pulVal);
+					}
+					void set(UInt32 Param_Value)
+					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
+
+						//Verifica se o ponteiro é invalido e cria.
+						if (!ObjetoValido(PonteiroTrabalho->pulVal))
+							PonteiroTrabalho->pulVal = new ULONG();
+
+						//Define o dado no ponteiro.
+						*PonteiroTrabalho->pulVal = static_cast<ULONG>(Param_Value);
 					}
 				}
-				property Int32 pullVal
+				/// <summary>
+				/// (VT_BYREF | VT_UI8) - Propriedade que armzena uma referência para um valor de 
+				/// </summary>
+				property UInt64 pullVal
 				{
-					Int32 get()
+					UInt64 get()
 					{
-						return 0;
-					}
-					void set(Int32 Param_Value)
-					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
 
+						//Verifica se o ponteiro é valido
+						if (!ObjetoValido(PonteiroTrabalho->pullVal))
+							throw gcnew NullReferenceException("O ponteiro para o dado não era valido.");
+
+						//Retorna os dados.
+						return static_cast<UInt32>(*PonteiroTrabalho->pullVal);
+					}
+					void set(UInt64 Param_Value)
+					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
+
+						//Verifica se o ponteiro é invalido e cria.
+						if (!ObjetoValido(PonteiroTrabalho->pullVal))
+							PonteiroTrabalho->pullVal = new ULONGLONG();
+
+						//Define o dado no ponteiro.
+						*PonteiroTrabalho->pullVal = Param_Value;
 					}
 				}
+				/// <summary>
+				/// (VT_BYREF | VT_INT) - Propriedade que armzena uma referência para um valor de 
+				/// </summary>
 				property Int32 pintVal
 				{
 					Int32 get()
 					{
-						return 0;
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
+
+						//Verifica se o ponteiro é valido
+						if (!ObjetoValido(PonteiroTrabalho->pintVal))
+							throw gcnew NullReferenceException("O ponteiro para o dado não era valido.");
+
+						//Retorna os dados.
+						return static_cast<Int32>(*PonteiroTrabalho->pintVal);
 					}
 					void set(Int32 Param_Value)
 					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
 
+						//Verifica se o ponteiro é invalido e cria.
+						if (!ObjetoValido(PonteiroTrabalho->pintVal))
+							PonteiroTrabalho->pintVal = new INT();
+
+						//Define o dado no ponteiro.
+						*PonteiroTrabalho->pintVal = static_cast<INT>(Param_Value);
 					}
 				}
-				property Int32 puintVal
+				/// <summary>
+				/// (VT_BYREF | VT_UINT) - Propriedade que armzena uma referência para um valor de 
+				/// </summary>
+				property UInt32 puintVal
 				{
-					Int32 get()
+					UInt32 get()
 					{
-						return 0;
-					}
-					void set(Int32 Param_Value)
-					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
 
+						//Verifica se o ponteiro é valido
+						if (!ObjetoValido(PonteiroTrabalho->puintVal))
+							throw gcnew NullReferenceException("O ponteiro para o dado não era valido.");
+
+						//Retorna os dados.
+						return static_cast<Int32>(*PonteiroTrabalho->puintVal);
+					}
+					void set(UInt32 Param_Value)
+					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
+
+						//Verifica se o ponteiro é invalido e cria.
+						if (!ObjetoValido(PonteiroTrabalho->puintVal))
+							PonteiroTrabalho->puintVal = new UINT();
+
+						//Define o dado no ponteiro.
+						*PonteiroTrabalho->puintVal = static_cast<UINT>(Param_Value);
 					}
 				}
-				property Int32 pvRecord
+				/// <summary>
+				/// () - Propriedade que armazena um ponteiro para um reegistro de banco de dados.
+				/// </summary>
+				property IntPtr pvRecord
 				{
-					Int32 get()
+					IntPtr get()
 					{
-						return 0;
-					}
-					void set(Int32 Param_Value)
-					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
 
+						//Verifica se o ponteiro é valido
+						if (!ObjetoValido(PonteiroTrabalho->pvRecord))
+							throw gcnew NullReferenceException("O ponteiro para o dado não era valido.");
+
+						//Retorna o dado.
+						return IntPtr(PonteiroTrabalho->pvRecord);
+					}
+					void set(IntPtr Param_Value)
+					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
+
+						//Define o dado.
+						PonteiroTrabalho->pvRecord = Param_Value.ToPointer();
 					}
 				}
-				property Int32 pRecInfo
+				/// <summary>
+				/// () - Propriedade que armazena um ponteiro para uma interface IRecordInfo.
+				/// </summary>
+				property IntPtr pRecInfo
 				{
-					Int32 get()
+					IntPtr get()
 					{
-						return 0;
-					}
-					void set(Int32 Param_Value)
-					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
 
+						//Verifica se o ponteiro é valido
+						if (!ObjetoValido(PonteiroTrabalho->pRecInfo))
+							throw gcnew NullReferenceException("O ponteiro para o dado não era valido.");
+
+						//Retorna o dado.
+						return IntPtr(PonteiroTrabalho->pRecInfo);
+					}
+					void set(IntPtr Param_Value)
+					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
+
+						//Define o dado.
+						PonteiroTrabalho->pRecInfo = reinterpret_cast<IRecordInfo*>(Param_Value.ToPointer());
 					}
 				}
-				property Int32 decVal
-				{
-					Int32 get()
-					{
-						return 0;
-					}
-					void set(Int32 Param_Value)
-					{
 
+
+				//TIPO SIMPLES
+
+				/// <summary>
+				/// (VT_DECIMAL) - Propriedade que armazena uma estrutura CA_DEC.
+				/// </summary>
+				property CA_DEC decVal
+				{
+					CA_DEC get()
+					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
+
+						//Variavel a ser retornada.
+						CA_DEC vi_DEC = CA_DEC();
+
+						//Define os dados.
+						vi_DEC.Hi32 = PonteiroTrabalho->decVal.Hi32;
+						vi_DEC.Mid32 = PonteiroTrabalho->decVal.Mid32;
+						vi_DEC.Lo32 = PonteiroTrabalho->decVal.Lo32;
+						vi_DEC.Lo64 = PonteiroTrabalho->decVal.Lo64;
+						vi_DEC.scale = PonteiroTrabalho->decVal.scale;
+						vi_DEC.sign = PonteiroTrabalho->decVal.sign;
+						vi_DEC.signscale = PonteiroTrabalho->decVal.signscale;
+
+						//Retorna os dados.
+						return vi_DEC;
+					}
+					void set(CA_DEC Param_Value)
+					{
+						//Verifica se o ponteiro não é invalido
+						if (!ObjetoValido(PonteiroTrabalho))
+							throw gcnew NullReferenceException("A variante atual não tem um ponteiro valido.");
+
+						//Define os dados.
+						PonteiroTrabalho->decVal.Hi32 = Param_Value.Hi32;
+						PonteiroTrabalho->decVal.Mid32 = Param_Value.Mid32;
+						PonteiroTrabalho->decVal.Lo32 = Param_Value.Lo32;
+						PonteiroTrabalho->decVal.Lo64 = Param_Value.Lo64;
+						PonteiroTrabalho->decVal.scale = Param_Value.scale;
+						PonteiroTrabalho->decVal.sign = Param_Value.sign;
+						PonteiroTrabalho->decVal.signscale = Param_Value.signscale;
 					}
 				}
 			};
@@ -18184,6 +19065,11 @@ namespace CarenRengine
 				//Construtor & Destruidor
 			public:
 				CA_SAFEARRAY() {}
+				CA_SAFEARRAY(IntPtr Param_Pointer) 
+				{
+					//Converte o ponteiro gerenciado para a estrutura SAFEARRAY.
+					PonteiroTrabalho = static_cast<SAFEARRAY*>(Param_Pointer.ToPointer());
+				}
 				CA_SAFEARRAY(const SAFEARRAY*& Param_SafeArray)
 				{
 					//Define o safe array no ponteiro de trabalho.
@@ -18224,6 +19110,37 @@ namespace CarenRengine
 					}
 				}
 
+				//Conversão implicita por IntPtr.
+			public:
+				static operator CA_SAFEARRAY^ (IntPtr Param_Pointer)
+				{
+					//Variavel a ser retornada.
+					CA_SAFEARRAY^ Resultado = nullptr;
+
+					//Ponteiro Nativo.
+					SAFEARRAY* vi_pSafeArray = Nulo;
+
+					//Verifica se o ponteiro é valido
+					if (Param_Pointer == IntPtr::Zero)
+						Sair; //Ponteiro Invalido.
+
+					//Tenta converter o ponteiro para um SAFEARRAY.
+					vi_pSafeArray = reinterpret_cast<SAFEARRAY*>(Param_Pointer.ToPointer());
+
+					//Verifica se converteu com sucesso.
+					if (!ObjetoValido(vi_pSafeArray))
+						Sair; // Conversão falhou
+
+					//Cria a variante
+					Resultado = gcnew CA_SAFEARRAY();
+
+					//Define o ponteiro.
+					Resultado->PonteiroTrabalho = vi_pSafeArray;
+
+				Done:;
+					//Retorna a estrutura.
+					return Resultado;
+				}
 
 				//Propriedades publicas.
 			public:

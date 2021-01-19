@@ -17439,7 +17439,7 @@ namespace CarenRengine
 			/// <summary>
 			/// (_FILETIME)(FALTA DOCUMENTAR) -  
 			/// </summary>
-			public ref struct CA_FILETIME
+			public value struct CA_FILETIME
 			{
 				/// <summary>
 				/// 
@@ -17501,7 +17501,7 @@ namespace CarenRengine
 			/// <summary>
 			/// (tagBLOB) - Estrutura que contém um Blob(Byte Array) com os dados requisitados.
 			/// </summary>
-			public ref struct CA_BlobData
+			public value struct CA_BlobData
 			{
 				/// <summary>
 				/// Contém a largura do buffer de dados.
@@ -17539,7 +17539,7 @@ namespace CarenRengine
 			};		
 			
 			/// <summary>
-			/// (tagVARIANT)(AUTO-ARMAZENADA) - Estrutura que 
+			/// (tagVARIANT)(AUTO-IMPLEMENTADA) - Estrutura que 
 			/// </summary>
 			public ref struct CA_VARIANT
 			{
@@ -18692,7 +18692,7 @@ namespace CarenRengine
 				//TIPOS DE REFERÊNCIA NÃO ASSINADOS = VT_BYREF|TIPO DADO
 
 				/// <summary>
-				/// (VT_BYREF | VT_DECIMAL) - Propriedade que armzena uma referência para um valor de 
+				/// (VT_BYREF | VT_DECIMAL) - Propriedade que armzena uma referência para uma estrutura CA_DEC.
 				/// </summary>
 				property CA_DEC pdecVal
 				{
@@ -18742,7 +18742,7 @@ namespace CarenRengine
 					}
 				}
 				/// <summary>
-				/// (VT_BYREF | VT_I1) - Propriedade que armzena uma referência para um valor de 
+				/// (VT_BYREF | VT_I1) - Propriedade que armzena uma referência para um valor de 1 byte.
 				/// </summary>
 				property char pcVal
 				{
@@ -18774,7 +18774,7 @@ namespace CarenRengine
 					}
 				}
 				/// <summary>
-				/// (VT_BYREF | VT_UI2) - Propriedade que armzena uma referência para um valor de 
+				/// (VT_BYREF | VT_UI2) - Propriedade que armzena uma referência para um valor de 2 bytes não assinado.
 				/// </summary>
 				property UInt16 puiVal
 				{
@@ -18806,7 +18806,7 @@ namespace CarenRengine
 					}
 				}
 				/// <summary>
-				/// (VT_BYREF | VT_UI4) - Propriedade que armzena uma referência para um valor de 
+				/// (VT_BYREF | VT_UI4) - Propriedade que armzena uma referência para um valor de 4 bytes não assinado.
 				/// </summary>
 				property UInt32 pulVal
 				{
@@ -18838,7 +18838,7 @@ namespace CarenRengine
 					}
 				}
 				/// <summary>
-				/// (VT_BYREF | VT_UI8) - Propriedade que armzena uma referência para um valor de 
+				/// (VT_BYREF | VT_UI8) - Propriedade que armzena uma referência para um valor de 8 bytes não assinado.
 				/// </summary>
 				property UInt64 pullVal
 				{
@@ -18870,7 +18870,7 @@ namespace CarenRengine
 					}
 				}
 				/// <summary>
-				/// (VT_BYREF | VT_INT) - Propriedade que armzena uma referência para um valor de 
+				/// (VT_BYREF | VT_INT) - Propriedade que armzena uma referência para um valor de 4 bytes assinado.
 				/// </summary>
 				property Int32 pintVal
 				{
@@ -18902,7 +18902,7 @@ namespace CarenRengine
 					}
 				}
 				/// <summary>
-				/// (VT_BYREF | VT_UINT) - Propriedade que armzena uma referência para um valor de 
+				/// (VT_BYREF | VT_UINT) - Propriedade que armzena uma referência para um valor de 4 bytes não assinado.
 				/// </summary>
 				property UInt32 puintVal
 				{
@@ -18934,7 +18934,7 @@ namespace CarenRengine
 					}
 				}
 				/// <summary>
-				/// () - Propriedade que armazena um ponteiro para um reegistro de banco de dados.
+				/// Propriedade que armazena um ponteiro para um reegistro de banco de dados.
 				/// </summary>
 				property IntPtr pvRecord
 				{
@@ -18962,7 +18962,7 @@ namespace CarenRengine
 					}
 				}
 				/// <summary>
-				/// () - Propriedade que armazena um ponteiro para uma interface IRecordInfo.
+				/// Propriedade que armazena um ponteiro para uma interface IRecordInfo.
 				/// </summary>
 				property IntPtr pRecInfo
 				{
@@ -21071,7 +21071,7 @@ namespace CarenRengine
 			/// <summary>
 			/// (tagCLIPDATA) - 
 			/// </summary>
-			public ref struct CA_CLIPDATA
+			public value struct CA_CLIPDATA
 			{
 				UInt32          cbSize;
 				Int32           ulClipFmt;
@@ -21085,7 +21085,7 @@ namespace CarenRengine
 			/// <summary>
 			/// (tagVersionedStream) - 
 			/// </summary>
-			public ref struct CA_VersionedStream
+			public value struct CA_VersionedStream
 			{
 				Guid guidVersion;
 			
@@ -21098,7 +21098,7 @@ namespace CarenRengine
 			/// <summary>
 			/// (LARGE_INTEGER) - 
 			/// </summary>
-			public ref struct CA_LARGE_INTEGER
+			public value struct CA_LARGE_INTEGER
 			{
 				UInt32 LowPart;
 				Int32 HighPart;
@@ -21108,7 +21108,7 @@ namespace CarenRengine
 			/// <summary>
 			/// (ULARGE_INTEGER) - 
 			/// </summary>
-			public ref struct CA_ULARGE_INTEGER
+			public value struct CA_ULARGE_INTEGER
 			{
 				UInt32 LowPart;
 				UInt32 HighPart;
@@ -21119,7 +21119,7 @@ namespace CarenRengine
 			/// (tagCAC) - Estrutura que representa uma matriz contada do tipo: CHAR
 			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
 			/// </summary>
-			public ref struct CA_CAC
+			public value struct CA_CAC
 			{
 				/// <summary>
 				/// Variavel que informa a quantidade de items no membro (pElems).
@@ -21136,7 +21136,7 @@ namespace CarenRengine
 			/// (tagCAUB) - Estrutura que representa uma matriz contada do tipo: UCHAR
 			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
 			/// </summary>
-			public ref struct CA_CAUB
+			public value struct CA_CAUB
 			{
 				/// <summary>
 				/// Variavel que informa a quantidade de items no membro (pElems).
@@ -21146,14 +21146,14 @@ namespace CarenRengine
 				/// <summary>
 				/// Array que contém os elementos contados da estrutura.
 				/// </summary>
-				cli::array<UCHAR>^ pElems;
+				cli::array<Byte>^ pElems;
 			};
 
 			/// <summary>
 			/// (tagCAI) - Estrutura que representa uma matriz contada do tipo: SHORT
 			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
 			/// </summary>
-			public ref struct CA_CAI
+			public value struct CA_CAI
 			{
 				/// <summary>
 				/// Variavel que informa a quantidade de items no membro (pElems).
@@ -21163,14 +21163,14 @@ namespace CarenRengine
 				/// <summary>
 				/// Array que contém os elementos contados da estrutura.
 				/// </summary>
-				cli::array<short>^ pElems;
+				cli::array<Int16>^ pElems;
 			};
 
 			/// <summary>
 			/// (tagCAUI) - Estrutura que representa uma matriz contada do tipo: USHORT
 			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
 			/// </summary>
-			public ref struct CA_CAUI
+			public value struct CA_CAUI
 			{
 				/// <summary>
 				/// Variavel que informa a quantidade de items no membro (pElems).
@@ -21180,14 +21180,14 @@ namespace CarenRengine
 				/// <summary>
 				/// Array que contém os elementos contados da estrutura.
 				/// </summary>
-				cli::array<USHORT>^ pElems;
+				cli::array<Byte>^ pElems;
 			};
 
 			/// <summary>
 			/// (tagCAL) - Estrutura que representa uma matriz contada do tipo: Int32
 			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
 			/// </summary>
-			public ref struct CA_CAL
+			public value struct CA_CAL
 			{
 				/// <summary>
 				/// Variavel que informa a quantidade de items no membro (pElems).
@@ -21204,7 +21204,7 @@ namespace CarenRengine
 			/// (tagCAUL) - Estrutura que representa uma matriz contada do tipo: UInt32
 			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
 			/// </summary>
-			public ref struct CA_CAUL
+			public value struct CA_CAUL
 			{
 				/// <summary>
 				/// Variavel que informa a quantidade de items no membro (pElems).
@@ -21221,7 +21221,7 @@ namespace CarenRengine
 			/// (tagCAFLT) - Estrutura que representa uma matriz contada do tipo: FLOAT
 			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
 			/// </summary>
-			public ref struct CA_CAFLT
+			public value struct CA_CAFLT
 			{
 				/// <summary>
 				/// Variavel que informa a quantidade de items no membro (pElems).
@@ -21238,7 +21238,7 @@ namespace CarenRengine
 			/// (tagCADBL) - Estrutura que representa uma matriz contada do tipo: DOUBLE
 			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
 			/// </summary>
-			public ref struct CA_CADBL
+			public value struct CA_CADBL
 			{
 				/// <summary>
 				/// Variavel que informa a quantidade de items no membro (pElems).
@@ -21255,7 +21255,7 @@ namespace CarenRengine
 			/// (tagCACY) - Estrutura que representa uma matriz contada do tipo: CA_CY
 			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
 			/// </summary>
-			public ref struct CA_CACY
+			public value struct CA_CACY
 			{
 				/// <summary>
 				/// Variavel que informa a quantidade de items no membro (pElems).
@@ -21265,14 +21265,14 @@ namespace CarenRengine
 				/// <summary>
 				/// Array que contém os elementos contados da estrutura.
 				/// </summary>
-				cli::array<CA_CY^>^ pElems;
+				cli::array<CA_CY>^ pElems;
 			};
 
 			/// <summary>
 			/// (tagCADATE) - Estrutura que representa uma matriz contada do tipo: DATA - DOUBLE
 			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
 			/// </summary>
-			public ref struct CA_CADATE
+			public value struct CA_CADATE
 			{
 				/// <summary>
 				/// Variavel que informa a quantidade de items no membro (pElems).
@@ -21289,7 +21289,7 @@ namespace CarenRengine
 			/// (tagCABSTR) - Estrutura que representa uma matriz contada do tipo: STRING
 			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
 			/// </summary>
-			public ref struct CA_CABSTR
+			public value struct CA_CABSTR
 			{
 				/// <summary>
 				/// Variavel que informa a quantidade de items no membro (pElems).
@@ -21306,7 +21306,7 @@ namespace CarenRengine
 			/// (tagCABSTRBLOB) - Estrutura que representa uma matriz contada do tipo: CA_BlobData
 			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
 			/// </summary>
-			public ref struct CA_CABSTRBLOB
+			public value struct CA_CABSTRBLOB
 			{
 				/// <summary>
 				/// Variavel que informa a quantidade de items no membro (pElems).
@@ -21316,14 +21316,14 @@ namespace CarenRengine
 				/// <summary>
 				/// Array que contém os elementos contados da estrutura.
 				/// </summary>
-				cli::array<CA_BlobData^>^ pElems;
+				cli::array<CA_BlobData>^ pElems;
 			};
 
 			/// <summary>
 			/// (tagCABOOL) - Estrutura que representa uma matriz contada do tipo: BOOLEAN
 			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
 			/// </summary>
-			public ref struct CA_CABOOL
+			public value struct CA_CABOOL
 			{
 				/// <summary>
 				/// Variavel que informa a quantidade de items no membro (pElems).
@@ -21340,7 +21340,7 @@ namespace CarenRengine
 			/// (tagCASCODE) - Estrutura que representa uma matriz contada do tipo: UInt32 - HRESULTs
 			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
 			/// </summary>
-			public ref struct CA_CASCODE
+			public value struct CA_CASCODE
 			{
 				/// <summary>
 				/// Variavel que informa a quantidade de items no membro (pElems).
@@ -21357,7 +21357,7 @@ namespace CarenRengine
 			/// (tagCAH) - Estrutura que representa uma matriz contada do tipo: CA_LARGE_INTEGER
 			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
 			/// </summary>
-			public ref struct CA_CAH
+			public value struct CA_CAH
 			{
 				/// <summary>
 				/// Variavel que informa a quantidade de items no membro (pElems).
@@ -21367,14 +21367,14 @@ namespace CarenRengine
 				/// <summary>
 				/// Array que contém os elementos contados da estrutura.
 				/// </summary>
-				cli::array<CA_LARGE_INTEGER^>^ pElems;
+				cli::array<CA_LARGE_INTEGER>^ pElems;
 			};
 
 			/// <summary>
 			/// (tagCAUH) - Estrutura que representa uma matriz contada do tipo: CA_ULARGE_INTEGER
 			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
 			/// </summary>
-			public ref struct CA_CAUH
+			public value struct CA_CAUH
 			{
 				/// <summary>
 				/// Variavel que informa a quantidade de items no membro (pElems).
@@ -21384,14 +21384,14 @@ namespace CarenRengine
 				/// <summary>
 				/// Array que contém os elementos contados da estrutura.
 				/// </summary>
-				cli::array<CA_ULARGE_INTEGER^>^ pElems;
+				cli::array<CA_ULARGE_INTEGER>^ pElems;
 			};
 			
 			/// <summary>
 			/// (tagCALPSTR) - Estrutura que representa uma matriz contada do tipo: STRING
 			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
 			/// </summary>
-			public ref struct CA_CALPSTR
+			public value struct CA_CALPSTR
 			{
 				/// <summary>
 				/// Variavel que informa a quantidade de items no membro (pElems).
@@ -21408,7 +21408,7 @@ namespace CarenRengine
 			/// (tagCALPWSTR) - Estrutura que representa uma matriz contada do tipo: STRING
 			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
 			/// </summary>
-			public ref struct CA_CALPWSTR
+			public value struct CA_CALPWSTR
 			{
 				/// <summary>
 				/// Variavel que informa a quantidade de items no membro (pElems).
@@ -21425,7 +21425,7 @@ namespace CarenRengine
 			/// (tagCAFILETIME) - Estrutura que representa uma matriz contada do tipo: CA_FILETIME
 			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
 			/// </summary>
-			public ref struct CA_CAFILETIME
+			public value struct CA_CAFILETIME
 			{
 				/// <summary>
 				/// Variavel que informa a quantidade de items no membro (pElems).
@@ -21442,7 +21442,7 @@ namespace CarenRengine
 			/// (tagCACLIPDATA) - Estrutura que representa uma matriz contada do tipo: CA_CLIPDATA
 			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
 			/// </summary>
-			public ref struct CA_CACLIPDATA
+			public value struct CA_CACLIPDATA
 			{
 				/// <summary>
 				/// Variavel que informa a quantidade de items no membro (pElems).
@@ -21459,7 +21459,7 @@ namespace CarenRengine
 			/// (tagCACLSID) - Estrutura que representa uma matriz contada do tipo: STRING - CLSID
 			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
 			/// </summary>
-			public ref struct CA_CACLSID
+			public value struct CA_CACLSID
 			{
 				/// <summary>
 				/// Variavel que informa a quantidade de items no membro (pElems).
@@ -21538,35 +21538,37 @@ namespace CarenRengine
 				CA_CABSTRBLOB^ cabstrblob;
 				CA_CALPSTR^ calpstr;
 				CA_CALPWSTR^ calpwstr;
+			
 				/// <summary>
 				/// Este membro representa a estrutura (CA_CAPROPVARIANT).
 				/// </summary>
 				Object^ capropvar;
 
-				//Ponteiros | VT_BYREF
 
-				/*
-				CHAR* pcVal;
-				UCHAR* pbVal;
-				SHORT* piVal;
-				USHORT* puiVal;
-				LONG* plVal;
-				ULONG* pulVal;
-				INT* pintVal;
-				UINT* puintVal;
-				FLOAT* pfltVal;
-				DOUBLE* pdblVal;
-				VARIANT_BOOL* pboolVal;
-				DECIMAL* pdecVal;
-				SCODE* pscode;
-				CY* pcyVal;
-				DATE* pdate;
-				BSTR* pbstrVal;
-				IUnknown** ppunkVal;
-				IDispatch** ppdispVal;
-				LPSAFEARRAY* pparray;
-				PROPVARIANT* pvarVal;
-				*/
+
+				//Ponteiros | VT_BYREF
+				
+				CHAR pcVal;
+				Byte pbVal;
+				Int16 piVal;
+				UInt16 puiVal;
+				Int32 plVal;
+				UInt32 pulVal;
+				Int32 pintVal;
+				UInt32 puintVal;
+				float pfltVal;
+				double pdblVal;
+				Boolean pboolVal;
+				CA_DEC pdecVal;
+				Int32 pscode;
+				CA_CY pcyVal;
+				double pdate;
+				String^ pbstrVal;
+				IntPtr ppunkVal;
+				IntPtr ppdispVal;
+				IntPtr pparray;
+				IntPtr pvarVal;
+				
 			};		
 
 			/// <summary>

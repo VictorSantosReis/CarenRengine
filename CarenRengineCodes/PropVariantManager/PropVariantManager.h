@@ -17,33 +17,43 @@ limitations under the License.
 
 #pragma once
 #include "../SDK_Base.h"
-#include "../SDK_Utilidades.h"
+#include "../SDK_Caren.h"
+#include "../SDK_Windows.h"
 
-/// <summary>
-/// Classe responsável pela conversão da estrutura (PROPVARIANT) entre suas representações NATIVA e GERENCIADA.
-/// </summary>
-class PropVariantManager
+//Importa o namespace base.
+namespace CarenRengine
 {
-	//Construtor & Destruidor da classe.
-public:
-	PropVariantManager(){}
-	~PropVariantManager(){}
+	//Importa o namespace de gerenciamento de propvariants.
+	namespace PropVariant
+	{
+		/// <summary>
+		/// Classe responsável pela conversão da estrutura (PROPVARIANT) entre suas representações NATIVA e GERENCIADA.
+		/// </summary>
+		public ref class PropVariantManager
+		{
+			//Construtor & Destruidor da classe.
+		public:
+			PropVariantManager() {}
+			~PropVariantManager() {}
 
-	//Métodos
-public:
-	/// <summary>
-	/// Método responsável por converter uma estrutura (CA_PROPVARIANT) GERENCIADA em sua representação NATIVA.
-	/// Retorna NULO se a conversão não for suportada ou algum valor necessário for invalido.
-	/// </summary>
-	/// <param name="Param_Estrutura">A estrutura GERENCIADA a ser convertida.</param>
-	/// <returns></returns>
-	PROPVARIANT* ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT^ Param_Estrutura);
+			//Métodos
+		public:
+			/// <summary>
+			/// Método responsável por converter uma estrutura (CA_PROPVARIANT) GERENCIADA em sua representação NATIVA.
+			/// Retorna NULO se a conversão não for suportada ou algum valor necessário for invalido.
+			/// Chame PropVariantClear quando não for mais utilizar a estrutura.
+			/// </summary>
+			/// <param name="Param_Estrutura">A estrutura GERENCIADA a ser convertida.</param>
+			/// <returns>Retorna um ponteiro para a estrutura nativa PROPVARIANT.</returns>
+			PVOID ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT^ Param_Estrutura);
 
-	/// <summary>
-	/// Método responsável por converter uma estrutura (PROPVARIANT) NATIVA em sua representação GERENCIADA.
-	/// Retorna NULO se a conversão não for suportada ou algum valor necessário for invalido.
-	/// </summary>
-	/// <param name="Param_Estrutura">A estrutura NATIVA  ser convertida.</param>
-	/// <returns></returns>
-	CA_PROPVARIANT^ ConverterPropVariantUnmanaged_ToManaged(PROPVARIANT* Param_Estrutura);
-};
+			/// <summary>
+			/// Método responsável por converter uma estrutura (PROPVARIANT) NATIVA em sua representação GERENCIADA.
+			/// Retorna NULO se a conversão não for suportada ou algum valor necessário for invalido.
+			/// </summary>
+			/// <param name="Param_Estrutura">A estrutura NATIVA  ser convertida.</param>
+			/// <returns></returns>
+			CA_PROPVARIANT^ ConverterPropVariantUnmanaged_ToManaged(PROPVARIANT* Param_Estrutura);
+		};
+	}
+}

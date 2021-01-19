@@ -21485,26 +21485,26 @@ namespace CarenRengine
 				//Tipos simples.
 
 				char cVal;
-				UCHAR bVal;
-				SHORT iVal;
-				USHORT uiVal;
+				Byte bVal;
+				Int16 iVal;
+				UInt16 uiVal;
 				Int32 lVal;
 				UInt32 ulVal;
 				Int32 intVal;
 				UInt32 uintVal;
-				CA_LARGE_INTEGER^ hVal;
-				CA_ULARGE_INTEGER^ uhVal;
-				FLOAT fltVal;
-				DOUBLE dblVal;
+				CA_LARGE_INTEGER hVal;
+				CA_ULARGE_INTEGER uhVal;
+				float fltVal;
+				double dblVal;
 				Boolean boolVal;
 				UInt32 scode;
-				CA_CY^ cyVal;
+				CA_CY cyVal;
 				DOUBLE date;
-				CA_FILETIME^ filetime;
+				CA_FILETIME filetime;
 				String^ puuid;
-				CA_CLIPDATA^ pclipdata;
+				CA_CLIPDATA pclipdata;
 				String^ bstrVal;
-				CA_BlobData^ blob;
+				CA_BlobData blob;
 				String^ pszVal;
 				String^ pwszVal;
 				Object^ punkVal;
@@ -21517,27 +21517,27 @@ namespace CarenRengine
 
 				//Matrizes Contadas | VT_VECTOR
 
-				CA_CAC^ cac;
-				CA_CAUB^ caub;
-				CA_CAI^ cai;
-				CA_CAUI^ caui;
-				CA_CAL^ cal;
-				CA_CAUL^ caul;
-				CA_CAH^ cah;
-				CA_CAUH^ cauh;
-				CA_CAFLT^ caflt;
-				CA_CADBL^ cadbl;
-				CA_CABOOL^ cabool;
-				CA_CASCODE^ cascode;
-				CA_CACY^ cacy;
-				CA_CADATE^ cadate;
-				CA_CAFILETIME^ cafiletime;
-				CA_CACLSID^ cauuid;
-				CA_CACLIPDATA^ caclipdata;
-				CA_CABSTR^ cabstr;
-				CA_CABSTRBLOB^ cabstrblob;
-				CA_CALPSTR^ calpstr;
-				CA_CALPWSTR^ calpwstr;
+				CA_CAC cac;
+				CA_CAUB caub;
+				CA_CAI cai;
+				CA_CAUI caui;
+				CA_CAL cal;
+				CA_CAUL caul;
+				CA_CAH cah;
+				CA_CAUH cauh;
+				CA_CAFLT caflt;
+				CA_CADBL cadbl;
+				CA_CABOOL cabool;
+				CA_CASCODE cascode;
+				CA_CACY cacy;
+				CA_CADATE cadate;
+				CA_CAFILETIME cafiletime;
+				CA_CACLSID cauuid;
+				CA_CACLIPDATA caclipdata;
+				CA_CABSTR cabstr;
+				CA_CABSTRBLOB cabstrblob;
+				CA_CALPSTR calpstr;
+				CA_CALPWSTR calpwstr;
 			
 				/// <summary>
 				/// Este membro representa a estrutura (CA_CAPROPVARIANT).

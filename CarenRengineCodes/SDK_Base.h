@@ -21511,7 +21511,7 @@ namespace CarenRengine
 				Object^ pdispVal;
 				Object^ pStream;
 				Object^ pStorage;
-				CA_VersionedStream^ pVersionedStream;
+				CA_VersionedStream pVersionedStream;
 				CA_SAFEARRAY^ parray;
 
 

@@ -223,92 +223,84 @@ PVOID PropVariantManager::ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT
 
 
 
-		//Matrizes Contadas.. TIPO | VT_VECTOR
+		//Matrizes Contadas.. TIPO | VT_VECTOR. Todos os membros com um (ca) no inicio.
 
 
 
-		//() - Representa um valor inteiro  
+		//(cac) - Representa um estrutura CA_CAC que contém uma matriz de char.
 	case VT_I1 | VT_VECTOR:
 	{}
 		break;
-		//() - Representa um valor inteiro  
-	case VT_I1 | VT_VECTOR:
+		//(caub) - Representa um estrutura CA_CAUB que contém uma matriz de Bytes.
+	case VT_UI1 | VT_VECTOR:
 	{}
 		break;
-		//() - Representa um valor inteiro  
-	case VT_I1 | VT_VECTOR:
+		//(cai) - Representa um estrutura CA_CAI que contém uma matriz de inteiros assinados de 2 bytes(Int16).
+	case VT_I2 | VT_VECTOR:
 	{}
 		break;
-		//() - Representa um valor inteiro  
-	case VT_I1 | VT_VECTOR:
+		//(caui) - Representa um estrutura CA_CAUI que contém uma matriz de inteiros não assinados de 2 bytes(UInt16).
+	case VT_UI2 | VT_VECTOR:
 	{}
 		break;
-		//() - Representa um valor inteiro  
-	case VT_I1 | VT_VECTOR:
+		//(cabool) - Representa um estrutura CA_CABOOL que contém uma matriz de valores Booleanos.
+	case VT_BOOL | VT_VECTOR:
 	{}
 		break;
-		//() - Representa um valor inteiro  
-	case VT_I1 | VT_VECTOR:
+		//(caul) - Representa um estrutura CA_CAUL que contém uma matriz de inteiros não assinados de 4 bytes(UInt32).
+	case VT_UI4 | VT_VECTOR:
 	{}
 		break;
-		//() - Representa um valor inteiro  
-	case VT_I1 | VT_VECTOR:
+		//(caflt) - Representa um estrutura CA_CAFLT que contém uma matriz de valores reais de 4 bytes(float).
+	case VT_R4 | VT_VECTOR:
 	{}
 		break;
-		//() - Representa um valor inteiro  
-	case VT_I1 | VT_VECTOR:
+		//(cadbl) - Representa um estrutura CA_CADBL que contém uma matriz de valores reais de 8 bytes(double).
+	case VT_R8 | VT_VECTOR:
 	{}
 		break;
-		//() - Representa um valor inteiro  
-	case VT_I1 | VT_VECTOR:
+		//(cascode) - Representa um estrutura CA_CASCODE que contém uma matriz de inteiros assinados de 4 bytes(Int32).
+	case VT_ERROR | VT_VECTOR:
 	{}
 		break;
-		//() - Representa um valor inteiro  
-	case VT_I1 | VT_VECTOR:
+		//(cauh) - Representa um estrutura CA_CAUH que contém uma matriz de estrutruas CA_ULARGE_INTERGER.
+	case VT_UI8 | VT_VECTOR:
 	{}
 		break;
-		//() - Representa um valor inteiro  
-	case VT_I1 | VT_VECTOR:
+		//(cacy) - Representa um estrutura CA_CACY que contém uma matriz de estrutruas CA_CY.
+	case VT_CY | VT_VECTOR:
 	{}
 		break;
-		//() - Representa um valor inteiro  
-	case VT_I1 | VT_VECTOR:
+		//(cadate) - Representa uma estrutura CA_CADATE que contém uma matriz de valores reais de 8 bytes cada.
+	case VT_DATE | VT_VECTOR:
 	{}
 		break;
-		//() - Representa um valor inteiro  
-	case VT_I1 | VT_VECTOR:
+		//(cafiletime) - Representa uma estrutura CA_CAFILETIME que contém uma matriz de estrutruas CA_FILETIME.
+	case VT_FILETIME | VT_VECTOR:
 	{}
 		break;
-		//() - Representa um valor inteiro  
-	case VT_I1 | VT_VECTOR:
+		//(cauuid) - Representa uma estrutura CA_CACLSID que contém uma matriz de GUIDs, implementados como System::String no gerenciado.
+	case VT_CLSID | VT_VECTOR:
 	{}
 		break;
-		//() - Representa um valor inteiro  
-	case VT_I1 | VT_VECTOR:
+		//(caclipdata) - Representa uma estrutura CA_CACLIPDATA que contém uma matriz de estruturas CA_CLIPDATA.
+	case VT_CF | VT_VECTOR:
 	{}
 		break;
-		//() - Representa um valor inteiro  
-	case VT_I1 | VT_VECTOR:
+		//(cabstr) - Representa uma estrutura CA_CABSTR que contém uma matriz de strings BSTR Unicode, implementados como System::String no gerenciado. 
+	case VT_BSTR | VT_VECTOR:
 	{}
 		break;
-		//() - Representa um valor inteiro  
-	case VT_I1 | VT_VECTOR:
+		//(calpstr) - Representa uma estrutura CA_CALPSTR que contém uma matriz de char* ANSI, implementados como System::String no gerenciado. 
+	case VT_LPSTR | VT_VECTOR:
 	{}
 		break;
-		//() - Representa um valor inteiro  
-	case VT_I1 | VT_VECTOR:
+		//(calpwstr) - Representa uma estrutura CA_CALPWSTR que contém uma matriz de WCHAR* Unicode, implementados como System::String no gerenciado. 
+	case VT_LPWSTR | VT_VECTOR:
 	{}
 		break;
-		//() - Representa um valor inteiro  
-	case VT_I1 | VT_VECTOR:
-	{}
-		break;
-		//() - Representa um valor inteiro  
-	case VT_I1 | VT_VECTOR:
-	{}
-		break;
-		//() - Representa um valor inteiro  
-	case VT_I1 | VT_VECTOR:
+		//(capropvar) - Representa uma estrutura CA_CAPROPVARIANT que contém uma matriz de estruturas CA_PROPVARIANT.
+	case VT_VARIANT | VT_VECTOR:
 	{}
 		break;
 		
@@ -325,75 +317,75 @@ PVOID PropVariantManager::ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT
 	{}
 		break;
 		//() - Representa um valor inteiro  
-	case VT_I1 | VT_ARRAY:
+	case VT_UI1 | VT_ARRAY:
 	{}
 		break;
 		//() - Representa um valor inteiro  
-	case VT_I1 | VT_ARRAY:
+	case VT_I2 | VT_ARRAY:
 	{}
 		break;
 		//() - Representa um valor inteiro  
-	case VT_I1 | VT_ARRAY:
+	case VT_UI2 | VT_ARRAY:
 	{}
 		break;
 		//() - Representa um valor inteiro  
-	case VT_I1 | VT_ARRAY:
+	case VT_I4 | VT_ARRAY:
 	{}
 		break;
 		//() - Representa um valor inteiro  
-	case VT_I1 | VT_ARRAY:
+	case VT_UI4 | VT_ARRAY:
 	{}
 		break;
 		//() - Representa um valor inteiro  
-	case VT_I1 | VT_ARRAY:
+	case VT_INT | VT_ARRAY:
 	{}
 		break;
 		//() - Representa um valor inteiro  
-	case VT_I1 | VT_ARRAY:
+	case VT_UINT | VT_ARRAY:
 	{}
 		break;
 		//() - Representa um valor inteiro  
-	case VT_I1 | VT_ARRAY:
+	case VT_R4 | VT_ARRAY:
 	{}
 		break;
 		//() - Representa um valor inteiro  
-	case VT_I1 | VT_ARRAY:
+	case VT_R8 | VT_ARRAY:
 	{}
 		break;
 		//() - Representa um valor inteiro  
-	case VT_I1 | VT_ARRAY:
+	case VT_BOOL | VT_ARRAY:
 	{}
 		break;
 		//() - Representa um valor inteiro  
-	case VT_I1 | VT_ARRAY:
+	case VT_DECIMAL | VT_ARRAY:
 	{}
 		break;
 		//() - Representa um valor inteiro  
-	case VT_I1 | VT_ARRAY:
+	case VT_ERROR | VT_ARRAY:
 	{}
 		break;
 		//() - Representa um valor inteiro  
-	case VT_I1 | VT_ARRAY:
+	case VT_CY | VT_ARRAY:
 	{}
 		break;
 		//() - Representa um valor inteiro  
-	case VT_I1 | VT_ARRAY:
+	case VT_DATE | VT_ARRAY:
 	{}
 		break;
 		//() - Representa um valor inteiro  
-	case VT_I1 | VT_ARRAY:
+	case VT_BSTR | VT_ARRAY:
 	{}
 		break;
 		//() - Representa um valor inteiro  
-	case VT_I1 | VT_ARRAY:
+	case VT_DISPATCH | VT_ARRAY:
 	{}
 		break;
 		//() - Representa um valor inteiro  
-	case VT_I1 | VT_ARRAY:
+	case VT_UNKNOWN | VT_ARRAY:
 	{}
 		break;
 		//() - Representa um valor inteiro  
-	case VT_I1 | VT_ARRAY:
+	case VT_VARIANT | VT_ARRAY:
 	{}
 		break;
 
@@ -401,7 +393,7 @@ PVOID PropVariantManager::ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT
 
 
 
-		//TIPOS REFERENCIA. TIPO | VT_BYREF
+		//TIPOS REFERENCIA. TIPO | VT_BYREF. Quase todos os membros com um (*p) no inicio.
 
 
 
@@ -410,79 +402,79 @@ PVOID PropVariantManager::ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT
 	{}
 		break;
 		//() - Representa um valor inteiro  
-	case VT_I1 | VT_BYREF:
+	case VT_UI1 | VT_BYREF:
 	{}
 		break;
 		//() - Representa um valor inteiro  
-	case VT_I1 | VT_BYREF:
+	case VT_I2 | VT_BYREF:
 	{}
 		break;
 		//() - Representa um valor inteiro  
-	case VT_I1 | VT_BYREF:
+	case VT_UI2 | VT_BYREF:
 	{}
 		break;
 		//() - Representa um valor inteiro  
-	case VT_I1 | VT_BYREF:
+	case VT_I4 | VT_BYREF:
 	{}
 		break;
 		//() - Representa um valor inteiro  
-	case VT_I1 | VT_BYREF:
+	case VT_UI4 | VT_BYREF:
 	{}
 		break;
 		//() - Representa um valor inteiro  
-	case VT_I1 | VT_BYREF:
+	case VT_INT | VT_BYREF:
 	{}
 		break;
 		//() - Representa um valor inteiro  
-	case VT_I1 | VT_BYREF:
+	case VT_UINT | VT_BYREF:
 	{}
 		break;
 		//() - Representa um valor inteiro  
-	case VT_I1 | VT_BYREF:
+	case VT_R4 | VT_BYREF:
 	{}
 		break;
 		//() - Representa um valor inteiro  
-	case VT_I1 | VT_BYREF:
+	case VT_R8 | VT_BYREF:
 	{}
 		break;
 		//() - Representa um valor inteiro  
-	case VT_I1 | VT_BYREF:
+	case VT_BOOL | VT_BYREF:
 	{}
 		break;
 		//() - Representa um valor inteiro  
-	case VT_I1 | VT_BYREF:
+	case VT_DECIMAL | VT_BYREF:
 	{}
 		break;
 		//() - Representa um valor inteiro  
-	case VT_I1 | VT_BYREF:
+	case VT_ERROR | VT_BYREF:
 	{}
 		break;
 		//() - Representa um valor inteiro  
-	case VT_I1 | VT_BYREF:
+	case VT_CY | VT_BYREF:
 	{}
 		break;
 		//() - Representa um valor inteiro  
-	case VT_I1 | VT_BYREF:
+	case VT_DATE | VT_BYREF:
 	{}
 		break;
 		//() - Representa um valor inteiro  
-	case VT_I1 | VT_BYREF:
+	case VT_BSTR | VT_BYREF:
 	{}
 		break;
 		//() - Representa um valor inteiro  
-	case VT_I1 | VT_BYREF:
+	case VT_UNKNOWN | VT_BYREF:
 	{}
 		break;
 		//() - Representa um valor inteiro  
-	case VT_I1 | VT_BYREF:
+	case VT_DISPATCH | VT_BYREF:
 	{}
 		break;
 		//() - Representa um valor inteiro  
-	case VT_I1 | VT_BYREF:
+	case VT_ARRAY | VT_BYREF:
 	{}
 		break;
 		//() - Representa um valor inteiro  
-	case VT_I1 | VT_BYREF:
+	case VT_VARIANT | VT_BYREF:
 	{}
 		break;
 

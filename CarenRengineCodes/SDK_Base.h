@@ -21337,7 +21337,7 @@ namespace CarenRengine
 			};
 
 			/// <summary>
-			/// (tagCASCODE) - Estrutura que representa uma matriz contada do tipo: UInt32 - HRESULTs
+			/// (tagCASCODE) - Estrutura que representa uma matriz contada do tipo: Int32 - HRESULTs
 			/// Essa estrutura é utilizada pela estrutura (CA_PROPVARIANT).
 			/// </summary>
 			public value struct CA_CASCODE
@@ -21350,7 +21350,7 @@ namespace CarenRengine
 				/// <summary>
 				/// Array que contém os elementos contados da estrutura.
 				/// </summary>
-				cli::array<UInt32>^ pElems;
+				cli::array<Int32>^ pElems;
 			};			
 
 			/// <summary>
@@ -21435,7 +21435,7 @@ namespace CarenRengine
 				/// <summary>
 				/// Array que contém os elementos contados da estrutura.
 				/// </summary>
-				cli::array<CA_FILETIME^>^ pElems;
+				cli::array<CA_FILETIME>^ pElems;
 			};
 
 			/// <summary>
@@ -21452,7 +21452,7 @@ namespace CarenRengine
 				/// <summary>
 				/// Array que contém os elementos contados da estrutura.
 				/// </summary>
-				cli::array<CA_CLIPDATA^>^ pElems;
+				cli::array<CA_CLIPDATA>^ pElems;
 			};
 
 			/// <summary>

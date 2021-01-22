@@ -31,10 +31,28 @@ namespace CarenRengine
 		/// </summary>
 		public ref class PropVariantManager
 		{
+
 			//Construtor & Destruidor da classe.
 		public:
 			PropVariantManager() {}
 			~PropVariantManager() {}
+
+
+			//Métodos auxiliares.
+		private:
+			//Cria um Guid a parti de uma determinada String.
+			_GUID CreateGuidFromString(String^ Param_DadosGuid);
+
+			//Converte um determinado GUID para uma representação de String gerenciada.
+			String^ CreateStringFromGuid(_GUID Param_Guid);
+			
+			//Função que copia dados da memoria de um buffer para outro de destino.
+			template<typename T>
+			errno_t CopiarMemoria(T* Param_BufferDestino, unsigned int Param_SizeBufferDestino, T* Param_BufferOrigem, unsigned int Param_QuantidadeElementos)
+			{
+				//Realiza a copia da memoria.
+				return memcpy_s(Param_BufferDestino, Param_SizeBufferDestino, Param_BufferOrigem, Param_QuantidadeElementos * sizeof(T));
+			}
 
 			//Métodos
 		public:

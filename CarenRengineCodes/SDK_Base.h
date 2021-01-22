@@ -21087,7 +21087,7 @@ namespace CarenRengine
 			/// </summary>
 			public value struct CA_VersionedStream
 			{
-				Guid guidVersion;
+				String^ guidVersion;
 			
 				/// <summary>
 				/// Deve representar uma interface ICarenStream
@@ -21513,6 +21513,7 @@ namespace CarenRengine
 				Object^ pStorage;
 				CA_VersionedStream pVersionedStream;
 				CA_SAFEARRAY^ parray;
+				CA_DEC decval;
 
 
 				//Matrizes Contadas | VT_VECTOR

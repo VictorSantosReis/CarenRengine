@@ -2345,55 +2345,155 @@ CA_PROPVARIANT^ PropVariantManager::ConverterPropVariantUnmanaged_ToManaged(PROP
 
 		//(pcVal) - Representa um ponteiro(referência) que leva para um valor inteiro de 1 byte (char).
 	case VT_I1 | VT_BYREF:
-	{}
+	{
+		//Verifica se o ponteiro é valido.
+		if (!ObjetoValido(Param_Estrutura->pcVal))
+			Sair; //Ponteiro inválido.
+
+		//Define os dados no membro da estrutura.
+		vi_Resultado->pcVal = *Param_Estrutura->pcVal;
+	}
 		break;
 		//(pbVal) - Representa um ponteiro(referência) que leva para um valor inteiro não assinado de 1 byte (Byte).
 	case VT_UI1 | VT_BYREF:
-	{}
+	{
+		//Verifica se o ponteiro é valido.
+		if (!ObjetoValido(Param_Estrutura->pbVal))
+			Sair; //Ponteiro inválido.
+
+		//Define os dados no membro da estrutura.
+		vi_Resultado->pbVal = *Param_Estrutura->pbVal;
+	}
 		break;
 		//(piVal) - Representa um ponteiro(referência) que leva para um valor inteiro de 2 bytes (Int16).
 	case VT_I2 | VT_BYREF:
-	{}
+	{
+		//Verifica se o ponteiro é valido.
+		if (!ObjetoValido(Param_Estrutura->piVal))
+			Sair; //Ponteiro inválido.
+
+		//Define os dados no membro da estrutura.
+		vi_Resultado->piVal = *Param_Estrutura->piVal;
+	}
 		break;
 		//(puiVal) - Representa um ponteiro(referência) que leva para um valor inteiro não assinado de 2 bytes (UInt16).
 	case VT_UI2 | VT_BYREF:
-	{}
+	{
+		//Verifica se o ponteiro é valido.
+		if (!ObjetoValido(Param_Estrutura->puiVal))
+			Sair; //Ponteiro inválido.
+
+		//Define os dados no membro da estrutura.
+		vi_Resultado->puiVal = *Param_Estrutura->puiVal;
+	}
 		break;
 		//(plVal) - Representa um ponteiro(referência) que leva para um valor inteiro de 4 bytes (Int32).
 	case VT_I4 | VT_BYREF:
-	{}
+	{
+		//Verifica se o ponteiro é valido.
+		if (!ObjetoValido(Param_Estrutura->plVal))
+			Sair; //Ponteiro inválido.
+
+		//Define os dados no membro da estrutura.
+		vi_Resultado->plVal = static_cast<int>(*Param_Estrutura->plVal);
+	}
 		break;
 		//(pulVal) - Representa um ponteiro(referência) que leva para um valor inteiro não assinado de 4 bytes (UInt32).
 	case VT_UI4 | VT_BYREF:
-	{}
+	{
+		//Verifica se o ponteiro é valido.
+		if (!ObjetoValido(Param_Estrutura->pulVal))
+			Sair; //Ponteiro inválido.
+
+		//Define os dados no membro da estrutura.
+		vi_Resultado->pulVal = static_cast<UInt32>(*Param_Estrutura->pulVal);
+	}
 		break;
 		//(pintVal) - Representa um ponteiro(referência) que leva para um valor inteiro de 4 bytes (Int32).
 	case VT_INT | VT_BYREF:
-	{}
+	{
+		//Verifica se o ponteiro é valido.
+		if (!ObjetoValido(Param_Estrutura->pintVal))
+			Sair; //Ponteiro inválido.
+
+		//Define os dados no membro da estrutura.
+		vi_Resultado->pintVal = static_cast<int>(*Param_Estrutura->pintVal);
+	}
 		break;
 		//(puintVal) - Representa um ponteiro(referência) que leva para um valor inteiro não assinado de 4 bytes (UInt32).
 	case VT_UINT | VT_BYREF:
-	{}
+	{
+		//Verifica se o ponteiro é valido.
+		if (!ObjetoValido(Param_Estrutura->puintVal))
+			Sair; //Ponteiro inválido.
+
+		//Define os dados no membro da estrutura.
+		vi_Resultado->puintVal = static_cast<UInt32>(*Param_Estrutura->puintVal);
+	}
 		break;
 		//(pfltVal) - Representa um ponteiro(referência) que leva para um valor real de 4 bytes (float).
 	case VT_R4 | VT_BYREF:
-	{}
+	{
+		//Verifica se o ponteiro é valido.
+		if (!ObjetoValido(Param_Estrutura->pfltVal))
+			Sair; //Ponteiro inválido.
+
+		//Define os dados no membro da estrutura.
+		vi_Resultado->pfltVal = *Param_Estrutura->pfltVal;
+	}
 		break;
 		//(pdblVal) - Representa um ponteiro(referência) que leva para um valor real de 8 bytes (double).
 	case VT_R8 | VT_BYREF:
-	{}
+	{
+		//Verifica se o ponteiro é valido.
+		if (!ObjetoValido(Param_Estrutura->pdblVal))
+			Sair; //Ponteiro inválido.
+
+		//Define os dados no membro da estrutura.
+		vi_Resultado->pdblVal = *Param_Estrutura->pdblVal;
+	}
 		break;
 		//(pboolVal) - Representa um ponteiro(referência) que leva para um valor booleano (Boolean).
 	case VT_BOOL | VT_BYREF:
-	{}
+	{
+		//Verifica se o ponteiro é valido.
+		if (!ObjetoValido(Param_Estrutura->pboolVal))
+			Sair; //Ponteiro inválido.
+
+		//Define os dados no membro da estrutura.
+		vi_Resultado->pboolVal = (*Param_Estrutura->pboolVal) == -1? true: false;
+	}
 		break;
 		//(pdecVal) - Representa um ponteiro(referência) que leva para uma estrutura DECIMAL (CA_DEC).
 	case VT_DECIMAL | VT_BYREF:
-	{}
+	{
+		//Verifica se o ponteiro é valido.
+		if (!ObjetoValido(Param_Estrutura->pdblVal))
+			Sair; //Ponteiro inválido.
+
+		//Inicializa a estrutura.
+		vi_Resultado->pdecVal = CA_DEC();
+
+		//Define os dados.
+		vi_Resultado->pdecVal.Hi32 = static_cast<UInt32>(Param_Estrutura->pdecVal->Hi32);
+		vi_Resultado->pdecVal.Mid32 = static_cast<UInt32>(Param_Estrutura->pdecVal->Mid32);
+		vi_Resultado->pdecVal.Lo32 = static_cast<UInt32>(Param_Estrutura->pdecVal->Lo32);
+		vi_Resultado->pdecVal.Lo64 = Param_Estrutura->pdecVal->Lo64;
+		vi_Resultado->pdecVal.scale = Param_Estrutura->pdecVal->scale;
+		vi_Resultado->pdecVal.sign = Param_Estrutura->pdecVal->sign;
+		vi_Resultado->pdecVal.signscale = Param_Estrutura->pdecVal->signscale;
+	}
 		break;
 		//(pscode) - Representa um ponteiro(referência) que leva para um valor inteiro de 4 bytes (Int32).
 	case VT_ERROR | VT_BYREF:
-	{}
+	{
+		//Verifica se o ponteiro é valido.
+		if (!ObjetoValido(Param_Estrutura->pscode))
+			Sair; //Ponteiro inválido.
+
+		//Define os dados no membro da estrutura.
+		vi_Resultado->pscode = *Param_Estrutura->pscode;
+	}
 		break;
 		//(pcyVal) - Representa um ponteiro(referência) que leva para uma estrutura CY (CA_CY).
 	case VT_CY | VT_BYREF:
@@ -2401,7 +2501,14 @@ CA_PROPVARIANT^ PropVariantManager::ConverterPropVariantUnmanaged_ToManaged(PROP
 		break;
 		//(pdate) - Representa um ponteiro(referência) que leva para um valor real de 8 bytes (double).
 	case VT_DATE | VT_BYREF:
-	{}
+	{
+		//Verifica se o ponteiro é valido.
+		if (!ObjetoValido(Param_Estrutura->pdate))
+			Sair; //Ponteiro inválido.
+
+		//Define os dados no membro da estrutura.
+		vi_Resultado->pdate = *Param_Estrutura->pdate;
+	}
 		break;
 		//(pbstrVal) - Representa um ponteiro(referência) que leva para um valor BSTR da tabela Unicode (String).
 	case VT_BSTR | VT_BYREF:

@@ -1358,6 +1358,7 @@ CA_PROPVARIANT^ PropVariantManager::ConverterPropVariantUnmanaged_ToManaged(PROP
 
 	//Variaveis utilizadas.
 	VARTYPE vi_Vt = VARENUM::VT_EMPTY;
+	tagSTATSTG vi_StatStream = {};
 
 	//Verifica se a variante não é invalida.
 	if (ObjetoValido(Param_Estrutura))
@@ -1369,6 +1370,9 @@ CA_PROPVARIANT^ PropVariantManager::ConverterPropVariantUnmanaged_ToManaged(PROP
 	//Cria a propvariant.
 	vi_Resultado = gcnew CA_PROPVARIANT();
 
+	//Define o tipo da propvariant.
+	vi_Resultado->vt = static_cast<CA_VARTYPE>(vi_Vt);
+
 	//Abre um swith para verificar o tipo dos dados na variante.
 	switch (vi_Vt)
 	{
@@ -1379,172 +1383,434 @@ CA_PROPVARIANT^ PropVariantManager::ConverterPropVariantUnmanaged_ToManaged(PROP
 
 		//(iVal) - Representa um valor inteiro assinado de 2 bytes. (Int16)
 	case VT_I2:
-	{}
-		break;
+	{
+		//Define os dados na estrutura a ser retornada.
+		vi_Resultado->iVal = Param_Estrutura->iVal;
+	}
+	break;
 
-		//(LVal) - Representa um valor inteiro assinado de 4 bytes. (Int32)
+	//(LVal) - Representa um valor inteiro assinado de 4 bytes. (Int32)
 	case VT_I4:
-		{}
-		break;
+	{
+		//Define os dados na estrutura a ser retornada.
+		vi_Resultado->lVal = static_cast<int>(Param_Estrutura->lVal);
+	}
+	break;
 
-		//(fltVal) - Representa um valor de ponto flutuante de 4 bytes. (float)
+	//(fltVal) - Representa um valor de ponto flutuante de 4 bytes. (float)
 	case VT_R4:
-		{}
-		break;
+	{
+		//Define os dados na estrutura a ser retornada.
+		vi_Resultado->fltVal = Param_Estrutura->fltVal;
+	}
+	break;
 
-		//(dblVal) - Representa um valor de ponto flutuante de 8 bytes. (double)
+	//(dblVal) - Representa um valor de ponto flutuante de 8 bytes. (double)
 	case VT_R8:
-	{}
-		break;
+	{
+		//Define os dados na estrutura a ser retornada.
+		vi_Resultado->dblVal = Param_Estrutura->dblVal;
+	}
+	break;
 
-		//(cVal) - Representa um valor assinado de 1 byte. (char)
+	//(cVal) - Representa um valor assinado de 1 byte. (char)
 	case VT_I1:
-	{}
-		break;
+	{
+		//Define os dados na estrutura a ser retornada.
+		vi_Resultado->cVal = Param_Estrutura->cVal;
+	}
+	break;
 
-		//(bVal) - Representa um valor não assinado de 1 byte. (Byte)
+	//(bVal) - Representa um valor não assinado de 1 byte. (Byte)
 	case VT_UI1:
-	{}
-		break;
+	{
+		//Define os dados na estrutura a ser retornada.
+		vi_Resultado->bVal = Param_Estrutura->bVal;
+	}
+	break;
 
-		//(uiVal) - Representa um valor não assinado de 2 bytes. (UInt16)
+	//(uiVal) - Representa um valor não assinado de 2 bytes. (UInt16)
 	case VT_UI2:
-	{}
-		break;
+	{
+		//Define os dados na estrutura a ser retornada.
+		vi_Resultado->uiVal = Param_Estrutura->uiVal;
+	}
+	break;
 
-		//(ulVal) - Representa um valor não assinado de 4 bytes. (UInt32)
+	//(ulVal) - Representa um valor não assinado de 4 bytes. (UInt32)
 	case VT_UI4:
-	{}
-		break;
+	{
+		//Define os dados na estrutura a ser retornada.
+		vi_Resultado->ulVal = static_cast<UInt32>(Param_Estrutura->ulVal);
+	}
+	break;
 
-		//(hVal) - Representa uma estrutra LARGE_INTEGER que contém dois valores que representam um inteiro assinado de 8 bytes. (CA_LARGE_INTEGER)
-	case VT_I8:	
-	{}
-		break;
+	//(hVal) - Representa uma estrutra LARGE_INTEGER que contém dois valores que representam um inteiro assinado de 8 bytes. (CA_LARGE_INTEGER)
+	case VT_I8:
+	{
+		//Inicializa a estrutura.
+		vi_Resultado->hVal = CA_LARGE_INTEGER();
 
-		//(uhVal) - RRepresenta uma estrutra ULARGE_INTEGER que contém dois valores que representam um inteiro não assinado de 8 bytes. (CA_ULARGE_INTEGER)
+		//Define os dados na estrutura.
+		vi_Resultado->hVal.HighPart = static_cast<int>(Param_Estrutura->hVal.HighPart);
+		vi_Resultado->hVal.LowPart = static_cast<UInt32>(Param_Estrutura->hVal.LowPart);
+		vi_Resultado->hVal.QuadPart = Param_Estrutura->hVal.QuadPart;
+	}
+	break;
+
+	//(uhVal) - RRepresenta uma estrutra ULARGE_INTEGER que contém dois valores que representam um inteiro não assinado de 8 bytes. (CA_ULARGE_INTEGER)
 	case VT_UI8:
-	{}
-		break;
+	{
+		//Inicializa a estrutura.
+		vi_Resultado->uhVal = CA_ULARGE_INTEGER();
 
-		//(intVal) - Representa um valor assinado de 4 bytes, equivalente ao VT_I4. (Int32)
+		//Define os dados na estrutura.
+		vi_Resultado->uhVal.HighPart = static_cast<UInt32>(Param_Estrutura->uhVal.HighPart);
+		vi_Resultado->uhVal.LowPart = static_cast<UInt32>(Param_Estrutura->uhVal.LowPart);
+		vi_Resultado->uhVal.QuadPart = Param_Estrutura->uhVal.QuadPart;
+	}
+	break;
+
+	//(intVal) - Representa um valor assinado de 4 bytes, equivalente ao VT_I4. (Int32)
 	case VT_INT:
-	{}
-		break;
+	{
+		//Define os dados na estrutura a ser retornada.
+		vi_Resultado->intVal = static_cast<int>(Param_Estrutura->intVal);
+	}
+	break;
 
-		//(uintVal) - Representa um valor não assinado de 4 bytes, equivalente ao VT_UI4. (UInt32)
+	//(uintVal) - Representa um valor não assinado de 4 bytes, equivalente ao VT_UI4. (UInt32)
 	case VT_UINT:
-	{}
-		break;
+	{
+		//Define os dados na estrutura a ser retornada.
+		vi_Resultado->uintVal = static_cast<UInt32>(Param_Estrutura->uintVal);
+	}
+	break;
 
-		//(cyVal) - Representa uma estrutura CY que contém 8 Bytes de dados para Moeda. (CA_CY)
+	//(cyVal) - Representa uma estrutura CY que contém 8 Bytes de dados para Moeda. (CA_CY)
 	case VT_CY:
-	{}
-		break;
+	{
+		//Inicializa a estrutura.
+		vi_Resultado->cyVal = CA_CY();
 
-		//(date) - Representa um valor de ponto flutuante de 8 bytes. (double)
+		//Define os dados na estrutura.
+		vi_Resultado->cyVal.Hi = static_cast<int>(Param_Estrutura->cyVal.Hi);
+		vi_Resultado->cyVal.int64 = Param_Estrutura->cyVal.int64;
+		vi_Resultado->cyVal.Lo = static_cast<UInt32>(Param_Estrutura->cyVal.Lo);
+	}
+	break;
+
+	//(date) - Representa um valor de ponto flutuante de 8 bytes. (double)
 	case VT_DATE:
-	{}
-		break;
+	{
+		//Define os dados na estrutura a ser retornada.
+		vi_Resultado->date = Param_Estrutura->date;
+	}
+	break;
 
-		//(filetime) - Representa uma estrutura FILETIME. (CA_FILETIME)
+	//(filetime) - Representa uma estrutura FILETIME. (CA_FILETIME)
 	case VT_FILETIME:
-	{}
-		break;
+	{
+		//Inicializa a estrutura.
+		vi_Resultado->filetime = CA_FILETIME();
+
+		//Define os dados na estrutura.
+		vi_Resultado->filetime.dwHighDateTime = static_cast<UInt32>(Param_Estrutura->filetime.dwHighDateTime);
+		vi_Resultado->filetime.dwLowDateTime = static_cast<UInt32>(Param_Estrutura->filetime.dwLowDateTime);
+	}
+	break;
 
 		//(bstrVal) - Representa uma string de terminação NULA da tabela Unicode. (String)
 	case VT_BSTR:
-	{}
+	{
+		//Verifica se os dados são validos
+		if (!ObjetoValido(Param_Estrutura->bstrVal))
+			Sair; //A string não é vãlida.
+
+		//Define os dados na estrutura
+		vi_Resultado->bstrVal = gcnew String(vi_Resultado->bstrVal);
+	}
 		break;
 
 		//(pszVal) - Representa uma string de terminação NULA da tabela ANSI. (String.)
 	case VT_LPSTR:
-	{}
+	{
+		//Verifica se os dados são validos
+		if (!ObjetoValido(Param_Estrutura->pszVal))
+			Sair; //A string não é vãlida.
+
+		//Define os dados na estrutura
+		vi_Resultado->pszVal = Marshal::PtrToStringAnsi(IntPtr(Param_Estrutura->pszVal));
+	}
 		break;
 
 		//(pwszVal) - Representa uma string de terminação NULA da tabela Unicode. (String)
 	case VT_LPWSTR:
-	{}
+	{
+		//Verifica se os dados são validos
+		if (!ObjetoValido(Param_Estrutura->pwszVal))
+			Sair; //A string não é vãlida.
+
+		//Define os dados na estrutura
+		vi_Resultado->pwszVal = Marshal::PtrToStringAnsi(IntPtr(Param_Estrutura->pwszVal));
+	}
 		break;
 
 		//(scode) - Representa um valor assinado de 4 bytes. (Int32)
 	case VT_ERROR:
-	{}
+	{
+		//Define os dados na estrutura a ser retornada.
+		vi_Resultado->scode = static_cast<UInt32>(Param_Estrutura->scode);
+	}
 		break;
 
 		//(boolVal) - Representa um valor pequeno de 1 byte que equivale a um Booleano. -1 == TRUE | 0 == FALSE
 	case VT_BOOL:
-	{}
+	{
+		//Define os dados na estrutura a ser retornada.
+		vi_Resultado->boolVal = Param_Estrutura->boolVal == -1? true: false;
+	}
 		break;
 
 		//(decVal) - Representa uma estrutura DECIMAL. (CA_DEC)
 	case VT_DECIMAL:
-	{}
+	{
+		//Inicializa a estrutura.
+		vi_Resultado->decVal = CA_DEC();
+
+		//Define os dados na estrutura.
+		vi_Resultado->decVal.Hi32 = static_cast<UInt32>(Param_Estrutura->decVal.Hi32);
+		vi_Resultado->decVal.Lo32 = static_cast<UInt32>(Param_Estrutura->decVal.Lo32);
+		vi_Resultado->decVal.Lo64 = Param_Estrutura->decVal.Lo64;
+		vi_Resultado->decVal.Mid32 = static_cast<UInt32>(Param_Estrutura->decVal.Mid32);
+		vi_Resultado->decVal.scale = Param_Estrutura->decVal.scale;
+		vi_Resultado->decVal.sign = Param_Estrutura->decVal.sign;
+		vi_Resultado->decVal.signscale = Param_Estrutura->decVal.signscale;
+	}
 		break;
 
 		//(puuid) - Representa uma estrutura CLSID(Guid). (String)
 	case VT_CLSID:
-	{}
+	{
+		//Define os dados na estrutura a ser retornada.
+		vi_Resultado->puuid = CreateStringFromGuid(*Param_Estrutura->puuid);
+	}
 		break;
 
 		//(pclipdata) - Representa uma estrutura CLIPDATA. (CA_CLIPDATA)
 	case VT_CF:
-	{}
+	{
+		//Inicializa a estrutura.
+		vi_Resultado->pclipdata = CA_CLIPDATA();
+
+		//Define os dados base na estrutura.
+		vi_Resultado->pclipdata.cbSize = static_cast<UInt32>(Param_Estrutura->pclipdata->cbSize);
+		vi_Resultado->pclipdata.ulClipFmt = static_cast<UInt32>(Param_Estrutura->pclipdata->ulClipFmt);
+
+		//Cria o buffer de destino.
+		vi_Resultado->pclipdata.pClipData = gcnew CarenBuffer();
+
+		//Cria a interface que vai conter o buffer e realiza uma cópia dos dados.
+		static_cast<ICarenBuffer^>(vi_Resultado->pclipdata.pClipData)->CriarBuffer(
+			IntPtr(Param_Estrutura->pclipdata->pClipData), //Buffer de Origem.
+			true, //Vai realizar uma copia.
+			vi_Resultado->pclipdata.cbSize, //Tamanho do buffer
+			vi_Resultado->pclipdata.cbSize); //Tamanho valido do buffer.
+	}
 		break;
 
 		//(blob) - Representa uma estrutura TagBlob. (CA_BLOB)
 	case VT_BLOB:
-	{}
+	{
+		//Inicializa a estrutura.
+		vi_Resultado->blob = CA_BlobData();
+
+		//Define os dados.
+		vi_Resultado->blob.SizeData = static_cast<UInt32>(Param_Estrutura->blob.cbSize);
+
+		//Cria o buffer de destino.
+		vi_Resultado->blob.BufferDados = gcnew CarenBuffer();
+
+		//Cria a interface que vai conter o buffer e realiza uma cópia dos dados.
+		static_cast<ICarenBuffer^>(vi_Resultado->blob.BufferDados)->CriarBuffer(
+			IntPtr(Param_Estrutura->blob.pBlobData), //Buffer de Origem.
+			true, //Vai realizar uma copia.
+			vi_Resultado->blob.SizeData,  //Tamanho do buffer
+			vi_Resultado->blob.SizeData); //Tamanho valido do buffer.
+	}
 		break;
 
 		//(pStream) - Representa um ponteiro para a interface IStream. (ICarenStream)
 	case VT_STREAM:
-	{}
+	{
+		//Verifica se o fluxo é válido.
+		if (!ObjetoValido(Param_Estrutura->pStream))
+			Sair; //O fluxo é invalido.
+
+		//Recupera o tamanho do fluxo.
+		Param_Estrutura->pStream->Stat(&vi_StatStream, 0);
+
+		//Adiciona uma referencia ao fluxo.
+		Param_Estrutura->pStream->AddRef();
+
+		//Cria a interface e define o fluxo e seu tamanho.
+		vi_Resultado->pStream = gcnew CarenStream(const_cast<IStream*>(Param_Estrutura->pStream), vi_StatStream.cbSize.QuadPart);
+	}
 		break;
 
 		//(pStorage) - Representa um ponteiro para a interface IStorage. (ICaren)
 	case VT_STORAGE:
-	{}
+	{
+		//Verifica se o Storage é válido.
+		if (!ObjetoValido(Param_Estrutura->pStorage))
+			Sair; //O Storage é invalido.
+
+		//Adiciona uma referencia ao Storage.
+		Param_Estrutura->pStorage->AddRef();
+
+		//Cria a interface que vai conter.
+		vi_Resultado->pStorage = gcnew Caren();
+
+		//Define o ponteiro na interface criada.
+		static_cast<ICaren^>(vi_Resultado->pStorage)->AdicionarPonteiro(Param_Estrutura->pStorage);
+	}
 		break;
 
 		//(blob) - Represneta uma estrutura TagBlob. (CA_BLOB)
 	case VT_BLOB_OBJECT:
-	{}
+	{
+		//Inicializa a estrutura.
+		vi_Resultado->blob = CA_BlobData();
+
+		//Define os dados.
+		vi_Resultado->blob.SizeData = static_cast<UInt32>(Param_Estrutura->blob.cbSize);
+
+		//Cria o buffer de destino.
+		vi_Resultado->blob.BufferDados = gcnew CarenBuffer();
+
+		//Cria a interface que vai conter o buffer e realiza uma cópia dos dados.
+		static_cast<ICarenBuffer^>(vi_Resultado->blob.BufferDados)->CriarBuffer(
+			IntPtr(Param_Estrutura->blob.pBlobData), //Buffer de Origem.
+			true, //Vai realizar uma copia.
+			vi_Resultado->blob.SizeData,  //Tamanho do buffer
+			vi_Resultado->blob.SizeData); //Tamanho valido do buffer.
+	}
 		break;
 
 		//(pStream) - Representa um ponteiro para a interface IStream. (ICarenStream)
 	case VT_STREAMED_OBJECT:
-	{}
+	{
+		//Verifica se o fluxo é válido.
+		if (!ObjetoValido(Param_Estrutura->pStream))
+			Sair; //O fluxo é invalido.
+
+		//Recupera o tamanho do fluxo.
+		Param_Estrutura->pStream->Stat(&vi_StatStream, 0);
+
+		//Adiciona uma referencia ao fluxo.
+		Param_Estrutura->pStream->AddRef();
+
+		//Cria a interface e define o fluxo e seu tamanho.
+		vi_Resultado->pStream = gcnew CarenStream(const_cast<IStream*>(Param_Estrutura->pStream), vi_StatStream.cbSize.QuadPart);
+	}
 		break;
 
 		//(pStorage) - Representa um ponteiro para a interface IStorage. (ICaren)
 	case VT_STORED_OBJECT:
-	{}
+	{
+		//Verifica se o Storage é válido.
+		if (!ObjetoValido(Param_Estrutura->pStorage))
+			Sair; //O Storage é invalido.
+
+		//Adiciona uma referencia ao Storage.
+		Param_Estrutura->pStorage->AddRef();
+
+		//Cria a interface que vai conter.
+		vi_Resultado->pStorage = gcnew Caren();
+
+		//Define o ponteiro na interface criada.
+		static_cast<ICaren^>(vi_Resultado->pStorage)->AdicionarPonteiro(Param_Estrutura->pStorage);
+	}
 		break;
 
 		//(pVersionedStream) - Representa uma estrutura TagVersionedStream que contém . (ICarenStream)
 	case VT_VERSIONED_STREAM:
-	{}
+	{
+		//Inicializa a estrutura.
+		vi_Resultado->pVersionedStream = CA_VersionedStream();
+
+		//Verifica se o fluxo é válido.
+		if (!ObjetoValido(Param_Estrutura->pVersionedStream->pStream))
+			Sair; //O fluxo é invalido.
+
+		//Recupera o tamanho do fluxo.
+		Param_Estrutura->pVersionedStream->pStream->Stat(&vi_StatStream, 0);
+
+		//Adiciona uma referencia ao fluxo.
+		Param_Estrutura->pVersionedStream->pStream->AddRef();
+
+		//Cria a interface e define o fluxo e seu tamanho.
+		vi_Resultado->pVersionedStream.pStream = gcnew CarenStream(const_cast<IStream*>(Param_Estrutura->pStream), vi_StatStream.cbSize.QuadPart);
+
+		//Converte e define o Guid.
+		vi_Resultado->pVersionedStream.guidVersion = CreateStringFromGuid(Param_Estrutura->pVersionedStream->guidVersion);
+	}
 		break;
 
 		//(punkVal) - Representa um ponteiro para a interface base nativa IUnknown. (ICaren)
 	case VT_UNKNOWN:
-	{}
+	{
+		//Verifica se a interface é válida.
+		if (!ObjetoValido(Param_Estrutura->punkVal))
+			Sair; //A interface é invalida.
+
+		//Adiciona uma referencia a interface.
+		Param_Estrutura->punkVal->AddRef();
+
+		//Cria a interface e define o fluxo e seu tamanho.
+		vi_Resultado->punkVal = gcnew Caren();
+
+		//Define o ponteiro na interface.
+		static_cast<ICaren^>(vi_Resultado->punkVal)->AdicionarPonteiro(Param_Estrutura->punkVal);
+	}
 		break;
 
 		//(pdispVal) - Representa um ponteiro para a interface nativa IDispatch. (ICaren)
 	case VT_DISPATCH:
-	{}
+	{
+		//Verifica se a interface é válida.
+		if (!ObjetoValido(Param_Estrutura->pdispVal))
+			Sair; //A interface é invalida.
+
+		//Adiciona uma referencia a interface.
+		Param_Estrutura->pdispVal->AddRef();
+
+		//Cria a interface e define o fluxo e seu tamanho.
+		vi_Resultado->pdispVal = gcnew Caren();
+
+		//Define o ponteiro na interface.
+		static_cast<ICaren^>(vi_Resultado->pdispVal)->AdicionarPonteiro(Param_Estrutura->pdispVal);
+	}
 		break;
 
 		//(NÃO INFORMADO) - Representa um ponteiro para uma estrutura SAFEARRAY.
 	case VT_SAFEARRAY:
-	{}
+	{
+		//Verifica se o SAFEARRAY é valido.
+		if (!ObjetoValido(Param_Estrutura->parray))
+			Sair; //SafeArray Invalido.
+
+		//Cria a estrutura e em seguida cria uma copia do SafeArray.
+		vi_Resultado->parray = gcnew CA_SAFEARRAY(const_cast<LPSAFEARRAY>(Param_Estrutura->parray), true);
+	}
 		break;
 		
 		//(NÃO INFORMADO) - Representa um erro HRESULT de 4 bytes. Deve ser do mesmo tipo que o (VT_ERROR) e o (VT_I4). (Int32)
 	case VT_HRESULT:
-	{}
+	{
+		//Define os dados na estrutura a ser retornada.
+		vi_Resultado->scode = static_cast<UInt32>(Param_Estrutura->scode);
+	}
 		break;
 
 

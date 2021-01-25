@@ -19070,10 +19070,35 @@ namespace CarenRengine
 					//Converte o ponteiro gerenciado para a estrutura SAFEARRAY.
 					PonteiroTrabalho = static_cast<SAFEARRAY*>(Param_Pointer.ToPointer());
 				}
-				CA_SAFEARRAY(const SAFEARRAY*& Param_SafeArray)
+				CA_SAFEARRAY(const SAFEARRAY* Param_SafeArray)
 				{
 					//Define o safe array no ponteiro de trabalho.
 					PonteiroTrabalho = const_cast<SAFEARRAY*>(Param_SafeArray);
+				}
+				CA_SAFEARRAY(const LPSAFEARRAY &Param_SafeArray, Boolean Param_Copiar)
+				{
+					//Variaveis
+					SAFEARRAY* vi_pSafeArrayOut = Nulo;
+					HRESULT Hr = E_FAIL;
+
+					//Verifica se deve copiar o safearray.
+					if (Param_Copiar)
+					{
+						//Cria uma copia do safe array.
+						Hr = SafeArrayCopy(const_cast<SAFEARRAY*>(Param_SafeArray), &vi_pSafeArrayOut);
+
+						//Verifica se ocorreu algum erro.
+						if (!Sucesso(Hr))
+							throw gcnew Exception("Ocorreu uma falha ao tentar criar uma copia do SAFEARRAY.");
+
+						//Define no ponteiro de trabalho.
+						PonteiroTrabalho = vi_pSafeArrayOut;
+					}
+					else
+					{
+						//Define o safe array no ponteiro de trabalho.
+						PonteiroTrabalho = const_cast<SAFEARRAY*>(Param_SafeArray);
+					}
 				}
 				CA_SAFEARRAY(Enumeracoes::CA_VARTYPE Param_vt, UInt32 Param_CountDim, cli::array<CA_SAFEARRAYBOUND>^ Param_Limites)
 				{

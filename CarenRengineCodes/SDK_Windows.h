@@ -47,6 +47,14 @@ namespace CarenRengine
 				virtual Boolean get();
 			}
 
+			/// <summary>
+			/// Proriedade que retorna o size do Fluxo atual. Retorna um valor válido apenas se a classe
+			/// tiver sido iniciada com um dos construtores.
+			/// </summary>
+			property UInt64 Size
+			{
+				virtual UInt64 get();
+			}
 
 			//Métodos
 

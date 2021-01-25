@@ -65,7 +65,7 @@ public:
 	/// <param name="Param_BufferInicial">Uma interface (ICarenBuffer) para os dados iniciais. O conteúdo deste buffer é usado para definir o conteúdo inicial do fluxo de memória. 
 	/// Se este parâmetro for NULO, o fluxo de memória retornado não terá nenhum conteúdo inicial.</param>
 	/// <param name="Param_LarguraBuffer">O número de bytes no buffer apontado por (Param_BufferInicial). Se (Param_BufferInicial) estiver definido como NULO, (Param_LarguraBuffer) deve ser zero.</param>
-	CarenStream(ICarenBuffer^ Param_BufferInicial, UInt32 Param_LarguraBuffer);
+	CarenStream(ICarenBuffer^ Param_BufferInicial, UInt64 Param_LarguraBuffer);
 	
 	/// <summary>
 	/// Cria e inicializa a classe do Stream que se baseia em um fluxo de memória. Este construtor permite criar o fluxo a aprti 
@@ -74,7 +74,15 @@ public:
 	/// <param name="Param_BufferInicial">Uma matriz de bytes para os dados iniciais. O conteúdo deste buffer é usado para definir o conteúdo inicial do fluxo de memória. 
 	/// Se este parâmetro for NULO, o fluxo de memória retornado não terá nenhum conteúdo inicial.</param>
 	/// <param name="Param_LarguraBuffer">O número de bytes no buffer apontado por (Param_BufferInicial). Se (Param_BufferInicial) estiver definido como NULO, (Param_LarguraBuffer) deve ser zero.</param>
-	CarenStream(MatrizBytes Param_BufferInicial, UInt32 Param_LarguraBuffer);
+	CarenStream(MatrizBytes Param_BufferInicial, UInt64 Param_LarguraBuffer);
+
+	/// <summary>
+	/// Cria e inicializa a classe do Stream que se baseia em um ponteiro para um fluxo nativo. Este construtor não adiciona referência a interface nativa a ser 
+	/// definida, o usuário é responsável por adicionar a referência.
+	/// </summary>
+	/// <param name="Param_FluxoNativo">Um ponteiro para uma interface IStream do fluxo a ser definido.</param>
+	/// <param name="Param_LarguraBuffer">O número de bytes no Fluxo nativo a ser definido.</param>
+	CarenStream(const IStream* Param_FluxoNativo, UInt64 Param_LarguraBuffer);
 
 	~CarenStream();
 
@@ -111,6 +119,9 @@ internal:
 	//Variavel que vai conter o ultimo código HRESULT retornado.
 	Int32 Var_Glob_LAST_HRESULT = 0;
 
+	//Variavel que vai conter o valor da propriedade (Size).
+	UInt64 Prop_SizeStream = 0;
+
 
 	//Variaveis publicas
 public:
@@ -124,6 +135,19 @@ public:
 		{
 			//Retorna o valor.
 			return Prop_DisposedClasse;
+		}
+	}
+
+	/// <summary>
+	/// Proriedade que retorna o size do Fluxo atual. Retorna um valor válido apenas se a classe
+	/// tiver sido iniciada com um dos construtores.
+	/// </summary>
+	property UInt64 Size
+	{
+		virtual UInt64 get()
+		{
+			//Retorna o size do fluxo.
+			return Prop_SizeStream;
 		}
 	}
 

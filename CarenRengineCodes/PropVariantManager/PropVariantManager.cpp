@@ -346,13 +346,13 @@ PVOID PropVariantManager::ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT
 		vi_Resultado->decVal = { };
 
 		//Define os dados na estrutura.
-		vi_Resultado->decVal.Hi32 = static_cast<ULONG>(Param_Estrutura->decval.Hi32);
-		vi_Resultado->decVal.Lo32 = static_cast<ULONG>(Param_Estrutura->decval.Lo32);
-		vi_Resultado->decVal.Lo64 = Param_Estrutura->decval.Lo64;
-		vi_Resultado->decVal.Mid32 = static_cast<ULONG>(Param_Estrutura->decval.Mid32);
-		vi_Resultado->decVal.scale = Param_Estrutura->decval.scale;
-		vi_Resultado->decVal.sign = Param_Estrutura->decval.sign;
-		vi_Resultado->decVal.signscale = Param_Estrutura->decval.signscale;
+		vi_Resultado->decVal.Hi32 = static_cast<ULONG>(Param_Estrutura->decVal.Hi32);
+		vi_Resultado->decVal.Lo32 = static_cast<ULONG>(Param_Estrutura->decVal.Lo32);
+		vi_Resultado->decVal.Lo64 = Param_Estrutura->decVal.Lo64;
+		vi_Resultado->decVal.Mid32 = static_cast<ULONG>(Param_Estrutura->decVal.Mid32);
+		vi_Resultado->decVal.scale = Param_Estrutura->decVal.scale;
+		vi_Resultado->decVal.sign = Param_Estrutura->decVal.sign;
+		vi_Resultado->decVal.signscale = Param_Estrutura->decVal.signscale;
 	}
 		break;
 
@@ -1359,6 +1359,7 @@ CA_PROPVARIANT^ PropVariantManager::ConverterPropVariantUnmanaged_ToManaged(PROP
 	//Variaveis utilizadas.
 	VARTYPE vi_Vt = VARENUM::VT_EMPTY;
 	tagSTATSTG vi_StatStream = {};
+	CA_CAPROPVARIANT^ vi_TempCaPropVariant = nullptr;
 
 	//Verifica se a variante não é invalida.
 	if (ObjetoValido(Param_Estrutura))
@@ -1823,83 +1824,430 @@ CA_PROPVARIANT^ PropVariantManager::ConverterPropVariantUnmanaged_ToManaged(PROP
 
 		//(cac) - Representa um estrutura CA_CAC que contém uma matriz de char.
 	case VT_I1 | VT_VECTOR:
-	{}
+	{
+		//Inicializa a estrutura
+		vi_Resultado->cac = CA_CAC();
+
+		//Define o tamanho do array.
+		vi_Resultado->cac.cElems = Param_Estrutura->cac.cElems;
+
+		//Cria o buffer que vai conter os dados.
+		vi_Resultado->cac.pElems = gcnew cli::array<char>(vi_Resultado->cac.cElems);
+
+		//Realiza a copia dos dados.
+		CopiarBufferNativoToGerenciado(
+			&Param_Estrutura->cac.pElems, //Buffer ORIGEM
+			vi_Resultado->cac.pElems,  //Buffer DESTINO
+			vi_Resultado->cac.cElems);
+	}
 		break;
 		//(caub) - Representa um estrutura CA_CAUB que contém uma matriz de Bytes.
 	case VT_UI1 | VT_VECTOR:
-	{}
+	{
+		//Inicializa a estrutura
+		vi_Resultado->caub = CA_CAUB();
+
+		//Define o tamanho do array.
+		vi_Resultado->caub.cElems = Param_Estrutura->caub.cElems;
+
+		//Cria o buffer que vai conter os dados.
+		vi_Resultado->caub.pElems = gcnew cli::array<Byte>(vi_Resultado->caub.cElems);
+
+		//Realiza a copia dos dados.
+		CopiarBufferNativoToGerenciado(
+			&Param_Estrutura->caub.pElems, //Buffer ORIGEM
+			vi_Resultado->caub.pElems,  //Buffer DESTINO
+			vi_Resultado->caub.cElems);
+	}
 		break;
 		//(cai) - Representa um estrutura CA_CAI que contém uma matriz de inteiros assinados de 2 bytes(Int16).
 	case VT_I2 | VT_VECTOR:
-	{}
+	{
+		//Inicializa a estrutura
+		vi_Resultado->cai = CA_CAI();
+
+		//Define o tamanho do array.
+		vi_Resultado->cai.cElems = Param_Estrutura->cai.cElems;
+
+		//Cria o buffer que vai conter os dados.
+		vi_Resultado->cai.pElems = gcnew cli::array<Int16>(vi_Resultado->cai.cElems);
+
+		//Realiza a copia dos dados.
+		CopiarBufferNativoToGerenciado(
+			&Param_Estrutura->cai.pElems, //Buffer ORIGEM
+			vi_Resultado->cai.pElems,  //Buffer DESTINO
+			vi_Resultado->cai.cElems);
+	}
 		break;
 		//(caui) - Representa um estrutura CA_CAUI que contém uma matriz de inteiros não assinados de 2 bytes(UInt16).
 	case VT_UI2 | VT_VECTOR:
-	{}
+	{
+		//Inicializa a estrutura
+		vi_Resultado->caui = CA_CAUI();
+
+		//Define o tamanho do array.
+		vi_Resultado->caui.cElems = Param_Estrutura->caui.cElems;
+
+		//Cria o buffer que vai conter os dados.
+		vi_Resultado->caui.pElems = gcnew cli::array<UInt16>(vi_Resultado->caui.cElems);
+
+		//Realiza a copia dos dados.
+		CopiarBufferNativoToGerenciado(
+			&Param_Estrutura->caui.pElems, //Buffer ORIGEM
+			vi_Resultado->caui.pElems,  //Buffer DESTINO
+			vi_Resultado->caui.cElems);
+	}
 		break;
 		//(cal) - Representa um estrutura CA_CAL que contém uma matriz de inteiros assinados de 4 bytes(Int32).
 	case VT_I4 | VT_VECTOR:
-	{}
+	{
+		//Inicializa a estrutura
+		vi_Resultado->cal = CA_CAL();
+
+		//Define o tamanho do array.
+		vi_Resultado->cal.cElems = Param_Estrutura->cal.cElems;
+
+		//Cria o buffer que vai conter os dados.
+		vi_Resultado->cal.pElems = gcnew cli::array<Int32>(vi_Resultado->cal.cElems);
+
+		//Realiza a copia dos dados.
+		CopiarBufferNativoToGerenciado(
+			&Param_Estrutura->cal.pElems, //Buffer ORIGEM
+			vi_Resultado->cal.pElems,  //Buffer DESTINO
+			vi_Resultado->cal.cElems);
+	}
 		break;
 		//(caul) - Representa um estrutura CA_CAUL que contém uma matriz de inteiros não assinados de 4 bytes(UInt32).
 	case VT_UI4 | VT_VECTOR:
-	{}
+	{
+		//Inicializa a estrutura
+		vi_Resultado->caul = CA_CAUL();
+
+		//Define o tamanho do array.
+		vi_Resultado->caul.cElems = Param_Estrutura->caul.cElems;
+
+		//Cria o buffer que vai conter os dados.
+		vi_Resultado->caul.pElems = gcnew cli::array<UInt32>(vi_Resultado->caul.cElems);
+
+		//Realiza a copia dos dados.
+		CopiarBufferNativoToGerenciado(
+			&Param_Estrutura->caul.pElems, //Buffer ORIGEM
+			vi_Resultado->caul.pElems,  //Buffer DESTINO
+			vi_Resultado->caul.cElems);
+	}
 		break;
 		//(cabool) - Representa um estrutura CA_CABOOL que contém uma matriz de valores Booleanos.
 	case VT_BOOL | VT_VECTOR:
-	{}
+	{
+		//Inicializa a estrutura
+		vi_Resultado->cabool = CA_CABOOL();
+
+		//Define o tamanho do array.
+		vi_Resultado->cabool.cElems = Param_Estrutura->cabool.cElems;
+
+		//Cria o buffer que vai conter os dados.
+		vi_Resultado->cabool.pElems = gcnew cli::array<Boolean>(vi_Resultado->cabool.cElems);
+
+		//Realiza a copia dos dados.
+		for (ULONG i = 0; i < Param_Estrutura->cabool.cElems; i++)
+		{
+			//Converte e define no index especificado.
+			vi_Resultado->cabool.pElems[i] = Param_Estrutura->cabool.pElems[i] == -1 ? true : false;
+		}
+	}
 		break;
 		//(caflt) - Representa um estrutura CA_CAFLT que contém uma matriz de valores reais de 4 bytes(float).
 	case VT_R4 | VT_VECTOR:
-	{}
+	{
+		//Inicializa a estrutura
+		vi_Resultado->caflt = CA_CAFLT();
+
+		//Define o tamanho do array.
+		vi_Resultado->caflt.cElems = Param_Estrutura->caflt.cElems;
+
+		//Cria o buffer que vai conter os dados.
+		vi_Resultado->caflt.pElems = gcnew cli::array<float>(vi_Resultado->caflt.cElems);
+
+		//Realiza a copia dos dados.
+		CopiarBufferNativoToGerenciado(
+			&Param_Estrutura->caflt.pElems, //Buffer ORIGEM
+			vi_Resultado->caflt.pElems,  //Buffer DESTINO
+			vi_Resultado->caflt.cElems);
+	}
 		break;
 		//(cadbl) - Representa um estrutura CA_CADBL que contém uma matriz de valores reais de 8 bytes(double).
 	case VT_R8 | VT_VECTOR:
-	{}
+	{
+		//Inicializa a estrutura
+		vi_Resultado->cadbl = CA_CADBL();
+
+		//Define o tamanho do array.
+		vi_Resultado->cadbl.cElems = Param_Estrutura->cadbl.cElems;
+
+		//Cria o buffer que vai conter os dados.
+		vi_Resultado->cadbl.pElems = gcnew cli::array<double>(vi_Resultado->cadbl.cElems);
+
+		//Realiza a copia dos dados.
+		CopiarBufferNativoToGerenciado(
+			&Param_Estrutura->cadbl.pElems, //Buffer ORIGEM
+			vi_Resultado->cadbl.pElems,  //Buffer DESTINO
+			vi_Resultado->cadbl.cElems);
+	}
 		break;
 		//(cascode) - Representa um estrutura CA_CASCODE que contém uma matriz de inteiros assinados de 4 bytes(Int32).
 	case VT_ERROR | VT_VECTOR:
-	{}
+	{
+		//Inicializa a estrutura
+		vi_Resultado->cascode = CA_CASCODE();
+
+		//Define o tamanho do array.
+		vi_Resultado->cascode.cElems = Param_Estrutura->cascode.cElems;
+
+		//Cria o buffer que vai conter os dados.
+		vi_Resultado->cascode.pElems = gcnew cli::array<Int32>(vi_Resultado->cascode.cElems);
+
+		//Realiza a copia dos dados.
+		CopiarBufferNativoToGerenciado(
+			&Param_Estrutura->cascode.pElems, //Buffer ORIGEM
+			vi_Resultado->cascode.pElems,  //Buffer DESTINO
+			vi_Resultado->cascode.cElems);
+	}
 		break;
 		//(cauh) - Representa um estrutura CA_CAUH que contém uma matriz de estrutruas CA_ULARGE_INTERGER.
 	case VT_UI8 | VT_VECTOR:
-	{}
+	{
+		//Inicializa a estrutura
+		vi_Resultado->cauh = CA_CAUH();
+
+		//Define o tamanho do array.
+		vi_Resultado->cauh.cElems = Param_Estrutura->cauh.cElems;
+
+		//Cria o buffer que vai conter os dados.
+		vi_Resultado->cauh.pElems = gcnew cli::array<CA_ULARGE_INTEGER>(vi_Resultado->cauh.cElems);
+
+		//Realiza a copia dos dados.
+		for (ULONG i = 0; i < Param_Estrutura->cauh.cElems; i++)
+		{
+			//Inicializa a estrutura.
+			vi_Resultado->cauh.pElems[i] = { };
+
+			//Define os dados na estrutura.
+			vi_Resultado->cauh.pElems[i].LowPart = Param_Estrutura->cauh.pElems[i].LowPart;
+			vi_Resultado->cauh.pElems[i].HighPart = Param_Estrutura->cauh.pElems[i].HighPart;
+			vi_Resultado->cauh.pElems[i].QuadPart = Param_Estrutura->cauh.pElems[i].QuadPart;
+		}
+	}
 		break;
 		//(cacy) - Representa um estrutura CA_CACY que contém uma matriz de estrutruas CA_CY.
 	case VT_CY | VT_VECTOR:
-	{}
+	{
+		//Inicializa a estrutura
+		vi_Resultado->cacy = CA_CACY();
+
+		//Define o tamanho do array.
+		vi_Resultado->cacy.cElems = Param_Estrutura->cacy.cElems;
+
+		//Cria o buffer que vai conter os dados.
+		vi_Resultado->cacy.pElems = gcnew cli::array<CA_CY>(vi_Resultado->cacy.cElems);
+
+		//Realiza a copia dos dados.
+		for (ULONG i = 0; i < Param_Estrutura->cacy.cElems; i++)
+		{
+			//Inicializa a estrutura.
+			vi_Resultado->cacy.pElems[i] = { };
+
+			//Define os dados na estrutura.
+			vi_Resultado->cacy.pElems[i].Hi = Param_Estrutura->cacy.pElems[i].Hi;
+			vi_Resultado->cacy.pElems[i].int64 = Param_Estrutura->cacy.pElems[i].int64;
+			vi_Resultado->cacy.pElems[i].Lo = Param_Estrutura->cacy.pElems[i].Lo;
+		}
+	}
 		break;
 		//(cadate) - Representa uma estrutura CA_CADATE que contém uma matriz de valores reais de 8 bytes cada.
 	case VT_DATE | VT_VECTOR:
-	{}
+	{
+		//Inicializa a estrutura
+		vi_Resultado->cadate = CA_CADATE();
+
+		//Define o tamanho do array.
+		vi_Resultado->cadate.cElems = Param_Estrutura->cadate.cElems;
+
+		//Cria o buffer que vai conter os dados.
+		vi_Resultado->cadate.pElems = gcnew cli::array<double>(vi_Resultado->cadate.cElems);
+
+		//Realiza a copia dos dados.
+		CopiarBufferNativoToGerenciado(
+			&Param_Estrutura->cadate.pElems, //Buffer ORIGEM
+			vi_Resultado->cadate.pElems,  //Buffer DESTINO
+			vi_Resultado->cadate.cElems);
+	}
 		break;
 		//(cafiletime) - Representa uma estrutura CA_CAFILETIME que contém uma matriz de estrutruas CA_FILETIME.
 	case VT_FILETIME | VT_VECTOR:
-	{}
+	{
+		//Inicializa a estrutura
+		vi_Resultado->cafiletime = CA_CAFILETIME();
+
+		//Define o tamanho do array.
+		vi_Resultado->cafiletime.cElems = Param_Estrutura->cafiletime.cElems;
+
+		//Cria o buffer que vai conter os dados.
+		vi_Resultado->cafiletime.pElems = gcnew cli::array<CA_FILETIME>(vi_Resultado->cafiletime.cElems);
+
+		//Realiza a copia dos dados.
+		for (ULONG i = 0; i < Param_Estrutura->cafiletime.cElems; i++)
+		{
+			//Inicializa a estrutura.
+			vi_Resultado->cafiletime.pElems[i] = { };
+
+			//Define os dados na estrutura.
+			vi_Resultado->cafiletime.pElems[i].dwHighDateTime = static_cast<UInt32>(Param_Estrutura->cafiletime.pElems[i].dwHighDateTime);
+			vi_Resultado->cafiletime.pElems[i].dwLowDateTime = static_cast<UInt32>(Param_Estrutura->cafiletime.pElems[i].dwLowDateTime);
+		}
+	}
 		break;
 		//(cauuid) - Representa uma estrutura CA_CACLSID que contém uma matriz de GUIDs, implementados como System::String no gerenciado.
 	case VT_CLSID | VT_VECTOR:
-	{}
+	{
+		//Inicializa a estrutura
+		vi_Resultado->cauuid = CA_CACLSID();
+
+		//Define o tamanho do array.
+		vi_Resultado->cauuid.cElems = static_cast<UInt32>(Param_Estrutura->cauuid.cElems);
+
+		//Cria o buffer que vai conter os dados.
+		vi_Resultado->cauuid.pElems = gcnew cli::array<String^>(vi_Resultado->cauuid.cElems);
+
+		//Realiza a copia dos dados.
+		for (ULONG i = 0; i < Param_Estrutura->cauuid.cElems; i++)
+		{
+			//Inicializa e define os dados no index especificado.
+			vi_Resultado->cauuid.pElems[i] = CreateStringFromGuid(Param_Estrutura->cauuid.pElems[i]);
+		}
+	}
 		break;
 		//(caclipdata) - Representa uma estrutura CA_CACLIPDATA que contém uma matriz de estruturas CA_CLIPDATA.
 	case VT_CF | VT_VECTOR:
-	{}
+	{
+		//Inicializa a estrutura
+		vi_Resultado->caclipdata = CA_CACLIPDATA();
+
+		//Define o tamanho do array.
+		vi_Resultado->caclipdata.cElems = static_cast<UInt32>(Param_Estrutura->caclipdata.cElems);
+
+		//Cria o buffer que vai conter os dados.
+		vi_Resultado->caclipdata.pElems = gcnew cli::array<CA_CLIPDATA>(vi_Resultado->caclipdata.cElems);
+
+		//Realiza a copia dos dados.
+		for (ULONG i = 0; i < Param_Estrutura->caclipdata.cElems; i++)
+		{
+			//Inicializa a estrutura
+			vi_Resultado->caclipdata.pElems[i] = CA_CLIPDATA();
+
+			//Define os dados na estrutura.
+			vi_Resultado->caclipdata.pElems[i].cbSize = static_cast<UInt32>(Param_Estrutura->caclipdata.pElems[i].cbSize);
+			vi_Resultado->caclipdata.pElems[i].ulClipFmt = static_cast<int>(Param_Estrutura->caclipdata.pElems[i].ulClipFmt);
+
+			//Verifica se o buffer é valido
+			if (!ObjetoValido(Param_Estrutura->caclipdata.pElems[i].pClipData))
+				continue; //Vai para o proximo laço. O buffer desse index não é valido.
+
+			//Cria o buffer que vai receber os dados.
+			vi_Resultado->caclipdata.pElems[i].pClipData = gcnew CarenBuffer();
+
+			//Cria o buffer e realizar uma copia dos dados.
+			static_cast<ICarenBuffer^>(vi_Resultado->caclipdata.pElems[i].pClipData)->CriarBuffer
+			(
+				IntPtr(Param_Estrutura->caclipdata.pElems[i].pClipData), // Buffer ORIGEM
+				true, // Deve realizar uma copia.
+				vi_Resultado->caclipdata.pElems[i].cbSize, //Tamanho.
+				vi_Resultado->caclipdata.pElems[i].cbSize //Tamanho válido.
+			);
+		}
+	}
 		break;
 		//(cabstr) - Representa uma estrutura CA_CABSTR que contém uma matriz de strings BSTR Unicode, implementados como System::String no gerenciado. 
 	case VT_BSTR | VT_VECTOR:
-	{}
+	{
+		//Inicializa a estrutura
+		vi_Resultado->cabstr = CA_CABSTR();
+
+		//Define o tamanho do array.
+		vi_Resultado->cabstr.cElems = static_cast<UInt32>(Param_Estrutura->cabstr.cElems);
+
+		//Cria o buffer que vai conter os dados.
+		vi_Resultado->cabstr.pElems = gcnew cli::array<String^>(vi_Resultado->cabstr.cElems);
+
+		//Realiza a copia dos dados.
+		for (ULONG i = 0; i < Param_Estrutura->cabstr.cElems; i++)
+		{
+			//Inicializa e define os dados no index especificado.
+			vi_Resultado->cabstr.pElems[i] = gcnew String(Param_Estrutura->cabstr.pElems[i]);
+		}
+	}
 		break;
 		//(calpstr) - Representa uma estrutura CA_CALPSTR que contém uma matriz de char* ANSI, implementados como System::String no gerenciado. 
 	case VT_LPSTR | VT_VECTOR:
-	{}
+	{
+		//Inicializa a estrutura
+		vi_Resultado->calpstr = CA_CALPSTR();
+
+		//Define o tamanho do array.
+		vi_Resultado->calpstr.cElems = static_cast<UInt32>(Param_Estrutura->calpstr.cElems);
+
+		//Cria o buffer que vai conter os dados.
+		vi_Resultado->calpstr.pElems = gcnew cli::array<String^>(vi_Resultado->calpstr.cElems);
+
+		//Realiza a copia dos dados.
+		for (ULONG i = 0; i < Param_Estrutura->calpstr.cElems; i++)
+		{
+			//Inicializa e define os dados no index especificado.
+			vi_Resultado->calpstr.pElems[i] = Marshal::PtrToStringAnsi(IntPtr(Param_Estrutura->calpstr.pElems[i]));
+		}
+	}
 		break;
 		//(calpwstr) - Representa uma estrutura CA_CALPWSTR que contém uma matriz de WCHAR* Unicode, implementados como System::String no gerenciado. 
 	case VT_LPWSTR | VT_VECTOR:
-	{}
+	{
+		//Inicializa a estrutura
+		vi_Resultado->calpwstr = CA_CALPWSTR();
+
+		//Define o tamanho do array.
+		vi_Resultado->calpwstr.cElems = static_cast<UInt32>(Param_Estrutura->calpwstr.cElems);
+
+		//Cria o buffer que vai conter os dados.
+		vi_Resultado->calpwstr.pElems = gcnew cli::array<String^>(vi_Resultado->calpwstr.cElems);
+
+		//Realiza a copia dos dados.
+		for (ULONG i = 0; i < Param_Estrutura->calpwstr.cElems; i++)
+		{
+			//Inicializa e define os dados no index especificado.
+			vi_Resultado->calpwstr.pElems[i] = Marshal::PtrToStringUni(IntPtr(Param_Estrutura->calpwstr.pElems[i]));
+		}
+	}
 		break;
 		//(capropvar) - Representa uma estrutura CA_CAPROPVARIANT que contém uma matriz de estruturas CA_PROPVARIANT.
 	case VT_VARIANT | VT_VECTOR:
-	{}
+	{
+		//Inicializa a estrutura
+		vi_Resultado->capropvar = gcnew CA_CAPROPVARIANT();
+
+		//Converte a estrutura para uma variavel temporaria.
+		vi_TempCaPropVariant = (CA_CAPROPVARIANT^)vi_Resultado->capropvar;
+
+		//Define o tamanho do array.
+		vi_TempCaPropVariant->cElems = static_cast<UInt32>(Param_Estrutura->capropvar.cElems);
+
+		//Cria o buffer que vai conter os dados.
+		vi_TempCaPropVariant->pElems = gcnew cli::array<CA_PROPVARIANT^>(vi_TempCaPropVariant->cElems);
+
+		//Realiza a copia dos dados.
+		for (ULONG i = 0; i < vi_TempCaPropVariant->cElems; i++)
+		{
+			//Converte e define no index a estrutura.
+			vi_TempCaPropVariant->pElems[i] = ConverterPropVariantUnmanaged_ToManaged(&Param_Estrutura->capropvar.pElems[i]);
+		}
+	}
 		break;
 		
 

@@ -21205,7 +21205,7 @@ namespace CarenRengine
 				/// <summary>
 				/// Array que contém os elementos contados da estrutura.
 				/// </summary>
-				cli::array<Byte>^ pElems;
+				cli::array<UInt16>^ pElems;
 			};
 
 			/// <summary>
@@ -21538,7 +21538,7 @@ namespace CarenRengine
 				Object^ pStorage;
 				CA_VersionedStream pVersionedStream;
 				CA_SAFEARRAY^ parray;
-				CA_DEC decval;
+				CA_DEC decVal;
 
 
 				//Matrizes Contadas | VT_VECTOR

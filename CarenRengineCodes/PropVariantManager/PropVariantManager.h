@@ -54,6 +54,42 @@ namespace CarenRengine
 				return memcpy_s(Param_BufferDestino, Param_SizeBufferDestino, Param_BufferOrigem, Param_QuantidadeElementos * sizeof(T));
 			}
 
+			//(MÉTODO EXPERIMENTAL)
+			template<typename TipoArrayNativo, typename TipoArrayGerenciado>
+			void CopiarBufferNativoToGerenciado(TipoArrayNativo** Param_Buffer, cli::array<TipoArrayGerenciado>^% Param_BufferGerenciado, UINT32 Param_TamanhoBuffer)
+			{
+				//Cria um pin para o buffer gerenciado.
+				pin_ptr<TipoArrayGerenciado> PinToIndexZeroBuffer = &Param_BufferGerenciado[0];
+
+				//Converte o pinptr para um buffer do tipo de destino.
+				TipoArrayNativo* pBufferDestino = reinterpret_cast<TipoArrayNativo*>(PinToIndexZeroBuffer);
+
+				//Verifica se é valido
+				if (!ObjetoValido(pBufferDestino))
+					throw gcnew NullReferenceException("(CopiarBufferNativoToGerenciado) - Houve uma falha ao criar uma ligação para o buffer de destino gerenciado através do (pin_ptr).");
+
+				//Copia os dados do nativo para o gerenciado.
+				std::copy(*Param_Buffer, (*Param_Buffer) + Param_TamanhoBuffer, pBufferDestino);
+			}
+
+			//(MÉTODO EXPERIMENTAL)
+			template<typename TipoArrayNativo, typename TipoArrayGerenciado>
+			void CopiarBufferGerenciadoToNativo(cli::array<TipoArrayGerenciado>^% Param_BufferGerenciado, TipoArrayNativo* Param_BufferDestino, UINT32 Param_TamanhoBuffer)
+			{
+				//Cria um pin para o buffer gerenciado.
+				pin_ptr<TipoArrayGerenciado> PinToIndexZeroBuffer = &Param_BufferGerenciado[0];
+
+				//Converte o pinptr para o buffer de origem.
+				TipoArrayNativo* pBufferOrigem = reinterpret_cast<TipoArrayNativo*>(PinToIndexZeroBuffer);
+
+				//Verifica se é valido
+				if (!ObjetoValido(pBufferOrigem))
+					throw gcnew NullReferenceException("(CopiarBufferGerenciadoToNativo) - Houve uma falha ao criar uma ligação para o buffer de origem gerenciado através do (pin_ptr).");
+
+				//Copia os dados do nativo para o gerenciado.
+				std::copy(pBufferOrigem, (pBufferOrigem)+Param_TamanhoBuffer, Param_BufferDestino);
+			}
+
 			//Métodos
 		public:
 			/// <summary>

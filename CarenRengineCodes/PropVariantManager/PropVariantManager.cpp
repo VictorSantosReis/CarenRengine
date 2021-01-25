@@ -124,6 +124,8 @@ PVOID PropVariantManager::ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT
 	ICarenBuffer^ vi_BufferGenTemp = nullptr;
 	IntPtr vi_PointerGenToNativeTemp = DefaultGenPointer;
 	PVOID vi_NativePointerTemp = Nulo;
+	CA_PROPVARIANT^ vi_PropVariantGenTemp = nullptr;
+	CA_CAPROPVARIANT^ vi_CaPropVariantGenTemp = {};
 
 	//Verifica se a variante não é invalida.
 	if (ObjetoGerenciadoValido(Param_Estrutura))
@@ -602,83 +604,493 @@ PVOID PropVariantManager::ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT
 
 		//(cac) - Representa um estrutura CA_CAC que contém uma matriz de char.
 	case VT_I1 | VT_VECTOR:
-	{}
+	{
+		//Inicializa a estrutura.
+		vi_Resultado->cac = {};
+
+		//Define os dados na estrutura.
+		vi_Resultado->cac.cElems = static_cast<ULONG>(Param_Estrutura->cac.cElems);
+
+		//Verififica se o buffer de origem é valido.
+		if (!ObjetoGerenciadoValido(Param_Estrutura->cac.pElems))
+			Sair; // O buffer de origem não é valido.
+
+		//Cria o buffer de destino.
+		vi_Resultado->cac.pElems = CriarMatrizUnidimensional<CHAR>(static_cast<DWORD>(Param_Estrutura->cac.cElems));
+
+		//Cópia os dados do buffer de origem para o de destino.
+		CopiarBufferGerenciadoToNativo(Param_Estrutura->cac.pElems, vi_Resultado->cac.pElems, Param_Estrutura->cac.cElems);
+	}
 		break;
 		//(caub) - Representa um estrutura CA_CAUB que contém uma matriz de Bytes.
 	case VT_UI1 | VT_VECTOR:
-	{}
+	{
+		//Inicializa a estrutura.
+		vi_Resultado->caub = {};
+
+		//Define os dados na estrutura.
+		vi_Resultado->caub.cElems = static_cast<ULONG>(Param_Estrutura->caub.cElems);
+
+		//Verififica se o buffer de origem é valido.
+		if (!ObjetoGerenciadoValido(Param_Estrutura->caub.pElems))
+			Sair; // O buffer de origem não é valido.
+
+		//Cria o buffer de destino.
+		vi_Resultado->caub.pElems = CriarMatrizUnidimensional<BYTE>(static_cast<DWORD>(Param_Estrutura->caub.cElems));
+
+		//Cópia os dados do buffer de origem para o de destino.
+		CopiarBufferGerenciadoToNativo(Param_Estrutura->caub.pElems, vi_Resultado->caub.pElems, Param_Estrutura->caub.cElems);
+	}
 		break;
 		//(cai) - Representa um estrutura CA_CAI que contém uma matriz de inteiros assinados de 2 bytes(Int16).
 	case VT_I2 | VT_VECTOR:
-	{}
+	{
+		//Inicializa a estrutura.
+		vi_Resultado->cai = {};
+
+		//Define os dados na estrutura.
+		vi_Resultado->cai.cElems = static_cast<ULONG>(Param_Estrutura->cai.cElems);
+
+		//Verififica se o buffer de origem é valido.
+		if (!ObjetoGerenciadoValido(Param_Estrutura->cai.pElems))
+			Sair; // O buffer de origem não é valido.
+
+		//Cria o buffer de destino.
+		vi_Resultado->cai.pElems = CriarMatrizUnidimensional<SHORT>(static_cast<DWORD>(Param_Estrutura->cai.cElems));
+
+		//Cópia os dados do buffer de origem para o de destino.
+		CopiarBufferGerenciadoToNativo(Param_Estrutura->cai.pElems, vi_Resultado->cai.pElems, Param_Estrutura->cai.cElems);
+	}
 		break;
 		//(caui) - Representa um estrutura CA_CAUI que contém uma matriz de inteiros não assinados de 2 bytes(UInt16).
 	case VT_UI2 | VT_VECTOR:
-	{}
+	{
+		//Inicializa a estrutura.
+		vi_Resultado->caui = {};
+
+		//Define os dados na estrutura.
+		vi_Resultado->caui.cElems = static_cast<ULONG>(Param_Estrutura->caui.cElems);
+
+		//Verififica se o buffer de origem é valido.
+		if (!ObjetoGerenciadoValido(Param_Estrutura->caui.pElems))
+			Sair; // O buffer de origem não é valido.
+
+		//Cria o buffer de destino.
+		vi_Resultado->caui.pElems = CriarMatrizUnidimensional<USHORT>(static_cast<DWORD>(Param_Estrutura->caui.cElems));
+
+		//Cópia os dados do buffer de origem para o de destino.
+		CopiarBufferGerenciadoToNativo(Param_Estrutura->caui.pElems, vi_Resultado->caui.pElems, Param_Estrutura->caui.cElems);
+	}
 		break;
 		//(cal) - Representa um estrutura CA_CAL que contém uma matriz de inteiros assinados de 4 bytes(Int32).
 	case VT_I4 | VT_VECTOR:
-	{}
+	{
+		//Inicializa a estrutura.
+		vi_Resultado->cal = {};
+
+		//Define os dados na estrutura.
+		vi_Resultado->cal.cElems = static_cast<ULONG>(Param_Estrutura->cal.cElems);
+
+		//Verififica se o buffer de origem é valido.
+		if (!ObjetoGerenciadoValido(Param_Estrutura->cal.pElems))
+			Sair; // O buffer de origem não é valido.
+
+		//Cria o buffer de destino.
+		vi_Resultado->cal.pElems = CriarMatrizUnidimensional<LONG>(static_cast<DWORD>(Param_Estrutura->cal.cElems));
+
+		//Cópia os dados do buffer de origem para o de destino.
+		CopiarBufferGerenciadoToNativo(Param_Estrutura->cal.pElems, vi_Resultado->cal.pElems, Param_Estrutura->cal.cElems);
+	}
 		break;
 		//(caul) - Representa um estrutura CA_CAUL que contém uma matriz de inteiros não assinados de 4 bytes(UInt32).
 	case VT_UI4 | VT_VECTOR:
-	{}
+	{
+		//Inicializa a estrutura.
+		vi_Resultado->caul = {};
+
+		//Define os dados na estrutura.
+		vi_Resultado->caul.cElems = static_cast<ULONG>(Param_Estrutura->caul.cElems);
+
+		//Verififica se o buffer de origem é valido.
+		if (!ObjetoGerenciadoValido(Param_Estrutura->caul.pElems))
+			Sair; // O buffer de origem não é valido.
+
+		//Cria o buffer de destino.
+		vi_Resultado->caul.pElems = CriarMatrizUnidimensional<ULONG>(static_cast<DWORD>(Param_Estrutura->caul.cElems));
+
+		//Cópia os dados do buffer de origem para o de destino.
+		CopiarBufferGerenciadoToNativo(Param_Estrutura->caul.pElems, vi_Resultado->caul.pElems, Param_Estrutura->caul.cElems);
+	}
 		break;
 		//(cabool) - Representa um estrutura CA_CABOOL que contém uma matriz de valores Booleanos.
 	case VT_BOOL | VT_VECTOR:
-	{}
+	{
+		//Inicializa a estrutura.
+		vi_Resultado->cabool = {};
+
+		//Define os dados na estrutura.
+		vi_Resultado->cabool.cElems = static_cast<ULONG>(Param_Estrutura->cabool.cElems);
+
+		//Verififica se o buffer de origem é valido.
+		if (!ObjetoGerenciadoValido(Param_Estrutura->cabool.pElems))
+			Sair; // O buffer de origem não é valido.
+
+		//Cria o buffer de destino.
+		vi_Resultado->cabool.pElems = CriarMatrizUnidimensional<SHORT>(static_cast<DWORD>(Param_Estrutura->cabool.cElems));
+
+		//Cópia os dados do buffer de origem para o de destino.
+		for (ULONG i = 0; i < Param_Estrutura->cabool.cElems; i++)
+		{
+			//Converte de Booleano para Short e define no array de destino.
+			//-1 TRUE | 0 FALSE
+			vi_Resultado->cabool.pElems[i] = Param_Estrutura->cabool.pElems[i] == true ? -1 : 0;
+		}
+	}
 		break;
 		//(caflt) - Representa um estrutura CA_CAFLT que contém uma matriz de valores reais de 4 bytes(float).
 	case VT_R4 | VT_VECTOR:
-	{}
+	{
+		//Inicializa a estrutura.
+		vi_Resultado->caflt = {};
+
+		//Define os dados na estrutura.
+		vi_Resultado->caflt.cElems = static_cast<ULONG>(Param_Estrutura->caflt.cElems);
+
+		//Verififica se o buffer de origem é valido.
+		if (!ObjetoGerenciadoValido(Param_Estrutura->caflt.pElems))
+			Sair; // O buffer de origem não é valido.
+
+		//Cria o buffer de destino.
+		vi_Resultado->caflt.pElems = CriarMatrizUnidimensional<float>(static_cast<DWORD>(Param_Estrutura->caflt.cElems));
+
+		//Cópia os dados do buffer de origem para o de destino.
+		CopiarBufferGerenciadoToNativo(Param_Estrutura->caflt.pElems, vi_Resultado->caflt.pElems, Param_Estrutura->caflt.cElems);
+	}
 		break;
 		//(cadbl) - Representa um estrutura CA_CADBL que contém uma matriz de valores reais de 8 bytes(double).
 	case VT_R8 | VT_VECTOR:
-	{}
+	{
+		//Inicializa a estrutura.
+		vi_Resultado->cadbl = {};
+
+		//Define os dados na estrutura.
+		vi_Resultado->cadbl.cElems = static_cast<ULONG>(Param_Estrutura->cadbl.cElems);
+
+		//Verififica se o buffer de origem é valido.
+		if (!ObjetoGerenciadoValido(Param_Estrutura->cadbl.pElems))
+			Sair; // O buffer de origem não é valido.
+
+		//Cria o buffer de destino.
+		vi_Resultado->cadbl.pElems = CriarMatrizUnidimensional<double>(static_cast<DWORD>(Param_Estrutura->cadbl.cElems));
+
+		//Cópia os dados do buffer de origem para o de destino.
+		CopiarBufferGerenciadoToNativo(Param_Estrutura->cadbl.pElems, vi_Resultado->cadbl.pElems, Param_Estrutura->cadbl.cElems);
+	}
 		break;
 		//(cascode) - Representa um estrutura CA_CASCODE que contém uma matriz de inteiros assinados de 4 bytes(Int32).
 	case VT_ERROR | VT_VECTOR:
-	{}
+	{
+		//Inicializa a estrutura.
+		vi_Resultado->cascode = {};
+
+		//Define os dados na estrutura.
+		vi_Resultado->cascode.cElems = static_cast<ULONG>(Param_Estrutura->cascode.cElems);
+
+		//Verififica se o buffer de origem é valido.
+		if (!ObjetoGerenciadoValido(Param_Estrutura->cascode.pElems))
+			Sair; // O buffer de origem não é valido.
+
+		//Cria o buffer de destino.
+		vi_Resultado->cascode.pElems = CriarMatrizUnidimensional<LONG>(static_cast<DWORD>(Param_Estrutura->cascode.cElems));
+
+		//Cópia os dados do buffer de origem para o de destino.
+		CopiarBufferGerenciadoToNativo(Param_Estrutura->cascode.pElems, vi_Resultado->cascode.pElems, Param_Estrutura->cascode.cElems);
+	}
 		break;
 		//(cauh) - Representa um estrutura CA_CAUH que contém uma matriz de estrutruas CA_ULARGE_INTERGER.
 	case VT_UI8 | VT_VECTOR:
-	{}
+	{
+		//Inicializa a estrutura.
+		vi_Resultado->cauh = {};
+
+		//Define os dados na estrutura.
+		vi_Resultado->cauh.cElems = static_cast<ULONG>(Param_Estrutura->cauh.cElems);
+
+		//Verififica se o buffer de origem é valido.
+		if (!ObjetoGerenciadoValido(Param_Estrutura->cauh.pElems))
+			Sair; // O buffer de origem não é valido.
+
+		//Cria o buffer de destino.
+		vi_Resultado->cauh.pElems = CriarMatrizEstruturas<ULARGE_INTEGER>(static_cast<DWORD>(Param_Estrutura->cauh.cElems));
+
+		//Cópia os dados do buffer de origem para o de destino.
+		for (ULONG i = 0; i < vi_Resultado->cauh.cElems; i++)
+		{
+			//Inicializa a estrutura
+			vi_Resultado->cauh.pElems[i] = { };
+
+			//Define os dados.
+			vi_Resultado->cauh.pElems[i].LowPart = Param_Estrutura->cauh.pElems[i].LowPart;
+			vi_Resultado->cauh.pElems[i].HighPart = Param_Estrutura->cauh.pElems[i].HighPart;
+			vi_Resultado->cauh.pElems[i].QuadPart = Param_Estrutura->cauh.pElems[i].QuadPart;
+		}
+	}
 		break;
 		//(cacy) - Representa um estrutura CA_CACY que contém uma matriz de estrutruas CA_CY.
 	case VT_CY | VT_VECTOR:
-	{}
+	{
+		//Inicializa a estrutura.
+		vi_Resultado->cacy = {};
+
+		//Define os dados na estrutura.
+		vi_Resultado->cacy.cElems = static_cast<ULONG>(Param_Estrutura->cacy.cElems);
+
+		//Verififica se o buffer de origem é valido.
+		if (!ObjetoGerenciadoValido(Param_Estrutura->cacy.pElems))
+			Sair; // O buffer de origem não é valido.
+
+		//Cria o buffer de destino.
+		vi_Resultado->cacy.pElems = CriarMatrizEstruturas<CY>(static_cast<DWORD>(Param_Estrutura->cacy.cElems));
+
+		//Cópia os dados do buffer de origem para o de destino.
+		for (ULONG i = 0; i < vi_Resultado->cacy.cElems; i++)
+		{
+			//Inicializa a estrutura
+			vi_Resultado->cacy.pElems[i] = { };
+
+			//Define os dados.
+			vi_Resultado->cacy.pElems[i].Hi = Param_Estrutura->cacy.pElems[i].Hi;
+			vi_Resultado->cacy.pElems[i].Lo = Param_Estrutura->cacy.pElems[i].Lo;
+			vi_Resultado->cacy.pElems[i].int64 = Param_Estrutura->cacy.pElems[i].int64;
+		}
+	}
 		break;
 		//(cadate) - Representa uma estrutura CA_CADATE que contém uma matriz de valores reais de 8 bytes cada.
 	case VT_DATE | VT_VECTOR:
-	{}
+	{
+		//Inicializa a estrutura.
+		vi_Resultado->cadate = {};
+
+		//Define os dados na estrutura.
+		vi_Resultado->cadate.cElems = static_cast<ULONG>(Param_Estrutura->cadate.cElems);
+
+		//Verififica se o buffer de origem é valido.
+		if (!ObjetoGerenciadoValido(Param_Estrutura->cadate.pElems))
+			Sair; // O buffer de origem não é valido.
+
+		//Cria o buffer de destino.
+		vi_Resultado->cadate.pElems = CriarMatrizUnidimensional<double>(static_cast<DWORD>(Param_Estrutura->cadate.cElems));
+
+		//Cópia os dados do buffer de origem para o de destino.
+		CopiarBufferGerenciadoToNativo(Param_Estrutura->cadate.pElems, vi_Resultado->cadate.pElems, Param_Estrutura->cadate.cElems);
+	}
 		break;
 		//(cafiletime) - Representa uma estrutura CA_CAFILETIME que contém uma matriz de estrutruas CA_FILETIME.
 	case VT_FILETIME | VT_VECTOR:
-	{}
+	{
+		//Inicializa a estrutura.
+		vi_Resultado->cafiletime = {};
+
+		//Define os dados na estrutura.
+		vi_Resultado->cafiletime.cElems = static_cast<ULONG>(Param_Estrutura->cafiletime.cElems);
+
+		//Verififica se o buffer de origem é valido.
+		if (!ObjetoGerenciadoValido(Param_Estrutura->cafiletime.pElems))
+			Sair; // O buffer de origem não é valido.
+
+		//Cria o buffer de destino.
+		vi_Resultado->cafiletime.pElems = CriarMatrizEstruturas<FILETIME>(static_cast<DWORD>(Param_Estrutura->cafiletime.cElems));
+
+		//Cópia os dados do buffer de origem para o de destino.
+		for (ULONG i = 0; i < vi_Resultado->cafiletime.cElems; i++)
+		{
+			//Inicializa a estrutura
+			vi_Resultado->cafiletime.pElems[i] = { };
+
+			//Define os dados.
+			vi_Resultado->cafiletime.pElems[i].dwLowDateTime = Param_Estrutura->cafiletime.pElems[i].dwLowDateTime;
+			vi_Resultado->cafiletime.pElems[i].dwHighDateTime = Param_Estrutura->cafiletime.pElems[i].dwHighDateTime;
+		}
+	}
 		break;
 		//(cauuid) - Representa uma estrutura CA_CACLSID que contém uma matriz de GUIDs, implementados como System::String no gerenciado.
 	case VT_CLSID | VT_VECTOR:
-	{}
+	{
+		//Inicializa a estrutura.
+		vi_Resultado->cauuid = {};
+
+		//Define os dados na estrutura.
+		vi_Resultado->cauuid.cElems = static_cast<ULONG>(Param_Estrutura->cauuid.cElems);
+
+		//Verififica se o buffer de origem é valido.
+		if (!ObjetoGerenciadoValido(Param_Estrutura->cauuid.pElems))
+			Sair; // O buffer de origem não é valido.
+
+		//Cria o buffer de destino.
+		vi_Resultado->cauuid.pElems = CriarMatrizUnidimensional<CLSID>(static_cast<DWORD>(Param_Estrutura->cauuid.cElems));
+
+		//Cópia os dados do buffer de origem para o de destino.
+		for (ULONG i = 0; i < vi_Resultado->cauuid.cElems; i++)
+		{
+			//Converte e define os dados.
+			vi_Resultado->cauuid.pElems[i] = CreateGuidFromString(Param_Estrutura->cauuid.pElems[i]);
+		}
+	}
 		break;
 		//(caclipdata) - Representa uma estrutura CA_CACLIPDATA que contém uma matriz de estruturas CA_CLIPDATA.
 	case VT_CF | VT_VECTOR:
-	{}
+	{
+		//Inicializa a estrutura.
+		vi_Resultado->caclipdata = {};
+
+		//Define os dados na estrutura.
+		vi_Resultado->caclipdata.cElems = static_cast<ULONG>(Param_Estrutura->caclipdata.cElems);
+
+		//Verififica se o buffer de origem é valido.
+		if (!ObjetoGerenciadoValido(Param_Estrutura->caclipdata.pElems))
+			Sair; // O buffer de origem não é valido.
+
+		//Cria o buffer de destino.
+		vi_Resultado->caclipdata.pElems = CriarMatrizEstruturas<CLIPDATA>(static_cast<DWORD>(Param_Estrutura->caclipdata.cElems));
+
+		//Cópia os dados do buffer de origem para o de destino.
+		for (ULONG i = 0; i < vi_Resultado->caclipdata.cElems; i++)
+		{
+			//Inicializa a estrutura.
+			vi_Resultado->caclipdata.pElems[i] = {};
+
+			//Define os dados Base.
+			vi_Resultado->caclipdata.pElems[i].cbSize = Param_Estrutura->caclipdata.pElems[i].cbSize;
+			vi_Resultado->caclipdata.pElems[i].ulClipFmt = Param_Estrutura->caclipdata.pElems[i].ulClipFmt;
+
+			//Verifica se o buffer é valido, se não for vai para o proximo laço de verificação.
+			if (!ObjetoGerenciadoValido(Param_Estrutura->caclipdata.pElems[i].pClipData))
+				continue; //Pula para o proximo laço
+
+			//Obtém a interface que contém o buffer.
+			vi_BufferGenTemp = (ICarenBuffer^)Param_Estrutura->caclipdata.pElems[i].pClipData;
+
+			//Obtém um ponteiro para os dados.
+			vi_BufferGenTemp->ObterPonteiroInterno(vi_PointerGenToNativeTemp);
+
+			//Converte o intptr em um ponteiro nativo.
+			vi_NativePointerTemp = vi_PointerGenToNativeTemp.ToPointer();
+
+			//Cria o buffer de destino que vai receber os dados.
+			vi_Resultado->caclipdata.pElems[i].pClipData = CriarMatrizUnidimensional<BYTE>(static_cast<DWORD>(vi_Resultado->caclipdata.pElems[i].cbSize));
+
+			//Copia os dados do buffer de origem para o buffer de destino.
+			CopiarMemoria(
+				vi_Resultado->caclipdata.pElems[i].pClipData, //Buffer de DESTINO.
+				vi_Resultado->caclipdata.pElems[i].cbSize, 
+				static_cast<BYTE*>(vi_NativePointerTemp), //Buffer de ORIGEM.
+				vi_Resultado->caclipdata.pElems[i].cbSize);
+
+			//Limpa os dados.
+			vi_BufferGenTemp = nullptr;
+			vi_PointerGenToNativeTemp = DefaultGenPointer;
+			vi_NativePointerTemp = Nulo;
+		}
+	}
 		break;
 		//(cabstr) - Representa uma estrutura CA_CABSTR que contém uma matriz de strings BSTR Unicode, implementados como System::String no gerenciado. 
 	case VT_BSTR | VT_VECTOR:
-	{}
+	{
+		//Inicializa a estrutura.
+		vi_Resultado->cabstr = {};
+
+		//Define os dados na estrutura.
+		vi_Resultado->cabstr.cElems = static_cast<ULONG>(Param_Estrutura->cabstr.cElems);
+
+		//Verififica se o buffer de origem é valido.
+		if (!ObjetoGerenciadoValido(Param_Estrutura->cabstr.pElems))
+			Sair; // O buffer de origem não é valido.
+
+		//Cria o buffer de destino.
+		vi_Resultado->cabstr.pElems = CriarMatrizPonteiros<WCHAR>(Param_Estrutura->cabstr.cElems);
+
+		//Cópia os dados do buffer de origem para o de destino.
+		for (ULONG i = 0; i < vi_Resultado->cabstr.cElems; i++)
+		{
+			//Converte e define os dados.
+			vi_Resultado->cabstr.pElems[i] = static_cast<BSTR>(Marshal::StringToBSTR(Param_Estrutura->cabstr.pElems[i]).ToPointer());
+		}
+	}
 		break;
 		//(calpstr) - Representa uma estrutura CA_CALPSTR que contém uma matriz de char* ANSI, implementados como System::String no gerenciado. 
 	case VT_LPSTR | VT_VECTOR:
-	{}
+	{
+		//Inicializa a estrutura.
+		vi_Resultado->calpstr = {};
+
+		//Define os dados na estrutura.
+		vi_Resultado->calpstr.cElems = static_cast<ULONG>(Param_Estrutura->calpstr.cElems);
+
+		//Verififica se o buffer de origem é valido.
+		if (!ObjetoGerenciadoValido(Param_Estrutura->calpstr.pElems))
+			Sair; // O buffer de origem não é valido.
+
+		//Cria o buffer de destino.
+		vi_Resultado->calpstr.pElems = CriarMatrizPonteiros<CHAR>(Param_Estrutura->calpstr.cElems);
+
+		//Cópia os dados do buffer de origem para o de destino.
+		for (ULONG i = 0; i < vi_Resultado->calpstr.cElems; i++)
+		{
+			//Converte e define os dados.
+			vi_Resultado->calpstr.pElems[i] = static_cast<LPSTR>(Marshal::StringToCoTaskMemAnsi(Param_Estrutura->calpstr.pElems[i]).ToPointer());
+		}
+	}
 		break;
 		//(calpwstr) - Representa uma estrutura CA_CALPWSTR que contém uma matriz de WCHAR* Unicode, implementados como System::String no gerenciado. 
 	case VT_LPWSTR | VT_VECTOR:
-	{}
+	{
+		//Inicializa a estrutura.
+		vi_Resultado->calpwstr = {};
+
+		//Define os dados na estrutura.
+		vi_Resultado->calpwstr.cElems = static_cast<ULONG>(Param_Estrutura->calpwstr.cElems);
+
+		//Verififica se o buffer de origem é valido.
+		if (!ObjetoGerenciadoValido(Param_Estrutura->calpwstr.pElems))
+			Sair; // O buffer de origem não é valido.
+
+		//Cria o buffer de destino.
+		vi_Resultado->calpwstr.pElems = CriarMatrizPonteiros<WCHAR>(Param_Estrutura->calpwstr.cElems);
+
+		//Cópia os dados do buffer de origem para o de destino.
+		for (ULONG i = 0; i < vi_Resultado->calpwstr.cElems; i++)
+		{
+			//Converte e define os dados.
+			vi_Resultado->calpwstr.pElems[i] = static_cast<LPWSTR>(Marshal::StringToCoTaskMemUni(Param_Estrutura->calpwstr.pElems[i]).ToPointer());
+		}
+	}
 		break;
 		//(capropvar) - Representa uma estrutura CA_CAPROPVARIANT que contém uma matriz de estruturas CA_PROPVARIANT.
 	case VT_VARIANT | VT_VECTOR:
-	{}
+	{
+		//Converte o objeto para sua representação real.
+		vi_CaPropVariantGenTemp = (CA_CAPROPVARIANT^)Param_Estrutura->capropvar;
+
+		//Inicializa a estrutura.
+		vi_Resultado->capropvar = {};
+
+		//Define os dados na estrutura.
+		vi_Resultado->capropvar.cElems = static_cast<ULONG>(vi_CaPropVariantGenTemp->cElems);
+
+		//Verififica se o buffer de origem é valido.
+		if (!ObjetoGerenciadoValido(vi_CaPropVariantGenTemp->pElems))
+			Sair; // O buffer de origem não é valido.
+
+		//Cria o buffer de destino.
+		vi_Resultado->capropvar.pElems = CriarMatrizEstruturas<PROPVARIANT>(static_cast<DWORD>(vi_CaPropVariantGenTemp->cElems));
+
+		//Cópia os dados do buffer de origem para o de destino.
+		for (ULONG i = 0; i < vi_Resultado->capropvar.cElems; i++)
+		{
+			//Converte a estrutura e define no index de destino.
+			vi_Resultado->capropvar.pElems[i] = *(static_cast<PROPVARIANT*>(ConverterPropVariantManaged_ToUnmanaged(vi_CaPropVariantGenTemp->pElems[i])));
+		}
+	}
 		break;
 		
 

@@ -343,6 +343,7 @@ namespace CarenRengine
 				//Copia os dados do nativo para o gerenciado.
 				std::copy(*Param_Buffer, (*Param_Buffer) + Param_TamanhoBuffer, pBufferDestino);
 			}
+		
 			//(MÉTODO EXPERIMENTAL)
 			template<typename TipoArrayNativo, typename TipoArrayGerenciado>
 			void CopiarBufferGerenciado_ToNativo(cli::array<TipoArrayGerenciado>^% Param_BufferGerenciado, TipoArrayNativo* Param_BufferDestino, UINT32 Param_TamanhoBuffer)
@@ -360,7 +361,6 @@ namespace CarenRengine
 				//Copia os dados do nativo para o gerenciado.
 				std::copy(pBufferOrigem, (pBufferOrigem) + Param_TamanhoBuffer, Param_BufferDestino);
 			}
-
 
 			//(MÉTODO EXPERIMENTAL) Método responsável por obter o ponteiro nativo na interface gerenciada e definir em uma matriz de ponteiros do mesmo tipo nativo.
 			template<typename TipoInterfaceNativa, typename TipoInterfaceGerenciada>
@@ -383,26 +383,6 @@ namespace CarenRengine
 				{
 					(reinterpret_cast<ICaren^>(Param_ArrayInterfacesDestino[i]))->AdicionarPonteiro(Param_ArrayInterfacesNativas[i]);
 				}
-			}
-
-			//Converte uma PropVariant Gerenciada para uma não gerenciada. O usuário é responsável por iniciar a PropVariant
-			bool ConvertPropVariantManagedToUnamaged(CA_PROPVARIANT^ Param_PropVariantManaged, PROPVARIANT& Param_PropVariant)
-			{
-				//Variavel que vai retornar o resultado.
-				bool EstruturaRetorno = false;
-
-				//Retorna o resultado.
-				return EstruturaRetorno;
-			}
-
-			//Converte uma PropVariant não gerenciada para uma gerenciada.
-			CA_PROPVARIANT^ ConvertPropVariantUnmanagedToManaged(PROPVARIANT& Param_PropVariant)
-			{
-				//Variavel que vai ser retornada.
-				CA_PROPVARIANT^ EstruturaRetorno = nullptr;
-
-				//Retorna o resultado.
-				return EstruturaRetorno;
 			}
 
 			//É PRECISO REFAZER A CONVERSÃO E ADICIONAR MAIS SUPORTE AO VARENUM GERENCIADO.

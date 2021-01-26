@@ -828,13 +828,14 @@ CarenResult MediaFoundationFunctions::_MFGetSupportedMimeTypes(OutParam CA_PROPV
 
 	//Variaveis utilizadas.
 	Utilidades Util;
-	PROPVARIANT* vi_pPropVar = Nulo;
+	PropVariantManager UtilVariant = PropVariantManager();
+	LPPROPVARIANT vi_PropVar = Nulo;
 
 	//Inicializa a propvariant.
-	PropVariantInit(vi_pPropVar);
+	PropVariantInit(vi_PropVar);
 
 	//Chama o método para realizar a operação.
-	Hr = MFGetSupportedMimeTypes(vi_pPropVar);
+	Hr = MFGetSupportedMimeTypes(vi_PropVar);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -849,12 +850,12 @@ CarenResult MediaFoundationFunctions::_MFGetSupportedMimeTypes(OutParam CA_PROPV
 	}
 
 	//Converte a propvariant nativa para a gerenciada e define no parametro de saida.
-	Param_Out_Mimes = Util.ConvertPropVariantUnmanagedToManaged(*vi_pPropVar);
+	Param_Out_Mimes = UtilVariant.ConverterPropVariantUnmanaged_ToManaged(vi_PropVar);
 
 Done:;
 	//Libera a memória utilizada pela propvariant.
-	if (ObjetoValido(vi_pPropVar))
-		PropVariantClear(vi_pPropVar);
+	if (ObjetoValido(vi_PropVar))
+		PropVariantClear(vi_PropVar);
 
 	//Retorna o resultado
 	return Resultado;
@@ -869,13 +870,14 @@ CarenResult MediaFoundationFunctions::_MFGetSupportedSchemes(OutParam CA_PROPVAR
 
 	//Variaveis utilizadas.
 	Utilidades Util;
-	PROPVARIANT* vi_pPropVar = Nulo;
+	PropVariantManager UtilVariant = PropVariantManager();
+	LPPROPVARIANT vi_PropVar = Nulo;
 
 	//Inicializa a propvariant.
-	PropVariantInit(vi_pPropVar);
+	PropVariantInit(vi_PropVar);
 
 	//Chama o método para realizar a operação.
-	Hr = MFGetSupportedSchemes(vi_pPropVar);
+	Hr = MFGetSupportedSchemes(vi_PropVar);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -890,12 +892,12 @@ CarenResult MediaFoundationFunctions::_MFGetSupportedSchemes(OutParam CA_PROPVAR
 	}
 
 	//Converte a propvariant nativa para a gerenciada e define no parametro de saida.
-	Param_Out_Schemes = Util.ConvertPropVariantUnmanagedToManaged(*vi_pPropVar);
+	Param_Out_Schemes = UtilVariant.ConverterPropVariantUnmanaged_ToManaged(vi_PropVar);
 
 Done:;
 	//Libera a memória utilizada pela propvariant.
-	if (ObjetoValido(vi_pPropVar))
-		PropVariantClear(vi_pPropVar);
+	if (ObjetoValido(vi_PropVar))
+		PropVariantClear(vi_PropVar);
 
 	//Retorna o resultado
 	return Resultado;

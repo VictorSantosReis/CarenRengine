@@ -671,17 +671,14 @@ CarenResult CarenMFMediaSourceEx::Start(ICarenMFPresentationDescriptor^ Param_De
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
-	PROPVARIANT PropVar;
+	Utilidades Util;
+	PropVariantManager UtilVariant = PropVariantManager();
+	LPPROPVARIANT vi_PropVar = Nulo;
 	IMFPresentationDescriptor* pDescritorApresentation = NULL;
 	GUID GuidFormatoHora = GUID_NULL;
-	Utilidades Util;
-	
-
-	//Inicia a PropVariant
-	PropVariantInit(&PropVar);
 
 	//Converte a PropVariant gerenciada para uma não gerenciada.
-	Util.ConvertPropVariantManagedToUnamaged(Param_PosiçãoInicio, PropVar);
+	vi_PropVar = static_cast<LPPROPVARIANT>(UtilVariant.ConverterPropVariantManaged_ToUnmanaged(Param_PosiçãoInicio));
 
 	//Verifica se foi especificado o guid
 	if (String::IsNullOrEmpty(Param_GuidTimeFormato))
@@ -695,7 +692,7 @@ CarenResult CarenMFMediaSourceEx::Start(ICarenMFPresentationDescriptor^ Param_De
 	}
 
 	//Obtém o ponteiro do descritor de apresentação
-	Resultado = Param_DescritorApresentação->RecuperarPonteiro((LPVOID*)& pDescritorApresentation);
+	Resultado = Param_DescritorApresentação->RecuperarPonteiro((LPVOID*)&pDescritorApresentation);
 
 	//Verifica o resultado
 	if (Resultado.StatusCode != ResultCode::SS_OK)
@@ -705,7 +702,7 @@ CarenResult CarenMFMediaSourceEx::Start(ICarenMFPresentationDescriptor^ Param_De
 	}
 
 	//Chama o método para poder iniciar.
-	Hr = PonteiroTrabalho->Start(pDescritorApresentation, &GuidFormatoHora, &PropVar);
+	Hr = PonteiroTrabalho->Start(pDescritorApresentation, &GuidFormatoHora, const_cast<PROPVARIANT*>(vi_PropVar));
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -724,7 +721,7 @@ CarenResult CarenMFMediaSourceEx::Start(ICarenMFPresentationDescriptor^ Param_De
 
 Done:;
 	//Libera a PropVariant
-	PropVariantClear(&PropVar);
+	PropVariantClear(vi_PropVar);
 
 	//Retorna o resultado
 	return Resultado;
@@ -1031,7 +1028,8 @@ Done:;
 /// <param name="Param_GuidExtendedType">O tipo estendido. Se o evento não tiver um tipo estendido, defina como NULO. O tipo estendido é retornado pelo método (ICarenMFMediaEvent.GetExtendedType) do evento.</param>
 /// <param name="Param_HResultCode">Um código de sucesso ou falha indicando o status do evento. Esse valor é retornado pelo método (ICarenMFMediaEvent.GetStatus) do evento.</param>
 /// <param name="Param_Dados">uma CA_PROPVARIANT que contém o valor do evento. Este parâmetro pode ser NULO. Esse valor é retornado pelo método (ICarenMFMediaEvent.GetValue) do evento.</param>
-CarenResult CarenMFMediaSourceEx::InserirEventoFila(Enumeracoes::CA_MediaEventType Param_TipoEvento, String^ Param_GuidExtendedType, Int32 Param_HResultCode, Estruturas::CA_PROPVARIANT^ Param_Dados) {
+CarenResult CarenMFMediaSourceEx::InserirEventoFila(Enumeracoes::CA_MediaEventType Param_TipoEvento, String^ Param_GuidExtendedType, Int32 Param_HResultCode, Estruturas::CA_PROPVARIANT^ Param_Dados) 
+{
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
 
@@ -1040,9 +1038,9 @@ CarenResult CarenMFMediaSourceEx::InserirEventoFila(Enumeracoes::CA_MediaEventTy
 
 	//Variaveis utilizadas pelo método
 	Utilidades Util;
-	
+	PropVariantManager UtilVariant = PropVariantManager();
 	MediaEventType MTypeEvento = static_cast<MediaEventType>(Param_TipoEvento);
-	PROPVARIANT PropVar;
+	LPPROPVARIANT vi_PropVar = Nulo;
 	bool PropVarConverted = false;
 	GUID GuidExtendedType = GUID_NULL;
 	HRESULT ValorResultEvento = Param_HResultCode;
@@ -1057,23 +1055,28 @@ CarenResult CarenMFMediaSourceEx::InserirEventoFila(Enumeracoes::CA_MediaEventTy
 	//Verifica se forneceu dados para o evento.
 	if (Param_Dados != nullptr)
 	{
-		//Inicializa a PropVariant 
-		PropVariantInit(&PropVar);
+		//Converte a PropVariant gerenciada para a nativa.
+		vi_PropVar = static_cast<LPPROPVARIANT>(UtilVariant.ConverterPropVariantManaged_ToUnmanaged(Param_Dados));
 
-		//Converte os dados da propvariant gerenciada para a não gerenciada.
-		PropVarConverted = Util.ConvertPropVariantManagedToUnamaged(Param_Dados, PropVar);
-
-		//Verifica o resultado
-		if (!PropVarConverted)
+		//Verifica se não ocorreu um erro na conversão.
+		if (!ObjetoValido(vi_PropVar))
 		{
-			//A PropVariant não foi convertida com sucesso.
+			//Falhou ao converter a propvariant.
+
+			//Define falha.
+			Resultado.AdicionarCodigo(ResultCode::ER_CONVERSAO_PROPVARIANT, false);
+
 			//Sai do método
-			goto Done;
+			Sair;
 		}
 	}
 
 	//Chama o método para adicionar o evento na lista
-	Hr = PonteiroTrabalho->QueueEvent(MTypeEvento, GuidExtendedType != GUID_NULL ? GuidExtendedType : GUID_NULL, ValorResultEvento, Param_Dados != nullptr ? &PropVar : NULL);
+	Hr = PonteiroTrabalho->QueueEvent(
+		MTypeEvento, 
+		GuidExtendedType, 
+		ValorResultEvento,
+		Param_Dados != nullptr ? vi_PropVar : NULL);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -1092,10 +1095,7 @@ CarenResult CarenMFMediaSourceEx::InserirEventoFila(Enumeracoes::CA_MediaEventTy
 
 Done:;
 	//Libera a PropVariant
-	PropVariantClear(&PropVar);
-
-	//Limpa o guid
-	GuidExtendedType = GUID_NULL;
+	PropVariantClear(vi_PropVar);
 
 	//Retorna o resultado da operação.
 	return Resultado;

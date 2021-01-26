@@ -420,12 +420,12 @@ CarenResult CarenMMDevice::Activate(String^ Param_GuidInterface, Enumeracoes::CA
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
+	Utilidades Util;
+	PropVariantManager UtilVariant = PropVariantManager();
 	LPVOID pInterfaceSolcitada = NULL;
 	GUID GuidInterface = GUID_NULL;
 	DWORD clsctxvalue = (DWORD)Param_ContextoEx;
-	PROPVARIANT pPropVar = { 0 };
-	
-	Utilidades Util;
+	LPPROPVARIANT vi_pPropVar = Nulo;	
 	
 	//Cria o guid da interface solicitada.
 	GuidInterface = Util.CreateGuidFromString(Param_GuidInterface);
@@ -433,27 +433,24 @@ CarenResult CarenMMDevice::Activate(String^ Param_GuidInterface, Enumeracoes::CA
 	//Verifica se o usuário especificou uma PropertyStore
 	if (Param_ParmetrosActive != nullptr)
 	{
-		//Inicializa a PropVariant.
-		PropVariantInit(&pPropVar);
+		//Converte a PropVariant gerenciada para a nativa.
+		vi_pPropVar = static_cast<LPPROPVARIANT>(UtilVariant.ConverterPropVariantManaged_ToUnmanaged(Param_ParmetrosActive));
 
-		//Chama o método que vai converter a estrutura gerenciada em um ponteiro para a PropertyStore.
-		bool CreatePropVar = Util.ConvertPropVariantManagedToUnamaged(Param_ParmetrosActive, pPropVar);
-
-		//Verifica se não houve erro ao preencher os dados da propvariant.
-		if(!CreatePropVar)
+		//Verifica se não ocorreu um erro na conversão.
+		if (!ObjetoValido(vi_pPropVar))
 		{
-			//O método falhou em converter a propvariant.
+			//Falhou ao converter a propvariant.
 
-			//Define falha de conversão
+			//Define falha.
 			Resultado.AdicionarCodigo(ResultCode::ER_CONVERSAO_PROPVARIANT, false);
 
 			//Sai do método
-			goto Done;
+			Sair;
 		}
 	}
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->Activate(GuidInterface, clsctxvalue, Param_ParmetrosActive != nullptr ? &pPropVar : NULL, &pInterfaceSolcitada);
+	Hr = PonteiroTrabalho->Activate(GuidInterface, clsctxvalue, Param_ParmetrosActive != nullptr ? vi_pPropVar : NULL, &pInterfaceSolcitada);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -475,7 +472,7 @@ CarenResult CarenMMDevice::Activate(String^ Param_GuidInterface, Enumeracoes::CA
 
 Done:;
 	//Libera a propvariant inicializada
-	PropVariantClear(&pPropVar);
+	PropVariantClear(vi_pPropVar);
 
 	//Retorna o resultado.
 	return Resultado;

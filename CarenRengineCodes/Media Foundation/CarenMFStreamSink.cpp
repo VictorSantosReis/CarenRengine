@@ -613,10 +613,10 @@ CarenResult CarenMFStreamSink::PlaceMarker(Enumeracoes::CA_MFSTREAMSINK_MARKER_T
 
 	//Variveis utilizadas no método
 	Utilidades Util;
-	PROPVARIANT PropValorAdd = {};
-	PROPVARIANT PropDadosAnexoEvento = {};
+	PropVariantManager UtilVariant = PropVariantManager();
+	LPPROPVARIANT vi_pPropValorAdd = Nulo;
+	LPPROPVARIANT vi_pPropDadosAnexoEvento = Nulo;
 	MFSTREAMSINK_MARKER_TYPE Marcador;
-	bool CriarPropVariant = false;
 
 	//Verifica se define na variavel o marcador definido pelo usuario
 	switch (Param_Marcador)
@@ -647,20 +647,19 @@ CarenResult CarenMFStreamSink::PlaceMarker(Enumeracoes::CA_MFSTREAMSINK_MARKER_T
 	{
 		//Vai adicionar valores adicionais ao marcador
 
-		//Cria a PropVariant.
-		PropVariantInit(&PropValorAdd);
+		//Converte a PropVariant gerenciada para a nativa.
+		vi_pPropValorAdd = static_cast<LPPROPVARIANT>(UtilVariant.ConverterPropVariantManaged_ToUnmanaged(Param_ValorAdicional));
 
-		//Chama o méto para criar a PropVariant a parti da PropVariant não gerenciada
-		CriarPropVariant = Util.ConvertPropVariantManagedToUnamaged(Param_ValorAdicional, PropValorAdd);
-
-		//Verifica se não falhou ao criar a PropVariant
-		if (!CriarPropVariant)
+		//Verifica se não ocorreu um erro na conversão.
+		if (!ObjetoValido(vi_pPropValorAdd))
 		{
-			//Define que falhou ao criar a PropVariant.
+			//Falhou ao converter a propvariant.
+
+			//Define falha.
 			Resultado.AdicionarCodigo(ResultCode::ER_CONVERSAO_PROPVARIANT, false);
 
 			//Sai do método
-			goto Done;
+			Sair;
 		}
 	}
 	else
@@ -673,20 +672,19 @@ CarenResult CarenMFStreamSink::PlaceMarker(Enumeracoes::CA_MFSTREAMSINK_MARKER_T
 	{
 		//Vai anexa um valor ao evento.
 
-		//Cria a PropVariant.
-		PropVariantInit(&PropDadosAnexoEvento);
+		//Converte a PropVariant gerenciada para a nativa.
+		vi_pPropDadosAnexoEvento = static_cast<LPPROPVARIANT>(UtilVariant.ConverterPropVariantManaged_ToUnmanaged(Param_DadosAnexoEvento));
 
-		//Chama o método para criar a PropVariant.
-		CriarPropVariant = Util.ConvertPropVariantManagedToUnamaged(Param_DadosAnexoEvento, PropDadosAnexoEvento);
-
-		//Verifica se não falhou ao criar a PropVariant
-		if (!CriarPropVariant)
+		//Verifica se não ocorreu um erro na conversão.
+		if (!ObjetoValido(vi_pPropDadosAnexoEvento))
 		{
-			//Define que falhou ao criar a PropVariant.
+			//Falhou ao converter a propvariant.
+
+			//Define falha.
 			Resultado.AdicionarCodigo(ResultCode::ER_CONVERSAO_PROPVARIANT, false);
 
 			//Sai do método
-			goto Done;
+			Sair;
 		}
 	}
 	else
@@ -697,7 +695,10 @@ CarenResult CarenMFStreamSink::PlaceMarker(Enumeracoes::CA_MFSTREAMSINK_MARKER_T
 	}
 
 	//Chama o método para definir o marcador.
-	Hr = PonteiroTrabalho->PlaceMarker(Marcador, Param_ValorAdicional != nullptr? &PropValorAdd: NULL, Param_DadosAnexoEvento != nullptr ? &PropDadosAnexoEvento : NULL);
+	Hr = PonteiroTrabalho->PlaceMarker(
+		Marcador, 
+		Param_ValorAdicional != nullptr? vi_pPropValorAdd: NULL, 
+		Param_DadosAnexoEvento != nullptr ? vi_pPropDadosAnexoEvento : NULL);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -719,8 +720,8 @@ CarenResult CarenMFStreamSink::PlaceMarker(Enumeracoes::CA_MFSTREAMSINK_MARKER_T
 
 Done:;
 	//Limpa as PropVariants
-	PropVariantClear(&PropValorAdd);
-	PropVariantClear(&PropDadosAnexoEvento);
+	PropVariantClear(vi_pPropValorAdd);
+	PropVariantClear(vi_pPropDadosAnexoEvento);
 
 	//Retorna o resultado
 	return Resultado;
@@ -973,9 +974,9 @@ CarenResult CarenMFStreamSink::InserirEventoFila(Enumeracoes::CA_MediaEventType 
 
 	//Variaveis utilizadas pelo método
 	Utilidades Util;
-	
+	PropVariantManager UtilVariant = PropVariantManager();
 	MediaEventType MTypeEvento = static_cast<MediaEventType>(Param_TipoEvento);
-	PROPVARIANT PropVar;
+	LPPROPVARIANT vi_PropVar = Nulo;
 	bool PropVarConverted = false;
 	GUID GuidExtendedType = GUID_NULL;
 	HRESULT ValorResultEvento = Param_HResultCode;
@@ -990,23 +991,28 @@ CarenResult CarenMFStreamSink::InserirEventoFila(Enumeracoes::CA_MediaEventType 
 	//Verifica se forneceu dados para o evento.
 	if (Param_Dados != nullptr)
 	{
-		//Inicializa a PropVariant 
-		PropVariantInit(&PropVar);
+		//Converte a PropVariant gerenciada para a nativa.
+		vi_PropVar = static_cast<LPPROPVARIANT>(UtilVariant.ConverterPropVariantManaged_ToUnmanaged(Param_Dados));
 
-		//Converte os dados da propvariant gerenciada para a não gerenciada.
-		PropVarConverted = Util.ConvertPropVariantManagedToUnamaged(Param_Dados, PropVar);
-
-		//Verifica o resultado
-		if (!PropVarConverted)
+		//Verifica se não ocorreu um erro na conversão.
+		if (!ObjetoValido(vi_PropVar))
 		{
-			//A PropVariant não foi convertida com sucesso.
+			//Falhou ao converter a propvariant.
+
+			//Define falha.
+			Resultado.AdicionarCodigo(ResultCode::ER_CONVERSAO_PROPVARIANT, false);
+
 			//Sai do método
-			goto Done;
+			Sair;
 		}
 	}
 
 	//Chama o método para adicionar o evento na lista
-	Hr = PonteiroTrabalho->QueueEvent(MTypeEvento, GuidExtendedType != GUID_NULL ? GuidExtendedType : GUID_NULL, ValorResultEvento, Param_Dados != nullptr ? &PropVar : NULL);
+	Hr = PonteiroTrabalho->QueueEvent(
+		MTypeEvento, 
+		GuidExtendedType, 
+		ValorResultEvento,
+		Param_Dados != nullptr ? vi_PropVar : NULL);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -1025,10 +1031,7 @@ CarenResult CarenMFStreamSink::InserirEventoFila(Enumeracoes::CA_MediaEventType 
 
 Done:;
 	//Libera a PropVariant
-	PropVariantClear(&PropVar);
-
-	//Limpa o guid
-	GuidExtendedType = GUID_NULL;
+	PropVariantClear(vi_PropVar);
 
 	//Retorna o resultado da operação.
 	return Resultado;

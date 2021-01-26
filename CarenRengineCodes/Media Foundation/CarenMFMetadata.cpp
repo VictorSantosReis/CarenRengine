@@ -455,14 +455,14 @@ CarenResult CarenMFMetadata::GetAllLanguages([Out] CA_PROPVARIANT^% Param_Out_Li
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	PROPVARIANT vi_OutPropVar = {};
+	PropVariantManager UtilVariant = PropVariantManager();
+	LPPROPVARIANT vi_OutPropVar = Nulo;
 
 	//Inicializa a propvariant
-	PropVariantInit(&vi_OutPropVar);
+	PropVariantInit(vi_OutPropVar);
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetAllLanguages(&vi_OutPropVar);
+	Hr = PonteiroTrabalho->GetAllLanguages(vi_OutPropVar);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -480,11 +480,11 @@ CarenResult CarenMFMetadata::GetAllLanguages([Out] CA_PROPVARIANT^% Param_Out_Li
 	}
 
 	//Converte a propvariant.
-	Param_Out_ListaIdiomas = Util.ConvertPropVariantUnmanagedToManaged(vi_OutPropVar);
+	Param_Out_ListaIdiomas = UtilVariant.ConverterPropVariantUnmanaged_ToManaged(vi_OutPropVar);
 
 Done:;
 	//Libera a propvariant
-	PropVariantClear(&vi_OutPropVar);
+	PropVariantClear(vi_OutPropVar);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -504,14 +504,14 @@ CarenResult CarenMFMetadata::GetAllPropertyNames([Out] CA_PROPVARIANT^% Param_Ou
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	PROPVARIANT vi_OutPropVar = {};
+	PropVariantManager UtilVariant = PropVariantManager();
+	LPPROPVARIANT vi_OutPropVar = Nulo;
 
 	//Inicializa a propvariant
-	PropVariantInit(&vi_OutPropVar);
+	PropVariantInit(vi_OutPropVar);
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetAllPropertyNames(&vi_OutPropVar);
+	Hr = PonteiroTrabalho->GetAllPropertyNames(vi_OutPropVar);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -529,11 +529,11 @@ CarenResult CarenMFMetadata::GetAllPropertyNames([Out] CA_PROPVARIANT^% Param_Ou
 	}
 
 	//Converte a propvariant.
-	Param_Out_ListaNomesProps = Util.ConvertPropVariantUnmanagedToManaged(vi_OutPropVar);
+	Param_Out_ListaNomesProps = UtilVariant.ConverterPropVariantUnmanaged_ToManaged(vi_OutPropVar);
 
 Done:;
 	//Libera a propvariant
-	PropVariantClear(&vi_OutPropVar);
+	PropVariantClear(vi_OutPropVar);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -601,17 +601,18 @@ CarenResult CarenMFMetadata::GetProperty(String^ Param_NomePropriedade, [Out] CA
 
 	//Variaveis a serem utilizadas.
 	Utilidades Util;
+	PropVariantManager UtilVariant = PropVariantManager();
+	LPPROPVARIANT vi_OutPropVar = Nulo;
 	PWSTR vi_NomeProp = Nulo;
-	PROPVARIANT vi_OutPropVar;
 
 	//Converte o nome da propriedade.
 	vi_NomeProp = Util.ConverterStringToWCHAR(Param_NomePropriedade);
 
 	//Inicializa a propvariant
-	PropVariantInit(&vi_OutPropVar);
+	PropVariantInit(vi_OutPropVar);
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetProperty(vi_NomeProp, &vi_OutPropVar);
+	Hr = PonteiroTrabalho->GetProperty(vi_NomeProp, vi_OutPropVar);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -629,12 +630,12 @@ CarenResult CarenMFMetadata::GetProperty(String^ Param_NomePropriedade, [Out] CA
 	}
 
 	//Converte a provariant e define no parametro de saida.
-	Param_Out_Valor = Util.ConvertPropVariantUnmanagedToManaged(vi_OutPropVar);
+	Param_Out_Valor = UtilVariant.ConverterPropVariantUnmanaged_ToManaged(vi_OutPropVar);
 
 Done:;
 	//Libera os dados.
 	DeletarStringAllocatedSafe(&vi_NomeProp);
-	PropVariantClear(&vi_OutPropVar);
+	PropVariantClear(vi_OutPropVar);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -700,30 +701,30 @@ CarenResult CarenMFMetadata::SetProperty(String^ Param_NomePropriedade, CA_PROPV
 
 	//Variaveis a serem utilizadas.
 	Utilidades Util;
+	PropVariantManager UtilVariant = PropVariantManager();
+	LPPROPVARIANT vi_PropVar = Nulo;
 	PWSTR vi_NomeProp = Nulo;
-	PROPVARIANT vi_PropVar;
 
 	//Converte o nome da propriedade.
 	vi_NomeProp = Util.ConverterStringToWCHAR(Param_NomePropriedade);
 
-	//Inicializa a propvariant
-	PropVariantInit(&vi_PropVar);
+	//Converte a PropVariant gerenciada para a nativa.
+	vi_PropVar = static_cast<LPPROPVARIANT>(UtilVariant.ConverterPropVariantManaged_ToUnmanaged(Param_Valor));
 
-	//Converte a Propvariant gerenciada para a nativa.
-	bool ConvertPropVar = Util.ConvertPropVariantManagedToUnamaged(Param_Valor, vi_PropVar);
-
-	//Verifica se converteu com sucesso
-	if (!ConvertPropVar)
+	//Verifica se não ocorreu um erro na conversão.
+	if (!ObjetoValido(vi_PropVar))
 	{
-		//Define erro na operação de conversão.
-		Resultado.AdicionarCodigo(ResultCode::ER_PROPVARIANT_CREATE_OR_CONVERSION, false);
+		//Falhou ao converter a propvariant.
+
+		//Define falha.
+		Resultado.AdicionarCodigo(ResultCode::ER_CONVERSAO_PROPVARIANT, false);
 
 		//Sai do método
 		Sair;
 	}
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->SetProperty(vi_NomeProp, &vi_PropVar);
+	Hr = PonteiroTrabalho->SetProperty(vi_NomeProp, vi_PropVar);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -743,7 +744,7 @@ CarenResult CarenMFMetadata::SetProperty(String^ Param_NomePropriedade, CA_PROPV
 Done:;
 	//Libera os dados.
 	DeletarStringAllocatedSafe(&vi_NomeProp);
-	PropVariantClear(&vi_PropVar);
+	PropVariantClear(vi_PropVar);
 
 	//Retorna o resultado.
 	return Resultado;

@@ -1280,12 +1280,10 @@ CarenResult CarenMFTopologyNode::CompareItem(String^ Param_GuidChave, CA_PROPVAR
 
 	//Variaveis a serem utilizadas.
 	Utilidades Util;
+	PropVariantManager UtilVariant = PropVariantManager();
 	GUID GuidChave = GUID_NULL;
 	BOOL ResultadoComp = FALSE;
-	BLOB BlobData = {};
-	char* DadosStringConvertido = NULL;
-	WCHAR* DadosWcharToBstr = NULL;
-	PROPVARIANT PropVar;
+	LPPROPVARIANT vi_PropVar = Nulo;
 
 	//Converte a string para guid.
 	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
@@ -1300,24 +1298,23 @@ CarenResult CarenMFTopologyNode::CompareItem(String^ Param_GuidChave, CA_PROPVAR
 		goto Done;
 	}
 
-	//Inicia a PropVariant
-	PropVariantInit(&PropVar);
+	//Converte a PropVariant gerenciada para a nativa.
+	vi_PropVar = static_cast<LPPROPVARIANT>(UtilVariant.ConverterPropVariantManaged_ToUnmanaged(Param_Valor));
 
-	//Chama o método para converter a propvariant gerenciada para nativa.
-	bool ConvertPropVariant = Util.ConvertPropVariantManagedToUnamaged(Param_Valor, PropVar);
-
-	//Verifica se obteve sucesso
-	if (!ConvertPropVariant)
+	//Verifica se não ocorreu um erro na conversão.
+	if (!ObjetoValido(vi_PropVar))
 	{
-		//Define falha na conversão da propvariant
+		//Falhou ao converter a propvariant.
+
+		//Define falha.
 		Resultado.AdicionarCodigo(ResultCode::ER_CONVERSAO_PROPVARIANT, false);
 
-		//Sai do método.
+		//Sai do método
 		Sair;
 	}
 
 	//Chama o método para compar o item.
-	Hr = PonteiroTrabalho->CompareItem(GuidChave, PropVar, &ResultadoComp);
+	Hr = PonteiroTrabalho->CompareItem(GuidChave, *vi_PropVar, &ResultadoComp);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -1338,20 +1335,8 @@ CarenResult CarenMFTopologyNode::CompareItem(String^ Param_GuidChave, CA_PROPVAR
 	Param_Out_Resultado = ResultadoComp ? true : false;
 
 Done:;
-	//Libera as string se forem validas
-	if (DadosStringConvertido != NULL)
-	{
-		//Deleta os dados da string
-		delete DadosStringConvertido;
-	}
-	if (DadosWcharToBstr != NULL)
-	{
-		//Deleta os dados da string
-		delete DadosWcharToBstr;
-	}
-
 	//Libera a memória utilizada pela PropVariant.
-	PropVariantClear(&PropVar);
+	PropVariantClear(vi_PropVar);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1899,17 +1884,18 @@ CarenResult CarenMFTopologyNode::GetItem(String^ Param_GuidChave, [Out] CA_PROPV
 
 	//Variariveis utilizadas no método
 	Utilidades Util;
+	PropVariantManager UtilVariant = PropVariantManager();
 	GUID GuidChave = GUID_NULL;
-	PROPVARIANT PropVar;
+	LPPROPVARIANT vi_PropVar = Nulo;
 
 	//Chama o método para obter o guid.
 	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
 
 	//Inicializa a PropVariant.
-	PropVariantInit(&PropVar);
+	PropVariantInit(vi_PropVar);
 
 	//Chama o método para obter o dado
-	Hr = PonteiroTrabalho->GetItem(GuidChave, &PropVar);
+	Hr = PonteiroTrabalho->GetItem(GuidChave, vi_PropVar);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -1926,12 +1912,12 @@ CarenResult CarenMFTopologyNode::GetItem(String^ Param_GuidChave, [Out] CA_PROPV
 		Sair;
 	}
 
-	//Converte a PropVariant Nativa para a gerenciada.
-	Param_Out_Valor = Util.ConvertPropVariantUnmanagedToManaged(PropVar);
+	//Converte e define a estrutura no parametro de saida.
+	Param_Out_Valor = UtilVariant.ConverterPropVariantUnmanaged_ToManaged(vi_PropVar);
 
 Done:;
 	//Limpa a PropVariant.
-	PropVariantClear(&PropVar);
+	PropVariantClear(vi_PropVar);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1953,14 +1939,15 @@ CarenResult CarenMFTopologyNode::GetItemByIndex(UInt32 Param_IdItem, [Out] Strin
 
 	//Variariveis utilizadas no método
 	Utilidades Util;
+	PropVariantManager UtilVariant = PropVariantManager();
 	GUID GuidChave = GUID_NULL;
-	PROPVARIANT PropVar;
-
+	LPPROPVARIANT vi_PropVar = Nulo;
+	
 	//Inicializa a PropVariant.
-	PropVariantInit(&PropVar);
+	PropVariantInit(vi_PropVar);
 
 	//Chama o método para obter o dado
-	Hr = PonteiroTrabalho->GetItemByIndex(Param_IdItem, &GuidChave, &PropVar);
+	Hr = PonteiroTrabalho->GetItemByIndex(Param_IdItem, &GuidChave, vi_PropVar);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -1977,15 +1964,18 @@ CarenResult CarenMFTopologyNode::GetItemByIndex(UInt32 Param_IdItem, [Out] Strin
 		Sair;
 	}
 
-	//Converte a PropVariant Nativa para a gerenciada.
-	Param_Out_Valor = Util.ConvertPropVariantUnmanagedToManaged(PropVar);
+	//Define a estrutura de retorno
+	Param_Out_Valor = UtilVariant.ConverterPropVariantUnmanaged_ToManaged(vi_PropVar);
 
 	//Define o guid do valor obtido.
 	Param_Out_GuidChave = Util.ConverterGuidToString(GuidChave);
 
+	//Define sucesso na operação
+	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+
 Done:;
 	//Limpa a PropVariant.
-	PropVariantClear(&PropVar);
+	PropVariantClear(vi_PropVar);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -2607,35 +2597,30 @@ CarenResult CarenMFTopologyNode::SetItem(String^ Param_GuidChave, Estruturas::CA
 
 	//Variariveis utilizadas no método
 	Utilidades Util;
+	PropVariantManager UtilVariant = PropVariantManager();
 	GUID GuidChave = GUID_NULL;
-	PROPVARIANT PropVar;
-	BLOB BlobData = {};
-	IUnknown* pInterfaceDesconhecida = NULL;
-	char* StringData = NULL;
-	bool ResultCreatePropVariant = false;
-
-
-	//Inicializa a PropVariant.
-	PropVariantInit(&PropVar);
+	LPPROPVARIANT vi_PropVar = Nulo;
 
 	//Chama o método para obter o guid.
 	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
 
-	//Converte os dados gerenciados para o nativo
-	ResultCreatePropVariant = Util.ConvertPropVariantManagedToUnamaged(Param_PropVariantValor, PropVar);
+	//Converte a PropVariant gerenciada para a nativa.
+	vi_PropVar = static_cast<LPPROPVARIANT>(UtilVariant.ConverterPropVariantManaged_ToUnmanaged(Param_PropVariantValor));
 
-	//Verifica o resultado
-	if (!ResultCreatePropVariant)
+	//Verifica se não ocorreu um erro na conversão.
+	if (!ObjetoValido(vi_PropVar))
 	{
-		//Define falha ao converter.
+		//Falhou ao converter a propvariant.
+
+		//Define falha.
 		Resultado.AdicionarCodigo(ResultCode::ER_CONVERSAO_PROPVARIANT, false);
 
 		//Sai do método
-		goto Done;
+		Sair;
 	}
 
 	//Chama o método para definir o valor.
-	Hr = PonteiroTrabalho->SetItem(GuidChave, PropVar);
+	Hr = PonteiroTrabalho->SetItem(GuidChave, const_cast<PROPVARIANT&>(*vi_PropVar));
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -2653,22 +2638,8 @@ CarenResult CarenMFTopologyNode::SetItem(String^ Param_GuidChave, Estruturas::CA
 	}
 
 Done:;
-	//Limpa a string
-	if (StringData != NULL)
-	{
-		//Deleta os dados armazenados.
-		delete StringData;
-	}
-
-	//Deleta o BlobData.
-	if (BlobData.pBlobData != NULL)
-	{
-		//Deleta o Blob da memoria.
-		delete BlobData.pBlobData;
-	}
-
-	//Limpa a PropVariant.
-	PropVariantClear(&PropVar);
+	//Libera a memória utilizada pela propvariant.
+	PropVariantClear(vi_PropVar);
 
 	//Retorna o resultado.
 	return Resultado;

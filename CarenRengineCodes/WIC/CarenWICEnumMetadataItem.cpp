@@ -463,6 +463,7 @@ cli::array<CA_PROPVARIANT^>^% Param_Ref_ArrayValores,
 
 	//Variaveis a serem utilizadas.
 	Utilidades Util;
+	PropVariantManager UtilVariant = PropVariantManager();
 	PROPVARIANT* pOutArraySchemas = Nulo; //Pode ser NULO.
 	PROPVARIANT* pOutArrayIds = Nulo;
 	PROPVARIANT* pOutArrayValores = Nulo; //Pode ser NULO.
@@ -484,7 +485,6 @@ cli::array<CA_PROPVARIANT^>^% Param_Ref_ArrayValores,
 
 	//Cria a matriz obrigatoria que retorna o array de ids.
 	pOutArrayIds = CriarMatrizEstruturas<PROPVARIANT>(static_cast<UINT32>(Param_Quantidade));
-
 
 	//Chama o método para realizar a operação.
 	Hr = PonteiroTrabalho->Next(
@@ -515,7 +515,7 @@ cli::array<CA_PROPVARIANT^>^% Param_Ref_ArrayValores,
 	for (ULONG i = 0; i < OutCountRecuperada; i++)
 	{
 		//Converte e define no id especificado.
-		Param_Out_ArrayIds[i] = Util.ConvertPropVariantUnmanagedToManaged(pOutArrayIds[i]);
+		Param_Out_ArrayIds[i] = UtilVariant.ConverterPropVariantUnmanaged_ToManaged(&pOutArrayIds[i]);
 	}
 
 	//Cria o array de SCHEMAS se pedido para retornar.
@@ -528,7 +528,7 @@ cli::array<CA_PROPVARIANT^>^% Param_Ref_ArrayValores,
 		for (ULONG i = 0; i < OutCountRecuperada; i++)
 		{
 			//Converte e define no id especificado.
-			Param_Ref_ArraySchemas[i] = Util.ConvertPropVariantUnmanagedToManaged(pOutArraySchemas[i]);
+			Param_Ref_ArraySchemas[i] = UtilVariant.ConverterPropVariantUnmanaged_ToManaged(&pOutArraySchemas[i]);
 		}
 	}
 
@@ -542,7 +542,7 @@ cli::array<CA_PROPVARIANT^>^% Param_Ref_ArrayValores,
 		for (ULONG i = 0; i < OutCountRecuperada; i++)
 		{
 			//Converte e define no id especificado.
-			Param_Ref_ArrayValores[i] = Util.ConvertPropVariantUnmanagedToManaged(pOutArrayValores[i]);
+			Param_Ref_ArrayValores[i] = UtilVariant.ConverterPropVariantUnmanaged_ToManaged(&pOutArrayValores[i]);
 		}
 	}
 

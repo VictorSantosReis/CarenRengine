@@ -756,17 +756,18 @@ String^ Param_GuidMFAtributos,
 
 	//Variaveis a serem utilizadas.
 	Utilidades Util;
+	PropVariantManager UtilVariant = PropVariantManager();
 	GUID vi_GuidAtributo = GUID_NULL;
-	PROPVARIANT vi_OutValor = {};
+	LPPROPVARIANT vi_PropVar = Nulo;
 
 	//Converte a string para o Guid.
 	vi_GuidAtributo = Util.CreateGuidFromString(Param_GuidMFAtributos);
 
 	//Inicializa a propvariant.
-	PropVariantInit(&vi_OutValor);
+	PropVariantInit(vi_PropVar);
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetPresentationAttribute(vi_GuidAtributo, &vi_OutValor);
+	Hr = PonteiroTrabalho->GetPresentationAttribute(vi_GuidAtributo, vi_PropVar);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -784,11 +785,11 @@ String^ Param_GuidMFAtributos,
 	}
 
 	//Converte a propvariant para gerenciada e define no parametro de saida.
-	Param_Out_ValorAtributo = Util.ConvertPropVariantUnmanagedToManaged(vi_OutValor);
+	Param_Out_ValorAtributo = UtilVariant.ConverterPropVariantUnmanaged_ToManaged(vi_PropVar);
 
 Done:;
 	//Libera a PROPVARIANT.
-	PropVariantClear(&vi_OutValor);
+	PropVariantClear(vi_PropVar);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -892,14 +893,14 @@ CA_MF_MEDIA_ENGINE_STATISTIC Param_TipoEstatistica,
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	PROPVARIANT vi_OutValorEstatistica = {};
+	PropVariantManager UtilVariant = PropVariantManager();
+	LPPROPVARIANT vi_PropVar = Nulo;
 
 	//Inicializa a propvariant.
-	PropVariantInit(&vi_OutValorEstatistica);
+	PropVariantInit(vi_PropVar);
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetStatistics(static_cast<MF_MEDIA_ENGINE_STATISTIC>(Param_TipoEstatistica), &vi_OutValorEstatistica);
+	Hr = PonteiroTrabalho->GetStatistics(static_cast<MF_MEDIA_ENGINE_STATISTIC>(Param_TipoEstatistica), vi_PropVar);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -917,11 +918,11 @@ CA_MF_MEDIA_ENGINE_STATISTIC Param_TipoEstatistica,
 	}
 
 	//Converte a propvariant e define no parametro de saida.
-	Param_Out_ValorEstatistica = Util.ConvertPropVariantUnmanagedToManaged(vi_OutValorEstatistica);
+	Param_Out_ValorEstatistica = UtilVariant.ConverterPropVariantUnmanaged_ToManaged(vi_PropVar);
 
 Done:;
 	//Libera a propvariant.
-	PropVariantClear(&vi_OutValorEstatistica);
+	PropVariantClear(vi_PropVar);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1028,6 +1029,7 @@ String^ Param_GuidMfAtributo,
 
 	//Variaveis a serem utilizadas.
 	Utilidades Util;
+	PropVariantManager UtilVariant = PropVariantManager();
 	GUID vi_GuidAtributo = GUID_NULL;
 	PROPVARIANT vi_OutValorAtributo = {};
 
@@ -1056,7 +1058,7 @@ String^ Param_GuidMfAtributo,
 	}
 
 	//Converte a propvariant e define no parametro de saida.
-	Param_Out_ValorAtributo = Util.ConvertPropVariantUnmanagedToManaged(vi_OutValorAtributo);
+	Param_Out_ValorAtributo = UtilVariant.ConverterPropVariantUnmanaged_ToManaged(&vi_OutValorAtributo);
 
 Done:;
 	//Libera a propvariant.

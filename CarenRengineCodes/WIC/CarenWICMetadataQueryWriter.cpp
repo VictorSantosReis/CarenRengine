@@ -462,30 +462,30 @@ CA_PROPVARIANT^ Param_Valor)
 
 	//Variaveis a serem utilizadas.
 	Utilidades Util;
+	PropVariantManager UtilVariant = PropVariantManager();
 	PWSTR pNome = NULL;
-	PROPVARIANT PropVar = {};
+	LPPROPVARIANT vi_PropVar = Nulo;
 
 	//Converte a string
 	pNome = Util.ConverterStringToWCHAR(Param_Nome);
 
-	//Inicializa a propVariant.
-	PropVariantInit(&PropVar);
+	//Converte a PropVariant gerenciada para a nativa.
+	vi_PropVar = static_cast<LPPROPVARIANT>(UtilVariant.ConverterPropVariantManaged_ToUnmanaged(Param_Valor));
 
-	//Converte a propvariant
-	bool ConvertPropVar = Util.ConvertPropVariantManagedToUnamaged(Param_Valor, PropVar);
-
-	//Verifica o resultado
-	if (!ConvertPropVar)
+	//Verifica se não ocorreu um erro na conversão.
+	if (!ObjetoValido(vi_PropVar))
 	{
-		//Define falha
-		Resultado.AdicionarCodigo(ResultCode::ER_PROPVARIANT_CREATE_OR_CONVERSION, false);
+		//Falhou ao converter a propvariant.
+
+		//Define falha.
+		Resultado.AdicionarCodigo(ResultCode::ER_CONVERSAO_PROPVARIANT, false);
 
 		//Sai do método
 		Sair;
 	}
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->SetMetadataByName(pNome, &PropVar);
+	Hr = PonteiroTrabalho->SetMetadataByName(pNome, const_cast<LPPROPVARIANT>(vi_PropVar));
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -502,10 +502,10 @@ CA_PROPVARIANT^ Param_Valor)
 		Sair;
 	}
 
-	//Libera a propVariant.
-	PropVariantClear(&PropVar);
-
 Done:;
+	//Libera a propVariant.
+	PropVariantClear(vi_PropVar);
+
 	//Libera a memória utilizada pela string
 	DeletarStringAllocatedSafe(&pNome);
 
@@ -693,6 +693,7 @@ CarenResult CarenWICMetadataQueryWriter::GetMetadataByName(
 
 	//Variaveis a serem utilizadas.
 	Utilidades Util;
+	PropVariantManager UtilVariant = PropVariantManager();
 	PWSTR pNome = NULL;
 	PROPVARIANT OutPropVar = {};
 
@@ -721,12 +722,12 @@ CarenResult CarenWICMetadataQueryWriter::GetMetadataByName(
 	}
 
 	//Converte a estrutura nativa para a gerenciada.
-	Param_Out_Valor = Util.ConvertPropVariantUnmanagedToManaged(OutPropVar);
+	Param_Out_Valor = UtilVariant.ConverterPropVariantUnmanaged_ToManaged(&OutPropVar);	
 
+Done:;
 	//Libera a propvariant
 	PropVariantClear(&OutPropVar);
 
-Done:;
 	//Libera a memória utilizada pela string
 	DeletarStringAllocatedSafe(&pNome);
 

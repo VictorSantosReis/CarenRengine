@@ -568,6 +568,7 @@ CarenResult CarenPropertyStore::GetValue(Estruturas::CA_PROPERTYKEY^% Param_Prop
 
 	//Variaveis a serem utilizadas.
 	Utilidades Util;
+	PropVariantManager UtilVariant = PropVariantManager();
 	PROPERTYKEY KeyProp = {};
 	PROPVARIANT PropValor;
 
@@ -597,7 +598,7 @@ CarenResult CarenPropertyStore::GetValue(Estruturas::CA_PROPERTYKEY^% Param_Prop
 	}
 
 	//Converte a propVariant e define no parametro de saida.
-	Param_Out_Valor = Util.ConvertPropVariantUnmanagedToManaged(PropValor);
+	Param_Out_Valor = UtilVariant.ConverterPropVariantUnmanaged_ToManaged(&PropValor);
 
 Done:;
 	//Libera a PropVariant.
@@ -621,23 +622,32 @@ CarenResult CarenPropertyStore::DefinirValor(Estruturas::CA_PROPERTYKEY^% Param_
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	PROPERTYKEY KeyProp = {};
-	PROPVARIANT PropValor;
-	
 	Utilidades Util;
+	PropVariantManager UtilVariant = PropVariantManager();
+	PROPERTYKEY KeyProp = {};
+	LPPROPVARIANT vi_PropValor = Nulo;
 
 	//Define os dados na PROPERTYKEY.
 	KeyProp.pid = Param_PropKey->PID;
 	KeyProp.fmtid = String::IsNullOrEmpty(Param_PropKey->GUIDProp) ? GUID_NULL : Util.CreateGuidFromString(Param_PropKey->GUIDProp);
 
-	//Inicializa a PropVariant.
-	PropVariantInit(&PropValor);
+	//Converte a PropVariant gerenciada para a nativa.
+	vi_PropValor = static_cast<LPPROPVARIANT>(UtilVariant.ConverterPropVariantManaged_ToUnmanaged(Param_PropValor));
 
-	//Converte a PropVariant.
-	Util.ConvertPropVariantManagedToUnamaged(Param_PropValor, PropValor);
+	//Verifica se não ocorreu um erro na conversão.
+	if (!ObjetoValido(vi_PropValor))
+	{
+		//Falhou ao converter a propvariant.
+
+		//Define falha.
+		Resultado.AdicionarCodigo(ResultCode::ER_CONVERSAO_PROPVARIANT, false);
+
+		//Sai do método
+		Sair;
+	}
 
 	//Chama o método para definir o valor.
-	Hr = PonteiroTrabalho->SetValue(KeyProp, PropValor);
+	Hr = PonteiroTrabalho->SetValue(KeyProp, *vi_PropValor);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -656,9 +666,7 @@ CarenResult CarenPropertyStore::DefinirValor(Estruturas::CA_PROPERTYKEY^% Param_
 
 Done:;
 	//Libera a PropVariant.
-	PropVariantClear(&PropValor);
-	KeyProp.pid = 0;
-	KeyProp.fmtid = GUID_NULL;
+	PropVariantClear(vi_PropValor);
 
 	//Retorna o resultado.
 	return Resultado;

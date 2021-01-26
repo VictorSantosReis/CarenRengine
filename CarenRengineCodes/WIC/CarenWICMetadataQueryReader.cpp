@@ -570,6 +570,7 @@ String^ Param_Nome,
 
 	//Variaveis a serem utilizadas.
 	Utilidades Util;
+	PropVariantManager UtilVariant = PropVariantManager();
 	PWSTR pNome = NULL;
 	PROPVARIANT OutPropVar = {};
 
@@ -598,12 +599,12 @@ String^ Param_Nome,
 	}
 
 	//Converte a estrutura nativa para a gerenciada.
-	Param_Out_Valor = Util.ConvertPropVariantUnmanagedToManaged(OutPropVar);
+	Param_Out_Valor = UtilVariant.ConverterPropVariantUnmanaged_ToManaged(&OutPropVar);
 
+Done:;
 	//Libera a propvariant
 	PropVariantClear(&OutPropVar);
 
-Done:;
 	//Libera a memória utilizada pela string
 	DeletarStringAllocatedSafe(&pNome);
 

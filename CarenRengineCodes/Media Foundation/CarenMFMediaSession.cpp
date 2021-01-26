@@ -478,9 +478,9 @@ void CarenMFMediaSession::Finalizar()
 
 
 
-//
-//Métodos da interface proprietaria.
-//
+
+//Métodos da interface proprietaria ICarenMFMediaSession
+
 
 /// <summary>
 /// (ClearTopologies) - Limpa todas as apresentações que estão enfileiradas para reprodução na sessão de mídia.
@@ -834,10 +834,9 @@ Done:;
 
 	 //Variaveis a serem utilizadas.
 	 Utilidades Util;
-	 
+	 PropVariantManager UtilVariant = PropVariantManager();
 	 GUID GuidFormatoTempo = GUID_NULL;
-	 PROPVARIANT PropVar = {};
-	 bool PropVarConverted = false;
+	 LPPROPVARIANT vi_PropVar = Nulo;
 
 	 //Verifica o GUID do formato de tempo.. NULL > Tempo default do sistema.
 	 if (!String::IsNullOrEmpty(Param_GuidFormatoTempo))
@@ -848,27 +847,23 @@ Done:;
 		 GuidFormatoTempo = Util.CreateGuidFromString(Param_GuidFormatoTempo);
 	 }
 
-	 //Inicializa a PropVariant 
-	 PropVariantInit(&PropVar);
+	 //Converte a PropVariant gerenciada para a nativa.
+	 vi_PropVar = static_cast<LPPROPVARIANT>(UtilVariant.ConverterPropVariantManaged_ToUnmanaged(Param_PosicaoInicio));
 
-	 //Converte os dados da propvariant gerenciada para a não gerenciada.
-	 PropVarConverted = Util.ConvertPropVariantManagedToUnamaged(Param_PosicaoInicio, PropVar);
-
-	 //Verifica o resultado
-	 if (!PropVarConverted)
+	 //Verifica se não ocorreu um erro na conversão.
+	 if (!ObjetoValido(vi_PropVar))
 	 {
-		 //A PropVariant não foi convertida com sucesso.
+		 //Falhou ao converter a propvariant.
+
+		 //Define falha.
 		 Resultado.AdicionarCodigo(ResultCode::ER_CONVERSAO_PROPVARIANT, false);
 
 		 //Sai do método
-		 goto Done;
+		 Sair;
 	 }
 
-	 //Converte a estrutura gerenciada para Nativa.
-	 Util.ConvertPropVariantManagedToUnamaged(Param_PosicaoInicio, PropVar);
-
 	 //Chama o método para realizar a operação.
-	 Hr = PonteiroTrabalho->Start(&GuidFormatoTempo, &PropVar);
+	 Hr = PonteiroTrabalho->Start(&GuidFormatoTempo, vi_PropVar);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -887,7 +882,7 @@ Done:;
 
  Done:;
 	 //Libera a propvariant
-	 PropVariantClear(&PropVar);
+	 PropVariantClear(vi_PropVar);
 
 	 //Retorna o resultado.
 	 return Resultado;
@@ -1125,51 +1120,55 @@ Done:;
  /// <param name="Param_GuidExtendedType">O tipo estendido. Se o evento não tiver um tipo estendido, defina como NULO. O tipo estendido é retornado pelo método (ICarenMFMediaEvent.GetExtendedType) do evento.</param>
  /// <param name="Param_HResultCode">Um código de sucesso ou falha indicando o status do evento. Esse valor é retornado pelo método (ICarenMFMediaEvent.GetStatus) do evento.</param>
  /// <param name="Param_Dados">uma CA_PROPVARIANT que contém o valor do evento. Este parâmetro pode ser NULO. Esse valor é retornado pelo método (ICarenMFMediaEvent.GetValue) do evento.</param>
- CarenResult CarenMFMediaSession::InserirEventoFila(Enumeracoes::CA_MediaEventType Param_TipoEvento, String^ Param_GuidExtendedType, Int32 Param_HResultCode, Estruturas::CA_PROPVARIANT^ Param_Dados) {
-	 //Variavel a ser retornada.
-	 CarenResult Resultado = CarenResult(E_FAIL, false);
+ CarenResult CarenMFMediaSession::InserirEventoFila(Enumeracoes::CA_MediaEventType Param_TipoEvento, String^ Param_GuidExtendedType, Int32 Param_HResultCode, Estruturas::CA_PROPVARIANT^ Param_Dados)
+ {
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
 
-	 //Variavel COM
-	 ResultadoCOM Hr = E_FAIL;
+	//Variavel COM
+	ResultadoCOM Hr = E_FAIL;
 
-	 //Variaveis utilizadas pelo método
-	 Utilidades Util;
-	 
-	 MediaEventType MTypeEvento = static_cast<MediaEventType>(Param_TipoEvento);
-	 PROPVARIANT PropVar;
-	 bool PropVarConverted = false;
-	 GUID GuidExtendedType = GUID_NULL;
-	 HRESULT ValorResultEvento = Param_HResultCode;
+	//Variaveis utilizadas pelo método
+	Utilidades Util;
+	PropVariantManager UtilVariant = PropVariantManager();
+	MediaEventType MTypeEvento = static_cast<MediaEventType>(Param_TipoEvento);
+	LPPROPVARIANT vi_PropVar = Nulo;
+	bool PropVarConverted = false;
+	GUID GuidExtendedType = GUID_NULL;
+	HRESULT ValorResultEvento = Param_HResultCode;
 
-	 //Cria o Guid se ele for valido.
-	 if (!String::IsNullOrEmpty(Param_GuidExtendedType))
-	 {
-		 //Cria o Guid.
-		 GuidExtendedType = Util.CreateGuidFromString(Param_GuidExtendedType);
-	 }
+	//Cria o Guid se ele for valido.
+	if (!String::IsNullOrEmpty(Param_GuidExtendedType))
+	{
+		//Cria o Guid.
+		GuidExtendedType = Util.CreateGuidFromString(Param_GuidExtendedType);
+	}
 
-	 //Verifica se forneceu dados para o evento.
-	 if (Param_Dados != nullptr)
-	 {
-		 //Inicializa a PropVariant 
-		 PropVariantInit(&PropVar);
+	//Verifica se forneceu dados para o evento.
+	if (Param_Dados != nullptr)
+	{
+		//Converte a PropVariant gerenciada para a nativa.
+		vi_PropVar = static_cast<LPPROPVARIANT>(UtilVariant.ConverterPropVariantManaged_ToUnmanaged(Param_Dados));
 
-		 //Converte os dados da propvariant gerenciada para a não gerenciada.
-		 PropVarConverted = Util.ConvertPropVariantManagedToUnamaged(Param_Dados, PropVar);
+		//Verifica se não ocorreu um erro na conversão.
+		if (!ObjetoValido(vi_PropVar))
+		{
+			//Falhou ao converter a propvariant.
 
-		 //Verifica o resultado
-		 if (!PropVarConverted)
-		 {
-			 //A PropVariant não foi convertida com sucesso.
-			 Resultado.AdicionarCodigo(ResultCode::ER_CONVERSAO_PROPVARIANT, false);
+			//Define falha.
+			Resultado.AdicionarCodigo(ResultCode::ER_CONVERSAO_PROPVARIANT, false);
 
-			 //Sai do método
-			 goto Done;
-		 }
-	 }
+			//Sai do método
+			Sair;
+		}
+	}
 
-	 //Chama o método para adicionar o evento na lista
-	 Hr = PonteiroTrabalho->QueueEvent(MTypeEvento, GuidExtendedType != GUID_NULL ? GuidExtendedType : GUID_NULL, ValorResultEvento, Param_Dados != nullptr ? &PropVar : NULL);
+	//Chama o método para adicionar o evento na lista
+	Hr = PonteiroTrabalho->QueueEvent(
+		MTypeEvento, 
+		GuidExtendedType, 
+		ValorResultEvento,
+		Param_Dados != nullptr ? vi_PropVar : NULL);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -1186,13 +1185,10 @@ Done:;
 		Sair;
 	}
 
- Done:;
-	 //Libera a PropVariant
-	 PropVariantClear(&PropVar);
+Done:;
+	//Libera a PropVariant
+	PropVariantClear(vi_PropVar);
 
-	 //Limpa o guid
-	 GuidExtendedType = GUID_NULL;
-
-	 //Retorna o resultado da operação.
-	 return Resultado;
- }
+	//Retorna o resultado da operação.
+	return Resultado;
+}

@@ -672,9 +672,9 @@ CarenResult CarenMFSourceReader::GetPresentationAttribute(UInt32 Param_IdFluxo, 
 
 	//Variariveis utilizadas no método
 	Utilidades Util;
+	PropVariantManager UtilVariant = PropVariantManager();
 	GUID GuidChave = GUID_NULL;
-	PROPVARIANT PropVar;
-	
+	PROPVARIANT vi_OutPropVar = {};
 
 	//Chama o método para obter o guid.
 	GuidChave = Util.CreateGuidFromString(Param_GuidAtributo);
@@ -690,10 +690,10 @@ CarenResult CarenMFSourceReader::GetPresentationAttribute(UInt32 Param_IdFluxo, 
 	}
 
 	//Inicializa a PropVariant.
-	PropVariantInit(&PropVar);
+	PropVariantInit(&vi_OutPropVar);
 
 	//Chama o método para obter o dados do atributo.
-	Hr = PonteiroTrabalho->GetPresentationAttribute(Param_IdFluxo, GuidChave, &PropVar);
+	Hr = PonteiroTrabalho->GetPresentationAttribute(Param_IdFluxo, GuidChave, &vi_OutPropVar);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -711,14 +711,14 @@ CarenResult CarenMFSourceReader::GetPresentationAttribute(UInt32 Param_IdFluxo, 
 	}
 
 	//Converte a estrutura nativa para gerenciada e define na estrutura de saida.
-	Param_Out_ValorAtributo = Util.ConvertPropVariantUnmanagedToManaged(PropVar);
+	Param_Out_ValorAtributo = UtilVariant.ConverterPropVariantUnmanaged_ToManaged(&vi_OutPropVar);
 
 	//Define sucesso na operação
 	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
 
 Done:;
 	//Limpa a PropVariant.
-	PropVariantClear(&PropVar);
+	PropVariantClear(&vi_OutPropVar);
 
 	//Retorna o resultado.
 	return Resultado;

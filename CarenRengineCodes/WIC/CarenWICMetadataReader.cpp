@@ -585,22 +585,29 @@ CA_PROPVARIANT^ Param_Id,
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	PROPVARIANT VariantSchema = {};
-	PROPVARIANT VariantId = {};
-	PROPVARIANT OutVariantValor = {};
-	
-	//Inicializa as propvariants
-	PropVariantInit(&VariantSchema);
-	PropVariantInit(&VariantId);
-	PropVariantInit(&OutVariantValor);
+	PropVariantManager UtilVariant = PropVariantManager();
+	LPPROPVARIANT vi_pVariantSchema = Nulo;
+	LPPROPVARIANT vi_pVariantId = Nulo;
+	PROPVARIANT vi_OutVariantValor = {};
 
-	//Converte as propvariants
-	Util.ConvertPropVariantManagedToUnamaged(Param_Schema, VariantSchema);
-	Util.ConvertPropVariantManagedToUnamaged(Param_Id, VariantId);
+	//Converte as variants
+	vi_pVariantSchema = static_cast<PROPVARIANT*>(UtilVariant.ConverterPropVariantManaged_ToUnmanaged(Param_Schema));
+	vi_pVariantId = static_cast<PROPVARIANT*>(UtilVariant.ConverterPropVariantManaged_ToUnmanaged(Param_Id));
+
+	//Verifica se não ocorreu um erro na conversão.
+	if (!ObjetoValido(vi_pVariantSchema) || !ObjetoValido(vi_pVariantId))
+	{
+		//Falhou ao converter a propvariant.
+
+		//Define falha.
+		Resultado.AdicionarCodigo(ResultCode::ER_CONVERSAO_PROPVARIANT, false);
+
+		//Sai do método
+		Sair;
+	}
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetValue(&VariantSchema, &VariantId, &OutVariantValor);
+	Hr = PonteiroTrabalho->GetValue(vi_pVariantSchema, vi_pVariantId, &vi_OutVariantValor);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -618,13 +625,13 @@ CA_PROPVARIANT^ Param_Id,
 	}
 
 	//Converte a variante para gerenciada e define no parametro de saida.
-	Param_Out_Valor = Util.ConvertPropVariantUnmanagedToManaged(OutVariantValor);
+	Param_Out_Valor = UtilVariant.ConverterPropVariantUnmanaged_ToManaged(&vi_OutVariantValor);
 
 Done:;
-	//Libera a memória utilizada pelas variants.
-	PropVariantClear(&VariantSchema);
-	PropVariantClear(&VariantId);
-	PropVariantClear(&OutVariantValor);
+	//Libera a memória utilizada pelas propvariants.
+	PropVariantClear(vi_pVariantSchema);
+	PropVariantClear(vi_pVariantId);
+	PropVariantClear(&vi_OutVariantValor);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -650,7 +657,7 @@ UInt32 Param_Index,
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	Utilidades Util;
+	PropVariantManager UtilVariant = PropVariantManager();
 	PROPVARIANT OutVariantSchema = {};
 	PROPVARIANT OutVariantId = {};
 	PROPVARIANT OutVariantValor = {};
@@ -679,9 +686,9 @@ UInt32 Param_Index,
 	}
 
 	//Converte as PropVariants para gerenciada e define nos parametros de saida.
-	Param_Out_Schema = Util.ConvertPropVariantUnmanagedToManaged(OutVariantSchema);
-	Param_Out_Id = Util.ConvertPropVariantUnmanagedToManaged(OutVariantId);
-	Param_Out_Valor = Util.ConvertPropVariantUnmanagedToManaged(OutVariantValor);
+	Param_Out_Schema = UtilVariant.ConverterPropVariantUnmanaged_ToManaged(&OutVariantSchema);
+	Param_Out_Id = UtilVariant.ConverterPropVariantUnmanaged_ToManaged(&OutVariantId);
+	Param_Out_Valor = UtilVariant.ConverterPropVariantUnmanaged_ToManaged(&OutVariantValor);
 
 Done:;
 	//Libera a memória utilizada pelas variants.

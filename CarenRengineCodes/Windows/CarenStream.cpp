@@ -86,7 +86,7 @@ CarenStream::CarenStream(ICarenBuffer^ Param_BufferInicial, UInt64 Param_Largura
 	//Chama o método para criar a interface.
 	vi_pOutStream = SHCreateMemStream(
 		(vi_pBufferInicial != IntPtr::Zero)? const_cast<PBYTE>(Util.ConverterIntPtrTo<PBYTE>(vi_pBufferInicial)): Nulo,
-		Param_LarguraBuffer);
+		static_cast<UInt32>(Param_LarguraBuffer));
 
 	//Verifica se não ocorreu erro no processo.
 	if (!ObjetoValido(vi_pOutStream))
@@ -119,11 +119,11 @@ CarenStream::CarenStream(MatrizBytes Param_BufferInicial, UInt64 Param_LarguraBu
 		vi_pBufferInicial = CriarMatrizUnidimensional<BYTE>(static_cast<DWORD>(Param_LarguraBuffer));
 		
 		//Copia os dados da matriz gerenciada para a nativa.
-		Util.CopiarBufferGerenciado_ToNativo(Param_BufferInicial, vi_pBufferInicial, Param_LarguraBuffer);
+		Util.CopiarBufferGerenciado_ToNativo(Param_BufferInicial, vi_pBufferInicial, static_cast<UInt32>(Param_LarguraBuffer));
 	}
 
 	//Chama o método para criar a interface.
-	vi_pOutStream = SHCreateMemStream(vi_pBufferInicial, Param_LarguraBuffer);
+	vi_pOutStream = SHCreateMemStream(vi_pBufferInicial, static_cast<UInt32>(Param_LarguraBuffer));
 
 	//Verifica se não ocorreu erro no processo.
 	if (!ObjetoValido(vi_pOutStream))

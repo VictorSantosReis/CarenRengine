@@ -87,6 +87,8 @@ internal:
 	//Variavel que vai conter o ultimo código HRESULT retornado.
 	Int32 Var_Glob_LAST_HRESULT = 0;
 
+	//Variavel que vai conter o valor da propriedade (Size).
+	UInt64 Prop_SizeStream = 0;
 
 	//Variaveis publicas
 public:
@@ -103,6 +105,18 @@ public:
 		}
 	}
 
+	/// <summary>
+	/// Proriedade que retorna o size do Fluxo atual. Retorna um valor válido apenas se a classe
+	/// tiver sido iniciada com um dos construtores.
+	/// </summary>
+	property UInt64 Size
+	{
+		virtual UInt64 get()
+		{
+			//Retorna o size do fluxo.
+			return Prop_SizeStream;
+		}
+	}
 
 	///////////////////////////////////////////////////////
 	//A parti daqui vai conter os métodos das interfaces.//

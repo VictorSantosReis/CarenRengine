@@ -1188,84 +1188,193 @@ PVOID PropVariantManager::ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT
 
 		//(pcVal) - Representa um ponteiro(referência) que leva para um valor inteiro de 1 byte (char).
 	case VT_I1 | VT_BYREF:
-	{}
-		break;
-		//(pbVal) - Representa um ponteiro(referência) que leva para um valor inteiro não assinado de 1 byte (Byte).
+	{
+		//Define os dados no membro da estrutura.
+		vi_Resultado->pcVal = new CHAR(const_cast<CHAR&>(Param_Estrutura->pcVal));
+	}
+	break;
+	//(pbVal) - Representa um ponteiro(referência) que leva para um valor inteiro não assinado de 1 byte (Byte).
 	case VT_UI1 | VT_BYREF:
-	{}
-		break;
-		//(piVal) - Representa um ponteiro(referência) que leva para um valor inteiro de 2 bytes (Int16).
+	{
+		//Define os dados no membro da estrutura.
+		vi_Resultado->pbVal = new UCHAR(const_cast<UCHAR&>(Param_Estrutura->pbVal));
+	}
+	break;
+	//(piVal) - Representa um ponteiro(referência) que leva para um valor inteiro de 2 bytes (Int16).
 	case VT_I2 | VT_BYREF:
-	{}
-		break;
-		//(puiVal) - Representa um ponteiro(referência) que leva para um valor inteiro não assinado de 2 bytes (UInt16).
+	{
+		//Define os dados no membro da estrutura.
+		vi_Resultado->piVal = new SHORT(const_cast<SHORT&>(Param_Estrutura->piVal));
+	}
+	break;
+	//(puiVal) - Representa um ponteiro(referência) que leva para um valor inteiro não assinado de 2 bytes (UInt16).
 	case VT_UI2 | VT_BYREF:
-	{}
-		break;
-		//(plVal) - Representa um ponteiro(referência) que leva para um valor inteiro de 4 bytes (Int32).
+	{
+		//Define os dados no membro da estrutura.
+		vi_Resultado->puiVal = new USHORT(const_cast<USHORT&>(Param_Estrutura->puiVal));
+	}
+	break;
+	//(plVal) - Representa um ponteiro(referência) que leva para um valor inteiro de 4 bytes (Int32).
 	case VT_I4 | VT_BYREF:
-	{}
-		break;
-		//(pulVal) - Representa um ponteiro(referência) que leva para um valor inteiro não assinado de 4 bytes (UInt32).
+	{
+		//Define os dados no membro da estrutura.
+		vi_Resultado->plVal = new LONG(static_cast<LONG>(Param_Estrutura->plVal));
+	}
+	break;
+	//(pulVal) - Representa um ponteiro(referência) que leva para um valor inteiro não assinado de 4 bytes (UInt32).
 	case VT_UI4 | VT_BYREF:
-	{}
-		break;
-		//(pintVal) - Representa um ponteiro(referência) que leva para um valor inteiro de 4 bytes (Int32).
+	{
+		//Define os dados no membro da estrutura.
+		vi_Resultado->pulVal = new ULONG(static_cast<ULONG>(Param_Estrutura->pulVal));
+	}
+	break;
+	//(pintVal) - Representa um ponteiro(referência) que leva para um valor inteiro de 4 bytes (Int32).
 	case VT_INT | VT_BYREF:
-	{}
-		break;
-		//(puintVal) - Representa um ponteiro(referência) que leva para um valor inteiro não assinado de 4 bytes (UInt32).
+	{
+		//Define os dados no membro da estrutura.
+		vi_Resultado->pintVal = new INT(const_cast<int&>(Param_Estrutura->pintVal));
+	}
+	break;
+	//(puintVal) - Representa um ponteiro(referência) que leva para um valor inteiro não assinado de 4 bytes (UInt32).
 	case VT_UINT | VT_BYREF:
-	{}
-		break;
-		//(pfltVal) - Representa um ponteiro(referência) que leva para um valor real de 4 bytes (float).
+	{
+		//Define os dados no membro da estrutura.
+		vi_Resultado->puintVal = new UINT(const_cast<UINT&>(Param_Estrutura->puintVal));
+	}
+	break;
+	//(pfltVal) - Representa um ponteiro(referência) que leva para um valor real de 4 bytes (float).
 	case VT_R4 | VT_BYREF:
-	{}
-		break;
-		//(pdblVal) - Representa um ponteiro(referência) que leva para um valor real de 8 bytes (double).
+	{
+		//Define os dados no membro da estrutura.
+		vi_Resultado->pfltVal = new FLOAT(const_cast<FLOAT&>(Param_Estrutura->pfltVal));
+	}
+	break;
+	//(pdblVal) - Representa um ponteiro(referência) que leva para um valor real de 8 bytes (double).
 	case VT_R8 | VT_BYREF:
-	{}
-		break;
-		//(pboolVal) - Representa um ponteiro(referência) que leva para um valor booleano (Boolean).
+	{
+		//Define os dados no membro da estrutura.
+		vi_Resultado->pdblVal = new DOUBLE(const_cast<DOUBLE&>(Param_Estrutura->pdblVal));
+	}
+	break;
+	//(pboolVal) - Representa um ponteiro(referência) que leva para um valor booleano (Boolean).
 	case VT_BOOL | VT_BYREF:
-	{}
-		break;
-		//(pdecVal) - Representa um ponteiro(referência) que leva para uma estrutura DECIMAL (CA_DEC).
+	{
+		//Define os dados no membro da estrutura.
+		vi_Resultado->pboolVal = new SHORT(Param_Estrutura->pboolVal == true ? -1 : 0);
+	}
+	break;
+	//(pdecVal) - Representa um ponteiro(referência) que leva para uma estrutura DECIMAL (CA_DEC).
 	case VT_DECIMAL | VT_BYREF:
-	{}
-		break;
-		//(pscode) - Representa um ponteiro(referência) que leva para um valor inteiro de 4 bytes (Int32).
+	{
+		//Inicializa a estrutura.
+		vi_Resultado->pdecVal = new DECIMAL();
+
+		//Define os dados.
+		vi_Resultado->pdecVal->Hi32 = static_cast<ULONG>(Param_Estrutura->pdecVal.Hi32);
+		vi_Resultado->pdecVal->Mid32 = static_cast<ULONG>(Param_Estrutura->pdecVal.Mid32);
+		vi_Resultado->pdecVal->Lo32 = static_cast<ULONG>(Param_Estrutura->pdecVal.Lo32);
+		vi_Resultado->pdecVal->Lo64 = Param_Estrutura->pdecVal.Lo64;
+		vi_Resultado->pdecVal->scale = Param_Estrutura->pdecVal.scale;
+		vi_Resultado->pdecVal->sign = Param_Estrutura->pdecVal.sign;
+		vi_Resultado->pdecVal->signscale = Param_Estrutura->pdecVal.signscale;
+	}
+	break;
+	//(pscode) - Representa um ponteiro(referência) que leva para um valor inteiro de 4 bytes (Int32).
 	case VT_ERROR | VT_BYREF:
-	{}
-		break;
-		//(pcyVal) - Representa um ponteiro(referência) que leva para uma estrutura CY (CA_CY).
+	{
+		//Define os dados no membro da estrutura.
+		vi_Resultado->pscode = new SCODE(static_cast<SCODE>(Param_Estrutura->pscode));
+	}
+	break;
+	//(pcyVal) - Representa um ponteiro(referência) que leva para uma estrutura CY (CA_CY).
 	case VT_CY | VT_BYREF:
-	{}
-		break;
-		//(pdate) - Representa um ponteiro(referência) que leva para um valor real de 8 bytes (double).
+	{
+		//Inicializa a estrutura.
+		vi_Resultado->pcyVal = new CY();
+
+		//Define os dados.
+		vi_Resultado->pcyVal->Hi = static_cast<LONG>(Param_Estrutura->pcyVal.Hi);
+		vi_Resultado->pcyVal->Lo = static_cast<ULONG>(Param_Estrutura->pcyVal.Hi);
+		vi_Resultado->pcyVal->int64 = Param_Estrutura->pcyVal.int64;
+	}
+	break;
+	//(pdate) - Representa um ponteiro(referência) que leva para um valor real de 8 bytes (double).
 	case VT_DATE | VT_BYREF:
-	{}
-		break;
-		//(pbstrVal) - Representa um ponteiro(referência) que leva para um valor BSTR da tabela Unicode (String).
+	{
+		//Define os dados no membro da estrutura.
+		vi_Resultado->pdate = new DOUBLE(Param_Estrutura->pdate);
+	}
+	break;
+	//(pbstrVal) - Representa um ponteiro(referência) que leva para um valor BSTR da tabela Unicode (String).
 	case VT_BSTR | VT_BYREF:
-	{}
-		break;
-		//(ppunkVal) - Representa um ponteiro(referência) que leva para um ponteiro que contém uma interface IUnknown (ICaren).
+	{
+		//Verifica se os dados são validos.
+		if (!ObjetoGerenciadoValido(Param_Estrutura->pbstrVal))
+			Sair; //Ponteiro inválido.
+
+		//Converte os dados e define no membro da estrutura
+		vi_Resultado->pbstrVal = new BSTR(static_cast<BSTR>(Marshal::StringToBSTR(Param_Estrutura->pbstrVal).ToPointer()));
+	}
+	break;
+	//(ppunkVal) - Representa um ponteiro(referência) que leva para um ponteiro que contém uma interface IUnknown (ICaren).
 	case VT_UNKNOWN | VT_BYREF:
-	{}
-		break;
-		//(ppdispVal) - Representa um ponteiro(referência) que leva para um ponteiro que contém uma interface IDispath (ICaren).
+	{
+		//Verifica se o ponteiro é valido.
+		if (Param_Estrutura->ppunkVal == IntPtr::Zero)
+			Sair; //Ponteiro inválido.
+
+		//Converte o IntPtr
+		vi_NativePointerTemp = Param_Estrutura->ppunkVal.ToPointer();
+
+		//Adiciona uma referência.
+		((IUnknown*)vi_NativePointerTemp)->AddRef();
+
+		//Define o ponteiro no membro da estrutura.
+		vi_Resultado->ppunkVal = reinterpret_cast<IUnknown**>(&vi_NativePointerTemp);
+	}
+	break;
+	//(ppdispVal) - Representa um ponteiro(referência) que leva para um ponteiro que contém uma interface IDispath (ICaren).
 	case VT_DISPATCH | VT_BYREF:
-	{}
-		break;
-		//(pparray) - Representa um ponteiro(referência) que leva para uma estrutura SAFEARRAY (CA_SAFEARRAY).
+	{
+		//Verifica se o ponteiro é valido.
+		if (Param_Estrutura->ppdispVal == IntPtr::Zero)
+			Sair; //Ponteiro inválido.
+
+		//Converte o IntPtr
+		vi_NativePointerTemp = Param_Estrutura->ppdispVal.ToPointer();
+
+		//Adiciona uma referência.
+		((IDispatch*)vi_NativePointerTemp)->AddRef();
+
+		//Define o ponteiro no membro da estrutura.
+		vi_Resultado->ppdispVal = reinterpret_cast<IDispatch**>(&vi_NativePointerTemp);
+	}
+	break;
+	//(pparray) - Representa um ponteiro(referência) que leva para uma estrutura SAFEARRAY (CA_SAFEARRAY).
 	case VT_ARRAY | VT_BYREF:
-	{}
-		break;
-		//(pvarVal) - Representa um ponteiro(referência) que leva para uma estrutura PROPVARIANT (CA_PROPVARIANT).
+	{
+		//Verifica se o objeto é valido.
+		if (!ObjetoGerenciadoValido(Param_Estrutura->pparray))
+			Sair; //Objeto invalido.
+
+		//Cria o safearray que vai conter os dados.
+		vi_Resultado->pparray = new LPSAFEARRAY();
+
+		//Cria uma copia do safe array.
+		Param_Estrutura->pparray->CopyTo(vi_Resultado->pparray);
+	}
+	break;
+	//(pvarVal) - Representa um ponteiro(referência) que leva para uma estrutura PROPVARIANT (CA_PROPVARIANT).
 	case VT_VARIANT | VT_BYREF:
-	{}
-		break;
+	{
+		//Verifica se o objeto é valido.
+		if (!ObjetoGerenciadoValido(Param_Estrutura->pvarVal))
+			Sair; //Objeto invalido.
+
+		//Converte e define no membro da estrutura.
+		vi_Resultado->pvarVal = static_cast<PROPVARIANT*>(ConverterPropVariantManaged_ToUnmanaged(Param_Estrutura->pvarVal));
+	}
+	break;
 
 
 
@@ -1302,7 +1411,7 @@ PVOID PropVariantManager::ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT
 		PropVariantClear(vi_Resultado);
 
 		//Chama uma exceção porque o tipo não é suportado.
-		throw gcnew Exception("O tipo de variante (VT_VARIANT) não é suportado puro. esse valor deve ser usado com (VT_VECTOR Ou VT_BYREF‎‎) com operador OR.");
+		throw gcnew Exception("O tipo de variante (VT_VARIANT) não é suportado puro. Esse valor deve ser usado com (VT_VECTOR ou VT_BYREF) com operador OR.");
 		break;
 
 	case VT_PTR:
@@ -2029,7 +2138,7 @@ CA_PROPVARIANT^ PropVariantManager::ConverterPropVariantUnmanaged_ToManaged(PROP
 		for (ULONG i = 0; i < Param_Estrutura->cauh.cElems; i++)
 		{
 			//Inicializa a estrutura.
-			vi_Resultado->cauh.pElems[i] = { };
+			vi_Resultado->cauh.pElems[i] = CA_ULARGE_INTEGER();
 
 			//Define os dados na estrutura.
 			vi_Resultado->cauh.pElems[i].LowPart = Param_Estrutura->cauh.pElems[i].LowPart;
@@ -2054,7 +2163,7 @@ CA_PROPVARIANT^ PropVariantManager::ConverterPropVariantUnmanaged_ToManaged(PROP
 		for (ULONG i = 0; i < Param_Estrutura->cacy.cElems; i++)
 		{
 			//Inicializa a estrutura.
-			vi_Resultado->cacy.pElems[i] = { };
+			vi_Resultado->cacy.pElems[i] = CA_CY();
 
 			//Define os dados na estrutura.
 			vi_Resultado->cacy.pElems[i].Hi = Param_Estrutura->cacy.pElems[i].Hi;
@@ -2098,7 +2207,7 @@ CA_PROPVARIANT^ PropVariantManager::ConverterPropVariantUnmanaged_ToManaged(PROP
 		for (ULONG i = 0; i < Param_Estrutura->cafiletime.cElems; i++)
 		{
 			//Inicializa a estrutura.
-			vi_Resultado->cafiletime.pElems[i] = { };
+			vi_Resultado->cafiletime.pElems[i] = CA_FILETIME();
 
 			//Define os dados na estrutura.
 			vi_Resultado->cafiletime.pElems[i].dwHighDateTime = static_cast<UInt32>(Param_Estrutura->cafiletime.pElems[i].dwHighDateTime);
@@ -2468,7 +2577,7 @@ CA_PROPVARIANT^ PropVariantManager::ConverterPropVariantUnmanaged_ToManaged(PROP
 	case VT_DECIMAL | VT_BYREF:
 	{
 		//Verifica se o ponteiro é valido.
-		if (!ObjetoValido(Param_Estrutura->pdblVal))
+		if (!ObjetoValido(Param_Estrutura->pdecVal))
 			Sair; //Ponteiro inválido.
 
 		//Inicializa a estrutura.
@@ -2512,23 +2621,66 @@ CA_PROPVARIANT^ PropVariantManager::ConverterPropVariantUnmanaged_ToManaged(PROP
 		break;
 		//(pbstrVal) - Representa um ponteiro(referência) que leva para um valor BSTR da tabela Unicode (String).
 	case VT_BSTR | VT_BYREF:
-	{}
+	{
+		//Verifica se o ponteiro é valido.
+		if (!ObjetoValido(Param_Estrutura->pbstrVal))
+			Sair; //Ponteiro inválido.
+
+		//Converte os dados e define no membro da estrutura
+		vi_Resultado->pbstrVal = gcnew String(*Param_Estrutura->pbstrVal);
+	}
 		break;
 		//(ppunkVal) - Representa um ponteiro(referência) que leva para um ponteiro que contém uma interface IUnknown (ICaren).
 	case VT_UNKNOWN | VT_BYREF:
-	{}
+	{
+		//Verifica se o ponteiro é valido.
+		if (!ObjetoValido(Param_Estrutura->ppunkVal))
+			Sair; //Ponteiro inválido.
+
+		//Adiciona uma referência.
+		(*Param_Estrutura->ppunkVal)->AddRef();
+
+		//Define o ponteiro no membro da estrutura.
+		vi_Resultado->ppunkVal = IntPtr(*Param_Estrutura->ppunkVal);
+	}
 		break;
 		//(ppdispVal) - Representa um ponteiro(referência) que leva para um ponteiro que contém uma interface IDispath (ICaren).
 	case VT_DISPATCH | VT_BYREF:
-	{}
+	{
+		//Verifica se o ponteiro é valido.
+		if (!ObjetoValido(Param_Estrutura->ppdispVal))
+			Sair; //Ponteiro inválido.
+
+		//Adiciona uma referência.
+		(*Param_Estrutura->ppdispVal)->AddRef();
+
+		//Define o ponteiro no membro da estrutura.
+		vi_Resultado->ppunkVal = IntPtr(*Param_Estrutura->ppdispVal);
+	}
 		break;
 		//(pparray) - Representa um ponteiro(referência) que leva para uma estrutura SAFEARRAY (CA_SAFEARRAY).
 	case VT_ARRAY | VT_BYREF:
-	{}
+	{
+		//Verifica se o ponteiro é valido.
+		if (!ObjetoValido(Param_Estrutura->pparray))
+			Sair; //Ponteiro inválido.
+
+		//Cria e define o safearray no membro da estrutura.
+		vi_Resultado->pparray = gcnew CA_SAFEARRAY(
+			const_cast<LPSAFEARRAY&>(*Param_Estrutura->pparray),
+			true); //Cria uma copia do safearray.
+	}
 		break;
 		//(pvarVal) - Representa um ponteiro(referência) que leva para uma estrutura PROPVARIANT (CA_PROPVARIANT).
 	case VT_VARIANT | VT_BYREF:
-	{}
+	{
+		//Verifica se o ponteiro é valido.
+		if (!ObjetoValido(Param_Estrutura->pvarVal))
+			Sair; //Ponteiro inválido.
+
+		//Converte e define no membro da estrutura.
+		vi_Resultado->pvarVal = ConverterPropVariantUnmanaged_ToManaged(Param_Estrutura->pvarVal);
+	}
 		break;
 
 
@@ -2554,7 +2706,7 @@ CA_PROPVARIANT^ PropVariantManager::ConverterPropVariantUnmanaged_ToManaged(PROP
 
 	case VT_VARIANT:
 		//Chama uma exceção porque o tipo não é suportado.
-		throw gcnew Exception("O tipo de variante (VT_VARIANT) não é suportado puro. esse valor deve ser usado com (VT_VECTOR Ou VT_BYREF‎‎) com operador OR.");
+		throw gcnew Exception("O tipo de variante (VT_VARIANT) não é suportado puro. Esse valor deve ser usado com (VT_VECTOR ou VT_BYREF) com operador OR.");
 		break;
 
 	case VT_PTR:

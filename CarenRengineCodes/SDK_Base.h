@@ -21090,7 +21090,39 @@ namespace CarenRengine
 				Done:;
 					//Retorna o resultado.
 					return Resultado;
-				}				
+				}
+
+				/// <summary>
+				/// Cópia o safe array atual para um de destino. O método é responsável por inicializar o SAFEARRAY de destino.
+				/// </summary>
+				/// <param name="Param_SafeArrayDestino">O ponteiro para o safe array de destino.</param>
+				/// <returns></returns>
+				CarenResult CopyTo(SAFEARRAY** Param_Out_SafeArrayDestino)
+				{
+					//Resultado.
+					CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+					//Variaveis
+					HRESULT Hr = E_FAIL;
+					SAFEARRAY* vi_pOutSafeArray = Nulo;
+
+					//Cria uma copia do safe array atual.
+					Hr = SafeArrayCopy(PonteiroTrabalho, &vi_pOutSafeArray);
+					
+					//Processa o resultado.
+					Resultado.ProcessarCodigoOperacao(Hr);
+
+					//Verifica se obteve sucesso
+					if (!Sucesso(Hr))
+						Sair; //A operação falhou.
+
+					//Define o safe array no ponteiro de destino.
+					*Param_Out_SafeArrayDestino = vi_pOutSafeArray;
+
+				Done:;
+					//Retorna o resultado.
+					return Resultado;
+				}
 			};
 
 			/// <summary>
@@ -21592,9 +21624,8 @@ namespace CarenRengine
 				String^ pbstrVal;
 				IntPtr ppunkVal;
 				IntPtr ppdispVal;
-				IntPtr pparray;
-				IntPtr pvarVal;
-				
+				CA_SAFEARRAY^ pparray;
+				CA_PROPVARIANT^ pvarVal;		
 			};		
 
 			/// <summary>

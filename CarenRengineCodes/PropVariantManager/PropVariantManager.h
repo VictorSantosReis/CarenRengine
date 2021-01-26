@@ -23,91 +23,89 @@ limitations under the License.
 //Importa o namespace base.
 namespace CarenRengine
 {
-	//Importa o namespace de gerenciamento de propvariants.
-	namespace PropVariant
+
+	/// <summary>
+	/// Classe responsável pela conversão da estrutura (PROPVARIANT) entre suas representações NATIVA e GERENCIADA.
+	/// </summary>
+	public ref class PropVariantManager
 	{
-		/// <summary>
-		/// Classe responsável pela conversão da estrutura (PROPVARIANT) entre suas representações NATIVA e GERENCIADA.
-		/// </summary>
-		public ref class PropVariantManager
+
+		//Construtor & Destruidor da classe.
+	public:
+		PropVariantManager() {}
+		~PropVariantManager() {}
+
+
+		//Métodos auxiliares.
+	private:
+		//Cria um Guid a parti de uma determinada String.
+		_GUID CreateGuidFromString(String^ Param_DadosGuid);
+
+		//Converte um determinado GUID para uma representação de String gerenciada.
+		String^ CreateStringFromGuid(_GUID Param_Guid);
+
+		//Função que copia dados da memoria de um buffer para outro de destino.
+		template<typename T>
+		errno_t CopiarMemoria(T* Param_BufferDestino, unsigned int Param_SizeBufferDestino, T* Param_BufferOrigem, unsigned int Param_QuantidadeElementos)
 		{
+			//Realiza a copia da memoria.
+			return memcpy_s(Param_BufferDestino, Param_SizeBufferDestino, Param_BufferOrigem, Param_QuantidadeElementos * sizeof(T));
+		}
 
-			//Construtor & Destruidor da classe.
-		public:
-			PropVariantManager() {}
-			~PropVariantManager() {}
+		//(MÉTODO EXPERIMENTAL)
+		template<typename TipoArrayNativo, typename TipoArrayGerenciado>
+		void CopiarBufferNativoToGerenciado(TipoArrayNativo** Param_Buffer, cli::array<TipoArrayGerenciado>^% Param_BufferGerenciado, UINT32 Param_TamanhoBuffer)
+		{
+			//Cria um pin para o buffer gerenciado.
+			pin_ptr<TipoArrayGerenciado> PinToIndexZeroBuffer = &Param_BufferGerenciado[0];
 
+			//Converte o pinptr para um buffer do tipo de destino.
+			TipoArrayNativo* pBufferDestino = reinterpret_cast<TipoArrayNativo*>(PinToIndexZeroBuffer);
 
-			//Métodos auxiliares.
-		private:
-			//Cria um Guid a parti de uma determinada String.
-			_GUID CreateGuidFromString(String^ Param_DadosGuid);
+			//Verifica se é valido
+			if (!ObjetoValido(pBufferDestino))
+				throw gcnew NullReferenceException("(CopiarBufferNativoToGerenciado) - Houve uma falha ao criar uma ligação para o buffer de destino gerenciado através do (pin_ptr).");
 
-			//Converte um determinado GUID para uma representação de String gerenciada.
-			String^ CreateStringFromGuid(_GUID Param_Guid);
-			
-			//Função que copia dados da memoria de um buffer para outro de destino.
-			template<typename T>
-			errno_t CopiarMemoria(T* Param_BufferDestino, unsigned int Param_SizeBufferDestino, T* Param_BufferOrigem, unsigned int Param_QuantidadeElementos)
-			{
-				//Realiza a copia da memoria.
-				return memcpy_s(Param_BufferDestino, Param_SizeBufferDestino, Param_BufferOrigem, Param_QuantidadeElementos * sizeof(T));
-			}
+			//Copia os dados do nativo para o gerenciado.
+			std::copy(*Param_Buffer, (*Param_Buffer) + Param_TamanhoBuffer, pBufferDestino);
+		}
 
-			//(MÉTODO EXPERIMENTAL)
-			template<typename TipoArrayNativo, typename TipoArrayGerenciado>
-			void CopiarBufferNativoToGerenciado(TipoArrayNativo** Param_Buffer, cli::array<TipoArrayGerenciado>^% Param_BufferGerenciado, UINT32 Param_TamanhoBuffer)
-			{
-				//Cria um pin para o buffer gerenciado.
-				pin_ptr<TipoArrayGerenciado> PinToIndexZeroBuffer = &Param_BufferGerenciado[0];
+		//(MÉTODO EXPERIMENTAL)
+		template<typename TipoArrayNativo, typename TipoArrayGerenciado>
+		void CopiarBufferGerenciadoToNativo(cli::array<TipoArrayGerenciado>^% Param_BufferGerenciado, TipoArrayNativo* Param_BufferDestino, UINT32 Param_TamanhoBuffer)
+		{
+			//Cria um pin para o buffer gerenciado.
+			pin_ptr<TipoArrayGerenciado> PinToIndexZeroBuffer = &Param_BufferGerenciado[0];
 
-				//Converte o pinptr para um buffer do tipo de destino.
-				TipoArrayNativo* pBufferDestino = reinterpret_cast<TipoArrayNativo*>(PinToIndexZeroBuffer);
+			//Converte o pinptr para o buffer de origem.
+			TipoArrayNativo* pBufferOrigem = reinterpret_cast<TipoArrayNativo*>(PinToIndexZeroBuffer);
 
-				//Verifica se é valido
-				if (!ObjetoValido(pBufferDestino))
-					throw gcnew NullReferenceException("(CopiarBufferNativoToGerenciado) - Houve uma falha ao criar uma ligação para o buffer de destino gerenciado através do (pin_ptr).");
+			//Verifica se é valido
+			if (!ObjetoValido(pBufferOrigem))
+				throw gcnew NullReferenceException("(CopiarBufferGerenciadoToNativo) - Houve uma falha ao criar uma ligação para o buffer de origem gerenciado através do (pin_ptr).");
 
-				//Copia os dados do nativo para o gerenciado.
-				std::copy(*Param_Buffer, (*Param_Buffer) + Param_TamanhoBuffer, pBufferDestino);
-			}
+			//Copia os dados do nativo para o gerenciado.
+			std::copy(pBufferOrigem, (pBufferOrigem)+Param_TamanhoBuffer, Param_BufferDestino);
+		}
 
-			//(MÉTODO EXPERIMENTAL)
-			template<typename TipoArrayNativo, typename TipoArrayGerenciado>
-			void CopiarBufferGerenciadoToNativo(cli::array<TipoArrayGerenciado>^% Param_BufferGerenciado, TipoArrayNativo* Param_BufferDestino, UINT32 Param_TamanhoBuffer)
-			{
-				//Cria um pin para o buffer gerenciado.
-				pin_ptr<TipoArrayGerenciado> PinToIndexZeroBuffer = &Param_BufferGerenciado[0];
+		//Métodos
+	public:
+		/// <summary>
+		/// Método responsável por converter uma estrutura (CA_PROPVARIANT) GERENCIADA em sua representação NATIVA.
+		/// Retorna NULO se a conversão não for suportada ou algum valor necessário for invalido.
+		/// Chame PropVariantClear quando não for mais utilizar a estrutura.
+		/// </summary>
+		/// <param name="Param_Estrutura">A estrutura GERENCIADA a ser convertida.</param>
+		/// <returns>Retorna um ponteiro para a estrutura nativa PROPVARIANT.</returns>
+		PVOID ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT^ Param_Estrutura);
 
-				//Converte o pinptr para o buffer de origem.
-				TipoArrayNativo* pBufferOrigem = reinterpret_cast<TipoArrayNativo*>(PinToIndexZeroBuffer);
+		/// <summary>
+		/// Método responsável por converter uma estrutura (PROPVARIANT) NATIVA em sua representação GERENCIADA.
+		/// Retorna NULO se a conversão não for suportada ou algum valor necessário for invalido.
+		/// </summary>
+		/// <param name="Param_Estrutura">A estrutura NATIVA  ser convertida.</param>
+		/// <returns></returns>
+		CA_PROPVARIANT^ ConverterPropVariantUnmanaged_ToManaged(PROPVARIANT* Param_Estrutura);
+	};
 
-				//Verifica se é valido
-				if (!ObjetoValido(pBufferOrigem))
-					throw gcnew NullReferenceException("(CopiarBufferGerenciadoToNativo) - Houve uma falha ao criar uma ligação para o buffer de origem gerenciado através do (pin_ptr).");
-
-				//Copia os dados do nativo para o gerenciado.
-				std::copy(pBufferOrigem, (pBufferOrigem)+Param_TamanhoBuffer, Param_BufferDestino);
-			}
-
-			//Métodos
-		public:
-			/// <summary>
-			/// Método responsável por converter uma estrutura (CA_PROPVARIANT) GERENCIADA em sua representação NATIVA.
-			/// Retorna NULO se a conversão não for suportada ou algum valor necessário for invalido.
-			/// Chame PropVariantClear quando não for mais utilizar a estrutura.
-			/// </summary>
-			/// <param name="Param_Estrutura">A estrutura GERENCIADA a ser convertida.</param>
-			/// <returns>Retorna um ponteiro para a estrutura nativa PROPVARIANT.</returns>
-			PVOID ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT^ Param_Estrutura);
-
-			/// <summary>
-			/// Método responsável por converter uma estrutura (PROPVARIANT) NATIVA em sua representação GERENCIADA.
-			/// Retorna NULO se a conversão não for suportada ou algum valor necessário for invalido.
-			/// </summary>
-			/// <param name="Param_Estrutura">A estrutura NATIVA  ser convertida.</param>
-			/// <returns></returns>
-			CA_PROPVARIANT^ ConverterPropVariantUnmanaged_ToManaged(PROPVARIANT* Param_Estrutura);
-		};
-	}
 }

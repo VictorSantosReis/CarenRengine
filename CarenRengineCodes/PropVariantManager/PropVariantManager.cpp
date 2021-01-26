@@ -1101,81 +1101,215 @@ PVOID PropVariantManager::ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT
 
 
 
+	
 		//(Parray) - Representa um SAFEARRAY que contém uma matriz de valores inteiros assinados de 1 byte (char).
 	case VT_I1 | VT_ARRAY:
-	{}
+	{
+		//Verifica se o objeto é válido.
+		if (!ObjetoGerenciadoValido(Param_Estrutura->parray))
+			Sair; //O objeto não é válido.
+
+		//Chama o método para criar um cópia do SAFEARRAY para o membro da estutura
+		Param_Estrutura->parray->CopyTo(&vi_Resultado->parray);
+	}
 		break;
 		//(Parray) - Representa um SAFEARRAY que contém uma matriz de valores inteiros não assinados de 1 byte (Byte).
 	case VT_UI1 | VT_ARRAY:
-	{}
+	{
+		//Verifica se o objeto é válido.
+		if (!ObjetoGerenciadoValido(Param_Estrutura->parray))
+			Sair; //O objeto não é válido.
+
+		//Chama o método para criar um cópia do SAFEARRAY para o membro da estutura
+		Param_Estrutura->parray->CopyTo(&vi_Resultado->parray);
+	}
 		break;
 		//(Parray) - Representa um SAFEARRAY que contém uma matriz de valores inteiros assinados de 2 bytes (Int16).
 	case VT_I2 | VT_ARRAY:
-	{}
+	{
+		//Verifica se o objeto é válido.
+		if (!ObjetoGerenciadoValido(Param_Estrutura->parray))
+			Sair; //O objeto não é válido.
+
+		//Chama o método para criar um cópia do SAFEARRAY para o membro da estutura
+		Param_Estrutura->parray->CopyTo(&vi_Resultado->parray);
+	}
 		break;
 		//(Parray) - Representa um SAFEARRAY que contém uma matriz de valores inteiros não assinados de 2 bytes (UInt16).
 	case VT_UI2 | VT_ARRAY:
-	{}
+	{
+		//Verifica se o objeto é válido.
+		if (!ObjetoGerenciadoValido(Param_Estrutura->parray))
+			Sair; //O objeto não é válido.
+
+		//Chama o método para criar um cópia do SAFEARRAY para o membro da estutura
+		Param_Estrutura->parray->CopyTo(&vi_Resultado->parray);
+	}
 		break;
 		//(Parray) - Representa um SAFEARRAY que contém uma matriz de valores inteiros assinados de 4 bytes (Int32).
 	case VT_I4 | VT_ARRAY:
-	{}
+	{
+		//Verifica se o objeto é válido.
+		if (!ObjetoGerenciadoValido(Param_Estrutura->parray))
+			Sair; //O objeto não é válido.
+
+		//Chama o método para criar um cópia do SAFEARRAY para o membro da estutura
+		Param_Estrutura->parray->CopyTo(&vi_Resultado->parray);
+	}
 		break;
 		//(Parray) - Representa um SAFEARRAY que contém uma matriz de valores inteiros não assinados de 4 bytes (UInt32).
 	case VT_UI4 | VT_ARRAY:
-	{}
+	{
+		//Verifica se o objeto é válido.
+		if (!ObjetoGerenciadoValido(Param_Estrutura->parray))
+			Sair; //O objeto não é válido.
+
+		//Chama o método para criar um cópia do SAFEARRAY para o membro da estutura
+		Param_Estrutura->parray->CopyTo(&vi_Resultado->parray);
+	}
 		break;
 		//(Parray) - Representa um SAFEARRAY que contém uma matriz de valores inteiros assinados de 4 bytes (Int32).
 	case VT_INT | VT_ARRAY:
-	{}
+	{
+		//Verifica se o objeto é válido.
+		if (!ObjetoGerenciadoValido(Param_Estrutura->parray))
+			Sair; //O objeto não é válido.
+
+		//Chama o método para criar um cópia do SAFEARRAY para o membro da estutura
+		Param_Estrutura->parray->CopyTo(&vi_Resultado->parray);
+	}
 		break;
 		//(Parray) - Representa um SAFEARRAY que contém uma matriz de valores inteiros não assinados de 4 bytes (UInt32). 
 	case VT_UINT | VT_ARRAY:
-	{}
+	{
+		//Verifica se o objeto é válido.
+		if (!ObjetoGerenciadoValido(Param_Estrutura->parray))
+			Sair; //O objeto não é válido.
+
+		//Chama o método para criar um cópia do SAFEARRAY para o membro da estutura
+		Param_Estrutura->parray->CopyTo(&vi_Resultado->parray);
+	}
 		break;
 		//(Parray) - Representa um SAFEARRAY que contém uma matriz de valores reais de 4 bytes (float). 
 	case VT_R4 | VT_ARRAY:
-	{}
+	{
+		//Verifica se o objeto é válido.
+		if (!ObjetoGerenciadoValido(Param_Estrutura->parray))
+			Sair; //O objeto não é válido.
+
+		//Chama o método para criar um cópia do SAFEARRAY para o membro da estutura
+		Param_Estrutura->parray->CopyTo(&vi_Resultado->parray);
+	}
 		break;
 		//(Parray) - Representa um SAFEARRAY que contém uma matriz de valores reais de 8 bytes (double).
 	case VT_R8 | VT_ARRAY:
-	{}
+	{
+		//Verifica se o objeto é válido.
+		if (!ObjetoGerenciadoValido(Param_Estrutura->parray))
+			Sair; //O objeto não é válido.
+
+		//Chama o método para criar um cópia do SAFEARRAY para o membro da estutura
+		Param_Estrutura->parray->CopyTo(&vi_Resultado->parray);
+	}
 		break;
 		//(Parray) - Representa um SAFEARRAY que contém uma matriz de valores booleanos (Boolean).
 	case VT_BOOL | VT_ARRAY:
-	{}
+	{
+		//Verifica se o objeto é válido.
+		if (!ObjetoGerenciadoValido(Param_Estrutura->parray))
+			Sair; //O objeto não é válido.
+
+		//Chama o método para criar um cópia do SAFEARRAY para o membro da estutura
+		Param_Estrutura->parray->CopyTo(&vi_Resultado->parray);
+	}
 		break;
 		//(Parray) - Representa um SAFEARRAY que contém uma matriz de estruturas DECIMAL (CA_DEC).
 	case VT_DECIMAL | VT_ARRAY:
-	{}
+	{
+		//Verifica se o objeto é válido.
+		if (!ObjetoGerenciadoValido(Param_Estrutura->parray))
+			Sair; //O objeto não é válido.
+
+		//Chama o método para criar um cópia do SAFEARRAY para o membro da estutura
+		Param_Estrutura->parray->CopyTo(&vi_Resultado->parray);
+	}
 		break;
 		//(Parray) - Representa um SAFEARRAY que contém uma matriz de valores inteiros de 4 bytes (Int32).
 	case VT_ERROR | VT_ARRAY:
-	{}
+	{
+		//Verifica se o objeto é válido.
+		if (!ObjetoGerenciadoValido(Param_Estrutura->parray))
+			Sair; //O objeto não é válido.
+
+		//Chama o método para criar um cópia do SAFEARRAY para o membro da estutura
+		Param_Estrutura->parray->CopyTo(&vi_Resultado->parray);
+	}
 		break;
 		//(Parray) - Representa um SAFEARRAY que contém uma matriz de estruturas CY (CA_CY).
 	case VT_CY | VT_ARRAY:
-	{}
+	{
+		//Verifica se o objeto é válido.
+		if (!ObjetoGerenciadoValido(Param_Estrutura->parray))
+			Sair; //O objeto não é válido.
+
+		//Chama o método para criar um cópia do SAFEARRAY para o membro da estutura
+		Param_Estrutura->parray->CopyTo(&vi_Resultado->parray);
+	}
 		break;
 		//(Parray) - Representa um SAFEARRAY que contém uma matriz de valores reais de 8 bytes (double).
 	case VT_DATE | VT_ARRAY:
-	{}
+	{
+		//Verifica se o objeto é válido.
+		if (!ObjetoGerenciadoValido(Param_Estrutura->parray))
+			Sair; //O objeto não é válido.
+
+		//Chama o método para criar um cópia do SAFEARRAY para o membro da estutura
+		Param_Estrutura->parray->CopyTo(&vi_Resultado->parray);
+	}
 		break;
 		//(Parray) - Representa um SAFEARRAY que contém uma matriz de BSTRs da tabela Unicode (String).
 	case VT_BSTR | VT_ARRAY:
-	{}
+	{
+		//Verifica se o objeto é válido.
+		if (!ObjetoGerenciadoValido(Param_Estrutura->parray))
+			Sair; //O objeto não é válido.
+
+		//Chama o método para criar um cópia do SAFEARRAY para o membro da estutura
+		Param_Estrutura->parray->CopyTo(&vi_Resultado->parray);
+	}
 		break;
 		//(Parray) - Representa um SAFEARRAY que contém uma matriz de ponteiros para a interface IDispatch (ICaren).
 	case VT_DISPATCH | VT_ARRAY:
-	{}
+	{
+		//Verifica se o objeto é válido.
+		if (!ObjetoGerenciadoValido(Param_Estrutura->parray))
+			Sair; //O objeto não é válido.
+
+		//Chama o método para criar um cópia do SAFEARRAY para o membro da estutura
+		Param_Estrutura->parray->CopyTo(&vi_Resultado->parray);
+	}
 		break;
 		//(Parray) - Representa um SAFEARRAY que contém uma matriz de ponteiros para a interface IUnknown (ICaren).
 	case VT_UNKNOWN | VT_ARRAY:
-	{}
+	{
+		//Verifica se o objeto é válido.
+		if (!ObjetoGerenciadoValido(Param_Estrutura->parray))
+			Sair; //O objeto não é válido.
+
+		//Chama o método para criar um cópia do SAFEARRAY para o membro da estutura
+		Param_Estrutura->parray->CopyTo(&vi_Resultado->parray);
+	}
 		break;
 		//(Parray) - Representa um SAFEARRAY que contém uma matriz de estruturas VARIANT (CA_VARIANT).
 	case VT_VARIANT | VT_ARRAY:
-	{}
+	{
+		//Verifica se o objeto é válido.
+		if (!ObjetoGerenciadoValido(Param_Estrutura->parray))
+			Sair; //O objeto não é válido.
+
+		//Chama o método para criar um cópia do SAFEARRAY para o membro da estutura
+		Param_Estrutura->parray->CopyTo(&vi_Resultado->parray);
+	}
 		break;
 
 
@@ -2370,80 +2504,211 @@ CA_PROPVARIANT^ PropVariantManager::ConverterPropVariantUnmanaged_ToManaged(PROP
 		//(Parray) - Representa um SAFEARRAY que contém uma matriz de valores inteiros assinados de 1 byte (char).
 	case VT_I1 | VT_ARRAY:
 	{
+		//Verifica se o objeto é valido
+		if (!ObjetoValido(Param_Estrutura->parray))
+			Sair; //O ponteiro para o objeto não é válido.
 
+		//Cria o SAFEARRAY e realiza uma cópia dos dados.
+		vi_Resultado->parray = gcnew CA_SAFEARRAY(const_cast<LPSAFEARRAY&>(Param_Estrutura->parray), true);
 	}
 		break;
 		//(Parray) - Representa um SAFEARRAY que contém uma matriz de valores inteiros não assinados de 1 byte (Byte).
 	case VT_UI1 | VT_ARRAY:
-	{}
+	{
+		//Verifica se o objeto é valido
+		if (!ObjetoValido(Param_Estrutura->parray))
+			Sair; //O ponteiro para o objeto não é válido.
+
+		//Cria o SAFEARRAY e realiza uma cópia dos dados.
+		vi_Resultado->parray = gcnew CA_SAFEARRAY(const_cast<LPSAFEARRAY&>(Param_Estrutura->parray), true);
+	}
 		break;
 		//(Parray) - Representa um SAFEARRAY que contém uma matriz de valores inteiros assinados de 2 bytes (Int16).
 	case VT_I2 | VT_ARRAY:
-	{}
+	{
+		//Verifica se o objeto é valido
+		if (!ObjetoValido(Param_Estrutura->parray))
+			Sair; //O ponteiro para o objeto não é válido.
+
+		//Cria o SAFEARRAY e realiza uma cópia dos dados.
+		vi_Resultado->parray = gcnew CA_SAFEARRAY(const_cast<LPSAFEARRAY&>(Param_Estrutura->parray), true);
+	}
 		break;
 		//(Parray) - Representa um SAFEARRAY que contém uma matriz de valores inteiros não assinados de 2 bytes (UInt16).
 	case VT_UI2 | VT_ARRAY:
-	{}
+	{
+		//Verifica se o objeto é valido
+		if (!ObjetoValido(Param_Estrutura->parray))
+			Sair; //O ponteiro para o objeto não é válido.
+
+		//Cria o SAFEARRAY e realiza uma cópia dos dados.
+		vi_Resultado->parray = gcnew CA_SAFEARRAY(const_cast<LPSAFEARRAY&>(Param_Estrutura->parray), true);
+	}
 		break;
 		//(Parray) - Representa um SAFEARRAY que contém uma matriz de valores inteiros assinados de 4 bytes (Int32).
 	case VT_I4 | VT_ARRAY:
-	{}
+	{
+		//Verifica se o objeto é valido
+		if (!ObjetoValido(Param_Estrutura->parray))
+			Sair; //O ponteiro para o objeto não é válido.
+
+		//Cria o SAFEARRAY e realiza uma cópia dos dados.
+		vi_Resultado->parray = gcnew CA_SAFEARRAY(const_cast<LPSAFEARRAY&>(Param_Estrutura->parray), true);
+	}
 		break;
 		//(Parray) - Representa um SAFEARRAY que contém uma matriz de valores inteiros não assinados de 4 bytes (UInt32).
 	case VT_UI4 | VT_ARRAY:
-	{}
+	{
+		//Verifica se o objeto é valido
+		if (!ObjetoValido(Param_Estrutura->parray))
+			Sair; //O ponteiro para o objeto não é válido.
+
+		//Cria o SAFEARRAY e realiza uma cópia dos dados.
+		vi_Resultado->parray = gcnew CA_SAFEARRAY(const_cast<LPSAFEARRAY&>(Param_Estrutura->parray), true);
+	}
 		break;
 		//(Parray) - Representa um SAFEARRAY que contém uma matriz de valores inteiros assinados de 4 bytes (Int32).
 	case VT_INT | VT_ARRAY:
-	{}
+	{
+		//Verifica se o objeto é valido
+		if (!ObjetoValido(Param_Estrutura->parray))
+			Sair; //O ponteiro para o objeto não é válido.
+
+		//Cria o SAFEARRAY e realiza uma cópia dos dados.
+		vi_Resultado->parray = gcnew CA_SAFEARRAY(const_cast<LPSAFEARRAY&>(Param_Estrutura->parray), true);
+	}
 		break;
 		//(Parray) - Representa um SAFEARRAY que contém uma matriz de valores inteiros não assinados de 4 bytes (UInt32). 
 	case VT_UINT | VT_ARRAY:
-	{}
+	{
+		//Verifica se o objeto é valido
+		if (!ObjetoValido(Param_Estrutura->parray))
+			Sair; //O ponteiro para o objeto não é válido.
+
+		//Cria o SAFEARRAY e realiza uma cópia dos dados.
+		vi_Resultado->parray = gcnew CA_SAFEARRAY(const_cast<LPSAFEARRAY&>(Param_Estrutura->parray), true);
+	}
 		break;
 		//(Parray) - Representa um SAFEARRAY que contém uma matriz de valores reais de 4 bytes (float). 
 	case VT_R4 | VT_ARRAY:
-	{}
+	{
+		//Verifica se o objeto é valido
+		if (!ObjetoValido(Param_Estrutura->parray))
+			Sair; //O ponteiro para o objeto não é válido.
+
+		//Cria o SAFEARRAY e realiza uma cópia dos dados.
+		vi_Resultado->parray = gcnew CA_SAFEARRAY(const_cast<LPSAFEARRAY&>(Param_Estrutura->parray), true);
+	}
 		break;
 		//(Parray) - Representa um SAFEARRAY que contém uma matriz de valores reais de 8 bytes (double).
 	case VT_R8 | VT_ARRAY:
-	{}
+	{
+		//Verifica se o objeto é valido
+		if (!ObjetoValido(Param_Estrutura->parray))
+			Sair; //O ponteiro para o objeto não é válido.
+
+		//Cria o SAFEARRAY e realiza uma cópia dos dados.
+		vi_Resultado->parray = gcnew CA_SAFEARRAY(const_cast<LPSAFEARRAY&>(Param_Estrutura->parray), true);
+	}
 		break;
 		//(Parray) - Representa um SAFEARRAY que contém uma matriz de valores booleanos (Boolean).
 	case VT_BOOL | VT_ARRAY:
-	{}
+	{
+		//Verifica se o objeto é valido
+		if (!ObjetoValido(Param_Estrutura->parray))
+			Sair; //O ponteiro para o objeto não é válido.
+
+		//Cria o SAFEARRAY e realiza uma cópia dos dados.
+		vi_Resultado->parray = gcnew CA_SAFEARRAY(const_cast<LPSAFEARRAY&>(Param_Estrutura->parray), true);
+	}
 		break;
 		//(Parray) - Representa um SAFEARRAY que contém uma matriz de estruturas DECIMAL (CA_DEC).
 	case VT_DECIMAL | VT_ARRAY:
-	{}
+	{
+		//Verifica se o objeto é valido
+		if (!ObjetoValido(Param_Estrutura->parray))
+			Sair; //O ponteiro para o objeto não é válido.
+
+		//Cria o SAFEARRAY e realiza uma cópia dos dados.
+		vi_Resultado->parray = gcnew CA_SAFEARRAY(const_cast<LPSAFEARRAY&>(Param_Estrutura->parray), true);
+	}
 		break;
 		//(Parray) - Representa um SAFEARRAY que contém uma matriz de valores inteiros de 4 bytes (Int32).
 	case VT_ERROR | VT_ARRAY:
-	{}
+	{
+		//Verifica se o objeto é valido
+		if (!ObjetoValido(Param_Estrutura->parray))
+			Sair; //O ponteiro para o objeto não é válido.
+
+		//Cria o SAFEARRAY e realiza uma cópia dos dados.
+		vi_Resultado->parray = gcnew CA_SAFEARRAY(const_cast<LPSAFEARRAY&>(Param_Estrutura->parray), true);
+	}
 		break;
 		//(Parray) - Representa um SAFEARRAY que contém uma matriz de estruturas CY (CA_CY).
 	case VT_CY | VT_ARRAY:
-	{}
+	{
+		//Verifica se o objeto é valido
+		if (!ObjetoValido(Param_Estrutura->parray))
+			Sair; //O ponteiro para o objeto não é válido.
+
+		//Cria o SAFEARRAY e realiza uma cópia dos dados.
+		vi_Resultado->parray = gcnew CA_SAFEARRAY(const_cast<LPSAFEARRAY&>(Param_Estrutura->parray), true);
+	}
 		break;
 		//(Parray) - Representa um SAFEARRAY que contém uma matriz de valores reais de 8 bytes (double).
 	case VT_DATE | VT_ARRAY:
-	{}
+	{
+		//Verifica se o objeto é valido
+		if (!ObjetoValido(Param_Estrutura->parray))
+			Sair; //O ponteiro para o objeto não é válido.
+
+		//Cria o SAFEARRAY e realiza uma cópia dos dados.
+		vi_Resultado->parray = gcnew CA_SAFEARRAY(const_cast<LPSAFEARRAY&>(Param_Estrutura->parray), true);
+	}
 		break;
 		//(Parray) - Representa um SAFEARRAY que contém uma matriz de BSTRs da tabela Unicode (String).
 	case VT_BSTR | VT_ARRAY:
-	{}
+	{
+		//Verifica se o objeto é valido
+		if (!ObjetoValido(Param_Estrutura->parray))
+			Sair; //O ponteiro para o objeto não é válido.
+
+		//Cria o SAFEARRAY e realiza uma cópia dos dados.
+		vi_Resultado->parray = gcnew CA_SAFEARRAY(const_cast<LPSAFEARRAY&>(Param_Estrutura->parray), true);
+	}
 		break;
 		//(Parray) - Representa um SAFEARRAY que contém uma matriz de ponteiros para a interface IDispatch (ICaren).
 	case VT_DISPATCH | VT_ARRAY:
-	{}
+	{
+		//Verifica se o objeto é valido
+		if (!ObjetoValido(Param_Estrutura->parray))
+			Sair; //O ponteiro para o objeto não é válido.
+
+		//Cria o SAFEARRAY e realiza uma cópia dos dados.
+		vi_Resultado->parray = gcnew CA_SAFEARRAY(const_cast<LPSAFEARRAY&>(Param_Estrutura->parray), true);
+	}
 		break;
 		//(Parray) - Representa um SAFEARRAY que contém uma matriz de ponteiros para a interface IUnknown (ICaren).
 	case VT_UNKNOWN | VT_ARRAY:
-	{}
+	{
+		//Verifica se o objeto é valido
+		if (!ObjetoValido(Param_Estrutura->parray))
+			Sair; //O ponteiro para o objeto não é válido.
+
+		//Cria o SAFEARRAY e realiza uma cópia dos dados.
+		vi_Resultado->parray = gcnew CA_SAFEARRAY(const_cast<LPSAFEARRAY&>(Param_Estrutura->parray), true);
+	}
 		break;
 		//(Parray) - Representa um SAFEARRAY que contém uma matriz de estruturas VARIANT (CA_VARIANT).
 	case VT_VARIANT | VT_ARRAY:
-	{}
+	{
+		//Verifica se o objeto é valido
+		if (!ObjetoValido(Param_Estrutura->parray))
+			Sair; //O ponteiro para o objeto não é válido.
+
+		//Cria o SAFEARRAY e realiza uma cópia dos dados.
+		vi_Resultado->parray = gcnew CA_SAFEARRAY(const_cast<LPSAFEARRAY&>(Param_Estrutura->parray), true);
+	}
 		break;
 
 

@@ -19,9 +19,6 @@ limitations under the License.
 #include "../pch.h"
 #include "PropVariantManager.h"
 
-//Importa o namespace da classe atual.
-using namespace CarenRengine::PropVariant;
-
 //MÉTODOS AUXILIARES.
 
 _GUID PropVariantManager::CreateGuidFromString(String^ Param_DadosGuid)
@@ -2873,7 +2870,19 @@ CA_PROPVARIANT^ PropVariantManager::ConverterPropVariantUnmanaged_ToManaged(PROP
 		break;
 		//(pcyVal) - Representa um ponteiro(referência) que leva para uma estrutura CY (CA_CY).
 	case VT_CY | VT_BYREF:
-	{}
+	{
+		//Verifica se o ponteiro é valido.
+		if (!ObjetoValido(Param_Estrutura->pcyVal))
+			Sair; //Ponteiro inválido.
+
+		//Inicializa a estrutura.
+		vi_Resultado->pcyVal = CA_CY();
+
+		//Define os dados na estrutura.
+		vi_Resultado->pcyVal.Hi = static_cast<int>(Param_Estrutura->pcyVal->Hi);
+		vi_Resultado->pcyVal.Lo = static_cast<UInt32>(Param_Estrutura->pcyVal->Lo);
+		vi_Resultado->pcyVal.int64 = Param_Estrutura->pcyVal->int64;
+	}
 		break;
 		//(pdate) - Representa um ponteiro(referência) que leva para um valor real de 8 bytes (double).
 	case VT_DATE | VT_BYREF:

@@ -32,6 +32,10 @@ limitations under the License.
 #include "FunctionClass/GlobalFuncs.h"
 
 
+//Propvariant Manager
+#include "PropVariantManager/PropVariantManager.h"
+
+
 //Interfaces da Api base CAREN
 #include "Caren/Caren.h"
 #include "Caren/CarenBuffer.h"

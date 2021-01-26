@@ -2369,7 +2369,9 @@ CA_PROPVARIANT^ PropVariantManager::ConverterPropVariantUnmanaged_ToManaged(PROP
 
 		//(Parray) - Representa um SAFEARRAY que contém uma matriz de valores inteiros assinados de 1 byte (char).
 	case VT_I1 | VT_ARRAY:
-	{}
+	{
+
+	}
 		break;
 		//(Parray) - Representa um SAFEARRAY que contém uma matriz de valores inteiros não assinados de 1 byte (Byte).
 	case VT_UI1 | VT_ARRAY:

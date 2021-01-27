@@ -60,7 +60,19 @@ void IniciarPropVariant(LPPROPVARIANT* Param_PropPointerInit);
 /// Função responsável por deletar completamente os dados e a memória alocada para um objeto PROPVARIANT.
 /// </summary>
 /// <param name="Param_PropPointerInit">Um ponteiro que leva a um endereço onde está um objeto alocado PROPVARIANT.</param>
-void DeletarPropVariant(LPPROPVARIANT* Param_PropPointerInit);
+void DeletarPropVariant(LPPROPVARIANT* Param_PropPointer);
+
+/// <summary>
+/// Função responsável por iniciar corretamente uma estrutura VARIANT.
+/// </summary>
+/// <param name="Param_VariantPointerInit">Um ponteiro que leva a um endereço onde será criado um objeto VARIANT.</param>
+void IniciarVariant(LPVARIANT* Param_VariantPointerInit);
+
+/// <summary>
+/// Função responsável por deletar completamente os dados e a memória alocada para um objeto VARIANT.
+/// </summary>
+/// <param name="Param_VariantPointer">Um ponteiro que leva a um endereço onde está um objeto alocado VARIANT.</param>
+void DeletarVariant(LPVARIANT* Param_VariantPointer);
 
 /// <summary>
 /// Função resposável por recuperar o ponteiro nativo de uma interface baseada em ICaren.

@@ -385,35 +385,6 @@ namespace CarenRengine
 				}
 			}
 
-			//É PRECISO REFAZER A CONVERSÃO E ADICIONAR MAIS SUPORTE AO VARENUM GERENCIADO.
-			VARIANT* ConverterVARIANTManged_ToUnamaged(CA_VARIANT^ Param_Estrutura)
-			{
-				//Variavel que vai retornar a estrutura.
-				VARIANT* EstruturaRetorno = Nulo;
-
-				//Inicializa a estrutura.
-				VariantInit(EstruturaRetorno);
-
-				//Variveis utilizadas.
-
-
-				//Retorna o resultado
-				return EstruturaRetorno;
-			}
-
-			//É PRECISO REFAZER A CONVERSÃO E ADICIONAR MAIS SUPORTE AO VARENUM GERENCIADO.
-			CA_VARIANT^ ConverterVARIANTUnamaged_ToManged(VARIANT* Param_Estrutura)
-			{
-				//Variavel que vai retornar a estrutura.
-				CA_VARIANT^ EstruturaRetorno = gcnew CA_VARIANT();
-
-				//Variveis utilizadas.
-
-
-				//Retorna o resultado
-				return EstruturaRetorno;
-			}
-
 			//Converte um ponteiro gerenciado para um ponteiro nativo.
 			LPVOID ConverterPonteiroGerenciadorParaNativo(IntPtr Param_Ponteiro)
 			{

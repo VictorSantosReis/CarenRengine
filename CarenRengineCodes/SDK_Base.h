@@ -17616,6 +17616,120 @@ namespace CarenRengine
 					return Resultado;
 				}
 
+				//Métodos
+			public:
+				/// <summary>
+				/// Método responsável por realizar uma cópia de uma variante de origem para a estrutura atual.
+				/// O método já inicializa os dados necessários.
+				/// </summary>
+				/// <param name="Param_VariantOrigem">Um ponteiro que leva a um endereço onde está localizado a variante a ser cópiada.</param>
+				/// <returns></returns>
+				CarenResult CopyFrom(LPVARIANT* Param_VariantOrigem)
+				{
+					//Variavel a ser retornada.
+					CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+					//Resultado COM.
+					HRESULT Hr = E_FAIL;
+
+					//Verifica se a variante atual é valida
+					if (!ObjetoValido(PonteiroTrabalho))
+					{
+						//O ponteiro da variante atual não é valido.
+
+						//Define erro.
+						Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
+
+						//Sai do método
+						Sair;
+					}
+
+					//Verifica se o ponteiro leva a um destino válido onde está a variante de origem.
+					if (!ObjetoValido(Param_VariantOrigem))
+					{
+						//O ponteiro não leva a um local válido.
+
+						//Define erro.
+						Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
+
+						//Sai do método
+						Sair;
+					}
+
+					//Inicia a variante que vai receber os dados.
+					PonteiroTrabalho = new VARIANT(); //Essa inicialização é igual ao método (IniciarVariant) em GlobaFuncs
+
+					//Preenche os bytes com 0 da propvariant.
+					memset(PonteiroTrabalho, 0, sizeof(tagVARIANT));
+
+					//Cria uma cópia da variante atual.
+					Hr = VariantCopy(PonteiroTrabalho, const_cast<VARIANT*>(*Param_VariantOrigem));
+
+					//Processa o código.
+					Resultado.ProcessarCodigoOperacao(Hr);
+
+				Done:;
+
+					//Retorna o resultado
+					return Resultado;
+				}
+
+				/// <summary>
+				/// Método responsável por realizar uma copia da variante atual para uma de destino especificada.
+				/// O método já é responsável por iniciar a VARIANT de destino corretamente.
+				/// </summary>
+				/// <param name="Param_VariantDestino">Um ponteiro que leva ao endereço de destino onde vai receber uma cópia da variante atual.</param>
+				/// <returns></returns>
+				CarenResult CopyTo(LPVARIANT* Param_VariantDestino)
+				{
+					//Variavel a ser retornada.
+					CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+					//Resultado COM.
+					HRESULT Hr = E_FAIL;
+
+					//Verifica se a variante atual é valida
+					if (!ObjetoValido(PonteiroTrabalho))
+					{
+						//O ponteiro da variante atual não é valido.
+
+						//Define erro.
+						Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
+
+						//Sai do método
+						Sair;
+					}
+
+					//Verifica se o ponteiro leva a um destino válido para armazenar a variante.
+					if (!ObjetoValido(Param_VariantDestino))
+					{
+						//O ponteiro não leva a um local válido.
+
+						//Define erro.
+						Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
+
+						//Sai do método
+						Sair;
+					}
+			
+					//Inicia a variante.
+					*Param_VariantDestino = new VARIANT();
+					
+					//Preenche os bytes com 0 da propvariant.
+					memset(*Param_VariantDestino, 0, sizeof(tagVARIANT));
+
+					//Cria uma cópia da variante atual.
+					 Hr = VariantCopy(*Param_VariantDestino, const_cast<VARIANT*>(PonteiroTrabalho));
+
+					 //Processa o código.
+					 Resultado.ProcessarCodigoOperacao(Hr);
+
+				Done:;
+
+					//Retorna o resultado
+					return Resultado;
+				}
+
 				//Propriedades
 			public:
 
@@ -21093,34 +21207,133 @@ namespace CarenRengine
 				}
 
 				/// <summary>
-				/// Cópia o safe array atual para um de destino. O método é responsável por inicializar o SAFEARRAY de destino.
+				/// Cópia o safe array atual para um de destino. 
+				/// O método é responsável por inicializar o SAFEARRAY de destino.
 				/// </summary>
-				/// <param name="Param_SafeArrayDestino">O ponteiro para o safe array de destino.</param>
+				/// <param name="Param_SafeArrayDestino">O ponteiro para o safe array de DESTINO.</param>
 				/// <returns></returns>
-				CarenResult CopyTo(SAFEARRAY** Param_Out_SafeArrayDestino)
+				CarenResult CopyTo(LPSAFEARRAY* Param_Out_SafeArrayDestino)
 				{
-					//Resultado.
+					//Variavel a ser retornada.
 					CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
 
 					//Variaveis
 					HRESULT Hr = E_FAIL;
-					SAFEARRAY* vi_pOutSafeArray = Nulo;
+					VARTYPE vi_vt = VT_EMPTY;
 
-					//Cria uma copia do safe array atual.
-					Hr = SafeArrayCopy(PonteiroTrabalho, &vi_pOutSafeArray);
+					//Verifica se o SAFEARRAY atual é valida
+					if (!ObjetoValido(PonteiroTrabalho))
+					{
+						//O ponteiro da variante atual não é valido.
+
+						//Define erro.
+						Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
+
+						//Sai do método
+						Sair;
+					}
+
+					//Verifica se o ponteiro leva a um destino válido para armazenar a PROPVARIANT.
+					if (!ObjetoValido(Param_Out_SafeArrayDestino))
+					{
+						//O ponteiro não leva a um local válido.
+
+						//Define erro.
+						Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
+
+						//Sai do método
+						Sair;
+					}
+
+					//Obtém o tipo do safearray.
+					vi_vt = static_cast<VARTYPE>(GetVarType());
 					
-					//Processa o resultado.
+					//Cria o SAFEARRAY.
+					*Param_Out_SafeArrayDestino = SafeArrayCreate(vi_vt, PonteiroTrabalho->cDims, PonteiroTrabalho->rgsabound);
+
+					//Cria uma cópia da SAFEARRAY atual.
+					Hr = SafeArrayCopy(PonteiroTrabalho, Param_Out_SafeArrayDestino);
+
+					//Processa o código.
 					Resultado.ProcessarCodigoOperacao(Hr);
 
-					//Verifica se obteve sucesso
-					if (!Sucesso(Hr))
-						Sair; //A operação falhou.
+					//Verifica se teve sucesso na cópia, se não deleta os dados.
+					if (Resultado.StatusCode != ResultCode::SS_OK)
+					{
+						//Deleta o SAFEARRAY.
+						SafeArrayDestroy(*Param_Out_SafeArrayDestino);
 
-					//Define o safe array no ponteiro de destino.
-					*Param_Out_SafeArrayDestino = vi_pOutSafeArray;
+						//Nula o ponteiro.
+						*Param_Out_SafeArrayDestino = Nulo;
+					}
 
 				Done:;
-					//Retorna o resultado.
+
+					//Retorna o resultado
+					return Resultado;
+				}
+
+				/// <summary>
+				/// Cópia um SAFEARRAY de destino para o SAFEARRAY atual.
+				/// O método já responsável por inicializar os dados necessários.
+				/// </summary>
+				/// <param name="Param_SafeArraySource">O ponteiro para o safe array de ORIGEM.</param>
+				/// <returns></returns>
+				CarenResult CopyFrom(LPSAFEARRAY* Param_SafeArraySource)
+				{
+					//Variavel a ser retornada.
+					CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+					//Variaveis
+					HRESULT Hr = E_FAIL;
+					VARTYPE vi_vt = VT_EMPTY;
+
+					//Verifica se o ponteiro leva a um destino válido para poder cópiar.
+					if (!ObjetoValido(Param_SafeArraySource) )
+					{
+						//O ponteiro não leva a um local válido.
+
+						//Define erro.
+						Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
+
+						//Sai do método
+						Sair;
+					}
+
+					//Verifica se o endereço principal onde está o SAFEARRAY é válido.
+					if (!ObjetoValido(*Param_SafeArraySource))
+					{
+						//O ponteiro não leva a um local válido.
+
+						//Define erro.
+						Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
+
+						//Sai do método
+						Sair;
+					}
+
+					//Chama o método para obter o tipo de dados do safe array.
+					SafeArrayGetVartype(*Param_SafeArraySource, &vi_vt);
+
+					//Cria o safearray atual que vai receber os dados.
+					PonteiroTrabalho = SafeArrayCreate(vi_vt, (*Param_SafeArraySource)->cDims, (*Param_SafeArraySource)->rgsabound);
+
+					//Cria uma cópia do SAFEARRAY de origem para o de destino.
+					Hr = SafeArrayCopy(*Param_SafeArraySource, &PonteiroTrabalho);
+
+					//Verifica se teve sucesso na cópia, se não deleta os dados.
+					if (Resultado.StatusCode != ResultCode::SS_OK)
+					{
+						//Deleta o SAFEARRAY.
+						SafeArrayDestroy(PonteiroTrabalho);
+
+						//Nula o ponteiro.
+						PonteiroTrabalho = Nulo;
+					}
+
+				Done:;
+
+					//Retorna o resultado
 					return Resultado;
 				}
 			};

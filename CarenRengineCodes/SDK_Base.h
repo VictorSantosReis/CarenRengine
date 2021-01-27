@@ -17552,10 +17552,22 @@ namespace CarenRengine
 				{
 					//Construtor Default
 				}
-				CA_VARIANT(IntPtr Param_Pointer)
+				CA_VARIANT(IntPtr Param_Pointer, Boolean Param_Copiar)
 				{
-					//Converte o IntPtr para uma estrutura VARIANT
-					PonteiroTrabalho = static_cast<VARIANT*>(Param_Pointer.ToPointer());
+					//Verifica se deve fazer uma copia dois dados.
+					if (Param_Copiar)
+					{
+						//Inicializa a variante.
+						VariantInit(PonteiroTrabalho);
+
+						//Chama o método para criar uma cópia.
+						VariantCopy(PonteiroTrabalho, static_cast<VARIANT*>(Param_Pointer.ToPointer()));
+					}
+					else
+					{
+						//Define a variante no ponteiro de trabalho.
+						PonteiroTrabalho = static_cast<VARIANT*>(Param_Pointer.ToPointer());
+					}
 				}
 				CA_VARIANT(Enumeracoes::CA_VARTYPE Param_Vartype)
 				{
@@ -17569,10 +17581,22 @@ namespace CarenRengine
 					//Define o tipo da variante.
 					PonteiroTrabalho->vt = static_cast<VARTYPE>(Param_Vartype);
 				}
-				CA_VARIANT(const VARIANT*& Param_Variant)
+				CA_VARIANT(const LPVARIANT& Param_Variant, Boolean Param_Copiar)
 				{
-					//Define a variante no ponteiro de trabalho.
-					PonteiroTrabalho = const_cast<VARIANT*>(Param_Variant);
+					//Verifica se deve fazer uma copia dois dados.
+					if (Param_Copiar)
+					{
+						//Inicializa a variante.
+						VariantInit(PonteiroTrabalho);
+
+						//Chama o método para criar uma cópia.
+						VariantCopy(PonteiroTrabalho, const_cast<VARIANT*>(Param_Variant));
+					}
+					else
+					{
+						//Define a variante no ponteiro de trabalho.
+						PonteiroTrabalho = const_cast<VARIANT*>(Param_Variant);
+					}
 				}
 				~CA_VARIANT()
 				{
@@ -21287,6 +21311,7 @@ namespace CarenRengine
 					//Variaveis
 					HRESULT Hr = E_FAIL;
 					VARTYPE vi_vt = VT_EMPTY;
+					LPSAFEARRAY vi_pOutSafeArray = Nulo;
 
 					//Verifica se o ponteiro leva a um destino válido para poder cópiar.
 					if (!ObjetoValido(Param_SafeArraySource) )
@@ -21316,10 +21341,10 @@ namespace CarenRengine
 					SafeArrayGetVartype(*Param_SafeArraySource, &vi_vt);
 
 					//Cria o safearray atual que vai receber os dados.
-					PonteiroTrabalho = SafeArrayCreate(vi_vt, (*Param_SafeArraySource)->cDims, (*Param_SafeArraySource)->rgsabound);
+					vi_pOutSafeArray = SafeArrayCreate(vi_vt, (*Param_SafeArraySource)->cDims, (*Param_SafeArraySource)->rgsabound);
 
 					//Cria uma cópia do SAFEARRAY de origem para o de destino.
-					Hr = SafeArrayCopy(*Param_SafeArraySource, &PonteiroTrabalho);
+					Hr = SafeArrayCopy(*Param_SafeArraySource, &vi_pOutSafeArray);
 
 					//Verifica se teve sucesso na cópia, se não deleta os dados.
 					if (Resultado.StatusCode != ResultCode::SS_OK)
@@ -21330,6 +21355,9 @@ namespace CarenRengine
 						//Nula o ponteiro.
 						PonteiroTrabalho = Nulo;
 					}
+
+					//Define o SAFEARRAY no ponteiro de trabalho.
+					PonteiroTrabalho = vi_pOutSafeArray;
 
 				Done:;
 

@@ -596,11 +596,12 @@ PVOID PropVariantManager::ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT
 	}
 		break;
 
-		//(NÃO INFORMADO) - Representa um ponteiro para uma estrutura SAFEARRAY.
+		//(parray) - Representa um ponteiro para uma estrutura SAFEARRAY.
 	case VT_SAFEARRAY:
 	{
-		//Define os dados na estrutura a ser retornada.
-		vi_Resultado->parray = Param_Estrutura->parray->PonteiroTrabalho;
+		//Copia o safe array na estrutura para o membro na estrutura de destino.
+		//O método já inicializa o safearray de destino.
+		Param_Estrutura->parray->CopyTo(&vi_Resultado->parray);
 	}
 		break;
 		

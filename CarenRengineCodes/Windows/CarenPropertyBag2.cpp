@@ -660,15 +660,15 @@ CarenResult CarenPropertyBag2::Read(
 	//NATIVAS PARA A GERENCIADA E LIBERA OS DADOS DAS VARIANTS
 	for (UINT32 i = 0; i < Param_Quantidade; i++)
 	{
-		//Converte o valor da matriz de VARIANT nativa para a gerenciada do parametro de saida.
-		Param_Out_VarValue[i] = Util.ConverterVARIANTUnamaged_ToManged(&vi_pOutArrayValues[i]);
+		//Cria uma cópia da variante.
+		Param_Out_VarValue[i] = gcnew CA_VARIANT(&vi_pOutArrayValues[i], true);
 
 		//Converte o valor da matriz de HRESULTS nativa para a gerenciada do parametro de saida.
 		Param_Out_HRESULTArray[i] = static_cast<Int32>(vi_pOutArrayHResults[i]);
-
-		//Libera a VARIANT no index especificado.
-		VariantClear(&vi_pOutArrayValues[i]);
 	}
+
+	//Libera o array de variants
+	ClearVariantArray(vi_pOutArrayValues, Param_Quantidade);
 
 Done:;
 	//Libera a memória utilizada pelas matrizes.
@@ -708,9 +708,9 @@ cli::array<Estruturas::CA_VARIANT^>^ Param_VarValue)
 	//Faz um for para converter os dados das matrizes gerenciadas para suas nativas.
 	for (UINT32 i = 0; i < Param_Quantidade; i++)
 	{
-		//Converte oS valorES do index especificado para uma variavel auxiliar.
+		//Converte os valores do index especificado para uma variavel auxiliar.
 		vi_pAuxiliarBag = Util.ConverterPROPBAG2ManagedToUnamaged(Param_ArrayPropBagsRequest[i]);
-		vi_pAuxiliarValue = Util.ConverterVARIANTManged_ToUnamaged(Param_VarValue[i]);
+		Param_VarValue[i]->CopyTo(&vi_pAuxiliarValue);
 
 		//Define o valor nos index das matrizes nativas.
 		vi_pArrayPropBagRequest[i] = *vi_pAuxiliarBag;

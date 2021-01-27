@@ -1,4 +1,4 @@
-/*
+ï»¿/*
 Copyright 2020 Victor Santos Reis
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,15 +24,15 @@ typedef HRESULT(__stdcall* CLN_IMFNetResourceFilter_EventoNativo_OnRedirect)(LPC
 typedef HRESULT(__stdcall* CLN_IMFNetResourceFilter_EventoNativo_OnSendingRequest)(LPCWSTR);
 
 /// <summary>
-/// Classe responsável por implementar a interface nativa (IMFNetResourceFilter) para receber e enviar os eventos para a classe gerenciada.
+/// Classe responsÃ¡vel por implementar a interface nativa (IMFNetResourceFilter) para receber e enviar os eventos para a classe gerenciada.
 /// </summary>
 class CLN_IMFNetResourceFilter : public IMFNetResourceFilter
 {
-	//Guarda a quantidade de referências.
+	//Guarda a quantidade de referÃªncias.
 	volatile long RefCount;
 
 public:
-	//Inicialização da classe.
+	//InicializaÃ§Ã£o da classe.
 	CLN_IMFNetResourceFilter() : RefCount(1)
 	{
 	}
@@ -42,7 +42,7 @@ public:
 
 	}
 
-	//Métodos da Interface IUnknown.
+	//MÃ©todos da Interface IUnknown.
 public:
 	//Procura uma determina interface nessa classe.
 	STDMETHODIMP QueryInterface(REFIID guid, void** pObj)
@@ -69,30 +69,30 @@ public:
 		}
 	}
 
-	//Adiciona uma referência a classe.
+	//Adiciona uma referÃªncia a classe.
 	STDMETHODIMP_(ULONG) AddRef()
 	{
-		//Incrementa a quantidade de referências.
+		//Incrementa a quantidade de referÃªncias.
 		return InterlockedIncrement(&RefCount);
 	}
 
-	//Libera uma referência a classe.
+	//Libera uma referÃªncia a classe.
 	STDMETHODIMP_(ULONG) Release()
 	{
-		//Desecrementa a quantidade de referências e verifica.
+		//Desecrementa a quantidade de referÃªncias e verifica.
 		ULONG result = InterlockedDecrement(&RefCount);
 		if (result == 0) delete this;
 		return result;
 	}
 
 
-	//Contém todos os delegates que seram chamados para notificar o usuário.
+	//ContÃ©m todos os delegates que seram chamados para notificar o usuÃ¡rio.
 public:
 	CLN_IMFNetResourceFilter_EventoNativo_OnRedirect Evento_OnRedirect = NULL;
 	CLN_IMFNetResourceFilter_EventoNativo_OnSendingRequest Evento_OnSendingRequest = NULL;
 
 
-	//Métodos da interface (IMFNetResourceFilter).
+	//MÃ©todos da interface (IMFNetResourceFilter).
 public:
 	virtual HRESULT STDMETHODCALLTYPE OnRedirect(
 		_In_  LPCWSTR pszUrl,

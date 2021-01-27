@@ -1,4 +1,4 @@
-/*
+ï»¿/*
 Copyright 2020 Victor Santos Reis
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,16 +23,16 @@ limitations under the License.
 typedef HRESULT(__stdcall* CLN_IMFNetProxyLocatorFactory_EventoNativo_OnCreateProxyLocator)(LPCWSTR, _Outptr_ IMFNetProxyLocator**);
 
 /// <summary>
-/// Classe responsável por implementar a interface nativa (IMFNetProxyLocatorFactory) possibilitando o usuário receber a chamada do método (CreateProxyLocator) para poder criar
+/// Classe responsÃ¡vel por implementar a interface nativa (IMFNetProxyLocatorFactory) possibilitando o usuÃ¡rio receber a chamada do mÃ©todo (CreateProxyLocator) para poder criar
 /// e configurar seu proxy personalizado.
 /// </summary>
 class CLN_IMFNetProxyLocatorFactory : public IMFNetProxyLocatorFactory
 {
-	//Guarda a quantidade de referências.
+	//Guarda a quantidade de referÃªncias.
 	volatile long RefCount;
 
 public:
-	//Inicialização da classe.
+	//InicializaÃ§Ã£o da classe.
 	CLN_IMFNetProxyLocatorFactory() : RefCount(1)
 	{
 	}
@@ -42,7 +42,7 @@ public:
 
 	}
 
-	//Métodos da Interface IUnknown.
+	//MÃ©todos da Interface IUnknown.
 public:
 	//Procura uma determina interface nessa classe.
 	STDMETHODIMP QueryInterface(REFIID guid, void** pObj)
@@ -69,29 +69,29 @@ public:
 		}
 	}
 
-	//Adiciona uma referência a classe.
+	//Adiciona uma referÃªncia a classe.
 	STDMETHODIMP_(ULONG) AddRef()
 	{
-		//Incrementa a quantidade de referências.
+		//Incrementa a quantidade de referÃªncias.
 		return InterlockedIncrement(&RefCount);
 	}
 
-	//Libera uma referência a classe.
+	//Libera uma referÃªncia a classe.
 	STDMETHODIMP_(ULONG) Release()
 	{
-		//Desecrementa a quantidade de referências e verifica.
+		//Desecrementa a quantidade de referÃªncias e verifica.
 		ULONG result = InterlockedDecrement(&RefCount);
 		if (result == 0) delete this;
 		return result;
 	}
 
 
-	//Contém todos os delegates que seram chamados para notificar o usuário.
+	//ContÃ©m todos os delegates que seram chamados para notificar o usuÃ¡rio.
 public:
 	CLN_IMFNetProxyLocatorFactory_EventoNativo_OnCreateProxyLocator Evento_OnCreateProxyLocator = NULL;
 
 
-	//Métodos da interface (IMFNetResourceFilter).
+	//MÃ©todos da interface (IMFNetResourceFilter).
 public:
 	virtual HRESULT STDMETHODCALLTYPE CreateProxyLocator(
 		LPCWSTR pszProtocol,

@@ -1,4 +1,4 @@
-/*
+Ôªø/*
 Copyright 2020 Victor Santos Reis
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,15 +24,15 @@ HRESULT __stdcall CLN_IMFSourceOpenMonitor::OnSourceEvent(__RPC__in_opt IMFMedia
     //Variavel que vai retornar o resultado.
     HRESULT Resultado = E_FAIL;
 
-    //Verifica se o evento È valido
+    //Verifica se o evento √© valido
     if (ObjetoValido(Evento_OnSourceEvent))
     {
-        //Chama o evento para notificar o usu·rio na classe gerenciada.
+        //Chama o evento para notificar o usu√°rio na classe gerenciada.
         Resultado = Evento_OnSourceEvent(pEvent);
     }
     else
     {
-        //N„o implementado.
+        //N√£o implementado.
         Resultado = E_NOTIMPL;
     }
 

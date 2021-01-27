@@ -28,7 +28,7 @@ CarenPD2D1_PROPERTY_FUNCTIONS::~CarenPD2D1_PROPERTY_FUNCTIONS()
 }
 
 
-//Métodos de registro e de-registro dos eventos.
+//MÃ©todos de registro e de-registro dos eventos.
 
 void CarenPD2D1_PROPERTY_FUNCTIONS::RegistrarCallback()
 {
@@ -43,7 +43,7 @@ void CarenPD2D1_PROPERTY_FUNCTIONS::RegistrarCallback()
     IntPtr Pointer_OnPropertySetFunction = Util.ConverterDelegateToPointer(Callback_OnPropertySetFunction);
     IntPtr Pointer_OnPropertyGetFunction = Util.ConverterDelegateToPointer(Callback_OnPropertyGetFunction);
 
-    //Aloca a Handle para cada delegate que fornece o método de chamado do evento.
+    //Aloca a Handle para cada delegate que fornece o mÃ©todo de chamado do evento.
     gHandle_Delegate_OnPropertySetFunction = Util.AlocarPointerDelegate(Pointer_OnPropertySetFunction);
     gHandle_Delegate_OnPropertyGetFunction = Util.AlocarPointerDelegate(Pointer_OnPropertyGetFunction);
 
@@ -58,13 +58,13 @@ void CarenPD2D1_PROPERTY_FUNCTIONS::UnRegisterCallback()
     gHandle_Delegate_OnPropertySetFunction.Free();
     gHandle_Delegate_OnPropertyGetFunction.Free();
 
-    //Verifica se é valido e deleta o ponteiro.
+    //Verifica se Ã© valido e deleta o ponteiro.
     if (ObjetoValido(PonteiroTrabalho_SET))
     {
         //Descarta o delegate.
         PonteiroTrabalho_SET = NULL;
     }
-    //Verifica se é valido e deleta o ponteiro.
+    //Verifica se Ã© valido e deleta o ponteiro.
     if (ObjetoValido(PonteiroTrabalho_GET))
     {
         //Descarta o delegate.
@@ -73,7 +73,7 @@ void CarenPD2D1_PROPERTY_FUNCTIONS::UnRegisterCallback()
 }
 
 
-//Métodos para recuperar e definir as funções.
+//MÃ©todos para recuperar e definir as funÃ§Ãµes.
 
 PD2D1_PROPERTY_SET_FUNCTION CarenPD2D1_PROPERTY_FUNCTIONS::RecuperarSetFunction()
 {
@@ -98,7 +98,7 @@ void CarenPD2D1_PROPERTY_FUNCTIONS::DefinirGetFunction(PD2D1_PROPERTY_GET_FUNCTI
 }
 
 
-//Métodos que recebem a chamada nativa e encaminha para o usuário.
+//MÃ©todos que recebem a chamada nativa e encaminha para o usuÃ¡rio.
 
 HRESULT CarenPD2D1_PROPERTY_FUNCTIONS::EncaminharEvento_OnPropertySetFunction(IUnknown* effect, const BYTE* data, UINT32 dataSize)
 {
@@ -113,7 +113,7 @@ HRESULT CarenPD2D1_PROPERTY_FUNCTIONS::EncaminharEvento_OnPropertySetFunction(IU
     //Define o buffer nativo na interface do buffer gerenciado.
     BufferDados->CriarBuffer(IntPtr(const_cast<BYTE*>(data)), false, dataSize, dataSize);
     
-    //Chama o evento para notificar o usuário.
+    //Chama o evento para notificar o usuÃ¡rio.
     Resultado = OnPropertySetFunction(Efeito, BufferDados, dataSize);
 
     //Retorna o resultado.
@@ -122,7 +122,7 @@ HRESULT CarenPD2D1_PROPERTY_FUNCTIONS::EncaminharEvento_OnPropertySetFunction(IU
 
 HRESULT CarenPD2D1_PROPERTY_FUNCTIONS::EncaminharEvento_OnPropertyGetFunction(const IUnknown* effect, BYTE* data, UINT32 dataSize, UINT32* actualSize)
 {
-   //Variaveis utilizadas para o método.
+   //Variaveis utilizadas para o mÃ©todo.
     Utilidades Util;
     ICaren^ OutEfeito = nullptr;
     ICarenBuffer^ OutBufferDados = nullptr;
@@ -142,20 +142,20 @@ HRESULT CarenPD2D1_PROPERTY_FUNCTIONS::EncaminharEvento_OnPropertyGetFunction(co
     {
         //Falhou ao obter os dados...
 
-        //Sai do método
+        //Sai do mÃ©todo
         Sair;
     }
 
     //Recupera o ponteiro para o evento.
     Resultado = RecuperarPonteiroCaren(OutEfeito, &pEfeito);
 
-    //Sai do método em caso de erro.
+    //Sai do mÃ©todo em caso de erro.
     SairOnError(Resultado);
 
     //Recupera o ponteiro para o buffer.
     Resultado = OutBufferDados->ObterPonteiroInterno(pBufferDados);
 
-    //Define os dados nos parametros de saida para o método nativo.
+    //Define os dados nos parametros de saida para o mÃ©todo nativo.
     effect = const_cast<const IUnknown*>(pEfeito);
     data = Util.ConverterIntPtrTo<PBYTE>(pBufferDados);
     dataSize = OutDataSize;

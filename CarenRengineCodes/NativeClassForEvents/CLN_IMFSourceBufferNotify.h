@@ -1,4 +1,4 @@
-/*
+ï»¿/*
 Copyright 2020 Victor Santos Reis
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,15 +27,15 @@ typedef void(__stdcall* CLN_IMFSourceBufferNotify_EventoNativo_OnUpdate)(void);
 typedef void(__stdcall* CLN_IMFSourceBufferNotify_EventoNativo_OnUpdateEnd)(void);
 
 /// <summary>
-/// Classe responsável por implementar a interface nativa (IMFSourceBufferNotify) para receber e enviar os eventos para a classe gerenciada.
+/// Classe responsÃ¡vel por implementar a interface nativa (IMFSourceBufferNotify) para receber e enviar os eventos para a classe gerenciada.
 /// </summary>
 class CLN_IMFSourceBufferNotify : public IMFSourceBufferNotify
 {
-	//Guarda a quantidade de referências.
+	//Guarda a quantidade de referÃªncias.
 	volatile long RefCount;
 
 public:
-	//Inicialização da classe.
+	//InicializaÃ§Ã£o da classe.
 	CLN_IMFSourceBufferNotify() : RefCount(1)
 	{
 
@@ -46,7 +46,7 @@ public:
 
 	}
 
-	//Métodos da Interface IUnknown.
+	//MÃ©todos da Interface IUnknown.
 public:
 	//Procura uma determina interface nessa classe.
 	STDMETHODIMP QueryInterface(REFIID guid, void** pObj)
@@ -73,24 +73,24 @@ public:
 		}
 	}
 
-	//Adiciona uma referência a classe.
+	//Adiciona uma referÃªncia a classe.
 	STDMETHODIMP_(ULONG) AddRef()
 	{
-		//Incrementa a quantidade de referências.
+		//Incrementa a quantidade de referÃªncias.
 		return InterlockedIncrement(&RefCount);
 	}
 
-	//Libera uma referência a classe.
+	//Libera uma referÃªncia a classe.
 	STDMETHODIMP_(ULONG) Release()
 	{
-		//Desecrementa a quantidade de referências e verifica.
+		//Desecrementa a quantidade de referÃªncias e verifica.
 		ULONG result = InterlockedDecrement(&RefCount);
 		if (result == 0) delete this;
 		return result;
 	}
 
 
-	//Contém todos os delegates que seram chamados para notificar o usuário.
+	//ContÃ©m todos os delegates que seram chamados para notificar o usuÃ¡rio.
 public:
 	CLN_IMFSourceBufferNotify_EventoNativo_OnUpdateStart Evento_OnUpdateStart = NULL;
 	CLN_IMFSourceBufferNotify_EventoNativo_OnAbort Evento_OnAbort = NULL;
@@ -99,7 +99,7 @@ public:
 	CLN_IMFSourceBufferNotify_EventoNativo_OnUpdateEnd Evento_OnUpdateEnd = NULL;
 
 
-	//Métodos da interface (IMFSourceBufferNotify).
+	//MÃ©todos da interface (IMFSourceBufferNotify).
 public:
 	virtual void STDMETHODCALLTYPE OnUpdateStart(void);
 

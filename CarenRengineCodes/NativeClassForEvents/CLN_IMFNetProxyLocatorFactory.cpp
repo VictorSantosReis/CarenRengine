@@ -1,4 +1,4 @@
-/*
+Ôªø/*
 Copyright 2020 Victor Santos Reis
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,15 +24,15 @@ HRESULT __stdcall CLN_IMFNetProxyLocatorFactory::CreateProxyLocator(LPCWSTR pszP
 	//Variavel que vai retornar o resultado.
 	HRESULT Resultado = E_FAIL;
 
-	//Verifica se o evento foi criado pelo usu·rio
+	//Verifica se o evento foi criado pelo usu√°rio
 	if (ObjetoValido(Evento_OnCreateProxyLocator))
 	{
-		//Chama o evento que vai notificar o usu·rio para criar o ProxyLocator.
+		//Chama o evento que vai notificar o usu√°rio para criar o ProxyLocator.
 		Resultado = Evento_OnCreateProxyLocator(pszProtocol, ppProxyLocator);
 	}
 	else
 	{
-		//Define que o mÈtodo n„o foi implementado pelo usu·rio.
+		//Define que o m√©todo n√£o foi implementado pelo usu√°rio.
 		Resultado = E_NOTIMPL;
 	}
 

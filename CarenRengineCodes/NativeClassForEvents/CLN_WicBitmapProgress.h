@@ -1,10 +1,10 @@
-#pragma once
+Ôªø#pragma once
 #include "../SDK_Base.h"
 
 
 /// <summary>
-/// Classe respons·vel por conter o mÈtodo que vai receber o progresso de notificaÁ„o de um codificador ou decodificador.
-/// Est· classe n„o implementa a interface nativa (IWICBitmapCodecProgressNotification), serve apenas de auxiliar.
+/// Classe respons√°vel por conter o m√©todo que vai receber o progresso de notifica√ß√£o de um codificador ou decodificador.
+/// Est√° classe n√£o implementa a interface nativa (IWICBitmapCodecProgressNotification), serve apenas de auxiliar.
 /// </summary>
 class CLN_WicBitmapProgress
 {
@@ -14,12 +14,12 @@ public:
 	~CLN_WicBitmapProgress();
 
 
-	//DeclaraÁ„o do evento de progresso.
+	//Declara√ß√£o do evento de progresso.
 public:
 	PFNProgressNotification Evento_Progresso;
 
 
-	//DeclraÁ„o do mÈtodo que recebe o evento.
+	//Declra√ß√£o do m√©todo que recebe o evento.
 public:
 	HRESULT Pfnprogressnotification(
 		LPVOID pvData,

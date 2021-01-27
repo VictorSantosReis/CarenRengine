@@ -1,4 +1,4 @@
-/*
+Ôªø/*
 Copyright 2020 Victor Santos Reis
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,17 +20,17 @@ limitations under the License.
 #include "../NativeClassForEvents/CLN_ID2D1CommandSink3.h"
 
 
-//MÈtodos da interface ID2D1CommandSink3
+//M√©todos da interface ID2D1CommandSink3
 
 METODODELC CLN_ID2D1CommandSink3::DrawSpriteBatch(_In_ ID2D1SpriteBatch* spriteBatch, UINT32 startIndex, UINT32 spriteCount, _In_ ID2D1Bitmap* bitmap, D2D1_BITMAP_INTERPOLATION_MODE interpolationMode, D2D1_SPRITE_OPTIONS spriteOptions)
 {
-	//Entra na sess„o critica de codÌgo.
+	//Entra na sess√£o critica de cod√≠go.
 	EnterCriticalSection(&SessaoCritica);
 
 	//Variavel que vai retornar o resultado.
 	HRESULT Resultado = E_NOTIMPL;
 
-	//Verifica se o evento È valido
+	//Verifica se o evento √© valido
 	if (ObjetoValido(Evento_DrawSpriteBatch))
 	{
 		//Evento valido.
@@ -42,11 +42,11 @@ METODODELC CLN_ID2D1CommandSink3::DrawSpriteBatch(_In_ ID2D1SpriteBatch* spriteB
 	}
 	else
 	{
-		//Define que o mÈtodo n„o foi implementado.
+		//Define que o m√©todo n√£o foi implementado.
 		Resultado = E_NOTIMPL;
 	}
 
-	//Sai da sess„o critica.
+	//Sai da sess√£o critica.
 	LeaveCriticalSection(&SessaoCritica);
 
 	//Retorna o resultado.
@@ -54,17 +54,17 @@ METODODELC CLN_ID2D1CommandSink3::DrawSpriteBatch(_In_ ID2D1SpriteBatch* spriteB
 }
 
 
-//MÈtodos da interface ID2D1CommandSink2
+//M√©todos da interface ID2D1CommandSink2
 
 METODODELC CLN_ID2D1CommandSink3::DrawInk(_In_ ID2D1Ink* ink, _In_ ID2D1Brush* brush, _In_opt_ ID2D1InkStyle* inkStyle)
 {
-	//Entra na sess„o critica de codÌgo.
+	//Entra na sess√£o critica de cod√≠go.
 	EnterCriticalSection(&SessaoCritica);
 
 	//Variavel que vai retornar o resultado.
 	HRESULT Resultado = E_NOTIMPL;
 
-	//Verifica se o evento È valido
+	//Verifica se o evento √© valido
 	if (ObjetoValido(Evento_DrawInk))
 	{
 		//Evento valido.
@@ -76,11 +76,11 @@ METODODELC CLN_ID2D1CommandSink3::DrawInk(_In_ ID2D1Ink* ink, _In_ ID2D1Brush* b
 	}
 	else
 	{
-		//Define que o mÈtodo n„o foi implementado.
+		//Define que o m√©todo n√£o foi implementado.
 		Resultado = E_NOTIMPL;
 	}
 
-	//Sai da sess„o critica.
+	//Sai da sess√£o critica.
 	LeaveCriticalSection(&SessaoCritica);
 
 	//Retorna o resultado.
@@ -89,13 +89,13 @@ METODODELC CLN_ID2D1CommandSink3::DrawInk(_In_ ID2D1Ink* ink, _In_ ID2D1Brush* b
 
 METODODELC CLN_ID2D1CommandSink3::DrawGradientMesh(_In_ ID2D1GradientMesh* gradientMesh)
 {
-	//Entra na sess„o critica de codÌgo.
+	//Entra na sess√£o critica de cod√≠go.
 	EnterCriticalSection(&SessaoCritica);
 
 	//Variavel que vai retornar o resultado.
 	HRESULT Resultado = E_NOTIMPL;
 
-	//Verifica se o evento È valido
+	//Verifica se o evento √© valido
 	if (ObjetoValido(Evento_DrawGradientMesh))
 	{
 		//Evento valido.
@@ -107,11 +107,11 @@ METODODELC CLN_ID2D1CommandSink3::DrawGradientMesh(_In_ ID2D1GradientMesh* gradi
 	}
 	else
 	{
-		//Define que o mÈtodo n„o foi implementado.
+		//Define que o m√©todo n√£o foi implementado.
 		Resultado = E_NOTIMPL;
 	}
 
-	//Sai da sess„o critica.
+	//Sai da sess√£o critica.
 	LeaveCriticalSection(&SessaoCritica);
 
 	//Retorna o resultado.
@@ -120,13 +120,13 @@ METODODELC CLN_ID2D1CommandSink3::DrawGradientMesh(_In_ ID2D1GradientMesh* gradi
 
 METODODELC CLN_ID2D1CommandSink3::DrawGdiMetafile(_In_ ID2D1GdiMetafile* gdiMetafile, _In_opt_ CONST D2D1_RECT_F* destinationRectangle, _In_opt_ CONST D2D1_RECT_F* sourceRectangle)
 {
-	//Entra na sess„o critica de codÌgo.
+	//Entra na sess√£o critica de cod√≠go.
 	EnterCriticalSection(&SessaoCritica);
 
 	//Variavel que vai retornar o resultado.
 	HRESULT Resultado = E_NOTIMPL;
 
-	//Verifica se o evento È valido
+	//Verifica se o evento √© valido
 	if (ObjetoValido(Evento_DrawGdiMetafile1))
 	{
 		//Evento valido.
@@ -138,11 +138,11 @@ METODODELC CLN_ID2D1CommandSink3::DrawGdiMetafile(_In_ ID2D1GdiMetafile* gdiMeta
 	}
 	else
 	{
-		//Define que o mÈtodo n„o foi implementado.
+		//Define que o m√©todo n√£o foi implementado.
 		Resultado = E_NOTIMPL;
 	}
 
-	//Sai da sess„o critica.
+	//Sai da sess√£o critica.
 	LeaveCriticalSection(&SessaoCritica);
 
 	//Retorna o resultado.
@@ -151,17 +151,17 @@ METODODELC CLN_ID2D1CommandSink3::DrawGdiMetafile(_In_ ID2D1GdiMetafile* gdiMeta
 
 
 
-//MÈtodos da interface ID2D1CommandSink1
+//M√©todos da interface ID2D1CommandSink1
 
 METODODELC CLN_ID2D1CommandSink3::SetPrimitiveBlend1(D2D1_PRIMITIVE_BLEND primitiveBlend)
 {
-	//Entra na sess„o critica de codÌgo.
+	//Entra na sess√£o critica de cod√≠go.
 	EnterCriticalSection(&SessaoCritica);
 
 	//Variavel que vai retornar o resultado.
 	HRESULT Resultado = E_NOTIMPL;
 
-	//Verifica se o evento È valido
+	//Verifica se o evento √© valido
 	if (ObjetoValido(Evento_SetPrimitiveBlend1))
 	{
 		//Evento valido.
@@ -173,11 +173,11 @@ METODODELC CLN_ID2D1CommandSink3::SetPrimitiveBlend1(D2D1_PRIMITIVE_BLEND primit
 	}
 	else
 	{
-		//Define que o mÈtodo n„o foi implementado.
+		//Define que o m√©todo n√£o foi implementado.
 		Resultado = E_NOTIMPL;
 	}
 
-	//Sai da sess„o critica.
+	//Sai da sess√£o critica.
 	LeaveCriticalSection(&SessaoCritica);
 
 	//Retorna o resultado.
@@ -187,17 +187,17 @@ METODODELC CLN_ID2D1CommandSink3::SetPrimitiveBlend1(D2D1_PRIMITIVE_BLEND primit
 
 
 
-//MÈtodos da interface ID2D1CommandSink
+//M√©todos da interface ID2D1CommandSink
 
 METODODELC CLN_ID2D1CommandSink3::BeginDraw()
 {
-	//Entra na sess„o critica de codÌgo.
+	//Entra na sess√£o critica de cod√≠go.
 	EnterCriticalSection(&SessaoCritica);
 
 	//Variavel que vai retornar o resultado.
 	HRESULT Resultado = E_NOTIMPL;
 
-	//Verifica se o evento È valido
+	//Verifica se o evento √© valido
 	if (ObjetoValido(Evento_BeginDraw))
 	{
 		//Evento valido.
@@ -209,11 +209,11 @@ METODODELC CLN_ID2D1CommandSink3::BeginDraw()
 	}
 	else
 	{
-		//Define que o mÈtodo n„o foi implementado.
+		//Define que o m√©todo n√£o foi implementado.
 		Resultado = E_NOTIMPL;
 	}
 
-	//Sai da sess„o critica.
+	//Sai da sess√£o critica.
 	LeaveCriticalSection(&SessaoCritica);
 
 	//Retorna o resultado.
@@ -222,13 +222,13 @@ METODODELC CLN_ID2D1CommandSink3::BeginDraw()
 
 METODODELC CLN_ID2D1CommandSink3::EndDraw()
 {
-	//Entra na sess„o critica de codÌgo.
+	//Entra na sess√£o critica de cod√≠go.
 	EnterCriticalSection(&SessaoCritica);
 
 	//Variavel que vai retornar o resultado.
 	HRESULT Resultado = E_NOTIMPL;
 
-	//Verifica se o evento È valido
+	//Verifica se o evento √© valido
 	if (ObjetoValido(Evento_EndDraw))
 	{
 		//Evento valido.
@@ -240,11 +240,11 @@ METODODELC CLN_ID2D1CommandSink3::EndDraw()
 	}
 	else
 	{
-		//Define que o mÈtodo n„o foi implementado.
+		//Define que o m√©todo n√£o foi implementado.
 		Resultado = E_NOTIMPL;
 	}
 
-	//Sai da sess„o critica.
+	//Sai da sess√£o critica.
 	LeaveCriticalSection(&SessaoCritica);
 
 	//Retorna o resultado.
@@ -253,13 +253,13 @@ METODODELC CLN_ID2D1CommandSink3::EndDraw()
 
 METODODELC CLN_ID2D1CommandSink3::SetAntialiasMode(D2D1_ANTIALIAS_MODE antialiasMode)
 {
-	//Entra na sess„o critica de codÌgo.
+	//Entra na sess√£o critica de cod√≠go.
 	EnterCriticalSection(&SessaoCritica);
 
 	//Variavel que vai retornar o resultado.
 	HRESULT Resultado = E_NOTIMPL;
 
-	//Verifica se o evento È valido
+	//Verifica se o evento √© valido
 	if (ObjetoValido(Evento_SetAntialiasMode))
 	{
 		//Evento valido.
@@ -271,11 +271,11 @@ METODODELC CLN_ID2D1CommandSink3::SetAntialiasMode(D2D1_ANTIALIAS_MODE antialias
 	}
 	else
 	{
-		//Define que o mÈtodo n„o foi implementado.
+		//Define que o m√©todo n√£o foi implementado.
 		Resultado = E_NOTIMPL;
 	}
 
-	//Sai da sess„o critica.
+	//Sai da sess√£o critica.
 	LeaveCriticalSection(&SessaoCritica);
 
 	//Retorna o resultado.
@@ -286,13 +286,13 @@ METODODELC CLN_ID2D1CommandSink3::SetTags(
 	D2D1_TAG tag1,
 	D2D1_TAG tag2)
 {
-	//Entra na sess„o critica de codÌgo.
+	//Entra na sess√£o critica de cod√≠go.
 	EnterCriticalSection(&SessaoCritica);
 
 	//Variavel que vai retornar o resultado.
 	HRESULT Resultado = E_NOTIMPL;
 
-	//Verifica se o evento È valido
+	//Verifica se o evento √© valido
 	if (ObjetoValido(Evento_SetTags))
 	{
 		//Evento valido.
@@ -304,11 +304,11 @@ METODODELC CLN_ID2D1CommandSink3::SetTags(
 	}
 	else
 	{
-		//Define que o mÈtodo n„o foi implementado.
+		//Define que o m√©todo n√£o foi implementado.
 		Resultado = E_NOTIMPL;
 	}
 
-	//Sai da sess„o critica.
+	//Sai da sess√£o critica.
 	LeaveCriticalSection(&SessaoCritica);
 
 	//Retorna o resultado.
@@ -317,13 +317,13 @@ METODODELC CLN_ID2D1CommandSink3::SetTags(
 
 METODODELC CLN_ID2D1CommandSink3::SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE textAntialiasMode)
 {
-	//Entra na sess„o critica de codÌgo.
+	//Entra na sess√£o critica de cod√≠go.
 	EnterCriticalSection(&SessaoCritica);
 
 	//Variavel que vai retornar o resultado.
 	HRESULT Resultado = E_NOTIMPL;
 
-	//Verifica se o evento È valido
+	//Verifica se o evento √© valido
 	if (ObjetoValido(Evento_SetTextAntialiasMode))
 	{
 		//Evento valido.
@@ -335,11 +335,11 @@ METODODELC CLN_ID2D1CommandSink3::SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE 
 	}
 	else
 	{
-		//Define que o mÈtodo n„o foi implementado.
+		//Define que o m√©todo n√£o foi implementado.
 		Resultado = E_NOTIMPL;
 	}
 
-	//Sai da sess„o critica.
+	//Sai da sess√£o critica.
 	LeaveCriticalSection(&SessaoCritica);
 
 	//Retorna o resultado.
@@ -348,13 +348,13 @@ METODODELC CLN_ID2D1CommandSink3::SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE 
 
 METODODELC CLN_ID2D1CommandSink3::SetTextRenderingParams(_In_opt_ IDWriteRenderingParams* textRenderingParams)
 {
-	//Entra na sess„o critica de codÌgo.
+	//Entra na sess√£o critica de cod√≠go.
 	EnterCriticalSection(&SessaoCritica);
 
 	//Variavel que vai retornar o resultado.
 	HRESULT Resultado = E_NOTIMPL;
 
-	//Verifica se o evento È valido
+	//Verifica se o evento √© valido
 	if (ObjetoValido(Evento_SetTextRenderingParams))
 	{
 		//Evento valido.
@@ -366,11 +366,11 @@ METODODELC CLN_ID2D1CommandSink3::SetTextRenderingParams(_In_opt_ IDWriteRenderi
 	}
 	else
 	{
-		//Define que o mÈtodo n„o foi implementado.
+		//Define que o m√©todo n√£o foi implementado.
 		Resultado = E_NOTIMPL;
 	}
 
-	//Sai da sess„o critica.
+	//Sai da sess√£o critica.
 	LeaveCriticalSection(&SessaoCritica);
 
 	//Retorna o resultado.
@@ -379,13 +379,13 @@ METODODELC CLN_ID2D1CommandSink3::SetTextRenderingParams(_In_opt_ IDWriteRenderi
 
 METODODELC CLN_ID2D1CommandSink3::SetTransform(_In_ CONST D2D1_MATRIX_3X2_F* transform)
 {
-	//Entra na sess„o critica de codÌgo.
+	//Entra na sess√£o critica de cod√≠go.
 	EnterCriticalSection(&SessaoCritica);
 
 	//Variavel que vai retornar o resultado.
 	HRESULT Resultado = E_NOTIMPL;
 
-	//Verifica se o evento È valido
+	//Verifica se o evento √© valido
 	if (ObjetoValido(Evento_SetTransform))
 	{
 		//Evento valido.
@@ -397,11 +397,11 @@ METODODELC CLN_ID2D1CommandSink3::SetTransform(_In_ CONST D2D1_MATRIX_3X2_F* tra
 	}
 	else
 	{
-		//Define que o mÈtodo n„o foi implementado.
+		//Define que o m√©todo n√£o foi implementado.
 		Resultado = E_NOTIMPL;
 	}
 
-	//Sai da sess„o critica.
+	//Sai da sess√£o critica.
 	LeaveCriticalSection(&SessaoCritica);
 
 	//Retorna o resultado.
@@ -410,13 +410,13 @@ METODODELC CLN_ID2D1CommandSink3::SetTransform(_In_ CONST D2D1_MATRIX_3X2_F* tra
 
 METODODELC CLN_ID2D1CommandSink3::SetPrimitiveBlend(D2D1_PRIMITIVE_BLEND primitiveBlend)
 {
-	//Entra na sess„o critica de codÌgo.
+	//Entra na sess√£o critica de cod√≠go.
 	EnterCriticalSection(&SessaoCritica);
 
 	//Variavel que vai retornar o resultado.
 	HRESULT Resultado = E_NOTIMPL;
 
-	//Verifica se o evento È valido
+	//Verifica se o evento √© valido
 	if (ObjetoValido(Evento_SetPrimitiveBlend))
 	{
 		//Evento valido.
@@ -428,11 +428,11 @@ METODODELC CLN_ID2D1CommandSink3::SetPrimitiveBlend(D2D1_PRIMITIVE_BLEND primiti
 	}
 	else
 	{
-		//Define que o mÈtodo n„o foi implementado.
+		//Define que o m√©todo n√£o foi implementado.
 		Resultado = E_NOTIMPL;
 	}
 
-	//Sai da sess„o critica.
+	//Sai da sess√£o critica.
 	LeaveCriticalSection(&SessaoCritica);
 
 	//Retorna o resultado.
@@ -441,13 +441,13 @@ METODODELC CLN_ID2D1CommandSink3::SetPrimitiveBlend(D2D1_PRIMITIVE_BLEND primiti
 
 METODODELC CLN_ID2D1CommandSink3::SetUnitMode(D2D1_UNIT_MODE unitMode)
 {
-	//Entra na sess„o critica de codÌgo.
+	//Entra na sess√£o critica de cod√≠go.
 	EnterCriticalSection(&SessaoCritica);
 
 	//Variavel que vai retornar o resultado.
 	HRESULT Resultado = E_NOTIMPL;
 
-	//Verifica se o evento È valido
+	//Verifica se o evento √© valido
 	if (ObjetoValido(Evento_SetUnitMode))
 	{
 		//Evento valido.
@@ -459,11 +459,11 @@ METODODELC CLN_ID2D1CommandSink3::SetUnitMode(D2D1_UNIT_MODE unitMode)
 	}
 	else
 	{
-		//Define que o mÈtodo n„o foi implementado.
+		//Define que o m√©todo n√£o foi implementado.
 		Resultado = E_NOTIMPL;
 	}
 
-	//Sai da sess„o critica.
+	//Sai da sess√£o critica.
 	LeaveCriticalSection(&SessaoCritica);
 
 	//Retorna o resultado.
@@ -472,13 +472,13 @@ METODODELC CLN_ID2D1CommandSink3::SetUnitMode(D2D1_UNIT_MODE unitMode)
 
 METODODELC CLN_ID2D1CommandSink3::Clear(_In_opt_ CONST D2D1_COLOR_F* color)
 {
-	//Entra na sess„o critica de codÌgo.
+	//Entra na sess√£o critica de cod√≠go.
 	EnterCriticalSection(&SessaoCritica);
 
 	//Variavel que vai retornar o resultado.
 	HRESULT Resultado = E_NOTIMPL;
 
-	//Verifica se o evento È valido
+	//Verifica se o evento √© valido
 	if (ObjetoValido(Evento_Clear))
 	{
 		//Evento valido.
@@ -490,11 +490,11 @@ METODODELC CLN_ID2D1CommandSink3::Clear(_In_opt_ CONST D2D1_COLOR_F* color)
 	}
 	else
 	{
-		//Define que o mÈtodo n„o foi implementado.
+		//Define que o m√©todo n√£o foi implementado.
 		Resultado = E_NOTIMPL;
 	}
 
-	//Sai da sess„o critica.
+	//Sai da sess√£o critica.
 	LeaveCriticalSection(&SessaoCritica);
 
 	//Retorna o resultado.
@@ -508,13 +508,13 @@ METODODELC CLN_ID2D1CommandSink3::DrawGlyphRun(
 	_In_ ID2D1Brush* foregroundBrush,
 	DWRITE_MEASURING_MODE measuringMode)
 {
-	//Entra na sess„o critica de codÌgo.
+	//Entra na sess√£o critica de cod√≠go.
 	EnterCriticalSection(&SessaoCritica);
 
 	//Variavel que vai retornar o resultado.
 	HRESULT Resultado = E_NOTIMPL;
 
-	//Verifica se o evento È valido
+	//Verifica se o evento √© valido
 	if (ObjetoValido(Evento_DrawGlyphRun))
 	{
 		//Evento valido.
@@ -532,11 +532,11 @@ METODODELC CLN_ID2D1CommandSink3::DrawGlyphRun(
 	}
 	else
 	{
-		//Define que o mÈtodo n„o foi implementado.
+		//Define que o m√©todo n√£o foi implementado.
 		Resultado = E_NOTIMPL;
 	}
 
-	//Sai da sess„o critica.
+	//Sai da sess√£o critica.
 	LeaveCriticalSection(&SessaoCritica);
 
 	//Retorna o resultado.
@@ -550,13 +550,13 @@ METODODELC CLN_ID2D1CommandSink3::DrawLine(
 	FLOAT strokeWidth,
 	_In_opt_ ID2D1StrokeStyle* strokeStyle)
 {
-	//Entra na sess„o critica de codÌgo.
+	//Entra na sess√£o critica de cod√≠go.
 	EnterCriticalSection(&SessaoCritica);
 
 	//Variavel que vai retornar o resultado.
 	HRESULT Resultado = E_NOTIMPL;
 
-	//Verifica se o evento È valido
+	//Verifica se o evento √© valido
 	if (ObjetoValido(Evento_DrawLine))
 	{
 		//Evento valido.
@@ -574,11 +574,11 @@ METODODELC CLN_ID2D1CommandSink3::DrawLine(
 	}
 	else
 	{
-		//Define que o mÈtodo n„o foi implementado.
+		//Define que o m√©todo n√£o foi implementado.
 		Resultado = E_NOTIMPL;
 	}
 
-	//Sai da sess„o critica.
+	//Sai da sess√£o critica.
 	LeaveCriticalSection(&SessaoCritica);
 
 	//Retorna o resultado.
@@ -591,13 +591,13 @@ METODODELC CLN_ID2D1CommandSink3::DrawGeometry(
 	FLOAT strokeWidth,
 	_In_opt_ ID2D1StrokeStyle* strokeStyle)
 {
-	//Entra na sess„o critica de codÌgo.
+	//Entra na sess√£o critica de cod√≠go.
 	EnterCriticalSection(&SessaoCritica);
 
 	//Variavel que vai retornar o resultado.
 	HRESULT Resultado = E_NOTIMPL;
 
-	//Verifica se o evento È valido
+	//Verifica se o evento √© valido
 	if (ObjetoValido(Evento_DrawGeometry))
 	{
 		//Evento valido.
@@ -614,11 +614,11 @@ METODODELC CLN_ID2D1CommandSink3::DrawGeometry(
 	}
 	else
 	{
-		//Define que o mÈtodo n„o foi implementado.
+		//Define que o m√©todo n√£o foi implementado.
 		Resultado = E_NOTIMPL;
 	}
 
-	//Sai da sess„o critica.
+	//Sai da sess√£o critica.
 	LeaveCriticalSection(&SessaoCritica);
 
 	//Retorna o resultado.
@@ -631,13 +631,13 @@ METODODELC CLN_ID2D1CommandSink3::DrawRectangle(
 	FLOAT strokeWidth,
 	_In_opt_ ID2D1StrokeStyle* strokeStyle)
 {
-	//Entra na sess„o critica de codÌgo.
+	//Entra na sess√£o critica de cod√≠go.
 	EnterCriticalSection(&SessaoCritica);
 
 	//Variavel que vai retornar o resultado.
 	HRESULT Resultado = E_NOTIMPL;
 
-	//Verifica se o evento È valido
+	//Verifica se o evento √© valido
 	if (ObjetoValido(Evento_DrawRectangle))
 	{
 		//Evento valido.
@@ -654,11 +654,11 @@ METODODELC CLN_ID2D1CommandSink3::DrawRectangle(
 	}
 	else
 	{
-		//Define que o mÈtodo n„o foi implementado.
+		//Define que o m√©todo n√£o foi implementado.
 		Resultado = E_NOTIMPL;
 	}
 
-	//Sai da sess„o critica.
+	//Sai da sess√£o critica.
 	LeaveCriticalSection(&SessaoCritica);
 
 	//Retorna o resultado.
@@ -673,13 +673,13 @@ METODODELC CLN_ID2D1CommandSink3::DrawBitmap(
 	_In_opt_ CONST D2D1_RECT_F* sourceRectangle,
 	_In_opt_ CONST D2D1_MATRIX_4X4_F* perspectiveTransform)
 {
-	//Entra na sess„o critica de codÌgo.
+	//Entra na sess√£o critica de cod√≠go.
 	EnterCriticalSection(&SessaoCritica);
 
 	//Variavel que vai retornar o resultado.
 	HRESULT Resultado = E_NOTIMPL;
 
-	//Verifica se o evento È valido
+	//Verifica se o evento √© valido
 	if (ObjetoValido(Evento_DrawBitmap))
 	{
 		//Evento valido.
@@ -698,11 +698,11 @@ METODODELC CLN_ID2D1CommandSink3::DrawBitmap(
 	}
 	else
 	{
-		//Define que o mÈtodo n„o foi implementado.
+		//Define que o m√©todo n√£o foi implementado.
 		Resultado = E_NOTIMPL;
 	}
 
-	//Sai da sess„o critica.
+	//Sai da sess√£o critica.
 	LeaveCriticalSection(&SessaoCritica);
 
 	//Retorna o resultado.
@@ -716,13 +716,13 @@ METODODELC CLN_ID2D1CommandSink3::DrawImage(
 	D2D1_INTERPOLATION_MODE interpolationMode,
 	D2D1_COMPOSITE_MODE compositeMode)
 {
-	//Entra na sess„o critica de codÌgo.
+	//Entra na sess√£o critica de cod√≠go.
 	EnterCriticalSection(&SessaoCritica);
 
 	//Variavel que vai retornar o resultado.
 	HRESULT Resultado = E_NOTIMPL;
 
-	//Verifica se o evento È valido
+	//Verifica se o evento √© valido
 	if (ObjetoValido(Evento_DrawImage))
 	{
 		//Evento valido.
@@ -740,11 +740,11 @@ METODODELC CLN_ID2D1CommandSink3::DrawImage(
 	}
 	else
 	{
-		//Define que o mÈtodo n„o foi implementado.
+		//Define que o m√©todo n√£o foi implementado.
 		Resultado = E_NOTIMPL;
 	}
 
-	//Sai da sess„o critica.
+	//Sai da sess√£o critica.
 	LeaveCriticalSection(&SessaoCritica);
 
 	//Retorna o resultado.
@@ -755,13 +755,13 @@ METODODELC CLN_ID2D1CommandSink3::DrawGdiMetafile(
 	_In_ ID2D1GdiMetafile* gdiMetafile,
 	_In_opt_ CONST D2D1_POINT_2F* targetOffset)
 {
-	//Entra na sess„o critica de codÌgo.
+	//Entra na sess√£o critica de cod√≠go.
 	EnterCriticalSection(&SessaoCritica);
 
 	//Variavel que vai retornar o resultado.
 	HRESULT Resultado = E_NOTIMPL;
 
-	//Verifica se o evento È valido
+	//Verifica se o evento √© valido
 	if (ObjetoValido(Evento_DrawGdiMetafile))
 	{
 		//Evento valido.
@@ -776,11 +776,11 @@ METODODELC CLN_ID2D1CommandSink3::DrawGdiMetafile(
 	}
 	else
 	{
-		//Define que o mÈtodo n„o foi implementado.
+		//Define que o m√©todo n√£o foi implementado.
 		Resultado = E_NOTIMPL;
 	}
 
-	//Sai da sess„o critica.
+	//Sai da sess√£o critica.
 	LeaveCriticalSection(&SessaoCritica);
 
 	//Retorna o resultado.
@@ -791,13 +791,13 @@ METODODELC CLN_ID2D1CommandSink3::FillMesh(
 	_In_ ID2D1Mesh* mesh,
 	_In_ ID2D1Brush* brush)
 {
-	//Entra na sess„o critica de codÌgo.
+	//Entra na sess√£o critica de cod√≠go.
 	EnterCriticalSection(&SessaoCritica);
 
 	//Variavel que vai retornar o resultado.
 	HRESULT Resultado = E_NOTIMPL;
 
-	//Verifica se o evento È valido
+	//Verifica se o evento √© valido
 	if (ObjetoValido(Evento_FillMesh))
 	{
 		//Evento valido.
@@ -811,11 +811,11 @@ METODODELC CLN_ID2D1CommandSink3::FillMesh(
 	}
 	else
 	{
-		//Define que o mÈtodo n„o foi implementado.
+		//Define que o m√©todo n√£o foi implementado.
 		Resultado = E_NOTIMPL;
 	}
 
-	//Sai da sess„o critica.
+	//Sai da sess√£o critica.
 	LeaveCriticalSection(&SessaoCritica);
 
 	//Retorna o resultado.
@@ -828,13 +828,13 @@ METODODELC CLN_ID2D1CommandSink3::FillOpacityMask(
 	_In_opt_ CONST D2D1_RECT_F* destinationRectangle,
 	_In_opt_ CONST D2D1_RECT_F* sourceRectangle)
 {
-	//Entra na sess„o critica de codÌgo.
+	//Entra na sess√£o critica de cod√≠go.
 	EnterCriticalSection(&SessaoCritica);
 
 	//Variavel que vai retornar o resultado.
 	HRESULT Resultado = E_NOTIMPL;
 
-	//Verifica se o evento È valido
+	//Verifica se o evento √© valido
 	if (ObjetoValido(Evento_FillOpacityMask))
 	{
 		//Evento valido.
@@ -851,11 +851,11 @@ METODODELC CLN_ID2D1CommandSink3::FillOpacityMask(
 	}
 	else
 	{
-		//Define que o mÈtodo n„o foi implementado.
+		//Define que o m√©todo n√£o foi implementado.
 		Resultado = E_NOTIMPL;
 	}
 
-	//Sai da sess„o critica.
+	//Sai da sess√£o critica.
 	LeaveCriticalSection(&SessaoCritica);
 
 	//Retorna o resultado.
@@ -867,13 +867,13 @@ METODODELC CLN_ID2D1CommandSink3::FillGeometry(
 	_In_ ID2D1Brush* brush,
 	_In_opt_ ID2D1Brush* opacityBrush)
 {
-	//Entra na sess„o critica de codÌgo.
+	//Entra na sess√£o critica de cod√≠go.
 	EnterCriticalSection(&SessaoCritica);
 
 	//Variavel que vai retornar o resultado.
 	HRESULT Resultado = E_NOTIMPL;
 
-	//Verifica se o evento È valido
+	//Verifica se o evento √© valido
 	if (ObjetoValido(Evento_FillGeometry))
 	{
 		//Evento valido.
@@ -889,11 +889,11 @@ METODODELC CLN_ID2D1CommandSink3::FillGeometry(
 	}
 	else
 	{
-		//Define que o mÈtodo n„o foi implementado.
+		//Define que o m√©todo n√£o foi implementado.
 		Resultado = E_NOTIMPL;
 	}
 
-	//Sai da sess„o critica.
+	//Sai da sess√£o critica.
 	LeaveCriticalSection(&SessaoCritica);
 
 	//Retorna o resultado.
@@ -904,13 +904,13 @@ METODODELC CLN_ID2D1CommandSink3::FillRectangle(
 	_In_ CONST D2D1_RECT_F* rect,
 	_In_ ID2D1Brush* brush)
 {
-	//Entra na sess„o critica de codÌgo.
+	//Entra na sess√£o critica de cod√≠go.
 	EnterCriticalSection(&SessaoCritica);
 
 	//Variavel que vai retornar o resultado.
 	HRESULT Resultado = E_NOTIMPL;
 
-	//Verifica se o evento È valido
+	//Verifica se o evento √© valido
 	if (ObjetoValido(Evento_FillRectangle))
 	{
 		//Evento valido.
@@ -925,11 +925,11 @@ METODODELC CLN_ID2D1CommandSink3::FillRectangle(
 	}
 	else
 	{
-		//Define que o mÈtodo n„o foi implementado.
+		//Define que o m√©todo n√£o foi implementado.
 		Resultado = E_NOTIMPL;
 	}
 
-	//Sai da sess„o critica.
+	//Sai da sess√£o critica.
 	LeaveCriticalSection(&SessaoCritica);
 
 	//Retorna o resultado.
@@ -940,13 +940,13 @@ METODODELC CLN_ID2D1CommandSink3::PushAxisAlignedClip(
 	_In_ CONST D2D1_RECT_F* clipRect,
 	D2D1_ANTIALIAS_MODE antialiasMode)
 {
-	//Entra na sess„o critica de codÌgo.
+	//Entra na sess√£o critica de cod√≠go.
 	EnterCriticalSection(&SessaoCritica);
 
 	//Variavel que vai retornar o resultado.
 	HRESULT Resultado = E_NOTIMPL;
 
-	//Verifica se o evento È valido
+	//Verifica se o evento √© valido
 	if (ObjetoValido(Evento_PushAxisAlignedClip))
 	{
 		//Evento valido.
@@ -961,11 +961,11 @@ METODODELC CLN_ID2D1CommandSink3::PushAxisAlignedClip(
 	}
 	else
 	{
-		//Define que o mÈtodo n„o foi implementado.
+		//Define que o m√©todo n√£o foi implementado.
 		Resultado = E_NOTIMPL;
 	}
 
-	//Sai da sess„o critica.
+	//Sai da sess√£o critica.
 	LeaveCriticalSection(&SessaoCritica);
 
 	//Retorna o resultado.
@@ -976,13 +976,13 @@ METODODELC CLN_ID2D1CommandSink3::PushLayer(
 	_In_ CONST D2D1_LAYER_PARAMETERS1* layerParameters1,
 	_In_opt_ ID2D1Layer* layer)
 {
-	//Entra na sess„o critica de codÌgo.
+	//Entra na sess√£o critica de cod√≠go.
 	EnterCriticalSection(&SessaoCritica);
 
 	//Variavel que vai retornar o resultado.
 	HRESULT Resultado = E_NOTIMPL;
 
-	//Verifica se o evento È valido
+	//Verifica se o evento √© valido
 	if (ObjetoValido(Evento_PushLayer))
 	{
 		//Evento valido.
@@ -997,11 +997,11 @@ METODODELC CLN_ID2D1CommandSink3::PushLayer(
 	}
 	else
 	{
-		//Define que o mÈtodo n„o foi implementado.
+		//Define que o m√©todo n√£o foi implementado.
 		Resultado = E_NOTIMPL;
 	}
 
-	//Sai da sess„o critica.
+	//Sai da sess√£o critica.
 	LeaveCriticalSection(&SessaoCritica);
 
 	//Retorna o resultado.
@@ -1010,13 +1010,13 @@ METODODELC CLN_ID2D1CommandSink3::PushLayer(
 
 METODODELC CLN_ID2D1CommandSink3::PopAxisAlignedClip()
 {
-	//Entra na sess„o critica de codÌgo.
+	//Entra na sess√£o critica de cod√≠go.
 	EnterCriticalSection(&SessaoCritica);
 
 	//Variavel que vai retornar o resultado.
 	HRESULT Resultado = E_NOTIMPL;
 
-	//Verifica se o evento È valido
+	//Verifica se o evento √© valido
 	if (ObjetoValido(Evento_PopAxisAlignedClip))
 	{
 		//Evento valido.
@@ -1028,11 +1028,11 @@ METODODELC CLN_ID2D1CommandSink3::PopAxisAlignedClip()
 	}
 	else
 	{
-		//Define que o mÈtodo n„o foi implementado.
+		//Define que o m√©todo n√£o foi implementado.
 		Resultado = E_NOTIMPL;
 	}
 
-	//Sai da sess„o critica.
+	//Sai da sess√£o critica.
 	LeaveCriticalSection(&SessaoCritica);
 
 	//Retorna o resultado.
@@ -1041,13 +1041,13 @@ METODODELC CLN_ID2D1CommandSink3::PopAxisAlignedClip()
 
 METODODELC CLN_ID2D1CommandSink3::PopLayer()
 {
-	//Entra na sess„o critica de codÌgo.
+	//Entra na sess√£o critica de cod√≠go.
 	EnterCriticalSection(&SessaoCritica);
 
 	//Variavel que vai retornar o resultado.
 	HRESULT Resultado = E_NOTIMPL;
 
-	//Verifica se o evento È valido
+	//Verifica se o evento √© valido
 	if (ObjetoValido(Evento_PopAxisAlignedClip))
 	{
 		//Evento valido.
@@ -1059,11 +1059,11 @@ METODODELC CLN_ID2D1CommandSink3::PopLayer()
 	}
 	else
 	{
-		//Define que o mÈtodo n„o foi implementado.
+		//Define que o m√©todo n√£o foi implementado.
 		Resultado = E_NOTIMPL;
 	}
 
-	//Sai da sess„o critica.
+	//Sai da sess√£o critica.
 	LeaveCriticalSection(&SessaoCritica);
 
 	//Retorna o resultado.

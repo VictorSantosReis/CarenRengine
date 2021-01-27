@@ -1,4 +1,4 @@
-/*
+ï»¿/*
 Copyright 2020 Victor Santos Reis
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -67,21 +67,21 @@ typedef void(__stdcall* CLN_ID2D1CommandSink2_EventoNativo_PopLayer)();
 
 
 /// <summary>
-/// Classe responsável por implementar a interface (ID2D1CommandSink2) que vai receber uma reprodução de comandos graficos.
+/// Classe responsÃ¡vel por implementar a interface (ID2D1CommandSink2) que vai receber uma reproduÃ§Ã£o de comandos graficos.
 /// </summary>
 class CLN_ID2D1CommandSink2 : public ID2D1CommandSink2
 {
-    //Guarda a quantidade de referências.
+    //Guarda a quantidade de referÃªncias.
     volatile long RefCount;
 
-    //Sessão critica de código.
+    //SessÃ£o critica de cÃ³digo.
     CRITICAL_SECTION SessaoCritica;
 
 public:
-    //Inicialização da classe.
+    //InicializaÃ§Ã£o da classe.
     CLN_ID2D1CommandSink2() : RefCount(1)
     {
-        //Inicia a sessão critica.
+        //Inicia a sessÃ£o critica.
         BOOL Resultado = InitializeCriticalSectionAndSpinCount(&SessaoCritica, 0x00000400);
 
         //Verifica o resultado
@@ -91,14 +91,14 @@ public:
         }
     }
 
-    //Destruição da classe.
+    //DestruiÃ§Ã£o da classe.
     ~CLN_ID2D1CommandSink2()
     {
-        //Deleta a sessão critica
+        //Deleta a sessÃ£o critica
         DeleteCriticalSection(&SessaoCritica);
     }
 
-    //Contém todos os Eventos que seram chamados para notificar o usuário.
+    //ContÃ©m todos os Eventos que seram chamados para notificar o usuÃ¡rio.
 public:
 
     //Eventos nativos da interface ID2D1CommandSink2
@@ -142,7 +142,7 @@ public:
     CLN_ID2D1CommandSink2_EventoNativo_PopLayer Evento_PopLayer = NULL;
 
 
-    //Métodos da Interface IUnknown.
+    //MÃ©todos da Interface IUnknown.
 public:
     //Procura uma determina interface nessa classe.
     STDMETHODIMP QueryInterface(REFIID guid, void** pObj)
@@ -169,17 +169,17 @@ public:
         }
     }
 
-    //Adiciona uma referência a classe.
+    //Adiciona uma referÃªncia a classe.
     STDMETHODIMP_(ULONG) AddRef()
     {
-        //Incrementa a quantidade de referências.
+        //Incrementa a quantidade de referÃªncias.
         return InterlockedIncrement(&RefCount);
     }
 
-    //Libera uma referência a classe.
+    //Libera uma referÃªncia a classe.
     STDMETHODIMP_(ULONG) Release()
     {
-        //Desecrementa a quantidade de referências e verifica.
+        //Desecrementa a quantidade de referÃªncias e verifica.
         ULONG result = InterlockedDecrement(&RefCount);
         if (result == 0) delete this;
         return result;
@@ -187,7 +187,7 @@ public:
 
 
 
-    //Métodos da interface ID2D1CommandSink2
+    //MÃ©todos da interface ID2D1CommandSink2
 public:
     STDMETHOD(DrawInk)(
         _In_ ID2D1Ink* ink,
@@ -206,14 +206,14 @@ public:
         );
 
 
-    //Métodos da interface ID2D1CommandSink1
+    //MÃ©todos da interface ID2D1CommandSink1
 public:
     STDMETHOD(SetPrimitiveBlend1)(
         D2D1_PRIMITIVE_BLEND primitiveBlend
         );
 
 
-    //Métodos da Interface ID2D1CommandSink
+    //MÃ©todos da Interface ID2D1CommandSink
 public:
 
     STDMETHOD(BeginDraw)(

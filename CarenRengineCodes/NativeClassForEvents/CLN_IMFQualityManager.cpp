@@ -1,4 +1,4 @@
-/*
+Ôªø/*
 Copyright 2020 Victor Santos Reis
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,7 +24,7 @@ HRESULT __stdcall CLN_IMFQualityManager::NotifyTopology(IMFTopology* pTopology)
 	//Variavel que vai retornar o resultado.
 	HRESULT Resultado = E_FAIL;
 
-	//Verifica se o usu·rio cadastrou o evento.
+	//Verifica se o usu√°rio cadastrou o evento.
 	if (ObjetoValido(Evento_NotifyTopology))
 		Resultado = Evento_NotifyTopology(pTopology);
 	else
@@ -39,7 +39,7 @@ HRESULT __stdcall CLN_IMFQualityManager::NotifyPresentationClock(IMFPresentation
 	//Variavel que vai retornar o resultado.
 	HRESULT Resultado = E_FAIL;
 
-	//Verifica se o usu·rio cadastrou o evento.
+	//Verifica se o usu√°rio cadastrou o evento.
 	if (ObjetoValido(Evento_NotifyPresentationClock))
 		Resultado = Evento_NotifyPresentationClock(pClock);
 	else
@@ -54,7 +54,7 @@ HRESULT __stdcall CLN_IMFQualityManager::NotifyProcessInput(IMFTopologyNode* pNo
 	//Variavel que vai retornar o resultado.
 	HRESULT Resultado = E_FAIL;
 
-	//Verifica se o usu·rio cadastrou o evento.
+	//Verifica se o usu√°rio cadastrou o evento.
 	if (ObjetoValido(Evento_NotifyProcessInput))
 		Resultado = Evento_NotifyProcessInput(pNode, lInputIndex, pSample);
 	else
@@ -69,7 +69,7 @@ HRESULT __stdcall CLN_IMFQualityManager::NotifyProcessOutput(IMFTopologyNode* pN
 	//Variavel que vai retornar o resultado.
 	HRESULT Resultado = E_FAIL;
 
-	//Verifica se o usu·rio cadastrou o evento.
+	//Verifica se o usu√°rio cadastrou o evento.
 	if (ObjetoValido(Evento_NotifyProcessOutput))
 		Resultado = Evento_NotifyProcessOutput(pNode, lOutputIndex, pSample);
 	else
@@ -84,7 +84,7 @@ HRESULT __stdcall CLN_IMFQualityManager::NotifyQualityEvent(IUnknown* pObject, I
 	//Variavel que vai retornar o resultado.
 	HRESULT Resultado = E_FAIL;
 
-	//Verifica se o usu·rio cadastrou o evento.
+	//Verifica se o usu√°rio cadastrou o evento.
 	if (ObjetoValido(Evento_NotifyQualityEvent))
 		Resultado = Evento_NotifyQualityEvent(pObject, pEvent);
 	else
@@ -99,7 +99,7 @@ HRESULT __stdcall CLN_IMFQualityManager::Shutdown(void)
 	//Variavel que vai retornar o resultado.
 	HRESULT Resultado = E_FAIL;
 
-	//Verifica se o usu·rio cadastrou o evento.
+	//Verifica se o usu√°rio cadastrou o evento.
 	if (ObjetoValido(Evento_Shutdown))
 		Resultado = Evento_Shutdown();
 	else

@@ -1,4 +1,4 @@
-/*
+Ôªø/*
 Copyright 2020 Victor Santos Reis
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -36,8 +36,8 @@ namespace CarenRengine
 			/// <summary>
 			/// Inicializa a estrutura passando os dados do parametro.
 			/// </summary>
-			/// <param name="Param_Objeto">O objeto original a ser passado para o mÈtodo.</param>
-			/// <param name="Param_IgnoreParameter">Um valor booleano que define se o parametro ser· ignorado ou n„o.</param>
+			/// <param name="Param_Objeto">O objeto original a ser passado para o m√©todo.</param>
+			/// <param name="Param_IgnoreParameter">Um valor booleano que define se o parametro ser√° ignorado ou n√£o.</param>
 			CarenParameterResolver(TypeObject Param_Objeto, Boolean Param_IgnoreParameter)
 			{
 				//Define os dados nas variaveis das propriedades abaixo.
@@ -52,7 +52,7 @@ namespace CarenRengine
 			/// </summary>
 			property TypeObject ObjetoParametro
 			{
-				//ObtÈm o objeto.
+				//Obt√©m o objeto.
 				TypeObject get()
 				{
 					return var_Objeto;
@@ -66,7 +66,7 @@ namespace CarenRengine
 			}
 
 			/// <summary>
-			/// Propriedade que indica se deve igonorar o parametro ou n„o.
+			/// Propriedade que indica se deve igonorar o parametro ou n√£o.
 			/// </summary>
 			property Boolean IgnoreParameter
 			{

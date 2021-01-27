@@ -1,4 +1,4 @@
-/*
+Ôªø/*
 Copyright 2020 Victor Santos Reis
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,7 +24,7 @@ HRESULT __stdcall CLN_IMFCaptureEngineOnSampleCallback2::OnSynchronizedEvent(IMF
 	//Variavel que vai retornar o resultado.
 	HRESULT Resultado = E_FAIL;
 
-	//Verifica se o usu·rio cadastrou o evento.
+	//Verifica se o usu√°rio cadastrou o evento.
 	if (ObjetoValido(Evento_OnSynchronizedEvent))
 		Resultado = Evento_OnSynchronizedEvent(pEvent);
 	else
@@ -39,7 +39,7 @@ HRESULT __stdcall CLN_IMFCaptureEngineOnSampleCallback2::OnSample(IMFSample* pSa
 	//Variavel que vai retornar o resultado.
 	HRESULT Resultado = E_FAIL;
 
-	//Verifica se o usu·rio cadastrou o evento.
+	//Verifica se o usu√°rio cadastrou o evento.
 	if (ObjetoValido(Evento_OnSample))
 		Resultado = Evento_OnSample(pSample);
 	else

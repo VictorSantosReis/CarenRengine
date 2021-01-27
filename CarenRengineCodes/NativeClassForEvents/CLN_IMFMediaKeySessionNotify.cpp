@@ -1,4 +1,4 @@
-/*
+Ôªø/*
 Copyright 2020 Victor Santos Reis
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,20 +22,20 @@ limitations under the License.
 
 void STDMETHODCALLTYPE CLN_IMFMediaKeySessionNotify::KeyMessage(BSTR destinationURL, const BYTE* message, DWORD cb)
 {
-	//Entra na sess„o critica do cÛdigo.
+	//Entra na sess√£o critica do c√≥digo.
 	EnterCriticalSection(&SessaoCritica);
 
-	//Verifica se o evento foi impelementado pelo usu·rio e chama para notificar na classe gerenciada.
+	//Verifica se o evento foi impelementado pelo usu√°rio e chama para notificar na classe gerenciada.
 	if (ObjetoValido(Evento_OnKeyMessage))
 		Evento_OnKeyMessage(destinationURL, message, cb);
 
-	//Sai da sess„o critica.
+	//Sai da sess√£o critica.
 	LeaveCriticalSection(&SessaoCritica);
 }
 
 void STDMETHODCALLTYPE CLN_IMFMediaKeySessionNotify::KeyAdded(void)
 {
-	//Verifica se o evento foi impelementado pelo usu·rio e chama para notificar na classe gerenciada.
+	//Verifica se o evento foi impelementado pelo usu√°rio e chama para notificar na classe gerenciada.
 	if (ObjetoValido(Evento_OnKeyAdded))
 		Evento_OnKeyAdded();
 
@@ -43,7 +43,7 @@ void STDMETHODCALLTYPE CLN_IMFMediaKeySessionNotify::KeyAdded(void)
 
 void STDMETHODCALLTYPE CLN_IMFMediaKeySessionNotify::KeyError(USHORT code, DWORD systemCode)
 {
-	//Verifica se o evento foi impelementado pelo usu·rio e chama para notificar na classe gerenciada.
+	//Verifica se o evento foi impelementado pelo usu√°rio e chama para notificar na classe gerenciada.
 	if (ObjetoValido(Evento_OnKeyError))
 		Evento_OnKeyError(code, systemCode);
 }

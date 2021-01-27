@@ -1,4 +1,4 @@
-/*
+ï»¿/*
 Copyright 2020 Victor Santos Reis
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,15 +22,15 @@ limitations under the License.
 typedef HRESULT(__stdcall* CLN_IMFSourceOpenMonitor_EventoNativo_OnSourceEvent)(__RPC__in_opt IMFMediaEvent*);
 
 /// <summary>
-/// Classe responsável por representar a impelementação nativa da interface(IMFSourceOpenMonitor) criada para receber notificações de fonte de rede.
+/// Classe responsÃ¡vel por representar a impelementaÃ§Ã£o nativa da interface(IMFSourceOpenMonitor) criada para receber notificaÃ§Ãµes de fonte de rede.
 /// </summary>
 class CLN_IMFSourceOpenMonitor : public IMFSourceOpenMonitor
 {
-	//Guarda a quantidade de referências.
+	//Guarda a quantidade de referÃªncias.
 	volatile long RefCount;
 
 public:
-	//Inicialização da classe.
+	//InicializaÃ§Ã£o da classe.
 	CLN_IMFSourceOpenMonitor() : RefCount(1)
 	{
 	}
@@ -40,7 +40,7 @@ public:
 
 	}
 
-	//Métodos da Interface IUnknown.
+	//MÃ©todos da Interface IUnknown.
 public:
 	//Procura uma determina interface nessa classe.
 	STDMETHODIMP QueryInterface(REFIID guid, void** pObj)
@@ -67,28 +67,28 @@ public:
 		}
 	}
 
-	//Adiciona uma referência a classe.
+	//Adiciona uma referÃªncia a classe.
 	STDMETHODIMP_(ULONG) AddRef()
 	{
-		//Incrementa a quantidade de referências.
+		//Incrementa a quantidade de referÃªncias.
 		return InterlockedIncrement(&RefCount);
 	}
 
-	//Libera uma referência a classe.
+	//Libera uma referÃªncia a classe.
 	STDMETHODIMP_(ULONG) Release()
 	{
-		//Desecrementa a quantidade de referências e verifica.
+		//Desecrementa a quantidade de referÃªncias e verifica.
 		ULONG result = InterlockedDecrement(&RefCount);
 		if (result == 0) delete this;
 		return result;
 	}
 
 
-	//Contém todos os delegates que seram chamados para notificar o usuário.
+	//ContÃ©m todos os delegates que seram chamados para notificar o usuÃ¡rio.
 public:
 	CLN_IMFSourceOpenMonitor_EventoNativo_OnSourceEvent Evento_OnSourceEvent = NULL;
 
-	//Métodos da interface (IMFSourceOpenMonitor).
+	//MÃ©todos da interface (IMFSourceOpenMonitor).
 public:
 	virtual HRESULT STDMETHODCALLTYPE OnSourceEvent(
 		__RPC__in_opt IMFMediaEvent* pEvent);

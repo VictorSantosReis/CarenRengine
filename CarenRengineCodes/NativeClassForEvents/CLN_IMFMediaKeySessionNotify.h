@@ -1,4 +1,4 @@
-/*
+ï»¿/*
 Copyright 2020 Victor Santos Reis
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,31 +25,31 @@ typedef void(__stdcall* CLN_IMFMediaKeySessionNotify_EventoNativo_OnKeyError)(_I
 typedef void(__stdcall* CLN_IMFMediaKeySessionNotify_EventoNativo_OnKeyMessage)(_In_opt_  BSTR, _In_reads_bytes_(cb)  const BYTE*, _In_  DWORD);
 
 /// <summary>
-/// Classe responsável por implementar a interface nativa (IMFMediaKeySessionNotify) que vai receber eventos de notificação para serem enviados ao usuário.
+/// Classe responsÃ¡vel por implementar a interface nativa (IMFMediaKeySessionNotify) que vai receber eventos de notificaÃ§Ã£o para serem enviados ao usuÃ¡rio.
 /// </summary>
 class CLN_IMFMediaKeySessionNotify : public IMFMediaKeySessionNotify
 {
-	//Guarda a quantidade de referências.
+	//Guarda a quantidade de referÃªncias.
 	volatile long RefCount;
 
-	//Sessão critica de código.
+	//SessÃ£o critica de cÃ³digo.
 	CRITICAL_SECTION SessaoCritica;
 
 public:
-	//Inicialização da classe.
+	//InicializaÃ§Ã£o da classe.
 	CLN_IMFMediaKeySessionNotify() : RefCount(1)
 	{
-		//Inicia a sessão critica.
+		//Inicia a sessÃ£o critica.
 		InitializeCriticalSectionAndSpinCount(&SessaoCritica, 0x00000400);
 	}
 
 	~CLN_IMFMediaKeySessionNotify()
 	{
-		//Deleta a sessão critica
+		//Deleta a sessÃ£o critica
 		DeleteCriticalSection(&SessaoCritica);
 	}
 
-	//Métodos da Interface IUnknown.
+	//MÃ©todos da Interface IUnknown.
 public:
 	//Procura uma determina interface nessa classe.
 	STDMETHODIMP QueryInterface(REFIID guid, void** pObj)
@@ -76,31 +76,31 @@ public:
 		}
 	}
 
-	//Adiciona uma referência a classe.
+	//Adiciona uma referÃªncia a classe.
 	STDMETHODIMP_(ULONG) AddRef()
 	{
-		//Incrementa a quantidade de referências.
+		//Incrementa a quantidade de referÃªncias.
 		return InterlockedIncrement(&RefCount);
 	}
 
-	//Libera uma referência a classe.
+	//Libera uma referÃªncia a classe.
 	STDMETHODIMP_(ULONG) Release()
 	{
-		//Desecrementa a quantidade de referências e verifica.
+		//Desecrementa a quantidade de referÃªncias e verifica.
 		ULONG result = InterlockedDecrement(&RefCount);
 		if (result == 0) delete this;
 		return result;
 	}
 
 
-	//Contém todos os delegates que seram chamados para notificar o usuário.
+	//ContÃ©m todos os delegates que seram chamados para notificar o usuÃ¡rio.
 public:
 	CLN_IMFMediaKeySessionNotify_EventoNativo_OnKeyAdded Evento_OnKeyAdded = NULL;
 	CLN_IMFMediaKeySessionNotify_EventoNativo_OnKeyError Evento_OnKeyError = NULL;
 	CLN_IMFMediaKeySessionNotify_EventoNativo_OnKeyMessage Evento_OnKeyMessage = NULL;
 
 
-	//Métodos da interface (IMFNetResourceFilter).
+	//MÃ©todos da interface (IMFNetResourceFilter).
 public:
 	virtual void STDMETHODCALLTYPE KeyMessage(
 		_In_opt_  BSTR destinationURL,

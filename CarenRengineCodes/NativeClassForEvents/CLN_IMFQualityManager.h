@@ -1,4 +1,4 @@
-/*
+ï»¿/*
 Copyright 2020 Victor Santos Reis
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,27 +28,27 @@ typedef HRESULT(__stdcall* CLN_IMFQualityManager_EventoNativo_Shutdown)(void);
 
 
 /// <summary>
-/// Classe responsável por implementar a interface (IMFQualityManager) para gerenciar os eventos de qualidade.
+/// Classe responsÃ¡vel por implementar a interface (IMFQualityManager) para gerenciar os eventos de qualidade.
 /// </summary>
 class CLN_IMFQualityManager: public IMFQualityManager
 {
-    //Guarda a quantidade de referências.
+    //Guarda a quantidade de referÃªncias.
     volatile long RefCount;
 
 public:
-    //Inicialização da classe.
+    //InicializaÃ§Ã£o da classe.
     CLN_IMFQualityManager() : RefCount(1)
     {
 
     }
 
-    //Destruição da classe.
+    //DestruiÃ§Ã£o da classe.
     ~CLN_IMFQualityManager()
     {
 
     }
 
-    //Contém todos os Eventos que seram chamados para notificar o usuário.
+    //ContÃ©m todos os Eventos que seram chamados para notificar o usuÃ¡rio.
 public:
 
     //Eventos nativos.
@@ -59,7 +59,7 @@ public:
     CLN_IMFQualityManager_EventoNativo_NotifyQualityEvent Evento_NotifyQualityEvent = NULL;
     CLN_IMFQualityManager_EventoNativo_Shutdown Evento_Shutdown = NULL;
 
-    //Métodos da Interface IUnknown.
+    //MÃ©todos da Interface IUnknown.
 public:
     //Procura uma determina interface nessa classe.
     STDMETHODIMP QueryInterface(REFIID guid, void** pObj)
@@ -86,24 +86,24 @@ public:
         }
     }
 
-    //Adiciona uma referência a classe.
+    //Adiciona uma referÃªncia a classe.
     STDMETHODIMP_(ULONG) AddRef()
     {
-        //Incrementa a quantidade de referências.
+        //Incrementa a quantidade de referÃªncias.
         return InterlockedIncrement(&RefCount);
     }
 
-    //Libera uma referência a classe.
+    //Libera uma referÃªncia a classe.
     STDMETHODIMP_(ULONG) Release()
     {
-        //Desecrementa a quantidade de referências e verifica.
+        //Desecrementa a quantidade de referÃªncias e verifica.
         ULONG result = InterlockedDecrement(&RefCount);
         if (result == 0) delete this;
         return result;
     }
 
 
-    //Métodos da Interface IMFQualityManager 
+    //MÃ©todos da Interface IMFQualityManager 
 public:
     virtual HRESULT STDMETHODCALLTYPE NotifyTopology(
         /* [in] */ IMFTopology* pTopology);

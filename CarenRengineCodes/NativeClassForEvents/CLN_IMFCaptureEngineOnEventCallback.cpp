@@ -1,4 +1,4 @@
-/*
+Ôªø/*
 Copyright 2020 Victor Santos Reis
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,19 +21,19 @@ limitations under the License.
 
 HRESULT __stdcall CLN_IMFCaptureEngineOnEventCallback::OnEvent(IMFMediaEvent* pEvent)
 {
-	//Entra na sessao critica de cÛdigo.
+	//Entra na sessao critica de c√≥digo.
 	EnterCriticalSection(&SessaoCritica);
 
 	//Variavel que vai retornar o resultado.
 	HRESULT Resultado = E_FAIL;
 
-	//Verifica se o usu·rio cadastrou o evento.
+	//Verifica se o usu√°rio cadastrou o evento.
 	if (ObjetoValido(Evento_OnEvent))
 		Resultado = Evento_OnEvent(pEvent);
 	else
 		Resultado = E_NOTIMPL;
 
-	//Sai da sess„o critica de cÛdigo.
+	//Sai da sess√£o critica de c√≥digo.
 	LeaveCriticalSection(&SessaoCritica);
 
 	//Retorna o resultado.

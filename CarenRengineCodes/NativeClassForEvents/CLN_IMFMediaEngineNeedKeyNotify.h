@@ -1,4 +1,4 @@
-/*
+ï»¿/*
 Copyright 2020 Victor Santos Reis
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,21 +24,21 @@ typedef void(__stdcall* CLN_IMFMediaEngineNeedKeyNotify_EventoNativo_OnNeedKeys)
 
 
 /// <summary>
-/// Classe responsável por implementar a interface (IMFMediaEngineNeedKeyNotify) que vai receber os eventos e encaminha para o usuário na classe gerenciada.
+/// Classe responsÃ¡vel por implementar a interface (IMFMediaEngineNeedKeyNotify) que vai receber os eventos e encaminha para o usuÃ¡rio na classe gerenciada.
 /// </summary>
 class CLN_IMFMediaEngineNeedKeyNotify : public IMFMediaEngineNeedKeyNotify
 {
-    //Guarda a quantidade de referências.
+    //Guarda a quantidade de referÃªncias.
     volatile long RefCount;
 
-    //Sessão critica de código.
+    //SessÃ£o critica de cÃ³digo.
     CRITICAL_SECTION SessaoCritica;
 
 public:
-    //Inicialização da classe.
+    //InicializaÃ§Ã£o da classe.
     CLN_IMFMediaEngineNeedKeyNotify() : RefCount(1)
     {
-        //Inicia a sessão critica.
+        //Inicia a sessÃ£o critica.
         BOOL Resultado = InitializeCriticalSectionAndSpinCount(&SessaoCritica, 0x00000400);
 
         //Verifica o resultado
@@ -48,21 +48,21 @@ public:
         }
     }
 
-    //Destruição da classe.
+    //DestruiÃ§Ã£o da classe.
     ~CLN_IMFMediaEngineNeedKeyNotify()
     {
-        //Deleta a sessão critica
+        //Deleta a sessÃ£o critica
         DeleteCriticalSection(&SessaoCritica);
     }
 
-    //Contém todos os Eventos que seram chamados para notificar o usuário.
+    //ContÃ©m todos os Eventos que seram chamados para notificar o usuÃ¡rio.
 public:
 
     //Eventos nativos.
     CLN_IMFMediaEngineNeedKeyNotify_EventoNativo_OnNeedKeys Evento_OnNeedKeys = NULL;
 
 
-    //Métodos da Interface IUnknown.
+    //MÃ©todos da Interface IUnknown.
 public:
     //Procura uma determina interface nessa classe.
     STDMETHODIMP QueryInterface(REFIID guid, void** pObj)
@@ -89,24 +89,24 @@ public:
         }
     }
 
-    //Adiciona uma referência a classe.
+    //Adiciona uma referÃªncia a classe.
     STDMETHODIMP_(ULONG) AddRef()
     {
-        //Incrementa a quantidade de referências.
+        //Incrementa a quantidade de referÃªncias.
         return InterlockedIncrement(&RefCount);
     }
 
-    //Libera uma referência a classe.
+    //Libera uma referÃªncia a classe.
     STDMETHODIMP_(ULONG) Release()
     {
-        //Desecrementa a quantidade de referências e verifica.
+        //Desecrementa a quantidade de referÃªncias e verifica.
         ULONG result = InterlockedDecrement(&RefCount);
         if (result == 0) delete this;
         return result;
     }
 
 
-    //Métodos da Interface IMFMediaEngineNeedKeyNotify
+    //MÃ©todos da Interface IMFMediaEngineNeedKeyNotify
 public:
     virtual void STDMETHODCALLTYPE NeedKey(
         _In_reads_bytes_opt_(cb)  const BYTE* initData,

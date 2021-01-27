@@ -1,4 +1,4 @@
-/*
+Ôªø/*
 Copyright 2020 Victor Santos Reis
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,13 +21,13 @@ limitations under the License.
 
 void __stdcall CLN_IMFMediaEngineNeedKeyNotify::NeedKey(const BYTE* initData, DWORD cb)
 {
-	//Entra na sess„o critica de cÛdigo.
+	//Entra na sess√£o critica de c√≥digo.
 	EnterCriticalSection(&SessaoCritica);
 
-	//Verifica se o evento È valido e chama
+	//Verifica se o evento √© valido e chama
 	if (ObjetoValido(Evento_OnNeedKeys))
 		Evento_OnNeedKeys(initData, cb);
 
-	//Sai da sess„o critica.
+	//Sai da sess√£o critica.
 	LeaveCriticalSection(&SessaoCritica);
 }

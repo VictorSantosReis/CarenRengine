@@ -1,4 +1,4 @@
-/*
+﻿/*
 Copyright 2020 Victor Santos Reis
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,7 +28,7 @@ using namespace System::Security::Permissions;
 [assembly:AssemblyConfigurationAttribute(L"")];
 [assembly:AssemblyCompanyAttribute(L"Victor Santos Reis")];
 [assembly:AssemblyProductAttribute(L"CarenRengine")];
-[assembly:AssemblyCopyrightAttribute(L"Copyright (c) Victor Santos Reis�  2020")];
+[assembly:AssemblyCopyrightAttribute(L"Copyright (c) Victor Santos Reis®  2020")];
 [assembly:AssemblyTrademarkAttribute(L"Victor Santos Reis")];
 [assembly:AssemblyCultureAttribute(L"")];
 

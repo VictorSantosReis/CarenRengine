@@ -1,4 +1,4 @@
-/*
+ï»¿/*
 Copyright 2020 Victor Santos Reis
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,36 +23,36 @@ typedef HRESULT(__stdcall* CLN_IMFCaptureEngineOnSampleCallback_EventoNativo_OnS
 
 
 /// <summary>
-/// Classe responsável por implementar a interface (IMFCaptureEngineOnSampleCallback ) que vai receber eventos da interface IMFCaptureEngine.
+/// Classe responsÃ¡vel por implementar a interface (IMFCaptureEngineOnSampleCallback ) que vai receber eventos da interface IMFCaptureEngine.
 /// </summary>
 class CLN_IMFCaptureEngineOnSampleCallback : public IMFCaptureEngineOnSampleCallback
 {
-    //Guarda a quantidade de referências.
+    //Guarda a quantidade de referÃªncias.
     volatile long RefCount;
 
-    //Sessão critica de código.
+    //SessÃ£o critica de cÃ³digo.
     CRITICAL_SECTION SessaoCritica;
 
 public:
-    //Inicialização da classe.
+    //InicializaÃ§Ã£o da classe.
     CLN_IMFCaptureEngineOnSampleCallback() : RefCount(1)
     {
 
     }
 
-    //Destruição da classe.
+    //DestruiÃ§Ã£o da classe.
     ~CLN_IMFCaptureEngineOnSampleCallback()
     {
 
     }
 
-    //Contém todos os Eventos que seram chamados para notificar o usuário.
+    //ContÃ©m todos os Eventos que seram chamados para notificar o usuÃ¡rio.
 public:
 
     //Eventos nativos.
     CLN_IMFCaptureEngineOnSampleCallback_EventoNativo_OnSample Evento_OnSample = NULL;
 
-    //Métodos da Interface IUnknown.
+    //MÃ©todos da Interface IUnknown.
 public:
     //Procura uma determina interface nessa classe.
     STDMETHODIMP QueryInterface(REFIID guid, void** pObj)
@@ -79,24 +79,24 @@ public:
         }
     }
 
-    //Adiciona uma referência a classe.
+    //Adiciona uma referÃªncia a classe.
     STDMETHODIMP_(ULONG) AddRef()
     {
-        //Incrementa a quantidade de referências.
+        //Incrementa a quantidade de referÃªncias.
         return InterlockedIncrement(&RefCount);
     }
 
-    //Libera uma referência a classe.
+    //Libera uma referÃªncia a classe.
     STDMETHODIMP_(ULONG) Release()
     {
-        //Desecrementa a quantidade de referências e verifica.
+        //Desecrementa a quantidade de referÃªncias e verifica.
         ULONG result = InterlockedDecrement(&RefCount);
         if (result == 0) delete this;
         return result;
     }
 
 
-    //Métodos da Interface IMFCaptureEngineOnSampleCallback 
+    //MÃ©todos da Interface IMFCaptureEngineOnSampleCallback 
 public:
     virtual HRESULT STDMETHODCALLTYPE OnSample(
         /* [annotation][in] */

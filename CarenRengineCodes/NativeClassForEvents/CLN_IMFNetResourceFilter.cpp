@@ -1,4 +1,4 @@
-/*
+ï»¿/*
 Copyright 2020 Victor Santos Reis
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,7 +24,7 @@ HRESULT __stdcall CLN_IMFNetResourceFilter::OnRedirect(_In_ LPCWSTR pszUrl, _Out
     //Resultado geral.
     HRESULT Resultado = E_FAIL;
 
-    //Verifica se o evento é valido
+    //Verifica se o evento Ã© valido
     if (ObjetoValido(Evento_OnRedirect))
     {
        //Chama o evento
@@ -32,7 +32,7 @@ HRESULT __stdcall CLN_IMFNetResourceFilter::OnRedirect(_In_ LPCWSTR pszUrl, _Out
     }
     else
     {
-        //Não implementado.
+        //NÃ£o implementado.
         Resultado = E_NOTIMPL;
     }
 
@@ -45,7 +45,7 @@ HRESULT __stdcall CLN_IMFNetResourceFilter::OnSendingRequest(_In_ LPCWSTR pszUrl
     //Resultado geral.
     HRESULT Resultado = E_FAIL;
 
-    //Verifica se o evento é valido
+    //Verifica se o evento Ã© valido
     if (ObjetoValido(Evento_OnSendingRequest))
     {
         //Chama o evento
@@ -53,7 +53,7 @@ HRESULT __stdcall CLN_IMFNetResourceFilter::OnSendingRequest(_In_ LPCWSTR pszUrl
     }
     else
     {
-        //Não implementado.
+        //NÃ£o implementado.
         Resultado = E_NOTIMPL;
     }
 

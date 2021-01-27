@@ -445,6 +445,9 @@ PVOID PropVariantManager::ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT
 		//Converte e define no membro da estrutura a ser retornada.
 		vi_Resultado->pStream = reinterpret_cast<IStream*>(vi_NativePointerTemp);
 
+		//Adiciona uma referência.
+		vi_Resultado->pStream->AddRef();
+
 		//Limpa os dados.
 		vi_NativePointerTemp = Nulo;
 	}
@@ -458,6 +461,9 @@ PVOID PropVariantManager::ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT
 
 		//Converte e define no membro da estrutura a ser retornada.
 		vi_Resultado->pStorage = reinterpret_cast<IStorage*>(vi_NativePointerTemp);
+
+		//Adiciona uma referência.
+		vi_Resultado->pStorage->AddRef();
 
 		//Limpa os dados.
 		vi_NativePointerTemp = Nulo;
@@ -508,6 +514,9 @@ PVOID PropVariantManager::ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT
 		//Converte e define no membro da estrutura a ser retornada.
 		vi_Resultado->pStream = reinterpret_cast<IStream*>(vi_NativePointerTemp);
 
+		//Adiciona uma referência.
+		vi_Resultado->pStream->AddRef();
+
 		//Limpa os dados.
 		vi_NativePointerTemp = Nulo;
 	}
@@ -521,6 +530,9 @@ PVOID PropVariantManager::ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT
 
 		//Converte e define no membro da estrutura a ser retornada.
 		vi_Resultado->pStorage = reinterpret_cast<IStorage*>(vi_NativePointerTemp);
+
+		//Adiciona uma referência.
+		vi_Resultado->pStorage->AddRef();
 
 		//Limpa os dados.
 		vi_NativePointerTemp = Nulo;
@@ -542,6 +554,9 @@ PVOID PropVariantManager::ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT
 		//Define o IStream no membro da estrutura.
 		vi_Resultado->pVersionedStream->pStream = reinterpret_cast<IStream*>(vi_NativePointerTemp);
 
+		//Adiciona uma referência.
+		vi_Resultado->pVersionedStream->pStream->AddRef();
+
 		//Limpa os dados.
 		vi_NativePointerTemp = Nulo;
 	}
@@ -556,6 +571,9 @@ PVOID PropVariantManager::ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT
 		//Converte e define no membro da estrutura a ser retornada.
 		vi_Resultado->punkVal = reinterpret_cast<IUnknown*>(vi_NativePointerTemp);
 
+		//Adiciona uma referência.
+		vi_Resultado->punkVal->AddRef();
+
 		//Limpa os dados.
 		vi_NativePointerTemp = Nulo;
 	}
@@ -569,6 +587,9 @@ PVOID PropVariantManager::ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT
 
 		//Converte e define no membro da estrutura a ser retornada.
 		vi_Resultado->pdispVal = reinterpret_cast<IDispatch*>(vi_NativePointerTemp);
+
+		//Adiciona uma referência.
+		vi_Resultado->pdispVal->AddRef();
 
 		//Limpa os dados.
 		vi_NativePointerTemp = Nulo;
@@ -2050,7 +2071,8 @@ CA_PROPVARIANT^ PropVariantManager::ConverterPropVariantUnmanaged_ToManaged(PROP
 	case VT_HRESULT:
 	{
 		//Define os dados na estrutura a ser retornada.
-		vi_Resultado->scode = static_cast<UInt32>(Param_Estrutura->scode);
+		vi_Resultado->scode = static_cast<int>(Param_Estrutura->scode);
+		vi_Resultado->lVal = static_cast<int>(Param_Estrutura->scode);
 	}
 		break;
 

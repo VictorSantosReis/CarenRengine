@@ -21554,7 +21554,7 @@ namespace CarenRengine
 				float fltVal;
 				double dblVal;
 				Boolean boolVal;
-				UInt32 scode;
+				Int32 scode;
 				CA_CY cyVal;
 				DOUBLE date;
 				CA_FILETIME filetime;

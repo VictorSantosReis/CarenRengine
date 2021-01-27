@@ -125,14 +125,14 @@ PVOID PropVariantManager::ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT
 	CA_CAPROPVARIANT^ vi_CaPropVariantGenTemp = {};
 
 	//Verifica se a variante não é invalida.
-	if (ObjetoGerenciadoValido(Param_Estrutura))
+	if (!ObjetoGerenciadoValido(Param_Estrutura))
 		throw gcnew NullReferenceException("O parametro (Param_Estrutura) não pode ser NULO!");
 
 	//Obtém o tipo da variante atual.
 	vi_Vt = static_cast<VARTYPE>(Param_Estrutura->vt);
 
 	//Inicializa a propvariant.
-	PropVariantInit(vi_Resultado);
+	IniciarPropVariant(&vi_Resultado);
 
 	//Define o tipo da variante.
 	vi_Resultado->vt = vi_Vt;
@@ -1515,7 +1515,7 @@ PVOID PropVariantManager::ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT
 
 	case VT_BSTR_BLOB:
 		//Libera a propvariant criada anteriormente.
-		PropVariantClear(vi_Resultado);
+		DeletarPropVariant(&vi_Resultado);
 
 		//Chama uma exceção porque o tipo não é suportado.
 		throw gcnew Exception("O tipo de variante (VT_BSTR_BLOB) não é valido porque é apenas de uso interno pelo sistema operacional.");
@@ -1523,7 +1523,7 @@ PVOID PropVariantManager::ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT
 
 	case VT_VOID:
 		//Libera a propvariant criada anteriormente.
-		PropVariantClear(vi_Resultado);
+		DeletarPropVariant(&vi_Resultado);
 
 		//Chama uma exceção porque o tipo não é suportado.
 		throw gcnew Exception("O tipo de variante (VT_VOID) não é suportado!");
@@ -1531,7 +1531,7 @@ PVOID PropVariantManager::ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT
 
 	case VT_RECORD:
 		//Libera a propvariant criada anteriormente.
-		PropVariantClear(vi_Resultado);
+		DeletarPropVariant(&vi_Resultado);
 
 		//Chama uma exceção porque o tipo não é suportado.
 		throw gcnew Exception("O tipo de variante (VT_RECORD) não é suportado atualmente. A documentação nativa não cita esse membro.");
@@ -1539,7 +1539,7 @@ PVOID PropVariantManager::ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT
 
 	case VT_VARIANT:
 		//Libera a propvariant criada anteriormente.
-		PropVariantClear(vi_Resultado);
+		DeletarPropVariant(&vi_Resultado);
 
 		//Chama uma exceção porque o tipo não é suportado.
 		throw gcnew Exception("O tipo de variante (VT_VARIANT) não é suportado puro. Esse valor deve ser usado com (VT_VECTOR ou VT_BYREF) com operador OR.");
@@ -1547,7 +1547,7 @@ PVOID PropVariantManager::ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT
 
 	case VT_PTR:
 		//Libera a propvariant criada anteriormente.
-		PropVariantClear(vi_Resultado);
+		DeletarPropVariant(&vi_Resultado);
 
 		//Chama uma exceção porque o tipo não é suportado.
 		throw gcnew Exception("O tipo de variante (VT_PTR) não é suportado!");
@@ -1555,7 +1555,7 @@ PVOID PropVariantManager::ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT
 
 	case VT_INT_PTR:
 		//Libera a propvariant criada anteriormente.
-		PropVariantClear(vi_Resultado);
+		DeletarPropVariant(&vi_Resultado);
 
 		//Chama uma exceção porque o tipo não é suportado.
 		throw gcnew Exception("O tipo de variante (VT_INT_PTR) não é suportado!");
@@ -1563,7 +1563,7 @@ PVOID PropVariantManager::ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT
 
 	case VT_UINT_PTR:
 		//Libera a propvariant criada anteriormente.
-		PropVariantClear(vi_Resultado);
+		DeletarPropVariant(&vi_Resultado);
 
 		//Chama uma exceção porque o tipo não é suportado.
 		throw gcnew Exception("O tipo de variante (VT_UINT_PTR) não é suportado!");
@@ -1571,7 +1571,7 @@ PVOID PropVariantManager::ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT
 
 	case VT_CARRAY:
 		//Libera a propvariant criada anteriormente.
-		PropVariantClear(vi_Resultado);
+		DeletarPropVariant(&vi_Resultado);
 
 		//Chama uma exceção porque o tipo não é suportado.
 		throw gcnew Exception("O tipo de variante (VT_CARRAY) não é suportado!");
@@ -1581,7 +1581,7 @@ PVOID PropVariantManager::ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT
 		//TIPO DESCONHECIDO!!
 
 		//Libera a propvariant criada anteriormente.
-		PropVariantClear(vi_Resultado);
+		DeletarPropVariant(&vi_Resultado);
 		break;
 	}
 
@@ -1602,7 +1602,7 @@ CA_PROPVARIANT^ PropVariantManager::ConverterPropVariantUnmanaged_ToManaged(PROP
 	CA_CAPROPVARIANT^ vi_TempCaPropVariant = nullptr;
 
 	//Verifica se a variante não é invalida.
-	if (ObjetoValido(Param_Estrutura))
+	if (!ObjetoValido(Param_Estrutura))
 		throw gcnew NullReferenceException("O parametro (Param_Estrutura) não pode ser NULO!");
 
 	//Obtém o tipo da variante atual.

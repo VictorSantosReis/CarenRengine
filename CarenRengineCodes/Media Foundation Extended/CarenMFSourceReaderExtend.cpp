@@ -667,7 +667,6 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-
 /// <summary>
 /// Obtém um determinado atributo da fonte de mídia atual.
 /// </summary>
@@ -704,7 +703,7 @@ CarenResult CarenMFSourceReaderExtend::GetPresentationAttribute(UInt32 Param_IdF
 	}
 
 	//Inicializa a PropVariant.
-	PropVariantInit(vi_PropVar);
+	IniciarPropVariant(&vi_PropVar);
 
 	//Chama o método para obter o dados do atributo.
 	Hr = PonteiroTrabalho->GetPresentationAttribute(Param_IdFluxo, GuidChave, vi_PropVar);
@@ -729,7 +728,7 @@ CarenResult CarenMFSourceReaderExtend::GetPresentationAttribute(UInt32 Param_IdF
 
 Done:;
 	//Limpa a PropVariant.
-	PropVariantClear(vi_PropVar);
+	DeletarPropVariant(&vi_PropVar);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1012,22 +1011,21 @@ CarenResult CarenMFSourceReaderExtend::SetCurrentPosition(Int64 Param_PosiçãoN
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas pelo método
-	PROPVARIANT PropVarPosition;
+	LPPROPVARIANT vi_PropVarPosition = Nulo;
 
-	//Chama o método para criar a propVariant.
-	InitPropVariantFromInt64(Param_PosiçãoNanoSegundos, &PropVarPosition);
+	//Inicia a PropVariant.
+	IniciarPropVariant(&vi_PropVarPosition);
 
-	/*
-	//Define o tipo da PropVariant
-	PropVarPosition.vt = VT_I8;
+	//Define o tipo da variante
+	vi_PropVarPosition->vt = VT_I8;
 
-	//Define a posição em nanosegundos -> Long Long
-	PropVarPosition.hVal.QuadPart = Param_PosiçãoNanoSegundos;
-	*/
+	//Define os dados.
+	vi_PropVarPosition->hVal = { 0 };
+	vi_PropVarPosition->hVal.QuadPart = Param_PosiçãoNanoSegundos;
 
 	//Chama o método que vai definir a posição de leitura.
 	//GUID_NULL -> Informa que o formato do tempo é baseado em unidades de 100 nanosegundos.
-	Hr = PonteiroTrabalho->SetCurrentPosition(GUID_NULL, PropVarPosition);
+	Hr = PonteiroTrabalho->SetCurrentPosition(GUID_NULL, const_cast<PROPVARIANT&>(*vi_PropVarPosition));
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -1046,7 +1044,7 @@ CarenResult CarenMFSourceReaderExtend::SetCurrentPosition(Int64 Param_PosiçãoN
 
 Done:;
 	//Limpa a PropVariant
-	PropVariantClear(&PropVarPosition);
+	DeletarPropVariant(&vi_PropVarPosition);
 
 	//Retorna o resultado
 	return Resultado;

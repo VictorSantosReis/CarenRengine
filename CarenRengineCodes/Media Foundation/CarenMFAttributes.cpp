@@ -590,7 +590,7 @@ CarenResult CarenMFAttributes::CompareItem(String^ Param_GuidChave, CA_PROPVARIA
 
 Done:;
 	//Libera a memória utilizada pela PropVariant.
-	PropVariantClear(vi_PropVar);
+	DeletarPropVariant(&vi_PropVar);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1146,7 +1146,7 @@ CarenResult CarenMFAttributes::GetItem(String^ Param_GuidChave, [Out] CA_PROPVAR
 	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
 
 	//Inicializa a PropVariant.
-	PropVariantInit(vi_PropVar);
+	IniciarPropVariant(&vi_PropVar);
 
 	//Chama o método para obter o dado
 	Hr = PonteiroTrabalho->GetItem(GuidChave, vi_PropVar);
@@ -1171,7 +1171,7 @@ CarenResult CarenMFAttributes::GetItem(String^ Param_GuidChave, [Out] CA_PROPVAR
 
 Done:;
 	//Limpa a PropVariant.
-	PropVariantClear(vi_PropVar);
+	DeletarPropVariant(&vi_PropVar);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1198,7 +1198,7 @@ CarenResult CarenMFAttributes::GetItemByIndex(UInt32 Param_IdItem, [Out] String^
 	LPPROPVARIANT vi_PropVar = Nulo;
 	
 	//Inicializa a PropVariant.
-	PropVariantInit(vi_PropVar);
+	IniciarPropVariant(&vi_PropVar);
 
 	//Chama o método para obter o dado
 	Hr = PonteiroTrabalho->GetItemByIndex(Param_IdItem, &GuidChave, vi_PropVar);
@@ -1229,7 +1229,7 @@ CarenResult CarenMFAttributes::GetItemByIndex(UInt32 Param_IdItem, [Out] String^
 
 Done:;
 	//Limpa a PropVariant.
-	PropVariantClear(vi_PropVar);
+	DeletarPropVariant(&vi_PropVar);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1890,7 +1890,7 @@ CarenResult CarenMFAttributes::SetItem(String^ Param_GuidChave, Estruturas::CA_P
 
 Done:;
 	//Libera a memória utilizada pela propvariant.
-	PropVariantClear(vi_PropVar);
+	DeletarPropVariant(&vi_PropVar);
 
 	//Retorna o resultado.
 	return Resultado;

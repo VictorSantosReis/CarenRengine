@@ -459,7 +459,7 @@ CarenResult CarenMFMetadata::GetAllLanguages([Out] CA_PROPVARIANT^% Param_Out_Li
 	LPPROPVARIANT vi_OutPropVar = Nulo;
 
 	//Inicializa a propvariant
-	PropVariantInit(vi_OutPropVar);
+	IniciarPropVariant(&vi_OutPropVar);
 
 	//Chama o método para realizar a operação.
 	Hr = PonteiroTrabalho->GetAllLanguages(vi_OutPropVar);
@@ -484,7 +484,7 @@ CarenResult CarenMFMetadata::GetAllLanguages([Out] CA_PROPVARIANT^% Param_Out_Li
 
 Done:;
 	//Libera a propvariant
-	PropVariantClear(vi_OutPropVar);
+	DeletarPropVariant(&vi_OutPropVar);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -508,7 +508,7 @@ CarenResult CarenMFMetadata::GetAllPropertyNames([Out] CA_PROPVARIANT^% Param_Ou
 	LPPROPVARIANT vi_OutPropVar = Nulo;
 
 	//Inicializa a propvariant
-	PropVariantInit(vi_OutPropVar);
+	IniciarPropVariant(&vi_OutPropVar);
 
 	//Chama o método para realizar a operação.
 	Hr = PonteiroTrabalho->GetAllPropertyNames(vi_OutPropVar);
@@ -533,7 +533,7 @@ CarenResult CarenMFMetadata::GetAllPropertyNames([Out] CA_PROPVARIANT^% Param_Ou
 
 Done:;
 	//Libera a propvariant
-	PropVariantClear(vi_OutPropVar);
+	DeletarPropVariant(&vi_OutPropVar);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -609,7 +609,7 @@ CarenResult CarenMFMetadata::GetProperty(String^ Param_NomePropriedade, [Out] CA
 	vi_NomeProp = Util.ConverterStringToWCHAR(Param_NomePropriedade);
 
 	//Inicializa a propvariant
-	PropVariantInit(vi_OutPropVar);
+	IniciarPropVariant(&vi_OutPropVar);
 
 	//Chama o método para realizar a operação.
 	Hr = PonteiroTrabalho->GetProperty(vi_NomeProp, vi_OutPropVar);
@@ -635,7 +635,7 @@ CarenResult CarenMFMetadata::GetProperty(String^ Param_NomePropriedade, [Out] CA
 Done:;
 	//Libera os dados.
 	DeletarStringAllocatedSafe(&vi_NomeProp);
-	PropVariantClear(vi_OutPropVar);
+	DeletarPropVariant(&vi_OutPropVar);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -744,7 +744,7 @@ CarenResult CarenMFMetadata::SetProperty(String^ Param_NomePropriedade, CA_PROPV
 Done:;
 	//Libera os dados.
 	DeletarStringAllocatedSafe(&vi_NomeProp);
-	PropVariantClear(vi_PropVar);
+	DeletarPropVariant(&vi_PropVar);
 
 	//Retorna o resultado.
 	return Resultado;

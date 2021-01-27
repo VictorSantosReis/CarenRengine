@@ -81,7 +81,7 @@ CarenMFMediaEvent::CarenMFMediaEvent(CA_MediaEventType Param_TypeEvent, String^ 
 
 	//Libera a memória utilizada pela propvariant.
 	if (ObjetoValido(vi_pPropValue))
-		PropVariantClear(vi_pPropValue);
+		DeletarPropVariant(&vi_pPropValue);
 }
 
 CarenMFMediaEvent::CarenMFMediaEvent(CA_MediaEventType Param_TypeEvent, String^ Param_GuidExtendedType, int Param_HRStatus, CA_PROPVARIANT^ Param_Valor)
@@ -134,7 +134,7 @@ CarenMFMediaEvent::CarenMFMediaEvent(CA_MediaEventType Param_TypeEvent, String^ 
 
 	//Libera a memória utilizada pela propvariant.
 	if (ObjetoValido(vi_pPropValue))
-		PropVariantClear(vi_pPropValue);
+		DeletarPropVariant(&vi_pPropValue);
 }
 
 //
@@ -648,7 +648,7 @@ CarenResult CarenMFMediaEvent::GetValue([Out] Estruturas::CA_PROPVARIANT^% Param
 	LPPROPVARIANT vi_PropVar = Nulo;
 
 	//Inicia a propvariant
-	PropVariantInit(vi_PropVar);
+	IniciarPropVariant(&vi_PropVar);
 
 	//Chama o método para obter o valor
 	Hr = PonteiroTrabalho->GetValue(vi_PropVar);
@@ -673,7 +673,7 @@ CarenResult CarenMFMediaEvent::GetValue([Out] Estruturas::CA_PROPVARIANT^% Param
 
 Done:;
 	//Limpa a PropVariant
-	PropVariantClear(vi_PropVar);
+	DeletarPropVariant(&vi_PropVar);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -814,7 +814,7 @@ CarenResult CarenMFMediaEvent::CompareItem(String^ Param_GuidChave, CA_PROPVARIA
 
 Done:;
 	//Libera a memória utilizada pela PropVariant.
-	PropVariantClear(vi_PropVar);
+	DeletarPropVariant(&vi_PropVar);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1370,7 +1370,7 @@ CarenResult CarenMFMediaEvent::GetItem(String^ Param_GuidChave, [Out] CA_PROPVAR
 	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
 
 	//Inicializa a PropVariant.
-	PropVariantInit(vi_PropVar);
+	IniciarPropVariant(&vi_PropVar);
 
 	//Chama o método para obter o dado
 	Hr = PonteiroTrabalho->GetItem(GuidChave, vi_PropVar);
@@ -1395,7 +1395,7 @@ CarenResult CarenMFMediaEvent::GetItem(String^ Param_GuidChave, [Out] CA_PROPVAR
 
 Done:;
 	//Limpa a PropVariant.
-	PropVariantClear(vi_PropVar);
+	DeletarPropVariant(&vi_PropVar);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1422,7 +1422,7 @@ CarenResult CarenMFMediaEvent::GetItemByIndex(UInt32 Param_IdItem, [Out] String^
 	LPPROPVARIANT vi_PropVar = Nulo;
 	
 	//Inicializa a PropVariant.
-	PropVariantInit(vi_PropVar);
+	IniciarPropVariant(&vi_PropVar);
 
 	//Chama o método para obter o dado
 	Hr = PonteiroTrabalho->GetItemByIndex(Param_IdItem, &GuidChave, vi_PropVar);
@@ -1453,7 +1453,7 @@ CarenResult CarenMFMediaEvent::GetItemByIndex(UInt32 Param_IdItem, [Out] String^
 
 Done:;
 	//Limpa a PropVariant.
-	PropVariantClear(vi_PropVar);
+	DeletarPropVariant(&vi_PropVar);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -2114,7 +2114,7 @@ CarenResult CarenMFMediaEvent::SetItem(String^ Param_GuidChave, Estruturas::CA_P
 
 Done:;
 	//Libera a memória utilizada pela propvariant.
-	PropVariantClear(vi_PropVar);
+	DeletarPropVariant(&vi_PropVar);
 
 	//Retorna o resultado.
 	return Resultado;

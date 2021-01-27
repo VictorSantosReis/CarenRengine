@@ -69,4 +69,41 @@ Done:;
 	//Retorna
 	return Resultado;
 }
+
+void IniciarPropVariant(LPPROPVARIANT* Param_PropPointerInit)
+{
+	//Verifica se o ponteiro é válido.
+	if (!ObjetoValido(Param_PropPointerInit))
+		throw gcnew NullReferenceException("(IniciarPropVariant) - O ponteiro para a PROPVARIANT nativa fornecido era inválido!");
+
+	//Aloca memória para o objeto.
+	*Param_PropPointerInit = new PROPVARIANT();
+
+	//Preenche os bytes com 0 da propvariant.
+	memset(*Param_PropPointerInit, 0, sizeof(tagPROPVARIANT));
+}
+
+void DeletarPropVariant(LPPROPVARIANT* Param_PropPointer)
+{
+	//Verifica se o ponteiro para o ponteiro ~e valido.
+	if (!ObjetoValido(Param_PropPointer))
+		throw gcnew NullReferenceException("(DeletarPropVariant) - O ponteiro para a PROPVARIANT nativa fornecido era inválido!");
+
+	//Verifica se o ponteiro aponta para uma memória que seja válida contendo a estrutura PROPVARIANT.
+	if (!ObjetoValido(*Param_PropPointer))
+		goto Done; //O ponteiro não leva a uma memória valida.
+
+	//Chama o método para liberar os dados.
+	PropVariantClear(*Param_PropPointer);
+
+	//Deleta a memória utilizada para criar a variante.
+	delete* Param_PropPointer;
+
+	//Limpa
+	*Param_PropPointer = Nulo;
+	Param_PropPointer = Nulo;
+
+Done:;
+	//Deixa o método continuar.
+}
 #pragma endregion

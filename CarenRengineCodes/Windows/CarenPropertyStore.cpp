@@ -570,17 +570,17 @@ CarenResult CarenPropertyStore::GetValue(Estruturas::CA_PROPERTYKEY^% Param_Prop
 	Utilidades Util;
 	PropVariantManager UtilVariant = PropVariantManager();
 	PROPERTYKEY KeyProp = {};
-	PROPVARIANT PropValor;
+	LPPROPVARIANT vi_OutPropVar = Nulo;
 
 	//Define os dados na PROPERTYKEY.
 	KeyProp.pid = Param_PropKey->PID;
 	KeyProp.fmtid = String::IsNullOrEmpty(Param_PropKey->GUIDProp)? GUID_NULL: Util.CreateGuidFromString(Param_PropKey->GUIDProp);
 
 	//Inicializa a PropVariant.
-	PropVariantInit(&PropValor);
+	IniciarPropVariant(&vi_OutPropVar);
 
 	//Chama o método para obter os dados.
-	Hr = PonteiroTrabalho->GetValue(KeyProp, &PropValor);
+	Hr = PonteiroTrabalho->GetValue(KeyProp, vi_OutPropVar);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -598,11 +598,11 @@ CarenResult CarenPropertyStore::GetValue(Estruturas::CA_PROPERTYKEY^% Param_Prop
 	}
 
 	//Converte a propVariant e define no parametro de saida.
-	Param_Out_Valor = UtilVariant.ConverterPropVariantUnmanaged_ToManaged(&PropValor);
+	Param_Out_Valor = UtilVariant.ConverterPropVariantUnmanaged_ToManaged(vi_OutPropVar);
 
 Done:;
 	//Libera a PropVariant.
-	PropVariantClear(&PropValor);
+	DeletarPropVariant(&vi_OutPropVar);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -666,7 +666,7 @@ CarenResult CarenPropertyStore::DefinirValor(Estruturas::CA_PROPERTYKEY^% Param_
 
 Done:;
 	//Libera a PropVariant.
-	PropVariantClear(vi_PropValor);
+	DeletarPropVariant(&vi_PropValor);
 
 	//Retorna o resultado.
 	return Resultado;

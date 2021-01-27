@@ -51,6 +51,18 @@ using namespace CarenRengine::SDKBase::Estruturas;
 CarenResult DefinirPonteiroInterface(IUnknown* Param_NativePointer, ICaren^ Param_Destino, bool Param_ReleasePointerOnErro = true);
 
 /// <summary>
+/// Função responsável por iniciar corretamente uma estrutura PROPVARIANT.
+/// </summary>
+/// <param name="Param_PropPointerInit">Um ponteiro que leva a um endereço onde será criado um objeto PROPVARIANT.</param>
+void IniciarPropVariant(LPPROPVARIANT* Param_PropPointerInit);
+
+/// <summary>
+/// Função responsável por deletar completamente os dados e a memória alocada para um objeto PROPVARIANT.
+/// </summary>
+/// <param name="Param_PropPointerInit">Um ponteiro que leva a um endereço onde está um objeto alocado PROPVARIANT.</param>
+void DeletarPropVariant(LPPROPVARIANT* Param_PropPointerInit);
+
+/// <summary>
 /// Função resposável por recuperar o ponteiro nativo de uma interface baseada em ICaren.
 /// </summary>
 /// <typeparam name="NativePointerOut">O tipo da interface nativa de saida.</typeparam>

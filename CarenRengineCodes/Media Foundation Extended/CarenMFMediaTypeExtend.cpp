@@ -812,7 +812,7 @@ CarenResult CarenMFMediaTypeExtend::CompareItem(String^ Param_GuidChave, CA_PROP
 
 Done:;
 	//Libera a memória utilizada pela PropVariant.
-	PropVariantClear(vi_PropVar);
+	DeletarPropVariant(&vi_PropVar);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1374,7 +1374,7 @@ CarenResult CarenMFMediaTypeExtend::GetItem(String^ Param_GuidChave, [Out] CA_PR
 	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
 
 	//Inicializa a PropVariant.
-	PropVariantInit(vi_PropVar);
+	IniciarPropVariant(&vi_PropVar);
 
 	//Chama o método para obter o dado
 	Hr = PonteiroTrabalho->GetItem(GuidChave, vi_PropVar);
@@ -1399,7 +1399,7 @@ CarenResult CarenMFMediaTypeExtend::GetItem(String^ Param_GuidChave, [Out] CA_PR
 
 Done:;
 	//Limpa a PropVariant.
-	PropVariantClear(vi_PropVar);
+	DeletarPropVariant(&vi_PropVar);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1426,7 +1426,7 @@ CarenResult CarenMFMediaTypeExtend::GetItemByIndex(UInt32 Param_IdItem, [Out] St
 	LPPROPVARIANT vi_PropVar = Nulo;
 	
 	//Inicializa a PropVariant.
-	PropVariantInit(vi_PropVar);
+	IniciarPropVariant(&vi_PropVar);
 
 	//Chama o método para obter o dado
 	Hr = PonteiroTrabalho->GetItemByIndex(Param_IdItem, &GuidChave, vi_PropVar);
@@ -1457,7 +1457,7 @@ CarenResult CarenMFMediaTypeExtend::GetItemByIndex(UInt32 Param_IdItem, [Out] St
 
 Done:;
 	//Limpa a PropVariant.
-	PropVariantClear(vi_PropVar);
+	DeletarPropVariant(&vi_PropVar);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -2118,7 +2118,7 @@ CarenResult CarenMFMediaTypeExtend::SetItem(String^ Param_GuidChave, Estruturas:
 
 Done:;
 	//Libera a memória utilizada pela propvariant.
-	PropVariantClear(vi_PropVar);
+	DeletarPropVariant(&vi_PropVar);
 
 	//Retorna o resultado.
 	return Resultado;

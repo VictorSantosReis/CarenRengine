@@ -676,7 +676,7 @@ CarenResult CarenMFStreamDescriptor::CompareItem(String^ Param_GuidChave, CA_PRO
 
 Done:;
 	//Libera a memória utilizada pela PropVariant.
-	PropVariantClear(vi_PropVar);
+	DeletarPropVariant(&vi_PropVar);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1232,7 +1232,7 @@ CarenResult CarenMFStreamDescriptor::GetItem(String^ Param_GuidChave, [Out] CA_P
 	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
 
 	//Inicializa a PropVariant.
-	PropVariantInit(vi_PropVar);
+	IniciarPropVariant(&vi_PropVar);
 
 	//Chama o método para obter o dado
 	Hr = PonteiroTrabalho->GetItem(GuidChave, vi_PropVar);
@@ -1257,7 +1257,7 @@ CarenResult CarenMFStreamDescriptor::GetItem(String^ Param_GuidChave, [Out] CA_P
 
 Done:;
 	//Limpa a PropVariant.
-	PropVariantClear(vi_PropVar);
+	DeletarPropVariant(&vi_PropVar);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1284,7 +1284,7 @@ CarenResult CarenMFStreamDescriptor::GetItemByIndex(UInt32 Param_IdItem, [Out] S
 	LPPROPVARIANT vi_PropVar = Nulo;
 	
 	//Inicializa a PropVariant.
-	PropVariantInit(vi_PropVar);
+	IniciarPropVariant(&vi_PropVar);
 
 	//Chama o método para obter o dado
 	Hr = PonteiroTrabalho->GetItemByIndex(Param_IdItem, &GuidChave, vi_PropVar);
@@ -1315,7 +1315,7 @@ CarenResult CarenMFStreamDescriptor::GetItemByIndex(UInt32 Param_IdItem, [Out] S
 
 Done:;
 	//Limpa a PropVariant.
-	PropVariantClear(vi_PropVar);
+	DeletarPropVariant(&vi_PropVar);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1976,7 +1976,7 @@ CarenResult CarenMFStreamDescriptor::SetItem(String^ Param_GuidChave, Estruturas
 
 Done:;
 	//Libera a memória utilizada pela propvariant.
-	PropVariantClear(vi_PropVar);
+	DeletarPropVariant(&vi_PropVar);
 
 	//Retorna o resultado.
 	return Resultado;

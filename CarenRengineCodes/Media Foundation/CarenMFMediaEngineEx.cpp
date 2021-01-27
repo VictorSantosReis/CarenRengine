@@ -764,7 +764,7 @@ String^ Param_GuidMFAtributos,
 	vi_GuidAtributo = Util.CreateGuidFromString(Param_GuidMFAtributos);
 
 	//Inicializa a propvariant.
-	PropVariantInit(vi_PropVar);
+	IniciarPropVariant(&vi_PropVar);
 
 	//Chama o método para realizar a operação.
 	Hr = PonteiroTrabalho->GetPresentationAttribute(vi_GuidAtributo, vi_PropVar);
@@ -789,7 +789,7 @@ String^ Param_GuidMFAtributos,
 
 Done:;
 	//Libera a PROPVARIANT.
-	PropVariantClear(vi_PropVar);
+	DeletarPropVariant(&vi_PropVar);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -897,7 +897,7 @@ CA_MF_MEDIA_ENGINE_STATISTIC Param_TipoEstatistica,
 	LPPROPVARIANT vi_PropVar = Nulo;
 
 	//Inicializa a propvariant.
-	PropVariantInit(vi_PropVar);
+	IniciarPropVariant(&vi_PropVar);
 
 	//Chama o método para realizar a operação.
 	Hr = PonteiroTrabalho->GetStatistics(static_cast<MF_MEDIA_ENGINE_STATISTIC>(Param_TipoEstatistica), vi_PropVar);
@@ -922,7 +922,7 @@ CA_MF_MEDIA_ENGINE_STATISTIC Param_TipoEstatistica,
 
 Done:;
 	//Libera a propvariant.
-	PropVariantClear(vi_PropVar);
+	DeletarPropVariant(&vi_PropVar);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1031,16 +1031,16 @@ String^ Param_GuidMfAtributo,
 	Utilidades Util;
 	PropVariantManager UtilVariant = PropVariantManager();
 	GUID vi_GuidAtributo = GUID_NULL;
-	PROPVARIANT vi_OutValorAtributo = {};
+	LPPROPVARIANT vi_OutValorAtributo = Nulo;
 
 	//Converte a string para o guid.
 	vi_GuidAtributo = Util.CreateGuidFromString(Param_GuidMfAtributo);
 
 	//Inicializa a propvariant.
-	PropVariantInit(&vi_OutValorAtributo);
+	IniciarPropVariant(&vi_OutValorAtributo);
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetStreamAttribute(static_cast<DWORD>(Param_IdFluxo), vi_GuidAtributo, &vi_OutValorAtributo);
+	Hr = PonteiroTrabalho->GetStreamAttribute(static_cast<DWORD>(Param_IdFluxo), vi_GuidAtributo, vi_OutValorAtributo);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -1058,11 +1058,11 @@ String^ Param_GuidMfAtributo,
 	}
 
 	//Converte a propvariant e define no parametro de saida.
-	Param_Out_ValorAtributo = UtilVariant.ConverterPropVariantUnmanaged_ToManaged(&vi_OutValorAtributo);
+	Param_Out_ValorAtributo = UtilVariant.ConverterPropVariantUnmanaged_ToManaged(vi_OutValorAtributo);
 
 Done:;
 	//Libera a propvariant.
-	PropVariantClear(&vi_OutValorAtributo);
+	DeletarPropVariant(&vi_OutValorAtributo);
 
 	//Retorna o resultado.
 	return Resultado;

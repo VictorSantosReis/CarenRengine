@@ -572,16 +572,16 @@ String^ Param_Nome,
 	Utilidades Util;
 	PropVariantManager UtilVariant = PropVariantManager();
 	PWSTR pNome = NULL;
-	PROPVARIANT OutPropVar = {};
+	LPPROPVARIANT vi_OutPropVar = Nulo;
 
 	//Converte a string.
 	pNome = Util.ConverterStringToWCHAR(Param_Nome);
 
 	//Inicializa a propvariant
-	PropVariantInit(&OutPropVar);
+	IniciarPropVariant(&vi_OutPropVar);
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetMetadataByName(pNome, &OutPropVar);
+	Hr = PonteiroTrabalho->GetMetadataByName(pNome, vi_OutPropVar);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -599,11 +599,11 @@ String^ Param_Nome,
 	}
 
 	//Converte a estrutura nativa para a gerenciada.
-	Param_Out_Valor = UtilVariant.ConverterPropVariantUnmanaged_ToManaged(&OutPropVar);
+	Param_Out_Valor = UtilVariant.ConverterPropVariantUnmanaged_ToManaged(vi_OutPropVar);
 
 Done:;
 	//Libera a propvariant
-	PropVariantClear(&OutPropVar);
+	DeletarPropVariant(&vi_OutPropVar);
 
 	//Libera a memória utilizada pela string
 	DeletarStringAllocatedSafe(&pNome);

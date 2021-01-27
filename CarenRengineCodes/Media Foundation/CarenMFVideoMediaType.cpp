@@ -712,7 +712,7 @@ CarenResult CarenMFVideoMediaType::CompareItem(String^ Param_GuidChave, CA_PROPV
 
 Done:;
 	//Libera a memória utilizada pela PropVariant.
-	PropVariantClear(vi_PropVar);
+	DeletarPropVariant(&vi_PropVar);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1268,7 +1268,7 @@ CarenResult CarenMFVideoMediaType::GetItem(String^ Param_GuidChave, [Out] CA_PRO
 	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
 
 	//Inicializa a PropVariant.
-	PropVariantInit(vi_PropVar);
+	IniciarPropVariant(&vi_PropVar);
 
 	//Chama o método para obter o dado
 	Hr = PonteiroTrabalho->GetItem(GuidChave, vi_PropVar);
@@ -1293,7 +1293,7 @@ CarenResult CarenMFVideoMediaType::GetItem(String^ Param_GuidChave, [Out] CA_PRO
 
 Done:;
 	//Limpa a PropVariant.
-	PropVariantClear(vi_PropVar);
+	DeletarPropVariant(&vi_PropVar);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1320,7 +1320,7 @@ CarenResult CarenMFVideoMediaType::GetItemByIndex(UInt32 Param_IdItem, [Out] Str
 	LPPROPVARIANT vi_PropVar = Nulo;
 	
 	//Inicializa a PropVariant.
-	PropVariantInit(vi_PropVar);
+	IniciarPropVariant(&vi_PropVar);
 
 	//Chama o método para obter o dado
 	Hr = PonteiroTrabalho->GetItemByIndex(Param_IdItem, &GuidChave, vi_PropVar);
@@ -1351,7 +1351,7 @@ CarenResult CarenMFVideoMediaType::GetItemByIndex(UInt32 Param_IdItem, [Out] Str
 
 Done:;
 	//Limpa a PropVariant.
-	PropVariantClear(vi_PropVar);
+	DeletarPropVariant(&vi_PropVar);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -2010,7 +2010,7 @@ CarenResult CarenMFVideoMediaType::SetItem(String^ Param_GuidChave, Estruturas::
 
 Done:;
 	//Libera a memória utilizada pela propvariant.
-	PropVariantClear(vi_PropVar);
+	DeletarPropVariant(&vi_PropVar);
 
 	//Retorna o resultado.
 	return Resultado;

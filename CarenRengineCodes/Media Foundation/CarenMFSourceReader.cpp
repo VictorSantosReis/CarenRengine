@@ -674,7 +674,7 @@ CarenResult CarenMFSourceReader::GetPresentationAttribute(UInt32 Param_IdFluxo, 
 	Utilidades Util;
 	PropVariantManager UtilVariant = PropVariantManager();
 	GUID GuidChave = GUID_NULL;
-	PROPVARIANT vi_OutPropVar = {};
+	LPPROPVARIANT vi_OutPropVar = Nulo;
 
 	//Chama o método para obter o guid.
 	GuidChave = Util.CreateGuidFromString(Param_GuidAtributo);
@@ -690,10 +690,10 @@ CarenResult CarenMFSourceReader::GetPresentationAttribute(UInt32 Param_IdFluxo, 
 	}
 
 	//Inicializa a PropVariant.
-	PropVariantInit(&vi_OutPropVar);
+	IniciarPropVariant(&vi_OutPropVar);
 
 	//Chama o método para obter o dados do atributo.
-	Hr = PonteiroTrabalho->GetPresentationAttribute(Param_IdFluxo, GuidChave, &vi_OutPropVar);
+	Hr = PonteiroTrabalho->GetPresentationAttribute(Param_IdFluxo, GuidChave, vi_OutPropVar);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -711,14 +711,14 @@ CarenResult CarenMFSourceReader::GetPresentationAttribute(UInt32 Param_IdFluxo, 
 	}
 
 	//Converte a estrutura nativa para gerenciada e define na estrutura de saida.
-	Param_Out_ValorAtributo = UtilVariant.ConverterPropVariantUnmanaged_ToManaged(&vi_OutPropVar);
+	Param_Out_ValorAtributo = UtilVariant.ConverterPropVariantUnmanaged_ToManaged(vi_OutPropVar);
 
 	//Define sucesso na operação
 	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
 
 Done:;
 	//Limpa a PropVariant.
-	PropVariantClear(&vi_OutPropVar);
+	DeletarPropVariant(&vi_OutPropVar);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1001,22 +1001,21 @@ CarenResult CarenMFSourceReader::SetCurrentPosition(Int64 Param_PosiçãoNanoSeg
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas pelo método
-	PROPVARIANT PropVarPosition;
+	LPPROPVARIANT vi_PropVarPosition = Nulo;
 
-	//Chama o método para criar a propVariant.
-	InitPropVariantFromInt64(Param_PosiçãoNanoSegundos, &PropVarPosition);
+	//Inicia a PropVariant.
+	IniciarPropVariant(&vi_PropVarPosition);
 
-	/*
-	//Define o tipo da PropVariant
-	PropVarPosition.vt = VT_I8;
+	//Define o tipo da variante
+	vi_PropVarPosition->vt = VT_I8;
 
-	//Define a posição em nanosegundos -> Long Long
-	PropVarPosition.hVal.QuadPart = Param_PosiçãoNanoSegundos;
-	*/
+	//Define os dados.
+	vi_PropVarPosition->hVal = { 0 };
+	vi_PropVarPosition->hVal.QuadPart = Param_PosiçãoNanoSegundos;
 
 	//Chama o método que vai definir a posição de leitura.
 	//GUID_NULL -> Informa que o formato do tempo é baseado em unidades de 100 nanosegundos.
-	Hr = PonteiroTrabalho->SetCurrentPosition(GUID_NULL, PropVarPosition);
+	Hr = PonteiroTrabalho->SetCurrentPosition(GUID_NULL, const_cast<PROPVARIANT&>(*vi_PropVarPosition));
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -1035,7 +1034,7 @@ CarenResult CarenMFSourceReader::SetCurrentPosition(Int64 Param_PosiçãoNanoSeg
 
 Done:;
 	//Limpa a PropVariant
-	PropVariantClear(&PropVarPosition);
+	DeletarPropVariant(&vi_PropVarPosition);
 
 	//Retorna o resultado
 	return Resultado;

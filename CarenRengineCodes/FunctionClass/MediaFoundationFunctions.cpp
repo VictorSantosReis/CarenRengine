@@ -832,7 +832,7 @@ CarenResult MediaFoundationFunctions::_MFGetSupportedMimeTypes(OutParam CA_PROPV
 	LPPROPVARIANT vi_PropVar = Nulo;
 
 	//Inicializa a propvariant.
-	PropVariantInit(vi_PropVar);
+	IniciarPropVariant(&vi_PropVar);
 
 	//Chama o método para realizar a operação.
 	Hr = MFGetSupportedMimeTypes(vi_PropVar);
@@ -855,7 +855,7 @@ CarenResult MediaFoundationFunctions::_MFGetSupportedMimeTypes(OutParam CA_PROPV
 Done:;
 	//Libera a memória utilizada pela propvariant.
 	if (ObjetoValido(vi_PropVar))
-		PropVariantClear(vi_PropVar);
+		DeletarPropVariant(&vi_PropVar);
 
 	//Retorna o resultado
 	return Resultado;
@@ -874,7 +874,7 @@ CarenResult MediaFoundationFunctions::_MFGetSupportedSchemes(OutParam CA_PROPVAR
 	LPPROPVARIANT vi_PropVar = Nulo;
 
 	//Inicializa a propvariant.
-	PropVariantInit(vi_PropVar);
+	IniciarPropVariant(&vi_PropVar);
 
 	//Chama o método para realizar a operação.
 	Hr = MFGetSupportedSchemes(vi_PropVar);
@@ -897,7 +897,7 @@ CarenResult MediaFoundationFunctions::_MFGetSupportedSchemes(OutParam CA_PROPVAR
 Done:;
 	//Libera a memória utilizada pela propvariant.
 	if (ObjetoValido(vi_PropVar))
-		PropVariantClear(vi_PropVar);
+		DeletarPropVariant(&vi_PropVar);
 
 	//Retorna o resultado
 	return Resultado;

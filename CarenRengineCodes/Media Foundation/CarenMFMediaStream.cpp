@@ -801,7 +801,7 @@ CarenResult CarenMFMediaStream::InserirEventoFila(Enumeracoes::CA_MediaEventType
 
 Done:;
 	//Libera a PropVariant
-	PropVariantClear(vi_PropVar);
+	DeletarPropVariant(&vi_PropVar);
 
 	//Retorna o resultado da operação.
 	return Resultado;

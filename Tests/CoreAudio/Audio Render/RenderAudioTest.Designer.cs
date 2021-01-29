@@ -32,8 +32,8 @@ namespace CoreAudio_RenderAudioTest
             this.Btn_PlayMusic = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.Txb_UrlMusic = new System.Windows.Forms.TextBox();
-            this.TackVolumeMusic = new System.Windows.Forms.TrackBar();
-            ((System.ComponentModel.ISupportInitialize)(this.TackVolumeMusic)).BeginInit();
+            this.TrackVolumeMusic = new System.Windows.Forms.TrackBar();
+            ((System.ComponentModel.ISupportInitialize)(this.TrackVolumeMusic)).BeginInit();
             this.SuspendLayout();
             // 
             // Btn_PlayMusic
@@ -65,12 +65,14 @@ namespace CoreAudio_RenderAudioTest
             this.Txb_UrlMusic.TabIndex = 2;
             this.Txb_UrlMusic.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // TackVolumeMusic
+            // TrackVolumeMusic
             // 
-            this.TackVolumeMusic.Location = new System.Drawing.Point(12, 61);
-            this.TackVolumeMusic.Name = "TackVolumeMusic";
-            this.TackVolumeMusic.Size = new System.Drawing.Size(340, 45);
-            this.TackVolumeMusic.TabIndex = 3;
+            this.TrackVolumeMusic.Location = new System.Drawing.Point(12, 61);
+            this.TrackVolumeMusic.Name = "TrackVolumeMusic";
+            this.TrackVolumeMusic.Size = new System.Drawing.Size(340, 45);
+            this.TrackVolumeMusic.TabIndex = 3;
+            this.TrackVolumeMusic.Value = 3;
+            this.TrackVolumeMusic.ValueChanged += new System.EventHandler(this.TrackVolumeMusic_ValueChanged);
             // 
             // RenderAudioTest
             // 
@@ -78,13 +80,13 @@ namespace CoreAudio_RenderAudioTest
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(445, 113);
-            this.Controls.Add(this.TackVolumeMusic);
+            this.Controls.Add(this.TrackVolumeMusic);
             this.Controls.Add(this.Txb_UrlMusic);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.Btn_PlayMusic);
             this.Name = "RenderAudioTest";
             this.Text = "Url do arquivo:";
-            ((System.ComponentModel.ISupportInitialize)(this.TackVolumeMusic)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TrackVolumeMusic)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -95,7 +97,7 @@ namespace CoreAudio_RenderAudioTest
         private System.Windows.Forms.Button Btn_PlayMusic;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox Txb_UrlMusic;
-        private System.Windows.Forms.TrackBar TackVolumeMusic;
+        private System.Windows.Forms.TrackBar TrackVolumeMusic;
     }
 }
 

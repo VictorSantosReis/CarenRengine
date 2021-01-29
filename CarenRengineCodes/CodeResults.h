@@ -5645,7 +5645,7 @@ namespace CarenRengine
 					OutStatus = ResultCode::ER_MF_E_DURATION_TOO_LONG;
 					break;
 
-				case MF_E_OPERATION_UNSUPPORTED_AT_D3D_FEATURE_LEVEL:
+				case _HRESULT_TYPEDEF_(0xc00d3708): //MF_E_OPERATION_UNSUPPORTED_AT_D3D_FEATURE_LEVEL
 					//Define o status geral do método como ERRO.
 					Resultado = false;
 
@@ -5653,7 +5653,7 @@ namespace CarenRengine
 					OutStatus = ResultCode::ER_MF_E_OPERATION_UNSUPPORTED_AT_D3D_FEATURE_LEVEL;
 					break;
 
-				case MF_E_UNSUPPORTED_MEDIATYPE_AT_D3D_FEATURE_LEVEL:
+				case _HRESULT_TYPEDEF_(0xc00d3709): //MF_E_UNSUPPORTED_MEDIATYPE_AT_D3D_FEATURE_LEVEL
 					//Define o status geral do método como ERRO.
 					Resultado = false;
 
@@ -6623,7 +6623,7 @@ namespace CarenRengine
 					OutStatus = ResultCode::ER_MF_E_AUDIO_SERVICE_NOT_RUNNING;
 					break;
 
-				case MF_E_AUDIO_BUFFER_SIZE_ERROR:
+				case _HRESULT_TYPEDEF_(0xc00d4e88): //MF_E_AUDIO_BUFFER_SIZE_ERROR
 					//Define o status geral do método como ERRO.
 					Resultado = false;
 
@@ -6631,7 +6631,7 @@ namespace CarenRengine
 					OutStatus = ResultCode::ER_MF_E_AUDIO_BUFFER_SIZE_ERROR;
 					break;
 
-				case MF_E_AUDIO_CLIENT_WRAPPER_SPOOF_ERROR:
+				case _HRESULT_TYPEDEF_(0xc00d4e89): //MF_E_AUDIO_CLIENT_WRAPPER_SPOOF_ERROR
 					//Define o status geral do método como ERRO.
 					Resultado = false;
 
@@ -7521,7 +7521,7 @@ namespace CarenRengine
 					OutStatus = ResultCode::ER_MF_S_CLOCK_STOPPED;
 					break;
 
-				case MF_E_CLOCK_AUDIO_DEVICE_POSITION_UNEXPECTED:
+				case _HRESULT_TYPEDEF_(0x000d9c45): //MF_E_CLOCK_AUDIO_DEVICE_POSITION_UNEXPECTED
 					//Define o status geral do método como ERRO.
 					Resultado = false;
 
@@ -7529,7 +7529,7 @@ namespace CarenRengine
 					OutStatus = ResultCode::ER_MF_E_CLOCK_AUDIO_DEVICE_POSITION_UNEXPECTED;
 					break;
 
-				case MF_E_CLOCK_AUDIO_RENDER_POSITION_UNEXPECTED:
+				case _HRESULT_TYPEDEF_(0x000d9c46): //MF_E_CLOCK_AUDIO_RENDER_POSITION_UNEXPECTED
 					//Define o status geral do método como ERRO.
 					Resultado = false;
 
@@ -7537,7 +7537,7 @@ namespace CarenRengine
 					OutStatus = ResultCode::ER_MF_E_CLOCK_AUDIO_RENDER_POSITION_UNEXPECTED;
 					break;
 
-				case MF_E_CLOCK_AUDIO_RENDER_TIME_UNEXPECTED:
+				case _HRESULT_TYPEDEF_(0x000d9c47): //MF_E_CLOCK_AUDIO_RENDER_TIME_UNEXPECTED
 					//Define o status geral do método como ERRO.
 					Resultado = false;
 
@@ -9305,11 +9305,11 @@ namespace CarenRengine
 					break;
 				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_OPERATION_UNSUPPORTED_AT_D3D_FEATURE_LEVEL:
 					//Define o código HRESULT referente ao ResultCode informado.
-					Resultado = MF_E_OPERATION_UNSUPPORTED_AT_D3D_FEATURE_LEVEL;
+					Resultado = _HRESULT_TYPEDEF_(0xc00d3708);
 					break;
 				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_UNSUPPORTED_MEDIATYPE_AT_D3D_FEATURE_LEVEL:
 					//Define o código HRESULT referente ao ResultCode informado.
-					Resultado = MF_E_UNSUPPORTED_MEDIATYPE_AT_D3D_FEATURE_LEVEL;
+					Resultado = _HRESULT_TYPEDEF_(0xc00d3709);
 					break;
 				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_ASF_PARSINGINCOMPLETE:
 					//Define o código HRESULT referente ao ResultCode informado.
@@ -9725,11 +9725,11 @@ namespace CarenRengine
 					break;
 				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_AUDIO_BUFFER_SIZE_ERROR:
 					//Define o código HRESULT referente ao ResultCode informado.
-					Resultado = MF_E_AUDIO_BUFFER_SIZE_ERROR;
+					Resultado = _HRESULT_TYPEDEF_(0xc00d4e88);
 					break;
 				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_AUDIO_CLIENT_WRAPPER_SPOOF_ERROR:
 					//Define o código HRESULT referente ao ResultCode informado.
-					Resultado = MF_E_AUDIO_CLIENT_WRAPPER_SPOOF_ERROR;
+					Resultado = _HRESULT_TYPEDEF_(0xc00d4e89);
 					break;
 				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TOPO_INVALID_OPTIONAL_NODE:
 					//Define o código HRESULT referente ao ResultCode informado.
@@ -10101,15 +10101,15 @@ namespace CarenRengine
 					break;
 				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_CLOCK_AUDIO_DEVICE_POSITION_UNEXPECTED:
 					//Define o código HRESULT referente ao ResultCode informado.
-					Resultado = MF_E_CLOCK_AUDIO_DEVICE_POSITION_UNEXPECTED;
+					Resultado = _HRESULT_TYPEDEF_(0x000d9c45);
 					break;
 				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_CLOCK_AUDIO_RENDER_POSITION_UNEXPECTED:
 					//Define o código HRESULT referente ao ResultCode informado.
-					Resultado = MF_E_CLOCK_AUDIO_RENDER_POSITION_UNEXPECTED;
+					Resultado = _HRESULT_TYPEDEF_(0x000d9c46);
 					break;
 				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_CLOCK_AUDIO_RENDER_TIME_UNEXPECTED:
 					//Define o código HRESULT referente ao ResultCode informado.
-					Resultado = MF_E_CLOCK_AUDIO_RENDER_TIME_UNEXPECTED;
+					Resultado = _HRESULT_TYPEDEF_(0x000d9c47);
 					break;
 				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NO_MORE_DROP_MODES:
 					//Define o código HRESULT referente ao ResultCode informado.

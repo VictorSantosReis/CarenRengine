@@ -71,7 +71,7 @@ namespace CoreAudio_RenderAudioTest
             this.TrackVolumeMusic.Name = "TrackVolumeMusic";
             this.TrackVolumeMusic.Size = new System.Drawing.Size(340, 45);
             this.TrackVolumeMusic.TabIndex = 3;
-            this.TrackVolumeMusic.Value = 3;
+            this.TrackVolumeMusic.Value = 5;
             this.TrackVolumeMusic.ValueChanged += new System.EventHandler(this.TrackVolumeMusic_ValueChanged);
             // 
             // RenderAudioTest

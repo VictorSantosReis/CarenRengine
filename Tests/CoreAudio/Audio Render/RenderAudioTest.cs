@@ -85,6 +85,8 @@ namespace CoreAudio_RenderAudioTest
             Paused,
 
             Stoped,
+
+            EndOfStream,
             
             nostarted
         }
@@ -132,6 +134,9 @@ namespace CoreAudio_RenderAudioTest
             MyRenderAudioTest.AtributosLeitor = new CarenMFAttributes(1);
             MyRenderAudioTest.EnumeradorAudioDevices = new CarenMMDeviceEnumerator(CA_CLSCTX.CLSCTX_INPROC_SERVER);
             MyRenderAudioTest.GuidAudioSession = Guid.NewGuid();
+
+            //Define o status do processo de audio.
+            StatusProcessAudio = EnumStatusRenderAudio.nostarted;
 
             //Inicia a plataforma da Media Foundation
             MyRenderAudioTest.MFTFuncs._MFStartup();
@@ -376,24 +381,7 @@ namespace CoreAudio_RenderAudioTest
                 //Sai do método
                 goto Done;
             }
-
-            //Define o volume de reprodução
-            Resultado = MyRenderAudioTest.AudioVolumeControl.SetMasterVolume((float)(TrackVolumeMusic.Value / TrackVolumeMusic.Maximum), null);
-
-            //Verifica se não houve erro
-            if (Resultado.StatusCode != ResultCode.SS_OK)
-            {
-                //A operação falhou.
-
-                //Mostra uma mensagem de erro.
-                ShowMensagem(
-                    "Ocorreu uma falha ao definir o volume de audio default. Mensagem de erro -> "
-                    + Resultado.ObterMensagem((int)Resultado.HResult), true);
-
-                //Sai do método
-                goto Done;
-            }
-
+            
             //Define sucesso na operação
             Resultado.AdicionarCodigo(ResultCode.SS_OK, true);
 
@@ -501,6 +489,14 @@ namespace CoreAudio_RenderAudioTest
                 //Abre um laço que vai ficar requisitando as amostras ao leitor.
                 while (ProcessandoAmostras)
                 {
+                    //Verifica se foi informado para parar o laço.
+                    if (StatusProcessAudio == EnumStatusRenderAudio.Stoped)
+                        break; //Sai do laço.
+
+                    //Verifica se o fluxo não chegou ao fim
+                    if (StatusProcessAudio == EnumStatusRenderAudio.EndOfStream)
+                        break; //O fluxo chegou ao fim.
+
                     //Verifica a quantidade de amostras atuais.
                     //Se o valor for igual ou maior que o maximo não ira requisitar amostras.
                     if (ListBuffer.Count >= SIZE_LIST_BUFFER)
@@ -535,7 +531,8 @@ namespace CoreAudio_RenderAudioTest
                     //Abre um laço para agurdar o fim do processamento para requisitar a proxima.
                     while (StatusRequisicaoAmostra)
                     {
-
+                        //Faz um delay minimo.
+                        await Task.Delay(1);
                     }
 
                     //Chama um continue para pular o Sleep já que o buffer não está completo.
@@ -557,7 +554,7 @@ namespace CoreAudio_RenderAudioTest
         private void IniciarRenderizadorAudio()
         {
             //Cria a task responsável pela renderização dos dados.
-            TaskRenderData = new Task(() =>
+            TaskRenderData = new Task(async() =>
             {
                 //Define que está processando os dados de audio.
                 RenderizandoAmostras = true;
@@ -572,6 +569,10 @@ namespace CoreAudio_RenderAudioTest
                 //Abre o laço que vai ser responsável por está renderizando.
                 while (RenderizandoAmostras)
                 {
+                    //Verifica se foi informado para parar o laço.
+                    if (StatusProcessAudio == EnumStatusRenderAudio.Stoped)
+                        break; //Sai do laço.
+
                     //Verifica se o status informa que deve renderizar.
                     if (StatusProcessAudio != EnumStatusRenderAudio.Rendering)
                         goto Done; //Pula para o fim do laço.
@@ -579,9 +580,24 @@ namespace CoreAudio_RenderAudioTest
                     //Obtém a quantidade de buffers.
                     CountBuffers = GetCountItensInBuffer();
 
-                    //Verifica se existe algum buffer
-                    if (CountBuffers == 0)
-                        goto Done; //Pula para o fim do laço.                   
+                    //Verifica a quantidade de buffers e se o fluxo já nao alcançou ao fim.
+                    if (CountBuffers == 0 && StatusProcessAudio == EnumStatusRenderAudio.EndOfStream)
+                    {
+                        //Define fim da reprodução.
+                        StatusProcessAudio = EnumStatusRenderAudio.Stoped;
+
+                        //Faz um Sleep para o relogio parar.
+                        MyRenderAudioTest.WinFuncs.SleepNativo(1000);
+
+                        //Chama o método para liberar todos as interfaces
+                        ReleaseAllInterfaces();
+
+                        //Mostra uma mensagem.
+                        ShowMensagem("O fluxo chegou ao fim!");
+
+                        //Sai do laço.
+                        break;
+                    }
 
                     //Aguarda o evento de novo buffer. O valor (2500) é o tempo que o método aguarda o evento ser notificado até retornar
                     //um TimeOut, não defina esse valor muito baixo, caso contrario, o laço vai repetir novamente de forma desnecessaria.
@@ -595,11 +611,16 @@ namespace CoreAudio_RenderAudioTest
                         //Obtém o proximo buffer a ser renderizado.
                         BufferRender = GetNextBuffer();
 
+                        //Verifica se o buffer não é invalido
+                        if (BufferRender is null)
+                            goto Done; //O buffer era invalido.
+
                         //Abre um laço para verificar se tem espaço suficiente para escrever o buffer no dispositivo
                         //de renderização para reproduzir o audio.
                         while (GetFramesAvailable() < BufferRender.FramesCount)
                         {
                             //Aguarda o dispositivo reproduzir dados para escrever os novos dados no buffer.
+                            await Task.Delay(1);
                         }
 
                         //Recupera o buffer onde será escrito os dados.
@@ -666,6 +687,9 @@ namespace CoreAudio_RenderAudioTest
                     }
 
                 Done:;
+
+                    //Faz um delay minimo.
+                    await Task.Delay(3);
                 }
 
                 //Define que não está mais renderizando as amostras.
@@ -718,7 +742,7 @@ namespace CoreAudio_RenderAudioTest
                 MyRenderAudioTest.WinFuncs.CA_QueryPerformanceCounter(out TickInicialRelogio);
 
                 //Abre o laço responsável pelas notificações.
-                while (StatusProcessAudio != EnumStatusRenderAudio.Stoped)
+                while (true)
                 {
                     //Obtém o Tick Atual.
                     MyRenderAudioTest.WinFuncs.CA_QueryPerformanceCounter(out OutTicksAtuais);
@@ -777,10 +801,12 @@ namespace CoreAudio_RenderAudioTest
 
                     }
 
-                Sair:;
-
                     //Realiza um Sleep.
                     MyRenderAudioTest.WinFuncs.SleepNativo(5);
+
+                    //Verifica se finalizou
+                    if (StatusProcessAudio == EnumStatusRenderAudio.Stoped)
+                        break;
                 }
             });
 
@@ -803,6 +829,21 @@ namespace CoreAudio_RenderAudioTest
 
             //Inicia o relogio de notificação.
             TaskClockRenderNotify.Start();
+
+            //Define o volume de reprodução
+            Resultado = MyRenderAudioTest.AudioVolumeControl.SetMasterVolume(0.5f, null);
+
+            //Verifica se não houve erro
+            if (Resultado.StatusCode != ResultCode.SS_OK)
+            {
+                //A operação falhou.
+
+                //Mostra uma mensagem de erro.
+                ShowMensagem(
+                    "Ocorreu uma falha ao definir o volume de audio default. Mensagem de erro -> "
+                    + Resultado.ObterMensagem((int)Resultado.HResult), true);
+
+            }
 
             //Define que deve iniciar o processamento.
             StatusProcessAudio = EnumStatusRenderAudio.Rendering;
@@ -982,11 +1023,11 @@ namespace CoreAudio_RenderAudioTest
                 }
                 else if (Param_FlagsLeituraAmostra == CA_MF_SOURCE_READER_FLAG.MF_SOURCE_READERF_ENDOFSTREAM)
                 {
+                    //Define que o fluxo chegou ao fim
+                    StatusProcessAudio = EnumStatusRenderAudio.EndOfStream;
+
                     //O final do fluxo foi atingido
                     ShowMensagem("O fim do fluxo foi alcançado!");
-
-                    //Define que o fluxo chegou ao fim
-                    StatusProcessAudio = EnumStatusRenderAudio.Stoped;
 
                     //Finaliza a operação.
                     goto Done;
@@ -1053,7 +1094,57 @@ namespace CoreAudio_RenderAudioTest
         {
             try
             {
+                //Abre um While para liberar todas as amostras pendentes.
+                while (true)
+                {
+                    //Verifica se a lista contém amostras ainda pendente.
+                    if (ListBuffer is not null && ListBuffer.Count > 0)
+                    {
+                        //Obtém o buffer a ser removido.
+                        MyBufferAudioData TempBuffer = ListBuffer.ElementAt(0);
 
+                        //Remove o buffer.
+                        RemoveBufferAndRelease(ref TempBuffer);
+                    }
+                    else
+                    {
+                        //Sai do laço.
+                        break;
+                    }
+                }
+
+                //Libera os media types e atributos.
+                SafeReleaseInterface(MyRenderAudioTest.AtributosLeitor);
+                SafeReleaseInterface(MyRenderAudioTest.AudioTypeSupportedRenderComplete);
+                SafeReleaseInterface(MyRenderAudioTest.AudioTypeSupportedRenderPartial);
+
+                //Libera o Callback e o leitor de amostras.
+                MyRenderAudioTest.CallbackReadSamples?.UnRegisterCallback();
+                SafeReleaseInterface(MyRenderAudioTest.CallbackReadSamples);
+                SafeReleaseInterface(MyRenderAudioTest.LeitorAmostras);
+
+                //Libera as APIs da core audio.
+                SafeReleaseInterface(MyRenderAudioTest.AudioRenderShared);
+                SafeReleaseInterface(MyRenderAudioTest.AudioVolumeControl);
+                MyRenderAudioTest.AudioClientOutputConfig.Stop();
+                SafeReleaseInterface(MyRenderAudioTest.AudioClientOutputConfig);
+                SafeReleaseInterface(MyRenderAudioTest.DefaultAudioOutput);
+
+                //Desliga a plataforma da media foundation.
+                MyRenderAudioTest.MFTFuncs._MFShutdown();
+
+                //Reseta o tempo minimo de espera do sistema.
+                MyRenderAudioTest.WinFuncs.CA_TimeEndPeriod(5);
+
+                //Libera as classes.
+                MyRenderAudioTest.MFTFuncs = null;
+                MyRenderAudioTest.WinFuncs = null;
+                MyRenderAudioTest.WinEventRenderBuffer?.LiberarEvento();
+                MyRenderAudioTest.WinEventRenderBuffer = null;
+                MyRenderAudioTest.WavAudioOutputInfo = null;
+                MyRenderAudioTest.GuidAudioSession = Guid.Empty;
+                MyRenderAudioTest.BufferDeviceTemp = null;
+               
             }
             catch (Exception)
             {
@@ -1061,13 +1152,10 @@ namespace CoreAudio_RenderAudioTest
             }
             finally
             {
-
-
-                //Desliga a plataforma da media foundation.
-                MyRenderAudioTest.MFTFuncs._MFShutdown();
-
-                //Reseta o tempo minimo de espera do sistema.
-                MyRenderAudioTest.WinFuncs.CA_TimeEndPeriod(5);
+                //Chama o GC para limpar tos dados.
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                GC.Collect();
             }
         }
 
@@ -1107,6 +1195,20 @@ namespace CoreAudio_RenderAudioTest
         Done:;
             //Retorna
             return CountFrames;
+        }
+
+        public void SafeReleaseInterface(ICaren Param_Base)
+        {
+            //Verifica se a interface é valida.
+            if(Param_Base is not null)
+            {
+                //Verifica se é valido e libera o ponteiro.
+                if (Param_Base.StatusPonteiro().StatusCode == ResultCode.SS_OK)
+                    Param_Base.LiberarReferencia();
+
+                //Chama o finalizador.
+                Param_Base.Finalizar();
+            }
         }
         #endregion
 

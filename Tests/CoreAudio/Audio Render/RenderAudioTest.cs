@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -115,9 +116,13 @@ namespace CoreAudio_RenderAudioTest
 
         public Boolean RenderizandoAmostras { get; set; } = false;
 
+        public Boolean EndOfStreamMusic { get; set; } = false;
+
         public EnumStatusRenderAudio StatusProcessAudio { get; set; } = EnumStatusRenderAudio.nostarted;
 
         readonly object ObjSyncBuffer = new object();
+
+        int CountReleasedBuffers = 0;
         #endregion
 
 
@@ -479,12 +484,18 @@ namespace CoreAudio_RenderAudioTest
 
             //Define o status da requisição de amostras para false.
             StatusRequisicaoAmostra = false;
-
+            
             //Cria a task que vai ficar requisitando as amostras.
             TaskSamplesGet = new Task(async () =>
             {
                 //Define que está processando as amostras.
                 ProcessandoAmostras = true;
+
+                //Variveis de resoluçao de parametros.
+                CarenParameterResolver<uint> Resolver_OutActualStreamIndex = new(0, true);
+                CarenParameterResolver<CA_MF_SOURCE_READER_FLAG> Resolver_OutStreamFlags = new(0, true);
+                CarenParameterResolver<long> Resolver_OutTimeStamp = new(0, true);
+                CarenParameterResolver<ICarenMFSample> Resolver_OutSample = new(null, true);
 
                 //Abre um laço que vai ficar requisitando as amostras ao leitor.
                 while (ProcessandoAmostras)
@@ -509,10 +520,10 @@ namespace CoreAudio_RenderAudioTest
                     Resultado = MyRenderAudioTest.LeitorAmostras.ReadSample(
                         (uint)CA_SOURCE_READER_ID.ID_MF_SOURCE_READER_FIRST_AUDIO_STREAM,
                         CA_MF_SOURCE_READER_CONTROL_FLAG.Zero,
-                        ResolverParametro<uint>(0, true),
-                        ResolverParametro<CA_MF_SOURCE_READER_FLAG>(0, true),
-                        ResolverParametro<long>(0, true),
-                        ResolverParametro<ICarenMFSample>(null, true)
+                        Resolver_OutActualStreamIndex,
+                        Resolver_OutStreamFlags,
+                        Resolver_OutTimeStamp,
+                        Resolver_OutSample
                         );
 
                     //Verifica se não houve erro
@@ -539,8 +550,6 @@ namespace CoreAudio_RenderAudioTest
                     continue;
 
                 Done:;
-                    //Faz um Sleep para verificar a proxima amostra.
-                    await Task.Delay(5);
                 }
 
                 //Define que não está mais processando as amostras.
@@ -554,7 +563,7 @@ namespace CoreAudio_RenderAudioTest
         private void IniciarRenderizadorAudio()
         {
             //Cria a task responsável pela renderização dos dados.
-            TaskRenderData = new Task(async() =>
+            TaskRenderData = new Task(() =>
             {
                 //Define que está processando os dados de audio.
                 RenderizandoAmostras = true;
@@ -581,19 +590,22 @@ namespace CoreAudio_RenderAudioTest
                     CountBuffers = GetCountItensInBuffer();
 
                     //Verifica a quantidade de buffers e se o fluxo já nao alcançou ao fim.
-                    if (CountBuffers == 0 && StatusProcessAudio == EnumStatusRenderAudio.EndOfStream)
+                    if (CountBuffers == 0 && EndOfStreamMusic)
                     {
-                        //Define fim da reprodução.
-                        StatusProcessAudio = EnumStatusRenderAudio.Stoped;
+                        //Define fim do fluxo.
+                        StatusProcessAudio = EnumStatusRenderAudio.EndOfStream;
 
                         //Faz um Sleep para o relogio parar.
-                        MyRenderAudioTest.WinFuncs.SleepNativo(1000);
+                        MyRenderAudioTest.WinFuncs.SleepNativo(2000);
 
                         //Chama o método para liberar todos as interfaces
                         ReleaseAllInterfaces();
 
                         //Mostra uma mensagem.
                         ShowMensagem("O fluxo chegou ao fim!");
+
+                        //Define que parou.
+                        StatusProcessAudio = EnumStatusRenderAudio.Stoped;
 
                         //Sai do laço.
                         break;
@@ -614,14 +626,6 @@ namespace CoreAudio_RenderAudioTest
                         //Verifica se o buffer não é invalido
                         if (BufferRender is null)
                             goto Done; //O buffer era invalido.
-
-                        //Abre um laço para verificar se tem espaço suficiente para escrever o buffer no dispositivo
-                        //de renderização para reproduzir o audio.
-                        while (GetFramesAvailable() < BufferRender.FramesCount)
-                        {
-                            //Aguarda o dispositivo reproduzir dados para escrever os novos dados no buffer.
-                            await Task.Delay(1);
-                        }
 
                         //Recupera o buffer onde será escrito os dados.
                         Resultado = MyRenderAudioTest.AudioRenderShared.GetBuffer(BufferRender.FramesCount, FrameSize, out MyRenderAudioTest.BufferDeviceTemp);
@@ -687,9 +691,6 @@ namespace CoreAudio_RenderAudioTest
                     }
 
                 Done:;
-
-                    //Faz um delay minimo.
-                    await Task.Delay(3);
                 }
 
                 //Define que não está mais renderizando as amostras.
@@ -804,8 +805,8 @@ namespace CoreAudio_RenderAudioTest
                     //Realiza um Sleep.
                     MyRenderAudioTest.WinFuncs.SleepNativo(5);
 
-                    //Verifica se finalizou
-                    if (StatusProcessAudio == EnumStatusRenderAudio.Stoped)
+                    //Verifica se o fluxo chegou ao fim e se todos os dados foram renderizados.
+                    if (StatusProcessAudio == EnumStatusRenderAudio.EndOfStream)
                         break;
                 }
             });
@@ -927,7 +928,8 @@ namespace CoreAudio_RenderAudioTest
                 ListBuffer.Add(NewBuffer);
 
                 //Ordena o buffer pelo timestamp(Menor para Maior).
-                ListBuffer = ListBuffer.OrderBy(x => x.TimeStampRender).ToList();
+                //ListBuffer = ListBuffer.OrderBy(x => x.TimeStampRender).ToList();
+                ListBuffer.Sort((x, y) => (x.TimeStampRender > y.TimeStampRender) ? 0 : -1);
 
             Done:;
             }
@@ -991,13 +993,30 @@ namespace CoreAudio_RenderAudioTest
             lock (ObjSyncBuffer)
             {
                 //Limpa todos os dados.
-                Param_BufferRemove.MediaBuffer.Unlock();
-                Param_BufferRemove.MediaBuffer.LiberarReferencia();
-                Param_BufferRemove.AudioSample.LiberarReferencia();
+                Param_BufferRemove.MediaBuffer?.Unlock();
+                Param_BufferRemove.MediaBuffer?.LiberarReferencia();
+                Param_BufferRemove.MediaBuffer?.Finalizar();
+                Param_BufferRemove.AudioSample?.LiberarReferencia();
+                Param_BufferRemove.AudioSample?.Finalizar();
                 Param_BufferRemove.BufferNativo = null;
                 Param_BufferRemove.MediaBuffer = null;
                 Param_BufferRemove.AudioSample = null;
                 Param_BufferRemove = null;
+
+                //Incrementa a quantidade de buffers liberados.
+                CountReleasedBuffers++;
+
+                //Verifica se tem mais de 50 e chama o GC.
+                if(CountReleasedBuffers >= 50)
+                {
+                    //Chama o GC.
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
+                    GC.Collect();
+
+                    //Reseta a quantidade
+                    CountReleasedBuffers = 0;
+                }
             }
         }
         #endregion
@@ -1023,11 +1042,8 @@ namespace CoreAudio_RenderAudioTest
                 }
                 else if (Param_FlagsLeituraAmostra == CA_MF_SOURCE_READER_FLAG.MF_SOURCE_READERF_ENDOFSTREAM)
                 {
-                    //Define que o fluxo chegou ao fim
-                    StatusProcessAudio = EnumStatusRenderAudio.EndOfStream;
-
-                    //O final do fluxo foi atingido
-                    ShowMensagem("O fim do fluxo foi alcançado!");
+                    //Define que chegou ao fim do fluxo.
+                    EndOfStreamMusic = true;
 
                     //Finaliza a operação.
                     goto Done;
@@ -1144,7 +1160,9 @@ namespace CoreAudio_RenderAudioTest
                 MyRenderAudioTest.WavAudioOutputInfo = null;
                 MyRenderAudioTest.GuidAudioSession = Guid.Empty;
                 MyRenderAudioTest.BufferDeviceTemp = null;
-               
+
+                //Info.
+                Debug.WriteLine("Todos os dados e interfaces foram liberadas.");
             }
             catch (Exception)
             {
@@ -1211,8 +1229,6 @@ namespace CoreAudio_RenderAudioTest
             }
         }
         #endregion
-
-
 
 
         private void Btn_PlayMusic_Click(object sender, EventArgs e)

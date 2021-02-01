@@ -2027,8 +2027,28 @@ namespace CarenRengine
 				literal UInt32 PID_Device_FriendlyName = 14;
 
 			};
+			
+			/// <summary>
+			/// Estrutura que define os subtypes(Subformatos) de áudio cru suportados pelo sistema.
+			/// </summary>
+			public value struct GUIDs_CoreAudio_KSDATAFORMAT_SUBTYPES
+			{
+				literal String^ CA_KSDATAFORMAT_SUBTYPE_ANALOG = "{6dba3190-67bd-11cf-a0f7-0020afd156e4}";
 
+				literal String^ CA_KSDATAFORMAT_SUBTYPE_PCM = "{00000001-0000-0010-8000-00aa00389b71}";
 
+				literal String^ CA_KSDATAFORMAT_SUBTYPE_IEEE_FLOAT = "{00000003-0000-0010-8000-00aa00389b71}";
+
+				literal String^ CA_KSDATAFORMAT_SUBTYPE_DRM = "{00000009-0000-0010-8000-00aa00389b71}";
+
+				literal String^ CA_KSDATAFORMAT_SUBTYPE_ALAW = "{00000006-0000-0010-8000-00aa00389b71}";
+
+				literal String^ CA_KSDATAFORMAT_SUBTYPE_MULAW = "{00000007-0000-0010-8000-00aa00389b71}";
+
+				literal String^ CA_KSDATAFORMAT_SUBTYPE_ADPCM = "{00000002-0000-0010-8000-00aa00389b71}";
+
+				literal String^ CA_KSDATAFORMAT_SUBTYPE_MPEG = "{00000050-0000-0010-8000-00aa00389b71}";
+			};
 
 
 

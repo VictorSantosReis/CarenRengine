@@ -23320,49 +23320,55 @@ namespace CarenRengine
 			};
 
 			/// <summary>
-			/// (WAVEFORMATEX)(FALTA DOCUMENTAR) - A estrutura define o formato de dados de áudio de forma de onda. Somente as informações de formato comuns a todos os formatos de dados de forma de onda-áudio estão 
+			/// (WAVEFORMATEX) - A estrutura define o formato de dados de áudio de forma de onda. Somente as informações de formato comuns a todos os formatos de dados de forma de onda-áudio estão 
 			/// incluídas nessa estrutura. Para formatos que exigem informações adicionais, essa estrutura é incluída como o primeiro membro em outra estrutura, juntamente com as informações adicionais.
 			/// Os formatos que oferecem suporte a mais de dois canais ou tamanhos de amostra de mais de 16 bits podem ser descritos em uma estrutura CA_WAVEFORMATEXEXTENSIBLE, que inclui a estrutura CA_WAVEFORMATEX.
 			/// </summary>
 			public ref struct CA_WAVEFORMATEX
 			{
 				/// <summary>
-				/// (wFormatTag) - 
+				/// O formato do áudio. Esse essa estrutura estiver dentro de uma (CA_WAVEFORMATEXEXTENSIBLE) esse valor é igual a WAVE_FORMAT_EXTENSIBLE.
 				/// </summary>
-				UInt16 TagFormatoAudio;
+				UInt16 wFormatTag;
 
 				/// <summary>
-				/// (nChannels) - 
+				///  A quantidade de canais nos dados de áudio. Áudio Mono utiliza 1 canal, áudio estereo utiliza 2 canais.
 				/// </summary>
-				UInt16 Canais;
+				UInt16 nChannels;
 
 				/// <summary>
-				/// (nSamplesPerSec)(Taxa de Amostragem) - Quantidade de amostras por segundo.
+				/// Quantidade de amostras por segundo, taxa de amostragem(Hertz). os valores comuns para ‎‎nSamplesPerSec‎‎ são de 8,0 kHz, 11.025 kHz, 22,05 kHz e 44,1 kHz.
 				/// </summary>
-				UInt32 AmostrasPorSegundo;
+				UInt32 nSamplesPerSec;
 
 				/// <summary>
-				/// (nAvgBytesPerSec) - 
+				///  ‎Taxa média de transferência de dados necessária, em bytes por segundo, para a tag de formato. Se ‎‎o wFormatTag‎‎ estiver WAVE_FORMAT_PCM, ‎‎o nAvgBytesPerSec‎‎ deve ser igual ao produto do ‎‎nSamplesPerSec‎‎ e ‎‎nBlockAlign‎‎. 
+				/// Para formatos não PCM, este membro deve ser computado de acordo com a especificação do fabricante da tag de formato.‎
 				/// </summary>
-				UInt32 BytesPorSegundo;
+				UInt32 nAvgBytesPerSec;
 
 				/// <summary>
-				/// (nBlockAlign) - 
+				///  ‎Alinhamento de blocos, em bytes. O alinhamento do bloco é a unidade atômica mínima de dados para o tipo de formato ‎‎wFormatTag.‎‎ Se ‎‎o wFormatTag‎‎ estiver WAVE_FORMAT_PCM ou WAVE_FORMAT_EXTENSIBLE, ‎‎o nBlockAlign‎‎ deve ser 
+				/// igual ao produto de ‎‎nChannels‎‎ e ‎‎wBitsPerSample‎‎ divididos por 8 (bits por byte). Para formatos não PCM, este membro deve ser computado de acordo com a especificação do fabricante da tag de formato.‎
 				/// </summary>
-				UInt16 AlinhamentoBloco;
+				UInt16 nBlockAlign;
 
 				/// <summary>
-				/// (wBitsPerSample) - 
+				/// ‎Bits por amostra para o tipo de formato ‎‎wFormatTag.‎‎ Se ‎‎o wFormatTag‎‎ estiver WAVE_FORMAT_PCM, então ‎‎o wBitsPerSample‎‎ deve ser igual a 8 ou 16. Para formatos não-PCM, este membro deve ser definido de acordo com a especificação do 
+				/// fabricante da tag de formato. Se ‎‎o wFormatTag‎‎ é WAVE_FORMAT_EXTENSIBLE, esse valor pode ser qualquer múltiplo inteiro de 8 e representa o tamanho do recipiente, não necessariamente o tamanho da amostra; por exemplo, um tamanho 
+				/// amostral de 20 bits está em um recipiente de 24 bits. Alguns esquemas de compressão não podem definir um valor para ‎‎wBitsPerSample‎‎, para que este membro possa ser 0.‎
 				/// </summary>
-				UInt16 BitsPorAmostra;
+				UInt16 wBitsPerSample;
 
 				/// <summary>
-				/// (cbSize) - 
+				/// ‎Tamanho, em bytes, de informações de formato extra anexadas ao final da estrutura ‎‎WAVEFORMATEX.‎‎ Essas informações podem ser usadas por formatos não-PCM para armazenar atributos extras para o ‎‎wFormatTag‎‎. 
+				/// Se nenhuma informação extra for necessária pela ‎‎wFormatTag,‎‎este membro deve ser definido como 0. Para WAVE_FORMAT_PCM formatos (e apenas WAVE_FORMAT_PCM formatos), este membro é ignorado. Quando esta estrutura é incluída 
+				/// em uma estrutura ‎‎ ‎‎WAVEFORMATEXTENSIBLE,‎‎ ‎‎ esse valor deve ser de pelo menos 22.‎
 				/// </summary>
-				UInt16 Size;
+				UInt16 cbSize;
 
 				/// <summary>
-				/// Contém o tamanho da estrutura para o código gerenciado.
+				/// Contém o tamanho da estrutura atual.
 				/// </summary>
 				UINT16 TamanhoEstrutura;
 			};
@@ -23374,19 +23380,21 @@ namespace CarenRengine
 			public ref struct CA_WAVEFORMATEXEXTENSIBLE
 			{
 				/// <summary>
-				/// (Format) - 
+				/// Representa uma estrutrua CA_WAVEFORMATEX que especifica o formato básico. O membro wFormatTag deve ser WAVE_FORMAT_EXTENSIBLE. O membro do CBSize deve ter pelo menos o tamanho de 22.
 				/// </summary>
-				CA_WAVEFORMATEX^ Formato;
+				CA_WAVEFORMATEX^ Format;
 
 				/// <summary>
-				/// (wValidBitsPerSample) - 
+				/// Número de amostras(samples) de precisão no sinal. Normalmente igual a CA_WAVEFORMATEX.wBitsPerSample. No entanto, wBitsPerSample é o tamanho do contêiner e deve ser um múltiplo de 8, enquanto wValidBitsPerSample
+				/// pode ser qualquer valor que não exceda o tamanho do contêiner. Por exemplo, se o formato usa amostras de 20 bits, o wBitsPerSample deve ter pelo menos 24, mas o wValidBitsPerSample é de 20.
 				/// </summary>
-				UInt16 BitsValidosPorAmostra;
+				UInt16 wValidBitsPerSample;
 
 				/// <summary>
-				/// (wSamplesPerBlock) - 
+				/// Número de amostras contidas em um bloco comprimido de dados de áudio. Este valor é usado na estimativa de buffer. Este valor é usado com formatos comprimidos que têm um número fixo de amostras dentro de cada bloco. 
+				/// Esse valor pode ser definido como 0 se um número variável de amostras estiver contido em cada bloco de dados de áudio comprimidos. Neste caso, a estimativa de buffer e informações de posição precisam ser obtidas de outras formas.
 				/// </summary>
-				UInt16 AmostrasPorBloco;
+				UInt16 wSamplesPerBlock;
 
 				/// <summary>
 				/// (wReserved) - 
@@ -23394,18 +23402,17 @@ namespace CarenRengine
 				UInt16 Reservado;
 
 				/// <summary>
-				/// (dwChannelMask) - 
+				/// Bitmask especificando a atribuição de canais no fluxo para posições de alto-falantes.
 				/// </summary>
-				UInt32 MascaraCanal;
+				UInt32 dwChannelMask;
 
 				/// <summary>
-				/// (SubFormat) - 
+				/// O subformato dos dados, como KSDATAFORMAT_SUBTYPE_PCM da estrutura GUIDs_CoreAudio_KSDATAFORMAT_SUBTYPES. As informações de subformat são semelhantes às fornecidas pela tag no membro wFormatTag da estrutura CA_WAVEFORMATEX.
 				/// </summary>
 				String^ SubFormato;
 
 				/// <summary>
-				/// Contém o tamanho da estrutura para o código gerenciado.
-				/// Esse valor não contém o tamanho da estrutura no parametro (Formato).
+				/// Contém o tamanho da estrutura atual.
 				/// </summary>
 				UINT16 TamanhoEstrutura;
 			};

@@ -275,7 +275,7 @@ namespace CoreAudio_RenderAudioTest
             }
 
             //Define a estrutura na propriedade.
-            MyRenderAudioTest.WavAudioOutputInfo = OutSupportedData;
+            MyRenderAudioTest.WavAudioOutputInfo = ConvertWavIEEEToPCM(OutSupportedData);
 
             //Inicia a interface de tipo de mídia que vai receber os dados.
             MyRenderAudioTest.AudioTypeSupportedRenderPartial = new CarenMFMediaType(true);
@@ -1104,6 +1104,32 @@ namespace CoreAudio_RenderAudioTest
         public void ShowMensagem(String Mensagem, Boolean ErrorMsg = false)
         {
             MessageBox.Show(Mensagem, "Audio Render Test", MessageBoxButtons.OK, ErrorMsg ? MessageBoxIcon.Error : MessageBoxIcon.Information);
+        }
+
+        public CA_WAVEFORMATEXEXTENSIBLE ConvertWavIEEEToPCM(CA_WAVEFORMATEXEXTENSIBLE Param_Formato)
+        {
+            //Variavel a ser retornada.
+            CA_WAVEFORMATEXEXTENSIBLE Resultado = Param_Formato;
+
+            //Variaveis
+            string GuidFormatoPcm = "{00000001-0000-0010-8000-00aa00389b71}";
+
+            //Verifica se o formato já não é pcm
+            if (Resultado.SubFormato.ToUpper() == GuidFormatoPcm.ToUpper())
+                goto Done; //O formato já é PCM.
+
+            //Converte o formato para PCM.
+            Resultado.SubFormato = GuidFormatoPcm;
+            Resultado.BitsValidosPorAmostra = 16;
+            Resultado.Formato.Canais = 2;
+            Resultado.Formato.AmostrasPorSegundo = 44100;
+            Resultado.Formato.BitsPorAmostra = 16;
+            Resultado.Formato.BytesPorSegundo = (16 * 2 / 8) * 44100;
+            Resultado.Formato.AlinhamentoBloco = (ushort)(Resultado.Formato.Canais * Resultado.Formato.BitsPorAmostra / 8);          
+
+        Done:;
+            //Retorna o resultado
+            return Resultado;
         }
 
         public void ReleaseAllInterfaces()

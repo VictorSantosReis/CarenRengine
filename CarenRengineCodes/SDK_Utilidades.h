@@ -594,13 +594,13 @@ namespace CarenRengine
 				CA_WAVEFORMATEX^ EstruturaRetorno = gcnew CA_WAVEFORMATEX();
 
 				//Define os dados na estrutura
-				EstruturaRetorno->AlinhamentoBloco = static_cast<UInt16>(pWaveFormat->nBlockAlign);
-				EstruturaRetorno->BitsPorAmostra = static_cast<UInt16>(pWaveFormat->wBitsPerSample);
-				EstruturaRetorno->BytesPorSegundo = static_cast<UInt32>(pWaveFormat->nAvgBytesPerSec);
-				EstruturaRetorno->Canais = static_cast<UInt16>(pWaveFormat->nChannels);
-				EstruturaRetorno->AmostrasPorSegundo = static_cast<UInt32>(pWaveFormat->nSamplesPerSec);
-				EstruturaRetorno->TagFormatoAudio = static_cast<UInt16>(pWaveFormat->wFormatTag);
-				EstruturaRetorno->Size = static_cast<UInt16>(pWaveFormat->cbSize);
+				EstruturaRetorno->nBlockAlign = static_cast<UInt16>(pWaveFormat->nBlockAlign);
+				EstruturaRetorno->wBitsPerSample = static_cast<UInt16>(pWaveFormat->wBitsPerSample);
+				EstruturaRetorno->nAvgBytesPerSec = static_cast<UInt32>(pWaveFormat->nAvgBytesPerSec);
+				EstruturaRetorno->nChannels = static_cast<UInt16>(pWaveFormat->nChannels);
+				EstruturaRetorno->nSamplesPerSec = static_cast<UInt32>(pWaveFormat->nSamplesPerSec);
+				EstruturaRetorno->wFormatTag = static_cast<UInt16>(pWaveFormat->wFormatTag);
+				EstruturaRetorno->cbSize = static_cast<UInt16>(pWaveFormat->cbSize);
 				EstruturaRetorno->TamanhoEstrutura = sizeof(WAVEFORMATEX);
 
 				//Retorna a estrutura.
@@ -614,13 +614,13 @@ namespace CarenRengine
 				WAVEFORMATEX* pWaveFormato = CriarEstrutura<WAVEFORMATEX>();
 
 				//Define os dados na estrutura.
-				pWaveFormato->cbSize = Param_WaveFormatex->Size;
-				pWaveFormato->nAvgBytesPerSec = Param_WaveFormatex->BytesPorSegundo;
-				pWaveFormato->nBlockAlign = Param_WaveFormatex->AlinhamentoBloco;
-				pWaveFormato->nChannels = Param_WaveFormatex->Canais;
-				pWaveFormato->nSamplesPerSec = Param_WaveFormatex->AmostrasPorSegundo;
-				pWaveFormato->wBitsPerSample = Param_WaveFormatex->BitsPorAmostra;
-				pWaveFormato->wFormatTag = Param_WaveFormatex->TagFormatoAudio;
+				pWaveFormato->cbSize = Param_WaveFormatex->cbSize;
+				pWaveFormato->nAvgBytesPerSec = Param_WaveFormatex->nAvgBytesPerSec;
+				pWaveFormato->nBlockAlign = Param_WaveFormatex->nBlockAlign;
+				pWaveFormato->nChannels = Param_WaveFormatex->nChannels;
+				pWaveFormato->nSamplesPerSec = Param_WaveFormatex->nSamplesPerSec;
+				pWaveFormato->wBitsPerSample = Param_WaveFormatex->wBitsPerSample;
+				pWaveFormato->wFormatTag = Param_WaveFormatex->wFormatTag;
 
 				//Retorna a estrutura não gerenciada
 				return pWaveFormato;
@@ -634,12 +634,12 @@ namespace CarenRengine
 				CA_WAVEFORMATEXEXTENSIBLE^ EstruturaRetorno = gcnew CA_WAVEFORMATEXEXTENSIBLE();
 
 				//Define os dados da estrutura WaveFormatex.
-				EstruturaRetorno->Formato = ConverterWaveFormatexUnmanagedToManaged(&pWaveFormatExtensible->Format);
+				EstruturaRetorno->Format = ConverterWaveFormatexUnmanagedToManaged(&pWaveFormatExtensible->Format);
 
 				//Define o restante dos dados.
-				EstruturaRetorno->MascaraCanal = static_cast<UInt32>(pWaveFormatExtensible->dwChannelMask);
-				EstruturaRetorno->BitsValidosPorAmostra = static_cast<UInt16>(pWaveFormatExtensible->Samples.wValidBitsPerSample);
-				EstruturaRetorno->AmostrasPorBloco = static_cast<UInt16>(pWaveFormatExtensible->Samples.wSamplesPerBlock);
+				EstruturaRetorno->dwChannelMask = static_cast<UInt32>(pWaveFormatExtensible->dwChannelMask);
+				EstruturaRetorno->wValidBitsPerSample = static_cast<UInt16>(pWaveFormatExtensible->Samples.wValidBitsPerSample);
+				EstruturaRetorno->wSamplesPerBlock = static_cast<UInt16>(pWaveFormatExtensible->Samples.wSamplesPerBlock);
 				EstruturaRetorno->SubFormato = ConverterGuidToString(pWaveFormatExtensible->SubFormat);
 				EstruturaRetorno->Reservado = static_cast<UInt16>(pWaveFormatExtensible->Samples.wReserved);
 				EstruturaRetorno->TamanhoEstrutura = sizeof(WAVEFORMATEXTENSIBLE);
@@ -653,13 +653,13 @@ namespace CarenRengine
 			{
 				//Estrutura que será retornada ao usuário.
 				WAVEFORMATEXTENSIBLE* pWaveFormatoEx = CriarEstrutura<WAVEFORMATEXTENSIBLE>();
-				WAVEFORMATEX* pWaveFormato = ConverterWaveFormatexManagedToUnamaged(Param_WaveFormatex->Formato);
+				WAVEFORMATEX* pWaveFormato = ConverterWaveFormatexManagedToUnamaged(Param_WaveFormatex->Format);
 
 				//Preenche os dados da estrutura principal.
-				pWaveFormatoEx->dwChannelMask = Param_WaveFormatex->MascaraCanal;
+				pWaveFormatoEx->dwChannelMask = Param_WaveFormatex->dwChannelMask;
 				pWaveFormatoEx->SubFormat = CreateGuidFromString(Param_WaveFormatex->SubFormato);
-				pWaveFormatoEx->Samples.wSamplesPerBlock = Param_WaveFormatex->AmostrasPorBloco;
-				pWaveFormatoEx->Samples.wValidBitsPerSample = Param_WaveFormatex->BitsValidosPorAmostra;
+				pWaveFormatoEx->Samples.wSamplesPerBlock = Param_WaveFormatex->wSamplesPerBlock;
+				pWaveFormatoEx->Samples.wValidBitsPerSample = Param_WaveFormatex->wValidBitsPerSample;
 				pWaveFormatoEx->Samples.wReserved = Param_WaveFormatex->Reservado;
 
 				//Preenche os dados da estrutura secundaria.

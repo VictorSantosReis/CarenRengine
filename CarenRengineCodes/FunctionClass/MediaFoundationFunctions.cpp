@@ -66,13 +66,27 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
-UInt32 MediaFoundationFunctions::_FCC(char Param_Dados)
+UInt32 MediaFoundationFunctions::_FCC(String^ Param_Dados)
 {
 	//Variavel a ser retornada.
 	DWORD vi_ValueConverted = 0;
 
+	//Variaveis
+	char vi_Values[4] = { ' ', ' ', ' ', ' ' };
+
+	//Verifica a quantidade de caracters
+	if (Param_Dados->Length > 4)
+		throw gcnew ArgumentException("O parametro (Param_Dados) deve ter no maximo 4 caracters.");
+
+	//Faz um for para converter os dados.
+	for (int i = 0; i < Param_Dados->Length; i++)
+	{
+		//Define o char da string no array de chars.
+		vi_Values[i] = static_cast<char>(Param_Dados->default[i]);
+	}
+
 	//Converte os dados.
-	vi_ValueConverted = FCC(Param_Dados);
+	vi_ValueConverted = MAKEFOURCC(vi_Values[0], vi_Values[1], vi_Values[2], vi_Values[3]);
 
 	//Retorna o valor.
 	return static_cast<UInt32>(vi_ValueConverted);

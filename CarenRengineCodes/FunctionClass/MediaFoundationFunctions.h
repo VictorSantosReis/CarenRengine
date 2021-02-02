@@ -61,7 +61,7 @@ public:
 	/// </summary>
 	/// <param name="Param_Dados">Os caracters a serem converidos. A quantidade maxima de caracters é de 4.</param>
 	/// <returns></returns>
-	UInt32 _FCC(char Param_Dados);
+	UInt32 _FCC(String^ Param_Dados);
 
 	/// <summary>
 	/// Define uma função de retorno de chamada a ser chamada em um intervalo fixo.

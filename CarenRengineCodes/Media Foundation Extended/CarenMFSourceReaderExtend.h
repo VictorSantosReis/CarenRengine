@@ -266,8 +266,8 @@ public:
 	/// Obtém o tipo de mídia atual para um fluxo.
 	/// </summary>
 	/// <param name="Param_IdFluxo">O fluxo de consulta. Você pode utilizar a enumeração (CA_SOURCE_READER_ID) para força o Leitor a obter o primeiro fluxo de áudio ou vídeo na lista.</param>
-	/// <param name="Param_Out_TipoMidia">Retorna o tipo da midia no Id especificado.</param>
-	virtual CarenResult GetCurrentMediaType(UInt32 Param_IdFluxo, [Out] ICarenMFMediaType^% Param_Out_TipoMidia);
+	/// <param name="Param_Out_TipoMidia">Retorna o tipo da midia no Id especificado. O usuário é responsável por inicializar a interface antes de chamar este método.</param>
+	virtual CarenResult GetCurrentMediaType(UInt32 Param_IdFluxo, ICarenMFMediaType^ Param_Out_TipoMidia);
 
 	/// <summary>
 	/// Obtém um formato que é suportado nativamente pelo fonte de mídia.
@@ -277,8 +277,8 @@ public:
 	/// </summary>
 	/// <param name="Param_IdFluxo">O fluxo de consulta. Você pode utilizar a enumeração (CA_SOURCE_READER_ID) para força o Leitor a obter o primeiro fluxo de áudio ou vídeo na lista.</param>
 	/// <param name="Param_IdMediaTypeIndice">O Id para o tipo de mídia na lista a ser obtida. O valor pode ser qualquer um dos seguintes. Indice baseado em 0 ou o valor: 0xffffffff que representa o tipo da mídia nativa atual. </param>
-	/// <param name="Param_Out_TipoMidia">Retorna o tipo da midia no Id especificado.</param>
-	virtual CarenResult GetNativeMediaType(UInt32 Param_IdFluxo, UInt32 Param_IdMediaTypeIndice, [Out] ICarenMFMediaType^% Param_Out_TipoMidia);
+	/// <param name="Param_Out_TipoMidia">Retorna o tipo da midia no Id especificado. O usuário é responsável por inicializar a interface antes de chamar este método.</param>
+	virtual CarenResult GetNativeMediaType(UInt32 Param_IdFluxo, UInt32 Param_IdMediaTypeIndice, ICarenMFMediaType^ Param_Out_TipoMidia);
 
 	/// <summary>
 	/// Obtém um determinado atributo da fonte de mídia atual.

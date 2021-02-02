@@ -614,8 +614,8 @@ Done:;
 /// Obtém o tipo de mídia atual para um fluxo.
 /// </summary>
 /// <param name="Param_IdFluxo">O fluxo de consulta. Você pode utilizar a enumeração (CA_SOURCE_READER_ID) para força o Leitor a obter o primeiro fluxo de áudio ou vídeo na lista.</param>
-/// <param name="Param_Out_TipoMidia">Retorna o tipo da midia no Id especificado.</param>
-CarenResult CarenMFSourceReaderExtend::GetCurrentMediaType(UInt32 Param_IdFluxo, [Out] ICarenMFMediaType^% Param_Out_TipoMidia)
+/// <param name="Param_Out_TipoMidia">Retorna o tipo da midia no Id especificado. O usuário é responsável por inicializar a interface antes de chamar este método.</param>
+CarenResult CarenMFSourceReaderExtend::GetCurrentMediaType(UInt32 Param_IdFluxo, ICarenMFMediaType^ Param_Out_TipoMidia)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -624,11 +624,10 @@ CarenResult CarenMFSourceReaderExtend::GetCurrentMediaType(UInt32 Param_IdFluxo,
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas pelo método
-	IMFMediaType* pTipoMidia = NULL;
-	ICarenMFMediaType^ MidiaTypeInterface = nullptr;
+	IMFMediaType* vi_OutpTipoMidia = NULL;
 
 	//Chama o método que vai obter o tipo da midia atual.
-	Hr = PonteiroTrabalho->GetCurrentMediaType(Param_IdFluxo, &pTipoMidia);
+	Hr = PonteiroTrabalho->GetCurrentMediaType(Param_IdFluxo, &vi_OutpTipoMidia);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -645,16 +644,11 @@ CarenResult CarenMFSourceReaderExtend::GetCurrentMediaType(UInt32 Param_IdFluxo,
 		Sair;
 	}
 
-	//Cria a interface gerenciada que vai conter o tipo da midia
-	MidiaTypeInterface = gcnew CarenMFMediaType(false);
-
-	//Chama o método que vai definir o ponteiro de trabalho na interface.
-	MidiaTypeInterface->AdicionarPonteiro(pTipoMidia);
-
-	//Define a interface a ser retornada.
-	Param_Out_TipoMidia = MidiaTypeInterface;
+	//Chama o método que vai definir o ponteiro de trabalho na interface de destino.
+	CarenSetPointerToICarenSafe(vi_OutpTipoMidia, Param_Out_TipoMidia, true);
 
 Done:;
+
 	//Retorna o resultado
 	return Resultado;
 }
@@ -667,8 +661,8 @@ Done:;
 /// </summary>
 /// <param name="Param_IdFluxo">O fluxo de consulta. Você pode utilizar a enumeração (CA_SOURCE_READER_ID) para força o Leitor a obter o primeiro fluxo de áudio ou vídeo na lista.</param>
 /// <param name="Param_IdMediaTypeIndice">O Id para o tipo de mídia na lista a ser obtida. O valor pode ser qualquer um dos seguintes. Indice baseado em 0 ou o valor: 0xffffffff que representa o tipo da mídia nativa atual. </param>
-/// <param name="Param_Out_TipoMidia">Retorna o tipo da midia no Id especificado.</param>
-CarenResult CarenMFSourceReaderExtend::GetNativeMediaType(UInt32 Param_IdFluxo, UInt32 Param_IdMediaTypeIndice, [Out] ICarenMFMediaType^% Param_Out_TipoMidia)
+/// <param name="Param_Out_TipoMidia">Retorna o tipo da midia no Id especificado. O usuário é responsável por inicializar a interface antes de chamar este método.</param>
+CarenResult CarenMFSourceReaderExtend::GetNativeMediaType(UInt32 Param_IdFluxo, UInt32 Param_IdMediaTypeIndice, ICarenMFMediaType^ Param_Out_TipoMidia)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -676,12 +670,11 @@ CarenResult CarenMFSourceReaderExtend::GetNativeMediaType(UInt32 Param_IdFluxo, 
 	//Resultado COM.
 	ResultadoCOM Hr = E_FAIL;
 
-	//Variaveis utilizadas pelo método
-	IMFMediaType* pTipoMidia = NULL;
-	ICarenMFMediaType^ MidiaTypeInterface = nullptr;
+	//Variaveis utilizadas
+	IMFMediaType* vi_OutpTipoMidia = NULL;
 
 	//Chama o método que vai obter o tipo da midia atual.
-	Hr = PonteiroTrabalho->GetNativeMediaType(Param_IdFluxo, Param_IdMediaTypeIndice, &pTipoMidia);
+	Hr = PonteiroTrabalho->GetNativeMediaType(Param_IdFluxo, Param_IdMediaTypeIndice, &vi_OutpTipoMidia);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -698,19 +691,15 @@ CarenResult CarenMFSourceReaderExtend::GetNativeMediaType(UInt32 Param_IdFluxo, 
 		Sair;
 	}
 
-	//Cria a interface gerenciada que vai conter o tipo da midia
-	MidiaTypeInterface = gcnew CarenMFMediaType(false);
-
-	//Chama o método que vai definir o ponteiro de trabalho na interface.
-	MidiaTypeInterface->AdicionarPonteiro(pTipoMidia);
-
-	//Define a interface a ser retornada.
-	Param_Out_TipoMidia = MidiaTypeInterface;
+	//Chama o método que vai definir o ponteiro de trabalho na interface de destino.
+	CarenSetPointerToICarenSafe(vi_OutpTipoMidia, Param_Out_TipoMidia, true);
 
 Done:;
+
 	//Retorna o resultado
 	return Resultado;
 }
+
 /// <summary>
 /// Obtém um determinado atributo da fonte de mídia atual.
 /// </summary>

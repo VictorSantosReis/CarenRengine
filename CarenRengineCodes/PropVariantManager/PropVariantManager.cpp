@@ -1788,7 +1788,7 @@ CA_PROPVARIANT^ PropVariantManager::ConverterPropVariantUnmanaged_ToManaged(PROP
 	{
 		//Verifica se os dados são validos
 		if (!ObjetoValido(Param_Estrutura->bstrVal))
-			Sair; //A string não é vãlida.
+			Sair; //A string não é válida.
 
 		//Define os dados na estrutura
 		vi_Resultado->bstrVal = gcnew String(vi_Resultado->bstrVal);
@@ -1800,7 +1800,7 @@ CA_PROPVARIANT^ PropVariantManager::ConverterPropVariantUnmanaged_ToManaged(PROP
 	{
 		//Verifica se os dados são validos
 		if (!ObjetoValido(Param_Estrutura->pszVal))
-			Sair; //A string não é vãlida.
+			Sair; //A string não é válida.
 
 		//Define os dados na estrutura
 		vi_Resultado->pszVal = Marshal::PtrToStringAnsi(IntPtr(Param_Estrutura->pszVal));
@@ -1812,10 +1812,10 @@ CA_PROPVARIANT^ PropVariantManager::ConverterPropVariantUnmanaged_ToManaged(PROP
 	{
 		//Verifica se os dados são validos
 		if (!ObjetoValido(Param_Estrutura->pwszVal))
-			Sair; //A string não é vãlida.
+			Sair; //A string não é válida.
 
 		//Define os dados na estrutura
-		vi_Resultado->pwszVal = Marshal::PtrToStringAnsi(IntPtr(Param_Estrutura->pwszVal));
+		vi_Resultado->pwszVal = Marshal::PtrToStringUni(IntPtr(Param_Estrutura->pwszVal));
 	}
 		break;
 

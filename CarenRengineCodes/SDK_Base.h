@@ -9905,6 +9905,80 @@ namespace CarenRengine
 			};
 
 			/// <summary>
+			/// (ORIGINAL) - Enumera constantes que são utilizadas na criação de arquivos ou fluxos com base em arquivo em disco.
+			/// </summary>
+			[FlagsAttribute]
+			public enum class CA_FILE_ATTRIBUTES
+			{
+				/// <summary>
+				/// O arquivo deve ser arquivado. Os aplicativos usam esse atributo para marcar arquivos para backup ou remoção.
+				/// </summary>
+				CA_FILE_ATTRIBUTE_ARCHIVE = FILE_ATTRIBUTE_ARCHIVE,
+				/// <summary>
+				/// O arquivo ou diretório está criptografado. Para um arquivo, isso significa que todos os dados no arquivo são criptografados. Para um diretório, isso significa que a criptografia é o padrão para arquivos e subdireções recém-criados. 
+				/// </summary>
+				CA_FILE_ATTRIBUTE_ENCRYPTED = FILE_ATTRIBUTE_ENCRYPTED,
+				/// <summary>
+				/// O arquivo está escondido. Não o inclua em uma lista de diretórios ordinário.
+				/// </summary>
+				CA_FILE_ATTRIBUTE_HIDDEN = FILE_ATTRIBUTE_HIDDEN,
+				/// <summary>
+				/// O arquivo não tem outros atributos definidos. Este atributo só é válido se usado sozinho.
+				/// </summary>
+				CA_FILE_ATTRIBUTE_NORMAL = FILE_ATTRIBUTE_NORMAL,
+				/// <summary>
+				/// Os dados de um arquivo não estão disponíveis imediatamente. Esse atributo indica que os dados do arquivo são fisicamente movidos para armazenamento off-line. Este atributo é usado pelo Remote Storage, o software hierárquico de gerenciamento de armazenamento. As aplicações não devem alterar arbitrariamente esse atributo.
+				/// </summary>
+				CA_FILE_ATTRIBUTE_OFFLINE = FILE_ATTRIBUTE_OFFLINE,
+				/// <summary>
+				/// O arquivo é lido apenas. Os aplicativos podem ler o arquivo, mas não podem gravá-lo ou excluí-lo.
+				/// </summary>
+				CA_FILE_ATTRIBUTE_READONLY = FILE_ATTRIBUTE_READONLY,
+				/// <summary>
+				/// O arquivo faz parte ou é usado exclusivamente por um sistema operacional.
+				/// </summary>
+				CA_FILE_ATTRIBUTE_SYSTEM = FILE_ATTRIBUTE_SYSTEM,
+				/// <summary>
+				/// O arquivo está sendo usado para armazenamento temporário.
+				/// </summary>
+				CA_FILE_ATTRIBUTE_TEMPORARY = FILE_ATTRIBUTE_TEMPORARY
+			};
+					
+			/// <summary>
+			/// (ORIGINAL) - Enumera constantes que são utilizadas na criação de arquivos ou fluxos com base em um arquivo em disco.
+			/// </summary>
+			[FlagsAttribute]
+			public enum class CA_FILE_FLAGS
+			{
+				/// <summary>
+				/// Esse valor é utilizado apenas para dar suporte, não faz parte da enumeração original.
+				/// </summary>
+				Zero = 0,
+
+				CA_FILE_FLAG_BACKUP_SEMANTICS = FILE_FLAG_BACKUP_SEMANTICS,
+
+				CA_FILE_FLAG_DELETE_ON_CLOSE = FILE_FLAG_DELETE_ON_CLOSE,
+
+				CA_FILE_FLAG_NO_BUFFERING = FILE_FLAG_NO_BUFFERING,
+
+				CA_FILE_FLAG_OPEN_NO_RECALL = FILE_FLAG_OPEN_NO_RECALL,
+
+				CA_FILE_FLAG_OPEN_REPARSE_POINT = FILE_FLAG_OPEN_REPARSE_POINT,
+
+				CA_FILE_FLAG_OVERLAPPED = FILE_FLAG_OVERLAPPED,
+
+				CA_FILE_FLAG_POSIX_SEMANTICS = FILE_FLAG_POSIX_SEMANTICS,
+
+				CA_FILE_FLAG_RANDOM_ACCESS = FILE_FLAG_RANDOM_ACCESS,
+
+				CA_FILE_FLAG_SESSION_AWARE = FILE_FLAG_SESSION_AWARE,
+
+				CA_FILE_FLAG_SEQUENTIAL_SCAN = FILE_FLAG_SEQUENTIAL_SCAN,
+
+				CA_FILE_FLAG_WRITE_THROUGH = FILE_FLAG_WRITE_THROUGH
+			};
+
+			/// <summary>
 			/// (MFWaveFormatExConvertFlags) - Enumera sinalizadores que especificam como converter um tipo de mídia de áudio.
 			/// </summary>
 			public enum class CA_MFWaveFormatExConvertFlags

@@ -53,6 +53,15 @@ public:
 	CarenStream();
 
 	/// <summary>
+	/// Cria e inicializa a classe com base em uma URL para um determinado arquivo, ou cria esse arquivo e abre um fluxo logo após.
+	/// </summary>
+	/// <param name="Param_UrlArquivo">Uma string para o arquivo de destino a ser aberto ou criado.</param>
+	/// <param name="Param_GrfMode">Um ou mais valores da enumeração (CA_STGMs) que são usados para especificar o modo de acesso ao arquivo e como o objeto que expõe o fluxo é criado e excluído.</param>
+	/// <param name="Param_Atributos">Um ou mais valores de sinalização que especificam atributos de arquivo no caso de um novo arquivo ser criado.</param>
+	/// <param name="Param_Create">Um valor booleano que ajuda a especificar, em conjunto com o (Param_GrfMode), como os arquivos existentes devem ser tratados ao criar o fluxo.</param>
+	CarenStream(String^ Param_UrlArquivo, CA_STGMs Param_GrfMode, CA_FILE_ATTRIBUTES Param_Atributos, Boolean Param_Create);
+
+	/// <summary>
 	/// Cria e inicializa ‎‎a classe‎‎ que envolve um fluxo byte da Microsoft Media Foundation.‎
 	/// </summary>
 	/// <param name="Param_ByteStream">‎Uma interface ‎‎ICarenMFByteStream‎‎ do fluxo byte da Media Foundation.‎</param>

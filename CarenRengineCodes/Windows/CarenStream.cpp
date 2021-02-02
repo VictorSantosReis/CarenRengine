@@ -31,6 +31,49 @@ CarenStream::CarenStream()
 	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
+CarenStream::CarenStream(String^ Param_UrlArquivo, CA_STGMs Param_GrfMode, CA_FILE_ATTRIBUTES Param_Atributos, Boolean Param_Create)
+{
+	//Variavel que vai conter o resultado COM.
+	HRESULT Hr = E_FAIL;
+
+	//Resultados de Caren.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Variaveis utilizadas.
+	Utilidades Util;
+	LPCWSTR vi_pUrlFileDest = Nulo;
+	DWORD vi_Stgms = static_cast<DWORD>(Param_GrfMode);
+	DWORD vi_Attributes = static_cast<DWORD>(Param_Atributos);
+	IStream* vi_pOutStream = Nulo;
+
+	//Verfifica se a url para o arquivo de destino a ser aberto ou criado é valida.
+	if (!StringObjetoValido(Param_UrlArquivo))
+		throw gcnew NullReferenceException("A URL para o arquivo de destino não pode ser inválida!");
+
+	//Cria a url para o arquivo de destino.
+	vi_pUrlFileDest = Util.ConverterStringToConstWCHAR(Param_UrlArquivo);
+
+	//Chama o método para criar a interface.
+	Hr = SHCreateStreamOnFileEx(
+		vi_pUrlFileDest,
+		vi_Stgms,
+		vi_Attributes,
+		Param_Create? TRUE: FALSE,
+		Nulo,
+		&vi_pOutStream
+	);
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = vi_pOutStream;
+}
+
 CarenStream::CarenStream(ICarenMFByteStream^ Param_ByteStream)
 {
 	//Variavel que vai conter o resultado COM.
@@ -141,6 +184,7 @@ CarenStream::CarenStream(MatrizBytes Param_BufferInicial, UInt64 Param_LarguraBu
 	//Libera a memória para o buffer.
 	DeletarMatrizUnidimensionalSafe(&vi_pBufferInicial);
 }
+
 CarenStream::CarenStream(const IStream* Param_FluxoNativo, UInt64 Param_LarguraBuffer)
 {
 	//Verifica se o fluxo é valido.

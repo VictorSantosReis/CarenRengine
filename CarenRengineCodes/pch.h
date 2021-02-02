@@ -213,6 +213,7 @@ limitations under the License.
 #include "Windows/CarenPersistStream.h"
 #include "Windows/CarenPropertyBag2.h"
 #include "Windows/CarenPropertyStore.h"
+#include "Windows/CarenSequentialStream.h"
 #include "Windows/CarenStream.h"
 
 #endif//PCH_H

@@ -1,0 +1,1 @@
+As bibliotecas desta pasta contém sempre a ultima compilação debug de testes realizada com sucesso.

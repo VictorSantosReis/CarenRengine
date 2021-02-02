@@ -40,7 +40,7 @@ namespace CoreAudio_RenderAudioTest
         #region Estruturas   
         public struct MyAudioInterfacesRender
         {
-            public ICarenMFSourceReader LeitorAmostras { get; set; }
+            public ICarenMFSourceReaderExtend LeitorAmostras { get; set; }
 
             public ICarenMFSourceReaderCallback CallbackReadSamples { get; set; }
 
@@ -147,13 +147,16 @@ namespace CoreAudio_RenderAudioTest
             MyRenderAudioTest.MFTFuncs._MFStartup();
 
             //Modifica o tempo minimo que o sistema fica em espera por uma chamada (Sleep).
-            MyRenderAudioTest.WinFuncs.CA_TimeBeginPeriod(5);
+            MyRenderAudioTest.WinFuncs._TimeBeginPeriod(5);
 
             //Obtém a frequencia atual do computador.
-            MyRenderAudioTest.WinFuncs.CA_QueryPerformanceFrequency(out long OutFrequency);
+            MyRenderAudioTest.WinFuncs._QueryPerformanceFrequency(out long OutFrequency);
 
-            //Obtém o dispositivo default de saida de audio do computador atual.
-            Resultado = MyRenderAudioTest.EnumeradorAudioDevices.GetDefaultAudioEndpoint(CA_EDataFlow.eRender, CA_ERole.eMultimedia, out ICarenMMDevice OutDevice);
+            //Cria a interface que vai receber o ponteiro do dispositivo default de reprodução de audio.
+            MyRenderAudioTest.DefaultAudioOutput = new CarenMMDevice();
+
+           //Obtém o dispositivo default de saida de audio do computador atual.
+           Resultado = MyRenderAudioTest.EnumeradorAudioDevices.GetDefaultAudioEndpoint(CA_EDataFlow.eRender, CA_ERole.eMultimedia, MyRenderAudioTest.DefaultAudioOutput);
 
             //Verifica se não houve erro
             if (Resultado.StatusCode != ResultCode.SS_OK)
@@ -169,8 +172,7 @@ namespace CoreAudio_RenderAudioTest
                 goto Done;
             }
 
-            //Define a interface criada na estrutura.
-            MyRenderAudioTest.DefaultAudioOutput = OutDevice;
+            //Adiciona uma referencia para liberar a interface de enumeração de dispositivos.
             MyRenderAudioTest.DefaultAudioOutput.AdicionarReferencia();
 
             //Libera o enumerador de dispositivos.
@@ -225,10 +227,10 @@ namespace CoreAudio_RenderAudioTest
                 goto Done;
             }
 
-            //Cria o leitor de amostras com a interface de atributos criada e a url para a musica.
+            //Cria o leitor de amostras estendido com a interface de atributos criada e a url para a musica.
             MyRenderAudioTest.LeitorAmostras = new CarenMFSourceReader(
                 Txb_UrlMusic.Text, 
-                MyRenderAudioTest.AtributosLeitor);
+                MyRenderAudioTest.AtributosLeitor).As<CarenMFSourceReaderExtend, ICarenMFSourceReaderExtend>(null);
 
             //Verifica se não houve erro
             if (MyRenderAudioTest.LeitorAmostras is null)
@@ -281,7 +283,7 @@ namespace CoreAudio_RenderAudioTest
             MyRenderAudioTest.AudioTypeSupportedRenderPartial = new CarenMFMediaType(true);
 
             //Converte os dados da estrutura Wav para uma interface ICarenMFMediaType.
-            Resultado = MyRenderAudioTest.MFTFuncs.CA_MFInitMediaTypeFromWaveFormatEx(
+            Resultado = MyRenderAudioTest.MFTFuncs._MFInitMediaTypeFromWaveFormatEx(
                 ref OutSupportedData,
                 OutSupportedData.TamanhoEstrutura,
                 MyRenderAudioTest.AudioTypeSupportedRenderPartial);
@@ -425,10 +427,13 @@ namespace CoreAudio_RenderAudioTest
                 goto Done;
             }
 
-            //Obtém o tipo completo definido pelo leitor de amostras.
-            Resultado = MyRenderAudioTest.LeitorAmostras.GetCurrentMediaType(
+            //Cria a interface do tipo de midia que vai receber o ponteiro para o tipo de midia atual.
+            MyRenderAudioTest.AudioTypeSupportedRenderComplete = new CarenMFMediaType(false);
+
+           //Obtém o tipo completo definido pelo leitor de amostras.
+           Resultado = MyRenderAudioTest.LeitorAmostras.GetCurrentMediaType(
                 (uint)CA_SOURCE_READER_ID.ID_MF_SOURCE_READER_FIRST_AUDIO_STREAM, //Define o ID do primeiro fluxo de audio.
-                out ICarenMFMediaType OutCompleteMediaType //Retorba i tipo completo.
+                MyRenderAudioTest.AudioTypeSupportedRenderComplete //Retorna o tipo completo.
                 );
 
             //Verifica se não houve erro
@@ -444,9 +449,6 @@ namespace CoreAudio_RenderAudioTest
                 //Sai do método
                 goto Done;
             }
-
-            //Define o tipo completo na estrutura.
-            MyRenderAudioTest.AudioTypeSupportedRenderComplete = OutCompleteMediaType;
 
             //Define o fluxo do arquivo de mídia que será processado pelo leitor.
             Resultado = MyRenderAudioTest.LeitorAmostras.SetStreamSelection((uint)CA_SOURCE_READER_ID.ID_MF_SOURCE_READER_FIRST_AUDIO_STREAM, true);
@@ -492,10 +494,10 @@ namespace CoreAudio_RenderAudioTest
                 ProcessandoAmostras = true;
 
                 //Variveis de resoluçao de parametros.
-                CarenParameterResolver<uint> Resolver_OutActualStreamIndex = new(0, true);
-                CarenParameterResolver<CA_MF_SOURCE_READER_FLAG> Resolver_OutStreamFlags = new(0, true);
-                CarenParameterResolver<long> Resolver_OutTimeStamp = new(0, true);
-                CarenParameterResolver<ICarenMFSample> Resolver_OutSample = new(null, true);
+                CarenParameterResolver<uint> Resolver_OutActualStreamIndex = new(true);
+                CarenParameterResolver<CA_MF_SOURCE_READER_FLAG> Resolver_OutStreamFlags = new(true);
+                CarenParameterResolver<long> Resolver_OutTimeStamp = new(true);
+                CarenParameterResolver<ICarenMFSample> Resolver_OutSample = new(true);
 
                 //Abre um laço que vai ficar requisitando as amostras ao leitor.
                 while (ProcessandoAmostras)
@@ -522,7 +524,7 @@ namespace CoreAudio_RenderAudioTest
                     //Define que está requisitando uma amostra.
                     StatusRequisicaoAmostra = true;
 
-                    //Chama o método para requisitar a proxima amostra de mídia disponivel.
+                    //Chama o método para requisitar a proxima amostra de mídia disponivel. Pode ser usado também o método estendido (ReadSampleAsync) da interface ICarenMFSouceReaderExtend para evitar o (CarenParameterResolver)
                     Resultado = MyRenderAudioTest.LeitorAmostras.ReadSample(
                         (uint)CA_SOURCE_READER_ID.ID_MF_SOURCE_READER_FIRST_AUDIO_STREAM,
                         CA_MF_SOURCE_READER_CONTROL_FLAG.Zero,
@@ -577,8 +579,9 @@ namespace CoreAudio_RenderAudioTest
                 //Variaveis
                 CarenResult Resultado = new CarenResult(ResultCode.ER_FAIL, false);
                 MyBufferAudioData BufferRender = null;
+                long NanoSecondsBaseInMs = (long)(Math.Pow(10, 7) / 1000); //Valor em ms.
                 int CountBuffers = 0;
-                uint FrameSize = (uint)MyRenderAudioTest.WavAudioOutputInfo.Formato.Canais * MyRenderAudioTest.WavAudioOutputInfo.Formato.BitsPorAmostra;
+                uint FrameSize = (uint)MyRenderAudioTest.WavAudioOutputInfo.Format.nChannels * MyRenderAudioTest.WavAudioOutputInfo.Format.wBitsPerSample;
                 FrameSize /= 8;
 
                 //Abre o laço que vai ser responsável por está renderizando.
@@ -684,8 +687,26 @@ namespace CoreAudio_RenderAudioTest
                             goto Done;
                         }
 
+                        //Calcula e define o tempo já renderizado de musica.
+                        Lbl_TimeMusic.Invoke(new MethodInvoker(() =>
+                        {
+                            //Variavel com os dados de tempo já renderizados.
+                            long sec, min, hour, TotalRendered = 0;
+
+                            //Calcula o total já renderizado em segundos.
+                            TotalRendered = (BufferRender.TimeStampRender / (NanoSecondsBaseInMs * 1000));
+
+                            //Calcula com base nos segundos totais.
+                            hour = (TotalRendered / 3600) % 60;
+                            min = (TotalRendered / 60) % 60;
+                            sec = (TotalRendered % 60);
+
+                            //Define os dados no lbl.
+                            Lbl_TimeMusic.Text = $"{String.Concat(hour > 9 ? hour : $"0{hour}")}:{String.Concat(min > 9 ? min : $"0{min}")}:{String.Concat(sec > 9 ? sec : $"0{sec}")}";
+                        }));
+
                         //Libera o buffer atual.
-                        RemoveBufferAndRelease(ref BufferRender);
+                        RemoveBufferAndRelease(ref BufferRender);                        
                     }
                     else if (Resultado.StatusCode == ResultCode.SS_WAIT_TIMEOUT)
                     {
@@ -746,13 +767,13 @@ namespace CoreAudio_RenderAudioTest
                 long LastTimeStampRender = -1;
 
                 //Obtém o primeiro tick
-                MyRenderAudioTest.WinFuncs.CA_QueryPerformanceCounter(out TickInicialRelogio);
+                MyRenderAudioTest.WinFuncs._QueryPerformanceCounter(out TickInicialRelogio);
 
                 //Abre o laço responsável pelas notificações.
                 while (true)
                 {
                     //Obtém o Tick Atual.
-                    MyRenderAudioTest.WinFuncs.CA_QueryPerformanceCounter(out OutTicksAtuais);
+                    MyRenderAudioTest.WinFuncs._QueryPerformanceCounter(out OutTicksAtuais);
 
                     //Calcula a quantiade de ticks desde o inicio.
                     TicksTotaisPassados = (OutTicksAtuais - TickInicialRelogio);
@@ -928,7 +949,7 @@ namespace CoreAudio_RenderAudioTest
 
                 //Define a quantidade de frames da amostra.
                 //A quantiade de frames é definida pela divisão (LarguraBuffer / (Canais * BitsPerSample / 8))
-                NewBuffer.FramesCount = (uint)(NewBuffer.SizeBufferNativo / (MyRenderAudioTest.WavAudioOutputInfo.Formato.Canais * MyRenderAudioTest.WavAudioOutputInfo.Formato.BitsPorAmostra / 8));
+                NewBuffer.FramesCount = (uint)(NewBuffer.SizeBufferNativo / (MyRenderAudioTest.WavAudioOutputInfo.Format.nChannels * MyRenderAudioTest.WavAudioOutputInfo.Format.wBitsPerSample / 8));
 
                 //Define o buffer na lista.
                 ListBuffer.Add(NewBuffer);
@@ -1156,7 +1177,7 @@ namespace CoreAudio_RenderAudioTest
                 MyRenderAudioTest.MFTFuncs._MFShutdown();
 
                 //Reseta o tempo minimo de espera do sistema.
-                MyRenderAudioTest.WinFuncs.CA_TimeEndPeriod(5);
+                MyRenderAudioTest.WinFuncs._TimeEndPeriod(5);
 
                 //Libera as classes.
                 MyRenderAudioTest.MFTFuncs = null;

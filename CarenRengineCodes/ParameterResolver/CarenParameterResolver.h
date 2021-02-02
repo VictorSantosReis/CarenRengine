@@ -47,7 +47,7 @@ namespace CarenRengine
 			/// <summary>
 			/// Inicializa a estrutura e internamente define para ignorar o parametro.
 			/// </summary>
-			/// <param name="Param_IgnoreParamter">Esse valor sempre ser· TRUE.</param>
+			/// <param name="Param_IgnoreParamter">Esse valor sempre ser√° TRUE.</param>
 			CarenParameterResolver(Boolean Param_IgnoreParamter)
 			{
 				//Define que deve ignorar o parametro

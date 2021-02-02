@@ -32,6 +32,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.Txb_UrlMusic = new System.Windows.Forms.TextBox();
             this.TrackVolumeMusic = new System.Windows.Forms.TrackBar();
+            this.Lbl_TimeMusic = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.TrackVolumeMusic)).BeginInit();
             this.SuspendLayout();
             // 
@@ -74,12 +75,22 @@
             this.TrackVolumeMusic.Value = 5;
             this.TrackVolumeMusic.ValueChanged += new System.EventHandler(this.TrackVolumeMusic_ValueChanged);
             // 
+            // Lbl_TimeMusic
+            // 
+            this.Lbl_TimeMusic.AutoSize = true;
+            this.Lbl_TimeMusic.Location = new System.Drawing.Point(384, 9);
+            this.Lbl_TimeMusic.Name = "Lbl_TimeMusic";
+            this.Lbl_TimeMusic.Size = new System.Drawing.Size(49, 15);
+            this.Lbl_TimeMusic.TabIndex = 4;
+            this.Lbl_TimeMusic.Text = "00:00:00";
+            // 
             // RenderAudioTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(445, 113);
+            this.Controls.Add(this.Lbl_TimeMusic);
             this.Controls.Add(this.TrackVolumeMusic);
             this.Controls.Add(this.Txb_UrlMusic);
             this.Controls.Add(this.label1);
@@ -98,6 +109,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox Txb_UrlMusic;
         private System.Windows.Forms.TrackBar TrackVolumeMusic;
+        private System.Windows.Forms.Label Lbl_TimeMusic;
     }
 }
 

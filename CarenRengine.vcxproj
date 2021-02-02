@@ -99,7 +99,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <OmitFramePointers />
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4996;4947</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <AdditionalDependencies />

@@ -386,4 +386,29 @@ public:
 	UInt64 Param_Offset,
 	UInt64 Param_CountBytes,
 	CA_LOCKTYPE Param_LockType);
+
+
+	//Métodos da interface(ICarenSequentialStream)
+public:
+	/// <summary>
+	/// Lê um número especificado de bytes do objeto de fluxo para a memória, começando pelo ponteiro de busca atual.
+	/// Este método lê bytes deste objeto de fluxo para a memória. O objeto de fluxo deve ser aberto no modo STGM_READ. Este método ajusta o ponteiro de busca pelo número real de bytes lidos.
+	/// </summary>
+	/// <param name="Param_Out_BufferDest">Uma interface ICarenBuffer que contém o ponteiro de destino dos dados a serem lidos. O usuário é responsável por criar esse buffer.</param>
+	/// <param name="Param_CountRead">O número de bytes de dados para ler a partir do objeto de fluxo.</param>
+	/// <param name="Param_Ref_TotalReadBytes">Na saída retorna o valor que representa a quantidade de bytes realmente lidos aparti do fluxo.
+	/// O número real de bytes lidos pode ser menor do que o número de bytes solicitados se ocorrer um erro ou se o final do fluxo for atingido durante a operação de leitura.</param>
+	/// <returns></returns>
+	virtual CarenResult Read(ICarenBuffer^ Param_Out_BufferDest, UInt64 Param_CountRead, UInt64% Param_Ref_TotalReadBytes);
+
+	/// <summary>
+	/// Grava um número especificado de bytes no objeto de fluxo começando no ponteiro de busca atual.
+	/// Write grava os dados especificados em um objeto de fluxo. O ponteiro de busca é ajustado para o número de bytes realmente escritos. O número de bytes realmente escritos é devolvido 
+	/// no parâmetro (Param_Ref_TotalWrittenBytes). Se a contagem de bytes é zero bytes, a operação de gravação não tem efeito.
+	/// </summary>
+	/// <param name="Param_BufferWrite">Uma interface ICarenBuffer que contém um ponteiro para os dados a serem escritos no buffer atual.</param>
+	/// <param name="Param_CountWrite">O número de bytes de dados para tentar escrever no fluxo. Esse valor pode ser zero.</param>
+	/// <param name="Param_Ref_TotalWrittenBytes">Na saída retorna o valor que representa a quantiade de bytes realmente escritas no fluxo. O parâmetro pode retornar um valor mesmo se ocorrer um erro.</param>
+	/// <returns></returns>
+	virtual CarenResult Write(ICarenBuffer^ Param_BufferWrite, UInt64 Param_CountWrite, UInt64% Param_Ref_TotalWrittenBytes);
 };

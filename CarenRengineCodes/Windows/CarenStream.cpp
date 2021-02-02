@@ -945,3 +945,126 @@ Done:;
 	//Retorna o resultado.
 	return Resultado;
 }
+
+
+
+
+// Métodos da interface (ICarenSequentialStream)
+
+
+/// <summary>
+/// Lê um número especificado de bytes do objeto de fluxo para a memória, começando pelo ponteiro de busca atual.
+/// Este método lê bytes deste objeto de fluxo para a memória. O objeto de fluxo deve ser aberto no modo STGM_READ. Este método ajusta o ponteiro de busca pelo número real de bytes lidos.
+/// </summary>
+/// <param name="Param_Out_BufferDest">Uma interface ICarenBuffer que contém o ponteiro de destino dos dados a serem lidos. O usuário é responsável por criar esse buffer.</param>
+/// <param name="Param_CountRead">O número de bytes de dados para ler a partir do objeto de fluxo.</param>
+/// <param name="Param_Ref_TotalReadBytes">Na saída retorna o valor que representa a quantidade de bytes realmente lidos aparti do fluxo.
+/// O número real de bytes lidos pode ser menor do que o número de bytes solicitados se ocorrer um erro ou se o final do fluxo for atingido durante a operação de leitura.</param>
+/// <returns></returns>
+CarenResult CarenStream::Read(ICarenBuffer^ Param_Out_BufferDest, UInt64 Param_CountRead, UInt64% Param_Ref_TotalReadBytes)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Resultado COM.
+	ResultadoCOM Hr = E_FAIL;
+
+	//Variaveis a serem utilizadas.
+	Utilidades Util;
+	GenPointer vi_pOutBufferDest = DefaultGenPointer;
+	ULONG vi_OutCountReaded = 0;
+
+	//Chama o método para recuperar o buffer de destino.
+	Resultado = Param_Out_BufferDest->ObterPonteiroInterno(vi_pOutBufferDest);
+
+	//Verifica se não houve erro
+	if (Resultado.StatusCode != ResultCode::SS_OK)
+		Sair; //Pula para o fim do método.
+
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->Read(
+		Util.ConverterIntPtrTo<void*>(vi_pOutBufferDest),  //Pointer Buffer.
+		static_cast<ULONG>(Param_CountRead),  //Count Read
+		&vi_OutCountReaded); //Total Readed.
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Define o código na classe.
+		Var_Glob_LAST_HRESULT = Hr;
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define a quantidade total de bytes lidos no parametro de saida.
+	Param_Ref_TotalReadBytes = static_cast<UInt64>(vi_OutCountReaded);
+
+Done:;
+	//Retorna o resultado.
+	return Resultado;
+}
+
+/// <summary>
+/// Grava um número especificado de bytes no objeto de fluxo começando no ponteiro de busca atual.
+/// Write grava os dados especificados em um objeto de fluxo. O ponteiro de busca é ajustado para o número de bytes realmente escritos. O número de bytes realmente escritos é devolvido 
+/// no parâmetro (Param_Ref_TotalWrittenBytes). Se a contagem de bytes é zero bytes, a operação de gravação não tem efeito.
+/// </summary>
+/// <param name="Param_BufferWrite">Uma interface ICarenBuffer que contém um ponteiro para os dados a serem escritos no buffer atual.</param>
+/// <param name="Param_CountWrite">O número de bytes de dados para tentar escrever no fluxo. Esse valor pode ser zero.</param>
+/// <param name="Param_Ref_TotalWrittenBytes">Na saída retorna o valor que representa a quantiade de bytes realmente escritas no fluxo. O parâmetro pode retornar um valor mesmo se ocorrer um erro.</param>
+/// <returns></returns>
+CarenResult CarenStream::Write(ICarenBuffer^ Param_BufferWrite, UInt64 Param_CountWrite, UInt64% Param_Ref_TotalWrittenBytes)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+
+	//Resultado COM.
+	ResultadoCOM Hr = E_FAIL;
+
+	//Variaveis a serem utilizadas.
+	Utilidades Util;
+	GenPointer vi_pBufferSource = DefaultGenPointer;
+	ULONG vi_OutCountWritten = 0;
+
+	//Chama o método para recuperar o buffer de origem.
+	Resultado = Param_BufferWrite->ObterPonteiroInterno(vi_pBufferSource);
+
+	//Verifica se não houve erro
+	if (Resultado.StatusCode != ResultCode::SS_OK)
+		Sair; //Pula para o fim do método.
+
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->Write(
+		const_cast<void*>(Util.ConverterIntPtrTo<void*>(vi_pBufferSource)),
+		static_cast<ULONG>(Param_CountWrite),
+		&vi_OutCountWritten
+	);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Define o código na classe.
+		Var_Glob_LAST_HRESULT = Hr;
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define a quantidade total de dados escritos no fluxo no parametro de saida.
+	Param_Ref_TotalWrittenBytes = static_cast<UInt64>(vi_OutCountWritten);
+
+Done:;
+	//Retorna o resultado.
+	return Resultado;
+}

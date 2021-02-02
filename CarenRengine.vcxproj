@@ -558,6 +558,7 @@
     <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_ID2D1CommandSink1.h" />
     <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_ID2D1CommandSink4.h" />
     <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_WicBitmapProgress.h" />
+    <ClInclude Include="CarenRengineCodes\Windows\CarenSequentialStream.h" />
     <ClInclude Include="CarenRengineCodes\Windows\CarenStream.h" />
     <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFNetResourceFilter.h" />
     <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFNetProxyLocatorFactory.h" />
@@ -991,6 +992,7 @@
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_ID2D1CommandSink1.cpp" />
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_ID2D1CommandSink4.cpp" />
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_WicBitmapProgress.cpp" />
+    <ClCompile Include="CarenRengineCodes\Windows\CarenSequentialStream.cpp" />
     <ClCompile Include="CarenRengineCodes\Windows\CarenStream.cpp" />
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFNetResourceFilter.cpp" />
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFNetProxyLocatorFactory.cpp" />

@@ -29,6 +29,44 @@ namespace CarenRengine
 	namespace Windows
 	{
 		/// <summary>
+		/// (ISequentialStream) - Interface responsável por fornecer acesso sequencial simplificado a objetos de fluxo. A interface ICarenStream herda seus métodos de Leitura e Gravação do ICarenSequentialStream.
+		/// </summary>
+		[CategoryAttribute("Windows Interface")]
+		[Guid("3A1CAD68-10A7-4DB2-8D53-A5461330E87E")]
+		public interface class ICarenSequentialStream : ICaren
+		{
+			/// <summary>
+			/// Propriedade que define se a classe foi descartada.
+			/// </summary>
+			property Boolean DisposedClasse
+			{
+				virtual Boolean get();
+			}
+
+			/// <summary>
+			/// Lê um número especificado de bytes do objeto de fluxo para a memória, começando pelo ponteiro de busca atual.
+			/// Este método lê bytes deste objeto de fluxo para a memória. O objeto de fluxo deve ser aberto no modo STGM_READ. Este método ajusta o ponteiro de busca pelo número real de bytes lidos.
+			/// </summary>
+			/// <param name="Param_Out_BufferDest">Uma interface ICarenBuffer que contém o ponteiro de destino dos dados a serem lidos. O usuário é responsável por criar esse buffer.</param>
+			/// <param name="Param_CountRead">O número de bytes de dados para ler a partir do objeto de fluxo.</param>
+			/// <param name="Param_Ref_TotalReadBytes">Na saída retorna o valor que representa a quantidade de bytes realmente lidos aparti do fluxo.
+			/// O número real de bytes lidos pode ser menor do que o número de bytes solicitados se ocorrer um erro ou se o final do fluxo for atingido durante a operação de leitura.</param>
+			/// <returns></returns>
+			CarenResult Read(ICarenBuffer^ Param_Out_BufferDest, UInt64 Param_CountRead, UInt64% Param_Ref_TotalReadBytes);
+
+			/// <summary>
+			/// Grava um número especificado de bytes no objeto de fluxo começando no ponteiro de busca atual.
+			/// Write grava os dados especificados em um objeto de fluxo. O ponteiro de busca é ajustado para o número de bytes realmente escritos. O número de bytes realmente escritos é devolvido 
+			/// no parâmetro (Param_Ref_TotalWrittenBytes). Se a contagem de bytes é zero bytes, a operação de gravação não tem efeito.
+			/// </summary>
+			/// <param name="Param_BufferWrite">Uma interface ICarenBuffer que contém um ponteiro para os dados a serem escritos no buffer atual.</param>
+			/// <param name="Param_CountWrite">O número de bytes de dados para tentar escrever no fluxo. Esse valor pode ser zero.</param>
+			/// <param name="Param_Ref_TotalWrittenBytes">Na saída retorna o valor que representa a quantiade de bytes realmente escritas no fluxo. O parâmetro pode retornar um valor mesmo se ocorrer um erro.</param>
+			/// <returns></returns>
+			CarenResult Write(ICarenBuffer^ Param_BufferWrite, UInt64 Param_CountWrite, UInt64% Param_Ref_TotalWrittenBytes);
+		};
+
+		/// <summary>
 		/// (IStream) - Interface responsável por representar um IStream que permite que você leia e escreva dados para transmitir objetos. Os objetos de fluxo contêm os dados em 
 		/// um objeto de armazenamento estruturado, onde os armazenamentos fornecem a estrutura. Dados simples podem ser escritos diretamente em um fluxo, mas, na maioria das vezes, 
 		/// os fluxos são elementos aninhados dentro de um objeto de armazenamento. Eles são semelhantes aos arquivos padrão.
@@ -37,7 +75,7 @@ namespace CarenRengine
 		/// </summary>
 		[CategoryAttribute("Windows Interface")]
 		[Guid("66BE0CDF-F0F1-4260-B64B-CBBAC152B4A4")]
-		public interface class ICarenStream : ICaren
+		public interface class ICarenStream : ICarenSequentialStream
 		{
 			/// <summary>
 			/// Propriedade que define se a classe foi descartada.

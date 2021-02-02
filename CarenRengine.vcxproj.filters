@@ -1503,6 +1503,9 @@
     <ClInclude Include="CarenRengineCodes\PropVariantManager\PropVariantManager.h">
       <Filter>Arquivos de Cabeçalho\Sistema</Filter>
     </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Windows\CarenSequentialStream.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D10Multithread.cpp">
@@ -2773,6 +2776,9 @@
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\PropVariantManager\PropVariantManager.cpp">
       <Filter>Arquivos de Origem\Sistema</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Windows\CarenSequentialStream.cpp">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

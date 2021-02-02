@@ -30,6 +30,16 @@ using System.Diagnostics;
 
 namespace CoreAudio_RenderAudioTest
 {
+
+    //ESTE PROJETO TEM COMO OBJETO MOSTRAR COMO FUNCIONA O PROCESSO DE RENDERIZAÇÃO DE AMOSTRAS DE ÁUDIO, DESDE SUA LEITURA DO ARQUIVO
+    //DE ORIGEM ATÉ SUA REPRODUÇÃO PELO DISPOSITOVO DE RENDERIZAÇÃO DE DESTINO. O PROJETO MOSTRA UM DOS CAMINHOS MAIS COMPLEXOS PARA
+    //CHEGAR ATÉ O OBJETIVO FINAL PARA PODER EXPLICAR COMO FUNCIONA O PROCESSO DE RENDERIZAÇÃO.
+    //O PROJETO UTILIZA AS SEGUINTES APIS:
+    //Microsoft Media Foundation - IMFSourceReader(ICarenMFSourceReader): UTILIZADO PARA LEITURA DAS AMOSTRAS DE ÁUDIO E DECODIFICAÇÃO PARA IEEE FLOAT.
+    //MMDevice Api - IMMDeviceEnumerator(ICarenMMDeviceEnumerator), IMMDevice(ICarenMMDevice): UTILIZADO PARA ENCONTRAR O DISPOSITIVO DE SAIDA RESPONSÁVEL POR REPRODUZIR O ÁUDIO E ATIVAR UM FLUXO PARA ESSE DISPOSITIVO.
+    //WASAPI - IAudioClient(ICarenAudioClient), IAudioRenderClient(ICarenAudioRenderClient), i - UTILIZADO PARA CONFIGURAR O DISPOSITIVO DE SAIDA E ABRIR UM FLUXO PARA ESCREVER DADOS PARA O DISPOSITIVO DE SAIDA REPRODUZIR OS DADOS.
+
+
     public partial class RenderAudioTest : Form
     {
         public RenderAudioTest()
@@ -1302,18 +1312,39 @@ namespace CoreAudio_RenderAudioTest
         }
     }
 
+    /// <summary>
+    /// Classe responsável por conter as informações de uma unica amostra lida aparti do leitor (ICarenMFSourceReader).
+    /// </summary>
     public class MyBufferAudioData
     {
+        /// <summary>
+        /// Representa o tempo atual da amostra e o time do qual essa amostra deve ser renderizada.
+        /// </summary>
         public long TimeStampRender;
 
+        /// <summary>
+        /// Representa o tamanho do buffer nativo na interface ICarenBuffer do membro (BufferNativo).
+        /// </summary>
         public uint SizeBufferNativo;
 
+        /// <summary>
+        /// Representa a quantidade de frames totais que o buffer nativo está contendo. Esse valor é determinado pelo calculo: SizeBufferNativo / (nChannels * wBitsPerSample / 8) O 8 é para converter de BIT para bytes. 1 BYTE contém 8 BITS.
+        /// </summary>
         public uint FramesCount;
 
+        /// <summary>
+        /// Representa a interface que contém a amostra de áudio a ser renderizada.
+        /// </summary>
         public ICarenMFSample AudioSample;
 
+        /// <summary>
+        /// Representa a interface que contém realmente os dados de áudio gerenciada pela ICarenMFSample.
+        /// </summary>
         public ICarenMFMediaBuffer MediaBuffer;
 
+        /// <summary>
+        /// Interface original da Biblioteca CarenRengine para gerenciar Buffers nativos.
+        /// </summary>
         public ICarenBuffer BufferNativo;
     }
 }

@@ -1,5 +1,4 @@
-﻿
-namespace CoreAudio_AudioCaptureTest
+﻿namespace CoreAudio_AudioCaptureTest
 {
     partial class AudioCaptureTest
     {

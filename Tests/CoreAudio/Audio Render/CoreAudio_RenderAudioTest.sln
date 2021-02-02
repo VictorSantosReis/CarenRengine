@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreAudio_RenderAudioTest", "CoreAudio_RenderAudioTest.csproj", "{17F9C752-1CA3-4179-89C2-9332B208239B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreAudio_AudioCaptureTest", "..\CoreAudio_AudioCaptureTest\CoreAudio_AudioCaptureTest.csproj", "{63368D3F-50CF-46D2-BF5D-70FEEEC67E91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreAudio_AudioCaptureTest", "..\AudioCapture\CoreAudio_AudioCaptureTest.csproj", "{63368D3F-50CF-46D2-BF5D-70FEEEC67E91}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

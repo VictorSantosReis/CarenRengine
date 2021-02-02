@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.IO;
 
 //Importa os namespaces base.
 using CarenRengine;
@@ -61,7 +62,7 @@ namespace CoreAudio_AudioCaptureTest
 
         private void AudioCaptureTest_Load(object sender, EventArgs e)
         {
-           
+
         }
 
         private void Btn_ListarDispositivos_Click(object sender, EventArgs e)

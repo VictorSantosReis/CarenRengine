@@ -559,6 +559,50 @@ Done:;
 	return Resultado;
 }
 
+/// <summary>
+/// Lê a próxima amostra disponivel da fonte de mídia de forma Assincrona.
+/// </summary>
+/// <param name="Param_StreamIndex">O index para o fluxo a ser extraido a amostra. Esse valor pode ser um UInt32 para um ID de fluxo valido ou um dos valores da enumeração (CA_SOURCE_READER_ID).</param>
+/// <returns></returns>
+CarenResult CarenMFSourceReaderExtend::ReadSampleAsync(UInt32 Param_StreamIndex)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM.
+	ResultadoCOM Hr = E_FAIL;
+
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->ReadSample(
+		static_cast<DWORD>(Param_StreamIndex),
+		Nulo,
+		Nulo,
+		Nulo,
+		Nulo,
+		Nulo
+		);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Define o código na classe.
+		Var_Glob_LAST_HRESULT = Hr;
+
+		//Sai do método
+		Sair;
+	}
+
+Done:;
+
+	//Retorna o resultado
+	return Resultado;
+}
+
 
 
 

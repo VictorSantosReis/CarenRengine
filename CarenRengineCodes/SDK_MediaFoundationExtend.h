@@ -78,6 +78,13 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_Out_TiposMidias">Recebe a lista, em ordem, com os tipos principais de mídia no fluxo carregado</param>
 			CarenResult ExGetAllMediaTypesStream(OutParam List<Enumeracoes::CA_MAJOR_MEDIA_TYPES>^% Param_Out_TiposMidias);
+
+			/// <summary>
+			/// Lê a próxima amostra disponivel da fonte de mídia de forma Assincrona.
+			/// </summary>
+			/// <param name="Param_StreamIndex">O index para o fluxo a ser extraido a amostra. Esse valor pode ser um UInt32 para um ID de fluxo valido ou um dos valores da enumeração (CA_SOURCE_READER_ID).</param>
+			/// <returns></returns>
+			CarenResult ReadSampleAsync(UInt32 Param_StreamIndex);
 		};
 	}
 }

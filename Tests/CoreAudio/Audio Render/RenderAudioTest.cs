@@ -96,7 +96,7 @@ namespace CoreAudio_RenderAudioTest
         #region Constantes
         const uint REFTIMES_PER_SEC = 10000000;
 
-        const int SIZE_LIST_BUFFER = 10;
+        const int SIZE_LIST_BUFFER = 6;
         #endregion
 
         #region Variaveis
@@ -275,7 +275,7 @@ namespace CoreAudio_RenderAudioTest
             }
 
             //Define a estrutura na propriedade.
-            MyRenderAudioTest.WavAudioOutputInfo = ConvertWavIEEEToPCM(OutSupportedData);
+            MyRenderAudioTest.WavAudioOutputInfo = OutSupportedData;
 
             //Inicia a interface de tipo de mídia que vai receber os dados.
             MyRenderAudioTest.AudioTypeSupportedRenderPartial = new CarenMFMediaType(true);
@@ -511,7 +511,13 @@ namespace CoreAudio_RenderAudioTest
                     //Verifica a quantidade de amostras atuais.
                     //Se o valor for igual ou maior que o maximo não ira requisitar amostras.
                     if (ListBuffer.Count >= SIZE_LIST_BUFFER)
-                        goto Done; //Pula para o fim do laço.
+                    {
+                        //Faz um Delay
+                        await Task.Delay(1);
+
+                        //Pula para o fim do laço.
+                        goto Done;
+                    }
 
                     //Define que está requisitando uma amostra.
                     StatusRequisicaoAmostra = true;
@@ -1104,32 +1110,6 @@ namespace CoreAudio_RenderAudioTest
         public void ShowMensagem(String Mensagem, Boolean ErrorMsg = false)
         {
             MessageBox.Show(Mensagem, "Audio Render Test", MessageBoxButtons.OK, ErrorMsg ? MessageBoxIcon.Error : MessageBoxIcon.Information);
-        }
-
-        public CA_WAVEFORMATEXEXTENSIBLE ConvertWavIEEEToPCM(CA_WAVEFORMATEXEXTENSIBLE Param_Formato)
-        {
-            //Variavel a ser retornada.
-            CA_WAVEFORMATEXEXTENSIBLE Resultado = Param_Formato;
-
-            //Variaveis
-            string GuidFormatoPcm = "{00000001-0000-0010-8000-00aa00389b71}";
-
-            //Verifica se o formato já não é pcm
-            if (Resultado.SubFormato.ToUpper() == GuidFormatoPcm.ToUpper())
-                goto Done; //O formato já é PCM.
-
-            //Converte o formato para PCM.
-            Resultado.SubFormato = GuidFormatoPcm;
-            Resultado.BitsValidosPorAmostra = 16;
-            Resultado.Formato.Canais = 2;
-            Resultado.Formato.AmostrasPorSegundo = 44100;
-            Resultado.Formato.BitsPorAmostra = 16;
-            Resultado.Formato.BytesPorSegundo = (16 * 2 / 8) * 44100;
-            Resultado.Formato.AlinhamentoBloco = (ushort)(Resultado.Formato.Canais * Resultado.Formato.BitsPorAmostra / 8);          
-
-        Done:;
-            //Retorna o resultado
-            return Resultado;
         }
 
         public void ReleaseAllInterfaces()

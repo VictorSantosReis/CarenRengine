@@ -62,14 +62,14 @@ public:
 	/// Recupera o valor atual do contador de desempenho, que é um carimbo de tempo de alta resolução (1us) que pode ser usado para medições de intervalo de tempo.
 	/// </summary>
 	/// <param name="Param_OutPerformanceCounter"></param>
-	Boolean CA_QueryPerformanceCounter([Out] Int64% Param_OutPerformanceCounter);
+	Boolean _QueryPerformanceCounter([Out] Int64% Param_OutPerformanceCounter);
 
 	/// <summary>
 	/// Recupera a frequência do contador de desempenho. A frequência do contador de desempenho é fixada na inicialização do sistema e é consistente em todos os processadores. 
 	/// Portanto, a frequência só precisa ser consultada após a inicialização do aplicativo, e o resultado pode ser armazenado em cache.
 	/// </summary>
 	/// <param name="Param_OutFrequency"></param>
-	Boolean CA_QueryPerformanceFrequency([Out] Int64% Param_OutFrequency);
+	Boolean _QueryPerformanceFrequency([Out] Int64% Param_OutFrequency);
 
 	/// <summary>
 	/// (timeBeginPeriod) - A função solicita uma resolução mínima para temporizadores periódicos.
@@ -78,20 +78,20 @@ public:
 	/// desde que cada chamada seja combinada com uma chamada para CA_TimeEndPeriod.
 	/// </summary>
 	/// <param name="Param_Periodo">Resolução mínima do temporizador, em milissegundos, para o motorista de aplicativo ou dispositivo. Um valor mais baixo especifica uma resolução mais alta (mais precisa).</param>
-	CarenResult CA_TimeBeginPeriod(UInt32 Param_Periodo);
+	CarenResult _TimeBeginPeriod(UInt32 Param_Periodo);
 
 	/// <summary>
 	/// (timeEndPeriod) - A função limpa uma resolução de temporizador mínimo previamente definida.
 	/// </summary>
 	/// <param name="Param_Periodo">A resolução, em milissegundos, definida na chamada para CA_TimeBeginPeriod.</param>
-	CarenResult CA_TimeEndPeriod(UInt32 Param_Periodo);
+	CarenResult _TimeEndPeriod(UInt32 Param_Periodo);
 
 	/// <summary>
 	/// (timeGetDevCaps) - A função consulta o dispositivo temporizador para determinar sua resolução.
 	/// </summary>
 	/// <param name="Param_Out_PeriodoMinimo">Recebe a resolução mínima suportada, em milissegundos.</param>
 	/// <param name="Param_Out_PeriodoMaximo">Recebe a resolução máxima suportada, em milissegundos.</param>
-	CarenResult CA_TimeGetDevCaps([Out] UInt32% Param_Out_PeriodoMinimo, [Out] UInt32% Param_Out_PeriodoMaximo);
+	CarenResult _TimeGetDevCaps([Out] UInt32% Param_Out_PeriodoMinimo, [Out] UInt32% Param_Out_PeriodoMaximo);
 
 	//CarenResult _CreateFileMappingW(); //Pendente.
 };

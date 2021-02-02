@@ -445,11 +445,11 @@ void CarenMMDeviceEnumerator::Finalizar()
 /// <param name="Param_EstadosPontoExtremidade">O estado ou Estados dos pontos de extremidade que devem ser incluídos na coleção. O chamador deve definir esse parâmetro para o bit a OR de um ou mais da
 /// enumeração.</param>
 /// <param name="Param_Out_ColeçãoDispotivios">Recebe a coleção de dispositivos solicitados. Por meio desse método, o chamador obtém uma referência contada para a interface. O chamador é responsável por 
-/// liberar a interface, quando ele não é mais necessário, chamando o método de Release da interface.</param>
+/// liberar a interface, quando ele não é mais necessário, chamando o método de Release da interface. O usuário é responsável por inicializar a interface antes de chamar este método.</param>
 CarenResult CarenMMDeviceEnumerator::EnumAudioEndpoints(
 	Enumeracoes::CA_EDataFlow Param_DireçãoFluxo,
 	Enumeracoes::CA_DEVICE_STATE_XXX Param_EstadosPontoExtremidade,
-	[Out] ICarenMMDeviceCollection^% Param_Out_ColeçãoDispotivios)
+	ICarenMMDeviceCollection^ Param_Out_ColeçãoDispotivios)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -458,11 +458,11 @@ CarenResult CarenMMDeviceEnumerator::EnumAudioEndpoints(
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	IMMDeviceCollection* pColecaoDispositivos = NULL;
+	IMMDeviceCollection* vi_OutpColecaoDispositivos = NULL;
 	EDataFlow DirecaoFluxo = static_cast<EDataFlow>(Param_DireçãoFluxo);
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->EnumAudioEndpoints(DirecaoFluxo, (DWORD)Param_EstadosPontoExtremidade, &pColecaoDispositivos);
+	Hr = PonteiroTrabalho->EnumAudioEndpoints(DirecaoFluxo, (DWORD)Param_EstadosPontoExtremidade, &vi_OutpColecaoDispositivos);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -479,11 +479,8 @@ CarenResult CarenMMDeviceEnumerator::EnumAudioEndpoints(
 		Sair;
 	}
 
-	//Cria a interface que vai ser retornada ao usuário.
-	Param_Out_ColeçãoDispotivios = gcnew CarenMMDeviceCollection();
-
-	//Chama o método que vai definir o ponteiro de trabalho
-	Param_Out_ColeçãoDispotivios->AdicionarPonteiro(pColecaoDispositivos);
+	//Chama o método que vai definir o ponteiro de trabalho na interface de destino.
+	CarenSetPointerToICarenSafe(vi_OutpColecaoDispositivos, Param_Out_ColeçãoDispotivios, true);
 
 Done:;
 	//Retorna o resultado.
@@ -495,11 +492,11 @@ Done:;
 /// </summary>
 /// <param name="Param_DireçãoFluxo">A direção de fluxo de dados para o dispositivo de ponto de extremidade.</param>
 /// <param name="Param_FunçãoDispositivo">A direção do fluxo de dados para um dispositivo de renderização é eRender. A direção do fluxo de dados para um dispositivo de captura é eCapture.</param>
-/// <param name="Param_Out_DispositivoDefault">Retorna o dispositivo de Audio padrão do sistema de acordo com sua função e direção.</param>
+/// <param name="Param_Out_DispositivoDefault">Retorna o dispositivo de Audio padrão do sistema de acordo com sua função e direção. O usuário é responsável por inicializar a interface antes de chamar este método.</param>
 CarenResult CarenMMDeviceEnumerator::GetDefaultAudioEndpoint(
 	Enumeracoes::CA_EDataFlow Param_DireçãoFluxo,
 	Enumeracoes::CA_ERole Param_FunçãoDispositivo,
-	[Out] ICarenMMDevice^% Param_Out_DispositivoDefault)
+	ICarenMMDevice^ Param_Out_DispositivoDefault)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -508,12 +505,12 @@ CarenResult CarenMMDeviceEnumerator::GetDefaultAudioEndpoint(
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	IMMDevice* pDispositivo = NULL;
+	IMMDevice* vi_OutpDispositivo = NULL;
 	EDataFlow DirecaoFluxo = static_cast<EDataFlow>(Param_DireçãoFluxo);
 	ERole FunctionDevice = static_cast<ERole>(Param_FunçãoDispositivo);
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetDefaultAudioEndpoint(DirecaoFluxo, FunctionDevice, &pDispositivo);
+	Hr = PonteiroTrabalho->GetDefaultAudioEndpoint(DirecaoFluxo, FunctionDevice, &vi_OutpDispositivo);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -530,11 +527,8 @@ CarenResult CarenMMDeviceEnumerator::GetDefaultAudioEndpoint(
 		Sair;
 	}
 
-	//Cria a interface que será retornada ao usuário
-	Param_Out_DispositivoDefault = gcnew CarenMMDevice();
-
-	//Chama o método para definir o ponteiro de trabalho.
-	Param_Out_DispositivoDefault->AdicionarPonteiro(pDispositivo);
+	//Chama o método para definir o ponteiro de trabalho na interface de destino.
+	CarenSetPointerToICarenSafe(vi_OutpDispositivo, Param_Out_DispositivoDefault, true);
 
 Done:;
 	//Retorna o resultado.
@@ -547,8 +541,8 @@ Done:;
 /// <param name="Param_IDPontoExtremidade">Ponteiro para uma seqüência de caracteres que contém o ID de ponto de extremidade. O chamador normalmente obtém essa seqüência de caracteres a partir de 
 /// ICarenMMDevice::ObterId método ou de um dos métodos na ICarenMMNotificationClient interface.</param>
 /// <param name="Param_Out_DispositivoSolicitado">Recebe um ponteiro para a interface do dispositivo solicitado. Por meio desse método, o chamador obtém uma referência contada para a interface. 
-/// O chamador é responsável por liberar a interface, quando ele não é mais necessário, chamando o método de Release da interface.</param>
-CarenResult CarenMMDeviceEnumerator::GetDevice(String^ Param_IDPontoExtremidade, [Out] ICarenMMDevice^% Param_Out_DispositivoSolicitado)
+/// O chamador é responsável por liberar a interface, quando ele não é mais necessário, chamando o método de Release da interface. O usuário é responsável por inicializar a interface antes de chamar este método.</param>
+CarenResult CarenMMDeviceEnumerator::GetDevice(String^ Param_IDPontoExtremidade, ICarenMMDevice^ Param_Out_DispositivoSolicitado)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -557,15 +551,15 @@ CarenResult CarenMMDeviceEnumerator::GetDevice(String^ Param_IDPontoExtremidade,
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	IMMDevice* pDispositivo = NULL;
-	LPCWSTR pIdEndpoint = NULL;
+	IMMDevice* vi_OutpDispositivo = NULL;
+	LPCWSTR vi_pIdEndpoint = NULL;
 	Utilidades Util;
 
 	//Converte a String para o LPCWSTR
-	pIdEndpoint = Util.ConverterStringToConstWCHAR(Param_IDPontoExtremidade);
+	vi_pIdEndpoint = Util.ConverterStringToConstWCHAR(Param_IDPontoExtremidade);
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetDevice(pIdEndpoint, &pDispositivo);
+	Hr = PonteiroTrabalho->GetDevice(vi_pIdEndpoint, &vi_OutpDispositivo);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -582,20 +576,13 @@ CarenResult CarenMMDeviceEnumerator::GetDevice(String^ Param_IDPontoExtremidade,
 		Sair;
 	}
 
-	//Cria a interface que será retornada ao usuário
-	Param_Out_DispositivoSolicitado = gcnew CarenMMDevice();
-
-	//Chama o método para definir o ponteiro de trabalho.
-	Param_Out_DispositivoSolicitado->AdicionarPonteiro(pDispositivo);
+	//Chama o método para definir o ponteiro de trabalho na interface de destino.
+	CarenSetPointerToICarenSafe(vi_OutpDispositivo, Param_Out_DispositivoSolicitado, true);
 
 Done:;
-	//Exclui os dados alocados para a string se eles forem validos.
-	if (ObjetoValido(pIdEndpoint))
-	{
-		//Deleta os dados da memoria
-		delete pIdEndpoint;
-	}
-
+	//Libera a memória utilizada pela string.
+	DeletarStringAllocatedSafe(&vi_pIdEndpoint);
+	
 	//Retorna o resultado.
 	return Resultado;
 }

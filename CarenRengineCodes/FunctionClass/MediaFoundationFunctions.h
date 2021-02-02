@@ -1059,7 +1059,7 @@ public:
 	/// <param name="Param_WavFormato">Uma estrutura wav que contém as informações do tipo de midia a ser criado.</param>
 	/// <param name="Param_SizeEstrutura">O tamanho da estrutura em bytes.</param>
 	/// <param name="Param_Out_TipoMidia">Retorna o tipo de midia convertida da estrutura Wav. O usuário é responsável por inicializar a classe antes de chamar este método.</param>
-	CarenResult CA_MFInitMediaTypeFromWaveFormatEx(
+	CarenResult _MFInitMediaTypeFromWaveFormatEx(
 		CA_WAVEFORMATEXEXTENSIBLE^% Param_WavFormato, 
 		UInt32 Param_SizeEstrutura, 
 		ICarenMFMediaType^ Param_Out_TipoMidia);

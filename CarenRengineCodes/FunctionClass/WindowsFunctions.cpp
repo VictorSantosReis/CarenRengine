@@ -74,7 +74,7 @@ void WindowsFunctions::SleepNativoChrono_Miliseconds(UInt32 Param_Sleep)
 	std::this_thread::sleep_for(std::chrono::milliseconds(Param_Sleep));
 }
 
-CarenResult WindowsFunctions::CA_TimeBeginPeriod(UInt32 Param_Periodo)
+CarenResult WindowsFunctions::_TimeBeginPeriod(UInt32 Param_Periodo)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -99,7 +99,7 @@ Done:;
 	return Resultado;
 }
 
-CarenResult WindowsFunctions::CA_TimeEndPeriod(UInt32 Param_Periodo)
+CarenResult WindowsFunctions::_TimeEndPeriod(UInt32 Param_Periodo)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -124,7 +124,7 @@ Done:;
 	return Resultado;
 }
 
-CarenResult WindowsFunctions::CA_TimeGetDevCaps([Out] UInt32% Param_Out_PeriodoMinimo, [Out] UInt32% Param_Out_PeriodoMaximo)
+CarenResult WindowsFunctions::_TimeGetDevCaps([Out] UInt32% Param_Out_PeriodoMinimo, [Out] UInt32% Param_Out_PeriodoMaximo)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -156,7 +156,7 @@ Done:;
 	return Resultado;
 }
 
-Boolean WindowsFunctions::CA_QueryPerformanceCounter([Out] Int64% Param_OutPerformanceCounter)
+Boolean WindowsFunctions::_QueryPerformanceCounter([Out] Int64% Param_OutPerformanceCounter)
 {
 	//Variavel que vai definir o resultado.
 	BOOLEAN Resultado = FALSE;
@@ -178,7 +178,7 @@ Boolean WindowsFunctions::CA_QueryPerformanceCounter([Out] Int64% Param_OutPerfo
 	return Resultado;
 }
 
-Boolean WindowsFunctions::CA_QueryPerformanceFrequency([Out] Int64% Param_OutFrequency)
+Boolean WindowsFunctions::_QueryPerformanceFrequency([Out] Int64% Param_OutFrequency)
 {
 	//Variavel que vai definir o resultado.
 	BOOLEAN Resultado = FALSE;

@@ -44,6 +44,15 @@ namespace CarenRengine
 				var_Objeto = Param_Objeto;
 				var_IgnoreParamter = Param_IgnoreParameter;
 			}
+			/// <summary>
+			/// Inicializa a estrutura e internamente define para ignorar o parametro.
+			/// </summary>
+			/// <param name="Param_IgnoreParamter">Esse valor sempre será TRUE.</param>
+			CarenParameterResolver(Boolean Param_IgnoreParamter)
+			{
+				//Define que deve ignorar o parametro
+				var_IgnoreParamter = true;
+			}
 
 			//Propriedades
 		public:

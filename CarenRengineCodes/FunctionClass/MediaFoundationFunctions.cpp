@@ -66,6 +66,17 @@ Done:;
 	//Retorna o resultado
 	return Resultado;
 }
+UInt32 MediaFoundationFunctions::_FCC(char Param_Dados)
+{
+	//Variavel a ser retornada.
+	DWORD vi_ValueConverted = 0;
+
+	//Converte os dados.
+	vi_ValueConverted = FCC(Param_Dados);
+
+	//Retorna o valor.
+	return static_cast<UInt32>(vi_ValueConverted);
+}
 CarenResult MediaFoundationFunctions::_MFAddPeriodicCallback(IntPtr Param_Callback, ICaren^ Param_Context, OutParam UInt32% Param_Out_Key)
 {
 	//Variavel a ser retornada.

@@ -55,6 +55,15 @@ public:
 	CarenResult _MFShutdown();
 
 	/// <summary>
+	/// Cria um FOURCC a parti dos caracters informado.
+	/// FOURCC é abreviação de "código de quatro caracteres" - um identificador para um codec de vídeo, formato de compressão, formato de cor ou pixel usado em arquivos de mídia.
+	/// Esse método é muito utilizado pela Media Foundation e parar escrever cabeçalhos para arquivos de mídia.
+	/// </summary>
+	/// <param name="Param_Dados">Os caracters a serem converidos. A quantidade maxima de caracters é de 4.</param>
+	/// <returns></returns>
+	UInt32 _FCC(char Param_Dados);
+
+	/// <summary>
 	/// Define uma função de retorno de chamada a ser chamada em um intervalo fixo.
 	/// </summary>
 	/// <param name="Param_Callback">A função que será chamada periodicamente. A função deve ser do tipo: MFPERIODICCALLBACK.</param>

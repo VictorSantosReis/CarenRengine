@@ -1,5 +1,4 @@
-﻿
-namespace CoreAudio_RenderAudioTest
+﻿namespace CoreAudio_RenderAudioTest
 {
     partial class RenderAudioTest
     {

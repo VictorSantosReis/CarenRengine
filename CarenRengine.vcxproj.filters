@@ -1506,6 +1506,9 @@
     <ClInclude Include="CarenRengineCodes\Windows\CarenSequentialStream.h">
       <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
     </ClInclude>
+    <ClInclude Include="CarenRengineCodes\version.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D10Multithread.cpp">

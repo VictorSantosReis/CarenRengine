@@ -112,6 +112,12 @@
     <PostBuildEvent>
       <Message>Copiando Binarios -&gt; Tests\Binarios</Message>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>powershell.exe -ExecutionPolicy Bypass -NoProfile -NonInteractive -File UpdateVersion.ps1 "$(MSBuildProjectDirectory)\CarenRengineCodes\version.h"</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Incrementando Versão Projeto</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -469,6 +475,7 @@
     <ClInclude Include="CarenRengineCodes\Core Audio\CarenMMDeviceEnumerator.h" />
     <ClInclude Include="CarenRengineCodes\Core Audio\CarenMMNotificationClient.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFGetService.h" />
+    <ClInclude Include="CarenRengineCodes\version.h" />
     <ClInclude Include="CarenRengineCodes\WIC\CarenWICBitmap.h" />
     <ClInclude Include="CarenRengineCodes\WIC\CarenWICBitmapClipper.h" />
     <ClInclude Include="CarenRengineCodes\WIC\CarenWICBitmapCodecInfo.h" />

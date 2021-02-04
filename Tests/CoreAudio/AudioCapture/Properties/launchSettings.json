@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CoreAudio_AudioCaptureTest": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

@@ -655,6 +655,8 @@ Done:;
 	return Resultado;
 }
 
+
+
 /// <summary>
 /// Escreve dados no buffer atual a parti de um Buffer de origem.
 /// </summary>
@@ -662,7 +664,7 @@ Done:;
 /// <param name="Param_Start">O deslocamento de bytes baseado em zero em (Param_BufferOrigem) do qual será iniciada a cópia de bytes no Buffer.</param>
 /// <param name="Param_Tamanho">A quantidade de dados, em bytes, que será escrita.</param>
 /// <returns></returns>
-CarenResult CarenBuffer::EscreverDados(ICarenBuffer^ Param_BufferOrigem, UInt32 Param_Start, UInt32 Param_Tamanho)
+CarenResult CarenBuffer::Write(ICarenBuffer^ Param_BufferOrigem, UInt32 Param_Start, UInt32 Param_Tamanho)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -723,7 +725,7 @@ Done:;
 /// <param name="Param_Start">O deslocamento de bytes baseado em zero em (Param_BufferOrigem) do qual será iniciada a cópia de bytes no Buffer.</param>
 /// <param name="Param_Tamanho">O tamanho dos dados, em bytes, que seram escritos.</param>
 /// <returns></returns>
-CarenResult CarenBuffer::EscreverDados(MatrizBytes Param_BufferOrigem, UInt32 Param_Start, UInt32 Param_Tamanho)
+CarenResult CarenBuffer::Write(MatrizBytes Param_BufferOrigem, UInt32 Param_Start, UInt32 Param_Tamanho)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -790,7 +792,7 @@ Done:;
 /// <param name="Param_Start">O deslocamento de bytes baseado em zero em (Param_BufferOrigem) do qual será iniciada a cópia de bytes no Buffer.</param>
 /// <param name="Param_Tamanho">O tamanho dos dados, em bytes, que seram escritos.</param>
 /// <returns></returns>
-CarenResult CarenBuffer::EscreverDados(IntPtr Param_BufferOrigem, UInt32 Param_TamanhoBufferOrigem, UInt32 Param_Start, UInt32 Param_Tamanho)
+CarenResult CarenBuffer::Write(IntPtr Param_BufferOrigem, UInt32 Param_TamanhoBufferOrigem, UInt32 Param_Start, UInt32 Param_Tamanho)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -834,7 +836,7 @@ CarenResult CarenBuffer::EscreverDados(IntPtr Param_BufferOrigem, UInt32 Param_T
 /// <param name="Param_Start">O deslocamento de bytes baseado em zero em (Param_BufferOrigem) do qual será iniciada a cópia de bytes no Buffer.</param>
 /// <param name="Param_Tamanho">O tamanho dos dados, em bytes, que seram escritos.</param>
 /// <returns></returns>
-CarenResult CarenBuffer::EscreverDados(Span<Byte> Param_BufferOrigem, UInt32 Param_Start, UInt32 Param_Tamanho)
+CarenResult CarenBuffer::Write(Span<Byte> Param_BufferOrigem, UInt32 Param_Start, UInt32 Param_Tamanho)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -903,7 +905,7 @@ Done:;
 /// <param name="Param_Start">O deslocamento de bytes baseado em zero em (Param_BufferOrigem) do qual será iniciada a cópia de bytes no Buffer.</param>
 /// <param name="Param_Tamanho">O tamanho dos dados, em bytes, que seram escritos.</param>
 /// <returns></returns>
-CarenResult CarenBuffer::EscreverDados(Memory<Byte> Param_BufferOrigem, UInt32 Param_Start, UInt32 Param_Tamanho)
+CarenResult CarenBuffer::Write(Memory<Byte> Param_BufferOrigem, UInt32 Param_Start, UInt32 Param_Tamanho)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -972,7 +974,7 @@ Done:;
 /// <param name="Param_Start">O deslocamento de bytes baseado em zero em (Param_BufferOrigem) do qual será iniciada a cópia de bytes no Buffer.</param>
 /// <param name="Param_Tamanho">O tamanho dos dados, em bytes, que seram escritos.</param>
 /// <returns></returns>
-CarenResult CarenBuffer::EscreverDados(ReadOnlySpan<Byte> Param_BufferOrigem, UInt32 Param_Start, UInt32 Param_Tamanho)
+CarenResult CarenBuffer::Write(ReadOnlySpan<Byte> Param_BufferOrigem, UInt32 Param_Start, UInt32 Param_Tamanho)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1041,7 +1043,7 @@ Done:;
 /// <param name="Param_Start">O deslocamento de bytes baseado em zero em (Param_BufferOrigem) do qual será iniciada a cópia de bytes no Buffer.</param>
 /// <param name="Param_Tamanho">O tamanho dos dados, em bytes, que seram escritos.</param>
 /// <returns></returns>
-CarenResult CarenBuffer::EscreverDados(ReadOnlyMemory<Byte> Param_BufferOrigem, UInt32 Param_Start, UInt32 Param_Tamanho)
+CarenResult CarenBuffer::Write(ReadOnlyMemory<Byte> Param_BufferOrigem, UInt32 Param_Start, UInt32 Param_Tamanho)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1106,6 +1108,498 @@ Done:;
 	//Retorna o resultado.
 	return Resultado;
 }
+
+/// <summary>
+/// Escreve dados no buffer atual a parti de um valor simples que será convertido para um array de bytes.
+/// </summary>
+/// <param name="Param_Value">O valor a ser convertido e defnido no buffer.</param>
+/// <returns></returns>
+CarenResult CarenBuffer::Write(SByte Param_Value)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Variaveis a serem utilizadas.
+	vector<BYTE> vi_VetorBytes;
+	PBYTE vi_pBufferNativoFromVector = Nulo;
+	int vi_SizeTypeValue = sizeof(Param_Value);
+
+	//Verifica se os ranges e offsets não ultrapassam os limites dos buffers.
+	if (Posição + vi_SizeTypeValue > Tamanho)
+	{
+		//Chama uma exceção e informado o motivo.
+		throw gcnew IndexOutOfRangeException("A posicão do buffer atual não suportava escrever a quantidade de dados necessária.");
+	}
+	else
+	{
+		//Deixa continuar para realizar a escrita dos dados.
+	}
+
+	//Converter o valor para um array de bytes.
+	vi_VetorBytes = ConvertValueToByteArray(Param_Value);
+
+	//Obtém o ponteiro interno do vetor.
+	vi_pBufferNativoFromVector = vi_VetorBytes.data();
+
+	//Realiza a escrita dos dados a parti do buffer informado.
+	std::copy(vi_pBufferNativoFromVector, vi_pBufferNativoFromVector + vi_SizeTypeValue, Posição > 0 ? pBufferNativo + Posição : pBufferNativo);
+
+	//Avança a posição do buffer.
+	Prop_Posição += vi_SizeTypeValue;
+
+	//Libera o vetor e os dados.
+	vi_VetorBytes.clear();
+	vi_VetorBytes.shrink_to_fit();
+
+	//Define sucesso na operação
+	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+
+	//Retorna o resultado.
+	return Resultado;
+}
+
+/// <summary>
+/// Escreve dados no buffer atual a parti de um valor simples que será convertido para um array de bytes.
+/// </summary>
+/// <param name="Param_Value">O valor a ser convertido e defnido no buffer.</param>
+/// <returns></returns>
+CarenResult CarenBuffer::Write(Byte Param_Value)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Variaveis a serem utilizadas.
+	vector<BYTE> vi_VetorBytes;
+	PBYTE vi_pBufferNativoFromVector = Nulo;
+	int vi_SizeTypeValue = sizeof(Param_Value);
+
+	//Verifica se os ranges e offsets não ultrapassam os limites dos buffers.
+	if (Posição + vi_SizeTypeValue > Tamanho)
+	{
+		//Chama uma exceção e informado o motivo.
+		throw gcnew IndexOutOfRangeException("A posicão do buffer atual não suportava escrever a quantidade de dados necessária.");
+	}
+	else
+	{
+		//Deixa continuar para realizar a escrita dos dados.
+	}
+
+	//Converter o valor para um array de bytes.
+	vi_VetorBytes = ConvertValueToByteArray(Param_Value);
+
+	//Obtém o ponteiro interno do vetor.
+	vi_pBufferNativoFromVector = vi_VetorBytes.data();
+
+	//Realiza a escrita dos dados a parti do buffer informado.
+	std::copy(vi_pBufferNativoFromVector, vi_pBufferNativoFromVector + vi_SizeTypeValue, Posição > 0 ? pBufferNativo + Posição : pBufferNativo);
+
+	//Avança a posição do buffer.
+	Prop_Posição += vi_SizeTypeValue;
+
+	//Libera o vetor e os dados.
+	vi_VetorBytes.clear();
+	vi_VetorBytes.shrink_to_fit();
+
+	//Define sucesso na operação
+	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+
+	//Retorna o resultado.
+	return Resultado;
+}
+
+/// <summary>
+/// Escreve dados no buffer atual a parti de um valor simples que será convertido para um array de bytes.
+/// </summary>
+/// <param name="Param_Value">O valor a ser convertido e defnido no buffer.</param>
+/// <returns></returns>
+CarenResult CarenBuffer::Write(Int16 Param_Value)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Variaveis a serem utilizadas.
+	vector<BYTE> vi_VetorBytes;
+	PBYTE vi_pBufferNativoFromVector = Nulo;
+	int vi_SizeTypeValue = sizeof(Param_Value);
+
+	//Verifica se os ranges e offsets não ultrapassam os limites dos buffers.
+	if (Posição + vi_SizeTypeValue > Tamanho)
+	{
+		//Chama uma exceção e informado o motivo.
+		throw gcnew IndexOutOfRangeException("A posicão do buffer atual não suportava escrever a quantidade de dados necessária.");
+	}
+	else
+	{
+		//Deixa continuar para realizar a escrita dos dados.
+	}
+
+	//Converter o valor para um array de bytes.
+	vi_VetorBytes = ConvertValueToByteArray(Param_Value);
+
+	//Obtém o ponteiro interno do vetor.
+	vi_pBufferNativoFromVector = vi_VetorBytes.data();
+
+	//Realiza a escrita dos dados a parti do buffer informado.
+	std::copy(vi_pBufferNativoFromVector, vi_pBufferNativoFromVector + vi_SizeTypeValue, Posição > 0 ? pBufferNativo + Posição : pBufferNativo);
+
+	//Avança a posição do buffer.
+	Prop_Posição += vi_SizeTypeValue;
+
+	//Libera o vetor e os dados.
+	vi_VetorBytes.clear();
+	vi_VetorBytes.shrink_to_fit();
+
+	//Define sucesso na operação
+	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+
+	//Retorna o resultado.
+	return Resultado;
+}
+
+/// <summary>
+/// Escreve dados no buffer atual a parti de um valor simples que será convertido para um array de bytes.
+/// </summary>
+/// <param name="Param_Value">O valor a ser convertido e defnido no buffer.</param>
+/// <returns></returns>
+CarenResult CarenBuffer::Write(Int32 Param_Value)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Variaveis a serem utilizadas.
+	vector<BYTE> vi_VetorBytes;
+	PBYTE vi_pBufferNativoFromVector = Nulo;
+	int vi_SizeTypeValue = sizeof(Param_Value);
+
+	//Verifica se os ranges e offsets não ultrapassam os limites dos buffers.
+	if (Posição + vi_SizeTypeValue > Tamanho)
+	{
+		//Chama uma exceção e informado o motivo.
+		throw gcnew IndexOutOfRangeException("A posicão do buffer atual não suportava escrever a quantidade de dados necessária.");
+	}
+	else
+	{
+		//Deixa continuar para realizar a escrita dos dados.
+	}
+
+	//Converter o valor para um array de bytes.
+	vi_VetorBytes = ConvertValueToByteArray(Param_Value);
+
+	//Obtém o ponteiro interno do vetor.
+	vi_pBufferNativoFromVector = vi_VetorBytes.data();
+
+	//Realiza a escrita dos dados a parti do buffer informado.
+	std::copy(vi_pBufferNativoFromVector, vi_pBufferNativoFromVector + vi_SizeTypeValue, Posição > 0 ? pBufferNativo + Posição : pBufferNativo);
+
+	//Avança a posição do buffer.
+	Prop_Posição += vi_SizeTypeValue;
+
+	//Libera o vetor e os dados.
+	vi_VetorBytes.clear();
+	vi_VetorBytes.shrink_to_fit();
+
+	//Define sucesso na operação
+	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+
+	//Retorna o resultado.
+	return Resultado;
+}
+
+/// <summary>
+/// Escreve dados no buffer atual a parti de um valor simples que será convertido para um array de bytes.
+/// </summary>
+/// <param name="Param_Value">O valor a ser convertido e defnido no buffer.</param>
+/// <returns></returns>
+CarenResult CarenBuffer::Write(Int64 Param_Value)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Variaveis a serem utilizadas.
+	vector<BYTE> vi_VetorBytes;
+	PBYTE vi_pBufferNativoFromVector = Nulo;
+	int vi_SizeTypeValue = sizeof(Param_Value);
+
+	//Verifica se os ranges e offsets não ultrapassam os limites dos buffers.
+	if (Posição + vi_SizeTypeValue > Tamanho)
+	{
+		//Chama uma exceção e informado o motivo.
+		throw gcnew IndexOutOfRangeException("A posicão do buffer atual não suportava escrever a quantidade de dados necessária.");
+	}
+	else
+	{
+		//Deixa continuar para realizar a escrita dos dados.
+	}
+
+	//Converter o valor para um array de bytes.
+	vi_VetorBytes = ConvertValueToByteArray(Param_Value);
+
+	//Obtém o ponteiro interno do vetor.
+	vi_pBufferNativoFromVector = vi_VetorBytes.data();
+
+	//Realiza a escrita dos dados a parti do buffer informado.
+	std::copy(vi_pBufferNativoFromVector, vi_pBufferNativoFromVector + vi_SizeTypeValue, Posição > 0 ? pBufferNativo + Posição : pBufferNativo);
+
+	//Avança a posição do buffer.
+	Prop_Posição += vi_SizeTypeValue;
+
+	//Libera o vetor e os dados.
+	vi_VetorBytes.clear();
+	vi_VetorBytes.shrink_to_fit();
+
+	//Define sucesso na operação
+	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+
+	//Retorna o resultado.
+	return Resultado;
+}
+
+/// <summary>
+/// Escreve dados no buffer atual a parti de um valor simples que será convertido para um array de bytes.
+/// </summary>
+/// <param name="Param_Value">O valor a ser convertido e defnido no buffer.</param>
+/// <returns></returns>
+CarenResult CarenBuffer::Write(UInt16 Param_Value)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Variaveis a serem utilizadas.
+	vector<BYTE> vi_VetorBytes;
+	PBYTE vi_pBufferNativoFromVector = Nulo;
+	int vi_SizeTypeValue = sizeof(Param_Value);
+
+	//Verifica se os ranges e offsets não ultrapassam os limites dos buffers.
+	if (Posição + vi_SizeTypeValue > Tamanho)
+	{
+		//Chama uma exceção e informado o motivo.
+		throw gcnew IndexOutOfRangeException("A posicão do buffer atual não suportava escrever a quantidade de dados necessária.");
+	}
+	else
+	{
+		//Deixa continuar para realizar a escrita dos dados.
+	}
+
+	//Converter o valor para um array de bytes.
+	vi_VetorBytes = ConvertValueToByteArray(Param_Value);
+
+	//Obtém o ponteiro interno do vetor.
+	vi_pBufferNativoFromVector = vi_VetorBytes.data();
+
+	//Realiza a escrita dos dados a parti do buffer informado.
+	std::copy(vi_pBufferNativoFromVector, vi_pBufferNativoFromVector + vi_SizeTypeValue, Posição > 0 ? pBufferNativo + Posição : pBufferNativo);
+
+	//Avança a posição do buffer.
+	Prop_Posição += vi_SizeTypeValue;
+
+	//Libera o vetor e os dados.
+	vi_VetorBytes.clear();
+	vi_VetorBytes.shrink_to_fit();
+
+	//Define sucesso na operação
+	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+
+	//Retorna o resultado.
+	return Resultado;
+}
+
+/// <summary>
+/// Escreve dados no buffer atual a parti de um valor simples que será convertido para um array de bytes.
+/// </summary>
+/// <param name="Param_Value">O valor a ser convertido e defnido no buffer.</param>
+/// <returns></returns>
+CarenResult CarenBuffer::Write(UInt32 Param_Value)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Variaveis a serem utilizadas.
+	vector<BYTE> vi_VetorBytes;
+	PBYTE vi_pBufferNativoFromVector = Nulo;
+	int vi_SizeTypeValue = sizeof(Param_Value);
+
+	//Verifica se os ranges e offsets não ultrapassam os limites dos buffers.
+	if (Posição + vi_SizeTypeValue > Tamanho)
+	{
+		//Chama uma exceção e informado o motivo.
+		throw gcnew IndexOutOfRangeException("A posicão do buffer atual não suportava escrever a quantidade de dados necessária.");
+	}
+	else
+	{
+		//Deixa continuar para realizar a escrita dos dados.
+	}
+
+	//Converter o valor para um array de bytes.
+	vi_VetorBytes = ConvertValueToByteArray(Param_Value);
+
+	//Obtém o ponteiro interno do vetor.
+	vi_pBufferNativoFromVector = vi_VetorBytes.data();
+
+	//Realiza a escrita dos dados a parti do buffer informado.
+	std::copy(vi_pBufferNativoFromVector, vi_pBufferNativoFromVector + vi_SizeTypeValue, Posição > 0 ? pBufferNativo + Posição : pBufferNativo);
+
+	//Avança a posição do buffer.
+	Prop_Posição += vi_SizeTypeValue;
+
+	//Libera o vetor e os dados.
+	vi_VetorBytes.clear();
+	vi_VetorBytes.shrink_to_fit();
+
+	//Define sucesso na operação
+	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+
+	//Retorna o resultado.
+	return Resultado;
+}
+
+/// <summary>
+/// Escreve dados no buffer atual a parti de um valor simples que será convertido para um array de bytes.
+/// </summary>
+/// <param name="Param_Value">O valor a ser convertido e defnido no buffer.</param>
+/// <returns></returns>
+CarenResult CarenBuffer::Write(UInt64 Param_Value)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Variaveis a serem utilizadas.
+	vector<BYTE> vi_VetorBytes;
+	PBYTE vi_pBufferNativoFromVector = Nulo;
+	int vi_SizeTypeValue = sizeof(Param_Value);
+
+	//Verifica se os ranges e offsets não ultrapassam os limites dos buffers.
+	if (Posição + vi_SizeTypeValue > Tamanho)
+	{
+		//Chama uma exceção e informado o motivo.
+		throw gcnew IndexOutOfRangeException("A posicão do buffer atual não suportava escrever a quantidade de dados necessária.");
+	}
+	else
+	{
+		//Deixa continuar para realizar a escrita dos dados.
+	}
+
+	//Converter o valor para um array de bytes.
+	vi_VetorBytes = ConvertValueToByteArray(Param_Value);
+
+	//Obtém o ponteiro interno do vetor.
+	vi_pBufferNativoFromVector = vi_VetorBytes.data();
+
+	//Realiza a escrita dos dados a parti do buffer informado.
+	std::copy(vi_pBufferNativoFromVector, vi_pBufferNativoFromVector + vi_SizeTypeValue, Posição > 0 ? pBufferNativo + Posição : pBufferNativo);
+
+	//Avança a posição do buffer.
+	Prop_Posição += vi_SizeTypeValue;
+
+	//Libera o vetor e os dados.
+	vi_VetorBytes.clear();
+	vi_VetorBytes.shrink_to_fit();
+
+	//Define sucesso na operação
+	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+
+	//Retorna o resultado.
+	return Resultado;
+}
+
+/// <summary>
+/// Escreve dados no buffer atual a parti de um valor simples que será convertido para um array de bytes.
+/// </summary>
+/// <param name="Param_Value">O valor a ser convertido e defnido no buffer.</param>
+/// <returns></returns>
+CarenResult CarenBuffer::Write(float Param_Value)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Variaveis a serem utilizadas.
+	vector<BYTE> vi_VetorBytes;
+	PBYTE vi_pBufferNativoFromVector = Nulo;
+	int vi_SizeTypeValue = sizeof(Param_Value);
+
+	//Verifica se os ranges e offsets não ultrapassam os limites dos buffers.
+	if (Posição + vi_SizeTypeValue > Tamanho)
+	{
+		//Chama uma exceção e informado o motivo.
+		throw gcnew IndexOutOfRangeException("A posicão do buffer atual não suportava escrever a quantidade de dados necessária.");
+	}
+	else
+	{
+		//Deixa continuar para realizar a escrita dos dados.
+	}
+
+	//Converter o valor para um array de bytes.
+	vi_VetorBytes = ConvertValueToByteArray(Param_Value);
+
+	//Obtém o ponteiro interno do vetor.
+	vi_pBufferNativoFromVector = vi_VetorBytes.data();
+
+	//Realiza a escrita dos dados a parti do buffer informado.
+	std::copy(vi_pBufferNativoFromVector, vi_pBufferNativoFromVector + vi_SizeTypeValue, Posição > 0 ? pBufferNativo + Posição : pBufferNativo);
+
+	//Avança a posição do buffer.
+	Prop_Posição += vi_SizeTypeValue;
+
+	//Libera o vetor e os dados.
+	vi_VetorBytes.clear();
+	vi_VetorBytes.shrink_to_fit();
+
+	//Define sucesso na operação
+	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+
+	//Retorna o resultado.
+	return Resultado;
+}
+
+/// <summary>
+/// Escreve dados no buffer atual a parti de um valor simples que será convertido para um array de bytes.
+/// </summary>
+/// <param name="Param_Value">O valor a ser convertido e defnido no buffer.</param>
+/// <returns></returns>
+CarenResult CarenBuffer::Write(Double Param_Value)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Variaveis a serem utilizadas.
+	vector<BYTE> vi_VetorBytes;
+	PBYTE vi_pBufferNativoFromVector = Nulo;
+	int vi_SizeTypeValue = sizeof(Param_Value);
+
+	//Verifica se os ranges e offsets não ultrapassam os limites dos buffers.
+	if (Posição + vi_SizeTypeValue > Tamanho)
+	{
+		//Chama uma exceção e informado o motivo.
+		throw gcnew IndexOutOfRangeException("A posicão do buffer atual não suportava escrever a quantidade de dados necessária.");
+	}
+	else
+	{
+		//Deixa continuar para realizar a escrita dos dados.
+	}
+
+	//Converter o valor para um array de bytes.
+	vi_VetorBytes = ConvertValueToByteArray(Param_Value);
+
+	//Obtém o ponteiro interno do vetor.
+	vi_pBufferNativoFromVector = vi_VetorBytes.data();
+
+	//Realiza a escrita dos dados a parti do buffer informado.
+	std::copy(vi_pBufferNativoFromVector, vi_pBufferNativoFromVector + vi_SizeTypeValue, Posição > 0 ? pBufferNativo + Posição : pBufferNativo);
+
+	//Avança a posição do buffer.
+	Prop_Posição += vi_SizeTypeValue;
+
+	//Libera o vetor e os dados.
+	vi_VetorBytes.clear();
+	vi_VetorBytes.shrink_to_fit();
+
+	//Define sucesso na operação
+	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+
+	//Retorna o resultado.
+	return Resultado;
+}
+
+
 
 /// <summary>
 /// Obtém uma cópia de todos os dados do Buffer. Este método não é recomendado porque cria uma cópia do Buffer na memória. Se possível, utilize os métodos que retornam um Span.
@@ -1261,6 +1755,8 @@ CarenResult CarenBuffer::ObterBuffer(UInt32 Param_Start, UInt32 Param_Tamanho, [
 	return Resultado;
 }
 
+
+
 /// <summary>
 /// Método responsável por recuperar o ponteiro para o buffer interno.
 /// </summary>
@@ -1294,6 +1790,16 @@ CarenResult CarenBuffer::ObterPonteiroInterno(IntPtr% Param_Ref_PonteiroBuffer)
 Done:;
 	//Retorna o resultado.
 	return Resultado;
+}
+
+/// <summary>
+/// Método responsável por preencher o buffer com ZEROS(0).
+/// </summary>
+void CarenBuffer::FillBuffer()
+{
+	//Verifica se o buffer atual é valido e preenche com zeros.
+	if (ObjetoValido(pBufferNativo))
+		ZeroMemory(pBufferNativo, Tamanho);
 }
 
 /// <summary>

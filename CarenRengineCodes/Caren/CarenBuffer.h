@@ -214,6 +214,49 @@ public:
 		return gcnew CarenBufferEnumerator(pBufferNativo, Tamanho);
 	}
 
+	//Conversões implicitas
+public:
+	static operator CarenBuffer^ (IntPtr Param_Pointer)
+	{
+		//Variavel a ser retornada.
+		CarenBuffer^ ClassResultado = nullptr;
+
+		//Verifica se o ponteiro não é invalido.
+		if (Param_Pointer == IntPtr::Zero)
+			Sair; // O ponteiro não é valido.
+
+		//Cria a classe para definir o ponteiro.
+		ClassResultado = gcnew CarenBuffer();
+
+		//Define o ponteiro na classe.
+		ClassResultado->pBufferNativo = static_cast<PBYTE>(Param_Pointer.ToPointer());
+
+	Done:;
+
+		//Retorna o resultado.
+		return ClassResultado;
+	}
+
+	static operator CarenBuffer^ (cli::array<Byte>^ Param_Buffer)
+	{
+		//Variavel a ser retornada.
+		CarenBuffer^ ClassResultado = nullptr;
+
+		//Verifica se o buffer não é invalido.
+		if (!ObjetoGerenciadoValido(Param_Buffer))
+			Sair; // O ponteiro não é valido.
+
+		//Cria a classe para definir o ponteiro.
+		ClassResultado = gcnew CarenBuffer();
+
+		//Cria o buffer com os dados do array.
+		ClassResultado->CriarBuffer(Param_Buffer, static_cast<UINT>(Param_Buffer->Length), static_cast<UINT>(Param_Buffer->Length));
+
+	Done:;
+
+		//Retorna o resultado.
+		return ClassResultado;
+	}
 
 	///////////////////////////////////////////////////////
 	//A parti daqui vai conter os métodos das interfaces.//
@@ -291,7 +334,7 @@ public:
 	/// <param name="Param_Start">O deslocamento de bytes baseado em zero em (Param_BufferOrigem) do qual será iniciada a cópia de bytes no Buffer.</param>
 	/// <param name="Param_Tamanho">A quantidade de dados, em bytes, que será escrita.</param>
 	/// <returns></returns>
-	virtual CarenResult EscreverDados(ICarenBuffer^ Param_BufferOrigem, UInt32 Param_Start, UInt32 Param_Tamanho);
+	virtual CarenResult Write(ICarenBuffer^ Param_BufferOrigem, UInt32 Param_Start, UInt32 Param_Tamanho);
 
 	/// <summary>
 	/// Escreve dados no buffer atual a parti de um Buffer de origem.
@@ -300,7 +343,7 @@ public:
 	/// <param name="Param_Start">O deslocamento de bytes baseado em zero em (Param_BufferOrigem) do qual será iniciada a cópia de bytes no Buffer.</param>
 	/// <param name="Param_Tamanho">O tamanho dos dados, em bytes, que seram escritos.</param>
 	/// <returns></returns>
-	virtual CarenResult EscreverDados(MatrizBytes Param_BufferOrigem, UInt32 Param_Start, UInt32 Param_Tamanho);
+	virtual CarenResult Write(MatrizBytes Param_BufferOrigem, UInt32 Param_Start, UInt32 Param_Tamanho);
 
 	/// <summary>
 	/// Escreve dados no buffer atual a parti de um Buffer de origem.
@@ -310,7 +353,7 @@ public:
 	/// <param name="Param_Start">O deslocamento de bytes baseado em zero em (Param_BufferOrigem) do qual será iniciada a cópia de bytes no Buffer.</param>
 	/// <param name="Param_Tamanho">O tamanho dos dados, em bytes, que seram escritos.</param>
 	/// <returns></returns>
-	virtual CarenResult EscreverDados(IntPtr Param_BufferOrigem, UInt32 Param_TamanhoBufferOrigem, UInt32 Param_Start, UInt32 Param_Tamanho);
+	virtual CarenResult Write(IntPtr Param_BufferOrigem, UInt32 Param_TamanhoBufferOrigem, UInt32 Param_Start, UInt32 Param_Tamanho);
 
 	/// <summary>
 	/// Escreve dados no buffer atual a parti de um Buffer de origem.
@@ -319,7 +362,7 @@ public:
 	/// <param name="Param_Start">O deslocamento de bytes baseado em zero em (Param_BufferOrigem) do qual será iniciada a cópia de bytes no Buffer.</param>
 	/// <param name="Param_Tamanho">O tamanho dos dados, em bytes, que seram escritos.</param>
 	/// <returns></returns>
-	virtual CarenResult EscreverDados(Span<Byte> Param_BufferOrigem, UInt32 Param_Start, UInt32 Param_Tamanho);
+	virtual CarenResult Write(Span<Byte> Param_BufferOrigem, UInt32 Param_Start, UInt32 Param_Tamanho);
 
 	/// <summary>
 	/// Escreve dados no buffer atual a parti de um Buffer de origem.
@@ -328,7 +371,7 @@ public:
 	/// <param name="Param_Start">O deslocamento de bytes baseado em zero em (Param_BufferOrigem) do qual será iniciada a cópia de bytes no Buffer.</param>
 	/// <param name="Param_Tamanho">O tamanho dos dados, em bytes, que seram escritos.</param>
 	/// <returns></returns>
-	virtual CarenResult EscreverDados(Memory<Byte> Param_BufferOrigem, UInt32 Param_Start, UInt32 Param_Tamanho);
+	virtual CarenResult Write(Memory<Byte> Param_BufferOrigem, UInt32 Param_Start, UInt32 Param_Tamanho);
 
 	/// <summary>
 	/// Escreve dados no buffer atual a parti de um Buffer de origem.
@@ -337,7 +380,7 @@ public:
 	/// <param name="Param_Start">O deslocamento de bytes baseado em zero em (Param_BufferOrigem) do qual será iniciada a cópia de bytes no Buffer.</param>
 	/// <param name="Param_Tamanho">O tamanho dos dados, em bytes, que seram escritos.</param>
 	/// <returns></returns>
-	virtual CarenResult EscreverDados(ReadOnlySpan<Byte> Param_BufferOrigem, UInt32 Param_Start, UInt32 Param_Tamanho);
+	virtual CarenResult Write(ReadOnlySpan<Byte> Param_BufferOrigem, UInt32 Param_Start, UInt32 Param_Tamanho);
 
 	/// <summary>
 	/// Escreve dados no buffer atual a parti de um Buffer de origem.
@@ -346,7 +389,77 @@ public:
 	/// <param name="Param_Start">O deslocamento de bytes baseado em zero em (Param_BufferOrigem) do qual será iniciada a cópia de bytes no Buffer.</param>
 	/// <param name="Param_Tamanho">O tamanho dos dados, em bytes, que seram escritos.</param>
 	/// <returns></returns>
-	virtual CarenResult EscreverDados(ReadOnlyMemory<Byte> Param_BufferOrigem, UInt32 Param_Start, UInt32 Param_Tamanho);
+	virtual CarenResult Write(ReadOnlyMemory<Byte> Param_BufferOrigem, UInt32 Param_Start, UInt32 Param_Tamanho);
+
+	/// <summary>
+	/// Escreve dados no buffer atual a parti de um valor simples que será convertido para um array de bytes.
+	/// </summary>
+	/// <param name="Param_Value">O valor a ser convertido e defnido no buffer.</param>
+	/// <returns></returns>
+	virtual CarenResult Write(SByte Param_Value);
+
+	/// <summary>
+	/// Escreve dados no buffer atual a parti de um valor simples que será convertido para um array de bytes.
+	/// </summary>
+	/// <param name="Param_Value">O valor a ser convertido e defnido no buffer.</param>
+	/// <returns></returns>
+	virtual CarenResult Write(Byte Param_Value);
+
+	/// <summary>
+	/// Escreve dados no buffer atual a parti de um valor simples que será convertido para um array de bytes.
+	/// </summary>
+	/// <param name="Param_Value">O valor a ser convertido e defnido no buffer.</param>
+	/// <returns></returns>
+	virtual CarenResult Write(Int16 Param_Value);
+
+	/// <summary>
+	/// Escreve dados no buffer atual a parti de um valor simples que será convertido para um array de bytes.
+	/// </summary>
+	/// <param name="Param_Value">O valor a ser convertido e defnido no buffer.</param>
+	/// <returns></returns>
+	virtual CarenResult Write(Int32 Param_Value);
+
+	/// <summary>
+	/// Escreve dados no buffer atual a parti de um valor simples que será convertido para um array de bytes.
+	/// </summary>
+	/// <param name="Param_Value">O valor a ser convertido e defnido no buffer.</param>
+	/// <returns></returns>
+	virtual CarenResult Write(Int64 Param_Value);
+
+	/// <summary>
+	/// Escreve dados no buffer atual a parti de um valor simples que será convertido para um array de bytes.
+	/// </summary>
+	/// <param name="Param_Value">O valor a ser convertido e defnido no buffer.</param>
+	/// <returns></returns>
+	virtual CarenResult Write(UInt16 Param_Value);
+
+	/// <summary>
+	/// Escreve dados no buffer atual a parti de um valor simples que será convertido para um array de bytes.
+	/// </summary>
+	/// <param name="Param_Value">O valor a ser convertido e defnido no buffer.</param>
+	/// <returns></returns>
+	virtual CarenResult Write(UInt32 Param_Value);
+
+	/// <summary>
+	/// Escreve dados no buffer atual a parti de um valor simples que será convertido para um array de bytes.
+	/// </summary>
+	/// <param name="Param_Value">O valor a ser convertido e defnido no buffer.</param>
+	/// <returns></returns>
+	virtual CarenResult Write(UInt64 Param_Value);
+
+	/// <summary>
+	/// Escreve dados no buffer atual a parti de um valor simples que será convertido para um array de bytes.
+	/// </summary>
+	/// <param name="Param_Value">O valor a ser convertido e defnido no buffer.</param>
+	/// <returns></returns>
+	virtual CarenResult Write(float Param_Value);
+
+	/// <summary>
+	/// Escreve dados no buffer atual a parti de um valor simples que será convertido para um array de bytes.
+	/// </summary>
+	/// <param name="Param_Value">O valor a ser convertido e defnido no buffer.</param>
+	/// <returns></returns>
+	virtual CarenResult Write(Double Param_Value);
 
 	/// <summary>
 	/// Obtém uma cópia de todos os dados do Buffer. Este método não é recomendado porque cria uma cópia do Buffer na memória. Se possível, utilize os métodos que retornam um Span.
@@ -388,6 +501,11 @@ public:
 	/// <param name="Param_Ref_PonteiroBuffer">Retorna o ponteiro para o buffer nativo gerenciado pela interface.</param>
 	/// <returns></returns>
 	virtual CarenResult ObterPonteiroInterno(IntPtr% Param_Ref_PonteiroBuffer);
+
+	/// <summary>
+	/// Método responsável por preencher o buffer com ZEROS(0).
+	/// </summary>
+	virtual void FillBuffer();
 
 	/// <summary>
 	/// Método responsável por definir a posição de escrita ou leitura no buffer.

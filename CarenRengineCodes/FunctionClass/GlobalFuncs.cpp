@@ -143,4 +143,419 @@ void DeletarVariant(LPVARIANT* Param_VariantPointer)
 Done:;
 	//Deixa o método continuar.
 }
+
+std::vector<BYTE> ConvertValueToByteArray(SByte Param_Value)
+{
+	//Obtém o tamanho do tipo
+	int vi_SizeTypeValue = sizeof(Param_Value);
+
+	//Declara o vetor com o tamanho indicado.
+	std::vector<BYTE> VectorOfByte(static_cast<size_t>(vi_SizeTypeValue));
+
+	//Vetor que vai conter os bits.
+	std::vector<int> VectorOfBits(vi_SizeTypeValue * 8);
+
+	//Mask Bits
+	int MaskBitIndex = 0;
+
+	//Variaveis
+	int PositionStart = 0;
+	vector<int>::const_iterator StartPos;
+
+	//Faz um for para converter o valor do parametro para bits.
+	for (int i = (vi_SizeTypeValue * 8) - 1; i >= 0; i--)
+	{
+		//Obtém a masca.
+		MaskBitIndex = 1 << i;
+
+		//Obtém o bit
+		VectorOfBits[i] = (Param_Value & MaskBitIndex) != 0 ? 1 : 0;
+	}
+
+	//Converte os bits para um Array de bytes.
+	for (int i = 0; i < vi_SizeTypeValue; i++)
+	{
+		//Calcula a posicao inicial
+		StartPos = VectorOfBits.begin() + PositionStart;
+
+		//Obtém o vetor.
+		vector<int> Vec8Bits = vector<int>(StartPos, StartPos + 8);
+
+		//Cria um vetor com 8 entradas(8 Bits) aparti do vetor de bits principal para serem convertidos.
+		VectorOfByte[i] = ConvertBitsToByte(Vec8Bits);
+
+		//Incrementa a posicao
+		PositionStart += 8;
+	}
+
+	//Retorna o vetor.
+	return VectorOfByte;
+}
+
+std::vector<BYTE> ConvertValueToByteArray(Byte Param_Value)
+{
+	//Obtém o tamanho do tipo
+	int vi_SizeTypeValue = sizeof(Param_Value);
+
+	//Declara o vetor com o tamanho indicado.
+	std::vector<BYTE> VectorOfByte(static_cast<size_t>(vi_SizeTypeValue));
+
+	//Vetor que vai conter os bits.
+	std::vector<int> VectorOfBits(vi_SizeTypeValue * 8);
+
+	//Mask Bits
+	int MaskBitIndex = 0;
+
+	//Variaveis
+	int PositionStart = 0;
+	vector<int>::const_iterator StartPos;
+
+	//Faz um for para converter o valor do parametro para bits.
+	for (int i = (vi_SizeTypeValue * 8) - 1; i >= 0; i--)
+	{
+		//Obtém a masca.
+		MaskBitIndex = 1 << i;
+
+		//Obtém o bit
+		VectorOfBits[i] = (Param_Value & MaskBitIndex) != 0 ? 1 : 0;
+	}
+
+	//Converte os bits para um Array de bytes.
+	for (int i = 0; i < vi_SizeTypeValue; i++)
+	{
+		//Calcula a posicao inicial
+		StartPos = VectorOfBits.begin() + PositionStart;
+
+		//Obtém o vetor.
+		vector<int> Vec8Bits = vector<int>(StartPos, StartPos + 8);
+
+		//Cria um vetor com 8 entradas(8 Bits) aparti do vetor de bits principal para serem convertidos.
+		VectorOfByte[i] = ConvertBitsToByte(Vec8Bits);
+
+		//Incrementa a posicao
+		PositionStart += 8;
+	}
+
+	//Retorna o vetor.
+	return VectorOfByte;
+}
+
+std::vector<BYTE> ConvertValueToByteArray(Int16 Param_Value)
+{
+	//Obtém o tamanho do tipo
+	int vi_SizeTypeValue = sizeof(Param_Value);
+
+	//Declara o vetor com o tamanho indicado.
+	std::vector<BYTE> VectorOfByte(static_cast<size_t>(vi_SizeTypeValue));
+
+	//Vetor que vai conter os bits.
+	std::vector<int> VectorOfBits(vi_SizeTypeValue * 8);
+
+	//Mask Bits
+	int MaskBitIndex = 0;
+
+	//Variaveis
+	int PositionStart = 0;
+	vector<int>::const_iterator StartPos;
+
+	//Faz um for para converter o valor do parametro para bits.
+	for (int i = (vi_SizeTypeValue * 8) - 1; i >= 0; i--)
+	{
+		//Obtém a masca.
+		MaskBitIndex = 1 << i;
+
+		//Obtém o bit
+		VectorOfBits[i] = (Param_Value & MaskBitIndex) != 0 ? 1 : 0;
+	}
+
+	//Converte os bits para um Array de bytes.
+	for (int i = 0; i < vi_SizeTypeValue; i++)
+	{
+		//Calcula a posicao inicial
+		StartPos = VectorOfBits.begin() + PositionStart;
+
+		//Obtém o vetor.
+		vector<int> Vec8Bits = vector<int>(StartPos, StartPos + 8);
+
+		//Cria um vetor com 8 entradas(8 Bits) aparti do vetor de bits principal para serem convertidos.
+		VectorOfByte[i] = ConvertBitsToByte(Vec8Bits);
+
+		//Incrementa a posicao
+		PositionStart += 8;
+	}
+
+	//Retorna o vetor.
+	return VectorOfByte;
+}
+
+std::vector<BYTE> ConvertValueToByteArray(Int32 Param_Value)
+{
+	//Obtém o tamanho do tipo
+	int vi_SizeTypeValue = sizeof(Param_Value);
+
+	//Declara o vetor com o tamanho indicado.
+	std::vector<BYTE> VectorOfByte(static_cast<size_t>(vi_SizeTypeValue));
+
+	//Vetor que vai conter os bits.
+	std::vector<int> VectorOfBits(vi_SizeTypeValue * 8);
+
+	//Mask Bits
+	int MaskBitIndex = 0;
+
+	//Variaveis
+	int PositionStart = 0;
+	vector<int>::const_iterator StartPos;
+
+	//Faz um for para converter o valor do parametro para bits.
+	for (int i = (vi_SizeTypeValue * 8) - 1; i >= 0; i--)
+	{
+		//Obtém a masca.
+		MaskBitIndex = 1 << i;
+
+		//Obtém o bit
+		VectorOfBits[i] = (Param_Value & MaskBitIndex) != 0 ? 1 : 0;
+	}
+
+	//Converte os bits para um Array de bytes.
+	for (int i = 0; i < vi_SizeTypeValue; i++)
+	{
+		//Calcula a posicao inicial
+		StartPos = VectorOfBits.begin() + PositionStart;
+
+		//Obtém o vetor.
+		vector<int> Vec8Bits = vector<int>(StartPos, StartPos + 8);
+
+		//Cria um vetor com 8 entradas(8 Bits) aparti do vetor de bits principal para serem convertidos.
+		VectorOfByte[i] = ConvertBitsToByte(Vec8Bits);
+
+		//Incrementa a posicao
+		PositionStart += 8;
+	}
+
+	//Retorna o vetor.
+	return VectorOfByte;
+}
+
+std::vector<BYTE> ConvertValueToByteArray(Int64 Param_Value)
+{
+	//Obtém o tamanho do tipo
+	int vi_SizeTypeValue = sizeof(Param_Value);
+
+	//Declara o vetor com o tamanho indicado.
+	std::vector<BYTE> VectorOfByte(static_cast<size_t>(vi_SizeTypeValue));
+
+	//Vetor que vai conter os bits.
+	std::vector<int> VectorOfBits(vi_SizeTypeValue * 8);
+
+	//Mask Bits
+	int MaskBitIndex = 0;
+
+	//Variaveis
+	int PositionStart = 0;
+	vector<int>::const_iterator StartPos;
+
+	//Faz um for para converter o valor do parametro para bits.
+	for (int i = (vi_SizeTypeValue * 8) - 1; i >= 0; i--)
+	{
+		//Obtém a masca.
+		MaskBitIndex = 1 << i;
+
+		//Obtém o bit
+		VectorOfBits[i] = (Param_Value & MaskBitIndex) != 0 ? 1 : 0;
+	}
+
+	//Converte os bits para um Array de bytes.
+	for (int i = 0; i < vi_SizeTypeValue; i++)
+	{
+		//Calcula a posicao inicial
+		StartPos = VectorOfBits.begin() + PositionStart;
+
+		//Obtém o vetor.
+		vector<int> Vec8Bits = vector<int>(StartPos, StartPos + 8);
+
+		//Cria um vetor com 8 entradas(8 Bits) aparti do vetor de bits principal para serem convertidos.
+		VectorOfByte[i] = ConvertBitsToByte(Vec8Bits);
+
+		//Incrementa a posicao
+		PositionStart += 8;
+	}
+
+	//Retorna o vetor.
+	return VectorOfByte;
+}
+
+std::vector<BYTE> ConvertValueToByteArray(UInt16 Param_Value)
+{
+	//Obtém o tamanho do tipo
+	int vi_SizeTypeValue = sizeof(Param_Value);
+
+	//Declara o vetor com o tamanho indicado.
+	std::vector<BYTE> VectorOfByte(static_cast<size_t>(vi_SizeTypeValue));
+
+	//Vetor que vai conter os bits.
+	std::vector<int> VectorOfBits(vi_SizeTypeValue * 8);
+
+	//Mask Bits
+	int MaskBitIndex = 0;
+
+	//Variaveis
+	int PositionStart = 0;
+	vector<int>::const_iterator StartPos;
+
+	//Faz um for para converter o valor do parametro para bits.
+	for (int i = (vi_SizeTypeValue * 8) - 1; i >= 0; i--)
+	{
+		//Obtém a masca.
+		MaskBitIndex = 1 << i;
+
+		//Obtém o bit
+		VectorOfBits[i] = (Param_Value & MaskBitIndex) != 0 ? 1 : 0;
+	}
+
+	//Converte os bits para um Array de bytes.
+	for (int i = 0; i < vi_SizeTypeValue; i++)
+	{
+		//Calcula a posicao inicial
+		StartPos = VectorOfBits.begin() + PositionStart;
+
+		//Obtém o vetor.
+		vector<int> Vec8Bits = vector<int>(StartPos, StartPos + 8);
+
+		//Cria um vetor com 8 entradas(8 Bits) aparti do vetor de bits principal para serem convertidos.
+		VectorOfByte[i] = ConvertBitsToByte(Vec8Bits);
+
+		//Incrementa a posicao
+		PositionStart += 8;
+	}
+
+	//Retorna o vetor.
+	return VectorOfByte;
+}
+
+std::vector<BYTE> ConvertValueToByteArray(UInt32 Param_Value)
+{
+	//Obtém o tamanho do tipo
+	int vi_SizeTypeValue = sizeof(Param_Value);
+
+	//Declara o vetor com o tamanho indicado.
+	std::vector<BYTE> VectorOfByte(static_cast<size_t>(vi_SizeTypeValue));
+
+	//Vetor que vai conter os bits.
+	std::vector<int> VectorOfBits(vi_SizeTypeValue * 8);
+
+	//Mask Bits
+	int MaskBitIndex = 0;
+
+	//Variaveis
+	int PositionStart = 0;
+	vector<int>::const_iterator StartPos;	
+
+	//Faz um for para converter o valor do parametro para bits.
+	for (int i = (vi_SizeTypeValue * 8) - 1; i >= 0 ; i--)
+	{
+		//Obtém a masca.
+		MaskBitIndex = 1 << i;
+
+		//Obtém o bit
+		VectorOfBits[i] = (Param_Value & MaskBitIndex) != 0 ? 1 : 0;
+	}
+
+	//Converte os bits para um Array de bytes.
+	for (int i = 0; i < vi_SizeTypeValue; i++)
+	{
+		//Calcula a posicao inicial
+		StartPos = VectorOfBits.begin() + PositionStart;
+
+		//Obtém o vetor.
+		vector<int> Vec8Bits = vector<int>(StartPos, StartPos + 8);
+
+		//Cria um vetor com 8 entradas(8 Bits) aparti do vetor de bits principal para serem convertidos.
+		VectorOfByte[i] = ConvertBitsToByte(Vec8Bits);
+
+		//Incrementa a posicao
+		PositionStart += 8;
+	}
+
+	//Retorna o vetor.
+	return VectorOfByte;
+}
+
+std::vector<BYTE> ConvertValueToByteArray(UInt64 Param_Value)
+{
+	//Obtém o tamanho do tipo
+	int vi_SizeTypeValue = sizeof(Param_Value);
+
+	//Declara o vetor com o tamanho indicado.
+	std::vector<BYTE> VectorOfByte(static_cast<size_t>(vi_SizeTypeValue));
+
+	//Vetor que vai conter os bits.
+	std::vector<int> VectorOfBits(vi_SizeTypeValue * 8);
+
+	//Mask Bits
+	int MaskBitIndex = 0;
+
+	//Variaveis
+	int PositionStart = 0;
+	vector<int>::const_iterator StartPos;
+
+	//Faz um for para converter o valor do parametro para bits.
+	for (int i = (vi_SizeTypeValue * 8) - 1; i >= 0; i--)
+	{
+		//Obtém a masca.
+		MaskBitIndex = 1 << i;
+
+		//Obtém o bit
+		VectorOfBits[i] = (Param_Value & MaskBitIndex) != 0 ? 1 : 0;
+	}
+
+	//Converte os bits para um Array de bytes.
+	for (int i = 0; i < vi_SizeTypeValue; i++)
+	{
+		//Calcula a posicao inicial
+		StartPos = VectorOfBits.begin() + PositionStart;
+
+		//Obtém o vetor.
+		vector<int> Vec8Bits = vector<int>(StartPos, StartPos + 8);
+
+		//Cria um vetor com 8 entradas(8 Bits) aparti do vetor de bits principal para serem convertidos.
+		VectorOfByte[i] = ConvertBitsToByte(Vec8Bits);
+
+		//Incrementa a posicao
+		PositionStart += 8;
+	}
+
+	//Retorna o vetor.
+	return VectorOfByte;
+}
+
+std::vector<BYTE> ConvertValueToByteArray(float Param_Value)
+{
+	//Obtém o tamanho do tipo
+	int vi_SizeTypeValue = sizeof(Param_Value);
+
+	//Declara o vetor com o tamanho indicado.
+	std::vector<BYTE> ArrayOfByte(static_cast<size_t>(vi_SizeTypeValue));
+
+	//Converte o valor.
+	memcpy_s(ArrayOfByte.data(), vi_SizeTypeValue, (unsigned char*)(&Param_Value), vi_SizeTypeValue);
+
+	//Retorna o vetor.
+	return ArrayOfByte;
+}
+
+std::vector<BYTE> ConvertValueToByteArray(Double Param_Value)
+
+{
+	//Obtém o tamanho do tipo
+	int vi_SizeTypeValue = sizeof(Param_Value);
+
+	//Declara o vetor com o tamanho indicado.
+	std::vector<BYTE> ArrayOfByte(static_cast<size_t>(vi_SizeTypeValue));
+
+	//Converte o valor.
+	memcpy_s(ArrayOfByte.data(), vi_SizeTypeValue, (unsigned char*)(&Param_Value), vi_SizeTypeValue);
+
+	//Retorna o vetor.
+	return ArrayOfByte;
+}
 #pragma endregion

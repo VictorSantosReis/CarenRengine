@@ -106,6 +106,12 @@
       <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>call "$(MSBuildProjectDirectory)\CopyWin32ToBinariosFolder.bat"</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Copiando Binarios -&gt; Tests\Binarios</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>

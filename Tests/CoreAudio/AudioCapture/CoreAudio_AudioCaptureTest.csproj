@@ -7,6 +7,10 @@
     <Platforms>AnyCPU;x86</Platforms>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+  </PropertyGroup>
+
   <ItemGroup>
     <Reference Include="CarenRengine.Debug.Win32">
       <HintPath>..\..\Binarios\CarenRengine.Debug.Win32.dll</HintPath>

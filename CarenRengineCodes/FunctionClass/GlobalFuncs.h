@@ -115,3 +115,43 @@ template<class T> BOOL VerificarGenericoValido(System::Object^ Param_Objeto)
 	//Retorna se o objeto generico é valido para o tipo.
 	return dynamic_cast<T>(Param_Objeto) != nullptr;
 }
+
+
+//FUNÇÕES DE CONVERSÃO DE VALORES SIMPLES PARA ARRAY DE BYTES.
+
+template <typename TypeVector>
+BYTE ConvertBitsToByte(vector<TypeVector> Param_BitsInNumber)
+{
+	//Variavel a ser retornada.
+	BYTE vi_Value = 0;
+
+	//Faz um for para converter os bits.
+	for (int i = 7; i >= 0; i--)
+	{
+		//Converte os dados.
+		vi_Value = (int)((vi_Value << 1) | (Param_BitsInNumber[i] ? 1 : 0));
+	}
+
+	//Retorna o valor.
+	return vi_Value;
+}
+
+std::vector<BYTE> ConvertValueToByteArray(SByte Param_Value);
+
+std::vector<BYTE> ConvertValueToByteArray(Byte Param_Value);
+
+std::vector<BYTE> ConvertValueToByteArray(Int16 Param_Value);
+
+std::vector<BYTE> ConvertValueToByteArray(Int32 Param_Value);
+
+std::vector<BYTE> ConvertValueToByteArray(Int64 Param_Value);
+
+std::vector<BYTE> ConvertValueToByteArray(UInt16 Param_Value);
+
+std::vector<BYTE> ConvertValueToByteArray(UInt32 Param_Value);
+
+std::vector<BYTE> ConvertValueToByteArray(UInt64 Param_Value);
+
+std::vector<BYTE> ConvertValueToByteArray(float Param_Value);
+
+std::vector<BYTE> ConvertValueToByteArray(Double Param_Value);

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreAudio_AudioCaptureTest", "CoreAudio_AudioCaptureTest.csproj", "{94242DDF-53B8-48FD-90ED-28690F0EA4A0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{94242DDF-53B8-48FD-90ED-28690F0EA4A0}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{94242DDF-53B8-48FD-90ED-28690F0EA4A0}.Debug|Any CPU.Build.0 = Debug|x86
+		{94242DDF-53B8-48FD-90ED-28690F0EA4A0}.Debug|x86.ActiveCfg = Debug|x86
+		{94242DDF-53B8-48FD-90ED-28690F0EA4A0}.Debug|x86.Build.0 = Debug|x86
+		{94242DDF-53B8-48FD-90ED-28690F0EA4A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94242DDF-53B8-48FD-90ED-28690F0EA4A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94242DDF-53B8-48FD-90ED-28690F0EA4A0}.Release|x86.ActiveCfg = Release|x86
+		{94242DDF-53B8-48FD-90ED-28690F0EA4A0}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {00822997-44CA-48CC-8D5E-36483634FCF8}
+	EndGlobalSection
+EndGlobal

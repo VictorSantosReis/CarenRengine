@@ -91,6 +91,7 @@ limitations under the License.
 #include <inspectable.h>
 #include <oleauto.h>
 #include <stringapiset.h>
+#include <bitset>
 
 //Errros Hresult
 #include <comdef.h>

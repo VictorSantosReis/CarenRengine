@@ -644,7 +644,7 @@ UInt32 Param_SizeProfileBuffer,
 	if (ObjetoGerenciadoValido(Param_Profile))
 	{
 		//Recupera o ponteiro para o profile.
-		Resultado = Param_Profile->ObterPonteiroInterno(pBufferProfile);
+		Resultado = Param_Profile->GetInternalPointer(pBufferProfile);
 	}
 
 	//Chama o método para realizar a operação.
@@ -940,7 +940,7 @@ UInt32 Param_SizeDados,
 	if (ObjetoGerenciadoValido(Param_Dados))
 	{
 		//Recupera o ponteiro para os dados.
-		Resultado = Param_Dados->ObterPonteiroInterno(pBufferDados);
+		Resultado = Param_Dados->GetInternalPointer(pBufferDados);
 
 		//Sai do método em caso de erro.
 		SairOnError(Resultado);
@@ -1366,7 +1366,7 @@ UInt32 Param_ShaderBufferSize)
 	IdRecurso = Util.CreateGuidFromString(Param_IdRecurso);
 
 	//Recupera o ponteiro para o buffer
-	Resultado = Param_ShaderBuffer->ObterPonteiroInterno(ShaderBuffer);
+	Resultado = Param_ShaderBuffer->GetInternalPointer(ShaderBuffer);
 
 	//Sai do método em caso de erro
 	SairOnError(Resultado);
@@ -1422,7 +1422,7 @@ UInt32 Param_ShaderBufferSize)
 	IdRecurso = Util.CreateGuidFromString(Param_IdRecurso);
 
 	//Recupera o ponteiro para o buffer
-	Resultado = Param_ShaderBuffer->ObterPonteiroInterno(ShaderBuffer);
+	Resultado = Param_ShaderBuffer->GetInternalPointer(ShaderBuffer);
 
 	//Sai do método em caso de erro
 	SairOnError(Resultado);
@@ -1478,7 +1478,7 @@ UInt32 Param_ShaderBufferSize)
 	IdRecurso = Util.CreateGuidFromString(Param_IdRecurso);
 
 	//Recupera o ponteiro para o buffer
-	Resultado = Param_ShaderBuffer->ObterPonteiroInterno(ShaderBuffer);
+	Resultado = Param_ShaderBuffer->GetInternalPointer(ShaderBuffer);
 
 	//Sai do método em caso de erro
 	SairOnError(Resultado);

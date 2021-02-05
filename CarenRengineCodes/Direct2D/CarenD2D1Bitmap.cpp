@@ -531,7 +531,7 @@ UInt32 Param_Pitch)
 	}
 
 	//Obtém o ponteiro para os dados na memória.
-	Resultado = Param_SourceData->ObterPonteiroInterno(SourcePointerBuffer);
+	Resultado = Param_SourceData->GetInternalPointer(SourcePointerBuffer);
 
 	//Verifica se obteve com sucesso o ponteiro
 	if(!CarenSucesso(Resultado))

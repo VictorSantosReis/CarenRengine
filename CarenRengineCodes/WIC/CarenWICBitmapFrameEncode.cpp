@@ -824,7 +824,7 @@ ICarenBuffer^ Param_Pixels)
 	GenPointer pPixelsWrite = DefaultGenPointer;
 
 	//Recupera o ponteiro para o buffer de pixels a serem escritos.
-	Resultado = Param_Pixels->ObterPonteiroInterno(pPixelsWrite);
+	Resultado = Param_Pixels->GetInternalPointer(pPixelsWrite);
 
 	//Sai do método em caso de erro.
 	SairOnError(Resultado);

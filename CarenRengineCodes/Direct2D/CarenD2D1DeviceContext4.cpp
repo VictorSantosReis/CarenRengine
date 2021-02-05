@@ -1444,7 +1444,7 @@ CarenResult CarenD2D1DeviceContext4::CreateLookupTable3D(
 	Util.CopiarItensTo_ArrayNativo(&pMyMatrizStrides, Param_Strides, static_cast<UINT32>(Param_Strides->Length));
 
 	//Recupera o ponteiro para o buffer de dados.
-	Resultado = Param_Data->ObterPonteiroInterno(pMyBufferData);
+	Resultado = Param_Data->GetInternalPointer(pMyBufferData);
 
 	//Sai do método em caso de erro
 	SairOnError(Resultado);
@@ -1879,7 +1879,7 @@ CarenResult CarenD2D1DeviceContext4::CreateBitmap(
 	pSize = Util.ConverterD2D1_SIZE_UManagedToUnmanaged(Param_Size);
 
 	//Recupera o ponteiro para o buffer.
-	Resultado = Param_SourceData->ObterPonteiroInterno(pBufferSourceData);
+	Resultado = Param_SourceData->GetInternalPointer(pBufferSourceData);
 
 	//Sai do método em caso de erro
 	SairOnError(Resultado);
@@ -2321,7 +2321,7 @@ CarenResult CarenD2D1DeviceContext4::CreateColorContext(
 	if (ObjetoGerenciadoValido(Param_Profile))
 	{
 		//Recupera o ponteiro.
-		Resultado = Param_Profile->ObterPonteiroInterno(pBufferProfile);
+		Resultado = Param_Profile->GetInternalPointer(pBufferProfile);
 	}
 
 	//Chama o método para realizar a operação.
@@ -3876,7 +3876,7 @@ CarenResult CarenD2D1DeviceContext4::CreateBitmap(
 	pBitmapProps = Util.ConverterD2D1_BITMAP_PROPERTIESManagedToUnmanaged(Param_PropriedadesBitmap);
 
 	//Obtém o ponteiro para a memória de origem.
-	Resultado = Param_DadosOrigem->ObterPonteiroInterno(pBufferOrigem);
+	Resultado = Param_DadosOrigem->GetInternalPointer(pBufferOrigem);
 
 	//Verifica se não falhou.
 	if (!CarenSucesso(Resultado))

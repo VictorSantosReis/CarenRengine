@@ -1189,7 +1189,7 @@ CarenResult CarenD3D11DeviceContext4::UpdateTiles(
 	}
 
 	//Recupera o ponteiro para a matriz de dados de origem.
-	Resultado = Param_OrigemDadosTile->ObterPonteiroInterno(PonteiroDados);
+	Resultado = Param_OrigemDadosTile->GetInternalPointer(PonteiroDados);
 
 	//Verifica se não houve erro
 	if (Resultado.StatusCode != ResultCode::SS_OK)
@@ -2620,7 +2620,7 @@ CarenResult CarenD3D11DeviceContext4::UpdateSubresource1(
 	}
 
 	//Recupera o ponteiros para os dados de origem.
-	Param_DadosOrigemMemoria->ObterPonteiroInterno(PonteiroDados); 
+	Param_DadosOrigemMemoria->GetInternalPointer(PonteiroDados); 
 	
 	//Define o ponteiro de dados.
 	pDadosOrigem = PonteiroDados.ToPointer();
@@ -4860,7 +4860,7 @@ CarenResult CarenD3D11DeviceContext4::GetData(
 		//Forneceu.
 
 		//Recuper ao ponteiro para a memoria que vai conter os dados.
-		Param_Dados->ObterPonteiroInterno(PonteiroDados); 
+		Param_Dados->GetInternalPointer(PonteiroDados); 
 		
 		//Define o ponteiro para os dados.
 		pData = PonteiroDados.ToPointer();
@@ -8146,7 +8146,7 @@ CarenResult CarenD3D11DeviceContext4::UpdateSubresource(
 	}
 
 	//Recupera o ponteiros para os dados de origem.
-	Param_DadosOrigemMemoria->ObterPonteiroInterno(PonteiroDados); 
+	Param_DadosOrigemMemoria->GetInternalPointer(PonteiroDados); 
 	
 	//Define o ponteiro dos dados.
 	pDadosOrigem = PonteiroDados.ToPointer();
@@ -8757,7 +8757,7 @@ CarenResult CarenD3D11DeviceContext4::GetPrivateData(
 	Param_Out_BufferDados = gcnew CarenBuffer();
 
 	//Define o ponteiro de dados na interface de buffer.
-	Param_Out_BufferDados->CriarBuffer(IntPtr(pDados), false, OutLarguraDados, OutLarguraDados);
+	Param_Out_BufferDados->CreateBuffer(IntPtr(pDados), false, OutLarguraDados, OutLarguraDados);
 
 	//Define o tamanho real dos dados retornados.
 	Param_Out_TamanhoBufferSaida = OutLarguraDados;
@@ -8806,7 +8806,7 @@ CarenResult CarenD3D11DeviceContext4::SetPrivateData(
 	GuidDados = Util.CreateGuidFromString(Param_Guid);
 
 	//Obtém o ponteiro para os dados.
-	Resultado = Param_Buffer->ObterPonteiroInterno(PonteiroDados);
+	Resultado = Param_Buffer->GetInternalPointer(PonteiroDados);
 
 	//Verifica se é valido
 	if (Resultado.StatusCode != ResultCode::SS_OK)

@@ -437,7 +437,7 @@ CarenResult CarenWICBitmapLock::GetDataPointer(
 	Param_Out_BufferData = gcnew CarenBuffer();
 
 	//Define o ponteiro na interface
-	Resultado = Param_Out_BufferData->CriarBuffer(IntPtr(pOutBufferData), false, OutBufferSize, OutBufferSize);
+	Resultado = Param_Out_BufferData->CreateBuffer(IntPtr(pOutBufferData), false, OutBufferSize, OutBufferSize);
 
 	//Define a largura do buffer.
 	Param_Out_BufferSize = OutBufferSize;

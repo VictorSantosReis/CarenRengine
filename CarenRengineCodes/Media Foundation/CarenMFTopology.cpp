@@ -1363,7 +1363,7 @@ CarenResult CarenMFTopology::GetAllocatedBlob(String^ Param_GuidChave, [Out] Est
 	Param_Out_Buffer->BufferDados = gcnew CarenBuffer();
 
 	//Copia os dados para o buffer
-	static_cast<ICarenBuffer^>(Param_Out_Buffer->BufferDados)->CriarBuffer(IntPtr(pBuffDados), true, Param_Out_Buffer->SizeData, Param_Out_Buffer->SizeData);
+	static_cast<ICarenBuffer^>(Param_Out_Buffer->BufferDados)->CreateBuffer(IntPtr(pBuffDados), true, Param_Out_Buffer->SizeData, Param_Out_Buffer->SizeData);
 
 Done:;
 	//Libera a memória para o buffer se válido.
@@ -1485,7 +1485,7 @@ CarenResult CarenMFTopology::GetBlob(String^ Param_GuidChave, UInt32 Param_Taman
 	Param_Out_Buffer->BufferDados = gcnew CarenBuffer();
 	
 	//Copia os dados para a interface do buffer.
-	static_cast<ICarenBuffer^>(Param_Out_Buffer->BufferDados)->CriarBuffer(IntPtr(pBuffDados), true, Param_Out_Buffer->SizeData, Param_Out_Buffer->SizeData);
+	static_cast<ICarenBuffer^>(Param_Out_Buffer->BufferDados)->CreateBuffer(IntPtr(pBuffDados), true, Param_Out_Buffer->SizeData, Param_Out_Buffer->SizeData);
 
 Done:;
 	//Libera a memória utilizada pela matriz.

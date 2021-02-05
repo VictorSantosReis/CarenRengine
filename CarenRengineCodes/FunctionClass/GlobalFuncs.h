@@ -36,7 +36,7 @@ using namespace CarenRengine::SDKBase::Estruturas;
 #define CarenSetPointerToICarenSafe(Pointer, CarenInterface, ReleasePointerOnError) Resultado = DefinirPonteiroInterface(Pointer, CarenInterface, ReleasePointerOnError);
 
 //Typedef que tenta recuperar o ponteiro nativo para o buffer na interface (ICarenBufer). Pula para o label 'Done' se o buffer não for valido ou ocorrer um erro na recuperação do ponteiro.
-#define CarenGetPointerFromICarenBufferSafe(CarenInterfaceBuffer, OutIntPtrBuffer) if(CarenInterfaceBuffer != nullptr){Resultado = CarenInterfaceBuffer->ObterPonteiroInterno(OutIntPtrBuffer); SairOnError(Resultado);}
+#define CarenGetPointerFromICarenBufferSafe(CarenInterfaceBuffer, OutIntPtrBuffer) if(CarenInterfaceBuffer != nullptr){Resultado = CarenInterfaceBuffer->GetInternalPointer(OutIntPtrBuffer); SairOnError(Resultado);}
 
 //FUNCÕES GLOBAIS.
 

@@ -774,7 +774,7 @@ CarenResult CarenWICImagingFactory2::CreateBitmapFromMemory(
 	vi_GuidPixel = Util.CreateGuidFromString(Param_GuidFormatoPixel);
 
 	//Recupera o ponteiro para o buffer.
-	Resultado = Param_Buffer->ObterPonteiroInterno(vi_pBuffer);
+	Resultado = Param_Buffer->GetInternalPointer(vi_pBuffer);
 
 	//Sai do método em caso de erro.
 	SairOnError(Resultado);

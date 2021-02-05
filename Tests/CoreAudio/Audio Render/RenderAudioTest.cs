@@ -664,7 +664,7 @@ namespace CoreAudio_RenderAudioTest
                         }
 
                         //Escreve os dados no buffer de destino.
-                        Resultado = MyRenderAudioTest.BufferDeviceTemp.EscreverDados(BufferRender.BufferNativo, 0, BufferRender.SizeBufferNativo);
+                        Resultado = MyRenderAudioTest.BufferDeviceTemp.Write(BufferRender.BufferNativo, 0, BufferRender.SizeBufferNativo);
 
                         //Verifica se não houve erro
                         if (Resultado.StatusCode != ResultCode.SS_OK)

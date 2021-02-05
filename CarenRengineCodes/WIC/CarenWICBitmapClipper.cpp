@@ -531,7 +531,7 @@ CarenResult CarenWICBitmapClipper::CopyPixels(
 	pRetanguloCopy = ObjetoGerenciadoValido(Param_RetanguloCopy) ? Util.ConverterWICRectManaged_ToUnManaged(Param_RetanguloCopy) : NULL;
 
 	//Recupera o ponteiro para o buffer
-	Resultado = Param_Buffer->ObterPonteiroInterno(pBufferDados);
+	Resultado = Param_Buffer->GetInternalPointer(pBufferDados);
 
 	//Chama o método para realizar a operação.
 	Hr = PonteiroTrabalho->CopyPixels(pRetanguloCopy, Param_Stride, Param_TamanhoBuffer, Util.ConverterIntPtrTo<PBYTE>(pBufferDados));

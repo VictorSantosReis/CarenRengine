@@ -111,7 +111,7 @@ HRESULT CarenPD2D1_PROPERTY_FUNCTIONS::EncaminharEvento_OnPropertySetFunction(IU
     Efeito->AdicionarPonteiro(effect);
 
     //Define o buffer nativo na interface do buffer gerenciado.
-    BufferDados->CriarBuffer(IntPtr(const_cast<BYTE*>(data)), false, dataSize, dataSize);
+    BufferDados->CreateBuffer(IntPtr(const_cast<BYTE*>(data)), false, dataSize, dataSize);
     
     //Chama o evento para notificar o usuário.
     Resultado = OnPropertySetFunction(Efeito, BufferDados, dataSize);
@@ -153,7 +153,7 @@ HRESULT CarenPD2D1_PROPERTY_FUNCTIONS::EncaminharEvento_OnPropertyGetFunction(co
     SairOnError(Resultado);
 
     //Recupera o ponteiro para o buffer.
-    Resultado = OutBufferDados->ObterPonteiroInterno(pBufferDados);
+    Resultado = OutBufferDados->GetInternalPointer(pBufferDados);
 
     //Define os dados nos parametros de saida para o método nativo.
     effect = const_cast<const IUnknown*>(pEfeito);

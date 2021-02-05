@@ -433,7 +433,7 @@ cli::array<UInt32>^ Param_Strides,
 	Util.CopiarItensTo_ArrayNativo(&pMatrizStrides, Param_Strides, Param_Strides->Length);
 
 	//Recupera o ponteiro para o buffer
-	Resultado = Param_Data->ObterPonteiroInterno(BufferData);
+	Resultado = Param_Data->GetInternalPointer(BufferData);
 
 	//Sai do método em caso de erro
 	SairOnError(Resultado);
@@ -730,7 +730,7 @@ CarenResult CarenD2D1EffectContext1::CreateColorContext(
 	if (ObjetoGerenciadoValido(Param_Profile))
 	{
 		//Recupera o ponteiro para o profile.
-		Resultado = Param_Profile->ObterPonteiroInterno(pBufferProfile);
+		Resultado = Param_Profile->GetInternalPointer(pBufferProfile);
 	}
 
 	//Chama o método para realizar a operação.
@@ -1026,7 +1026,7 @@ CarenResult CarenD2D1EffectContext1::CreateResourceTexture(
 	if (ObjetoGerenciadoValido(Param_Dados))
 	{
 		//Recupera o ponteiro para os dados.
-		Resultado = Param_Dados->ObterPonteiroInterno(pBufferDados);
+		Resultado = Param_Dados->GetInternalPointer(pBufferDados);
 
 		//Sai do método em caso de erro.
 		SairOnError(Resultado);
@@ -1452,7 +1452,7 @@ CarenResult CarenD2D1EffectContext1::LoadComputeShader(
 	IdRecurso = Util.CreateGuidFromString(Param_IdRecurso);
 
 	//Recupera o ponteiro para o buffer
-	Resultado = Param_ShaderBuffer->ObterPonteiroInterno(ShaderBuffer);
+	Resultado = Param_ShaderBuffer->GetInternalPointer(ShaderBuffer);
 
 	//Sai do método em caso de erro
 	SairOnError(Resultado);
@@ -1508,7 +1508,7 @@ CarenResult CarenD2D1EffectContext1::LoadPixelShader(
 	IdRecurso = Util.CreateGuidFromString(Param_IdRecurso);
 
 	//Recupera o ponteiro para o buffer
-	Resultado = Param_ShaderBuffer->ObterPonteiroInterno(ShaderBuffer);
+	Resultado = Param_ShaderBuffer->GetInternalPointer(ShaderBuffer);
 
 	//Sai do método em caso de erro
 	SairOnError(Resultado);
@@ -1564,7 +1564,7 @@ CarenResult CarenD2D1EffectContext1::LoadVertexShader(
 	IdRecurso = Util.CreateGuidFromString(Param_IdRecurso);
 
 	//Recupera o ponteiro para o buffer
-	Resultado = Param_ShaderBuffer->ObterPonteiroInterno(ShaderBuffer);
+	Resultado = Param_ShaderBuffer->GetInternalPointer(ShaderBuffer);
 
 	//Sai do método em caso de erro
 	SairOnError(Resultado);

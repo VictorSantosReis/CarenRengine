@@ -668,7 +668,7 @@ CarenResult CarenDXGIOutputDuplication::GetFramePointerShape(
 	DXGI_OUTDUPL_POINTER_SHAPE_INFO ShapeInfo = { 0 };
 
 	//Recupera o ponteiro para o Buffer que vai receber os dados.
-	Resultado = Param_Ref_ShapePointerBuffer->ObterPonteiroInterno(PonteiroBuffer);
+	Resultado = Param_Ref_ShapePointerBuffer->GetInternalPointer(PonteiroBuffer);
 
 	//Verifica se obteve com sucesso
 	if (Resultado.StatusCode != ResultCode::SS_OK)

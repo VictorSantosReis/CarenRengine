@@ -379,7 +379,7 @@ PVOID PropVariantManager::ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT
 		vi_BufferGenTemp = (ICarenBuffer^)Param_Estrutura->pclipdata.pClipData;
 
 		//Obtém um ponteiro para o buffer.
-		vi_BufferGenTemp->ObterPonteiroInterno(vi_PointerGenToNativeTemp);	
+		vi_BufferGenTemp->GetInternalPointer(vi_PointerGenToNativeTemp);	
 
 		//Converte para um ponteiro.
 		vi_NativePointerTemp = vi_PointerGenToNativeTemp.ToPointer();
@@ -414,7 +414,7 @@ PVOID PropVariantManager::ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT
 		vi_BufferGenTemp = (ICarenBuffer^)Param_Estrutura->blob.BufferDados;
 
 		//Obtém um ponteiro para o buffer.
-		vi_BufferGenTemp->ObterPonteiroInterno(vi_PointerGenToNativeTemp);
+		vi_BufferGenTemp->GetInternalPointer(vi_PointerGenToNativeTemp);
 
 		//Converte para um ponteiro.
 		vi_NativePointerTemp = vi_PointerGenToNativeTemp.ToPointer();
@@ -483,7 +483,7 @@ PVOID PropVariantManager::ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT
 		vi_BufferGenTemp = (ICarenBuffer^)Param_Estrutura->blob.BufferDados;
 
 		//Obtém um ponteiro para o buffer.
-		vi_BufferGenTemp->ObterPonteiroInterno(vi_PointerGenToNativeTemp);
+		vi_BufferGenTemp->GetInternalPointer(vi_PointerGenToNativeTemp);
 
 		//Converte para um ponteiro.
 		vi_NativePointerTemp = vi_PointerGenToNativeTemp.ToPointer();
@@ -990,7 +990,7 @@ PVOID PropVariantManager::ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT
 			vi_BufferGenTemp = (ICarenBuffer^)Param_Estrutura->caclipdata.pElems[i].pClipData;
 
 			//Obtém um ponteiro para os dados.
-			vi_BufferGenTemp->ObterPonteiroInterno(vi_PointerGenToNativeTemp);
+			vi_BufferGenTemp->GetInternalPointer(vi_PointerGenToNativeTemp);
 
 			//Converte o intptr em um ponteiro nativo.
 			vi_NativePointerTemp = vi_PointerGenToNativeTemp.ToPointer();
@@ -1874,7 +1874,7 @@ CA_PROPVARIANT^ PropVariantManager::ConverterPropVariantUnmanaged_ToManaged(PROP
 		vi_Resultado->pclipdata.pClipData = gcnew CarenBuffer();
 
 		//Cria a interface que vai conter o buffer e realiza uma cópia dos dados.
-		static_cast<ICarenBuffer^>(vi_Resultado->pclipdata.pClipData)->CriarBuffer(
+		static_cast<ICarenBuffer^>(vi_Resultado->pclipdata.pClipData)->CreateBuffer(
 			IntPtr(Param_Estrutura->pclipdata->pClipData), //Buffer de Origem.
 			true, //Vai realizar uma copia.
 			vi_Resultado->pclipdata.cbSize, //Tamanho do buffer
@@ -1895,7 +1895,7 @@ CA_PROPVARIANT^ PropVariantManager::ConverterPropVariantUnmanaged_ToManaged(PROP
 		vi_Resultado->blob.BufferDados = gcnew CarenBuffer();
 
 		//Cria a interface que vai conter o buffer e realiza uma cópia dos dados.
-		static_cast<ICarenBuffer^>(vi_Resultado->blob.BufferDados)->CriarBuffer(
+		static_cast<ICarenBuffer^>(vi_Resultado->blob.BufferDados)->CreateBuffer(
 			IntPtr(Param_Estrutura->blob.pBlobData), //Buffer de Origem.
 			true, //Vai realizar uma copia.
 			vi_Resultado->blob.SizeData,  //Tamanho do buffer
@@ -1952,7 +1952,7 @@ CA_PROPVARIANT^ PropVariantManager::ConverterPropVariantUnmanaged_ToManaged(PROP
 		vi_Resultado->blob.BufferDados = gcnew CarenBuffer();
 
 		//Cria a interface que vai conter o buffer e realiza uma cópia dos dados.
-		static_cast<ICarenBuffer^>(vi_Resultado->blob.BufferDados)->CriarBuffer(
+		static_cast<ICarenBuffer^>(vi_Resultado->blob.BufferDados)->CreateBuffer(
 			IntPtr(Param_Estrutura->blob.pBlobData), //Buffer de Origem.
 			true, //Vai realizar uma copia.
 			vi_Resultado->blob.SizeData,  //Tamanho do buffer
@@ -2419,7 +2419,7 @@ CA_PROPVARIANT^ PropVariantManager::ConverterPropVariantUnmanaged_ToManaged(PROP
 			vi_Resultado->caclipdata.pElems[i].pClipData = gcnew CarenBuffer();
 
 			//Cria o buffer e realizar uma copia dos dados.
-			static_cast<ICarenBuffer^>(vi_Resultado->caclipdata.pElems[i].pClipData)->CriarBuffer
+			static_cast<ICarenBuffer^>(vi_Resultado->caclipdata.pElems[i].pClipData)->CreateBuffer
 			(
 				IntPtr(Param_Estrutura->caclipdata.pElems[i].pClipData), // Buffer ORIGEM
 				true, // Deve realizar uma copia.

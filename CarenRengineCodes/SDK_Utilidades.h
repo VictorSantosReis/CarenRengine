@@ -2687,7 +2687,7 @@ namespace CarenRengine
 				if (ObjetoGerenciadoValido(Param_Estrutura->bits))
 				{
 					//Tenta obter o buffer.
-					Resultado = static_cast<ICarenBuffer^>(Param_Estrutura->bits)->ObterPonteiroInterno(IntptrBuffer);
+					Resultado = static_cast<ICarenBuffer^>(Param_Estrutura->bits)->GetInternalPointer(IntptrBuffer);
 					
 					//Verifica se obteve sucesso
 					if (!CarenSucesso(Resultado))
@@ -2717,7 +2717,7 @@ namespace CarenRengine
 					EstruturaRetorno->bits = gcnew CarenBuffer();
 
 					//Cria o buffer com base no ponteiro.
-					static_cast<ICarenBuffer^>(EstruturaRetorno->bits)->CriarBuffer(IntPtr(Param_Estrutura->bits), false, 0, 0);
+					static_cast<ICarenBuffer^>(EstruturaRetorno->bits)->CreateBuffer(IntPtr(Param_Estrutura->bits), false, 0, 0);
 				}
 				
 				//Retorna o resultado
@@ -4325,7 +4325,7 @@ namespace CarenRengine
 				EstruturaRetorno->byteWidth = Param_Estrutura->byteWidth;
 
 				//Recupera o ponteiro para o buffer.
-				static_cast<ICarenBuffer^>(Param_Estrutura->data)->ObterPonteiroInterno(pBufferDados);
+				static_cast<ICarenBuffer^>(Param_Estrutura->data)->GetInternalPointer(pBufferDados);
 
 				//Define o ponteiro na estrutura.
 				EstruturaRetorno->data = ConverterIntPtrTo<PBYTE>(pBufferDados);
@@ -4346,7 +4346,7 @@ namespace CarenRengine
 				EstruturaRetorno->data = gcnew CarenBuffer();
 
 				//Define os dados no buffer.
-				static_cast<ICarenBuffer^>(EstruturaRetorno->data)->CriarBuffer(IntPtr(const_cast<PBYTE>(Param_Estrutura->data)), false, EstruturaRetorno->byteWidth, EstruturaRetorno->byteWidth);
+				static_cast<ICarenBuffer^>(EstruturaRetorno->data)->CreateBuffer(IntPtr(const_cast<PBYTE>(Param_Estrutura->data)), false, EstruturaRetorno->byteWidth, EstruturaRetorno->byteWidth);
 				
 				//Retorna o resultado
 				return EstruturaRetorno;
@@ -7077,7 +7077,7 @@ namespace CarenRengine
 				EstruturaRetorno->RowPitch = Param_Estrutura->LinhaPasso;
 
 				//Obtém o ponteiro para o buffer.
-				((ICarenBuffer^)Param_Estrutura->Param_BufferDados)->ObterPonteiroInterno(PointeiroBuffer);
+				((ICarenBuffer^)Param_Estrutura->Param_BufferDados)->GetInternalPointer(PointeiroBuffer);
 
 				//Define o ponteiro na estrutura
 				EstruturaRetorno->pData = (PBYTE)PointeiroBuffer.ToPointer();
@@ -7097,7 +7097,7 @@ namespace CarenRengine
 				EstruturaRetorno->ProfundidadePasso = Param_Estrutura->DepthPitch;
 
 				//Define o ponteiro de buffer.
-				Param_BuffInterface->CriarBuffer(IntPtr(Param_Estrutura->pData), false, 0, 0); //Associa o ponteiro da estrutura ao da CarenBuffer.
+				Param_BuffInterface->CreateBuffer(IntPtr(Param_Estrutura->pData), false, 0, 0); //Associa o ponteiro da estrutura ao da CarenBuffer.
 
 				//Define a interface de buffer criada na estrutura.
 				EstruturaRetorno->Param_BufferDados = Param_BuffInterface;
@@ -8723,7 +8723,7 @@ namespace CarenRengine
 				if (ObjetoGerenciadoValido(Param_Estrutura->Buffer))
 				{
 					//Recupera o ponteiro do buffer para a estrutura.
-					static_cast<ICarenBuffer^>(Param_Estrutura->Buffer)->ObterPonteiroInterno(PointeiroBuffer);
+					static_cast<ICarenBuffer^>(Param_Estrutura->Buffer)->GetInternalPointer(PointeiroBuffer);
 
 					//Define o ponteiro.
 					EstruturaRetorno->pBits = (BYTE*)PointeiroBuffer.ToPointer();
@@ -8749,10 +8749,10 @@ namespace CarenRengine
 					EstruturaRetorno->Buffer = gcnew CarenBuffer();
 
 					//Cria e associa o ponteiro da estrutura a interface.
-					static_cast<ICarenBuffer^>(EstruturaRetorno->Buffer)->CriarBuffer(IntPtr(Param_Estrutura->pBits), false, (unsigned int)EstruturaRetorno->Largura, (unsigned int)EstruturaRetorno->Largura);
+					static_cast<ICarenBuffer^>(EstruturaRetorno->Buffer)->CreateBuffer(IntPtr(Param_Estrutura->pBits), false, (unsigned int)EstruturaRetorno->Largura, (unsigned int)EstruturaRetorno->Largura);
 
 					//Define a posição para zero
-					static_cast<ICarenBuffer^>(EstruturaRetorno->Buffer)->DefinirPosicao(0);
+					static_cast<ICarenBuffer^>(EstruturaRetorno->Buffer)->SetPosition(0);
 				}
 				
 				//Retorna a variavel.
@@ -9046,8 +9046,8 @@ namespace CarenRengine
 				GenPointer pBufferMask = DefaultGenPointer;
 
 				//Recupera o ponteiro dos buffers acima.
-				static_cast<ICarenBuffer^>(Param_Estrutura->Pattern)->ObterPonteiroInterno(pBufferPattern);
-				static_cast<ICarenBuffer^>(Param_Estrutura->Mask)->ObterPonteiroInterno(pBufferMask);
+				static_cast<ICarenBuffer^>(Param_Estrutura->Pattern)->GetInternalPointer(pBufferPattern);
+				static_cast<ICarenBuffer^>(Param_Estrutura->Mask)->GetInternalPointer(pBufferMask);
 
 				//Define os dados na estrutura
 				EstruturaRetorno->Length = static_cast<ULONG>(Param_Estrutura->Length);
@@ -9074,8 +9074,8 @@ namespace CarenRengine
 				EstruturaRetorno->EndOfStream = Param_Estrutura->EndOfStream ? TRUE : FALSE;
 				
 				//Define os dados no buffer.
-				static_cast<ICarenBuffer^>(EstruturaRetorno->Pattern)->CriarBuffer(IntPtr(Param_Estrutura->Pattern), false, safe_cast<UInt32>(EstruturaRetorno->Length), safe_cast<UInt32>(EstruturaRetorno->Length));
-				static_cast<ICarenBuffer^>(EstruturaRetorno->Mask)->CriarBuffer(IntPtr(Param_Estrutura->Mask), false, 0, 0);
+				static_cast<ICarenBuffer^>(EstruturaRetorno->Pattern)->CreateBuffer(IntPtr(Param_Estrutura->Pattern), false, safe_cast<UInt32>(EstruturaRetorno->Length), safe_cast<UInt32>(EstruturaRetorno->Length));
+				static_cast<ICarenBuffer^>(EstruturaRetorno->Mask)->CreateBuffer(IntPtr(Param_Estrutura->Mask), false, 0, 0);
 
 				//Retorna a variavel.
 				return EstruturaRetorno;
@@ -9546,7 +9546,7 @@ namespace CarenRengine
 				GenPointer pBuffer = DefaultGenPointer;
 
 				//Recupera o ponteiro para o buffer.
-				static_cast<ICarenBuffer^>(Param_Estrutura->pbBuffer)->ObterPonteiroInterno(pBuffer);
+				static_cast<ICarenBuffer^>(Param_Estrutura->pbBuffer)->GetInternalPointer(pBuffer);
 
 				//Define os dados.
 				EstruturaRetorno->Format = CreateGuidFromString(Param_Estrutura->Format);
@@ -9573,7 +9573,7 @@ namespace CarenRengine
 				EstruturaRetorno->pbBuffer = gcnew CarenBuffer();
 
 				//Define o ponteiro na interface.
-				static_cast<ICarenBuffer^>(EstruturaRetorno->pbBuffer)->CriarBuffer(IntPtr(Param_Estrutura->pbBuffer), Param_CopyBuffer, EstruturaRetorno->cbBufferSize, EstruturaRetorno->cbBufferSize);
+				static_cast<ICarenBuffer^>(EstruturaRetorno->pbBuffer)->CreateBuffer(IntPtr(Param_Estrutura->pbBuffer), Param_CopyBuffer, EstruturaRetorno->cbBufferSize, EstruturaRetorno->cbBufferSize);
 
 				//Retorna o resultado
 				return EstruturaRetorno;

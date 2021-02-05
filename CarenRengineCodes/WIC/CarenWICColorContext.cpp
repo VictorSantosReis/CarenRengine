@@ -463,7 +463,7 @@ ICarenBuffer^% Param_Ref_Buffer,
 
 	//Recupera o ponteiro para o buffer se ele tiver sido informado
 	if (ObjetoGerenciadoValido(Param_Ref_Buffer))
-		Param_Ref_Buffer->ObterPonteiroInterno(pBufferDados);
+		Param_Ref_Buffer->GetInternalPointer(pBufferDados);
 
 	//Chama o método para realizar a operação.
 	Hr = PonteiroTrabalho->GetProfileBytes(Param_SizeBuffer, Param_Ref_Buffer == nullptr ? NULL : Util.ConverterIntPtrTo<PBYTE>(pBufferDados), &OutSizeAtual);
@@ -633,7 +633,7 @@ UInt32 Param_SizeBuffer)
 	GenPointer pBufferDados = DefaultGenPointer;
 
 	//Recupera o ponteiro para o buffer.
-	Resultado = Param_Buffer->ObterPonteiroInterno(pBufferDados);
+	Resultado = Param_Buffer->GetInternalPointer(pBufferDados);
 
 	//Sai do método em caso de erro.
 	SairOnError(Resultado);

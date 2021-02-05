@@ -1119,7 +1119,7 @@ CarenResult CarenD3D11Device4::ReadFromSubresource(
 	D3D11_BOX* pBox = ObjetoGerenciadoValido(Param_CaixaOrigem) ? Util.ConverterD3D11_BOXManaged_ToUnManaged(Param_CaixaOrigem) : NULL;
 
 	//Recupera o ponteiro para o buffer de destino
-	Resultado = Param_BufferDestino->ObterPonteiroInterno(PonteiroDados);
+	Resultado = Param_BufferDestino->GetInternalPointer(PonteiroDados);
 
 	//Verifica se não houve erro
 	if (Resultado.StatusCode != ResultCode::SS_OK)
@@ -1196,7 +1196,7 @@ CarenResult CarenD3D11Device4::WriteToSubresource(
 	D3D11_BOX* pBox = ObjetoGerenciadoValido(Param_CaixaDestino) ? Util.ConverterD3D11_BOXManaged_ToUnManaged(Param_CaixaDestino) : NULL;
 
 	//Recupera o ponteiro para o buffer de destino
-	Resultado = Param_BufferOrigem->ObterPonteiroInterno(PonteiroDados);
+	Resultado = Param_BufferOrigem->GetInternalPointer(PonteiroDados);
 
 	//Verifica se não houve erro
 	if (Resultado.StatusCode != ResultCode::SS_OK)
@@ -4530,7 +4530,7 @@ CarenResult CarenD3D11Device4::GetPrivateData(
 	Param_Out_Buffer = gcnew CarenBuffer();
 
 	//Define o ponteiro de dados na interface de buffer.
-	Param_Out_Buffer->CriarBuffer(IntPtr(pData), false, TamanhoBuffer, TamanhoBuffer);
+	Param_Out_Buffer->CreateBuffer(IntPtr(pData), false, TamanhoBuffer, TamanhoBuffer);
 
 
 
@@ -4661,7 +4661,7 @@ CarenResult CarenD3D11Device4::SetPrivateData(
 	GuidBuffer = Util.CreateGuidFromString(Param_Guid);
 
 	//Obtém o ponteiro para os dados.
-	Resultado = Param_Buffer->ObterPonteiroInterno(PonteiroDados);
+	Resultado = Param_Buffer->GetInternalPointer(PonteiroDados);
 
 	//Verifica se é valido
 	if (Resultado.StatusCode != ResultCode::SS_OK)

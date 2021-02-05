@@ -458,7 +458,7 @@ ICarenBuffer^ Param_ScanDataBufferDestino,
 	UINT vi_OutBufferSizeAtual = 0;
 
 	//Recupera o ponteiro para o buffer de destino.
-	Resultado = Param_ScanDataBufferDestino->ObterPonteiroInterno(vi_pBufferDestino);
+	Resultado = Param_ScanDataBufferDestino->GetInternalPointer(vi_pBufferDestino);
 
 	//Sai do método em caso de erro.
 	SairOnError(Resultado);

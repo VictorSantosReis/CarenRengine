@@ -3681,7 +3681,7 @@ CarenResult CarenD3D11Device2::GetPrivateData(
 	Param_Out_Buffer = gcnew CarenBuffer();
 
 	//Define o ponteiro de dados na interface de buffer.
-	Param_Out_Buffer->CriarBuffer(IntPtr(pData), false, TamanhoBuffer, TamanhoBuffer);
+	Param_Out_Buffer->CreateBuffer(IntPtr(pData), false, TamanhoBuffer, TamanhoBuffer);
 
 
 
@@ -3812,7 +3812,7 @@ CarenResult CarenD3D11Device2::SetPrivateData(
 	GuidBuffer = Util.CreateGuidFromString(Param_Guid);
 
 	//Obtém o ponteiro para os dados.
-	Resultado = Param_Buffer->ObterPonteiroInterno(PonteiroDados);
+	Resultado = Param_Buffer->GetInternalPointer(PonteiroDados);
 
 	//Verifica se é valido
 	if (Resultado.StatusCode != ResultCode::SS_OK)

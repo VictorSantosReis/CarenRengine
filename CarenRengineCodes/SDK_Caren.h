@@ -220,7 +220,7 @@ namespace CarenRengine
 		/// </summary>
 		/// <param name="Param_TamanhoBuffer">O tamanho do buffer a ser criado.</param>
 		/// <returns></returns>
-		CarenResult CriarBuffer(UInt32 Param_TamanhoBuffer);
+		CarenResult CreateBuffer(UInt32 Param_TamanhoBuffer);
 
 		/// <summary>
 		/// Método responsável por criar o Buffer a parti de um Buffer já existente. Permite especifica se deve realizar uma cópia do Buffer ou apenas associar o ponteiro a interface.
@@ -230,7 +230,7 @@ namespace CarenRengine
 		/// <param name="Param_Copiar">Um valor Booleano que indica se o método deve fazer uma cópia do buffer de origem, ou se deve apenas associar seu ponteiro a este buffer.</param>
 		/// <param name="Param_TamanhoDadosValidos">O total, em bytes, de dados validos no buffer. Se todos forem validos, esse valor deve ser igual ao do parametro (Param_Tamanho).</param>
 		/// <returns></returns>
-		CarenResult CriarBuffer(ICarenBuffer^ Param_BufferOrigem, Boolean Param_Copiar, UInt32 Param_Tamanho, UInt32 Param_TamanhoDadosValidos);
+		CarenResult CreateBuffer(ICarenBuffer^ Param_BufferOrigem, Boolean Param_Copiar, UInt32 Param_Tamanho, UInt32 Param_TamanhoDadosValidos);
 
 		/// <summary>
 		/// Método responsável por criar o Buffer a parti de um Buffer já existente. Permite especifica se deve realizar uma cópia do Buffer ou apenas associar o ponteiro a interface.
@@ -240,7 +240,7 @@ namespace CarenRengine
 		/// <param name="Param_Copiar">Um valor Booleano que indica se o método deve fazer uma cópia do buffer de origem, ou se deve apenas associar seu ponteiro a este buffer.</param>
 		/// <param name="Param_TamanhoDadosValidos">O total, em bytes, de dados validos no buffer. Se todos forem validos, esse valor deve ser igual ao do parametro (Param_Tamanho).</param>
 		/// <returns></returns>
-		CarenResult CriarBuffer(IntPtr Param_BufferOrigem, Boolean Param_Copiar, UInt32 Param_Tamanho, UInt32 Param_TamanhoDadosValidos);
+		CarenResult CreateBuffer(IntPtr Param_BufferOrigem, Boolean Param_Copiar, UInt32 Param_Tamanho, UInt32 Param_TamanhoDadosValidos);
 
 		/// <summary>
 		/// Método responsável por criar o Buffer a parti de um Buffer já existente.
@@ -249,7 +249,7 @@ namespace CarenRengine
 		/// <param name="Param_Tamanho">O tamanho do buffer de origem.</param>
 		/// <param name="Param_TamanhoDadosValidos">O total, em bytes, de dados validos no buffer. Se todos forem validos, esse valor deve ser igual ao do parametro (Param_Tamanho).</param>
 		/// <returns></returns>
-		CarenResult CriarBuffer(MatrizBytes Param_BufferOrigem, UInt32 Param_Tamanho, UInt32 Param_TamanhoDadosValidos);
+		CarenResult CreateBuffer(MatrizBytes Param_BufferOrigem, UInt32 Param_Tamanho, UInt32 Param_TamanhoDadosValidos);
 
 		/// <summary>
 		/// Método responsável por criar o Buffer a parti de um Buffer já existente.
@@ -258,7 +258,7 @@ namespace CarenRengine
 		/// <param name="Param_Tamanho">O tamanho do buffer de origem.</param>
 		/// <param name="Param_TamanhoDadosValidos">O total, em bytes, de dados validos no buffer. Se todos forem validos, esse valor deve ser igual ao do parametro (Param_Tamanho).</param>
 		/// <returns></returns>
-		CarenResult CriarBuffer(Span<Byte> Param_BufferOrigem, UInt32 Param_Tamanho, UInt32 Param_TamanhoDadosValidos);
+		CarenResult CreateBuffer(Span<Byte> Param_BufferOrigem, UInt32 Param_Tamanho, UInt32 Param_TamanhoDadosValidos);
 
 		/// <summary>
 		/// Método responsável por criar o Buffer a parti de um Buffer já existente.
@@ -267,7 +267,7 @@ namespace CarenRengine
 		/// <param name="Param_Tamanho">O tamanho do buffer de origem.</param>
 		/// <param name="Param_TamanhoDadosValidos">O total, em bytes, de dados validos no buffer. Se todos forem validos, esse valor deve ser igual ao do parametro (Param_Tamanho).</param>
 		/// <returns></returns>
-		CarenResult CriarBuffer(ReadOnlySpan<Byte> Param_BufferOrigem, UInt32 Param_Tamanho, UInt32 Param_TamanhoDadosValidos);
+		CarenResult CreateBuffer(ReadOnlySpan<Byte> Param_BufferOrigem, UInt32 Param_Tamanho, UInt32 Param_TamanhoDadosValidos);
 
 		/// <summary>
 		/// Método responsável por criar o Buffer a parti de um Buffer já existente.
@@ -276,7 +276,7 @@ namespace CarenRengine
 		/// <param name="Param_Tamanho">O tamanho do buffer de origem.</param>
 		/// <param name="Param_TamanhoDadosValidos">O total, em bytes, de dados validos no buffer. Se todos forem validos, esse valor deve ser igual ao do parametro (Param_Tamanho).</param>
 		/// <returns></returns>
-		CarenResult CriarBuffer(ReadOnlyMemory<Byte> Param_BufferOrigem, UInt32 Param_Tamanho, UInt32 Param_TamanhoDadosValidos);
+		CarenResult CreateBuffer(ReadOnlyMemory<Byte> Param_BufferOrigem, UInt32 Param_Tamanho, UInt32 Param_TamanhoDadosValidos);
 
 		/// <summary>
 		/// Escreve dados no buffer atual a parti de um Buffer de origem.
@@ -413,11 +413,65 @@ namespace CarenRengine
 		CarenResult Write(Double Param_Value);
 
 		/// <summary>
+		/// Escreve uma certa quantidade de dados do buffer atual em um buffer de destino.
+		/// </summary>
+		/// <param name="Param_StartIndex">O Index do inicio da cópia dos dados do buffer atual.</param>
+		/// <param name="Param_Count">A quantidade de dados atuais a serem escritos no buffer de destino.</param>
+		/// <param name="Param_Ref_BufferDest">O buffer de destino que vai receber os dados.</param>
+		/// <returns></returns>
+		CarenResult WriteTo(UInt32 Param_StartIndex, UInt32 Param_Count, Span<Byte>% Param_Ref_BufferDest);
+
+		/// <summary>
+		/// Escreve uma certa quantidade de dados do buffer atual em um buffer de destino.
+		/// </summary>
+		/// <param name="Param_StartIndex">O Index do inicio da cópia dos dados do buffer atual.</param>
+		/// <param name="Param_Count">A quantidade de dados atuais a serem escritos no buffer de destino.</param>
+		/// <param name="Param_Ref_BufferDest">O buffer de destino que vai receber os dados.</param>
+		/// <returns></returns>
+		CarenResult WriteTo(UInt32 Param_StartIndex, UInt32 Param_Count, Memory<Byte>% Param_Ref_BufferDest);
+
+		/// <summary>
+		/// Escreve uma certa quantidade de dados do buffer atual em um buffer de destino.
+		/// </summary>
+		/// <param name="Param_StartIndex">O Index do inicio da cópia dos dados do buffer atual.</param>
+		/// <param name="Param_Count">A quantidade de dados atuais a serem escritos no buffer de destino.</param>
+		/// <param name="Param_Ref_BufferDest">O buffer de destino que vai receber os dados.</param>
+		/// <returns></returns>
+		CarenResult WriteTo(UInt32 Param_StartIndex, UInt32 Param_Count, MatrizBytes% Param_Ref_BufferDest);
+
+		/// <summary>
+		/// Escreve uma certa quantidade de dados do buffer atual em um buffer de destino.
+		/// </summary>
+		/// <param name="Param_StartIndex">O Index do inicio da cópia dos dados do buffer atual.</param>
+		/// <param name="Param_Count">A quantidade de dados atuais a serem escritos no buffer de destino.</param>
+		/// <param name="Param_Ref_BufferDest">O buffer de destino que vai receber os dados.</param>
+		/// <returns></returns>
+		CarenResult WriteTo(UInt32 Param_StartIndex, UInt32 Param_Count, ICarenBuffer^% Param_Ref_BufferDest);
+
+		/// <summary>
+		/// Escreve uma certa quantidade de dados do buffer atual em um buffer de destino.
+		/// </summary>
+		/// <param name="Param_StartIndex">O Index do inicio da cópia dos dados do buffer atual.</param>
+		/// <param name="Param_Count">A quantidade de dados atuais a serem escritos no buffer de destino.</param>
+		/// <param name="Param_Ref_BufferDest">O buffer de destino que vai receber os dados.</param>
+		/// <returns></returns>
+		CarenResult WriteTo(UInt32 Param_StartIndex, UInt32 Param_Count, IntPtr Param_BufferDest);
+
+		/// <summary>
+		/// Escreve uma certa quantidade de dados do buffer atual em um buffer de destino.
+		/// </summary>
+		/// <param name="Param_StartIndex">O Index do inicio da cópia dos dados do buffer atual.</param>
+		/// <param name="Param_Count">A quantidade de dados atuais a serem escritos no buffer de destino.</param>
+		/// <param name="Param_Ref_BufferDest">O buffer de destino que vai receber os dados.</param>
+		/// <returns></returns>
+		CarenResult WriteTo(UInt32 Param_StartIndex, UInt32 Param_Count, PBYTE Param_BufferDest);		
+
+		/// <summary>
 		/// Obtém uma cópia de todos os dados do Buffer. Este método não é recomendado porque cria uma cópia do Buffer na memória. Se possível, utilize os métodos que retornam um Span.
 		/// </summary>
 		/// <param name="Param_Out_Buffer">Retorna uma matriz de bytes que representa uma cópia total do buffer.</param>
 		/// <returns></returns>
-		CarenResult ObterBuffer([Out] MatrizBytes% Param_Out_Buffer);
+		CarenResult Get([Out] MatrizBytes% Param_Out_Buffer);
 
 		/// <summary>
 		/// Obtém uma cópia de uma região especifica do Buffer. Este método não é recomendado porque cria uma cópia do Buffer na memória. Se possível, utilize os métodos que retornam um Span.
@@ -426,7 +480,7 @@ namespace CarenRengine
 		/// <param name="Param_Tamanho">O tamanho dos dados, em bytes, que seram obtidos.</param>
 		/// <param name="Param_Out_Buffer">Retorna uma matriz de bytes que representa uma cópia da região solicitada do buffer.</param>
 		/// <returns></returns>
-		CarenResult ObterBuffer(UInt32 Param_Start, UInt32 Param_Tamanho, [Out] MatrizBytes% Param_Out_Buffer);
+		CarenResult Get(UInt32 Param_Start, UInt32 Param_Tamanho, [Out] MatrizBytes% Param_Out_Buffer);
 
 		/// <summary>
 		/// Obtém uma região especifica do Buffer. Este método não realiza nenhum tipo de cópia. Qualquer alteração no buffer (Param_Out_Buffer) será refletido no buffer original.
@@ -435,7 +489,7 @@ namespace CarenRengine
 		/// <param name="Param_Tamanho">O tamanho dos dados, em bytes, que seram obtidos.</param>
 		/// <param name="Param_Out_Buffer">Retorna um Span de bytes que representa diretamente a região solicitada do Buffer.</param>
 		/// <returns></returns>
-		CarenResult ObterBuffer(UInt32 Param_Start, UInt32 Param_Tamanho, [Out] Span<Byte>% Param_Out_Buffer);
+		CarenResult Get(UInt32 Param_Start, UInt32 Param_Tamanho, [Out] Span<Byte>% Param_Out_Buffer);
 
 		/// <summary>
 		/// Obtém uma região especifica do Buffer. Este método não realiza nenhum tipo de cópia.
@@ -444,17 +498,20 @@ namespace CarenRengine
 		/// <param name="Param_Tamanho">O tamanho dos dados, em bytes, que seram obtidos.</param>
 		/// <param name="Param_Out_Buffer">Retorna um Span de bytes que representa diretamente a região solicitada do Buffer.</param>
 		/// <returns></returns>
-		CarenResult ObterBuffer(UInt32 Param_Start, UInt32 Param_Tamanho, [Out] ReadOnlySpan<Byte>% Param_Out_Buffer);
-
-
-
+		CarenResult Get(UInt32 Param_Start, UInt32 Param_Tamanho, [Out] ReadOnlySpan<Byte>% Param_Out_Buffer);
 
 		/// <summary>
 		/// Método responsável por recuperar o ponteiro para o buffer interno.
 		/// </summary>
 		/// <param name="Param_Ref_PonteiroBuffer">Retorna o ponteiro para o buffer nativo gerenciado pela interface.</param>
 		/// <returns></returns>
-		CarenResult ObterPonteiroInterno(IntPtr% Param_Ref_PonteiroBuffer);
+		CarenResult GetInternalPointer(IntPtr% Param_Ref_PonteiroBuffer);
+
+		/// <summary>
+		/// Método responsável por retornar um valor que define se o ponteiro para o buffer atual é valido.
+		/// </summary>
+		/// <returns></returns>
+		CarenResult GetStatusPointer();
 
 		/// <summary>
 		/// Método responsável por preencher o buffer com ZEROS(0).
@@ -465,10 +522,10 @@ namespace CarenRengine
 		/// Método responsável por definir a posição de escrita ou leitura no buffer.
 		/// </summary>
 		/// <param name="Param_Offset">O deslocamento, em bytes, que representa a nova posição para leitura ou escrita.</param>
-		void DefinirPosicao(UInt32 Param_Offset);
+		void SetPosition(UInt32 Param_Offset);
 
 		/// <summary>
-		/// Libera os dados alocados para o buffer criado pelo método(CriarBuffer).
+		/// Libera os dados alocados para o buffer criado pelo método(CreateBuffer).
 		/// </summary>
 		/// <returns></returns>
 		void ReleaseBuffer();

@@ -454,7 +454,7 @@ void CarenMFMediaEngineNeedKeyNotify::EncaminharEvento_OnNeedKeys(_In_reads_byte
 		vi_pBufferGerenciado = gcnew CarenBuffer();
 
 		//Define os dados no classe sem realizar nenhuma cópia extra.
-		vi_pBufferGerenciado->CriarBuffer(IntPtr(const_cast<PBYTE>(initdata)), false, vi_CountData, vi_CountData);
+		vi_pBufferGerenciado->CreateBuffer(IntPtr(const_cast<PBYTE>(initdata)), false, vi_CountData, vi_CountData);
 	}
 
 	//Chama o método para notificar o usuário.

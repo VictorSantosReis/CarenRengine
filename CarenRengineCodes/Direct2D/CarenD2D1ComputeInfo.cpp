@@ -458,7 +458,7 @@ UInt32 Param_DataCount)
 	IntPtr PonteiroToBuffer = IntPtr::Zero;
 
 	//Recupera o ponteiro para o buffer.
-	Resultado = Param_Buffer->ObterPonteiroInterno(PonteiroToBuffer);
+	Resultado = Param_Buffer->GetInternalPointer(PonteiroToBuffer);
 
 	//Sai do método em caso de erro
 	SairOnError(Resultado);

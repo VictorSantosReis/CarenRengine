@@ -632,7 +632,7 @@ CarenResult CarenMFMediaBuffer::Lock([Out] ICarenBuffer^% Param_Out_BufferMidia,
 	Param_Out_BufferMidia = gcnew CarenBuffer();
 
 	//Chama o método que vai criar o buffer da classe com base no buffer retornado pelo método Lock
-	Resultado = Param_Out_BufferMidia->CriarBuffer(IntPtr(BufferMidiaData), false, LarguraAtual, LarguaraMaximaForEscrita);
+	Resultado = Param_Out_BufferMidia->CreateBuffer(IntPtr(BufferMidiaData), false, LarguraAtual, LarguaraMaximaForEscrita);
 
 	//Verifica se obteve sucesso
 	if (Resultado.StatusCode != ResultCode::SS_OK)

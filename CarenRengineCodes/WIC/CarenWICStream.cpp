@@ -567,7 +567,7 @@ UInt32 Param_BufferSize)
 	GenPointer pBufferMemory = DefaultGenPointer;
 
 	//Recupera o ponteiro para o fluxo.
-	Resultado = Param_MemoryBuffer->ObterPonteiroInterno(pBufferMemory);
+	Resultado = Param_MemoryBuffer->GetInternalPointer(pBufferMemory);
 
 	//Sai do método em caso de erro.
 	SairOnError(Resultado);
@@ -1056,7 +1056,7 @@ CarenResult CarenWICStream::Read(ICarenBuffer^ Param_Out_BufferDest, UInt64 Para
 	ULONG vi_OutCountReaded = 0;
 
 	//Chama o método para recuperar o buffer de destino.
-	Resultado = Param_Out_BufferDest->ObterPonteiroInterno(vi_pOutBufferDest);
+	Resultado = Param_Out_BufferDest->GetInternalPointer(vi_pOutBufferDest);
 
 	//Verifica se não houve erro
 	if (Resultado.StatusCode != ResultCode::SS_OK)
@@ -1114,7 +1114,7 @@ CarenResult CarenWICStream::Write(ICarenBuffer^ Param_BufferWrite, UInt64 Param_
 	ULONG vi_OutCountWritten = 0;
 
 	//Chama o método para recuperar o buffer de origem.
-	Resultado = Param_BufferWrite->ObterPonteiroInterno(vi_pBufferSource);
+	Resultado = Param_BufferWrite->GetInternalPointer(vi_pBufferSource);
 
 	//Verifica se não houve erro
 	if (Resultado.StatusCode != ResultCode::SS_OK)

@@ -449,7 +449,7 @@ CarenResult CarenAudioRenderClient::GetBuffer(UInt32 Param_NumeroFramesRequisita
 	Param_Out_BufferAudio = gcnew CarenBuffer();
 
 	//Associa o ponteiro de dados a classe.
-	Resultado = Param_Out_BufferAudio->CriarBuffer(IntPtr(pBufferData), false, LarguraDisponivelBuffer, LarguraDisponivelBuffer);
+	Resultado = Param_Out_BufferAudio->CreateBuffer(IntPtr(pBufferData), false, LarguraDisponivelBuffer, LarguraDisponivelBuffer);
 
 	//Verifica se houve erro
 	if (Resultado.StatusCode != ResultCode::SS_OK)

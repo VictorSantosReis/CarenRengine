@@ -10,7 +10,7 @@
 /// </summary>
 /// <param name="Param_TamanhoBuffer">O tamanho do buffer a ser criado.</param>
 /// <returns></returns>
-CarenResult CarenBuffer::CriarBuffer(UInt32 Param_TamanhoBuffer)
+CarenResult CarenBuffer::CreateBuffer(UInt32 Param_TamanhoBuffer)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -68,7 +68,7 @@ Done:;
 /// <param name="Param_Copiar">Um valor Booleano que indica se o método deve fazer uma cópia do buffer de origem, ou se deve apenas associar seu ponteiro a este buffer.</param>
 /// <param name="Param_TamanhoDadosValidos">O total, em bytes, de dados validos no buffer. Se todos forem validos, esse valor deve ser igual ao do parametro (Param_Tamanho).</param>
 /// <returns></returns>
-CarenResult CarenBuffer::CriarBuffer(ICarenBuffer^ Param_BufferOrigem, Boolean Param_Copiar, UInt32 Param_Tamanho, UInt32 Param_TamanhoDadosValidos)
+CarenResult CarenBuffer::CreateBuffer(ICarenBuffer^ Param_BufferOrigem, Boolean Param_Copiar, UInt32 Param_Tamanho, UInt32 Param_TamanhoDadosValidos)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -79,7 +79,7 @@ CarenResult CarenBuffer::CriarBuffer(ICarenBuffer^ Param_BufferOrigem, Boolean P
 	BOOL GetMemStatus = FALSE;
 
 	//Recupera o ponteiro para o buffer do origem
-	Resultado = Param_BufferOrigem->ObterPonteiroInterno(PonteiroBufferOrigem);
+	Resultado = Param_BufferOrigem->GetInternalPointer(PonteiroBufferOrigem);
 
 	//Verifica se não houve erro
 	if (Resultado.StatusCode != ResultCode::SS_OK)
@@ -177,7 +177,7 @@ Done:;
 /// <param name="Param_Copiar">Um valor Booleano que indica se o método deve fazer uma cópia do buffer de origem, ou se deve apenas associar seu ponteiro a este buffer.</param>
 /// <param name="Param_TamanhoDadosValidos">O total, em bytes, de dados validos no buffer. Se todos forem validos, esse valor deve ser igual ao do parametro (Param_Tamanho).</param>
 /// <returns></returns>
-CarenResult CarenBuffer::CriarBuffer(IntPtr Param_BufferOrigem, Boolean Param_Copiar, UInt32 Param_Tamanho, UInt32 Param_TamanhoDadosValidos)
+CarenResult CarenBuffer::CreateBuffer(IntPtr Param_BufferOrigem, Boolean Param_Copiar, UInt32 Param_Tamanho, UInt32 Param_TamanhoDadosValidos)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -291,7 +291,7 @@ Done:;
 /// <param name="Param_Tamanho">O tamanho do buffer de origem.</param>
 /// <param name="Param_TamanhoDadosValidos">O total, em bytes, de dados validos no buffer. Se todos forem validos, esse valor deve ser igual ao do parametro (Param_Tamanho).</param>
 /// <returns></returns>
-CarenResult CarenBuffer::CriarBuffer(MatrizBytes Param_BufferOrigem, UInt32 Param_Tamanho, UInt32 Param_TamanhoDadosValidos)
+CarenResult CarenBuffer::CreateBuffer(MatrizBytes Param_BufferOrigem, UInt32 Param_Tamanho, UInt32 Param_TamanhoDadosValidos)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -382,7 +382,7 @@ Done:;
 /// <param name="Param_Tamanho">O tamanho do buffer de origem.</param>
 /// <param name="Param_TamanhoDadosValidos">O total, em bytes, de dados validos no buffer. Se todos forem validos, esse valor deve ser igual ao do parametro (Param_Tamanho).</param>
 /// <returns></returns>
-CarenResult CarenBuffer::CriarBuffer(Span<Byte> Param_BufferOrigem, UInt32 Param_Tamanho, UInt32 Param_TamanhoDadosValidos)
+CarenResult CarenBuffer::CreateBuffer(Span<Byte> Param_BufferOrigem, UInt32 Param_Tamanho, UInt32 Param_TamanhoDadosValidos)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -474,7 +474,7 @@ Done:;
 /// <param name="Param_Tamanho">O tamanho do buffer de origem.</param>
 /// <param name="Param_TamanhoDadosValidos">O total, em bytes, de dados validos no buffer. Se todos forem validos, esse valor deve ser igual ao do parametro (Param_Tamanho).</param>
 /// <returns></returns>
-CarenResult CarenBuffer::CriarBuffer(ReadOnlySpan<Byte> Param_BufferOrigem, UInt32 Param_Tamanho, UInt32 Param_TamanhoDadosValidos)
+CarenResult CarenBuffer::CreateBuffer(ReadOnlySpan<Byte> Param_BufferOrigem, UInt32 Param_Tamanho, UInt32 Param_TamanhoDadosValidos)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -566,7 +566,7 @@ Done:;
 /// <param name="Param_Tamanho">O tamanho do buffer de origem.</param>
 /// <param name="Param_TamanhoDadosValidos">O total, em bytes, de dados validos no buffer. Se todos forem validos, esse valor deve ser igual ao do parametro (Param_Tamanho).</param>
 /// <returns></returns>
-CarenResult CarenBuffer::CriarBuffer(ReadOnlyMemory<Byte> Param_BufferOrigem, UInt32 Param_Tamanho, UInt32 Param_TamanhoDadosValidos)
+CarenResult CarenBuffer::CreateBuffer(ReadOnlyMemory<Byte> Param_BufferOrigem, UInt32 Param_Tamanho, UInt32 Param_TamanhoDadosValidos)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -674,7 +674,7 @@ CarenResult CarenBuffer::Write(ICarenBuffer^ Param_BufferOrigem, UInt32 Param_St
 	PBYTE pBufferOrigemNativo = NULL;
 
 	//Recupera o ponteiro para o buffer de origem que será escrito.
-	Resultado = Param_BufferOrigem->ObterPonteiroInterno(pBufferOrigem);
+	Resultado = Param_BufferOrigem->GetInternalPointer(pBufferOrigem);
 
 	//Verifica o resultado da operação.
 	if (Resultado.StatusCode != ResultCode::SS_OK)
@@ -1599,14 +1599,366 @@ CarenResult CarenBuffer::Write(Double Param_Value)
 	return Resultado;
 }
 
+/// <summary>
+/// Escreve uma certa quantidade de dados do buffer atual em um buffer de destino.
+/// </summary>
+/// <param name="Param_StartIndex">O Index do inicio da cópia dos dados do buffer atual.</param>
+/// <param name="Param_Count">A quantidade de dados atuais a serem escritos no buffer de destino.</param>
+/// <param name="Param_Ref_BufferDest">O buffer de destino que vai receber os dados.</param>
+/// <returns></returns>
+CarenResult CarenBuffer::WriteTo(UInt32 Param_StartIndex, UInt32 Param_Count, Span<Byte>% Param_Ref_BufferDest)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
 
+	//Variaveis a serem utilizadas.	
+	pin_ptr<BYTE> vi_pBufferIndex0 = nullptr;
+	PBYTE vi_pBufferDestino = Nulo;
+
+	//Verifica se os ranges e offsets não ultrapassam os limites dos buffers.
+	if (Param_StartIndex + Param_Count > Tamanho)
+	{
+		//Chama uma exceção e informado o motivo.
+		throw gcnew IndexOutOfRangeException("Os ranges informado para iniciar a cópia e quantidade de dados estava fora dos limites possíveis.");
+	}
+	else
+	{
+		//Deixa continuar para realizar a escrita dos dados.
+	}
+
+	//Verifica se o buffer de destino tem capacidade para receber a quantidade de dados informada
+	if ((UINT)Param_Ref_BufferDest.Length < Param_Count)
+		throw gcnew IndexOutOfRangeException(String::Concat("O buffer de destino do parametro (Param_Ref_BufferDest) não tem uma largura suficiente para caber os dados(", Param_Count.ToString(), ")."));
+
+	//Cria um pin_ptr para o buffer de destino.
+	vi_pBufferIndex0 = &Param_Ref_BufferDest.GetPinnableReference();
+
+	//Converte para um buffer nativo.
+	vi_pBufferDestino = reinterpret_cast<PBYTE>(vi_pBufferIndex0);
+
+	//Verifica se o buffer é valido.
+	if (!ObjetoValido(vi_pBufferDestino))
+	{
+		//O buffer não é valido.
+		
+		//Define erro no ponteiro.
+		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
+
+		//Sai do método.
+		Sair;
+	}
+
+	//Chama o método para realizar a cópia dos dados.
+	std::copy(pBufferNativo + Param_StartIndex, pBufferNativo + Param_StartIndex + Param_Count, vi_pBufferDestino);
+
+	//Define sucesso na operação
+	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+
+Done:;
+
+	//Retorna o resultado.
+	return Resultado;
+}
+
+/// <summary>
+/// Escreve uma certa quantidade de dados do buffer atual em um buffer de destino.
+/// </summary>
+/// <param name="Param_StartIndex">O Index do inicio da cópia dos dados do buffer atual.</param>
+/// <param name="Param_Count">A quantidade de dados atuais a serem escritos no buffer de destino.</param>
+/// <param name="Param_Ref_BufferDest">O buffer de destino que vai receber os dados.</param>
+/// <returns></returns>
+CarenResult CarenBuffer::WriteTo(UInt32 Param_StartIndex, UInt32 Param_Count, Memory<Byte>% Param_Ref_BufferDest)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Variaveis a serem utilizadas.	
+	MemoryHandle vi_HandleToMemoryBlock = MemoryHandle();
+	PBYTE vi_pBufferDestino = Nulo;
+
+	//Verifica se os ranges e offsets não ultrapassam os limites dos buffers.
+	if (Param_StartIndex + Param_Count > Tamanho)
+	{
+		//Chama uma exceção e informado o motivo.
+		throw gcnew IndexOutOfRangeException("Os ranges informado para iniciar a cópia e quantidade de dados estava fora dos limites possíveis.");
+	}
+	else
+	{
+		//Deixa continuar para realizar a escrita dos dados.
+	}
+
+	//Verifica se o buffer de destino tem capacidade para receber a quantidade de dados informada
+	if ((UINT)Param_Ref_BufferDest.Length < Param_Count)
+		throw gcnew IndexOutOfRangeException(String::Concat("O buffer de destino do parametro (Param_Ref_BufferDest) não tem uma largura suficiente para caber os dados(", Param_Count.ToString(), ")."));
+
+	//Obtém um MemoryHandle para o bloco de memória de destino para ele não ser movido pelo GC.
+	vi_HandleToMemoryBlock = Param_Ref_BufferDest.Pin();
+
+	//Obtém o ponteiro para o bloco de memória nativo de destino.
+	vi_pBufferDestino = static_cast<PBYTE>(vi_HandleToMemoryBlock.Pointer);
+
+	//Verifica se o buffer é valido.
+	if (!ObjetoValido(vi_pBufferDestino))
+	{
+		//O buffer não é valido.
+
+		//Define erro no ponteiro.
+		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
+
+		//Sai do método.
+		Sair;
+	}
+
+	//Chama o método para realizar a cópia dos dados.
+	std::copy(pBufferNativo + Param_StartIndex, pBufferNativo + Param_StartIndex + Param_Count, vi_pBufferDestino);
+
+	//Define sucesso na operação
+	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+
+Done:;
+	//Libera o identificado de memória recuperado.
+	delete vi_HandleToMemoryBlock;
+
+	//Retorna o resultado.
+	return Resultado;
+}
+
+/// <summary>
+/// Escreve uma certa quantidade de dados do buffer atual em um buffer de destino.
+/// </summary>
+/// <param name="Param_StartIndex">O Index do inicio da cópia dos dados do buffer atual.</param>
+/// <param name="Param_Count">A quantidade de dados atuais a serem escritos no buffer de destino.</param>
+/// <param name="Param_Ref_BufferDest">O buffer de destino que vai receber os dados.</param>
+/// <returns></returns>
+CarenResult CarenBuffer::WriteTo(UInt32 Param_StartIndex, UInt32 Param_Count, MatrizBytes% Param_Ref_BufferDest)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Variaveis a serem utilizadas.	
+	pin_ptr<BYTE> vi_pBufferIndex0 = nullptr;
+	PBYTE vi_pBufferDestino = Nulo;
+
+	//Verifica se os ranges e offsets não ultrapassam os limites dos buffers.
+	if (Param_StartIndex + Param_Count > Tamanho)
+	{
+		//Chama uma exceção e informado o motivo.
+		throw gcnew IndexOutOfRangeException("Os ranges informado para iniciar a cópia e quantidade de dados estava fora dos limites possíveis.");
+	}
+	else
+	{
+		//Deixa continuar para realizar a escrita dos dados.
+	}
+
+	//Verifica se o buffer de destino tem capacidade para receber a quantidade de dados informada
+	if ((UINT)Param_Ref_BufferDest->Length < Param_Count)
+		throw gcnew IndexOutOfRangeException(String::Concat("O buffer de destino do parametro (Param_Ref_BufferDest) não tem uma largura suficiente para caber os dados(", Param_Count.ToString(), ")."));
+
+	//Cria um pin_ptr para o buffer de destino.
+	vi_pBufferIndex0 = &Param_Ref_BufferDest[0];
+
+	//Converte para um buffer nativo.
+	vi_pBufferDestino = reinterpret_cast<PBYTE>(vi_pBufferIndex0);
+
+	//Verifica se o buffer é valido.
+	if (!ObjetoValido(vi_pBufferDestino))
+	{
+		//O buffer não é valido.
+
+		//Define erro no ponteiro.
+		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
+
+		//Sai do método.
+		Sair;
+	}
+
+	//Chama o método para realizar a cópia dos dados.
+	std::copy(pBufferNativo + Param_StartIndex, pBufferNativo + Param_StartIndex + Param_Count, vi_pBufferDestino);
+
+	//Define sucesso na operação
+	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+
+Done:;
+
+	//Retorna o resultado.
+	return Resultado;
+}
+
+/// <summary>
+/// Escreve uma certa quantidade de dados do buffer atual em um buffer de destino.
+/// </summary>
+/// <param name="Param_StartIndex">O Index do inicio da cópia dos dados do buffer atual.</param>
+/// <param name="Param_Count">A quantidade de dados atuais a serem escritos no buffer de destino.</param>
+/// <param name="Param_Ref_BufferDest">O buffer de destino que vai receber os dados.</param>
+/// <returns></returns>
+CarenResult CarenBuffer::WriteTo(UInt32 Param_StartIndex, UInt32 Param_Count, ICarenBuffer^% Param_Ref_BufferDest)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Variaveis a serem utilizadas.	
+	GenPointer vi_PtrToBuffer = DefaultGenPointer;
+	PBYTE vi_pBufferDestino = Nulo;
+
+	//Verifica se os ranges e offsets não ultrapassam os limites dos buffers.
+	if (Param_StartIndex + Param_Count > Tamanho)
+	{
+		//Chama uma exceção e informado o motivo.
+		throw gcnew IndexOutOfRangeException("Os ranges informado para iniciar a cópia e quantidade de dados estava fora dos limites possíveis.");
+	}
+	else
+	{
+		//Deixa continuar para realizar a escrita dos dados.
+	}
+
+	//Verifica se a interface par ao buffer é valida.
+	if (!ObjetoGerenciadoValido(Param_Ref_BufferDest))
+		throw gcnew NullReferenceException("O parametro (Param_Ref_BufferDest) com o buffer de destino não era uma interface (ICarenBuffer) válida!");
+
+	//Verifica se o buffer de destino tem capacidade para receber a quantidade de dados informada
+	if (Param_Ref_BufferDest->Tamanho < Param_Count)
+		throw gcnew IndexOutOfRangeException(String::Concat("O buffer de destino do parametro (Param_Ref_BufferDest) não tem uma largura suficiente para caber os dados(", Param_Count.ToString(), ")."));
+
+	//Chama o método para obter um IntPtr para o buffer.
+	Resultado = Param_Ref_BufferDest->GetInternalPointer(vi_PtrToBuffer);
+
+	//Verifica se não houve erro e sai do método.
+	if (!CarenSucesso(Resultado))
+		Sair; //Não foi possivel obter o ponteiro para o buffer.
+
+	//Converte para um buffer nativo.
+	vi_pBufferDestino = reinterpret_cast<PBYTE>(vi_PtrToBuffer.ToPointer());
+
+	//Verifica se o buffer é valido.
+	if (!ObjetoValido(vi_pBufferDestino))
+	{
+		//O buffer não é valido.
+
+		//Define erro no ponteiro.
+		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
+
+		//Sai do método.
+		Sair;
+	}
+
+	//Chama o método para realizar a cópia dos dados.
+	std::copy(pBufferNativo + Param_StartIndex, pBufferNativo + Param_StartIndex + Param_Count, vi_pBufferDestino);
+
+	//Define sucesso na operação
+	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+
+Done:;
+
+	//Retorna o resultado.
+	return Resultado;
+}
+
+/// <summary>
+/// Escreve uma certa quantidade de dados do buffer atual em um buffer de destino.
+/// </summary>
+/// <param name="Param_StartIndex">O Index do inicio da cópia dos dados do buffer atual.</param>
+/// <param name="Param_Count">A quantidade de dados atuais a serem escritos no buffer de destino.</param>
+/// <param name="Param_Ref_BufferDest">O buffer de destino que vai receber os dados.</param>
+/// <returns></returns>
+CarenResult CarenBuffer::WriteTo(UInt32 Param_StartIndex, UInt32 Param_Count, IntPtr Param_BufferDest)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Variaveis a serem utilizadas.	
+	PBYTE vi_pBufferDestino = Nulo;
+
+	//Verifica se os ranges e offsets não ultrapassam os limites dos buffers.
+	if (Param_StartIndex + Param_Count > Tamanho)
+	{
+		//Chama uma exceção e informado o motivo.
+		throw gcnew IndexOutOfRangeException("Os ranges informado para iniciar a cópia e quantidade de dados estava fora dos limites possíveis.");
+	}
+	else
+	{
+		//Deixa continuar para realizar a escrita dos dados.
+	}
+
+	//Converte o intptr para um buffer nativo.
+	vi_pBufferDestino = reinterpret_cast<PBYTE>(Param_BufferDest.ToPointer());
+
+	//Verifica se o buffer é valido.
+	if (!ObjetoValido(vi_pBufferDestino))
+	{
+		//O buffer não é valido.
+
+		//Define erro no ponteiro.
+		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
+
+		//Sai do método.
+		Sair;
+	}
+
+	//Chama o método para realizar a cópia dos dados.
+	std::copy(pBufferNativo + Param_StartIndex, pBufferNativo + Param_StartIndex + Param_Count, vi_pBufferDestino);
+
+	//Define sucesso na operação
+	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+
+Done:;
+
+	//Retorna o resultado.
+	return Resultado;
+}
+
+/// <summary>
+/// Escreve uma certa quantidade de dados do buffer atual em um buffer de destino.
+/// </summary>
+/// <param name="Param_StartIndex">O Index do inicio da cópia dos dados do buffer atual.</param>
+/// <param name="Param_Count">A quantidade de dados atuais a serem escritos no buffer de destino.</param>
+/// <param name="Param_Ref_BufferDest">O buffer de destino que vai receber os dados.</param>
+/// <returns></returns>
+CarenResult CarenBuffer::WriteTo(UInt32 Param_StartIndex, UInt32 Param_Count, PBYTE Param_BufferDest)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Verifica se os ranges e offsets não ultrapassam os limites dos buffers.
+	if (Param_StartIndex + Param_Count > Tamanho)
+	{
+		//Chama uma exceção e informado o motivo.
+		throw gcnew IndexOutOfRangeException("Os ranges informado para iniciar a cópia e quantidade de dados estava fora dos limites possíveis.");
+	}
+	else
+	{
+		//Deixa continuar para realizar a escrita dos dados.
+	}
+
+	//Verifica se o buffer é valido.
+	if (!ObjetoValido(Param_BufferDest))
+	{
+		//O buffer não é valido.
+
+		//Define erro no ponteiro.
+		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
+
+		//Sai do método.
+		Sair;
+	}
+
+	//Chama o método para realizar a cópia dos dados.
+	std::copy(pBufferNativo + Param_StartIndex, pBufferNativo + Param_StartIndex + Param_Count, Param_BufferDest);
+
+	//Define sucesso na operação
+	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+
+Done:;
+
+	//Retorna o resultado.
+	return Resultado;
+}
 
 /// <summary>
 /// Obtém uma cópia de todos os dados do Buffer. Este método não é recomendado porque cria uma cópia do Buffer na memória. Se possível, utilize os métodos que retornam um Span.
 /// </summary>
 /// <param name="Param_Out_Buffer">Retorna uma matriz de bytes que representa uma cópia total do buffer.</param>
 /// <returns></returns>
-CarenResult CarenBuffer::ObterBuffer([Out] MatrizBytes% Param_Out_Buffer)
+CarenResult CarenBuffer::Get([Out] MatrizBytes% Param_Out_Buffer)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1638,7 +1990,7 @@ CarenResult CarenBuffer::ObterBuffer([Out] MatrizBytes% Param_Out_Buffer)
 /// <param name="Param_Tamanho">O tamanho dos dados, em bytes, que seram obtidos.</param>
 /// <param name="Param_Out_Buffer">Retorna uma matriz de bytes que representa uma cópia da região solicitada do buffer.</param>
 /// <returns></returns>
-CarenResult CarenBuffer::ObterBuffer(UInt32 Param_Start, UInt32 Param_Tamanho, [Out] MatrizBytes% Param_Out_Buffer)
+CarenResult CarenBuffer::Get(UInt32 Param_Start, UInt32 Param_Tamanho, [Out] MatrizBytes% Param_Out_Buffer)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1684,7 +2036,7 @@ CarenResult CarenBuffer::ObterBuffer(UInt32 Param_Start, UInt32 Param_Tamanho, [
 /// <param name="Param_Tamanho">O tamanho dos dados, em bytes, que seram obtidos.</param>
 /// <param name="Param_Out_Buffer">Retorna um Span de bytes que representa diretamente a região solicitada do Buffer.</param>
 /// <returns></returns>
-CarenResult CarenBuffer::ObterBuffer(UInt32 Param_Start, UInt32 Param_Tamanho, [Out] Span<Byte>% Param_Out_Buffer)
+CarenResult CarenBuffer::Get(UInt32 Param_Start, UInt32 Param_Tamanho, [Out] Span<Byte>% Param_Out_Buffer)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1723,7 +2075,7 @@ CarenResult CarenBuffer::ObterBuffer(UInt32 Param_Start, UInt32 Param_Tamanho, [
 /// <param name="Param_Tamanho">O tamanho dos dados, em bytes, que seram obtidos.</param>
 /// <param name="Param_Out_Buffer">Retorna um Span de bytes que representa diretamente a região solicitada do Buffer.</param>
 /// <returns></returns>
-CarenResult CarenBuffer::ObterBuffer(UInt32 Param_Start, UInt32 Param_Tamanho, [Out] ReadOnlySpan<Byte>% Param_Out_Buffer)
+CarenResult CarenBuffer::Get(UInt32 Param_Start, UInt32 Param_Tamanho, [Out] ReadOnlySpan<Byte>% Param_Out_Buffer)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1755,14 +2107,12 @@ CarenResult CarenBuffer::ObterBuffer(UInt32 Param_Start, UInt32 Param_Tamanho, [
 	return Resultado;
 }
 
-
-
 /// <summary>
 /// Método responsável por recuperar o ponteiro para o buffer interno.
 /// </summary>
 /// <param name="Param_Ref_PonteiroBuffer">Retorna o ponteiro para o buffer nativo gerenciado pela interface.</param>
 /// <returns></returns>
-CarenResult CarenBuffer::ObterPonteiroInterno(IntPtr% Param_Ref_PonteiroBuffer)
+CarenResult CarenBuffer::GetInternalPointer(IntPtr% Param_Ref_PonteiroBuffer)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1793,6 +2143,16 @@ Done:;
 }
 
 /// <summary>
+/// Método responsável por retornar um valor que define se o ponteiro para o buffer atual é valido.
+/// </summary>
+/// <returns></returns>
+CarenResult CarenBuffer::GetStatusPointer()
+{
+	//Verifica e retorna o resultado
+	return ObjetoValido(pBufferNativo) ? CarenResult(ResultCode::SS_OK, true) : CarenResult(ResultCode::ER_E_POINTER, false);
+}
+
+/// <summary>
 /// Método responsável por preencher o buffer com ZEROS(0).
 /// </summary>
 void CarenBuffer::FillBuffer()
@@ -1806,7 +2166,7 @@ void CarenBuffer::FillBuffer()
 /// Método responsável por definir a posição de escrita ou leitura no buffer.
 /// </summary>
 /// <param name="Param_Offset">O deslocamento, em bytes, que representa a nova posição para leitura ou escrita.</param>
-void CarenBuffer::DefinirPosicao(UInt32 Param_Offset)
+void CarenBuffer::SetPosition(UInt32 Param_Offset)
 {
 	//Verifica se o offset não ultrapassa ou é igual ao tamanho do buffer.
 	if (Param_Offset >= Tamanho)
@@ -1820,7 +2180,7 @@ void CarenBuffer::DefinirPosicao(UInt32 Param_Offset)
 }
 
 /// <summary>
-/// Libera os dados alocados para o buffer criado pelo método(CriarBuffer).
+/// Libera os dados alocados para o buffer criado pelo método(CreateBuffer).
 /// </summary>
 /// <returns></returns>
 void CarenBuffer::ReleaseBuffer()

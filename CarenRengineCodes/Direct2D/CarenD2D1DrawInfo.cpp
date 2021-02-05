@@ -462,7 +462,7 @@ UInt32 Param_BufferSize)
 	IntPtr BufferData = IntPtr::Zero;
 
 	//Recupera o ponteiro para o buffer
-	Resultado = Param_Buffer->ObterPonteiroInterno(BufferData);
+	Resultado = Param_Buffer->GetInternalPointer(BufferData);
 
 	//Sai do método em caso de erro
 	SairOnError(Resultado);
@@ -630,7 +630,7 @@ UInt32 Param_BufferSize)
 	IntPtr BufferData = IntPtr::Zero;
 
 	//Recupera o ponteiro para o buffer
-	Resultado = Param_Buffer->ObterPonteiroInterno(BufferData);
+	Resultado = Param_Buffer->GetInternalPointer(BufferData);
 
 	//Sai do método em caso de erro
 	SairOnError(Resultado);

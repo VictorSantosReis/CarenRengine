@@ -512,7 +512,7 @@ CarenResult CarenD2D1BitmapRenderTarget::CreateBitmap(
 	pBitmapProps = Util.ConverterD2D1_BITMAP_PROPERTIESManagedToUnmanaged(Param_PropriedadesBitmap);
 
 	//Obtém o ponteiro para a memória de origem.
-	Resultado = Param_DadosOrigem->ObterPonteiroInterno(pBufferOrigem);
+	Resultado = Param_DadosOrigem->GetInternalPointer(pBufferOrigem);
 
 	//Verifica se não falhou.
 	if (!CarenSucesso(Resultado))

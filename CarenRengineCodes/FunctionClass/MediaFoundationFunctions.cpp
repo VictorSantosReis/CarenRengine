@@ -646,7 +646,7 @@ CarenResult MediaFoundationFunctions::_MFSerializePresentationDescriptor(ICarenM
 	Param_Out_Buffer = gcnew CarenBuffer();
 
 	//Associa a matriz de bytes na interface de saida do buffer.
-	Resultado = Param_Out_Buffer->CriarBuffer(IntPtr(vi_pOutBufferSerializado), false, Param_Out_SizeBuffer, Param_Out_SizeBuffer);
+	Resultado = Param_Out_Buffer->CreateBuffer(IntPtr(vi_pOutBufferSerializado), false, Param_Out_SizeBuffer, Param_Out_SizeBuffer);
 
 	//Verifica se não falhou e libera o buffer.
 	if (!CarenSucesso(Resultado))

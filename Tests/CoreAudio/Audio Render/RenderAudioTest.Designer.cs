@@ -63,7 +63,6 @@
             this.Txb_UrlMusic.PlaceholderText = "URL ";
             this.Txb_UrlMusic.Size = new System.Drawing.Size(421, 28);
             this.Txb_UrlMusic.TabIndex = 2;
-            this.Txb_UrlMusic.Text = "C:\\Users\\Victo\\Music\\Jacob Lee - Ghost.mp3";
             this.Txb_UrlMusic.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // TrackVolumeMusic

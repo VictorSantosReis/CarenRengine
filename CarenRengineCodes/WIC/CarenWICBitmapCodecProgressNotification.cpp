@@ -515,7 +515,7 @@ HRESULT CarenWICBitmapCodecProgressNotification::EncaminharEvento_OnProgressNoti
 	CA_WICProgressOperation ProgresOp = static_cast<CA_WICProgressOperation>(operation);
 
 	//Cria o buffer como um ponteiro para os dados.
-	pBufferDados->CriarBuffer(IntPtr(pvData), false, 0, 0);
+	pBufferDados->CreateBuffer(IntPtr(pvData), false, 0, 0);
 
 	//Chama o evento para notificar o usuário
 	Resultado = OnProgressNotification(pBufferDados, uFrameNum, ProgresOp, dblProgress);

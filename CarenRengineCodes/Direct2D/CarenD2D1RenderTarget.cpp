@@ -460,7 +460,7 @@ CA_D2D1_BITMAP_PROPERTIES^ Param_PropriedadesBitmap,
 	pBitmapProps = Util.ConverterD2D1_BITMAP_PROPERTIESManagedToUnmanaged(Param_PropriedadesBitmap);
 
 	//Obtém o ponteiro para a memória de origem.
-	Resultado = Param_DadosOrigem->ObterPonteiroInterno(pBufferOrigem);
+	Resultado = Param_DadosOrigem->GetInternalPointer(pBufferOrigem);
 
 	//Verifica se não falhou.
 	if (!CarenSucesso(Resultado))

@@ -456,7 +456,7 @@ CarenResult CarenMFMediaEngineProtectedContent::SetApplicationCertificate(ICaren
 	GenPointer vi_pBuffer = DefaultGenPointer;
 
 	//Recupera o ponteiro para o buffer com o certificado.
-	Param_BufferCertificado->ObterPonteiroInterno(vi_pBuffer);
+	Param_BufferCertificado->GetInternalPointer(vi_pBuffer);
 
 	//Chama o método para realizar a operação.
 	Hr = PonteiroTrabalho->SetApplicationCertificate(const_cast<PBYTE>(Util.ConverterIntPtrTo<PBYTE>(vi_pBuffer)), static_cast<DWORD>(Param_CountData));

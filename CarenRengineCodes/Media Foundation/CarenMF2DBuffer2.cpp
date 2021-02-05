@@ -450,8 +450,8 @@ CarenResult CarenMF2DBuffer2::Lock2DSize(Enumeracoes::CA_MF2DBuffer_LockFlags Pa
 	Param_Out_BufferStart = gcnew CarenBuffer();
 
 	//Define os buffers em cada interface de saida.
-	Param_Out_BufferPBScanline0->CriarBuffer(IntPtr(pPBScanLine0), false, 0, 0);
-	Param_Out_BufferStart->CriarBuffer(IntPtr(pBufferData), false, 0, 0);
+	Param_Out_BufferPBScanline0->CreateBuffer(IntPtr(pPBScanLine0), false, 0, 0);
+	Param_Out_BufferStart->CreateBuffer(IntPtr(pBufferData), false, 0, 0);
 
 	//Define os dados nos parametros de saida
 	Param_Out_StrideSuperfice = StrideBuffer;
@@ -532,7 +532,7 @@ CarenResult CarenMF2DBuffer2::ContiguousCopyFrom(ICarenBuffer^ Param_BufferConti
 	IntPtr PonteiroDados = IntPtr::Zero;
 
 	//Chama o método para recuperar o ponteiro par ao buffer na interface.
-	Resultado = Param_BufferContiguo->ObterPonteiroInterno(PonteiroDados);
+	Resultado = Param_BufferContiguo->GetInternalPointer(PonteiroDados);
 
 	//Verifica se não houve erro
 	if (Resultado.StatusCode != ResultCode::SS_OK)
@@ -581,7 +581,7 @@ CarenResult CarenMF2DBuffer2::ContiguousCopyTo(ICarenBuffer^% Param_DestinoBuffe
 	IntPtr PonteiroDados = IntPtr::Zero;
 
 	//Chama o método que vai obter o ponteiro do buffer.
-	Resultado = Param_DestinoBufferContiguou->ObterPonteiroInterno(PonteiroDados);
+	Resultado = Param_DestinoBufferContiguou->GetInternalPointer(PonteiroDados);
 
 	//Verifica se não houve erro
 	if (Resultado.StatusCode != ResultCode::SS_OK)
@@ -696,7 +696,7 @@ CarenResult CarenMF2DBuffer2::GetScanline0AndPitch([Out] ICarenBuffer^% Param_Ou
 	Param_Out_ByteBufferPrimeiraLinha = gcnew CarenBuffer();
 
 	//Define o ponteiro de trabalho na interface.
-	Resultado = Param_Out_ByteBufferPrimeiraLinha->CriarBuffer(IntPtr(pBufferScanLine), false, 0, 0);
+	Resultado = Param_Out_ByteBufferPrimeiraLinha->CreateBuffer(IntPtr(pBufferScanLine), false, 0, 0);
 
 	//Define o Stride no parametro de saida.
 	Param_Out_Stride = StrideValue;
@@ -788,7 +788,7 @@ CarenResult CarenMF2DBuffer2::Lock2D([Out] ICarenBuffer^% Param_Out_Buffer, [Out
 	Param_Out_Buffer = gcnew CarenBuffer();
 
 	//Define o ponteiro de trabalho na interface.
-	Resultado = Param_Out_Buffer->CriarBuffer(IntPtr(pBuffer), false, 0, 0);
+	Resultado = Param_Out_Buffer->CreateBuffer(IntPtr(pBuffer), false, 0, 0);
 
 	//Verifica se obteve sucesso
 	if (Resultado.StatusCode != ResultCode::SS_OK)

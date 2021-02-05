@@ -104,7 +104,7 @@ CarenMFMediaType::CarenMFMediaType(String^ Param_GuidRepresentation, ICarenBuffe
 	vi_GuidRepresentation = Util.CreateGuidFromString(Param_GuidRepresentation);
 
 	//Recupera o ponteiro do buffer.
-	CarenResult ResultGetBuffer = Param_BufferRepresentation->ObterPonteiroInterno(vi_pBuffer);
+	CarenResult ResultGetBuffer = Param_BufferRepresentation->GetInternalPointer(vi_pBuffer);
 
 	//Verifica se não houve erro
 	if (!CarenSucesso(ResultGetBuffer))
@@ -1052,7 +1052,7 @@ CarenResult CarenMFMediaType::GetAllocatedBlob(String^ Param_GuidChave, [Out] Es
 	Param_Out_Buffer->BufferDados = gcnew CarenBuffer();
 
 	//Copia os dados para o buffer
-	static_cast<ICarenBuffer^>(Param_Out_Buffer->BufferDados)->CriarBuffer(IntPtr(pBuffDados), true, Param_Out_Buffer->SizeData, Param_Out_Buffer->SizeData);
+	static_cast<ICarenBuffer^>(Param_Out_Buffer->BufferDados)->CreateBuffer(IntPtr(pBuffDados), true, Param_Out_Buffer->SizeData, Param_Out_Buffer->SizeData);
 
 Done:;
 	//Libera a memória para o buffer se válido.
@@ -1174,7 +1174,7 @@ CarenResult CarenMFMediaType::GetBlob(String^ Param_GuidChave, UInt32 Param_Tama
 	Param_Out_Buffer->BufferDados = gcnew CarenBuffer();
 	
 	//Copia os dados para a interface do buffer.
-	static_cast<ICarenBuffer^>(Param_Out_Buffer->BufferDados)->CriarBuffer(IntPtr(pBuffDados), true, Param_Out_Buffer->SizeData, Param_Out_Buffer->SizeData);
+	static_cast<ICarenBuffer^>(Param_Out_Buffer->BufferDados)->CreateBuffer(IntPtr(pBuffDados), true, Param_Out_Buffer->SizeData, Param_Out_Buffer->SizeData);
 
 Done:;
 	//Libera a memória utilizada pela matriz.

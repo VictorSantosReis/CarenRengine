@@ -438,7 +438,7 @@ UInt32 Param_BufferSize)
 	Param_Out_BufferData = gcnew CarenBuffer();
 
 	//Define o ponteiro na interface.
-	Resultado = Param_Out_BufferData->CriarBuffer(IntPtr(pOutBufferData), false, Param_BufferSize, Param_BufferSize);
+	Resultado = Param_Out_BufferData->CreateBuffer(IntPtr(pOutBufferData), false, Param_BufferSize, Param_BufferSize);
 
 	//Verifica se não falhou
 	if (!CarenSucesso(Resultado))

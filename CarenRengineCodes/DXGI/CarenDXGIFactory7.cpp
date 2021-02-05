@@ -577,7 +577,7 @@ CarenResult CarenDXGIFactory7::CheckFeatureSupport(CA_DXGI_FEATURE Param_Recurso
 	DXGI_FEATURE Feature = static_cast<DXGI_FEATURE>(Param_Recurso);
 
 	//Recupera o ponteiro para o buffer que vai ser preenchido com os dados.
-	Resultado = Param_Ref_BufferDescFeature->ObterPonteiroInterno(PonteiroBuffer);
+	Resultado = Param_Ref_BufferDescFeature->GetInternalPointer(PonteiroBuffer);
 
 	//Verifica se não houve erro
 	if (Resultado.StatusCode != ResultCode::SS_OK)

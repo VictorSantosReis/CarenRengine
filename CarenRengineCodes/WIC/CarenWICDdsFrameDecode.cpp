@@ -427,7 +427,7 @@ ICarenBuffer^ Param_BufferDestino)
 	vi_RectCopy = ObjetoGerenciadoValido(Param_RetanguloCopy) ? Util.ConverterWICRectManaged_ToUnManaged(Param_RetanguloCopy) : Nulo;
 
 	//Recupera o potneiro para o buffer de destino.
-	Resultado = Param_BufferDestino->ObterPonteiroInterno(vi_BufferDestino);
+	Resultado = Param_BufferDestino->GetInternalPointer(vi_BufferDestino);
 
 	//Sai do método em caso de erro.
 	SairOnError(Resultado);

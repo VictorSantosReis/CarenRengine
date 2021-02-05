@@ -421,7 +421,7 @@ CarenResult CarenMF2DBuffer::ContiguousCopyFrom(ICarenBuffer^ Param_BufferContig
 	IntPtr PonteiroDados = IntPtr::Zero;
 
 	//Chama o método para recuperar o ponteiro par ao buffer na interface.
-	Resultado = Param_BufferContiguo->ObterPonteiroInterno(PonteiroDados);
+	Resultado = Param_BufferContiguo->GetInternalPointer(PonteiroDados);
 
 	//Verifica se não houve erro
 	if (Resultado.StatusCode != ResultCode::SS_OK)
@@ -470,7 +470,7 @@ CarenResult CarenMF2DBuffer::ContiguousCopyTo(ICarenBuffer^% Param_DestinoBuffer
 	IntPtr PonteiroDados = IntPtr::Zero;
 
 	//Chama o método que vai obter o ponteiro do buffer.
-	Resultado = Param_DestinoBufferContiguou->ObterPonteiroInterno(PonteiroDados);
+	Resultado = Param_DestinoBufferContiguou->GetInternalPointer(PonteiroDados);
 
 	//Verifica se não houve erro
 	if (Resultado.StatusCode != ResultCode::SS_OK)
@@ -585,7 +585,7 @@ CarenResult CarenMF2DBuffer::GetScanline0AndPitch([Out] ICarenBuffer^% Param_Out
 	Param_Out_ByteBufferPrimeiraLinha = gcnew CarenBuffer();
 
 	//Define o ponteiro de trabalho na interface.
-	Param_Out_ByteBufferPrimeiraLinha->CriarBuffer(IntPtr(pBufferScanLine), false, 0, 0);
+	Param_Out_ByteBufferPrimeiraLinha->CreateBuffer(IntPtr(pBufferScanLine), false, 0, 0);
 
 	//Define o Stride no parametro de saida.
 	Param_Out_Stride = StrideValue;
@@ -677,7 +677,7 @@ CarenResult CarenMF2DBuffer::Lock2D([Out] ICarenBuffer^% Param_Out_Buffer, [Out]
 	Param_Out_Buffer = gcnew CarenBuffer();
 
 	//Define o ponteiro de trabalho na interface.
-	Param_Out_Buffer->CriarBuffer(IntPtr(pBuffer), false, 0, 0);
+	Param_Out_Buffer->CreateBuffer(IntPtr(pBuffer), false, 0, 0);
 
 	//Define o Stride no parametro de saida.
 	Param_Out_Stride = StrideBuffer;

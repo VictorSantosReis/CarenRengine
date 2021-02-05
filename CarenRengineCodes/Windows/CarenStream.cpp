@@ -124,7 +124,7 @@ CarenStream::CarenStream(ICarenBuffer^ Param_BufferInicial, UInt64 Param_Largura
 
 	//Verifica se forneceu dados iniciais para a criação do buffer.
 	if (ObjetoGerenciadoValido(Param_BufferInicial))
-		Param_BufferInicial->ObterPonteiroInterno(vi_pBufferInicial);
+		Param_BufferInicial->GetInternalPointer(vi_pBufferInicial);
 
 	//Chama o método para criar a interface.
 	vi_pOutStream = SHCreateMemStream(
@@ -1019,7 +1019,7 @@ CarenResult CarenStream::Read(ICarenBuffer^ Param_Out_BufferDest, UInt64 Param_C
 	ULONG vi_OutCountReaded = 0;
 
 	//Chama o método para recuperar o buffer de destino.
-	Resultado = Param_Out_BufferDest->ObterPonteiroInterno(vi_pOutBufferDest);
+	Resultado = Param_Out_BufferDest->GetInternalPointer(vi_pOutBufferDest);
 
 	//Verifica se não houve erro
 	if (Resultado.StatusCode != ResultCode::SS_OK)
@@ -1077,7 +1077,7 @@ CarenResult CarenStream::Write(ICarenBuffer^ Param_BufferWrite, UInt64 Param_Cou
 	ULONG vi_OutCountWritten = 0;
 
 	//Chama o método para recuperar o buffer de origem.
-	Resultado = Param_BufferWrite->ObterPonteiroInterno(vi_pBufferSource);
+	Resultado = Param_BufferWrite->GetInternalPointer(vi_pBufferSource);
 
 	//Verifica se não houve erro
 	if (Resultado.StatusCode != ResultCode::SS_OK)

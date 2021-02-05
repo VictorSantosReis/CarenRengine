@@ -559,7 +559,7 @@ ICarenBuffer^ Param_BufferScanData)
 	GenPointer vi_pBufferScanData = DefaultGenPointer;
 
 	//Recupera o potneiro para o buffer.
-	Resultado = Param_BufferScanData->ObterPonteiroInterno(vi_pBufferScanData);
+	Resultado = Param_BufferScanData->GetInternalPointer(vi_pBufferScanData);
 
 	//Sai do método em caso de erro.
 	SairOnError(Resultado);

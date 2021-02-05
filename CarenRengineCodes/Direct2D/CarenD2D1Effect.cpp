@@ -752,10 +752,10 @@ CarenResult CarenD2D1Effect::GetValue(
 	Param_Out_Buffer = gcnew CarenBuffer();
 
 	//Cria o ponteiro para o buffer.
-	Param_Out_Buffer->CriarBuffer(Param_BufferSize);
+	Param_Out_Buffer->CreateBuffer(Param_BufferSize);
 
 	//Recupera um ponteiro para o buffer.
-	Resultado = Param_Out_Buffer->ObterPonteiroInterno(PointerToBuffer);
+	Resultado = Param_Out_Buffer->GetInternalPointer(PointerToBuffer);
 
 	//Sai do método em caso de erro
 	SairOnError(Resultado);
@@ -809,10 +809,10 @@ CarenResult CarenD2D1Effect::GetValue(
 	Param_Out_Buffer = gcnew CarenBuffer();
 
 	//Cria o ponteiro para o buffer.
-	Param_Out_Buffer->CriarBuffer(Param_BufferSize);
+	Param_Out_Buffer->CreateBuffer(Param_BufferSize);
 
 	//Recupera um ponteiro para o buffer.
-	Resultado = Param_Out_Buffer->ObterPonteiroInterno(PointerToBuffer);
+	Resultado = Param_Out_Buffer->GetInternalPointer(PointerToBuffer);
 
 	//Sai do método em caso de erro
 	SairOnError(Resultado);
@@ -872,13 +872,13 @@ CarenResult CarenD2D1Effect::GetValueByName(
 	Param_Out_Buffer = gcnew CarenBuffer();
 
 	//Cria o buffer com o tamanho indicado pelo user.
-	Resultado = Param_Out_Buffer->CriarBuffer(Param_BufferSize);
+	Resultado = Param_Out_Buffer->CreateBuffer(Param_BufferSize);
 
 	//Sai do método em caso de erro
 	SairOnError(Resultado);
 
 	//Recupera o ponteiro para o buffer.
-	Resultado = Param_Out_Buffer->ObterPonteiroInterno(PointerToBuffer);
+	Resultado = Param_Out_Buffer->GetInternalPointer(PointerToBuffer);
 
 	//Chama o método para realizar a operação.
 	Hr = PonteiroTrabalho->GetValueByName(pNomeProp, TipoProp, Util.ConverterIntPtrTo<PBYTE>(PointerToBuffer), Param_BufferSize);
@@ -935,13 +935,13 @@ CarenResult CarenD2D1Effect::GetValueByName(
 	Param_Out_Buffer = gcnew CarenBuffer();
 
 	//Cria o buffer com o tamanho indicado pelo user.
-	Resultado = Param_Out_Buffer->CriarBuffer(Param_BufferSize);
+	Resultado = Param_Out_Buffer->CreateBuffer(Param_BufferSize);
 
 	//Sai do método em caso de erro
 	SairOnError(Resultado);
 
 	//Recupera o ponteiro para o buffer.
-	Resultado = Param_Out_Buffer->ObterPonteiroInterno(PointerToBuffer);
+	Resultado = Param_Out_Buffer->GetInternalPointer(PointerToBuffer);
 
 	//Chama o método para realizar a operação.
 	Hr = PonteiroTrabalho->GetValueByName(pNomeProp, Util.ConverterIntPtrTo<PBYTE>(PointerToBuffer), Param_BufferSize);
@@ -1008,7 +1008,7 @@ CarenResult CarenD2D1Effect::SetValue(
 	IntPtr PonteiroToBuffer = IntPtr::Zero;
 
 	//Recuper ao ponteiro para o buffer.
-	Resultado = Param_Buffer->ObterPonteiroInterno(PonteiroToBuffer);
+	Resultado = Param_Buffer->GetInternalPointer(PonteiroToBuffer);
 
 	//Sai do método em caso de erro
 	SairOnError(Resultado);
@@ -1059,7 +1059,7 @@ CarenResult CarenD2D1Effect::SetValue(
 	IntPtr PonteiroToBuffer = IntPtr::Zero;
 
 	//Recuper ao ponteiro para o buffer.
-	Resultado = Param_Buffer->ObterPonteiroInterno(PonteiroToBuffer);
+	Resultado = Param_Buffer->GetInternalPointer(PonteiroToBuffer);
 
 	//Sai do método em caso de erro
 	SairOnError(Resultado);
@@ -1116,7 +1116,7 @@ CarenResult CarenD2D1Effect::SetValueByName(
 	pNomeProp = Util.ConverterStringToWCHAR(Param_NomePropriedade);
 
 	//Recuper ao ponteiro para o buffer.
-	Resultado = Param_Buffer->ObterPonteiroInterno(PonteiroToBuffer);
+	Resultado = Param_Buffer->GetInternalPointer(PonteiroToBuffer);
 
 	//Sai do método em caso de erro
 	SairOnError(Resultado);
@@ -1173,7 +1173,7 @@ CarenResult CarenD2D1Effect::SetValueByName(
 	pNomeProp = Util.ConverterStringToWCHAR(Param_NomePropriedade);
 
 	//Recuper ao ponteiro para o buffer.
-	Resultado = Param_Buffer->ObterPonteiroInterno(PonteiroToBuffer);
+	Resultado = Param_Buffer->GetInternalPointer(PonteiroToBuffer);
 
 	//Sai do método em caso de erro
 	SairOnError(Resultado);
@@ -1228,7 +1228,7 @@ CarenResult CarenD2D1Effect::SetValueByName(
 	pNomeProp = Util.ConverterStringToWCHAR(Param_NomePropriedade);
 
 	//Recuper ao ponteiro para o buffer.
-	Resultado = Param_Valor->ObterPonteiroInterno(PonteiroToBuffer);
+	Resultado = Param_Valor->GetInternalPointer(PonteiroToBuffer);
 
 	//Sai do método em caso de erro
 	SairOnError(Resultado);

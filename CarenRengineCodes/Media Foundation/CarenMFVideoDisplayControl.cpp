@@ -547,7 +547,7 @@ CarenResult CarenMFVideoDisplayControl::GetCurrentImage(
 	//Define o ponteiro de buffer.
 
 	//Associa o ponteiro de buffer com a classe.
-	CarenBufferInterface->CriarBuffer(IntPtr(pBufferData), false, LarguraBufferData, LarguraBufferData);
+	CarenBufferInterface->CreateBuffer(IntPtr(pBufferData), false, LarguraBufferData, LarguraBufferData);
 
 
 	//Define os dados do bipmapheader.

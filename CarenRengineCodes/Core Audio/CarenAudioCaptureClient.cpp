@@ -460,7 +460,7 @@ CarenResult CarenAudioCaptureClient::GetBuffer(
 	Param_Out_BufferData = gcnew CarenBuffer();
 
 	//Define o ponteiro de dados
-	Param_Out_BufferData->CriarBuffer(IntPtr(pBufferData), false, 0, 0);
+	Param_Out_BufferData->CreateBuffer(IntPtr(pBufferData), false, 0, 0);
 
 	//Define o restante dos parametros
 	Param_Out_NumeroFramesLidos = NumeroFramesLidos;

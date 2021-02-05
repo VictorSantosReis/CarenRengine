@@ -546,7 +546,7 @@ CarenResult CarenMFByteStream::BeginRead(
 	IUnknown* pObjetoEstado = NULL;
 
 	//Recupera o ponteiro para o buffer que vai conter os dados lidos.
-	Resultado = Param_Buffer->ObterPonteiroInterno(PonteiroDados);
+	Resultado = Param_Buffer->GetInternalPointer(PonteiroDados);
 
 	//Verifica se não houve erro
 	if (Resultado.StatusCode != ResultCode::SS_OK)
@@ -641,7 +641,7 @@ CarenResult CarenMFByteStream::BeginWrite(
 	IUnknown* pObjetoEstado = NULL;
 
 	//Recupera o ponteiro para o buffer que contem os dados a serem escritos.
-	Resultado = Param_Buffer->ObterPonteiroInterno(PonteiroDados);
+	Resultado = Param_Buffer->GetInternalPointer(PonteiroDados);
 
 	//Verifica se não houve erro
 	if (Resultado.StatusCode != ResultCode::SS_OK)
@@ -1074,7 +1074,7 @@ CarenResult CarenMFByteStream::Read(
 	ULONG OutTotalLido = 0;
 
 	//Recupera o ponteiro para o buffer que vai conter os dados a serem lidos.
-	Resultado = Param_Buffer->ObterPonteiroInterno(PonteiroDados);
+	Resultado = Param_Buffer->GetInternalPointer(PonteiroDados);
 
 	//Verifica se não houve erro
 	if (Resultado.StatusCode != ResultCode::SS_OK)
@@ -1258,7 +1258,7 @@ CarenResult CarenMFByteStream::Write(
 	ULONG OutTotalEscrito = 0;
 
 	//Recupera o ponteiro para o buffer que vai conter os dados a serem lidos.
-	Resultado = Param_Buffer->ObterPonteiroInterno(PonteiroDados);
+	Resultado = Param_Buffer->GetInternalPointer(PonteiroDados);
 
 	//Verifica se não houve erro
 	if (Resultado.StatusCode != ResultCode::SS_OK)

@@ -2419,7 +2419,7 @@ CarenResult CarenD3D11DeviceContext::GetData(
 		//Forneceu.
 
 		//Recuper ao ponteiro para a memoria que vai conter os dados.
-		Param_Dados->ObterPonteiroInterno(PonteiroDados); pData = PonteiroDados.ToPointer();
+		Param_Dados->GetInternalPointer(PonteiroDados); pData = PonteiroDados.ToPointer();
 	}
 	else
 	{
@@ -5702,7 +5702,7 @@ CarenResult CarenD3D11DeviceContext::UpdateSubresource(
 	}
 
 	//Recupera o ponteiros para os dados de origem.
-	Resultado = Param_DadosOrigemMemoria->ObterPonteiroInterno(PonteiroDados);
+	Resultado = Param_DadosOrigemMemoria->GetInternalPointer(PonteiroDados);
 
 	//Verifica se obteve com sucesso
 	if (Resultado.StatusCode != ResultCode::SS_OK)
@@ -6322,7 +6322,7 @@ CarenResult CarenD3D11DeviceContext::GetPrivateData(
 	Param_Out_BufferDados = gcnew CarenBuffer();
 
 	//Define o ponteiro de dados na interface de buffer.
-	Param_Out_BufferDados->CriarBuffer(IntPtr(pDados), false, OutLarguraDados, OutLarguraDados);
+	Param_Out_BufferDados->CreateBuffer(IntPtr(pDados), false, OutLarguraDados, OutLarguraDados);
 
 	//Define o tamanho real dos dados retornados.
 	Param_Out_TamanhoBufferSaida = OutLarguraDados;
@@ -6371,7 +6371,7 @@ CarenResult CarenD3D11DeviceContext::SetPrivateData(
 	GuidDados = Util.CreateGuidFromString(Param_Guid);
 
 	//Obtém o ponteiro para os dados.
-	Resultado = Param_Buffer->ObterPonteiroInterno(PonteiroDados);
+	Resultado = Param_Buffer->GetInternalPointer(PonteiroDados);
 
 	//Verifica se é valido
 	if (Resultado.StatusCode != ResultCode::SS_OK)

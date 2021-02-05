@@ -444,7 +444,7 @@ ICarenBuffer^ Param_Buffer)
 	GuidFormatPixel = Util.CreateGuidFromString(Param_GuidFormatoDestino);
 
 	//Recupera o ponteiro para o buffer de saida.
-	Resultado = Param_Buffer->ObterPonteiroInterno(pBufferSaida);
+	Resultado = Param_Buffer->GetInternalPointer(pBufferSaida);
 
 	//Sai do método em caso de erro.
 	SairOnError(Resultado);

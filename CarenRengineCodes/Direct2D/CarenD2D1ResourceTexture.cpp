@@ -451,7 +451,7 @@ UInt32 Param_DataCount)
 	Util.CopiarItensTo_ArrayNativo(&pArrayStrides, Param_Strides, static_cast<UINT32>(Param_Strides->Length));
 
 	//Recupera o ponteiro para o buffer.
-	Resultado = Param_Buffer->ObterPonteiroInterno(PonteiroToBuffer);
+	Resultado = Param_Buffer->GetInternalPointer(PonteiroToBuffer);
 
 	//Verifica se não falhou
 	SairOnError(Resultado);

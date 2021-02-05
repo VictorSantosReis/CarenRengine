@@ -3825,6 +3825,31 @@ namespace CarenRengine
 
 				CA_AUDCLNT_SESSIONFLAGS_DISPLAY_HIDEWHENEXPIRED = AUDCLNT_SESSIONFLAGS_DISPLAY_HIDEWHENEXPIRED
 			};
+
+			/////////////////
+			// WINDOWS API //
+			/////////////////
+
+			/// <summary>
+			/// (ORIGINAL) - Essa estrutura contém valores do registro que definem o nome da Task para o método
+			/// AvSetMmThreadCharacteristicsW.
+			/// </summary>
+			public value struct CA_Windows_MMCSS_Multimedia_Name_Tasks
+			{
+				literal String^ Audio = "Audio";
+
+				literal String^ Capture = "Capture";
+
+				literal String^ Distribution = "Distribution";
+
+				literal String^ Games = "Games";
+
+				literal String^ Playback = "Playback";
+
+				literal String^ Pro_Audio = "Pro Audio";
+
+				literal String^ Window_Manager = "Window Manager";
+			};
 		}
 
 		//Namespace que contém todas as enumerações utilizadas pela diversas APIs presentes.

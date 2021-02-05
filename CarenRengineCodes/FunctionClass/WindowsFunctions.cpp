@@ -59,6 +59,41 @@ UInt32 WindowsFunctions::ObterUltimoCodigoErro()
 	return GetLastError();
 }
 
+IntPtr WindowsFunctions::_AvSetMmThreadCharacteristicsW(String^ Param_NameTask, OutParam UInt32% Param_Out_TaskIndex)
+{
+	//Variavel a ser retornada.
+	HANDLE vi_Handle = Nulo;
+
+	//Variaveis utilizadas.
+	DWORD vi_OutTaskIndex = 0;
+	LPWSTR vi_pNomeTask = Nulo;
+
+	//Verfica se a String não é invalida ou vazia.
+	if (!StringObjetoValido(Param_NameTask))
+		throw gcnew NullReferenceException("O parametro (Param_NameTask) não pode ser NULO!");
+	
+	//Converte o nome gerenciada para o nativo.
+	vi_pNomeTask = static_cast<LPWSTR>(Marshal::StringToCoTaskMemUni(Param_NameTask).ToPointer());
+
+	//Chama o método.
+	vi_Handle = AvSetMmThreadCharacteristicsW(vi_pNomeTask, &vi_OutTaskIndex);
+
+	//Define o Id da task no parametro de saida.
+	Param_Out_TaskIndex = static_cast<UInt32>(vi_OutTaskIndex);
+
+	//Libera a memória utilizada pela string.
+	Marshal::FreeCoTaskMem(IntPtr(vi_pNomeTask));
+
+	//Retorna a handle.
+	return ObjetoValido(vi_Handle)? IntPtr(vi_Handle): DefaultGenPointer;
+}
+
+Boolean WindowsFunctions::_AvRevertMmThreadCharacteristics(IntPtr Param_Handle)
+{
+	//Chama o método para realizar a função. 
+	return AvRevertMmThreadCharacteristics(Param_Handle.ToPointer())? true: false;
+}
+
 void WindowsFunctions::SleepNativo(UInt32 Param_Sleep)
 {
 	Sleep(Param_Sleep);

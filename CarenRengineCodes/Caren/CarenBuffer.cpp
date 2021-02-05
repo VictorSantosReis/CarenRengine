@@ -655,8 +655,6 @@ Done:;
 	return Resultado;
 }
 
-
-
 /// <summary>
 /// Escreve dados no buffer atual a parti de um Buffer de origem.
 /// </summary>
@@ -1105,6 +1103,70 @@ CarenResult CarenBuffer::Write(ReadOnlyMemory<Byte> Param_BufferOrigem, UInt32 P
 	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
 
 Done:;
+	//Retorna o resultado.
+	return Resultado;
+}
+
+/// <summary>
+/// Escreve dados no buffer atual a parti de uma String que será convertida para um array de bytes.
+/// </summary>
+/// <param name="Param_Value">O valor a ser convertido e defnido no buffer.</param>
+/// <param name="Param_Encode">O tipo de encodificação de string para ser alocada.</param>
+/// <returns></returns>
+CarenResult CarenBuffer::Write(String^ Param_Value, CA_STRING_ENCODE Param_Encode)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Variaveis.
+	PBYTE vi_pBufferDados = Nulo;
+
+	//Verifica se a string não é invalida
+	if (!StringObjetoValido(Param_Value))
+		throw gcnew NullReferenceException("O parametro (Param_Value) deve conter uma cadeia de caracters valida e não vazia.");
+
+	//Verifica se os ranges e offsets não ultrapassam os limites dos buffers.
+	if (Posição + (UINT)Param_Value->Length > Tamanho)
+	{
+		//Chama uma exceção e informado o motivo.
+		throw gcnew IndexOutOfRangeException("A posicão do buffer atual não suportava escrever a quantidade de dados necessária.");
+	}
+	else
+	{
+		//Deixa continuar para realizar a escrita dos dados.
+	}
+
+	//Chama um switch para verificar como converter
+	switch (Param_Encode)
+	{
+	case CarenRengine::SDKBase::Enumeracoes::CA_STRING_ENCODE::ANSI:
+		//Converte e define no buffer.
+		vi_pBufferDados = static_cast<PBYTE>(Marshal::StringToCoTaskMemAnsi(Param_Value).ToPointer());
+		break;
+	case CarenRengine::SDKBase::Enumeracoes::CA_STRING_ENCODE::Unicode:
+		//Converte e define no buffer.
+		vi_pBufferDados = static_cast<PBYTE>(Marshal::StringToCoTaskMemUni(Param_Value).ToPointer());
+		break;
+	case CarenRengine::SDKBase::Enumeracoes::CA_STRING_ENCODE::UTF8:
+		//Converte e define no buffer.
+		vi_pBufferDados = static_cast<PBYTE>(Marshal::StringToCoTaskMemUTF8(Param_Value).ToPointer());
+		break;
+	default:
+		break;
+	}
+
+	//Realiza a escrita dos dados a parti do buffer informado.
+	std::copy(
+		vi_pBufferDados, //O endereço inicial do buffer a ser copiado.
+		vi_pBufferDados + Param_Value->Length, //O endereço final do buffer a ser copiado.
+		Posição > 0 ? pBufferNativo + Posição : pBufferNativo); //O buffer de destino que vai receber os dados.
+
+	//Libera a memória utilizada para converter os dados.
+	Marshal::FreeCoTaskMem(IntPtr(vi_pBufferDados));
+
+	//Define sucesso na operação
+	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+
 	//Retorna o resultado.
 	return Resultado;
 }

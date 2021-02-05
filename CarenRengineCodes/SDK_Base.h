@@ -4080,6 +4080,27 @@ namespace CarenRengine
 			};
 
 			/// <summary>
+			/// Enumera valores que especificam a tabela de codificação de uma String.
+			/// </summary>
+			public enum class CA_STRING_ENCODE
+			{
+				/// <summary>
+				/// Vai alocar ou conver para a tabela de codificação ANSI.
+				/// </summary>
+				ANSI,
+
+				/// <summary>
+				/// Vai alocar ou conver para a tabela de codificação Unicode.
+				/// </summary>
+				Unicode,
+
+				/// <summary>
+				/// Vai alocar ou conver para a tabela de codificação UTF8.
+				/// </summary>
+				UTF8
+			};
+
+			/// <summary>
 			/// Especifica o Resultado de uma comparação das interfaces: ICarenMFMediaType
 			/// </summary>
 			[FlagsAttribute]

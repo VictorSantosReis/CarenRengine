@@ -392,6 +392,14 @@ public:
 	virtual CarenResult Write(ReadOnlyMemory<Byte> Param_BufferOrigem, UInt32 Param_Start, UInt32 Param_Tamanho);
 
 	/// <summary>
+	/// Escreve dados no buffer atual a parti de uma String que será convertida para um array de bytes.
+	/// </summary>
+	/// <param name="Param_Value">O valor a ser convertido e defnido no buffer.</param>
+	/// <param name="Param_Encode">O tipo de encodificação de string para ser alocada.</param>
+	/// <returns></returns>
+	virtual CarenResult Write(String^ Param_Value, CA_STRING_ENCODE Param_Encode);
+
+	/// <summary>
 	/// Escreve dados no buffer atual a parti de um valor simples que será convertido para um array de bytes.
 	/// </summary>
 	/// <param name="Param_Value">O valor a ser convertido e defnido no buffer.</param>

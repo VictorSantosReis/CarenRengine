@@ -46,7 +46,36 @@ namespace CoreAudio_AudioCaptureTest
 
             public ICarenMMDeviceCollection ColecaoDispositivos { get; set; }
 
-            public ICarenMMDevice DispositivoCaptura { get; set; }
+            public ICarenMMDevice DispositivoCapturaDefault { get; set; }
+
+            public ICarenAudioClient AudioClientConfig { get; set; }
+
+            public ICarenAudioCaptureClient AudioCapture { get; set; }
+
+            public ICarenSimpleAudioVolume AudioCaptureVolume { get; set; }
+
+            public ICarenStream StreamFile { get; set; }
+
+            public ICarenBuffer BufferCapturedAudio { get; set; }
+
+            public CA_WAVEFORMATEXEXTENSIBLE WavFormatCapture { get; set; }
+
+            public uint FrameSize { get; set; }
+
+            public UInt64 TotalLenghtCaptured { get; set; }
+        }
+
+        public struct MyHeaderInfoFile 
+        {
+            /// <summary>
+            /// Variavel constante que contém o tamanho do header.
+            /// </summary>
+            public const ushort HeaderSize = 44;
+
+            /// <summary>
+            /// Variavel que contém o tamanho total do arquivo junto com o header.
+            /// </summary>
+            public static UInt32 TotalFileSize = 0;
         }
         #endregion
 
@@ -68,9 +97,58 @@ namespace CoreAudio_AudioCaptureTest
         MediaFoundationFunctions mftfuncs = new MediaFoundationFunctions();
         #endregion
 
+        #region Métodos para gerenciamento do arquivo Wav que vai receber os dados.
+        /// <summary>
+        /// Método responsável por criar e preparar o arquivo que vai receber os dados capturados do dispositivo de áudio.
+        /// </summary>
+        /// <param name="Param_Url">A url para o arquivo que será criado.</param>
+        /// <returns></returns>
+        public CarenResult CriarArquivoWav(String Param_Url)
+        {
+            //Variavel que vai retornar o resultado.
+            CarenResult Resultado = new CarenResult(ResultCode.ER_FAIL, false);
+
+            //Chama o construtor para criar o arquivo de destino.
+            myCaptureAudio.StreamFile = new CarenStream(Param_Url, CA_STGMs.CA_STGM_READWRITE, CA_FILE_ATTRIBUTES.CA_FILE_ATTRIBUTE_NORMAL, true);
+
+            //Verifica se não houve erro.
+            if(myCaptureAudio.StreamFile is null)
+            {
+                //Define erro na operação.
+                Resultado.AdicionarCodigo(ResultCode.ER_FAIL, false);
+
+                //Sai do método.
+                goto Done;
+            }
+
+
+
+        Done:;
+            //Retorna
+            return Resultado;
+        }
+
+        /// <summary>
+        /// Método responsável por terminar de configurar o header e finalizar o arquivo.
+        /// </summary>
+        /// <returns></returns>
+        public CarenResult FinalizarArquivoWav()
+        {
+            //Variavel que vai retornar o resultado.
+            CarenResult Resultado = new CarenResult(ResultCode.ER_FAIL, false);
+
+
+
+        Done:;
+            //Retorna
+            return Resultado;
+        }
+        #endregion
+
+
         private void AudioCaptureTest_Load(object sender, EventArgs e)
         {
-            
+ 
         }
 
         private void Btn_ListarDispositivos_Click(object sender, EventArgs e)
@@ -93,7 +171,7 @@ namespace CoreAudio_AudioCaptureTest
             BufferWriter = new CarenBuffer();
 
             //Cria o buffer para escrever os dados do header.
-            BufferWriter.CriarBuffer(HeaderSize);
+            BufferWriter.CreateBuffer(HeaderSize);
 
             //Escreve o Header.
             BufferWriter.Write(mftfuncs._FCC("RIFF"));
@@ -117,7 +195,7 @@ namespace CoreAudio_AudioCaptureTest
             BufferWriter.ReleaseBuffer();
 
             //Cria o buffer que vai conter os dados a serem escritos no arquivo.
-            BufferWriter.CriarBuffer((uint)TotalFileSize - HeaderSize);
+            BufferWriter.CreateBuffer((uint)TotalFileSize - HeaderSize);
 
             //Preenche com zeros
             BufferWriter.FillBuffer();

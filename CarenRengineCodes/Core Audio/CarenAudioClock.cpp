@@ -400,9 +400,9 @@ void CarenAudioClock::Finalizar()
 
 
 
-//
+
 // Métodos da interface proprietária(ICarenAudioClock)
-//
+
 
 /// <summary>
 /// (GetCharacteristics) - Método é reservado para uso futuro.

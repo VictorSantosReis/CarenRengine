@@ -166,7 +166,7 @@ namespace CarenRengine
 		};
 
 		/// <summary>
-		/// (IAudioClient2) - A interface ICarenAudioClient2 é derivada da interface IAudioClient, com um conjunto de métodos adicionais que permitem que um cliente de áudio da Windows Audio Session API (WASAPI) 
+		/// (IAudioClient2) - A interface ICarenAudioClient2 é derivada da interface ICarenAudioClient, com um conjunto de métodos adicionais que permitem que um cliente de áudio da Windows Audio Session API (WASAPI) 
 		/// faça o seguinte: opte por descarregar, consultar propriedades de fluxo e obtenha informações do hardware que lida com a descarga.
 		/// </summary>
 		[CategoryAttribute("Interface WASAPI")]
@@ -211,7 +211,7 @@ namespace CarenRengine
 			/// (SetClientProperties) -  Define as propriedades do fluxo de áudio povoando uma estrutura CA_AudioClientProperties.
 			/// </summary>
 			/// <param name="Param_Propriedades">Uma estrutura CA_AudioClientProperties.</param>
-			CarenResult DefinirPropriedadesCliente(CA_AudioClientProperties^ Param_Propriedades);
+			CarenResult SetClientProperties(CA_AudioClientProperties^ Param_Propriedades);
 		};
 
 		/// <summary>
@@ -237,7 +237,7 @@ namespace CarenRengine
 			/// (GetCurrentSharedModeEnginePeriod) - Retorna o formato atual e a periodicidade do motor de áudio. Este método permite que os clientes de áudio correspondam ao período atual do mecanismo de áudio. 
 			/// </summary>
 			/// <param name="Param_Out_Formato">Retorna o formato atual do dispositivo que está sendo usado pelo motor de áudio.</param>
-			/// <param name="Param_Out_PeriodoAtualEmFrames">Retorna o período atual do motor de áudio, em molduras de áudio.</param>
+			/// <param name="Param_Out_PeriodoAtualEmFrames">Retorna o período atual do motor de áudio, em frames de áudio.</param>
 			CarenResult GetCurrentSharedModeEnginePeriod(
 				[Out] CA_WAVEFORMATEXEXTENSIBLE^% Param_Out_Formato, 
 				[Out] UInt32% Param_Out_PeriodoAtualEmFrames);
@@ -245,7 +245,7 @@ namespace CarenRengine
 			/// <summary>
 			/// (GetSharedModeEnginePeriod) - Retorna a gama de periodicidades suportadas pelo motor para o formato de fluxo especificado. A periodicidade do motor é a taxa na qual o motor acorda um cliente de 
 			/// áudio orientado por eventos para transferir dados de áudio para ou do motor. Os valores retornados dependem das características do cliente de áudio especificadas através de uma chamada anterior 
-			/// para ICarenAudioClient2::DefinirPropriedadesCliente. 
+			/// para ICarenAudioClient2::SetClientProperties. 
 			/// </summary>
 			/// <param name="Param_Formato">O formato de fluxo para o qual as periodicidades suportadas são consultadas.</param>
 			/// <param name="Param_Out_PeriodoPadraoEmFrames">Retorna o período padrão com o qual o motor acordará o cliente para a transferência de amostras de áudio</param>
@@ -427,7 +427,7 @@ namespace CarenRengine
 		};
 
 		/// <summary>
-		/// (IAudioClock2) - Interface responsável por obter a posição atual do dispositivo.
+		/// (IAudioClock2) - Interface responsável por obter a posição atual do dispositivo áudio. Essa interface não herda os métodos da (ICarenAudioClock), é uma interface diferente.
 		/// Para obter uma referência para o ICarenAudioClock2 interface, o aplicativo deve chamar ICarenAudioClock::ConsultarInterface para solicitar o ponteiro interface do objeto 
 		/// transmitir ICarenAudioClock interface.
 		/// O cliente obtém uma referência à interface ICarenAudioClock de um objeto de fluxo chamando o método ICarenAudioClient::GetService com o parâmetro RIID definido como 
@@ -435,7 +435,7 @@ namespace CarenRengine
 		/// </summary>
 		[CategoryAttribute("Interface WASAPI")]
 		[Guid("525FB789-3E55-4677-90A0-84E779B9B6F2")]
-		public interface class ICarenAudioClock2 : ICarenAudioClock
+		public interface class ICarenAudioClock2
 		{
 			/// <summary>
 			/// Propriedade que define se a classe foi descartada.

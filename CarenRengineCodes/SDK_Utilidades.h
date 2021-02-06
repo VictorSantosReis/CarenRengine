@@ -557,89 +557,6 @@ namespace CarenRengine
 				return EstruturaRetorno;
 			}
 
-
-			//Converte a estrutura não gerenciada(WAVEFORMATEX) para sua correspondencia gerenciada(CA_WAVEFORMATEX).
-			CA_WAVEFORMATEX^ ConverterWaveFormatexUnmanagedToManaged(WAVEFORMATEX* pWaveFormat)
-			{
-				//Cria a estrutura a ser retornada.
-				CA_WAVEFORMATEX^ EstruturaRetorno = gcnew CA_WAVEFORMATEX();
-
-				//Define os dados na estrutura
-				EstruturaRetorno->nBlockAlign = static_cast<UInt16>(pWaveFormat->nBlockAlign);
-				EstruturaRetorno->wBitsPerSample = static_cast<UInt16>(pWaveFormat->wBitsPerSample);
-				EstruturaRetorno->nAvgBytesPerSec = static_cast<UInt32>(pWaveFormat->nAvgBytesPerSec);
-				EstruturaRetorno->nChannels = static_cast<UInt16>(pWaveFormat->nChannels);
-				EstruturaRetorno->nSamplesPerSec = static_cast<UInt32>(pWaveFormat->nSamplesPerSec);
-				EstruturaRetorno->wFormatTag = static_cast<UInt16>(pWaveFormat->wFormatTag);
-				EstruturaRetorno->cbSize = static_cast<UInt16>(pWaveFormat->cbSize);
-				EstruturaRetorno->TamanhoEstrutura = sizeof(WAVEFORMATEX);
-
-				//Retorna a estrutura.
-				return EstruturaRetorno;
-			}
-
-			//Covnerte uma estrutura gerenciada(CA_WAVEFORMATEX) para sua correspondencia não gerenciada(WAVEFORMATEX).
-			WAVEFORMATEX* ConverterWaveFormatexManagedToUnamaged(CA_WAVEFORMATEX^ Param_WaveFormatex)
-			{
-				//Estrutura que será retornada ao usuário.
-				WAVEFORMATEX* pWaveFormato = CriarEstrutura<WAVEFORMATEX>();
-
-				//Define os dados na estrutura.
-				pWaveFormato->cbSize = Param_WaveFormatex->cbSize;
-				pWaveFormato->nAvgBytesPerSec = Param_WaveFormatex->nAvgBytesPerSec;
-				pWaveFormato->nBlockAlign = Param_WaveFormatex->nBlockAlign;
-				pWaveFormato->nChannels = Param_WaveFormatex->nChannels;
-				pWaveFormato->nSamplesPerSec = Param_WaveFormatex->nSamplesPerSec;
-				pWaveFormato->wBitsPerSample = Param_WaveFormatex->wBitsPerSample;
-				pWaveFormato->wFormatTag = Param_WaveFormatex->wFormatTag;
-
-				//Retorna a estrutura não gerenciada
-				return pWaveFormato;
-			}
-
-
-			//Converte a estrutura não gerenciada(WAVEFORMATEXTENSIBLE) para sua correspondencia gerenciada(CA_WAVEFORMATEXEXTENSIBLE).
-			CA_WAVEFORMATEXEXTENSIBLE^ ConverterWaveformatExtensibleUnmanagedToManaged(WAVEFORMATEXTENSIBLE* pWaveFormatExtensible)
-			{
-				//Cria a estrutura a ser retornada.
-				CA_WAVEFORMATEXEXTENSIBLE^ EstruturaRetorno = gcnew CA_WAVEFORMATEXEXTENSIBLE();
-
-				//Define os dados da estrutura WaveFormatex.
-				EstruturaRetorno->Format = ConverterWaveFormatexUnmanagedToManaged(&pWaveFormatExtensible->Format);
-
-				//Define o restante dos dados.
-				EstruturaRetorno->dwChannelMask = static_cast<UInt32>(pWaveFormatExtensible->dwChannelMask);
-				EstruturaRetorno->wValidBitsPerSample = static_cast<UInt16>(pWaveFormatExtensible->Samples.wValidBitsPerSample);
-				EstruturaRetorno->wSamplesPerBlock = static_cast<UInt16>(pWaveFormatExtensible->Samples.wSamplesPerBlock);
-				EstruturaRetorno->SubFormato = ConverterGuidToString(pWaveFormatExtensible->SubFormat);
-				EstruturaRetorno->Reservado = static_cast<UInt16>(pWaveFormatExtensible->Samples.wReserved);
-				EstruturaRetorno->TamanhoEstrutura = sizeof(WAVEFORMATEXTENSIBLE);
-
-				//Retorna a estrutura
-				return EstruturaRetorno;
-			}
-
-			//Covnerte uma estrutura gerenciada(CA_WAVEFORMATEXEXTENSIBLE) para sua correspondencia não gerenciada(WAVEFORMATEXTENSIBLE).
-			WAVEFORMATEXTENSIBLE* ConverterWaveformatExtensibleManagedToUnamaged(CA_WAVEFORMATEXEXTENSIBLE^ Param_WaveFormatex)
-			{
-				//Estrutura que será retornada ao usuário.
-				WAVEFORMATEXTENSIBLE* pWaveFormatoEx = CriarEstrutura<WAVEFORMATEXTENSIBLE>();
-				WAVEFORMATEX* pWaveFormato = ConverterWaveFormatexManagedToUnamaged(Param_WaveFormatex->Format);
-
-				//Preenche os dados da estrutura principal.
-				pWaveFormatoEx->dwChannelMask = Param_WaveFormatex->dwChannelMask;
-				pWaveFormatoEx->SubFormat = CreateGuidFromString(Param_WaveFormatex->SubFormato);
-				pWaveFormatoEx->Samples.wSamplesPerBlock = Param_WaveFormatex->wSamplesPerBlock;
-				pWaveFormatoEx->Samples.wValidBitsPerSample = Param_WaveFormatex->wValidBitsPerSample;
-				pWaveFormatoEx->Samples.wReserved = Param_WaveFormatex->Reservado;
-
-				//Preenche os dados da estrutura secundaria.
-				pWaveFormatoEx->Format = *pWaveFormato;
-
-				//Retorna a estrutura não gerenciada
-				return pWaveFormatoEx;
-			}
-
 			//Converte a estrutura não gerenciada(BITMAPINFOHEADER) para sua correspondencia gerenciada(CA_BITMAPINFOHEADER).
 			CA_BITMAPINFOHEADER^ ConverterBITMAPINFOHEADERUnmanaged_ToManaged(BITMAPINFOHEADER* Param_Estrutura)
 			{
@@ -1491,6 +1408,127 @@ namespace CarenRengine
 				return pAtributosSeguranca;
 			}
 
+
+
+			// CORE AUDIO ESTRUTURAS
+
+			//Converte a estrutura não gerenciada(WAVEFORMATEX) para sua correspondencia gerenciada(CA_WAVEFORMATEX).
+			CA_WAVEFORMATEX^ ConverterWaveFormatexUnmanagedToManaged(WAVEFORMATEX* pWaveFormat)
+			{
+				//Cria a estrutura a ser retornada.
+				CA_WAVEFORMATEX^ EstruturaRetorno = gcnew CA_WAVEFORMATEX();
+
+				//Define os dados na estrutura
+				EstruturaRetorno->nBlockAlign = static_cast<UInt16>(pWaveFormat->nBlockAlign);
+				EstruturaRetorno->wBitsPerSample = static_cast<UInt16>(pWaveFormat->wBitsPerSample);
+				EstruturaRetorno->nAvgBytesPerSec = static_cast<UInt32>(pWaveFormat->nAvgBytesPerSec);
+				EstruturaRetorno->nChannels = static_cast<UInt16>(pWaveFormat->nChannels);
+				EstruturaRetorno->nSamplesPerSec = static_cast<UInt32>(pWaveFormat->nSamplesPerSec);
+				EstruturaRetorno->wFormatTag = static_cast<UInt16>(pWaveFormat->wFormatTag);
+				EstruturaRetorno->cbSize = static_cast<UInt16>(pWaveFormat->cbSize);
+				EstruturaRetorno->TamanhoEstrutura = sizeof(WAVEFORMATEX);
+
+				//Retorna a estrutura.
+				return EstruturaRetorno;
+			}
+
+			//Covnerte uma estrutura gerenciada(CA_WAVEFORMATEX) para sua correspondencia não gerenciada(WAVEFORMATEX).
+			WAVEFORMATEX* ConverterWaveFormatexManagedToUnamaged(CA_WAVEFORMATEX^ Param_WaveFormatex)
+			{
+				//Estrutura que será retornada ao usuário.
+				WAVEFORMATEX* pWaveFormato = CriarEstrutura<WAVEFORMATEX>();
+
+				//Define os dados na estrutura.
+				pWaveFormato->cbSize = Param_WaveFormatex->cbSize;
+				pWaveFormato->nAvgBytesPerSec = Param_WaveFormatex->nAvgBytesPerSec;
+				pWaveFormato->nBlockAlign = Param_WaveFormatex->nBlockAlign;
+				pWaveFormato->nChannels = Param_WaveFormatex->nChannels;
+				pWaveFormato->nSamplesPerSec = Param_WaveFormatex->nSamplesPerSec;
+				pWaveFormato->wBitsPerSample = Param_WaveFormatex->wBitsPerSample;
+				pWaveFormato->wFormatTag = Param_WaveFormatex->wFormatTag;
+
+				//Retorna a estrutura não gerenciada
+				return pWaveFormato;
+			}
+
+
+			//Converte a estrutura não gerenciada(WAVEFORMATEXTENSIBLE) para sua correspondencia gerenciada(CA_WAVEFORMATEXEXTENSIBLE).
+			CA_WAVEFORMATEXEXTENSIBLE^ ConverterWaveformatExtensibleUnmanagedToManaged(WAVEFORMATEXTENSIBLE* pWaveFormatExtensible)
+			{
+				//Cria a estrutura a ser retornada.
+				CA_WAVEFORMATEXEXTENSIBLE^ EstruturaRetorno = gcnew CA_WAVEFORMATEXEXTENSIBLE();
+
+				//Define os dados da estrutura WaveFormatex.
+				EstruturaRetorno->Format = ConverterWaveFormatexUnmanagedToManaged(&pWaveFormatExtensible->Format);
+
+				//Define o restante dos dados.
+				EstruturaRetorno->dwChannelMask = static_cast<UInt32>(pWaveFormatExtensible->dwChannelMask);
+				EstruturaRetorno->wValidBitsPerSample = static_cast<UInt16>(pWaveFormatExtensible->Samples.wValidBitsPerSample);
+				EstruturaRetorno->wSamplesPerBlock = static_cast<UInt16>(pWaveFormatExtensible->Samples.wSamplesPerBlock);
+				EstruturaRetorno->SubFormato = ConverterGuidToString(pWaveFormatExtensible->SubFormat);
+				EstruturaRetorno->Reservado = static_cast<UInt16>(pWaveFormatExtensible->Samples.wReserved);
+				EstruturaRetorno->TamanhoEstrutura = sizeof(WAVEFORMATEXTENSIBLE);
+
+				//Retorna a estrutura
+				return EstruturaRetorno;
+			}
+
+			//Covnerte uma estrutura gerenciada(CA_WAVEFORMATEXEXTENSIBLE) para sua correspondencia não gerenciada(WAVEFORMATEXTENSIBLE).
+			WAVEFORMATEXTENSIBLE* ConverterWaveformatExtensibleManagedToUnamaged(CA_WAVEFORMATEXEXTENSIBLE^ Param_WaveFormatex)
+			{
+				//Estrutura que será retornada ao usuário.
+				WAVEFORMATEXTENSIBLE* pWaveFormatoEx = CriarEstrutura<WAVEFORMATEXTENSIBLE>();
+				WAVEFORMATEX* vi_pWavFormatTemp = ConverterWaveFormatexManagedToUnamaged(Param_WaveFormatex->Format);
+
+				//Preenche os dados da estrutura principal.
+				pWaveFormatoEx->dwChannelMask = Param_WaveFormatex->dwChannelMask;
+				pWaveFormatoEx->SubFormat = CreateGuidFromString(Param_WaveFormatex->SubFormato);
+				pWaveFormatoEx->Samples.wSamplesPerBlock = Param_WaveFormatex->wSamplesPerBlock;
+				pWaveFormatoEx->Samples.wValidBitsPerSample = Param_WaveFormatex->wValidBitsPerSample;
+				pWaveFormatoEx->Samples.wReserved = Param_WaveFormatex->Reservado;
+
+				//Preenche os dados da estrutura secundaria.
+				pWaveFormatoEx->Format = *vi_pWavFormatTemp;
+
+				//Libera a memória utilizada pela estrutura
+				DeletarEstruturaSafe(&vi_pWavFormatTemp);
+
+				//Retorna a estrutura não gerenciada
+				return pWaveFormatoEx;
+			}
+
+
+			//Converte a estrutura não gerenciada(AudioClientProperties) para sua correspondencia gerenciada(CA_AudioClientProperties).
+			CA_AudioClientProperties^ ConverterCoreAudio_AudioClientPropertiesUnmanagedToManaged(AudioClientProperties* Param_Estrutura)
+			{
+				//Cria a estrutura a ser retornada.
+				CA_AudioClientProperties^ EstruturaRetorno = gcnew CA_AudioClientProperties();
+
+				//Define os dados na estrutura
+				EstruturaRetorno->bIsOffload = static_cast<Boolean>(Param_Estrutura->bIsOffload);
+				EstruturaRetorno->cbSize = static_cast<unsigned int>(Param_Estrutura->cbSize);
+				EstruturaRetorno->Options = static_cast<CA_AUDCLNT_STREAMOPTIONS>(Param_Estrutura->Options);
+				EstruturaRetorno->eCategory = static_cast<CA_AUDIO_STREAM_CATEGORY>(Param_Estrutura->eCategory);
+
+				//Retorna a estrutura.
+				return EstruturaRetorno;
+			}
+
+			//Covnerte uma estrutura gerenciada(CA_AudioClientProperties) para sua correspondencia não gerenciada(AudioClientProperties).
+			AudioClientProperties* ConverterCoreAudio_AudioClientPropertiesManagedToUnamaged(CA_AudioClientProperties^ Param_Estrutura)
+			{
+				//Estrutura que será retornada ao usuário.
+				AudioClientProperties* EstruturaRetorno = CriarEstrutura<AudioClientProperties>();
+
+				//Define os dados na estrutura.
+				EstruturaRetorno->bIsOffload = static_cast<Boolean>(Param_Estrutura->bIsOffload);
+				EstruturaRetorno->cbSize = static_cast<unsigned int>(Param_Estrutura->cbSize);
+				EstruturaRetorno->Options = static_cast<AUDCLNT_STREAMOPTIONS>(Param_Estrutura->Options);
+				EstruturaRetorno->eCategory = static_cast<AUDIO_STREAM_CATEGORY>(Param_Estrutura->eCategory);
+
+				//Retorna a estrutura não gerenciada
+				return EstruturaRetorno;
+			}
 
 
 

@@ -25,9 +25,6 @@
     <Filter Include="Arquivos de Cabeçalho\Classes de Funções">
       <UniqueIdentifier>{ccc9d9d6-988c-4d62-a38b-cad8ee8f216d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Arquivos de Cabeçalho\Classes em desenvolvimento">
-      <UniqueIdentifier>{f444ebd5-7122-4bbe-b57d-725457a99eba}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Arquivos de Cabeçalho\Classes Nativas">
       <UniqueIdentifier>{208edeac-5c06-47f2-950d-e2a87018864c}</UniqueIdentifier>
     </Filter>
@@ -183,6 +180,9 @@
     </Filter>
     <Filter Include="Arquivos de Origem\Classes Nativas\Classes\Caren Api">
       <UniqueIdentifier>{0cb74aa9-db4b-4b0d-8724-4960fb35da69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Classes em desenvolvimento">
+      <UniqueIdentifier>{f444ebd5-7122-4bbe-b57d-725457a99eba}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1503,11 +1503,20 @@
     <ClInclude Include="CarenRengineCodes\PropVariantManager\PropVariantManager.h">
       <Filter>Arquivos de Cabeçalho\Sistema</Filter>
     </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Windows\CarenSequentialStream.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
     <ClInclude Include="CarenRengineCodes\version.h">
       <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Windows\CarenSequentialStream.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Core Audio\CarenAudioClock2.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Core Audio\CarenAudioClient2.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Core Audio\CarenAudioClient3.h">
+      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2781,7 +2790,16 @@
       <Filter>Arquivos de Origem\Sistema</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Windows\CarenSequentialStream.cpp">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Origem\Classes\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Core Audio\CarenAudioClock2.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Core Audio\CarenAudioClient2.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Core Audio\CarenAudioClient3.cpp">
+      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

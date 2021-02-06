@@ -216,6 +216,28 @@ namespace CarenRengine
 
 
 
+			/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			//ENUMS DE ERROS DE APIs QUE NÃO ESTÁ LIGADAS DIRETAMENTE AS API DO PROJETO E SÃO CONSIDERADAS ERROS DO WINDOWS//
+			/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+			/// <summary>
+			/// (ERROR_INVALID_TASK_INDEX) - ‎Ou ‎‎o TaskIndex‎‎ não é 0 na primeira chamada ou não é reconhecido valor (em chamadas subsequentes).‎
+			/// </summary>
+			ER_ERROR_INVALID_TASK_INDEX,
+
+			/// <summary>
+			/// (ERROR_INVALID_TASK_NAME) - ‎A tarefa especificada não corresponde a nenhuma das tarefas armazenadas no registro.‎
+			/// </summary>
+			ER_ERROR_INVALID_TASK_NAME,
+
+			/// <summary>
+			/// (ERROR_PRIVILEGE_NOT_HELD) - ‎O chamador não tem privilégio suficiente.‎
+			/// </summary>
+			ER_ERROR_PRIVILEGE_NOT_HELD,
+
+
+
 
 			////////////////////////////
 			//ENUMS DA CORE AUDIO APIs//
@@ -231,7 +253,7 @@ namespace CarenRengine
 			/// <summary>
 			/// 
 			/// </summary>
-			SS_AUDCLNT_S_THREAD_ALREADY_REGISTERED = ER_FAIL + 1,
+			SS_AUDCLNT_S_THREAD_ALREADY_REGISTERED = ER_ERROR_PRIVILEGE_NOT_HELD + 1,
 
 			/// <summary>
 			/// 
@@ -3711,8 +3733,35 @@ namespace CarenRengine
 					break;
 
 
+					///////////////////////////////////////////////////////////////////////////////////////////////////
+					//VERIFICA OS HRESULTS DE QUALQUER OUTRA API QUE NÃO FAZ PARTE DIRETAMENTE DAS APIs DA BIBLIOTECA//
+					///////////////////////////////////////////////////////////////////////////////////////////////////
 
-					
+				case ERROR_INVALID_TASK_INDEX:
+					//Define o status geral do método como ERRO.
+					Resultado = false;
+
+					//Define o ResultCode a ser retornado.
+					OutStatus = ResultCode::ER_ERROR_INVALID_TASK_INDEX;
+					break;
+
+				case ERROR_INVALID_TASK_NAME:
+					//Define o status geral do método como ERRO.
+					Resultado = false;
+
+					//Define o ResultCode a ser retornado.
+					OutStatus = ResultCode::ER_ERROR_INVALID_TASK_NAME;
+					break;
+
+				case ERROR_PRIVILEGE_NOT_HELD:
+					//Define o status geral do método como ERRO.
+					Resultado = false;
+
+					//Define o ResultCode a ser retornado.
+					OutStatus = ResultCode::ER_ERROR_PRIVILEGE_NOT_HELD;
+					break;
+
+				
 
 					////////////////////////////////////
 					//VERIFICA OS HRESULTS DA WAIT API//
@@ -8159,10 +8208,6 @@ namespace CarenRengine
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = E_FAIL;
 					break;
-
-
-
-
 				case CarenRengine::CarenCodesStatus::ResultCode::ER_GUID_INVALIDO:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = E_FAIL;
@@ -8175,6 +8220,11 @@ namespace CarenRengine
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = E_FAIL;
 					break;
+
+
+
+					//ERROS COMUNS DAS APIS 'COM' 
+
 				case CarenRengine::CarenCodesStatus::ResultCode::ER_E_NOT_SUFFICIENT_BUFFER:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = E_NOT_SUFFICIENT_BUFFER;
@@ -8251,6 +8301,27 @@ namespace CarenRengine
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = E_FAIL;
 					break;
+
+
+
+					//ERROS DE TODAS AS APIS QUE NÃO FAZEM PARTE DIRETAMENTE DAS APIS UTILIZADAS PELA BIBLIOTECA.
+
+				case CarenRengine::CarenCodesStatus::ResultCode::ER_ERROR_INVALID_TASK_INDEX:
+					//Define o código HRESULT referente ao ResultCode informado.
+					Resultado = ERROR_INVALID_TASK_INDEX;
+					break;
+				case CarenRengine::CarenCodesStatus::ResultCode::ER_ERROR_INVALID_TASK_NAME:
+					//Define o código HRESULT referente ao ResultCode informado.
+					Resultado = ERROR_INVALID_TASK_NAME;
+					break;
+				case CarenRengine::CarenCodesStatus::ResultCode::ER_ERROR_PRIVILEGE_NOT_HELD:
+					//Define o código HRESULT referente ao ResultCode informado.
+					Resultado = ERROR_PRIVILEGE_NOT_HELD;
+					break;
+
+
+
+
 				case CarenRengine::CarenCodesStatus::ResultCode::ER_AUDCLNT_E_DEVICE_INVALIDATED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = AUDCLNT_E_DEVICE_INVALIDATED;
@@ -10421,7 +10492,8 @@ namespace CarenRengine
 				case CarenRengine::CarenCodesStatus::ResultCode::ER_WINCODEC_ERR_INVALIDJPEGSCANINDEX:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WINCODEC_ERR_INVALIDJPEGSCANINDEX;
-					break;
+					break;				
+
 				default:
 					//Como o erro não foi reconhecido, vai definir como (E_FAIL.)
 					Resultado = E_FAIL;

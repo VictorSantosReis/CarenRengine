@@ -564,7 +564,7 @@ Done:;
 /// </summary>
 /// <param name="Param_StreamIndex">O index para o fluxo a ser extraido a amostra. Esse valor pode ser um UInt32 para um ID de fluxo valido ou um dos valores da enumeração (CA_SOURCE_READER_ID).</param>
 /// <returns></returns>
-CarenResult CarenMFSourceReaderExtend::ReadSampleAsync(UInt32 Param_StreamIndex)
+CarenResult CarenMFSourceReaderExtend::ExReadSampleAsync(UInt32 Param_StreamIndex)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

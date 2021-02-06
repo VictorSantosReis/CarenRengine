@@ -399,9 +399,9 @@ void CarenAudioClient::Finalizar()
 
 
 
-//
+
 //Métodos da interface proprietaria(ICarenAudioClient)
-//
+
 
 /// <summary>
 /// (GetBufferSize) - O método recupera o tamanho (capacidade máxima) do buffer de ponto de extremidade.

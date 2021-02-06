@@ -23685,7 +23685,7 @@ namespace CarenRengine
 			/// incluídas nessa estrutura. Para formatos que exigem informações adicionais, essa estrutura é incluída como o primeiro membro em outra estrutura, juntamente com as informações adicionais.
 			/// Os formatos que oferecem suporte a mais de dois canais ou tamanhos de amostra de mais de 16 bits podem ser descritos em uma estrutura CA_WAVEFORMATEXEXTENSIBLE, que inclui a estrutura CA_WAVEFORMATEX.
 			/// </summary>
-			public ref struct CA_WAVEFORMATEX
+			public value struct CA_WAVEFORMATEX
 			{
 				/// <summary>
 				/// O formato do áudio. Esse essa estrutura estiver dentro de uma (CA_WAVEFORMATEXEXTENSIBLE) esse valor é igual a WAVE_FORMAT_EXTENSIBLE.
@@ -23735,7 +23735,7 @@ namespace CarenRengine
 			};
 
 			/// <summary>
-			/// (WAVEFORMATEXTENSIBLE)(FALTA DOCUMENTAR) - a estrutura define o formato de dados de forma de onda-áudio para formatos com mais de dois canais ou resoluções de exemplo mais altas do que o permitido por 
+			/// (WAVEFORMATEXTENSIBLE) - a estrutura define o formato de dados de forma de onda-áudio para formatos com mais de dois canais ou resoluções de exemplo mais altas do que o permitido por 
 			/// CA_WAVEFORMATEX. Ele também pode ser usado para definir qualquer formato que pode ser definido por CA_WAVEFORMATEX.
 			/// </summary>
 			public ref struct CA_WAVEFORMATEXEXTENSIBLE

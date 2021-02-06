@@ -257,7 +257,7 @@ public:
 	/// </summary>
 	/// <param name="Param_StreamIndex">O index para o fluxo a ser extraido a amostra. Esse valor pode ser um UInt32 para um ID de fluxo valido ou um dos valores da enumeração (CA_SOURCE_READER_ID).</param>
 	/// <returns></returns>
-	virtual CarenResult ReadSampleAsync(UInt32 Param_StreamIndex);
+	virtual CarenResult ExReadSampleAsync(UInt32 Param_StreamIndex);
 
 
 	//Métodos da interface ICarenMFSourceReader

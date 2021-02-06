@@ -35,6 +35,7 @@
             this.Txb_UrlOutputFile = new System.Windows.Forms.TextBox();
             this.Btn_StopCapture = new System.Windows.Forms.Button();
             this.Btn_ListarDispositivos = new System.Windows.Forms.Button();
+            this.Btn_AtivarDispositivo = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -95,7 +96,7 @@
             // 
             // Btn_ListarDispositivos
             // 
-            this.Btn_ListarDispositivos.Location = new System.Drawing.Point(313, 51);
+            this.Btn_ListarDispositivos.Location = new System.Drawing.Point(190, 51);
             this.Btn_ListarDispositivos.Name = "Btn_ListarDispositivos";
             this.Btn_ListarDispositivos.Size = new System.Drawing.Size(117, 35);
             this.Btn_ListarDispositivos.TabIndex = 8;
@@ -103,12 +104,23 @@
             this.Btn_ListarDispositivos.UseVisualStyleBackColor = true;
             this.Btn_ListarDispositivos.Click += new System.EventHandler(this.Btn_ListarDispositivos_Click);
             // 
+            // Btn_AtivarDispositivo
+            // 
+            this.Btn_AtivarDispositivo.Location = new System.Drawing.Point(313, 51);
+            this.Btn_AtivarDispositivo.Name = "Btn_AtivarDispositivo";
+            this.Btn_AtivarDispositivo.Size = new System.Drawing.Size(117, 35);
+            this.Btn_AtivarDispositivo.TabIndex = 9;
+            this.Btn_AtivarDispositivo.Text = "Ativar Dispositivo";
+            this.Btn_AtivarDispositivo.UseVisualStyleBackColor = true;
+            this.Btn_AtivarDispositivo.Click += new System.EventHandler(this.Btn_AtivarDispositivo_Click);
+            // 
             // AudioCaptureTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(442, 206);
+            this.Controls.Add(this.Btn_AtivarDispositivo);
             this.Controls.Add(this.Btn_ListarDispositivos);
             this.Controls.Add(this.Btn_StopCapture);
             this.Controls.Add(this.Txb_UrlOutputFile);
@@ -133,6 +145,7 @@
         private System.Windows.Forms.TextBox Txb_UrlOutputFile;
         private System.Windows.Forms.Button Btn_StopCapture;
         private System.Windows.Forms.Button Btn_ListarDispositivos;
+        private System.Windows.Forms.Button Btn_AtivarDispositivo;
     }
 }
 

@@ -1509,14 +1509,14 @@
     <ClInclude Include="CarenRengineCodes\Windows\CarenSequentialStream.h">
       <Filter>Arquivos de Cabeçalho\Classes\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Core Audio\CarenAudioClock2.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
-    </ClInclude>
     <ClInclude Include="CarenRengineCodes\Core Audio\CarenAudioClient2.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes\WASAPI</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Core Audio\CarenAudioClient3.h">
-      <Filter>Arquivos de Cabeçalho\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Cabeçalho\Classes\WASAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Core Audio\CarenAudioClock2.h">
+      <Filter>Arquivos de Cabeçalho\Classes\WASAPI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2793,13 +2793,13 @@
       <Filter>Arquivos de Origem\Classes\Windows</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Core Audio\CarenAudioClock2.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Origem\Classes\WASAPI</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Core Audio\CarenAudioClient2.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Origem\Classes\WASAPI</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Core Audio\CarenAudioClient3.cpp">
-      <Filter>Arquivos de Origem\Classes em desenvolvimento</Filter>
+      <Filter>Arquivos de Origem\Classes\WASAPI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

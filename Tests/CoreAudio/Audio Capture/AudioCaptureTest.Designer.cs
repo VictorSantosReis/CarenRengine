@@ -79,7 +79,7 @@
             this.Txb_UrlOutputFile.Location = new System.Drawing.Point(13, 109);
             this.Txb_UrlOutputFile.Multiline = true;
             this.Txb_UrlOutputFile.Name = "Txb_UrlOutputFile";
-            this.Txb_UrlOutputFile.PlaceholderText = "URL DA PASTA DE SAIDA";
+            this.Txb_UrlOutputFile.PlaceholderText = "URL ARQUIVO DE SAIDA";
             this.Txb_UrlOutputFile.Size = new System.Drawing.Size(417, 44);
             this.Txb_UrlOutputFile.TabIndex = 6;
             this.Txb_UrlOutputFile.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;

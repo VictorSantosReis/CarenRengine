@@ -210,6 +210,9 @@ namespace CoreAudio_AudioCaptureTest
                 goto Done;
             }
 
+            //Define o dispositivo de captura no membro da estrutura.
+            myCaptureAudio.DispositivoCaptura = OutDeviceCapture;
+
             //Cria a interface que vai ser ativada.
             myCaptureAudio.AudioClientConfig = new CarenAudioClient();
 
@@ -230,8 +233,67 @@ namespace CoreAudio_AudioCaptureTest
                 goto Done;
             }
 
-            //Define o dispositivo de captura no membro da estrutura.
-            myCaptureAudio.DispositivoCaptura = OutDeviceCapture;
+            //Inicializa a interface de captura que vai ser criada.
+            myCaptureAudio.AudioCapture = new CarenAudioCaptureClient();
+
+            //Chama o método para obter a interface de captura de áudio.
+            Resultado = myCaptureAudio.AudioClientConfig.GetService(GUIDs_InterfacesWASAPI.IID_IAudioCaptureClient, myCaptureAudio.AudioCapture);
+
+            //Verifica se obteve sucesso
+            if (Resultado.StatusCode != ResultCode.SS_OK)
+            {
+                //A operação falhou.
+
+                //Mostra uma mensagem de erro.
+                ShowMensagem(
+                    "Ocorreu uma falha ao obter a interface responsável pela captura dos dados de áudio do dispositivo. Mensagem de erro -> "
+                    + Resultado.ObterMensagem((int)Resultado.HResult), true);
+
+                //Sai do método
+                goto Done;
+            }
+
+            //Obtém a interface que controla o volume do áudio.
+            Resultado = myCaptureAudio.AudioClientConfig.GetService(GUIDs_InterfacesWASAPI.IID_ISimpleAudioVolume, myCaptureAudio.AudioCaptureVolume);
+
+            //Verifica se obteve sucesso
+            if (Resultado.StatusCode != ResultCode.SS_OK)
+            {
+                //A operação falhou.
+
+                //Mostra uma mensagem de erro.
+                ShowMensagem(
+                    "Ocorreu uma falha ao obter a interface de controle de volume do áudio. Mensagem de erro -> "
+                    + Resultado.ObterMensagem((int)Resultado.HResult), true);
+
+                //Sai do método
+                goto Done;
+            }
+
+            //Obtém o formato que o dispostivo de captura suporta
+            Resultado = myCaptureAudio.AudioClientConfig.GetMixFormat(out CA_WAVEFORMATEXEXTENSIBLE OutWaveFormatCapture);
+
+            //Verifica se obteve sucesso
+            if (Resultado.StatusCode != ResultCode.SS_OK)
+            {
+                //A operação falhou.
+
+                //Mostra uma mensagem de erro.
+                ShowMensagem(
+                    "Ocorreu uma falha ao obter o tipo de dados suportado pelo dispositivo de captura. Mensagem de erro -> "
+                    + Resultado.ObterMensagem((int)Resultado.HResult), true);
+
+                //Sai do método
+                goto Done;
+            }
+
+            //Calcula os dados do formato do áudio e define nas estruturas.
+            myCaptureAudio.FrameSize = (uint)(OutWaveFormatCapture.Format.wBitsPerSample * OutWaveFormatCapture.Format.nChannels / 8);
+            MyHeaderInfoFile.Canais = OutWaveFormatCapture.Format.nChannels;
+            MyHeaderInfoFile.BitsPerSample = OutWaveFormatCapture.Format.wBitsPerSample;
+            MyHeaderInfoFile.SampleRate = OutWaveFormatCapture.Format.nSamplesPerSec;
+            MyHeaderInfoFile.BytesPerSec = OutWaveFormatCapture.Format.nSamplesPerSec * OutWaveFormatCapture.Format.wBitsPerSample * OutWaveFormatCapture.Format.nChannels / 8;
+            MyHeaderInfoFile.BlockAlign = OutWaveFormatCapture.Format.nBlockAlign;
 
         Done:;
 
@@ -675,6 +737,8 @@ namespace CoreAudio_AudioCaptureTest
                 //Mostra uma mensagem de sucesso.
                 ShowMensagem($"O dispositivo de captura '{Cbx_ListCaptureAudioDevices.Items[Cbx_ListCaptureAudioDevices.SelectedIndex].ToString()}' foi ativado e está pronto para uso!");
             }
+
+
         }
 
         private void Btn_StartCapture_Click(object sender, EventArgs e)

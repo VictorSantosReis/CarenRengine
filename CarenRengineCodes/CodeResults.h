@@ -3206,6 +3206,7 @@ namespace CarenRengine
 					Sair;
 				}
 
+				//Verifica o caso especial do codigo de 'sucesso' AUDCLNT_S_POSITION_STALLED
 				else if (Param_Resultado == AUDCLNT_S_POSITION_STALLED)
 				{
 					//Define o resultado geral como true.
@@ -3218,6 +3219,7 @@ namespace CarenRengine
 					Sair;
 				}
 
+				//Verifica o caso especial do codigo de 'sucesso' AUDCLNT_S_THREAD_ALREADY_REGISTERED
 				else if (Param_Resultado == AUDCLNT_S_THREAD_ALREADY_REGISTERED)
 				{
 					//Define o resultado geral como true.
@@ -3761,6 +3763,158 @@ namespace CarenRengine
 					OutStatus = ResultCode::ER_ERROR_PRIVILEGE_NOT_HELD;
 					break;
 
+
+
+					//////////////////////
+					//CORE AUDIO HRESULT//
+					//////////////////////
+				case AUDCLNT_E_DEVICE_INVALIDATED:
+					//Define o status geral do método como ERRO.
+					Resultado = false;
+
+					//Define o ResultCode a ser retornado.
+					OutStatus = ResultCode::ER_AUDCLNT_E_SERVICE_NOT_RUNNING;
+					break;
+				case AUDCLNT_E_NOT_INITIALIZED:
+					//Define o status geral do método como ERRO.
+					Resultado = false;
+
+					//Define o ResultCode a ser retornado.
+					OutStatus = ResultCode::ER_AUDCLNT_E_NOT_INITIALIZED;
+					break;
+				case AUDCLNT_E_SERVICE_NOT_RUNNING:
+					//Define o status geral do método como ERRO.
+					Resultado = false;
+
+					//Define o ResultCode a ser retornado.
+					OutStatus = ResultCode::ER_AUDCLNT_E_SERVICE_NOT_RUNNING;
+					break;
+				case AUDCLNT_E_WRONG_ENDPOINT_TYPE:
+					//Define o status geral do método como ERRO.
+					Resultado = false;
+
+					//Define o ResultCode a ser retornado.
+					OutStatus = ResultCode::ER_AUDCLNT_E_WRONG_ENDPOINT_TYPE;
+					break;
+				case AUDCLNT_E_NOT_STOPPED:
+					//Define o status geral do método como ERRO.
+					Resultado = false;
+
+					//Define o ResultCode a ser retornado.
+					OutStatus = ResultCode::ER_AUDCLNT_E_NOT_STOPPED;
+					break;
+				case AUDCLNT_E_EVENTHANDLE_NOT_SET:
+					//Define o status geral do método como ERRO.
+					Resultado = false;
+
+					//Define o ResultCode a ser retornado.
+					OutStatus = ResultCode::ER_AUDCLNT_E_EVENTHANDLE_NOT_SET;
+					break;
+				case AUDCLNT_E_ALREADY_INITIALIZED:
+					//Define o status geral do método como ERRO.
+					Resultado = false;
+
+					//Define o ResultCode a ser retornado.
+					OutStatus = ResultCode::ER_AUDCLNT_E_ALREADY_INITIALIZED;
+					break;
+				case AUDCLNT_E_BUFFER_OPERATION_PENDING:
+					//Define o status geral do método como ERRO.
+					Resultado = false;
+
+					//Define o ResultCode a ser retornado.
+					OutStatus = ResultCode::ER_AUDCLNT_E_BUFFER_OPERATION_PENDING;
+					break;
+				case AUDCLNT_E_BUFFER_SIZE_NOT_ALIGNED:
+					//Define o status geral do método como ERRO.
+					Resultado = false;
+
+					//Define o ResultCode a ser retornado.
+					OutStatus = ResultCode::ER_AUDCLNT_E_BUFFER_SIZE_NOT_ALIGNED;
+					break;
+				case AUDCLNT_E_BUFFER_SIZE_ERROR:
+					//Define o status geral do método como ERRO.
+					Resultado = false;
+
+					//Define o ResultCode a ser retornado.
+					OutStatus = ResultCode::ER_AUDCLNT_E_BUFFER_SIZE_ERROR;
+					break;
+				case AUDCLNT_E_BUFFER_ERROR:
+					//Define o status geral do método como ERRO.
+					Resultado = false;
+
+					//Define o ResultCode a ser retornado.
+					OutStatus = ResultCode::ER_AUDCLNT_E_BUFFER_ERROR;
+					break;
+				case AUDCLNT_E_BUFFER_TOO_LARGE:
+					//Define o status geral do método como ERRO.
+					Resultado = false;
+
+					//Define o ResultCode a ser retornado.
+					OutStatus = ResultCode::ER_AUDCLNT_E_BUFFER_TOO_LARGE;
+					break;
+				case AUDCLNT_E_INVALID_SIZE:
+					//Define o status geral do método como ERRO.
+					Resultado = false;
+
+					//Define o ResultCode a ser retornado.
+					OutStatus = ResultCode::ER_AUDCLNT_E_INVALID_SIZE;
+					break;
+				case AUDCLNT_E_OUT_OF_ORDER:
+					//Define o status geral do método como ERRO.
+					Resultado = false;
+
+					//Define o ResultCode a ser retornado.
+					OutStatus = ResultCode::ER_AUDCLNT_E_OUT_OF_ORDER;
+					break;
+				case AUDCLNT_E_CPUUSAGE_EXCEEDED:
+					//Define o status geral do método como ERRO.
+					Resultado = false;
+
+					//Define o ResultCode a ser retornado.
+					OutStatus = ResultCode::ER_AUDCLNT_E_CPUUSAGE_EXCEEDED;
+					break;
+				case AUDCLNT_E_DEVICE_IN_USE:
+					//Define o status geral do método como ERRO.
+					Resultado = false;
+
+					//Define o ResultCode a ser retornado.
+					OutStatus = ResultCode::ER_AUDCLNT_E_DEVICE_IN_USE;
+					break;
+				case AUDCLNT_E_ENDPOINT_CREATE_FAILED:
+					//Define o status geral do método como ERRO.
+					Resultado = false;
+
+					//Define o ResultCode a ser retornado.
+					OutStatus = ResultCode::ER_AUDCLNT_E_ENDPOINT_CREATE_FAILED;
+					break;
+				case AUDCLNT_E_INVALID_DEVICE_PERIOD:
+					//Define o status geral do método como ERRO.
+					Resultado = false;
+
+					//Define o ResultCode a ser retornado.
+					OutStatus = ResultCode::ER_AUDCLNT_E_INVALID_DEVICE_PERIOD;
+					break;
+				case AUDCLNT_E_UNSUPPORTED_FORMAT:
+					//Define o status geral do método como ERRO.
+					Resultado = false;
+
+					//Define o ResultCode a ser retornado.
+					OutStatus = ResultCode::ER_AUDCLNT_E_UNSUPPORTED_FORMAT;
+					break;
+				case AUDCLNT_E_EXCLUSIVE_MODE_NOT_ALLOWED:
+					//Define o status geral do método como ERRO.
+					Resultado = false;
+
+					//Define o ResultCode a ser retornado.
+					OutStatus = ResultCode::ER_AUDCLNT_E_EXCLUSIVE_MODE_NOT_ALLOWED;
+					break;
+				case AUDCLNT_E_BUFDURATION_PERIOD_NOT_EQUAL:
+					//Define o status geral do método como ERRO.
+					Resultado = false;
+
+					//Define o ResultCode a ser retornado.
+					OutStatus = ResultCode::ER_AUDCLNT_E_BUFDURATION_PERIOD_NOT_EQUAL;
+					break;
 				
 
 					////////////////////////////////////
@@ -8321,6 +8475,7 @@ namespace CarenRengine
 
 
 
+					//CORE AUDIO
 
 				case CarenRengine::CarenCodesStatus::ResultCode::ER_AUDCLNT_E_DEVICE_INVALIDATED:
 					//Define o código HRESULT referente ao ResultCode informado.
@@ -8406,6 +8561,8 @@ namespace CarenRengine
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = AUDCLNT_E_BUFDURATION_PERIOD_NOT_EQUAL;
 					break;
+
+
 				case CarenRengine::CarenCodesStatus::ResultCode::ER_WAIT_FAILED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WAIT_FAILED;

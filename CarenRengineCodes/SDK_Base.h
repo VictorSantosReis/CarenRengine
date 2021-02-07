@@ -3543,7 +3543,7 @@ namespace CarenRengine
 				/// </summary>
 				literal String^ IID_IMMNotificationClient = "{7991EEC9-7E89-4D85-8390-6C703CEC60C0}";
 			};
-
+			
 			/// <summary>
 			/// Estrutura que contém os IID de todas as interfaces disponiveis nessa biblioteca que fazem parte da WASAPI Api.
 			/// </summary>
@@ -3573,7 +3573,7 @@ namespace CarenRengine
 				/// IID da interface nativa: IAudioCaptureClient
 				/// </summary>
 				literal String^ IID_IAudioCaptureClient = "{C8ADBD64-E71E-48a0-A4DE-185C395CD317}";
-
+				                                          
 				/// <summary>
 				/// IID da interface nativa: IAudioClock 
 				/// </summary>

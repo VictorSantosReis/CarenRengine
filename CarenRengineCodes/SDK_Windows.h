@@ -86,10 +86,17 @@ namespace CarenRengine
 			}
 
 			/// <summary>
-			/// Proriedade que retorna o size do Fluxo atual. Retorna um valor válido apenas se a classe
-			/// tiver sido iniciada com um dos construtores.
+			/// Proriedade que retorna o tamanho(Size) do fluxo atual. Causa uma exceção se o fluxo não for válido.
 			/// </summary>
 			property UInt64 Size
+			{
+				virtual UInt64 get();
+			}
+
+			/// <summary>
+			/// Propriedade que retorna a posição atual do ponteiro de busca no fluxo. Causa uma exceção se o fluxo não for válido.
+			/// </summary>
+			property UInt64 Position
 			{
 				virtual UInt64 get();
 			}

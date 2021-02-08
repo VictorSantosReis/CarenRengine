@@ -87,9 +87,6 @@ internal:
 	//Variavel que vai conter o ultimo código HRESULT retornado.
 	Int32 Var_Glob_LAST_HRESULT = 0;
 
-	//Variavel que vai conter o valor da propriedade (Size).
-	UInt64 Prop_SizeStream = 0;
-
 	//Variaveis publicas
 public:
 	/// <summary>
@@ -106,15 +103,76 @@ public:
 	}
 
 	/// <summary>
-	/// Proriedade que retorna o size do Fluxo atual. Retorna um valor válido apenas se a classe
-	/// tiver sido iniciada com um dos construtores.
+	/// Proriedade que retorna o tamanho(Size) do fluxo atual. Causa uma exceção se o fluxo não for válido.
 	/// </summary>
 	property UInt64 Size
 	{
 		virtual UInt64 get()
 		{
-			//Retorna o size do fluxo.
-			return Prop_SizeStream;
+			//Variavel a ser retornada.
+			UINT64 vi_ValueReturn = 0;
+
+			//Variaveis
+			HRESULT Hr = E_FAIL;
+			STATSTG vi_InfoStream = {};
+
+			//Verifica se o fluxo não é invalido
+			if (!ObjetoValido(PonteiroTrabalho))
+				throw gcnew NullReferenceException("O fluxo atual era inválido!");
+
+			//Chama o método para obter informações sobre o fluxo.
+			Hr = PonteiroTrabalho->Stat(&vi_InfoStream, STATFLAG_NONAME);
+
+			//Verifica se não houve erro
+			if (!Sucesso(Hr))
+				Sair; //A operação não foi bem sucedida
+
+			//Obtém o tamanho do fluxo atual.
+			vi_ValueReturn = vi_InfoStream.cbSize.QuadPart;
+
+		Done:;
+
+			//Retorna a variavel.
+			return vi_ValueReturn;
+		}
+	}
+
+	/// <summary>
+	/// Propriedade que retorna a posição atual do ponteiro de busca no fluxo. Causa uma exceção se o fluxo não for válido.
+	/// </summary>
+	property UInt64 Position
+	{
+		virtual UInt64 get()
+		{
+			//Variavel a ser retornada.
+			UINT64 vi_ValueReturn = 0;
+
+			//Variaveis
+			HRESULT Hr = E_FAIL;
+			LARGE_INTEGER vi_PosMove = {};
+			ULARGE_INTEGER vi_OutPosition = {};
+
+			//Verifica se o fluxo não é invalido
+			if (!ObjetoValido(PonteiroTrabalho))
+				throw gcnew NullReferenceException("O fluxo atual era inválido!");
+
+			//Zera os dados do PosMove.
+			ZeroMemory(&vi_PosMove, sizeof(LARGE_INTEGER));
+
+			//Chama o método para obter a posição atual do fluxo.
+			Hr = PonteiroTrabalho->Seek(vi_PosMove, STREAM_SEEK_CUR, &vi_OutPosition);
+
+			//Verifica se não houve erro
+			if (!Sucesso(Hr))
+				Sair; //A operação não foi bem sucedida
+
+			//Obtém o tamanho do fluxo atual.
+			vi_ValueReturn = vi_OutPosition.QuadPart;
+
+		Done:;
+
+			//Retorna a variavel.
+			return vi_ValueReturn;
 		}
 	}
 

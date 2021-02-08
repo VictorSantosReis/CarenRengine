@@ -138,9 +138,6 @@ CarenStream::CarenStream(ICarenBuffer^ Param_BufferInicial, UInt64 Param_Largura
 		throw gcnew Exception("Ocorreu uma falha ao criar o Stream!");
 	}
 
-	//Define o tamanho do fluxo
-	Prop_SizeStream = Param_LarguraBuffer;
-
 	//Define a interface criada no ponteiro de trabalho
 	PonteiroTrabalho = vi_pOutStream;
 }
@@ -175,9 +172,6 @@ CarenStream::CarenStream(MatrizBytes Param_BufferInicial, UInt64 Param_LarguraBu
 		throw gcnew Exception("Ocorreu uma falha ao criar o Stream!");
 	}
 
-	//Define o tamanho do fluxo
-	Prop_SizeStream = Param_LarguraBuffer;
-
 	//Define a interface criada no ponteiro de trabalho
 	PonteiroTrabalho = vi_pOutStream;
 
@@ -190,9 +184,6 @@ CarenStream::CarenStream(const IStream* Param_FluxoNativo, UInt64 Param_LarguraB
 	//Verifica se o fluxo é valido.
 	if (!ObjetoValido(Param_FluxoNativo))
 		throw gcnew NullReferenceException("O parametro (Param_FluxoNativo) não pode ser NULO!");
-
-	//Define o tamanho do fluxo
-	Prop_SizeStream = Param_LarguraBuffer;
 
 	//Define a interface fornecida no ponteiro de trabalho.
 	PonteiroTrabalho = const_cast<IStream*>(Param_FluxoNativo);

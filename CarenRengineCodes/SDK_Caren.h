@@ -546,11 +546,12 @@ namespace CarenRengine
 	};
 
 	/// <summary>
-	/// Interface responsável por criar e gerenciar um evento nativo do Windows.
+	/// Interface responsável por representar um sistema de sinalização para (EVENTOS). Internamente a interface utiliza HANDLES e métodos nativos do Windows
+	/// para sinalizar eventos ou aguardar sinalizações para poderem executar uma devida operação.
 	/// </summary>
 	[CategoryAttribute("Caren Interface")]
 	[Guid("CCC5A485-8664-474D-A88D-B9DE3512AE0D")]
-	public interface class ICarenWindowsEvent
+	public interface class ICarenEvent
 	{
 		/// <summary>
 		/// Propriedade que define se a classe foi descartada.

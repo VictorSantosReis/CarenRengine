@@ -424,7 +424,7 @@
     <ClInclude Include="CarenRengineCodes\Caren\Caren.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFVideoMediaType.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFVideoPresenter.h" />
-    <ClInclude Include="CarenRengineCodes\Caren\CarenWindowsEvent.h" />
+    <ClInclude Include="CarenRengineCodes\Caren\CarenEvent.h" />
     <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_ID2D1CommandSink2.h" />
     <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_ID2D1CommandSink3.h" />
     <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_ID2D1CommandSink5.h" />
@@ -983,7 +983,7 @@
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFTopologyNodeAttributeEditor.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFTopologyServiceLookup.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFTopologyServiceLookupClient.cpp" />
-    <ClCompile Include="CarenRengineCodes\Caren\CarenWindowsEvent.cpp" />
+    <ClCompile Include="CarenRengineCodes\Caren\CarenEvent.cpp" />
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IAudioSessionEvents.cpp" />
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_ID2D1CommandSink2.cpp" />
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_ID2D1CommandSink3.cpp" />

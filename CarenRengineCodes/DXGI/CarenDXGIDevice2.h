@@ -250,7 +250,7 @@ public:
 	/// </summary>
 	/// <param name="Param_HandleEvento">Uma Handle para o objeto do evento. Todos os tipos de objetos de evento (manual-reset, auto-reset e assim por diante) são suportados. 
 	/// A Handle deve ter a bandeira de direito de acesso (EVENT_MODIFY_STATE).</param>
-	virtual CarenResult EnqueueSetEvent(ICarenWindowsEvent^ Param_HandleEvento);
+	virtual CarenResult EnqueueSetEvent(ICarenEvent^ Param_HandleEvento);
 
 	/// <summary>
 	/// (OfferResources) - Permite que o sistema operacional liberte a memória de vídeo dos recursos descartando seu conteúdo.

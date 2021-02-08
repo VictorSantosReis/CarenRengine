@@ -509,7 +509,7 @@ CarenResult CarenD3D11Fence::GetCompletedValue([Out] UInt64% Param_Out_Valor)
 /// <param name="Param_HandleEvento">Uma handle para o objeto do evento.</param>
 CarenResult CarenD3D11Fence::SetEventOnCompletion(
 				UInt64 Param_ValorDisparo,
-				ICarenWindowsEvent^ Param_HandleEvento)
+				ICarenEvent^ Param_HandleEvento)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

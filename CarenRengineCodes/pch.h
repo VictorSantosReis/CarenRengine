@@ -39,7 +39,7 @@ limitations under the License.
 //Interfaces da Api base CAREN
 #include "Caren/Caren.h"
 #include "Caren/CarenBuffer.h"
-#include "Caren/CarenWindowsEvent.h"
+#include "Caren/CarenEvent.h"
 #include "Caren/CarenHMONITOR.h"
 #include "Caren/CarenObjectState.h"
 

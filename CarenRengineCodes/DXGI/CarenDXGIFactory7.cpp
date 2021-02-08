@@ -406,7 +406,7 @@ void CarenDXGIFactory7::Finalizar()
 /// </summary>
 /// <param name="Param_HandleEvento">Uma Handle para o objeto do evento.</param>
 /// <param name="Param_Out_Cookie">Recebe um valor da chave para o evento registrado.</param>
-CarenResult CarenDXGIFactory7::RegisterAdaptersChangedEvent(ICarenWindowsEvent^ Param_HandleEvento, [Out] UInt32% Param_Out_Cookie)
+CarenResult CarenDXGIFactory7::RegisterAdaptersChangedEvent(ICarenEvent^ Param_HandleEvento, [Out] UInt32% Param_Out_Cookie)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1157,7 +1157,7 @@ CarenResult CarenDXGIFactory7::IsWindowedStereoEnabled([Out] Boolean% Param_Out_
 /// A função CriarEvento ou AbrirEvento retorna essa alça.</param>
 /// <param name="Param_Out_Cookie">Retorna um valor-chave que um aplicativo pode passar para o método ICarenDXGIFactory2::UnregisterOcclusionStatus para cancelar o 
 /// registro do evento de notificação que (Param_Evento) especifica.</param>
-CarenResult CarenDXGIFactory7::RegisterOcclusionStatusEvent(ICarenWindowsEvent^ Param_Evento, [Out] UInt32% Param_Out_Cookie)
+CarenResult CarenDXGIFactory7::RegisterOcclusionStatusEvent(ICarenEvent^ Param_Evento, [Out] UInt32% Param_Out_Cookie)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1261,7 +1261,7 @@ Done:;
 /// A função CriarEvento ou AbrirEvento retorna essa alça.</param>
 /// <param name="Param_Out_Cookie">Retorna um valor-chave que um aplicativo pode passar para o método ICarenDXGIFactory2::UnregisterStereoStatus para cancelar o 
 /// registro do evento de notificação que (Param_Evento) especifica.</param>
-CarenResult CarenDXGIFactory7::RegisterStereoStatusEvent(ICarenWindowsEvent^ Param_Evento, [Out] UInt32% Param_Out_Cookie)
+CarenResult CarenDXGIFactory7::RegisterStereoStatusEvent(ICarenEvent^ Param_Evento, [Out] UInt32% Param_Out_Cookie)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

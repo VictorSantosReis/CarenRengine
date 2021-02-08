@@ -669,9 +669,6 @@
     <ClInclude Include="CarenRengineCodes\Caren\CarenHMONITOR.h">
       <Filter>Arquivos de Cabeçalho\Sistema</Filter>
     </ClInclude>
-    <ClInclude Include="CarenRengineCodes\Caren\CarenWindowsEvent.h">
-      <Filter>Arquivos de Cabeçalho\Classes\Caren</Filter>
-    </ClInclude>
     <ClInclude Include="CarenRengineCodes\Windows\CarenPropertyStore.h">
       <Filter>Arquivos de Cabeçalho\Classes\Windows</Filter>
     </ClInclude>
@@ -1518,6 +1515,9 @@
     <ClInclude Include="CarenRengineCodes\Core Audio\CarenAudioClock2.h">
       <Filter>Arquivos de Cabeçalho\Classes\WASAPI</Filter>
     </ClInclude>
+    <ClInclude Include="CarenRengineCodes\Caren\CarenEvent.h">
+      <Filter>Arquivos de Cabeçalho\Classes\Caren</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D10Multithread.cpp">
@@ -1957,9 +1957,6 @@
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Caren\CarenHMONITOR.cpp">
       <Filter>Arquivos de Origem\Sistema</Filter>
-    </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Caren\CarenWindowsEvent.cpp">
-      <Filter>Arquivos de Origem\Classes\Caren</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Windows\CarenPropertyStore.cpp">
       <Filter>Arquivos de Origem\Classes\Windows</Filter>
@@ -2800,6 +2797,9 @@
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Core Audio\CarenAudioClient3.cpp">
       <Filter>Arquivos de Origem\Classes\WASAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\Caren\CarenEvent.cpp">
+      <Filter>Arquivos de Origem\Classes\Caren</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

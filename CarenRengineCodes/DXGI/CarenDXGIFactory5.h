@@ -372,7 +372,7 @@ public:
 	/// A função CriarEvento ou AbrirEvento retorna essa alça.</param>
 	/// <param name="Param_Out_Cookie">Retorna um valor-chave que um aplicativo pode passar para o método ICarenDXGIFactory2::UnregisterOcclusionStatus para cancelar o 
 	/// registro do evento de notificação que (Param_Evento) especifica.</param>
-	virtual CarenResult RegisterOcclusionStatusEvent(ICarenWindowsEvent^ Param_Evento, [Out] UInt32% Param_Out_Cookie);
+	virtual CarenResult RegisterOcclusionStatusEvent(ICarenEvent^ Param_Evento, [Out] UInt32% Param_Out_Cookie);
 
 	/// <summary>
 	/// (RegisterOcclusionStatusWindow) - Registra uma janela de inscrição para receber mensagens de notificação de alterações do status de oclusão.
@@ -390,7 +390,7 @@ public:
 	/// A função CriarEvento ou AbrirEvento retorna essa alça.</param>
 	/// <param name="Param_Out_Cookie">Retorna um valor-chave que um aplicativo pode passar para o método ICarenDXGIFactory2::UnregisterStereoStatus para cancelar o 
 	/// registro do evento de notificação que (Param_Evento) especifica.</param>
-	virtual CarenResult RegisterStereoStatusEvent(ICarenWindowsEvent^ Param_Evento, [Out] UInt32% Param_Out_Cookie);
+	virtual CarenResult RegisterStereoStatusEvent(ICarenEvent^ Param_Evento, [Out] UInt32% Param_Out_Cookie);
 
 	/// <summary>
 	/// (RegisterStereoStatusWindow) - Registra uma janela de inscrição para receber mensagens de notificação de alterações de status estéreo.

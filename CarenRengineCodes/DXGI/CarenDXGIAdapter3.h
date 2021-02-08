@@ -260,7 +260,7 @@ public:
 	/// <param name="Param_Evento">Uma Handle para o objeto de evento que o sistema operacional define quando ocorre o (TearDown) de proteção de conteúdo de hardware. </param>
 	/// <param name="Param_Out_Cookie">um valor-chave que um aplicativo pode passar para o método ICarenDXGIAdapter3:::UnregisterHardwareContentProtectionTeardownStatus para 
 	/// descadastrar o evento de notificação que o Param_Evento especifica.</param>
-	virtual CarenResult RegisterHardwareContentProtectionTeardownStatusEvent(ICarenWindowsEvent^ Param_Evento, [Out] UInt32 Param_Out_Cookie);
+	virtual CarenResult RegisterHardwareContentProtectionTeardownStatusEvent(ICarenEvent^ Param_Evento, [Out] UInt32 Param_Out_Cookie);
 
 	/// <summary>
 	/// (RegisterVideoMemoryBudgetChangeNotificationEvent) - Este método estabelece uma correlação entre um objeto de sincronização da CPU e o evento de mudança orçamentária.
@@ -268,7 +268,7 @@ public:
 	/// <param name="Param_Evento">Uma Handle para o objeto de evento.</param>
 	/// <param name="Param_Out_Cookie">Um valor-chave para a janela ou evento para descadastrar. O método ICarenDXGIAdapter3::RegisterHardwareContentProtectionTeardownStatusEvent
 	/// retorna esse valor.</param>
-	virtual CarenResult RegisterVideoMemoryBudgetChangeNotificationEvent(ICarenWindowsEvent^ Param_Evento, [Out] UInt32 Param_Out_Cookie);
+	virtual CarenResult RegisterVideoMemoryBudgetChangeNotificationEvent(ICarenEvent^ Param_Evento, [Out] UInt32 Param_Out_Cookie);
 
 	/// <summary>
 	/// (SetVideoMemoryReservation) - Este método envia a memória física mínima necessária para uma aplicação, para o Sistema Operacional.

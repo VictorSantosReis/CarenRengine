@@ -295,7 +295,7 @@ public:
 	/// fila de cópia 3D, vídeo ou imagem.</param>
 	/// <param name="Param_Handle">Uma Handle opcional de eventos. Quando especificado, este método cria uma consulta de eventos. Flush1 opera de forma assíncrona, portanto, 
 	/// pode retornar antes ou depois que a GPU terminar executando os comandos gráficos enfileirados, que eventualmente serão concluídos.</param>
-	virtual CarenResult Flush1(CA_D3D11_CONTEXT_TYPE Param_TypeContexto, ICarenWindowsEvent^ Param_Handle);
+	virtual CarenResult Flush1(CA_D3D11_CONTEXT_TYPE Param_TypeContexto, ICarenEvent^ Param_Handle);
 
 	/// <summary>
 	/// (GetHardwareProtectionState) - Obtém um valor que define se a proteção de hardware está ativada.

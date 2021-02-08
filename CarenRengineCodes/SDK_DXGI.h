@@ -899,7 +899,7 @@ namespace CarenRengine
 			/// <param name="Param_Evento">Uma Handle para o objeto de evento que o sistema operacional define quando ocorre o (TearDown) de proteção de conteúdo de hardware. </param>
 			/// <param name="Param_Out_Cookie">um valor-chave que um aplicativo pode passar para o método ICarenDXGIAdapter3:::UnregisterHardwareContentProtectionTeardownStatus para 
 			/// descadastrar o evento de notificação que o Param_Evento especifica.</param>
-			CarenResult RegisterHardwareContentProtectionTeardownStatusEvent(ICarenWindowsEvent^ Param_Evento, [Out] UInt32 Param_Out_Cookie);
+			CarenResult RegisterHardwareContentProtectionTeardownStatusEvent(ICarenEvent^ Param_Evento, [Out] UInt32 Param_Out_Cookie);
 
 			/// <summary>
 			/// (RegisterVideoMemoryBudgetChangeNotificationEvent) - Este método estabelece uma correlação entre um objeto de sincronização da CPU e o evento de mudança orçamentária.
@@ -907,7 +907,7 @@ namespace CarenRengine
 			/// <param name="Param_Evento">Uma Handle para o objeto de evento.</param>
 			/// <param name="Param_Out_Cookie">Um valor-chave para a janela ou evento para descadastrar. O método ICarenDXGIAdapter3::RegisterHardwareContentProtectionTeardownStatusEvent
 			/// retorna esse valor.</param>
-			CarenResult RegisterVideoMemoryBudgetChangeNotificationEvent(ICarenWindowsEvent^ Param_Evento, [Out] UInt32 Param_Out_Cookie);
+			CarenResult RegisterVideoMemoryBudgetChangeNotificationEvent(ICarenEvent^ Param_Evento, [Out] UInt32 Param_Out_Cookie);
 
 			/// <summary>
 			/// (SetVideoMemoryReservation) - Este método envia a memória física mínima necessária para uma aplicação, para o Sistema Operacional.
@@ -1179,12 +1179,12 @@ namespace CarenRengine
 			/// (GetFrameLatencyWaitableObject) - Retorna uma Handle aguardavel que sinaliza quando o adaptador DXGI terminar de apresentar um novo quadro.
 			/// O Windows 8.1 introduz novas APIs que permitem renderização de menor latência esperando até que o quadro anterior seja apresentado ao display antes de desenhar o 
 			/// quadro seguinte. Para usar este método, primeiro crie a cadeia de swap DXGI com o conjunto de bandeiras CA_DXGI_SWAP_CHAIN_FLAG::CA_DXGI_SWAP_CHAIN_FLAG_FRAME_LATENCY_WAITABLE_OBJECT, 
-			/// em seguida, ligue para GetFrameLatencyWaitableObject para recuperar a handle aguardavel. Chame o método ICarenWindowsEvent::AguardarObjetoUnicoEx para sincronizar a 
+			/// em seguida, ligue para GetFrameLatencyWaitableObject para recuperar a handle aguardavel. Chame o método ICarenEvent::AguardarObjetoUnicoEx para sincronizar a 
 			/// renderização de cada novo quadro com o final do quadro anterior. Para cada quadro que renderiza, o aplicativo deve esperar por essa alça antes de iniciar qualquer operação 
 			/// de renderização.
 			/// </summary>
 			/// <param name="Param_Out_HandleEvento">Recebe a interface que gerencia a Handle aguardavel.</param>
-			CarenResult GetFrameLatencyWaitableObject([Out] ICarenWindowsEvent^% Param_Out_HandleEvento);
+			CarenResult GetFrameLatencyWaitableObject([Out] ICarenEvent^% Param_Out_HandleEvento);
 
 			/// <summary>
 			/// (GetMatrixTransform) - Obtém a matriz de transformação que será aplicada a uma cadeia de troca de composição no proximo (Present).
@@ -1547,7 +1547,7 @@ namespace CarenRengine
 			/// A função CriarEvento ou AbrirEvento retorna essa alça.</param>
 			/// <param name="Param_Out_Cookie">Retorna um valor-chave que um aplicativo pode passar para o método ICarenDXGIFactory2::UnregisterOcclusionStatus para cancelar o 
 			/// registro do evento de notificação que (Param_Evento) especifica.</param>
-			CarenResult RegisterOcclusionStatusEvent(ICarenWindowsEvent^ Param_Evento, [Out] UInt32% Param_Out_Cookie);
+			CarenResult RegisterOcclusionStatusEvent(ICarenEvent^ Param_Evento, [Out] UInt32% Param_Out_Cookie);
 
 			/// <summary>
 			/// (RegisterOcclusionStatusWindow) - Registra uma janela de inscrição para receber mensagens de notificação de alterações do status de oclusão.
@@ -1565,7 +1565,7 @@ namespace CarenRengine
 			/// A função CriarEvento ou AbrirEvento retorna essa alça.</param>
 			/// <param name="Param_Out_Cookie">Retorna um valor-chave que um aplicativo pode passar para o método ICarenDXGIFactory2::UnregisterStereoStatus para cancelar o 
 			/// registro do evento de notificação que (Param_Evento) especifica.</param>
-			CarenResult RegisterStereoStatusEvent(ICarenWindowsEvent^ Param_Evento, [Out] UInt32% Param_Out_Cookie);
+			CarenResult RegisterStereoStatusEvent(ICarenEvent^ Param_Evento, [Out] UInt32% Param_Out_Cookie);
 
 			/// <summary>
 			/// (RegisterStereoStatusWindow) - Registra uma janela de inscrição para receber mensagens de notificação de alterações de status estéreo.
@@ -1734,7 +1734,7 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_HandleEvento">Uma Handle para o objeto do evento.</param>
 			/// <param name="Param_Out_Cookie">Recebe um valor da chave para o evento registrado.</param>
-			CarenResult RegisterAdaptersChangedEvent(ICarenWindowsEvent^ Param_HandleEvento, [Out] UInt32% Param_Out_Cookie);
+			CarenResult RegisterAdaptersChangedEvent(ICarenEvent^ Param_HandleEvento, [Out] UInt32% Param_Out_Cookie);
 
 			/// <summary>
 			/// (UnregisterAdaptersChangedEvent) - Cancela o registro do evento para parar de receber notificações quando o estado de enumeração do adaptador muda.
@@ -1865,7 +1865,7 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_HandleEvento">Uma Handle para o objeto do evento. Todos os tipos de objetos de evento (manual-reset, auto-reset e assim por diante) são suportados. 
 			/// A Handle deve ter a bandeira de direito de acesso (EVENT_MODIFY_STATE).</param>
-			CarenResult EnqueueSetEvent(ICarenWindowsEvent^ Param_HandleEvento);
+			CarenResult EnqueueSetEvent(ICarenEvent^ Param_HandleEvento);
 
 			/// <summary>
 			/// (OfferResources) - Permite que o sistema operacional liberte a memória de vídeo dos recursos descartando seu conteúdo.

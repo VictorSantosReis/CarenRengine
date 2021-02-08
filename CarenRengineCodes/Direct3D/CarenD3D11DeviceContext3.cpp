@@ -409,7 +409,7 @@ void CarenD3D11DeviceContext3::Finalizar()
 /// fila de cópia 3D, vídeo ou imagem.</param>
 /// <param name="Param_Handle">Uma Handle opcional de eventos. Quando especificado, este método cria uma consulta de eventos. Flush1 opera de forma assíncrona, portanto, 
 /// pode retornar antes ou depois que a GPU terminar executando os comandos gráficos enfileirados, que eventualmente serão concluídos.</param>
-CarenResult CarenD3D11DeviceContext3::Flush1(CA_D3D11_CONTEXT_TYPE Param_TypeContexto, ICarenWindowsEvent^ Param_Handle)
+CarenResult CarenD3D11DeviceContext3::Flush1(CA_D3D11_CONTEXT_TYPE Param_TypeContexto, ICarenEvent^ Param_Handle)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

@@ -408,7 +408,7 @@ public:
 	/// (SetEventHandle) - O método define o identificador de evento que o sistema sinaliza quando um buffer de áudio está pronto para ser processado pelo cliente.
 	/// </summary>
 	/// <param name="Param_EventHandle">O identificador de evento.</param>
-	virtual CarenResult SetEventHandle(IntPtr Param_EventHandle);
+	virtual CarenResult SetEventHandle(ICarenEvent^ Param_EventHandle);
 
 	/// <summary>
 	/// (Start) - O método inicia o fluxo de áudio. Esse método requer inicialização anterior do Audio Cliente antes de ser chamado.

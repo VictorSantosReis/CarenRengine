@@ -1013,7 +1013,8 @@ Done:;
 /// (SetEventHandle) - O método define o identificador de evento que o sistema sinaliza quando um buffer de áudio está pronto para ser processado pelo cliente.
 /// </summary>
 /// <param name="Param_EventHandle">O identificador de evento.</param>
-CarenResult CarenAudioClient2::SetEventHandle(IntPtr Param_EventHandle) {
+CarenResult CarenAudioClient2::SetEventHandle(ICarenEvent^ Param_EventHandle)
+{
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
 
@@ -1021,11 +1022,17 @@ CarenResult CarenAudioClient2::SetEventHandle(IntPtr Param_EventHandle) {
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	HANDLE EventHandle = Util.ConverterIntPtrToHWND(Param_EventHandle);
+	HANDLE vi_EventHandle = Nulo;
+
+	//Tenta recuperar o ponteiro para o evento.
+	Resultado = Param_EventHandle->RecuperarEvento(&vi_EventHandle);
+
+	//Verifica se não houve erro
+	if (!CarenSucesso(Resultado))
+		Sair;
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->SetEventHandle(EventHandle);
+	Hr = PonteiroTrabalho->SetEventHandle(vi_EventHandle);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);

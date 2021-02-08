@@ -274,7 +274,7 @@ public:
 	/// <param name="Param_HandleEvento">Uma handle para o objeto do evento.</param>
 	virtual CarenResult SetEventOnCompletion(
 		UInt64 Param_ValorDisparo,
-		ICarenWindowsEvent^ Param_HandleEvento);
+		ICarenEvent^ Param_HandleEvento);
 
 
 

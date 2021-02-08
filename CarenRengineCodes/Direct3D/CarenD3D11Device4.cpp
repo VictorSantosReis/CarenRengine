@@ -407,7 +407,7 @@ void CarenD3D11Device4::Finalizar()
 /// <param name="Param_HandleEvento">Uma Handle para ser utilizada pelo evento.</param>
 /// <param name="Param_Out_Cookie">Recebe um valor para informações sobre o evento "dispositivo removido", que pode ser usado no (UnregisterDeviceRemoved) para cancelar o registro do evento.</param>
 CarenResult CarenD3D11Device4::RegisterDeviceRemovedEvent(
-				ICarenWindowsEvent^ Param_HandleEvento, 
+				ICarenEvent^ Param_HandleEvento, 
 				[Out] UInt32 Param_Out_Cookie)
 {
 	//Variavel a ser retornada.

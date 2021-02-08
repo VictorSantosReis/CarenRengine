@@ -235,7 +235,7 @@ namespace CarenRengine
 			/// <param name="Param_HandleEvento">Uma handle para o objeto do evento.</param>
 			CarenResult SetEventOnCompletion(
 				UInt64 Param_ValorDisparo,
-				ICarenWindowsEvent^ Param_HandleEvento);
+				ICarenEvent^ Param_HandleEvento);
 		};
 
 		/// <summary>
@@ -2816,7 +2816,7 @@ namespace CarenRengine
 			/// fila de cópia 3D, vídeo ou imagem.</param>
 			/// <param name="Param_Handle">Uma Handle opcional de eventos. Quando especificado, este método cria uma consulta de eventos. Flush1 opera de forma assíncrona, portanto, 
 			/// pode retornar antes ou depois que a GPU terminar executando os comandos gráficos enfileirados, que eventualmente serão concluídos.</param>
-			CarenResult Flush1(CA_D3D11_CONTEXT_TYPE Param_TypeContexto, ICarenWindowsEvent^ Param_Handle);
+			CarenResult Flush1(CA_D3D11_CONTEXT_TYPE Param_TypeContexto, ICarenEvent^ Param_Handle);
 
 			/// <summary>
 			/// (GetHardwareProtectionState) - Obtém um valor que define se a proteção de hardware está ativada.
@@ -3873,7 +3873,7 @@ namespace CarenRengine
 			/// <param name="Param_HandleEvento">Uma Handle para ser utilizada pelo evento.</param>
 			/// <param name="Param_Out_Cookie">Recebe um valor para informações sobre o evento "dispositivo removido", que pode ser usado no (UnregisterDeviceRemoved) para cancelar o registro do evento.</param>
 			CarenResult RegisterDeviceRemovedEvent(
-				ICarenWindowsEvent^ Param_HandleEvento, 
+				ICarenEvent^ Param_HandleEvento, 
 				[Out] UInt32 Param_Out_Cookie);
 
 			/// <summary>

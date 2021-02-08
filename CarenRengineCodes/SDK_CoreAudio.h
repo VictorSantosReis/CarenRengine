@@ -105,7 +105,7 @@ namespace CarenRengine
 			/// (Initialize) - Inicializa o fluxo de áudio.
 			/// </summary>
 			/// <param name="Param_ModoCompartilhamento">O modo de compartilhamento para a conexão. Por meio desse parâmetro, o cliente informa ao mecanismo de áudio se deseja compartilhar o dispositivo de ponto de extremidade de áudio com outros clientes.</param>
-			/// <param name="Param_FlagsFluxo">Sinalizadores para controlar a criação do fluxo. O cliente deve definir esse parâmetro como 0 ou para o bit ou OR de um ou mais das: AUDCLNT_STREAMFLAGS_XXX  ou AUDCLNT_SESSIONFLAGS_XXX constantes.</param>
+			/// <param name="Param_FlagsFluxo">Sinalizadores para controlar a criação do fluxo. O cliente deve definir esse parâmetro como 0 ou para o bit ou OR de um ou mais das: CA_CoreAudio_AUDCLNT_STREAMFLAGS_XXX ou CA_CoreAudio_AUDCLNT_SESSIONFLAGS_XXX constantes.</param>
 			/// <param name="Param_DuraçãoBuffer">A capacidade de buffer como um valor de tempo. Este parâmetro é do tipo REFERENCE_TIME(Int64) e é expresso em unidades de 100 nanossegundos. Este parâmetro contém o 
 			/// tamanho do buffer que o chamador solicita para o buffer que o aplicativo de áudio compartilhará com o mecanismo de áudio (no modo compartilhado) ou com o dispositivo de ponto de extremidade 
 			/// (no modo exclusivo). Se a chamada for bem-sucedida, o método aloca um buffer que é um mínimo este grande.</param>
@@ -147,7 +147,7 @@ namespace CarenRengine
 			/// (SetEventHandle) - O método define o identificador de evento que o sistema sinaliza quando um buffer de áudio está pronto para ser processado pelo cliente.
 			/// </summary>
 			/// <param name="Param_EventHandle">O identificador de evento.</param>
-			CarenResult SetEventHandle(IntPtr Param_EventHandle);
+			CarenResult SetEventHandle(ICarenEvent^ Param_EventHandle);
 
 			/// <summary>
 			/// (Start) - O método inicia o fluxo de áudio. Esse método requer inicialização anterior do Audio Cliente antes de ser chamado.

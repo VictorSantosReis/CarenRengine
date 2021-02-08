@@ -661,12 +661,12 @@ Done:;
 /// (GetFrameLatencyWaitableObject) - Retorna uma Handle aguardavel que sinaliza quando o adaptador DXGI terminar de apresentar um novo quadro.
 /// O Windows 8.1 introduz novas APIs que permitem renderização de menor latência esperando até que o quadro anterior seja apresentado ao display antes de desenhar o 
 /// quadro seguinte. Para usar este método, primeiro crie a cadeia de swap DXGI com o conjunto de bandeiras CA_DXGI_SWAP_CHAIN_FLAG::CA_DXGI_SWAP_CHAIN_FLAG_FRAME_LATENCY_WAITABLE_OBJECT, 
-/// em seguida, ligue para GetFrameLatencyWaitableObject para recuperar a handle aguardavel. Chame o método ICarenWindowsEvent::AguardarObjetoUnicoEx para sincronizar a 
+/// em seguida, ligue para GetFrameLatencyWaitableObject para recuperar a handle aguardavel. Chame o método ICarenEvent::AguardarObjetoUnicoEx para sincronizar a 
 /// renderização de cada novo quadro com o final do quadro anterior. Para cada quadro que renderiza, o aplicativo deve esperar por essa alça antes de iniciar qualquer operação 
 /// de renderização.
 /// </summary>
 /// <param name="Param_Out_HandleEvento">Recebe a interface que gerencia a Handle aguardavel.</param>
-CarenResult CarenDXGISwapChain4::GetFrameLatencyWaitableObject([Out] ICarenWindowsEvent^% Param_Out_HandleEvento)
+CarenResult CarenDXGISwapChain4::GetFrameLatencyWaitableObject([Out] ICarenEvent^% Param_Out_HandleEvento)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -678,7 +678,7 @@ CarenResult CarenDXGISwapChain4::GetFrameLatencyWaitableObject([Out] ICarenWindo
 	HandleEvento = PonteiroTrabalho->GetFrameLatencyWaitableObject();
 
 	//Cria a interface que vai conter o evento.
-	Param_Out_HandleEvento = gcnew CarenWindowsEvent();
+	Param_Out_HandleEvento = gcnew CarenEvent();
 
 	//Define o ponteiro do evento na interface.
 	Param_Out_HandleEvento->AssociarEvento(IntPtr(HandleEvento));

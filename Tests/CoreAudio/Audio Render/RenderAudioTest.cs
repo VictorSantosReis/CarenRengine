@@ -78,7 +78,7 @@ namespace CoreAudio_RenderAudioTest
 
             public MediaFoundationFunctions MFTFuncs { get; set; }
 
-            public CarenWindowsEvent WinEventRenderBuffer { get; set; }
+            public ICarenEvent WinEventRenderBuffer { get; set; }
 
             public long FrequencyComputer { get; set; }
 
@@ -744,7 +744,7 @@ namespace CoreAudio_RenderAudioTest
             CarenResult Resultado = new CarenResult(ResultCode.ER_FAIL, false);
 
             //Cria a classe de evento para notificação de renderização de amostras.
-            MyRenderAudioTest.WinEventRenderBuffer = new CarenWindowsEvent();
+            MyRenderAudioTest.WinEventRenderBuffer = new CarenEvent();
 
             //Cria o evento.
             Resultado = MyRenderAudioTest.WinEventRenderBuffer.CriarEvento(null, false, false, "Evt_RenderAudio");

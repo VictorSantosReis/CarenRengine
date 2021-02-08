@@ -20,7 +20,7 @@ limitations under the License.
 #include "../SDK_Caren.h"
 #include "../SDK_Utilidades.h"
 #include "CarenDXGIOutput.h"
-#include "../Caren/CarenWindowsEvent.h"
+#include "../Caren/CarenEvent.h"
 
 //Importa o namespace que contém as interfaces da API primária.
 using namespace CarenRengine::DXGI;
@@ -316,12 +316,12 @@ public:
 	/// (GetFrameLatencyWaitableObject) - Retorna uma Handle aguardavel que sinaliza quando o adaptador DXGI terminar de apresentar um novo quadro.
 	/// O Windows 8.1 introduz novas APIs que permitem renderização de menor latência esperando até que o quadro anterior seja apresentado ao display antes de desenhar o 
 	/// quadro seguinte. Para usar este método, primeiro crie a cadeia de swap DXGI com o conjunto de bandeiras CA_DXGI_SWAP_CHAIN_FLAG::CA_DXGI_SWAP_CHAIN_FLAG_FRAME_LATENCY_WAITABLE_OBJECT, 
-	/// em seguida, ligue para GetFrameLatencyWaitableObject para recuperar a handle aguardavel. Chame o método ICarenWindowsEvent::AguardarObjetoUnicoEx para sincronizar a 
+	/// em seguida, ligue para GetFrameLatencyWaitableObject para recuperar a handle aguardavel. Chame o método ICarenEvent::AguardarObjetoUnicoEx para sincronizar a 
 	/// renderização de cada novo quadro com o final do quadro anterior. Para cada quadro que renderiza, o aplicativo deve esperar por essa alça antes de iniciar qualquer operação 
 	/// de renderização.
 	/// </summary>
 	/// <param name="Param_Out_HandleEvento">Recebe a interface que gerencia a Handle aguardavel.</param>
-	virtual CarenResult GetFrameLatencyWaitableObject([Out] ICarenWindowsEvent^% Param_Out_HandleEvento);
+	virtual CarenResult GetFrameLatencyWaitableObject([Out] ICarenEvent^% Param_Out_HandleEvento);
 
 	/// <summary>
 	/// (GetMatrixTransform) - Obtém a matriz de transformação que será aplicada a uma cadeia de troca de composição no proximo (Present).

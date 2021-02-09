@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Transcode Dll": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>Transcode_Dll</RootNamespace>
+    <Platforms>x86</Platforms>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="CarenRengine.Debug.Win32">
+      <HintPath>..\..\Binarios\CarenRengine.Debug.Win32.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

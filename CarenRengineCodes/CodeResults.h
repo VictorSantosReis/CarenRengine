@@ -248,17 +248,17 @@ namespace CarenRengine
 			/// <summary>
 			/// (AUDCLNT_S_BUFFER_EMPTY | SS_FALSE) - A chamada foi bem sucedida e o número de frames lidos é 0, indicando que nenhum dado de captura está disponivel para ser lido. 
 			/// </summary>
-			SS_AUDCLNT_S_BUFFER_EMPTY = SS_FALSE,
+			SS_AUDCLNT_S_BUFFER_EMPTY = SS_OK,
 
 			/// <summary>
 			/// 
 			/// </summary>
-			SS_AUDCLNT_S_THREAD_ALREADY_REGISTERED = ER_ERROR_PRIVILEGE_NOT_HELD + 1,
+			SS_AUDCLNT_S_THREAD_ALREADY_REGISTERED = SS_AUDCLNT_S_BUFFER_EMPTY + 1,
 
 			/// <summary>
 			/// 
 			/// </summary>
-			SS_AUDCLNT_S_POSITION_STALLED,
+			SS_AUDCLNT_S_POSITION_STALLED = SS_AUDCLNT_S_THREAD_ALREADY_REGISTERED + 1,
 
 
 			// -> Erros
@@ -266,7 +266,7 @@ namespace CarenRengine
 			/// <summary>
 			/// (AUDCLNT_E_DEVICE_INVALIDATED) - O usuário removeu o dispositivo de ponto de extremidade de áudio ou o dispositivo de adaptador ao qual o dispositivo de ponto de extremidade se conecta.
 			/// </summary>
-			ER_AUDCLNT_E_DEVICE_INVALIDATED,
+			ER_AUDCLNT_E_DEVICE_INVALIDATED = ER_ERROR_PRIVILEGE_NOT_HELD + 1,
 
 			/// <summary>
 			/// (AUDCLNT_E_NOT_INITIALIZED) - O fluxo de áudio não foi inicializado com éxito.
@@ -3200,7 +3200,20 @@ namespace CarenRengine
 					Resultado = true;
 
 					//Define o status do (ResultCode) manualmente.
-					OutStatus = ResultCode::SS_FALSE; //-> ER_TIMERR_NOCANDO | SS_AUDCLNT_S_BUFFER_EMPTY 
+					OutStatus = ResultCode::SS_FALSE; //-> ER_TIMERR_NOCANDO 
+
+					//Pula para o final do método.
+					Sair;
+				}
+
+				//Verifica o caso especial do codigo de 'sucesso' AUDCLNT_S_BUFFER_EMPTY
+				else if (Param_Resultado == AUDCLNT_S_BUFFER_EMPTY)
+				{
+					//Define o resultado geral como true.
+					Resultado = true;
+
+					//Define o status do (ResultCode) manualmente.
+					OutStatus = ResultCode::SS_AUDCLNT_S_BUFFER_EMPTY;
 
 					//Pula para o final do método.
 					Sair;

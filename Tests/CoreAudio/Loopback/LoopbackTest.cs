@@ -448,13 +448,52 @@ namespace CoreAudio_LoopbackTest
                     Resultado = myCaptureAudio.WinEventBufferAudio.AguardarObjetoUnico(3000);
 
                     //Verifica o resultado
-                    if(Resultado.StatusCode != ResultCode.SS_WAIT_OBJECT_0)
+                    if(Resultado.StatusCode == ResultCode.SS_WAIT_OBJECT_0)
+                    {
+                       //EVENTO SINALIZADO. O DISPOSITIVO DE RENDERIZAÇÃO ESTÁ INDICANDO QUE PODE LER OS DADOS.
+                    }
+                    else if (Resultado.StatusCode == ResultCode.ER_WAIT_FAILED)
                     {
                         //Ocorreu uma falha...
 
                         //Mostra uma mensagem de erro.
                         ShowMensagem(
-                            "Ocorreu uma falha ao aguardar pelo dispositivo de renderização os dados a serem capturados. Mensagem de erro -> "
+                            "Ocorreu uma falha ao aguardar o dispostivo de renderização sinalizar que há dados disponiveis no fluxo para serem lidos. Mensagem de erro -> "
+                            + Resultado.ObterMensagem((int)Resultado.HResult), true);
+
+                        //Define que não está mais capturando
+                        StatusCapturandoDados = false;
+
+                        //Sai do laço
+                        break;
+                    }    
+                    else if (Resultado.StatusCode == ResultCode.SS_WAIT_TIMEOUT)
+                    {
+                        //O tempo de esperado foi esgotado..
+
+                        //Pode escrever dados SILENCIOSOS, BUFFER DE ZEROS ou repetir o laço para aguardar novamente.
+
+                        //Pula para o final do laço para repetir ou utilize o (continue).
+                        goto EndWhile;
+                    }
+                    else if (Resultado.StatusCode == ResultCode.SS_WAIT_ABANDONED)
+                    {
+                        //Ocorreu alguma procedimento desconhecido que deve ser verificado.
+
+                        //Pula para o fim do laço.
+                        goto EndWhile;
+                    }
+                    else if (Resultado.StatusCode == ResultCode.SS_WAIT_IO_COMPLETION)
+                    { 
+
+                    }
+                    else
+                    {
+                        //Ocorreu uma falha...
+
+                        //Mostra uma mensagem de erro.
+                        ShowMensagem(
+                            "Ocorreu uma falha ao aguardar o dispostivo de renderização sinalizar que há dados disponiveis no fluxo para serem lidos. Mensagem de erro -> "
                             + Resultado.ObterMensagem((int)Resultado.HResult), true);
 
                         //Define que não está mais capturando
@@ -465,6 +504,7 @@ namespace CoreAudio_LoopbackTest
                     }
 
                     //Chama o método para ler os dados do dispositivo.
+                    //Pode retornar sucesso e mesmo assim o buffer está vazio e o numero de frames lidos ser igual a 0.
                     Resultado = myCaptureAudio.AudioCapture.GetBuffer(
                         out myCaptureAudio.BufferCapturedAudio,
                         out OutFramesReaded,
@@ -479,12 +519,16 @@ namespace CoreAudio_LoopbackTest
 
                         //Mostra uma mensagem de erro.
                         ShowMensagem(
-                            "Ocorreu uma falha ao tentar caturar os dados disponiveis no dispositivo de captura. Mensagem de erro -> "
+                            "Ocorreu uma falha ao tentar caturar os dados disponiveis no dispositivo de renderização. Mensagem de erro -> "
                             + Resultado.ObterMensagem((int)Resultado.HResult), true);
 
                         //Sai do laço
                         break;
                     }
+
+                    //Verifica se o método retornou um buffer válido e há frames lidos.
+                    if (OutFramesReaded <= 0)
+                        goto EndWhile; //O método não retornou um buffer com dados válidos.
 
                     //Define o tamanho do buffer lido do dispositivo.
                     SizeInBytesBuffer = OutFramesReaded * myCaptureAudio.FrameSize;
@@ -534,6 +578,8 @@ namespace CoreAudio_LoopbackTest
 
                     //Incrementa a quantidade de dados capturados.
                     MyHeaderInfoFile.TotalLenghtCaptured += SizeInBytesBuffer;
+
+                EndWhile:;
                 }
             });
 

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CoreAudio_EnumeradorDispositivos": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

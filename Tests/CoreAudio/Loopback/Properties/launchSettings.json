@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CoreAudio_LoopbackTest": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

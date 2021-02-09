@@ -29,21 +29,21 @@ namespace CoreAudio_EnumeradorDispositivos
         /// </summary>
         private void InitializeComponent()
         {
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.Cbx_RenderAudioDevices = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.Cbx_CaptureAudioDevices = new System.Windows.Forms.ComboBox();
             this.Btn_EnumRenderAudio = new System.Windows.Forms.Button();
             this.Btn_EnumCaptureAudio = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // comboBox1
+            // Cbx_RenderAudioDevices
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(12, 33);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(306, 23);
-            this.comboBox1.TabIndex = 0;
+            this.Cbx_RenderAudioDevices.FormattingEnabled = true;
+            this.Cbx_RenderAudioDevices.Location = new System.Drawing.Point(12, 33);
+            this.Cbx_RenderAudioDevices.Name = "Cbx_RenderAudioDevices";
+            this.Cbx_RenderAudioDevices.Size = new System.Drawing.Size(306, 23);
+            this.Cbx_RenderAudioDevices.TabIndex = 0;
             // 
             // label1
             // 
@@ -63,13 +63,13 @@ namespace CoreAudio_EnumeradorDispositivos
             this.label2.TabIndex = 3;
             this.label2.Text = "Dispositivos de Captura Áudio:";
             // 
-            // comboBox2
+            // Cbx_CaptureAudioDevices
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(12, 107);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(306, 23);
-            this.comboBox2.TabIndex = 2;
+            this.Cbx_CaptureAudioDevices.FormattingEnabled = true;
+            this.Cbx_CaptureAudioDevices.Location = new System.Drawing.Point(12, 107);
+            this.Cbx_CaptureAudioDevices.Name = "Cbx_CaptureAudioDevices";
+            this.Cbx_CaptureAudioDevices.Size = new System.Drawing.Size(306, 23);
+            this.Cbx_CaptureAudioDevices.TabIndex = 2;
             // 
             // Btn_EnumRenderAudio
             // 
@@ -99,9 +99,9 @@ namespace CoreAudio_EnumeradorDispositivos
             this.Controls.Add(this.Btn_EnumCaptureAudio);
             this.Controls.Add(this.Btn_EnumRenderAudio);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.comboBox2);
+            this.Controls.Add(this.Cbx_CaptureAudioDevices);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.Cbx_RenderAudioDevices);
             this.Name = "EnumerdorDispostiivos";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.EnumerdorDispostiivos_Load);
@@ -112,10 +112,10 @@ namespace CoreAudio_EnumeradorDispositivos
 
         #endregion
 
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox Cbx_RenderAudioDevices;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox Cbx_CaptureAudioDevices;
         private System.Windows.Forms.Button Btn_EnumRenderAudio;
         private System.Windows.Forms.Button Btn_EnumCaptureAudio;
     }

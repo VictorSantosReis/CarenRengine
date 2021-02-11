@@ -11,8 +11,8 @@
     <Reference Include="CarenRengine.Debug.Win32">
       <HintPath>..\..\Binarios\CarenRengine.Debug.Win32.dll</HintPath>
     </Reference>
-    <Reference Include="Transcode Dll">
-      <HintPath>..\..\Media Foundation\Transcode Dll\bin\x86\Debug\net5.0\Transcode Dll.dll</HintPath>
+    <Reference Include="TranscodeApiTest">
+      <HintPath>..\..\Binarios\TranscodeApiTest.dll</HintPath>
     </Reference>
   </ItemGroup>
 

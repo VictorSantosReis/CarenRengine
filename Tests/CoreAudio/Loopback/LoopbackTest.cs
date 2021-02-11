@@ -458,6 +458,7 @@ namespace CoreAudio_LoopbackTest
                 //Variavies utilizadas.
                 uint SizeInBytesBuffer = 0;
                 uint OutFramesReaded = 0;
+                long OutQPCValue = 0;
                 CA_AUDIOCLIENTE_BUFFERFLAGS FlagsBuffer = CA_AUDIOCLIENTE_BUFFERFLAGS.Zero;
                 ICarenBuffer BufferSilence = new CarenBuffer();          
 
@@ -476,7 +477,13 @@ namespace CoreAudio_LoopbackTest
                     //Verifica o resultado
                     if(Resultado.StatusCode == ResultCode.SS_WAIT_OBJECT_0)
                     {
-                       //EVENTO SINALIZADO. O DISPOSITIVO DE RENDERIZAÇÃO ESTÁ INDICANDO QUE PODE LER OS DADOS.
+                        //EVENTO SINALIZADO. O DISPOSITIVO DE RENDERIZAÇÃO ESTÁ INDICANDO QUE PODE LER OS DADOS.
+
+                        //Chama o QPC para obter os ticks de inicio.
+                        WinFuncs._QueryPerformanceCounter(out OutQPCValue);
+
+                        //Converte os Ticks para nanossegundos
+                        OutQPCValue *= 100;
                     }
                     else if (Resultado.StatusCode == ResultCode.ER_WAIT_FAILED)
                     {
@@ -559,6 +566,9 @@ namespace CoreAudio_LoopbackTest
                     //Define o tamanho do buffer lido do dispositivo.
                     SizeInBytesBuffer = OutFramesReaded * myCaptureAudio.FrameSize;
 
+                    //Converte Para nanossegundos
+                    QpcPosition *= 100;
+
                     //Verifica os Flags do buffer.
                     if ((FlagsBuffer & CA_AUDIOCLIENTE_BUFFERFLAGS.AUDCLNT_BUFFERFLAGS_SILENT) != 0)
                     {
@@ -569,7 +579,10 @@ namespace CoreAudio_LoopbackTest
                         BufferSilence.FillBuffer();
 
                         //Envia o buffer para o escritor de dados.
-                        EnviarAmostra(ref BufferSilence, SizeInBytesBuffer, QpcPosition);
+                        EnviarAmostra(
+                            ref BufferSilence, 
+                            SizeInBytesBuffer, 
+                            (QpcPosition - (ulong)OutQPCValue) * 100);
 
                         //Libera a memória utilizada pelo buffer de silencio.
                         BufferSilence.ReleaseBuffer();
@@ -582,7 +595,11 @@ namespace CoreAudio_LoopbackTest
                         myCaptureAudio.BufferCapturedAudio.SetPosition(0);
 
                         //Envia o buffer para o escritor de dados.
-                        EnviarAmostra(ref myCaptureAudio.BufferCapturedAudio, SizeInBytesBuffer, QpcPosition);
+                        EnviarAmostra(
+                            ref myCaptureAudio.BufferCapturedAudio, 
+                            SizeInBytesBuffer, 
+                            (QpcPosition - (ulong)OutQPCValue) * 100                           
+                            );
                     }
 
                     //Chama o método para liberar o buffer.
@@ -973,6 +990,8 @@ namespace CoreAudio_LoopbackTest
                 Done:;
                     await Task.Delay(5);
                 }
+
+                Debug.WriteLine("O ESCRITOR DE DADOS FOI ENCERRADO!");
 
                 //Chama o GC.
                 GC.Collect();
@@ -1385,7 +1404,6 @@ namespace CoreAudio_LoopbackTest
         MFTTranscodeApi MFTTranscode { get; set; }
         CA_WAVEFORMATEXEXTENSIBLE WavFormat { get; set; }
         MFTTranscodeApi.AudioEncoders EncoderSelected { get; set; }
-        int i = 0;
 
         public CreateMp3FromDados(MFTTranscodeApi.AudioEncoders Param_Encoder, String Param_UrlSaida, CA_WAVEFORMATEXEXTENSIBLE Param_WavForm)
         {
@@ -1460,13 +1478,21 @@ namespace CoreAudio_LoopbackTest
             BufferDadosAmostra.SetCurrentLength(Param_LenghtBuffer);
 
             //Adiciona o buffer na amostra.
-            NovaAmostra.AddBuffer(BufferDadosAmostra);
-           
-            //Adiciona uma referencia a cada interface para o SinkWriter gerenciar seu tempo de vida.
-            //BufferDadosAmostra.AdicionarReferencia();
+            NovaAmostra.AddBuffer(BufferDadosAmostra);         
 
             //Envia a amostra para o encodificador.
             Resultado = MFTTranscode.EnviarAmostrar(NovaAmostra);
+
+            //Verifica se não houve erro
+            if (Resultado.StatusCode != ResultCode.SS_OK)
+            {
+                //A operação falhou.
+
+                //Mostra uma mensagem de erro.
+                MessageBox.Show(
+                    $"Ocorreu uma falha ao tentar escrever os dados.({Resultado.StatusCode}) Mensagem de erro -> "
+                    + Resultado.ObterMensagem((int)Resultado.HResult));
+            }
 
             //Libera as referencias criada aqui.
             BufferDadosAmostra.LiberarReferencia();

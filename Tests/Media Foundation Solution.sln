@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Transcode Dll", "Transcode Dll\Transcode Dll.csproj", "{564C8B5E-93BD-44DA-8ABF-408920840B19}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Media Foundation", ".\Media Foundation\Transcode Dll\Transcode Dll.csproj", "{564C8B5E-93BD-44DA-8ABF-408920840B19}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

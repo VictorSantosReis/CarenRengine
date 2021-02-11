@@ -1,9 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>Transcode_Dll</RootNamespace>
+    <RootNamespace>TranscodeApiTest</RootNamespace>
     <Platforms>x86</Platforms>
+    <EnforceCodeStyleInBuild>false</EnforceCodeStyleInBuild>
+    <AssemblyName>TranscodeApiTest</AssemblyName>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
@@ -15,5 +18,9 @@
       <HintPath>..\..\Binarios\CarenRengine.Debug.Win32.dll</HintPath>
     </Reference>
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="copy &quot;$(TargetPath)&quot; &quot;$(SolutionDir)Binarios\TranscodeApiTest.dll&quot;&#xD;&#xA;copy &quot;$(TargetDir)TranscodeApiTest.pdb&quot; &quot;$(SolutionDir)Binarios\TranscodeApiTest.pdb&quot;" />
+  </Target>
 
 </Project>

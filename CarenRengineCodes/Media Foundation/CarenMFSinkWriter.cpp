@@ -527,11 +527,11 @@ CarenResult CarenMFSinkWriter::AddStream(ICarenMFMediaType^ Param_TipoMidia, [Ou
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método.
-	IMFMediaType *pTipoAdd = NULL;
-	DWORD IdTipoMidiaAdicionado = 0;
+	IMFMediaType *vi_pMediaTypeAdd = Nulo;
+	DWORD vi_OutIdAdded = 0;
 
 	//Chama o método para recuperar o ponteiro de trabalho na interface gerenciada.
-	Resultado = Param_TipoMidia->RecuperarPonteiro((LPVOID*)pTipoAdd);
+	CarenGetPointerFromICarenSafe(Param_TipoMidia, vi_pMediaTypeAdd);
 
 	//Verifica se não houve erro
 	if (!CarenSucesso(Resultado))
@@ -541,30 +541,25 @@ CarenResult CarenMFSinkWriter::AddStream(ICarenMFMediaType^ Param_TipoMidia, [Ou
 	}
 
 	//Chama o método para definir o tipo da midia
-	Hr = PonteiroTrabalho->AddStream(pTipoAdd, &IdTipoMidiaAdicionado);
+	Hr = PonteiroTrabalho->AddStream(vi_pMediaTypeAdd, &vi_OutIdAdded);
 
-	//Verifica se obteve sucesso
-	if (Sucesso(Hr))
-	{
-		//Deixa o método continuar.
-	}
-	else
-	{
-		//Define falha
-		Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
 
-		//Define o código de erro
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Define o código na classe.
 		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
-		goto Done;
+		Sair;
 	}
 
 	//Define o Id do fluxo adicionado
-	Param_Out_IdFluxoAdicionado = safe_cast<UInt32>(IdTipoMidiaAdicionado);
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	Param_Out_IdFluxoAdicionado = safe_cast<UInt32>(vi_OutIdAdded);
 
 Done:;
 	//Retorna o resultado
@@ -651,22 +646,13 @@ CarenResult CarenMFSinkWriter::Flush(UInt32 Param_IdFluxo, Boolean Param_TodosFl
 	//Define falha na operação.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
 
-	//Resultado Com
+	//Resultado COM
 	ResultadoCOM Hr = E_FAIL;
 
-	//Verifica se deve liberar o fluxo no id especificado ou todos
-	if (Param_TodosFluxos)
-	{
-		//Deve liberar todos os fluxos.
-
-		//Chama o método para liberar todos os fluxos
-		Hr = PonteiroTrabalho->Flush(MF_SINK_WRITER_ALL_STREAMS);
-	}
-	else
-	{
-		//Chama o método para liberar o fluxo no id especificado
-		Hr = PonteiroTrabalho->Flush(Param_IdFluxo);
-	}
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->Flush(Param_TodosFluxos ? 
+		MF_SINK_WRITER_ALL_STREAMS :
+		static_cast<DWORD>(Param_IdFluxo));
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -771,7 +757,7 @@ CarenResult CarenMFSinkWriter::GetServiceForStream(
 	}
 
 	//Define o ponteiro para o ponteiro de trabalho
-	Param_Out_Interface->AdicionarPonteiro(OutInterfaceNativa);
+	CarenSetPointerToICarenSafe(reinterpret_cast<IUnknown*>(OutInterfaceNativa), Param_Out_Interface, true);
 
 Done:;
 	//Retorna o resultado.
@@ -898,21 +884,14 @@ CarenResult CarenMFSinkWriter::PlaceMarker(UInt32 Param_IdFluxo, ICaren^ Param_V
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método.
-	LPVOID pInterfaceDesconhecida = NULL;
+	LPVOID vi_pInterfaceValue = NULL;
 
-	//Verifica se a interface que contem o ponteiro desconhecido é valida.
-	if (Param_Valor != nullptr)
-	{
-		//Chama o método para obter o ponteiro de trabalho
-		Param_Valor->RecuperarPonteiro(&pInterfaceDesconhecida);
-	}
-	else
-	{
-		//Como esse valor é opcional o método não vai sair por erro aqui.
-	}
-
+	//Verifica se foi fornecida a interface opcional e recupera seu ponteiro.
+	if (!ObjetoGerenciadoValido(Param_Valor))
+		CarenGetPointerFromICarenSafe(Param_Valor, vi_pInterfaceValue);
+	
 	//Chama o método para definir o marcador
-	Hr = PonteiroTrabalho->PlaceMarker(Param_IdFluxo, pInterfaceDesconhecida);
+	Hr = PonteiroTrabalho->PlaceMarker(Param_IdFluxo, vi_pInterfaceValue);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -951,7 +930,7 @@ CarenResult CarenMFSinkWriter::SendStreamTick(UInt32 Param_IdFluxo, Int64 Param_
 	//Variaveis utilizadas no método.
 
 	//Chama o método para enviar a Lacuna para o fluxo especificado.
-	Hr = PonteiroTrabalho->SendStreamTick(Param_IdFluxo, Param_TimeStamp);
+	Hr = PonteiroTrabalho->SendStreamTick(static_cast<DWORD>(Param_IdFluxo), Param_TimeStamp);
 	
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -990,41 +969,18 @@ CarenResult CarenMFSinkWriter::SetInputMediaType(UInt32 Param_IdFluxo, ICarenMFM
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método.
-	IMFMediaType *pTipoMidiaEntrada = NULL;
-	IMFAttributes *pAtributosEncode = NULL;
+	IMFMediaType *vi_pMediaTypeEntry = Nulo;
+	IMFAttributes *vi_pAttributesEncode = Nulo;
 
 	//Chama o método para obter o tipo de midia de entrada
-	Resultado = Param_TipoMidia->RecuperarPonteiro((LPVOID*)&pTipoMidiaEntrada);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//A interface não é valida
-
-		//Sai do método.
-		goto Done;
-	}
+	CarenGetPointerFromICarenSafe(Param_TipoMidia, vi_pMediaTypeEntry);
 
 	//Verifica se está adicionando os atributos de configuração para o decodificador.
-	if (Param_ParametrosEncode != nullptr)
-	{
-		//Forneceu uma interface com os atributos do decodificador.
-
-		//Chama o método para recuperar os dados.
-		Resultado = Param_ParametrosEncode->RecuperarPonteiro((LPVOID*)&pAtributosEncode);
-	}
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//A interface não é valida
-
-		//Sai do método.
-		goto Done;
-	}
+	if (ObjetoGerenciadoValido(Param_ParametrosEncode))
+		CarenGetPointerFromICarenSafe(Param_ParametrosEncode, vi_pAttributesEncode);
 
 	//Chama o método para definir o tipo da midia de entrada.
-	Hr = PonteiroTrabalho->SetInputMediaType(Param_IdFluxo, pTipoMidiaEntrada, pAtributosEncode ? pAtributosEncode : NULL);
+	Hr = PonteiroTrabalho->SetInputMediaType(static_cast<DWORD>(Param_IdFluxo), vi_pMediaTypeEntry, vi_pAttributesEncode);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -1063,10 +1019,10 @@ CarenResult CarenMFSinkWriter::WriteSample(UInt32 Param_IdFluxo, ICarenMFSample^
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método.
-	IMFSample *pAmostraMidia = NULL;
+	IMFSample *vi_pWriteSample = NULL;
 
 	//Chama o método para obter a amostra a ser escrita.
-	Resultado = Param_AmostraMidia->RecuperarPonteiro((LPVOID*)&pAmostraMidia);
+	CarenGetPointerFromICarenSafe(Param_AmostraMidia, vi_pWriteSample);
 
 	//Verifica se não houve erro
 	if (Resultado.StatusCode != ResultCode::SS_OK)
@@ -1078,7 +1034,7 @@ CarenResult CarenMFSinkWriter::WriteSample(UInt32 Param_IdFluxo, ICarenMFSample^
 	}
 
 	//Chama o método para escrever a amostra no id especificado para o arquivo ou Hardware
-	Hr = PonteiroTrabalho->WriteSample(Param_IdFluxo, pAmostraMidia);
+	Hr = PonteiroTrabalho->WriteSample(static_cast<DWORD>(Param_IdFluxo), vi_pWriteSample);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);

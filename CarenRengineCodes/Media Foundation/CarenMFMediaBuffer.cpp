@@ -49,6 +49,25 @@ CarenMFMediaBuffer::CarenMFMediaBuffer(UInt32 Param_Lenght)
 	//Define a interface criada no ponteiro de trabalho da classe.
 	PonteiroTrabalho = vi_pOutMediaBuffer;
 }
+CarenMFMediaBuffer::CarenMFMediaBuffer(UInt32 Param_Lenght, Enumeracoes::CA_MF_BYTE_ALIGNMENT Param_Alignment)
+{
+	//Resultado COM
+	HRESULT Hr = E_FAIL;
+
+	//Variaveis a serem utilizadas.
+	Utilidades Util;
+	IMFMediaBuffer* vi_pOutMediaBuffer = Nulo;
+
+	//Chama o método para realizar a operação
+	Hr = MFCreateAlignedMemoryBuffer(static_cast<DWORD>(Param_Lenght), static_cast<DWORD>(Param_Alignment), &vi_pOutMediaBuffer);
+
+	//Verifica se não ocorreu algum erro
+	if (!Sucesso(Hr))
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao tentar criar o buffer. Mensagem de erro -> ", Util.TranslateCodeResult(Hr)));
+
+	//Define a interface criada no ponteiro de trabalho da classe.
+	PonteiroTrabalho = vi_pOutMediaBuffer;
+}
 CarenMFMediaBuffer::CarenMFMediaBuffer(UInt32 Param_Width, UInt32 Param_Height, CA_D3DFORMAT Param_D3DFormat, Boolean Param_BottomUp)
 {
 	//Resultado COM
@@ -606,12 +625,12 @@ CarenResult CarenMFMediaBuffer::Lock([Out] ICarenBuffer^% Param_Out_BufferMidia,
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas pelo método
-	PBYTE BufferMidiaData = NULL;
-	DWORD LarguaraMaximaForEscrita = 0;
-	DWORD LarguraAtual = 0;
+	PBYTE vi_pBufferLocked = NULL;
+	DWORD vi_OutMaxLenghtBuffer = 0;
+	DWORD vi_OutActualLenght = 0;
 
 	//Chama o método que vai obter o ponteiro para o buffer de midia.
-	Hr = PonteiroTrabalho->Lock(&BufferMidiaData, &LarguaraMaximaForEscrita, &LarguraAtual);
+	Hr = PonteiroTrabalho->Lock(&vi_pBufferLocked, &vi_OutMaxLenghtBuffer, &vi_OutActualLenght);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -632,7 +651,7 @@ CarenResult CarenMFMediaBuffer::Lock([Out] ICarenBuffer^% Param_Out_BufferMidia,
 	Param_Out_BufferMidia = gcnew CarenBuffer();
 
 	//Chama o método que vai criar o buffer da classe com base no buffer retornado pelo método Lock
-	Resultado = Param_Out_BufferMidia->CreateBuffer(IntPtr(BufferMidiaData), false, LarguraAtual, LarguaraMaximaForEscrita);
+	Resultado = Param_Out_BufferMidia->CreateBuffer(IntPtr(vi_pBufferLocked), false, vi_OutMaxLenghtBuffer, vi_OutActualLenght);
 
 	//Verifica se obteve sucesso
 	if (Resultado.StatusCode != ResultCode::SS_OK)
@@ -653,8 +672,8 @@ CarenResult CarenMFMediaBuffer::Lock([Out] ICarenBuffer^% Param_Out_BufferMidia,
 	}
 
 	//Define os dados de largura.
-	Param_Out_LarguraMaximaEscrita = LarguaraMaximaForEscrita;
-	Param_Out_LarguraAtual = LarguraAtual;
+	Param_Out_LarguraMaximaEscrita = vi_OutMaxLenghtBuffer;
+	Param_Out_LarguraAtual = vi_OutActualLenght;
 
 Done:;
 

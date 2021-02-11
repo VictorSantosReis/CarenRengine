@@ -10711,7 +10711,7 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_StatusCode">Um código(HRESULT) a ser definido como o status da operação.</param>
 			/// <param name="Param_Resultado">Um valor booleano que define o status geral da operação.</param>
-			CarenResult(Int64 Param_StatusCode, Boolean Param_Resultado)
+			CarenResult(Int32 Param_StatusCode, Boolean Param_Resultado)
 			{
 				//Variavel que realiza as operações no código de status.
 				ResultCodeState CheckStatus;
@@ -10723,6 +10723,19 @@ namespace CarenRengine
 				Glob_PropValue_HRESULT = CheckStatus.VerificarStatus(static_cast<HRESULT>(Param_StatusCode), Glob_PropValue_StatusCode);
 			}
 
+			//Converões implicitas
+		public:
+			static operator CarenResult(ResultCode Status_Code)
+			{
+				//Variavel a ser retornada.
+				CarenResult vi_NewCarenResult = CarenResult(E_FAIL, false);
+
+				//Chama o método para processar o código definido pelo usuário.
+				vi_NewCarenResult.ProcessarCodigoOperacao(static_cast<HRESULT>(Status_Code));
+
+				//Retorna o valor.
+				return vi_NewCarenResult;
+			}
 
 			//Propriedades.
 		public:
@@ -10737,9 +10750,9 @@ namespace CarenRengine
 			/// <summary>
 			/// Propriedade que armazena o código(HRESULT) gerado pelo método nativo na chamada.
 			/// </summary>
-			property Int64 HResult
+			property Int32 HResult
 			{
-				Int64 get() { return static_cast<Int64>(Glob_PropValue_HRESULT); }
+				Int32 get() { return static_cast<Int32>(Glob_PropValue_HRESULT); }
 			}
 
 			/// <summary>
@@ -10797,7 +10810,7 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_HRESULT">O código da operação a ser definido.</param>
 			/// <param name="Param_Resultado">Um valor Booleano que indica se o método foi executado com sucesso. O valor não indica diretamente se o resultado foi o esperado.</param>
-			void AdicionarCodigo(Int64 Param_HRESULT, Boolean Param_Resultado)
+			void AdicionarCodigo(Int32 Param_HRESULT, Boolean Param_Resultado)
 			{
 				//Define os dados nos valores das propriedades
 				Glob_PropValue_HRESULT = static_cast<HRESULT>(Param_HRESULT);
@@ -10833,8 +10846,8 @@ namespace CarenRengine
 			/// <summary>
 			/// Processa um código HRESULT e traduz os seu valor para um (ResultCode) se disponível e define o valor da propriedade (Resultado) automaticamente.
 			/// </summary>
-			/// <param name="Param_HRESULT">>O código da operação a ser definido.</param>
-			void ProcessarCodigoOperacao(Int64 Param_HRESULT)
+			/// <param name="Param_HRESULT">O código da operação a ser definido.</param>
+			void ProcessarCodigoOperacao(Int32 Param_HRESULT)
 			{
 				//Classe de verificação dos códigos de Status.
 				ResultCodeState CheckStatus;
@@ -10875,10 +10888,10 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_CodigoHResult">O código de erro a ser obtido a mensagem associada.</param>
 			/// <returns></returns>
-			String^ ObterMensagem(long Param_CodigoHResult)
+			String^ ObterMensagem(Int32 Param_CodigoHResult)
 			{
 				//Tenta obter a mensagem e retorna ao chamador.
-				return TranslateCodeResult(Param_CodigoHResult);
+				return TranslateCodeResult(static_cast<HRESULT>(Param_CodigoHResult));
 			}
 
 			/// <summary>

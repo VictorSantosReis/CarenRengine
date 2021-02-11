@@ -575,7 +575,7 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_GuidChave">O GUID para chave que contém o Blob a ser obtido.</param>
 			/// <param name="Param_Out_Buffer">O buffer que contém os dados da matriz bytes do valor da chave solicitada.</param>
-			CarenResult GetAllocatedBlob(String^ Param_GuidChave, OutParam CA_BlobData^% Param_Out_Buffer);
+			CarenResult GetAllocatedBlob(String^ Param_GuidChave, OutParam CA_BlobData% Param_Out_Buffer);
 
 			/// <summary>
 			/// Obtém uma seqüência de caracteres largos associada a uma chave. 
@@ -593,7 +593,7 @@ namespace CarenRengine
 			/// <param name="Param_GuidChave">O GUID para chave que contém o Blob a ser obtido.</param>
 			/// <param name="Param_Out_Buffer">O buffer que contém os dados da matriz bytes do valor da chave solicitada.</param>
 			/// <param name="Param_TamanhoBuffer">Define o tamanho da matriz em bytes do valor da chave a ser obtido. Chame o método (GetBlobSize) para obter o valor para esse parametro.</param>
-			CarenResult GetBlob(String^ Param_GuidChave, UInt32 Param_TamanhoBuffer, OutParam CA_BlobData^% Param_Out_Buffer);
+			CarenResult GetBlob(String^ Param_GuidChave, UInt32 Param_TamanhoBuffer, OutParam CA_BlobData% Param_Out_Buffer);
 
 			/// <summary>
 			/// Recupera o comprimento de uma matriz de byte associado a uma chave.

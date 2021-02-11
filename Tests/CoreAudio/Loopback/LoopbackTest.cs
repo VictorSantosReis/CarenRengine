@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.IO;
+using Transcode_Dll;
 
 //Importa os namespaces base.
 using CarenRengine;
@@ -114,6 +115,12 @@ namespace CoreAudio_LoopbackTest
 
             public static ushort BitsPerSample = 0;
         }
+
+        public struct MyAudioData 
+        {
+            public ICarenBuffer BufferAudio { get; set; }
+            public UInt64 PresentationTime { get; set; }
+        }
         #endregion
 
         #region Constantes
@@ -127,7 +134,7 @@ namespace CoreAudio_LoopbackTest
         #region Variaveis
         MyInterfacesForCaptureDevice myCaptureAudio = new MyInterfacesForCaptureDevice();
 
-        List<ICarenBuffer> ListaBuffersAudio { get; set; }
+        List<MyAudioData> ListaBuffersAudio { get; set; }
 
         MediaFoundationFunctions MFTFuncs = new MediaFoundationFunctions();
 
@@ -144,6 +151,10 @@ namespace CoreAudio_LoopbackTest
         Boolean StatusCapturandoDados { get; set; } = false;
 
         readonly object SyncList = new object();
+
+
+
+        CreateMp3FromDados Mp3Encode { get; set; }
         #endregion
 
 
@@ -268,8 +279,16 @@ namespace CoreAudio_LoopbackTest
                 goto Done;
             }
 
+            //Configura o formato para PCM
+            OutWaveFormatCapture.wValidBitsPerSample = 16;
+            OutWaveFormatCapture.Format.wBitsPerSample = 16;
+            OutWaveFormatCapture.Format.nBlockAlign = (ushort)(OutWaveFormatCapture.Format.wBitsPerSample * OutWaveFormatCapture.Format.nChannels / 8);
+            OutWaveFormatCapture.Format.nAvgBytesPerSec = OutWaveFormatCapture.Format.nBlockAlign * OutWaveFormatCapture.Format.nSamplesPerSec;
+            OutWaveFormatCapture.SubFormato = GUIDs_MF_AUDIO_SUBTYPES.MFAudioFormat_PCM;
+            OutWaveFormatCapture.Reservado = 16;
+
             //Define na estrutura.
-            myCaptureAudio.WavFormatCapture = OutWaveFormatCapture;
+            myCaptureAudio.WavFormatCapture = OutWaveFormatCapture;     
 
             //Calcula os dados do formato do áudio e define nas estruturas.
             myCaptureAudio.FrameSize = (uint)(OutWaveFormatCapture.Format.wBitsPerSample * OutWaveFormatCapture.Format.nChannels / 8);
@@ -278,7 +297,7 @@ namespace CoreAudio_LoopbackTest
             MyHeaderInfoFile.SampleRate = OutWaveFormatCapture.Format.nSamplesPerSec;
             MyHeaderInfoFile.BytesPerSec = OutWaveFormatCapture.Format.nSamplesPerSec * OutWaveFormatCapture.Format.wBitsPerSample * OutWaveFormatCapture.Format.nChannels / 8;
             MyHeaderInfoFile.BlockAlign = OutWaveFormatCapture.Format.nBlockAlign;
-            MyHeaderInfoFile.FormatAudioData = OutWaveFormatCapture.SubFormato == GUIDs_MF_AUDIO_SUBTYPES.MFAudioFormat_PCM ? 0 : 0x0003; //0x0003 é o formato IEEE Float
+            MyHeaderInfoFile.FormatAudioData = OutWaveFormatCapture.SubFormato == GUIDs_MF_AUDIO_SUBTYPES.MFAudioFormat_PCM ? 1 : 0x0003; //0x0003 é o formato IEEE Float
 
             //O SISTEMA VAI USAR O MODO DE EVENTOS ORIENTADOS PARA O BUFFER. ISSO INDICA QUE O APP VAI LER OS DADOS DISPONIVEIS PELO DISPOSITIVO
             //QUANDO O MESMO SINALIZAR QUE HÁ DADOS DISPONIVEIS, ISSO MELHORA O DESEMPENHO COMO TODO. 
@@ -298,7 +317,9 @@ namespace CoreAudio_LoopbackTest
            Resultado = myCaptureAudio.AudioClientConfig.Initialize(
                 CA_AUDIOCLIENTE_SHAREMODE.AUDCLNT_SHAREMODE_SHARED,
                 (uint)CA_CoreAudio_AUDCLNT_STREAMFLAGS_XXX.CA_AUDCLNT_STREAMFLAGS_LOOPBACK | //Define a flag para indicar que vai capturar os dados do renderizador.
-                (uint)CA_CoreAudio_AUDCLNT_STREAMFLAGS_XXX.CA_AUDCLNT_STREAMFLAGS_EVENTCALLBACK, //Define a flag para indicar que vai usar buffers orientado por eventos.
+                (uint)CA_CoreAudio_AUDCLNT_STREAMFLAGS_XXX.CA_AUDCLNT_STREAMFLAGS_EVENTCALLBACK | //Define a flag para indicar que vai usar buffers orientado por eventos.
+                (uint)CA_CoreAudio_AUDCLNT_STREAMFLAGS_XXX.CA_AUDCLNT_STREAMFLAGS_AUTOCONVERTPCM | 
+                (uint)CA_CoreAudio_AUDCLNT_STREAMFLAGS_XXX.CA_AUDCLNT_STREAMFLAGS_SRC_DEFAULT_QUALITY, 
                 REFTIMES_PER_SEC,
                 0,
                 ref OutWaveFormatCapture,
@@ -395,6 +416,11 @@ namespace CoreAudio_LoopbackTest
                 goto Done;
             }
 
+            MFTFuncs._MFStartup();
+
+            //Tenta criar o encodifciador MP3
+            Mp3Encode = new CreateMp3FromDados( MFTTranscodeApi.AudioEncoders.AAC, Txb_UrlOutputFile.Text.Replace(".wav", ".aac"), myCaptureAudio.WavFormatCapture);
+
         Done:;
 
             //Retorna o resultado.
@@ -433,7 +459,7 @@ namespace CoreAudio_LoopbackTest
                 uint SizeInBytesBuffer = 0;
                 uint OutFramesReaded = 0;
                 CA_AUDIOCLIENTE_BUFFERFLAGS FlagsBuffer = CA_AUDIOCLIENTE_BUFFERFLAGS.Zero;
-                ICarenBuffer BufferSilence = new CarenBuffer();
+                ICarenBuffer BufferSilence = new CarenBuffer();          
 
                 //Define que essa thread deve ter uma latencia menor.
                 WinFuncs._AvSetMmThreadCharacteristicsW(CA_Windows_MMCSS_Multimedia_Name_Tasks.Pro_Audio, out uint OutTaskIndex);
@@ -509,8 +535,8 @@ namespace CoreAudio_LoopbackTest
                         out myCaptureAudio.BufferCapturedAudio,
                         out OutFramesReaded,
                         out FlagsBuffer,
-                        out _,
-                        out _);
+                        out ulong PositionDevice,
+                        out ulong QpcPosition);
 
                     //Verifica se obteve sucesso
                     if (Resultado.StatusCode != ResultCode.SS_OK)
@@ -543,7 +569,7 @@ namespace CoreAudio_LoopbackTest
                         BufferSilence.FillBuffer();
 
                         //Envia o buffer para o escritor de dados.
-                        EnviarAmostra(ref BufferSilence, SizeInBytesBuffer);
+                        EnviarAmostra(ref BufferSilence, SizeInBytesBuffer, QpcPosition);
 
                         //Libera a memória utilizada pelo buffer de silencio.
                         BufferSilence.ReleaseBuffer();
@@ -556,7 +582,7 @@ namespace CoreAudio_LoopbackTest
                         myCaptureAudio.BufferCapturedAudio.SetPosition(0);
 
                         //Envia o buffer para o escritor de dados.
-                        EnviarAmostra(ref myCaptureAudio.BufferCapturedAudio, SizeInBytesBuffer);
+                        EnviarAmostra(ref myCaptureAudio.BufferCapturedAudio, SizeInBytesBuffer, QpcPosition);
                     }
 
                     //Chama o método para liberar o buffer.
@@ -842,6 +868,9 @@ namespace CoreAudio_LoopbackTest
             myCaptureAudio.StreamFile.Finalizar();
             myCaptureAudio.StreamFile = null;
 
+            //Filiza o mp3
+            Resultado = Mp3Encode.Finalizar();
+
         Done:;
 
             //Retorna
@@ -854,14 +883,14 @@ namespace CoreAudio_LoopbackTest
         public void IniciarEscritorDados()
         {
             //Cria o buffer que vai conter as amostras de áudio.
-            ListaBuffersAudio = new List<ICarenBuffer>(SIZE_INITIAL_BUFFER);
+            ListaBuffersAudio = new List<MyAudioData>(SIZE_INITIAL_BUFFER);
 
             //Cria a task responsável por ficar escrever no arquivo.
             Task_EscritorDados = new Task(async () =>
             {
                 //Variaveis
                 CarenResult Resultado = new CarenResult(ResultCode.ER_FAIL, false);
-                ICarenBuffer BufferNextWriter = null;
+                MyAudioData BufferNextWriter ;
                 ulong RefTotalWrittenBytes = 0;
                 uint ActualSamplesWrited = 0;
 
@@ -892,11 +921,11 @@ namespace CoreAudio_LoopbackTest
                     BufferNextWriter = ObterProximaAmostra();
 
                     //Verifica se a amostra não é nula.
-                    if (BufferNextWriter is null)
+                    if (BufferNextWriter.BufferAudio is null)
                         goto Done; //O buffer é invalido.
 
                     //Chama o método para escrever os dados no fluxo.
-                    Resultado = myCaptureAudio.StreamFile.Write(BufferNextWriter, BufferNextWriter.TamanhoValido, ref RefTotalWrittenBytes);
+                    Resultado = myCaptureAudio.StreamFile.Write(BufferNextWriter.BufferAudio, BufferNextWriter.BufferAudio.TamanhoValido, ref RefTotalWrittenBytes);
 
                     //Verifica se não houve erro.
                     if (Resultado.StatusCode != ResultCode.SS_OK)
@@ -915,9 +944,13 @@ namespace CoreAudio_LoopbackTest
                         StatusEscritorDados = false;
                     }
 
+                    //Escreve no Mp3
+                    Resultado = Mp3Encode.EnviarAmostra(BufferNextWriter.BufferAudio, BufferNextWriter.BufferAudio.TamanhoValido, (long)BufferNextWriter.PresentationTime);
+
                     //Libera o buffer.
-                    BufferNextWriter.ReleaseBuffer();
-                    BufferNextWriter = null;
+                    BufferNextWriter.BufferAudio.ReleaseBuffer();
+                    BufferNextWriter.BufferAudio = null;
+                    BufferNextWriter.PresentationTime = 0;
 
                     //Incrementa a quantidade de amostras escritas.
                     ActualSamplesWrited++;
@@ -953,7 +986,7 @@ namespace CoreAudio_LoopbackTest
         #endregion
 
         #region Métodos que gerenciam o buffer responsável por conter os dados a serem escritos.
-        public void EnviarAmostra(ref ICarenBuffer Param_Buffer, uint Param_CountAudioBytes)
+        public void EnviarAmostra(ref ICarenBuffer Param_Buffer, uint Param_CountAudioBytes, ulong Param_Presentation)
         {
             //Sincroniza o acesso a lista que contém os buffers de áudio.
             lock (SyncList)
@@ -974,18 +1007,21 @@ namespace CoreAudio_LoopbackTest
                 NewBuffer.TamanhoValido = Param_CountAudioBytes;
                 NewBuffer.Tamanho = Param_CountAudioBytes;
 
+                //Cria a estrutura comos dados.
+                MyAudioData MyDados = new MyAudioData() { BufferAudio = NewBuffer, PresentationTime = Param_Presentation };
+
                 //Adiciona na lista.
-                ListaBuffersAudio.Add(NewBuffer);
+                ListaBuffersAudio.Add(MyDados);
             }
         }
 
-        public ICarenBuffer ObterProximaAmostra()
+        public MyAudioData ObterProximaAmostra()
         {
             //Sincroniza o acesso a lista que contém os buffers de áudio.
             lock (SyncList)
             {
                 //Variavel a ser retornada.
-                ICarenBuffer NextBuffer = null;
+                MyAudioData NextBuffer = new MyAudioData() { BufferAudio = null, PresentationTime = 0 };
 
                 //Verifica se a lista contém amostras.
                 if (ListaBuffersAudio.Count <= 0)
@@ -1133,13 +1169,14 @@ namespace CoreAudio_LoopbackTest
                     if (ListaBuffersAudio is not null && ListaBuffersAudio.Count > 0)
                     {
                         //Obtém o buffer a ser removido.
-                        ICarenBuffer TempBuffer = ObterProximaAmostra();
+                        MyAudioData TempBuffer = ObterProximaAmostra();
 
                         //Verifica se é valido e libera os dados.
-                        if (TempBuffer is not null)
+                        if (TempBuffer.BufferAudio is not null)
                         {
-                            TempBuffer.ReleaseBuffer();
-                            TempBuffer = null;
+                            TempBuffer.BufferAudio.ReleaseBuffer();
+                            TempBuffer.BufferAudio = null;
+                            TempBuffer.PresentationTime = 0;
                         }
                     }
                     else
@@ -1340,6 +1377,117 @@ namespace CoreAudio_LoopbackTest
             Btn_StartCapture.Enabled = true;
             Btn_StopCapture.Enabled = true;
             Btn_StartCapture.Text = "Capturar";
+        }
+    }
+
+    public class CreateMp3FromDados
+    {
+        MFTTranscodeApi MFTTranscode { get; set; }
+        CA_WAVEFORMATEXEXTENSIBLE WavFormat { get; set; }
+        MFTTranscodeApi.AudioEncoders EncoderSelected { get; set; }
+        int i = 0;
+
+        public CreateMp3FromDados(MFTTranscodeApi.AudioEncoders Param_Encoder, String Param_UrlSaida, CA_WAVEFORMATEXEXTENSIBLE Param_WavForm)
+        {
+            //Define a estrutura WavFormat
+            WavFormat = Param_WavForm;
+
+            //Define o encodifciador selecionado.
+            EncoderSelected = Param_Encoder;
+
+            //Cria o transcodificador.
+            MFTTranscode = new MFTTranscodeApi(EncoderSelected, Param_UrlSaida, Param_WavForm);
+
+            //Inicializa o encodificador.
+            CarenResult Resultado = MFTTranscode.Inicializar();
+
+            //Verifica o resultado
+            if(Resultado.StatusCode != ResultCode.SS_OK)
+            {
+                //chama uma exceção.
+                throw new Exception("Ocorreu uma falha ao inicializar o encodificador. Mensagem de erro > " + Resultado.ObterMensagem(Resultado.HResult));
+            }
+        }
+
+        public CarenResult EnviarAmostra(ICarenBuffer Param_BufferDados, UInt32 Param_LenghtBuffer, Int64 Param_SamplePresentationTime)
+        {
+            //Variavel a ser retornada.
+            CarenResult Resultado = ResultCode.ER_FAIL;
+
+            //Variaveis.
+            CarenRengine.MediaFoundation.ICarenMFSample NovaAmostra = null;
+            CarenRengine.MediaFoundation.ICarenMFMediaBuffer BufferDadosAmostra = null;
+            ICarenBuffer OutPointerToBuffer = null;
+
+            //Cria a nova amostra que vai conter os dados.
+            NovaAmostra = new CarenMFSample(true);
+
+            //Define os atributos da amostra.
+            NovaAmostra.SetGUID(GUIDs_MF_MEDIATYPE_ATTRIBUTES.MF_MT_MAJOR_TYPE, GUIDs_MFAttributes_MAJOR_TYPES.MFMediaType_Audio); //O tipo principal dos dados. (AUDIO)
+            NovaAmostra.SetGUID(GUIDs_MF_MEDIATYPE_ATTRIBUTES.MF_MT_SUBTYPE, GUIDs_MF_AUDIO_SUBTYPES.MFAudioFormat_PCM); //O tipo dos dados na amostra. (PCM)              
+            NovaAmostra.SetUINT32(GUIDs_MF_MEDIATYPE_ATTRIBUTES.MF_MT_AUDIO_NUM_CHANNELS, WavFormat.Format.nChannels);
+            NovaAmostra.SetUINT32(GUIDs_MF_MEDIATYPE_ATTRIBUTES.MF_MT_AUDIO_BITS_PER_SAMPLE, WavFormat.Format.wBitsPerSample);
+            NovaAmostra.SetUINT32(GUIDs_MF_MEDIATYPE_ATTRIBUTES.MF_MT_AUDIO_SAMPLES_PER_SECOND, WavFormat.Format.nSamplesPerSec);
+            NovaAmostra.SetUINT32(GUIDs_MF_MEDIATYPE_ATTRIBUTES.MF_MT_AUDIO_BLOCK_ALIGNMENT, WavFormat.Format.nBlockAlign);
+            NovaAmostra.SetUINT32(GUIDs_MF_MEDIATYPE_ATTRIBUTES.MF_MT_AUDIO_AVG_BYTES_PER_SECOND, WavFormat.Format.nAvgBytesPerSec);
+            NovaAmostra.SetUINT32(GUIDs_MF_MEDIATYPE_ATTRIBUTES.MF_MT_AUDIO_CHANNEL_MASK, WavFormat.dwChannelMask);
+
+            //Verififica se o encidificador é AAC
+            if(EncoderSelected == MFTTranscodeApi.AudioEncoders.AAC)
+            {
+                //Define o Time e a duração.
+                NovaAmostra.SetSampleDuration(((Param_LenghtBuffer / 4) * 10000000) / WavFormat.Format.nSamplesPerSec);
+                NovaAmostra.SetSampleTime(Param_SamplePresentationTime);
+            }
+
+            //Cria o buffer que vai conter os dados descompactados do tamanho exato dos dados.
+            BufferDadosAmostra = new CarenMFMediaBuffer(Param_LenghtBuffer);
+
+            //Chama o método para recuperar o buffer da interface.
+            BufferDadosAmostra.Lock(out OutPointerToBuffer, out uint SizeMax, out uint SizeAtual);
+
+            //Define as posições dos buffers para ZERO.
+            OutPointerToBuffer.SetPosition(0);
+            Param_BufferDados.SetPosition(0);
+
+            //Escreve os dados descompactados no buffer.           
+            Param_BufferDados.WriteTo(0, Param_LenghtBuffer, ref OutPointerToBuffer);
+
+            //Libera o buffer capturado anteriormente.
+            BufferDadosAmostra.Unlock();
+
+            //Define a nova largura do buffer.
+            BufferDadosAmostra.SetCurrentLength(Param_LenghtBuffer);
+
+            //Adiciona o buffer na amostra.
+            NovaAmostra.AddBuffer(BufferDadosAmostra);
+           
+            //Adiciona uma referencia a cada interface para o SinkWriter gerenciar seu tempo de vida.
+            //BufferDadosAmostra.AdicionarReferencia();
+
+            //Envia a amostra para o encodificador.
+            Resultado = MFTTranscode.EnviarAmostrar(NovaAmostra);
+
+            //Libera as referencias criada aqui.
+            BufferDadosAmostra.LiberarReferencia();
+            BufferDadosAmostra.Finalizar();
+            NovaAmostra.LiberarReferencia();
+            NovaAmostra.Finalizar();
+            NovaAmostra = null;
+            BufferDadosAmostra = null;
+            OutPointerToBuffer = null;
+
+            //Retorna
+            return Resultado;
+        }
+
+        public CarenResult Finalizar()
+        {
+            CarenResult Resultado = MFTTranscode.Finalizar();
+            MFTTranscode.Dispose();
+            MFTTranscode = null;
+
+            return Resultado;
         }
     }
 }

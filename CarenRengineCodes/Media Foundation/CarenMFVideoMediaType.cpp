@@ -886,7 +886,7 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para chave que contém o Blob a ser obtido.</param>
 /// <param name="Param_Out_Buffer">O buffer que contém os dados da matriz bytes do valor da chave solicitada.</param>
-CarenResult CarenMFVideoMediaType::GetAllocatedBlob(String^ Param_GuidChave, [Out] Estruturas::CA_BlobData^% Param_Out_Buffer)
+CarenResult CarenMFVideoMediaType::GetAllocatedBlob(String^ Param_GuidChave, [Out] Estruturas::CA_BlobData% Param_Out_Buffer)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -922,16 +922,16 @@ CarenResult CarenMFVideoMediaType::GetAllocatedBlob(String^ Param_GuidChave, [Ou
 	}
 
 	//Cria a estrutura a ser retornada com os dados.
-	Param_Out_Buffer = gcnew CA_BlobData();
+	Param_Out_Buffer = CA_BlobData();
 
 	//Define a largura do buffer
-	Param_Out_Buffer->SizeData = LarguraBuffer;
+	Param_Out_Buffer.SizeData = LarguraBuffer;
 
 	//Cria a interface que vai conter os dados do buffer.
-	Param_Out_Buffer->BufferDados = gcnew CarenBuffer();
+	Param_Out_Buffer.BufferDados = gcnew CarenBuffer();
 
 	//Copia os dados para o buffer
-	static_cast<ICarenBuffer^>(Param_Out_Buffer->BufferDados)->CreateBuffer(IntPtr(pBuffDados), true, Param_Out_Buffer->SizeData, Param_Out_Buffer->SizeData);
+	static_cast<ICarenBuffer^>(Param_Out_Buffer.BufferDados)->CreateBuffer(IntPtr(pBuffDados), true, Param_Out_Buffer.SizeData, Param_Out_Buffer.SizeData);
 
 Done:;
 	//Libera a memória para o buffer se válido.
@@ -1006,7 +1006,7 @@ Done:;
 /// <param name="Param_GuidChave">O GUID para chave que contém o Blob a ser obtido.</param>
 /// <param name="Param_Out_Buffer">O buffer que contém os dados da matriz bytes do valor da chave solicitada.</param>
 /// <param name="Param_TamanhoBuffer">Define o tamanho da matriz em bytes do valor da chave a ser obtido. Chame o método (GetBlobSize) para obter o valor para esse parametro.</param>
-CarenResult CarenMFVideoMediaType::GetBlob(String^ Param_GuidChave, UInt32 Param_TamanhoBuffer, [Out] Estruturas::CA_BlobData^% Param_Out_Buffer)
+CarenResult CarenMFVideoMediaType::GetBlob(String^ Param_GuidChave, UInt32 Param_TamanhoBuffer, [Out] Estruturas::CA_BlobData% Param_Out_Buffer)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1044,16 +1044,16 @@ CarenResult CarenMFVideoMediaType::GetBlob(String^ Param_GuidChave, UInt32 Param
 	}
 
 	//Cria a estrutura que será retornada.
-	Param_Out_Buffer = gcnew CA_BlobData();
+	Param_Out_Buffer = CA_BlobData();
 
 	//Define a largura do buffer
-	Param_Out_Buffer->SizeData = Param_TamanhoBuffer;
+	Param_Out_Buffer.SizeData = Param_TamanhoBuffer;
 
 	//Cria a interface que vai conter os dados.
-	Param_Out_Buffer->BufferDados = gcnew CarenBuffer();
+	Param_Out_Buffer.BufferDados = gcnew CarenBuffer();
 	
 	//Copia os dados para a interface do buffer.
-	static_cast<ICarenBuffer^>(Param_Out_Buffer->BufferDados)->CreateBuffer(IntPtr(pBuffDados), true, Param_Out_Buffer->SizeData, Param_Out_Buffer->SizeData);
+	static_cast<ICarenBuffer^>(Param_Out_Buffer.BufferDados)->CreateBuffer(IntPtr(pBuffDados), true, Param_Out_Buffer.SizeData, Param_Out_Buffer.SizeData);
 
 Done:;
 	//Libera a memória utilizada pela matriz.

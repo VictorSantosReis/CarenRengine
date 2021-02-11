@@ -1056,7 +1056,7 @@ namespace CarenRengine
 			/// <summary>
 			/// Contém todos os GUIDs para os formatos principais suportados por essa biblioteca.
 			/// </summary>
-			public value struct GUIDs_MFAtributos_FormatosPrincipais
+			public value struct GUIDs_MFAttributes_MAJOR_TYPES
 			{
 				/// <summary>
 				/// Fluxo de Áudio.
@@ -1838,6 +1838,72 @@ namespace CarenRengine
 			public value struct GUIDs_MFAtributos_MediaEngine
 			{
 
+			};
+
+			/// <summary>
+			/// Estrutura que contém todos os GUIDs que especificam um tipo de contêiner e um arquivo codificado.
+			/// </summary>
+			public value struct GUIDs_MFTranscodeContainerType
+			{
+				/// <summary>
+				/// Recipiente de arquivo ASF.
+				/// </summary>
+				literal String^ TranscodeContainerType_ASF = "{430f6f6e-b6bf-4fc1-a0bd-9ee46eee2afb}";
+
+				/// <summary>
+				/// Recipiente de arquivo MP4.
+				/// </summary>
+				literal String^ TranscodeContainerType_MPEG4 = "{dc6cd05d-b9d0-40ef-bd35-fa622c1ab28a}";
+
+				/// <summary>
+				/// Recipiente de arquivo MP3.
+				/// </summary>
+				literal String^ TranscodeContainerType_MP3 = "{e438b912-83f1-4de6-9e3a-9ffbc6dd24d1}";
+
+				/// <summary>
+				/// Recipiente de arquivo 3GP.
+				/// </summary>
+				literal String^ MFTranscodeContainerType_FLAC = "{31344aa3-05a9-42b5-901b-8e9d4257f705}";
+
+				/// <summary>
+				/// Recipiente de arquivo 3GP.
+				/// </summary>
+				literal String^ MFTranscodeContainerType_3GP = "{34c50167-4472-4f34-9ea0-c49fbacf037d}";
+
+				/// <summary>
+				/// Recipiente de arquivo AC3.
+				/// </summary>
+				literal String^ MFTranscodeContainerType_AC3 = "{6d8d91c3-8c91-4ed1-8742-8c347d5b44d0}";
+
+				/// <summary>
+				/// Recipiente de arquivo ADTS.
+				/// </summary>
+				literal String^ MFTranscodeContainerType_ADTS = "{132fd27d-0f02-43de-a301-38fbbbb3834e}";
+
+				/// <summary>
+				/// Recipiente de arquivo MPEG2.
+				/// </summary>
+				literal String^ MFTranscodeContainerType_MPEG2 = "{bfc2dbf9-7bb4-4f8f-afde-e112c44ba882}";
+
+				/// <summary>
+				/// Contêiner de arquivos FMPEG4.
+				/// </summary>
+				literal String^ MFTranscodeContainerType_FMPEG4 = "{9ba876f1-419f-4b77-a1e0-35959d9d4004}";
+
+				/// <summary>
+				/// Recipiente de arquivo WAVE. Suportado no Windows 8.1 e e posteriormente.
+				/// </summary>
+				literal String^ MFTranscodeContainerType_WAVE = "{64c3453c-0f26-4741-be63-87bdf8bb935b}";
+
+				/// <summary>
+				/// Recipiente de arquivo AVI. Suportado no Windows 8.1 e e posteriormente.
+				/// </summary>
+				literal String^ MFTranscodeContainerType_AVI = "{7edfe8af-402f-4d76-a33c-619fd157d0f1}";
+
+				/// <summary>
+				/// Recipiente de arquivo AMR.
+				/// </summary>
+				literal String^ MFTranscodeContainerType_AMR = "{025d5ad3-621a-475b-964d-66b1c824f079}";
 			};
 
 			/// <summary>
@@ -6210,6 +6276,53 @@ namespace CarenRengine
 				/// Pad a imagem para que ele possa ser exibido em uma área de 16×9.
 				/// </summary>
 				MFVideoPadFlag_PAD_TO_16x9
+			};
+
+			/// <summary>
+			/// Enumera os valores que definem o perfil de audio AAC e o seu nivel.
+			/// </summary>
+			public enum class CA_AUDIO_AAC_PROFILE_LEVEL_INDICATION
+			{
+				/// <summary>
+				/// Perfil AAC L2
+				/// </summary>
+				PerfilAAC_L2 = 0x29,
+				/// <summary>
+				/// AAC Profile L4
+				/// </summary>
+				PerfilAAC_L4 = 0x2A,
+				/// <summary>
+				/// AAC Profile L5
+				/// </summary>
+				PerfilAAC_L5 = 0x2B,
+				/// <summary>
+				/// High Efficiency v1 Perfil AAC L2
+				/// </summary>
+				PerfilAAC_HighEfficiency_V1_L2 = 0x2C,
+				/// <summary>
+				/// High Efficiency v1 Perfil AAC L4
+				/// </summary>
+				PerfilAAC_HighEfficiency_V1_L4 = 0x2E,
+				/// <summary>
+				/// High Efficiency v1 AAC Profile L5
+				/// </summary>
+				PerfilAAC_HighEfficiency_V1_Profile_L5 = 0x2F,
+				/// <summary>
+				/// High Efficiency v2 AAC Profile L2
+				/// </summary>
+				PerfilAAC_HighEfficiency_V2_Profile_L2 = 0x30,
+				/// <summary>
+				/// High Efficiency v2 AAC Profile L3
+				/// </summary>
+				PerfilAAC_HighEfficiency_V2_Profile_L3 = 0x31,
+				/// <summary>
+				/// High Efficiency v2 AAC Profile L4
+				/// </summary>
+				PerfilAAC_HighEfficiency_V2_Profile_L4 = 0x32,
+				/// <summary>
+				/// High Efficiency v2 AAC Profile L5
+				/// </summary>
+				PerfilAAC_HighEfficiency_V2_Profile_L5 = 0x33,
 			};
 
 			/// <summary>
@@ -24470,7 +24583,7 @@ namespace CarenRengine
 			public ref struct CA_MFT_REGISTER_TYPE_INFO
 			{
 				/// <summary>
-				/// Um GUID para o tipo de midia principal. Consulte a estrutura GUIDs_MFAtributos_FormatosPrincipais
+				/// Um GUID para o tipo de midia principal. Consulte a estrutura GUIDs_MFAttributes_MAJOR_TYPES
 				/// </summary>
 				String^ guidMajorType;
 

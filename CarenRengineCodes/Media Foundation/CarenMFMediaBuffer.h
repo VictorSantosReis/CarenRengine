@@ -61,6 +61,13 @@ public:
 	CarenMFMediaBuffer(UInt32 Param_Lenght);
 
 	/// <summary>
+	/// Inicializa a classe e cria um buffer que envolve uma poção de memória alocada do sistema e um alinhamento especificado.
+	/// </summary>
+	/// <param name="Param_Lenght">Tamanho do Buffer, em bytes.</param>
+	/// <param name="Param_Alignment">Especifica o alinhamento de memória para o buffer.</param>
+	CarenMFMediaBuffer(UInt32 Param_Lenght, Enumeracoes::CA_MF_BYTE_ALIGNMENT Param_Alignment);
+
+	/// <summary>
 	/// Inicializa a classe como um objeto de buffer de memória do sistema para armazenar dados de imagem 2D.
 	/// </summary>
 	/// <param name="Param_Width">Largura da imagem, em pixels.</param>
@@ -278,7 +285,7 @@ public:
 
 
 
-	//Métodos da interface ICarenMidiabuffer
+	//Métodos da interface ICarenMFMediaBuffer.
 public:
 	/// <summary>
 	/// Recupera o comprimento dos dados válidos no buffer.

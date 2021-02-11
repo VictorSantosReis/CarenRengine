@@ -83,6 +83,7 @@ namespace CoreAudio_LoopbackTest
             this.Txb_UrlOutputFile.PlaceholderText = "URL ARQUIVO DE SAIDA";
             this.Txb_UrlOutputFile.Size = new System.Drawing.Size(417, 44);
             this.Txb_UrlOutputFile.TabIndex = 6;
+            this.Txb_UrlOutputFile.Text = "c:\\Temp\\MusicTeste.wav";
             this.Txb_UrlOutputFile.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // Btn_StopCapture

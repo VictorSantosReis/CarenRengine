@@ -329,7 +329,7 @@ public:
 	/// </summary>
 	/// <param name="Param_GuidChave">O GUID para chave que contém o Blob a ser obtido.</param>
 	/// <param name="Param_Out_Buffer">O buffer que contém os dados da matriz bytes do valor da chave solicitada.</param>
-	virtual CarenResult GetAllocatedBlob(String^ Param_GuidChave, [Out] Estruturas::CA_BlobData^% Param_Out_Buffer);
+	virtual CarenResult GetAllocatedBlob(String^ Param_GuidChave, [Out] Estruturas::CA_BlobData% Param_Out_Buffer);
 
 
 	/// <summary>
@@ -349,7 +349,7 @@ public:
 	/// <param name="Param_GuidChave">O GUID para chave que contém o Blob a ser obtido.</param>
 	/// <param name="Param_Out_Buffer">O buffer que contém os dados da matriz bytes do valor da chave solicitada.</param>
 	/// <param name="Param_TamanhoBuffer">Define o tamanho da matriz em bytes do valor da chave a ser obtido. Chame o método (GetBlobSize) para obter o valor para esse parametro.</param>
-	virtual CarenResult GetBlob(String^ Param_GuidChave, UInt32 Param_TamanhoBuffer, [Out] Estruturas::CA_BlobData^% Param_Out_Buffer);
+	virtual CarenResult GetBlob(String^ Param_GuidChave, UInt32 Param_TamanhoBuffer, [Out] Estruturas::CA_BlobData% Param_Out_Buffer);
 
 
 	/// <summary>

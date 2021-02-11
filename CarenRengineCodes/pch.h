@@ -27,6 +27,12 @@ limitations under the License.
 //Adicione os cabeçalhos que você deseja pré-compilar aqui
 #include "Header.h"
 
+//Interfaces da Api base CAREN
+#include "Caren/Caren.h"
+#include "Caren/CarenBuffer.h"
+#include "Caren/CarenEvent.h"
+#include "Caren/CarenHMONITOR.h"
+#include "Caren/CarenObjectState.h"
 
 //Funções globais
 #include "FunctionClass/GlobalFuncs.h"
@@ -34,14 +40,6 @@ limitations under the License.
 
 //Propvariant Manager
 #include "PropVariantManager/PropVariantManager.h"
-
-
-//Interfaces da Api base CAREN
-#include "Caren/Caren.h"
-#include "Caren/CarenBuffer.h"
-#include "Caren/CarenEvent.h"
-#include "Caren/CarenHMONITOR.h"
-#include "Caren/CarenObjectState.h"
 
 
 //Codigos de resultados da api

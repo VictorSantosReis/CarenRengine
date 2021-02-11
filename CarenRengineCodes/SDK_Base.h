@@ -22490,14 +22490,6 @@ namespace CarenRengine
 			};
 
 			/// <summary>
-			/// (D3DPRESENT_PARAMETERS) - Descreve os parâmetros de apresentação.
-			/// </summary>
-			public ref struct CA_D3DPRESENT_PARAMETERS
-			{
-
-			};
-
-			/// <summary>
 			/// (D3D11_COUNTER_DESC) - Descreve UM CONTADOR.
 			/// </summary>
 			public ref struct CA_D3D11_DESC_CONTADOR

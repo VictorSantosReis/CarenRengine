@@ -772,7 +772,7 @@ namespace CoreAudio_RenderAudioTest
                 long NanoSegundosTotaisPassados = 0; //Nanosegundo, segundo o SI(Sistema internacional de unidades). 1 segundo = (10 elevado a 9 potencia).
                 long TempoApresentacaoEmNS = 0;
                 long OutTicksAtuais = 0;
-                long AproximacaoNS_Audio = 1000000; //2 ms
+                long AproximacaoNS_Audio = 1000000; //1 ms
                 long NextTimestampRender = 0;
                 long LastTimeStampRender = -1;
 

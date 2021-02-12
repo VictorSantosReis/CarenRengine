@@ -91,7 +91,7 @@ public:
 	/// <summary>
 	/// (timeBeginPeriod) - A função solicita uma resolução mínima para temporizadores periódicos.
 	/// Chame esta função imediatamente antes de usar os serviços do temporizador e ligue para a função CA_TimeEndPeriod imediatamente após terminar de usar os serviços do temporizador.
-	/// Você deve corresponder cada chamada CA_TimeBeginPeriod com uma chamada para CA_TimeEndPeriod, especificando a mesma resolução mínima em ambas as chamadas. Um aplicativo pode fazer várias chamadas de CA_TimeBeginPeriod, 
+	/// Você deve corresponder cada chamada _TimeBeginPeriod com uma chamada para CA_TimeEndPeriod, especificando a mesma resolução mínima em ambas as chamadas. Um aplicativo pode fazer várias chamadas de _TimeBeginPeriod, 
 	/// desde que cada chamada seja combinada com uma chamada para CA_TimeEndPeriod.
 	/// </summary>
 	/// <param name="Param_Periodo">Resolução mínima do temporizador, em milissegundos, para o motorista de aplicativo ou dispositivo. Um valor mais baixo especifica uma resolução mais alta (mais precisa).</param>
@@ -100,7 +100,7 @@ public:
 	/// <summary>
 	/// (timeEndPeriod) - A função limpa uma resolução de temporizador mínimo previamente definida.
 	/// </summary>
-	/// <param name="Param_Periodo">A resolução, em milissegundos, definida na chamada para CA_TimeBeginPeriod.</param>
+	/// <param name="Param_Periodo">A resolução, em milissegundos, definida na chamada para _TimeBeginPeriod.</param>
 	CarenResult _TimeEndPeriod(UInt32 Param_Periodo);
 
 	/// <summary>

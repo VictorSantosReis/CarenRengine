@@ -37,6 +37,8 @@ namespace CoreAudio_LoopbackTest
             this.Btn_StopCapture = new System.Windows.Forms.Button();
             this.Btn_ListarDispositivos = new System.Windows.Forms.Button();
             this.Btn_AtivarDispositivo = new System.Windows.Forms.Button();
+            this.Cbx_FormatoDestino = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -58,7 +60,7 @@ namespace CoreAudio_LoopbackTest
             // 
             // Btn_StartCapture
             // 
-            this.Btn_StartCapture.Location = new System.Drawing.Point(12, 159);
+            this.Btn_StartCapture.Location = new System.Drawing.Point(12, 168);
             this.Btn_StartCapture.Name = "Btn_StartCapture";
             this.Btn_StartCapture.Size = new System.Drawing.Size(94, 35);
             this.Btn_StartCapture.TabIndex = 3;
@@ -88,7 +90,7 @@ namespace CoreAudio_LoopbackTest
             // 
             // Btn_StopCapture
             // 
-            this.Btn_StopCapture.Location = new System.Drawing.Point(112, 159);
+            this.Btn_StopCapture.Location = new System.Drawing.Point(112, 168);
             this.Btn_StopCapture.Name = "Btn_StopCapture";
             this.Btn_StopCapture.Size = new System.Drawing.Size(94, 35);
             this.Btn_StopCapture.TabIndex = 7;
@@ -116,12 +118,35 @@ namespace CoreAudio_LoopbackTest
             this.Btn_AtivarDispositivo.UseVisualStyleBackColor = true;
             this.Btn_AtivarDispositivo.Click += new System.EventHandler(this.Btn_AtivarDispositivo_Click);
             // 
+            // Cbx_FormatoDestino
+            // 
+            this.Cbx_FormatoDestino.FormattingEnabled = true;
+            this.Cbx_FormatoDestino.Items.AddRange(new object[] {
+            "WAV",
+            "AAC",
+            "MP3"});
+            this.Cbx_FormatoDestino.Location = new System.Drawing.Point(309, 180);
+            this.Cbx_FormatoDestino.Name = "Cbx_FormatoDestino";
+            this.Cbx_FormatoDestino.Size = new System.Drawing.Size(121, 23);
+            this.Cbx_FormatoDestino.TabIndex = 10;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(309, 162);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(98, 15);
+            this.label3.TabIndex = 11;
+            this.label3.Text = "Formato Destino:";
+            // 
             // LoopbackTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(442, 206);
+            this.ClientSize = new System.Drawing.Size(442, 211);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.Cbx_FormatoDestino);
             this.Controls.Add(this.Btn_AtivarDispositivo);
             this.Controls.Add(this.Btn_ListarDispositivos);
             this.Controls.Add(this.Btn_StopCapture);
@@ -132,6 +157,7 @@ namespace CoreAudio_LoopbackTest
             this.Controls.Add(this.label1);
             this.Name = "LoopbackTest";
             this.Text = "Loopback Test";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LoopbackTest_FormClosing);
             this.Load += new System.EventHandler(this.LoopbackTest_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -148,6 +174,8 @@ namespace CoreAudio_LoopbackTest
         private System.Windows.Forms.Button Btn_StopCapture;
         private System.Windows.Forms.Button Btn_ListarDispositivos;
         private System.Windows.Forms.Button Btn_AtivarDispositivo;
+        private System.Windows.Forms.ComboBox Cbx_FormatoDestino;
+        private System.Windows.Forms.Label label3;
     }
 }
 

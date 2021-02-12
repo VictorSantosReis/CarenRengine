@@ -18,7 +18,7 @@ using CarenRengine.MediaFoundation;
 //Importa o SDK do Windows.
 using CarenRengine.Windows;
 
-namespace Transcode_Dll
+namespace TranscodeMFTTest
 {
     /// <summary>
     /// Classe responsável por demonstrar o funcionamento da API de transcodificação da Media Foundation.
@@ -170,9 +170,9 @@ namespace Transcode_Dll
                         myTranscodeApi.TypeOutputStreamAudioMPEG4.SetUINT32(GUIDs_MF_MEDIATYPE_ATTRIBUTES.MF_MT_AUDIO_BITS_PER_SAMPLE, Param_AudioFormatoEntrada.Format.wBitsPerSample);
                         myTranscodeApi.TypeOutputStreamAudioMPEG4.SetUINT32(GUIDs_MF_MEDIATYPE_ATTRIBUTES.MF_MT_AUDIO_SAMPLES_PER_SECOND, Param_AudioFormatoEntrada.Format.nSamplesPerSec);
                         myTranscodeApi.TypeOutputStreamAudioMPEG4.SetUINT32(GUIDs_MF_MEDIATYPE_ATTRIBUTES.MF_MT_AUDIO_NUM_CHANNELS, Param_AudioFormatoEntrada.Format.nChannels);
-                        myTranscodeApi.TypeOutputStreamAudioMPEG4.SetUINT32(GUIDs_MF_MEDIATYPE_ATTRIBUTES.MF_MT_AUDIO_AVG_BYTES_PER_SECOND, 12000);
+                        myTranscodeApi.TypeOutputStreamAudioMPEG4.SetUINT32(GUIDs_MF_MEDIATYPE_ATTRIBUTES.MF_MT_AUDIO_AVG_BYTES_PER_SECOND, 12000); //A quantidade de Bytes per second encodificado(IMPORTANTE).
                         myTranscodeApi.TypeOutputStreamAudioMPEG4.SetUINT32(GUIDs_MF_MEDIATYPE_ATTRIBUTES.MF_MT_AAC_PAYLOAD_TYPE, 0);
-                        myTranscodeApi.TypeOutputStreamAudioMPEG4.SetUINT32(GUIDs_MF_MEDIATYPE_ATTRIBUTES.MF_MT_AAC_AUDIO_PROFILE_LEVEL_INDICATION, (uint)CA_AUDIO_AAC_PROFILE_LEVEL_INDICATION.PerfilAAC_L2); //Perfil AAC
+                        myTranscodeApi.TypeOutputStreamAudioMPEG4.SetUINT32(GUIDs_MF_MEDIATYPE_ATTRIBUTES.MF_MT_AAC_AUDIO_PROFILE_LEVEL_INDICATION, (uint)CA_AUDIO_AAC_PROFILE_LEVEL_INDICATION.PerfilAAC_HighEfficiency_V1_L2); //Perfil AAC
                         
                         //Chama o método para criar o dissipador de mídia escolhido pelo usuário.
                         Resultado = MFTFuncs._MFCreateMPEG4MediaSink(myTranscodeApi.MFByteStream, null, myTranscodeApi.TypeOutputStreamAudioMPEG4, myTranscodeApi.Encoder = new CarenMFMediaSink());
@@ -251,7 +251,7 @@ namespace Transcode_Dll
             {
                 //Chama uma exceção.
                 throw new Exception($"Não foi possivel finalizar o escritor de dados. Code({Resultado.StatusCode.ToString()}) - Mensagem de erro > " + Resultado.ObterMensagem(Resultado.HResult));
-            }
+            }         
 
             //Desliga o Media Sink(Encoder).
             Resultado = myTranscodeApi.Encoder.Shutdown();
@@ -286,7 +286,7 @@ namespace Transcode_Dll
 
         public void Dispose()
         {
-            //Libera as interfaces utilizadas pela classe.
+            //Libera as interfaces utilizadas pela classe.            
             SafeReleaseInterface(myTranscodeApi.TypeOutputStreamAudioMPEG4);
             SafeReleaseInterface(myTranscodeApi.Encoder);
             SafeReleaseInterface(myTranscodeApi.AtributosEscritor);

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.IO;
-using Transcode_Dll;
+using TranscodeMFTTest;
 
 //Importa os namespaces base.
 using CarenRengine;
@@ -35,7 +35,8 @@ namespace CoreAudio_LoopbackTest
         //ESTE PROJETO TEM COMO INTUITO MOSTRAR COMO SE DESENVOLVER UM APLICATIVO PARA LER DADOS DE ÁUDIO DE UM DISPOSTIVO DE RENDERIZAÇÃO FINAL.
         //O PROJETO UTILIZA DE BUFFERS ORIENTADOS POR EVENTOS, O QUE EXCLUI CHAMADAS PARA (NEXTPACKETSIZE) OU A UTILIZAÇÃO DA FUNÇÃO SLEEP OU AWAIT.
         //ESTE PROJETO É SEMELHANTE AO PROJETO (AudioCaptureTest), APENAS COM ALGUMAS MODIFICAÇÕES MINIMAS PARA FUNCIONAR EM MODO (LOOPBACK).
-        //COMO IGUAL AO (AudioCaptureTest), O ARQUIVO DEVE SAIDA DEVE SER UM (.WAV) OBRIGATORIAMENTE.
+        //ESTE PROJETO INCLUI A DEMONSTRAÇÃO DA API DE TRANSCODIFICAÇÃO DA (MEDIA FOUNDATION) QUE REPRESENTA O PROJETO (TranscodeMFTTest) 
+        //NO QUAL DEMONSTRA COMO CONVERTER OS DADOS (PCM) RETORNADO PELO DISPOSITIVO DE CAPTURA EM UM ARQUIVO .AAC OU .MP3.
 
 
 
@@ -140,6 +141,11 @@ namespace CoreAudio_LoopbackTest
 
         WindowsFunctions WinFuncs = new WindowsFunctions();
 
+        /// <summary>
+        /// Variavel que vai configurar o encodificador de arquivos MP3 e AAC para testes.
+        /// </summary>
+        CreateEncoderMFTTest EncoderTestePreview { get; set; }
+
         Task Task_EscritorDados { get; set; }
 
         Task Task_ReadDataDispositivo { get; set; }
@@ -151,10 +157,6 @@ namespace CoreAudio_LoopbackTest
         Boolean StatusCapturandoDados { get; set; } = false;
 
         readonly object SyncList = new object();
-
-
-
-        CreateMp3FromDados Mp3Encode { get; set; }
         #endregion
 
 
@@ -316,10 +318,7 @@ namespace CoreAudio_LoopbackTest
            //Inicializa o dispositivo de renderização a ter os dados capturados no modo LOOPBACK.
            Resultado = myCaptureAudio.AudioClientConfig.Initialize(
                 CA_AUDIOCLIENTE_SHAREMODE.AUDCLNT_SHAREMODE_SHARED,
-                (uint)CA_CoreAudio_AUDCLNT_STREAMFLAGS_XXX.CA_AUDCLNT_STREAMFLAGS_LOOPBACK | //Define a flag para indicar que vai capturar os dados do renderizador.
-                (uint)CA_CoreAudio_AUDCLNT_STREAMFLAGS_XXX.CA_AUDCLNT_STREAMFLAGS_EVENTCALLBACK | //Define a flag para indicar que vai usar buffers orientado por eventos.
-                (uint)CA_CoreAudio_AUDCLNT_STREAMFLAGS_XXX.CA_AUDCLNT_STREAMFLAGS_AUTOCONVERTPCM | 
-                (uint)CA_CoreAudio_AUDCLNT_STREAMFLAGS_XXX.CA_AUDCLNT_STREAMFLAGS_SRC_DEFAULT_QUALITY, 
+                CreateFlagsConvertDataToPCMAudioClient(true), //Cria as flags com o buffer orientado a eventos. 
                 REFTIMES_PER_SEC,
                 0,
                 ref OutWaveFormatCapture,
@@ -416,10 +415,28 @@ namespace CoreAudio_LoopbackTest
                 goto Done;
             }
 
-            MFTFuncs._MFStartup();
-
-            //Tenta criar o encodifciador MP3
-            Mp3Encode = new CreateMp3FromDados( MFTTranscodeApi.AudioEncoders.AAC, Txb_UrlOutputFile.Text.Replace(".wav", ".aac"), myCaptureAudio.WavFormatCapture);
+            //Verifica se vai utilizar o Encodificador MFT ou vai encodificar em .wav mesmo.
+            if (Cbx_FormatoDestino.SelectedIndex == 0) //.Wav
+            {
+                //Não cria o encodificador MFT. Os dados seram escritos em um arquivo .wav cru mesmo.
+                //Deixa o método continuar normalmente.
+            }
+            else if (Cbx_FormatoDestino.SelectedIndex == 1) //.AAC
+            {
+                //Cria o encodificador para formato AAC
+                EncoderTestePreview = new CreateEncoderMFTTest(MFTTranscodeApi.AudioEncoders.AAC, Txb_UrlOutputFile.Text.Replace(".wav", ".aac"), myCaptureAudio.WavFormatCapture);
+            }
+            else if (Cbx_FormatoDestino.SelectedIndex == 2) //.MP3
+            {
+                //Cria o encodificador para formato MP3
+                EncoderTestePreview = new CreateEncoderMFTTest(MFTTranscodeApi.AudioEncoders.MP3, Txb_UrlOutputFile.Text.Replace(".wav", ".mp3"), myCaptureAudio.WavFormatCapture);
+            }
+            else
+            {
+                //Falha.
+                throw new Exception("Não foi possivel determinar o encodificador!");
+            }
+           
 
         Done:;
 
@@ -458,7 +475,7 @@ namespace CoreAudio_LoopbackTest
                 //Variavies utilizadas.
                 uint SizeInBytesBuffer = 0;
                 uint OutFramesReaded = 0;
-                long OutQPCValue = 0;
+                ulong OutQPCStartPresentationTime = 0;
                 CA_AUDIOCLIENTE_BUFFERFLAGS FlagsBuffer = CA_AUDIOCLIENTE_BUFFERFLAGS.Zero;
                 ICarenBuffer BufferSilence = new CarenBuffer();          
 
@@ -467,6 +484,12 @@ namespace CoreAudio_LoopbackTest
 
                 //Define a TaskIndex na estrutura
                 myCaptureAudio.TaskIndex = OutTaskIndex;
+
+                //Chama o método para Obter o QPC atual.
+                WinFuncs._QueryPerformanceCounter(out long OutStartQPC);
+
+                //Converte o valor do QPC para tempo de apresentação.
+                OutQPCStartPresentationTime = MFTFuncs.CalculePresentationTime((ulong)OutStartQPC);
 
                 //Abre o laço que vai ficar capturando os dados.
                 while (StatusCapturandoDados)
@@ -478,12 +501,6 @@ namespace CoreAudio_LoopbackTest
                     if(Resultado.StatusCode == ResultCode.SS_WAIT_OBJECT_0)
                     {
                         //EVENTO SINALIZADO. O DISPOSITIVO DE RENDERIZAÇÃO ESTÁ INDICANDO QUE PODE LER OS DADOS.
-
-                        //Chama o QPC para obter os ticks de inicio.
-                        WinFuncs._QueryPerformanceCounter(out OutQPCValue);
-
-                        //Converte os Ticks para nanossegundos
-                        OutQPCValue *= 100;
                     }
                     else if (Resultado.StatusCode == ResultCode.ER_WAIT_FAILED)
                     {
@@ -566,9 +583,6 @@ namespace CoreAudio_LoopbackTest
                     //Define o tamanho do buffer lido do dispositivo.
                     SizeInBytesBuffer = OutFramesReaded * myCaptureAudio.FrameSize;
 
-                    //Converte Para nanossegundos
-                    QpcPosition *= 100;
-
                     //Verifica os Flags do buffer.
                     if ((FlagsBuffer & CA_AUDIOCLIENTE_BUFFERFLAGS.AUDCLNT_BUFFERFLAGS_SILENT) != 0)
                     {
@@ -581,8 +595,9 @@ namespace CoreAudio_LoopbackTest
                         //Envia o buffer para o escritor de dados.
                         EnviarAmostra(
                             ref BufferSilence, 
-                            SizeInBytesBuffer, 
-                            (QpcPosition - (ulong)OutQPCValue) * 100);
+                            SizeInBytesBuffer,
+                            QpcPosition - OutQPCStartPresentationTime
+                            );
 
                         //Libera a memória utilizada pelo buffer de silencio.
                         BufferSilence.ReleaseBuffer();
@@ -597,8 +612,8 @@ namespace CoreAudio_LoopbackTest
                         //Envia o buffer para o escritor de dados.
                         EnviarAmostra(
                             ref myCaptureAudio.BufferCapturedAudio, 
-                            SizeInBytesBuffer, 
-                            (QpcPosition - (ulong)OutQPCValue) * 100                           
+                            SizeInBytesBuffer,
+                            QpcPosition - OutQPCStartPresentationTime
                             );
                     }
 
@@ -700,7 +715,7 @@ namespace CoreAudio_LoopbackTest
             WinFuncs.SleepNativo(500);
 
             //Chama o método para finalizar a criação do arquivo.
-            Resultado = FinalizarArquivoWav();
+            Resultado = FinalizarArquivo();
 
             //Verifica se obteve sucesso
             if (Resultado.StatusCode != ResultCode.SS_OK)
@@ -797,7 +812,7 @@ namespace CoreAudio_LoopbackTest
         /// Método responsável por terminar de configurar o header e finalizar o arquivo.
         /// </summary>
         /// <returns></returns>
-        public CarenResult FinalizarArquivoWav()
+        public CarenResult FinalizarArquivo()
         {
             //Variavel que vai retornar o resultado.
             CarenResult Resultado = new CarenResult(ResultCode.ER_FAIL, false);
@@ -885,9 +900,41 @@ namespace CoreAudio_LoopbackTest
             myCaptureAudio.StreamFile.Finalizar();
             myCaptureAudio.StreamFile = null;
 
-            //Filiza o mp3
-            Resultado = Mp3Encode.Finalizar();
+            //Verifica se está utilizando um ENCODIFICADOR MFT e chama o finalizador.
+            if (EncoderTestePreview is not null)
+            {
+                //Chama o método para finalizar todos os procedimentos do encodificador MFT.
+                Resultado = EncoderTestePreview.Finalizar();
 
+                //Verifica se obteve sucesso
+                if (Resultado.StatusCode != ResultCode.SS_OK)
+                {
+                    //A operação falhou.
+
+                    //Mostra uma mensagem de erro.
+                    ShowMensagem(
+                        $"Ocorreu uma falha ao tentar finalizar o ENCODIFICADOR MFT. Code({Resultado.StatusCode}). Mensagem de erro -> "
+                        + Resultado.ObterMensagem(Resultado.HResult), true);
+
+                    //Sai do método
+                    goto Done;
+                }
+            }
+
+            //Verifica se obteve sucesso
+            if (Resultado.StatusCode != ResultCode.SS_OK)
+            {
+                //A operação falhou.
+
+                //Mostra uma mensagem de erro.
+                ShowMensagem(
+                    "Ocorreu uma falha ao tentar finalizar o fluxo AAC ou MP3. Mensagem de erro -> "
+                    + Resultado.ObterMensagem((int)Resultado.HResult), true);
+
+                //Sai do método
+                goto Done;
+            }
+  
         Done:;
 
             //Retorna
@@ -961,10 +1008,34 @@ namespace CoreAudio_LoopbackTest
                         StatusEscritorDados = false;
                     }
 
-                    //Escreve no Mp3
-                    Resultado = Mp3Encode.EnviarAmostra(BufferNextWriter.BufferAudio, BufferNextWriter.BufferAudio.TamanhoValido, (long)BufferNextWriter.PresentationTime);
+                    //Verifica se vai encodificar com o encodificador MFT.
+                    if (EncoderTestePreview is not null)
+                    {
+                        //Chama o método para criar a amostra de mídia e enviar ao encodificador.
+                        Resultado = EncoderTestePreview.EnviarAmostra(
+                            BufferNextWriter.BufferAudio,
+                            BufferNextWriter.BufferAudio.TamanhoValido,
+                            (long)BufferNextWriter.PresentationTime);
 
-                    //Libera o buffer.
+                        //Verifica se não houve erro.
+                        if (Resultado.StatusCode != ResultCode.SS_OK)
+                        {
+                            //A operação de escrita falhou.
+
+                            //Mostra uma mensagem de erro.
+                            ShowMensagem(
+                                $"Ocorreu uma falha ao enviar os dados ao ENCODIFICADOR MFT. Code({Resultado.StatusCode}). Mensagem de erro -> "
+                                + Resultado.ObterMensagem((int)Resultado.HResult), true);
+
+                            //Define que o status geral é false.
+                            StatusGeral = false;
+
+                            //Define que vai sair do laço.
+                            StatusEscritorDados = false;
+                        }
+                    }
+
+                    //Libera o buffer atual.
                     BufferNextWriter.BufferAudio.ReleaseBuffer();
                     BufferNextWriter.BufferAudio = null;
                     BufferNextWriter.PresentationTime = 0;
@@ -1172,6 +1243,21 @@ namespace CoreAudio_LoopbackTest
             return NomeDispositivo;
         }
 
+        public uint CreateFlagsConvertDataToPCMAudioClient( Boolean Param_AsyncByEvents)
+        {
+            if (Param_AsyncByEvents)
+                return
+                    (uint)CA_CoreAudio_AUDCLNT_STREAMFLAGS_XXX.CA_AUDCLNT_STREAMFLAGS_LOOPBACK | //Informa que vai funciona em modo Loopback - Capturando as amostras sendo renderizadas.
+                    (uint)CA_CoreAudio_AUDCLNT_STREAMFLAGS_XXX.CA_AUDCLNT_STREAMFLAGS_EVENTCALLBACK | //Informa que vai funcionar com Buffers orientados para eventos. Esse sistema é preferido ao funcionamento Sincrono.
+                    (uint)CA_CoreAudio_AUDCLNT_STREAMFLAGS_XXX.CA_AUDCLNT_STREAMFLAGS_AUTOCONVERTPCM | //Informa para converter os dados (IEEE Float) para PCM. Esse valor é importante porque os codificadores utilizam geralmente PCM.
+                    (uint)CA_CoreAudio_AUDCLNT_STREAMFLAGS_XXX.CA_AUDCLNT_STREAMFLAGS_SRC_DEFAULT_QUALITY; //Utiliza um conversor de melhor qualidade para converter os dados IEEE Float para PCM. OBRIGATORIO ESSE FLAG.
+            else
+                return
+                    (uint)CA_CoreAudio_AUDCLNT_STREAMFLAGS_XXX.CA_AUDCLNT_STREAMFLAGS_LOOPBACK | //Informa que vai funciona em modo Loopback - Capturando as amostras sendo renderizadas.
+                    (uint)CA_CoreAudio_AUDCLNT_STREAMFLAGS_XXX.CA_AUDCLNT_STREAMFLAGS_AUTOCONVERTPCM | //Informa para converter os dados (IEEE Float) para PCM. Esse valor é importante porque os codificadores utilizam geralmente PCM.
+                    (uint)CA_CoreAudio_AUDCLNT_STREAMFLAGS_XXX.CA_AUDCLNT_STREAMFLAGS_SRC_DEFAULT_QUALITY; //Utiliza um conversor de melhor qualidade para converter os dados IEEE Float para PCM. OBRIGATORIO ESSE FLAG.
+        }
+
         public void ReleaseAllInterfaces()
         {
             try
@@ -1269,7 +1355,17 @@ namespace CoreAudio_LoopbackTest
 
         private void LoopbackTest_Load(object sender, EventArgs e)
         {
+            //Inicializa a plataforma da Media Foundation para utilizar o encodificador.
+            MFTFuncs._MFStartup();
 
+            //Define o formato default a ser encodificado.
+            Cbx_FormatoDestino.SelectedIndex = 0;
+        }
+
+        private void LoopbackTest_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //Desliga a plataforma da Media Foundation.
+            MFTFuncs._MFShutdown();
         }
 
         private void Btn_ListarDispositivos_Click(object sender, EventArgs e)
@@ -1397,15 +1493,43 @@ namespace CoreAudio_LoopbackTest
             Btn_StopCapture.Enabled = true;
             Btn_StartCapture.Text = "Capturar";
         }
+
     }
 
-    public class CreateMp3FromDados
+    /// <summary>
+    /// Classe que demonstra uma previa da utilização dos Encoders disponivel pela Media Foundation.
+    /// Você pode fazer isso de outras maneiras mais simples, como utilizar a Media Session, Topologia.
+    /// Mais essa classe demonstra 
+    /// </summary>
+    public class CreateEncoderMFTTest
     {
+        /// <summary>
+        /// Classe  de encodificação de dados PCM para MP3 ou AAC exportada pela DLL 'TranscodeApiTest' da solução 'Media Foundation Solution' de testes.
+        /// </summary>
         MFTTranscodeApi MFTTranscode { get; set; }
+
+        /// <summary>
+        /// Estrutura que descreve o formato de áudio PCM de entrada.
+        /// </summary>
         CA_WAVEFORMATEXEXTENSIBLE WavFormat { get; set; }
+
+        /// <summary>
+        /// Contém o tipo do encodificador selecionado.
+        /// </summary>
         MFTTranscodeApi.AudioEncoders EncoderSelected { get; set; }
 
-        public CreateMp3FromDados(MFTTranscodeApi.AudioEncoders Param_Encoder, String Param_UrlSaida, CA_WAVEFORMATEXEXTENSIBLE Param_WavForm)
+        /// <summary>
+        /// Funções para calcular duração de amostras de áudio.
+        /// </summary>
+        MediaFoundationFunctions MFTFuncs = new MediaFoundationFunctions();
+
+        /// <summary>
+        /// Inicializa e configura o encodificador de amostras PCM.
+        /// </summary>
+        /// <param name="Param_Encoder">O tipo de destino do arquivo de áudio. MP3 ou AAC</param>
+        /// <param name="Param_UrlSaida">O arquivo de saida encodificado.</param>
+        /// <param name="Param_WavForm">Uma estrutura que descreve os dados de uma amostra PCM.</param>
+        public CreateEncoderMFTTest(MFTTranscodeApi.AudioEncoders Param_Encoder, String Param_UrlSaida, CA_WAVEFORMATEXEXTENSIBLE Param_WavForm)
         {
             //Define a estrutura WavFormat
             WavFormat = Param_WavForm;
@@ -1427,6 +1551,13 @@ namespace CoreAudio_LoopbackTest
             }
         }
 
+        /// <summary>
+        /// Cria uma amostra de mídia(ICarenMFSample) a parti do buffer de dados de áudio e envia para o encodificador escrever os dados no arquivo de destino.
+        /// </summary>
+        /// <param name="Param_BufferDados">Uma interface para o buffer que contém os dados de áudio.</param>
+        /// <param name="Param_LenghtBuffer">A largura do buffer, em bytes.</param>
+        /// <param name="Param_SamplePresentationTime">O tempo de apresentação desse buffer de áudio a ser adicionado na amostra. Apenas o encodificador AAC utiliza esse parametro.</param>
+        /// <returns></returns>
         public CarenResult EnviarAmostra(ICarenBuffer Param_BufferDados, UInt32 Param_LenghtBuffer, Int64 Param_SamplePresentationTime)
         {
             //Variavel a ser retornada.
@@ -1450,11 +1581,15 @@ namespace CoreAudio_LoopbackTest
             NovaAmostra.SetUINT32(GUIDs_MF_MEDIATYPE_ATTRIBUTES.MF_MT_AUDIO_AVG_BYTES_PER_SECOND, WavFormat.Format.nAvgBytesPerSec);
             NovaAmostra.SetUINT32(GUIDs_MF_MEDIATYPE_ATTRIBUTES.MF_MT_AUDIO_CHANNEL_MASK, WavFormat.dwChannelMask);
 
-            //Verififica se o encidificador é AAC
+            //Verififica se o encidificador é AAC e adicona as informações de duração da amostra e o tempo de apresentação.
             if(EncoderSelected == MFTTranscodeApi.AudioEncoders.AAC)
             {
-                //Define o Time e a duração.
-                NovaAmostra.SetSampleDuration(((Param_LenghtBuffer / 4) * 10000000) / WavFormat.Format.nSamplesPerSec);
+                //Define a duração do buffer de audio em tempo de apresentação,
+                NovaAmostra.SetSampleDuration(
+                    (long)MFTFuncs.CalculeSampleAudioDuration(Param_LenghtBuffer, 
+                    (uint)(WavFormat.Format.wBitsPerSample * WavFormat.Format.nChannels / 8), WavFormat.Format.nSamplesPerSec));
+
+                //Define o tempo de apresentação da amostra.
                 NovaAmostra.SetSampleTime(Param_SamplePresentationTime);
             }
 
@@ -1507,12 +1642,20 @@ namespace CoreAudio_LoopbackTest
             return Resultado;
         }
 
+        /// <summary>
+        /// Chama o método para finalizar o encodificador e configurar todas as informações necessárias no arquivo final.
+        /// </summary>
+        /// <returns></returns>
         public CarenResult Finalizar()
         {
+            //Chama o método para finalizar o encodificador e terminar o arquivo.
             CarenResult Resultado = MFTTranscode.Finalizar();
+
+            //Chama o Dispose para liberar todas suas interfaces.
             MFTTranscode.Dispose();
             MFTTranscode = null;
 
+            //Retorna o resultado.
             return Resultado;
         }
     }

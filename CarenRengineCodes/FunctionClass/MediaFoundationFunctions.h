@@ -41,6 +41,9 @@ public:
 	{
 	}
 
+	//Variaveis
+public:
+	INT64 Var_Glob_FrequencyDevice = 0;
 
 	//Métodos da Media Foundation.
 public:
@@ -62,6 +65,48 @@ public:
 	/// <param name="Param_Dados">Os caracters a serem converidos. A quantidade maxima de caracters é de 4.</param>
 	/// <returns></returns>
 	UInt32 _FCC(String^ Param_Dados);
+
+	/// <summary>
+	/// Método responsável por calcular o Tempo de apresentação(em unidades de 100 nanossegundos) que é utilizada pela interface ICarenMFSample e SDKs que utilizam do tempo para apresentar
+	/// Audio ou Frames.
+	/// </summary>
+	/// <param name="Param_Ticks">Os ticks a serem convertido para tempo de apresentação. Esse valor é obtido através do contador de desempenho(QueryPeformanceCounter).</param>
+	/// <returns></returns>
+	UInt64 CalculePresentationTime(UInt64 Param_Ticks);
+
+	/// <summary>
+	/// Método responsável por calcular o Tempo de apresentação(em unidades de 100 nanossegundos) que é utilizada pela interface ICarenMFSample e SDKs que utilizam do tempo para apresentar
+	/// Audio ou Frames.
+	/// </summary>
+	/// <param name="Param_Frequency">A frequência utilizada para calcular o tempo de apresentação. Esse valor é obtido atráves do contadador de desempenho(QueryPerformanceFrequency).</param>
+	/// <param name="Param_Ticks">Os ticks a serem convertido para tempo de apresentação. Esse valor é obtido através do contador de desempenho(QueryPeformanceCounter).</param>
+	/// <returns></returns>
+	UInt64 CalculePresentationTime(UInt64 Param_Frequency, UInt64 Param_Ticks);
+
+	/// <summary>
+	/// Método responsável por calcular a duração de um buffer de áudio em unidades de 100 nanossegundos utilizadas pela Media Foundation e APIs de áudio.
+	/// </summary>
+	/// <param name="Param_LenghtBufferAudio">O buffer que contém os dados de audio a ter a duração calculada.</param>
+	/// <param name="Param_FrameSize">O tamanho(Size) de um unico frame de áudio. Esse valor é calculado da seguinte forma: BitsPerSample * Canais / 8</param>
+	/// <param name="Param_SamplesPerSec">A quantidade de frames por segundos que são renderizados. Valores comuns são: 44100Hz | 48000Hz | 96000Hz</param>
+	/// <returns></returns>
+	UInt64 CalculeSampleAudioDuration(UInt32 Param_LenghtBufferAudio, UInt32 Param_FrameSize, UInt32 Param_SamplesPerSec);
+
+	/// <summary>
+	/// Método responsável por calcular a quantidade de Ticks de relógio de um tempo de apresentação(Representado em unidades de 100 nanossegundos).
+	/// O método vai obter a Frequencia do dispositivo se ela não tiver sido obtida ainda.
+	/// </summary>
+	/// <param name="Param_PresentationTime">O tempo de apresentação da amostra em unidades de 100 nanossegundos a ser convertido em Ticks.</param>
+	/// <returns></returns>
+	UInt64 ConvertPresentationTimeToTicks(UInt64 Param_PresentationTime);
+
+	/// <summary>
+	/// Método responsável por calcular a quantidade de Ticks de relógio de um tempo de apresentação(Representado em unidades de 100 nanossegundos).
+	/// </summary>
+	/// <param name="Param_Frequency">A frequência utilizada para calcular a quantidade de Ticks. Esse valor é obtido atráves do contadador de desempenho(QueryPerformanceFrequency).</param>
+	/// <param name="Param_PresentationTime">O tempo de apresentação da amostra em unidades de 100 nanossegundos a ser convertido em Ticks.</param>
+	/// <returns></returns>
+	UInt64 ConvertPresentationTimeToTicks(UInt64 Param_Frequency, UInt64 Param_PresentationTime);
 
 	/// <summary>
 	/// Define uma função de retorno de chamada a ser chamada em um intervalo fixo.

@@ -91,6 +91,97 @@ UInt32 MediaFoundationFunctions::_FCC(String^ Param_Dados)
 	//Retorna o valor.
 	return static_cast<UInt32>(vi_ValueConverted);
 }
+UInt64 MediaFoundationFunctions::CalculePresentationTime(UInt64 Param_Ticks)
+{
+	//Variavel a ser retornada.
+	UINT64 PresentationTime = 0;
+
+	//Variaveis a serem utilizadas.
+	HRESULT Hr = E_FAIL;
+	LARGE_INTEGER vi_OutFrequency = { };
+
+	//Verifica se a frequencia do dispositivo já foi capturada, se não vai obter e depois calcular.
+	if (Var_Glob_FrequencyDevice == 0)
+	{
+		//Chama o método para recuperar a frequencia atual do dispositivo.
+		Hr = QueryPerformanceFrequency(&vi_OutFrequency);
+
+		//Verifica se não houve erro
+		if (!Sucesso(Hr))
+			throw gcnew Exception("Ocorreu uma falha ao obter a frequencia do contador de desempenho atual.");
+
+		//Define na variavel global o valor.
+		Var_Glob_FrequencyDevice = vi_OutFrequency.QuadPart;
+	}
+
+	//Calcula o Tempo de apresentação do parametro dado em Ticks
+	PresentationTime = static_cast<UInt64>(10000000 * static_cast<INT64>(Param_Ticks) / Var_Glob_FrequencyDevice);
+
+	//Retorna o resultado
+	return PresentationTime;
+}
+UInt64 MediaFoundationFunctions::CalculePresentationTime(UInt64 Param_Frequency, UInt64 Param_Ticks)
+{
+	//Variavel a ser retornada.
+	UINT64 PresentationTime = 0;
+
+	//Calcula o Tempo de apresentação do parametro dado em Ticks
+	PresentationTime = static_cast<UInt64>(10000000 * static_cast<INT64>(Param_Ticks) / Param_Frequency);
+
+	//Retorna o resultado
+	return PresentationTime;
+}
+UInt64 MediaFoundationFunctions::CalculeSampleAudioDuration(UInt32 Param_LenghtBufferAudio, UInt32 Param_FrameSize, UInt32 Param_SamplesPerSec)
+{
+	//Variavel a ser retornada.
+	UINT64 AudioDuration = 0;
+
+	//Calcula a duração do áudio.
+	AudioDuration = static_cast<UINT64>(((Param_LenghtBufferAudio / Param_FrameSize) * 10000000) / Param_SamplesPerSec);
+
+	//Retorna o resultado
+	return AudioDuration;
+}
+UInt64 MediaFoundationFunctions::ConvertPresentationTimeToTicks(UInt64 Param_PresentationTime)
+{
+	//Variavel a ser retornada.
+	UINT64 TotalTicks = 0;
+
+	//Variaveis a serem utilizadas.
+	HRESULT Hr = E_FAIL;
+	LARGE_INTEGER vi_OutFrequency = { };
+
+	//Verifica se a frequencia do dispositivo já foi capturada, se não vai obter e depois calcular.
+	if (Var_Glob_FrequencyDevice == 0)
+	{
+		//Chama o método para recuperar a frequencia atual do dispositivo.
+		Hr = QueryPerformanceFrequency(&vi_OutFrequency);
+
+		//Verifica se não houve erro
+		if (!Sucesso(Hr))
+			throw gcnew Exception("Ocorreu uma falha ao obter a frequencia do contador de desempenho atual.");
+
+		//Define na variavel global o valor.
+		Var_Glob_FrequencyDevice = vi_OutFrequency.QuadPart;
+	}
+
+	//Calcula o Tempo de apresentação do parametro dado em Ticks
+	TotalTicks = ((Param_PresentationTime / 10000000) * static_cast<UINT64>(Var_Glob_FrequencyDevice));
+
+	//Retorna o resultado
+	return TotalTicks;
+}
+UInt64 MediaFoundationFunctions::ConvertPresentationTimeToTicks(UInt64 Param_Frequency, UInt64 Param_PresentationTime)
+{
+	//Variavel a ser retornada.
+	UINT64 TotalTicks = 0;
+
+	//Calcula o Tempo de apresentação do parametro dado em Ticks
+	TotalTicks = (Param_PresentationTime / 10000000) * Param_Frequency;
+
+	//Retorna o resultado
+	return TotalTicks;
+}
 CarenResult MediaFoundationFunctions::_MFAddPeriodicCallback(IntPtr Param_Callback, ICaren^ Param_Context, OutParam UInt32% Param_Out_Key)
 {
 	//Variavel a ser retornada.

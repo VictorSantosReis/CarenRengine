@@ -397,10 +397,153 @@ void CarenMFActivate::Finalizar()
 }
 
 
-//
-//Métodos da interface ICarenMFAttributes
-//
 
+
+
+// Métodos da interface Proprietaria (ICarenMFActivate)
+
+
+/// <summary>
+/// (ActivateObject) - Cria o objeto associado com esse objeto de ativação.
+/// O método só pode ser chamado se o objeto de ativação já tiver sido criado.
+/// Alguns objetos do Microsoft Media Foundation devem ser encerrados antes de serem liberados. Em caso afirmativo, o chamador é responsável 
+/// por desligar o objeto que é retornado em (Param_Out_InterfaceSolicitada).
+/// </summary>
+/// <param name="Param_IIDInterface">Identificador de interface (IID) da interface solicitada.</param>
+/// <param name="Param_Out_InterfaceSolicitada">Recebe a interface que contém a interface solicitada. O usuário deve criar a interfaces antes de chamar este método.</param>
+CarenResult CarenMFActivate::ActivateObject(String^ Param_IIDInterface, ICaren^ Param_Out_InterfaceSolicitada)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Variavel COM
+	ResultadoCOM Hr = E_FAIL;
+
+	//Variaveis utilizadas no método.
+	Utilidades Util;
+	GUID vi_IIDInterface = GUID_NULL;
+	LPVOID vi_pOutInterface = Nulo;
+
+	//Chama o método para obter o guid.
+	vi_IIDInterface = Util.CreateGuidFromString(Param_IIDInterface);
+
+	//Verifica se o guid foi criado com sucesso
+	if (vi_IIDInterface == GUID_NULL)
+	{
+		//O guid informado não é valido
+		Resultado.AdicionarCodigo(ResultCode::ER_GUID_INVALIDO, false);
+
+		//Sai do método.
+		goto Done;
+	}
+
+	//Chama o método para ativar o objeto.
+	Hr = PonteiroTrabalho->ActivateObject(vi_IIDInterface, &vi_pOutInterface);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Define o código na classe.
+		Var_Glob_LAST_HRESULT = Hr;
+
+		//Sai do método
+		Sair;
+	}
+
+	//Chama o método para definir o ponteiro na interface de saida.
+	CarenSetPointerToICarenSafe(reinterpret_cast<IUnknown*>(vi_pOutInterface), Param_Out_InterfaceSolicitada, true);
+
+Done:;
+	//Retorna o resultado
+	return Resultado;
+}
+
+
+/// <summary>
+/// (DetachObject) - Desanexa o objeto criado a partir do objeto de ativação.
+/// O objeto de ativação libera Todas as suas referências internas para o objeto criado. Se você chamar (ActivateObject) novamente, o objeto 
+/// de ativação criará uma nova instância do outro objeto.
+/// O método não desliga o objeto criado. Se o método for bem-sucedido, o cliente deve desligar o objeto criado
+/// </summary>
+CarenResult CarenMFActivate::DetachObject()
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Variavel COM
+	ResultadoCOM Hr = E_FAIL;
+
+	//Chama o método para Desanexar o objeto.
+	Hr = PonteiroTrabalho->DetachObject();
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Define o código na classe.
+		Var_Glob_LAST_HRESULT = Hr;
+
+		//Sai do método
+		Sair;
+	}
+
+Done:;
+	//Retorna o resultado
+	return Resultado;
+}
+
+
+/// <summary>
+/// (ShutdownObject) - Desliga o objeto criado.
+/// O componente que chama (ActivateObject) não o componente que cria o objeto de ativação  é responsável por chamar (ShutdownObject). Por exemplo, 
+/// em um aplicativo de reprodução típica, o aplicativo cria objetos de ativação para os coletores de mídia, mas a sessão de mídia chama (ActivateObject). 
+/// Portanto, a sessão de mídia, não o aplicativo, chama (ShutdownObject).
+/// </summary>
+CarenResult CarenMFActivate::ShutdownObject()
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Variavel COM
+	ResultadoCOM Hr = E_FAIL;
+
+	//Chama o método para Shutdown o objeto.
+	Hr = PonteiroTrabalho->ShutdownObject();
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Define o código na classe.
+		Var_Glob_LAST_HRESULT = Hr;
+
+		//Sai do método
+		Sair;
+	}
+
+Done:;
+	//Retorna o resultado
+	return Resultado;
+}
+
+
+
+
+
+// Métodos da interface (ICarenMFAttributes)
 
 
 /// <summary>
@@ -419,18 +562,18 @@ CarenResult CarenMFActivate::Compare(ICarenMFAttributes^ Param_InterfaceCompare,
 
 	//Variaveis a serem utilizadas.
 	Utilidades Util;
-	IMFAttributes *pAtributosCompare = NULL;
-	MF_ATTRIBUTES_MATCH_TYPE Comparador;
-	BOOL ResultadoCompare = FALSE;
+	IMFAttributes *vi_pAttributesCompare = Nulo;
+	MF_ATTRIBUTES_MATCH_TYPE vi_CompareType = static_cast<MF_ATTRIBUTES_MATCH_TYPE>(Param_TipoComparação);
+	BOOL vi_Resultado = FALSE;
 
 	//Chama o método para obter a interface(IMFAttributes) que será comparada a está.
-	Resultado = Param_InterfaceCompare->RecuperarPonteiro((LPVOID*)&pAtributosCompare);
-
-	//Obtém o tipo de comparação a ser realizada.
-	Comparador = (MF_ATTRIBUTES_MATCH_TYPE)((int)Param_TipoComparação);
+	CarenGetPointerFromICarenSafe(Param_InterfaceCompare, vi_pAttributesCompare);
 
 	//Chama o método para comparar os itens
-	Hr = PonteiroTrabalho->Compare(pAtributosCompare, Comparador, &ResultadoCompare);
+	Hr = PonteiroTrabalho->Compare(
+		vi_pAttributesCompare,
+		vi_CompareType,
+		&vi_Resultado);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -448,7 +591,7 @@ CarenResult CarenMFActivate::Compare(ICarenMFAttributes^ Param_InterfaceCompare,
 	}
 
 	//Define o resultado da comparação.
-	Param_Out_Resultado = ResultadoCompare ? true : false;
+	Param_Out_Resultado = vi_Resultado ? true : false;
 
 Done:;
 	//Retorna o resultado.
@@ -475,15 +618,15 @@ CarenResult CarenMFActivate::CompareItem(String^ Param_GuidChave, CA_PROPVARIANT
 	//Variaveis a serem utilizadas.
 	Utilidades Util;
 	PropVariantManager UtilVariant = PropVariantManager();
-	GUID GuidChave = GUID_NULL;
-	BOOL ResultadoComp = FALSE;
+	GUID vi_GuidChave = GUID_NULL;
+	BOOL vi_ResultadoCompare = FALSE;
 	LPPROPVARIANT vi_PropVar = Nulo;
 
 	//Converte a string para guid.
-	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
+	vi_GuidChave = Util.CreateGuidFromString(Param_GuidChave);
 
 	//Verifica se o Guid é valido
-	if (GuidChave == GUID_NULL)
+	if (vi_GuidChave == GUID_NULL)
 	{
 		//O guid informado é invalido.
 		Resultado.AdicionarCodigo(ResultCode::ER_GUID_INVALIDO, false);
@@ -694,8 +837,7 @@ Done:;
 }
 
 
-//Métodos (GET) da interface IMFAttributes.
-
+// GET METHODS
 
 
 /// <summary>
@@ -1615,10 +1757,7 @@ CarenResult CarenMFActivate::LockStore()
 }
 
 
-
-//Métodos (SET) da interface IMFAttributes.
-
-
+//SET METHODS
 
 
 /// <summary>
@@ -2170,151 +2309,5 @@ CarenResult CarenMFActivate::UnlockStore()
 
 Done:;
 	//Retorna o resultado.
-	return Resultado;
-}
-
-
-
-
-//
-// Métodos da interface Proprietaria
-//
-
-/// <summary>
-/// (ActivateObject) - Cria o objeto associado com esse objeto de ativação.
-/// O método só pode ser chamado se o objeto de ativação já tiver sido criado.
-/// Alguns objetos do Microsoft Media Foundation devem ser encerrados antes de serem liberados. Em caso afirmativo, o chamador é responsável 
-/// por desligar o objeto que é retornado em (Param_Out_InterfaceSolicitada).
-/// </summary>
-/// <param name="Param_IIDInterface">Identificador de interface (IID) da interface solicitada.</param>
-/// <param name="Param_Out_InterfaceSolicitada">Recebe a interface que contém a interface solicitada. O usuário deve criar a interfaces antes de chamar este método.</param>
-CarenResult CarenMFActivate::ActivateObject(String^ Param_IIDInterface, ICaren^ Param_Out_InterfaceSolicitada)
-{
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variavel COM
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis utilizadas no método.
-	Utilidades Util;
-	GUID GuidIIDInterface = GUID_NULL;
-	LPVOID pInterfaceObtida = NULL;
-
-	//Chama o método para obter o guid.
-	GuidIIDInterface = Util.CreateGuidFromString(Param_IIDInterface);
-
-	//Verifica se o guid foi criado com sucesso
-	if (GuidIIDInterface == GUID_NULL)
-	{
-		//O guid informado não é valido
-		Resultado.AdicionarCodigo(ResultCode::ER_GUID_INVALIDO, false);
-
-		//Sai do método.
-		goto Done;
-	}
-
-	//Chama o método para ativar o objeto.
-	Hr = PonteiroTrabalho->ActivateObject(GuidIIDInterface, &pInterfaceObtida);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-	//Chama o método para definir o ponteiro na interface de saida.
-	Param_Out_InterfaceSolicitada->AdicionarPonteiro(pInterfaceObtida);
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Retorna o resultado
-	return Resultado;
-}
-
-
-/// <summary>
-/// (DetachObject) - Desanexa o objeto criado a partir do objeto de ativação.
-/// O objeto de ativação libera Todas as suas referências internas para o objeto criado. Se você chamar (ActivateObject) novamente, o objeto 
-/// de ativação criará uma nova instância do outro objeto.
-/// O método não desliga o objeto criado. Se o método for bem-sucedido, o cliente deve desligar o objeto criado
-/// </summary>
-CarenResult CarenMFActivate::DetachObject()
-{
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variavel COM
-	ResultadoCOM Hr = E_FAIL;
-
-	//Chama o método para Desanexar o objeto.
-	Hr = PonteiroTrabalho->DetachObject();
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Retorna o resultado
-	return Resultado;
-}
-
-
-/// <summary>
-/// (ShutdownObject) - Desliga o objeto criado.
-/// O componente que chama (ActivateObject) não o componente que cria o objeto de ativação  é responsável por chamar (ShutdownObject). Por exemplo, 
-/// em um aplicativo de reprodução típica, o aplicativo cria objetos de ativação para os coletores de mídia, mas a sessão de mídia chama (ActivateObject). 
-/// Portanto, a sessão de mídia, não o aplicativo, chama (ShutdownObject).
-/// </summary>
-CarenResult CarenMFActivate::ShutdownObject()
-{
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variavel COM
-	ResultadoCOM Hr = E_FAIL;
-
-	//Chama o método para Shutdown o objeto.
-	Hr = PonteiroTrabalho->ShutdownObject();
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Retorna o resultado
 	return Resultado;
 }

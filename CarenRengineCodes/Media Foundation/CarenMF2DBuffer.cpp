@@ -33,9 +33,9 @@ CarenMF2DBuffer::CarenMF2DBuffer()
 }
 	
 
-//
+
 // Métodos da interface ICaren
-//
+
 
 /// <summary>
 /// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 
@@ -400,9 +400,9 @@ void CarenMF2DBuffer::Finalizar()
 
 
 
-//
-// Métodos da interface proprietaria
-//
+
+// Métodos da interface proprietaria (ICarenMF2DBuffer)
+
 
 /// <summary>
 /// (ContiguousCopyFrom) - Copia dados para esse buffer de um buffer que tem um formato contíguo(Único).
@@ -418,20 +418,15 @@ CarenResult CarenMF2DBuffer::ContiguousCopyFrom(ICarenBuffer^ Param_BufferContig
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
-	IntPtr PonteiroDados = IntPtr::Zero;
-
-	//Chama o método para recuperar o ponteiro par ao buffer na interface.
-	Resultado = Param_BufferContiguo->GetInternalPointer(PonteiroDados);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Sai do método
-		goto Done;
-	}
+	GenPointer vi_BufferSource = DefaultGenPointer;
+	
+	//Chama o método para recuperar o ponteiro para o buffer de origem.
+	CarenGetPointerFromICarenBufferSafe(Param_BufferContiguo, vi_BufferSource);
 
 	//Chama o método para copiar os dados do buffer para este.
-	Hr = PonteiroTrabalho->ContiguousCopyFrom((PBYTE)PonteiroDados.ToPointer() , Param_LarguraBuffer);
+	Hr = PonteiroTrabalho->ContiguousCopyFrom(
+		static_cast<PBYTE>(vi_BufferSource.ToPointer()),
+		Param_LarguraBuffer);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -467,20 +462,15 @@ CarenResult CarenMF2DBuffer::ContiguousCopyTo(ICarenBuffer^% Param_DestinoBuffer
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis que seram utilizadas no método.
-	IntPtr PonteiroDados = IntPtr::Zero;
+	GenPointer vi_BufferDest = DefaultGenPointer;
 
-	//Chama o método que vai obter o ponteiro do buffer.
-	Resultado = Param_DestinoBufferContiguou->GetInternalPointer(PonteiroDados);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Sai do método
-		goto Done;
-	}
+	//Chama o método para recuperar o ponteiro para o buffer de destino.
+	CarenGetPointerFromICarenBufferSafe(Param_DestinoBufferContiguou, vi_BufferDest);
 
 	//Chama o método que vai copiar os dados para o buffer de destino.
-	Hr = PonteiroTrabalho->ContiguousCopyTo((PBYTE)PonteiroDados.ToPointer(), Param_LarguraBufferDestino);
+	Hr = PonteiroTrabalho->ContiguousCopyTo(
+		static_cast<PBYTE>(vi_BufferDest.ToPointer()),
+		Param_LarguraBufferDestino);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -516,10 +506,10 @@ CarenResult CarenMF2DBuffer::GetContiguousLength([Out] UInt32% Param_Out_Largura
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método.
-	DWORD LarguraContigouBuff = 0;
+	DWORD vi_OutLenghtBuffer = 0;
 
 	//Chama o método para obter a largura contigua do buffer.
-	Hr = PonteiroTrabalho->GetContiguousLength(&LarguraContigouBuff);
+	Hr = PonteiroTrabalho->GetContiguousLength(&vi_OutLenghtBuffer);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -536,8 +526,8 @@ CarenResult CarenMF2DBuffer::GetContiguousLength([Out] UInt32% Param_Out_Largura
 		Sair;
 	}
 
-	//Define a largura contigua do buffer no parametro de saida.
-	Param_Out_LarguraBufferContiguou = LarguraContigouBuff;
+	//Define a largura do buffer no parametro de saida.
+	Param_Out_LarguraBufferContiguou = vi_OutLenghtBuffer;
 
 Done:;
 	//Retorna o resultado.
@@ -560,11 +550,11 @@ CarenResult CarenMF2DBuffer::GetScanline0AndPitch([Out] ICarenBuffer^% Param_Out
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
-	PBYTE pBufferScanLine = NULL;
-	LONG StrideValue = 0;
+	PBYTE vi_pOutBufferScanline = NULL;
+	LONG vi_OutStrideValue = 0;
 
 	//Chama o método para obter a superfice e o stride.
-	Hr = PonteiroTrabalho->GetScanline0AndPitch(&pBufferScanLine, &StrideValue);
+	Hr = PonteiroTrabalho->GetScanline0AndPitch(&vi_pOutBufferScanline, &vi_OutStrideValue);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -585,10 +575,10 @@ CarenResult CarenMF2DBuffer::GetScanline0AndPitch([Out] ICarenBuffer^% Param_Out
 	Param_Out_ByteBufferPrimeiraLinha = gcnew CarenBuffer();
 
 	//Define o ponteiro de trabalho na interface.
-	Param_Out_ByteBufferPrimeiraLinha->CreateBuffer(IntPtr(pBufferScanLine), false, 0, 0);
+	Param_Out_ByteBufferPrimeiraLinha->CreateBuffer(IntPtr(vi_pOutBufferScanline), false, 0, 0);
 
 	//Define o Stride no parametro de saida.
-	Param_Out_Stride = StrideValue;
+	Param_Out_Stride = vi_OutStrideValue;
 
 Done:;
 	//Retorna o resultado.
@@ -608,10 +598,10 @@ CarenResult CarenMF2DBuffer::IsContiguousFormat([Out] Boolean% Param_Out_BufferC
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método.
-	BOOL IsContiguou = FALSE;
+	BOOL vi_OutIsContiguou = FALSE;
 
 	//Chama o método que vai verificar se é um buffer contiguou.
-	Hr = PonteiroTrabalho->IsContiguousFormat(&IsContiguou);
+	Hr = PonteiroTrabalho->IsContiguousFormat(&vi_OutIsContiguou);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -629,7 +619,7 @@ CarenResult CarenMF2DBuffer::IsContiguousFormat([Out] Boolean% Param_Out_BufferC
 	}
 
 	//Define o resultado no parametro de saida.
-	Param_Out_BufferContiguou = IsContiguou ? true : false;
+	Param_Out_BufferContiguou = vi_OutIsContiguou ? true : false;
 
 Done:;
 	//Retorna o resultado.
@@ -652,11 +642,11 @@ CarenResult CarenMF2DBuffer::Lock2D([Out] ICarenBuffer^% Param_Out_Buffer, [Out]
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
-	PBYTE pBuffer = NULL;
-	LONG StrideBuffer = 0;
+	PBYTE vi_pOutBufferLocked = NULL;
+	LONG vi_OutStrideValue = 0;
 
 	//Chama o método para prender o buffer.
-	Hr = PonteiroTrabalho->Lock2D(&pBuffer, &StrideBuffer);
+	Hr = PonteiroTrabalho->Lock2D(&vi_pOutBufferLocked, &vi_OutStrideValue);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -677,10 +667,10 @@ CarenResult CarenMF2DBuffer::Lock2D([Out] ICarenBuffer^% Param_Out_Buffer, [Out]
 	Param_Out_Buffer = gcnew CarenBuffer();
 
 	//Define o ponteiro de trabalho na interface.
-	Param_Out_Buffer->CreateBuffer(IntPtr(pBuffer), false, 0, 0);
+	Param_Out_Buffer->CreateBuffer(IntPtr(vi_pOutBufferLocked), false, 0, 0);
 
 	//Define o Stride no parametro de saida.
-	Param_Out_Stride = StrideBuffer;
+	Param_Out_Stride = vi_OutStrideValue;
 
 Done:;
 	//Retorna o resultado.

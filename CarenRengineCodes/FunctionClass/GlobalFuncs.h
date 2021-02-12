@@ -14,6 +14,7 @@ limitations under the License.
 #pragma once
 #include "../SDK_Base.h"
 #include "../SDK_Caren.h"
+#include "../PropVariantManager/PropVariantManager.h"
 
 //Importa o namespace base
 using namespace CarenRengine;
@@ -37,6 +38,9 @@ using namespace CarenRengine::SDKBase::Estruturas;
 
 //Typedef que tenta recuperar o ponteiro nativo para o buffer na interface (ICarenBufer). Pula para o label 'Done' se o buffer não for valido ou ocorrer um erro na recuperação do ponteiro.
 #define CarenGetPointerFromICarenBufferSafe(CarenInterfaceBuffer, OutIntPtrBuffer) if(CarenInterfaceBuffer != nullptr){Resultado = CarenInterfaceBuffer->GetInternalPointer(OutIntPtrBuffer); SairOnError(Resultado);}
+
+#define CarenConvertPropvariantToNativateSafe(PropVariantManaged) 
+
 
 //FUNCÕES GLOBAIS.
 
@@ -73,6 +77,13 @@ void IniciarVariant(LPVARIANT* Param_VariantPointerInit);
 /// </summary>
 /// <param name="Param_VariantPointer">Um ponteiro que leva a um endereço onde está um objeto alocado VARIANT.</param>
 void DeletarVariant(LPVARIANT* Param_VariantPointer);
+
+/// <summary>
+/// Função responsável por converter uma (CA_PROPVARIANT) gerenciada para sua representação nativa.
+/// </summary>
+/// <param name="Param_VariantManaged"></param>
+/// <returns></returns>
+LPPROPVARIANT ConverterPropVariantManaged(CA_PROPVARIANT ^ Param_VariantManaged);
 
 /// <summary>
 /// Função resposável por recuperar o ponteiro nativo de uma interface baseada em ICaren.
@@ -115,6 +126,9 @@ template<class T> BOOL VerificarGenericoValido(System::Object^ Param_Objeto)
 	//Retorna se o objeto generico é valido para o tipo.
 	return dynamic_cast<T>(Param_Objeto) != nullptr;
 }
+
+
+
 
 
 //FUNÇÕES DE CONVERSÃO DE VALORES SIMPLES PARA ARRAY DE BYTES.

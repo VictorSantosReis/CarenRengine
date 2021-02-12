@@ -144,6 +144,19 @@ Done:;
 	//Deixa o método continuar.
 }
 
+LPPROPVARIANT ConverterPropVariantManaged(CA_PROPVARIANT^ Param_VariantManaged)
+{
+	//Variavel a ser retornada.
+	LPPROPVARIANT Resultado = Nulo;
+
+	//Variaveis a serem utilizadas.
+	PropVariantManager 
+
+
+	//Retorna o resultado.
+	return Resultado;
+}
+
 std::vector<BYTE> ConvertValueToByteArray(SByte Param_Value)
 {
 	//Obtém o tamanho do tipo

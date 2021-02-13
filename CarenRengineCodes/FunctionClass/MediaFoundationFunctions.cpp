@@ -111,11 +111,11 @@ UInt64 MediaFoundationFunctions::CalculePresentationTime(UInt64 Param_Ticks)
 			throw gcnew Exception("Ocorreu uma falha ao obter a frequencia do contador de desempenho atual.");
 
 		//Define na variavel global o valor.
-		Var_Glob_FrequencyDevice = vi_OutFrequency.QuadPart;
+		Var_Glob_FrequencyDevice = static_cast<UINT64>(vi_OutFrequency.QuadPart);
 	}
 
 	//Calcula o Tempo de apresentação do parametro dado em Ticks
-	PresentationTime = static_cast<UInt64>(10000000 * static_cast<INT64>(Param_Ticks) / Var_Glob_FrequencyDevice);
+	PresentationTime = 10000000 * Param_Ticks / Var_Glob_FrequencyDevice;
 
 	//Retorna o resultado
 	return PresentationTime;
@@ -126,7 +126,7 @@ UInt64 MediaFoundationFunctions::CalculePresentationTime(UInt64 Param_Frequency,
 	UINT64 PresentationTime = 0;
 
 	//Calcula o Tempo de apresentação do parametro dado em Ticks
-	PresentationTime = static_cast<UInt64>(10000000 * static_cast<INT64>(Param_Ticks) / Param_Frequency);
+	PresentationTime = 10000000 * Param_Ticks / Param_Frequency;
 
 	//Retorna o resultado
 	return PresentationTime;
@@ -971,7 +971,7 @@ CarenResult MediaFoundationFunctions::_MFGetSupportedMimeTypes(OutParam CA_PROPV
 Done:;
 	//Libera a memória utilizada pela propvariant.
 	if (ObjetoValido(vi_PropVar))
-		DeletarPropVariant(&vi_PropVar);
+		DeletarPropVariantSafe(&vi_PropVar);
 
 	//Retorna o resultado
 	return Resultado;
@@ -1013,7 +1013,7 @@ CarenResult MediaFoundationFunctions::_MFGetSupportedSchemes(OutParam CA_PROPVAR
 Done:;
 	//Libera a memória utilizada pela propvariant.
 	if (ObjetoValido(vi_PropVar))
-		DeletarPropVariant(&vi_PropVar);
+		DeletarPropVariantSafe(&vi_PropVar);
 
 	//Retorna o resultado
 	return Resultado;

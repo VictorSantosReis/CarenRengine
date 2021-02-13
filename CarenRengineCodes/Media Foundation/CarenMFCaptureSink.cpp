@@ -393,6 +393,8 @@ void CarenMFCaptureSink::Finalizar()
 
 
 
+
+
 // Métodos da interface proprietária(ICarenMFCaptureSink)
 
 

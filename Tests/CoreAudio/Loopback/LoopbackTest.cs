@@ -920,20 +920,6 @@ namespace CoreAudio_LoopbackTest
                     goto Done;
                 }
             }
-
-            //Verifica se obteve sucesso
-            if (Resultado.StatusCode != ResultCode.SS_OK)
-            {
-                //A operação falhou.
-
-                //Mostra uma mensagem de erro.
-                ShowMensagem(
-                    "Ocorreu uma falha ao tentar finalizar o fluxo AAC ou MP3. Mensagem de erro -> "
-                    + Resultado.ObterMensagem((int)Resultado.HResult), true);
-
-                //Sai do método
-                goto Done;
-            }
   
         Done:;
 

@@ -603,7 +603,7 @@ String^ Param_Nome,
 
 Done:;
 	//Libera a propvariant
-	DeletarPropVariant(&vi_OutPropVar);
+	DeletarPropVariantSafe(&vi_OutPropVar);
 
 	//Libera a memória utilizada pela string
 	DeletarStringAllocatedSafe(&pNome);

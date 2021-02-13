@@ -789,7 +789,7 @@ String^ Param_GuidMFAtributos,
 
 Done:;
 	//Libera a PROPVARIANT.
-	DeletarPropVariant(&vi_PropVar);
+	DeletarPropVariantSafe(&vi_PropVar);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -922,7 +922,7 @@ CA_MF_MEDIA_ENGINE_STATISTIC Param_TipoEstatistica,
 
 Done:;
 	//Libera a propvariant.
-	DeletarPropVariant(&vi_PropVar);
+	DeletarPropVariantSafe(&vi_PropVar);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1062,7 +1062,7 @@ String^ Param_GuidMfAtributo,
 
 Done:;
 	//Libera a propvariant.
-	DeletarPropVariant(&vi_OutValorAtributo);
+	DeletarPropVariantSafe(&vi_OutValorAtributo);
 
 	//Retorna o resultado.
 	return Resultado;

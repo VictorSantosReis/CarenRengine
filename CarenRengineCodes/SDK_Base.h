@@ -4214,7 +4214,7 @@ namespace CarenRengine
 				/// </summary>
 				MF_ATTRIBUTE_SERIALIZE_UNKNOWN_BYREF = 0x1
 			};
-
+			
 			/// <summary>
 			/// (_MF_ATTRIBUTE_TYPE) - Enumera valores que definem o tipo de dados para (Emparelhar) uma Chave/Valor.
 			/// </summary>
@@ -4223,37 +4223,37 @@ namespace CarenRengine
 				/// <summary>
 				/// Valor inteiro não assinado de 32 Bits.
 				/// </summary>
-				UINT32 = 0,
+				MF_ATTRIBUTE_UINT32 = VT_UI4,
 
 				/// <summary>
 				/// Valor inteiro não assinado de 64 Bits.
 				/// </summary>
-				UINT64,
+				MF_ATTRIBUTE_UINT64 = VT_UI8,
 
 				/// <summary>
 				/// Número de ponto flutuante.
 				/// </summary>
-				DOUBLE,
+				MF_ATTRIBUTE_DOUBLE = VT_R8,
 
 				/// <summary>
 				/// Representa um GUID.
 				/// </summary>
-				GUID,
+				MF_ATTRIBUTE_GUID = VT_CLSID,
 
 				/// <summary>
 				/// Sequência de caracteres largos terminada por caractere nulo.
 				/// </summary>
-				STRING,
+				MF_ATTRIBUTE_STRING = VT_LPWSTR,
 
 				/// <summary>
 				/// Matriz de byte.
 				/// </summary>
-				BLOB,
+				MF_ATTRIBUTE_BLOB = (VT_VECTOR | VT_UI1),
 
 				/// <summary>
 				/// Ponteiro desconhecido para um objeto.
 				/// </summary>
-				IUNKNOWN
+				MF_ATTRIBUTE_IUNKNOWN = VT_UNKNOWN
 			};
 
 			/// <summary>

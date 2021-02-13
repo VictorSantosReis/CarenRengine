@@ -420,6 +420,8 @@ void CarenMFDLNASinkInit::Finalizar()
 
 
 
+
+
 // Métodos da interface proprietária(ICarenMFDLNASinkInit)
 
 

@@ -397,9 +397,11 @@ void CarenMFAudioStreamVolume::Finalizar()
 }
 
 
-//
+
+
+
 //Métodos da interface ICarenMFAudioStreamVolume
-//
+
 
 /// <summary>
 /// (GetAllVolumes) - Recupera os níveis de volume para todos os canais no fluxo de áudio.

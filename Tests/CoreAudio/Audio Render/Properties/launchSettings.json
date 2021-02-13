@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CoreAudio_RenderAudioTest": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

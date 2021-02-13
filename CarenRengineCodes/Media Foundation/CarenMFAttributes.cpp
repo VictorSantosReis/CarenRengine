@@ -25,12 +25,12 @@ CarenMFAttributes::~CarenMFAttributes()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+
 //Construtores
 CarenMFAttributes::CarenMFAttributes()
 {
 	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
-
 CarenMFAttributes::CarenMFAttributes(UInt32 Param_QuantidadeAtributos)
 {
 	//Variavel que vai conter o resultado COM.
@@ -53,7 +53,6 @@ CarenMFAttributes::CarenMFAttributes(UInt32 Param_QuantidadeAtributos)
 	//Define o ponteiro criado no ponteiro de trabalho
 	PonteiroTrabalho = vi_pOutAtributos;
 }
-
 CarenMFAttributes::CarenMFAttributes(ICarenMFCollection^ Param_ColecaoAtributosMuxStream)
 {
 	//Variavel que vai conter o resultado COM.
@@ -93,9 +92,9 @@ CarenMFAttributes::CarenMFAttributes(ICarenMFCollection^ Param_ColecaoAtributosM
 }
 
 
-//
+
 // Métodos da interface ICaren
-//
+
 
 /// <summary>
 /// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 
@@ -459,9 +458,11 @@ void CarenMFAttributes::Finalizar()
 }
 
 
-//
-//Métodos da interface ICarenMFAttributes
-//
+
+
+
+// Métodos da interface proprietaria (ICarenMFAttributes)
+
 
 /// <summary>
 /// Compara os atributos neste objeto com os atributos em outro objeto.
@@ -478,19 +479,18 @@ CarenResult CarenMFAttributes::Compare(ICarenMFAttributes^ Param_InterfaceCompar
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	IMFAttributes *pAtributosCompare = NULL;
-	MF_ATTRIBUTES_MATCH_TYPE Comparador;
-	BOOL ResultadoCompare = FALSE;
+	IMFAttributes* vi_pAttributesCompare = Nulo;
+	MF_ATTRIBUTES_MATCH_TYPE vi_CompareType = static_cast<MF_ATTRIBUTES_MATCH_TYPE>(Param_TipoComparação);
+	BOOL vi_Resultado = FALSE;
 
 	//Chama o método para obter a interface(IMFAttributes) que será comparada a está.
-	Resultado = Param_InterfaceCompare->RecuperarPonteiro((LPVOID*)&pAtributosCompare);
-
-	//Obtém o tipo de comparação a ser realizada.
-	Comparador = (MF_ATTRIBUTES_MATCH_TYPE)((int)Param_TipoComparação);
+	CarenGetPointerFromICarenSafe(Param_InterfaceCompare, vi_pAttributesCompare);
 
 	//Chama o método para comparar os itens
-	Hr = PonteiroTrabalho->Compare(pAtributosCompare, Comparador, &ResultadoCompare);
+	Hr = PonteiroTrabalho->Compare(
+		vi_pAttributesCompare,
+		vi_CompareType,
+		&vi_Resultado);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -508,7 +508,7 @@ CarenResult CarenMFAttributes::Compare(ICarenMFAttributes^ Param_InterfaceCompar
 	}
 
 	//Define o resultado da comparação.
-	Param_Out_Resultado = ResultadoCompare ? true : false;
+	Param_Out_Resultado = vi_Resultado ? true : false;
 
 Done:;
 	//Retorna o resultado.
@@ -533,27 +533,16 @@ CarenResult CarenMFAttributes::CompareItem(String^ Param_GuidChave, CA_PROPVARIA
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	Utilidades Util;
 	PropVariantManager UtilVariant = PropVariantManager();
-	GUID GuidChave = GUID_NULL;
-	BOOL ResultadoComp = FALSE;
+	GUID vi_GuidChave = GUID_NULL;
 	LPPROPVARIANT vi_PropVar = Nulo;
+	BOOL vi_ResultadoCompare = FALSE;
 
-	//Converte a string para guid.
-	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
+	//Chama o método para ciar o guid aparti da String gerenciada.
+	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
 
-	//Verifica se o Guid é valido
-	if (GuidChave == GUID_NULL)
-	{
-		//O guid informado é invalido.
-		Resultado.AdicionarCodigo(ResultCode::ER_GUID_INVALIDO, false);
-
-		//Sai do método.
-		goto Done;
-	}
-
-	//Converte a PropVariant gerenciada para a nativa.
-	vi_PropVar = static_cast<LPPROPVARIANT>(UtilVariant.ConverterPropVariantManaged_ToUnmanaged(Param_Valor));
+	//Chama o método para tentar converter a CA_PROPVARIANT gerenciada para a nativa.
+	CarenConvertPropvariantToNativeSafe(Param_Valor, vi_PropVar);
 
 	//Verifica se não ocorreu um erro na conversão.
 	if (!ObjetoValido(vi_PropVar))
@@ -568,7 +557,10 @@ CarenResult CarenMFAttributes::CompareItem(String^ Param_GuidChave, CA_PROPVARIA
 	}
 
 	//Chama o método para compar o item.
-	Hr = PonteiroTrabalho->CompareItem(GuidChave, *vi_PropVar, &ResultadoComp);
+	Hr = PonteiroTrabalho->CompareItem(
+		const_cast<GUID&>(vi_GuidChave),
+		const_cast<PROPVARIANT&>(*vi_PropVar),
+		&vi_ResultadoCompare);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -586,11 +578,11 @@ CarenResult CarenMFAttributes::CompareItem(String^ Param_GuidChave, CA_PROPVARIA
 	}
 
 	//Define o resultado da comparação
-	Param_Out_Resultado = ResultadoComp ? true : false;
+	Param_Out_Resultado = vi_ResultadoCompare ? true : false;
 
 Done:;
 	//Libera a memória utilizada pela PropVariant.
-	DeletarPropVariant(&vi_PropVar);
+	DeletarPropVariantSafe(&vi_PropVar);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -612,38 +604,13 @@ CarenResult CarenMFAttributes::CopyAllItems(ICarenMFAttributes^ Param_Out_Interf
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis que o método vai usar
-	IMFAttributes *pAtributoInterfaceDestino;
+	IMFAttributes* vi_pInterfaceDest = Nulo;
 
-	//Verifica se a interface é valida
-	if (Param_Out_InterfaceDestino == nullptr)
-	{
-		//O argumento passado é invalido.
-		Resultado.AdicionarCodigo(ResultCode::ER_E_INVALIDARG, false);
+	//Tenta recuperar o ponteiro para a interface de destino que vai receber os atributos.
+	CarenGetPointerFromICarenSafe(Param_Out_InterfaceDestino, vi_pInterfaceDest);
 
-		//Sai do método.
-		goto Done;
-	}
-
-	//Chama o método para obter o ponteiro de trabalho na interface
-	Resultado = Param_Out_InterfaceDestino->RecuperarPonteiro((LPVOID*)&pAtributoInterfaceDestino);
-
-	//Verifica o resultado da obtenção do ponteiro de trabalho
-	//Se ele for nulo, o método Retornado ER_NO_INTERFACE.
-	if (Resultado.StatusCode == ResultCode::SS_OK)
-	{
-		//Deixa o método continuar.
-	}
-	else
-	{
-		//O ponteiro de trabalho na interface de destino não é valido.
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Chama o método que vai copiar os atributos do ponteiro de trabalho dessa classe
-	//para o da interface de destino.
-	Hr = PonteiroTrabalho->CopyAllItems(pAtributoInterfaceDestino);
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->CopyAllItems(vi_pInterfaceDest);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -676,7 +643,7 @@ CarenResult CarenMFAttributes::DeleteAllItems()
 	//Resultado COM.
 	ResultadoCOM Hr = E_FAIL;
 
-	//Chama o método para deletar todos os itens
+	//Chama o método para realizar a operação.
 	Hr = PonteiroTrabalho->DeleteAllItems();
 
 	//Processa o resultado da chamada.
@@ -713,25 +680,13 @@ CarenResult CarenMFAttributes::DeleteItem(String^ Param_GuidChave)
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
-	Utilidades Util;
-	GUID GuidChave = GUID_NULL;
+	GUID vi_GuidChave = GUID_NULL;
 
-	//Converte a string para guid.
-	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
+	//Chama o método para ciar o guid aparti da String gerenciada.
+	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
 
-	//Verifica se o Guid é valido
-	if (GuidChave == GUID_NULL)
-	{
-		//O guid informado é invalido.
-		Resultado.AdicionarCodigo(ResultCode::ER_GUID_INVALIDO, false);
-
-		//Sai do método.
-		goto Done;
-	}
-
-	//Chama o método para deletar o item
-	//O método retornar S_OK mesmo se a chave não existir no atributo.
-	Hr = PonteiroTrabalho->DeleteItem(GuidChave);
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->DeleteItem(const_cast<GUID&>(vi_GuidChave));
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -754,8 +709,7 @@ Done:;
 }
 
 
-//Métodos (GET) da interface IMFAttributes.
-
+// GET METHODS
 
 
 /// <summary>
@@ -773,16 +727,15 @@ CarenResult CarenMFAttributes::GetAllocatedBlob(String^ Param_GuidChave, [Out] E
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas pelo método
-	Utilidades Util;
-	UINT8 *pBuffDados = NULL;
-	UINT32 LarguraBuffer = 0;
-	GUID GuidChave = GUID_NULL;
+	PBYTE vi_pOutBuffer = NULL;
+	UINT32 vi_OutLarguraBlob = 0;
+	GUID vi_GuidChave = GUID_NULL;
 
-	//Converte a string para o GUID.
-	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
+	//Chama o método para ciar o guid aparti da String gerenciada.
+	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetAllocatedBlob(GuidChave, &pBuffDados, &LarguraBuffer);
+	Hr = PonteiroTrabalho->GetAllocatedBlob(const_cast<GUID&>(vi_GuidChave), &vi_pOutBuffer, &vi_OutLarguraBlob);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -803,18 +756,18 @@ CarenResult CarenMFAttributes::GetAllocatedBlob(String^ Param_GuidChave, [Out] E
 	Param_Out_Buffer = CA_BlobData();
 
 	//Define a largura do buffer
-	Param_Out_Buffer.SizeData = LarguraBuffer;
+	Param_Out_Buffer.SizeData = vi_OutLarguraBlob;
 
 	//Cria a interface que vai conter os dados do buffer.
 	Param_Out_Buffer.BufferDados = gcnew CarenBuffer();
 
 	//Copia os dados para o buffer
-	static_cast<ICarenBuffer^>(Param_Out_Buffer.BufferDados)->CreateBuffer(IntPtr(pBuffDados), true, Param_Out_Buffer.SizeData, Param_Out_Buffer.SizeData);
+	static_cast<ICarenBuffer^>(Param_Out_Buffer.BufferDados)->CreateBuffer(IntPtr(vi_pOutBuffer), true, Param_Out_Buffer.SizeData, Param_Out_Buffer.SizeData);
 
 Done:;
 	//Libera a memória para o buffer se válido.
-	if (ObjetoValido(pBuffDados))
-		CoTaskMemFree(pBuffDados);
+	if (ObjetoValido(vi_pOutBuffer))
+		CoTaskMemFree(vi_pOutBuffer);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -836,16 +789,15 @@ CarenResult CarenMFAttributes::GetAllocatedString(String^ Param_GuidChave, [Out]
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas pelo método
-	Utilidades Util;
-	LPWSTR StringValorRetornado = NULL;
-	UINT32 LarguraBuffer = 0;
-	GUID GuidChave = GUID_NULL;
+	LPWSTR vi_pOutString = NULL;
+	UINT32 vi_OutLarguraBuffer = 0;
+	GUID vi_GuidChave = GUID_NULL;
 
-	//Chama o método para obter o guid.
-	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
+	//Chama o método para ciar o guid aparti da String gerenciada.
+	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
 
-	//Chama o método para obter a String alocada internamente.
-	Hr = PonteiroTrabalho->GetAllocatedString(GuidChave, &StringValorRetornado, &LarguraBuffer);
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetAllocatedString(const_cast<GUID&>(vi_GuidChave), &vi_pOutString, &vi_OutLarguraBuffer);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -862,16 +814,13 @@ CarenResult CarenMFAttributes::GetAllocatedString(String^ Param_GuidChave, [Out]
 		Sair;
 	}
 
-	//Define o valor de retorno.
-	Param_Out_String = gcnew String(StringValorRetornado);
+	//Define os dados nos parametros de saida.
+	Param_Out_String = gcnew String(vi_pOutString);
+	Param_Out_LarguraString = vi_OutLarguraBuffer;
 
 Done:;
-	//Verifica se o Buffer é valido e exclui
-	if (StringValorRetornado != NULL)
-	{
-		//Chama um CoTaskMemFree -> Método indicado pelo Microsoft.
-		CoTaskMemFree(StringValorRetornado);
-	}
+	//Libera a memória utilizada pela String se válida.
+	DeletarStringCoTaskSafe(&vi_pOutString);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -893,18 +842,17 @@ CarenResult CarenMFAttributes::GetBlob(String^ Param_GuidChave, UInt32 Param_Tam
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas pelo método
-	Utilidades Util;
-	UINT8 *pBuffDados = NULL;
-	GUID GuidChave = GUID_NULL;
+	PBYTE vi_pOutBuffer = NULL;
+	GUID vi_GuidChave = GUID_NULL;
 
-	//Chama o método para obter o guid.
-	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
+	//Chama o método para ciar o guid aparti da String gerenciada.
+	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
 
 	//Cria o buffer que vai conter os dados.
-	pBuffDados = CriarMatrizUnidimensional<UINT8>(static_cast<DWORD>(Param_TamanhoBuffer));
+	vi_pOutBuffer = CriarMatrizUnidimensional<BYTE>(static_cast<DWORD>(Param_TamanhoBuffer));
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetBlob(GuidChave, pBuffDados, Param_TamanhoBuffer, NULL);
+	Hr = PonteiroTrabalho->GetBlob(const_cast<GUID&>(vi_GuidChave), vi_pOutBuffer, Param_TamanhoBuffer, NULL);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -929,13 +877,13 @@ CarenResult CarenMFAttributes::GetBlob(String^ Param_GuidChave, UInt32 Param_Tam
 
 	//Cria a interface que vai conter os dados.
 	Param_Out_Buffer.BufferDados = gcnew CarenBuffer();
-	
+
 	//Copia os dados para a interface do buffer.
-	static_cast<ICarenBuffer^>(Param_Out_Buffer.BufferDados)->CreateBuffer(IntPtr(pBuffDados), true, Param_Out_Buffer.SizeData, Param_Out_Buffer.SizeData);
+	static_cast<ICarenBuffer^>(Param_Out_Buffer.BufferDados)->CreateBuffer(IntPtr(vi_pOutBuffer), true, Param_Out_Buffer.SizeData, Param_Out_Buffer.SizeData);
 
 Done:;
 	//Libera a memória utilizada pela matriz.
-	DeletarMatrizUnidimensionalSafe(&pBuffDados);
+	DeletarMatrizUnidimensionalSafe(&vi_pOutBuffer);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -955,15 +903,14 @@ CarenResult CarenMFAttributes::GetBlobSize(String^ Param_GuidChave, [Out] UInt32
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas pelo método
-	Utilidades Util;
-	UINT32 ValorRequisitado = 0;
-	GUID GuidChave = GUID_NULL;
+	UINT32 vi_OutLargura = 0;
+	GUID vi_GuidChave = GUID_NULL;
 
-	//Chama o método para obter o guid.
-	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
+	//Chama o método para ciar o guid aparti da String gerenciada.
+	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
 
-	//Obtém o tamanho do blob no guid informado
-	Hr = PonteiroTrabalho->GetBlobSize(GuidChave, &ValorRequisitado);
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetBlobSize(const_cast<GUID&>(vi_GuidChave), &vi_OutLargura);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -981,7 +928,7 @@ CarenResult CarenMFAttributes::GetBlobSize(String^ Param_GuidChave, [Out] UInt32
 	}
 
 	//Define o valor de retorno.
-	Param_Out_TamanhoBuffer = ValorRequisitado;
+	Param_Out_TamanhoBuffer = vi_OutLargura;
 
 Done:;
 	//Retorna o resultado.
@@ -1001,10 +948,10 @@ CarenResult CarenMFAttributes::GetCount([Out] UInt32% Param_QuantidadeAtributos)
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variavel que vai conter a quantidade de atributos.
-	UINT32 CountAtributos = 0;
+	UINT32 vi_OutCountAttributes = 0;
 
-	//Chama o método para obter a quantidade de atributos.
-	Hr = PonteiroTrabalho->GetCount(&CountAtributos);
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetCount(&vi_OutCountAttributes);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -1022,7 +969,7 @@ CarenResult CarenMFAttributes::GetCount([Out] UInt32% Param_QuantidadeAtributos)
 	}
 
 	//Define o valor de retorno.
-	Param_QuantidadeAtributos = CountAtributos;
+	Param_QuantidadeAtributos = vi_OutCountAttributes;
 
 Done:;
 	//Retorna o resultado.
@@ -1043,15 +990,14 @@ CarenResult CarenMFAttributes::GetDouble(String^ Param_GuidChave, [Out] Double% 
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas pelo método
-	Utilidades Util;
-	double ValorRequisitado = 0;
-	GUID GuidChave = GUID_NULL;
+	GUID vi_GuidChave = GUID_NULL;
+	double vi_OutValue = 0;
 
-	//Chama o método para obter o guid.
-	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
+	//Chama o método para ciar o guid aparti da String gerenciada.
+	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
 
-	//Chama o método para obter o valor
-	Hr = PonteiroTrabalho->GetDouble(GuidChave, &ValorRequisitado);
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetDouble(const_cast<GUID&>(vi_GuidChave), &vi_OutValue);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -1069,7 +1015,7 @@ CarenResult CarenMFAttributes::GetDouble(String^ Param_GuidChave, [Out] Double% 
 	}
 
 	//Define o valor de retorno para o usuário.
-	Param_Out_Valor = ValorRequisitado;
+	Param_Out_Valor = vi_OutValue;
 
 Done:;
 	//Retorna o resultado.
@@ -1091,14 +1037,14 @@ CarenResult CarenMFAttributes::GetGUID(String^ Param_GuidChave, [Out] String^% P
 
 	//Variaveis utilizadas pelo método
 	Utilidades Util;
-	GUID ValorRequisitado = GUID_NULL;
-	GUID GuidChave = GUID_NULL;
+	GUID vi_OutGuidValue = GUID_NULL;
+	GUID vi_GuidChave = GUID_NULL;
 
-	//Chama o método para obter o guid.
-	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
+	//Chama o método para ciar o guid aparti da String gerenciada.
+	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
 
-	//Chama o método para obter o valor
-	Hr = PonteiroTrabalho->GetGUID(GuidChave, &ValorRequisitado);
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetGUID(const_cast<GUID&>(vi_GuidChave), &vi_OutGuidValue);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -1116,7 +1062,7 @@ CarenResult CarenMFAttributes::GetGUID(String^ Param_GuidChave, [Out] String^% P
 	}
 
 	//Define o valor de retorno para o usuário.
-	Param_Out_Valor = Util.ConverterGuidToString(ValorRequisitado);
+	Param_Out_Valor = Util.ConverterGuidToString(vi_OutGuidValue);
 
 Done:;
 	//Retorna o resultado.
@@ -1137,19 +1083,18 @@ CarenResult CarenMFAttributes::GetItem(String^ Param_GuidChave, [Out] CA_PROPVAR
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variariveis utilizadas no método
-	Utilidades Util;
 	PropVariantManager UtilVariant = PropVariantManager();
-	GUID GuidChave = GUID_NULL;
-	LPPROPVARIANT vi_PropVar = Nulo;
+	GUID vi_GuidChave = GUID_NULL;
+	LPPROPVARIANT vi_OutPropVar = Nulo;
 
-	//Chama o método para obter o guid.
-	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
+	//Chama o método para ciar o guid aparti da String gerenciada.
+	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
 
 	//Inicializa a PropVariant.
-	IniciarPropVariant(&vi_PropVar);
+	IniciarPropVariant(&vi_OutPropVar);
 
-	//Chama o método para obter o dado
-	Hr = PonteiroTrabalho->GetItem(GuidChave, vi_PropVar);
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetItem(const_cast<GUID&>(vi_GuidChave), vi_OutPropVar);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -1167,11 +1112,11 @@ CarenResult CarenMFAttributes::GetItem(String^ Param_GuidChave, [Out] CA_PROPVAR
 	}
 
 	//Converte e define a estrutura no parametro de saida.
-	Param_Out_Valor = UtilVariant.ConverterPropVariantUnmanaged_ToManaged(vi_PropVar);
+	Param_Out_Valor = UtilVariant.ConverterPropVariantUnmanaged_ToManaged(vi_OutPropVar);
 
 Done:;
 	//Limpa a PropVariant.
-	DeletarPropVariant(&vi_PropVar);
+	DeletarPropVariantSafe(&vi_OutPropVar);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1194,14 +1139,14 @@ CarenResult CarenMFAttributes::GetItemByIndex(UInt32 Param_IdItem, [Out] String^
 	//Variariveis utilizadas no método
 	Utilidades Util;
 	PropVariantManager UtilVariant = PropVariantManager();
-	GUID GuidChave = GUID_NULL;
-	LPPROPVARIANT vi_PropVar = Nulo;
-	
-	//Inicializa a PropVariant.
-	IniciarPropVariant(&vi_PropVar);
+	GUID vi_OutGuidChave = GUID_NULL;
+	LPPROPVARIANT vi_OutPropVar = Nulo;
 
-	//Chama o método para obter o dado
-	Hr = PonteiroTrabalho->GetItemByIndex(Param_IdItem, &GuidChave, vi_PropVar);
+	//Inicializa a PropVariant.
+	IniciarPropVariant(&vi_OutPropVar);
+
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetItemByIndex(Param_IdItem, &vi_OutGuidChave, vi_OutPropVar);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -1219,17 +1164,14 @@ CarenResult CarenMFAttributes::GetItemByIndex(UInt32 Param_IdItem, [Out] String^
 	}
 
 	//Define a estrutura de retorno
-	Param_Out_Valor = UtilVariant.ConverterPropVariantUnmanaged_ToManaged(vi_PropVar);
+	Param_Out_Valor = UtilVariant.ConverterPropVariantUnmanaged_ToManaged(vi_OutPropVar);
 
 	//Define o guid do valor obtido.
-	Param_Out_GuidChave = Util.ConverterGuidToString(GuidChave);
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	Param_Out_GuidChave = Util.ConverterGuidToString(vi_OutGuidChave);
 
 Done:;
 	//Limpa a PropVariant.
-	DeletarPropVariant(&vi_PropVar);
+	DeletarPropVariantSafe(&vi_OutPropVar);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1249,15 +1191,14 @@ CarenResult CarenMFAttributes::GetItemType(String^ Param_GuidChave, [Out] CA_MF_
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas pelo método
-	Utilidades Util;
-	MF_ATTRIBUTE_TYPE ValorRequisitado;
-	GUID GuidChave = GUID_NULL;
+	MF_ATTRIBUTE_TYPE vi_OutItemType;
+	GUID vi_GuidChave = GUID_NULL;
 
-	//Chama o método para obter o guid.
-	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
+	//Chama o método para ciar o guid aparti da String gerenciada.
+	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
 
-	//Chama o método para obter o valor
-	Hr = PonteiroTrabalho->GetItemType(GuidChave, &ValorRequisitado);
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetItemType(const_cast<GUID&>(vi_GuidChave), &vi_OutItemType);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -1274,8 +1215,8 @@ CarenResult CarenMFAttributes::GetItemType(String^ Param_GuidChave, [Out] CA_MF_
 		Sair;
 	}
 
-	//Converte o valor retornado para um gerenciado representado pela enumeração CA_MF_ATTRIBUTE_TYPE.
-	Param_Out_TipoDado = Util.ConverterMF_ATTRIBUTE_TYPEUnmanagedToManaged(ValorRequisitado);
+	//Converte o valor e define no parametro de saida.
+	Param_Out_TipoDado = static_cast<CA_MF_ATTRIBUTE_TYPE>(vi_OutItemType);
 
 Done:;
 	//Retorna o resultado.
@@ -1288,7 +1229,7 @@ Done:;
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (String) obtido. O tipo de atributo deve ser MF_ATTRIBUTE_STRING.</param>
 /// <param name="Param_Out_Valor">A largura da string a ser recebida. Some +1 a esse valor. Para obter esse valor, chame o método: GetStringLength</param>
 /// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada.</param>
-CarenResult CarenMFAttributes::GetString(String^ Param_GuidChave, UInt32 Param_LarguraString, [Out] String^% Param_Out_Valor)
+CarenResult CarenMFAttributes::GetString(String^ Param_GuidChave, UInt32 Param_LagruraString, [Out] String^% Param_Out_Valor)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1297,18 +1238,17 @@ CarenResult CarenMFAttributes::GetString(String^ Param_GuidChave, UInt32 Param_L
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas pelo método
-	Utilidades Util;
-	WCHAR *ValorRequisitado = NULL;
-	GUID GuidChave = GUID_NULL;
+	LPWSTR vi_pOutString = NULL;
+	GUID vi_GuidChave = GUID_NULL;
 
-	//Chama o método para obter o guid.
-	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
+	//Chama o método para ciar o guid aparti da String gerenciada.
+	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
 
 	//Inicializa a matriz que vai conter a string
-	ValorRequisitado = new wchar_t[Param_LarguraString];
+	vi_pOutString = CriarMatrizUnidimensional<WCHAR>(Param_LagruraString);
 
-	//Chama o método para obter o valor
-	Hr = PonteiroTrabalho->GetString(GuidChave, ValorRequisitado, Param_LarguraString, NULL);
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetString(const_cast<GUID&>(vi_GuidChave), vi_pOutString, Param_LagruraString, NULL);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -1326,15 +1266,11 @@ CarenResult CarenMFAttributes::GetString(String^ Param_GuidChave, UInt32 Param_L
 	}
 
 	//Define o valor de retorno para o usuário.
-	Param_Out_Valor = gcnew String(ValorRequisitado);
+	Param_Out_Valor = gcnew String(vi_pOutString);
 
 Done:;
-	//Deleta a string contida aqui
-	if (ValorRequisitado != NULL)
-	{
-		//Deleta o buffer criado para armazenar os dados.
-		delete ValorRequisitado;
-	}
+	//Libera a memória utilizada para alocar os dados para a string nativa.
+	DeletarMatrizUnidimensionalSafe(&vi_pOutString);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1355,15 +1291,14 @@ CarenResult CarenMFAttributes::GetStringLength(String^ Param_GuidChave, [Out] UI
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas pelo método
-	Utilidades Util;
-	UINT32 ValorRequisitado = 0;
-	GUID GuidChave = GUID_NULL;
+	UINT32 vi_OutValue = 0;
+	GUID vi_GuidChave = GUID_NULL;
 
-	//Chama o método para obter o guid.
-	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
+	//Chama o método para ciar o guid aparti da String gerenciada.
+	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
 
-	//Chama o método para obter a largura da string.
-	Hr = PonteiroTrabalho->GetStringLength(GuidChave, &ValorRequisitado);
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetStringLength(const_cast<GUID&>(vi_GuidChave), &vi_OutValue);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -1381,7 +1316,7 @@ CarenResult CarenMFAttributes::GetStringLength(String^ Param_GuidChave, [Out] UI
 	}
 
 	//Define o valor de retorno.
-	Param_Out_Largura = ValorRequisitado;
+	Param_Out_Largura = vi_OutValue;
 
 Done:;
 	//Retorna o resultado.
@@ -1402,15 +1337,14 @@ CarenResult CarenMFAttributes::GetUINT32(String^ Param_GuidChave, [Out] UInt32% 
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas pelo método
-	Utilidades Util;
-	UINT32 ValorRequisitado = 0;
-	GUID GuidChave = GUID_NULL;
+	UINT32 vi_OutValue = 0;
+	GUID vi_GuidChave = GUID_NULL;
 
-	//Chama o método para obter o guid.
-	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
+	//Chama o método para ciar o guid aparti da String gerenciada.
+	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
 
-	//Chama o método para obter o valor
-	Hr = PonteiroTrabalho->GetUINT32(GuidChave, &ValorRequisitado);
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetUINT32(const_cast<GUID&>(vi_GuidChave), &vi_OutValue);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -1428,7 +1362,7 @@ CarenResult CarenMFAttributes::GetUINT32(String^ Param_GuidChave, [Out] UInt32% 
 	}
 
 	//Define o valor de retorno para o usuário.
-	Param_Out_Valor = ValorRequisitado;
+	Param_Out_Valor = vi_OutValue;
 
 Done:;
 	//Retorna o resultado.
@@ -1449,15 +1383,14 @@ CarenResult CarenMFAttributes::GetUINT64(String^ Param_GuidChave, [Out] UInt64% 
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas pelo método
-	Utilidades Util;
-	UINT64 ValorRequisitado = 0;
-	GUID GuidChave = GUID_NULL;
+	UINT64 vi_OutValue = 0;
+	GUID vi_GuidChave = GUID_NULL;
 
-	//Chama o método para obter o guid.
-	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
+	//Chama o método para ciar o guid aparti da String gerenciada.
+	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
 
-	//Chama o método para obter o valor
-	Hr = PonteiroTrabalho->GetUINT64(GuidChave, &ValorRequisitado);
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetUINT64(const_cast<GUID&>(vi_GuidChave), &vi_OutValue);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -1475,7 +1408,7 @@ CarenResult CarenMFAttributes::GetUINT64(String^ Param_GuidChave, [Out] UInt64% 
 	}
 
 	//Define o valor de retorno para o usuário.
-	Param_Out_Valor = ValorRequisitado;
+	Param_Out_Valor = vi_OutValue;
 
 Done:;
 	//Retorna o resultado.
@@ -1499,16 +1432,15 @@ CarenResult CarenMFAttributes::_MFGetAttributeRatio(String^ Param_GuidChave, [Ou
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas pelo método
-	Utilidades Util;
-	UINT32 Valor_Numerador = 0;
-	UINT32 Valor_Denominador = 0;
-	GUID GuidChave = GUID_NULL;
+	UINT32 vi_OutNumerador = 0;
+	UINT32 vi_OutDenominador = 0;
+	GUID vi_GuidChave = GUID_NULL;
 
-	//Chama o método para obter o guid.
-	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
+	//Chama o método para ciar o guid aparti da String gerenciada.
+	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
 
-	//Chama o método para obter os valores.
-	Hr = MFGetAttributeRatio(PonteiroTrabalho, GuidChave, &Valor_Numerador, &Valor_Denominador);
+	//Chama o método para realizar a operação.
+	Hr = MFGetAttributeRatio(PonteiroTrabalho, const_cast<GUID&>(vi_GuidChave), &vi_OutNumerador, &vi_OutDenominador);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -1526,8 +1458,8 @@ CarenResult CarenMFAttributes::_MFGetAttributeRatio(String^ Param_GuidChave, [Ou
 	}
 
 	//Define os valores da razão
-	Param_Out_Numerador = Valor_Numerador;
-	Param_Out_Denominador = Valor_Denominador;
+	Param_Out_Numerador = vi_OutNumerador;
+	Param_Out_Denominador = vi_OutDenominador;
 
 Done:;
 	//Retorna o resultado.
@@ -1550,15 +1482,15 @@ CarenResult CarenMFAttributes::_MFGetAttributeSize(String^ Param_GuidChave, [Out
 
 	//Variaveis utilizadas pelo método
 	Utilidades Util;
-	UINT32 Valor_Largura = 0;
-	UINT32 Valor_Altura = 0;
-	GUID GuidChave = GUID_NULL;
+	UINT32 vi_OutLargura = 0;
+	UINT32 vi_OutAltura = 0;
+	GUID vi_GuidChave = GUID_NULL;
 
-	//Chama o método para obter o guid.
-	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
+	//Chama o método para ciar o guid aparti da String gerenciada.
+	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
 
-	//Chama o método para obter os valores.
-	Hr = MFGetAttributeSize(PonteiroTrabalho, GuidChave, &Valor_Largura, &Valor_Altura);
+	//Chama o método para realizar a operação.
+	Hr = MFGetAttributeSize(PonteiroTrabalho, const_cast<GUID&>(vi_GuidChave), &vi_OutLargura, &vi_OutAltura);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -1576,8 +1508,8 @@ CarenResult CarenMFAttributes::_MFGetAttributeSize(String^ Param_GuidChave, [Out
 	}
 
 	//Define os valores do Size.
-	Param_Out_Largura = Valor_Largura;
-	Param_Out_Altura = Valor_Altura;
+	Param_Out_Largura = vi_OutLargura;
+	Param_Out_Altura = vi_OutAltura;
 
 Done:;
 	//Retorna o resultado.
@@ -1600,26 +1532,16 @@ CarenResult CarenMFAttributes::GetUnknown(String^ Param_GuidChave, String^ Param
 
 	//Variaveis que seram utilizadas pelo método.
 	Utilidades Util;
-	GUID GuidChave = GUID_NULL;
-	GUID GuidInterfaceSolicitada = GUID_NULL;
-	LPVOID pInterfaceRetornada = NULL;
+	GUID vi_GuidChave = GUID_NULL;
+	GUID vi_RIIDInterface = GUID_NULL;
+	LPVOID vi_pOutInterface = NULL;
 
-	//Chama o método para obter os guids.
-	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
-	GuidInterfaceSolicitada = Util.CreateGuidFromString(Param_GuidInterfaceSolicitada);
+	//Chama o método para criar os GUIDs aparti das Strings gerenciadas.
+	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
+	CarenCreateGuidFromStringSafe(Param_GuidInterfaceSolicitada, vi_RIIDInterface);
 
-	//Verifica se os guids foram criados com sucesso
-	if (GuidChave == GUID_NULL || GuidInterfaceSolicitada == GUID_NULL)
-	{
-		//O guid informado não é valido
-		Resultado.AdicionarCodigo(ResultCode::ER_GUID_INVALIDO, false);
-
-		//Sai do método.
-		goto Done;
-	}
-
-	//Chama o método para obter a interface.
-	Hr = PonteiroTrabalho->GetUnknown(GuidChave, GuidInterfaceSolicitada, &pInterfaceRetornada);
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetUnknown(const_cast<GUID&>(vi_GuidChave), const_cast<IID&>(vi_RIIDInterface), &vi_pOutInterface);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -1637,7 +1559,7 @@ CarenResult CarenMFAttributes::GetUnknown(String^ Param_GuidChave, String^ Param
 	}
 
 	//Chama o método para definir o ponteiro desconhecido para a interface.
-	Param_Out_InterfaceDesconhecida->AdicionarPonteiro(pInterfaceRetornada);
+	CarenSetPointerToICarenSafe(reinterpret_cast<IUnknown*>(vi_pOutInterface), Param_Out_InterfaceDesconhecida, true);
 
 Done:;
 	//Retorna o resultado.
@@ -1655,7 +1577,7 @@ CarenResult CarenMFAttributes::LockStore()
 	//Variavel COM
 	ResultadoCOM Hr = E_FAIL;
 
-	//Chama o método que vai bloquear o armazenamento de atributos para outros threads.
+	//Chama o método para realizar a operação.
 	Hr = PonteiroTrabalho->LockStore();
 
 	//Processa o resultado da chamada.
@@ -1675,18 +1597,15 @@ CarenResult CarenMFAttributes::LockStore()
 }
 
 
-
-//Métodos (SET) da interface IMFAttributes.
-
-
+//SET METHODS
 
 
 /// <summary>
 /// (SetBlob) - Associa uma (Matriz de Byte) com uma chave.
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
-/// <param name="Param_Buffer">A matriz de bytes a ser associada a chave especificada.</param>
-CarenResult CarenMFAttributes::SetBlob(String^ Param_GuidChave, cli::array<Byte>^ Param_Buffer)
+/// <param name="Param_Buffer">Uma interface (ICarenBuffer) que contém os dados a serem associados a chave especificada.</param>
+CarenResult CarenMFAttributes::SetBlob(String^ Param_GuidChave, ICarenBuffer^ Param_Buffer)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1695,26 +1614,32 @@ CarenResult CarenMFAttributes::SetBlob(String^ Param_GuidChave, cli::array<Byte>
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas pelo método
-	Utilidades Util;
-	BYTE* pBlobData = NULL;
-	UINT32 ArraySize = 0;
-	GUID GuidChave = GUID_NULL;
+	GenPointer vi_BufferBlob = DefaultGenPointer;
+	GUID vi_GuidChave = GUID_NULL;
 
-	//Chama o método para obter o guid.
-	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
+	//Chama o método para ciar o guid aparti da String gerenciada.
+	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
 
-	//Obtém a largura do buffer
-	ArraySize = Param_Buffer->Length;
+	//Tenta recuperar o ponteiro para o buffer.
+	CarenGetPointerFromICarenBufferSafe(Param_Buffer, vi_BufferBlob);
 
-	//Cria o buffer que vai conter os dados.
-	pBlobData = new BYTE[ArraySize];
+	//Verifica se o usuário informou o tamanho do buffer válido
+	if (Param_Buffer->TamanhoValido == 0)
+	{
+		//O tamanho do buffer especificado na interface é inválido.
 
-	//Copia os dados para o buffer
-	Marshal::Copy(Param_Buffer, 0, IntPtr(pBlobData), ArraySize);
+		//Define o erro.
+		Resultado.AdicionarCodigo(ResultCode::ER_CARENBUFFER_TAMANHO_INVALIDO, false);
 
-	//Chama o método para definir o BlobData.
-	//O método vai realizar uma copia da matriz.
-	Hr = PonteiroTrabalho->SetBlob(GuidChave, pBlobData, ArraySize);
+		//Sai do método
+		Sair;
+	}
+
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->SetBlob(
+		const_cast<GUID&>(vi_GuidChave),
+		reinterpret_cast<PBYTE>(vi_BufferBlob.ToPointer()),
+		Param_Buffer->TamanhoValido);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -1731,15 +1656,7 @@ CarenResult CarenMFAttributes::SetBlob(String^ Param_GuidChave, cli::array<Byte>
 		Sair;
 	}
 
-
-
 Done:;
-	//Deleta a matriz se ela for valida.
-	if (pBlobData != NULL)
-	{
-		//Deleta os dados.
-		delete[] pBlobData;
-	}
 
 	//Retorna o resultado
 	return Resultado;
@@ -1759,14 +1676,13 @@ CarenResult CarenMFAttributes::SetDouble(String^ Param_GuidChave, Double Param_V
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas pelo método
-	Utilidades Util;
-	GUID GuidChave = GUID_NULL;
+	GUID vi_GuidChave = GUID_NULL;
 
-	//Chama o método para obter o guid.
-	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
+	//Chama o método para ciar o guid aparti da String gerenciada.
+	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
 
-	//Chama o método para definir o valor
-	Hr = PonteiroTrabalho->SetDouble(GuidChave, Param_Valor);
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->SetDouble(const_cast<GUID&>(vi_GuidChave), Param_Valor);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -1802,12 +1718,15 @@ CarenResult CarenMFAttributes::SetGUID(String^ Param_GuidChave, String^ Param_Va
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
-	Utilidades Util;
-	GUID Chave = Util.CreateGuidFromString(Param_GuidChave);
-	GUID Valor = Util.CreateGuidFromString(Param_Valor);
+	GUID vi_GuidChave = GUID_NULL;
+	GUID vi_GuidValue = GUID_NULL;
 
-	//Chama o método que vai definir o valor do Guid no atributo.
-	Hr = PonteiroTrabalho->SetGUID(Chave, Valor);
+	//Chama o método para converter as Strings gerenciadas para os GUIDs nativos.
+	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
+	CarenCreateGuidFromStringSafe(Param_Valor, vi_GuidValue);
+
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->SetGUID(const_cast<GUID&>(vi_GuidChave), const_cast<GUID&>(vi_GuidValue));
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -1825,9 +1744,6 @@ CarenResult CarenMFAttributes::SetGUID(String^ Param_GuidChave, String^ Param_Va
 	}
 
 Done:;
-	//Limpa os dados.
-	Chave = GUID_NULL;
-	Valor = GUID_NULL;
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1847,31 +1763,18 @@ CarenResult CarenMFAttributes::SetItem(String^ Param_GuidChave, Estruturas::CA_P
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variariveis utilizadas no método
-	Utilidades Util;
 	PropVariantManager UtilVariant = PropVariantManager();
-	GUID GuidChave = GUID_NULL;
-	LPPROPVARIANT vi_PropVar = Nulo;
+	GUID vi_GuidChave = GUID_NULL;
+	LPPROPVARIANT vi_Propvar = Nulo;
 
-	//Chama o método para obter o guid.
-	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
+	//Chama o método para ciar o guid aparti da String gerenciada.
+	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
 
 	//Converte a PropVariant gerenciada para a nativa.
-	vi_PropVar = static_cast<LPPROPVARIANT>(UtilVariant.ConverterPropVariantManaged_ToUnmanaged(Param_PropVariantValor));
+	CarenConvertPropvariantToNativeSafe(Param_PropVariantValor, vi_Propvar);
 
-	//Verifica se não ocorreu um erro na conversão.
-	if (!ObjetoValido(vi_PropVar))
-	{
-		//Falhou ao converter a propvariant.
-
-		//Define falha.
-		Resultado.AdicionarCodigo(ResultCode::ER_CONVERSAO_PROPVARIANT, false);
-
-		//Sai do método
-		Sair;
-	}
-
-	//Chama o método para definir o valor.
-	Hr = PonteiroTrabalho->SetItem(GuidChave, const_cast<PROPVARIANT&>(*vi_PropVar));
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->SetItem(const_cast<GUID&>(vi_GuidChave), const_cast<PROPVARIANT&>(*vi_Propvar));
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -1890,7 +1793,7 @@ CarenResult CarenMFAttributes::SetItem(String^ Param_GuidChave, Estruturas::CA_P
 
 Done:;
 	//Libera a memória utilizada pela propvariant.
-	DeletarPropVariant(&vi_PropVar);
+	DeletarPropVariantSafe(&vi_Propvar);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1911,22 +1814,17 @@ CarenResult CarenMFAttributes::SetString(String^ Param_GuidChave, String^ Param_
 
 	//Variaveis utilizadas pelo método.
 	Utilidades Util;
-	GUID GuidChave = GUID_NULL;
-	LPCWSTR wCharData = NULL;
-	char* DadosConvertidos = NULL;
+	GUID vi_GuidChave = GUID_NULL;
+	LPWSTR vi_pBufferValor = Nulo;
 
-	//Chama o método para obter o guid.
-	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
+	//Chama o método para ciar o guid aparti da String gerenciada.
+	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
 
-	//Converte a string
-	DadosConvertidos = Util.ConverterStringToChar(Param_Valor);
+	//Chama o método para converter a string gerenciada em nativa.
+	vi_pBufferValor = Util.ConverterStringToWCHAR(Param_Valor);
 
-	//Converte o char para um WCHAR
-	wCharData = Util.ConverterConstCharToConstWCHAR(DadosConvertidos);
-
-	//Chama o método para definir o valor
-	//O método vai criar uma copia da string.
-	Hr = PonteiroTrabalho->SetString(GuidChave, wCharData);
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->SetString(const_cast<GUID&>(vi_GuidChave), vi_pBufferValor);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -1944,17 +1842,8 @@ CarenResult CarenMFAttributes::SetString(String^ Param_GuidChave, String^ Param_
 	}
 
 Done:;
-	//Deleta as strings.
-	if (DadosConvertidos != NULL)
-	{
-		//Deleta a memoria para os dados.
-		delete DadosConvertidos;
-	}
-	if (wCharData != NULL)
-	{
-		//Deleta a memoria para os dados.
-		delete wCharData;
-	}
+	//Libera a memória utilizada para alocar a string.
+	DeletarStringAllocatedSafe(&vi_pBufferValor);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1974,14 +1863,13 @@ CarenResult CarenMFAttributes::SetUINT32(String^ Param_GuidChave, UInt32 Param_V
 	HRESULT Hr = E_FAIL;
 
 	//Variaveis utilizadas pelo método.
-	Utilidades Util;
-	GUID GuidChave = GUID_NULL;
+	GUID vi_GuidChave = GUID_NULL;
 
-	//Chama o método para obter o guid.
-	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
+	//Chama o método para ciar o guid aparti da String gerenciada.
+	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
 
-	//Chama o método para definir o valor
-	Hr = PonteiroTrabalho->SetUINT32(GuidChave, Param_Valor);
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->SetUINT32(const_cast<GUID&>(vi_GuidChave), Param_Valor);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -2017,14 +1905,13 @@ CarenResult CarenMFAttributes::SetUINT64(String^ Param_GuidChave, UInt64 Param_V
 	HRESULT Hr = E_FAIL;
 
 	//Variaveis utilizadas pelo método.
-	Utilidades Util;
-	GUID GuidChave = GUID_NULL;
+	GUID vi_GuidChave = GUID_NULL;
 
-	//Chama o método para obter o guid.
-	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
+	//Chama o método para ciar o guid aparti da String gerenciada.
+	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
 
-	//Chama o método para definir o valor
-	Hr = PonteiroTrabalho->SetUINT64(GuidChave, Param_Valor);
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->SetUINT64(const_cast<GUID&>(vi_GuidChave), Param_Valor);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -2063,14 +1950,13 @@ CarenResult CarenMFAttributes::_MFSetAttributeRatio(String^ Param_GuidChave, UIn
 	HRESULT Hr = E_FAIL;
 
 	//Variaveis utilizadas pelo método.
-	Utilidades Util;
-	GUID GuidChave = GUID_NULL;
+	GUID vi_GuidChave = GUID_NULL;
 
-	//Chama o método para obter o guid.
-	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
+	//Chama o método para ciar o guid aparti da String gerenciada.
+	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
 
-	//Chama o método que vai definir os valores do Ratio.
-	Hr = MFSetAttributeRatio(PonteiroTrabalho, GuidChave, Param_Numerador, Param_Denominador);
+	//Chama o método para realizar a operação.
+	Hr = MFSetAttributeRatio(PonteiroTrabalho, const_cast<GUID&>(vi_GuidChave), Param_Numerador, Param_Denominador);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -2109,14 +1995,13 @@ CarenResult CarenMFAttributes::_MFSetAttributeSize(String^ Param_GuidChave, UInt
 	HRESULT Hr = E_FAIL;
 
 	//Variaveis utilizadas pelo método.
-	Utilidades Util;
-	GUID GuidChave = GUID_NULL;
+	GUID vi_GuidChave = GUID_NULL;
 
-	//Chama o método para obter o guid.
-	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
+	//Chama o método para ciar o guid aparti da String gerenciada.
+	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
 
-	//Chama o método que vai definir os valores de altura e largura.
-	Hr = MFSetAttributeSize(PonteiroTrabalho, GuidChave, Param_Largura, Param_Altura);
+	//Chama o método para realizar a operação.
+	Hr = MFSetAttributeSize(PonteiroTrabalho, const_cast<GUID&>(vi_GuidChave), Param_Largura, Param_Altura);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -2153,30 +2038,17 @@ CarenResult CarenMFAttributes::SetUnknown(String^ Param_GuidChave, ICaren^ Param
 
 	//Variaveis utilizadas pelo método.
 	Utilidades Util;
-	GUID GuidChave = GUID_NULL;
-	LPVOID pNativeInterfaceDesconhecida = NULL;
+	GUID vi_GuidChave = GUID_NULL;
+	LPVOID vi_pInterfaceSet = NULL;
 
-	//Chama o método para obter o guid.
-	GuidChave = Util.CreateGuidFromString(Param_GuidChave);
+	//Chama o método para ciar o guid aparti da String gerenciada.
+	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
 
-	//Chama o método para obter a interface desconhecida a ser adicionada.
-	Resultado = Param_InterfaceDesconhecida->RecuperarPonteiro(&pNativeInterfaceDesconhecida);
+	//Chama o método para tentar recuperar a interface.
+	CarenGetPointerFromICarenSafe(Param_InterfaceDesconhecida, vi_pInterfaceSet);
 
-	//Verifica se obteve com sucesso o ponteiro desconhecido
-	if (Resultado.StatusCode == ResultCode::SS_OK)
-	{
-		//Deixa o método continuar.
-	}
-	else
-	{
-		//Falhou ao obter o ponteiro. O método já define o erro ocorrido.
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Chama o método para definir o ponteiro desconhecido nos atributos.
-	Hr = PonteiroTrabalho->SetUnknown(GuidChave, (IUnknown*)pNativeInterfaceDesconhecida);
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->SetUnknown(const_cast<GUID&>(vi_GuidChave), reinterpret_cast<IUnknown*>(vi_pInterfaceSet));
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -2210,7 +2082,7 @@ CarenResult CarenMFAttributes::UnlockStore()
 	//Variavel COM
 	HRESULT Hr = E_FAIL;
 
-	//Chama o método para desbloquear o armazenado.
+	//Chama o método para realizar a operação.
 	Hr = PonteiroTrabalho->UnlockStore();
 
 	//Processa o resultado da chamada.

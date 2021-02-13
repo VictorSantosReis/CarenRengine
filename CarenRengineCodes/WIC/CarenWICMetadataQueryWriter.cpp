@@ -504,7 +504,7 @@ CA_PROPVARIANT^ Param_Valor)
 
 Done:;
 	//Libera a propVariant.
-	DeletarPropVariant(&vi_PropVar);
+	DeletarPropVariantSafe(&vi_PropVar);
 
 	//Libera a memória utilizada pela string
 	DeletarStringAllocatedSafe(&pNome);
@@ -726,7 +726,7 @@ CarenResult CarenWICMetadataQueryWriter::GetMetadataByName(
 
 Done:;
 	//Libera a propvariant
-	DeletarPropVariant(&vi_OutPropVar);
+	DeletarPropVariantSafe(&vi_OutPropVar);
 
 	//Libera a memória utilizada pela string
 	DeletarStringAllocatedSafe(&pNome);

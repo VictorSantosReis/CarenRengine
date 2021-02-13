@@ -659,7 +659,7 @@ CarenResult CarenMFMediaEventGenerator::InserirEventoFila(Enumeracoes::CA_MediaE
 
 Done:;
 	//Libera a PropVariant
-	DeletarPropVariant(&vi_PropVar);
+	DeletarPropVariantSafe(&vi_PropVar);
 
 	//Retorna o resultado da operação.
 	return Resultado;

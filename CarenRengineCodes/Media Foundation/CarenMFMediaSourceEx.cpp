@@ -721,7 +721,7 @@ CarenResult CarenMFMediaSourceEx::Start(ICarenMFPresentationDescriptor^ Param_De
 
 Done:;
 	//Libera a PropVariant
-	DeletarPropVariant(&vi_PropVar);
+	DeletarPropVariantSafe(&vi_PropVar);
 
 	//Retorna o resultado
 	return Resultado;
@@ -1095,7 +1095,7 @@ CarenResult CarenMFMediaSourceEx::InserirEventoFila(Enumeracoes::CA_MediaEventTy
 
 Done:;
 	//Libera a PropVariant
-	DeletarPropVariant(&vi_PropVar);
+	DeletarPropVariantSafe(&vi_PropVar);
 
 	//Retorna o resultado da operação.
 	return Resultado;

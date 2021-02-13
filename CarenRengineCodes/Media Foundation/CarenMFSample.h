@@ -563,8 +563,8 @@ public:
 	/// (SetBlob) - Associa uma (Matriz de Byte) com uma chave.
 	/// </summary>
 	/// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
-	/// <param name="Param_Buffer">A matriz de bytes a ser associada a chave especificada.</param>
-	virtual CarenResult SetBlob(String^ Param_GuidChave, cli::array<Byte>^ Param_Buffer);
+	/// <param name="Param_Buffer">Uma interface (ICarenBuffer) que contém os dados a serem associados a chave especificada.</param>
+	virtual CarenResult SetBlob(String^ Param_GuidChave, ICarenBuffer^ Param_Buffer);
 
 
 	/// <summary>

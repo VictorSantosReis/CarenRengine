@@ -39,8 +39,11 @@ using namespace CarenRengine::SDKBase::Estruturas;
 //Typedef que tenta recuperar o ponteiro nativo para o buffer na interface (ICarenBufer). Pula para o label 'Done' se o buffer não for valido ou ocorrer um erro na recuperação do ponteiro.
 #define CarenGetPointerFromICarenBufferSafe(CarenInterfaceBuffer, OutIntPtrBuffer) if(CarenInterfaceBuffer != nullptr){Resultado = CarenInterfaceBuffer->GetInternalPointer(OutIntPtrBuffer); SairOnError(Resultado);}
 
-#define CarenConvertPropvariantToNativateSafe(PropVariantManaged) 
+//Typedef que tenta converter uma estrutura CA_PROPVARIANT gerenciada para nativa. O método pula para o label 'Done' se houver um erro ao tentar converter a variante.
+#define CarenConvertPropvariantToNativeSafe(PropVariantManaged, OutPropVar) OutPropVar = ConverterPropVariantManaged(PropVariantManaged); if(OutPropVar == Nulo){ Resultado = CarenResult(ResultCode::ER_CONVERSAO_PROPVARIANT, false); goto Done; }
 
+//Typedef que tenta converter uma String gerenciada em uma estrutura (GUID) nativa. Pula para o label 'Done' se não for possivel converter a String.
+#define CarenCreateGuidFromStringSafe(Param_StrGuid, Param_OutGuid) Param_OutGuid = CreateGuidFromString(Param_StrGuid); if(Param_OutGuid == GUID_NULL){ Resultado = CarenResult(ResultCode::ER_GUID_INVALIDO, false); goto Done;  }
 
 //FUNCÕES GLOBAIS.
 
@@ -64,7 +67,7 @@ void IniciarPropVariant(LPPROPVARIANT* Param_PropPointerInit);
 /// Função responsável por deletar completamente os dados e a memória alocada para um objeto PROPVARIANT.
 /// </summary>
 /// <param name="Param_PropPointerInit">Um ponteiro que leva a um endereço onde está um objeto alocado PROPVARIANT.</param>
-void DeletarPropVariant(LPPROPVARIANT* Param_PropPointer);
+void DeletarPropVariantSafe(LPPROPVARIANT* Param_PropPointer);
 
 /// <summary>
 /// Função responsável por iniciar corretamente uma estrutura VARIANT.
@@ -81,9 +84,16 @@ void DeletarVariant(LPVARIANT* Param_VariantPointer);
 /// <summary>
 /// Função responsável por converter uma (CA_PROPVARIANT) gerenciada para sua representação nativa.
 /// </summary>
-/// <param name="Param_VariantManaged"></param>
+/// <param name="Param_VariantManaged">A estrutura gerenciada a ser convertida para a nativa.</param>
 /// <returns></returns>
 LPPROPVARIANT ConverterPropVariantManaged(CA_PROPVARIANT ^ Param_VariantManaged);
+
+/// <summary>
+/// Função responsável por converter uma String gerenciada para um GUID.
+/// </summary>
+/// <param name="Param_StrGuid">A string a ser convertida.</param>
+/// <returns></returns>
+GUID CreateGuidFromString(String ^ Param_StrGuid);
 
 /// <summary>
 /// Função resposável por recuperar o ponteiro nativo de uma interface baseada em ICaren.

@@ -761,7 +761,7 @@ CarenResult CarenMFSourceReaderExtend::GetPresentationAttribute(UInt32 Param_IdF
 
 Done:;
 	//Limpa a PropVariant.
-	DeletarPropVariant(&vi_PropVar);
+	DeletarPropVariantSafe(&vi_PropVar);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -1077,7 +1077,7 @@ CarenResult CarenMFSourceReaderExtend::SetCurrentPosition(Int64 Param_PosiçãoN
 
 Done:;
 	//Limpa a PropVariant
-	DeletarPropVariant(&vi_PropVarPosition);
+	DeletarPropVariantSafe(&vi_PropVarPosition);
 
 	//Retorna o resultado
 	return Resultado;

@@ -83,11 +83,11 @@ void IniciarPropVariant(LPPROPVARIANT* Param_PropPointerInit)
 	memset(*Param_PropPointerInit, 0, sizeof(tagPROPVARIANT));
 }
 
-void DeletarPropVariant(LPPROPVARIANT* Param_PropPointer)
+void DeletarPropVariantSafe(LPPROPVARIANT* Param_PropPointer)
 {
-	//Verifica se o ponteiro para o ponteiro ~e valido.
+	//Verifica se o ponteiro para o ponteiro é valido.
 	if (!ObjetoValido(Param_PropPointer))
-		throw gcnew NullReferenceException("(DeletarPropVariant) - O ponteiro para a PROPVARIANT nativa fornecido era inválido!");
+		goto Done; //O ponteiro não era valido.
 
 	//Verifica se o ponteiro aponta para uma memória que seja válida contendo a estrutura PROPVARIANT.
 	if (!ObjetoValido(*Param_PropPointer))
@@ -147,13 +147,52 @@ Done:;
 LPPROPVARIANT ConverterPropVariantManaged(CA_PROPVARIANT^ Param_VariantManaged)
 {
 	//Variavel a ser retornada.
-	LPPROPVARIANT Resultado = Nulo;
+	LPVOID Resultado = Nulo;
 
 	//Variaveis a serem utilizadas.
-	PropVariantManager 
+	PropVariantManager UtilPropVar = PropVariantManager();
 
+	//Verifica se a estrutura é valida
+	if (!ObjetoGerenciadoValido(Param_VariantManaged))
+		Sair; //A variante gerenciada não é valida.
+
+	//Chama o método para tentar converter a variante.
+	Resultado = UtilPropVar.ConverterPropVariantManaged_ToUnmanaged(Param_VariantManaged);
+
+Done:;
 
 	//Retorna o resultado.
+	return ObjetoValido(Resultado) ? reinterpret_cast<LPPROPVARIANT>(Resultado) : Nulo;
+}
+
+GUID CreateGuidFromString(String^ Param_StrGuid)
+{
+	//Variavel que vai ser retornada.
+	GUID Resultado = GUID_NULL;
+
+	//Varaveis a serem utilizadas.
+	LPWSTR vi_pBufferStrGuid = Nulo;
+
+	//Verifica se a string é valida e contém dados.
+	if (!StringObjetoValido(Param_StrGuid))
+		Sair; //A String não era válida.
+
+	//Converte a string para um buffer nativo.
+	vi_pBufferStrGuid = reinterpret_cast<LPWSTR>(Marshal::StringToCoTaskMemUni(Param_StrGuid).ToPointer());
+
+	//Verifica se é valido os dados convertidos.
+	if (!ObjetoValido(vi_pBufferStrGuid))
+		Sair; //A string não foi convertida com sucesso.
+	
+	//Cria o GUID a parti do buffer nativo.
+	CLSIDFromString(const_cast<LPCWSTR>(vi_pBufferStrGuid), const_cast<LPCLSID>(&Resultado));
+
+Done:;
+	//Libera a memória utilizada pelo buffer que conteve a string.
+	if (ObjetoValido(vi_pBufferStrGuid))
+		Marshal::FreeCoTaskMem(IntPtr(vi_pBufferStrGuid));
+
+	//Retorna o resultado
 	return Resultado;
 }
 

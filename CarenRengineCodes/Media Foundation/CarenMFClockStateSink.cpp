@@ -402,10 +402,7 @@ void CarenMFClockStateSink::Finalizar()
 
 
 
-
-//
-// Métodos da interface proprietaria.
-//
+// Métodos da interface proprietaria (ICarenMFClockStateSink)
 
 
 /// <summary>
@@ -493,9 +490,8 @@ void CarenMFClockStateSink::UnRegisterCallback()
 
 
 
-//
 //Métodos que recebem os eventos da classe nativa(CLN_IMFClockStateSink)
-//
+
 
 void CarenMFClockStateSink::EncaminharEvento_OnClockStart(MFTIME hnsSystemTime, LONGLONG llClockStartOffset)
 {

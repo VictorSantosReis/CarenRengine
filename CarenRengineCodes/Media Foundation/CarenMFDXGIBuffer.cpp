@@ -397,9 +397,11 @@ void CarenMFDXGIBuffer::Finalizar()
 }
 
 
-//
-// Métodos da interface proprietária
-//
+
+
+
+// Métodos da interface proprietária (ICarenMFDXGIBuffer)
+
 
 /// <summary>
 /// Consulta a superfície do Microsoft DirectX Graphics infra-estrutura (DXGI) para uma interface.

@@ -487,27 +487,6 @@ namespace CarenRengine
 		};
 
 		/// <summary>
-		/// Interface responsável por conter métodos que extendem a interface de leitura de mídia.
-		/// </summary>
-		[CategoryAttribute("MF Interface")]
-		[DescriptionAttribute("Extensão")]
-		[Guid("8E3B80BC-2993-4D7D-AAA0-D460B06ACE22")]
-		public interface class ICarenLeitorMidiaExtensões
-		{
-			/// <summary>
-			/// (Extensão) - Método responsável por retornar a quantidade de fluxos na mídia carregada pelo leitor.
-			/// </summary>
-			/// <param name="Param_Out_QuantidadeFluxos">Recebe a quantidade de fluxos na mídia carregada.</param>
-			CarenResult ExRecuperarQuantidadeFluxos(OutParam UInt32% Param_Out_QuantidadeFluxos);
-
-			/// <summary>
-			/// (Extensão) - Método responsável por retornar todos os tipos principais de mídia do arquivo carregado pelo leitor.
-			/// </summary>
-			/// <param name="Param_Out_TiposMidias">Recebe a lista, em ordem, com os tipos principais de mídia no fluxo carregado</param>
-			CarenResult ExRecuperarTiposMidia(OutParam List<Enumeracoes::CA_MAJOR_MEDIA_TYPES>^% Param_Out_TiposMidias);
-		};
-
-		/// <summary>
 		/// (IMFAttributes) - Fornece uma maneira genérica para armazenar pares Chave/Valor em um objeto. As chaves são GUIDs, e os valores podem ser qualquer um dos seguintes tipos de dados: 
 		/// UINT32, UINT64, Double, GUID, Cadeia de caracteres largos, Matriz de Byte.
 		/// </summary>
@@ -717,8 +696,8 @@ namespace CarenRengine
 			/// (SetBlob) - Associa uma (Matriz de Byte) com uma chave.
 			/// </summary>
 			/// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
-			/// <param name="Param_Buffer">A matriz de bytes a ser associada a chave especificada.</param>
-			CarenResult SetBlob(String^ Param_GuidChave, cli::array<Byte>^ Param_Buffer);
+			/// <param name="Param_Buffer">Uma interface (ICarenBuffer) que contém os dados a serem associados a chave especificada.</param>
+			CarenResult SetBlob(String^ Param_GuidChave, ICarenBuffer^ Param_Buffer);
 
 			/// <summary>
 			/// Associa um valor duplo com uma chave.
@@ -2433,7 +2412,7 @@ namespace CarenRengine
 		/// </summary>
 		[CategoryAttribute("MF Interface")]
 		[Guid("A86D1E72-CD70-4602-B35C-DD3A0D5B57C3")]
-		public interface class ICarenMFActivate : ICaren, ICarenMFAttributes
+		public interface class ICarenMFActivate : ICarenMFAttributes
 		{
 			/// <summary>
 			/// Propriedade que define se a classe foi descartada.
@@ -6243,31 +6222,6 @@ namespace CarenRengine
 			CarenResult RemoveStreamConfiguration(UInt64 Param_ullStreamMask);
 		};
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		//NOVAS INTERFACES.
-	
 		/// <summary>
 		/// (IMFByteStreamBuffering ) - Interface responsável por controlar como um fluxo de bytes armazena dados de uma rede.
 		/// Para obter um ponteiro para esta interface, ligue para ICaren::ConsultarInterface no objeto de fluxo byte.

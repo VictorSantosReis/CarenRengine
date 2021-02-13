@@ -720,8 +720,8 @@ CarenResult CarenMFStreamSink::PlaceMarker(Enumeracoes::CA_MFSTREAMSINK_MARKER_T
 
 Done:;
 	//Limpa as PropVariants
-	DeletarPropVariant(&vi_pPropValorAdd);
-	DeletarPropVariant(&vi_pPropDadosAnexoEvento);
+	DeletarPropVariantSafe(&vi_pPropValorAdd);
+	DeletarPropVariantSafe(&vi_pPropDadosAnexoEvento);
 
 	//Retorna o resultado
 	return Resultado;
@@ -1031,7 +1031,7 @@ CarenResult CarenMFStreamSink::InserirEventoFila(Enumeracoes::CA_MediaEventType 
 
 Done:;
 	//Libera a PropVariant
-	DeletarPropVariant(&vi_PropVar);
+	DeletarPropVariantSafe(&vi_PropVar);
 
 	//Retorna o resultado da operação.
 	return Resultado;

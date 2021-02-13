@@ -425,9 +425,8 @@ void CarenMFCollection::Finalizar()
 
 
 
+
 // Métodos da interface ICarenMFCollection
-
-
 
 
 /// <summary>

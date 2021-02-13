@@ -444,9 +444,9 @@ void CarenMFAsyncResult::Finalizar()
 
 
 
-//
+
 //Métodos da interface ICarenMFAsyncResult
-//
+
 
 /// <summary>
 /// (GetObject) - Retorna um objeto associado à operação assíncrona. O tipo de objeto, se houver, depende do método assíncrono que foi chamado.

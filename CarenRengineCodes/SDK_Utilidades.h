@@ -205,12 +205,9 @@ namespace CarenRengine
 				}
 
 			Done:;
-				//Verifica se o OLECHAR é valido e destroi
-				if (DadosGuid != NULL)
-				{
-					//Libera os dados.
+				//Verifica se o OLECHAR é valido e libera a memória utilizada.
+				if (ObjetoValido(DadosGuid))
 					delete[] DadosGuid;
-				}
 
 				//Retorna o resultado
 				return GuidRetorno;
@@ -226,7 +223,7 @@ namespace CarenRengine
 				LPOLESTR DadosConvertidos = NULL;
 
 				//Chama o método para obter uma string a parti do GUID.
-				ResultadoCOM Hr = StringFromCLSID((const IID)Param_Guid, &DadosConvertidos);
+				ResultadoCOM Hr = StringFromCLSID(const_cast<IID&>(Param_Guid), &DadosConvertidos);
 
 				//Verifica se obteve sucesso
 				if (Sucesso(Hr))
@@ -245,6 +242,10 @@ namespace CarenRengine
 				RetornoDados = gcnew String(DadosConvertidos);
 
 			Done:;
+				//Libera a memória utilizada pela String.
+				if (ObjetoValido(DadosConvertidos))
+					CoTaskMemFree(DadosConvertidos);
+
 				//Retorna os dados
 				return RetornoDados;
 			}
@@ -601,72 +602,6 @@ namespace CarenRengine
 
 				//Retorna a estrutura não gerenciada
 				return EstruturaRetorno;
-			}
-
-			//Converte uma enumeração nativa (_MF_ATTRIBUTE_TYPE) para sua correspondência gerenciada(CA_MF_ATTRIBUTE_TYPE).
-			SDKBase::Enumeracoes::CA_MF_ATTRIBUTE_TYPE ConverterMF_ATTRIBUTE_TYPEUnmanagedToManaged(_MF_ATTRIBUTE_TYPE Param_TipoAtributo)
-			{
-				//Variavel que vai retornar.
-				CA_MF_ATTRIBUTE_TYPE Atributo;
-
-				//Abre um switch para verificar o tipo do atributo e definir na variavel de retorno.
-				switch (Param_TipoAtributo)
-				{
-				case MF_ATTRIBUTE_TYPE::MF_ATTRIBUTE_UINT32:
-				{
-					//Define o tipo do atributo.
-					Atributo = CA_MF_ATTRIBUTE_TYPE::UINT32;
-				}
-				break;
-
-				case MF_ATTRIBUTE_TYPE::MF_ATTRIBUTE_UINT64:
-				{
-					//Define o tipo do atributo.
-					Atributo = CA_MF_ATTRIBUTE_TYPE::UINT64;
-				}
-				break;
-
-				case MF_ATTRIBUTE_TYPE::MF_ATTRIBUTE_DOUBLE:
-				{
-					//Define o tipo do atributo.
-					Atributo = CA_MF_ATTRIBUTE_TYPE::DOUBLE;
-				}
-				break;
-
-				case MF_ATTRIBUTE_TYPE::MF_ATTRIBUTE_GUID:
-				{
-					//Define o tipo do atributo.
-					Atributo = CA_MF_ATTRIBUTE_TYPE::GUID;
-				}
-				break;
-
-				case MF_ATTRIBUTE_TYPE::MF_ATTRIBUTE_STRING:
-				{
-					//Define o tipo do atributo.
-					Atributo = CA_MF_ATTRIBUTE_TYPE::STRING;
-				}
-				break;
-
-				case MF_ATTRIBUTE_TYPE::MF_ATTRIBUTE_BLOB:
-				{
-					//Define o tipo do atributo.
-					Atributo = CA_MF_ATTRIBUTE_TYPE::BLOB;
-				}
-				break;
-
-				case MF_ATTRIBUTE_TYPE::MF_ATTRIBUTE_IUNKNOWN:
-				{
-					//Define o tipo do atributo.
-					Atributo = CA_MF_ATTRIBUTE_TYPE::IUNKNOWN;
-				}
-				break;
-
-				default:
-					break;
-				}
-
-				//Retorna o resultado
-				return Atributo;
 			}
 
 			//Converte um GUID que define o subtipo de um midia principal para a enumeração gerenciada(CA_MEDIA_SUBTYPES).

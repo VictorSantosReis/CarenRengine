@@ -484,7 +484,7 @@ CarenResult CarenMFMetadata::GetAllLanguages([Out] CA_PROPVARIANT^% Param_Out_Li
 
 Done:;
 	//Libera a propvariant
-	DeletarPropVariant(&vi_OutPropVar);
+	DeletarPropVariantSafe(&vi_OutPropVar);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -533,7 +533,7 @@ CarenResult CarenMFMetadata::GetAllPropertyNames([Out] CA_PROPVARIANT^% Param_Ou
 
 Done:;
 	//Libera a propvariant
-	DeletarPropVariant(&vi_OutPropVar);
+	DeletarPropVariantSafe(&vi_OutPropVar);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -635,7 +635,7 @@ CarenResult CarenMFMetadata::GetProperty(String^ Param_NomePropriedade, [Out] CA
 Done:;
 	//Libera os dados.
 	DeletarStringAllocatedSafe(&vi_NomeProp);
-	DeletarPropVariant(&vi_OutPropVar);
+	DeletarPropVariantSafe(&vi_OutPropVar);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -744,7 +744,7 @@ CarenResult CarenMFMetadata::SetProperty(String^ Param_NomePropriedade, CA_PROPV
 Done:;
 	//Libera os dados.
 	DeletarStringAllocatedSafe(&vi_NomeProp);
-	DeletarPropVariant(&vi_PropVar);
+	DeletarPropVariantSafe(&vi_PropVar);
 
 	//Retorna o resultado.
 	return Resultado;

@@ -512,9 +512,11 @@ void CarenMFByteStream::Finalizar()
 }
 
 
-//
+
+
+
 // Métodos da interface proprietária(ICarenMFByteStream)
-//
+
 
 /// <summary>
 /// (BeginRead) - Inicia uma operação de leitura assíncrona do fluxo.

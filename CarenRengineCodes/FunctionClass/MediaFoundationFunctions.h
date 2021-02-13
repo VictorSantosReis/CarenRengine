@@ -43,7 +43,7 @@ public:
 
 	//Variaveis
 public:
-	INT64 Var_Glob_FrequencyDevice = 0;
+	UINT64 Var_Glob_FrequencyDevice = 0;
 
 	//Métodos da Media Foundation.
 public:

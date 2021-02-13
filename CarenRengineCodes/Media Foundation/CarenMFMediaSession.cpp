@@ -882,7 +882,7 @@ Done:;
 
  Done:;
 	 //Libera a propvariant
-	 DeletarPropVariant(&vi_PropVar);
+	 DeletarPropVariantSafe(&vi_PropVar);
 
 	 //Retorna o resultado.
 	 return Resultado;
@@ -1187,7 +1187,7 @@ Done:;
 
 Done:;
 	//Libera a PropVariant
-	DeletarPropVariant(&vi_PropVar);
+	DeletarPropVariantSafe(&vi_PropVar);
 
 	//Retorna o resultado da operação.
 	return Resultado;

@@ -393,6 +393,8 @@ void CarenMFFinalizableMediaSink::Finalizar()
 
 
 
+
+
 // Métodos da interface proprietária(ICarenMFFinalizableMediaSink)
 
 
@@ -485,6 +487,7 @@ Done:;
 	//Retorna o resultado.
 	return Resultado;
 }
+
 
 
 

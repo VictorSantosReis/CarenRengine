@@ -399,9 +399,9 @@ void CarenMFAsyncCallback::Finalizar()
 
 
 
-//
+
 //Métodos da interface ICarenCarenAsyncCallback
-//
+
 
 /// <summary>
 /// Fornece informações de configuração para o segmento de expedição para um retorno de chamada.
@@ -480,9 +480,9 @@ void CarenMFAsyncCallback::UnRegisterCallback()
 }
 
 
-//
+
 // Métodos de encaminhamento dos eventos
-//
+
 
 /// <summary>
 /// Método responsável por chamar o evento gerenciado para notificar o usuário sobre uma chamada para o método (GetParameters) na classe nativa.

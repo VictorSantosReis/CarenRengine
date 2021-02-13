@@ -393,6 +393,8 @@ void CarenMFContentProtectionManager::Finalizar()
 
 
 
+
+
 // Métodos da interface proprietária(ICarenMFContentProtectionManager)
 
 

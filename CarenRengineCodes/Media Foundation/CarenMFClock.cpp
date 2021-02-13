@@ -399,9 +399,10 @@ void CarenMFClock::Finalizar()
 
 
 
-//
-// Métodos da interface proprietaria
-//
+
+
+// Métodos da interface proprietaria (ICarenMFClock)
+
 
 /// <summary>
 /// Recupera as características do relógio.

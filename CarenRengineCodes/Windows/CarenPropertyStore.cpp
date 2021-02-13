@@ -602,7 +602,7 @@ CarenResult CarenPropertyStore::GetValue(Estruturas::CA_PROPERTYKEY^% Param_Prop
 
 Done:;
 	//Libera a PropVariant.
-	DeletarPropVariant(&vi_OutPropVar);
+	DeletarPropVariantSafe(&vi_OutPropVar);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -666,7 +666,7 @@ CarenResult CarenPropertyStore::DefinirValor(Estruturas::CA_PROPERTYKEY^% Param_
 
 Done:;
 	//Libera a PropVariant.
-	DeletarPropVariant(&vi_PropValor);
+	DeletarPropVariantSafe(&vi_PropValor);
 
 	//Retorna o resultado.
 	return Resultado;

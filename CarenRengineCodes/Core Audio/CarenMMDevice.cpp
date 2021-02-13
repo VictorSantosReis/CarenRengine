@@ -472,7 +472,7 @@ CarenResult CarenMMDevice::Activate(String^ Param_GuidInterface, Enumeracoes::CA
 
 Done:;
 	//Libera a propvariant inicializada
-	DeletarPropVariant(&vi_pPropVar);
+	DeletarPropVariantSafe(&vi_pPropVar);
 
 	//Retorna o resultado.
 	return Resultado;

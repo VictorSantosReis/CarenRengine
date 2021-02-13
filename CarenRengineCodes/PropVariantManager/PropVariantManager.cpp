@@ -1537,7 +1537,7 @@ PVOID PropVariantManager::ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT
 
 	case VT_BSTR_BLOB:
 		//Libera a propvariant criada anteriormente.
-		DeletarPropVariant(&vi_Resultado);
+		DeletarPropVariantSafe(&vi_Resultado);
 
 		//Chama uma exceção porque o tipo não é suportado.
 		throw gcnew Exception("O tipo de variante (VT_BSTR_BLOB) não é valido porque é apenas de uso interno pelo sistema operacional.");
@@ -1545,7 +1545,7 @@ PVOID PropVariantManager::ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT
 
 	case VT_VOID:
 		//Libera a propvariant criada anteriormente.
-		DeletarPropVariant(&vi_Resultado);
+		DeletarPropVariantSafe(&vi_Resultado);
 
 		//Chama uma exceção porque o tipo não é suportado.
 		throw gcnew Exception("O tipo de variante (VT_VOID) não é suportado!");
@@ -1553,7 +1553,7 @@ PVOID PropVariantManager::ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT
 
 	case VT_RECORD:
 		//Libera a propvariant criada anteriormente.
-		DeletarPropVariant(&vi_Resultado);
+		DeletarPropVariantSafe(&vi_Resultado);
 
 		//Chama uma exceção porque o tipo não é suportado.
 		throw gcnew Exception("O tipo de variante (VT_RECORD) não é suportado atualmente. A documentação nativa não cita esse membro.");
@@ -1561,7 +1561,7 @@ PVOID PropVariantManager::ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT
 
 	case VT_VARIANT:
 		//Libera a propvariant criada anteriormente.
-		DeletarPropVariant(&vi_Resultado);
+		DeletarPropVariantSafe(&vi_Resultado);
 
 		//Chama uma exceção porque o tipo não é suportado.
 		throw gcnew Exception("O tipo de variante (VT_VARIANT) não é suportado puro. Esse valor deve ser usado com (VT_VECTOR ou VT_BYREF) com operador OR.");
@@ -1569,7 +1569,7 @@ PVOID PropVariantManager::ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT
 
 	case VT_PTR:
 		//Libera a propvariant criada anteriormente.
-		DeletarPropVariant(&vi_Resultado);
+		DeletarPropVariantSafe(&vi_Resultado);
 
 		//Chama uma exceção porque o tipo não é suportado.
 		throw gcnew Exception("O tipo de variante (VT_PTR) não é suportado!");
@@ -1577,7 +1577,7 @@ PVOID PropVariantManager::ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT
 
 	case VT_INT_PTR:
 		//Libera a propvariant criada anteriormente.
-		DeletarPropVariant(&vi_Resultado);
+		DeletarPropVariantSafe(&vi_Resultado);
 
 		//Chama uma exceção porque o tipo não é suportado.
 		throw gcnew Exception("O tipo de variante (VT_INT_PTR) não é suportado!");
@@ -1585,7 +1585,7 @@ PVOID PropVariantManager::ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT
 
 	case VT_UINT_PTR:
 		//Libera a propvariant criada anteriormente.
-		DeletarPropVariant(&vi_Resultado);
+		DeletarPropVariantSafe(&vi_Resultado);
 
 		//Chama uma exceção porque o tipo não é suportado.
 		throw gcnew Exception("O tipo de variante (VT_UINT_PTR) não é suportado!");
@@ -1593,7 +1593,7 @@ PVOID PropVariantManager::ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT
 
 	case VT_CARRAY:
 		//Libera a propvariant criada anteriormente.
-		DeletarPropVariant(&vi_Resultado);
+		DeletarPropVariantSafe(&vi_Resultado);
 
 		//Chama uma exceção porque o tipo não é suportado.
 		throw gcnew Exception("O tipo de variante (VT_CARRAY) não é suportado!");
@@ -1603,7 +1603,7 @@ PVOID PropVariantManager::ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT
 		//TIPO DESCONHECIDO!!
 
 		//Libera a propvariant criada anteriormente.
-		DeletarPropVariant(&vi_Resultado);
+		DeletarPropVariantSafe(&vi_Resultado);
 		break;
 	}
 

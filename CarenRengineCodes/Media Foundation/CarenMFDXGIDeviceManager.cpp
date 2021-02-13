@@ -425,11 +425,9 @@ void CarenMFDXGIDeviceManager::Finalizar()
 
 
 
-//
-// Métodos da interface proprietaria
-//
 
 
+// Métodos da interface proprietaria (ICarenMFDXGIDeviceManager)
 
 
 /// <summary>

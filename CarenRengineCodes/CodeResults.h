@@ -78,6 +78,11 @@ namespace CarenRengine
 			ER_CONVERSAO_TIPO_NAO_SUPORTADO,
 
 			/// <summary>
+			/// Indica que o tamanho do buffer é invalido. Esse valor remete as propriedades que indicam (Tamanho, TamanhoValido) do buffer retido pela interface ICarenBuffer.
+			/// </summary>
+			ER_CARENBUFFER_TAMANHO_INVALIDO,
+
+			/// <summary>
 			/// Indica que a largura(Total) a ser escrito em um buffer é invalida. O valor deve ser diferente de 0 e menor ou igual ao tamanho maximo do buffer.
 			/// </summary>
 			ER_CARENBUFFER_LARGURA_ESCRITA_INVALIDA,
@@ -8352,6 +8357,10 @@ namespace CarenRengine
 					Resultado = E_FAIL;
 					break;
 				case CarenRengine::CarenCodesStatus::ResultCode::ER_CONVERSAO_ESTRUTURA:
+					//Define o código HRESULT referente ao ResultCode informado.
+					Resultado = E_FAIL;
+					break;
+				case CarenRengine::CarenCodesStatus::ResultCode::ER_CARENBUFFER_TAMANHO_INVALIDO:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = E_FAIL;
 					break;

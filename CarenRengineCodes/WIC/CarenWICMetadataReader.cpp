@@ -632,9 +632,9 @@ CA_PROPVARIANT^ Param_Id,
 
 Done:;
 	//Libera a memória utilizada pelas propvariants.
-	DeletarPropVariant(&vi_pVariantSchema);
-	DeletarPropVariant(&vi_pVariantId);
-	DeletarPropVariant(&vi_OutVariantValor);
+	DeletarPropVariantSafe(&vi_pVariantSchema);
+	DeletarPropVariantSafe(&vi_pVariantId);
+	DeletarPropVariantSafe(&vi_OutVariantValor);
 
 	//Retorna o resultado.
 	return Resultado;
@@ -695,9 +695,9 @@ UInt32 Param_Index,
 
 Done:;
 	//Libera a memória utilizada pelas variants.
-	DeletarPropVariant(&vi_OutVariantSchema);
-	DeletarPropVariant(&vi_OutVariantId);
-	DeletarPropVariant(&vi_OutVariantValor);
+	DeletarPropVariantSafe(&vi_OutVariantSchema);
+	DeletarPropVariantSafe(&vi_OutVariantId);
+	DeletarPropVariantSafe(&vi_OutVariantValor);
 
 	//Retorna o resultado.
 	return Resultado;

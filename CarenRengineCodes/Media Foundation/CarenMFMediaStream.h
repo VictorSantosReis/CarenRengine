@@ -34,7 +34,7 @@ using namespace CarenRengine::SDKBase::Estruturas;
 using namespace CarenRengine::SDKUtilidades;
 
 /// <summary>
-/// (Concluido - Fase de Testes) - Classe que representa um fluxo de mídia dentro de uma fonte de midia.
+/// Classe responsável por representar um fluxo de mídia dentro de uma fonte de midia.
 /// </summary>
 public ref class CarenMFMediaStream :public ICarenMFMediaStream
 {
@@ -247,13 +247,13 @@ public:
 	/// <summary>
 	/// (GetMediaSource) - Recupera um ponteiro para a fonte de mídia que criou este fluxo de mídia.
 	/// </summary>
-	/// <param name="Param_Out_FonteMidia">Recebe a fonte de mídia responsável por esse fluxo.</param>
+	/// <param name="Param_Out_FonteMidia">Recebe a fonte de mídia responsável por esse fluxo. O usuário é responsável por inicializar a interface antes de chamar este método.</param>
 	virtual CarenResult GetMediaSource([Out] ICarenMFMediaSource^% Param_Out_FonteMidia);
 
 	/// <summary>
 	/// (GetStreamDescriptor) - Recupera um descritor de stream para este fluxo de mídia.
 	/// </summary>
-	/// <param name="Param_Out_DescritorFluxo">Recebe o descritor deste fluxo.</param>
+	/// <param name="Param_Out_DescritorFluxo">Recebe o descritor deste fluxo. O usuário é responsável por inicializar a interface antes de chamar este método.</param>
 	virtual CarenResult GetStreamDescriptor([Out] ICarenMFStreamDescriptor^% Param_Out_DescritorFluxo);
 
 	/// <summary>

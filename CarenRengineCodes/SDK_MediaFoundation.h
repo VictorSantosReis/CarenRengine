@@ -2799,13 +2799,13 @@ namespace CarenRengine
 			/// <summary>
 			/// (GetMediaSource) - Recupera um ponteiro para a fonte de mídia que criou este fluxo de mídia.
 			/// </summary>
-			/// <param name="Param_Out_FonteMidia">Recebe a fonte de mídia responsável por esse fluxo.</param>
+			/// <param name="Param_Out_FonteMidia">Recebe a fonte de mídia responsável por esse fluxo. O usuário é responsável por inicializar a interface antes de chamar este método.</param>
 			CarenResult GetMediaSource(OutParam ICarenMFMediaSource^% Param_Out_FonteMidia);
 
 			/// <summary>
 			/// (GetStreamDescriptor) - Recupera um descritor de stream para este fluxo de mídia.
 			/// </summary>
-			/// <param name="Param_Out_DescritorFluxo">Recebe o descritor deste fluxo.</param>
+			/// <param name="Param_Out_DescritorFluxo">Recebe o descritor deste fluxo. O usuário é responsável por inicializar a interface antes de chamar este método.</param>
 			CarenResult GetStreamDescriptor(OutParam ICarenMFStreamDescriptor^% Param_Out_DescritorFluxo);
 
 			/// <summary>

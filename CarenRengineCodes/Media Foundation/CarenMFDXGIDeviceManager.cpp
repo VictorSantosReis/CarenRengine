@@ -25,12 +25,12 @@ CarenMFDXGIDeviceManager::~CarenMFDXGIDeviceManager()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+
 //Construtores
 CarenMFDXGIDeviceManager::CarenMFDXGIDeviceManager()
 {
 	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
-
 CarenMFDXGIDeviceManager::CarenMFDXGIDeviceManager(OutParam UInt32% Param_Out_ResetToken)
 {
 	//Variavel que vai conter o resultado COM.
@@ -58,9 +58,9 @@ CarenMFDXGIDeviceManager::CarenMFDXGIDeviceManager(OutParam UInt32% Param_Out_Re
 	Param_Out_ResetToken = vi_OutResetToken;
 }
 
-//
+
 // Métodos da interface ICaren
-//
+
 
 /// <summary>
 /// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 
@@ -438,20 +438,20 @@ void CarenMFDXGIDeviceManager::Finalizar()
 CarenResult CarenMFDXGIDeviceManager::CloseDeviceHandle(IntPtr Param_Identificador)
 {
 	//Variavel que vai ser retornada.
-	CarenResult Resultado = CarenResult(ResultCode::ER_E_NOINTERFACE, false);
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
 
 	//Variavel COM
 	ResultadoCOM Hr = E_FAIL;
 
 	//Vaiaveis utilizadas no método
 	Utilidades Util;
-	HANDLE HandClose = NULL;
+	HANDLE vi_HandleDeviceClose = NULL;
 
 	//Converte o parametro.
-	HandClose = Util.ConverterIntPtrToHWND(Param_Identificador);
+	vi_HandleDeviceClose = Util.ConverterIntPtrToHWND(Param_Identificador);
 
-	//Chama o método para finalizar a handle
-	Hr = PonteiroTrabalho->CloseDeviceHandle(HandClose);
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->CloseDeviceHandle(vi_HandleDeviceClose);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -483,36 +483,25 @@ Done:;
 CarenResult CarenMFDXGIDeviceManager::GetVideoService(IntPtr Param_HandleDirect3D, String^ Param_IIDInterface, ICaren^ Param_Out_InterfaceSolicitada)
 {
 	//Variavel que vai ser retornada.
-	CarenResult Resultado = CarenResult(ResultCode::ER_E_NOINTERFACE, false);
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
 
 	//Variavel COM
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
 	Utilidades Util;
-	HANDLE HandleDirect3D = 0;
-	GUID GuidInterfaceSolicitada = GUID_NULL;
-	void* pInterface = NULL;
-	ICaren^ InterfaceSolicitada = nullptr;
+	HANDLE vi_HandleDirect3D = Nulo;
+	GUID vi_GuidInterface = GUID_NULL;
+	IUnknown* vi_pOutInterface = Nulo;
 
 	//Obtém a handle do Direct3D
-	HandleDirect3D = Util.ConverterIntPtrToHWND(Param_HandleDirect3D);
+	vi_HandleDirect3D = Util.ConverterIntPtrToHWND(Param_HandleDirect3D);
 
 	//Obtém o guid da interface solicitada
-	GuidInterfaceSolicitada = Util.CreateGuidFromString(Param_IIDInterface);
+	CarenCreateGuidFromStringSafe(Param_IIDInterface, vi_GuidInterface);
 
-	//Verifica e o Guid é valido
-	if (GuidInterfaceSolicitada == GUID_NULL)
-	{
-		//O guid informado é invalido.
-		Resultado.AdicionarCodigo(ResultCode::ER_GUID_INVALIDO, false);
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Consulta o serviço
-	Hr = PonteiroTrabalho->GetVideoService(HandleDirect3D, GuidInterfaceSolicitada, &pInterface);
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetVideoService(vi_HandleDirect3D, vi_GuidInterface, reinterpret_cast<LPVOID*>(&vi_pOutInterface));
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -528,6 +517,9 @@ CarenResult CarenMFDXGIDeviceManager::GetVideoService(IntPtr Param_HandleDirect3
 		//Sai do método
 		Sair;
 	}
+
+	//Define o ponteiro na interface de saida.
+	CarenSetPointerToICarenSafe(vi_pOutInterface, Param_Out_InterfaceSolicitada, true);
 
 Done:;
 	//retorna o resultado
@@ -545,26 +537,29 @@ Done:;
 CarenResult CarenMFDXGIDeviceManager::LockDevice(IntPtr Param_Handle, Boolean Param_AguardarBloqueio, String^ Param_IIDInterface, ICaren^ Param_Out_InterfaceSolicitada)
 {
 	//Variavel que vai ser retornada.
-	CarenResult Resultado = CarenResult(ResultCode::ER_E_NOINTERFACE, false);
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
 
 	//Variavel COM
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
 	Utilidades Util;
-	HANDLE HandleDirect3D = 0;
-	GUID GuidInterface = GUID_NULL;
-	BOOL fAguardarBloqueio = Param_AguardarBloqueio ? TRUE : FALSE;
-	LPVOID pInterface = NULL;
+	HANDLE vi_HandleDevice = Nulo;
+	GUID vi_GuidInterface = GUID_NULL;
+	IUnknown* vi_pOutInterface = Nulo;
 
 	//Obtém a handle do Direct3D
-	HandleDirect3D = Util.ConverterIntPtrToHWND(Param_Handle);
+	vi_HandleDevice = Util.ConverterIntPtrToHWND(Param_Handle);
 
 	//Obtém o guid da interface solicitada
-	GuidInterface = Util.CreateGuidFromString(Param_IIDInterface);
+	CarenCreateGuidFromStringSafe(Param_IIDInterface, vi_GuidInterface);
 
-	//Chama o método para obter o acesso exclusivo ao dispositivo.
-	Hr = PonteiroTrabalho->LockDevice(HandleDirect3D, GuidInterface, &pInterface, fAguardarBloqueio);
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->LockDevice(
+		vi_HandleDevice, 
+		vi_GuidInterface, 
+		reinterpret_cast<LPVOID*>(&vi_pOutInterface), //OUT
+		Param_AguardarBloqueio ? TRUE : FALSE);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -581,11 +576,8 @@ CarenResult CarenMFDXGIDeviceManager::LockDevice(IntPtr Param_Handle, Boolean Pa
 		Sair;
 	}
 
-	//Define o ponteiro de trabalho
-	Param_Out_InterfaceSolicitada->AdicionarPonteiro(pInterface);
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	//Define o ponteiro na interface de saida.
+	CarenSetPointerToICarenSafe(vi_pOutInterface, Param_Out_InterfaceSolicitada, true);
 
 Done:;
 	//retorna o resultado
@@ -600,17 +592,17 @@ Done:;
 CarenResult CarenMFDXGIDeviceManager::OpenDeviceHandle([Out] IntPtr% Param_Out_Handle)
 {
 	//Variavel que vai ser retornada.
-	CarenResult Resultado = CarenResult(ResultCode::ER_E_NOINTERFACE, false);
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
 
 	//Variavel COM
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método.
 	Utilidades Util;
-	HANDLE HandDeviceOpened = NULL;
+	HANDLE vi_HandleDeviceOpened = NULL;
 
-	//Chama o método para abrir o identificador do dispositivo.
-	Hr = PonteiroTrabalho->OpenDeviceHandle(&HandDeviceOpened);
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->OpenDeviceHandle(&vi_HandleDeviceOpened);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -628,7 +620,7 @@ CarenResult CarenMFDXGIDeviceManager::OpenDeviceHandle([Out] IntPtr% Param_Out_H
 	}
 
 	//Converte de define a handle no parametro de saida.
-	Param_Out_Handle = Util.ConverterHandleToIntPtr(HandDeviceOpened);
+	Param_Out_Handle = Util.ConverterHandleToIntPtr(vi_HandleDeviceOpened);
 
 Done:;
 	//retorna o resultado
@@ -645,26 +637,19 @@ Done:;
 CarenResult CarenMFDXGIDeviceManager::ResetDevice(ICaren^ Param_Dispostivo3D, UInt32 Param_Token)
 {
 	//Variavel que vai ser retornada.
-	CarenResult Resultado = CarenResult(ResultCode::ER_E_NOINTERFACE, false);
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
 
 	//Variavel COM
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método.
-	LPVOID pDispositivo3D11 = NULL;
+	IUnknown* vi_pDevice3D = NULL;
 
 	//Recupera o ponteiro para o dispositivo 3D.
-	Resultado = Param_Dispostivo3D->RecuperarPonteiro(&pDispositivo3D11);
+	CarenGetPointerFromICarenSafe(Param_Dispostivo3D, vi_pDevice3D);
 
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Sai do método
-		goto Done;
-	}
-
-	//Chama o método para resetar o dispositivo.
-	Hr = PonteiroTrabalho->ResetDevice((IUnknown*)pDispositivo3D11, Param_Token);
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->ResetDevice(vi_pDevice3D, Param_Token);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -695,20 +680,20 @@ Done:;
 CarenResult CarenMFDXGIDeviceManager::TestDevice(IntPtr Param_HandleDispositivo3D)
 {
 	//Variavel que vai ser retornada.
-	CarenResult Resultado = CarenResult(ResultCode::ER_E_NOINTERFACE, false);
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
 
 	//Variavel COM
 	ResultadoCOM Hr = E_FAIL;
 
 	//Vaiaveis utilizadas no método
 	Utilidades Util;
-	HANDLE HandTeste = NULL;
+	HANDLE vi_HandleDeviceTest = Nulo;
 
 	//Converte o parametro.
-	HandTeste = Util.ConverterIntPtrToHWND(Param_HandleDispositivo3D);
+	vi_HandleDeviceTest = Util.ConverterIntPtrToHWND(Param_HandleDispositivo3D);
 
-	//Testa o identificador.
-	Hr = PonteiroTrabalho->TestDevice(HandTeste);
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->TestDevice(vi_HandleDeviceTest);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -738,20 +723,20 @@ Done:;
 CarenResult CarenMFDXGIDeviceManager::UnlockDevice(IntPtr Param_HandleDispositivo3D, Boolean Param_SalvarEstadoDispositivo)
 {
 	//Variavel que vai ser retornada.
-	CarenResult Resultado = CarenResult(ResultCode::ER_E_NOINTERFACE, false);
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
 
 	//Variavel COM
 	ResultadoCOM Hr = E_FAIL;
 
 	//Vaiaveis utilizadas no método
 	Utilidades Util;
-	HANDLE HandDevice = NULL;
+	HANDLE vi_HandleDevice = Nulo;
 
 	//Converte o parametro.
-	HandDevice = Util.ConverterIntPtrToHWND(Param_HandleDispositivo3D);
+	vi_HandleDevice = Util.ConverterIntPtrToHWND(Param_HandleDispositivo3D);
 
-	//Chama o método para desbloquear o dispositivo.
-	Hr = PonteiroTrabalho->UnlockDevice(HandDevice, Param_SalvarEstadoDispositivo ? TRUE : FALSE);
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->UnlockDevice(vi_HandleDevice, Param_SalvarEstadoDispositivo ? TRUE : FALSE);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);

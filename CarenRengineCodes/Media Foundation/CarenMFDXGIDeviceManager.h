@@ -33,7 +33,7 @@ using namespace CarenRengine::SDKBase::Estruturas;
 using namespace CarenRengine::SDKUtilidades;
 
 /// <summary>
-/// (Concluido - Fase de Testes) - Classe responsável por permitir que dois segmentos(Threads) de compartilhar o mesmo dispositivo Microsoft Direct3D 11.
+/// Classe responsável por permitir que dois segmentos(Threads) de compartilhar o mesmo dispositivo Microsoft Direct3D 11.
 /// </summary>
 public ref class CarenMFDXGIDeviceManager :public ICarenMFDXGIDeviceManager
 {

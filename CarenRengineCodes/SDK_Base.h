@@ -5843,8 +5843,13 @@ namespace CarenRengine
 			/// <summary>
 			/// Enumera possveis flags relacionais para o Relógio.
 			/// </summary>
-			public enum class CA_CLOCK_RELATIONAL_FLAGS
+			public enum class CA_MFCLOCK_RELATIONAL_FLAG
 			{
+				/// <summary>
+				/// Utilizado para suporte, não faz parte da numeração original.
+				/// </summary>
+				Zero = 0x0,
+
 				/// <summary>
 				/// Os valores de jitter são sempre negativos. Em outras palavras, o tempo retornado por (ICarenMFClock.GetCorrelatedTime) pode jitter por trás do tempo 
 				/// real do relógio, mas nunca tremulará antes do tempo real. Se este sinalizador não estiver presente, o relógio pode jitter em qualquer direção.
@@ -22231,7 +22236,7 @@ namespace CarenRengine
 				///</summary>
 				UInt64 ES_TAXA_MEDIA_AMOSTRAS_ENVIDAS_COLETOR_MIDIA;
 			};
-
+			
 			/// <summary>
 			/// (MFCLOCK_PROPERTIES) - Contém as propriedades de um Relógio.
 			/// </summary>
@@ -22239,32 +22244,37 @@ namespace CarenRengine
 			{
 				/// <summary>
 				/// O intervalo no qual o relógio correlaciona seu tempo de clock com a hora do sistema, em unidades de 100-nanosecond. 
-				/// Se o valor for zero, a correlação é feita sempre que o Imfclock:: GetCorrelatedTime método é chamado.
+				/// Se o valor for zero, a correlação é feita sempre que o ICarenMFClock::GetCorrelatedTime método é chamado.
 				///</summary>
-				UInt64 RL_CORRELATION_RATE;
+				UInt64 qwCorrelationRate;
+		
 				/// <summary>
 				/// O identificador exclusivo do dispositivo subjacente que fornece a hora. Se dois relógios têm o mesmo identificador 
 				/// exclusivo, eles são baseados no mesmo dispositivo. Se o dispositivo subjacente não é compartilhado entre dois relógios, 
 				/// o valor pode ser (NULO).
 				///</summary>
-				String^ RL_GUID_RELOGIO;
+				String^ guidClockId;
+			
 				/// <summary>
-				/// Um bit a bit or dos sinalizadores do CA_CLOCK_RELATIONAL_FLAGS enumeração.
+				/// Um bit a bit or dos sinalizadores do CA_MFCLOCK_RELATIONAL_FLAG enumeração.
 				///</summary>
-				UInt32 RL_CLOCK_FLAGS;
+				Enumeracoes::CA_MFCLOCK_RELATIONAL_FLAG dwClockFlags;
+		
 				/// <summary>
 				/// A frequência do relógio em Hz. Um valor de MFCLOCK_FREQUENCY_HNS significa que o relógio tem uma frequência de 10 MHz 
 				/// (ticks de 100 nanossegundos), que é a unidade de tempo (MFTIME -> Int64) padrão no Media Foundation. Se o
-				/// o método (ICarenMFClock.GetClockCharacteristics) devolver o sinalizador MFCLOCK_CHARACTERISTICS_FLAG_FREQUENCY_10MHZ , o valor
+				/// o método (ICarenMFClock::GetClockCharacteristics) devolver o sinalizador MFCLOCK_CHARACTERISTICS_FLAG_FREQUENCY_10MHZ , o valor
 				/// deste campo deve ser MFCLOCK_FREQUENCY_HNS.
 				///</summary>
-				UInt64 RL_FREQUENCIA_CLOCK;
+				UInt64 qwClockFrequency;
+		
 				/// <summary>
 				/// A quantidade de imprecisão que pode estar presente no relógio, em partes por bilhão (ppb). Por exemplo, uma imprecisão de 50 ppb 
 				/// significa que o relógio pode derivar até 50 segundos por bilhão de segundos de tempo real. Se a tolerância não for conhecida, 
 				/// o valor é MFCLOCK_TOLERANCE_UNKNOWN. Essa constante é igual a 50 partes por milhão (ppm).
 				///</summary>
-				UInt32 RL_TOLERANCIA_CLOCK;
+				UInt32 dwClockTolerance;
+		
 				/// <summary>
 				/// A quantidade de jitter que pode estar presente, em unidades de 100 nanossegundos. Jitter é a variação na frequência devido à 
 				/// amostragem do relógio subjacente. Jitter não inclui imprecisões causadas por deriva, que é refletido no valor de RL_TOLERANCIA_CLOCK.
@@ -22278,7 +22288,7 @@ namespace CarenRengine
 				/// MFCLOCK_JITTER_DPC -> Jitter devido ao carimbo de hora durante o processamento de chamada de procedimento diferido (DPC).
 				/// MFCLOCK_JITTER_PASSIVE -> Jitter devido a queda para a execução do thread normal antes do carimbo de hora.
 				///</summary>
-				UInt32 RL_JITTER_CLOCK;
+				UInt32 dwClockJitter;
 
 			};
 

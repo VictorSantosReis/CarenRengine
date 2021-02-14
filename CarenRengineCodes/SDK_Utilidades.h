@@ -2170,6 +2170,45 @@ namespace CarenRengine
 			}
 
 
+			//Converte uma estrutura gerenciada(CA_MFCLOCK_PROPERTIES) para sua correspondencia não gerenciada(_MFCLOCK_PROPERTIES).
+			_MFCLOCK_PROPERTIES* ConverterMFCLOCK_PROPERTIESManaged_ToUnamaged(CA_MFCLOCK_PROPERTIES^ Param_Estrutura)
+			{
+				//Variavel que vai ser retornada.
+				_MFCLOCK_PROPERTIES* EstruturaRetorno = CriarEstrutura<_MFCLOCK_PROPERTIES>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(_MFCLOCK_PROPERTIES));
+
+				//Define os valores
+				EstruturaRetorno->qwCorrelationRate = static_cast<ULONG64>(Param_Estrutura->qwCorrelationRate);
+				EstruturaRetorno->guidClockId = CreateGuidFromString(Param_Estrutura->guidClockId);
+				EstruturaRetorno->dwClockFlags = static_cast<DWORD>(Param_Estrutura->dwClockFlags);
+				EstruturaRetorno->qwClockFrequency = static_cast<ULONG64>(Param_Estrutura->qwClockFrequency);
+				EstruturaRetorno->dwClockTolerance = static_cast<DWORD>(Param_Estrutura->dwClockTolerance);
+				EstruturaRetorno->dwClockJitter = static_cast<DWORD>(Param_Estrutura->dwClockJitter);
+
+				//Retorna a estrutura.
+				return EstruturaRetorno;
+			}
+
+			//Converte uma estrutura não gerenciada(_MFCLOCK_PROPERTIES) para sua correspondencia gerenciada(CA_MFCLOCK_PROPERTIES).
+			CA_MFCLOCK_PROPERTIES^ ConverterMFCLOCK_PROPERTIESUnamaged_ToManaged(_MFCLOCK_PROPERTIES* Param_Estrutura)
+			{
+				//Variavel que vai ser retornada.
+				CA_MFCLOCK_PROPERTIES^ EstruturaRetorno = gcnew CA_MFCLOCK_PROPERTIES();
+
+				//Define os valores
+				EstruturaRetorno->qwCorrelationRate = static_cast<UInt64>(Param_Estrutura->qwCorrelationRate);
+				EstruturaRetorno->guidClockId = ConverterGuidToString(Param_Estrutura->guidClockId);
+				EstruturaRetorno->dwClockFlags = static_cast<CA_MFCLOCK_RELATIONAL_FLAG>(Param_Estrutura->dwClockFlags);
+				EstruturaRetorno->qwClockFrequency = static_cast<UInt64>(Param_Estrutura->qwClockFrequency);
+				EstruturaRetorno->dwClockTolerance = static_cast<UInt32>(Param_Estrutura->dwClockTolerance);
+				EstruturaRetorno->dwClockJitter = static_cast<UInt32>(Param_Estrutura->dwClockJitter);
+
+				//Retorna a estrutura.
+				return EstruturaRetorno;
+			}
+
 
 
 

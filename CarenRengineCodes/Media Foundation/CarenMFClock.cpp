@@ -417,10 +417,10 @@ CarenResult CarenMFClock::GetClockCharacteristics([Out] Enumeracoes::CA_MFCLOCK_
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
-	DWORD CaracteristicasClock = 0;	
+	DWORD vi_OutCharacteristicsClock = 0;	
 
 	//Chama o método para obter as caracteristicas
-	Hr = PonteiroTrabalho->GetClockCharacteristics(&CaracteristicasClock);
+	Hr = PonteiroTrabalho->GetClockCharacteristics(&vi_OutCharacteristicsClock);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -438,10 +438,7 @@ CarenResult CarenMFClock::GetClockCharacteristics([Out] Enumeracoes::CA_MFCLOCK_
 	}
 
 	//Define o valor no parametro de saida
-	Param_Out_CaracteristicasClock = (CA_MFCLOCK_CHARACTERISTICS_FLAGS)safe_cast<UInt32>(CaracteristicasClock);
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	Param_Out_CaracteristicasClock = static_cast<CA_MFCLOCK_CHARACTERISTICS_FLAGS>(vi_OutCharacteristicsClock);
 
 Done:;
 	//Retorna o resultado
@@ -461,10 +458,10 @@ CarenResult CarenMFClock::GetContinuityKey([Out] UInt32% Param_Out_Chave)
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
-	DWORD ChaveRelogio = 0;
+	DWORD vi_OutKeyClock = 0;
 
 	//Chama o método para obter a chave de continuidade
-	Hr = PonteiroTrabalho->GetContinuityKey(&ChaveRelogio);
+	Hr = PonteiroTrabalho->GetContinuityKey(&vi_OutKeyClock);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -482,10 +479,7 @@ CarenResult CarenMFClock::GetContinuityKey([Out] UInt32% Param_Out_Chave)
 	}
 
 	//Define o valor da chave no parametro de retorno.
-	Param_Out_Chave = safe_cast<UInt32>(ChaveRelogio);
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	Param_Out_Chave = safe_cast<UInt32>(vi_OutKeyClock);
 
 Done:;
 	//Retorna o resultado
@@ -507,11 +501,11 @@ CarenResult CarenMFClock::GetCorrelatedTime(UInt32 Param_ValorReservado, [Out] I
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
-	INT64 ClockTime = 0;
-	INT64 NsSystemTime = 0;
+	INT64 vi_OutClockTime = 0;
+	INT64 vi_OutNsSystemTime = 0;
 
 	//Chama o método para obter a hora correlacionada
-	Hr = PonteiroTrabalho->GetCorrelatedTime(Param_ValorReservado, &ClockTime, &NsSystemTime);
+	Hr = PonteiroTrabalho->GetCorrelatedTime(Param_ValorReservado, &vi_OutClockTime, &vi_OutNsSystemTime);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -529,11 +523,8 @@ CarenResult CarenMFClock::GetCorrelatedTime(UInt32 Param_ValorReservado, [Out] I
 	}
 
 	//Define os parametros de saida
-	Param_Out_ClockTime = ClockTime;
-	Param_Out_NsSystemTime = NsSystemTime;
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	Param_Out_ClockTime = vi_OutClockTime;
+	Param_Out_NsSystemTime = vi_OutNsSystemTime;
 
 Done:;
 	//Retorna o resultado
@@ -553,12 +544,11 @@ CarenResult CarenMFClock::GetProperties([Out] Estruturas::CA_MFCLOCK_PROPERTIES^
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
-	MFCLOCK_PROPERTIES PropsRelogio;
-	CA_MFCLOCK_PROPERTIES^ PropriedadesRelogio;
 	Utilidades Util;
+	MFCLOCK_PROPERTIES vi_OutPropsClock = { };
 
 	//Chama o método para obter as propriedades do relogio.
-	Hr = PonteiroTrabalho->GetProperties(&PropsRelogio);
+	Hr = PonteiroTrabalho->GetProperties(&vi_OutPropsClock);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -575,22 +565,8 @@ CarenResult CarenMFClock::GetProperties([Out] Estruturas::CA_MFCLOCK_PROPERTIES^
 		Sair;
 	}
 
-	//Cria a estrutura
-	PropriedadesRelogio = gcnew CA_MFCLOCK_PROPERTIES();
-
-	//Define os valores na propriedade gerenciada
-	PropriedadesRelogio->RL_CLOCK_FLAGS = PropsRelogio.dwClockFlags;
-	PropriedadesRelogio->RL_CORRELATION_RATE = PropsRelogio.qwCorrelationRate;
-	PropriedadesRelogio->RL_FREQUENCIA_CLOCK = PropsRelogio.qwClockFrequency;
-	PropriedadesRelogio->RL_GUID_RELOGIO = Util.ConverterGuidToString(PropsRelogio.guidClockId);
-	PropriedadesRelogio->RL_JITTER_CLOCK = PropsRelogio.dwClockJitter;
-	PropriedadesRelogio->RL_TOLERANCIA_CLOCK = PropsRelogio.dwClockTolerance;
-
-	//Define a estrutura no parametro de retorno.
-	Param_Out_PropriedadesRelogio = PropriedadesRelogio;
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	//Converte a estrutura nativa para a gerenciada e define no parametro de saida.
+	Param_Out_PropriedadesRelogio = Util.ConverterMFCLOCK_PROPERTIESUnamaged_ToManaged(&vi_OutPropsClock);
 
 Done:;
 	//Retorna o resultado
@@ -611,11 +587,10 @@ CarenResult CarenMFClock::GetState(UInt32 Param_ValorReservado, [Out] Enumeracoe
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas pelo método
-	MFCLOCK_STATE StateRelogio;
-	CA_MFCLOCK_STATE EstadoRelogioRetorno;
+	MFCLOCK_STATE vi_OutStateClock;
 
 	//Chama o método para obter o estado do relogio.
-	Hr = PonteiroTrabalho->GetState(Param_ValorReservado, &StateRelogio);
+	Hr = PonteiroTrabalho->GetState(Param_ValorReservado, &vi_OutStateClock);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -632,35 +607,8 @@ CarenResult CarenMFClock::GetState(UInt32 Param_ValorReservado, [Out] Enumeracoe
 		Sair;
 	}
 
-	//Verifica o estado do relogio e define na variavel.
-	switch (StateRelogio)
-	{
-	case MFCLOCK_STATE_INVALID:
-		//Define o estado do relógio.
-		EstadoRelogioRetorno = CA_MFCLOCK_STATE::MFCLOCK_STATE_INVALID;
-		break;
-
-	case MFCLOCK_STATE_RUNNING:
-		//Define o estado do relógio.
-		EstadoRelogioRetorno = CA_MFCLOCK_STATE::MFCLOCK_STATE_RUNNING;
-		break;
-
-	case MFCLOCK_STATE_STOPPED:
-		//Define o estado do relógio.
-		EstadoRelogioRetorno = CA_MFCLOCK_STATE::MFCLOCK_STATE_STOPPED;
-		break;
-
-	case MFCLOCK_STATE_PAUSED:
-		//Define o estado do relógio.
-		EstadoRelogioRetorno = CA_MFCLOCK_STATE::MFCLOCK_STATE_PAUSED;
-		break;
-	}
-
-	//Define o estado no parametro de retorno.
-	Param_Out_EstadoRelogio = EstadoRelogioRetorno;
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	//Define o estado do relogio no parametro de saida.
+	Param_Out_EstadoRelogio = static_cast<CA_MFCLOCK_STATE>(vi_OutStateClock);
 
 Done:;
 	//Retorna o resultado

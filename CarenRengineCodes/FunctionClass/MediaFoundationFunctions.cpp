@@ -93,12 +93,10 @@ UInt32 MediaFoundationFunctions::_FCC(String^ Param_Dados)
 }
 UInt64 MediaFoundationFunctions::CalculePresentationTime(UInt64 Param_Ticks)
 {
-	//Variavel a ser retornada.
-	UINT64 PresentationTime = 0;
-
 	//Variaveis a serem utilizadas.
 	HRESULT Hr = E_FAIL;
 	LARGE_INTEGER vi_OutFrequency = { };
+	DOUBLE vi_PresentationTime = 0;
 
 	//Verifica se a frequencia do dispositivo já foi capturada, se não vai obter e depois calcular.
 	if (Var_Glob_FrequencyDevice == 0)
@@ -115,21 +113,21 @@ UInt64 MediaFoundationFunctions::CalculePresentationTime(UInt64 Param_Ticks)
 	}
 
 	//Calcula o Tempo de apresentação do parametro dado em Ticks
-	PresentationTime = 10000000 * Param_Ticks / Var_Glob_FrequencyDevice;
+	vi_PresentationTime = (static_cast<DOUBLE>(10000000) * Param_Ticks) / Var_Glob_FrequencyDevice;
 
 	//Retorna o resultado
-	return PresentationTime;
+	return safe_cast<UINT64>(vi_PresentationTime);
 }
 UInt64 MediaFoundationFunctions::CalculePresentationTime(UInt64 Param_Frequency, UInt64 Param_Ticks)
 {
 	//Variavel a ser retornada.
-	UINT64 PresentationTime = 0;
+	DOUBLE vi_PresentationTime = 0;
 
 	//Calcula o Tempo de apresentação do parametro dado em Ticks
-	PresentationTime = 10000000 * Param_Ticks / Param_Frequency;
+	vi_PresentationTime = (static_cast<DOUBLE>(10000000) * Param_Ticks) / Param_Frequency;
 
 	//Retorna o resultado
-	return PresentationTime;
+	return safe_cast<UInt64>(vi_PresentationTime);
 }
 UInt64 MediaFoundationFunctions::CalculeSampleAudioDuration(UInt32 Param_LenghtBufferAudio, UInt32 Param_FrameSize, UInt32 Param_SamplesPerSec)
 {
@@ -137,7 +135,7 @@ UInt64 MediaFoundationFunctions::CalculeSampleAudioDuration(UInt32 Param_LenghtB
 	UINT64 AudioDuration = 0;
 
 	//Calcula a duração do áudio.
-	AudioDuration = static_cast<UINT64>(((Param_LenghtBufferAudio / Param_FrameSize) * 10000000) / Param_SamplesPerSec);
+	AudioDuration = ((static_cast<UINT64>(Param_LenghtBufferAudio / Param_FrameSize)) * 10000000) / Param_SamplesPerSec;
 
 	//Retorna o resultado
 	return AudioDuration;

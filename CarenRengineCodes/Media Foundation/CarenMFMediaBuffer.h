@@ -34,7 +34,7 @@ using namespace CarenRengine::SDKUtilidades;
 
 
 /// <summary>
-/// (Concluido - Fase de Testes) - Classe responsãvel por conter dados de midia. Os tipos podem ser Áudio ou Video.
+/// Classe responsãvel por conter dados de midia. Os tipos podem ser Áudio ou Video.
 /// </summary>
 public ref class CarenMFMediaBuffer : public ICarenMFMediaBuffer
 {
@@ -293,7 +293,6 @@ public:
 	/// <param name="Param_Out_LarguraAtual">Recebe o comprimento dos dados válidos, em bytes. Se o buffer não contiver nenhum dado válido, o valor será zero.</param>
 	virtual CarenResult GetCurrentLength([Out] UInt32% Param_Out_LarguraAtual);
 
-
 	/// <summary>
 	/// Recupera o Dimensionar alocado do buffer. Esse o valor da largura total
 	/// de dados que podem ser adicioandos. Se o buffer conter dados, a largura dos dados
@@ -302,7 +301,6 @@ public:
 	/// </summary>
 	/// <param name="Param_Out_LarguraMaxima">Recebe a largura total de dados que esse buffer pode conter.</param>
 	virtual CarenResult GetMaxLength([Out] UInt32% Param_Out_LarguraMaxima);
-
 
 	/// <summary>
 	/// Force acesso aos dados que estão presentes neste buffer, para leitura ou gravação.
@@ -314,14 +312,12 @@ public:
 	/// <param name="Param_Out_LarguraAtual">Recebe o comprimento dos dados válidos no buffer, em bytes. Este parâmetro pode ser (NULO).</param>
 	virtual CarenResult Lock([Out] ICarenBuffer^% Param_Out_BufferMidia, [Out] UInt32% Param_Out_LarguraMaximaEscrita, [Out] UInt32% Param_Out_LarguraAtual);
 
-
 	/// <summary>
 	/// Desbloqueia um buffer que foi bloqueado anteriormente. Chame esse método uma vez para cada chamada no método (Lock).
 	/// É um erro chamar Unlock se você não chamar Lock anteriormente. Depois de chamar esse método, (Não Use) a interface 
 	/// retornada pelo Lock método. Não é mais garantido que o buffer que contenha nela seja valido.
 	/// </summary>
 	virtual CarenResult Unlock();
-
 
 	/// <summary>
 	/// Define o comprimento dos dados válidos no buffer.
@@ -330,6 +326,5 @@ public:
 	/// <param name="Param_LarguraAtual">Comprimento dos dados válidos, em bytes. Esse valor não pode ser maior do que o tamanho alocado do buffer,
 	/// que é retornado pelo método (GetMaxLength).</param>
 	virtual CarenResult SetCurrentLength(UInt32 Param_LarguraAtual);
-
 };
 

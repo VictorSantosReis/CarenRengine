@@ -25,6 +25,7 @@ CarenMFMediaBuffer::~CarenMFMediaBuffer()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+
 //Construtores
 CarenMFMediaBuffer::CarenMFMediaBuffer()
 {
@@ -139,9 +140,9 @@ CarenMFMediaBuffer::CarenMFMediaBuffer(ICarenMFMediaBuffer^ Param_Buffer, UInt32
 	PonteiroTrabalho = vi_pOutMediaBuffer;
 }
 
-//
+
 // Métodos da interface ICaren
-//
+
 
 /// <summary>
 /// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 
@@ -507,9 +508,8 @@ void CarenMFMediaBuffer::Finalizar()
 
 
 
-//
-// Métodos Proprietários da interface.
-//
+
+// Métodos da interface proprietária (ICarenMFMediaBuffer)
 
 
 /// <summary>
@@ -519,40 +519,34 @@ void CarenMFMediaBuffer::Finalizar()
 CarenResult CarenMFMediaBuffer::GetCurrentLength([Out] UInt32% Param_Out_LarguraAtual)
 {
 	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
 
 	//Variavel que contém os resultados COM.
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas pelo método
-	DWORD LarguraAtual = 0;
+	DWORD vi_OutLarguraAtual = 0;
 
-	//Chama o método que vai obter a largura de dados validos atualmente.
-	Hr = PonteiroTrabalho->GetCurrentLength(&LarguraAtual);
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetCurrentLength(&vi_OutLarguraAtual);
 
-	//Verifica se obteve sucesso
-	if (Sucesso(Hr))
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
-		//Deixa o método continuar.
-	}
+		//Falhou ao realizar a operação.
 
-	else
-	{
-		//Define falha na operação.
-		Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-		//Define o código HResult
+		//Define o código na classe.
 		Var_Glob_LAST_HRESULT = Hr;
 
-		//Sai do método.
-		goto Done;
+		//Sai do método
+		Sair;
 	}
 
 	//Define o valor de retorno
-	Param_Out_LarguraAtual = safe_cast<UInt32>(LarguraAtual);
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	Param_Out_LarguraAtual = static_cast<UInt32>(vi_OutLarguraAtual);
 
 Done:;
 	//Retorna o resultado geral
@@ -569,39 +563,34 @@ Done:;
 CarenResult CarenMFMediaBuffer::GetMaxLength([Out] UInt32 % Param_Out_LarguraMaxima)
 {
 	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
 
 	//Variavel que contém os resultados COM.
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas pelo método
-	DWORD LarguraMaximaBuffer = 0;
+	DWORD vi_OutMaxLengthBuffer = 0;
 
-	//Chama o método que vai obter a largura maxima para o buffer.
-	Hr = PonteiroTrabalho->GetMaxLength(&LarguraMaximaBuffer);
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetMaxLength(&vi_OutMaxLengthBuffer);
 
-	//Verifica se obteve sucesso
-	if (Sucesso(Hr))
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
-		//Deixa o método continuar.
-	}
-	else
-	{
-		//Define falha na operação.
-		Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
+		//Falhou ao realizar a operação.
 
-		//Define o código HResult
+		//Define o código na classe.
 		Var_Glob_LAST_HRESULT = Hr;
 
-		//Sai do método.
-		goto Done;
+		//Sai do método
+		Sair;
 	}
 
 	//Define o valor de retorno
-	Param_Out_LarguraMaxima = safe_cast<UInt32>(LarguraMaximaBuffer);
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	Param_Out_LarguraMaxima = static_cast<UInt32>(vi_OutMaxLengthBuffer);
 
 Done:;
 	//Retorna o resultado geral
@@ -619,7 +608,7 @@ Done:;
 CarenResult CarenMFMediaBuffer::Lock([Out] ICarenBuffer^% Param_Out_BufferMidia, [Out] UInt32% Param_Out_LarguraMaximaEscrita, [Out] UInt32% Param_Out_LarguraAtual)
 {
 	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
 
 	//Variavel que contém os resultados COM.
 	ResultadoCOM Hr = E_FAIL;
@@ -629,7 +618,7 @@ CarenResult CarenMFMediaBuffer::Lock([Out] ICarenBuffer^% Param_Out_BufferMidia,
 	DWORD vi_OutMaxLenghtBuffer = 0;
 	DWORD vi_OutActualLenght = 0;
 
-	//Chama o método que vai obter o ponteiro para o buffer de midia.
+	//Chama o método para realizar a operação.
 	Hr = PonteiroTrabalho->Lock(&vi_pBufferLocked, &vi_OutMaxLenghtBuffer, &vi_OutActualLenght);
 
 	//Processa o resultado da chamada.
@@ -689,12 +678,12 @@ Done:;
 CarenResult CarenMFMediaBuffer::Unlock()
 {
 	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
 
 	//Variavel que contém os resultados COM.
 	ResultadoCOM Hr = E_FAIL;
 
-	//Chama o método para desbloquear o buffer
+	//Chama o método para realizar a operação.
 	Hr = PonteiroTrabalho->Unlock();
 
 	//Processa o resultado da chamada.
@@ -726,12 +715,12 @@ Done:;
 CarenResult CarenMFMediaBuffer::SetCurrentLength(UInt32 Param_LarguraAtual)
 {
 	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
+	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
 
 	//Variavel que contém os resultados COM.
 	ResultadoCOM Hr = E_FAIL;
 
-	//Chama o método para definir a largura atual dos dados validos.
+	//Chama o método para realizar a operação.
 	Hr = PonteiroTrabalho->SetCurrentLength(Param_LarguraAtual);
 
 	//Processa o resultado da chamada.

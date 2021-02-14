@@ -25,12 +25,12 @@ CarenMFMediaEvent::~CarenMFMediaEvent()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+
 //Construtores
 CarenMFMediaEvent::CarenMFMediaEvent()
 {
 	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
-
 CarenMFMediaEvent::CarenMFMediaEvent(CA_MediaEventType Param_TypeEvent, String^ Param_GuidExtendedType, CarenResult Param_HRStatus, CA_PROPVARIANT^ Param_Valor)
 {
 	//Variavel que vai conter o resultado COM.
@@ -83,7 +83,6 @@ CarenMFMediaEvent::CarenMFMediaEvent(CA_MediaEventType Param_TypeEvent, String^ 
 	if (ObjetoValido(vi_pPropValue))
 		DeletarPropVariantSafe(&vi_pPropValue);
 }
-
 CarenMFMediaEvent::CarenMFMediaEvent(CA_MediaEventType Param_TypeEvent, String^ Param_GuidExtendedType, int Param_HRStatus, CA_PROPVARIANT^ Param_Valor)
 {
 	//Variavel que vai conter o resultado COM.
@@ -137,9 +136,9 @@ CarenMFMediaEvent::CarenMFMediaEvent(CA_MediaEventType Param_TypeEvent, String^ 
 		DeletarPropVariantSafe(&vi_pPropValue);
 }
 
-//
+
 // Métodos da interface ICaren
-//
+
 
 /// <summary>
 /// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 
@@ -522,10 +521,10 @@ CarenResult CarenMFMediaEvent::GetStatus([Out] int% Param_Out_HResultCode)
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método.
-	HRESULT hResultStatus = 0;
+	HRESULT vi_OutHresult = 0;
 
 	//Chama o método para obter o status
-	Hr = PonteiroTrabalho->GetStatus(&hResultStatus);
+	Hr = PonteiroTrabalho->GetStatus(&vi_OutHresult);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -543,7 +542,7 @@ CarenResult CarenMFMediaEvent::GetStatus([Out] int% Param_Out_HResultCode)
 	}
 
 	//Define o valor no parametro de saida.
-	Param_Out_HResultCode = static_cast<int>(hResultStatus);
+	Param_Out_HResultCode = static_cast<int>(vi_OutHresult);
 
 Done:;
 	//Retorna o resultado.
@@ -563,10 +562,10 @@ CarenResult CarenMFMediaEvent::GetType([Out] Enumeracoes::CA_MediaEventType% Par
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método.
-	MediaEventType pTipoEvento = NULL;
+	MediaEventType vi_OutEventType = NULL;
 	
 	///Chama o método para obter o tipo do evento.
-	Hr = PonteiroTrabalho->GetType(&pTipoEvento);
+	Hr = PonteiroTrabalho->GetType(&vi_OutEventType);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -584,7 +583,7 @@ CarenResult CarenMFMediaEvent::GetType([Out] Enumeracoes::CA_MediaEventType% Par
 	}
 
 	//Converte e define o tipo do evento no parametro.
-	Param_Out_TipoEvento = static_cast<CA_MediaEventType>(pTipoEvento);
+	Param_Out_TipoEvento = static_cast<CA_MediaEventType>(vi_OutEventType);
 
 Done:;
 	//Retorna o resultado.
@@ -605,10 +604,10 @@ CarenResult CarenMFMediaEvent::GetExtendedType([Out] String^% Param_Out_GuidExte
 
 	//Variaveis utilizadas no método.
 	Utilidades Util;
-	GUID GuidExtendedTipo = GUID_NULL;
+	GUID vi_OutGuidExtend = GUID_NULL;
 
 	//Chama o método para obter o guid do tipo extendido.
-	Hr = PonteiroTrabalho->GetExtendedType(&GuidExtendedTipo);
+	Hr = PonteiroTrabalho->GetExtendedType(&vi_OutGuidExtend);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -624,6 +623,9 @@ CarenResult CarenMFMediaEvent::GetExtendedType([Out] String^% Param_Out_GuidExte
 		//Sai do método
 		Sair;
 	}
+
+	//Converte o guid para uma string e define no parametro de saida.
+	Param_Out_GuidExtendedType = Util.ConverterGuidToString(vi_OutGuidExtend);
 
 Done:;
 	//Retorna o resultado.
@@ -645,13 +647,13 @@ CarenResult CarenMFMediaEvent::GetValue([Out] Estruturas::CA_PROPVARIANT^% Param
 
 	//Variaveis utilizadas no método.
 	PropVariantManager UtilVariant = PropVariantManager();
-	LPPROPVARIANT vi_PropVar = Nulo;
+	LPPROPVARIANT vi_OutPropvar = Nulo;
 
 	//Inicia a propvariant
-	IniciarPropVariant(&vi_PropVar);
+	IniciarPropVariant(&vi_OutPropvar);
 
 	//Chama o método para obter o valor
-	Hr = PonteiroTrabalho->GetValue(vi_PropVar);
+	Hr = PonteiroTrabalho->GetValue(vi_OutPropvar);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -669,11 +671,11 @@ CarenResult CarenMFMediaEvent::GetValue([Out] Estruturas::CA_PROPVARIANT^% Param
 	}
 
 	//Converte a PropVariant nativa para gerenciada e define no parametro de saida.
-	Param_Out_ValorEvento = UtilVariant.ConverterPropVariantUnmanaged_ToManaged(vi_PropVar);
+	Param_Out_ValorEvento = UtilVariant.ConverterPropVariantUnmanaged_ToManaged(vi_OutPropvar);
 
 Done:;
 	//Limpa a PropVariant
-	DeletarPropVariantSafe(&vi_PropVar);
+	DeletarPropVariantSafe(&vi_OutPropvar);
 
 	//Retorna o resultado.
 	return Resultado;

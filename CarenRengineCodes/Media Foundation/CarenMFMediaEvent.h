@@ -18,7 +18,6 @@ limitations under the License.
 #pragma once
 #include "../SDK_MediaFoundation.h"
 #include "../Caren/Caren.h"
-
 #include "../SDK_Utilidades.h"
 
 //Importa o namespace que contém as interfaces da Media Foundation.
@@ -33,7 +32,7 @@ using namespace CarenRengine::SDKBase::Estruturas;
 using namespace CarenRengine::SDKUtilidades;
 
 /// <summary>
-/// (Concluido - Fase de Testes) - Representa um evento gerado por um objeto do Media Foundation. Use essa interface para obter informações
+/// Representa um evento gerado por um objeto do Media Foundation. Use essa interface para obter informações
 /// sobre o evento.
 /// </summary> 
 public ref class CarenMFMediaEvent : public ICarenMFMediaEvent

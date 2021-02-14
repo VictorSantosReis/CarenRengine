@@ -24,6 +24,7 @@ CarenMFAsyncCallback::~CarenMFAsyncCallback()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+
 //Construtor
 CarenMFAsyncCallback::CarenMFAsyncCallback(Boolean Param_CriarInterface)
 {
@@ -32,9 +33,9 @@ CarenMFAsyncCallback::CarenMFAsyncCallback(Boolean Param_CriarInterface)
 		PonteiroTrabalho = new CLN_IMFAsyncCallback();
 }
 
-//
+
 // Métodos da interface ICaren
-//
+
 
 /// <summary>
 /// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 
@@ -404,31 +405,6 @@ void CarenMFAsyncCallback::Finalizar()
 
 
 /// <summary>
-/// Fornece informações de configuração para o segmento de expedição para um retorno de chamada.
-/// Esse método deve ser chamado durante uma chamada do evento (OnRequisiçãoParametros).
-/// </summary>
-/// <param name="Param_Flags">Flags que definem o comportamente do método (Invoke) notificado pelo evento(OnInvoke).</param>
-/// <param name="Param_IdentificadorFilaTrabalho">Define o identificador da fila de trabalho na qual o retorno de chamada é despachado.</param>
-CarenResult CarenMFAsyncCallback::DefinirConfigurações(Enumeracoes::CA_FLAGS_ASYNC_COMPORTAMENTO_INVOKE Param_Flags, Enumeracoes::CA_IDENTICADORES_FILA_TRABALHO Param_IdentificadorFilaTrabalho)
-{
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis utilizadas
-	DWORD FlagsInvokeMetodo = static_cast<DWORD>(Param_Flags);
-	DWORD IdentificadorFila = static_cast<DWORD>(Param_IdentificadorFilaTrabalho);
-
-	//Chama o método na interface personalizada para definir as configurações de comportamento do método Invoke.
-	((CLN_IMFAsyncCallback*)PonteiroTrabalho)->SetParameters(FlagsInvokeMetodo, IdentificadorFila);
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Retorna o resultado
-	return Resultado;
-}
-
-/// <summary>
 /// Método responsável por registrar os eventos da interface.
 /// </summary>
 void CarenMFAsyncCallback::RegistrarCallback()
@@ -487,41 +463,56 @@ void CarenMFAsyncCallback::UnRegisterCallback()
 /// <summary>
 /// Método responsável por chamar o evento gerenciado para notificar o usuário sobre uma chamada para o método (GetParameters) na classe nativa.
 /// </summary>
-int CarenMFAsyncCallback::EncaminharEvento_OnGetParameters()
+HRESULT CarenMFAsyncCallback::EncaminharEvento_OnGetParameters(__RPC__out DWORD* Param_Flags, __RPC__out DWORD* Param_Queue)
 {
 	//Não é preciso verificar se o evento é uma referência valida.
 	//Em C++ CLI, caso o evento não seja valido, a função não será chamada.
 
-	//Variaveis utilizadas no método.
-	int ResultImplementMetodo = 0;
+	//Variavel a ser retornada.
+	CarenResult Resultado = ResultCode::ER_FAIL;
 
-	//Chama o evento e obtém o resultado
-	ResultImplementMetodo = OnRequisiçãoParametros();
+	//Variaveis utilizadas.
+	CA_MFASYNC_BEHAVIOR vi_OutFlags = CA_MFASYNC_BEHAVIOR::Zero;
+	CA_MFASYNC_CALLBACK_QUEUE vi_OutQueue = CA_MFASYNC_CALLBACK_QUEUE::CA_MFASYNC_CALLBACK_QUEUE_MULTITHREADED;
 
-	//Retorna o resultado do evento.
-	return ResultImplementMetodo;
+	//Invoca o evento para o usuário definir os valores a serem retornado por referencia.
+	Resultado = OnGetParameters(vi_OutFlags, vi_OutQueue);
+
+	//Define os dados nos parametros de saida para o método nativo.
+	*Param_Flags = static_cast<DWORD>(vi_OutFlags);
+	*Param_Queue = static_cast<DWORD>(vi_OutQueue);
+
+	//Retorna o resultado.
+	return static_cast<HRESULT>(Resultado.HResult);
 }
 
 /// <summary>
 /// Método responsável por chamar o evento gerenciado para notificar o usuário sobre uma chamada para o método (Invoke) na classe nativa.
 /// </summary>
-void CarenMFAsyncCallback::EncaminharEvento_OnInvoke(IMFAsyncResult* Param_AsyncResult)
+HRESULT CarenMFAsyncCallback::EncaminharEvento_OnInvoke(IMFAsyncResult* Param_AsyncResult)
 {
 	//Não é preciso verificar se o evento é uma referência valida.
 	//Em C++ CLI, caso o evento não seja valido, a função não será chamada.
 
-	//Variaveis utilizadas no método.
-	ICarenMFAsyncResult^ InterfaceResultadoAsync = nullptr;
+	//Variavel a ser retornada.
+	CarenResult Resultado = ResultCode::ER_FAIL;
 
-	//Cria a interface que vai receber o ponteiro
-	InterfaceResultadoAsync = gcnew CarenMFAsyncResult();
+	//Variaveis utilizadas.
+	ICarenMFAsyncResult^ vi_AsyncResult = nullptr;
 
-	//Define o ponteiro de trabalho
-	InterfaceResultadoAsync->AdicionarPonteiro(Param_AsyncResult);
+	//Verifica se o ponteiro é valido
+	if (ObjetoValido(Param_AsyncResult))
+	{
+		//Cria a interface a ser retornada.
+		vi_AsyncResult = gcnew CarenMFAsyncResult();
+
+		//Define o ponteiro na interface.
+		vi_AsyncResult->AdicionarPonteiro(Param_AsyncResult);
+	}
 
 	//Chama o evento para notificar o usuário
-	OnInvoke(InterfaceResultadoAsync);
+	Resultado = OnInvoke(vi_AsyncResult);
 
-	//Exclui a interface.
-	InterfaceResultadoAsync = nullptr;
+	//Retorna o resultado.
+	return Resultado.HResult;
 }

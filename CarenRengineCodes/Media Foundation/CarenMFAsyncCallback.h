@@ -18,9 +18,8 @@ limitations under the License.
 #pragma once
 #include "../SDK_MediaFoundation.h"
 #include "../Caren/Caren.h"
-#include "../NativeClassForEvents/CLN_IMFAsyncCallback.h"
-#include "CarenMFAsyncResult.h"
 #include "../SDK_Utilidades.h"
+#include "../NativeClassForEvents/CLN_IMFAsyncCallback.h"
 
 //Importa o namespace que contém as interfaces da Media Foundation.
 using namespace CarenRengine::MediaFoundation;
@@ -114,11 +113,9 @@ public:
 	/////////////////////////////////////////////
 
 	/// <summary>
-	/// Evento chamado para indicar que uma chamada interna para o método (GetParameters) foi realizada e está requisitando as configurações para o segmento de 
-	/// expedição para um retorno de chamada. Chame o método (DefinirConfigurações) na chamada deste evento para configurar os dados.
-	/// Atenção: Retorne 1, se o evento tiver sido configurado, e 0 se o método não é implementado.
+	/// Evento chamado para o usuário fornecer informações de configuração para o thread de despacho para um Callback.
 	/// </summary>
-	virtual event ICarenMFAsyncCallback::Delegate_RequisicaoParametros^ OnRequisiçãoParametros;
+	virtual event ICarenMFAsyncCallback::Delegate_GetParameters^ OnGetParameters;
 
 	/// <summary>
 	/// Evento chamado quando uma operação assincrona é concluida.
@@ -135,13 +132,13 @@ private:
 	/// <summary>
 	/// Delegate nativo que vai conter o método que vai receber o evento(OnGetParameters) nativo da classe (CLN_IMFAsyncCallback) para ser enviado ao usuário.
 	/// </summary>
-	delegate int DelegateNativo_Evento_OnGetParameters();
+	delegate HRESULT DelegateNativo_Evento_OnGetParameters(__RPC__out DWORD*, __RPC__out DWORD*);
 	DelegateNativo_Evento_OnGetParameters^ Callback_OnGetParameters = nullptr;
 
 	/// <summary>
 	/// Delegate nativo que vai conter o método que vai receber o evento(OnInvoke) nativo da classe (CLN_IMFAsyncCallback) para ser enviado ao usuário.
 	/// </summary>
-	delegate void DelegateNativo_Evento_OnInvoke(IMFAsyncResult* pAsyncResult);
+	delegate HRESULT DelegateNativo_Evento_OnInvoke(IMFAsyncResult* pAsyncResult);
 	DelegateNativo_Evento_OnInvoke^ Callback_OnInvoke = nullptr;
 
 	//(HANDLES ALOCADAS DOS EVENTOS)
@@ -296,16 +293,8 @@ public:
 
 
 
-	//Métodos da interface proprietaria.
+	//Métodos da interface ICarenMFAsyncCallback.
 public:
-	/// <summary>
-	/// Fornece informações de configuração para o segmento de expedição para um retorno de chamada.
-	/// Esse método deve ser chamado durante uma chamada do evento (OnRequisiçãoParametros).
-	/// </summary>
-	/// <param name="Param_Flags">Flags que definem o comportamente do método (Invoke) notificado pelo evento(OnInvoke).</param>
-	/// <param name="Param_IdentificadorFilaTrabalho">Define o identificador da fila de trabalho na qual o retorno de chamada é despachado.</param>
-	virtual CarenResult DefinirConfigurações(Enumeracoes::CA_FLAGS_ASYNC_COMPORTAMENTO_INVOKE Param_Flags, Enumeracoes::CA_IDENTICADORES_FILA_TRABALHO Param_IdentificadorFilaTrabalho);
-
 	/// <summary>
 	/// Método responsável por registrar os eventos da interface.
 	/// </summary>
@@ -323,11 +312,11 @@ public:
 	/// <summary>
 	/// Método responsável por chamar o evento gerenciado para notificar o usuário sobre uma chamada para o método (GetParameters) na classe nativa.
 	/// </summary>
-	virtual int EncaminharEvento_OnGetParameters();
+	virtual HRESULT EncaminharEvento_OnGetParameters(__RPC__out DWORD* Param_Flags , __RPC__out DWORD* Param_Queue);
 
 	/// <summary>
 	/// Método responsável por chamar o evento gerenciado para notificar o usuário sobre uma chamada para o método (Invoke) na classe nativa.
 	/// </summary>
-	virtual void EncaminharEvento_OnInvoke(IMFAsyncResult* Param_AsyncResult);
+	virtual HRESULT EncaminharEvento_OnInvoke(IMFAsyncResult* Param_AsyncResult);
 };
 

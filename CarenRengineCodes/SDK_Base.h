@@ -7351,17 +7351,16 @@ namespace CarenRengine
 			};
 
 			/// <summary>
-			/// Enumera o comportamento do método de conclusão de chamada Assincrona (Invoke) notificado pelo evento
-			/// OnInvoke. Utilize essa enumeração para definir as configurações em uma chamada do evento (OnRequisiçãoParametros).
+			/// Enumera o comportamento do método de conclusão de chamada Assincrona (Invoke) notificado pelo evento OnInvoke
 			/// </summary>
 			[FlagsAttribute]
-			public enum class CA_FLAGS_ASYNC_COMPORTAMENTO_INVOKE
+			public enum class CA_MFASYNC_BEHAVIOR
 			{
 				/// <summary>
 				/// O retorno de chamada não demora muito para ser concluído, mas não possui restrições específicas sobre quais chamadas do sistema ele faz. 
 				/// O retorno de chamada geralmente leva menos de 30 milissegundos para ser concluído.
 				/// </summary>
-				Flags_Zero = 0,
+				Zero = 0,
 
 				/// <summary>
 				/// O retorno de chamada faz um processamento muito mínimo. Demora menos de 1 milissegundo para ser concluído.
@@ -7391,56 +7390,56 @@ namespace CarenRengine
 			/// <summary>
 			/// Enumera todos os identificadores de fila de trabalho padrão do Media Foundation.
 			/// </summary>
-			public enum class CA_IDENTICADORES_FILA_TRABALHO : UINT32
+			public enum class CA_MFASYNC_CALLBACK_QUEUE : UINT32
 			{
 				/// <summary>
 				/// Fila de trabalho indefinida.
 				/// </summary>
-				IDENT_MFASYNC_CALLBACK_QUEUE_UNDEFINED = MFASYNC_CALLBACK_QUEUE_UNDEFINED,
+				CA_MFASYNC_CALLBACK_QUEUE_UNDEFINED = MFASYNC_CALLBACK_QUEUE_UNDEFINED,
 
 				/// <summary>
 				/// Na maioria dos casos, os aplicativos devem usar MFASYNC_CALLBACK_QUEUE_MULTITHREADED . 
 				/// Esta fila de trabalho é usada para operações síncronas. Usando a fila de trabalho padrão pode correr o risco de deadlocking
 				/// </summary>
-				IDENT_MFASYNC_CALLBACK_QUEUE_STANDARD = MFASYNC_CALLBACK_QUEUE_STANDARD,
+				CA_MFASYNC_CALLBACK_QUEUE_STANDARD = MFASYNC_CALLBACK_QUEUE_STANDARD,
 
 				/// <summary>
 				/// Não é para uso geral de aplicativos.
 				/// </summary>
-				IDENT_MFASYNC_CALLBACK_QUEUE_RT = MFASYNC_CALLBACK_QUEUE_RT,
+				CA_MFASYNC_CALLBACK_QUEUE_RT = MFASYNC_CALLBACK_QUEUE_RT,
 
 				/// <summary>
 				/// Não para uso geral de aplicativos. 
 				/// Essa fila de trabalho é usada internamente para operações de E / S, como leitura de arquivos e leitura da rede.
 				/// </summary>
-				IDENT_MFASYNC_CALLBACK_QUEUE_IO = MFASYNC_CALLBACK_QUEUE_IO,
+				CA_MFASYNC_CALLBACK_QUEUE_IO = MFASYNC_CALLBACK_QUEUE_IO,
 
 				/// <summary>
 				/// Não para uso geral de aplicativos. 
 				/// Essa fila de trabalho é usada para retornos periódicos e itens de trabalho planejados.
 				/// </summary>
-				IDENT_MFASYNC_CALLBACK_QUEUE_TIMER = MFASYNC_CALLBACK_QUEUE_TIMER,
+				CA_MFASYNC_CALLBACK_QUEUE_TIMER = MFASYNC_CALLBACK_QUEUE_TIMER,
 
 				/// <summary>
 				/// Esta fila de trabalho multithread deve ser usada na maioria dos casos. 
 				/// Essa fila de trabalho é usada para operações assíncronas em toda a Media Foundation.
 				/// </summary>
-				IDENT_MFASYNC_CALLBACK_QUEUE_MULTITHREADED = MFASYNC_CALLBACK_QUEUE_MULTITHREADED,
+				CA_MFASYNC_CALLBACK_QUEUE_MULTITHREADED = MFASYNC_CALLBACK_QUEUE_MULTITHREADED,
 
 				/// <summary>
 				/// Não para uso geral de aplicativos. Os aplicativos devem usar (MFASYNC_CALLBACK_QUEUE_MULTITHREADED).
 				/// </summary>
-				IDENT_MFASYNC_CALLBACK_QUEUE_LONG_FUNCTION = MFASYNC_CALLBACK_QUEUE_LONG_FUNCTION,
+				CA_MFASYNC_CALLBACK_QUEUE_LONG_FUNCTION = MFASYNC_CALLBACK_QUEUE_LONG_FUNCTION,
 
 				/// <summary>
 				/// Máscara de bits para distinguir filas de trabalho de plataforma daquelas criadas chamando MFAllocateWorkQueue. 
 				/// </summary>
-				IDENT_MFASYNC_CALLBACK_QUEUE_PRIVATE_MASK = MFASYNC_CALLBACK_QUEUE_PRIVATE_MASK,
+				CA_MFASYNC_CALLBACK_QUEUE_PRIVATE_MASK = MFASYNC_CALLBACK_QUEUE_PRIVATE_MASK,
 
 				/// <summary>
 				/// Todas as filas de trabalho da plataforma.
 				/// </summary>
-				IDENT_MFASYNC_CALLBACK_QUEUE_ALL = MFASYNC_CALLBACK_QUEUE_ALL
+				CA_MFASYNC_CALLBACK_QUEUE_ALL = MFASYNC_CALLBACK_QUEUE_ALL
 
 			};
 

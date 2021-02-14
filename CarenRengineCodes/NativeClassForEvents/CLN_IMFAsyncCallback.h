@@ -19,8 +19,8 @@ limitations under the License.
 #include "../SDK_Base.h"
 
 //Typedefs que definem os delegates de eventos que seram chamados para notificar o usuario.
-typedef void(__stdcall* CLN_IMFAsyncCallback_EventoNativo_Invoke)(__RPC__in_opt IMFAsyncResult*);
-typedef int(__stdcall* CLN_IMFAsyncCallback_EventoNativo_GetParameters)();
+typedef HRESULT(__stdcall* CLN_IMFAsyncCallback_EventoNativo_Invoke)(__RPC__in_opt IMFAsyncResult*);
+typedef HRESULT(__stdcall* CLN_IMFAsyncCallback_EventoNativo_GetParameters)(__RPC__out DWORD*, __RPC__out DWORD*);
 
 //Classe responsável por notificar o usuário em classe gerenciada de uma operação assincrona.
 class CLN_IMFAsyncCallback : public IMFAsyncCallback
@@ -39,10 +39,8 @@ public:
 		BOOL Resultado = InitializeCriticalSectionAndSpinCount(&SessaoCritica, 0x00000400);
 
 		//Verifica o resultado
-		if (Resultado)
-		{
-
-		}
+		if (!Resultado)
+			throw gcnew Exception("Não foi possivel inicializar a 'Sessão Criticca' de código para sincronização de chamadas!");
 	}
 
 	~CLN_IMFAsyncCallback()
@@ -51,22 +49,10 @@ public:
 		DeleteCriticalSection(&SessaoCritica);
 	}
 
-	//Variaveis que vão conter o valor para o método (GetParameters) definido pelo usuario.
-public:
-	DWORD GetParameters_dwFlags = 0;
-	DWORD GetParameters_pdwQueue = 0;
-
 	//Contém todos os delegates que seram chamados para notificar uma operação assincrona.
 public:
-	//O Evento notifica a conclusão de uma operação assincrona.
-	CLN_IMFAsyncCallback_EventoNativo_Invoke Evento_OnInvoke = NULL;
-	
-	//Evento responsável por notificar o usuário que uma chamada está requisitando as configurações do sistema Assincrono.
-	//O cliente deve chamar o método (SetParameters) nesta classe para definir os valores durante a chamada deste evento.
-	//Atenção: Se o evento retorna 1, indica que o usuário chamou(SetParameters) e configurou o evento, se não, o método não foi configurado e retorna E_NOTIMPL.
+	CLN_IMFAsyncCallback_EventoNativo_Invoke Evento_OnInvoke = NULL;	
 	CLN_IMFAsyncCallback_EventoNativo_GetParameters Evento_OnGetParameters = NULL;
-
-
 
 	//Métodos da Interface IUnknown.
 public:
@@ -117,11 +103,5 @@ public:
 	virtual HRESULT STDMETHODCALLTYPE GetParameters(__RPC__out DWORD* pdwFlags, __RPC__out DWORD* pdwQueue);
 
 	virtual HRESULT STDMETHODCALLTYPE Invoke(__RPC__in_opt IMFAsyncResult* pAsyncResult);
-
-
-	//Método utilizado para definir os valores que seram retornados durante a chamada do evento (Evento_OnGetParameters)
-public:
-	//Método responsável por definir as configurações do sistema Assincrono para ser retornado pelo método (GetParameters)
-	virtual void SetParameters(DWORD dwFlags, DWORD dwQueue);
 };
 

@@ -846,27 +846,24 @@ namespace CarenRengine
 			//Delegates
 
 			/// <summary>
-			/// Delegate que expõe a estrutura do evento (OnObterParametros).
+			/// Delegate utilizado pelo evento OnGetParameters. 
 			/// </summary>
-			delegate int Delegate_RequisicaoParametros();
+			delegate CarenResult Delegate_GetParameters(CA_MFASYNC_BEHAVIOR% Param_Flags, CA_MFASYNC_CALLBACK_QUEUE% Param_Queue);
 
 			/// <summary>
-			/// Delegate que expõe a estrutura do evento (OnInvoke).
+			/// Delegate utilizado pelo evento OnInvoke.
 			/// </summary>
-			/// <param name="Param_AsyncResult">A interface com o resultado do método assincrono.</param>
-			delegate void Delegate_Invoke(ICarenMFAsyncResult^ Param_AsyncResult);
+			delegate CarenResult Delegate_Invoke(ICarenMFAsyncResult^ Param_AsyncResult);
 
 
-			//
+			
 			//Eventos
-			//
+			
 
 			/// <summary>
-			/// Evento chamado para indicar que uma chamada interna para o método (GetParameters) foi realizada e está requisitando as configurações para o segmento de 
-			/// expedição para um retorno de chamada. Chame o método (DefinirConfigurações) na chamada deste evento para configurar os dados.
-			/// Atenção: Retorne 1, se o evento tiver sido configurado, e 0 se o método não é implementado.
+			/// Evento chamado para o usuário fornecer informações de configuração para o thread de despacho para um Callback.
 			/// </summary>
-			event Delegate_RequisicaoParametros^ OnRequisiçãoParametros;
+			event Delegate_GetParameters^ OnGetParameters;
 
 			/// <summary>
 			/// Evento chamado quando uma operação assincrona é concluida.
@@ -875,18 +872,9 @@ namespace CarenRengine
 
 
 
-			//
+			
 			// Métodos
-			//
-
-			/// <summary>
-			/// Fornece informações de configuração para o segmento de expedição para um retorno de chamada.
-			/// Esse método deve ser chamado durante uma chamada do evento (OnRequisiçãoParametros).
-			/// </summary>
-			/// <param name="Param_Flags">Flags que definem o comportamente do método (Invoke) notificado pelo evento(OnInvoke).</param>
-			/// <param name="Param_IdentificadorFilaTrabalho">Define o identificador da fila de trabalho na qual o retorno de chamada é despachado.</param>
-			CarenResult DefinirConfigurações(Enumeracoes::CA_FLAGS_ASYNC_COMPORTAMENTO_INVOKE Param_Flags, Enumeracoes::CA_IDENTICADORES_FILA_TRABALHO Param_IdentificadorFilaTrabalho);
-
+			
 			/// <summary>
 			/// Método responsável por registrar os eventos da interface.
 			/// </summary>

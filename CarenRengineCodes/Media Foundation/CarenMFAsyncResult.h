@@ -50,7 +50,6 @@ public:
 	/// <summary>
 	/// Inicializa a classe sem nenhum ponteiro de trabalho vinculado.
 	/// </summary>
-	/// </summary>
 	CarenMFAsyncResult();
 
 	/// <summary>

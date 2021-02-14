@@ -18,9 +18,8 @@ limitations under the License.
 #include "../pch.h"
 #include "../NativeClassForEvents/CLN_IMFAsyncCallback.h"
 
-//
+
 // Métodos da Interface IMFAsyncCallback
-//
 
 
 //Obtém as configurações deste sistema assincrono.
@@ -32,38 +31,18 @@ HRESULT __stdcall CLN_IMFAsyncCallback::GetParameters(DWORD* pdwFlags, DWORD* pd
 	//Variavel que vai retornar o resultado.
 	HRESULT Resultado = E_NOTIMPL;
 
-	//Variavel que vai conter se o evento está implementado ou não.
-	//Se sim, o variavel retorna o valor 1, se não, retorna 0.
-	int ResultadoGetParameters = 0;
-
 	//Verifica se o evento é valido
 	if (ObjetoValido(Evento_OnGetParameters))
 	{
 		//Evento valido.
 
-		//Chama o método para notificar o usuário que 
-		ResultadoGetParameters = Evento_OnGetParameters();
-
-		//Verifica se o usuário implementou o evento.
-		if (ResultadoGetParameters == 1)
-		{
-			//O usuário chamou o método (SetParameters) e definiu as configurações.
-
-			//Define os valores nos parametros de saida.
-			*pdwFlags = GetParameters_dwFlags;
-			*pdwQueue = GetParameters_pdwQueue;
-
-			//Define sucesso na operação.
-			Resultado = S_OK;
-		}
-		else
-		{
-			//Este método não foi implementado pelo usuário.
-			Resultado = E_NOTIMPL;
-		}
+		//Chama o evento para notificar o cliente.
+		Resultado = Evento_OnGetParameters(pdwFlags, pdwQueue);
 	}
-
-
+	else
+	{
+		//O evento não foi implementado.. Deixa continuar.
+	}
 
 	//Sai da sessão critica.
 	LeaveCriticalSection(&SessaoCritica);
@@ -85,15 +64,13 @@ HRESULT __stdcall CLN_IMFAsyncCallback::Invoke(IMFAsyncResult* pAsyncResult)
 	if (ObjetoValido(Evento_OnInvoke))
 	{
 		//Evento valido.
-		//Chama o evento para notificar a classe gerenciada base.
-		Evento_OnInvoke(pAsyncResult);
 
-		//Define sucesso
-		Resultado = S_OK;
+		//Chama o evento para notificar o cliente.
+		Resultado = Evento_OnInvoke(pAsyncResult);
 	}
 	else
 	{
-		Resultado = E_NOTIMPL;
+		//O evento não foi implementado.. Deixa continuar.
 	}
 
 	//Sai da sessão critica.
@@ -101,18 +78,4 @@ HRESULT __stdcall CLN_IMFAsyncCallback::Invoke(IMFAsyncResult* pAsyncResult)
 
 	//Retorna o resultado.
 	return Resultado;
-}
-
-
-
-//
-// Método auxiliar para o método(GetParameters) da interface IMFAsyncCallback
-//
-
-//Método responsável por definir as configurações do sistema Assincrono para ser retornado pelo método (GetParameters)
-void CLN_IMFAsyncCallback::SetParameters(DWORD dwFlags, DWORD dwQueue)
-{
-	//Define os valores.
-	GetParameters_dwFlags = dwFlags;
-	GetParameters_pdwQueue = dwQueue;
 }

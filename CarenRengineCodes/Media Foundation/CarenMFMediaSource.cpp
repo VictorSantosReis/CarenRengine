@@ -486,11 +486,10 @@ CarenResult CarenMFMediaSource::CreatePresentationDescriptor([Out] ICarenMFPrese
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
-	IMFPresentationDescriptor* pDescritor = NULL;
-	ICarenMFPresentationDescriptor^ InterfaceDescritor = nullptr;
+	IMFPresentationDescriptor* vi_pOutPresentationDesc = Nulo;
 
-	//Chama o método para criar o descritor de apresentação.
-	Hr = PonteiroTrabalho->CreatePresentationDescriptor(&pDescritor);
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->CreatePresentationDescriptor(&vi_pOutPresentationDesc);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -507,17 +506,11 @@ CarenResult CarenMFMediaSource::CreatePresentationDescriptor([Out] ICarenMFPrese
 		Sair;
 	}
 
-	//Cria a interface que vai conter o descritor de apresentação
-	InterfaceDescritor = gcnew CarenMFPresentationDescriptor();
+	//Cria a interface que vai ser retornada.
+	Param_Out_DescritorApresentação = gcnew CarenMFPresentationDescriptor();
 
-	//Chama o método para definir o ponteiro do descritor
-	InterfaceDescritor->AdicionarPonteiro(pDescritor);
-
-	//Define a interface criada no parametro de saida.
-	Param_Out_DescritorApresentação = InterfaceDescritor;
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	//Define o ponteiro na interface a ser retornada.
+	CarenSetPointerToICarenSafe(vi_pOutPresentationDesc, Param_Out_DescritorApresentação, true);
 
 Done:;
 	//Retorna o resultado
@@ -537,10 +530,10 @@ CarenResult CarenMFMediaSource::GetCharacteristics([Out] Enumeracoes::CA_MFMEDIA
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
-	DWORD CaracteristicasMediaSource = 0;
+	DWORD vi_OutCharacteristicsSource = 0;
 
 	//Chama o método para obter as caracteriscticas.
-	Hr = PonteiroTrabalho->GetCharacteristics(&CaracteristicasMediaSource);
+	Hr = PonteiroTrabalho->GetCharacteristics(&vi_OutCharacteristicsSource);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -558,10 +551,7 @@ CarenResult CarenMFMediaSource::GetCharacteristics([Out] Enumeracoes::CA_MFMEDIA
 	}
 
 	//Define as caracteristicas no parametro de saida
-	Param_Out_Caracteristicas = static_cast<CA_MFMEDIASOURCE_CHARACTERISTICS>(CaracteristicasMediaSource);
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	Param_Out_Caracteristicas = static_cast<CA_MFMEDIASOURCE_CHARACTERISTICS>(vi_OutCharacteristicsSource);
 
 Done:;
 	//Retorna o resultado
@@ -586,38 +576,25 @@ CarenResult CarenMFMediaSource::Start(ICarenMFPresentationDescriptor^ Param_Desc
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
-	Utilidades Util;
-	PropVariantManager UtilVariant = PropVariantManager();
-	LPPROPVARIANT vi_PropVar = Nulo;
-	IMFPresentationDescriptor* pDescritorApresentation = NULL;
-	GUID GuidFormatoHora = GUID_NULL;
+	IMFPresentationDescriptor* vi_pPresentationDesc = Nulo;
+	GUID vi_GuidTimeFormat = GUID_NULL;
+	PROPVARIANT* vi_pPropvar = Nulo;
 
-	//Converte a PropVariant gerenciada para uma não gerenciada.
-	vi_PropVar = static_cast<LPPROPVARIANT>(UtilVariant.ConverterPropVariantManaged_ToUnmanaged(Param_PosiçãoInicio));
+	//Recupera o ponteiro para o descritor de apresentação.
+	CarenGetPointerFromICarenSafe(Param_DescritorApresentação, vi_pPresentationDesc);
 
-	//Verifica se foi especificado o guid
-	if (String::IsNullOrEmpty(Param_GuidTimeFormato))
-	{
-		//O guid deve ser GUID_NULL.
-	}
-	else
-	{
-		//Cria o guid do time aparti do guid informado.
-		GuidFormatoHora = Util.CreateGuidFromString(Param_GuidTimeFormato);
-	}
-
-	//Obtém o ponteiro do descritor de apresentação
-	Resultado = Param_DescritorApresentação->RecuperarPonteiro((LPVOID*)&pDescritorApresentation);
-
-	//Verifica o resultado
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Sai do método.
-		goto Done;
-	}
+	//Converte a string para GUID se informado.
+	if (StringObjetoValido(Param_GuidTimeFormato))
+		vi_GuidTimeFormat = CarenCreateGuidFromStringSafe(Param_GuidTimeFormato, vi_GuidTimeFormat);
+	
+	//Converte a PROPVARIANT gerenciada para a nativa.
+	CarenConvertPropvariantToNativeSafe(Param_PosiçãoInicio, vi_pPropvar);
 
 	//Chama o método para poder iniciar.
-	Hr = PonteiroTrabalho->Start(pDescritorApresentation, &GuidFormatoHora, const_cast<PROPVARIANT*>(vi_PropVar));
+	Hr = PonteiroTrabalho->Start(
+		vi_pPresentationDesc,
+		&vi_GuidTimeFormat,
+		const_cast<PROPVARIANT*>(vi_pPropvar));
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -636,7 +613,7 @@ CarenResult CarenMFMediaSource::Start(ICarenMFPresentationDescriptor^ Param_Desc
 
 Done:;
 	//Libera a PropVariant
-	DeletarPropVariantSafe(&vi_PropVar);
+	DeletarPropVariantSafe(&vi_pPropvar);
 
 	//Retorna o resultado
 	return Resultado;

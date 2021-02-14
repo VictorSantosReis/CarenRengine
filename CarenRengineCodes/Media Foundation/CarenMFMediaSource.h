@@ -34,8 +34,7 @@ using namespace CarenRengine::SDKBase::Estruturas;
 using namespace CarenRengine::SDKUtilidades;
 
 /// <summary>
-/// (Conluido - Fase de testes) - Fontes de mídia são objetos que geram dados de mídia.Por exemplo, os dados podem vir de um arquivo de vídeo, um fluxo de rede ou um dispositivo de hardware, como uma câmera. 
-/// Cada fonte de mídia contém um ou mais fluxos, e entrega de cada fluxo de dados de um tipo, como áudio ou vídeo.
+/// Classe responsável por representa uma 'fonte' de mídia que serve para gerar dados de mídia para o pepiline de renderização de áudio, vídeo ou ambos.
 /// </summary>
 public ref class CarenMFMediaSource : public ICarenMFMediaSource
 {
@@ -250,8 +249,6 @@ public:
 	/// Este método pode ser escrito de forma diferente para cada interface.
 	/// </summary>
 	virtual void Finalizar();
-
-
 
 
 

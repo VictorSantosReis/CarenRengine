@@ -416,10 +416,10 @@ CarenResult CarenMFStreamSink::GetMediaSink(ICaren^ Param_Out_MidiaSink)
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variveis utilizadas pelo método
-	IMFMediaSink* pMediaSink = NULL;
+	IMFMediaSink* vi_pOutMediaSink = NULL;
 	
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetMediaSink(&pMediaSink);
+	Hr = PonteiroTrabalho->GetMediaSink(&vi_pOutMediaSink);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -436,9 +436,9 @@ CarenResult CarenMFStreamSink::GetMediaSink(ICaren^ Param_Out_MidiaSink)
 		Sair;
 	}
 
-	//Define o ponteiro no parametro
-	Param_Out_MidiaSink->AdicionarPonteiro(pMediaSink);
-
+	//Define o ponteiro na interface de saida.
+	CarenSetPointerToICarenSafe(vi_pOutMediaSink, Param_Out_MidiaSink, true);
+	
 Done:;
 	//Retorna o resultado
 	return Resultado;
@@ -462,20 +462,13 @@ CarenResult CarenMFStreamSink::ProcessSample(ICarenMFSample^ Param_AmostraMidia)
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variveis utilizadas pelo método
-	IMFSample *pSampleMidia = NULL;
+	IMFSample *vi_pSample = Nulo;
 
-	//Chama o método para recuperar o ponteiro para o Sample
-	Resultado = Param_AmostraMidia->RecuperarPonteiro((LPVOID*)&pSampleMidia);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Sai do método
-		goto Done;
-	}
+	//Recupera o ponteiro para a amostra de mídia
+	CarenGetPointerFromICarenSafe(Param_AmostraMidia, vi_pSample);
 
 	//Chama o método para processar a amostra
-	Hr = PonteiroTrabalho->ProcessSample(pSampleMidia);
+	Hr = PonteiroTrabalho->ProcessSample(vi_pSample);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -510,10 +503,10 @@ CarenResult CarenMFStreamSink::GetIdentifier([Out] UInt32% Param_Out_Identificad
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método.
-	DWORD IdentificadorFluxo = 0;
+	DWORD vi_OutIdentficadorFluxo = 0;
 
 	//Chama o método para recuperar o identificador deste fluxo.
-	Hr = PonteiroTrabalho->GetIdentifier(&IdentificadorFluxo);
+	Hr = PonteiroTrabalho->GetIdentifier(&vi_OutIdentficadorFluxo);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -531,10 +524,7 @@ CarenResult CarenMFStreamSink::GetIdentifier([Out] UInt32% Param_Out_Identificad
 	}
 
 	//Define o resultado.
-	Param_Out_IdentificadorFluxo = safe_cast<UInt32>(IdentificadorFluxo);
-
-	//Deifine sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	Param_Out_IdentificadorFluxo = safe_cast<UInt32>(vi_OutIdentficadorFluxo);
 
 Done:;
 	//Retorna o resultado
@@ -556,11 +546,10 @@ CarenResult CarenMFStreamSink::GetMediaTypeHandler([Out] ICarenMFMediaTypeHandle
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas pelo método
-	IMFMediaTypeHandler *pHandlerMedia = NULL;
-	ICarenMFMediaTypeHandler^ InterfaceHandlerMidia = nullptr;
+	IMFMediaTypeHandler *vi_pOutMediaTypeHandler = NULL;
 
-	//Chama o método para obter o Gerenciador de tipos de mídia para este StreamSink
-	Hr = PonteiroTrabalho->GetMediaTypeHandler(&pHandlerMedia);
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetMediaTypeHandler(&vi_pOutMediaTypeHandler);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -577,17 +566,11 @@ CarenResult CarenMFStreamSink::GetMediaTypeHandler([Out] ICarenMFMediaTypeHandle
 		Sair;
 	}
 
-	//Cria a interface que vai conter o ponteiro
-	InterfaceHandlerMidia = gcnew CarenMFMediaTypeHandler(false);
+	//Cria a interface a ser retornada.
+	Param_Out_MidiaHandle = gcnew CarenMFMediaTypeHandler(false);
 	
-	//Chama o método para definir o ponteiro
-	InterfaceHandlerMidia->AdicionarPonteiro(pHandlerMedia);
-
-	//Define a interface criada no parametro de retorno.
-	Param_Out_MidiaHandle = InterfaceHandlerMidia;
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	//Define o ponteiro na interface a ser retornada.
+	CarenSetPointerToICarenSafe(vi_pOutMediaTypeHandler, Param_Out_MidiaHandle, true);
 
 Done:;
 	//Retorna o resultado
@@ -612,93 +595,24 @@ CarenResult CarenMFStreamSink::PlaceMarker(Enumeracoes::CA_MFSTREAMSINK_MARKER_T
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variveis utilizadas no método
-	Utilidades Util;
-	PropVariantManager UtilVariant = PropVariantManager();
-	LPPROPVARIANT vi_pPropValorAdd = Nulo;
-	LPPROPVARIANT vi_pPropDadosAnexoEvento = Nulo;
-	MFSTREAMSINK_MARKER_TYPE Marcador;
+	MFSTREAMSINK_MARKER_TYPE vi_MarkerType = static_cast<MFSTREAMSINK_MARKER_TYPE>(Param_Marcador);
+	LPPROPVARIANT vi_pValueAdicional = Nulo; //Pode ser Nulo.
+	LPPROPVARIANT vi_pDadosEvento = Nulo; //Pode ser Nulo.
 
-	//Verifica se define na variavel o marcador definido pelo usuario
-	switch (Param_Marcador)
-	{
-	case CarenRengine::SDKBase::Enumeracoes::CA_MFSTREAMSINK_MARKER_TYPE::MFSTREAMSINK_MARKER_DEFAULT:
-		//Define o marcador.
-		Marcador = MFSTREAMSINK_MARKER_DEFAULT;
-		break;
+	//Converte a PROPVARIANT gerenciada para nativa com os dados do valor adicional se fornecido.
+	if (ObjetoGerenciadoValido(Param_ValorAdicional))
+		CarenConvertPropvariantToNativeSafe(Param_ValorAdicional, vi_pValueAdicional);
 
-	case CarenRengine::SDKBase::Enumeracoes::CA_MFSTREAMSINK_MARKER_TYPE::MFSTREAMSINK_MARKER_ENDOFSEGMENT:
-		//Define o marcador.
-		Marcador = MFSTREAMSINK_MARKER_ENDOFSEGMENT;
-		break;
+	//Converte a PROPVARIANT gerenciada para nativa com os dados do de anexo do evento se fornecido.
+	if (ObjetoGerenciadoValido(Param_DadosAnexoEvento))
+		CarenConvertPropvariantToNativeSafe(Param_DadosAnexoEvento, vi_pDadosEvento);
 
-	case CarenRengine::SDKBase::Enumeracoes::CA_MFSTREAMSINK_MARKER_TYPE::MFSTREAMSINK_MARKER_TICK:
-		//Define o marcador.
-		Marcador = MFSTREAMSINK_MARKER_TICK;
-		break;
-
-	case CarenRengine::SDKBase::Enumeracoes::CA_MFSTREAMSINK_MARKER_TYPE::MFSTREAMSINK_MARKER_EVENT:
-		//Define o marcador.
-		Marcador = MFSTREAMSINK_MARKER_EVENT;
-		break;
-	}
-
-	//Verifica se vai definir valores adicionais ao marcador
-	if(Param_ValorAdicional != nullptr)
-	{
-		//Vai adicionar valores adicionais ao marcador
-
-		//Converte a PropVariant gerenciada para a nativa.
-		vi_pPropValorAdd = static_cast<LPPROPVARIANT>(UtilVariant.ConverterPropVariantManaged_ToUnmanaged(Param_ValorAdicional));
-
-		//Verifica se não ocorreu um erro na conversão.
-		if (!ObjetoValido(vi_pPropValorAdd))
-		{
-			//Falhou ao converter a propvariant.
-
-			//Define falha.
-			Resultado.AdicionarCodigo(ResultCode::ER_CONVERSAO_PROPVARIANT, false);
-
-			//Sai do método
-			Sair;
-		}
-	}
-	else
-	{
-		//Não vai definir valores adicionais.
-	}
-
-	//Verifica se vai anexar um valor ao evento.
-	if (Param_DadosAnexoEvento != nullptr)
-	{
-		//Vai anexa um valor ao evento.
-
-		//Converte a PropVariant gerenciada para a nativa.
-		vi_pPropDadosAnexoEvento = static_cast<LPPROPVARIANT>(UtilVariant.ConverterPropVariantManaged_ToUnmanaged(Param_DadosAnexoEvento));
-
-		//Verifica se não ocorreu um erro na conversão.
-		if (!ObjetoValido(vi_pPropDadosAnexoEvento))
-		{
-			//Falhou ao converter a propvariant.
-
-			//Define falha.
-			Resultado.AdicionarCodigo(ResultCode::ER_CONVERSAO_PROPVARIANT, false);
-
-			//Sai do método
-			Sair;
-		}
-	}
-	else
-	{
-		//Não vai enexar valores ao evento.
-
-
-	}
-
-	//Chama o método para definir o marcador.
+	//Chama o método para realizar a operação.
 	Hr = PonteiroTrabalho->PlaceMarker(
-		Marcador, 
-		Param_ValorAdicional != nullptr? vi_pPropValorAdd: NULL, 
-		Param_DadosAnexoEvento != nullptr ? vi_pPropDadosAnexoEvento : NULL);
+		vi_MarkerType,
+		ObjetoValido(vi_pValueAdicional)? const_cast<LPPROPVARIANT>(vi_pValueAdicional) : Nulo,
+		ObjetoValido(vi_pDadosEvento) ? const_cast<LPPROPVARIANT>(vi_pDadosEvento) : Nulo
+	);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -715,13 +629,10 @@ CarenResult CarenMFStreamSink::PlaceMarker(Enumeracoes::CA_MFSTREAMSINK_MARKER_T
 		Sair;
 	}
 
-	//Deifine sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
 Done:;
 	//Limpa as PropVariants
-	DeletarPropVariantSafe(&vi_pPropValorAdd);
-	DeletarPropVariantSafe(&vi_pPropDadosAnexoEvento);
+	DeletarPropVariantSafe(&vi_pValueAdicional);
+	DeletarPropVariantSafe(&vi_pDadosEvento);
 
 	//Retorna o resultado
 	return Resultado;
@@ -756,9 +667,6 @@ CarenResult CarenMFStreamSink::Flush()
 		//Sai do método
 		Sair;
 	}
-
-	//Deifine sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
 
 Done:;
 	//Retorna o resultado

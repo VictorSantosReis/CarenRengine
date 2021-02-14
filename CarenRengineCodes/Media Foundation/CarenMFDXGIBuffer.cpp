@@ -31,9 +31,9 @@ CarenMFDXGIBuffer::CarenMFDXGIBuffer()
 	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
-//
+
 // Métodos da interface ICaren
-//
+
 
 /// <summary>
 /// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 
@@ -418,12 +418,11 @@ CarenResult CarenMFDXGIBuffer::GetResource(String^ Param_Guid, ICaren^ Param_Out
 	ResultadoCOM  Hr = E_FAIL;
 
 	//Variaveis utilizadas no método.
-	Utilidades Util;
 	GUID vi_GuidRecurso = GUID_NULL;
 	LPUNKNOWN vi_pOutResource = NULL;
 
 	//Cria o guid da interface de recurso.
-	vi_GuidRecurso = Util.CreateGuidFromString(Param_Guid);
+	CarenCreateGuidFromStringSafe(Param_Guid, vi_GuidRecurso);
 
 	//Chama o método para realizar a operação
 	Hr = PonteiroTrabalho->GetResource(vi_GuidRecurso, reinterpret_cast<void**>(&vi_pOutResource));
@@ -507,17 +506,16 @@ CarenResult CarenMFDXGIBuffer::GetUnknown(String^ Param_GuidInterface, String^ P
 	ResultadoCOM  Hr = E_FAIL;
 
 	//Variaveis utilizadas no método.
-	Utilidades Util;
-	GUID GuidInterface = GUID_NULL;
-	GUID RidInterfaceRequisitada = GUID_NULL;
+	GUID vi_GuidInterface = GUID_NULL;
+	GUID vi_RIIDInterface = GUID_NULL;
 	LPVOID vi_pOutInterface = NULL;
 
-	//Obtém os dados dos guids
-	GuidInterface = Util.CreateGuidFromString(Param_GuidInterface);
-	RidInterfaceRequisitada = Util.CreateGuidFromString(Param_IID);
+	//Converte os parametros de Strings para GUIDs nativos.
+	CarenCreateGuidFromStringSafe(Param_GuidInterface, vi_GuidInterface);
+	CarenCreateGuidFromStringSafe(Param_IID, vi_RIIDInterface);
 
 	//Chama o método para realizar a operação
-	Hr = PonteiroTrabalho->GetUnknown(GuidInterface, RidInterfaceRequisitada, &vi_pOutInterface);
+	Hr = PonteiroTrabalho->GetUnknown(vi_GuidInterface, vi_RIIDInterface, &vi_pOutInterface);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -557,18 +555,17 @@ CarenResult CarenMFDXGIBuffer::SetUnknown(String^ Param_GuidInterface, ICaren^ P
 	ResultadoCOM  Hr = E_FAIL;
 
 	//Variaveis utilizadas no método.
-	Utilidades Util;
-	GUID GuidInterface = GUID_NULL;
+	GUID vi_GuidInterface = GUID_NULL;
 	IUnknown* vi_pOutInterface = NULL;
 
-	//Obtém o Guid.
-	GuidInterface = Util.CreateGuidFromString(Param_GuidInterface);
+	//Obtém o Guid da interface a ser definida.
+	CarenCreateGuidFromStringSafe(Param_GuidInterface, vi_GuidInterface);
 
-	//Obtém o ponteiro para a interface nativa.
+	//Obtém o ponteiro para a interface nativa a ser definida.
 	CarenGetPointerFromICarenSafe(Param_Interface, vi_pOutInterface);
 
 	//Chama o método para realizar a função
-	Hr = PonteiroTrabalho->SetUnknown(GuidInterface, vi_pOutInterface);
+	Hr = PonteiroTrabalho->SetUnknown(vi_GuidInterface, vi_pOutInterface);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);

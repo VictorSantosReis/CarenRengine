@@ -34,7 +34,7 @@ using namespace CarenRengine::SDKUtilidades;
 
 
 /// <summary>
-/// (Concluido - Fase de Testes) - Classe responsável por conter um buffer de mídia para gerenciar uma superfície de infraestrutura gráfica DirectX(DXGI) da Microsoft.
+/// Classe responsável por conter um buffer de mídia para gerenciar uma superfície de infraestrutura gráfica DirectX(DXGI) da Microsoft.
 /// </summary>
 public ref class CarenMFDXGIBuffer :public ICarenMFDXGIBuffer
 {

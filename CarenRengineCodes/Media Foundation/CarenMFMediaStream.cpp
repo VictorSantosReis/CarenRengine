@@ -31,9 +31,9 @@ CarenMFMediaStream::CarenMFMediaStream()
 	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
-//
+
 // Métodos da interface ICaren
-//
+
 
 /// <summary>
 /// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 
@@ -397,9 +397,11 @@ void CarenMFMediaStream::Finalizar()
 }
 
 
-//
-//Métodos da interface Proprietaria
-//
+
+
+
+//Métodos da interface proprietaria (ICarenMFMediaStream)
+
 
 CarenResult CarenMFMediaStream::GetMediaSource(ICarenMFMediaSource^% Param_Out_FonteMidia)
 {
@@ -539,9 +541,10 @@ Done:;
 
 
 
-//
-//Métodos da interface ICarenMFGeradorEventosMidia
-//
+
+
+// Métodos da interface proprietaria (ICarenMFMediaEventGenerator)
+
 
 /// <summary>
 /// (GetEvent) - Recupera o próximo evento na fila. Este método é (Síncrono).
@@ -550,7 +553,7 @@ Done:;
 /// </summary>
 /// <param name="Param_Flags">Especifica como deve obter o evento.</param>
 /// <param name="Param_Out_MidiaEvent">Recebe a interface que contém as informações da operação assincrona para o evento notificado. O chamador deve liberar a interface.</param>
-CarenResult CarenMFMediaStream::GetEvent(CA_MF_GET_FLAGS_EVENT Param_Flags, [Out] ICarenMFMediaEvent^% Param_Out_MidiaEvent)
+CarenResult CarenMFMediaEventGenerator::GetEvent(CA_MF_GET_FLAGS_EVENT Param_Flags, [Out] ICarenMFMediaEvent^% Param_Out_MidiaEvent)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -559,11 +562,10 @@ CarenResult CarenMFMediaStream::GetEvent(CA_MF_GET_FLAGS_EVENT Param_Flags, [Out
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas pelo método
-	ICarenMFMediaEvent^ InterfaceSolictada = nullptr;
-	IMFMediaEvent* pMediaEvent = NULL;
+	IMFMediaEvent* vi_pOutMediaEvent = NULL;
 
 	//Chama o método para obter o evento.
-	Hr = PonteiroTrabalho->GetEvent((UInt32)Param_Flags, &pMediaEvent);
+	Hr = PonteiroTrabalho->GetEvent(static_cast<DWORD>(Param_Flags), &vi_pOutMediaEvent);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -580,17 +582,11 @@ CarenResult CarenMFMediaStream::GetEvent(CA_MF_GET_FLAGS_EVENT Param_Flags, [Out
 		Sair;
 	}
 
-	//Cria a interface que vai conter o evento
-	InterfaceSolictada = gcnew CarenMFMediaEvent();
+	//Cria a interface que vai ser retornada no parametro de saida.
+	Param_Out_MidiaEvent = gcnew CarenMFMediaEvent();
 
-	//Chama o método para deifinir o ponteiro
-	InterfaceSolictada->AdicionarPonteiro(pMediaEvent);
-
-	//Define a interface criada no parametro de saida.
-	Param_Out_MidiaEvent = InterfaceSolictada;
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	//Define o ponteiro na interface
+	CarenSetPointerToICarenSafe(vi_pOutMediaEvent, Param_Out_MidiaEvent, true);
 
 Done:;
 	//Retorna o resultado da operação.
@@ -604,7 +600,7 @@ Done:;
 /// <param name="Param_Callback">A interface que vai receber os eventos que seram gerados pelas interfaces que derivam desta.</param>
 /// <param name="Param_ObjetoDesconhecido">Uma interface ICaren de um objeto de estado, definido pelo chamador. Este parâmetro pode ser NULO. Você pode usar esse objeto para armazenar 
 /// informações de estado. O objeto é retornado ao responsável pela chamada quando o retorno de chamada é invocado.</param>
-CarenResult CarenMFMediaStream::BeginGetEvent(ICarenMFAsyncCallback^ Param_Callback, ICaren^ Param_ObjetoDesconhecido)
+CarenResult CarenMFMediaEventGenerator::BeginGetEvent(ICarenMFAsyncCallback^ Param_Callback, ICaren^ Param_ObjetoDesconhecido)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -613,36 +609,18 @@ CarenResult CarenMFMediaStream::BeginGetEvent(ICarenMFAsyncCallback^ Param_Callb
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas pelo método
-	IMFAsyncCallback* pInterfaceCallback = NULL;
-	IUnknown* pDadosObjeto = NULL;
+	IMFAsyncCallback* vi_pCallback = NULL;
+	IUnknown* vi_pDadosObjeto = NULL; //Pode ser Nulo.
 
-	//Recupera o Callback
-	Resultado = Param_Callback->RecuperarPonteiro((LPVOID*)& pInterfaceCallback);
+	//Recupera o ponteiro para a interface de Callback
+	CarenGetPointerFromICarenSafe(Param_Callback, vi_pCallback);
 
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Sai do método
-		goto Done;
-	}
+	//Verifica se forneceu uma interface de dados e recupera o ponteiro
+	if (ObjetoGerenciadoValido(Param_ObjetoDesconhecido))
+		CarenGetPointerFromICarenSafe(Param_ObjetoDesconhecido, vi_pDadosObjeto);
 
-	//Verifica se um objeto com dados foi especificado e obtém
-	if (Param_ObjetoDesconhecido != nullptr)
-	{
-		//Obtém o objeto desconhecido.
-
-		Resultado = Param_ObjetoDesconhecido->RecuperarPonteiro((LPVOID*)& pDadosObjeto);
-	}
-
-	//Verifica se não houve erro ao obter o objeto de dados.
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Sai do método
-		goto Done;
-	}
-
-	//Chama o método para obter o proximo evento na fila.
-	Hr = PonteiroTrabalho->BeginGetEvent(pInterfaceCallback, ObjetoValido(pDadosObjeto) ? pDadosObjeto : NULL);
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->BeginGetEvent(vi_pCallback, vi_pDadosObjeto);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -669,7 +647,7 @@ Done:;
 /// </summary>
 /// <param name="Param_ResultAsync">A interface ICarenMFAsyncResult. Essa interface deve ser a retornada pelo Evento (OnInvoke).</param>
 /// <param name="Param_Out_MidiaEvent">Recebe a interface que contém as informações da operação assincrona para o evento notificado. O chamador deve liberar a interface.</param>
-CarenResult CarenMFMediaStream::EndGetEvent(ICarenMFAsyncResult^ Param_ResultAsync, [Out] ICarenMFMediaEvent^% Param_Out_MidiaEvent)
+CarenResult CarenMFMediaEventGenerator::EndGetEvent(ICarenMFAsyncResult^ Param_ResultAsync, [Out] ICarenMFMediaEvent^% Param_Out_MidiaEvent)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -678,23 +656,14 @@ CarenResult CarenMFMediaStream::EndGetEvent(ICarenMFAsyncResult^ Param_ResultAsy
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas pelo método
-	IMFAsyncResult* pResultAsync = NULL;
-	IMFMediaEvent* pMediaEvent = NULL;
-	ICarenMFMediaEvent^ InterfaceMidiaEvent = nullptr;
+	IMFAsyncResult* vi_pResultAsync = Nulo;
+	IMFMediaEvent* vi_pOutMediaEvent = Nulo;
 
-	//Recupera o resultado assincrono.
-	Resultado = Param_ResultAsync->RecuperarPonteiro((LPVOID*)& pResultAsync);
+	//Recupera o ponteiro para a interface de resultado assincrono.
+	CarenGetPointerFromICarenSafe(Param_ResultAsync, vi_pResultAsync);
 
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Sai do método
-		goto Done;
-	}
-
-	//Chama o método para concluir a operação assincrona e obter o Media Event com as informações
-	//do evento concluido.
-	Hr = PonteiroTrabalho->EndGetEvent(pResultAsync, &pMediaEvent);
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->EndGetEvent(vi_pResultAsync, &vi_pOutMediaEvent);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -711,17 +680,11 @@ CarenResult CarenMFMediaStream::EndGetEvent(ICarenMFAsyncResult^ Param_ResultAsy
 		Sair;
 	}
 
-	//Cria a interface que vai conter o evento
-	InterfaceMidiaEvent = gcnew CarenMFMediaEvent();
+	//Cria a interface a ser retornada.
+	Param_Out_MidiaEvent = gcnew CarenMFMediaEvent();
 
-	//Chama o método para deifinir o ponteiro
-	InterfaceMidiaEvent->AdicionarPonteiro(pMediaEvent);
-
-	//Define a interface criada no parametro de saida.
-	Param_Out_MidiaEvent = InterfaceMidiaEvent;
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	//Define o ponteiro na interface a ser retornada.
+	CarenSetPointerToICarenSafe(vi_pOutMediaEvent, Param_Out_MidiaEvent, true);
 
 Done:;
 	//Retorna o resultado da operação.
@@ -735,7 +698,12 @@ Done:;
 /// <param name="Param_GuidExtendedType">O tipo estendido. Se o evento não tiver um tipo estendido, defina como NULO. O tipo estendido é retornado pelo método (ICarenMFMediaEvent.GetExtendedType) do evento.</param>
 /// <param name="Param_HResultCode">Um código de sucesso ou falha indicando o status do evento. Esse valor é retornado pelo método (ICarenMFMediaEvent.GetStatus) do evento.</param>
 /// <param name="Param_Dados">uma CA_PROPVARIANT que contém o valor do evento. Este parâmetro pode ser NULO. Esse valor é retornado pelo método (ICarenMFMediaEvent.GetValue) do evento.</param>
-CarenResult CarenMFMediaStream::InserirEventoFila(Enumeracoes::CA_MediaEventType Param_TipoEvento, String^ Param_GuidExtendedType, Int32 Param_HResultCode, Estruturas::CA_PROPVARIANT^ Param_Dados) {
+CarenResult CarenMFMediaEventGenerator::QueueEvent(
+	Enumeracoes::CA_MediaEventType Param_TipoEvento,
+	String^ Param_GuidExtendedType,
+	Int32 Param_HResultCode,
+	Estruturas::CA_PROPVARIANT^ Param_Dados)
+{
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
 
@@ -743,46 +711,26 @@ CarenResult CarenMFMediaStream::InserirEventoFila(Enumeracoes::CA_MediaEventType
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas pelo método
-	Utilidades Util;
-	PropVariantManager UtilVariant = PropVariantManager();
-	MediaEventType MTypeEvento = static_cast<MediaEventType>(Param_TipoEvento);
-	LPPROPVARIANT vi_PropVar = Nulo;
-	bool PropVarConverted = false;
-	GUID GuidExtendedType = GUID_NULL;
-	HRESULT ValorResultEvento = Param_HResultCode;
+	MediaEventType vi_TypeEvent = static_cast<MediaEventType>(Param_TipoEvento);
+	GUID vi_GuidExtendEvent = GUID_NULL; //Pode ser NULO.
+	HRESULT vi_Hresult = static_cast<HRESULT>(Param_HResultCode);
+	PROPVARIANT* vi_Propvar = Nulo; //Pode ser NULO.
 
-	//Cria o Guid se ele for valido.
-	if (!String::IsNullOrEmpty(Param_GuidExtendedType))
-	{
-		//Cria o Guid.
-		GuidExtendedType = Util.CreateGuidFromString(Param_GuidExtendedType);
-	}
+	//Converte a string para o GUID se fornecido.
+	if (StringObjetoValido(Param_GuidExtendedType))
+		CarenCreateGuidFromStringSafe(Param_GuidExtendedType, vi_GuidExtendEvent); //Converte o GUID
 
-	//Verifica se forneceu dados para o evento.
-	if (Param_Dados != nullptr)
-	{
-		//Converte a PropVariant gerenciada para a nativa.
-		vi_PropVar = static_cast<LPPROPVARIANT>(UtilVariant.ConverterPropVariantManaged_ToUnmanaged(Param_Dados));
+	//Verifica se forneceu uma estrutura PROPVARIANT com o valor do evento.
+	if (ObjetoGerenciadoValido(Param_Dados))
+		CarenConvertPropvariantToNativeSafe(Param_Dados, vi_Propvar); //Converte CA_PROPVARIANT
 
-		//Verifica se não ocorreu um erro na conversão.
-		if (!ObjetoValido(vi_PropVar))
-		{
-			//Falhou ao converter a propvariant.
-
-			//Define falha.
-			Resultado.AdicionarCodigo(ResultCode::ER_CONVERSAO_PROPVARIANT, false);
-
-			//Sai do método
-			Sair;
-		}
-	}
-
-	//Chama o método para adicionar o evento na lista
+	//Chama o método para realizar a operação.
 	Hr = PonteiroTrabalho->QueueEvent(
-		MTypeEvento, 
-		GuidExtendedType, 
-		ValorResultEvento,
-		Param_Dados != nullptr ? vi_PropVar : NULL);
+		vi_TypeEvent,
+		vi_GuidExtendEvent,
+		vi_Hresult,
+		ObjetoValido(vi_Propvar) ? const_cast<PROPVARIANT*>(vi_Propvar) : Nulo
+	);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -800,8 +748,8 @@ CarenResult CarenMFMediaStream::InserirEventoFila(Enumeracoes::CA_MediaEventType
 	}
 
 Done:;
-	//Libera a PropVariant
-	DeletarPropVariantSafe(&vi_PropVar);
+	//Libera a memória utilizada pela propvariant.
+	DeletarPropVariantSafe(&vi_Propvar);
 
 	//Retorna o resultado da operação.
 	return Resultado;

@@ -33,7 +33,7 @@ using namespace CarenRengine::SDKUtilidades;
 
 
 /// <summary>
-/// (Concluido - Fase de Testes) - Classe responsável por gerenciar uma coleção que contém ponteiros para interfaces.
+/// Classe responsável por gerenciar uma coleção que contém ponteiros para interfaces.
 /// </summary>
 public ref class CarenMFCollection :public ICarenMFCollection
 {

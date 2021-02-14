@@ -43,6 +43,10 @@ public:
 	{
 		//Inicia a sessão critica.
 		BOOL Resultado = InitializeCriticalSectionAndSpinCount(&SessaoCritica, 0x00000400);
+
+		//Verifica o resultado
+		if (!Resultado)
+			throw gcnew Exception("Não foi possivel inicializar a 'Sessão Criticca' de código para sincronização de chamadas!");
 	}
 
 	~CLN_IMFClockStateSink()

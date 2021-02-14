@@ -57,9 +57,9 @@ CarenMFCollection::CarenMFCollection(Boolean Param_CriarInterface)
 	}
 }
 
-//
+
 // Métodos da interface ICaren
-//
+
 
 /// <summary>
 /// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 
@@ -442,22 +442,13 @@ CarenResult CarenMFCollection::AddElement(ICaren^ Param_Elemento)
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas pelo método
-	LPVOID pInterface = NULL;
+	IUnknown* vi_pElementAdd = NULL;
 
-	//Recupera o ponteiro para a interface
-	Resultado = Param_Elemento->RecuperarPonteiro(&pInterface);
-
-	//Verifica se obteve sucesso
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou ao obter o ponteiro
-
-		//Sai do método.
-		goto Done;
-	}
+	//Recupera o ponteiro para o elemento a ser adicionado.
+	CarenGetPointerFromICarenSafe(Param_Elemento, vi_pElementAdd);
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->AddElement((IUnknown*)pInterface);
+	Hr = PonteiroTrabalho->AddElement(vi_pElementAdd);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -493,10 +484,10 @@ CarenResult CarenMFCollection::GetElement(UInt32 Param_IndexElemento, ICaren^ Pa
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas pelo método
-	IUnknown* pInterfaceInIndex = NULL;
+	IUnknown* vi_pOutInterfaceByIndex = NULL;
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetElement(Param_IndexElemento, &pInterfaceInIndex);
+	Hr = PonteiroTrabalho->GetElement(Param_IndexElemento, &vi_pOutInterfaceByIndex);
 	
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -514,7 +505,7 @@ CarenResult CarenMFCollection::GetElement(UInt32 Param_IndexElemento, ICaren^ Pa
 	}
 
 	//Define o ponteiro na interface de saida.
-	Param_Out_Elemento->AdicionarPonteiro(pInterfaceInIndex);
+	CarenSetPointerToICarenSafe(vi_pOutInterfaceByIndex, Param_Out_Elemento, true);
 
 Done:;
 	//Retorna o resultado.
@@ -534,10 +525,10 @@ CarenResult CarenMFCollection::GetElementCount([Out] UInt32% Param_Out_Quantidad
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas pelo método
-	DWORD CountItens = 0;
+	DWORD vi_OutCountItens = 0;
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetElementCount(&CountItens);
+	Hr = PonteiroTrabalho->GetElementCount(&vi_OutCountItens);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -555,7 +546,7 @@ CarenResult CarenMFCollection::GetElementCount([Out] UInt32% Param_Out_Quantidad
 	}
 
 	//Define a quantidade no parametor de saida
-	Param_Out_Quantidade = CountItens;
+	Param_Out_Quantidade = vi_OutCountItens;
 
 Done:;
 	//Retorna o resultado.
@@ -576,22 +567,13 @@ CarenResult CarenMFCollection::InsertElementAt(UInt32 Param_Indice, ICaren^ Para
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas pelo método
-	LPVOID pInterfaceAdd = NULL;
+	IUnknown* vi_pElementAdd = NULL;
 
-	//Recupera o ponteiro para a interface
-	Resultado = Param_Elemento->RecuperarPonteiro(&pInterfaceAdd);
-
-	//Verifica se obteve sucesso
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou ao obter o ponteiro
-
-		//Sai do método.
-		goto Done;
-	}
+	//Recupera o ponteiro para o elemento a ser adicionado.
+	CarenGetPointerFromICarenSafe(Param_Elemento, vi_pElementAdd);
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->InsertElementAt(Param_Indice, (IUnknown*)pInterfaceAdd);
+	Hr = PonteiroTrabalho->InsertElementAt(Param_Indice, vi_pElementAdd);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -662,10 +644,10 @@ CarenResult CarenMFCollection::RemoveElement(UInt32 Param_Indice, ICaren^ Param_
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas pelo método
-	IUnknown* pElementoRemoved = NULL;
+	IUnknown* vi_pOutElementRemoved = NULL;
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->RemoveElement(Param_Indice, &pElementoRemoved);
+	Hr = PonteiroTrabalho->RemoveElement(Param_Indice, &vi_pOutElementRemoved);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -683,7 +665,7 @@ CarenResult CarenMFCollection::RemoveElement(UInt32 Param_Indice, ICaren^ Param_
 	}
 
 	//Define o ponteiro a interface de saida.
-	Param_Out_Elemento->AdicionarPonteiro(pElementoRemoved);
+	CarenSetPointerToICarenSafe(vi_pOutElementRemoved, Param_Out_Elemento, true);
 
 Done:;
 	//Retorna o resultado.

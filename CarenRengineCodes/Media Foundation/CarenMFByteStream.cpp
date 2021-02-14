@@ -541,57 +541,24 @@ CarenResult CarenMFByteStream::BeginRead(
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	PBYTE pBufferDestino = NULL;
-	IntPtr PonteiroDados = IntPtr::Zero;
-	ULONG LarguraBuffer = static_cast<ULONG>(Param_TamanhoBuffer);
-	IMFAsyncCallback* pCallback = NULL;
-	IUnknown* pObjetoEstado = NULL;
+	GenPointer vi_BufferDestino = DefaultGenPointer;
+	IMFAsyncCallback* vi_pCallback = NULL;
+	IUnknown* vi_pObjectState = NULL;
 
-	//Recupera o ponteiro para o buffer que vai conter os dados lidos.
-	Resultado = Param_Buffer->GetInternalPointer(PonteiroDados);
+	//Recupera o ponteiro para o buffer de destino.
+	CarenGetPointerFromICarenBufferSafe(Param_Buffer, vi_BufferDestino);
 
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//O ponteiro para o buffer é invalido
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Define o ponteiro de dados.
-	pBufferDestino = (PBYTE)PonteiroDados.ToPointer();
-
-	//Recupera o ponteiro para a interface de retorno de chamada
-	Resultado = Param_Callback->RecuperarPonteiro((LPVOID*)&pCallback);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//O ponteiro para a interface é invalido.
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Verifcia se forneceu um objeto de estado(OPICIONAL)
+	//Verifcia se forneceu um objeto de estado(OPICIONAL) e tenta recuperar seu ponteiro.
 	if (ObjetoGerenciadoValido(Param_ObjetoEstado))
-	{
-		//Recupera o ponteiro para o objeto.
-		Resultado = Param_ObjetoEstado->RecuperarPonteiro((LPVOID*)&pObjetoEstado);
-
-		//Verifica se não houve erro
-		if (Resultado.StatusCode != ResultCode::SS_OK)
-		{
-			//O ponteiro para o objeto de estado é invalido.
-
-			//Sai do método
-			goto Done;
-		}
-	}
+		CarenGetPointerFromICarenSafe(Param_ObjetoEstado, vi_pObjectState);
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->BeginRead(pBufferDestino, LarguraBuffer, pCallback, pObjetoEstado);
+	Hr = PonteiroTrabalho->BeginRead(
+		static_cast<PBYTE>(vi_BufferDestino.ToPointer()),
+		static_cast<ULONG>(Param_TamanhoBuffer),
+		vi_pCallback,
+		vi_pObjectState	
+	);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -636,37 +603,12 @@ CarenResult CarenMFByteStream::BeginWrite(
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	PBYTE pBufferOrigem = NULL;
-	IntPtr PonteiroDados = IntPtr::Zero;
-	ULONG LarguraBuffer = static_cast<ULONG>(Param_TamanhoBuffer);
-	IMFAsyncCallback* pCallback = NULL;
-	IUnknown* pObjetoEstado = NULL;
+	GenPointer vi_BufferSource = DefaultGenPointer;
+	IMFAsyncCallback* vi_pCallback = Nulo;
+	IUnknown* vi_pObjectState = Nulo;
 
-	//Recupera o ponteiro para o buffer que contem os dados a serem escritos.
-	Resultado = Param_Buffer->GetInternalPointer(PonteiroDados);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//O ponteiro para o buffer é invalido
-
-		//Sai do método
-		goto Done;
-	}
-
-	pBufferOrigem = (PBYTE)PonteiroDados.ToPointer();
-
-	//Recupera o ponteiro para a interface de retorno de chamada
-	Resultado = Param_Callback->RecuperarPonteiro((LPVOID*)&pCallback);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//O ponteiro para a interface é invalido.
-
-		//Sai do método
-		goto Done;
-	}
+	//Recupera o ponteiro para o buffer de origem.
+	CarenGetPointerFromICarenBufferSafe(Param_Buffer, vi_BufferSource);
 
 	//Verifcia se forneceu um objeto de estado(OPICIONAL)
 	if (ObjetoGerenciadoValido(Param_ObjetoEstado))
@@ -685,7 +627,12 @@ CarenResult CarenMFByteStream::BeginWrite(
 	}
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->BeginWrite(pBufferOrigem, LarguraBuffer, pCallback, pObjetoEstado);
+	Hr = PonteiroTrabalho->BeginWrite(
+		const_cast<PBYTE>(reinterpret_cast<PBYTE>(vi_BufferSource.ToPointer())),
+		static_cast<ULONG>(Param_TamanhoBuffer),
+		vi_pCallback,
+		vi_pObjectState
+	);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -757,23 +704,14 @@ CarenResult CarenMFByteStream::EndRead(ICarenMFAsyncResult^ Param_Resultado, [Ou
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	IMFAsyncResult* pResultado = NULL;
-	ULONG TotalLido = 0;
+	IMFAsyncResult* vi_pResulado = NULL;
+	ULONG vi_OutTotalLido = 0;
 
-	//Recupera o ponteiro para a interface de resultado do método assicnrono.
-	Resultado = Param_Resultado->RecuperarPonteiro((LPVOID*)&pResultado);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//O ponteiro para a interface é invalido.
-
-		//Sai do método
-		goto Done;
-	}
+	//Recupera o ponteiro para a interface de resultado
+	CarenGetPointerFromICarenSafe(Param_Resultado, vi_pResulado);
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->EndRead(pResultado, &TotalLido);
+	Hr = PonteiroTrabalho->EndRead(vi_pResulado, &vi_OutTotalLido);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -791,7 +729,7 @@ CarenResult CarenMFByteStream::EndRead(ICarenMFAsyncResult^ Param_Resultado, [Ou
 	}
 
 	//Define o total lido no parametro de saida.
-	Param_Out_TotalLido = static_cast<UInt64>(TotalLido);
+	Param_Out_TotalLido = vi_OutTotalLido;
 
 Done:;
 	//Retorna o resultado.
@@ -813,23 +751,14 @@ CarenResult CarenMFByteStream::EndWrite(ICarenMFAsyncResult^ Param_Resultado, [O
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	IMFAsyncResult* pResultado = NULL;
-	ULONG TotalEscrito = 0;
+	IMFAsyncResult* vi_pResulado = NULL;
+	ULONG vi_OutTotalEscrito = 0;
 
-	//Recupera o ponteiro para a interface de resultado do método assicnrono.
-	Resultado = Param_Resultado->RecuperarPonteiro((LPVOID*)&pResultado);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//O ponteiro para a interface é invalido.
-
-		//Sai do método
-		goto Done;
-	}
+	//Recupera o ponteiro para a interface de resultado
+	CarenGetPointerFromICarenSafe(Param_Resultado, vi_pResulado);
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->EndWrite(pResultado, &TotalEscrito);
+	Hr = PonteiroTrabalho->EndWrite(vi_pResulado, &vi_OutTotalEscrito);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -847,7 +776,7 @@ CarenResult CarenMFByteStream::EndWrite(ICarenMFAsyncResult^ Param_Resultado, [O
 	}
 
 	//Define o total lido no parametro de saida.
-	Param_Out_TotalEscrito = static_cast<UInt64>(TotalEscrito);
+	Param_Out_TotalEscrito = vi_OutTotalEscrito;
 
 Done:;
 	//Retorna o resultado.
@@ -901,10 +830,10 @@ CarenResult CarenMFByteStream::GetCapabilities([Out] CA_MFBYTESTREAM_CHARACTERIS
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	DWORD CaracteristicasFluxo = 0;
+	DWORD vi_OutCapabilities = 0;
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetCapabilities(&CaracteristicasFluxo);
+	Hr = PonteiroTrabalho->GetCapabilities(&vi_OutCapabilities);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -922,7 +851,7 @@ CarenResult CarenMFByteStream::GetCapabilities([Out] CA_MFBYTESTREAM_CHARACTERIS
 	}
 
 	//Define as caracteristicas no parametro de saida.
-	Param_Out_CaracteristicasFluxo = static_cast<CA_MFBYTESTREAM_CHARACTERISTICS>(CaracteristicasFluxo);
+	Param_Out_CaracteristicasFluxo = static_cast<CA_MFBYTESTREAM_CHARACTERISTICS>(vi_OutCapabilities);
 
 Done:;
 	//Retorna o resultado.
@@ -942,10 +871,10 @@ CarenResult CarenMFByteStream::GetCurrentPosition([Out] UInt64% Param_Out_Posica
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	QWORD CurrentPosition = 0;
+	QWORD vi_OutCurrentPosition = 0;
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetCurrentPosition(&CurrentPosition);
+	Hr = PonteiroTrabalho->GetCurrentPosition(&vi_OutCurrentPosition);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -962,8 +891,8 @@ CarenResult CarenMFByteStream::GetCurrentPosition([Out] UInt64% Param_Out_Posica
 		Sair;
 	}
 
-	//Converte de define a posição atual no parametro de saida.
-	Param_Out_Posicao = static_cast<UInt64>(CurrentPosition);
+	//Define o valor no parametro de saida.
+	Param_Out_Posicao = vi_OutCurrentPosition;
 
 Done:;
 	//Retorna o resultado.
@@ -983,10 +912,10 @@ CarenResult CarenMFByteStream::GetLength([Out] UInt64% Param_Out_Largura)
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	QWORD LarguraFluxo = 0;
+	QWORD vi_OutLarguraStream = 0;
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetLength(&LarguraFluxo);
+	Hr = PonteiroTrabalho->GetLength(&vi_OutLarguraStream);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -1003,8 +932,8 @@ CarenResult CarenMFByteStream::GetLength([Out] UInt64% Param_Out_Largura)
 		Sair;
 	}
 
-	//Converte e define o valor da largura do fluxo no parametro de saida.
-	Param_Out_Largura = static_cast<UInt64>(LarguraFluxo);
+	//Define o valor no parametro de saida.
+	Param_Out_Largura = vi_OutLarguraStream;
 
 Done:;
 	//Retorna o resultado.
@@ -1024,10 +953,10 @@ CarenResult CarenMFByteStream::IsEndOfStream([Out] Boolean% Param_Out_FinalFluxo
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	BOOL ResultadoEndFluxo = FALSE;
+	BOOL vi_IsEndOfStream = FALSE;
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->IsEndOfStream(&ResultadoEndFluxo);
+	Hr = PonteiroTrabalho->IsEndOfStream(&vi_IsEndOfStream);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -1045,7 +974,7 @@ CarenResult CarenMFByteStream::IsEndOfStream([Out] Boolean% Param_Out_FinalFluxo
 	}
 
 	//Converte e define o resultado da verificação do final do fluxo.
-	Param_Out_FinalFluxo = static_cast<Boolean>(ResultadoEndFluxo);
+	Param_Out_FinalFluxo = vi_IsEndOfStream ? true : false;
 
 Done:;
 	//Retorna o resultado.
@@ -1070,28 +999,18 @@ CarenResult CarenMFByteStream::Read(
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	PBYTE pBufferDestino = NULL;
-	IntPtr PonteiroDados = IntPtr::Zero;
-	ULONG LarguraBuffer = static_cast<ULONG>(Param_Tamanho);
-	ULONG OutTotalLido = 0;
+	GenPointer vi_BufferDestino = DefaultGenPointer;
+	ULONG vi_OutTotalLido = 0;
 
-	//Recupera o ponteiro para o buffer que vai conter os dados a serem lidos.
-	Resultado = Param_Buffer->GetInternalPointer(PonteiroDados);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//O ponteiro para o buffer é invalido
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Define o ponteiro de dados.
-	pBufferDestino = (PBYTE)PonteiroDados.ToPointer();
+	//Recupera o ponteiro para o buffer de destino.
+	CarenGetPointerFromICarenBufferSafe(Param_Buffer, vi_BufferDestino);
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->Read(pBufferDestino, LarguraBuffer, &OutTotalLido);
+	Hr = PonteiroTrabalho->Read(
+		reinterpret_cast<PBYTE>(vi_BufferDestino.ToPointer()),
+		static_cast<ULONG>(Param_Tamanho),
+		&vi_OutTotalLido
+	);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -1108,8 +1027,8 @@ CarenResult CarenMFByteStream::Read(
 		Sair;
 	}
 
-	//Define o total que foi lido do fluxo no parametro de saida.
-	Param_Out_TotalLido = static_cast<UInt64>(OutTotalLido);
+	//Define o total lido no parametro de saida.
+	Param_Out_TotalLido = vi_OutTotalLido;
 
 Done:;
 	//Retorna o resultado.
@@ -1136,12 +1055,12 @@ CarenResult CarenMFByteStream::Seek(
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	MFBYTESTREAM_SEEK_ORIGIN SeekOrigin = static_cast<MFBYTESTREAM_SEEK_ORIGIN>(Param_Origem);
-	DWORD Flags = static_cast<DWORD>(Param_Flags);
-	QWORD OutCurrentPosition = 0;
+	MFBYTESTREAM_SEEK_ORIGIN vi_SeekOrigin = static_cast<MFBYTESTREAM_SEEK_ORIGIN>(Param_Origem);
+	DWORD vi_Flags = static_cast<DWORD>(Param_Flags);
+	QWORD vi_OutCurrentPosition = 0;
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->Seek(SeekOrigin, Param_Offset, Flags, &OutCurrentPosition);
+	Hr = PonteiroTrabalho->Seek(vi_SeekOrigin, Param_Offset, vi_Flags, &vi_OutCurrentPosition);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -1159,7 +1078,7 @@ CarenResult CarenMFByteStream::Seek(
 	}
 
 	//Define a nova posição do fluxo no parametro de saida.
-	Param_Out_NovaPosicao = static_cast<UInt64>(OutCurrentPosition);
+	Param_Out_NovaPosicao = vi_OutCurrentPosition;
 
 Done:;
 	//Retorna o resultado.
@@ -1179,7 +1098,7 @@ CarenResult CarenMFByteStream::SetCurrentPosition(UInt64 Param_Posicao)
 	ResultadoCOM Hr = E_FAIL;
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->SetCurrentPosition(static_cast<QWORD>(Param_Posicao));
+	Hr = PonteiroTrabalho->SetCurrentPosition(Param_Posicao);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -1214,7 +1133,7 @@ CarenResult CarenMFByteStream::SetLength(UInt64 Param_LarguraFluxo)
 	ResultadoCOM Hr = E_FAIL;
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->SetLength(static_cast<QWORD>(Param_LarguraFluxo));
+	Hr = PonteiroTrabalho->SetLength(Param_LarguraFluxo);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -1254,28 +1173,17 @@ CarenResult CarenMFByteStream::Write(
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	PBYTE pBufferOrigem = NULL;
-	IntPtr PonteiroDados = IntPtr::Zero;
-	ULONG LarguraBuffer = static_cast<ULONG>(Param_Tamanho);
-	ULONG OutTotalEscrito = 0;
+	GenPointer vi_BufferOrigem = DefaultGenPointer;
+	ULONG vi_OutTotalEscrito = 0;
 
-	//Recupera o ponteiro para o buffer que vai conter os dados a serem lidos.
-	Resultado = Param_Buffer->GetInternalPointer(PonteiroDados);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//O ponteiro para o buffer é invalido
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Define o ponteiro de dados.
-	pBufferOrigem = (PBYTE)PonteiroDados.ToPointer();
+	//Recupera o ponteiro para o buffer a ser escrito.
+	CarenGetPointerFromICarenBufferSafe(Param_Buffer, vi_BufferOrigem);
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->Write(pBufferOrigem, LarguraBuffer, &OutTotalEscrito);
+	Hr = PonteiroTrabalho->Write(
+		const_cast<PBYTE>(reinterpret_cast<PBYTE>(vi_BufferOrigem.ToPointer())), 
+		static_cast<ULONG>(Param_Tamanho), 
+		&vi_OutTotalEscrito);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -1293,7 +1201,7 @@ CarenResult CarenMFByteStream::Write(
 	}
 
 	//Define o total escrito no parametro de saida.
-	Param_Out_TotalEscrito = static_cast<UInt64>(OutTotalEscrito);
+	Param_Out_TotalEscrito = static_cast<UInt64>(vi_OutTotalEscrito);
 
 Done:;
 	//Retorna o resultado.

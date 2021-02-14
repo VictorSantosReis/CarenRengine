@@ -37,7 +37,7 @@ using namespace CarenRengine::SDKUtilidades;
 
 
 /// <summary>
-/// (Concluido - Fase de Testes) - Classe responsável por representar um fluxo de bytes de alguma fonte de dados, que pode ser um arquivo local, um arquivo de rede ou alguma outra fonte. 
+/// Classe responsável por representar um fluxo de bytes de alguma fonte de dados, que pode ser um arquivo local, um arquivo de rede ou alguma outra fonte. 
 /// </summary>
 public ref class CarenMFByteStream : public ICarenMFByteStream
 {

@@ -25,6 +25,7 @@ CarenMFSample::~CarenMFSample()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+
 //Construtores
 CarenMFSample::CarenMFSample(Boolean Param_CriarInterface)
 {
@@ -56,7 +57,6 @@ CarenMFSample::CarenMFSample(Boolean Param_CriarInterface)
 		//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 	}
 }
-
 CarenMFSample::CarenMFSample(ICarenMFCollection^ Param_SamplesToMux)
 {
 	//Variavel que vai conter o resultado COM.
@@ -94,7 +94,6 @@ CarenMFSample::CarenMFSample(ICarenMFCollection^ Param_SamplesToMux)
 	//Define a interface criada no ponteiro de trabalho
 	PonteiroTrabalho = vi_pOutSample;
 }
-
 CarenMFSample::CarenMFSample(ICaren^ Param_UnkSurface)
 {
 	//Variavel que vai conter o resultado COM.
@@ -493,7 +492,6 @@ void CarenMFSample::Finalizar()
 // Métodos da interface proprietaria (ICarenMFSample)
 
 
-
 CarenResult CarenMFSample::AddBuffer(ICarenMFMediaBuffer^ Param_NovoBuffer)
 {
 	//Variavel a ser retornada.
@@ -508,7 +506,7 @@ CarenResult CarenMFSample::AddBuffer(ICarenMFMediaBuffer^ Param_NovoBuffer)
 	//Obtém o ponteiro de trabalho para o novo buffer a ser adicionado.
 	CarenGetPointerFromICarenSafe(Param_NovoBuffer, vi_pNewMediaBuffer);
 
-	//Chama o método para adicionar o novo buffer.
+	//Chama o método para realizar a operação.
 	Hr = PonteiroTrabalho->AddBuffer(vi_pNewMediaBuffer);
 
 	//Processa o resultado da chamada.
@@ -540,10 +538,10 @@ CarenResult CarenMFSample::ConvertToContiguousBuffer([Out] ICarenMFMediaBuffer^%
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
-	IMFMediaBuffer* pBuffer = NULL;
+	IMFMediaBuffer* vi_pOutBuffer = NULL;
 
-	//Chama o método para converter todos os buffers em um único buffer.
-	Hr = PonteiroTrabalho->ConvertToContiguousBuffer(&pBuffer);
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->ConvertToContiguousBuffer(&vi_pOutBuffer);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -563,26 +561,8 @@ CarenResult CarenMFSample::ConvertToContiguousBuffer([Out] ICarenMFMediaBuffer^%
 	//Cria a classe que vai conter o buffer.
 	Param_Out_SingleBuffer = gcnew CarenMFMediaBuffer();
 
-	//Chama o método para definir o ponteiro de trabalho.
-	Resultado = Param_Out_SingleBuffer->AdicionarPonteiro(pBuffer);
-
-	//Verifica o resultado
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Libera a referencia para o buffer obtido.
-		pBuffer->Release();
-		pBuffer = NULL;
-
-		//Limpa a classe que seria retornada.
-		Param_Out_SingleBuffer->Finalizar();
-		Param_Out_SingleBuffer = nullptr;
-
-		//Define o código de erro no resultado geral.
-		Resultado.AdicionarCodigo(Resultado.StatusCode, false);
-	
-		//Sai do método
-		Sair;
-	}
+	//Chama o método para definir o ponteiro no parametro de saida.
+	CarenSetPointerToICarenSafe(vi_pOutBuffer, Param_Out_SingleBuffer, true);
 
 Done:;
 
@@ -599,20 +579,13 @@ CarenResult CarenMFSample::CopyToBuffer(ICarenMFMediaBuffer^% Param_BufferDestin
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
-	LPVOID PonteiroInBufferDestino = NULL;
+	IMFMediaBuffer* vi_pBufferDest  = Nulo;
 
-	//Obtém o ponteiro de trabalho que vai conter uma copia concatenada de todos os buffers dessa amostra.
-	Resultado = Param_BufferDestino->AdicionarPonteiro(&PonteiroInBufferDestino);
+	//Obtém o ponteiro para o buffer de destino que vai receber os dados.
+	CarenGetPointerFromICarenSafe(Param_BufferDestino, vi_pBufferDest);
 
-	//Verifica se o ponteiro não é invalido
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Sai do método
-		goto Done;
-	}
-
-	//Chama o método para concatenar e copiar os buffers de dados dessa amostra para o buffer de destino especificado.
-	Hr = PonteiroTrabalho->CopyToBuffer((IMFMediaBuffer*)&PonteiroInBufferDestino);
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->CopyToBuffer(vi_pBufferDest);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -643,11 +616,10 @@ CarenResult CarenMFSample::GetBufferByIndex(UInt32 Param_IdBuffer, [Out] ICarenM
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
-	IMFMediaBuffer* pBuffer = NULL;
-	ICarenMFMediaBuffer^ BufferInterface = nullptr;
+	IMFMediaBuffer* vi_pOutBuffer = Nulo;
 
-	//Chama o método para obter o buffer no Id especificado.
-	Hr = PonteiroTrabalho->GetBufferByIndex(Param_IdBuffer, &pBuffer);
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetBufferByIndex(Param_IdBuffer, &vi_pOutBuffer);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -665,16 +637,10 @@ CarenResult CarenMFSample::GetBufferByIndex(UInt32 Param_IdBuffer, [Out] ICarenM
 	}
 
 	//Cria a classe que vai conter o buffer.
-	BufferInterface = gcnew CarenMFMediaBuffer();
+	Param_Out_Buffer = gcnew CarenMFMediaBuffer();
 
-	//Chama o método para definir o ponteiro de trabalho.
-	Resultado = BufferInterface->AdicionarPonteiro(pBuffer);
-
-	//Define a interface gerenciada no retorno do método.
-	Param_Out_Buffer = BufferInterface;
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	//Chama o método para definir o ponteiro no parametro de saida.
+	CarenSetPointerToICarenSafe(vi_pOutBuffer, Param_Out_Buffer, true);
 
 Done:;
 	//Retorna o resultado
@@ -690,10 +656,10 @@ CarenResult CarenMFSample::GetBufferCount([Out] UInt32% Param_Out_QuantidadeBuff
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
-	DWORD CountBuffers = 0;
+	DWORD vi_OutCountBuffers = 0;
 
-	//Chama o método para obter a quantidade total de buffers de mídia.
-	Hr = PonteiroTrabalho->GetBufferCount(&CountBuffers);
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetBufferCount(&vi_OutCountBuffers);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -711,10 +677,7 @@ CarenResult CarenMFSample::GetBufferCount([Out] UInt32% Param_Out_QuantidadeBuff
 	}
 
 	//Define os dados de retorno.
-	Param_Out_QuantidadeBuffers = safe_cast<UInt32>(CountBuffers);
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	Param_Out_QuantidadeBuffers = safe_cast<UInt32>(vi_OutCountBuffers);
 
 Done:;
 	//Retorna o resultado
@@ -730,10 +693,10 @@ CarenResult CarenMFSample::GetSampleDuration([Out] Int64% Param_Out_DuraçãoAmo
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
-	INT64 DuracaoAmostra = 0;
+	INT64 vi_OutDurationSample = 0;
 
-	//Chama o método para obter o a duração da amostra.
-	Hr = PonteiroTrabalho->GetSampleDuration(&DuracaoAmostra);
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetSampleDuration(&vi_OutDurationSample);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -751,10 +714,7 @@ CarenResult CarenMFSample::GetSampleDuration([Out] Int64% Param_Out_DuraçãoAmo
 	}
 
 	//Define os dados de retorno.
-	Param_Out_DuraçãoAmostra = DuracaoAmostra;
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	Param_Out_DuraçãoAmostra = vi_OutDurationSample;
 
 Done:;
 	//Retorna o resultado
@@ -770,11 +730,10 @@ CarenResult CarenMFSample::GetSampleFlags([Out] UInt32% Param_Out_Flags)
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas pelo método
-	DWORD FlagsGet = 0;
+	DWORD vi_OutFlags = 0;
 
-	//Chama o método para obter os flags.
-	//Atualmente não há flags a serem obtidos.
-	Hr = PonteiroTrabalho->GetSampleFlags(&FlagsGet);
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetSampleFlags(&vi_OutFlags);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -792,10 +751,7 @@ CarenResult CarenMFSample::GetSampleFlags([Out] UInt32% Param_Out_Flags)
 	}
 
 	//Define o valor de retorno.
-	Param_Out_Flags = safe_cast<UInt32>(FlagsGet);
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	Param_Out_Flags = safe_cast<UInt32>(vi_OutFlags);
 
 Done:;
 	//Retorna o resultado
@@ -811,10 +767,10 @@ CarenResult CarenMFSample::GetSampleTime([Out] Int64% Param_Out_TempoApresentaca
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
-	INT64 TempoApresentacao = 0;
+	INT64 vi_OutSampleTime = 0;
 
-	//Chama o método para obter o TimeSpan que representa o tempo de apresenção da amostra.
-	Hr = PonteiroTrabalho->GetSampleTime(&TempoApresentacao);
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetSampleTime(&vi_OutSampleTime);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -832,10 +788,7 @@ CarenResult CarenMFSample::GetSampleTime([Out] Int64% Param_Out_TempoApresentaca
 	}
 
 	//Define os dados de retorno.
-	Param_Out_TempoApresentacao = TempoApresentacao;
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	Param_Out_TempoApresentacao = vi_OutSampleTime;
 
 Done:;
 	//Retorna o resultado
@@ -851,10 +804,10 @@ CarenResult CarenMFSample::GetTotalLength([Out] UInt32% Param_Out_LarguraTotal)
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
-	DWORD LarguraTotalBuffer = 0;
+	DWORD vi_OutTotalSizeBuffer = 0;
 
-	//Chama o método para remover todos os buffers.
-	Hr = PonteiroTrabalho->GetTotalLength(&LarguraTotalBuffer);
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetTotalLength(&vi_OutTotalSizeBuffer);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -872,10 +825,7 @@ CarenResult CarenMFSample::GetTotalLength([Out] UInt32% Param_Out_LarguraTotal)
 	}
 
 	//Define os dados de retorno.
-	Param_Out_LarguraTotal = safe_cast<UInt32>(LarguraTotalBuffer);
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	Param_Out_LarguraTotal = safe_cast<UInt32>(vi_OutTotalSizeBuffer);
 
 Done:;
 	//Retorna o resultado
@@ -890,7 +840,7 @@ CarenResult CarenMFSample::RemoveAllBuffers()
 	//Variavel COM
 	ResultadoCOM Hr = E_FAIL;
 
-	//Chama o método para remover todos os buffers.
+	//Chama o método para realizar a operação.
 	Hr = PonteiroTrabalho->RemoveAllBuffers();
 
 	//Processa o resultado da chamada.
@@ -921,7 +871,7 @@ CarenResult CarenMFSample::RemoveBufferByIndex(UInt32 Param_IdBuffer)
 	//Variavel COM
 	ResultadoCOM Hr = E_FAIL;
 
-	//Chama o método para remover o buffer no Id especificado.
+	//Chama o método para realizar a operação.
 	Hr = PonteiroTrabalho->RemoveBufferByIndex(Param_IdBuffer);
 
 	//Processa o resultado da chamada.
@@ -952,7 +902,7 @@ CarenResult CarenMFSample::SetSampleDuration(Int64 Param_Duração)
 	//Variavel COM
 	ResultadoCOM Hr = E_FAIL;
 
-	//Chama o método para definir a duração da amostra.
+	//Chama o método para realizar a operação.
 	Hr = PonteiroTrabalho->SetSampleDuration(Param_Duração);
 
 	//Processa o resultado da chamada.
@@ -983,7 +933,7 @@ CarenResult CarenMFSample::SetSampleTime(Int64 Param_TempoApresentação)
 	//Variavel COM
 	ResultadoCOM Hr = E_FAIL;
 
-	//Chama o método para definir o tempo de apresentação da amostra.
+	//Chama o método para realizar a operação.
 	Hr = PonteiroTrabalho->SetSampleTime(Param_TempoApresentação);
 
 	//Processa o resultado da chamada.
@@ -1014,8 +964,7 @@ CarenResult CarenMFSample::SetSampleFlags(UInt32 Param_Flag)
 	//Variavel COM
 	ResultadoCOM Hr = E_FAIL;
 
-	//Chama o método para definir os flags.
-	//Atualmente não há flags a serem definidos.
+	//Chama o método para realizar a operação.
 	Hr = PonteiroTrabalho->SetSampleFlags(Param_Flag);
 
 	//Processa o resultado da chamada.
@@ -2683,116 +2632,5 @@ CarenResult CarenMFSample::UnlockStore()
 
 Done:;
 	//Retorna o resultado.
-	return Resultado;
-}
-
-
-
-
-
-// Métodos da interface ICarenMidiaExtensões
-
-
-/// <summary>
-/// (Extensão) - Método responsável por obter o tipo principal da mídia. 
-/// </summary>
-/// <param name="Param_Out_TipoPrincipal">Recebe o tipo principal da mídia(Áudio ou Vídeo).</param>
-/// <param name="Param_Out_Guid">Recebe o Guid do formato principal.</param>
-CarenResult CarenMFSample::ObterTipoPrincipalMidia([Out] Enumeracoes::CA_MAJOR_MEDIA_TYPES% Param_Out_TipoPrincipal, [Out] String^% Param_Out_Guid)
-{
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis utilizadas no método
-	ResultadoCOM  Hr = E_FAIL;
-	GUID GuidTipoPrincipal = GUID_NULL;
-	Utilidades Util;
-
-	//Obtém o guid o formato principal da mídia.
-	Hr = PonteiroTrabalho->GetGUID(MF_MT_MAJOR_TYPE, &GuidTipoPrincipal);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-	//Verifica o tipo principal da midia
-	if (GuidTipoPrincipal == MFMediaType_Audio)
-	{
-		//O tipo principal da mídia é Áudio.
-		Param_Out_TipoPrincipal = CA_MAJOR_MEDIA_TYPES::TP_Audio;
-		//Define o Guid
-		Param_Out_Guid = Util.ConverterGuidToString(MFMediaType_Audio);
-	}
-	else if (GuidTipoPrincipal == MFMediaType_Video)
-	{
-		//O tipo principal da mídia é Vídeo.
-		Param_Out_TipoPrincipal = CA_MAJOR_MEDIA_TYPES::TP_Video;
-		//Define o Guid
-		Param_Out_Guid = Util.ConverterGuidToString(MFMediaType_Video);
-	}
-	else
-	{
-		//Tipo desconhecido.
-		Param_Out_TipoPrincipal = CA_MAJOR_MEDIA_TYPES::TP_Desconhecido;
-	}
-
-Done:;
-	//Retorna o resultado
-	return Resultado;
-}
-
-/// <summary>
-/// (Extensão) - Método responsável por retornar o formato do tipo principal da mídia. 
-/// </summary>
-/// <param name="Param_Out_FormatoMidia">Recebe o subtipo(Formato) da mídia principal.</param>
-/// <param name="Param_Out_GuidFormato">Recebe o Guid do subtipo(Formato).</param>
-CarenResult CarenMFSample::ObterFormatoMidia([Out] CA_MEDIA_SUBTYPES% Param_Out_FormatoMidia, [Out] String^% Param_Out_GuidFormato)
-{
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis utilizadas no método
-	ResultadoCOM  Hr = E_FAIL;
-	GUID GuidFormatoMidia = GUID_NULL;
-	Utilidades Util;
-
-	//Obtém o guid para o Subtipo da midia
-	//O subtipo é o formato da mídia principal.
-	Hr = PonteiroTrabalho->GetGUID(MF_MT_SUBTYPE, &GuidFormatoMidia);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-		//Obtém o formato de midia.
-	Param_Out_FormatoMidia = Util.ConverterGUIDSubtipoMidia_ToMidia_SubTipo(GuidFormatoMidia);
-
-	//Converte o GUID do formato para String
-	Param_Out_GuidFormato = Util.ConverterGuidToString(GuidFormatoMidia);
-
-Done:;
-	//Retorna o valor
 	return Resultado;
 }

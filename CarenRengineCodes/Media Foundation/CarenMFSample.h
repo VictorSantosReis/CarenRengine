@@ -647,27 +647,5 @@ public:
 	/// Enquanto o objeto é desbloqueado, Múltiplos threads podem acessar atributos do objeto.
 	/// </summary>
 	virtual CarenResult UnlockStore();
-
-
-
-	//
-	// Métodos da interface ICarenMidiaExtensões
-	//
-
-public:
-	/// <summary>
-	/// (Extensão) - Método responsável por obter o tipo principal da mídia. 
-	/// </summary>
-	/// <param name="Param_Out_TipoPrincipal">Recebe o tipo principal da mídia(Áudio ou Vídeo).</param>
-	/// <param name="Param_Out_Guid">Recebe o Guid do formato principal.</param>
-	virtual CarenResult ObterTipoPrincipalMidia([Out] Enumeracoes::CA_MAJOR_MEDIA_TYPES% Param_Out_TipoPrincipal, [Out] String^% Param_Out_Guid);
-
-	/// <summary>
-	/// (Extensão) - Método responsável por retornar o formato do tipo principal da mídia. 
-	/// </summary>
-	/// <param name="Param_Out_FormatoMidia">Recebe o subtipo(Formato) da mídia principal.</param>
-	/// <param name="Param_Out_GuidFormato">Recebe o Guid do subtipo(Formato).</param>
-	virtual CarenResult ObterFormatoMidia([Out] Enumeracoes::CA_MEDIA_SUBTYPES% Param_Out_FormatoMidia, [Out] String^% Param_Out_GuidFormato);
-
 };
 

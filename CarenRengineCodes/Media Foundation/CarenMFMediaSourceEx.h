@@ -35,7 +35,7 @@ using namespace CarenRengine::SDKBase::Estruturas;
 using namespace CarenRengine::SDKUtilidades;
 
 /// <summary>
-/// Estende a interface ICarenMFMediaSource para fornecer recursos adicionais para uma fonte de mídia.
+/// Classe responsável por estender a classe base CarenMediaSource para fornecer recursos adicionais para uma fonte de mídia.
 /// </summary>
 public ref class CarenMFMediaSourceEx :public ICarenMFMediaSourceEx
 {

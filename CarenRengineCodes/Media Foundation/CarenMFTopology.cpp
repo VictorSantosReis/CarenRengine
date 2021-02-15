@@ -564,22 +564,13 @@ CarenResult CarenMFTopology::AddNode(ICarenMFTopologyNode^ Param_NoTopologia)
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	IMFTopologyNode* pNo = NULL;
+	IMFTopologyNode* vi_pNode = Nulo;
 
-	//Chama o método para recuperar o ponteiro
-	Resultado = Param_NoTopologia->RecuperarPonteiro((LPVOID*)&pNo);
-
-	//Verifica o resultado
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falha..
-
-		//Sai do método
-		goto Done;
-	}
+	//Recupera o ponteiro para o nó a ser adicionado.
+	CarenGetPointerFromICarenSafe(Param_NoTopologia, vi_pNode);
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->AddNode(pNo);
+	Hr = PonteiroTrabalho->AddNode(vi_pNode);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -595,9 +586,6 @@ CarenResult CarenMFTopology::AddNode(ICarenMFTopologyNode^ Param_NoTopologia)
 		//Sai do método
 		Sair;
 	}
-	
-	//Limpa
-	pNo = NULL;
 
 Done:;
 	//Retorna o resultado.
@@ -651,22 +639,13 @@ CarenResult CarenMFTopology::CloneFrom(ICarenMFTopology^ Param_TopologiaClone)
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	IMFTopology* pTopologia = NULL;
+	IMFTopology* vi_pTopology = Nulo;
 
-	//Chama o método para recuperar o ponteiro
-	Resultado = Param_TopologiaClone->RecuperarPonteiro((LPVOID*)&pTopologia);
-
-	//Verifica o resultado
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falha..
-
-		//Sai do método
-		goto Done;
-	}
-
+	//Chama o método para recuperar o ponteiro para a topologia a ser clonada.
+	CarenGetPointerFromICarenSafe(Param_TopologiaClone, vi_pTopology);
+	
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->CloneFrom(pTopologia);
+	Hr = PonteiroTrabalho->CloneFrom(vi_pTopology);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -682,9 +661,6 @@ CarenResult CarenMFTopology::CloneFrom(ICarenMFTopology^ Param_TopologiaClone)
 		//Sai do método
 		Sair;
 	}
-
-	//Limpa
-	pTopologia = NULL;
 
 Done:;
 	//Retorna o resultado.
@@ -705,10 +681,10 @@ CarenResult CarenMFTopology::GetNode(UInt16 Param_Index, [Out] ICarenMFTopologyN
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	IMFTopologyNode* pNo = NULL;
+	IMFTopologyNode* vi_pOutNode = Nulo;
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetNode(Param_Index, &pNo);
+	Hr = PonteiroTrabalho->GetNode(Param_Index, &vi_pOutNode);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -728,8 +704,8 @@ CarenResult CarenMFTopology::GetNode(UInt16 Param_Index, [Out] ICarenMFTopologyN
 	//Cria a interface a ser retornada
 	Param_Out_NodeTopologia = gcnew CarenMFTopologyNode();
 
-	//Define o ponteiro de trabalho.
-	Param_Out_NodeTopologia->AdicionarPonteiro(pNo);
+	//Chama o método para definir o ponteiro na interface de saida.
+	CarenSetPointerToICarenSafe(vi_pOutNode, Param_Out_NodeTopologia, true);
 
 Done:;
 	//Retorna o resultado.
@@ -750,10 +726,10 @@ CarenResult CarenMFTopology::GetNodeByID(UInt64 Param_IdentificadorNode, [Out] I
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	IMFTopologyNode* pNo = NULL;
+	IMFTopologyNode* vi_pOutNode = Nulo;
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetNodeByID(Param_IdentificadorNode, &pNo);
+	Hr = PonteiroTrabalho->GetNodeByID(Param_IdentificadorNode, &vi_pOutNode);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -773,8 +749,8 @@ CarenResult CarenMFTopology::GetNodeByID(UInt64 Param_IdentificadorNode, [Out] I
 	//Cria a interface que será retornada
 	Param_Out_NodeTopologia = gcnew CarenMFTopologyNode();
 
-	//Define o ponteiro de trabalho
-	Param_Out_NodeTopologia->AdicionarPonteiro(pNo);
+	//Chama o método para definir o ponteiro na interface de saida.
+	CarenSetPointerToICarenSafe(vi_pOutNode, Param_Out_NodeTopologia, true);
 
 Done:;
 	//Retorna o resultado.
@@ -794,10 +770,10 @@ CarenResult CarenMFTopology::GetNodeCount([Out] UInt16 Param_Out_Quantidade)
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	WORD CountNo = 0;
+	WORD vi_OutCountNodes = 0;
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetNodeCount(&CountNo);
+	Hr = PonteiroTrabalho->GetNodeCount(&vi_OutCountNodes);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -815,7 +791,7 @@ CarenResult CarenMFTopology::GetNodeCount([Out] UInt16 Param_Out_Quantidade)
 	}
 
 	//Define a quantidade no parametro de saida
-	Param_Out_Quantidade = CountNo;
+	Param_Out_Quantidade = vi_OutCountNodes;
 
 Done:;
 	//Retorna o resultado.
@@ -836,10 +812,10 @@ CarenResult CarenMFTopology::GetOutputNodeCollection([Out] ICarenMFCollection^% 
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	IMFCollection* pColecaoNoSaida = NULL;
+	IMFCollection* vi_pOutCollection = NULL;
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetOutputNodeCollection(&pColecaoNoSaida);
+	Hr = PonteiroTrabalho->GetOutputNodeCollection(&vi_pOutCollection);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -859,8 +835,8 @@ CarenResult CarenMFTopology::GetOutputNodeCollection([Out] ICarenMFCollection^% 
 	//Cria a interface a ser retornada
 	Param_Out_ColecaoNoSaida = gcnew CarenMFCollection(false);
 
-	//Define o ponteiro de trabalho
-	Param_Out_ColecaoNoSaida->AdicionarPonteiro(pColecaoNoSaida);
+	//Define o ponteiro na interface de saida
+	CarenSetPointerToICarenSafe(vi_pOutCollection, Param_Out_ColecaoNoSaida, true);
 
 Done:;
 	//Retorna o resultado.
@@ -881,10 +857,10 @@ CarenResult CarenMFTopology::GetSourceNodeCollection([Out] ICarenMFCollection^% 
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	IMFCollection* pColecaoNoOrigem = NULL;
+	IMFCollection* vi_pOutCollection = NULL;
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetSourceNodeCollection(&pColecaoNoOrigem);
+	Hr = PonteiroTrabalho->GetSourceNodeCollection(&vi_pOutCollection);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -904,8 +880,8 @@ CarenResult CarenMFTopology::GetSourceNodeCollection([Out] ICarenMFCollection^% 
 	//Cria a interface a ser retornada
 	Param_Out_ColecaoNoOrigem = gcnew CarenMFCollection(false);
 
-	//Define o ponteiro de trabalho
-	Param_Out_ColecaoNoOrigem->AdicionarPonteiro(&pColecaoNoOrigem);
+	//Define o ponteiro na interface de saida.
+	CarenSetPointerToICarenSafe(vi_pOutCollection, Param_Out_ColecaoNoOrigem, true);
 
 Done:;
 	//Retorna o resultado.
@@ -968,22 +944,13 @@ CarenResult CarenMFTopology::RemoveNode(ICarenMFTopologyNode^ Param_NodeRemove)
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	IMFTopologyNode* pNoRemove = NULL;
+	IMFTopologyNode* vi_pNoRemove = NULL;
 
-	//Chama o método para recuperar o ponteiro
-	Resultado = Param_NodeRemove->RecuperarPonteiro((LPVOID*)&pNoRemove);
-
-	//Verifica o resultado
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falha..
-
-		//Sai do método
-		goto Done;
-	}
+	//Recupera o ponteiro para o no a ser removido
+	CarenGetPointerFromICarenSafe(Param_NodeRemove, vi_pNoRemove);
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->RemoveNode(pNoRemove);
+	Hr = PonteiroTrabalho->RemoveNode(vi_pNoRemove);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -999,9 +966,6 @@ CarenResult CarenMFTopology::RemoveNode(ICarenMFTopologyNode^ Param_NodeRemove)
 		//Sai do método
 		Sair;
 	}
-
-	//Limpa
-	pNoRemove = NULL;
 
 Done:;
 	//Retorna o resultado.

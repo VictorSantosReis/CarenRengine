@@ -33,7 +33,7 @@ using namespace CarenRengine::SDKBase::Estruturas;
 using namespace CarenRengine::SDKUtilidades;
 
 /// <summary>
-/// (Conluido - Fase de Testes) - Classe responsável por converter uma topologia parcial em uma topologia completa.
+/// Classe responsável por converter uma topologia parcial em uma topologia completa.
 /// </summary>
 public ref class CarenMFTopoLoader :public ICarenMFTopoLoader
 {
@@ -243,7 +243,7 @@ public:
 
 
 
-	//Métodos da interface Proprietaria
+	//Métodos da interface ICarenMFTopoLoader
 public:
 	/// <summary>
 	/// (Load) - Cria uma topologia totalmente carregada da topologia parcial de entrada.

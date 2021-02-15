@@ -25,6 +25,7 @@ CarenMFTopology::~CarenMFTopology()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+
 //Construtores
 CarenMFTopology::CarenMFTopology(Boolean Param_CriarInterface)
 {
@@ -56,7 +57,6 @@ CarenMFTopology::CarenMFTopology(Boolean Param_CriarInterface)
 		//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 	}
 }
-
 CarenMFTopology::CarenMFTopology(ICarenMFMediaSource^ Param_MediaSource, ICarenMFByteStream^ Param_OutputStream, ICarenMFTranscodeProfile^ Param_TranscodeProfile)
 {
 	//Variavel que vai conter o resultado COM.
@@ -118,7 +118,6 @@ CarenMFTopology::CarenMFTopology(ICarenMFMediaSource^ Param_MediaSource, ICarenM
 	//Define a interface criada no ponteiro de trabalho
 	PonteiroTrabalho = vi_pOutTopology;
 }
-
 CarenMFTopology::CarenMFTopology(ICarenMFMediaSource^ Param_MediaSource, String^ Param_OutputUrl, ICarenMFTranscodeProfile^ Param_TranscodeProfile)
 {
 	//Variavel que vai conter o resultado COM.
@@ -180,9 +179,9 @@ CarenMFTopology::CarenMFTopology(ICarenMFMediaSource^ Param_MediaSource, String^
 	DeletarStringAllocatedSafe(&vi_pOutputUrl);
 }
 
-//
+
 // Métodos da interface ICaren
-//
+
 
 /// <summary>
 /// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 

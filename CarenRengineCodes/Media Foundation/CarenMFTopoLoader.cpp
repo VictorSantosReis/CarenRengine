@@ -57,9 +57,9 @@ CarenMFTopoLoader::CarenMFTopoLoader(Boolean Param_CriarInterface)
 	}
 }
 
-//
+
 // Métodos da interface ICaren
-//
+
 
 /// <summary>
 /// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 
@@ -424,9 +424,10 @@ void CarenMFTopoLoader::Finalizar()
 
 
 
-//
-//Métodos da interface proprietaria.
-//
+
+
+//Métodos da interface proprietaria (ICarenMFTopoLoader)
+
 
 /// <summary>
 /// (Load) - Cria uma topologia totalmente carregada da topologia parcial de entrada.
@@ -446,40 +447,23 @@ CarenResult CarenMFTopoLoader::Load(ICarenMFTopology^ Param_TopologiaParcial, [O
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	IMFTopology* pTopologiaParcial = NULL;
-	IMFTopology* pTopologiaCompleta = NULL;
-	IMFTopology* pTopologiaAnterior = NULL;
+	IMFTopology* vi_pTopologiaParcial = Nulo;
+	IMFTopology* vi_pOutTopologiaCompleta = Nulo;
+	IMFTopology* vi_pTopologiaAnterior = Nulo; //Pode ser NULO.
 
 	//Chama o método para recuperar o ponteiro da (TOPOLOGIA PARCIAL)
-	Resultado = Param_TopologiaParcial->RecuperarPonteiro((LPVOID*)&pTopologiaParcial);
+	CarenGetPointerFromICarenSafe(Param_TopologiaParcial, vi_pTopologiaParcial);
 
-	//Verifica o resultado
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falha..
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Verifica se foi fornencido uma topologia Anterior e obtém um ponteiro para ela.
-	if (Param_TopologiaAnterior != nullptr)
-	{
-		//Chama o método para recuperar o ponteiro da (TOPOLOGIA ANTERIOR)
-		Resultado = Param_TopologiaAnterior->RecuperarPonteiro((LPVOID*) pTopologiaAnterior);
-
-		//Verifica o resultado
-		if (Resultado.StatusCode != ResultCode::SS_OK)
-		{
-			//Falha..
-
-			//Sai do método
-			goto Done;
-		}
-	}
+	//Verifica se forneceu a topologia completa anterior.
+	if (ObjetoGerenciadoValido(Param_TopologiaAnterior))
+		CarenGetPointerFromICarenSafe(Param_TopologiaAnterior, vi_pTopologiaAnterior);
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->Load(pTopologiaParcial, &pTopologiaCompleta, pTopologiaAnterior != NULL ? pTopologiaAnterior : NULL);
+	Hr = PonteiroTrabalho->Load(
+		vi_pTopologiaParcial,
+		&vi_pOutTopologiaCompleta,
+		vi_pTopologiaAnterior
+	);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -499,26 +483,9 @@ CarenResult CarenMFTopoLoader::Load(ICarenMFTopology^ Param_TopologiaParcial, [O
 	//Cria a interface que vai ser retornada.
 	Param_Out_TopologiaCompleta = gcnew CarenMFTopology(false);
 
-	//Define o ponteiro de trabalho
-	Param_Out_TopologiaCompleta->AdicionarPonteiro(pTopologiaCompleta);
-
-	//Limpa
-	if (ObjetoValido(pTopologiaParcial))
-	{
-		//Limpa o objeto.
-		pTopologiaParcial = NULL;
-	}
-	if (ObjetoValido(pTopologiaCompleta))
-	{
-		//Limpa o objeto.
-		pTopologiaCompleta = NULL;
-	}
-	if (ObjetoValido(pTopologiaAnterior))
-	{
-		//Limpa o objeto.
-		pTopologiaAnterior = NULL;
-	}
-
+	//Define o ponteiro na interface de saida
+	CarenSetPointerToICarenSafe(vi_pOutTopologiaCompleta, Param_Out_TopologiaCompleta, true);
+	
 Done:;
 	//Retorna o resultado.
 	return Resultado;

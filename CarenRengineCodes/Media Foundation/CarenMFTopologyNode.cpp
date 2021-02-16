@@ -25,12 +25,12 @@ CarenMFTopologyNode::~CarenMFTopologyNode()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+
 //Cosntrutores
 CarenMFTopologyNode::CarenMFTopologyNode()
 {
 	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
-
 CarenMFTopologyNode::CarenMFTopologyNode(CA_MF_TOPOLOGY_TYPE Param_TypeNode)
 {
 	//Variavel que vai conter o resultado COM.
@@ -56,9 +56,9 @@ CarenMFTopologyNode::CarenMFTopologyNode(CA_MF_TOPOLOGY_TYPE Param_TypeNode)
 }
 
 
-//
+
 // Métodos da interface ICaren
-//
+
 
 /// <summary>
 /// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 
@@ -441,22 +441,13 @@ CarenResult CarenMFTopologyNode::CloneFrom(ICarenMFTopologyNode^ Param_NodeClone
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizada no método.
-	IMFTopologyNode* pNoTopologia = NULL;
+	IMFTopologyNode* vi_pNoClone = Nulo;
 
-	//Obtém o ponteiro para a interface nativa.
-	Resultado = Param_NodeClone->RecuperarPonteiro((LPVOID*)& pNoTopologia);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou.
-
-		//Sai do método
-		goto Done;
-	}
+	//Recupera o ponteiro para o nó a ser clonado.
+	CarenGetPointerFromICarenSafe(Param_NodeClone, vi_pNoClone);
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->CloneFrom(pNoTopologia);
+	Hr = PonteiroTrabalho->CloneFrom(vi_pNoClone);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -472,12 +463,6 @@ CarenResult CarenMFTopologyNode::CloneFrom(ICarenMFTopologyNode^ Param_NodeClone
 		//Sai do método
 		Sair;
 	}
-
-	//Limpa
-	pNoTopologia = NULL;
-
-	//Define sucesso na operação.
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
 
 Done:;
 	//Retorna o resultado.
@@ -500,22 +485,13 @@ CarenResult CarenMFTopologyNode::ConnectOutput(UInt32 Param_IndexFluxoSaida, ICa
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizada no método.
-	IMFTopologyNode* pNoConexao = NULL;
+	IMFTopologyNode* vi_pNoConexao = Nulo;
 
-	//Obtém o ponteiro para a interface nativa.
-	Resultado = Param_NoConexao->RecuperarPonteiro((LPVOID*)&pNoConexao);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou.
-
-		//Sai do método
-		goto Done;
-	}
+	//Recupera o ponteiro para o nó de conexao.
+	CarenGetPointerFromICarenSafe(Param_NoConexao, vi_pNoConexao);
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->ConnectOutput(Param_IndexFluxoSaida, pNoConexao, Param_IndexFluxoEntrada);
+	Hr = PonteiroTrabalho->ConnectOutput(Param_IndexFluxoSaida, vi_pNoConexao, Param_IndexFluxoEntrada);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -531,9 +507,6 @@ CarenResult CarenMFTopologyNode::ConnectOutput(UInt32 Param_IndexFluxoSaida, ICa
 		//Sai do método
 		Sair;
 	}
-
-	//Limpa
-	pNoConexao = NULL;
 
 Done:;
 	//Retorna o resultado.
@@ -590,11 +563,11 @@ CarenResult CarenMFTopologyNode::GetInput(UInt32 Param_IndexEntrada, [Out] ICare
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizada no método.
-	DWORD OutputIndex = 0;
-	IMFTopologyNode* pNoEntrada = NULL;
+	DWORD vi_OutIndexOutput = 0;
+	IMFTopologyNode* vi_pOutUpstreamNode = Nulo;
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetInput(Param_IndexEntrada, &pNoEntrada, &OutputIndex);
+	Hr = PonteiroTrabalho->GetInput(Param_IndexEntrada, &vi_pOutUpstreamNode, &vi_OutIndexOutput);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -611,14 +584,14 @@ CarenResult CarenMFTopologyNode::GetInput(UInt32 Param_IndexEntrada, [Out] ICare
 		Sair;
 	}
 
-	//Cria a interface que vai retornar o no
+	//Cria a interface a ser retornada.
 	Param_Out_NoConectado = gcnew CarenMFTopologyNode();
 
-	//Define o ponteiro
-	Param_Out_NoConectado->AdicionarPonteiro(pNoEntrada);
+	//Define o ponteiro na interface de saida.
+	CarenSetPointerToICarenSafe(vi_pOutUpstreamNode, Param_Out_NoConectado, true);
 
 	//Define o Index do fluxo de saida
-	Param_Out_IndexFluxoSaida = OutputIndex;
+	Param_Out_IndexFluxoSaida = vi_OutIndexOutput;
 
 Done:;
 	//Retorna o resultado.
@@ -638,10 +611,10 @@ CarenResult CarenMFTopologyNode::GetInputCount([Out] UInt32% Param_Out_Quantidad
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizada no método.
-	DWORD CountFluxosEntrada = 0;
+	DWORD vi_OutInputCount = 0;
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetInputCount(&CountFluxosEntrada);
+	Hr = PonteiroTrabalho->GetInputCount(&vi_OutInputCount);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -658,11 +631,8 @@ CarenResult CarenMFTopologyNode::GetInputCount([Out] UInt32% Param_Out_Quantidad
 		Sair;
 	}
 
-	//Define a quanitdade de nos de entrada
-	Param_Out_QuantidadeFluxosEntrada = CountFluxosEntrada;
-
-	//Define sucesso na operação.
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	//Define a quanitdade de nos de entrada no parametro de saida.
+	Param_Out_QuantidadeFluxosEntrada = vi_OutInputCount;
 
 Done:;
 	//Retorna o resultado.
@@ -683,10 +653,10 @@ CarenResult CarenMFTopologyNode::GetInputPrefType(UInt32 Param_IndexEntrada, [Ou
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizada no método.
-	IMFMediaType* pTipoMidia = NULL;
+	IMFMediaType* vi_pOutMediaType = Nulo;
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetInputPrefType(Param_IndexEntrada, &pTipoMidia);
+	Hr = PonteiroTrabalho->GetInputPrefType(Param_IndexEntrada, &vi_pOutMediaType);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -703,14 +673,11 @@ CarenResult CarenMFTopologyNode::GetInputPrefType(UInt32 Param_IndexEntrada, [Ou
 		Sair;
 	}
 
-	//Cria a interface do tipo preferencia de midia
+	//Cria a interface a ser retornada.
 	Param_Out_TipoMidiaPreferencial = gcnew CarenMFMediaType(false);
 
-	//Define o ponteiro de trabalho
-	Param_Out_TipoMidiaPreferencial->AdicionarPonteiro(pTipoMidia);
-
-	//Define sucesso na operação.
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	//Define o ponteiro na interface de saida.
+	CarenSetPointerToICarenSafe(vi_pOutMediaType, Param_Out_TipoMidiaPreferencial, true);
 
 Done:;
 	//Retorna o resultado.
@@ -730,10 +697,10 @@ CarenResult CarenMFTopologyNode::GetNodeType([Out] Enumeracoes::CA_MF_TOPOLOGY_T
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizada no método.
-	MF_TOPOLOGY_TYPE TipoTopologia;
+	MF_TOPOLOGY_TYPE vi_OutNodeType;
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetNodeType(&TipoTopologia);
+	Hr = PonteiroTrabalho->GetNodeType(&vi_OutNodeType);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -751,10 +718,7 @@ CarenResult CarenMFTopologyNode::GetNodeType([Out] Enumeracoes::CA_MF_TOPOLOGY_T
 	}
 
 	//Define o tipo da topologia.
-	Param_Out_TipoNode = static_cast<CA_MF_TOPOLOGY_TYPE>(TipoTopologia);
-
-	//Define sucesso na operação.
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	Param_Out_TipoNode = static_cast<CA_MF_TOPOLOGY_TYPE>(vi_OutNodeType);
 
 Done:;
 	//Retorna o resultado.
@@ -774,10 +738,10 @@ CarenResult CarenMFTopologyNode::GetObject(ICaren^ Param_Out_Objeto)
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizada no método.
-	IUnknown* pObjeto = NULL;
+	IUnknown* vi_pOutObject = Nulo;
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetObject(&pObjeto);
+	Hr = PonteiroTrabalho->GetObject(&vi_pOutObject);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -794,12 +758,9 @@ CarenResult CarenMFTopologyNode::GetObject(ICaren^ Param_Out_Objeto)
 		Sair;
 	}
 
-	//Define o ponteiro para o objeto
-	Param_Out_Objeto->AdicionarPonteiro(pObjeto);
-
-	//Define sucesso na operação.
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
+	//Define o ponteiro na interface de saida.
+	CarenSetPointerToICarenSafe(vi_pOutObject, Param_Out_Objeto, true);
+	
 Done:;
 	//Retorna o resultado.
 	return Resultado;
@@ -820,11 +781,11 @@ CarenResult CarenMFTopologyNode::GetOutput(UInt32 Param_IndexSaidaFluxo, [Out] I
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizada no método.
-	IMFTopologyNode* pNoSaida = NULL;
-	DWORD IndexEntradaFluxo = 0;
+	IMFTopologyNode* vi_pOutDownstreamNode = Nulo;
+	DWORD vi_OutIndexInputStream = 0;
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetOutput(Param_IndexSaidaFluxo, &pNoSaida, &IndexEntradaFluxo);
+	Hr = PonteiroTrabalho->GetOutput(Param_IndexSaidaFluxo, &vi_pOutDownstreamNode, &vi_OutIndexInputStream);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -844,14 +805,11 @@ CarenResult CarenMFTopologyNode::GetOutput(UInt32 Param_IndexSaidaFluxo, [Out] I
 	//Cria a interface a ser retornada
 	Param_Out_NodeConexao = gcnew CarenMFTopologyNode();
 
-	//Define o ponteiro de trabalho
-	Param_Out_NodeConexao->AdicionarPonteiro(pNoSaida);
+	//Define o ponteiro na interface de saida.
+	CarenSetPointerToICarenSafe(vi_pOutDownstreamNode, Param_Out_NodeConexao, true);
 
 	//Define o index de entrada
-	Param_Out_IndexEntradaFluxo = IndexEntradaFluxo;
-
-	//Define sucesso na operação.
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	Param_Out_IndexEntradaFluxo = vi_OutIndexInputStream;
 
 Done:;
 	//Retorna o resultado.
@@ -871,10 +829,10 @@ CarenResult CarenMFTopologyNode::GetOutputCount([Out] UInt32% Param_Out_Quantida
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizada no método.
-	DWORD CountNoSaida = 0;
+	DWORD vi_OutCount = 0;
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetOutputCount(&CountNoSaida);
+	Hr = PonteiroTrabalho->GetOutputCount(&vi_OutCount);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -892,10 +850,7 @@ CarenResult CarenMFTopologyNode::GetOutputCount([Out] UInt32% Param_Out_Quantida
 	}
 
 	//Define a quantidade de nos de saida
-	Param_Out_QuantidadeFluxosSaida = CountNoSaida;
-
-	//Define sucesso na operação.
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	Param_Out_QuantidadeFluxosSaida = vi_OutCount;
 
 Done:;
 	//Retorna o resultado.
@@ -916,10 +871,10 @@ CarenResult CarenMFTopologyNode::GetOutputPrefType(UInt32 Param_IndexSaida, [Out
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método.
-	IMFMediaType* pTipoMidia = NULL;
+	IMFMediaType* vi_pOutMediaType = Nulo;
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetInputPrefType(Param_IndexSaida, &pTipoMidia);
+	Hr = PonteiroTrabalho->GetInputPrefType(Param_IndexSaida, &vi_pOutMediaType);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -936,14 +891,11 @@ CarenResult CarenMFTopologyNode::GetOutputPrefType(UInt32 Param_IndexSaida, [Out
 		Sair;
 	}
 
-	//Cria a interface do tipo preferencia de midia
+	//Cria a interface a ser retornada.
 	Param_Out_TipoMidiaPreferencial = gcnew CarenMFMediaType(false);
 
-	//Define o ponteiro de trabalho
-	Param_Out_TipoMidiaPreferencial->AdicionarPonteiro(pTipoMidia);
-
-	//Define sucesso na operação.
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	//Define o ponteiro na interface de saida.
+	CarenSetPointerToICarenSafe(vi_pOutMediaType, Param_Out_TipoMidiaPreferencial, true);
 
 Done:;
 	//Retorna o resultado.
@@ -965,10 +917,10 @@ CarenResult CarenMFTopologyNode::GetTopoNodeID([Out] UInt64% Param_Out_Identific
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizada no método.
-	TOPOID NodeId = 0;
+	TOPOID vi_OutID = 0;
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetTopoNodeID(&NodeId);
+	Hr = PonteiroTrabalho->GetTopoNodeID(&vi_OutID);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -985,11 +937,8 @@ CarenResult CarenMFTopologyNode::GetTopoNodeID([Out] UInt64% Param_Out_Identific
 		Sair;
 	}
 
-	//Define o Id
-	Param_Out_IdentificadorNode = NodeId;
-
-	//Define sucesso na operação.
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	//Define o id no parametro de saida.
+	Param_Out_IdentificadorNode = vi_OutID;
 
 Done:;
 	//Retorna o resultado.
@@ -1010,22 +959,13 @@ CarenResult CarenMFTopologyNode::SetInputPrefType(UInt32 Param_IndexFluxoEntrada
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizada no método.
-	IMFMediaType* pTipoMidia = NULL;
+	IMFMediaType* vi_pMediaType = Nulo;
 
-	//Recupera o ponteiro para o tipo de midia
-	Resultado = Param_TipoMidia->RecuperarPonteiro((LPVOID*)&pTipoMidia);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falha..
-
-		//Sai do método
-		goto Done;
-	}
+	//Recupera o ponteiro para o tipo de midia a ser definido.
+	CarenGetPointerFromICarenSafe(Param_TipoMidia, vi_pMediaType);
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->SetInputPrefType(Param_IndexFluxoEntrada, pTipoMidia);
+	Hr = PonteiroTrabalho->SetInputPrefType(Param_IndexFluxoEntrada, vi_pMediaType);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -1041,12 +981,6 @@ CarenResult CarenMFTopologyNode::SetInputPrefType(UInt32 Param_IndexFluxoEntrada
 		//Sai do método
 		Sair;
 	}
-
-	//Limpa
-	pTipoMidia = NULL;
-
-	//Define sucesso na operação.
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
 
 Done:;
 	//Retorna o resultado.
@@ -1066,22 +1000,13 @@ CarenResult CarenMFTopologyNode::SetObject(ICaren^ Param_Objeto)
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizada no método.
-	IUnknown* pObjeto = NULL;
+	IUnknown* vi_pObject = Nulo;
 
-	//Recupera o ponteiro para o objeto.
-	Resultado = Param_Objeto->RecuperarPonteiro((LPVOID*)&pObjeto);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falha..
-
-		//Sai do método
-		goto Done;
-	}
+	//Recupera o ponteiro para o objeto a ser definido.
+	CarenGetPointerFromICarenSafe(Param_Objeto, vi_pObject);
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->SetObject(pObjeto);
+	Hr = PonteiroTrabalho->SetObject(vi_pObject);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -1097,12 +1022,6 @@ CarenResult CarenMFTopologyNode::SetObject(ICaren^ Param_Objeto)
 		//Sai do método
 		Sair;
 	}
-
-	//Limpa
-	pObjeto = NULL;
-
-	//Define sucesso na operação.
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
 
 Done:;
 	//Retorna o resultado.
@@ -1123,22 +1042,13 @@ CarenResult CarenMFTopologyNode::SetOutputPrefType(UInt32 Param_IndexFluxoSaida,
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizada no método.
-	IMFMediaType* pTipoMidia = NULL;
+	IMFMediaType* vi_pMediaType = Nulo;
 
-	//Recupera o ponteiro para o tipo de midia
-	Resultado = Param_TipoMidia->RecuperarPonteiro((LPVOID*)& pTipoMidia);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falha..
-
-		//Sai do método
-		goto Done;
-	}
+	//Recupera o ponteiro para o tipo de midia a ser definido.
+	CarenGetPointerFromICarenSafe(Param_TipoMidia, vi_pMediaType);
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->SetInputPrefType(Param_IndexFluxoSaida, pTipoMidia);
+	Hr = PonteiroTrabalho->SetInputPrefType(Param_IndexFluxoSaida, vi_pMediaType);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -1154,12 +1064,6 @@ CarenResult CarenMFTopologyNode::SetOutputPrefType(UInt32 Param_IndexFluxoSaida,
 		//Sai do método
 		Sair;
 	}
-
-	//Limpa
-	pTipoMidia = NULL;
-
-	//Define sucesso na operação.
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
 
 Done:;
 	//Retorna o resultado.

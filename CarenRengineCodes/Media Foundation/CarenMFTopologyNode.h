@@ -33,7 +33,7 @@ using namespace CarenRengine::SDKBase::Estruturas;
 using namespace CarenRengine::SDKUtilidades;
 
 /// <summary>
-/// (Concluido - Fase de Testes) - Classe responsável por representar um nó em uma topologia.
+/// Classe responsável por representar um nó em uma topologia.
 /// </summary>
 public ref class CarenMFTopologyNode :public ICarenMFTopologyNode
 {
@@ -247,7 +247,7 @@ public:
 
 
 
-	//Métodos da interface Proprietaria
+	//Métodos da interface (ICarenMFTopologyNode)
 public:
 	/// <summary>
 	/// (CloneFrom) - Copia os dados de outro nó de topologia para este nó.

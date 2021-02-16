@@ -585,7 +585,7 @@ CarenResult CarenMFMediaSource::Start(ICarenMFPresentationDescriptor^ Param_Desc
 
 	//Converte a string para GUID se informado.
 	if (StringObjetoValido(Param_GuidTimeFormato))
-		vi_GuidTimeFormat = CarenCreateGuidFromStringSafe(Param_GuidTimeFormato, vi_GuidTimeFormat);
+		CarenCreateGuidFromStringSafe(Param_GuidTimeFormato, vi_GuidTimeFormat);
 	
 	//Converte a PROPVARIANT gerenciada para a nativa.
 	CarenConvertPropvariantToNativeSafe(Param_PosiçãoInicio, vi_pPropvar);

@@ -1858,7 +1858,7 @@ namespace CarenRengine
 			/// <param name="Param_IdFluxo">O fluxo ou objeto de consulta. Você pode utilizar a enumeração(CA_SOURCE_READER_ID) para espeficar um valor padrão ao sistema.</param>
 			/// <param name="Param_GuidAtributo">Um GUID que identifica o atributo para recuperar. Se o Param_IdFluxo parâmetro é igual a ID_MF_SOURCE_READER_MEDIASOURCE, 
 			/// Param_GuidAtributo pode especificar os atributos de: MFAtributos_DescritorApresentação, MF_SOURCE_READER_MEDIASOURCE_CHARACTERISTICS.
-			/// Se Param_IdFluxo espeficifica um Fluxo, Param_GuidAtributo deve especificar um atributo do Descritor de Fluxo(GUIDs_MFAtributos_DescritorFluxo) </param>
+			/// Se Param_IdFluxo espeficifica um Fluxo, Param_GuidAtributo deve especificar um atributo do Descritor de Fluxo(GUIDs_MFAttributes_StreamDescriptor) </param>
 			/// <param name="Param_Out_ValorAtributo">Retorna o valor do atributo solicitado</param>
 			CarenResult GetPresentationAttribute(UInt32 Param_IdFluxo, String^ Param_GuidAtributo, OutParam CA_PROPVARIANT^% Param_Out_ValorAtributo);
 
@@ -5155,7 +5155,7 @@ namespace CarenRengine
 			/// Obtém um atributo de apresentação do recurso de mídia.
 			/// </summary>
 			/// <param name="Param_GuidMFAtributos">O atributo a ser consultado. Para obter uma lista de atributos de apresentação, consulte a estrutura: 
-			/// GUIDs_MFAtributos_DescritorApresentacao</param>
+			/// GUIDs_MFAttributes_PresentationDescriptor</param>
 			/// <param name="Param_Out_ValorAtributo">Retrona uma CA_PROPVARIANT com os dados do atributo.</param>
 			CarenResult GetPresentationAttribute(
 				String^ Param_GuidMFAtributos, 
@@ -5198,7 +5198,7 @@ namespace CarenRengine
 			/// Obtém um atributo de nível de fluxo do recurso de mídia.
 			/// </summary>
 			/// <param name="Param_IdFluxo">O índice baseado em zero do fluxo. Para obter o número de fluxos, ligue para ICarenMFMediaEngineEx::ObterNumeroFluxos.</param>
-			/// <param name="Param_GuidMfAtributo">O atributo a ser consultado. Os valores possíveis estão presentes nas estruturas: GUIDs_MFAtributos_DescritorFluxo e GUIDs_MF_MEDIATYPE_ATTRIBUTES</param>
+			/// <param name="Param_GuidMfAtributo">O atributo a ser consultado. Os valores possíveis estão presentes nas estruturas: GUIDs_MFAttributes_StreamDescriptor e GUIDs_MF_MEDIATYPE_ATTRIBUTES</param>
 			/// <param name="Param_Out_ValorAtributo">>Retrona uma CA_PROPVARIANT com os dados do atributo.</param>
 			CarenResult GetStreamAttribute(
 				UInt32 Param_IdFluxo, 
@@ -5763,7 +5763,7 @@ namespace CarenRengine
 			/// Cria uma nova instância do Media Engine.
 			/// </summary>
 			/// <param name="Param_Flags">Um OR bit a bit de zero ou mais sinalizadores da enumeração CA_MF_MEDIA_ENGINE_CREATEFLAGS.</param>
-			/// <param name="Param_Atributos">Um ponteiro para a interface ICarenMFAttributes de um armazenamento de atributos. Consulte a estrutura GUIDs_MFAtributos_MediaEngine
+			/// <param name="Param_Atributos">Um ponteiro para a interface ICarenMFAttributes de um armazenamento de atributos. Consulte a estrutura GUIDs_MFAtributes_MediaEngine
 			/// para os atributos disponiveis para a Media Engine.</param>
 			/// <param name="Param_Out_MediaEngine">Recebe um ponteiro para a interface ICarenMFMediaEngine. O chamador deve liberar a interface.</param>
 			CarenResult CreateInstance(

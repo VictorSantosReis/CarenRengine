@@ -307,7 +307,7 @@ public:
 	/// Obtém um atributo de apresentação do recurso de mídia.
 	/// </summary>
 	/// <param name="Param_GuidMFAtributos">O atributo a ser consultado. Para obter uma lista de atributos de apresentação, consulte a estrutura: 
-	/// GUIDs_MFAtributos_DescritorApresentacao</param>
+	/// GUIDs_MFAttributes_PresentationDescriptor</param>
 	/// <param name="Param_Out_ValorAtributo">Retrona uma CA_PROPVARIANT com os dados do atributo.</param>
 	virtual CarenResult GetPresentationAttribute(
 	String^ Param_GuidMFAtributos, 
@@ -350,7 +350,7 @@ public:
 	/// Obtém um atributo de nível de fluxo do recurso de mídia.
 	/// </summary>
 	/// <param name="Param_IdFluxo">O índice baseado em zero do fluxo. Para obter o número de fluxos, ligue para ICarenMFMediaEngineEx::ObterNumeroFluxos.</param>
-	/// <param name="Param_GuidMfAtributo">O atributo a ser consultado. Os valores possíveis estão presentes nas estruturas: GUIDs_MFAtributos_DescritorFluxo e GUIDs_MF_MEDIATYPE_ATTRIBUTES</param>
+	/// <param name="Param_GuidMfAtributo">O atributo a ser consultado. Os valores possíveis estão presentes nas estruturas: GUIDs_MFAttributes_StreamDescriptor e GUIDs_MF_MEDIATYPE_ATTRIBUTES</param>
 	/// <param name="Param_Out_ValorAtributo">>Retrona uma CA_PROPVARIANT com os dados do atributo.</param>
 	virtual CarenResult GetStreamAttribute(
 	UInt32 Param_IdFluxo, 

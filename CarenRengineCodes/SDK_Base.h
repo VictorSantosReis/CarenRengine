@@ -37,9 +37,7 @@ namespace CarenRengine
 		namespace GUIDs
 		{
 
-			////////////////////////
 			//MEDIA FOUNDATION API//
-			////////////////////////
 
 
 			//ATRIBUTOS.
@@ -1144,7 +1142,7 @@ namespace CarenRengine
 			/// <summary>
 			/// Contém todos os GUIDs utilizados pela interface IMFSourceReader.
 			/// </summary>
-			public value struct GUIDs_MFAtributos_SourceReader
+			public value struct GUIDs_MFAttributes_SourceReader
 			{
 				/// <summary>
 				/// Permite o processamento de baixa latência.
@@ -1205,19 +1203,12 @@ namespace CarenRengine
 				/// Contém propriedades de configuração para a fonte de mídia.
 				/// </summary>
 				literal String^ MF_SOURCE_READER_MEDIASOURCE_CONFIG = "{9085ABEB-0354-48F9-ABB5-200DF838C68E}";
-
-
-				/// <summary>
-				/// (Não implementado) - Contém um ponteiro Imffieldofusemftunlock , que é usado para desbloquear um MFT
-				/// com restrições de campo de uso.
-				/// </summary>
-				literal String^ MFT_FIELDOFUSE_UNLOCK_Attribute = "{8EC2E9FD-9148-410D-831E-702439461A8E}";
 			};
 
 			/// <summary>
 			/// Contém todos os GUIDs utilizados pela interface IMFSample.
 			/// </summary>
-			public value struct GUIDs_MFAtributos_Sample
+			public value struct GUIDs_MFAttributes_Sample
 			{
 				/// <summary>
 				/// Especifica se um exemplo de mídia contém um quadro de vídeo 3D.
@@ -1419,7 +1410,7 @@ namespace CarenRengine
 			/// <summary>
 			/// Contém todos os GUIDs utilizados pela interface IMFPresentationDescriptor.
 			/// </summary>
-			public value struct GUIDs_MFAtributos_DescritorApresentacao
+			public value struct GUIDs_MFAttributes_PresentationDescriptor
 			{
 				/// <summary>
 				/// Contém um ponteiro para o descritor de apresentação do caminho de mídia protegido (PMP).
@@ -1491,7 +1482,7 @@ namespace CarenRengine
 			/// <summary>
 			/// Contém todos os GUIDs utilizados pela interface IMFStreamDescriptor.
 			/// </summary>
-			public value struct GUIDs_MFAtributos_DescritorFluxo
+			public value struct GUIDs_MFAttributes_StreamDescriptor
 			{
 				/// <summary>
 				/// Especifica o idioma para um fluxo.
@@ -1517,7 +1508,7 @@ namespace CarenRengine
 			/// <summary>
 			/// Contém todos os GUIDs utilizados pelo SAR(Streaming Audio Render).
 			/// </summary>
-			public value struct GUIDs_MFAtributos_SAR
+			public value struct GUIDs_MFAttributes_AudioRenderer
 			{
 				/// <summary>
 				/// Especifica o identificador para o dispositivo de ponto de extremidade de áudio.
@@ -1552,7 +1543,7 @@ namespace CarenRengine
 			/// <summary>
 			/// Contém todos os GUIDs utilizados pelo EVR(Renderizador de Vídeo Aprimorado).
 			/// </summary>
-			public value struct GUIDs_MFAtributos_EVR
+			public value struct GUIDs_MFAttributes_EVR
 			{
 				/// <summary>
 				/// Permite que o EVR faça chamadas em lotes para o método IDirect3DDevice9::Present.
@@ -1690,7 +1681,7 @@ namespace CarenRengine
 			/// <summary>
 			/// Contém todos os GUIDs que podem ser utilizados na inicialização do IMFSinkWriter.
 			/// </summary>
-			public value struct GUIDs_MFAtributos_SinkWriter
+			public value struct GUIDs_MFAttributes_SinkWriter
 			{
 				/// <summary>
 				/// Permite o processamento de baixa latência.
@@ -1737,107 +1728,403 @@ namespace CarenRengine
 			};
 
 			/// <summary>
-			/// (Não definido ainda)Contém todos os GUIDs que podem ser utilizados no Media Foundation Transform(MFTs) ou nos ativadores de MFTs.
+			/// (NAO DEFINIDO) - Contém todos os GUIDs que podem ser utilizados pela api de captura de dispositivos.
 			/// </summary>
-			public value struct GUIDs_MFAtributos_MediaFoundationTransform
+			public value struct GUIDs_MFAttributes_CaptureDevice
 			{
 				/// <summary>
-				/// 
+				/// O nome de exibição do dispositivo.
 				/// </summary>
-				literal String^ MF_TRANSFORM_ASYNC = "";
-				
+				literal String^ MF_DEVSOURCE_ATTRIBUTE_FRIENDLY_NAME = "{}";
+
 				/// <summary>
-				/// 
+				/// O formato de saída do dispositivo.
 				/// </summary>
-				literal String^ MF_TRANSFORM_ASYNC_UNLOCK = "";
-				
+				literal String^ MF_DEVSOURCE_ATTRIBUTE_MEDIA_TYPE = "{}";
+
 				/// <summary>
-				/// 
+				/// O tipo de dispositivo, como captura de áudio ou captura de vídeo.
 				/// </summary>
-				literal String^ MF_TRANSFORM_FLAGS_Attribute = "";
-				
+				literal String^ MF_DEVSOURCE_ATTRIBUTE_SOURCE_TYPE = "{}";
+
 				/// <summary>
-				/// 
+				/// O ID de ponto final para um dispositivo de captura de áudio.
 				/// </summary>
-				literal String^ MF_TRANSFORM_CATEGORY_Attribute = "";
-			
+				literal String^ MF_DEVSOURCE_ATTRIBUTE_SOURCE_TYPE_AUDCAP_ENDPOINT_ID = "{}";
+
 				/// <summary>
-				/// 
+				/// A função do dispositivo para um dispositivo de captura de áudio.
 				/// </summary>
-				literal String^ MFT_TRANSFORM_CLSID_Attribute = "";
-			
+				literal String^ MF_DEVSOURCE_ATTRIBUTE_SOURCE_TYPE_AUDCAP_ROLE = "{}";
+
 				/// <summary>
-				/// 
+				/// A categoria de dispositivo para um dispositivo de vídeo.
 				/// </summary>
-				literal String^ MFT_INPUT_TYPES_Attributes = "";
-				
+				literal String^ MF_DEVSOURCE_ATTRIBUTE_SOURCE_TYPE_VIDCAP_CATEGORY = "{}";
+
 				/// <summary>
-				/// 
+				/// Especifica se uma fonte de captura de vídeo é um dispositivo de hardware ou um dispositivo de software.
 				/// </summary>
-				literal String^ MFT_OUTPUT_TYPES_Attributes = "";
-			
+				literal String^ MF_DEVSOURCE_ATTRIBUTE_SOURCE_TYPE_VIDCAP_HW_SOURCE = "{}";
+
 				/// <summary>
-				/// 
+				/// Especifica o número máximo de frames que a fonte de captura de vídeo armazenará em buffer.
 				/// </summary>
-				literal String^ MFT_ENUM_HARDWARE_URL_Attribute = "";
-				
+				literal String^ MF_DEVSOURCE_ATTRIBUTE_SOURCE_TYPE_VIDCAP_MAX_BUFFERS = "{}";
+
 				/// <summary>
-				/// 
+				/// O link simbólico para um driver de captura de vídeo.
 				/// </summary>
-				literal String^ MFT_FRIENDLY_NAME_Attribute = "";
-				
+				literal String^ MF_DEVSOURCE_ATTRIBUTE_SOURCE_TYPE_VIDCAP_SYMBOLIC_LINK = "{}";
+
 				/// <summary>
-				/// 
+				/// ‎Especifica se a fonte do dispositivo usa o tempo do sistema para carimbos de hora.‎
 				/// </summary>
-				literal String^ MFT_CONNECTED_STREAM_ATTRIBUTE = "";
-				
-				/// <summary>
-				/// 
-				/// </summary>
-				literal String^ MFT_CONNECTED_TO_HW_STREAM = "";
-				
-				/// <summary>
-				/// 
-				/// </summary>
-				literal String^ MFT_PREFERRED_OUTPUTTYPE_Attribute = "";
-			
-				/// <summary>
-				/// 
-				/// </summary>
-				literal String^ MFT_PROCESS_LOCAL_Attribute = "";
-			
-				/// <summary>
-				/// 
-				/// </summary>
-				literal String^ MFT_PREFERRED_ENCODER_PROFILE = "";
-				
-				/// <summary>
-				/// 
-				/// </summary>
-				literal String^ MFT_HW_TIMESTAMP_WITH_QPC_Attribute = "";
-			
-				/// <summary>
-				/// 
-				/// </summary>
-				literal String^ MFT_FIELDOFUSE_UNLOCK_Attribute = "";
-			
-				/// <summary>
-				/// 
-				/// </summary>
-				literal String^ MFT_CODEC_MERIT_Attribute = "";
-			
-				/// <summary>
-				/// 
-				/// </summary>
-				literal String^ MFT_ENUM_TRANSCODE_ONLY_ATTRIBUTE = "";
+				literal String^ MFT_HW_TIMESTAMP_WITH_QPC_Attribute = "{8d030fb8-cc43-4258-a22e-9210bef89be4}";
 			};
 
 			/// <summary>
-			/// (Não definido ainda )Contém todos os GUIDs que podem ser utilizados pela Media Engine(ICarenMFMediaEngine).
+			/// Contém todos os GUIDs que podem ser utilizados no Media Foundation Transform(MFTs) ou nos ativadores de MFTs.
 			/// </summary>
-			public value struct GUIDs_MFAtributos_MediaEngine
+			public value struct GUIDs_MFAttributes_Transform
 			{
+				/// <summary>
+				/// Especifica se o Carregador de Topologia mudará os tipos de mídia em um MFT.
+				/// </summary>
+				literal String^ MF_ACTIVATE_MFT_LOCKED = "{c1f6093c-7f65-4fbd-9e39-5faec3c4fbd7}";
 
+				/// <summary>
+				/// Especifica se uma transformação de mídia (MFT) suporta aceleração de vídeo DirectX.
+				/// </summary>
+				literal String^ MF_SA_D3D_AWARE = "{eaa35c29-775e-488e-9b61-b3283e49583b}";
+
+				/// <summary>
+				/// Especifica se um MFT realiza processamento assíncrono.
+				/// </summary>
+				literal String^ MF_TRANSFORM_ASYNC = "{f81a699a-649a-497d-8c73-29f8fed6ad7a}";
+				
+				/// <summary>
+				/// Permite o uso de um MFT assíncroto.
+				/// </summary>
+				literal String^ MF_TRANSFORM_ASYNC_UNLOCK = "{e5666d6b-3422-4eb6-a421-da7db1f8e207}";
+				
+				/// <summary>
+				/// Contém bandeiras para um objeto de ativação MFT.
+				/// </summary>
+				literal String^ MF_TRANSFORM_FLAGS_Attribute = "{9359bb7e-6275-46c4-a025-1c01e45f1a86}";
+				
+				/// <summary>
+				/// Especifica a categoria para um MFT.
+				/// </summary>
+				literal String^ MF_TRANSFORM_CATEGORY_Attribute = "{ceabba49-506d-4757-a6ff-66c184987e4e}";
+			
+				/// <summary>
+				/// Contém o identificador de classe (CLSID) de um MFT.
+				/// </summary>
+				literal String^ MFT_TRANSFORM_CLSID_Attribute = "{6821c42b-65a4-4e82-99bc-9a88205ecd0c}";
+			
+				/// <summary>
+				/// Contém os tipos de entrada registrados para um MFT.
+				/// </summary>
+				literal String^ MFT_INPUT_TYPES_Attributes = "{4276c9b1-759d-4bf3-9cd0-0d723d138f96}";
+				
+				/// <summary>
+				/// Contém os tipos de saída registrados para um MFT.
+				/// </summary>
+				literal String^ MFT_OUTPUT_TYPES_Attributes = "{8eae8cf3-a44f-4306-ba5c-bf5dda242818}";
+			
+				/// <summary>
+				/// Contém o link simbólico para um MFT baseado em hardware.
+				/// </summary>
+				literal String^ MFT_ENUM_HARDWARE_URL_Attribute = "{2fb866ac-b078-4942-ab6c-003d05cda674}";
+				
+				/// <summary>
+				/// Contém o nome de exibição de um MFT baseado em hardware.
+				/// </summary>
+				literal String^ MFT_FRIENDLY_NAME_Attribute = "{314ffbae-5b41-4c95-9c19-4e7d586face3}";
+				
+				/// <summary>
+				/// Contém um ponteiro para os atributos de fluxo do fluxo conectado em um MFT baseado em hardware.
+				/// </summary>
+				literal String^ MFT_CONNECTED_STREAM_ATTRIBUTE = "{71eeb820-a59f-4de2-bcec-38db1dd611a4}";
+				
+				/// <summary>
+				/// Especifica se um MFT baseado em hardware está conectado a outro MFT baseado em hardware.
+				/// </summary>
+				literal String^ MFT_CONNECTED_TO_HW_STREAM = "{34e6e728-06d6-4491-a553-4795650db912}";
+				
+				/// <summary>
+				/// Especifica se um decodificador expõe os tipos de saída IYUV/I420 (adequado para transcodificação) antes de outros formatos.
+				/// </summary>
+				literal String^ MFT_DECODER_EXPOSE_OUTPUT_TYPES_IN_NATIVE_ORDER = "{ef80833f-f8fa-44d9-80d8-41ed6232670c}";
+
+				/// <summary>
+				/// Especifica a resolução final de saída da imagem decodificada, após o processamento do vídeo.
+				/// </summary>
+				literal String^ MFT_DECODER_FINAL_VIDEO_RESOLUTION_HINT = "{dc2f8496-15c4-407a-b6f0-1b66ab5fbf53}";
+
+				/// <summary>
+				/// Especifica que o codificador MFT suporta receber eventos MEEncodingParameter durante o streaming.
+				/// </summary>
+				literal String^ MFT_ENCODER_SUPPORTS_CONFIG_EVENT = "{86a355ae-3a77-4ec4-9f31-01149a4e92de}";
+
+				/// <summary>
+				/// Especifica um identificador exclusivo para um adaptador de vídeo. Use este atributo ao chamar MFTEnum2 para enumerar MFTs associados a um adaptador específico.
+				/// </summary>
+				literal String^ MFT_ENUM_ADAPTER_LUID = "{1d39518c-e220-4da8-a07f-ba172552d6b1}";
+
+				/// <summary>
+				/// Especifica a ID do fornecedor para uma transformação da Media Foundation baseada em hardware
+				/// </summary>
+				literal String^ MFT_ENUM_HARDWARE_VENDOR_ID_Attribute = "{3aecb0cc-035b-4bcc-8185-2b8d551ef3af}";
+
+				/// <summary>
+				/// Especifica o formato de saída preferido para um codificador.
+				/// </summary>
+				literal String^ MFT_PREFERRED_OUTPUTTYPE_Attribute = "{7e700499-396a-49ee-b1b4-f628021e8c9d}";
+			
+				/// <summary>
+				/// Especifica se um MFT está registrado apenas no processo do aplicativo.
+				/// </summary>
+				literal String^ MFT_PROCESS_LOCAL_Attribute = "{543186e4-4649-4e65-b588-4aa352aff379}";
+
+				/// <summary>
+				/// Especifica se o vídeo H.264 remux MFT deve marcar imagens I como ponto limpo para uma melhor capacidade de busca. Isso tem o potencial de corrupção em buscas em arquivos MP4 finais não conformes.
+				/// </summary>
+				literal String^ MFT_REMUX_MARK_I_PICTURE_AS_CLEAN_POINT = "{364e8f85-3f2e-436c-b2a2-4440a012a9e8}";
+			
+				/// <summary>
+				/// Contém propriedades de configuração para um codificador.
+				/// </summary>
+				literal String^ MFT_PREFERRED_ENCODER_PROFILE = "{53004909-1ef5-46d7-a18e-5a75f8b5905f}";
+
+				/// <summary>
+				/// Especifica se uma transformação de Media Foundation (MFT) suporta vídeo estereoscópico 3D.
+				/// </summary>
+				literal String^ MFT_SUPPORT_3DVIDEO = "{093f81b1-4f2e-4631-8168-7934032a01d3}";
+
+				/// <summary>
+				/// Especifica se uma transformação de Mídia Foundation (MFT) suporta mudanças dinâmicas de formato.
+				/// </summary>
+				literal String^ MFT_SUPPORT_DYNAMIC_FORMAT_CHANGE = "{53476a11-3f13-49fb-ac42-ee2733c96741}";
+				
+				/// <summary>
+				/// Contém um ponteiro IMFFieldOfUseMFTUnlock, que pode ser usado para desbloquear o MFT.
+				/// </summary>
+				literal String^ MFT_FIELDOFUSE_UNLOCK_Attribute = "{8ec2e9fd-9148-410d-831e-702439461a8e}";
+			
+				/// <summary>
+				/// Contém o valor de mérito de um codec de hardware.
+				/// </summary>
+				literal String^ MFT_CODEC_MERIT_Attribute = "{88a7cb15-7b07-4a34-9128-e64c6703c4d3}";
+			
+				/// <summary>
+				/// Especifica se um decodificador é otimizado para transcodificação e não para reprodução.
+				/// </summary>
+				literal String^ MFT_ENUM_TRANSCODE_ONLY_ATTRIBUTE = "{111ea8cd-b62a-4bdb-89f6-67ffcdc2458b}";
+			};
+
+			/// <summary>
+			/// Contém todos os GUIDs que podem ser utilizados pela api da Media Engine.
+			/// </summary>
+			public value struct GUIDs_MFAtributes_MediaEngine
+			{
+				/// <summary>
+				/// ‎(UINT32) - ‎Especifica a categoria do fluxo de áudio.‎
+				/// </summary>
+				literal String^ MF_MEDIA_ENGINE_AUDIO_CATEGORY = "{c8d4c51d-350e-41f2-ba46-faebbb0857f6}";
+
+				/// <summary>
+				/// (UINT32) - ‎Especifica a função do dispositivo para o fluxo de áudio.‎
+				/// </summary>
+				literal String^ MF_MEDIA_ENGINE_AUDIO_ENDPOINT_ROLE = "{d2cb93d1-116a-44f2-9385-f7d0fda2fb46}";
+
+				/// <summary>
+				/// (GUID) - ‎Especifica o modo de compatibilidade do navegador.‎
+				/// </summary>
+				literal String^ MF_MEDIA_ENGINE_BROWSER_COMPATIBILITY_MODE = "{4e0212e2-e18f-41e1-95e5-c0e7e9235bc3}";
+
+				/// <summary>
+				/// NÃO POSSUI DOCUMENTAÇÃO.
+				/// </summary>
+				literal String^ MF_MEDIA_ENGINE_COMPATIBILITY_MODE_WIN10 = "{5b25e089-6ca7-4139-a2cb-fcaab39552a3}";
+
+				/// <summary>
+				/// NÃO POSSUI DOCUMENTAÇÃO.
+				/// </summary>
+				literal String^ MF_MEDIA_ENGINE_COMPATIBILITY_MODE_WWA_EDGE = "{15b29098-9f01-4e4d-b65a-c06c6c89da2a}";
+
+				/// <summary>
+				/// (IUNKNOWN - ICarenMFMediaEngineNotify) - ‎Contém um ponteiro para a interface de retorno de chamada para o Media Engine.‎
+				/// </summary>
+				literal String^ MF_MEDIA_ENGINE_CALLBACK = "{c60381b8-83a4-41f8-a3d0-de05076849a9}";
+
+				/// <summary>
+				/// (UINT32) - ‎Especifica se o Media Engine reproduzirá conteúdo protegido.‎
+				/// </summary>
+				literal String^ MF_MEDIA_ENGINE_CONTENT_PROTECTION_FLAGS = "{e0350223-5aaf-4d76-a7c3-06de70894db4}";
+
+				/// <summary>
+				/// (IUNKNOWN) - ‎Permite que o Media Engine reprodumente conteúdo protegido.‎
+				/// </summary>
+				literal String^ MF_MEDIA_ENGINE_CONTENT_PROTECTION_MANAGER = "{fdd6dfaa-bd85-4af3-9e0f-a01d539d876a}";
+
+				/// <summary>
+				/// (IUNKNOWN - ICoreWindow) - Uma interface Core Window.
+				/// </summary>
+				literal String^ MF_MEDIA_ENGINE_COREWINDOW = "{fccae4dc-0b7f-41c2-9f96-4659948acddc}";
+
+				/// <summary>
+				/// (IUNKNOWN - ICarenMFDXGIDeviceManager) - ‎Define o Gerenciador de Dispositivos Microsoft DirectX Graphics Infrastructure (DXGI) no Media Engine.‎
+				/// </summary>
+				literal String^ MF_MEDIA_ENGINE_DXGI_MANAGER = "{065702da-1094-486d-8617-ee7cc4ee4648}";
+
+				/// <summary>
+				/// (IUNKNOWN - ICarenMFMediaEngineExtension) - ‎Contém um ponteiro para a interface ‎‎‎‎ICarenMFMediaEngineExtension.‎‎ ‎
+				/// </summary>
+				literal String^ MF_MEDIA_ENGINE_EXTENSION = "{3109fd46-060d-4b62-8dcf-faff811318d2}";
+
+				/// <summary>
+				/// (UINT64) - ‎Especifica uma janela para que o Media Engine aplique proteções OPM ‎‎(Output Protection Manager, gerenciador‎‎ de proteção de saída).‎
+				/// </summary>
+				literal String^ MF_MEDIA_ENGINE_OPM_HWND = "{a0be8ee7-0572-4f2c-a801-2a151bd3e726}";
+
+				/// <summary>
+				/// (UINT64) - ‎Defina uma Handle para uma janela de reprodução de vídeo para o Media Engine.‎
+				/// </summary>
+				literal String^ MF_MEDIA_ENGINE_PLAYBACK_HWND = "{d988879b-67c9-4d92-baa7-6eadd446039d}";
+
+				/// <summary>
+				/// (IUNKNOWN - IDCompositionVisual) - ‎Define um (Visual Microsoft DirectComposition) como a região de reprodução para o Media Engine.‎
+				/// </summary>
+				literal String^ MF_MEDIA_ENGINE_PLAYBACK_VISUAL = "{6debd26f-6ab9-4d7e-b0ee-c61a73ffad15}";
+
+				/// <summary>
+				/// (IUNKNOWN) - ‎Obtém as configurações do resolvedor de fonte.
+				/// </summary>
+				literal String^ MF_MEDIA_ENGINE_SOURCE_RESOLVER_CONFIG_STORE = "{0ac0c497-b3c4-48c9-9cde-bb8ca2442ca3}";
+
+				/// <summary>
+				/// (BOOL) - ‎Especifica se o fluxo contém um canal alfa.‎
+				/// </summary>
+				literal String^ MF_MEDIA_ENGINE_STREAM_CONTAINS_ALPHA_CHANNEL = "{5cbfaf44-d2b2-4cfb-80a7-d429c74c789d}";
+
+				/// <summary>
+				/// (UINT32 - CA_DXGI_FORMAT)‎ - Define o formato de destino de renderização para o Media Engine.‎
+				/// </summary>
+				literal String^ MF_MEDIA_ENGINE_VIDEO_OUTPUT_FORMAT = "{5066893c-8cf9-42bc-8b8a-472212e52726}";
+			};
+
+			/// <summary>
+			/// Contém todos os GUIDs que podem ser utilizados pela api da Media Session.
+			/// </summary>
+			public value struct GUIDs_MFAtributes_MediaSession
+			{
+				/// <summary>
+				/// Fornece uma interface de retorno de chamada para que o aplicativo receba um objeto ativador de conteúdo da sessão PMP.
+				/// </summary>
+				literal String^ MF_SESSION_CONTENT_PROTECTION_MANAGER = "{1e83d482-1f1c-4571-8405-88f4b2181f74}";
+
+				/// <summary>
+				/// Especifica se as topologias terão um tempo global de início e parada.
+				/// </summary>
+				literal String^ MF_SESSION_GLOBAL_TIME = "{1e83d482-1f1c-4571-8405-88f4b2181f72}";
+
+				/// <summary>
+				/// Contém o CLSID de um gerenciador de qualidade para a Sessão de Mídia.
+				/// </summary>
+				literal String^ MF_SESSION_QUALITY_MANAGER = "{1e83d482-1f1c-4571-8405-88f4b2181f73}";
+
+				/// <summary>
+				/// Especifica que a fonte de mídia está sendo em execução em um processo remoto.
+				/// </summary>
+				literal String^ MF_SESSION_REMOTE_SOURCE_MODE = "{f4033ef4-9bb3-4378-941f-85a0856bc244}";
+
+				/// <summary>
+				/// Permite que duas instâncias da Sessão de Mídia compartilhem o mesmo processo pmp.
+				/// </summary>
+				literal String^ MF_SESSION_SERVER_CONTEXT = "{2f00c910-d2cf-4278-8b6a-d077fac3a25f}";
+
+				/// <summary>
+				/// Contém o CLSID de um carregador de topologia para a Sessão de Mídia.
+				/// </summary>
+				literal String^ MF_SESSION_TOPOLOADER = "{1e83d482-1f1c-4571-8405-88f4b2181f71}";
+			};
+
+			/// <summary>
+			/// Contém todos os GUIDs que podem ser utilizados pela api de Topologia.
+			/// </summary>
+			public value struct GUIDs_MFAtributes_Topology
+			{
+				/// <summary>
+				/// Especifica se o carregador de topologia habilita o Microsoft DirectX Video Acceleration (DXVA) na topologia.
+				/// </summary>
+				literal String^ MF_TOPOLOGY_DXVA_MODE = "{1e8d34f6-f5ab-4e23-bb88-874aa3a1a74d}";
+
+				/// <summary>
+				/// NÃO POSSUI DOCUMENTAÇÃO.
+				/// </summary>
+				literal String^ MF_TOPOLOGY_ENABLE_XVP_FOR_PLAYBACK = "{1967731f-cd78-42fc-b026-0992a56e5693}";
+
+				/// <summary>
+				/// Especifica se a Sessão de Mídia tenta modificar a topologia quando o formato de um fluxo muda.
+				/// </summary>
+				literal String^ MF_TOPOLOGY_DYNAMIC_CHANGE_NOT_ALLOWED = "{d529950b-d484-4527-a9cd-b1909532b5b0}";
+
+				/// <summary>
+				/// Especifica se o carregador de topologia enumera os tipos de mídia fornecidos pela fonte de mídia.
+				/// </summary>
+				literal String^ MF_TOPOLOGY_ENUMERATE_SOURCE_TYPES = "{6248c36d-5d0b-4f40-a0bb-b0b305f77698}";
+
+				/// <summary>
+				/// Especifica se deve incluir transformações baseadas em hardware na topologia.
+				/// </summary>
+				literal String^ MF_TOPOLOGY_HARDWARE_MODE = "{d2d362fd-4e4f-4191-a579-c618b66706af}";
+
+				/// <summary>
+				/// Especifica se o pepiline apara amostras.
+				/// </summary>
+				literal String^ MF_TOPOLOGY_NO_MARKIN_MARKOUT = "{7ed3f804-86bb-4b3f-b7e4-7cb43afd4b80}";
+
+				/// <summary>
+				/// Especifica a taxa de atualização do monitor.
+				/// </summary>
+				literal String^ MF_TOPOLOGY_PLAYBACK_FRAMERATE = "{c164737a-c2b1-4553-83bb-5a526072448f}";
+
+				/// <summary>
+				/// Especifica o tamanho da janela de destino para reprodução de vídeo.
+				/// </summary>
+				literal String^ MF_TOPOLOGY_PLAYBACK_MAX_DIMS = "{5715cf19-5768-44aa-ad6e-8721f1b0f9bb}";
+
+				/// <summary>
+				/// Especifica o tempo de início da topologia dentro do segmento atual, em unidades de 100 nanossegundos.
+				/// </summary>
+				literal String^ MF_TOPOLOGY_PROJECTSTART = "{7ed3f802-86bb-4b3f-b7e4-7cb43afd4b80}";
+
+				/// <summary>
+				/// Especifica o tempo de parada da topologia dentro do segmento atual, em unidades de 100 nanossegundos.
+				/// </summary>
+				literal String^ MF_TOPOLOGY_PROJECTSTOP = "{7ed3f803-86bb-4b3f-b7e4-7cb43afd4b80}";
+
+				/// <summary>
+				/// Especifica o status de uma tentativa de resolver uma topologia.
+				/// </summary>
+				literal String^ MF_TOPOLOGY_RESOLUTION_STATUS = "{494bbcde-b031-4e38-97c4-d5422dd618dc}";
+
+				/// <summary>
+				/// Especifica o horário de início das apresentações que estão na fila após a primeira apresentação.
+				/// </summary>
+				literal String^ MF_TOPOLOGY_START_TIME_ON_PRESENTATION_SWITCH = "{c8cc113f-7951-4548-aad6-9ed6202e62b3}";
+
+				/// <summary>
+				/// Permite otimizações estáticas no pipeline de vídeo.
+				/// </summary>
+				literal String^ MF_TOPOLOGY_STATIC_PLAYBACK_OPTIMIZATIONS = "{b86cac42-41a6-4b79-897a-1ab0e52b4a1b}";
+
+				/// <summary>
+				/// Contém um ponteiro IMFFieldOfUseMFTUnlock, que pode ser usado para desbloquear o MFT.
+				/// </summary>
+				literal String^ MFT_FIELDOFUSE_UNLOCK_Attribute = "{8ec2e9fd-9148-410d-831e-702439461a8e}";
 			};
 
 			/// <summary>

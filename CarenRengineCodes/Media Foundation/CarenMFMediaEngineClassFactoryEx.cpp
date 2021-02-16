@@ -626,7 +626,7 @@ Done:;
 /// Cria uma nova instância do Media Engine.
 /// </summary>
 /// <param name="Param_Flags">Um OR bit a bit de zero ou mais sinalizadores da enumeração CA_MF_MEDIA_ENGINE_CREATEFLAGS.</param>
-/// <param name="Param_Atributos">Um ponteiro para a interface ICarenMFAttributes de um armazenamento de atributos. Consulte a estrutura GUIDs_MFAtributos_MediaEngine
+/// <param name="Param_Atributos">Um ponteiro para a interface ICarenMFAttributes de um armazenamento de atributos. Consulte a estrutura GUIDs_MFAtributes_MediaEngine
 /// para os atributos disponiveis para a Media Engine.</param>
 /// <param name="Param_Out_MediaEngine">Recebe um ponteiro para a interface ICarenMFMediaEngine. O chamador deve liberar a interface.</param>
 CarenResult CarenMFMediaEngineClassFactoryEx::CreateInstance(

@@ -32,7 +32,7 @@ using namespace CarenRengine::SDKBase::Estruturas;
 using namespace CarenRengine::SDKUtilidades;
 
 /// <summary>
-/// (Concluido - Fase de Testes) - Classe responsável por atualizar os atributos de um ou mais nós na topologia atual da sessão de mídia.
+/// Classe responsável por atualizar os atributos de um ou mais nós na topologia atual da sessão de mídia.
 /// </summary>
 public ref class CarenMFTopologyNodeAttributeEditor :public ICarenMFTopologyNodeAttributeEditor
 {
@@ -243,7 +243,7 @@ public:
 	//Métodos da interface Proprietaria
 public:
 	/// <summary>
-	/// (UpdateNodeAttributes) - Atualiza os atributos de um ou mais nós na topologia atual..
+	/// Atualiza os atributos de um ou mais nós na topologia atual.
 	/// </summary>
 	/// <param name="Param_TopoId">Reservado.</param>
 	/// <param name="Param_CountArray">A quantidade de elementos no array que contém as atualizações dos atributos.</param>

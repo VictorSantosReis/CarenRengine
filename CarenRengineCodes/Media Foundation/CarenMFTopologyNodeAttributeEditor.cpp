@@ -31,9 +31,9 @@ CarenMFTopologyNodeAttributeEditor::CarenMFTopologyNodeAttributeEditor()
 	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
-//
+
 // Métodos da interface ICaren
-//
+
 
 /// <summary>
 /// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 
@@ -398,12 +398,13 @@ void CarenMFTopologyNodeAttributeEditor::Finalizar()
 
 
 
-//
-//Métodos da interface proprietaria.
-//
+
+
+//Métodos da interface proprietaria (ICarenMFTopologyNodeAttributeEditor)
+
 
 /// <summary>
-/// (UpdateNodeAttributes) - Atualiza os atributos de um ou mais nós na topologia atual..
+/// Atualiza os atributos de um ou mais nós na topologia atual.
 /// </summary>
 /// <param name="Param_TopoId">Reservado.</param>
 /// <param name="Param_CountArray">A quantidade de elementos no array que contém as atualizações dos atributos.</param>
@@ -418,17 +419,27 @@ CarenResult CarenMFTopologyNodeAttributeEditor::UpdateNodeAttributes(UInt64 Para
 
 	//Variaveis a serem utilizadas.
 	Utilidades Util;
-	MFTOPONODE_ATTRIBUTE_UPDATE *pArrayAtributeEditor = new MFTOPONODE_ATTRIBUTE_UPDATE[Param_CountArray];
+	MFTOPONODE_ATTRIBUTE_UPDATE* vi_pArrayUpdate = Nulo;
+	MFTOPONODE_ATTRIBUTE_UPDATE* vi_pTemporary = Nulo;
 
-	//Converte o objeto gerenciado para o não gerenciado.
-	for (UINT32 i = 0; i < Param_CountArray; i++)
+	//Cria o array nativo que vai conter as estruturas
+	vi_pArrayUpdate = CriarMatrizEstruturas<MFTOPONODE_ATTRIBUTE_UPDATE>(safe_cast<UINT32>(Param_ArrayUpdates->Length));
+
+	//Abre um for para copiar os dados do array gerenciado para o nativo.
+	for (int i = 0; i < Param_ArrayUpdates->Length; i++)
 	{
-		//Obtém e converte a estrutura gerenciada para a nativa.
-		pArrayAtributeEditor[i] = *Util.ConverterTopoNodeAttributesToUnamaged(Param_ArrayUpdates[i]);
+		//Converte a estrutura no id especificado.
+		vi_pTemporary = Util.ConverterMFTOPONODE_ATTRIBUTE_UPDATEManaged_ToUnamaged(Param_ArrayUpdates[i]);
+
+		//Define a estrutura no id.
+		vi_pArrayUpdate[i] = *vi_pTemporary;
+
+		//Libera a memória utilizada pela estrutura temporaria
+		DeletarEstruturaSafe(&vi_pTemporary);
 	}
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->UpdateNodeAttributes(Param_TopoId, Param_CountArray, pArrayAtributeEditor);
+	Hr = PonteiroTrabalho->UpdateNodeAttributes(Param_TopoId, Param_CountArray, vi_pArrayUpdate);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -445,11 +456,10 @@ CarenResult CarenMFTopologyNodeAttributeEditor::UpdateNodeAttributes(UInt64 Para
 		Sair;
 	}
 
-	//Destroi o array
-	delete[] pArrayAtributeEditor;
-	pArrayAtributeEditor = NULL;
-
 Done:;
+	//Libera a memória utilizada pelo array de estruturas nativo.
+	DeletarMatrizEstruturasSafe(&vi_pArrayUpdate);
+
 	//Retorna o resultado.
 	return Resultado;
 }

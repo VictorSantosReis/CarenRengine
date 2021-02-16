@@ -276,7 +276,7 @@ public:
 	/// </summary>
 	/// <param name="Param_MidiaCompare">A interface a ser comparada com a atual.</param>
 	/// <param name="Param_Out_ResultadoCompare">O resultado da comparação dos objetos.</param>
-	virtual CarenResult IsEqual(ICarenMFMediaType^ Param_MidiaCompare, [Out] Enumeracoes::CA_MEDIA_TYPE_EQUAL% Param_Out_ResultadoCompare);
+	virtual CarenResult IsEqual(ICarenMFMediaType^ Param_MidiaCompare, [Out] Enumeracoes::CA_MF_MEDIATYPE_EQUAL% Param_Out_ResultadoCompare);
 
 
 
@@ -290,7 +290,7 @@ public:
 	/// <param name="Param_InterfaceCompare">A interface que vai ter todos os atributos comparado com a interface atual.</param>
 	/// <param name="Param_TipoComparação">O tipo de comparação a ser realizada.</param>
 	/// <param name="Param_Out_Resultado">O resultado da comparação segundo o parametro (Param_TipoComparação).</param>
-	virtual CarenResult Compare(ICarenMFAttributes^ Param_InterfaceCompare, Enumeracoes::CA_ATTRIBUTES_MATCH_TYPE Param_TipoComparação, [Out] Boolean% Param_Out_Resultado);
+	virtual CarenResult Compare(ICarenMFAttributes^ Param_InterfaceCompare, Enumeracoes::CA_MF_ATTRIBUTES_MATCH_TYPE Param_TipoComparação, [Out] Boolean% Param_Out_Resultado);
 
 
 	/// <summary>

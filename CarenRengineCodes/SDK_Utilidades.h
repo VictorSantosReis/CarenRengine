@@ -2210,6 +2210,45 @@ namespace CarenRengine
 			}
 
 
+			//Converte uma estrutura gerenciada(CA_MFTOPONODE_ATTRIBUTE_UPDATE) para sua correspondencia não gerenciada(MFTOPONODE_ATTRIBUTE_UPDATE).
+			MFTOPONODE_ATTRIBUTE_UPDATE* ConverterMFTOPONODE_ATTRIBUTE_UPDATEManaged_ToUnamaged(CA_MFTOPONODE_ATTRIBUTE_UPDATE^ Param_Estrutura)
+			{
+				//Variavel que vai ser retornada.
+				MFTOPONODE_ATTRIBUTE_UPDATE* EstruturaRetorno = CriarEstrutura<MFTOPONODE_ATTRIBUTE_UPDATE>();
+
+				//Preenche tudo com zero e inicializa as estruturas e unions se houver.
+				ZeroMemory(EstruturaRetorno, sizeof(MFTOPONODE_ATTRIBUTE_UPDATE));
+
+				//Define os valores
+				EstruturaRetorno->NodeId = Param_Estrutura->NodeId;
+				EstruturaRetorno->guidAttributeKey = StringObjetoValido(Param_Estrutura->guidAttributeKey) ? CreateGuidFromString(Param_Estrutura->guidAttributeKey) : GUID_NULL;
+				EstruturaRetorno->attrType = static_cast<MF_ATTRIBUTE_TYPE>(Param_Estrutura->attrType);
+				EstruturaRetorno->u32 = Param_Estrutura->u32;
+				EstruturaRetorno->u64 = Param_Estrutura->u64;
+				EstruturaRetorno->d = Param_Estrutura->d;
+
+				//Retorna a estrutura.
+				return EstruturaRetorno;
+			}
+
+			//Converte uma estrutura não gerenciada(MFTOPONODE_ATTRIBUTE_UPDATE) para sua correspondencia gerenciada(CA_MFTOPONODE_ATTRIBUTE_UPDATE).
+			CA_MFTOPONODE_ATTRIBUTE_UPDATE^ ConverterMFTOPONODE_ATTRIBUTE_UPDATEUnamaged_ToManaged(MFTOPONODE_ATTRIBUTE_UPDATE* Param_Estrutura)
+			{
+				//Variavel que vai ser retornada.
+				CA_MFTOPONODE_ATTRIBUTE_UPDATE^ EstruturaRetorno = gcnew CA_MFTOPONODE_ATTRIBUTE_UPDATE();
+
+				//Define os valores
+				EstruturaRetorno->NodeId = Param_Estrutura->NodeId;
+				EstruturaRetorno->guidAttributeKey = Param_Estrutura->guidAttributeKey == GUID_NULL ? nullptr: ConverterGuidToString(Param_Estrutura->guidAttributeKey);
+				EstruturaRetorno->attrType = static_cast<CA_MF_ATTRIBUTE_TYPE>(Param_Estrutura->attrType);
+				EstruturaRetorno->u32 = Param_Estrutura->u32;
+				EstruturaRetorno->u64 = Param_Estrutura->u64;
+				EstruturaRetorno->d = Param_Estrutura->d;			
+
+				//Retorna a estrutura.
+				return EstruturaRetorno;
+			}
+
 
 
 

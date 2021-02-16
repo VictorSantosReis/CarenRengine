@@ -3955,7 +3955,7 @@ namespace CarenRengine
 			/// (_MF_ATTRIBUTES_MATCH_TYPE) - Especifica como comparar os atributos em dois objetos.
 			/// </summary>
 			[FlagsAttribute]
-			public enum class CA_ATTRIBUTES_MATCH_TYPE
+			public enum class CA_MF_ATTRIBUTES_MATCH_TYPE
 			{
 				/// <summary>
 				/// Verifique se todos os atributos da (Interface Atual) existem na (Interface No Parametro) e se possuem
@@ -4167,35 +4167,35 @@ namespace CarenRengine
 			};
 
 			/// <summary>
-			/// Especifica o Resultado de uma comparação das interfaces: ICarenMFMediaType
+			/// (ORIGINAL) - Especifica o Resultado de uma comparação das interfaces: ICarenMFMediaType
 			/// </summary>
 			[FlagsAttribute]
-			public enum class CA_MEDIA_TYPE_EQUAL
+			public enum class CA_MF_MEDIATYPE_EQUAL
 			{
 				/// <summary>
 				/// Os tipos principais são os mesmos. O tipo principal é especificado 
 				/// pelo atributo MF_MT_MAJOR_TYPE .
 				/// </summary>
-				TIPOS_PRINCIPAIS = 0x00000001,
+				CA_MF_MEDIATYPE_EQUAL_MAJOR_TYPES = 0x00000001,
 
 				/// <summary>
 				/// Os subtipos são iguais, ou nenhum tipo de mídia tem um subtipo. 
 				/// O subtipo é especificado pelo atributo MF_MT_SUBTYPE.
 				/// </summary>
-				FORMATOS = 0x00000002,
+				CA_MF_MEDIATYPE_EQUAL_FORMAT_TYPES = 0x00000002,
 
 				/// <summary>
 				/// Especificamente, o método usa o tipo de mídia com o menor número de atributos e 
 				/// verifica se cada atributo desse tipo está presente no outro tipo de mídia e tem o 
 				/// mesmo valor (não incluindo MF_MT_USER_DATA, MF_MT_FRAME_RATE_RANGE_MIN, e MF_MT_FRAME_RATE_RANGE_MAX).
 				/// </summary>
-				FORMATOS_DADOS = 0x00000004,
+				CA_MF_MEDIATYPE_EQUAL_FORMAT_DATA = 0x00000004,
 
 				/// <summary>
 				/// Os dados do usuário são idênticos ou nenhum tipo de mídia contém dados do usuário. Dados do usuário são 
 				/// especificados pelo atributo MF_MT_USER_DATA.
 				/// </summary>
-				DADOS_USUARIO = 0x00000008
+				CA_MF_MEDIATYPE_EQUAL_FORMAT_USER_DATA = 0x00000008
 			};
 
 			/// <summary>
@@ -23909,27 +23909,27 @@ namespace CarenRengine
 			public ref struct CA_MFTOPONODE_ATTRIBUTE_UPDATE
 			{
 				/// <summary>
-				/// (NodeId) - O identificador do nó de topologia para atualizar. Para obter o identificador de um nó de topologia.
+				/// O identificador do nó de topologia para atualizar. Para obter o identificador de um nó de topologia.
 				/// </summary>
 				UInt64 NodeId;
 
 				/// <summary>
-				/// (guidAttributeKey) - GUID que especifica o atributo para atualizar.
+				/// GUID que especifica o atributo para atualizar.
 				/// </summary>
-				String^ GUID;
+				String^ guidAttributeKey;
 
 				/// <summary>
-				/// (attrType) - Tipo de atributo, especificado como um membro da enumeração(CA_MF_ATTRIBUTE_TYPE).
+				/// Tipo de atributo, especificado como um membro da enumeração(CA_MF_ATTRIBUTE_TYPE).
 				/// </summary>
-				Enumeracoes::CA_MF_ATTRIBUTE_TYPE TipoAtributo;
+				Enumeracoes::CA_MF_ATTRIBUTE_TYPE attrType;
 
 				/// <summary>
-				/// (u32) - Valor do atributo (unsigned 32-bit inteiro). Esse membro é usado quando (TipoAtributo) é igual a MF_ATTRIBUTE_UINT32.
+				/// Valor do atributo (unsigned 32-bit inteiro). Esse membro é usado quando (TipoAtributo) é igual a MF_ATTRIBUTE_UINT32.
 				/// </summary>
 				UInt32 u32;
 
 				/// <summary>
-				/// (u64) - Valor do atributo (unsigned 32-bit inteiro). Esse membro é usado quando Attrtype é igual a MF_ATTRIBUTE_UINT64.
+				/// Valor do atributo (unsigned 32-bit inteiro). Esse membro é usado quando Attrtype é igual a MF_ATTRIBUTE_UINT64.
 				/// [ATENCAO] - Devido a um erro na declaração de estrutura, o membro u64 é declarado como um inteiro de 32 bits, não um inteiro 
 				/// de 64 bits. Portanto, qualquer valor de 64 bits passado para o método ICarenMFTopologyNodeAttributeEditor::UpdateNodeAttributes 
 				/// é truncado para 32 bits.
@@ -23937,7 +23937,7 @@ namespace CarenRengine
 				UInt64 u64;
 
 				/// <summary>
-				/// (d) - Valor do atributo (ponto flutuante). Esse membro é usado quando Attrtype é igual a MF_ATTRIBUTE_DOUBLE.
+				/// Valor do atributo (ponto flutuante). Esse membro é usado quando (attrType) é igual a MF_ATTRIBUTE_DOUBLE.
 				/// </summary>
 				double d;
 			};

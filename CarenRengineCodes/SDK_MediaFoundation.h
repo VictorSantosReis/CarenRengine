@@ -508,7 +508,7 @@ namespace CarenRengine
 			/// <param name="Param_InterfaceCompare">A interface que vai ter todos os atributos comparado com a interface atual.</param>
 			/// <param name="Param_TipoComparação">O tipo de comparação a ser realizada.</param>
 			/// <param name="Param_Out_Resultado">O resultado da comparação segundo o parametro (Param_TipoComparação).</param>
-			CarenResult Compare(ICarenMFAttributes^ Param_InterfaceCompare, Enumeracoes::CA_ATTRIBUTES_MATCH_TYPE Param_TipoComparação, OutParam Boolean% Param_Out_Resultado);
+			CarenResult Compare(ICarenMFAttributes^ Param_InterfaceCompare, Enumeracoes::CA_MF_ATTRIBUTES_MATCH_TYPE Param_TipoComparação, OutParam Boolean% Param_Out_Resultado);
 
 			/// <summary>
 			/// Consulta se um valor de atributo armazenado é igual ao valor que está armazenado numa CA_PROPVARIANT.
@@ -1023,7 +1023,7 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_MidiaCompare">A interface a ser comparada com a atual.</param>
 			/// <param name="Param_Out_ResultadoCompare">O resultado da comparação dos objetos.</param>
-			CarenResult IsEqual(ICarenMFMediaType^ Param_MidiaCompare, OutParam Enumeracoes::CA_MEDIA_TYPE_EQUAL% Param_Out_ResultadoCompare);
+			CarenResult IsEqual(ICarenMFMediaType^ Param_MidiaCompare, OutParam Enumeracoes::CA_MF_MEDIATYPE_EQUAL% Param_Out_ResultadoCompare);
 		};
 
 		/// <summary>
@@ -3317,7 +3317,7 @@ namespace CarenRengine
 			//Métodos
 
 			/// <summary>
-			/// (UpdateNodeAttributes) - Atualiza os atributos de um ou mais nós na topologia atual..
+			/// Atualiza os atributos de um ou mais nós na topologia atual.
 			/// </summary>
 			/// <param name="Param_TopoId">Reservado.</param>
 			/// <param name="Param_CountArray">A quantidade de elementos no array que contém as atualizações dos atributos.</param>

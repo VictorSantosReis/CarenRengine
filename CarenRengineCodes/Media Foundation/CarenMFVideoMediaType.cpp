@@ -537,7 +537,7 @@ Done:;
 /// </summary>
 /// <param name="Param_MidiaCompare">A interface a ser comparada com a atual.</param>
 /// <param name="Param_Out_ResultadoCompare">O resultado da comparação dos objetos.</param>
-CarenResult CarenMFVideoMediaType::IsEqual(ICarenMFMediaType^ Param_MidiaCompare, [Out] CA_MEDIA_TYPE_EQUAL% Param_Out_ResultadoCompare)
+CarenResult CarenMFVideoMediaType::IsEqual(ICarenMFMediaType^ Param_MidiaCompare, [Out] CA_MF_MEDIATYPE_EQUAL% Param_Out_ResultadoCompare)
 {
 	//Variavel que vai retornar o resultado do método.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -595,7 +595,7 @@ Done:;
 /// <param name="Param_InterfaceCompare">A interface que vai ter todos os atributos comparado com a interface atual.</param>
 /// <param name="Param_TipoComparação">O tipo de comparação a ser realizada.</param>
 /// <param name="Param_Out_Resultado">O resultado da comparação segundo o parametro (Param_TipoComparação).</param>
-CarenResult CarenMFVideoMediaType::Compare(ICarenMFAttributes^ Param_InterfaceCompare, CA_ATTRIBUTES_MATCH_TYPE Param_TipoComparação, [Out] Boolean% Param_Out_Resultado)
+CarenResult CarenMFVideoMediaType::Compare(ICarenMFAttributes^ Param_InterfaceCompare, CA_MF_ATTRIBUTES_MATCH_TYPE Param_TipoComparação, [Out] Boolean% Param_Out_Resultado)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

@@ -18,9 +18,8 @@ limitations under the License.
 #pragma once
 #include "../SDK_MediaFoundation.h"
 #include "../Caren/Caren.h"
-#include "CarenMFMediaTypeHandler.h"
-
 #include "../SDK_Utilidades.h"
+#include "CarenMFMediaTypeHandler.h"
 
 //Importa o namespace que contém as interfaces da Media Foundation.
 using namespace CarenRengine::MediaFoundation;
@@ -34,7 +33,7 @@ using namespace CarenRengine::SDKBase::Estruturas;
 using namespace CarenRengine::SDKUtilidades;
 
 /// <summary>
-/// (Concluido - Fase de Testes) - Classe responsável por obter informações sobre um fluxo em uma fonte de mídia.
+/// Classe responsável por obter informações sobre um fluxo em uma fonte de mídia.
 /// </summary>
 public ref class CarenMFStreamDescriptor : public ICarenMFStreamDescriptor
 {
@@ -111,82 +110,6 @@ public:
 			//Retorna o valor.
 			return Prop_DisposedClasse;
 		}
-	}
-
-
-
-	//Cria uma instância dessa classe (Estático)
-public:
-	/// <summary>
-	/// Método responsável por criar um Descritor de fluxo.
-	/// </summary>
-	/// <param name="Param_IdentificadorFluxo">O identificador para o descritor de fluxo a ser criado.</param>
-	/// <param name="Param_QuantidadeArrayMediaTypes">A quantidade de tipos de midia no parametro Param_ArrayTiposMidia.</param>
-	/// <param name="Param_ArrayTiposMidia">Um array com os tipos de midia. Estes indicadores são usadas para inicializar o manipulador de tipo de mídia para o descritor de fluxo.</param>
-	/// <param name="Param_Out_DescritorFluxo">Recebe a interface do descritor de fluxo.</param>
-	static CarenResult CriarInstancia(UInt32 Param_IdentificadorFluxo, UInt32 Param_QuantidadeArrayMediaTypes,  cli::array<ICarenMFMediaType^>^ Param_ArrayTiposMidia, [Out] ICarenMFStreamDescriptor^% Param_Out_DescritorFluxo)
-	{
-		//Variavel a ser retornada.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Variavel que contém o resultado COM.
-		HRESULT Hr = E_FAIL;
-
-		//Variavel que vai ser retornada.
-		IMFStreamDescriptor* pStreamDesc = NULL;
-		ICarenMFStreamDescriptor^ InterfaceSolicitada = nullptr;
-		std::vector<IMFMediaType*> ListaArray(Param_QuantidadeArrayMediaTypes);
-		IMFMediaType* pTypeMidia = NULL;
-
-		//Preenche o array com os dados.
-		for (DWORD i = 0; i < Param_QuantidadeArrayMediaTypes; i++)
-		{
-			//Obtém o ponteiro de trabalho.
-			Param_ArrayTiposMidia[i]->RecuperarPonteiro((LPVOID*)&pTypeMidia);
-
-			//Adiciona no array.
-			ListaArray.push_back(pTypeMidia);
-
-			//Nula
-			pTypeMidia = NULL;
-		}
-
-		//Chama o método para criar o Descritor de fluxo
-		Hr = MFCreateStreamDescriptor(Param_IdentificadorFluxo, Param_QuantidadeArrayMediaTypes, ListaArray.data(), &pStreamDesc);
-
-		//Verifica se obteve sucesso
-		if(Sucesso(Hr))
-		{
-			//Deixa o método continuar.
-		}
-		else
-		{
-			//O método falhou.
-			Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-			//Sai do método
-			goto Done;
-		}
-
-		//Cria a interface que vai conter o ponteiro
-		InterfaceSolicitada = gcnew CarenMFStreamDescriptor();
-
-		//Define o ponteiro na interface
-		InterfaceSolicitada->AdicionarPonteiro(pStreamDesc);
-
-		//Define a interface no parametro de saida
-		Param_Out_DescritorFluxo = InterfaceSolicitada;
-
-		//Define sucesso na operção.
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	Done:;
-		//Limpa o vetor com os dados.
-		ListaArray.clear();
-		ListaArray.shrink_to_fit();
-
-		//Retorna o resultado.
-		return Resultado;
 	}
 
 

@@ -10546,10 +10546,10 @@ namespace CarenRengine
 			/// <summary>
 			/// (Original) - Enumera os recursos de uma sessão de midia.
 			/// </summary>
-			public enum class CA_RECURSOS_SESSAO_MIDIA
+			public enum class CA_MFSESSIONCAP
 			{
 				/// <summary>
-				/// Suporte
+				/// Utilizado para suporte, não faz parte da enumeração original.
 				/// </summary>
 				CA_Zero = 0,
 

@@ -3530,8 +3530,8 @@ namespace CarenRengine
 			/// <summary>
 			/// (GetSessionCapabilities) - Recupera os recursos da sessão de mídia, com base na apresentação atual.
 			/// </summary>
-			/// <param name="Param_Out_Recursos">Recebe um OU de bit ou de ZERO ou mais dos sinalizadores da enumeração(CA_RECURSOS_SESSAO_MIDIA).</param>
-			CarenResult GetSessionCapabilities(OutParam Enumeracoes::CA_RECURSOS_SESSAO_MIDIA% Param_Out_Recursos);
+			/// <param name="Param_Out_Recursos">Recebe um OU de bit ou de ZERO ou mais dos sinalizadores da enumeração(CA_MFSESSIONCAP).</param>
+			CarenResult GetSessionCapabilities(OutParam Enumeracoes::CA_MFSESSIONCAP% Param_Out_Recursos);
 
 			/// <summary>
 			/// (Pause) - Pausa a sessão de mídia.

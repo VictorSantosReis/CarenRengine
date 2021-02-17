@@ -36,7 +36,7 @@ using namespace CarenRengine::SDKBase::Estruturas;
 using namespace CarenRengine::SDKUtilidades;
 
 /// <summary>
-/// (Concluido - Fase de Testes) - Classe responsável por fornecer controles de reprodução para conteúdo protegido e desprotegido. A sessão de mídia e os objetos de sessão do caminho de mídia protegida (PMP) 
+/// Classe responsável por fornecer controles de reprodução para conteúdo protegido e desprotegido. A sessão de mídia e os objetos de sessão do caminho de mídia protegida (PMP) 
 /// expõem essa classe(Interface).
 /// </summary>
 public ref class CarenMFMediaSession :public ICarenMFMediaSession
@@ -290,8 +290,8 @@ public:
 	/// <summary>
 	/// (GetSessionCapabilities) - Recupera os recursos da sessão de mídia, com base na apresentação atual.
 	/// </summary>
-	/// <param name="Param_Out_Recursos">Recebe um OU de bit ou de ZERO ou mais dos sinalizadores da enumeração(CA_RECURSOS_SESSAO_MIDIA).</param>
-	virtual CarenResult GetSessionCapabilities([Out] Enumeracoes::CA_RECURSOS_SESSAO_MIDIA% Param_Out_Recursos);
+	/// <param name="Param_Out_Recursos">Recebe um OU de bit ou de ZERO ou mais dos sinalizadores da enumeração(CA_MFSESSIONCAP).</param>
+	virtual CarenResult GetSessionCapabilities([Out] Enumeracoes::CA_MFSESSIONCAP% Param_Out_Recursos);
 
 	/// <summary>
 	/// (Pause) - Pausa a sessão de mídia.

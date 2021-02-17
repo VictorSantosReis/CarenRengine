@@ -564,10 +564,10 @@ Done:;
 	 ResultadoCOM Hr = E_FAIL;
 
 	 //Variaveis a serem utilizadas.
-	 IMFClock* pRelogio = NULL;
+	 IMFClock* vi_pOutRelogio = Nulo;
 
 	 //Chama o método para realizar a operação.
-	 Hr = PonteiroTrabalho->GetClock(&pRelogio);
+	 Hr = PonteiroTrabalho->GetClock(&vi_pOutRelogio);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -587,11 +587,8 @@ Done:;
 	 //Cria a interface a ser retornada.
 	 Param_Out_Relogio = gcnew CarenMFClock();
 
-	 //Define o ponteiro
-	 Param_Out_Relogio->AdicionarPonteiro(pRelogio);
-
-	 //Define sucesso na operação
-	 Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	 //Define o ponteiro na interface de saida.
+	 CarenSetPointerToICarenSafe(vi_pOutRelogio, Param_Out_Relogio, true);
 
  Done:;
 	 //Retorna o resultado.
@@ -613,11 +610,11 @@ Done:;
 	 ResultadoCOM Hr = E_FAIL;
 
 	 //Variaveis a serem utilizadas.
-	 DWORD FlagsGetTopo = static_cast<DWORD>(Param_Flags);
-	 IMFTopology* pTopologiaCompleta = NULL;
+	 DWORD vi_Flags = static_cast<DWORD>(Param_Flags);
+	 IMFTopology* vi_pOutFullTopology = Nulo;
 
 	 //Chama o método para realizar a operação.
-	 Hr = PonteiroTrabalho->GetFullTopology(FlagsGetTopo, Param_TopoId, &pTopologiaCompleta);
+	 Hr = PonteiroTrabalho->GetFullTopology(vi_Flags, Param_TopoId, &vi_pOutFullTopology);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -634,14 +631,11 @@ Done:;
 		Sair;
 	}
 
-	 //Cria a interface que será retornada no parametro.
+	 //Cria a interface a ser retornada.
 	 Param_Out_TopologiaCompleta = gcnew CarenMFTopology(false);
 
-	 //Define o ponteiro de trabalho
-	 Param_Out_TopologiaCompleta->AdicionarPonteiro(pTopologiaCompleta);
-
-	 //Define sucesso na operação
-	 Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	 //Define o ponteiro na interface de saida
+	 CarenSetPointerToICarenSafe(vi_pOutFullTopology, Param_Out_TopologiaCompleta, true);
 
  Done:;
 	 //Retorna o resultado.
@@ -651,8 +645,8 @@ Done:;
 /// <summary>
 /// (GetSessionCapabilities) - Recupera os recursos da sessão de mídia, com base na apresentação atual.
 /// </summary>
-/// <param name="Param_Out_Recursos">Recebe um OU de bit ou de ZERO ou mais dos sinalizadores da enumeração(CA_RECURSOS_SESSAO_MIDIA).</param>
- CarenResult CarenMFMediaSession::GetSessionCapabilities([Out] Enumeracoes::CA_RECURSOS_SESSAO_MIDIA% Param_Out_Recursos)
+/// <param name="Param_Out_Recursos">Recebe um OU de bit ou de ZERO ou mais dos sinalizadores da enumeração(CA_MFSESSIONCAP).</param>
+ CarenResult CarenMFMediaSession::GetSessionCapabilities([Out] Enumeracoes::CA_MFSESSIONCAP% Param_Out_Recursos)
  {
 	 //Variavel a ser retornada.
 	 CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -661,10 +655,10 @@ Done:;
 	 ResultadoCOM Hr = E_FAIL;
 
 	 //Variaveis a serem utilizadas.
-	 DWORD RecursosSessao = 0;
+	 DWORD vi_OutRecursos = 0;
 
 	 //Chama o método para realizar a operação.
-	 Hr = PonteiroTrabalho->GetSessionCapabilities(&RecursosSessao);
+	 Hr = PonteiroTrabalho->GetSessionCapabilities(&vi_OutRecursos);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -682,10 +676,7 @@ Done:;
 	}
 
 	 //Define o valor no parametro de saida.
-	 Param_Out_Recursos = static_cast<CA_RECURSOS_SESSAO_MIDIA>(RecursosSessao);
-
-	 //Define sucesso na operação
-	 Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	 Param_Out_Recursos = static_cast<CA_MFSESSIONCAP>(vi_OutRecursos);
 
  Done:;
 	 //Retorna o resultado.
@@ -741,23 +732,14 @@ Done:;
 	 ResultadoCOM Hr = E_FAIL;
 
 	 //Variaveis a serem utilizadas.
-	 MFSESSION_SETTOPOLOGY_FLAGS FlagsSetTopology = static_cast<MFSESSION_SETTOPOLOGY_FLAGS>(Param_Flags);
-	 IMFTopology* pTopologia = NULL;
+	 MFSESSION_SETTOPOLOGY_FLAGS vi_Flags = static_cast<MFSESSION_SETTOPOLOGY_FLAGS>(Param_Flags);
+	 IMFTopology* vi_pTopologia = Nulo;
 
-	 //Obtém o ponteiro para topologia
-	 Resultado = Param_Topologia->RecuperarPonteiro((LPVOID*)&pTopologia);
-
-	 //Verifica o resultado
-	 if(Resultado.StatusCode != ResultCode::SS_OK)
-	 {
-		 //Falhou..
-
-		 //Sai do método
-		 goto Done;
-	 }
-
+	 //Obtém o ponteiro para topologia a ser definida.
+	 CarenGetPointerFromICarenSafe(Param_Topologia, vi_pTopologia);
+	 
 	 //Chama o método para realizar a operação.
-	 Hr = PonteiroTrabalho->SetTopology(FlagsSetTopology, pTopologia);
+	 Hr = PonteiroTrabalho->SetTopology(vi_Flags, vi_pTopologia);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -832,37 +814,18 @@ Done:;
 	 ResultadoCOM Hr = E_FAIL;
 
 	 //Variaveis a serem utilizadas.
-	 Utilidades Util;
-	 PropVariantManager UtilVariant = PropVariantManager();
-	 GUID GuidFormatoTempo = GUID_NULL;
-	 LPPROPVARIANT vi_PropVar = Nulo;
+	 GUID vi_GuidTimeFormat = GUID_NULL;
+	 LPPROPVARIANT vi_Propvar = Nulo;
 
-	 //Verifica o GUID do formato de tempo.. NULL > Tempo default do sistema.
-	 if (!String::IsNullOrEmpty(Param_GuidFormatoTempo))
-	 {
-		 //String é valida
+	 //Verifica se forneceu um guid e converte
+	 if (StringObjetoValido(Param_GuidFormatoTempo))
+		 CarenCreateGuidFromStringSafe(Param_GuidFormatoTempo, vi_GuidTimeFormat);
 
-		 //Cria ao Guid a parti dela.
-		 GuidFormatoTempo = Util.CreateGuidFromString(Param_GuidFormatoTempo);
-	 }
-
-	 //Converte a PropVariant gerenciada para a nativa.
-	 vi_PropVar = static_cast<LPPROPVARIANT>(UtilVariant.ConverterPropVariantManaged_ToUnmanaged(Param_PosicaoInicio));
-
-	 //Verifica se não ocorreu um erro na conversão.
-	 if (!ObjetoValido(vi_PropVar))
-	 {
-		 //Falhou ao converter a propvariant.
-
-		 //Define falha.
-		 Resultado.AdicionarCodigo(ResultCode::ER_CONVERSAO_PROPVARIANT, false);
-
-		 //Sai do método
-		 Sair;
-	 }
+	 //Converte a CA_PROPVARIANT para sua representação nativa.
+	 CarenConvertPropvariantToNativeSafe(Param_PosicaoInicio, vi_Propvar);
 
 	 //Chama o método para realizar a operação.
-	 Hr = PonteiroTrabalho->Start(&GuidFormatoTempo, vi_PropVar);
+	 Hr = PonteiroTrabalho->Start(&vi_GuidTimeFormat, const_cast<PROPVARIANT*>(vi_Propvar));
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -881,7 +844,7 @@ Done:;
 
  Done:;
 	 //Libera a propvariant
-	 DeletarPropVariantSafe(&vi_PropVar);
+	 DeletarPropVariantSafe(&vi_Propvar);
 
 	 //Retorna o resultado.
 	 return Resultado;

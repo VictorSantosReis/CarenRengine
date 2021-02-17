@@ -1685,14 +1685,12 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_IdFluxo">Um Indice baseado em zero de um fluxo para a consulta. Desconsidere esse valor se o parâmetro (Param_Escritor)
 			/// for True.</param>
-			/// <param name="Param_ConsultarColetor">Define que o objeto de consulta é o Coletor de Mídia associado. Esse valor representa o: MF_SINK_WRITER_MEDIASINK</param>
 			/// <param name="Param_GuidServiço">O Guid para o (Identificador de Serviço). Se o valor for (NULO), o método chama (QueryInterface) para obter
 			/// interface solicitada.</param>
 			/// <param name="Param_GuidInterfaceSolicitada">O Guid para a interface solicitada.</param>
 			/// <param name="Param_Out_Interface">Recebe a interface solicitada. O usuário deve criar a interfaces antes de chamar este método.</param>
 			CarenResult GetServiceForStream(
 				UInt32 Param_IdFluxo,
-				Boolean Param_ConsultarColetor,
 				String^ Param_GuidServiço,
 				String^ Param_GuidInterfaceSolicitada,
 				ICaren^ Param_Out_Interface);

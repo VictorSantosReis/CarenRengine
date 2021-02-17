@@ -641,10 +641,10 @@ CarenResult CarenMFMediaSink::GetStreamSinkCount([Out] UInt32% Param_Out_Quantid
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
-	DWORD CountStreams = 0;
+	DWORD vi_OutCountSink = 0;
 
 	//Chama o método para obter a quantidade de Streams
-	Hr = PonteiroTrabalho->GetStreamSinkCount(&CountStreams);
+	Hr = PonteiroTrabalho->GetStreamSinkCount(&vi_OutCountSink);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -662,7 +662,7 @@ CarenResult CarenMFMediaSink::GetStreamSinkCount([Out] UInt32% Param_Out_Quantid
 	}
 
 	//Define o valor no parametro de saida.
-	Param_Out_QuantidadeSinks = static_cast<UInt32>(CountStreams);
+	Param_Out_QuantidadeSinks = static_cast<UInt32>(vi_OutCountSink);
 
 Done:;
 	//Retorna o resultado
@@ -719,10 +719,11 @@ CarenResult CarenMFMediaSink::SetPresentationClock(ICarenMFPresentationClock^ Pa
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variavies utilizadas no método
-	IMFPresentationClock *vi_pRelogio = NULL;
+	IMFPresentationClock *vi_pRelogio = Nulo; //Pode ser OPCIONAL.
 
-	//Recupera o ponteiro para o relogio.
-	CarenGetPointerFromICarenSafe(Param_RelogioApresentação, vi_pRelogio);
+	//Recupera o ponteiro para o relogio se fornecido.
+	if(ObjetoGerenciadoValido(Param_RelogioApresentação))
+		CarenGetPointerFromICarenSafe(Param_RelogioApresentação, vi_pRelogio);
 
 	//Chama o método para definir o relogio de apresentação
 	Hr = PonteiroTrabalho->SetPresentationClock(vi_pRelogio);

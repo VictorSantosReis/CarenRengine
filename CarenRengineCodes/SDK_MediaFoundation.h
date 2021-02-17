@@ -891,7 +891,7 @@ namespace CarenRengine
 		/// </summary>
 		[CategoryAttribute("MF Interface")]
 		[Guid("0EDC6D22-20F5-44D7-B6B9-EA8A2A321D49")]
-		public interface class ICarenMFMediaEvent : ICaren, ICarenMFAttributes
+		public interface class ICarenMFMediaEvent : ICarenMFAttributes
 		{
 			/// <summary>
 			/// Propriedade que define se a classe foi descartada.

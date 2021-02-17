@@ -125,6 +125,7 @@ public:
 	//A parti daqui vai conter os métodos das interfaces.//
 	///////////////////////////////////////////////////////
 
+
 	//Métodos da interface (ICaren)
 public:
 	/// <summary>
@@ -257,9 +258,7 @@ public:
 
 
 
-
-
-	//Métodos da interface proprietaria.
+	//Métodos da interface (ICarenMFMediaEvent).
 public:
 	/// <summary>
 	/// (GetStatus) - Recupera um HRESULT que especifica o status do evento.
@@ -285,10 +284,6 @@ public:
 	/// </summary>
 	/// <param name="Param_Out_ValorEvento">Recebe a PropVariant que contém o valor associado ao evento. Nem todos eventos possuem valores.</param>
 	virtual CarenResult GetValue([Out] Estruturas::CA_PROPVARIANT^% Param_Out_ValorEvento);
-
-
-
-
 
 
 

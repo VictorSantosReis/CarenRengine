@@ -33,7 +33,7 @@ using namespace CarenRengine::SDKBase::Estruturas;
 using namespace CarenRengine::SDKUtilidades;
 
 /// <summary>
-/// (Concluido - Fase de testes) - Classe responsável por representar um fluxo em um objeto de coletor de mídia.
+/// Classe responsável por representar um fluxo em um objeto de coletor de mídia.
 /// </summary>
 public ref class CarenMFStreamSink :public ICarenMFStreamSink
 {

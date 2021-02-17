@@ -17,7 +17,7 @@ using namespace CarenRengine::SDKBase::Estruturas;
 using namespace CarenRengine::SDKUtilidades;
 
 /// <summary>
-/// (Concluida - Fase de Testes) - Classe responsável por representar um apresentador de vídeo.
+/// Classe responsável por representar um apresentador de vídeo.
 /// </summary>
 public ref class CarenMFVideoPresenter : public ICarenMFVideoPresenter
 {
@@ -326,11 +326,11 @@ public:
 	//Métodos da interface(ICarenMFVideoPresenter)
 public:
 	/// <summary>
-	/// /// Recupera o tipo de mídia do apresentador. 
-	/// /// Este método retorna o tipo de mídia que o apresentador define para o tipo de saída do misturador. Descreve o formato da imagem composta.
-	/// /// </summary>
-	/// /// <param name="Param_Out_TipoVideo">Retorna uma interface para o tipo de midia de video do apresentador.</param>
-	/// /// <returns></returns>
+	/// Recupera o tipo de mídia do apresentador. 
+	/// Este método retorna o tipo de mídia que o apresentador define para o tipo de saída do misturador. Descreve o formato da imagem composta.
+	/// </summary>
+	/// <param name="Param_Out_TipoVideo">Retorna uma interface para o tipo de midia de video do apresentador.</param>
+	/// <returns></returns>
 	virtual CarenResult GetCurrentMediaType([Out] ICarenMFVideoMediaType^% Param_Out_TipoVideo);
 
 	/// <summary>

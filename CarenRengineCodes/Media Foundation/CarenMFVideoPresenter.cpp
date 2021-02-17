@@ -399,11 +399,10 @@ CarenResult CarenMFVideoPresenter::GetCurrentMediaType([Out] ICarenMFVideoMediaT
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	IMFVideoMediaType* pMediaTypeSaida = NULL;
+	IMFVideoMediaType* vi_pOutVideoMediaType = Nulo;
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetCurrentMediaType(&pMediaTypeSaida);
+	Hr = PonteiroTrabalho->GetCurrentMediaType(&vi_pOutVideoMediaType);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -423,8 +422,8 @@ CarenResult CarenMFVideoPresenter::GetCurrentMediaType([Out] ICarenMFVideoMediaT
 	//Cria a interface que vai ser retornada.
 	Param_Out_TipoVideo = gcnew CarenMFVideoMediaType();
 
-	//Define o ponteiro de trabalho
-	Param_Out_TipoVideo->AdicionarPonteiro(pMediaTypeSaida);
+	//Define o ponteiro na interface de saida.
+	CarenSetPointerToICarenSafe(vi_pOutVideoMediaType, Param_Out_TipoVideo, true);
 
 Done:;
 	//Retorna o resultado.
@@ -446,7 +445,10 @@ CarenResult CarenMFVideoPresenter::ProcessMessage(CA_MFVP_MESSAGE_TYPE Param_Men
 	ResultadoCOM Hr = E_FAIL;
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->ProcessMessage(static_cast<MFVP_MESSAGE_TYPE>(Param_Mensagem), static_cast<ULONG_PTR>(Param_UlParam));
+	Hr = PonteiroTrabalho->ProcessMessage(
+		static_cast<MFVP_MESSAGE_TYPE>(Param_Mensagem), 
+		static_cast<ULONG_PTR>(Param_UlParam)
+	);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);

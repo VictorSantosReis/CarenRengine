@@ -57,9 +57,9 @@ CarenMFSourceResolver::CarenMFSourceResolver(Boolean Param_CriarInterface)
 	}
 }
 
-//
+
 // Métodos da interface ICaren
-//
+
 
 /// <summary>
 /// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 
@@ -762,37 +762,28 @@ CarenResult CarenMFSourceResolver::CreateObjectFromURL
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
-	LPCWSTR URLDados = NULL;
-	DWORD FlagsResolver = 0;
-	IPropertyStore* pStoreProps = NULL;
-	MF_OBJECT_TYPE TipoObjeto = MF_OBJECT_TYPE::MF_OBJECT_INVALID;
-	IUnknown* pFonteMidiaObjeto = NULL;
-	char* Ch_DadosConvertidos = NULL;
 	Utilidades Util;
+	LPCWSTR vi_pUrl = Nulo;
+	DWORD vi_Flags = static_cast<DWORD>(Param_Flags);
+	IPropertyStore* vi_pPropertyStore = Nulo; //Pode ser Nulo.
+	MF_OBJECT_TYPE vi_OutTipoObjeto = MF_OBJECT_TYPE::MF_OBJECT_INVALID;
+	IUnknown* vi_pOutObject = Nulo;
 
-	//Verifica se a uma url definida e cria a url nativa.
-	if (!String::IsNullOrEmpty(Param_Url))
-	{
-		//O usuário informou uma Url.
-		Ch_DadosConvertidos = Util.ConverterStringToChar(Param_Url);
+	//Converte a string contendo a url para o arquivo.
+	vi_pUrl = Util.ConverterStringToConstWCHAR(Param_Url);
 
-		//Converte o char* para WCHAR*
-		URLDados = Util.ConverterConstCharToConstWCHAR(Ch_DadosConvertidos);
-	}
-
-	//Define os flags
-	FlagsResolver = static_cast<DWORD>(Param_Flags);
-
-	//Verifica se definiu uma interface com propriedades
-	if (Param_Propriedades != nullptr)
-	{
-		//Obtém as propriedades
-		Param_Propriedades->RecuperarPonteiro((LPVOID*)&pStoreProps);
-	}
-
+	//Verifica se forneceu a interface de propriedades e recupera o seu ponteiro.
+	if (ObjetoGerenciadoValido(Param_Propriedades))
+		CarenGetPointerFromICarenSafe(Param_Propriedades, vi_pPropertyStore);
 
 	//Chama o método para executar a operação
-	Hr = PonteiroTrabalho->CreateObjectFromURL(URLDados, FlagsResolver, pStoreProps, &TipoObjeto, &pFonteMidiaObjeto);
+	Hr = PonteiroTrabalho->CreateObjectFromURL(
+		vi_pUrl,
+		vi_Flags,
+		vi_pPropertyStore,
+		&vi_OutTipoObjeto,
+		&vi_pOutObject
+	);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -808,28 +799,13 @@ CarenResult CarenMFSourceResolver::CreateObjectFromURL
 		//Sai do método
 		Sair;
 	}
-
-	//Chama o método para definir o ponteiro
-	Param_Out_FonteMidia->AdicionarPonteiro(pFonteMidiaObjeto);
-
-	//Define os dados nos parametros de saida
-	Param_Out_TipoObjeto = static_cast<CA_MF_OBJECT_TYPE>(TipoObjeto);
-		
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	
+	//Define o ponteiro na interface de saida.
+	CarenSetPointerToICarenSafe(vi_pOutObject, Param_Out_FonteMidia, true);
 
 Done:;
-	//Limpa os dados de Url.
-	if (ObjetoValido(URLDados))
-	{
-		//Deleta os dados da memória.
-		delete URLDados;
-	}
-	if (ObjetoValido(Ch_DadosConvertidos))
-	{
-		//Deleta os dados da memória.
-		delete Ch_DadosConvertidos;
-	}
+	//Libera a memória utilizada pela string se válida.
+	DeletarStringAllocatedSafe(&vi_pUrl);
 
 	//Retorna o resultado
 	return Resultado;
@@ -855,22 +831,18 @@ CarenResult CarenMFSourceResolver::EndCreateObjectFromByteStream
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
-	IMFAsyncResult* pResultado = NULL;
-	MF_OBJECT_TYPE TipoObjeto = MF_OBJECT_TYPE::MF_OBJECT_INVALID;
-	IUnknown* pFonteMidiaObjeto = NULL;
+	IMFAsyncResult* vi_pAsyncResult = Nulo;
+	MF_OBJECT_TYPE vi_OutTipoObjeto = MF_OBJECT_TYPE::MF_OBJECT_INVALID;
+	IUnknown* vi_pOutObject = Nulo;
 
-	//Obtém o Resultado
-	Resultado = Param_Resultado->RecuperarPonteiro((LPVOID*)& pResultado);
-
-	//Verifica e não é invalido a interface
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//A interface é invalida
-		goto Done;
-	}
+	//Recupera o ponteiro para a interface de resultado assincrono.
+	CarenGetPointerFromICarenSafe(Param_Resultado, vi_pAsyncResult);
 
 	//Chama o método para realizar a operação
-	Hr = PonteiroTrabalho->EndCreateObjectFromByteStream(pResultado, &TipoObjeto, &pFonteMidiaObjeto);
+	Hr = PonteiroTrabalho->EndCreateObjectFromByteStream(
+		vi_pAsyncResult, 
+		&vi_OutTipoObjeto,
+		&vi_pOutObject);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -887,14 +859,11 @@ CarenResult CarenMFSourceResolver::EndCreateObjectFromByteStream
 		Sair;
 	}
 
-	//Chama o método para definir o ponteiro
-	Param_Out_FonteMidia->AdicionarPonteiro(pFonteMidiaObjeto);
+	//Define o ponteiro na interface de saida.
+	CarenSetPointerToICarenSafe(vi_pOutObject, Param_Out_FonteMidia, true);
 
-	//Define os dados nos parametros de saida
-	Param_Out_TipoObjeto = static_cast<CA_MF_OBJECT_TYPE>(TipoObjeto);
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	//Define o tipo do objeto criado no parmetro de saida.
+	Param_Out_TipoObjeto = static_cast<CA_MF_OBJECT_TYPE>(vi_OutTipoObjeto);
 
 Done:;
 	//Retorna o resultado
@@ -921,22 +890,18 @@ CarenResult CarenMFSourceResolver::EndCreateObjectFromURL
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
-	IMFAsyncResult* pResultado = NULL;
-	MF_OBJECT_TYPE TipoObjeto = MF_OBJECT_TYPE::MF_OBJECT_INVALID;
-	IUnknown* pFonteMidiaObjeto = NULL;
+	IMFAsyncResult* vi_pAsyncResult = Nulo;
+	MF_OBJECT_TYPE vi_OutTipoObjeto = MF_OBJECT_TYPE::MF_OBJECT_INVALID;
+	IUnknown* vi_pOutObject = Nulo;
 
-	//Obtém o Resultado
-	Resultado = Param_Resultado->RecuperarPonteiro((LPVOID*)& pResultado);
-
-	//Verifica e não é invalido a interface
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//A interface é invalida
-		goto Done;
-	}
+	//Recupera o ponteiro para a interface de resultado assincrono.
+	CarenGetPointerFromICarenSafe(Param_Resultado, vi_pAsyncResult);
 
 	//Chama o método para realizar a operação
-	Hr = PonteiroTrabalho->EndCreateObjectFromByteStream(pResultado, &TipoObjeto, &pFonteMidiaObjeto);
+	Hr = PonteiroTrabalho->EndCreateObjectFromByteStream(
+		vi_pAsyncResult,
+		&vi_OutTipoObjeto,
+		&vi_pOutObject);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -953,14 +918,11 @@ CarenResult CarenMFSourceResolver::EndCreateObjectFromURL
 		Sair;
 	}
 
-	//Chama o método para definir o ponteiro
-	Param_Out_FonteMidia->AdicionarPonteiro(pFonteMidiaObjeto);
+	//Define o ponteiro na interface de saida.
+	CarenSetPointerToICarenSafe(vi_pOutObject, Param_Out_FonteMidia, true);
 
-	//Define os dados nos parametros de saida
-	Param_Out_TipoObjeto = static_cast<CA_MF_OBJECT_TYPE>(TipoObjeto);
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	//Define o tipo do objeto criado no parmetro de saida.
+	Param_Out_TipoObjeto = static_cast<CA_MF_OBJECT_TYPE>(vi_OutTipoObjeto);
 
 Done:;
 	//Retorna o resultado

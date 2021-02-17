@@ -33,7 +33,7 @@ using namespace CarenRengine::SDKUtilidades;
 
 
 /// <summary>
-/// (Concluido - Fase de testes) - Classe responsável por criar uma fonte de mídia a parti de uma URL ou fluxo de bytes. 
+/// Classe responsável por criar uma fonte de mídia a parti de uma URL ou fluxo de bytes. 
 /// </summary>
 public ref class CarenMFSourceResolver : public ICarenMFSourceResolver
 {

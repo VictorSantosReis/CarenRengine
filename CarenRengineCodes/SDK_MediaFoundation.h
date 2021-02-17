@@ -2944,8 +2944,8 @@ namespace CarenRengine
 			/// <param name="Param_Flags">Um bit a bit ou de uma ou mais bandeiras.</param>
 			/// <param name="Param_Propriedades">Um ponteiro para a interface de ICarenPropertyStore de uma loja de propriedade. O método passa a loja de propriedade para o manipulador de fluxo de bytes.
 			/// O manipulador de fluxo de bytes pode usar o armazenamento de propriedade para configurar a fonte de mídia. Este parâmetro pode ser nulo.</param>
-			/// <param name="Param_ObjetoCancel">Recebe um ponteiro ICaren ou o valor nulo. Se o valor não for NULO, você pode cancelar a operação assíncrona, passando esse ponteiro para o método 
-			/// de ICarenMFSourceResolver::CancelObjectCreation. O chamador deve liberar a interface. Este parâmetro pode ser nulo.</param>
+			/// <param name="Param_Out_ObjetoCancel">Recebe um ponteiro ICaren ou o valor NULO. Se o valor não for NULO, você pode cancelar a operação assíncrona, passando esse ponteiro para o método 
+			/// de ICarenMFSourceResolver::CancelObjectCreation. O chamador deve liberar a interface. Ignore esse valor se não deseja receber a interface de cancelamento.</param>
 			/// <param name="Param_Callback">Um ponteiro para a interface de ICarenMFAsyncCallback de um objeto de retorno de chamada. O chamador deve implementar essa interface.</param>
 			/// <param name="Param_ObjetoEstado">Um ponteiro para a interface ICaren de um objeto de estado, definido pelo chamador. Este parâmetro pode ser nulo. Você pode usar esse objeto para 
 			/// armazenar informações de estado. O objeto é retornado ao chamador de quando o callback é invocado.</param>
@@ -2955,7 +2955,7 @@ namespace CarenRengine
 				String^ Param_Url,
 				Enumeracoes::CA_SOURCE_RESOLVER_FLAGS Param_Flags,
 				ICarenPropertyStore^ Param_Propriedades,
-				ICaren^ Param_ObjetoCancel,
+				CarenParameterResolver<ICaren^> Param_Out_ObjetoCancel,
 				ICarenMFAsyncCallback^ Param_Callback,
 				ICaren^ Param_ObjetoEstado
 			);
@@ -2967,8 +2967,8 @@ namespace CarenRengine
 			/// <param name="Param_Flags">OR bit a bit dos sinalizadores.</param>
 			/// <param name="Param_Propriedades">Ponteiro para a interface de ICarenPropertyStore de uma loja de propriedade. O método passa a loja de propriedade para o esquema manipulador ou 
 			/// manipulador de fluxo de bytes que cria o objeto. O manipulador pode usar o armazenamento de propriedade para configurar o objeto. Este parâmetro pode ser nulo</param>
-			/// <param name="Param_ObjetoCancel">Recebe um ponteiro ICaren ou o valor nulo. Se o valor não for NULO, você pode cancelar a operação assíncrona, passando esse ponteiro para o método 
-			/// de ICarenMFSourceResolver::CancelObjectCreation. O chamador deve liberar a interface. Este parâmetro pode ser nulo.</param>
+			/// <param name="Param_Out_ObjetoCancel">Recebe um ponteiro ICaren ou o valor NULO. Se o valor não for NULO, você pode cancelar a operação assíncrona, passando esse ponteiro para o método 
+			/// de ICarenMFSourceResolver::CancelObjectCreation. O chamador deve liberar a interface. Ignore esse valor se não deseja receber a interface de cancelamento.</param>
 			/// <param name="Param_Callback">Um ponteiro para a interface de ICarenMFAsyncCallback de um objeto de retorno de chamada. O chamador deve implementar essa interface.</param>
 			/// <param name="Param_ObjetoEstado">Um ponteiro para a interface ICaren de um objeto de estado, definido pelo chamador. Este parâmetro pode ser nulo. Você pode usar esse objeto para 
 			/// armazenar informações de estado. O objeto é retornado ao chamador de quando o callback é invocado.</param>
@@ -2977,7 +2977,7 @@ namespace CarenRengine
 				String^ Param_Url,
 				Enumeracoes::CA_SOURCE_RESOLVER_FLAGS Param_Flags,
 				ICarenPropertyStore^ Param_Propriedades,
-				ICaren^ Param_ObjetoCancel,
+				CarenParameterResolver<ICaren^> Param_Out_ObjetoCancel,
 				ICarenMFAsyncCallback^ Param_Callback,
 				ICaren^ Param_ObjetoEstado
 			);

@@ -436,8 +436,8 @@ void CarenMFSourceResolver::Finalizar()
 /// <param name="Param_Flags">Um bit a bit ou de uma ou mais bandeiras.</param>
 /// <param name="Param_Propriedades">Um ponteiro para a interface de ICarenPropertyStore de uma loja de propriedade. O método passa a loja de propriedade para o manipulador de fluxo de bytes.
 /// O manipulador de fluxo de bytes pode usar o armazenamento de propriedade para configurar a fonte de mídia. Este parâmetro pode ser nulo.</param>
-/// <param name="Param_ObjetoCancel">Recebe um ponteiro ICaren ou o valor nulo. Se o valor não for NULO, você pode cancelar a operação assíncrona, passando esse ponteiro para o método 
-/// de ICarenMFSourceResolver::CancelObjectCreation. O chamador deve liberar a interface. Este parâmetro pode ser nulo.</param>
+/// <param name="Param_Out_ObjetoCancel">Recebe um ponteiro ICaren ou o valor NULO. Se o valor não for NULO, você pode cancelar a operação assíncrona, passando esse ponteiro para o método 
+/// de ICarenMFSourceResolver::CancelObjectCreation. O chamador deve liberar a interface. Ignore esse valor se não deseja receber a interface de cancelamento.</param>
 /// <param name="Param_Callback">Um ponteiro para a interface de ICarenMFAsyncCallback de um objeto de retorno de chamada. O chamador deve implementar essa interface.</param>
 /// <param name="Param_ObjetoEstado">Um ponteiro para a interface ICaren de um objeto de estado, definido pelo chamador. Este parâmetro pode ser nulo. Você pode usar esse objeto para 
 /// armazenar informações de estado. O objeto é retornado ao chamador de quando o callback é invocado.</param>
@@ -447,7 +447,7 @@ CarenResult CarenMFSourceResolver::BeginCreateObjectFromByteStream
 	String^ Param_Url,
 	Enumeracoes::CA_SOURCE_RESOLVER_FLAGS Param_Flags,
 	ICarenPropertyStore^ Param_Propriedades,
-	ICaren^ Param_ObjetoCancel,
+	CarenParameterResolver<ICaren^> Param_Out_ObjetoCancel,
 	ICarenMFAsyncCallback^ Param_Callback,
 	ICaren^ Param_ObjetoEstado
 )
@@ -459,73 +459,41 @@ CarenResult CarenMFSourceResolver::BeginCreateObjectFromByteStream
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
-	IMFByteStream* pByteStream = NULL;
-	LPCWSTR URLDados = NULL;
-	DWORD FlagsResolver = 0;
-	IPropertyStore *pStoreProps = NULL;
-	IUnknown* pObjetoCancel = NULL;
-	IMFAsyncCallback* pCallback = NULL;
-	IUnknown* pObjetoEstado = NULL;
-	char* Ch_DadosConvertidos = NULL;
 	Utilidades Util;
+	IMFByteStream* vi_pByteStream = NULL;
+	LPCWSTR vi_pUrl = Nulo; //Pode ser Nulo.
+	DWORD vi_Flags = static_cast<DWORD>(Param_Flags);
+	IPropertyStore *vi_pPropertyStore = Nulo; //Pode ser Nulo.
+	IUnknown* vi_pOutObjectCancel = Nulo; //Pode ser IGNORADO.
+	IMFAsyncCallback* vi_pCallback = Nulo;
+	IUnknown* vi_pObjectState = Nulo; //Pode ser Nulo.
 
-	//Chama o método para obter o ByteStream
-	Resultado = Param_FluxoBytes->RecuperarPonteiro((LPVOID*)& pByteStream);
+	//Tenta recuperar o ponteiro para as interfaces obrigatorias.
+	CarenGetPointerFromICarenSafe(Param_FluxoBytes, vi_pByteStream);
+	CarenGetPointerFromICarenSafe(Param_Callback, vi_pCallback);
 
-	//Verifica se a interface retornada não é invalida.
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Sai do método
-		goto Done;
-	}
+	//Converte a URL se fornecido
+	if (StringObjetoValido(Param_Url))
+		vi_pUrl = Util.ConverterStringToConstWCHAR(Param_Url);
 
-	//Verifica se a uma url definida e cria a url nativa.
-	if (!String::IsNullOrEmpty(Param_Url))
-	{
-		//O usuário informou uma Url.
-		Ch_DadosConvertidos = Util.ConverterStringToChar(Param_Url);
+	//Verifica se forneceu a interface de propriedades e recupera o seu ponteiro.
+	if (ObjetoGerenciadoValido(Param_Propriedades))
+		CarenGetPointerFromICarenSafe(Param_Propriedades, vi_pPropertyStore);
 
-		//Converte o char* para WCHAR*
-		URLDados = Util.ConverterConstCharToConstWCHAR(Ch_DadosConvertidos);
-	}
-
-	//Define os flags
-	FlagsResolver = static_cast<DWORD>(Param_Flags);
-
-	//Verifica se definiu uma interface com propriedades
-	if (Param_Propriedades != nullptr)
-	{
-		//Obtém as propriedades
-		Param_Propriedades->RecuperarPonteiro((LPVOID*)&pStoreProps);
-	}
-
-	//Verifica se definiu um objeto para cancelar a requisição
-	if (Param_ObjetoCancel != nullptr)
-	{
-		//Obtém o objeto para cancelar a requisição.
-		Param_ObjetoCancel->RecuperarPonteiro((LPVOID*)&pObjetoCancel);
-	}
-
-	//Recupera o ponteiro para o Callback a ser utilizado.
-	Resultado = Param_Callback->RecuperarPonteiro((LPVOID*)&pCallback);
-
-	//Verifica se a interface retornada não é invalida.
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Sai do método
-		goto Done;
-	}
-
-	//Verifica se definiu um objeto de estado para ser retornado na conclusão.
-	if (Param_ObjetoCancel != nullptr)
-	{
-		//Obtém o objeto para cancelar a requisição.
-		Param_ObjetoEstado->RecuperarPonteiro((LPVOID*)&pObjetoEstado);
-	}
-
+	//Verifica se forneceu o objeto de estado devolvido na conclusão da operação assincrona.
+	if (ObjetoGerenciadoValido(Param_ObjetoEstado))
+		CarenGetPointerFromICarenSafe(Param_ObjetoEstado, vi_pObjectState);
 
 	//Chama o método para Resolver a midia
-	Hr = PonteiroTrabalho->BeginCreateObjectFromByteStream(pByteStream, URLDados, FlagsResolver, pStoreProps, &pObjetoCancel, pCallback, pObjetoEstado);
+	Hr = PonteiroTrabalho->BeginCreateObjectFromByteStream(
+		vi_pByteStream,
+		vi_pUrl,
+		vi_Flags,
+		vi_pPropertyStore,
+		Param_Out_ObjetoCancel.IgnoreParameter? Nulo: &vi_pOutObjectCancel,
+		vi_pCallback,
+		vi_pObjectState
+	);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -542,18 +510,13 @@ CarenResult CarenMFSourceResolver::BeginCreateObjectFromByteStream
 		Sair;
 	}
 
+	//Verifica se o método retornou uma interface de cancelamento e define no parametro.
+	if (ObjetoValido(vi_pOutObjectCancel))
+		CarenSetPointerToICarenSafe(vi_pOutObjectCancel, Param_Out_ObjetoCancel.ObjetoParametro, true);
+
 Done:;
-	//Limpa os dados de Url.
-	if (ObjetoValido(URLDados))
-	{
-		//Deleta os dados da memória.
-		delete URLDados;
-	}
-	if (ObjetoValido(Ch_DadosConvertidos))
-	{
-		//Deleta os dados da memória.
-		delete Ch_DadosConvertidos;
-	}
+	//Libera a memória para a string se ela for valida
+	DeletarStringAllocatedSafe(&vi_pUrl);
 
 	//Retorna o resultado
 	return Resultado;
@@ -566,8 +529,8 @@ Done:;
 /// <param name="Param_Flags">OR bit a bit dos sinalizadores.</param>
 /// <param name="Param_Propriedades">Ponteiro para a interface de ICarenPropertyStore de uma loja de propriedade. O método passa a loja de propriedade para o esquema manipulador ou 
 /// manipulador de fluxo de bytes que cria o objeto. O manipulador pode usar o armazenamento de propriedade para configurar o objeto. Este parâmetro pode ser nulo</param>
-/// <param name="Param_ObjetoCancel">Recebe um ponteiro ICaren ou o valor nulo. Se o valor não for NULO, você pode cancelar a operação assíncrona, passando esse ponteiro para o método 
-/// de ICarenMFSourceResolver::CancelObjectCreation. O chamador deve liberar a interface. Este parâmetro pode ser nulo.</param>
+/// <param name="Param_Out_ObjetoCancel">Recebe um ponteiro ICaren ou o valor NULO. Se o valor não for NULO, você pode cancelar a operação assíncrona, passando esse ponteiro para o método 
+/// de ICarenMFSourceResolver::CancelObjectCreation. O chamador deve liberar a interface. Ignore esse valor se não deseja receber a interface de cancelamento.</param>
 /// <param name="Param_Callback">Um ponteiro para a interface de ICarenMFAsyncCallback de um objeto de retorno de chamada. O chamador deve implementar essa interface.</param>
 /// <param name="Param_ObjetoEstado">Um ponteiro para a interface ICaren de um objeto de estado, definido pelo chamador. Este parâmetro pode ser nulo. Você pode usar esse objeto para 
 /// armazenar informações de estado. O objeto é retornado ao chamador de quando o callback é invocado.</param>
@@ -576,7 +539,7 @@ CarenResult CarenMFSourceResolver::BeginCreateObjectFromURL
 	String^ Param_Url,
 	Enumeracoes::CA_SOURCE_RESOLVER_FLAGS Param_Flags,
 	ICarenPropertyStore^ Param_Propriedades,
-	ICaren^ Param_ObjetoCancel,
+	CarenParameterResolver<ICaren^> Param_Out_ObjetoCancel,
 	ICarenMFAsyncCallback^ Param_Callback,
 	ICaren^ Param_ObjetoEstado
 )
@@ -588,61 +551,37 @@ CarenResult CarenMFSourceResolver::BeginCreateObjectFromURL
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
-	LPCWSTR URLDados = NULL;
-	DWORD FlagsResolver = 0;
-	IPropertyStore* pStoreProps = NULL;
-	IUnknown* pObjetoCancel = NULL;
-	IMFAsyncCallback* pCallback = NULL;
-	IUnknown* pObjetoEstado = NULL;
-	char* Ch_DadosConvertidos = NULL;
 	Utilidades Util;
+	LPCWSTR vi_pUrl = Nulo; //Pode ser Nulo.
+	DWORD vi_Flags = static_cast<DWORD>(Param_Flags);
+	IPropertyStore* vi_pPropertyStore = Nulo; //Pode ser Nulo.
+	IUnknown* vi_pOutObjectCancel = Nulo; //Pode ser IGNORADO.
+	IMFAsyncCallback* vi_pCallback = Nulo;
+	IUnknown* vi_pObjectState = Nulo; //Pode ser Nulo.
 
-	//Verifica se a uma url definida e cria a url nativa.
-	if (!String::IsNullOrEmpty(Param_Url))
-	{
-		//O usuário informou uma Url.
-		Ch_DadosConvertidos = Util.ConverterStringToChar(Param_Url);
+	//Converte a string contendo a url para o arquivo a ser criado.
+	vi_pUrl = Util.ConverterStringToConstWCHAR(Param_Url);
 
-		//Converte o char* para WCHAR*
-		URLDados = Util.ConverterConstCharToConstWCHAR(Ch_DadosConvertidos);
-	}
+	//Recupera o ponteiro para a interface de callback.
+	CarenGetPointerFromICarenSafe(Param_Callback, vi_pCallback);
 
-	//Define os flags
-	FlagsResolver = static_cast<DWORD>(Param_Flags);
+	//Verifica se forneceu a interface de propriedades e recupera o seu ponteiro.
+	if (ObjetoGerenciadoValido(Param_Propriedades))
+		CarenGetPointerFromICarenSafe(Param_Propriedades, vi_pPropertyStore);
 
-	//Verifica se definiu uma interface com propriedades
-	if (Param_Propriedades != nullptr)
-	{
-		//Obtém as propriedades
-		Param_Propriedades->RecuperarPonteiro((LPVOID*)& pStoreProps);
-	}
-
-	//Verifica se definiu um objeto para cancelar a requisição
-	if (Param_ObjetoCancel != nullptr)
-	{
-		//Obtém o objeto para cancelar a requisição.
-		Param_ObjetoCancel->RecuperarPonteiro((LPVOID*)& pObjetoCancel);
-	}
-
-	//Recupera o ponteiro para o Callback a ser utilizado.
-	Resultado = Param_Callback->RecuperarPonteiro((LPVOID*)& pCallback);
-
-	//Verifica se a interface retornada não é invalida.
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Sai do método
-		goto Done;
-	}
-
-	//Verifica se definiu um objeto de estado para ser retornado na conclusão.
-	if (Param_ObjetoCancel != nullptr)
-	{
-		//Obtém o objeto para cancelar a requisição.
-		Param_ObjetoEstado->RecuperarPonteiro((LPVOID*)& pObjetoEstado);
-	}
+	//Verifica se forneceu o objeto de estado devolvido na conclusão da operação assincrona.
+	if (ObjetoGerenciadoValido(Param_ObjetoEstado))
+		CarenGetPointerFromICarenSafe(Param_ObjetoEstado, vi_pObjectState);
 
 	//Chama o método para executar a operação
-	Hr = PonteiroTrabalho->BeginCreateObjectFromURL(URLDados, FlagsResolver, ObjetoValido(pStoreProps)? pStoreProps:NULL, ObjetoValido(pObjetoCancel)?&pObjetoCancel:NULL, pCallback, ObjetoValido(pObjetoEstado)? pObjetoEstado:NULL);
+	Hr = PonteiroTrabalho->BeginCreateObjectFromURL(
+		vi_pUrl,
+		vi_Flags,
+		vi_pPropertyStore,
+		Param_Out_ObjetoCancel.IgnoreParameter? Nulo: &vi_pOutObjectCancel,
+		vi_pCallback,
+		vi_pObjectState
+	);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -659,18 +598,13 @@ CarenResult CarenMFSourceResolver::BeginCreateObjectFromURL
 		Sair;
 	}
 
+	//Verifica se o método retornou uma interface de cancelamento e define no parametro.
+	if (ObjetoValido(vi_pOutObjectCancel))
+		CarenSetPointerToICarenSafe(vi_pOutObjectCancel, Param_Out_ObjetoCancel.ObjetoParametro, true);
+
 Done:;
-	//Limpa os dados de Url.
-	if (ObjetoValido(URLDados))
-	{
-		//Deleta os dados da memória.
-		delete URLDados;
-	}
-	if (ObjetoValido(Ch_DadosConvertidos))
-	{
-		//Deleta os dados da memória.
-		delete Ch_DadosConvertidos;
-	}
+	//Libera a memória para a string se ela for valida
+	DeletarStringAllocatedSafe(&vi_pUrl);
 
 	//Retorna o resultado
 	return Resultado;
@@ -690,20 +624,13 @@ CarenResult CarenMFSourceResolver::CancelObjectCreation(ICaren^ Param_ObjetoCanc
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
-	IUnknown* pObjetoCancel = NULL;
+	IUnknown* vi_pObjectCancel = Nulo;
 
-	//Obtém o objeto para cancelar a requisição.
-	Resultado = Param_ObjetoCancel->RecuperarPonteiro((LPVOID*)&pObjetoCancel);
-
-	//Verifica se a interface não é invalida
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//A interface não é valida
-		goto Done;
-	}
+	//Recupera o ponteiro para o objeto de cancelamento da operação.
+	CarenGetPointerFromICarenSafe(Param_ObjetoCancel, vi_pObjectCancel);
 
 	//Chama o método para cancelar a operação
-	Hr = PonteiroTrabalho->CancelObjectCreation(pObjetoCancel);
+	Hr = PonteiroTrabalho->CancelObjectCreation(vi_pObjectCancel);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -752,47 +679,34 @@ CarenResult CarenMFSourceResolver::CreateObjectFromByteStream
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
-	IMFByteStream* pByteStream = NULL;
-	LPCWSTR URLDados = NULL;
-	DWORD FlagsResolver = 0;
-	IPropertyStore* pStoreProps = NULL;
-	MF_OBJECT_TYPE TipoObjeto = MF_OBJECT_TYPE::MF_OBJECT_INVALID;
-	IUnknown* pFonteMidiaObjeto = NULL;
-	char* Ch_DadosConvertidos = NULL;
 	Utilidades Util;
+	IMFByteStream* vi_pByteStream = Nulo;
+	LPCWSTR vi_pUrl = Nulo; //Pode ser Nulo.
+	DWORD vi_Flags  = static_cast<DWORD>(Param_Flags);
+	IPropertyStore* vi_pPropertyStore = Nulo; //Pode ser Nulo.
+	MF_OBJECT_TYPE vi_OutTipoObjeto = MF_OBJECT_TYPE::MF_OBJECT_INVALID;
+	IUnknown* vi_pOutSource = Nulo;
 
-	//Chama o método para obter o ByteStream
-	Resultado = Param_FluxoBytes->RecuperarPonteiro((LPVOID*)& pByteStream);
+	//Recupera o ponteiro para o fluxo de bytes.
+	CarenGetPointerFromICarenSafe(Param_FluxoBytes, vi_pByteStream);
+	
+	//Verifica se forneceu a URL e converte a string.
+	if (StringObjetoValido(Param_Url))
+		vi_pUrl = Util.ConverterStringToConstWCHAR(Param_Url);
 
-	//Verifica se a interface retornada não é invalida.
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Sai do método
-		goto Done;
-	}
-
-	//Verifica se a uma url definida e cria a url nativa.
-	if (!String::IsNullOrEmpty(Param_Url))
-	{
-		//O usuário informou uma Url.
-		Ch_DadosConvertidos = Util.ConverterStringToChar(Param_Url);
-
-		//Converte o char* para WCHAR*
-		URLDados = Util.ConverterConstCharToConstWCHAR(Ch_DadosConvertidos);
-	}
-
-	//Define os flags
-	FlagsResolver = static_cast<DWORD>(Param_Flags);
-
-	//Verifica se definiu uma interface com propriedades
-	if (Param_Propriedades != nullptr)
-	{
-		//Obtém as propriedades
-		Param_Propriedades->RecuperarPonteiro((LPVOID*)& pStoreProps);
-	}
+	//Verifica se forneceu a interface de propriedades e recupera o seu ponteiro.
+	if (ObjetoGerenciadoValido(Param_Propriedades))
+		CarenGetPointerFromICarenSafe(Param_Propriedades, vi_pPropertyStore);
 
 	//Chama o método para executar a operação
-	Hr = PonteiroTrabalho->CreateObjectFromByteStream(pByteStream, URLDados, FlagsResolver, pStoreProps, &TipoObjeto, &pFonteMidiaObjeto);
+	Hr = PonteiroTrabalho->CreateObjectFromByteStream(
+		vi_pByteStream,
+		vi_pUrl,
+		vi_Flags,
+		vi_pPropertyStore,
+		&vi_OutTipoObjeto,
+		&vi_pOutSource
+	);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -809,27 +723,15 @@ CarenResult CarenMFSourceResolver::CreateObjectFromByteStream
 		Sair;
 	}
 
-	//Chama o método para definir o ponteiro
-	Param_Out_FonteMidia->AdicionarPonteiro(pFonteMidiaObjeto);
+	//Define o tipo do objeto criado no parametro de saida.
+	Param_Out_TipoObjeto = static_cast<CA_MF_OBJECT_TYPE>(vi_OutTipoObjeto);
 
-	//Define os dados nos parametros de saida
-	Param_Out_TipoObjeto = static_cast<CA_MF_OBJECT_TYPE>(TipoObjeto);
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	//Define o ponteiro na interface de saida.
+	CarenSetPointerToICarenSafe(vi_pOutSource, Param_Out_FonteMidia, true);
 
 Done:;
-	//Limpa os dados de Url.
-	if (ObjetoValido(URLDados))
-	{
-		//Deleta os dados da memória.
-		delete URLDados;
-	}
-	if (ObjetoValido(Ch_DadosConvertidos))
-	{
-		//Deleta os dados da memória.
-		delete Ch_DadosConvertidos;
-	}
+	//Libera a memória utilizada pela string se válida.
+	DeletarStringAllocatedSafe(&vi_pUrl);
 
 	//Retorna o resultado
 	return Resultado;

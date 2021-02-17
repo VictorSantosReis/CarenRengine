@@ -25,10 +25,37 @@ CarenMFVideoRenderer::~CarenMFVideoRenderer()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
-//Cosntrutor
+
+//Cosntrutores
 CarenMFVideoRenderer::CarenMFVideoRenderer()
 {
 	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
+}
+CarenMFVideoRenderer::CarenMFVideoRenderer(String^ Param_IID_VideoRender)
+{
+	//Variavel COM
+	ResultadoCOM Hr = E_FAIL;
+
+	//Variaveis utilizadas pelo método
+	Utilidades Util;
+	GUID vi_GuidVideoRender = GUID_NULL;
+	IUnknown* vi_pOutVideoRender = Nulo;	
+
+	//Chama o método para obter o guid.
+	vi_GuidVideoRender = Util.CreateGuidFromString(Param_IID_VideoRender);
+
+	//Chama o método que vai criar o Renderizador de Vídeo.
+	Hr = MFCreateVideoRenderer(vi_GuidVideoRender, reinterpret_cast<void**>(&vi_pOutVideoRender));
+
+	//Verifica se não ocorreu erro no processo.
+	if (!Sucesso(Hr))
+	{
+		//Chama uma exceção para informar o error.
+		throw gcnew Exception(String::Concat("Ocorreu uma falha ao criar a interface. Mensagem associado ao ERROR -> ", Util.TranslateCodeResult(Hr)));
+	}
+
+	//Define a interface criada no ponteiro de trabalho
+	PonteiroTrabalho = reinterpret_cast<IMFVideoRenderer*>(vi_pOutVideoRender);
 }
 
 
@@ -400,9 +427,7 @@ void CarenMFVideoRenderer::Finalizar()
 
 
 
-
-// Métodos da interface Proprietaria
-
+// Métodos da interface proprietaria (ICarenMFVideoRenderer)
 
 
 /// <summary>
@@ -421,28 +446,19 @@ CarenResult CarenMFVideoRenderer::InitializeRenderer(ICarenMFTransform^ Param_Vi
 	ResultadoCOM  Hr = E_FAIL;
 	
 	//Variaveis utilizadas no método.
-	IMFTransform *pVideoMixer = NULL;
-	IMFVideoPresenter *pApresentador = NULL;
+	IMFTransform *vi_pVideoMixer = Nulo;
+	IMFVideoPresenter *vi_pVideoPresenter = Nulo;
 
-	//Verifica se o usuário está fornencendo o Mixer e Apresentador ou um dos dois.
-	//O método não necessita de forma obrigatoria de uma das interfaces.
+	//Recupera o ponteiro para o mixer se fornecido
+	if (ObjetoGerenciadoValido(Param_VideoMixer))
+		CarenGetPointerFromICarenSafe(Param_VideoMixer, vi_pVideoMixer);
 
-	//Verifica o ponteiro do Mixer.
-	if (Param_VideoMixer != nullptr)
-	{
-		//Chama o método para recuperar o ponteiro de trabalho.
-		Param_VideoMixer->RecuperarPonteiro((LPVOID*)&pVideoMixer);
-	}
-
-	//Verifica o ponteiro do Apresentador
-	if (Param_Apresentador != nullptr)
-	{
-		//Chama o método para recuperar o ponteiro de trabalho.
-		Param_Apresentador->RecuperarPonteiro((LPVOID*)&pVideoMixer);
-	}
+	//Recupera o ponteiro para o apresentador de video se fornecido.
+	if (ObjetoGerenciadoValido(Param_Apresentador))
+		CarenGetPointerFromICarenSafe(Param_Apresentador, vi_pVideoPresenter);
 
 	//Chama o método para inicializar o Renderizador
-	Hr = PonteiroTrabalho->InitializeRenderer(pVideoMixer ? pVideoMixer : NULL, pApresentador ? pApresentador : NULL);
+	Hr = PonteiroTrabalho->InitializeRenderer(vi_pVideoMixer, vi_pVideoPresenter);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);

@@ -51,6 +51,12 @@ public:
 	/// </summary>
 	CarenMFVideoRenderer();
 
+	/// <summary>
+	/// Inicializa e cria uma nova instânca do renderizador de video aprimorado(EVR) com base no GUID.
+	/// </summary>
+	/// <param name="Param_IID_VideoRender">O GUID para a interface de serviço solictada.</param>
+	CarenMFVideoRenderer(String^ Param_IID_VideoRender);
+
 	~CarenMFVideoRenderer();
 
 
@@ -102,130 +108,6 @@ public:
 		}
 	}
 
-	//Cria uma instância dessa classe (Estático)
-public:
-
-	/// <summary>
-	/// Método responsável por criar uma instância da classe atual.
-	/// </summary>
-	/// <param name="Param_IID_VideoRender">O GUID para a interface de serviço solictada.</param>
-	/// <param name="Param_Out_VideoRender">Recebe a interface do renderizador de Vídeo.</param>
-	static CarenResult CriarInstanciaVideoRender(String^ Param_IID_VideoRender, [Out] CarenMFVideoRenderer^% Param_Out_VideoRender)
-	{
-		//Variavel que vai retornar o resultado.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Variavel COM
-		ResultadoCOM Hr = E_FAIL;
-
-		//Variaveis utilizadas pelo método
-		LPVOID *pVideoRender = NULL;
-		CarenMFVideoRenderer^ InterfaceVideoRender = nullptr;
-		Utilidades Util;
-		GUID GuidService = GUID_NULL;
-
-		//Chama o método para obter o guid.
-		GuidService = Util.CreateGuidFromString(Param_IID_VideoRender);
-
-		//Verifica se o guid foi criado com sucesso
-		if (GuidService == GUID_NULL)
-		{
-			//O guid informado não é valido
-			Resultado.AdicionarCodigo(ResultCode::ER_GUID_INVALIDO, false);
-
-			//Sai do método.
-			goto Done;
-		}
-
-		//Chama o método que vai criar o Renderizador de Vídeo.
-		Hr = MFCreateVideoRenderer(GuidService, (LPVOID*)&pVideoRender);
-		
-		//Verifica o resultado do método
-		if (Sucesso(Hr))
-		{
-			//Deixa o método continuar.
-		}
-		else
-		{
-			//Define que houve falha.
-			Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-			//Sai do método
-			goto Done;
-		}
-
-		//Cria a interface que vai conter o ponteiro.
-		InterfaceVideoRender = gcnew CarenMFVideoRenderer();
-
-		//Chama o método para definir o ponteiro de trablho.
-		InterfaceVideoRender->AdicionarPonteiro(pVideoRender);
-
-		//Define a interface criada no parametro de saida.
-		Param_Out_VideoRender = InterfaceVideoRender;
-
-		//Define sucesso na operação
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	Done:;
-		//Retorna o resultado.
-		return Resultado;
-	}
-
-	/// <summary>
-	/// Método responsável por criar um objeto de ativação do Renderizador de Vídeo.
-	/// </summary>
-	/// <param name="Param_HandleVideoSuperfice">A handle para a superfice que vai conter o video a ser renderizado.</param>
-	/// <param name="Param_Out_VideoRenderAtivador">Recebe a interface de ativação do objeto.</param>
-	static CarenResult CriarInstanciaVideoRender(IntPtr Param_HandleVideoSuperfice, [Out] ICarenMFActivate^% Param_Out_VideoRenderAtivador)
-	{
-		//Variavel que vai retornar o resultado.
-		CarenResult Resultado = CarenResult(E_FAIL, false);
-
-		//Variavel COM
-		ResultadoCOM Hr = E_FAIL;
-
-		//Variaveis utilizadas pelo método
-		IMFActivate *pVideoRenderActivate = NULL;
-		ICarenMFActivate^ InterfaceVideoRenderAtivador = nullptr;
-		HWND HandleVideoSuperfice = NULL;
-		Utilidades Util;
-		
-		//Chama o método para obter a handle nativa da janela que vai conter a renderização do vídeo.
-		HandleVideoSuperfice = Util.ConverterIntPtrToHWND(Param_HandleVideoSuperfice);
-
-		//Chama o método que vai criar o objeto de ativação do Renderizador.
-		Hr = MFCreateVideoRendererActivate(HandleVideoSuperfice, &pVideoRenderActivate);
-
-		//Verifica o resultado do método
-		if (Sucesso(Hr))
-		{
-			//Deixa o método continuar.
-		}
-		else
-		{
-			//Define que houve falha.
-			Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-			//Sai do método
-			goto Done;
-		}
-
-		//Cria a interface que vai conter o ponteiro.
-		InterfaceVideoRenderAtivador = gcnew CarenMFActivate();
-
-		//Chama o método para definir o ponteiro de trablho.
-		InterfaceVideoRenderAtivador->AdicionarPonteiro(pVideoRenderActivate);
-
-		//Define a interface criada no parametro de saida.
-		Param_Out_VideoRenderAtivador = InterfaceVideoRenderAtivador;
-
-		//Define sucesso na operação
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	Done:;
-		//Retorna o resultado.
-		return Resultado;
-	}
 
 	///////////////////////////////////////////////////////
 	//A parti daqui vai conter os métodos das interfaces.//

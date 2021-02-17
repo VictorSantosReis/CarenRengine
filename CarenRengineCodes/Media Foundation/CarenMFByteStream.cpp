@@ -25,12 +25,12 @@ CarenMFByteStream::~CarenMFByteStream()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+
 //Construtores
 CarenMFByteStream::CarenMFByteStream()
 {
 	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
-
 CarenMFByteStream::CarenMFByteStream(ICarenStream^ Param_Stream)
 {
 	//Variavel que vai conter o resultado COM.
@@ -68,7 +68,6 @@ CarenMFByteStream::CarenMFByteStream(ICarenStream^ Param_Stream)
 	//Define a interface criada no ponteiro de trabalho
 	PonteiroTrabalho = vi_pOutByteStream;
 }
-
 CarenMFByteStream::CarenMFByteStream(ICarenMFByteStream^ Param_MFStream)
 {
 	//Variavel que vai conter o resultado COM.
@@ -106,7 +105,6 @@ CarenMFByteStream::CarenMFByteStream(ICarenMFByteStream^ Param_MFStream)
 	//Define a interface criada no ponteiro de trabalho
 	PonteiroTrabalho = vi_pOutByteStream;
 }
-
 CarenMFByteStream::CarenMFByteStream(ICaren^ Param_UnkStream)
 {
 	//Variavel que vai conter o resultado COM.
@@ -145,9 +143,9 @@ CarenMFByteStream::CarenMFByteStream(ICaren^ Param_UnkStream)
 	PonteiroTrabalho = vi_pOutByteStream;
 }
 
-//
+
 // Métodos da interface ICaren
-//
+
 
 /// <summary>
 /// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 
@@ -612,19 +610,7 @@ CarenResult CarenMFByteStream::BeginWrite(
 
 	//Verifcia se forneceu um objeto de estado(OPICIONAL)
 	if (ObjetoGerenciadoValido(Param_ObjetoEstado))
-	{
-		//Recupera o ponteiro para o objeto.
-		Resultado = Param_ObjetoEstado->RecuperarPonteiro((LPVOID*)&pObjetoEstado);
-
-		//Verifica se não houve erro
-		if (Resultado.StatusCode != ResultCode::SS_OK)
-		{
-			//O ponteiro para o objeto de estado é invalido.
-
-			//Sai do método
-			goto Done;
-		}
-	}
+		CarenGetPointerFromICarenSafe(Param_ObjetoEstado, vi_pObjectState);
 
 	//Chama o método para realizar a operação.
 	Hr = PonteiroTrabalho->BeginWrite(

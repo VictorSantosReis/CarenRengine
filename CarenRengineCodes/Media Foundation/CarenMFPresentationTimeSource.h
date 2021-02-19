@@ -18,7 +18,6 @@ limitations under the License.
 #pragma once
 #include "../SDK_MediaFoundation.h"
 #include "../Caren/Caren.h"
-#include "CarenMFClock.h"
 #include "../SDK_Utilidades.h"
 
 //Importa o namespace que contém as interfaces da Media Foundation.
@@ -33,7 +32,7 @@ using namespace CarenRengine::SDKBase::Estruturas;
 using namespace CarenRengine::SDKUtilidades;
 
 /// <summary>
-/// (Concluido - Fase de Testes) - Classe responsável por fornecer os tempos de relógio para o Tempo de apresentação(ICarenMFPresentationClock). 
+/// Classe responsável por fornecer os tempos de relógio para o Tempo de apresentação(ICarenMFPresentationClock). 
 /// </summary>
 public ref class CarenMFPresentationTimeSource: public ICarenMFPresentationTimeSource
 {
@@ -241,14 +240,12 @@ public:
 	virtual void Finalizar();
 
 
-
-
 	//Métodos da interface (ICarenMFPresentationTimeSource)
 public:
 	/// <summary>
 	/// Recupera o relógio subjacente que a fonte de tempo de apresentação usa para gerar seus tempos de relógio.
 	/// </summary>
-	/// <param name="Param_Out_Relogio">Recebe a interface ICarenMFClock que representa um Relógio. O chamador deve liberar a interface.</param>
+	/// <param name="Param_Out_Relogio">Recebe a interface ICarenMFClock que representa um Relógio. O chamador deve liberar a interface. O usuário é responsável por inicializar a interface antes de chamar este método.</param>
 	virtual CarenResult GetUnderlyingClock([Out] ICarenMFClock^% Param_Out_Relogio);
 
 

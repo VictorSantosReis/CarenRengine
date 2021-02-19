@@ -25,12 +25,12 @@ CarenMFSinkWriter::~CarenMFSinkWriter()
 	//Define que a classe foi descartada
 	Prop_DisposedClasse = true;
 }
+
 //Construtores
 CarenMFSinkWriter::CarenMFSinkWriter()
 {
 	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
-
 CarenMFSinkWriter::CarenMFSinkWriter(ICarenMFMediaSink^ Param_MediaSink, ICarenMFAttributes^ Param_Atributos)
 {
 	//Variavel que vai conter o resultado COM.
@@ -80,7 +80,6 @@ CarenMFSinkWriter::CarenMFSinkWriter(ICarenMFMediaSink^ Param_MediaSink, ICarenM
 	//Define a interface criada no ponteiro de trabalho
 	PonteiroTrabalho = vi_pOutSinkWriter;
 }
-
 CarenMFSinkWriter::CarenMFSinkWriter(String^ Param_OutputUrl, ICarenMFByteStream^ Param_Stream, ICarenMFAttributes^ Param_Atributos)
 {
 	//Variavel que vai conter o resultado COM.
@@ -139,9 +138,9 @@ CarenMFSinkWriter::CarenMFSinkWriter(String^ Param_OutputUrl, ICarenMFByteStream
 	DeletarStringAllocatedSafe(&vi_pOutputUrl);
 }
 
-//
+
 // Métodos da interface ICaren
-//
+
 
 /// <summary>
 /// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 
@@ -506,10 +505,9 @@ void CarenMFSinkWriter::Finalizar()
 
 
 
-//
-// Métodos da interface Proprietaria
-//
 
+
+// Métodos da interface proprietaria (ICarenMFSinkWriter)
 
 
 /// <summary>
@@ -532,13 +530,6 @@ CarenResult CarenMFSinkWriter::AddStream(ICarenMFMediaType^ Param_TipoMidia, [Ou
 
 	//Chama o método para recuperar o ponteiro de trabalho na interface gerenciada.
 	CarenGetPointerFromICarenSafe(Param_TipoMidia, vi_pMediaTypeAdd);
-
-	//Verifica se não houve erro
-	if (!CarenSucesso(Resultado))
-	{
-		//O ponteiro de trabalho não é valido.
-		goto Done;
-	}
 
 	//Chama o método para definir o tipo da midia
 	Hr = PonteiroTrabalho->AddStream(vi_pMediaTypeAdd, &vi_OutIdAdded);
@@ -679,14 +670,12 @@ Done:;
 /// </summary>
 /// <param name="Param_IdFluxo">Um Indice baseado em zero de um fluxo para a consulta. Desconsidere esse valor se o parâmetro (Param_Escritor)
 /// for True.</param>
-/// <param name="Param_ConsultarColetor">Define que o objeto de consulta é o Coletor de Mídia associado. Esse valor representa o: MF_SINK_WRITER_MEDIASINK</param>
 /// <param name="Param_GuidServiço">O Guid para o (Identificador de Serviço). Se o valor for (NULO), o método chama (QueryInterface) para obter
 /// interface solicitada.</param>
 /// <param name="Param_GuidInterfaceSolicitada">O Guid para a interface solicitada.</param>
 /// <param name="Param_Out_Interface">Recebe a interface solicitada.</param>
 CarenResult CarenMFSinkWriter::GetServiceForStream(
 	UInt32 Param_IdFluxo,
-	Boolean Param_ConsultarColetor,
 	String^ Param_GuidServiço,
 	String^ Param_GuidInterfaceSolicitada,
 	ICaren^ Param_Out_Interface)
@@ -698,48 +687,19 @@ CarenResult CarenMFSinkWriter::GetServiceForStream(
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variariveis utilizadas no método
-	Utilidades Util;
-	GUID GuidService = GUID_NULL;
-	GUID GuidInterface = GUID_NULL;
-	LPVOID OutInterfaceNativa = NULL;
+	GUID vi_GuidService = GUID_NULL; //Pode ser NULO.
+	GUID vi_GuidInterface = GUID_NULL;
+	LPVOID vi_pOutInterface = Nulo;
 
-	//Chama o método para obter o guid da interface.
-	GuidInterface = Util.CreateGuidFromString(Param_GuidInterfaceSolicitada);
+	//Verifica se  forneceu o guid de serviço e cria
+	if (StringObjetoValido(Param_GuidServiço))
+		CarenCreateGuidFromStringSafe(Param_GuidServiço, vi_GuidService);
 
-	//Verifica se o guid foi criado com sucesso
-	if (GuidInterface == GUID_NULL)
-	{
-		//O guid informado não é valido
-		Resultado.AdicionarCodigo(ResultCode::ER_GUID_INVALIDO, false);
-
-		//Sai do método.
-		goto Done;
-	}
-
-	//Verifica se o Guid de seriço é valido.
-	//Essa função pode consultar a interface diretamente sem o guid de serviço.
-	if (!String::IsNullOrEmpty(Param_GuidServiço))
-	{
-		//Chama o método para obter o guid do serviço.
-		GuidService = Util.CreateGuidFromString(Param_GuidServiço);
-
-		//Verifica se o guid foi criado com sucesso
-		if (GuidService == GUID_NULL)
-		{
-			//O guid informado não é valido
-			Resultado.AdicionarCodigo(ResultCode::ER_GUID_INVALIDO, false);
-
-			//Sai do método.
-			goto Done;
-		}
-	}
-	else
-	{
-		//Deixa o método continuar.
-	}
+	//Converte o GUID da interface solicitada.
+	CarenCreateGuidFromStringSafe(Param_GuidInterfaceSolicitada, vi_GuidInterface);
 
 	//Chama o método para consultar.
-	Hr = PonteiroTrabalho->GetServiceForStream(Param_IdFluxo, GuidService, GuidInterface, &OutInterfaceNativa);
+	Hr = PonteiroTrabalho->GetServiceForStream(Param_IdFluxo, vi_GuidService, vi_GuidInterface, &vi_pOutInterface);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -756,8 +716,8 @@ CarenResult CarenMFSinkWriter::GetServiceForStream(
 		Sair;
 	}
 
-	//Define o ponteiro para o ponteiro de trabalho
-	CarenSetPointerToICarenSafe(reinterpret_cast<IUnknown*>(OutInterfaceNativa), Param_Out_Interface, true);
+	//Define o ponteiro na interface de saida.
+	CarenSetPointerToICarenSafe(reinterpret_cast<IUnknown*>(vi_pOutInterface), Param_Out_Interface, true);
 
 Done:;
 	//Retorna o resultado.
@@ -779,23 +739,17 @@ CarenResult CarenMFSinkWriter::GetStatistics(UInt32 Param_IdFluxo, Boolean Param
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método.
-	MF_SINK_WRITER_STATISTICS* EstuturaNativaEstatisticasColetor = CriarEstrutura<MF_SINK_WRITER_STATISTICS>();
 	Utilidades Util;
+	MF_SINK_WRITER_STATISTICS vi_OutWriterStatistics = { 0 };
 
-	//Define o tamanho da estrutura
-	EstuturaNativaEstatisticasColetor->cb = sizeof(MF_SINK_WRITER_STATISTICS);
+	//Define o tamanho da estrutura em bytes.
+	//Esse procedimento é NECESSÁRIO para chamar o método.
+	vi_OutWriterStatistics.cb = sizeof(MF_SINK_WRITER_STATISTICS);
 
-	//Verifica se deve obter as estatiticas do coletor diretamente
-	if (Param_ConsultarColetor)
-	{
-		//Chama o método para consultar as estatísticas do proprio coletor.
-		Hr = PonteiroTrabalho->GetStatistics(MF_SINK_WRITER_ALL_STREAMS, EstuturaNativaEstatisticasColetor);
-	}
-	else
-	{
-		//Chama o método para consultar o fluxo no id especificado.
-		Hr = PonteiroTrabalho->GetStatistics(Param_IdFluxo, EstuturaNativaEstatisticasColetor);
-	}
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetStatistics(
+		Param_ConsultarColetor? MF_SINK_WRITER_ALL_STREAMS: Param_IdFluxo,
+		&vi_OutWriterStatistics);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -813,11 +767,9 @@ CarenResult CarenMFSinkWriter::GetStatistics(UInt32 Param_IdFluxo, Boolean Param
 	}
 
 	//Converte e define no parametro de saida.
-	Param_Out_StatusDesempenho = Util.ConverterMF_SINK_WRITER_STATISTICSUnamagedToManaged(EstuturaNativaEstatisticasColetor);
-Done:;
-	//Deleta a estrutura não gerenciada
-	DeletarEstruturaSafe(&EstuturaNativaEstatisticasColetor);
+	Param_Out_StatusDesempenho = Util.ConverterMF_SINK_WRITER_STATISTICSUnamagedToManaged(&vi_OutWriterStatistics);
 
+Done:;
 	//Retorna o resultado
 	return Resultado;
 }
@@ -836,17 +788,9 @@ CarenResult CarenMFSinkWriter::NotifyEndOfSegment(UInt32 Param_IdFluxo, Boolean 
 	//Resultado Com
 	ResultadoCOM Hr = E_FAIL;
 
-	//Verifica se deve notificar todos os fluxos
-	if (Param_NotificarTodos)
-	{
-		//Chama o método para notificar todos os fluxos.
-		Hr = PonteiroTrabalho->NotifyEndOfSegment(MF_SINK_WRITER_ALL_STREAMS);
-	}
-	else
-	{
-		//Chama o método para notificar o fluxo especificado.
-		Hr = PonteiroTrabalho->NotifyEndOfSegment(Param_IdFluxo);
-	}
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->NotifyEndOfSegment(
+		Param_NotificarTodos ? MF_SINK_WRITER_ALL_STREAMS : Param_IdFluxo);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -927,8 +871,6 @@ CarenResult CarenMFSinkWriter::SendStreamTick(UInt32 Param_IdFluxo, Int64 Param_
 	//Resultado Com
 	ResultadoCOM Hr = E_FAIL;
 
-	//Variaveis utilizadas no método.
-
 	//Chama o método para enviar a Lacuna para o fluxo especificado.
 	Hr = PonteiroTrabalho->SendStreamTick(static_cast<DWORD>(Param_IdFluxo), Param_TimeStamp);
 	
@@ -970,7 +912,7 @@ CarenResult CarenMFSinkWriter::SetInputMediaType(UInt32 Param_IdFluxo, ICarenMFM
 
 	//Variaveis utilizadas no método.
 	IMFMediaType *vi_pMediaTypeEntry = Nulo;
-	IMFAttributes *vi_pAttributesEncode = Nulo;
+	IMFAttributes *vi_pAttributesEncode = Nulo; //Pode ser NULO.
 
 	//Chama o método para obter o tipo de midia de entrada
 	CarenGetPointerFromICarenSafe(Param_TipoMidia, vi_pMediaTypeEntry);
@@ -1002,7 +944,6 @@ Done:;
 	return Resultado;
 }
 
-
 /// <summary>
 /// (WriteSample) - Fornece uma amostra para o gravador de coletor.
 /// Você deve chamar o método (BeginWriting) antes de chamar esse método. Caso contrário, o método retornará 
@@ -1023,15 +964,6 @@ CarenResult CarenMFSinkWriter::WriteSample(UInt32 Param_IdFluxo, ICarenMFSample^
 
 	//Chama o método para obter a amostra a ser escrita.
 	CarenGetPointerFromICarenSafe(Param_AmostraMidia, vi_pWriteSample);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//A interface não é valida
-
-		//Sai do método.
-		goto Done;
-	}
 
 	//Chama o método para escrever a amostra no id especificado para o arquivo ou Hardware
 	Hr = PonteiroTrabalho->WriteSample(static_cast<DWORD>(Param_IdFluxo), vi_pWriteSample);

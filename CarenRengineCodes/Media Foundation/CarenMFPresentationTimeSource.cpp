@@ -57,9 +57,9 @@ CarenMFPresentationTimeSource::CarenMFPresentationTimeSource(Boolean Param_Criar
 	}
 }
 
-//
+
 // Métodos da interface ICaren
-//
+
 
 /// <summary>
 /// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 
@@ -424,14 +424,15 @@ void CarenMFPresentationTimeSource::Finalizar()
 
 
 
-// Métodos da interface proprietaria
 
+
+// Métodos da interface proprietaria (ICarenMFPresentationTimeSource)
 
 
 /// <summary>
 /// Recupera o relógio subjacente que a fonte de tempo de apresentação usa para gerar seus tempos de relógio.
 /// </summary>
-/// <param name="Param_Out_Relogio">Recebe a interface ICarenMFClock que representa um Relógio. O chamador deve liberar a interface.</param>
+/// <param name="Param_Out_Relogio">Recebe a interface ICarenMFClock que representa um Relógio. O chamador deve liberar a interface. O usuário é responsável por inicializar a interface antes de chamar este método.</param>
 CarenResult CarenMFPresentationTimeSource::GetUnderlyingClock(ICarenMFClock ^% Param_Out_Relogio)
 {
 	//Variavel que vai retorna o resultado.
@@ -441,11 +442,10 @@ CarenResult CarenMFPresentationTimeSource::GetUnderlyingClock(ICarenMFClock ^% P
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas pelo método
-	IMFClock *pClock = NULL;
-	ICarenMFClock^ InterfaceSolictada = nullptr;
+	IMFClock *vi_pOutClock = Nulo;
 
-	//Chama o método para recuperar o relogio deste objeto.
-	Hr = PonteiroTrabalho->GetUnderlyingClock(&pClock);
+	//Chama o método para realizar a operação.
+	Hr = PonteiroTrabalho->GetUnderlyingClock(&vi_pOutClock);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -462,17 +462,11 @@ CarenResult CarenMFPresentationTimeSource::GetUnderlyingClock(ICarenMFClock ^% P
 		Sair;
 	}
 
-	//Cria a interace a que vai conter o relogio.
-	InterfaceSolictada = gcnew CarenMFClock();
+	//Cria a interace a ser retornada.
+	Param_Out_Relogio = gcnew CarenMFClock();
 
-	//Chama o método para definir o ponteiro
-	InterfaceSolictada->AdicionarPonteiro(pClock);
-
-	//Define a interface no parametro de retorno.
-	Param_Out_Relogio = InterfaceSolictada;
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	//Define o ponteiro na interface de saida.
+	CarenSetPointerToICarenSafe(vi_pOutClock, Param_Out_Relogio, true);
 
 Done:;
 	//Retorna o resultado
@@ -481,7 +475,9 @@ Done:;
 
 
 
-// Métodos da interface ICarenMFClock
+
+
+// Métodos da interface (ICarenMFClock)
 
 
 /// <summary>
@@ -497,10 +493,10 @@ CarenResult CarenMFPresentationTimeSource::GetClockCharacteristics([Out] Enumera
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
-	DWORD CaracteristicasClock = 0;
+	DWORD vi_OutCharacteristicsClock = 0;
 
 	//Chama o método para obter as caracteristicas
-	Hr = PonteiroTrabalho->GetClockCharacteristics(&CaracteristicasClock);
+	Hr = PonteiroTrabalho->GetClockCharacteristics(&vi_OutCharacteristicsClock);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -518,10 +514,7 @@ CarenResult CarenMFPresentationTimeSource::GetClockCharacteristics([Out] Enumera
 	}
 
 	//Define o valor no parametro de saida
-	Param_Out_CaracteristicasClock = (CA_MFCLOCK_CHARACTERISTICS_FLAGS)safe_cast<UInt32>(CaracteristicasClock);
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	Param_Out_CaracteristicasClock = static_cast<CA_MFCLOCK_CHARACTERISTICS_FLAGS>(vi_OutCharacteristicsClock);
 
 Done:;
 	//Retorna o resultado
@@ -541,10 +534,10 @@ CarenResult CarenMFPresentationTimeSource::GetContinuityKey([Out] UInt32% Param_
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
-	DWORD ChaveRelogio = 0;
+	DWORD vi_OutKeyClock = 0;
 
 	//Chama o método para obter a chave de continuidade
-	Hr = PonteiroTrabalho->GetContinuityKey(&ChaveRelogio);
+	Hr = PonteiroTrabalho->GetContinuityKey(&vi_OutKeyClock);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -562,10 +555,7 @@ CarenResult CarenMFPresentationTimeSource::GetContinuityKey([Out] UInt32% Param_
 	}
 
 	//Define o valor da chave no parametro de retorno.
-	Param_Out_Chave = safe_cast<UInt32>(ChaveRelogio);
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	Param_Out_Chave = safe_cast<UInt32>(vi_OutKeyClock);
 
 Done:;
 	//Retorna o resultado
@@ -577,8 +567,8 @@ Done:;
 /// </summary>
 /// <param name="Param_ValorReservado">Valor reservado. Deve ser zero.</param>
 /// <param name="Param_Out_ClockTime">Recebe o último tempo de relógio conhecido, em unidades de freqüência do relógio.</param>
-/// <param name="Param_NsSystemTime">Recebe a hora do sistema que corresponde ao tempo de relógio retornado em Param_Out_ClockTime, em unidades de 100 nanosegundos.</param>
-CarenResult CarenMFPresentationTimeSource::GetCorrelatedTime(UInt32 Param_ValorReservado, [Out] Int64% Param_Out_ClockTime, [Out] Int64% Param_NsSystemTime)
+/// <param name="Param_Out_NsSystemTime">Recebe a hora do sistema que corresponde ao tempo de relógio retornado em Param_Out_ClockTime, em unidades de 100 nanosegundos.</param>
+CarenResult CarenMFPresentationTimeSource::GetCorrelatedTime(UInt32 Param_ValorReservado, [Out] Int64% Param_Out_ClockTime, [Out] Int64% Param_Out_NsSystemTime)
 {
 	//Variavel que vai retorna o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -587,11 +577,11 @@ CarenResult CarenMFPresentationTimeSource::GetCorrelatedTime(UInt32 Param_ValorR
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
-	INT64 ClockTime = 0;
-	INT64 NsSystemTime = 0;
+	INT64 vi_OutClockTime = 0;
+	INT64 vi_OutNsSystemTime = 0;
 
 	//Chama o método para obter a hora correlacionada
-	Hr = PonteiroTrabalho->GetCorrelatedTime(Param_ValorReservado, &ClockTime, &NsSystemTime);
+	Hr = PonteiroTrabalho->GetCorrelatedTime(Param_ValorReservado, &vi_OutClockTime, &vi_OutNsSystemTime);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -609,11 +599,8 @@ CarenResult CarenMFPresentationTimeSource::GetCorrelatedTime(UInt32 Param_ValorR
 	}
 
 	//Define os parametros de saida
-	Param_Out_ClockTime = ClockTime;
-	Param_NsSystemTime = NsSystemTime;
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	Param_Out_ClockTime = vi_OutClockTime;
+	Param_Out_NsSystemTime = vi_OutNsSystemTime;
 
 Done:;
 	//Retorna o resultado
@@ -633,12 +620,11 @@ CarenResult CarenMFPresentationTimeSource::GetProperties([Out] Estruturas::CA_MF
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas no método
-	MFCLOCK_PROPERTIES PropsRelogio;
-	CA_MFCLOCK_PROPERTIES^ PropriedadesRelogio;
 	Utilidades Util;
+	MFCLOCK_PROPERTIES vi_OutPropsClock = { };
 
 	//Chama o método para obter as propriedades do relogio.
-	Hr = PonteiroTrabalho->GetProperties(&PropsRelogio);
+	Hr = PonteiroTrabalho->GetProperties(&vi_OutPropsClock);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -655,22 +641,8 @@ CarenResult CarenMFPresentationTimeSource::GetProperties([Out] Estruturas::CA_MF
 		Sair;
 	}
 
-	//Cria a estrutura
-	PropriedadesRelogio = gcnew CA_MFCLOCK_PROPERTIES();
-
-	//Define os valores na propriedade gerenciada
-	PropriedadesRelogio->RL_CLOCK_FLAGS = PropsRelogio.dwClockFlags;
-	PropriedadesRelogio->RL_CORRELATION_RATE = PropsRelogio.qwCorrelationRate;
-	PropriedadesRelogio->RL_FREQUENCIA_CLOCK = PropsRelogio.qwClockFrequency;
-	PropriedadesRelogio->RL_GUID_RELOGIO = Util.ConverterGuidToString(PropsRelogio.guidClockId);
-	PropriedadesRelogio->RL_JITTER_CLOCK = PropsRelogio.dwClockJitter;
-	PropriedadesRelogio->RL_TOLERANCIA_CLOCK = PropsRelogio.dwClockTolerance;
-
-	//Define a estrutura no parametro de retorno.
-	Param_Out_PropriedadesRelogio = PropriedadesRelogio;
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	//Converte a estrutura nativa para a gerenciada e define no parametro de saida.
+	Param_Out_PropriedadesRelogio = Util.ConverterMFCLOCK_PROPERTIESUnamaged_ToManaged(&vi_OutPropsClock);
 
 Done:;
 	//Retorna o resultado
@@ -691,11 +663,10 @@ CarenResult CarenMFPresentationTimeSource::GetState(UInt32 Param_ValorReservado,
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis utilizadas pelo método
-	MFCLOCK_STATE StateRelogio;
-	CA_MFCLOCK_STATE EstadoRelogioRetorno;
+	MFCLOCK_STATE vi_OutStateClock;
 
 	//Chama o método para obter o estado do relogio.
-	Hr = PonteiroTrabalho->GetState(Param_ValorReservado, &StateRelogio);
+	Hr = PonteiroTrabalho->GetState(Param_ValorReservado, &vi_OutStateClock);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -712,35 +683,8 @@ CarenResult CarenMFPresentationTimeSource::GetState(UInt32 Param_ValorReservado,
 		Sair;
 	}
 
-	//Verifica o estado do relogio e define na variavel.
-	switch (StateRelogio)
-	{
-	case MFCLOCK_STATE_INVALID:
-		//Define o estado do relógio.
-		EstadoRelogioRetorno = CA_MFCLOCK_STATE::MFCLOCK_STATE_INVALID;
-		break;
-
-	case MFCLOCK_STATE_RUNNING:
-		//Define o estado do relógio.
-		EstadoRelogioRetorno = CA_MFCLOCK_STATE::MFCLOCK_STATE_RUNNING;
-		break;
-
-	case MFCLOCK_STATE_STOPPED:
-		//Define o estado do relógio.
-		EstadoRelogioRetorno = CA_MFCLOCK_STATE::MFCLOCK_STATE_STOPPED;
-		break;
-
-	case MFCLOCK_STATE_PAUSED:
-		//Define o estado do relógio.
-		EstadoRelogioRetorno = CA_MFCLOCK_STATE::MFCLOCK_STATE_PAUSED;
-		break;
-	}
-
-	//Define o estado no parametro de retorno.
-	Param_Out_EstadoRelogio = EstadoRelogioRetorno;
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+	//Define o estado do relogio no parametro de saida.
+	Param_Out_EstadoRelogio = static_cast<CA_MFCLOCK_STATE>(vi_OutStateClock);
 
 Done:;
 	//Retorna o resultado

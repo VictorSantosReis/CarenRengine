@@ -463,11 +463,10 @@ CarenResult CarenMFStreamDescriptor::GetMediaTypeHandler([Out] ICarenMFMediaType
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	IMFMediaTypeHandler* pHandlerMidia = NULL;
-	ICarenMFMediaTypeHandler^ InterfaceHandlerMidia = nullptr;
+	IMFMediaTypeHandler* vi_pOutMediaTypeHandler = Nulo;
 
 	//Chama o método para recuperar a handler
-	Hr = PonteiroTrabalho->GetMediaTypeHandler(&pHandlerMidia);
+	Hr = PonteiroTrabalho->GetMediaTypeHandler(&vi_pOutMediaTypeHandler);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -484,14 +483,11 @@ CarenResult CarenMFStreamDescriptor::GetMediaTypeHandler([Out] ICarenMFMediaType
 		Sair;
 	}
 
-	//Cria a interface que vai conter o ponteiro
-	InterfaceHandlerMidia = gcnew CarenMFMediaTypeHandler(false);
+	//Cria a interface que vai ser retornada.
+	Param_Out_TipoMidiaHandler = gcnew CarenMFMediaTypeHandler(false);
 
-	//Define o ponteiro de trabalho
-	InterfaceHandlerMidia->AdicionarPonteiro(pHandlerMidia);
-
-	//Define a interface criada no parametro de saida.
-	Param_Out_TipoMidiaHandler = InterfaceHandlerMidia;
+	//Define o ponteiro na interface de saida.
+	CarenSetPointerToICarenSafe(vi_pOutMediaTypeHandler, Param_Out_TipoMidiaHandler, true);
 
 Done:;
 	//Retorna o resultado.
@@ -511,10 +507,10 @@ CarenResult CarenMFStreamDescriptor::GetStreamIdentifier([Out] UInt32% Param_Out
 	ResultadoCOM Hr = E_FAIL;
 
 	//Variaveis a serem utilizadas.
-	DWORD IdentficadorFluxo = 0;
+	DWORD vi_OutStreamIdentifier = 0;
 
 	//Chama o método para recuperar o identificador do fluxo
-	Hr = PonteiroTrabalho->GetStreamIdentifier(&IdentficadorFluxo);
+	Hr = PonteiroTrabalho->GetStreamIdentifier(&vi_OutStreamIdentifier);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -532,7 +528,7 @@ CarenResult CarenMFStreamDescriptor::GetStreamIdentifier([Out] UInt32% Param_Out
 	}
 
 	//Define o Identificado no parametro de saida.
-	Param_Out_Identificador = IdentficadorFluxo;
+	Param_Out_Identificador = vi_OutStreamIdentifier;
 
 Done:;
 	//Retorna o resultado.

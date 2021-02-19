@@ -343,7 +343,7 @@ namespace CarenRengine
 			/// <summary>
 			/// Recupera o relógio subjacente que a fonte de tempo de apresentação usa para gerar seus tempos de relógio.
 			/// </summary>
-			/// <param name="Param_Out_Relogio">Recebe a interface ICarenMFClock que representa um Relógio. O chamador deve liberar a interface.</param>
+			/// <param name="Param_Out_Relogio">Recebe a interface ICarenMFClock que representa um Relógio. O chamador deve liberar a interface. O usuário é responsável por inicializar a interface antes de chamar este método.</param>
 			CarenResult GetUnderlyingClock(OutParam ICarenMFClock^% Param_Out_Relogio);
 		};
 
@@ -891,7 +891,7 @@ namespace CarenRengine
 		/// </summary>
 		[CategoryAttribute("MF Interface")]
 		[Guid("0EDC6D22-20F5-44D7-B6B9-EA8A2A321D49")]
-		public interface class ICarenMFMediaEvent : ICaren, ICarenMFAttributes
+		public interface class ICarenMFMediaEvent : ICarenMFAttributes
 		{
 			/// <summary>
 			/// Propriedade que define se a classe foi descartada.
@@ -1685,14 +1685,12 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_IdFluxo">Um Indice baseado em zero de um fluxo para a consulta. Desconsidere esse valor se o parâmetro (Param_Escritor)
 			/// for True.</param>
-			/// <param name="Param_ConsultarColetor">Define que o objeto de consulta é o Coletor de Mídia associado. Esse valor representa o: MF_SINK_WRITER_MEDIASINK</param>
 			/// <param name="Param_GuidServiço">O Guid para o (Identificador de Serviço). Se o valor for (NULO), o método chama (QueryInterface) para obter
 			/// interface solicitada.</param>
 			/// <param name="Param_GuidInterfaceSolicitada">O Guid para a interface solicitada.</param>
 			/// <param name="Param_Out_Interface">Recebe a interface solicitada. O usuário deve criar a interfaces antes de chamar este método.</param>
 			CarenResult GetServiceForStream(
 				UInt32 Param_IdFluxo,
-				Boolean Param_ConsultarColetor,
 				String^ Param_GuidServiço,
 				String^ Param_GuidInterfaceSolicitada,
 				ICaren^ Param_Out_Interface);

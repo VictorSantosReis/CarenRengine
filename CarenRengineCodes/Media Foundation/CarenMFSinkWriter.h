@@ -17,8 +17,8 @@ limitations under the License.
 
 #pragma once
 #include "../SDK_MediaFoundation.h"
-#include "CarenMFMediaType.h"
 #include "../SDK_Utilidades.h"
+#include "CarenMFMediaType.h"
 
 //Importa o namespace que contém as interfaces da Media Foundation.
 using namespace CarenRengine::MediaFoundation;
@@ -32,7 +32,7 @@ using namespace CarenRengine::SDKBase::Estruturas;
 using namespace CarenRengine::SDKUtilidades;
 
 /// <summary>
-/// (Concluido - Fase de Testes) - Classe responsável por enviar os dados de mídia dos (Coletores de Mídia) para um Arquivo ou Hardware. 
+/// Classe responsável por enviar os dados de mídia dos (Coletores de Mídia) para um Arquivo ou Hardware. 
 /// </summary>
 public ref class CarenMFSinkWriter : public ICarenMFSinkWriter
 {
@@ -122,7 +122,8 @@ public:
 	//A parti daqui vai conter os métodos das interfaces.//
 	///////////////////////////////////////////////////////
 
-		//Métodos da interface (ICaren)
+
+	//Métodos da interface (ICaren)
 public:
 	/// <summary>
 	/// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 
@@ -289,14 +290,12 @@ public:
 	/// </summary>
 	/// <param name="Param_IdFluxo">Um Indice baseado em zero de um fluxo para a consulta. Desconsidere esse valor se o parâmetro (Param_Escritor)
 	/// for True.</param>
-	/// <param name="Param_ConsultarColetor">Define que o objeto de consulta é o Coletor de Mídia associado. Esse valor representa o: MF_SINK_WRITER_MEDIASINK</param>
 	/// <param name="Param_GuidServiço">O Guid para o (Identificador de Serviço). Se o valor for (NULO), o método chama (QueryInterface) para obter
 	/// interface solicitada.</param>
 	/// <param name="Param_GuidInterfaceSolicitada">O Guid para a interface solicitada.</param>
 	/// <param name="Param_Out_Interface">Recebe a interface solicitada.</param>
 	virtual CarenResult GetServiceForStream(
 		UInt32 Param_IdFluxo,
-		Boolean Param_ConsultarColetor,
 		String^ Param_GuidServiço,
 		String^ Param_GuidInterfaceSolicitada,
 		ICaren^ Param_Out_Interface);

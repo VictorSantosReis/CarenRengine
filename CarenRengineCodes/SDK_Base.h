@@ -1049,33 +1049,7 @@ namespace CarenRengine
 				/// Código FOURCC: WAVE_FORMAT_DTS (0x0008)
 				/// </summary>
 				literal String^ MFAudioFormat_ADTS = "{00001600-0000-0010-8000-00AA00389B71}";
-			};
-
-			/// <summary>
-			/// Contém todos os GUIDs para os formatos principais suportados por essa biblioteca.
-			/// </summary>
-			public value struct GUIDs_MFAttributes_MAJOR_TYPES
-			{
-				/// <summary>
-				/// Fluxo de Áudio.
-				/// </summary>
-				literal String^ MFMediaType_Audio = "{73647561-0000-0010-8000-00AA00389B71}";
-
-				/// <summary>
-				/// Fluxo de Vídeo.
-				/// </summary>
-				literal String^ MFMediaType_Video = "{73646976-0000-0010-8000-00AA00389B71}";
-
-				/// <summary>
-				/// Fluxo de Image.
-				/// </summary>
-				literal String^ MFMediaType_Image = "{72178C23-E45B-11D5-BC2A-00B0D0F3F4AB}";
-
-				/// <summary>
-				/// Fluxo multiplexado ou fluxo elementar.
-				/// </summary>
-				literal String^ MFMediaType_Stream = "{e436eb83-524f-11ce-9f53-0020af0ba770}";
-			};
+			};			
 
 			/// <summary>
 			/// Contém todos os GUIDs que definem categorias para Transformações da Media Foundation (MFTs). Essas categorias são usadas para registrar e enumerar MFTs.
@@ -1139,6 +1113,32 @@ namespace CarenRengine
 				literal String^ MFT_CATEGORY_VIDEO_PROCESSOR = "{302EA3FC-AA5F-47f9-9F7A-C2188BB163021}";
 			};
 			
+			/// <summary>
+			/// Contém todos os GUIDs para os formatos principais suportados por essa biblioteca.
+			/// </summary>
+			public value struct GUIDs_MFAttributes_MAJOR_TYPES
+			{
+				/// <summary>
+				/// Fluxo de Áudio.
+				/// </summary>
+				literal String^ MFMediaType_Audio = "{73647561-0000-0010-8000-00AA00389B71}";
+
+				/// <summary>
+				/// Fluxo de Vídeo.
+				/// </summary>
+				literal String^ MFMediaType_Video = "{73646976-0000-0010-8000-00AA00389B71}";
+
+				/// <summary>
+				/// Fluxo de Image.
+				/// </summary>
+				literal String^ MFMediaType_Image = "{72178C23-E45B-11D5-BC2A-00B0D0F3F4AB}";
+
+				/// <summary>
+				/// Fluxo multiplexado ou fluxo elementar.
+				/// </summary>
+				literal String^ MFMediaType_Stream = "{e436eb83-524f-11ce-9f53-0020af0ba770}";
+			};
+
 			/// <summary>
 			/// Contém todos os GUIDs utilizados pela interface IMFSourceReader.
 			/// </summary>
@@ -1927,7 +1927,7 @@ namespace CarenRengine
 			/// <summary>
 			/// Contém todos os GUIDs que podem ser utilizados pela api da Media Engine.
 			/// </summary>
-			public value struct GUIDs_MFAtributes_MediaEngine
+			public value struct GUIDs_MFAttributes_MediaEngine
 			{
 				/// <summary>
 				/// ‎(UINT32) - ‎Especifica a categoria do fluxo de áudio.‎
@@ -2018,7 +2018,7 @@ namespace CarenRengine
 			/// <summary>
 			/// Contém todos os GUIDs que podem ser utilizados pela api da Media Session.
 			/// </summary>
-			public value struct GUIDs_MFAtributes_MediaSession
+			public value struct GUIDs_MFAttributes_MediaSession
 			{
 				/// <summary>
 				/// Fornece uma interface de retorno de chamada para que o aplicativo receba um objeto ativador de conteúdo da sessão PMP.
@@ -2054,7 +2054,7 @@ namespace CarenRengine
 			/// <summary>
 			/// Contém todos os GUIDs que podem ser utilizados pela api de Topologia.
 			/// </summary>
-			public value struct GUIDs_MFAtributes_Topology
+			public value struct GUIDs_MFAttributes_Topology
 			{
 				/// <summary>
 				/// Especifica se o carregador de topologia habilita o Microsoft DirectX Video Acceleration (DXVA) na topologia.
@@ -2125,6 +2125,152 @@ namespace CarenRengine
 				/// Contém um ponteiro IMFFieldOfUseMFTUnlock, que pode ser usado para desbloquear o MFT.
 				/// </summary>
 				literal String^ MFT_FIELDOFUSE_UNLOCK_Attribute = "{8ec2e9fd-9148-410d-831e-702439461a8e}";
+			};
+
+			/// <summary>
+			/// Contém todos os GUIDs que podem ser utilizados pela interface de nós de topologia.
+			/// </summary>
+			public value struct GUIDs_MFAttributes_TopologyNode
+			{
+				/// <summary>
+				/// 
+				/// </summary>
+				literal String^ MF_TOPONODE_CONNECT_METHOD = "{494bbcf7-b031-4e38-97c4-d5422dd618dc}";
+
+				/// <summary>
+				/// 
+				/// </summary>
+				literal String^ MF_TOPONODE_DECODER = "{494bbd02-b031-4e38-97c4-d5422dd618dc}";
+
+				/// <summary>
+				/// 
+				/// </summary>
+				literal String^ MF_TOPONODE_DECRYPTOR = "{494bbcfa-b031-4e38-97c4-d5422dd618dc}";
+
+				/// <summary>
+				/// 
+				/// </summary>
+				literal String^ MF_TOPONODE_DISCARDABLE = "{494bbcfb-b031-4e38-97c4-d5422dd618dc}";
+
+				/// <summary>
+				/// 
+				/// </summary>
+				literal String^ MF_TOPONODE_ERROR_MAJORTYPE = "{494bbcfd-b031-4e38-97c4-d5422dd618dc}";
+
+				/// <summary>
+				/// 
+				/// </summary>
+				literal String^ MF_TOPONODE_ERROR_SUBTYPE = "{494bbcfe-b031-4e38-97c4-d5422dd618dc}";
+
+				/// <summary>
+				/// 
+				/// </summary>
+				literal String^ MF_TOPONODE_ERRORCODE = "{494bbcee-b031-4e38-97c4-d5422dd618dc}";
+
+				/// <summary>
+				/// 
+				/// </summary>
+				literal String^ MF_TOPONODE_LOCKED = "{494bbcf7-b031-4e38-97c4-d5422dd618dc}";
+
+				/// <summary>
+				/// 
+				/// </summary>
+				literal String^ MF_TOPONODE_MARKIN_HERE = "{494bbd00-b031-4e38-97c4-d5422dd618dc}";
+
+				/// <summary>
+				/// 
+				/// </summary>
+				literal String^ MF_TOPONODE_MARKOUT_HERE = "{494bbd01-b031-4e38-97c4-d5422dd618dc}";
+
+				/// <summary>
+				/// 
+				/// </summary>
+				literal String^ MF_TOPONODE_MEDIASTART = "{835c58ea-e075-4bc7-bcba-4de000df9ae6}";
+
+				/// <summary>
+				/// 
+				/// </summary>
+				literal String^ MF_TOPONODE_MEDIASTOP = "{835c58eb-e075-4bc7-bcba-4de000df9ae6}";
+
+				/// <summary>
+				/// 
+				/// </summary>
+				literal String^ MF_TOPONODE_PRESENTATION_DESCRIPTOR = "{835c58ed-e075-4bc7-bcba-4de000df9ae6}";
+
+				/// <summary>
+				/// 
+				/// </summary>
+				literal String^ MF_TOPONODE_SEQUENCE_ELEMENTID = "{835c58ef-e075-4bc7-bcba-4de000df9ae6}";
+
+				/// <summary>
+				/// 
+				/// </summary>
+				literal String^ MF_TOPONODE_SOURCE = "{835c58ec-e075-4bc7-bcba-4de000df9ae6}";
+
+				/// <summary>
+				/// 
+				/// </summary>
+				literal String^ MF_TOPONODE_STREAM_DESCRIPTOR = "{835c58ee-e075-4bc7-bcba-4de000df9ae6}";
+
+				/// <summary>
+				/// 
+				/// </summary>
+				literal String^ MF_TOPONODE_WORKQUEUE_ID = "{494bbcf8-b031-4e38-97c4-d5422dd618dc}";
+
+				/// <summary>
+				/// 
+				/// </summary>
+				literal String^ MF_TOPONODE_WORKQUEUE_MMCSS_CLASS = "{494bbcf9-b031-4e38-97c4-d5422dd618dc}";
+
+				/// <summary>
+				/// 
+				/// </summary>
+				literal String^ MF_TOPONODE_WORKQUEUE_MMCSS_TASKID = "{494bbcff-b031-4e38-97c4-d5422dd618dc}";
+
+				/// <summary>
+				/// 
+				/// </summary>
+				literal String^ MF_TOPONODE_D3DAWARE = "{494bbced-b031-4e38-97c4-d5422dd618dc}";
+
+				/// <summary>
+				/// 
+				/// </summary>
+				literal String^ MF_TOPONODE_DRAIN = "{494bbce9-b031-4e38-97c4-d5422dd618dc}";
+
+				/// <summary>
+				/// 
+				/// </summary>
+				literal String^ MF_TOPONODE_FLUSH = "{494bbce8-b031-4e38-97c4-d5422dd618dc}";
+
+				/// <summary>
+				/// 
+				/// </summary>
+				literal String^ MF_TOPONODE_TRANSFORM_OBJECTID = "{88dcc0c9-293e-4e8b-9aeb-0ad64cc016b0}";
+
+				/// <summary>
+				/// 
+				/// </summary>
+				literal String^ MF_TOPONODE_DISABLE_PREROLL = "{14932f9e-9087-4bb4-8412-5167145cbe04}";
+
+				/// <summary>
+				/// 
+				/// </summary>
+				literal String^ MF_TOPONODE_NOSHUTDOWN_ON_REMOVE = "{14932f9c-9087-4bb4-8412-5167145cbe04}";
+
+				/// <summary>
+				/// 
+				/// </summary>
+				literal String^ MF_TOPONODE_RATELESS = "{14932f9d-9087-4bb4-8412-5167145cbe04}";
+
+				/// <summary>
+				/// 
+				/// </summary>
+				literal String^ MF_TOPONODE_STREAMID = "{14932f9b-9087-4bb4-8412-5167145cbe04}";
+
+				/// <summary>
+				/// 
+				/// </summary>
+				literal String^ MF_TOPONODE_PRIMARYOUTPUT = "{6304ef99-16b2-4ebe-9d67-e4c539b3a259}";
 			};
 
 			/// <summary>

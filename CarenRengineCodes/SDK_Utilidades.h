@@ -1604,43 +1604,6 @@ namespace CarenRengine
 			}
 
 
-			//Converte uma estrutura gerenciada(CA_MFTOPONODE_ATTRIBUTE_UPDATE) para sua correspondencia não gerenciada(MFTOPONODE_ATTRIBUTE_UPDATE).
-			MFTOPONODE_ATTRIBUTE_UPDATE* ConverterTopoNodeAttributesToUnamaged(CA_MFTOPONODE_ATTRIBUTE_UPDATE^ Param_ManagedStruct)
-			{
-				//Variavel que vai ser retornada.
-				MFTOPONODE_ATTRIBUTE_UPDATE* pConvertedStruct = CriarEstrutura<MFTOPONODE_ATTRIBUTE_UPDATE>();
-
-				//Define os valores
-				pConvertedStruct->attrType = static_cast<MF_ATTRIBUTE_TYPE>(Param_ManagedStruct->TipoAtributo);
-				pConvertedStruct->d = Param_ManagedStruct->d;
-				pConvertedStruct->guidAttributeKey = CreateGuidFromString(Param_ManagedStruct->GUID);
-				pConvertedStruct->NodeId = Param_ManagedStruct->NodeId;
-				pConvertedStruct->u32 = Param_ManagedStruct->u32;
-				pConvertedStruct->u64 = Param_ManagedStruct->u64;
-
-				//Retorna a estrutura.
-				return pConvertedStruct;
-			}
-
-			//Converte uma estrutura não gerenciada(MFTOPONODE_ATTRIBUTE_UPDATE) para sua correspondencia gerenciada(CA_MFTOPONODE_ATTRIBUTE_UPDATE).
-			CA_MFTOPONODE_ATTRIBUTE_UPDATE^ ConverterTopoNodeAttributesToManaged(MFTOPONODE_ATTRIBUTE_UPDATE* Param_EstruturaNativa)
-			{
-				//Variavel que vai ser retornada.
-				CA_MFTOPONODE_ATTRIBUTE_UPDATE^ EstruturaConvertida = gcnew CA_MFTOPONODE_ATTRIBUTE_UPDATE();
-
-				//Define os valores
-				EstruturaConvertida->TipoAtributo = static_cast<SDKBase::Enumeracoes::CA_MF_ATTRIBUTE_TYPE>(Param_EstruturaNativa->attrType);
-				EstruturaConvertida->GUID = ConverterGuidToString(Param_EstruturaNativa->guidAttributeKey);
-				EstruturaConvertida->NodeId = Param_EstruturaNativa->NodeId;
-				EstruturaConvertida->d = Param_EstruturaNativa->d;
-				EstruturaConvertida->u32 = Param_EstruturaNativa->u32;
-				EstruturaConvertida->u64 = Param_EstruturaNativa->u64;
-
-				//Retorna a estrutura.
-				return EstruturaConvertida;
-			}
-
-
 			//Converte uma estrutura gerenciada(CA_MF_SINK_WRITER_STATISTICS) para sua correspondencia não gerenciada(MF_SINK_WRITER_STATISTICS).
 			MF_SINK_WRITER_STATISTICS* ConverterMF_SINK_WRITER_STATISTICSManagedToUnamaged(CA_MF_SINK_WRITER_STATISTICS^ Param_Estrutura)
 			{

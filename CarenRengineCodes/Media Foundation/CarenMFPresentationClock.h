@@ -18,8 +18,8 @@ limitations under the License.
 #pragma once
 #include "../SDK_MediaFoundation.h"
 #include "../Caren/Caren.h"
-#include "CarenMFPresentationTimeSource.h"
 #include "../SDK_Utilidades.h"
+#include "CarenMFPresentationTimeSource.h"
 
 //Importa o namespace que contém as interfaces da Media Foundation.
 using namespace CarenRengine::MediaFoundation;
@@ -34,7 +34,7 @@ using namespace CarenRengine::SDKUtilidades;
 
 
 /// <summary>
-/// (Concluido - Fase de testes) - Classe responsável por representar uma relógio de apresentação que é usado para agendar quando as amostras de mídia devem ser processadas e para sincronizar vários fluxos. 
+/// Classe responsável por representar uma relógio de apresentação que é usado para agendar quando as amostras de mídia devem ser processadas e para sincronizar vários fluxos. 
 /// </summary>
 public ref class CarenMFPresentationClock : public ICarenMFPresentationClock
 {
@@ -242,9 +242,6 @@ public:
 	virtual void Finalizar();
 
 
-
-
-
 	//Métodos da interface ICarenMFPresentationClock
 public:
 	/// <summary>
@@ -298,8 +295,6 @@ public:
 	/// (GetTime) método do relógio retorna zero.
 	/// </summary>
 	virtual CarenResult Stop();
-
-
 
 
 	//Métodos da interface (ICarenMFClock)

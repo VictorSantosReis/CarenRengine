@@ -32,7 +32,7 @@ using namespace CarenRengine::SDKBase::Estruturas;
 using namespace CarenRengine::SDKUtilidades;
 
 /// <summary>
-/// (Concluido - Fase de Testes) - Classe responsável por fornecer informações de tempo a partir de um relógio na Microsoft Media Foundation.
+/// Classe responsável por fornecer informações de tempo a partir de um relógio na Microsoft Media Foundation.
 /// </summary>
 public ref class CarenMFClock : public ICarenMFClock
 {
@@ -102,10 +102,10 @@ public:
 	}
 
 
-
 	///////////////////////////////////////////////////////
 	//A parti daqui vai conter os métodos das interfaces.//
 	///////////////////////////////////////////////////////
+
 
 	//Métodos da interface (ICaren)
 public:

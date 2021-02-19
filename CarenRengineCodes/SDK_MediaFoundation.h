@@ -343,7 +343,7 @@ namespace CarenRengine
 			/// <summary>
 			/// Recupera o relógio subjacente que a fonte de tempo de apresentação usa para gerar seus tempos de relógio.
 			/// </summary>
-			/// <param name="Param_Out_Relogio">Recebe a interface ICarenMFClock que representa um Relógio. O chamador deve liberar a interface.</param>
+			/// <param name="Param_Out_Relogio">Recebe a interface ICarenMFClock que representa um Relógio. O chamador deve liberar a interface. O usuário é responsável por inicializar a interface antes de chamar este método.</param>
 			CarenResult GetUnderlyingClock(OutParam ICarenMFClock^% Param_Out_Relogio);
 		};
 

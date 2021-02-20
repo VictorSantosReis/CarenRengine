@@ -693,7 +693,10 @@ CarenResult CarenMFSinkWriter::GetServiceForStream(
 
 	//Verifica se  forneceu o guid de serviço e cria
 	if (StringObjetoValido(Param_GuidServiço))
+	{
+		//Cria o GUID.
 		CarenCreateGuidFromStringSafe(Param_GuidServiço, vi_GuidService);
+	}
 
 	//Converte o GUID da interface solicitada.
 	CarenCreateGuidFromStringSafe(Param_GuidInterfaceSolicitada, vi_GuidInterface);

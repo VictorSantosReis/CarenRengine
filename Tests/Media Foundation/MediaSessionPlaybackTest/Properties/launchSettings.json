@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MediaSessionPlaybackTest": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

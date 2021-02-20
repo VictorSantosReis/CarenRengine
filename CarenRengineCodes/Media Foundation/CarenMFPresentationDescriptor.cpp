@@ -756,18 +756,6 @@ CarenResult CarenMFPresentationDescriptor::CompareItem(String^ Param_GuidChave, 
 	//Chama o método para tentar converter a CA_PROPVARIANT gerenciada para a nativa.
 	CarenConvertPropvariantToNativeSafe(Param_Valor, vi_PropVar);
 
-	//Verifica se não ocorreu um erro na conversão.
-	if (!ObjetoValido(vi_PropVar))
-	{
-		//Falhou ao converter a propvariant.
-
-		//Define falha.
-		Resultado.AdicionarCodigo(ResultCode::ER_CONVERSAO_PROPVARIANT, false);
-
-		//Sai do método
-		Sair;
-	}
-
 	//Chama o método para compar o item.
 	Hr = PonteiroTrabalho->CompareItem(
 		const_cast<GUID&>(vi_GuidChave),

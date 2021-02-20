@@ -898,9 +898,12 @@ CarenResult CarenMFMediaSource::QueueEvent(
 	HRESULT vi_Hresult = static_cast<HRESULT>(Param_HResultCode);
 	PROPVARIANT* vi_Propvar = Nulo; //Pode ser NULO.
 
-	//Converte a string para o GUID se fornecido.
+	 //Converte a string para o GUID se fornecido.
 	if (StringObjetoValido(Param_GuidExtendedType))
-		CarenCreateGuidFromStringSafe(Param_GuidExtendedType, vi_GuidExtendEvent); //Converte o GUID
+	{
+		//Cria o GUID.
+		CarenCreateGuidFromStringSafe(Param_GuidExtendedType, vi_GuidExtendEvent);
+	}
 
 	//Verifica se forneceu uma estrutura PROPVARIANT com o valor do evento.
 	if (ObjetoGerenciadoValido(Param_Dados))

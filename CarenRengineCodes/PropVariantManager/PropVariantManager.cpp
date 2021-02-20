@@ -141,9 +141,17 @@ PVOID PropVariantManager::ConverterPropVariantManaged_ToUnmanaged(CA_PROPVARIANT
 	switch (vi_Vt)
 	{
 
+		//VARIANT VAZIA - EMPTY
+
+		//(EMPTY) - Variante não possui dados.
+	case VT_EMPTY:
+	{
+		//deixa continuar.
+	}
+	break;
+
+
 		//TIPOS SIMPLES. 
-
-
 
 		//(iVal) - Representa um valor inteiro assinado de 2 bytes. (Int16)
 	case VT_I2:
@@ -1639,6 +1647,15 @@ CA_PROPVARIANT^ PropVariantManager::ConverterPropVariantUnmanaged_ToManaged(PROP
 	//Abre um swith para verificar o tipo dos dados na variante.
 	switch (vi_Vt)
 	{
+		
+		//VARIANT VAZIA - EMPTY
+
+		//(EMPTY) - Variante não possui dados.
+	case VT_EMPTY:
+	{
+		//deixa continuar.
+	}
+	break;
 
 		//TIPOS SIMPLES. 
 

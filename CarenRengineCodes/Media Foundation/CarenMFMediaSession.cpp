@@ -819,7 +819,10 @@ Done:;
 
 	 //Verifica se forneceu um guid e converte
 	 if (StringObjetoValido(Param_GuidFormatoTempo))
+	 {
+		 //Cria o GUID.
 		 CarenCreateGuidFromStringSafe(Param_GuidFormatoTempo, vi_GuidTimeFormat);
+	 }
 
 	 //Converte a CA_PROPVARIANT para sua representação nativa.
 	 CarenConvertPropvariantToNativeSafe(Param_PosicaoInicio, vi_Propvar);
@@ -1064,7 +1067,10 @@ Done:;
 
 	 //Converte a string para o GUID se fornecido.
 	 if (StringObjetoValido(Param_GuidExtendedType))
-		 CarenCreateGuidFromStringSafe(Param_GuidExtendedType, vi_GuidExtendEvent); //Converte o GUID
+	 {
+		 //Cria o GUID.
+		 CarenCreateGuidFromStringSafe(Param_GuidExtendedType, vi_GuidExtendEvent);
+	 }
 
 	 //Verifica se forneceu uma estrutura PROPVARIANT com o valor do evento.
 	 if (ObjetoGerenciadoValido(Param_Dados))

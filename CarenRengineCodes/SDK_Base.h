@@ -1140,6 +1140,92 @@ namespace CarenRengine
 			};
 
 			/// <summary>
+			/// Contém todos os GUIDs utilizados pelas interfaces de eventos da media foundation.
+			/// </summary>
+			public value struct GUIDs_MFAttributes_Events
+			{
+				/// <summary>
+				/// Quando uma fonte de mídia solicita uma nova taxa de reprodução, especifica se a fonte também solicita o afinamento.
+				/// </summary>
+				literal String^ MF_EVENT_DO_THINNING = "{321EA6FB-DAD9-46e4-B31D-D2EAE7090E30}";
+
+				/// <summary>
+				/// Identifica o nó de topologia para um Stream Sink.
+				/// </summary>
+				literal String^ MF_EVENT_OUTPUT_NODE = "{830f1a8b-c060-46dd-a801-1c95dec9b107}";
+
+				/// <summary>
+				/// Deslocamento entre o tempo de apresentação e os carimbos de hora da fonte de mídia.
+				/// </summary>
+				literal String^ MF_EVENT_PRESENTATION_TIME_OFFSET = "{5AD914D1-9B45-4a8d-A2C0-81D1E50BFB07}";
+
+				/// <summary>
+				/// Tempo de apresentação de uma amostra que foi renderizada durante a limpeza.
+				/// </summary>
+				literal String^ MF_EVENT_SCRUBSAMPLE_TIME = "{9AC712B3-DCB8-44d5-8D0C-37455A2782E3}";
+
+				/// <summary>
+				/// Contém bandeiras que definem os recursos da Sessão de Mídia, com base na apresentação atual.
+				/// </summary>
+				literal String^ MF_EVENT_SESSIONCAPS = "{7E5EBCD0-11B8-4abe-AFAD-10F6599A7F42}";
+
+				/// <summary>
+				/// Contém bandeiras que indicam quais recursos foram alterados na Sessão de Mídia, com base na apresentação atual.
+				/// </summary>
+				literal String^ MF_EVENT_SESSIONCAPS_DELTA = "{7E5EBCD1-11B8-4abe-AFAD-10F6599A7F42}";
+
+				/// <summary>
+				/// Contém o tempo de início quando uma fonte de mídia é reiniciada a partir de sua posição atual.
+				/// </summary>
+				literal String^ MF_EVENT_SOURCE_ACTUAL_START = "{a8cc55a9-6b31-419f-845d-ffb351a2434b}";
+
+				/// <summary>
+				/// Especifica as características atuais da fonte de mídia.
+				/// </summary>
+				literal String^ MF_EVENT_SOURCE_CHARACTERISTICS = "{47DB8490-8B22-4f52-AFDA-9CE1B2D3CFA8}";
+
+				/// <summary>
+				/// Especifica as características anteriores da fonte de mídia.
+				/// </summary>
+				literal String^ MF_EVENT_SOURCE_CHARACTERISTICS_OLD = "{47DB8491-8B22-4f52-AFDA-9CE1B2D3CFA8}";
+
+				/// <summary>
+				/// Especifica se a topologia do segmento atual está vazia.
+				/// </summary>
+				literal String^ MF_EVENT_SOURCE_FAKE_START = "{a8cc55a7-6b31-419f-845d-ffb351a2434b}";
+
+				/// <summary>
+				/// Especifica o tempo de início para uma topologia de segmento.
+				/// </summary>
+				literal String^ MF_EVENT_SOURCE_PROJECTSTART = "{a8cc55a8-6b31-419f-845d-ffb351a2434b}";
+
+				/// <summary>
+				/// Especifica se a fonte do sequenciador cancelou uma topologia.
+				/// </summary>
+				literal String^ MF_EVENT_SOURCE_TOPOLOGY_CANCELED = "{}";
+
+				/// <summary>
+				/// O horário de início da apresentação, em unidades de 100 nanossegundos, medido pelo relógio de apresentação.
+				/// </summary>
+				literal String^ MF_EVENT_START_PRESENTATION_TIME = "{DB62F650-9A5E-4704-ACF3-563BC6A73364}";
+
+				/// <summary>
+				/// O tempo de apresentação em que a mídia afunda renderá a primeira amostra da nova topologia.
+				/// </summary>
+				literal String^ MF_EVENT_START_PRESENTATION_TIME_AT_OUTPUT = "{5AD914D2-9B45-4a8d-A2C0-81D1E50BFB07}";
+
+				/// <summary>
+				/// Especifica o status de uma topologia durante a reprodução.
+				/// </summary>
+				literal String^ MF_EVENT_TOPOLOGY_STATUS = "{30C5018D-9A53-454b-AD9E-6D5F8FA7C43B}";
+
+				/// <summary>
+				/// O momento aproximado em que a Media Session levantou um evento.
+				/// </summary>
+				literal String^ MF_SESSION_APPROX_EVENT_OCCURRENCE_TIME = "{190e852f-6238-42d1-b5af-69ea338ef850}";
+			};
+
+			/// <summary>
 			/// Contém todos os GUIDs utilizados pela interface IMFSourceReader.
 			/// </summary>
 			public value struct GUIDs_MFAttributes_SourceReader
@@ -1203,6 +1289,42 @@ namespace CarenRengine
 				/// Contém propriedades de configuração para a fonte de mídia.
 				/// </summary>
 				literal String^ MF_SOURCE_READER_MEDIASOURCE_CONFIG = "{9085ABEB-0354-48F9-ABB5-200DF838C68E}";
+			};
+
+			/// <summary>
+			///  Contém todos os GUIDs utilizados pelas api de manipulação de fluxos de bytes da media foundation.
+			/// </summary>
+			public value struct GUIDs_MFAttributes_ByteStream
+			{
+				/// <summary>
+				/// Especifica o tipo MIME de um fluxo de byte.
+				/// </summary>
+				literal String^ MF_BYTESTREAM_CONTENT_TYPE = "{fc358289-3cb6-460c-a424-b6681260375a}";
+
+				/// <summary>
+				/// Especifica a duração de um fluxo byte, em unidades de 100 nanossegundos.
+				/// </summary>
+				literal String^ MF_BYTESTREAM_DURATION = "{fc35828a-3cb6-460c-a424-b6681260375a}";
+
+				/// <summary>
+				/// Especifica a URL de um arquivo IFO associado.
+				/// </summary>
+				literal String^ MF_BYTESTREAM_IFO_FILE_URI = "{fc35828c-3cb6-460c-a424-b6681260375a}";
+
+				/// <summary>
+				/// Especifica quando um fluxo de byte foi modificado pela última vez.
+				/// </summary>
+				literal String^ MF_BYTESTREAM_LAST_MODIFIED_TIME = "{fc35828b-3cb6-460c-a424-b6681260375a}";
+
+				/// <summary>
+				/// Especifica a URL original para um fluxo byte.
+				/// </summary>
+				literal String^ MF_BYTESTREAM_ORIGIN_NAME = "{fc358288-3cb6-460c-a424-b6681260375a}";
+
+				/// <summary>
+				/// Especifica se um manipulador byte-stream pode usar um fluxo de byte que é aberto para escrever por outro segmento
+				/// </summary>
+				literal String^ MF_BYTESTREAMHANDLER_ACCEPTS_SHARE_WRITE = "{a6e1f733-3001-4915-8150-1558a2180ec8}";
 			};
 
 			/// <summary>
@@ -1728,59 +1850,150 @@ namespace CarenRengine
 			};
 
 			/// <summary>
-			/// (NAO DEFINIDO) - Contém todos os GUIDs que podem ser utilizados pela api de captura de dispositivos.
+			/// Contém todos os GUIDs que podem ser utilizados pela api de captura de dispositivos.
 			/// </summary>
 			public value struct GUIDs_MFAttributes_CaptureDevice
 			{
 				/// <summary>
 				/// O nome de exibição do dispositivo.
 				/// </summary>
-				literal String^ MF_DEVSOURCE_ATTRIBUTE_FRIENDLY_NAME = "{}";
+				literal String^ MF_DEVSOURCE_ATTRIBUTE_FRIENDLY_NAME = "{60d0e559-52f8-4fa2-bbce-acdb34a8ec01}";
 
 				/// <summary>
 				/// O formato de saída do dispositivo.
 				/// </summary>
-				literal String^ MF_DEVSOURCE_ATTRIBUTE_MEDIA_TYPE = "{}";
+				literal String^ MF_DEVSOURCE_ATTRIBUTE_MEDIA_TYPE = "{56a819ca-0c78-4de4-a0a7-3ddaba0f24d4}";
 
 				/// <summary>
 				/// O tipo de dispositivo, como captura de áudio ou captura de vídeo.
 				/// </summary>
-				literal String^ MF_DEVSOURCE_ATTRIBUTE_SOURCE_TYPE = "{}";
+				literal String^ MF_DEVSOURCE_ATTRIBUTE_SOURCE_TYPE = "{c60ac5fe-252a-478f-a0ef-bc8fa5f7cad3}";
 
 				/// <summary>
 				/// O ID de ponto final para um dispositivo de captura de áudio.
 				/// </summary>
-				literal String^ MF_DEVSOURCE_ATTRIBUTE_SOURCE_TYPE_AUDCAP_ENDPOINT_ID = "{}";
+				literal String^ MF_DEVSOURCE_ATTRIBUTE_SOURCE_TYPE_AUDCAP_ENDPOINT_ID = "{30da9258-feb9-47a7-a453-763a7a8e1c5f}";
 
 				/// <summary>
 				/// A função do dispositivo para um dispositivo de captura de áudio.
 				/// </summary>
-				literal String^ MF_DEVSOURCE_ATTRIBUTE_SOURCE_TYPE_AUDCAP_ROLE = "{}";
+				literal String^ MF_DEVSOURCE_ATTRIBUTE_SOURCE_TYPE_AUDCAP_ROLE = "{bc9d118e-8c67-4a18-85d4-12d300400552}";
 
 				/// <summary>
 				/// A categoria de dispositivo para um dispositivo de vídeo.
 				/// </summary>
-				literal String^ MF_DEVSOURCE_ATTRIBUTE_SOURCE_TYPE_VIDCAP_CATEGORY = "{}";
+				literal String^ MF_DEVSOURCE_ATTRIBUTE_SOURCE_TYPE_VIDCAP_CATEGORY = "{77f0ae69-c3bd-4509-941d-467e4d24899e}";
 
 				/// <summary>
 				/// Especifica se uma fonte de captura de vídeo é um dispositivo de hardware ou um dispositivo de software.
 				/// </summary>
-				literal String^ MF_DEVSOURCE_ATTRIBUTE_SOURCE_TYPE_VIDCAP_HW_SOURCE = "{}";
+				literal String^ MF_DEVSOURCE_ATTRIBUTE_SOURCE_TYPE_VIDCAP_HW_SOURCE = "{de7046ba-54d6-4487-a2a4-ec7c0d1bd163}";
 
 				/// <summary>
 				/// Especifica o número máximo de frames que a fonte de captura de vídeo armazenará em buffer.
 				/// </summary>
-				literal String^ MF_DEVSOURCE_ATTRIBUTE_SOURCE_TYPE_VIDCAP_MAX_BUFFERS = "{}";
+				literal String^ MF_DEVSOURCE_ATTRIBUTE_SOURCE_TYPE_VIDCAP_MAX_BUFFERS = "{7dd9b730-4f2d-41d5-8f95-0cc9a912ba26}";
 
 				/// <summary>
 				/// O link simbólico para um driver de captura de vídeo.
 				/// </summary>
-				literal String^ MF_DEVSOURCE_ATTRIBUTE_SOURCE_TYPE_VIDCAP_SYMBOLIC_LINK = "{}";
+				literal String^ MF_DEVSOURCE_ATTRIBUTE_SOURCE_TYPE_VIDCAP_SYMBOLIC_LINK = "{58f0aad8-22bf-4f8a-bb3d-d2c4978c6e2f}";
 
 				/// <summary>
 				/// ‎Especifica se a fonte do dispositivo usa o tempo do sistema para carimbos de hora.‎
 				/// </summary>
 				literal String^ MFT_HW_TIMESTAMP_WITH_QPC_Attribute = "{8d030fb8-cc43-4258-a22e-9210bef89be4}";
+			};
+
+			/// <summary>
+			/// Contém todos os GUIDs que podem ser utilizados pela engine de captura.
+			/// </summary>
+			public value struct GUIDs_MFAttributes_CaptureEngine
+			{
+				/// <summary>
+				/// Sinais de que a captura de vídeo está sendo bloqueada pelo motorista.
+				/// </summary>
+				literal String^ MF_CAPTURE_ENGINE_CAMERA_STREAM_BLOCKED = "{a4209417-8d39-46f3-b759-5912528f4207}";
+
+				/// <summary>
+				/// Sinais de que a captura de vídeo é restaurada após ser bloqueada.
+				/// </summary>
+				literal String^ MF_CAPTURE_ENGINE_CAMERA_STREAM_UNBLOCKED = "{9be9eef0-cdaf-4717-8564-834aae66415c}";
+
+				/// <summary>
+				/// Define um ponteiro para o Gerenciador de Dispositivos DXGI no motor de captura.
+				/// </summary>
+				literal String^ MF_CAPTURE_ENGINE_D3D_MANAGER = "{76e25e7b-d595-4283-962c-c594afd78ddf}";
+
+				/// <summary>
+				/// Permite que o mecanismo de captura use um decodificador que tenha restrições de campo de uso.
+				/// </summary>
+				literal String^ MF_CAPTURE_ENGINE_DECODER_MFT_FIELDOFUSE_UNLOCK_ATTRIBUTE = "{2b8ad2e8-7acb-4321-a606-325c4249f4fc}";
+
+				/// <summary>
+				/// Especifica se o mecanismo de captura usa DXVA (DirectX Video Acceleration, aceleração de vídeo) para decodificação de vídeo.
+				/// </summary>
+				literal String^ MF_CAPTURE_ENGINE_DISABLE_DXVA = "{f9818862-179d-433f-a32f-74cbcf74466d}";
+
+				/// <summary>
+				/// Desativa o uso de transformações baseadas em hardware media foundation (MFTs) no mecanismo de captura.
+				/// </summary>
+				literal String^ MF_CAPTURE_DISABLE_HARDWARE_TRANSFORMS = "{b7c42a6b-3207-4495-b4e7-81f9c35d5991}";
+
+				/// <summary>
+				/// Indica se as notificações do estado de fluxo devem ser ativadas.
+				/// </summary>
+				literal String^ MF_CAPTURE_ENGINE_ENABLE_CAMERA_STREAMSTATE_NOTIFICATION = "{4c808e9d-aaed-4713-90fb-cb24064ab8da}";
+
+				/// <summary>
+				/// Permite que o mecanismo de captura use um codificador que tenha restrições de campo de uso.
+				/// </summary>
+				literal String^ MF_CAPTURE_ENGINE_ENCODER_MFT_FIELDOFUSE_UNLOCK_ATTRIBUTE = "{54c63a00-78d5-422f-aa3e-5e99ac649269}";
+
+				/// <summary>
+				/// Identifica o componente que gerou um evento de captura.
+				/// </summary>
+				literal String^ MF_CAPTURE_ENGINE_EVENT_GENERATOR_GUID = "{abfa8ad5-fc6d-4911-87e0-961945f8f7ce}";
+
+				/// <summary>
+				/// Identifica qual fluxo gerou um evento de captura.
+				/// </summary>
+				literal String^ MF_CAPTURE_ENGINE_EVENT_STREAM_INDEX = "{82697f44-b1cf-42eb-9753-f86d649c8865}";
+
+				/// <summary>
+				/// Contém propriedades de configuração para a fonte de captura.
+				/// </summary>
+				literal String^ MF_CAPTURE_ENGINE_MEDIASOURCE_CONFIG = "{bc6989d2-0fc1-46e1-a74f-efd36bc788de}";
+
+				/// <summary>
+				/// Define o número máximo de amostras processadas que podem ser tamponadas no caminho de áudio da pia de registro.
+				/// </summary>
+				literal String^ MF_CAPTURE_ENGINE_RECORD_SINK_AUDIO_MAX_PROCESSED_SAMPLES = "{9896e12a-f707-4500-b6bd-db8eb810b50f}";
+
+				/// <summary>
+				/// Define o número máximo de amostras não processadas que podem ser tamponadas para processamento no caminho de áudio da pia de registro.
+				/// </summary>
+				literal String^ MF_CAPTURE_ENGINE_RECORD_SINK_AUDIO_MAX_UNPROCESSED_SAMPLES = "{1cddb141-a7f4-4d58-9896-4d15a53c4efe}";
+
+				/// <summary>
+				/// Define o número máximo de amostras processadas que podem ser tamponadas no caminho de vídeo da pia de registro.
+				/// </summary>
+				literal String^ MF_CAPTURE_ENGINE_RECORD_SINK_VIDEO_MAX_PROCESSED_SAMPLES = "{e7b4a49e-382c-4aef-a946-aed5490b7111}";
+
+				/// <summary>
+				/// Define o número máximo de amostras não processadas que podem ser tamponadas para processamento no caminho de vídeo do registro sink.
+				/// </summary>
+				literal String^ MF_CAPTURE_ENGINE_RECORD_SINK_VIDEO_MAX_UNPROCESSED_SAMPLES = "{b467f705-7913-4894-9d42-a215fea23da9}";
+
+				/// <summary>
+				/// Especifica se o mecanismo de captura captura captura áudio, mas não vídeo.
+				/// </summary>
+				literal String^ MF_CAPTURE_ENGINE_USE_AUDIO_DEVICE_ONLY = "{1c8077da-8466-4dc4-8b8e-276b3f85923b}";
+
+				/// <summary>
+				/// Especifica se o mecanismo de captura captura de vídeo, mas não áudio.
+				/// </summary>
+				literal String^ MF_CAPTURE_ENGINE_USE_VIDEO_DEVICE_ONLY = "{7e025171-cf32-4f2e-8f19-410577b73a66}";
 			};
 
 			/// <summary>
@@ -2052,6 +2265,22 @@ namespace CarenRengine
 			};
 
 			/// <summary>
+			/// Contém todos os GUIDs que podem ser utilizados pelos fluxos de mídia.
+			/// </summary>
+			public value struct GUIDs_MFAttributes_MediaStreamsExtension
+			{
+				/// <summary>
+				/// A câmera extrínseca para o fluxo.
+				/// </summary>
+				literal String^ MFStreamExtension_CameraExtrinsics = "{686196d0-13e2-41d9-9638-ef032c272a52}";
+
+				/// <summary>
+				/// A câmera pinhole intrínseca ao fluxo.
+				/// </summary>
+				literal String^ MFStreamExtension_PinholeCameraIntrinsics = "{dbac0455-0ec8-4aef-9c32-7a3ee3456f53}";
+			};
+
+			/// <summary>
 			/// Contém todos os GUIDs que podem ser utilizados pela api de Topologia.
 			/// </summary>
 			public value struct GUIDs_MFAttributes_Topology
@@ -2271,6 +2500,47 @@ namespace CarenRengine
 				/// 
 				/// </summary>
 				literal String^ MF_TOPONODE_PRIMARYOUTPUT = "{6304ef99-16b2-4ebe-9d67-e4c539b3a259}";
+			};
+
+			/// <summary>
+			/// Contém todos os GUIDs que podem ser utilizados pela api de transcodificação.
+			/// </summary>
+			public value struct GUIDs_MFAttributes_Transcode
+			{
+				/// <summary>
+				/// 
+				/// </summary>
+				literal String^ MF_TRANSCODE_ADJUST_PROFILE = "{9c37c21b-060f-487c-a690-80d7f50d1c72}";
+
+				/// <summary>
+				/// Especifica o tipo de contêiner do arquivo de saída.
+				/// </summary>
+				literal String^ MF_TRANSCODE_CONTAINERTYPE = "{150FF23F-4ABC-478B-AC4F-E1916FBA1CCA}";
+
+				/// <summary>
+				/// 
+				/// </summary>
+				literal String^ MF_TRANSCODE_DONOT_INSERT_ENCODER = "{f45aa7ce-ab24-4012-a11b-dc8220201410}";
+
+				/// <summary>
+				/// 
+				/// </summary>
+				literal String^ MF_TRANSCODE_ENCODINGPROFILE = "{6947787c-f508-4ea9-b1e9-a1fe3a49fbc9}";
+
+				/// <summary>
+				/// 
+				/// </summary>
+				literal String^ MF_TRANSCODE_QUALITYVSSPEED = "{98332df8-03cd-476b-89fa-3f9e442dec9f}";
+
+				/// <summary>
+				/// 
+				/// </summary>
+				literal String^ MF_TRANSCODE_SKIP_METADATA_TRANSFER = "{4e4469ef-b571-4959-8f83-3dcfba33a393}";
+
+				/// <summary>
+				/// 
+				/// </summary>
+				literal String^ MF_TRANSCODE_TOPOLOGYMODE = "{3e3df610-394a-40b2-9dea-3bab650bebf2}";
 			};
 
 			/// <summary>

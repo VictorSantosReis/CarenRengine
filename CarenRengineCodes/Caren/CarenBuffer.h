@@ -510,7 +510,7 @@ public:
 	/// </summary>
 	/// <param name="Param_StartIndex">O Index do inicio da cópia dos dados do buffer atual.</param>
 	/// <param name="Param_Count">A quantidade de dados atuais a serem escritos no buffer de destino.</param>
-	/// <param name="Param_Ref_BufferDest">O buffer de destino que vai receber os dados.</param>
+	/// <param name="Param_BufferDest">O buffer de destino que vai receber os dados.</param>
 	/// <returns></returns>
 	virtual CarenResult WriteTo(UInt32 Param_StartIndex, UInt32 Param_Count, IntPtr Param_BufferDest);
 
@@ -519,7 +519,7 @@ public:
 	/// </summary>
 	/// <param name="Param_StartIndex">O Index do inicio da cópia dos dados do buffer atual.</param>
 	/// <param name="Param_Count">A quantidade de dados atuais a serem escritos no buffer de destino.</param>
-	/// <param name="Param_Ref_BufferDest">O buffer de destino que vai receber os dados.</param>
+	/// <param name="Param_BufferDest">O buffer de destino que vai receber os dados.</param>
 	/// <returns></returns>
 	virtual CarenResult WriteTo(UInt32 Param_StartIndex, UInt32 Param_Count, PBYTE Param_BufferDest);
 

@@ -2610,7 +2610,7 @@ namespace CarenRengine
 			};
 
 			/// <summary>
-			/// Contém todos os GUIDs de serviço utilizado pela biblioteca.
+			/// Contém todos os GUIDs de serviço utilizado pela biblioteca da Media Foundation.
 			/// </summary>
 			public value struct GUIDs_MF_SERVICE_INTERFACES
 			{
@@ -2726,15 +2726,1423 @@ namespace CarenRengine
 			};
 
 
-
+			
 			// PROPRIEDADES
 
 			/// <summary>
-			/// Contém todas as propriedades utilizadas pela Media Foundation.
+			/// [FALTA DOCUMENTAR E ADICIONAR OS PID`S] - Contém todas as propriedades utilizadas pela Media Foundation.
 			/// </summary>
-			public value struct GUIDs_MediaFoundation_Propriedades
+			public value struct GUIDs_MEDIAFOUNDATION_PROPERTIES
 			{
+				/// <summary>
+				/// Tipo: UInt32 Desc: ‎Especifica o modo downmix estéreo para um decodificador de áudio Dolby Digital.‎ 
+				/// </summary>
+				literal String^ GUID_CODECAPI_AVDecDDStereoDownMixMode = "{6ce4122c-3ee9-4182-b4ae-c10fc088649d}";
 
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_CODECAPI_AVDecNumWorkerThreads = "{9561c3e8-ea9e-4435-9b1e-a93e691894d8}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_CODECAPI_AVDecSoftwareDynamicFormatChange = "{862e2f0a-507b-47ff-af47-01e2624298b7}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_CODECAPI_AVDecVideoMaxCodedHeight = "{7262a16a-d2dc-4e75-9ba8-65c0c6d32b13}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_CODECAPI_AVDecVideoMaxCodedWidth = "{5ae557b8-77af-41f5-9fa6-4db2fe1d4bca}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_CODECAPI_AVEncAdaptiveMode = "{4419b185-da1f-4f53-bc76-097d0c1efb1e}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_CODECAPI_AVEncCommonTranscodeEncodingProfile = "{6947787c-f508-4ea9-b1e9-a1fe3a49fbc9}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_CODECAPI_AVEncH264CABACEnable = "{ee6cad62-d305-4248-a50e-e1b255f7caf8}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_CODECAPI_AVEncH264PPSID = "{bfe29ec2-056c-4d68-a38d-ae5944c8582e}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_CODECAPI_AVEncH264SPSID = "{50f38f51-2b79-40e3-b39c-7e9fa0770501}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_CODECAPI_AVEncMaxFrameRate = "{b98e1b31-19fa-4d4f-9931-d6a5b8aab93c}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_CODECAPI_AVEncNumWorkerThreads = "{b0c8bf60-16f7-4951-a30b-1db1609293d6}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_CODECAPI_AVEncSliceControlMode = "{e9e782ef-5f18-44c9-a90b-e9c3c2c17b0b}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_CODECAPI_AVEncSliceControlSize = "{92f51df3-07a5-4172-aefe-c69ca3b60e35}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_CODECAPI_AVEncVideoContentType = "{66117aca-eb77-459d-930c-a48d9d0683fc}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_CODECAPI_AVEncVideoEncodeFrameTypeQP = "{aa70b610-e03f-450c-ad07-07314e639ce7}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_CODECAPI_AVEncVideoEncodeQP = "{2cb5696b-23fb-4ce1-a0f9-ef5b90fd55ca}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_CODECAPI_AVEncVideoForceKeyFrame = "{398c1b98-8353-475a-9ef2-8f265d260345}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_CODECAPI_AVEncVideoLTRBufferControl = "{a4a0e93d-4cbc-444c-89f4-826d310e92a7}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_CODECAPI_AVEncVideoMarkLTRFrame = "{e42f4748-a06d-4ef9-8cea-3d05fde3bd3b}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_CODECAPI_AVEncVideoMaxNumRefFrame = "{964829ed-94f9-43b4-b74d-ef40944b69a0}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_CODECAPI_AVEncVideoMaxQP = "{3daf6f66-a6a7-45e0-a8e5-f2743f46a3a2}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_CODECAPI_AVEncVideoMeanAbsoluteDifference = "{e5c0c10f-81a4-422d-8c3f-b474a4581336}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_CODECAPI_AVEncVideoMinQP = "{0ee22c6a-a37c-4568-b5f1-9d4c2b3ab886}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_CODECAPI_AVEncVideoRateControlParams = "{87d43767-7645-44ec-b438-d3322fbca29f}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_CODECAPI_AVEncVideoROIEnabled = "{d74f7f18-44dd-4b85-aba3-05d9f42a8280}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_CODECAPI_AVEncVideoSelectLayer = "{eb1084f5-6aaa-4914-bb2f-6147227f12e7}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_CODECAPI_AVEncVideoSupportedControls = "{d3f40fdd-77b9-473d-8196-061259e69cff}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_CODECAPI_AVEncVideoTemporalLayerCount = "{19caebff-b74d-4cfd-8c27-c2f9d97d5f52}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_CODECAPI_AVEncVideoUsage = "{1f636849-5dc1-49f1-b1d8-ce3cf62ea385}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_CODECAPI_AVEncVideoUseLTRFrame = "{00752db8-55f7-4f80-895b-27639195f2ad}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_CODECAPI_AVLowLatencyMode = "{9c27891a-ed7a-40e1-88e8-b22727a024ee}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_CODECAPI_VideoEncoderDisplayContentType = "{79b90b27-f4b1-42dc-9dd7-cdaf8135c400}";
+				
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_ACCELERATEDSTREAMINGDURATION = "{3cb1f277-0505-4c5d-ae71-0a556344efa1}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_AUTORECONNECTLIMIT = "{3cb1f27a-0505-4c5d-ae71-0a556344efa1}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_AUTORECONNECTPROGRESS = "{3cb1f282-0505-4c5d-ae71-0a556344efa1}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_BROWSERUSERAGENT = "{3cb1f28b-0505-4c5d-ae71-0a556344efa1}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_BROWSERWEBPAGE = "{3cb1f28c-0505-4c5d-ae71-0a556344efa1}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_BUFFERINGTIME = "{3cb1f276-0505-4c5d-ae71-0a556344efa1}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_CACHEENABLED = "{3cb1f279-0505-4c5d-ae71-0a556344efa1}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_CLIENTGUID = "{60a2c4a6-f197-4c14-a5bf-88830d2458af}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_CONNECTIONBANDWIDTH = "{3cb1f278-0505-4c5d-ae71-0a556344efa1}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_CREDENTIAL_MANAGER = "{3cb1f280-0505-4c5d-ae71-0a556344efa1}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_DRMNET_LICENSE_REPRESENTATION = "{47eae1bd-bdfe-42e2-82f3-54a48c17962d}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_ENABLE_DOWNLOAD = "{3cb1f29d-0505-4c5d-ae71-0a556344efa1}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_ENABLE_HTTP = "{3cb1f299-0505-4c5d-ae71-0a556344efa1}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_ENABLE_MSB = "{3cb1f296-0505-4c5d-ae71-0a556344efa1}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_ENABLE_PRIVATEMODE = "{824779d8-f18b-4405-8cf1-464fb5aa8f71}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_ENABLE_RTSP = "{3cb1f298-0505-4c5d-ae71-0a556344efa1}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_ENABLE_STREAMING = "{3cb1f29c-0505-4c5d-ae71-0a556344efa1}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_ENABLE_TCP = "{3cb1f295-0505-4c5d-ae71-0a556344efa1}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_ENABLE_UDP = "{3cb1f294-0505-4c5d-ae71-0a556344efa1}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_FRIENDLYNAME = "{5b2a7757-bc6b-447e-aa06-0dda1c646e2f}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_HOSTEXE = "{3cb1f28f-0505-4c5d-ae71-0a556344efa1}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_HOSTVERSION = "{3cb1f291-0505-4c5d-ae71-0a556344efa1}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_LOGPARAMS = "{64936ae8-9418-453a-8cda-3e0a668b353b}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_LOGURL = "{3cb1f293-0505-4c5d-ae71-0a556344efa1}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_MAXBUFFERTIMEMS = "{408b24e6-4038-4401-b5b2-fe701a9ebf10}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_MAXUDPACCELERATEDSTREAMINGDURATION = "{4aab2879-bbe1-4994-9ff0-5495bd250129}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_PEERMANAGER = "{48b29adb-febf-45ee-a9bf-efb81c492efc}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_PLAYERID = "{3cb1f28e-0505-4c5d-ae71-0a556344efa1}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_PLAYERUSERAGENT = "{3cb1f292-0505-4c5d-ae71-0a556344efa1}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_PLAYERVERSION = "{3cb1f28d-0505-4c5d-ae71-0a556344efa1}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_PPBANDWIDTH = "{3cb1f281-0505-4c5d-ae71-0a556344efa1}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_PREVIEWMODEENABLED = "{3cb1f27f-0505-4c5d-ae71-0a556344efa1}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_PROTOCOL = "{3cb1f27d-0505-4c5d-ae71-0a556344efa1}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_PROXYBYPASSFORLOCAL = "{3cb1f286-0505-4c5d-ae71-0a556344efa1}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_PROXYEXCEPTIONLIST = "{3cb1f285-0505-4c5d-ae71-0a556344efa1}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_PROXYHOSTNAME = "{3cb1f284-0505-4c5d-ae71-0a556344efa1}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_PROXYINFO = "{3cb1f29b-0505-4c5d-ae71-0a556344efa1}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_PROXYLOCATORFACTORY = "{3cb1f283-0505-4c5d-ae71-0a556344efa1}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_PROXYPORT = "{3cb1f288-0505-4c5d-ae71-0a556344efa1}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_PROXYRERUNAUTODETECTION = "{3cb1f289-0505-4c5d-ae71-0a556344efa1}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_PROXYSETTINGS = "{3cb1f287-0505-4c5d-ae71-0a556344efa1}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_RESENDSENABLED = "{3cb1f27b-0505-4c5d-ae71-0a556344efa1}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_RESOURCE_FILTER = "{815d0ff6-265a-4477-9e46-7b80ad80b5fb}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_SSLCERTIFICATE_MANAGER = "{55e6cb27-e69b-4267-940c-2d7ec5bb8a0f}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_STATISTICS = "{3cb1f274-0505-4c5d-ae71-0a556344efa1}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_STREAM_LANGUAGE = "{9ab44318-f7cd-4f2d-8d6d-fa35b492cecb}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_THINNINGENABLED = "{3cb1f27c-0505-4c5d-ae71-0a556344efa1}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_TRANSPORT = "{3cb1f27e-0505-4c5d-ae71-0a556344efa1}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFNETSOURCE_UDP_PORT_RANGE = "{3cb1f29a-0505-4c5d-ae71-0a556344efa1}";
+				
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_ASFMEDIASINK_AUTOADJUST_BITRATE = "{cddcbc82-3411-4119-9135-8423c41b3957}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_ASFMEDIASINK_BASE_SENDTIME = "{cddcbc82-3411-4119-9135-8423c41b3957}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_ASFMEDIASINK_DRMACTION = "{a1db6f6c-1d0a-4cb6-8254-cb36beedbc48}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_ASFMediaSource_ApproxSeek = "{b4cd270f-244d-4969-bb92-3f0fb8316f10}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_ASFMediaSource_IterativeSeek_Max_Count = "{170b65dc-4a4e-407a-ac22-577f50e4a37c}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_ASFMediaSource_IterativeSeek_Tolerance_In_MilliSecond = "{170b65dc-4a4e-407a-ac22-577f50e4a37c}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_ASFMediaSource_IterativeSeekIfNoIndex = "{170b65dc-4a4e-407a-ac22-577f50e4a37c}";
+				
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_ASFOVERHEADPERFRAME = "{0eac7502-1957-4beb-914d-885f85e75436}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_ASFSTREAMSINK_CORRECTED_LEAKYBUCKET = "{a2f152fb-8ad9-4a11-b345-2ce2fad8723d}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_AVDecVideoSWPowerLevel = "{fb5d2347-4dd8-4509-aed0-db5fa9aa93f4}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_AVGCONSTRAINED = "{6dbdf03b-b05c-4a03-8ec1-bbe63db10cb4}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_AVGFRAMERATE = "{41d700d6-95b1-4e3f-b759-2d66d8c7ada2}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_BAVG = "{10174e76-e0ca-4a39-948c-8510c2323276}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_BDELTAQP = "{4e91bf89-665a-49da-bb94-88c550cfcd28}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_BMAX = "{ff365211-21b6-4134-ab7c-52393a8f80f6}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_BUFFERFULLNESSINFIRSTBYTE = "{b69dc3c5-64c4-4757-99cb-5d580fd5659e}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_CATEGORY = "{c57a84c0-1a80-40a3-97b5-9272a403c8ae}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_CHECKDATACONSISTENCY2P = "{6dbdf03b-b05c-4a03-8ec1-bbe63db10cb4}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_CLOSEDENTRYPOINT = "{4e91bf89-665a-49da-bb94-88c550cfcd28}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_CLSID = "{c57a84c0-1a80-40a3-97b5-9272a403c8ae}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_CODEDFRAMES = "{62872b55-fe0e-4930-a6d2-ccaa37e8f535}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_CODEDNONZEROFRAMES = "{7adf5b69-1e3f-42d3-991d-f81e0cebe93e}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_COLOR_BRIGHTNESS = "{174fb0ec-2695-476c-88aa-d2b41ce75e67}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_COLOR_CONTRAST = "{174fb0ec-2695-476c-88aa-d2b41ce75e67}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_COLOR_HUE = "{174fb0ec-2695-476c-88aa-d2b41ce75e67}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_COLOR_SATURATION = "{174fb0ec-2695-476c-88aa-d2b41ce75e67}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_COLORCONV_DSTLEFT = "{dc9100be-1228-416c-9948-6f38f479654f}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_COLORCONV_DSTTOP = "{dc9100be-1228-416c-9948-6f38f479654f}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_COLORCONV_HEIGHT = "{dc9100be-1228-416c-9948-6f38f479654f}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_COLORCONV_MODE = "{dc9100be-1228-416c-9948-6f38f479654f}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_COLORCONV_SRCLEFT = "{dc9100be-1228-416c-9948-6f38f479654f}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_COLORCONV_SRCTOP = "{dc9100be-1228-416c-9948-6f38f479654f}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_COLORCONV_WIDTH = "{dc9100be-1228-416c-9948-6f38f479654f}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_COMPLEXITY = "{44fa08c7-92f5-45dc-8376-8d1d324c652a}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_COMPLEXITYEX = "{d6e48f93-fd47-47a3-9262-8aefb5530332}";
+
+				/// <summary>
+				/// Tipo:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_COMPRESSIONOPTIMIZATIONTYPE = "{4e91bf89-665a-49da-bb94-88c550cfcd28}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_CONSTRAIN_ENUMERATED_VBRQUALITY = "{6dbdf03b-b05c-4a03-8ec1-bbe63db10cb4}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_CONSTRAINDECLATENCY = "{6dbdf03b-b05c-4a03-8ec1-bbe63db10cb4}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_CONSTRAINENCCOMPLEXITY = "{6dbdf03b-b05c-4a03-8ec1-bbe63db10cb4}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_CONSTRAINENCLATENCY = "{6dbdf03b-b05c-4a03-8ec1-bbe63db10cb4}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_Content_DLNA_Profile_ID = "{cfa31b45-525d-4998-bb44-3f7d81542fa4}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_CONV_INPUTFRAMERATE = "{52f8d29b-2e76-43f7-a4f6-1717904e35df}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_CONV_OUTPUTFRAMERATE = "{52f8d29b-2e76-43f7-a4f6-1717904e35df}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_CRISP = "{2985f772-3af2-4d15-8cfa-8a962ff32040}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_DATARATE = "{e0db0807-8003-4880-ac11-61b73f33dc60}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_DECODER_DEINTERLACING = "{00c6281f-4be6-4e44-9ed8-9ec5422316e4}";
+
+				/// <summary>
+				/// [NÃO RECONHECIDO COMO UM GUID]
+				/// </summary>
+				literal String^ GUID_MFPKEY_Decoder_MaxNumPCMSamplesWithPaddedSilence = "{}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_DECODERCOMPLEXITYPROFILE = "{c0d912d6-14da-4d31-8d83-d108915e8d77}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_DECODERCOMPLEXITYREQUESTED = "{b0d7d4a7-422b-44c3-97b4-b9760cceeea9}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_DELTAMVRANGEINDEX = "{4e91bf89-665a-49da-bb94-88c550cfcd28}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_DENOISEOPTION = "{4e91bf89-665a-49da-bb94-88c550cfcd28}";
+
+				/// <summary>
+				/// Tipo:  PID: 00 + 25 Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_DESIRED_VBRQUALITY = "{6dbdf03b-b05c-4a03-8ec1-bbe63db10cb4}";
+
+				/// <summary>
+				/// Tipo:  PID: 0x1d Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_DROPPEDFRAMES = "{bdb5afd3-4027-4882-806c-4162e4a7a3f0}";
+
+				/// <summary>
+				/// Tipo:  PID: 0x1 Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_DXVA_ENABLED = "{58e28605-1d51-48ed-a3eb-0f9baf785fbd}";
+
+				/// <summary>
+				/// Tipo:  PID: 0x00 + 19 Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_DYN_ALLOW_NOISESUB = "{6dbdf03b-b05c-4a03-8ec1-bbe63db10cb4}";
+
+				/// <summary>
+				/// Tipo:  PID: 0x00 +27 Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_DYN_ALLOW_PCMRANGELIMITING = "{6dbdf03b-b05c-4a03-8ec1-bbe63db10cb4}";
+
+				/// <summary>
+				/// Tipo:  PID: 0x00 + 14 Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_DYN_BANDTRUNC_BWCEIL = "{6dbdf03b-b05c-4a03-8ec1-bbe63db10cb4}";
+
+				/// <summary>
+				/// Tipo:  PID: 0x00 + 13 Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_DYN_BANDTRUNC_BWFLOOR = "{6dbdf03b-b05c-4a03-8ec1-bbe63db10cb4}";
+
+				/// <summary>
+				/// Tipo:  PID: 0x00 + 12 Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_DYN_BANDTRUNC_QCEIL = "{6dbdf03b-b05c-4a03-8ec1-bbe63db10cb4}";
+
+				/// <summary>
+				/// Tipo:  PID: 0x00 + 11 Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_DYN_BANDTRUNC_QFLOOR = "{6dbdf03b-b05c-4a03-8ec1-bbe63db10cb4}";
+
+				/// <summary>
+				/// Tipo:  PID: 0x00 + 10 Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_DYN_BANDTRUNCATION = "{6dbdf03b-b05c-4a03-8ec1-bbe63db10cb4}";
+
+				/// <summary>
+				/// Tipo:  PID: 0x00 + 15 Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_DYN_SIMPLEMASK = "{6dbdf03b-b05c-4a03-8ec1-bbe63db10cb4}";
+
+				/// <summary>
+				/// Tipo:  PID: 0x00 + 16 Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_DYN_STEREO_PREPROC = "{6dbdf03b-b05c-4a03-8ec1-bbe63db10cb4}";
+
+				/// <summary>
+				/// Tipo:  PID: 0x00 + 18 Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_DYN_VBR_BAVG = "{6dbdf03b-b05c-4a03-8ec1-bbe63db10cb4}";
+
+				/// <summary>
+				/// Tipo:  PID: 0x00 + 9 Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_DYN_VBR_RAVG = "{6dbdf03b-b05c-4a03-8ec1-bbe63db10cb4}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_ENCCOMPLEXITY = "{6dbdf03b-b05c-4a03-8ec1-bbe63db10cb4}";
+
+				/// <summary>
+				/// Tipo:  PID: 0x08 Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_ENDOFPASS = "{b2030f2a-8bbc-46f8-a64b-a98ff7fcf02a}";
+
+				/// <summary>
+				/// Tipo:  PID: 0x00 + 20 Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_ENHANCED_WMA = "{6dbdf03b-b05c-4a03-8ec1-bbe63db10cb4}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_EXATTRIBUTE_SUPPORTED = "{456fe843-3c87-40c0-949d-1409c97dab2c}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_FI_ENABLED = "{e020c4ca-3bdd-40ec-bcf4-4039b1450eb8}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_FI_SUPPORTED = "{5ce18788-b992-49a7-a4f1-60ea21caa55f}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_FORCEFRAMEHEIGHT = "{4e91bf89-665a-49da-bb94-88c550cfcd28}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_FORCEFRAMEWIDTH = "{4e91bf89-665a-49da-bb94-88c550cfcd28}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_FORCEMEDIANSETTING = "{4e91bf89-665a-49da-bb94-88c550cfcd28}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_FOURCC = "{593e3f2e-f84d-4e85-b68d-f669400edabc}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_FRAMECOUNT = "{75028eb4-4853-44d3-88a3-e499f89d227f}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_FULLFRAMERATE = "{4e91bf89-665a-49da-bb94-88c550cfcd28}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_HTTP_ByteStream_Enable_Urlmon = "{eda8afdf-c171-417f-8d17-2e0918303292}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_HTTP_ByteStream_Urlmon_Bind_Flags = "{eda8afdf-c171-417f-8d17-2e0918303292}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_HTTP_ByteStream_Urlmon_Security_Id = "{eda8afdf-c171-417f-8d17-2e0918303292}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_HTTP_ByteStream_Urlmon_Window = "{eda8afdf-c171-417f-8d17-2e0918303292}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_INTERLACEDCODINGENABLED = "{56976073-06c3-4b3b-ad41-b7417fce8474}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_KEYDIST = "{18d6f8c5-2416-4d7b-90d7-9f3f21e752b4}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_LIVEENCODE = "{3ffa1e60-5514-4634-86e6-1f3b7c545143}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_LOOKAHEAD = "{4e91bf89-665a-49da-bb94-88c550cfcd28}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_LOOPFILTER = "{4e91bf89-665a-49da-bb94-88c550cfcd28}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_MACROBLOCKMODECOSTMETHOD = "{4e91bf89-665a-49da-bb94-88c550cfcd28}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_MAXDECLATENCYMS = "{6dbdf03b-b05c-4a03-8ec1-bbe63db10cb4}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_MAXENCLATENCYMS = "{6dbdf03b-b05c-4a03-8ec1-bbe63db10cb4}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_MediaProtectionContainerGuid = "{42af3d7c-00cf-4a0f-81f0-adf524a5a5b5}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_MediaProtectionSystemContext = "{636b271d-ddc7-49e9-a6c6-47385962e5bd}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_MediaProtectionSystemContextsPerTrack = "{4454b092-d3da-49b0-8452-6850c7db764d}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_MediaProtectionSystemId = "{636b271d-ddc7-49e9-a6c6-47385962e5bd}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_MediaProtectionSystemIdMapping = "{636b271d-ddc7-49e9-a6c6-47385962e5bd}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_MediaSource_DisableReadAhead = "{26366c14-c5bf-4c76-887b-9f1754db5f09}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_MOST_RECENTLY_ENUMERATED_VBRQUALITY = "{6dbdf03b-b05c-4a03-8ec1-bbe63db10cb4}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_MOTIONMATCHMETHOD = "{4e91bf89-665a-49da-bb94-88c550cfcd28}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_MOTIONSEARCHLEVEL = "{4e91bf89-665a-49da-bb94-88c550cfcd28}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_MOTIONSEARCHRANGE = "{4e91bf89-665a-49da-bb94-88c550cfcd28}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_NOISEEDGEREMOVAL = "{4e91bf89-665a-49da-bb94-88c550cfcd28}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_NUMBFRAMES = "{4e91bf89-665a-49da-bb94-88c550cfcd28}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_NUMTHREADS = "{4e91bf89-665a-49da-bb94-88c550cfcd28}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_NUMTHREADSDEC = "{00c6281f-4be6-4e44-9ed8-9ec5422316e4}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_PASSESRECOMMENDED = "{38bdceea-393e-4f9a-8dc3-802cc405838f}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_PASSESUSED = "{b1653ac1-cb7d-43ee-8454-3f9d811b0331}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_PEAKCONSTRAINED = "{6dbdf03b-b05c-4a03-8ec1-bbe63db10cb4}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_PERCEPTUALOPTLEVEL = "{4e91bf89-665a-49da-bb94-88c550cfcd28}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_PIXELASPECTRATIO = "{6612a6bc-e57d-407d-a958-285df0d9b400}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_PMP_Creation_Callback = "{28bb4de2-26a2-4870-b720-d26bbeb14942}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_POSTPROCESSMODE = "{00c6281f-4be6-4e44-9ed8-9ec5422316e4}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_PREFERRED_FRAMESIZE = "{6dbdf03b-b05c-4a03-8ec1-bbe63db10cb4}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_PRODUCEDUMMYFRAMES = "{61714bc6-08a1-49d1-b827-a33aada95526}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_QPPERFRAME = "{4e91bf89-665a-49da-bb94-88c550cfcd28}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_RANGEREDUX = "{4e91bf89-665a-49da-bb94-88c550cfcd28}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_RAVG = "{14b2aae6-2987-460a-8b22-9c077c55d05e}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_RDSUBPIXELSEARCH = "{4e91bf89-665a-49da-bb94-88c550cfcd28}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_REENCDURATION = "{4e91bf89-665a-49da-bb94-88c550cfcd28}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_REENCENDBUFFERSIZE = "{4e91bf89-665a-49da-bb94-88c550cfcd28}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_REENCQPREF = "{4e91bf89-665a-49da-bb94-88c550cfcd28}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_REENCSTARTBUFFERSIZE = "{4e91bf89-665a-49da-bb94-88c550cfcd28}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_REQUESTING_A_FRAMESIZE = "{6dbdf03b-b05c-4a03-8ec1-bbe63db10cb4}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_RESIZE_DST_HEIGHT = "{6612a6bc-e57d-407d-a958-285df0d9b400}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_RESIZE_DST_LEFT = "{6612a6bc-e57d-407d-a958-285df0d9b400}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_RESIZE_DST_TOP = "{6612a6bc-e57d-407d-a958-285df0d9b400}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_RESIZE_DST_WIDTH = "{6612a6bc-e57d-407d-a958-285df0d9b400}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_RESIZE_GEOMAPHEIGHT = "{6612a6bc-e57d-407d-a958-285df0d9b400}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_RESIZE_GEOMAPWIDTH = "{6612a6bc-e57d-407d-a958-285df0d9b400}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_RESIZE_GEOMAPX = "{6612a6bc-e57d-407d-a958-285df0d9b400}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_RESIZE_GEOMAPY = "{6612a6bc-e57d-407d-a958-285df0d9b400}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_RESIZE_INTERLACE = "{6612a6bc-e57d-407d-a958-285df0d9b400}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_RESIZE_MINAPHEIGHT = "{6612a6bc-e57d-407d-a958-285df0d9b400}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_RESIZE_MINAPWIDTH = "{6612a6bc-e57d-407d-a958-285df0d9b400}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_RESIZE_MINAPX = "{6612a6bc-e57d-407d-a958-285df0d9b400}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_RESIZE_MINAPY = "{6612a6bc-e57d-407d-a958-285df0d9b400}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_RESIZE_PANSCANAPHEIGHT = "{6612a6bc-e57d-407d-a958-285df0d9b400}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_RESIZE_PANSCANAPWIDTH = "{6612a6bc-e57d-407d-a958-285df0d9b400}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_RESIZE_PANSCANAPX = "{6612a6bc-e57d-407d-a958-285df0d9b400}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_RESIZE_PANSCANAPY = "{6612a6bc-e57d-407d-a958-285df0d9b400}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_RESIZE_QUALITY = "{6612a6bc-e57d-407d-a958-285df0d9b400}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_RESIZE_SRC_HEIGHT = "{6612a6bc-e57d-407d-a958-285df0d9b400}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_RESIZE_SRC_LEFT = "{6612a6bc-e57d-407d-a958-285df0d9b400}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_RESIZE_SRC_TOP = "{6612a6bc-e57d-407d-a958-285df0d9b400}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_RESIZE_SRC_WIDTH = "{6612a6bc-e57d-407d-a958-285df0d9b400}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_RMAX = "{7d8dd246-aaf4-4a24-8166-19396b06ef69}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_SBESourceMode = "{3fae10bb-f859-4192-b562-1868d3da3a02}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_SourceOpenMonitor = "{074d4637-b5ae-465d-af17-1a538d2859dd}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_STAT_BAVG = "{036f6b60-ad43-485c-86c6-21a6db2c1ba3}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_STAT_BMAX = "{cd95e5b7-9143-47fb-a9d2-9db75f2e74be}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_STAT_RAVG = "{23a0e3b5-fc62-4ab8-b77c-6e0c28ab3016}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_STAT_RMAX = "{82ff7c67-6554-4749-a32b-3690dd1ae8de}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_TOTALFRAMES = "{ce5f1e3c-d3d4-4c3f-88c8-01e989d998d2}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_VBRENABLED = "{e48d9459-6abe-4eb5-9211-60080c1ab984}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_VBRQUALITY = "{f97b3f3a-9eff-4ac9-8247-35b30eb925f4}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_VIDEOSCALING = "{4e91bf89-665a-49da-bb94-88c550cfcd28}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_VIDEOWINDOW = "{c1c96060-76f0-47d4-a875-5bdda90df5e9}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_VOLHEADERFORREENCODE = "{4e91bf89-665a-49da-bb94-88c550cfcd28}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_VTYPE = "{4e91bf89-665a-49da-bb94-88c550cfcd28}";
+
+				/// <summary>
+				/// [NÃO SUPORTADO]
+				/// </summary>
+				literal String^ GUID_MFPKEY_WMA_ELEMENTARY_STREAM = "{6dbdf03b-b05c-4a03-8ec1-bbe63db10cb4}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_WMAAECMA_DEVICE_INDEXES = "{6f52c567-0360-4bd2-9617-ccbf1421c939}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_WMAAECMA_DEVICEPAIR_GUID = "{6f52c567-0360-4bd2-9617-ccbf1421c939}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_WMAAECMA_DMO_SOURCE_MODE = "{6f52c567-0360-4bd2-9617-ccbf1421c939}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_WMAAECMA_FEATR_AES = "6f52c567-0360-4bd2-9617-ccbf1421c939{}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_WMAAECMA_FEATR_AGC = "{6f52c567-0360-4bd2-9617-ccbf1421c939}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_WMAAECMA_FEATR_CENTER_CLIP = "{6f52c567-0360-4bd2-9617-ccbf1421c939}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_WMAAECMA_FEATR_ECHO_LENGTH = "{6f52c567-0360-4bd2-9617-ccbf1421c939}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_WMAAECMA_FEATR_FRAME_SIZE = "{6f52c567-0360-4bd2-9617-ccbf1421c939}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_WMAAECMA_FEATR_MICARR_BEAM = "{6f52c567-0360-4bd2-9617-ccbf1421c939}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_WMAAECMA_FEATR_MICARR_MODE = "{6f52c567-0360-4bd2-9617-ccbf1421c939}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_WMAAECMA_FEATR_MICARR_PREPROC = "{6f52c567-0360-4bd2-9617-ccbf1421c939}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_WMAAECMA_FEATR_NOISE_FILL = "{6f52c567-0360-4bd2-9617-ccbf1421c939}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_WMAAECMA_FEATR_NS = "{6f52c567-0360-4bd2-9617-ccbf1421c939}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_WMAAECMA_FEATR_VAD = "{6f52c567-0360-4bd2-9617-ccbf1421c939}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_WMAAECMA_FEATURE_MODE = "{6f52c567-0360-4bd2-9617-ccbf1421c939}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_WMAAECMA_MIC_GAIN_BOUNDER = "{6f52c567-0360-4bd2-9617-ccbf1421c939}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_WMAAECMA_MICARRAY_DESCPTR = "{6f52c567-0360-4bd2-9617-ccbf1421c939}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_WMAAECMA_QUALITY_METRICS = "{6f52c567-0360-4bd2-9617-ccbf1421c939}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_WMAAECMA_RETRIEVE_TS_STATS = "{6f52c567-0360-4bd2-9617-ccbf1421c939}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_WMAAECMA_SYSTEM_MODE = "{6f52c567-0360-4bd2-9617-ccbf1421c939}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_WMADEC_DRCMODE = "{7b613713-3d38-4cda-aa61-0478b1bcfc42}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_WMADEC_FOLDDOWN_MATRIX = "{51647e9b-6a7f-4739-9e0b-294b278969eb}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_WMADEC_HIRESOUTPUT = "{8d3fe592-eecc-4f4e-9aff-5af1679d38d2}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_WMADEC_LTRTOUTPUT = "{7b613713-3d38-4cda-aa61-0478b1bcfc42}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_WMADEC_SPKRCFG = "{8fff67be-977f-41dc-8faf-23bac9a6df73}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_WMADRC_AVGREF = "{7b613713-3d38-4cda-aa61-0478b1bcfc42}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_WMADRC_AVGTARGET = "{7b613713-3d38-4cda-aa61-0478b1bcfc42}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_WMADRC_PEAKREF = "{7b613713-3d38-4cda-aa61-0478b1bcfc42}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_WMADRC_PEAKTARGET = "{7b613713-3d38-4cda-aa61-0478b1bcfc42}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_WMAENC_AVGBYTESPERSEC = "{11caf780-921b-42ef-b755-f3a053ea1a41}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_WMAENC_BUFFERLESSCBR = "{6dbdf03b-b05c-4a03-8ec1-bbe63db10cb4}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_WMAENC_GENERATE_DRC_PARAMS = "{6dbdf03b-b05c-4a03-8ec1-bbe63db10cb4}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_WMAENC_ORIGWAVEFORMAT = "{f5c760a2-3635-48e1-8fbd-0e498124e0a2}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_WMAENC_RTSPDIF = "{6dbdf03b-b05c-4a03-8ec1-bbe63db10cb4}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_WMAVOICE_ENC_BufferWindow = "{d9c8f5fe-8682-4347-8507-60a3f51f33f1}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_WMAVOICE_ENC_DecoderDelay = "{d9c8f5fe-8682-4347-8507-60a3f51f33f1}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_WMAVOICE_ENC_EDL = "{d9c8f5fe-8682-4347-8507-60a3f51f33f1}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_WMAVOICE_ENC_MusicSpeechClassMode = "{d9c8f5fe-8682-4347-8507-60a3f51f33f1}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_WMRESAMP_CHANNELMTX = "{af1adc73-a210-4b05-966e-5491cff48b1d}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_WMRESAMP_FILTERQUALITY = "{af1adc73-a210-4b05-966e-5491cff48b1d}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_WMRESAMP_LOWPASS_BANDWIDTH = "{af1adc73-a210-4b05-966e-5491cff48b1d}";
+
+				/// <summary>
+				/// Tipo:  PID:  Desc: 
+				/// </summary>
+				literal String^ GUID_MFPKEY_ZEROBYTEFRAMES = "{8f04aba4-313d-40fb-8031-31517813d9ef}";
 			};
 			
 
@@ -4868,6 +6276,25 @@ namespace CarenRengine
 				/// </summary>
 				UTF8
 			};
+			
+			/// <summary>
+			/// (eAVDecDDStereoDownMixMode) - Enumera valores do modo downmix estéreo para um decodificador de áudio Dolby Digital. Esta enumeração é usada com a propriedade CODECAPI_AVDecDDStereoDownMixMode.			
+			/// </summary>
+			public enum class CA_eAVDecDDStereoDownMixMode
+			{
+				/// <summary>
+				/// 
+				/// </summary>
+				eAVDecDDStereoDownMixMode_Auto = 0,
+				/// <summary>
+				/// 
+				/// </summary>
+				eAVDecDDStereoDownMixMode_LtRt = 1,
+				/// <summary>
+				/// 
+				/// </summary>
+				eAVDecDDStereoDownMixMode_LoRo = 2 
+			};
 
 			/// <summary>
 			/// (ORIGINAL) - Especifica o Resultado de uma comparação das interfaces: ICarenMFMediaType
@@ -4981,7 +6408,7 @@ namespace CarenRengine
 			};
 			
 			/// <summary>
-			/// (MFPMPSESSION_CREATION_FLAGS) - Enumera bandeiras que definem o comportamento da função MFCreatePMPMediaSession & _MFCreatePMPServer.
+			/// (MFPMPSESSION_CREATION_FLAGS) - Enumera bandeiras que definem o comportamento da função MFCreatePMPMediaSession e MFCreatePMPServer.
 			/// </summary>
 			public enum class CA_MFPMPSESSION_CREATION_FLAGS
 			{
@@ -6689,6 +8116,44 @@ namespace CarenRengine
 				/// Máscara de bits para validar valores de sinalizador. Esse valor não é um sinalizador válido.
 				/// </summary>
 				VR_MASK = 0x1ff
+			};
+			
+			/// <summary>
+			/// (MF_TOPOSTATUS) - enumera valores que especificam o status de uma topologia durante a reprodução.
+			/// </summary>
+			public enum class CA_MF_TOPOSTATUS
+			{
+				/// <summary>
+				/// Este valor não é usado.
+				/// </summary>
+				MF_TOPOSTATUS_INVALID = 0,
+
+				/// <summary>
+				/// A topologia está pronta para começar. Depois que essa bandeira de status for recebida, você pode usar o método (GetService) para consultar a topologia para serviços, como controle de taxa(Rate Control).
+				/// </summary>
+				MF_TOPOSTATUS_READY = 100,
+
+				/// <summary>
+				/// A Media Session começou a ler dados das fontes de mídia na topologia.
+				/// </summary>
+				MF_TOPOSTATUS_STARTED_SOURCE = 200,
+
+				/// <summary>
+				/// A Media Session modificou a topologia, porque o formato de um fluxo mudou.
+				/// </summary>
+				MF_TOPOSTATUS_DYNAMIC_CHANGED = 210,
+				
+				/// <summary>
+				/// Os Sinks de midia mudaram da topologia anterior para esta topologia. Este valor de status não é enviado para a primeira topologia que é reproduzida. Para a primeira topologia, o evento MESessionStarted 
+				/// indica que os dissipadores de mídia começaram a receber dados.
+				/// </summary>
+				MF_TOPOSTATUS_SINK_SWITCHED = 300,
+				
+				/// <summary>
+				/// A reprodução desta topologia está completa. A Sessão de Mídia ainda pode usar a topologia internamente. A Media Session não libera completamente a topologia até que envie o próximo evento de status 
+				/// MF_TOPOSTATUS_STARTED_SOURCE ou o evento MESessionEnded.
+				/// </summary>
+				MF_TOPOSTATUS_ENDED = 400
 			};
 
 			/// <summary>
@@ -18362,22 +19827,22 @@ namespace CarenRengine
 				/// <summary>
 				/// (Left) - A coordenada X do canto (Superior Esquerdo) do retângulo.
 				/// </summary>
-				Int32 Esquerda;
+				Int32 Left;
 
 				/// <summary>
 				/// (Top) - A coordenada Y do canto (Superior Esquerdo) do retângulo.
 				/// </summary>
-				Int32 Topo;
+				Int32 Top;
 
 				/// <summary>
 				/// (Rigth) - A coordenada X do canto (Inferior Direito) do retângulo.
 				/// </summary>
-				Int32 Direita;
+				Int32 Rigth;
 
 				/// <summary>
 				/// (Bottom) - A coordenada Y do canto (Inferior Direito) do retângulo.
 				/// </summary>
-				Int32 Fundo;
+				Int32 Bottom;
 			};
 
 			/// <summary>
@@ -22191,10 +23656,9 @@ namespace CarenRengine
 				}
 
 				/// <summary>
-				/// Cópia o safe array atual para um de destino. 
-				/// O método é responsável por inicializar o SAFEARRAY de destino.
+				/// Cópia o safe array atual para um de destino. O método é responsável por inicializar o SAFEARRAY de destino.
 				/// </summary>
-				/// <param name="Param_SafeArrayDestino">O ponteiro para o safe array de DESTINO.</param>
+				/// <param name="Param_Out_SafeArrayDestino">O ponteiro para o safe array de DESTINO.</param>
 				/// <returns></returns>
 				CarenResult CopyTo(LPSAFEARRAY* Param_Out_SafeArrayDestino)
 				{
@@ -22258,8 +23722,7 @@ namespace CarenRengine
 				}
 
 				/// <summary>
-				/// Cópia um SAFEARRAY de destino para o SAFEARRAY atual.
-				/// O método já responsável por inicializar os dados necessários.
+				/// Cópia um SAFEARRAY de destino para o SAFEARRAY atual. O método já responsável por inicializar os dados necessários.
 				/// </summary>
 				/// <param name="Param_SafeArraySource">O ponteiro para o safe array de ORIGEM.</param>
 				/// <returns></returns>

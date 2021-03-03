@@ -262,7 +262,7 @@ public:
 	/// <summary>
 	/// Recupera os formatos de contêiner suportados pelo manipulador de metadados. 
 	/// </summary>
-	/// <param name="Param_TamanhoArray"><O tamanho da matriz (Param_Out_ArrayGuidsFormatosContainer)./param>
+	/// <param name="Param_TamanhoArray"><O tamanho da matriz (Param_Out_ArrayGuidsFormatosContainer).</param>
 	/// <param name="Param_Ref_Out_ArrayGuidsFormatosContainer">Retorna uma matriz que recebe os formatos de contêiner suportados pelo manipulador de metadados. O usuário deve criar matriz com a capacidade
     /// indicada no (Param_TamanhoArray).</param>
 	/// <param name="Param_Out_QuantidadeRetornada">Retorna o número real de GUIDs adicionados à matriz. Para obter o número de formatos de contêiner suportados, 
@@ -287,7 +287,7 @@ public:
 	/// Recupera os modelos do dispositivo que suportam o manipulador de metadados. 
 	/// </summary>
 	/// <param name="Param_TamanhoBufferString">O tamanho da String em (Param_Ref_DeviceModels).</param>
-	/// <param name="Param_Out_DeviceModels">Retorna os modelos do dispositivo suportados pelo manipulador de metadados.</param>
+	/// <param name="Param_Ref_DeviceModels">Retorna os modelos do dispositivo suportados pelo manipulador de metadados.</param>
 	/// <param name="Param_Out_LarguraReal">Retorna o comprimento real necessário para recuperar os modelos do dispositivo.</param>
 	virtual CarenResult GetDeviceModels(
 	UInt32 Param_TamanhoBufferString,

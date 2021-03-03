@@ -30,7 +30,7 @@ namespace MediaSessionPlaybackTest
         }
 
         #region Estruturas & Enumerações 
-        private struct MysMediaSessionConfig
+        private struct MyMediaSessionConfig
         {
             public ICarenMFSourceResolver ResolvedorMidia { get; set; }
             public ICarenMFMediaSource SourceMidia { get; set; }
@@ -41,7 +41,7 @@ namespace MediaSessionPlaybackTest
 
             public ICarenMFPresentationDescriptor DescritorMidia;
             public ICarenMFVideoDisplayControl DisplayPlaybackControl { get; set; }
-
+            public ICarenMFSimpleAudioVolume AudioVolumePlayback { get; set; }
 
 
             public UInt64 TotalTimeMidiaSegundos { get; set; }
@@ -50,16 +50,37 @@ namespace MediaSessionPlaybackTest
             public IntPtr HandleVideoPlayback { get; set; }
 
         }
+
+        private enum StatusRendering
+        {
+            NoStarted,
+
+            Rendering,
+
+            Paused,
+
+            Stoped
+        }
         #endregion
 
         #region Variaveis
-        MysMediaSessionConfig myMediaSession = new MysMediaSessionConfig();
+        MyMediaSessionConfig myMediaSession = new MyMediaSessionConfig();
 
         MediaFoundationFunctions MFTFuncs = new MediaFoundationFunctions();
+
+        StatusRendering StatusPlayback = StatusRendering.NoStarted;
+
+        private readonly object Obj_SyncVolume = new object();
+
+        private readonly object Obj_SyncVideoPos = new object();
         #endregion
 
 
         #region Métodos de configuração
+        /// <summary>
+        /// Inicializa a configuração basica da Media Session, configura enventos e inicia a solicitação para a criação do arquivo de mídia de forma assincrona.
+        /// </summary>
+        /// <returns></returns>
         public CarenResult IniciarConfiguração()
         {
             //Variavel que vai retornar o resultado da operação.
@@ -87,7 +108,7 @@ namespace MediaSessionPlaybackTest
             myMediaSession.CallbackMediaSession.RegistrarCallback();
             myMediaSession.CallbackCreateMediaSource.RegistrarCallback();
 
-            //Define o callback na media session.
+            //Inicia uma solicitação assíncrona para o proximo evento na fila para a Media Session.
             Resultado = myMediaSession.MediaSession.BeginGetEvent(myMediaSession.CallbackMediaSession, null);
 
             //Verifica se não houve erro
@@ -137,6 +158,10 @@ namespace MediaSessionPlaybackTest
             return Resultado;
         }
 
+        /// <summary>
+        /// O método responsável por chamar as funções para configurar os nós de entrada e saida para os fluxos do arquivo a ser renderizado.
+        /// </summary>
+        /// <returns></returns>
         public CarenResult ConfigurarTopologia()
         {
             //Variavel que vai retornar o resultado da operação.
@@ -148,8 +173,10 @@ namespace MediaSessionPlaybackTest
             //Cria um for para criar os nós de topologia para os fluxos da midia carregada.
             for (uint i = 0; i < myMediaSession.TotalStreamMediaSource; i++)
             {
-                //Chama o método para configurar os nós.
+                //Chama o método para configurar os nós de entrada e saida.
                 Resultado = Configurar_Nodes_Topologia(i);
+
+                //Verifica se não houve erro.
                 if (Resultado.StatusCode != ResultCode.SS_OK)
                     break;
             }
@@ -158,6 +185,11 @@ namespace MediaSessionPlaybackTest
             return Resultado;
         }
 
+        /// <summary>
+        /// Método responsável por configurar o Media Sink(Dissipador/Decoder) para o fluxo selecionado e conectar o nó de entra ao de saída.
+        /// </summary>
+        /// <param name="Param_Id">O ID do fluxo a ser criado o Media Sink adequado.</param>
+        /// <returns></returns>
         public CarenResult Configurar_Nodes_Topologia(uint Param_Id)
         {
             //Variavel que vai retornar o resultado da operação.
@@ -320,6 +352,12 @@ namespace MediaSessionPlaybackTest
             return Resultado;
         }
 
+        /// <summary>
+        /// Cria o Source Node(Nó de entrada) para um determinado fluxo no arquivo a ser renderizado.
+        /// </summary>
+        /// <param name="Param_StreamDesc">O Descritor para o fluxo no arquivo carregado.</param>
+        /// <param name="Param_OutNode">Retorna uma interface para o nó de entrada.</param>
+        /// <returns></returns>
         public CarenResult CreateSourceNodeToTopology(ICarenMFStreamDescriptor Param_StreamDesc, out ICarenMFTopologyNode Param_OutNode)
         {
             //Variavel a ser retornada.
@@ -353,6 +391,12 @@ namespace MediaSessionPlaybackTest
             return Resultado;
         }
 
+        /// <summary>
+        /// Cria o Output Node(Nó de saída), node responsável pelo codificador de audio ou video para o fluxo no arquivo carregado.
+        /// </summary>
+        /// <param name="Param_Sink">Uma interface de ativação para um Media Sink(Dissipador/Decoder) que representa o SAR(Áudio) ou o EVR(Vídeo).</param>
+        /// <param name="Param_OutNode">Retorna uma interface para o nó de saída.</param>
+        /// <returns></returns>
         public CarenResult CreateOutputNodeToTopology(ICarenMFActivate Param_Sink, out ICarenMFTopologyNode Param_OutNode)
         {
             //Variavel a ser retornada.
@@ -398,6 +442,169 @@ namespace MediaSessionPlaybackTest
 
             //Retorna o resultado.
             return Resultado;
+        }
+
+        /// <summary>
+        /// Método responsável por recuperar as interfaces de controle da midia(Audio, Video).
+        /// </summary>
+        /// <returns></returns>
+        public CarenResult ObterInterfacesControle()
+        {
+            //Variavel a ser retornada.
+            CarenResult Resultado = ResultCode.SS_OK;
+
+            //Recupera a interface de controle da Audio 
+            Resultado = MFTFuncs._MFGetService(myMediaSession.MediaSession, GUIDs_MF_SERVICE_INTERFACES.MR_POLICY_VOLUME_SERVICE, GUIDs_InterfacesMediaFoundation.IID_IMFSimpleAudioVolume, myMediaSession.AudioVolumePlayback = new CarenMFSimpleAudioVolume());
+
+            //Verifica se não houve erro
+            if (Resultado.StatusCode != ResultCode.SS_OK)
+            {
+                //Falhou ao realizar a operação.
+
+                //Chama uma mensagem de erro.
+                ShowMensagem("Ocorreu uma falha ao tentar recuperar a interface de controle de volume!", true);
+
+                //Sai do método.
+                goto Done;
+            }
+
+            //Recupera a interface de controle de vídeo.
+            Resultado = MFTFuncs._MFGetService(myMediaSession.MediaSession, GUIDs_MF_SERVICE_INTERFACES.MR_VIDEO_RENDER_SERVICE, GUIDs_InterfacesMediaFoundation.IID_IMFVideoDisplayControl, myMediaSession.DisplayPlaybackControl = new CarenMFVideoDisplayControl());
+
+            //Verifica se não houve erro
+            if (Resultado.StatusCode != ResultCode.SS_OK)
+            {
+                //Falhou ao realizar a operação.
+
+                //Chama uma mensagem de erro.
+                ShowMensagem("Ocorreu uma falha ao tentar recupera a interface de controle de video!", true);
+
+                //Sai do método.
+                goto Done;
+            }
+
+        Done:;
+
+            //Retorna o resultado.
+            return Resultado;
+        }
+        #endregion
+
+        #region Métodos de processamento dos eventos da Media Session
+        private void ProcessarEventoMediaSession(CA_MediaEventType Param_EventType, ref ICarenMFMediaEvent Param_Event)
+        {
+            //Variaveis
+            CarenResult Resultado = new CarenResult(ResultCode.ER_FAIL, false);
+
+            //Verifica o tipo do evento.
+            switch (Param_EventType)
+            {
+                case CA_MediaEventType.MEUnknown:
+                    break;
+                case CA_MediaEventType.MEError:
+                    break;
+                case CA_MediaEventType.MEExtendedType:
+                    break;
+                case CA_MediaEventType.MENonFatalError:
+                    break;
+                case CA_MediaEventType.MESessionUnknown:
+                    break;
+                case CA_MediaEventType.MESessionTopologySet:
+                    break;
+                case CA_MediaEventType.MESessionTopologiesCleared:
+                    break;
+                case CA_MediaEventType.MESessionStarted:
+                    StatusPlayback = StatusRendering.Rendering;
+                    break;
+                case CA_MediaEventType.MESessionPaused:
+                    StatusPlayback = StatusRendering.Paused;
+                    break;
+                case CA_MediaEventType.MESessionStopped:
+                    StatusPlayback = StatusRendering.Stoped;
+                    break;
+                case CA_MediaEventType.MESessionClosed:
+                    break;
+                case CA_MediaEventType.MESessionEnded:
+                    break;
+                case CA_MediaEventType.MESessionRateChanged:
+                    break;
+                case CA_MediaEventType.MESessionScrubSampleComplete:
+                    break;
+                case CA_MediaEventType.MESessionCapabilitiesChanged:
+                    break;
+                case CA_MediaEventType.MESessionTopologyStatus:
+                    {
+                        //Variaveis utilizadas.
+                        CA_MF_TOPOSTATUS OutStatusTopology = CA_MF_TOPOSTATUS.MF_TOPOSTATUS_INVALID;
+
+                        //Obtém o atributo que indica o status da topologia no evento.
+                        Resultado = Param_Event.GetUINT32(GUIDs_MFAttributes_Events.MF_EVENT_TOPOLOGY_STATUS, out uint OutStatus);
+
+                        //Verifica se obteve sucesso na operação.
+                        if (Resultado.StatusCode != ResultCode.SS_OK)
+                            goto Done;
+
+                        //Converte o status
+                        OutStatusTopology = (CA_MF_TOPOSTATUS)OutStatus;
+
+                        //Verifica o status da topologia.
+                        switch (OutStatusTopology)
+                        {
+                            case CA_MF_TOPOSTATUS.MF_TOPOSTATUS_INVALID:
+                                //Topologia em estado invalido.
+                                break;
+                            case CA_MF_TOPOSTATUS.MF_TOPOSTATUS_READY:
+                                //A topologia está pronta.
+
+                                //Chama o método para recuperar as interfaces de serviços que seram utilizadas.
+                                ObterInterfacesControle();
+
+                                //Chama o método para iniciar a reprodução.
+                                Resultado = myMediaSession.MediaSession.Start(null, new CA_PROPVARIANT() { vt = CA_VARTYPE.VT_EMPTY });
+
+                                //Verifica se obteve sucesso.
+                                if(Resultado.StatusCode != ResultCode.SS_OK)
+                                {
+                                    //Ocorreu uma falha ao tentar iniciar a reprodução da midia.
+
+                                    //Chama uma mensagem de erro.
+                                    ShowMensagem("Ocorreu uma falha ao tentar iniciar a reprodução da mídia!", true);
+
+                                    //Sai do método
+                                    goto Done;
+                                }
+
+                                break;
+                            case CA_MF_TOPOSTATUS.MF_TOPOSTATUS_STARTED_SOURCE:
+                                //A topologia começou a ler os dados.
+                                break;
+                            case CA_MF_TOPOSTATUS.MF_TOPOSTATUS_DYNAMIC_CHANGED:
+                                break;
+                            case CA_MF_TOPOSTATUS.MF_TOPOSTATUS_SINK_SWITCHED:
+                                break;
+                            case CA_MF_TOPOSTATUS.MF_TOPOSTATUS_ENDED:
+                                //A topologia chegou ao fim.
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    break;
+                case CA_MediaEventType.MESessionNotifyPresentationTime:
+                    break;
+                case CA_MediaEventType.MESessionStreamSinkFormatChanged:
+                    break;
+                case CA_MediaEventType.MENewPresentation:
+                    break;
+                
+                default:
+                    break;
+            }
+
+        Done:;
+
+            //Informa o evento gerado.
+            Debug.WriteLine("Evento gerado: " + Param_EventType.ToString());
         }
         #endregion
 
@@ -465,21 +672,23 @@ namespace MediaSessionPlaybackTest
                 goto Done;
             }
 
-            //Verifica o tipo do evento.
-            if(OutEventType == CA_MediaEventType.MESessionClosed)
-            { }
-            if (OutEventType == CA_MediaEventType.MESessionTopologyStatus)
-            {
-                Resultado = myMediaSession.MediaSession.Start(null, new CA_PROPVARIANT() { vt = CA_VARTYPE.VT_EMPTY });
-            }
-            else
-            {
-                //Obtém o proximo evento.
-                myMediaSession.MediaSession.BeginGetEvent(myMediaSession.CallbackMediaSession, null);
-            }
+            //Chama o método para processar o evento
+            ProcessarEventoMediaSession(OutEventType, ref OutEvent);
 
-            //Informa o evento gerado.
-            Debug.WriteLine("Evento gerado: " + OutEventType.ToString());
+            //Chama o proximo evento na lista.
+            Resultado = myMediaSession.MediaSession.BeginGetEvent(myMediaSession.CallbackMediaSession, null);
+
+            //Verifica se não houve erro
+            if (Resultado.StatusCode != ResultCode.SS_OK)
+            {
+                //Falhou ao realizar a operação.
+
+                //Chama uma mensagem de erro.
+                ShowMensagem("Ocorreu uma falha ao tentar solicitar o proximo evento assincrona da Media Session!", true);
+
+                //Sai do método.
+                goto Done;
+            }
 
         Done:;
             //Libera o ponteiro para o evento.
@@ -582,6 +791,50 @@ namespace MediaSessionPlaybackTest
             return ResultCode.SS_OK;
         }
 
+        #endregion
+
+        #region Eventos dos controles do formulario.
+        private void TrackBarVolume_ValueChanged(object sender, EventArgs e)
+        {
+            //Sincroniza o acesso ao controle de volume.
+            lock (Obj_SyncVolume)
+            {
+                //Verifica se o controle de volume é valido.
+                if (myMediaSession.AudioVolumePlayback is not null && myMediaSession.AudioVolumePlayback.StatusPonteiro().StatusCode == ResultCode.SS_OK)
+                    myMediaSession.AudioVolumePlayback.SetMasterVolume((TrackBarVolume.Value == 0? 0.0f: ( (float)(TrackBarVolume.Value) / TrackBarVolume.Maximum) )); //Define o nivel de volume maximo. O valor vai de (0.0 A 1.0)
+            }
+        }
+
+        private void PanelRender_SizeChanged(object sender, EventArgs e)
+        {
+            //Sincroniza o acesso.
+            lock (Obj_SyncVideoPos)
+            {
+                //Verifica se o vídeo está sendo reproduzido antes de realizar a operação.
+                if (StatusPlayback == StatusRendering.Rendering)
+                {
+                    //Pausa a Media Session.
+                    myMediaSession.MediaSession.Pause();
+
+                    //Define a nova posicação dos retangulos do video.
+                    CarenResult Resultado = myMediaSession.DisplayPlaybackControl.SetVideoPosition(new CA_MFVideoNormalizedRect() { right = 1, bottom = 1 }, new CA_RECT() { Rigth = PanelRender.Width, Left = 0, Bottom = PanelRender.Height, Top = 0 });
+
+                    //Repinta a superfice.
+                    myMediaSession.DisplayPlaybackControl.RepaintSuperfice();
+
+                    //Inicia novamente a media session.
+                    myMediaSession.MediaSession.Start(null, new CA_PROPVARIANT() { vt = CA_VARTYPE.VT_EMPTY });
+                }
+            }
+        }
+
+        private void PanelRender_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (PanelControlPlayback.Visible)
+                PanelControlPlayback.Visible = false;
+            else
+                PanelControlPlayback.Visible = true;
+        }
         #endregion
 
         private void MediaSessionPlayback_Load(object sender, EventArgs e)

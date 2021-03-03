@@ -314,8 +314,8 @@ public:
 	/// <summary>
 	/// Obtém o formato de saída para um fluxo nesta pia de captura.
 	/// </summary>
-	/// <param name="Nome_Parametro">O índice baseado em zero do fluxo para consulta. O índice é devolvido no parâmetro (Param_Out_SinkStreamIndex) do método ICarenMFCaptureSink::AddStream.</param>
-	/// <param name="Nome_Parametro">Retorna uma interface ICarenMFMediaType com o formato do tipo de midia no fluxo especificado. O usuário é responsável por liberar a interface.</param>
+	/// <param name="Param_SinkStreamIndex">O índice baseado em zero do fluxo para consulta. O índice é devolvido no parâmetro (Param_Out_SinkStreamIndex) do método ICarenMFCaptureSink::AddStream.</param>
+	/// <param name="Param_Out_MediaType">Retorna uma interface ICarenMFMediaType com o formato do tipo de midia no fluxo especificado. O usuário é responsável por liberar a interface.</param>
 	virtual CarenResult GetOutputMediaType(
 		UInt32 Param_SinkStreamIndex,
 		[Out] ICarenMFMediaType^% Param_Out_MediaType);

@@ -66,7 +66,7 @@ void IniciarPropVariant(LPPROPVARIANT* Param_PropPointerInit);
 /// <summary>
 /// Função responsável por deletar completamente os dados e a memória alocada para um objeto PROPVARIANT.
 /// </summary>
-/// <param name="Param_PropPointerInit">Um ponteiro que leva a um endereço onde está um objeto alocado PROPVARIANT.</param>
+/// <param name="Param_PropPointer">Um ponteiro que leva a um endereço onde está um objeto alocado PROPVARIANT.</param>
 void DeletarPropVariantSafe(LPPROPVARIANT* Param_PropPointer);
 
 /// <summary>

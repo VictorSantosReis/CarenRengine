@@ -289,7 +289,7 @@ public:
 	/// o retorno de chamada é garantido para ser chamado com o progresso 1.0. WICProgressNotificaçãoFrequent aumenta a frequência em que o retorno de chamada é chamado. Se uma operação 
 	/// for esperada para levar mais de 30 segundos, o WICProgressNotificationFrequent deve ser adicionado ao (Param_FlagsProgresso).
 	/// </summary>
-	/// <param name="Param_CallbackPointer">Uma interface(ICaren) que contém um ponteiro de função para a função de chamada de notificação de progresso definida pelo aplicativo.</param>
+	/// <param name="Param_Callback">Uma interface(ICaren) que contém um ponteiro de função para a função de chamada de notificação de progresso definida pelo aplicativo.</param>
 	/// <param name="Param_ComponenteData">Uma interface(ICaren) que contém um ponteiro para componente de dados para o método de retorno de chamada.</param>
 	/// <param name="Param_FlagsProgresso">As bandeiras CA_WICProgressOperation e CA_WICProgressNotification para uso para notificação de progresso.</param>
 	virtual CarenResult RegisterProgressNotification(

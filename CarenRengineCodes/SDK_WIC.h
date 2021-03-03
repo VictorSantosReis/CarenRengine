@@ -754,7 +754,7 @@ namespace CarenRengine
 			/// o retorno de chamada é garantido para ser chamado com o progresso 1.0. WICProgressNotificaçãoFrequent aumenta a frequência em que o retorno de chamada é chamado. Se uma operação 
 			/// for esperada para levar mais de 30 segundos, o WICProgressNotificationFrequent deve ser adicionado ao (Param_FlagsProgresso).
 			/// </summary>
-			/// <param name="Param_CallbackPointer">Uma interface(ICaren) que contém um ponteiro de função para a função de chamada de notificação de progresso definida pelo aplicativo.</param>
+			/// <param name="Param_Callback">Uma interface(ICaren) que contém um ponteiro de função para a função de chamada de notificação de progresso definida pelo aplicativo.</param>
 			/// <param name="Param_ComponenteData">Uma interface(ICaren) que contém um ponteiro para componente de dados para o método de retorno de chamada.</param>
 			/// <param name="Param_FlagsProgresso">As bandeiras CA_WICProgressOperation e CA_WICProgressNotification para uso para notificação de progresso.</param>
 			CarenResult RegisterProgressNotification(
@@ -1710,7 +1710,7 @@ namespace CarenRengine
 			/// <summary>
 			/// Recupera os formatos de contêiner suportados pelo manipulador de metadados. 
 			/// </summary>
-			/// <param name="Param_TamanhoArray"><O tamanho da matriz (Param_Out_ArrayGuidsFormatosContainer)./param>
+			/// <param name="Param_TamanhoArray"><O tamanho da matriz (Param_Out_ArrayGuidsFormatosContainer).</param>
 			/// <param name="Param_Out_ArrayGuidsFormatosContainer">Retorna uma matriz que recebe os formatos de contêiner suportados pelo manipulador de metadados. O usuário deve criar matriz com a capacidade
             /// indicada no (Param_TamanhoArray).</param>
 			/// <param name="Param_Out_QuantidadeRetornada">Retorna o número real de GUIDs adicionados à matriz. Para obter o número de formatos de contêiner suportados, 
@@ -1735,7 +1735,7 @@ namespace CarenRengine
 			/// Recupera os modelos do dispositivo que suportam o manipulador de metadados. 
 			/// </summary>
 			/// <param name="Param_TamanhoBufferString">O tamanho da String em (Param_Ref_DeviceModels).</param>
-			/// <param name="Param_Out_DeviceModels">Retorna os modelos do dispositivo suportados pelo manipulador de metadados.</param>
+			/// <param name="Param_Ref_DeviceModels">Retorna os modelos do dispositivo suportados pelo manipulador de metadados.</param>
 			/// <param name="Param_Out_LarguraReal">Retorna o comprimento real necessário para recuperar os modelos do dispositivo.</param>
 			CarenResult GetDeviceModels(
 				UInt32 Param_TamanhoBufferString,
@@ -3524,6 +3524,7 @@ namespace CarenRengine
 			/// e ICarenWICBitmapFrameEncode::SetPixelFormat devem ser chamados antes deste método ou ele falhará.
 			/// O formato de pixel intercalado definido via ICarenWICBitmapFrameEncode::SetPixelFormat e os parâmetros de codificação específicos do codec determinam os formatos planar suportados.
 			/// <param name="Param_LineCount">O número de linhas para codificar. Consulte a seção Observações para restrições específicas de contagem de linhas do WIC Jpeg.</param>
+			/// </summary>
 			/// <param name="Param_Planes">Especifica os buffers de origem para cada plano componente codificado.</param>
 			/// <param name="Param_QuantidadePlanes">O número de planos componentes especificados pelo parâmetro (Param_Planes).</param>
 			CarenResult WritePixels(

@@ -43,7 +43,7 @@ public:
 	/// <summary>
 	/// Método responsável por associar uma Thread de chamada com uma tarefa especifica.
 	/// Chame o método (_AvRevertMmThreadCharacteristics) quando a thread não for mais executar chamadas de áudio.
-	/// Está função deve ser utilizada por aplicativos de Audio e (Video & Audio) para diminuir a latência.
+	/// Está função deve ser utilizada por aplicativos de Audio e (Video e Audio) para diminuir a latência.
 	/// </summary>
 	/// <param name="Param_NameTask">O nome da task a qual a thread será associada. Este valor deve corresponder a algum valor da estrutura (CA_Windows_MMCSS_Multimedia_Name_Tasks).</param>
 	/// <param name="Param_Out_TaskIndex">O identificador de tarefas único. Na primeira vez que esta função é chamada, este valor deve ser 0 na entrada. O valor do índice é devolvido na saída e pode ser usado como entrada em chamadas subsequentes.</param>

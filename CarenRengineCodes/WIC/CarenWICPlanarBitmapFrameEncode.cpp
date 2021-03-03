@@ -402,6 +402,7 @@ void CarenWICPlanarBitmapFrameEncode::Finalizar()
 /// As chamadas WritePixels sucessivas são assumidas adicionando linhas de varredura sequencialmente à imagem de saída. ICarenWICBitmapFrameEncode::Initialize, ICarenWICBitmapFrameEncode::SetSize 
 /// e ICarenWICBitmapFrameEncode::SetPixelFormat devem ser chamados antes deste método ou ele falhará.
 /// O formato de pixel intercalado definido via ICarenWICBitmapFrameEncode::SetPixelFormat e os parâmetros de codificação específicos do codec determinam os formatos planar suportados.
+/// </summary>
 /// <param name="Param_LineCount">O número de linhas para codificar. Consulte a seção Observações para restrições específicas de contagem de linhas do WIC Jpeg.</param>
 /// <param name="Param_Planes">Especifica os buffers de origem para cada plano componente codificado.</param>
 /// <param name="Param_QuantidadePlanes">O número de planos componentes especificados pelo parâmetro (Param_Planes).</param>

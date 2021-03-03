@@ -82,7 +82,6 @@ public:
 	/// </summary>
 	/// <param name="Param_Width">Largura da imagem, em pixels.</param>
 	/// <param name="Param_Height">Altura da imagem, em pixels.</param>
-	/// <param name="Param_D3DFormat">Um código FOURCC que especifica o formato de vídeo. Se você tiver um subtipo de vídeo GUID, você pode usar o primeiro DWORD do subtipo.</param>
 	/// <param name="Param_BottomUp">Se TRUE, o método ICarenMF2DBuffer::ContiguousCopyTo copia o buffer em um formato de baixo para cima. O formato de baixo para cima é compatível com GDI para imagens RGB não compactadas. 
 	/// Se este parâmetro for FALSE, o método ContiguousCopyTo copia o buffer em um formato de cima para baixo, compatível com o DirectX.</param>
 	CarenMFMediaBuffer(UInt32 Param_Width, UInt32 Param_Height, UInt32 Param_FourCC, Boolean Param_BottomUp);

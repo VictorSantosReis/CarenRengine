@@ -236,7 +236,7 @@ public:
 	/// </summary>
 	/// <param name="Param_AtributosSerialize">Uma interface de atributos que será serializada para o fluxo.</param>
 	/// <param name="Param_Flags">‎Bitwise ‎‎OR‎‎ de zero ou mais bandeiras da enumeração ‎‎CA_MF_ATTRIBUTE_SERIALIZE_OPTIONS.‎</param>
-	/// <param name="Param_Stream">Uma interface ‎‎ICarenStream‎‎ do fluxo onde os atributos são salvos.‎</param>
+	/// <param name="Param_StreamDestino">Uma interface ‎‎ICarenStream‎‎ do fluxo onde os atributos são salvos.‎</param>
 	/// <returns></returns>
 	CarenResult _MFSerializeAttributesToStream(ICarenMFAttributes^ Param_AtributosSerialize, CA_MF_ATTRIBUTE_SERIALIZE_OPTIONS Param_Flags, ICarenStream^ Param_StreamDestino);
 
@@ -975,7 +975,7 @@ public:
 	/// Cria uma instância do AC-3 media sink.
 	/// </summary>
 	/// <param name="Param_ByteStream">Um a interface ICarenMFByteStream de um fluxo byte. O Media Sink grava o arquivo AC-3 para este fluxo de byte. O fluxo de byte deve ser escrito.</param>
-	/// <param name="Param_AudioType">Uma interface ICarenMFMediaType. Este parâmetro especifica o tipo de mídia para o fluxo de áudio AC-3. O tipo de mídia deve conter os seguintes atributos: MF_MT_MAJOR_TYPE & MF_MT_SUBTYPE</param>
+	/// <param name="Param_AudioType">Uma interface ICarenMFMediaType. Este parâmetro especifica o tipo de mídia para o fluxo de áudio AC-3. O tipo de mídia deve conter os seguintes atributos: MF_MT_MAJOR_TYPE e MF_MT_SUBTYPE</param>
 	/// <param name="Param_Out_MediaSink">Retorna a interface (ICarenMFMediaSink) do coletor de mídia 3GP(Media Sink). O usuário deve inicializar a interface antes de chamar este método.</param>
 	/// <returns></returns>
 	CarenResult _MFCreateAC3MediaSink(ICarenMFByteStream^ Param_ByteStream, ICarenMFMediaType^ Param_AudioType, ICarenMFMediaSink^ Param_Out_MediaSink);
@@ -984,7 +984,7 @@ public:
 	/// Cria uma instância do media sink do fluxo de transporte de dados de áudio (ADTS).
 	/// </summary>
 	/// <param name="Param_ByteStream">Um a interface ICarenMFByteStream de um fluxo byte. O Media Sink grava o fluxo ADTS para este fluxo byte. O fluxo de byte deve ter permissão de escrita.</param>
-	/// <param name="Param_AudioType">Uma interface ICarenMFMediaType. Este parâmetro especifica o tipo de mídia para o fluxo ADTS. O tipo de mídia deve conter os seguintes atributos: MF_MT_MAJOR_TYPE & MF_MT_SUBTYPE & MF_MT_AAC_PAYLOAD_TYPE</param>
+	/// <param name="Param_AudioType">Uma interface ICarenMFMediaType. Este parâmetro especifica o tipo de mídia para o fluxo ADTS. O tipo de mídia deve conter os seguintes atributos: MF_MT_MAJOR_TYPE e MF_MT_SUBTYPE e MF_MT_AAC_PAYLOAD_TYPE</param>
 	/// <param name="Param_Out_MediaSink">Retorna a interface (ICarenMFMediaSink). O usuário deve inicializar a interface antes de chamar este método.</param>
 	/// <returns></returns>
 	CarenResult _MFCreateADTSMediaSink(ICarenMFByteStream^ Param_ByteStream, ICarenMFMediaType^ Param_AudioType, ICarenMFMediaSink^ Param_Out_MediaSink);

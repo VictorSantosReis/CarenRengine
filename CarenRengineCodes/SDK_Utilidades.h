@@ -504,10 +504,10 @@ namespace CarenRengine
 				CA_RECT^ EstruturaRetorno = gcnew CA_RECT();
 
 				//Define os dados da estrutura.
-				EstruturaRetorno->Direita = Param_Estrutura->right;
-				EstruturaRetorno->Esquerda = Param_Estrutura->left;
-				EstruturaRetorno->Fundo = Param_Estrutura->bottom;
-				EstruturaRetorno->Topo = Param_Estrutura->top;
+				EstruturaRetorno->Rigth = Param_Estrutura->right;
+				EstruturaRetorno->Left = Param_Estrutura->left;
+				EstruturaRetorno->Bottom = Param_Estrutura->bottom;
+				EstruturaRetorno->Top = Param_Estrutura->top;
 
 				//Retorna a estrutura
 				return EstruturaRetorno;
@@ -520,10 +520,10 @@ namespace CarenRengine
 				PRECT EstruturaRetorno = CriarEstrutura<RECT>();
 
 				//Define os dados na estrutura.
-				EstruturaRetorno->right = Param_Estrutura->Direita;
-				EstruturaRetorno->left = Param_Estrutura->Esquerda;
-				EstruturaRetorno->bottom = Param_Estrutura->Fundo;
-				EstruturaRetorno->top = Param_Estrutura->Topo;
+				EstruturaRetorno->right = Param_Estrutura->Rigth;
+				EstruturaRetorno->left = Param_Estrutura->Left;
+				EstruturaRetorno->bottom = Param_Estrutura->Bottom;
+				EstruturaRetorno->top = Param_Estrutura->Top;
 
 				//Retorna a estrutura não gerenciada
 				return EstruturaRetorno;
@@ -7654,10 +7654,10 @@ namespace CarenRengine
 					EstruturaRetorno->DestinationRect = { 0 };
 
 					//Define os dados.
-					EstruturaRetorno->DestinationRect.left = Param_Estrutura->DestinationRect->Esquerda;
-					EstruturaRetorno->DestinationRect.right = Param_Estrutura->DestinationRect->Direita;
-					EstruturaRetorno->DestinationRect.top = Param_Estrutura->DestinationRect->Topo;
-					EstruturaRetorno->DestinationRect.bottom = Param_Estrutura->DestinationRect->Fundo;
+					EstruturaRetorno->DestinationRect.left = Param_Estrutura->DestinationRect->Left;
+					EstruturaRetorno->DestinationRect.right = Param_Estrutura->DestinationRect->Rigth;
+					EstruturaRetorno->DestinationRect.top = Param_Estrutura->DestinationRect->Top;
+					EstruturaRetorno->DestinationRect.bottom = Param_Estrutura->DestinationRect->Bottom;
 				}
 				if (ObjetoGerenciadoValido(Param_Estrutura->SourcePoint))
 				{
@@ -7684,10 +7684,10 @@ namespace CarenRengine
 				EstruturaRetorno->SourcePoint = gcnew CA_POINT();
 
 				//Define os dados na estrutura de destino do retangulo.
-				EstruturaRetorno->DestinationRect->Direita = Param_Estrutura->DestinationRect.right;
-				EstruturaRetorno->DestinationRect->Esquerda = Param_Estrutura->DestinationRect.left;
-				EstruturaRetorno->DestinationRect->Topo = Param_Estrutura->DestinationRect.top;
-				EstruturaRetorno->DestinationRect->Fundo = Param_Estrutura->DestinationRect.bottom;
+				EstruturaRetorno->DestinationRect->Rigth = Param_Estrutura->DestinationRect.right;
+				EstruturaRetorno->DestinationRect->Left = Param_Estrutura->DestinationRect.left;
+				EstruturaRetorno->DestinationRect->Top = Param_Estrutura->DestinationRect.top;
+				EstruturaRetorno->DestinationRect->Bottom = Param_Estrutura->DestinationRect.bottom;
 
 				//Define os dados na estrutura de ponto
 				EstruturaRetorno->SourcePoint->X = Param_Estrutura->SourcePoint.x;
@@ -8007,10 +8007,10 @@ namespace CarenRengine
 				if (ObjetoGerenciadoValido(Param_Estrutura->DesktopCoordinates))
 				{
 					//Preenche os dados.
-					EstruturaRetorno->DesktopCoordinates.top = Param_Estrutura->DesktopCoordinates->Topo;
-					EstruturaRetorno->DesktopCoordinates.bottom = Param_Estrutura->DesktopCoordinates->Fundo;
-					EstruturaRetorno->DesktopCoordinates.right = Param_Estrutura->DesktopCoordinates->Direita;
-					EstruturaRetorno->DesktopCoordinates.left = Param_Estrutura->DesktopCoordinates->Esquerda;
+					EstruturaRetorno->DesktopCoordinates.top = Param_Estrutura->DesktopCoordinates->Top;
+					EstruturaRetorno->DesktopCoordinates.bottom = Param_Estrutura->DesktopCoordinates->Bottom;
+					EstruturaRetorno->DesktopCoordinates.right = Param_Estrutura->DesktopCoordinates->Rigth;
+					EstruturaRetorno->DesktopCoordinates.left = Param_Estrutura->DesktopCoordinates->Left;
 				}
 
 				//Retorna
@@ -8042,10 +8042,10 @@ namespace CarenRengine
 				EstruturaRetorno->DesktopCoordinates = gcnew CA_RECT();
 
 				//Define as coordenadas
-				EstruturaRetorno->DesktopCoordinates->Topo = Param_Estrutura->DesktopCoordinates.top;
-				EstruturaRetorno->DesktopCoordinates->Fundo = Param_Estrutura->DesktopCoordinates.bottom;
-				EstruturaRetorno->DesktopCoordinates->Direita = Param_Estrutura->DesktopCoordinates.right;
-				EstruturaRetorno->DesktopCoordinates->Esquerda = Param_Estrutura->DesktopCoordinates.left;
+				EstruturaRetorno->DesktopCoordinates->Top = Param_Estrutura->DesktopCoordinates.top;
+				EstruturaRetorno->DesktopCoordinates->Bottom = Param_Estrutura->DesktopCoordinates.bottom;
+				EstruturaRetorno->DesktopCoordinates->Rigth = Param_Estrutura->DesktopCoordinates.right;
+				EstruturaRetorno->DesktopCoordinates->Left = Param_Estrutura->DesktopCoordinates.left;
 
 
 				//Retorna a variavel.
@@ -8127,10 +8127,10 @@ namespace CarenRengine
 					EstruturaRetorno->DesktopCoordinates = { 0 };
 
 					//Preenche os dados.
-					EstruturaRetorno->DesktopCoordinates.top = Param_Estrutura->DesktopCoordinates->Topo;
-					EstruturaRetorno->DesktopCoordinates.bottom = Param_Estrutura->DesktopCoordinates->Fundo;
-					EstruturaRetorno->DesktopCoordinates.right = Param_Estrutura->DesktopCoordinates->Direita;
-					EstruturaRetorno->DesktopCoordinates.left = Param_Estrutura->DesktopCoordinates->Esquerda;
+					EstruturaRetorno->DesktopCoordinates.top = Param_Estrutura->DesktopCoordinates->Top;
+					EstruturaRetorno->DesktopCoordinates.bottom = Param_Estrutura->DesktopCoordinates->Bottom;
+					EstruturaRetorno->DesktopCoordinates.right = Param_Estrutura->DesktopCoordinates->Rigth;
+					EstruturaRetorno->DesktopCoordinates.left = Param_Estrutura->DesktopCoordinates->Left;
 				}
 
 				//Retorna
@@ -8187,10 +8187,10 @@ namespace CarenRengine
 				EstruturaRetorno->DesktopCoordinates = gcnew CA_RECT();
 				
 				//Define as coordenadas
-				EstruturaRetorno->DesktopCoordinates->Topo = Param_Estrutura->DesktopCoordinates.top;
-				EstruturaRetorno->DesktopCoordinates->Fundo = Param_Estrutura->DesktopCoordinates.bottom;
-				EstruturaRetorno->DesktopCoordinates->Direita = Param_Estrutura->DesktopCoordinates.right;
-				EstruturaRetorno->DesktopCoordinates->Esquerda = Param_Estrutura->DesktopCoordinates.left;
+				EstruturaRetorno->DesktopCoordinates->Top = Param_Estrutura->DesktopCoordinates.top;
+				EstruturaRetorno->DesktopCoordinates->Bottom = Param_Estrutura->DesktopCoordinates.bottom;
+				EstruturaRetorno->DesktopCoordinates->Rigth = Param_Estrutura->DesktopCoordinates.right;
+				EstruturaRetorno->DesktopCoordinates->Left = Param_Estrutura->DesktopCoordinates.left;
 
 
 				//Retorna a variavel.
@@ -8281,10 +8281,10 @@ namespace CarenRengine
 					//Faz um for para adicionar os dados a matriz de rects.
 					for (UINT i = 0; i < EstruturaRetorno->DirtyRectsCount; i++)
 					{
-						EstruturaRetorno->pDirtyRects[i].bottom = Param_Estrutura->pDirtyRects[i]->Fundo;
-						EstruturaRetorno->pDirtyRects[i].top = Param_Estrutura->pDirtyRects[i]->Topo;
-						EstruturaRetorno->pDirtyRects[i].right = Param_Estrutura->pDirtyRects[i]->Direita;
-						EstruturaRetorno->pDirtyRects[i].left = Param_Estrutura->pDirtyRects[i]->Esquerda;
+						EstruturaRetorno->pDirtyRects[i].bottom = Param_Estrutura->pDirtyRects[i]->Bottom;
+						EstruturaRetorno->pDirtyRects[i].top = Param_Estrutura->pDirtyRects[i]->Top;
+						EstruturaRetorno->pDirtyRects[i].right = Param_Estrutura->pDirtyRects[i]->Rigth;
+						EstruturaRetorno->pDirtyRects[i].left = Param_Estrutura->pDirtyRects[i]->Left;
 					}
 				}
 				else
@@ -8344,10 +8344,10 @@ namespace CarenRengine
 					for (UINT i = 0; i < EstruturaRetorno->DirtyRectsCount; i++)
 					{
 						//Define os dados na estrutura.
-						EstruturaRetorno->pDirtyRects[i]->Fundo = Param_Estrutura->pDirtyRects[i].bottom;
-						EstruturaRetorno->pDirtyRects[i]->Topo = Param_Estrutura->pDirtyRects[i].top;
-						EstruturaRetorno->pDirtyRects[i]->Direita = Param_Estrutura->pDirtyRects[i].right;
-						EstruturaRetorno->pDirtyRects[i]->Esquerda = Param_Estrutura->pDirtyRects[i].left;
+						EstruturaRetorno->pDirtyRects[i]->Bottom = Param_Estrutura->pDirtyRects[i].bottom;
+						EstruturaRetorno->pDirtyRects[i]->Top = Param_Estrutura->pDirtyRects[i].top;
+						EstruturaRetorno->pDirtyRects[i]->Rigth = Param_Estrutura->pDirtyRects[i].right;
+						EstruturaRetorno->pDirtyRects[i]->Left = Param_Estrutura->pDirtyRects[i].left;
 					}
 				}
 				else

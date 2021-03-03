@@ -70,7 +70,7 @@ public:
 	/// Inicializa e cria um novo contexto de dispositivo Direct2D associado a uma superfície DXGI.
 	/// Esta função também criará um novo ICarenD2D1Factory1 que pode ser recuperado através do ICarenD2D1Resource::GetFactory.
 	/// </summary>
-	/// <param name="Param_DXGIDevice">A superfície DXGI com a do que o contexto do dispositivo Direct2D está associado.</param>
+	/// <param name="Param_DXGISurface">A superfície DXGI com a do que o contexto do dispositivo Direct2D está associado.</param>
 	/// <param name="Param_PropsCreate">As propriedades a serem aplicadas ao dispositivo Direct2D.</param>
 	CarenD2D1DeviceContext(ICarenDXGISurface^ Param_DXGISurface, CA_D2D1_CREATION_PROPERTIES^ Param_PropsCreate);
 

@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 //Importa os SDKs base.
@@ -18,7 +19,6 @@ using CarenRengine.CarenCodesStatus;
 
 //Importa o SDK da Media Foundation.
 using CarenRengine.MediaFoundation;
-using System.Diagnostics;
 
 namespace MediaSessionPlaybackTest
 {
@@ -34,16 +34,18 @@ namespace MediaSessionPlaybackTest
         {
             public ICarenMFSourceResolver ResolvedorMidia { get; set; }
             public ICarenMFMediaSource SourceMidia { get; set; }
-            public ICarenMFTopology TopologiaCompleta { get; set; }
+            public ICarenMFTopology Topologia { get; set; }
             public ICarenMFAsyncCallback CallbackMediaSession { get; set; }
             public ICarenMFAsyncCallback CallbackCreateMediaSource { get; set; }
             public ICarenMFMediaSession MediaSession { get; set; }
-
             public ICarenMFPresentationDescriptor DescritorMidia;
+            public ICarenMFClock Relogio;
+            public ICarenMFPresentationClock RelogioApresentacao { get; set; }
             public ICarenMFVideoDisplayControl DisplayPlaybackControl { get; set; }
             public ICarenMFSimpleAudioVolume AudioVolumePlayback { get; set; }
 
 
+            public UInt64 TotalTimeMidiaNs { get; set; }
             public UInt64 TotalTimeMidiaSegundos { get; set; }
             public UInt32 TotalStreamMediaSource;
             public String UrlMidia { get; set; }
@@ -59,7 +61,9 @@ namespace MediaSessionPlaybackTest
 
             Paused,
 
-            Stoped
+            Stoped,
+
+            Closed
         }
         #endregion
 
@@ -73,6 +77,8 @@ namespace MediaSessionPlaybackTest
         private readonly object Obj_SyncVolume = new object();
 
         private readonly object Obj_SyncVideoPos = new object();
+
+        private UInt64 REFTIME_1_SEGUNDO = (UInt64)Math.Pow(10, 7); //Valor que se refere a 1 segundo de mídia em unidades de 100 nanossegundos.
         #endregion
 
 
@@ -168,7 +174,7 @@ namespace MediaSessionPlaybackTest
             CarenResult Resultado = ResultCode.SS_OK;
 
             //Cria a topologia
-            myMediaSession.TopologiaCompleta = new CarenMFTopology(true);
+            myMediaSession.Topologia = new CarenMFTopology(true);
 
             //Cria um for para criar os nós de topologia para os fluxos da midia carregada.
             for (uint i = 0; i < myMediaSession.TotalStreamMediaSource; i++)
@@ -372,7 +378,7 @@ namespace MediaSessionPlaybackTest
             Param_OutNode.SetUnknown(GUIDs_MFAttributes_TopologyNode.MF_TOPONODE_STREAM_DESCRIPTOR, Param_StreamDesc);
 
             //Adiciona o nó a topologia.
-            Resultado = myMediaSession.TopologiaCompleta.AddNode(Param_OutNode);
+            Resultado = myMediaSession.Topologia.AddNode(Param_OutNode);
 
             //Verifica se não houve erro
             if (Resultado.StatusCode != ResultCode.SS_OK)
@@ -421,7 +427,7 @@ namespace MediaSessionPlaybackTest
             }
 
             //Adiciona o nó a topologia.
-            Resultado = myMediaSession.TopologiaCompleta.AddNode(Param_OutNode);
+            Resultado = myMediaSession.Topologia.AddNode(Param_OutNode);
 
             //Verifica se não houve erro
             if (Resultado.StatusCode != ResultCode.SS_OK)
@@ -483,6 +489,36 @@ namespace MediaSessionPlaybackTest
                 goto Done;
             }
 
+            //Recupera o relogio Associado.
+            Resultado = myMediaSession.MediaSession.GetClock(out myMediaSession.Relogio);
+
+            //Verifica se não houve erro
+            if (Resultado.StatusCode != ResultCode.SS_OK)
+            {
+                //Falhou ao realizar a operação.
+
+                //Chama uma mensagem de erro.
+                ShowMensagem("Ocorreu uma falha ao tentar recupera o relogio associado a reprodução!", true);
+
+                //Sai do método.
+                goto Done;
+            }
+
+            //Obtém o relogio de apresentação.
+            myMediaSession.Relogio.ConsultarInterface(GUIDs_InterfacesMediaFoundation.IID_IMFPresentationClock, myMediaSession.RelogioApresentacao = new CarenMFPresentationClock(false));
+
+            //Verifica se não houve erro
+            if (Resultado.StatusCode != ResultCode.SS_OK)
+            {
+                //Falhou ao realizar a operação.
+
+                //Chama uma mensagem de erro.
+                ShowMensagem("Ocorreu uma falha ao tentar recupera o relogio de apresentação da mídia!", true);
+
+                //Sai do método.
+                goto Done;
+            }
+
         Done:;
 
             //Retorna o resultado.
@@ -514,15 +550,35 @@ namespace MediaSessionPlaybackTest
                 case CA_MediaEventType.MESessionTopologiesCleared:
                     break;
                 case CA_MediaEventType.MESessionStarted:
+                    //Define que está renderizando.
                     StatusPlayback = StatusRendering.Rendering;
                     break;
                 case CA_MediaEventType.MESessionPaused:
+                    //Define que está pausado.
                     StatusPlayback = StatusRendering.Paused;
                     break;
                 case CA_MediaEventType.MESessionStopped:
+                    //Define que a sessão de mídia foi parada.
                     StatusPlayback = StatusRendering.Stoped;
+
+                    //Chama o método para fechar a Media Session.
+                    Resultado = myMediaSession.MediaSession.Close();
+
+                    //Verifica se não houve erro
+                    if (Resultado.StatusCode != ResultCode.SS_OK)
+                    {
+                        //Falhou ao realizar a operação.
+
+                        //Chama uma mensagem de erro.
+                        ShowMensagem("Ocorreu uma falha ao tentar fechar a Media Session.", true);
+                    }
                     break;
                 case CA_MediaEventType.MESessionClosed:
+                    //Define que a media session foi fechada.
+                    StatusPlayback = StatusRendering.Closed;
+
+                    //Chama o método para concluir a liberação de todas as interfaces.
+                    LiberarInterfaces();
                     break;
                 case CA_MediaEventType.MESessionEnded:
                     break;
@@ -608,6 +664,79 @@ namespace MediaSessionPlaybackTest
         }
         #endregion
 
+        #region Métodos para obter informações sobre a renderização e controlar os dados.
+
+        /// <summary>
+        /// Retorna o tempo total da midia em unidades de 100 nanossegundos.
+        /// </summary>
+        /// <returns></returns>
+        public UInt64 ObterTempoTotalMidia()
+        {
+            //Variavel a ser retornada.
+            UInt64 TotalTimeRender = 0;
+
+            //Obtém o tempo total da midia.
+            CarenResult Resultado = myMediaSession.DescritorMidia.GetUINT64(GUIDs_MFAttributes_PresentationDescriptor.MF_PD_DURATION, out TotalTimeRender);
+
+            //Verifica se não houve erro
+            if (Resultado.StatusCode != ResultCode.SS_OK)
+            {
+                //Falhou ao realizar a operação.
+
+                //Define erro.
+                TotalTimeRender = 0;
+            }
+
+            //Retorna o resultado.
+            return TotalTimeRender;
+        }
+
+        /// <summary>
+        /// Retorna o tempo atual de reprodução em unidades de 100 nanossegundos.
+        /// </summary>
+        /// <returns></returns>
+        public Int64 ObterPosicaoRelogioApresentacao()
+        {
+            //Variavel a ser retornada.
+            Int64 CurrentPosition = 0;
+
+            //Chama o método para recuperar o tempo atual de reprodução.
+            CarenResult Resultado = myMediaSession.RelogioApresentacao.GetTime(out CurrentPosition);
+
+            //Verifica se não houve erro
+            if (Resultado.StatusCode != ResultCode.SS_OK)
+            {
+                //Falhou ao realizar a operação.
+
+                //Define erro.
+                CurrentPosition = -1;
+            }
+
+            //Retorna o resultado
+            return CurrentPosition;
+        }
+
+        /// <summary>
+        /// Define uma nova posição de reprodução da midia.
+        /// </summary>
+        /// <param name="Param_NovaPosition">O valor da nova posição de reprodução em unidades de 100 nanossegundos.</param>
+        /// <returns></returns>
+        public CarenResult DefinirNovaPosicaoReproducao(Int64 Param_NovaPosition)
+        {
+            //Variavel a ser retornada.
+            CarenResult Resultado = ResultCode.ER_FAIL;
+
+            //Variaveis
+            CA_PROPVARIANT PropVar = new CA_PROPVARIANT() { vt = CA_VARTYPE.VT_I8, hVal = new CA_LARGE_INTEGER() { QuadPart = Param_NovaPosition } };
+
+            //Chama o método para definir a nova posição de reprodução.
+            Resultado = myMediaSession.MediaSession.Start(null, PropVar);
+
+            //Retorna o resultado.
+            return Resultado;
+        }
+        #endregion
+
         #region Métodos Auxiliares
         public void ShowMensagem(String Mensagem, Boolean ErrorMsg = false)
         {
@@ -626,6 +755,57 @@ namespace MediaSessionPlaybackTest
                 //Chama o finalizador.
                 Param_Base.Finalizar();
             }
+        }
+
+        public void LiberarInterfaces()
+        {
+            //Libera as interfaces de callback.
+            SafeReleaseInterface(myMediaSession.CallbackMediaSession);
+            SafeReleaseInterface(myMediaSession.CallbackCreateMediaSource);
+
+            //Verifica se a fonte de midia é valida ainda e libera seus dados.
+            if (myMediaSession.MediaSession is not null & myMediaSession.MediaSession.StatusPonteiro().StatusCode == ResultCode.SS_OK)
+            {
+                //Libera as interfaces auxiliares.
+                SafeReleaseInterface(myMediaSession.AudioVolumePlayback);
+                SafeReleaseInterface(myMediaSession.DisplayPlaybackControl);
+                SafeReleaseInterface(myMediaSession.RelogioApresentacao);
+                SafeReleaseInterface(myMediaSession.Relogio);
+                SafeReleaseInterface(myMediaSession.DescritorMidia);
+                SafeReleaseInterface(myMediaSession.Topologia);
+
+                //Limpa a topologia da media session.
+                myMediaSession.MediaSession.ClearTopologies();
+
+                //Verifica se a Media Session chamou o Metodo Close, se não vai chamar.
+                if (StatusPlayback != StatusRendering.Closed)
+                    myMediaSession.MediaSession.Close();
+
+                //Chama o shutdown na media session.
+                myMediaSession.MediaSession.Shutdown();
+
+                //Libera seu ponteiro.
+                SafeReleaseInterface(myMediaSession.MediaSession);
+            }
+
+            //Libera a fonte de midia utilizada pela Media Session
+            if(myMediaSession.SourceMidia is not null & myMediaSession.SourceMidia.StatusPonteiro().StatusCode == ResultCode.SS_OK)
+            {
+                //Desliga a fonte de midia.
+                myMediaSession.SourceMidia.Shutdown();
+
+                //Libera seu ponteiro.
+                SafeReleaseInterface(myMediaSession.SourceMidia);
+            }
+
+            //Libera o restante das interfaces.
+            SafeReleaseInterface(myMediaSession.ResolvedorMidia);
+
+            //Chama o GC.
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+
         }
         #endregion
 
@@ -675,19 +855,23 @@ namespace MediaSessionPlaybackTest
             //Chama o método para processar o evento
             ProcessarEventoMediaSession(OutEventType, ref OutEvent);
 
-            //Chama o proximo evento na lista.
-            Resultado = myMediaSession.MediaSession.BeginGetEvent(myMediaSession.CallbackMediaSession, null);
-
-            //Verifica se não houve erro
-            if (Resultado.StatusCode != ResultCode.SS_OK)
+            //Verifica se a media session não foi fechada antes de requisitar o proximo evento.
+            if (StatusPlayback != StatusRendering.Closed)
             {
-                //Falhou ao realizar a operação.
+                //Chama o proximo evento na lista.
+                Resultado = myMediaSession.MediaSession.BeginGetEvent(myMediaSession.CallbackMediaSession, null);
 
-                //Chama uma mensagem de erro.
-                ShowMensagem("Ocorreu uma falha ao tentar solicitar o proximo evento assincrona da Media Session!", true);
+                //Verifica se não houve erro
+                if (Resultado.StatusCode != ResultCode.SS_OK)
+                {
+                    //Falhou ao realizar a operação.
 
-                //Sai do método.
-                goto Done;
+                    //Chama uma mensagem de erro.
+                    ShowMensagem("Ocorreu uma falha ao tentar solicitar o proximo evento assincrona da Media Session!", true);
+
+                    //Sai do método.
+                    goto Done;
+                }
             }
 
         Done:;
@@ -765,7 +949,7 @@ namespace MediaSessionPlaybackTest
             ConfigurarTopologia();
 
             //Define a topologia na Sessao da mídia.
-            Resultado = myMediaSession.MediaSession.SetTopology(CA_MFSESSION_SETTOPOLOGY_FLAGS.Zero, myMediaSession.TopologiaCompleta);
+            Resultado = myMediaSession.MediaSession.SetTopology(CA_MFSESSION_SETTOPOLOGY_FLAGS.Zero, myMediaSession.Topologia);
 
             //Verifica se não houve erro
             if (Resultado.StatusCode != ResultCode.SS_OK)
@@ -778,6 +962,10 @@ namespace MediaSessionPlaybackTest
                 //Sai do método.
                 goto Done;
             }
+
+            //Obtém o tempo total da mídia.
+            myMediaSession.TotalTimeMidiaNs = ObterTempoTotalMidia();
+            myMediaSession.TotalTimeMidiaSegundos = myMediaSession.TotalTimeMidiaNs / REFTIME_1_SEGUNDO;
 
         Done:;
             //Retorna o resultado.
@@ -844,7 +1032,73 @@ namespace MediaSessionPlaybackTest
 
         private void Btn_Start_Click(object sender, EventArgs e)
         {
-            IniciarConfiguração();
+            if (StatusPlayback == StatusRendering.NoStarted)
+            {
+                //Inicia o processo para configurar a reprodução.
+                IniciarConfiguração();
+            }
+            else if (StatusPlayback == StatusRendering.Paused)
+            {
+                //Inicia novamente a reprodução do ponto que parou..
+                //O Guid nulo e o vt como VT_EMPTY especificam que deve iniciar do ponto que parou ou do inicio.
+                myMediaSession.MediaSession.Start(null, new CA_PROPVARIANT() { vt = CA_VARTYPE.VT_EMPTY });
+            }
+            else
+            {
+
+            }
+        }
+
+        private void Btn_Pause_Click(object sender, EventArgs e)
+        {
+            if(StatusPlayback == StatusRendering.Rendering & StatusPlayback != StatusRendering.NoStarted)
+            {
+                //Chama o método para pausar a reprodução.
+                CarenResult Resultado = myMediaSession.MediaSession.Pause();
+
+                //Verifica se não houve erro
+                if (Resultado.StatusCode != ResultCode.SS_OK)
+                {
+                    //Falhou ao realizar a operação.
+
+                    //Chama uma mensagem de erro.
+                    ShowMensagem("Ocorreu uma falha ao tentar pausar a reprodução atual!", true);
+                }
+            }
+        }
+
+        private void Btn_Stop_Click(object sender, EventArgs e)
+        {
+            if (StatusPlayback == StatusRendering.Rendering & StatusPlayback != StatusRendering.NoStarted)
+            {
+                //Chama o método para pausar a reprodução.
+                CarenResult Resultado = myMediaSession.MediaSession.Stop();
+
+                //Verifica se não houve erro
+                if (Resultado.StatusCode != ResultCode.SS_OK)
+                {
+                    //Falhou ao realizar a operação.
+
+                    //Chama uma mensagem de erro.
+                    ShowMensagem("Ocorreu uma falha ao tentar parar a reprodução atual!", true);
+                }
+            }
+        }
+
+        private void Btn_Advance_Click(object sender, EventArgs e)
+        {
+            long SecondsAdvance = (long)REFTIME_1_SEGUNDO * 60;
+            long CurrentPos = ObterPosicaoRelogioApresentacao();
+            long NewPos = CurrentPos + SecondsAdvance;
+            DefinirNovaPosicaoReproducao(NewPos);
+        }
+
+        private void Btn_Back_Click(object sender, EventArgs e)
+        {
+            long SecondsBack = (long)REFTIME_1_SEGUNDO * 30;
+            long CurrentPos = ObterPosicaoRelogioApresentacao();
+            long NewPos = (CurrentPos - SecondsBack) < 0? 0: CurrentPos - SecondsBack;
+            DefinirNovaPosicaoReproducao(NewPos);
         }
     }
 }

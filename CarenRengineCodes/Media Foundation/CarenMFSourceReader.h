@@ -329,10 +329,10 @@ public:
 	(
 		UInt32 Param_StreamIndex,
 		CA_MF_SOURCE_READER_CONTROL_FLAG Param_ControlFlags,
-		CarenParameterResolver<UInt32> Param_Out_ActualStreamIndex,
-		CarenParameterResolver<CA_MF_SOURCE_READER_FLAG> Param_Out_StreamFlags,
-		CarenParameterResolver<Int64> Param_Out_Timestamp,
-		CarenParameterResolver<ICarenMFSample^> Param_Out_Sample
+		CarenParamResolver<UInt32> Param_Out_ActualStreamIndex,
+		CarenParamResolver<CA_MF_SOURCE_READER_FLAG> Param_Out_StreamFlags,
+		CarenParamResolver<Int64> Param_Out_Timestamp,
+		CarenParamResolver<ICarenMFSample^> Param_Out_Sample
 	);
 
 	/// <summary>

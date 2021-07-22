@@ -142,7 +142,7 @@ namespace MediaSessionPlaybackTest
                 myMediaSession.UrlMidia,
                 CA_SOURCE_RESOLVER_FLAGS.MF_RESOLUTION_MEDIASOURCE,
                 null, 
-                new CarenParameterResolver<ICaren>(true),
+                new CarenParamResolver<ICaren>(true),
                 myMediaSession.CallbackCreateMediaSource, //Configura o Callback da fonte de midia.
                 null);
 

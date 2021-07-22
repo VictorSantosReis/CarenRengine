@@ -299,7 +299,7 @@ namespace CoreAudio_LoopbackTest
             MyHeaderInfoFile.SampleRate = OutWaveFormatCapture.Format.nSamplesPerSec;
             MyHeaderInfoFile.BytesPerSec = OutWaveFormatCapture.Format.nSamplesPerSec * OutWaveFormatCapture.Format.wBitsPerSample * OutWaveFormatCapture.Format.nChannels / 8;
             MyHeaderInfoFile.BlockAlign = OutWaveFormatCapture.Format.nBlockAlign;
-            MyHeaderInfoFile.FormatAudioData = OutWaveFormatCapture.SubFormato == GUIDs_MF_AUDIO_SUBTYPES.MFAudioFormat_PCM ? 1 : 0x0003; //0x0003 é o formato IEEE Float
+            MyHeaderInfoFile.FormatAudioData = (ushort)(OutWaveFormatCapture.SubFormato == GUIDs_MF_AUDIO_SUBTYPES.MFAudioFormat_PCM ? 1 : 0x0003); //0x0003 é o formato IEEE Float
 
             //O SISTEMA VAI USAR O MODO DE EVENTOS ORIENTADOS PARA O BUFFER. ISSO INDICA QUE O APP VAI LER OS DADOS DISPONIVEIS PELO DISPOSITIVO
             //QUANDO O MESMO SINALIZAR QUE HÁ DADOS DISPONIVEIS, ISSO MELHORA O DESEMPENHO COMO TODO. 

@@ -473,10 +473,10 @@ public:
 	/// <returns></returns>
 	CarenResult _MFTGetInfo(
 		String^ Param_ClsidMFT,
-		CarenParameterResolver<String^>% Param_Out_NomeMFT, //Ref Value
-		CarenParameterResolver<cli::array<CA_MFT_REGISTER_TYPE_INFO^>^>% Param_Out_ArrayInputTypes, //Ref Value
+		CarenParamResolver<String^>% Param_Out_NomeMFT, //Ref Value
+		CarenParamResolver<cli::array<CA_MFT_REGISTER_TYPE_INFO^>^>% Param_Out_ArrayInputTypes, //Ref Value
 		OutParam UInt32% Param_Out_CountArrayInputTypes,
-		CarenParameterResolver<cli::array<CA_MFT_REGISTER_TYPE_INFO^>^>% Param_Out_ArrayOutputTypes, //Ref Value
+		CarenParamResolver<cli::array<CA_MFT_REGISTER_TYPE_INFO^>^>% Param_Out_ArrayOutputTypes, //Ref Value
 		OutParam UInt32% Param_Out_CountArrayOutputTypes,
 		ICarenMFAttributes^ Param_Out_Atributos
 	);

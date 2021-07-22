@@ -1896,10 +1896,10 @@ namespace CarenRengine
 			(
 				UInt32 Param_StreamIndex,
 				CA_MF_SOURCE_READER_CONTROL_FLAG Param_ControlFlags,
-				CarenParameterResolver<UInt32> Param_Out_ActualStreamIndex,
-				CarenParameterResolver<CA_MF_SOURCE_READER_FLAG> Param_Out_StreamFlags,
-				CarenParameterResolver<Int64> Param_Out_Timestamp,
-				CarenParameterResolver<ICarenMFSample^> Param_Out_Sample
+				CarenParamResolver<UInt32> Param_Out_ActualStreamIndex,
+				CarenParamResolver<CA_MF_SOURCE_READER_FLAG> Param_Out_StreamFlags,
+				CarenParamResolver<Int64> Param_Out_Timestamp,
+				CarenParamResolver<ICarenMFSample^> Param_Out_Sample
 			);
 
 			/// <summary>
@@ -2953,7 +2953,7 @@ namespace CarenRengine
 				String^ Param_Url,
 				Enumeracoes::CA_SOURCE_RESOLVER_FLAGS Param_Flags,
 				ICarenPropertyStore^ Param_Propriedades,
-				CarenParameterResolver<ICaren^> Param_Out_ObjetoCancel,
+				CarenParamResolver<ICaren^> Param_Out_ObjetoCancel,
 				ICarenMFAsyncCallback^ Param_Callback,
 				ICaren^ Param_ObjetoEstado
 			);
@@ -2975,7 +2975,7 @@ namespace CarenRengine
 				String^ Param_Url,
 				Enumeracoes::CA_SOURCE_RESOLVER_FLAGS Param_Flags,
 				ICarenPropertyStore^ Param_Propriedades,
-				CarenParameterResolver<ICaren^> Param_Out_ObjetoCancel,
+				CarenParamResolver<ICaren^> Param_Out_ObjetoCancel,
 				ICarenMFAsyncCallback^ Param_Callback,
 				ICaren^ Param_ObjetoEstado
 			);

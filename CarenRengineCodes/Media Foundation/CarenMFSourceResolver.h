@@ -266,7 +266,7 @@ public:
 		String^ Param_Url,
 		Enumeracoes::CA_SOURCE_RESOLVER_FLAGS Param_Flags,
 		ICarenPropertyStore^ Param_Propriedades,
-		CarenParameterResolver<ICaren^> Param_Out_ObjetoCancel,
+		CarenParamResolver<ICaren^> Param_Out_ObjetoCancel,
 		ICarenMFAsyncCallback^ Param_Callback,
 		ICaren^ Param_ObjetoEstado
 	);
@@ -288,7 +288,7 @@ public:
 		String^ Param_Url,
 		Enumeracoes::CA_SOURCE_RESOLVER_FLAGS Param_Flags,
 		ICarenPropertyStore^ Param_Propriedades,
-		CarenParameterResolver<ICaren^> Param_Out_ObjetoCancel,
+		CarenParamResolver<ICaren^> Param_Out_ObjetoCancel,
 		ICarenMFAsyncCallback^ Param_Callback,
 		ICaren^ Param_ObjetoEstado
 	);

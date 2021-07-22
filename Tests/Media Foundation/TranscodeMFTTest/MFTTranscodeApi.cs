@@ -190,8 +190,8 @@ namespace TranscodeMFTTest
                         myTranscodeApi.AtributosEscritor = new CarenMFAttributes(2);
 
                         //Define os atributos.
-                        myTranscodeApi.AtributosEscritor.SetUINT32(GUIDs_MFAtributos_SinkWriter.MF_READWRITE_DISABLE_CONVERTERS, 0); //0 - HABILITA CONVERSOES.
-                        myTranscodeApi.AtributosEscritor.SetGUID(GUIDs_MFAtributos_SinkWriter.MF_TRANSCODE_CONTAINERTYPE, GUIDs_MFTranscodeContainerType.TranscodeContainerType_MPEG4); //Container.
+                        myTranscodeApi.AtributosEscritor.SetUINT32(GUIDs_MFAttributes_SinkWriter.MF_READWRITE_DISABLE_CONVERTERS, 0); //0 - HABILITA CONVERSOES.
+                        myTranscodeApi.AtributosEscritor.SetGUID(GUIDs_MFAttributes_SinkWriter.MF_TRANSCODE_CONTAINERTYPE, GUIDs_MFTranscodeContainerType.TranscodeContainerType_MPEG4); //Container.
 
                         //Chama o método para criar o escritor com o encodificador inicializado.
                         myTranscodeApi.Escritor = new CarenMFSinkWriter(myTranscodeApi.Encoder, myTranscodeApi.AtributosEscritor);

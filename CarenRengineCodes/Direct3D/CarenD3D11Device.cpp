@@ -36,7 +36,7 @@ CarenD3D11Device::CarenD3D11Device(
 	CA_D3D_DRIVER_TYPE Param_TipoDriver,
 	CA_D3D11_CREATE_DEVICE_FLAG Param_FlagsCreateDevice,
 	OutParam CA_D3D_FEATURE_LEVEL% Param_Out_NivelRecursoAceito,
-	CarenParameterResolver<ICarenD3D11DeviceContext^>% Param_Out_ContextoDispositivo
+	CarenParamResolver<ICarenD3D11DeviceContext^>% Param_Out_ContextoDispositivo
 )
 {
 	//Variavel que vai conter o resultado COM.
@@ -121,8 +121,8 @@ CarenD3D11Device::CarenD3D11Device(
 	CA_D3D11_CREATE_DEVICE_FLAG Param_FlagsCreateDevice,
 	CA_DXGI_SWAP_CHAIN_DESC^ Param_DescSwapChain,
 	OutParam CA_D3D_FEATURE_LEVEL% Param_Out_NivelRecursoAceito,
-	CarenParameterResolver<ICarenDXGISwapChain^>% Param_Out_SwapChain,
-	CarenParameterResolver<ICarenD3D11DeviceContext^>% Param_Out_ContextoDispositivo
+	CarenParamResolver<ICarenDXGISwapChain^>% Param_Out_SwapChain,
+	CarenParamResolver<ICarenD3D11DeviceContext^>% Param_Out_ContextoDispositivo
 )
 {
 	//Variavel que vai conter o resultado COM.

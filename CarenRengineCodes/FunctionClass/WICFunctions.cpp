@@ -228,7 +228,7 @@ Done:;
 CarenResult WICFunctions::_WICMapGuidToShortName(
 	String^ Param_Guid, 
 	UInt32 Param_SizeName, 
-	CarenParameterResolver<String^>^% Param_Out_Name, 
+	CarenParamResolver<String^>^% Param_Out_Name, 
 	OutParam UInt32% Param_Out_SizeAtual)
 {
 	//Variavel de resultado a ser retornado.
@@ -289,7 +289,7 @@ CarenResult WICFunctions::_WICMapSchemaToName(
 	String^ Param_Guid, 
 	String^ Param_Schema, 
 	UInt32 Param_SizeName, 
-	CarenParameterResolver<String^>^% Param_Out_Name, 
+	CarenParamResolver<String^>^% Param_Out_Name, 
 	OutParam UInt32% Param_Out_SizeAtual)
 {
 	//Variavel de resultado a ser retornado.

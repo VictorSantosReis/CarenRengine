@@ -19,7 +19,7 @@ limitations under the License.
 #include "Header.h"
 #include "Caren/CarenHMONITOR.h"
 #include "CarenGuids.h"
-#include "ParameterResolver/CarenParameterResolver.h"
+#include "ParameterResolver/CarenParamResolver.h"
 
 //Importa o namespace do sistema
 using namespace System;

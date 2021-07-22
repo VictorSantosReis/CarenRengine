@@ -1461,7 +1461,7 @@
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFSinkWriterCallback.h">
       <Filter>Arquivos de Cabeçalho\Classes\MediaFoundation</Filter>
     </ClInclude>
-    <ClInclude Include="CarenRengineCodes\ParameterResolver\CarenParameterResolver.h">
+    <ClInclude Include="CarenRengineCodes\ParameterResolver\CarenParamResolver.h">
       <Filter>Arquivos de Cabeçalho\Sistema</Filter>
     </ClInclude>
     <ClInclude Include="CarenRengineCodes\Direct2D Matrix Class\Direct2D_MatrixClass.h">

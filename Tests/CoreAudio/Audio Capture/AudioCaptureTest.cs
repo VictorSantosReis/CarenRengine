@@ -281,7 +281,7 @@ namespace CoreAudio_AudioCaptureTest
             MyHeaderInfoFile.SampleRate = OutWaveFormatCapture.Format.nSamplesPerSec;
             MyHeaderInfoFile.BytesPerSec = OutWaveFormatCapture.Format.nSamplesPerSec * OutWaveFormatCapture.Format.wBitsPerSample * OutWaveFormatCapture.Format.nChannels / 8;
             MyHeaderInfoFile.BlockAlign = OutWaveFormatCapture.Format.nBlockAlign;
-            MyHeaderInfoFile.FormatAudioData = OutWaveFormatCapture.SubFormato == GUIDs_MF_AUDIO_SUBTYPES.MFAudioFormat_PCM ? 0 : 0x0003; //0x0003 é o formato IEEE Float
+            MyHeaderInfoFile.FormatAudioData = (ushort)(OutWaveFormatCapture.SubFormato == GUIDs_MF_AUDIO_SUBTYPES.MFAudioFormat_PCM ? 0x0 : 0x0003); //0x0003 é o formato IEEE Float
 
             //Inicializa o dispositivo de captura.
             Resultado = myCaptureAudio.AudioClientConfig.Initialize(

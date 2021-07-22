@@ -221,7 +221,7 @@ namespace CoreAudio_RenderAudioTest
             MyRenderAudioTest.CallbackReadSamples.RegistrarCallback();
 
             //Define a interface de eventos criada na interface de abributos que será usada para criar o leitor de amostras.
-            Resultado = MyRenderAudioTest.AtributosLeitor.SetUnknown(GUIDs_MFAtributos_SourceReader.MF_SOURCE_READER_ASYNC_CALLBACK, MyRenderAudioTest.CallbackReadSamples);
+            Resultado = MyRenderAudioTest.AtributosLeitor.SetUnknown(GUIDs_MFAttributes_SourceReader.MF_SOURCE_READER_ASYNC_CALLBACK, MyRenderAudioTest.CallbackReadSamples);
 
             //Verifica se não houve erro
             if (Resultado.StatusCode != ResultCode.SS_OK)
@@ -504,10 +504,10 @@ namespace CoreAudio_RenderAudioTest
                 ProcessandoAmostras = true;
 
                 //Variveis de resoluçao de parametros.
-                CarenParameterResolver<uint> Resolver_OutActualStreamIndex = new(true);
-                CarenParameterResolver<CA_MF_SOURCE_READER_FLAG> Resolver_OutStreamFlags = new(true);
-                CarenParameterResolver<long> Resolver_OutTimeStamp = new(true);
-                CarenParameterResolver<ICarenMFSample> Resolver_OutSample = new(true);
+                CarenParamResolver<uint> Resolver_OutActualStreamIndex = new(true);
+                CarenParamResolver<CA_MF_SOURCE_READER_FLAG> Resolver_OutStreamFlags = new(true);
+                CarenParamResolver<long> Resolver_OutTimeStamp = new(true);
+                CarenParamResolver<ICarenMFSample> Resolver_OutSample = new(true);
 
                 //Abre um laço que vai ficar requisitando as amostras ao leitor.
                 while (ProcessandoAmostras)
@@ -534,7 +534,7 @@ namespace CoreAudio_RenderAudioTest
                     //Define que está requisitando uma amostra.
                     StatusRequisicaoAmostra = true;
 
-                    //Chama o método para requisitar a proxima amostra de mídia disponivel. Pode ser usado também o método estendido (ReadSampleAsync) da interface ICarenMFSouceReaderExtend para evitar o (CarenParameterResolver)
+                    //Chama o método para requisitar a proxima amostra de mídia disponivel. Pode ser usado também o método estendido (ReadSampleAsync) da interface ICarenMFSouceReaderExtend para evitar o (CarenParamResolver)
                     Resultado = MyRenderAudioTest.LeitorAmostras.ReadSample(
                         (uint)CA_SOURCE_READER_ID.ID_MF_SOURCE_READER_FIRST_AUDIO_STREAM,
                         CA_MF_SOURCE_READER_CONTROL_FLAG.Zero,
@@ -1214,9 +1214,9 @@ namespace CoreAudio_RenderAudioTest
             }
         }
 
-        public CarenParameterResolver<T> ResolverParametro<T>(T Param_Obj, Boolean Ignorar)
+        public CarenParamResolver<T> ResolverParametro<T>(T Param_Obj, Boolean Ignorar)
         {
-            return new CarenParameterResolver<T>(Param_Obj, Ignorar);
+            return new CarenParamResolver<T>(Param_Obj, Ignorar);
         }
 
         public uint GetFramesAvailable()

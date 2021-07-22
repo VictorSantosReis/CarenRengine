@@ -438,7 +438,7 @@
     <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFQualityManager.h" />
     <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFSourceOpenMonitor.h" />
     <ClInclude Include="CarenRengineCodes\NativeClassForEvents\CLN_IWICDevelopRawNotificationCallback.h" />
-    <ClInclude Include="CarenRengineCodes\ParameterResolver\CarenParameterResolver.h" />
+    <ClInclude Include="CarenRengineCodes\ParameterResolver\CarenParamResolver.h" />
     <ClInclude Include="CarenRengineCodes\PropVariantManager\PropVariantManager.h" />
     <ClInclude Include="CarenRengineCodes\SDK_Base.h" />
     <ClInclude Include="CarenRengineCodes\SDK_Caren.h" />

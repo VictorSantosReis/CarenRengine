@@ -4381,7 +4381,7 @@ namespace CarenRengine
 				D2D1_INPUT_ELEMENT_DESC* pInputDescAuxiliar = NULL;
 
 				//Define os dados.
-				EstruturaRetorno->shaderBufferWithInputSignature = CriarMatrizUnidimensional<const BYTE>(static_cast<DWORD>(Param_Estrutura->shaderBufferSize));
+				EstruturaRetorno->shaderBufferWithInputSignature =  const_cast<BYTE*>(CriarMatrizUnidimensional<BYTE>(static_cast<DWORD>(Param_Estrutura->shaderBufferSize)));
 				EstruturaRetorno->shaderBufferSize = Param_Estrutura->shaderBufferSize;
 				EstruturaRetorno->inputElements = pMatrizElementos;
 				EstruturaRetorno->elementCount = Param_Estrutura->elementCount;

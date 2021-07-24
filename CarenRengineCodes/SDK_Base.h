@@ -1903,6 +1903,16 @@ namespace CarenRengine
 				/// ‎Especifica se a fonte do dispositivo usa o tempo do sistema para carimbos de hora.‎
 				/// </summary>
 				literal String^ MFT_HW_TIMESTAMP_WITH_QPC_Attribute = "{8d030fb8-cc43-4258-a22e-9210bef89be4}";
+
+				/// <summary>
+				/// Especifica que é um dispositivo de Áudio.
+				/// </summary>
+				literal String^ MF_DEVSOURCE_ATTRIBUTE_SOURCE_TYPE_AUDCAP_GUID = "{14dd9a1c-7cff-41be-b1b9-ba1ac6ecb571}";
+
+				/// <summary>
+				/// Especifica que é um dispositivo de Vídeo.
+				/// </summary>
+				literal String^ MF_DEVSOURCE_ATTRIBUTE_SOURCE_TYPE_VIDCAP_GUID = "{8ac3587a-4ae7-42d8-99e0-0a6013eef90f}";
 			};
 
 			/// <summary>

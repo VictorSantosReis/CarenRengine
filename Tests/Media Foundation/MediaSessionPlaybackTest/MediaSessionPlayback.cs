@@ -1023,11 +1023,10 @@ namespace MediaSessionPlaybackTest
             else
                 PanelControlPlayback.Visible = true;
         }
-        #endregion
 
         private void MediaSessionPlayback_Load(object sender, EventArgs e)
         {
-           
+
         }
 
         private void Btn_Start_Click(object sender, EventArgs e)
@@ -1051,7 +1050,7 @@ namespace MediaSessionPlaybackTest
 
         private void Btn_Pause_Click(object sender, EventArgs e)
         {
-            if(StatusPlayback == StatusRendering.Rendering & StatusPlayback != StatusRendering.NoStarted)
+            if (StatusPlayback == StatusRendering.Rendering & StatusPlayback != StatusRendering.NoStarted)
             {
                 //Chama o método para pausar a reprodução.
                 CarenResult Resultado = myMediaSession.MediaSession.Pause();
@@ -1097,8 +1096,9 @@ namespace MediaSessionPlaybackTest
         {
             long SecondsBack = (long)REFTIME_1_SEGUNDO * 30;
             long CurrentPos = ObterPosicaoRelogioApresentacao();
-            long NewPos = (CurrentPos - SecondsBack) < 0? 0: CurrentPos - SecondsBack;
+            long NewPos = (CurrentPos - SecondsBack) < 0 ? 0 : CurrentPos - SecondsBack;
             DefinirNovaPosicaoReproducao(NewPos);
         }
+        #endregion
     }
 }

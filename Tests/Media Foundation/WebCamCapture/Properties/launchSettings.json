@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "WebCamCapture": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

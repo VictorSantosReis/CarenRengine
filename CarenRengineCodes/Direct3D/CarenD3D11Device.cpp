@@ -36,7 +36,7 @@ CarenD3D11Device::CarenD3D11Device(
 	CA_D3D_DRIVER_TYPE Param_TipoDriver,
 	CA_D3D11_CREATE_DEVICE_FLAG Param_FlagsCreateDevice,
 	OutParam CA_D3D_FEATURE_LEVEL% Param_Out_NivelRecursoAceito,
-	CarenParamResolver<ICarenD3D11DeviceContext^>% Param_Out_ContextoDispositivo
+	CarenParamResolver<ICarenD3D11DeviceContext^> Param_Out_ContextoDispositivo
 )
 {
 	//Variavel que vai conter o resultado COM.
@@ -121,8 +121,8 @@ CarenD3D11Device::CarenD3D11Device(
 	CA_D3D11_CREATE_DEVICE_FLAG Param_FlagsCreateDevice,
 	CA_DXGI_SWAP_CHAIN_DESC^ Param_DescSwapChain,
 	OutParam CA_D3D_FEATURE_LEVEL% Param_Out_NivelRecursoAceito,
-	CarenParamResolver<ICarenDXGISwapChain^>% Param_Out_SwapChain,
-	CarenParamResolver<ICarenD3D11DeviceContext^>% Param_Out_ContextoDispositivo
+	CarenParamResolver<ICarenDXGISwapChain^> Param_Out_SwapChain,
+	CarenParamResolver<ICarenD3D11DeviceContext^> Param_Out_ContextoDispositivo
 )
 {
 	//Variavel que vai conter o resultado COM.
@@ -210,9 +210,9 @@ CarenD3D11Device::CarenD3D11Device(
 	if (ObjetoValido(vi_pOutDeviceContext))
 		Param_Out_ContextoDispositivo.ObjetoParametro->AdicionarPonteiro(vi_pOutDeviceContext);
 
-	//Define o Swap Chainse requisitado.
+	//Define o Swap Chain se requisitado.
 	if (ObjetoValido(vi_pOutSwapChain))
-		Param_Out_ContextoDispositivo.ObjetoParametro->AdicionarPonteiro(vi_pOutSwapChain);
+		Param_Out_SwapChain.ObjetoParametro->AdicionarPonteiro(vi_pOutSwapChain);
 
 	//Libera a memória utilizada pela estrutura.
 	DeletarEstruturaSafe(&vi_pDescSwapChain);

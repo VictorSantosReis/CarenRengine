@@ -7,9 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TranscodeMFTTest", "Media F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MediaSessionPlaybackTest", "Media Foundation\MediaSessionPlaybackTest\MediaSessionPlaybackTest.csproj", "{72819FF9-663B-45D9-8259-B5ED6F8C1EBC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarenRenderDX11", "CarenRenderDX11\CarenRenderDX11.csproj", "{F822F0A6-46C2-434F-AF66-07132B0780A8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebCamCapture", "Media Foundation\WebCamCapture\WebCamCapture.csproj", "{63BDEC17-14C8-427E-B2A2-B19B127C5B35}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebCamCapture", "Media Foundation\WebCamCapture\WebCamCapture.csproj", "{63BDEC17-14C8-427E-B2A2-B19B127C5B35}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,14 +33,6 @@ Global
 		{72819FF9-663B-45D9-8259-B5ED6F8C1EBC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{72819FF9-663B-45D9-8259-B5ED6F8C1EBC}.Release|x86.ActiveCfg = Release|Any CPU
 		{72819FF9-663B-45D9-8259-B5ED6F8C1EBC}.Release|x86.Build.0 = Release|Any CPU
-		{F822F0A6-46C2-434F-AF66-07132B0780A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F822F0A6-46C2-434F-AF66-07132B0780A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F822F0A6-46C2-434F-AF66-07132B0780A8}.Debug|x86.ActiveCfg = Debug|x86
-		{F822F0A6-46C2-434F-AF66-07132B0780A8}.Debug|x86.Build.0 = Debug|x86
-		{F822F0A6-46C2-434F-AF66-07132B0780A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F822F0A6-46C2-434F-AF66-07132B0780A8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F822F0A6-46C2-434F-AF66-07132B0780A8}.Release|x86.ActiveCfg = Release|Any CPU
-		{F822F0A6-46C2-434F-AF66-07132B0780A8}.Release|x86.Build.0 = Release|Any CPU
 		{63BDEC17-14C8-427E-B2A2-B19B127C5B35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{63BDEC17-14C8-427E-B2A2-B19B127C5B35}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{63BDEC17-14C8-427E-B2A2-B19B127C5B35}.Debug|x86.ActiveCfg = Debug|x86

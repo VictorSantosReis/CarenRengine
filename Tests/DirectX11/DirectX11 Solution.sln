@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31515.178
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarenDX11Render", "CarenDX11Render\CarenDX11Render.csproj", "{58145229-87D2-4D04-BCE5-E5ED45948595}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{58145229-87D2-4D04-BCE5-E5ED45948595}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58145229-87D2-4D04-BCE5-E5ED45948595}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58145229-87D2-4D04-BCE5-E5ED45948595}.Debug|x86.ActiveCfg = Debug|x86
+		{58145229-87D2-4D04-BCE5-E5ED45948595}.Debug|x86.Build.0 = Debug|x86
+		{58145229-87D2-4D04-BCE5-E5ED45948595}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58145229-87D2-4D04-BCE5-E5ED45948595}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58145229-87D2-4D04-BCE5-E5ED45948595}.Release|x86.ActiveCfg = Release|x86
+		{58145229-87D2-4D04-BCE5-E5ED45948595}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BA1A2BEB-1E55-4E43-8EC8-CE97C555F18F}
+	EndGlobalSection
+EndGlobal

@@ -21,7 +21,7 @@ using namespace System;
 namespace CarenRengine
 {
 	//Namespace que contém o sistema de status utilizado pela biblioca.
-	namespace CarenCodesStatus
+	namespace CarenStatus
 	{
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -8348,51 +8348,51 @@ namespace CarenRengine
 				{
 					//VALORES PROPRIOS DA BIBLIOTECA QUE SEMPRE RETORNAM - E_FAIL
 
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_CONVERSAO_HRESULT:
+				case CarenRengine::CarenStatus::ResultCode::ER_CONVERSAO_HRESULT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = E_FAIL;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_CONVERSAO_PROPVARIANT:
+				case CarenRengine::CarenStatus::ResultCode::ER_CONVERSAO_PROPVARIANT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = E_FAIL;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_CONVERSAO_ESTRUTURA:
+				case CarenRengine::CarenStatus::ResultCode::ER_CONVERSAO_ESTRUTURA:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = E_FAIL;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_CARENBUFFER_TAMANHO_INVALIDO:
+				case CarenRengine::CarenStatus::ResultCode::ER_CARENBUFFER_TAMANHO_INVALIDO:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = E_FAIL;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_CARENBUFFER_LARGURA_ESCRITA_INVALIDA:
+				case CarenRengine::CarenStatus::ResultCode::ER_CARENBUFFER_LARGURA_ESCRITA_INVALIDA:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = E_FAIL;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_CARENBUFFER_START_INDEX_INVALIDO:
+				case CarenRengine::CarenStatus::ResultCode::ER_CARENBUFFER_START_INDEX_INVALIDO:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = E_FAIL;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_CARENBUFFER_FALHA_CONVERSAO:
+				case CarenRengine::CarenStatus::ResultCode::ER_CARENBUFFER_FALHA_CONVERSAO:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = E_FAIL;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_CARENBUFFER_POINTER:
+				case CarenRengine::CarenStatus::ResultCode::ER_CARENBUFFER_POINTER:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = E_FAIL;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_CONVERSAO_TIPO_NAO_SUPORTADO:
+				case CarenRengine::CarenStatus::ResultCode::ER_CONVERSAO_TIPO_NAO_SUPORTADO:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = E_FAIL;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_GUID_INVALIDO:
+				case CarenRengine::CarenStatus::ResultCode::ER_GUID_INVALIDO:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = E_FAIL;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_PROPVARIANT_CREATE_OR_CONVERSION:
+				case CarenRengine::CarenStatus::ResultCode::ER_PROPVARIANT_CREATE_OR_CONVERSION:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = E_FAIL;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_PROPVARIANT_TYPE_NO_SUPPORTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_PROPVARIANT_TYPE_NO_SUPPORTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = E_FAIL;
 					break;
@@ -8401,79 +8401,79 @@ namespace CarenRengine
 
 					//ERROS COMUNS DAS APIS 'COM' 
 
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_E_NOT_SUFFICIENT_BUFFER:
+				case CarenRengine::CarenStatus::ResultCode::ER_E_NOT_SUFFICIENT_BUFFER:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = E_NOT_SUFFICIENT_BUFFER;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_E_ABORT:
+				case CarenRengine::CarenStatus::ResultCode::ER_E_ABORT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = E_ABORT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_E_NOTIMPL:
+				case CarenRengine::CarenStatus::ResultCode::ER_E_NOTIMPL:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = E_NOTIMPL;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_E_INVALIDARG:
+				case CarenRengine::CarenStatus::ResultCode::ER_E_INVALIDARG:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = E_INVALIDARG;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_E_OUTOFMEMORY:
+				case CarenRengine::CarenStatus::ResultCode::ER_E_OUTOFMEMORY:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = E_OUTOFMEMORY;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_STG_E_ACCESSDENIED:
+				case CarenRengine::CarenStatus::ResultCode::ER_STG_E_ACCESSDENIED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = STG_E_ACCESSDENIED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_STG_E_CANTSAVE:
+				case CarenRengine::CarenStatus::ResultCode::ER_STG_E_CANTSAVE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = STG_E_CANTSAVE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_STG_E_MEDIUMFULL:
+				case CarenRengine::CarenStatus::ResultCode::ER_STG_E_MEDIUMFULL:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = STG_E_MEDIUMFULL;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_ERROR_INVALID_FUNCTION:
+				case CarenRengine::CarenStatus::ResultCode::ER_ERROR_INVALID_FUNCTION:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = ERROR_INVALID_FUNCTION;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_ERROR_OBJECT_ALREADY_EXISTS:
+				case CarenRengine::CarenStatus::ResultCode::ER_ERROR_OBJECT_ALREADY_EXISTS:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = ERROR_OBJECT_ALREADY_EXISTS;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_E_HANDLE:
+				case CarenRengine::CarenStatus::ResultCode::ER_E_HANDLE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = E_HANDLE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_E_NOINTERFACE:
+				case CarenRengine::CarenStatus::ResultCode::ER_E_NOINTERFACE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = E_NOINTERFACE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_E_POINTER:
+				case CarenRengine::CarenStatus::ResultCode::ER_E_POINTER:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = E_POINTER;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_ERROR_ALREADY_EXISTS:
+				case CarenRengine::CarenStatus::ResultCode::ER_ERROR_ALREADY_EXISTS:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = ERROR_ALREADY_EXISTS;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_E_NOTFOUND:
+				case CarenRengine::CarenStatus::ResultCode::ER_E_NOTFOUND:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = E_NOTFOUND;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_E_ACCESSDENIED:
+				case CarenRengine::CarenStatus::ResultCode::ER_E_ACCESSDENIED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = E_ACCESSDENIED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_E_UNEXPECTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_E_UNEXPECTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = E_UNEXPECTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_E_PENDING:
+				case CarenRengine::CarenStatus::ResultCode::ER_E_PENDING:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = E_PENDING;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_FAIL:
+				case CarenRengine::CarenStatus::ResultCode::ER_FAIL:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = E_FAIL;
 					break;
@@ -8482,15 +8482,15 @@ namespace CarenRengine
 
 					//ERROS DE TODAS AS APIS QUE NÃO FAZEM PARTE DIRETAMENTE DAS APIS UTILIZADAS PELA BIBLIOTECA.
 
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_ERROR_INVALID_TASK_INDEX:
+				case CarenRengine::CarenStatus::ResultCode::ER_ERROR_INVALID_TASK_INDEX:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = ERROR_INVALID_TASK_INDEX;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_ERROR_INVALID_TASK_NAME:
+				case CarenRengine::CarenStatus::ResultCode::ER_ERROR_INVALID_TASK_NAME:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = ERROR_INVALID_TASK_NAME;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_ERROR_PRIVILEGE_NOT_HELD:
+				case CarenRengine::CarenStatus::ResultCode::ER_ERROR_PRIVILEGE_NOT_HELD:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = ERROR_PRIVILEGE_NOT_HELD;
 					break;
@@ -8499,2009 +8499,2009 @@ namespace CarenRengine
 
 					//CORE AUDIO
 
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_AUDCLNT_E_DEVICE_INVALIDATED:
+				case CarenRengine::CarenStatus::ResultCode::ER_AUDCLNT_E_DEVICE_INVALIDATED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = AUDCLNT_E_DEVICE_INVALIDATED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_AUDCLNT_E_NOT_INITIALIZED:
+				case CarenRengine::CarenStatus::ResultCode::ER_AUDCLNT_E_NOT_INITIALIZED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = AUDCLNT_E_NOT_INITIALIZED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_AUDCLNT_E_SERVICE_NOT_RUNNING:
+				case CarenRengine::CarenStatus::ResultCode::ER_AUDCLNT_E_SERVICE_NOT_RUNNING:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = AUDCLNT_E_SERVICE_NOT_RUNNING;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_AUDCLNT_E_WRONG_ENDPOINT_TYPE:
+				case CarenRengine::CarenStatus::ResultCode::ER_AUDCLNT_E_WRONG_ENDPOINT_TYPE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = AUDCLNT_E_WRONG_ENDPOINT_TYPE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_AUDCLNT_E_NOT_STOPPED:
+				case CarenRengine::CarenStatus::ResultCode::ER_AUDCLNT_E_NOT_STOPPED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = AUDCLNT_E_NOT_STOPPED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_AUDCLNT_E_EVENTHANDLE_NOT_SET:
+				case CarenRengine::CarenStatus::ResultCode::ER_AUDCLNT_E_EVENTHANDLE_NOT_SET:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = AUDCLNT_E_EVENTHANDLE_NOT_SET;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_AUDCLNT_E_ALREADY_INITIALIZED:
+				case CarenRengine::CarenStatus::ResultCode::ER_AUDCLNT_E_ALREADY_INITIALIZED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = AUDCLNT_E_ALREADY_INITIALIZED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_AUDCLNT_E_BUFFER_OPERATION_PENDING:
+				case CarenRengine::CarenStatus::ResultCode::ER_AUDCLNT_E_BUFFER_OPERATION_PENDING:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = AUDCLNT_E_BUFFER_OPERATION_PENDING;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_AUDCLNT_E_BUFFER_SIZE_NOT_ALIGNED:
+				case CarenRengine::CarenStatus::ResultCode::ER_AUDCLNT_E_BUFFER_SIZE_NOT_ALIGNED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = AUDCLNT_E_BUFFER_SIZE_NOT_ALIGNED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_AUDCLNT_E_BUFFER_SIZE_ERROR:
+				case CarenRengine::CarenStatus::ResultCode::ER_AUDCLNT_E_BUFFER_SIZE_ERROR:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = AUDCLNT_E_BUFFER_SIZE_ERROR;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_AUDCLNT_E_BUFFER_ERROR:
+				case CarenRengine::CarenStatus::ResultCode::ER_AUDCLNT_E_BUFFER_ERROR:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = AUDCLNT_E_BUFFER_ERROR;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_AUDCLNT_E_BUFFER_TOO_LARGE:
+				case CarenRengine::CarenStatus::ResultCode::ER_AUDCLNT_E_BUFFER_TOO_LARGE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = AUDCLNT_E_BUFFER_TOO_LARGE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_AUDCLNT_E_INVALID_SIZE:
+				case CarenRengine::CarenStatus::ResultCode::ER_AUDCLNT_E_INVALID_SIZE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = AUDCLNT_E_INVALID_SIZE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_AUDCLNT_E_OUT_OF_ORDER:
+				case CarenRengine::CarenStatus::ResultCode::ER_AUDCLNT_E_OUT_OF_ORDER:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = AUDCLNT_E_OUT_OF_ORDER;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_AUDCLNT_E_CPUUSAGE_EXCEEDED:
+				case CarenRengine::CarenStatus::ResultCode::ER_AUDCLNT_E_CPUUSAGE_EXCEEDED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = AUDCLNT_E_CPUUSAGE_EXCEEDED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_AUDCLNT_E_DEVICE_IN_USE:
+				case CarenRengine::CarenStatus::ResultCode::ER_AUDCLNT_E_DEVICE_IN_USE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = AUDCLNT_E_DEVICE_IN_USE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_AUDCLNT_E_ENDPOINT_CREATE_FAILED:
+				case CarenRengine::CarenStatus::ResultCode::ER_AUDCLNT_E_ENDPOINT_CREATE_FAILED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = AUDCLNT_E_ENDPOINT_CREATE_FAILED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_AUDCLNT_E_INVALID_DEVICE_PERIOD:
+				case CarenRengine::CarenStatus::ResultCode::ER_AUDCLNT_E_INVALID_DEVICE_PERIOD:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = AUDCLNT_E_INVALID_DEVICE_PERIOD;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_AUDCLNT_E_UNSUPPORTED_FORMAT:
+				case CarenRengine::CarenStatus::ResultCode::ER_AUDCLNT_E_UNSUPPORTED_FORMAT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = AUDCLNT_E_UNSUPPORTED_FORMAT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_AUDCLNT_E_EXCLUSIVE_MODE_NOT_ALLOWED:
+				case CarenRengine::CarenStatus::ResultCode::ER_AUDCLNT_E_EXCLUSIVE_MODE_NOT_ALLOWED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = AUDCLNT_E_EXCLUSIVE_MODE_NOT_ALLOWED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_AUDCLNT_E_BUFDURATION_PERIOD_NOT_EQUAL:
+				case CarenRengine::CarenStatus::ResultCode::ER_AUDCLNT_E_BUFDURATION_PERIOD_NOT_EQUAL:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = AUDCLNT_E_BUFDURATION_PERIOD_NOT_EQUAL;
 					break;
 
 
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_WAIT_FAILED:
+				case CarenRengine::CarenStatus::ResultCode::ER_WAIT_FAILED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WAIT_FAILED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_TIMERR_NOCANDO:
+				case CarenRengine::CarenStatus::ResultCode::ER_TIMERR_NOCANDO:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = TIMERR_NOCANDO;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D3DERR_INVALIDCALL:
+				case CarenRengine::CarenStatus::ResultCode::ER_D3DERR_INVALIDCALL:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D3DERR_INVALIDCALL;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D3DERR_CONFLICTINGRENDERSTATE:
+				case CarenRengine::CarenStatus::ResultCode::ER_D3DERR_CONFLICTINGRENDERSTATE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D3DERR_CONFLICTINGRENDERSTATE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D3DERR_CONFLICTINGTEXTUREFILTER:
+				case CarenRengine::CarenStatus::ResultCode::ER_D3DERR_CONFLICTINGTEXTUREFILTER:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D3DERR_CONFLICTINGTEXTUREFILTER;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D3DERR_CONFLICTINGTEXTUREPALETTE:
+				case CarenRengine::CarenStatus::ResultCode::ER_D3DERR_CONFLICTINGTEXTUREPALETTE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D3DERR_CONFLICTINGTEXTUREPALETTE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D3DERR_DEVICEHUNG:
+				case CarenRengine::CarenStatus::ResultCode::ER_D3DERR_DEVICEHUNG:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D3DERR_DEVICEHUNG;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D3DERR_DEVICELOST:
+				case CarenRengine::CarenStatus::ResultCode::ER_D3DERR_DEVICELOST:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D3DERR_DEVICELOST;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D3DERR_DEVICENOTRESET:
+				case CarenRengine::CarenStatus::ResultCode::ER_D3DERR_DEVICENOTRESET:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D3DERR_DEVICENOTRESET;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D3DERR_DEVICEREMOVED:
+				case CarenRengine::CarenStatus::ResultCode::ER_D3DERR_DEVICEREMOVED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D3DERR_DEVICEREMOVED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D3DERR_DRIVERINTERNALERROR:
+				case CarenRengine::CarenStatus::ResultCode::ER_D3DERR_DRIVERINTERNALERROR:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D3DERR_DRIVERINTERNALERROR;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D3DERR_DRIVERINVALIDCALL:
+				case CarenRengine::CarenStatus::ResultCode::ER_D3DERR_DRIVERINVALIDCALL:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D3DERR_DRIVERINVALIDCALL;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D3DERR_INVALIDDEVICE:
+				case CarenRengine::CarenStatus::ResultCode::ER_D3DERR_INVALIDDEVICE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D3DERR_INVALIDDEVICE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D3DERR_MOREDATA:
+				case CarenRengine::CarenStatus::ResultCode::ER_D3DERR_MOREDATA:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D3DERR_MOREDATA;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D3DERR_NOTAVAILABLE:
+				case CarenRengine::CarenStatus::ResultCode::ER_D3DERR_NOTAVAILABLE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D3DERR_NOTAVAILABLE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D3DERR_NOTFOUND:
+				case CarenRengine::CarenStatus::ResultCode::ER_D3DERR_NOTFOUND:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D3DERR_NOTFOUND;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D3DERR_OUTOFVIDEOMEMORY:
+				case CarenRengine::CarenStatus::ResultCode::ER_D3DERR_OUTOFVIDEOMEMORY:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D3DERR_OUTOFVIDEOMEMORY;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D3DERR_TOOMANYOPERATIONS:
+				case CarenRengine::CarenStatus::ResultCode::ER_D3DERR_TOOMANYOPERATIONS:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D3DERR_TOOMANYOPERATIONS;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D3DERR_UNSUPPORTEDALPHAARG:
+				case CarenRengine::CarenStatus::ResultCode::ER_D3DERR_UNSUPPORTEDALPHAARG:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D3DERR_UNSUPPORTEDALPHAARG;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D3DERR_UNSUPPORTEDALPHAOPERATION:
+				case CarenRengine::CarenStatus::ResultCode::ER_D3DERR_UNSUPPORTEDALPHAOPERATION:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D3DERR_UNSUPPORTEDALPHAOPERATION;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D3DERR_UNSUPPORTEDCOLORARG:
+				case CarenRengine::CarenStatus::ResultCode::ER_D3DERR_UNSUPPORTEDCOLORARG:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D3DERR_UNSUPPORTEDCOLORARG;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D3DERR_UNSUPPORTEDCOLOROPERATION:
+				case CarenRengine::CarenStatus::ResultCode::ER_D3DERR_UNSUPPORTEDCOLOROPERATION:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D3DERR_UNSUPPORTEDCOLOROPERATION;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D3DERR_UNSUPPORTEDFACTORVALUE:
+				case CarenRengine::CarenStatus::ResultCode::ER_D3DERR_UNSUPPORTEDFACTORVALUE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D3DERR_UNSUPPORTEDFACTORVALUE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D3DERR_UNSUPPORTEDTEXTUREFILTER:
+				case CarenRengine::CarenStatus::ResultCode::ER_D3DERR_UNSUPPORTEDTEXTUREFILTER:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D3DERR_UNSUPPORTEDTEXTUREFILTER;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D3DERR_WASSTILLDRAWING:
+				case CarenRengine::CarenStatus::ResultCode::ER_D3DERR_WASSTILLDRAWING:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D3DERR_WASSTILLDRAWING;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D3DERR_WRONGTEXTUREFORMAT:
+				case CarenRengine::CarenStatus::ResultCode::ER_D3DERR_WRONGTEXTUREFORMAT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D3DERR_WRONGTEXTUREFORMAT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D3DERR_UNSUPPORTEDOVERLAY:
+				case CarenRengine::CarenStatus::ResultCode::ER_D3DERR_UNSUPPORTEDOVERLAY:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D3DERR_UNSUPPORTEDOVERLAY;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D3DERR_UNSUPPORTEDOVERLAYFORMAT:
+				case CarenRengine::CarenStatus::ResultCode::ER_D3DERR_UNSUPPORTEDOVERLAYFORMAT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D3DERR_UNSUPPORTEDOVERLAYFORMAT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D3DERR_CANNOTPROTECTCONTENT:
+				case CarenRengine::CarenStatus::ResultCode::ER_D3DERR_CANNOTPROTECTCONTENT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D3DERR_CANNOTPROTECTCONTENT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D3DERR_UNSUPPORTEDCRYPTO:
+				case CarenRengine::CarenStatus::ResultCode::ER_D3DERR_UNSUPPORTEDCRYPTO:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D3DERR_UNSUPPORTEDCRYPTO;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D3DERR_PRESENT_STATISTICS_DISJOINT:
+				case CarenRengine::CarenStatus::ResultCode::ER_D3DERR_PRESENT_STATISTICS_DISJOINT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D3DERR_PRESENT_STATISTICS_DISJOINT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_DXGI_ERROR_WAS_STILL_DRAWING:
+				case CarenRengine::CarenStatus::ResultCode::ER_DXGI_ERROR_WAS_STILL_DRAWING:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXGI_ERROR_WAS_STILL_DRAWING;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_DXGI_ERROR_INVALID_CALL:
+				case CarenRengine::CarenStatus::ResultCode::ER_DXGI_ERROR_INVALID_CALL:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXGI_ERROR_INVALID_CALL;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::SS_DXGI_STATUS_OCCLUDED:
+				case CarenRengine::CarenStatus::ResultCode::SS_DXGI_STATUS_OCCLUDED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXGI_STATUS_OCCLUDED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::SS_DXGI_STATUS_MODE_CHANGED:
+				case CarenRengine::CarenStatus::ResultCode::SS_DXGI_STATUS_MODE_CHANGED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXGI_STATUS_MODE_CHANGED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::SS_DXGI_STATUS_MODE_CHANGE_IN_PROGRESS:
+				case CarenRengine::CarenStatus::ResultCode::SS_DXGI_STATUS_MODE_CHANGE_IN_PROGRESS:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXGI_STATUS_MODE_CHANGE_IN_PROGRESS;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::SS_DXGI_STATUS_CLIPPED:
+				case CarenRengine::CarenStatus::ResultCode::SS_DXGI_STATUS_CLIPPED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXGI_STATUS_CLIPPED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::SS_DXGI_STATUS_NO_REDIRECTION:
+				case CarenRengine::CarenStatus::ResultCode::SS_DXGI_STATUS_NO_REDIRECTION:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXGI_STATUS_NO_REDIRECTION;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::SS_DXGI_STATUS_GRAPHICS_VIDPN_SOURCE_IN_USE:
+				case CarenRengine::CarenStatus::ResultCode::SS_DXGI_STATUS_GRAPHICS_VIDPN_SOURCE_IN_USE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXGI_STATUS_GRAPHICS_VIDPN_SOURCE_IN_USE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::SS_DXGI_STATUS_NO_DESKTOP_ACCESS:
+				case CarenRengine::CarenStatus::ResultCode::SS_DXGI_STATUS_NO_DESKTOP_ACCESS:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXGI_STATUS_NO_DESKTOP_ACCESS;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_DXVA2_E_VIDEO_DEVICE_LOCKED:
+				case CarenRengine::CarenStatus::ResultCode::ER_DXVA2_E_VIDEO_DEVICE_LOCKED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXVA2_E_VIDEO_DEVICE_LOCKED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_DXVA2_E_NEW_VIDEO_DEVICE:
+				case CarenRengine::CarenStatus::ResultCode::ER_DXVA2_E_NEW_VIDEO_DEVICE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXVA2_E_NEW_VIDEO_DEVICE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_DXVA2_E_NOT_AVAILABLE:
+				case CarenRengine::CarenStatus::ResultCode::ER_DXVA2_E_NOT_AVAILABLE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXVA2_E_NOT_AVAILABLE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_DXVA2_E_NOT_INITIALIZED:
+				case CarenRengine::CarenStatus::ResultCode::ER_DXVA2_E_NOT_INITIALIZED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXVA2_E_NOT_INITIALIZED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_DXGI_ERROR_NONEXCLUSIVE:
+				case CarenRengine::CarenStatus::ResultCode::ER_DXGI_ERROR_NONEXCLUSIVE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXGI_ERROR_NONEXCLUSIVE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_DXGI_ERROR_UNSUPPORTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_DXGI_ERROR_UNSUPPORTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXGI_ERROR_UNSUPPORTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_DXGI_ERROR_DEVICE_REMOVED:
+				case CarenRengine::CarenStatus::ResultCode::ER_DXGI_ERROR_DEVICE_REMOVED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXGI_ERROR_DEVICE_REMOVED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_DXGI_ERROR_DEVICE_HUNG:
+				case CarenRengine::CarenStatus::ResultCode::ER_DXGI_ERROR_DEVICE_HUNG:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXGI_ERROR_DEVICE_HUNG;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_DXGI_ERROR_DEVICE_RESET:
+				case CarenRengine::CarenStatus::ResultCode::ER_DXGI_ERROR_DEVICE_RESET:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXGI_ERROR_DEVICE_RESET;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_DXGI_ERROR_DRIVER_INTERNAL_ERROR:
+				case CarenRengine::CarenStatus::ResultCode::ER_DXGI_ERROR_DRIVER_INTERNAL_ERROR:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXGI_ERROR_DRIVER_INTERNAL_ERROR;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_DXGI_ERROR_WAIT_TIMEOUT:
+				case CarenRengine::CarenStatus::ResultCode::ER_DXGI_ERROR_WAIT_TIMEOUT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXGI_ERROR_WAIT_TIMEOUT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_DXGI_ERROR_SESSION_DISCONNECTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_DXGI_ERROR_SESSION_DISCONNECTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXGI_ERROR_SESSION_DISCONNECTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_DXGI_ERROR_SDK_COMPONENT_MISSING:
+				case CarenRengine::CarenStatus::ResultCode::ER_DXGI_ERROR_SDK_COMPONENT_MISSING:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXGI_ERROR_SDK_COMPONENT_MISSING;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_DXGI_ERROR_RESTRICT_TO_OUTPUT_STALE:
+				case CarenRengine::CarenStatus::ResultCode::ER_DXGI_ERROR_RESTRICT_TO_OUTPUT_STALE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXGI_ERROR_RESTRICT_TO_OUTPUT_STALE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_DXGI_ERROR_REMOTE_OUTOFMEMORY:
+				case CarenRengine::CarenStatus::ResultCode::ER_DXGI_ERROR_REMOTE_OUTOFMEMORY:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXGI_ERROR_REMOTE_OUTOFMEMORY;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_DXGI_ERROR_REMOTE_CLIENT_DISCONNECTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_DXGI_ERROR_REMOTE_CLIENT_DISCONNECTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXGI_ERROR_REMOTE_CLIENT_DISCONNECTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_DXGI_ERROR_NOT_FOUND:
+				case CarenRengine::CarenStatus::ResultCode::ER_DXGI_ERROR_NOT_FOUND:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXGI_ERROR_NOT_FOUND;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_DXGI_ERROR_NOT_CURRENTLY_AVAILABLE:
+				case CarenRengine::CarenStatus::ResultCode::ER_DXGI_ERROR_NOT_CURRENTLY_AVAILABLE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXGI_ERROR_NOT_CURRENTLY_AVAILABLE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_DXGI_ERROR_NAME_ALREADY_EXISTS:
+				case CarenRengine::CarenStatus::ResultCode::ER_DXGI_ERROR_NAME_ALREADY_EXISTS:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXGI_ERROR_NAME_ALREADY_EXISTS;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_DXGI_ERROR_MORE_DATA:
+				case CarenRengine::CarenStatus::ResultCode::ER_DXGI_ERROR_MORE_DATA:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXGI_ERROR_MORE_DATA;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_DXGI_ERROR_GRAPHICS_VIDPN_SOURCE_IN_USE:
+				case CarenRengine::CarenStatus::ResultCode::ER_DXGI_ERROR_GRAPHICS_VIDPN_SOURCE_IN_USE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXGI_ERROR_GRAPHICS_VIDPN_SOURCE_IN_USE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_DXGI_ERROR_FRAME_STATISTICS_DISJOINT:
+				case CarenRengine::CarenStatus::ResultCode::ER_DXGI_ERROR_FRAME_STATISTICS_DISJOINT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXGI_ERROR_FRAME_STATISTICS_DISJOINT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_DXGI_ERROR_CANNOT_PROTECT_CONTENT:
+				case CarenRengine::CarenStatus::ResultCode::ER_DXGI_ERROR_CANNOT_PROTECT_CONTENT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXGI_ERROR_CANNOT_PROTECT_CONTENT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_DXGI_ERROR_ALREADY_EXISTS:
+				case CarenRengine::CarenStatus::ResultCode::ER_DXGI_ERROR_ALREADY_EXISTS:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXGI_ERROR_ALREADY_EXISTS;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_DXGI_ERROR_ACCESS_LOST:
+				case CarenRengine::CarenStatus::ResultCode::ER_DXGI_ERROR_ACCESS_LOST:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXGI_ERROR_ACCESS_LOST;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_DXGI_ERROR_ACCESS_DENIED:
+				case CarenRengine::CarenStatus::ResultCode::ER_DXGI_ERROR_ACCESS_DENIED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXGI_ERROR_ACCESS_DENIED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_DXGI_STATUS_DDA_WAS_STILL_DRAWING:
+				case CarenRengine::CarenStatus::ResultCode::ER_DXGI_STATUS_DDA_WAS_STILL_DRAWING:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXGI_STATUS_DDA_WAS_STILL_DRAWING;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_DXGI_ERROR_NOT_CURRENT:
+				case CarenRengine::CarenStatus::ResultCode::ER_DXGI_ERROR_NOT_CURRENT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXGI_ERROR_NOT_CURRENT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_DXGI_ERROR_HW_PROTECTION_OUTOFMEMORY:
+				case CarenRengine::CarenStatus::ResultCode::ER_DXGI_ERROR_HW_PROTECTION_OUTOFMEMORY:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXGI_ERROR_HW_PROTECTION_OUTOFMEMORY;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_DXGI_ERROR_DYNAMIC_CODE_POLICY_VIOLATION:
+				case CarenRengine::CarenStatus::ResultCode::ER_DXGI_ERROR_DYNAMIC_CODE_POLICY_VIOLATION:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXGI_ERROR_DYNAMIC_CODE_POLICY_VIOLATION;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_DXGI_ERROR_NON_COMPOSITED_UI:
+				case CarenRengine::CarenStatus::ResultCode::ER_DXGI_ERROR_NON_COMPOSITED_UI:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXGI_ERROR_NON_COMPOSITED_UI;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_DXGI_ERROR_CACHE_CORRUPT:
+				case CarenRengine::CarenStatus::ResultCode::ER_DXGI_ERROR_CACHE_CORRUPT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXGI_ERROR_CACHE_CORRUPT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_DXGI_ERROR_CACHE_FULL:
+				case CarenRengine::CarenStatus::ResultCode::ER_DXGI_ERROR_CACHE_FULL:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXGI_ERROR_CACHE_FULL;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_DXGI_ERROR_CACHE_HASH_COLLISION:
+				case CarenRengine::CarenStatus::ResultCode::ER_DXGI_ERROR_CACHE_HASH_COLLISION:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXGI_ERROR_CACHE_HASH_COLLISION;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_DXGI_DDI_ERR_WASSTILLDRAWING:
+				case CarenRengine::CarenStatus::ResultCode::ER_DXGI_DDI_ERR_WASSTILLDRAWING:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXGI_DDI_ERR_WASSTILLDRAWING;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_DXGI_DDI_ERR_UNSUPPORTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_DXGI_DDI_ERR_UNSUPPORTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXGI_DDI_ERR_UNSUPPORTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_DXGI_DDI_ERR_NONEXCLUSIVE:
+				case CarenRengine::CarenStatus::ResultCode::ER_DXGI_DDI_ERR_NONEXCLUSIVE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = DXGI_DDI_ERR_NONEXCLUSIVE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_WRONG_STATE:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_WRONG_STATE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_WRONG_STATE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_NOT_INITIALIZED:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_NOT_INITIALIZED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_NOT_INITIALIZED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_UNSUPPORTED_OPERATION:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_UNSUPPORTED_OPERATION:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_UNSUPPORTED_OPERATION;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_SCANNER_FAILED:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_SCANNER_FAILED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_SCANNER_FAILED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_SCREEN_ACCESS_DENIED:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_SCREEN_ACCESS_DENIED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_SCREEN_ACCESS_DENIED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_DISPLAY_STATE_INVALID:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_DISPLAY_STATE_INVALID:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_DISPLAY_STATE_INVALID;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_ZERO_VECTOR:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_ZERO_VECTOR:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_ZERO_VECTOR;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_INTERNAL_ERROR:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_INTERNAL_ERROR:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_INTERNAL_ERROR;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_DISPLAY_FORMAT_NOT_SUPPORTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_DISPLAY_FORMAT_NOT_SUPPORTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_DISPLAY_FORMAT_NOT_SUPPORTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_INVALID_CALL:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_INVALID_CALL:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_INVALID_CALL;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_NO_HARDWARE_DEVICE:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_NO_HARDWARE_DEVICE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_NO_HARDWARE_DEVICE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_RECREATE_TARGET:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_RECREATE_TARGET:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_RECREATE_TARGET;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_TOO_MANY_SHADER_ELEMENTS:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_TOO_MANY_SHADER_ELEMENTS:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_TOO_MANY_SHADER_ELEMENTS;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_SHADER_COMPILE_FAILED:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_SHADER_COMPILE_FAILED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_SHADER_COMPILE_FAILED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_MAX_TEXTURE_SIZE_EXCEEDED:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_MAX_TEXTURE_SIZE_EXCEEDED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_MAX_TEXTURE_SIZE_EXCEEDED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_UNSUPPORTED_VERSION:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_UNSUPPORTED_VERSION:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_UNSUPPORTED_VERSION;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_BAD_NUMBER:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_BAD_NUMBER:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_BAD_NUMBER;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_WRONG_FACTORY:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_WRONG_FACTORY:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_WRONG_FACTORY;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_LAYER_ALREADY_IN_USE:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_LAYER_ALREADY_IN_USE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_LAYER_ALREADY_IN_USE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_POP_CALL_DID_NOT_MATCH_PUSH:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_POP_CALL_DID_NOT_MATCH_PUSH:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_POP_CALL_DID_NOT_MATCH_PUSH;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_WRONG_RESOURCE_DOMAIN:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_WRONG_RESOURCE_DOMAIN:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_WRONG_RESOURCE_DOMAIN;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_PUSH_POP_UNBALANCED:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_PUSH_POP_UNBALANCED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_PUSH_POP_UNBALANCED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_RENDER_TARGET_HAS_LAYER_OR_CLIPRECT:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_RENDER_TARGET_HAS_LAYER_OR_CLIPRECT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_RENDER_TARGET_HAS_LAYER_OR_CLIPRECT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_INCOMPATIBLE_BRUSH_TYPES:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_INCOMPATIBLE_BRUSH_TYPES:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_INCOMPATIBLE_BRUSH_TYPES;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_WIN32_ERROR:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_WIN32_ERROR:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_WIN32_ERROR;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_TARGET_NOT_GDI_COMPATIBLE:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_TARGET_NOT_GDI_COMPATIBLE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_TARGET_NOT_GDI_COMPATIBLE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_TEXT_EFFECT_IS_WRONG_TYPE:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_TEXT_EFFECT_IS_WRONG_TYPE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_TEXT_EFFECT_IS_WRONG_TYPE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_TEXT_RENDERER_NOT_RELEASED:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_TEXT_RENDERER_NOT_RELEASED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_TEXT_RENDERER_NOT_RELEASED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_EXCEEDS_MAX_BITMAP_SIZE:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_EXCEEDS_MAX_BITMAP_SIZE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_EXCEEDS_MAX_BITMAP_SIZE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_INVALID_GRAPH_CONFIGURATION:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_INVALID_GRAPH_CONFIGURATION:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_INVALID_GRAPH_CONFIGURATION;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_INVALID_INTERNAL_GRAPH_CONFIGURATION:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_INVALID_INTERNAL_GRAPH_CONFIGURATION:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_INVALID_INTERNAL_GRAPH_CONFIGURATION;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_CYCLIC_GRAPH:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_CYCLIC_GRAPH:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_CYCLIC_GRAPH;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_BITMAP_CANNOT_DRAW:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_BITMAP_CANNOT_DRAW:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_BITMAP_CANNOT_DRAW;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_OUTSTANDING_BITMAP_REFERENCES:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_OUTSTANDING_BITMAP_REFERENCES:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_OUTSTANDING_BITMAP_REFERENCES;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_ORIGINAL_TARGET_NOT_BOUND:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_ORIGINAL_TARGET_NOT_BOUND:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_ORIGINAL_TARGET_NOT_BOUND;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_INVALID_TARGET:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_INVALID_TARGET:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_INVALID_TARGET;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_BITMAP_BOUND_AS_TARGET:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_BITMAP_BOUND_AS_TARGET:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_BITMAP_BOUND_AS_TARGET;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_INSUFFICIENT_DEVICE_CAPABILITIES:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_INSUFFICIENT_DEVICE_CAPABILITIES:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_INSUFFICIENT_DEVICE_CAPABILITIES;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_INTERMEDIATE_TOO_LARGE:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_INTERMEDIATE_TOO_LARGE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_INTERMEDIATE_TOO_LARGE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_EFFECT_IS_NOT_REGISTERED:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_EFFECT_IS_NOT_REGISTERED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_EFFECT_IS_NOT_REGISTERED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_INVALID_PROPERTY:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_INVALID_PROPERTY:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_INVALID_PROPERTY;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_NO_SUBPROPERTIES:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_NO_SUBPROPERTIES:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_NO_SUBPROPERTIES;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_PRINT_JOB_CLOSED:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_PRINT_JOB_CLOSED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_PRINT_JOB_CLOSED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_PRINT_FORMAT_NOT_SUPPORTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_PRINT_FORMAT_NOT_SUPPORTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_PRINT_FORMAT_NOT_SUPPORTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_TOO_MANY_TRANSFORM_INPUTS:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_TOO_MANY_TRANSFORM_INPUTS:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_TOO_MANY_TRANSFORM_INPUTS;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D2DERR_INVALID_GLYPH_IMAGE:
+				case CarenRengine::CarenStatus::ResultCode::ER_D2DERR_INVALID_GLYPH_IMAGE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D2DERR_INVALID_GLYPH_IMAGE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D3D11_ERROR_DEFERRED_CONTEXT_MAP_WITHOUT_INITIAL_DISCARD:
+				case CarenRengine::CarenStatus::ResultCode::ER_D3D11_ERROR_DEFERRED_CONTEXT_MAP_WITHOUT_INITIAL_DISCARD:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D3D11_ERROR_DEFERRED_CONTEXT_MAP_WITHOUT_INITIAL_DISCARD;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D3D11_ERROR_TOO_MANY_UNIQUE_VIEW_OBJECTS:
+				case CarenRengine::CarenStatus::ResultCode::ER_D3D11_ERROR_TOO_MANY_UNIQUE_VIEW_OBJECTS:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D3D11_ERROR_TOO_MANY_UNIQUE_VIEW_OBJECTS;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D3D11_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS:
+				case CarenRengine::CarenStatus::ResultCode::ER_D3D11_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D3D11_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_D3D11_ERROR_FILE_NOT_FOUND:
+				case CarenRengine::CarenStatus::ResultCode::ER_D3D11_ERROR_FILE_NOT_FOUND:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = D3D11_ERROR_FILE_NOT_FOUND;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::SS_MF_S_MULTIPLE_BEGIN:
+				case CarenRengine::CarenStatus::ResultCode::SS_MF_S_MULTIPLE_BEGIN:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_S_MULTIPLE_BEGIN;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::SS_MF_S_ASF_PARSEINPROGRESS:
+				case CarenRengine::CarenStatus::ResultCode::SS_MF_S_ASF_PARSEINPROGRESS:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_S_ASF_PARSEINPROGRESS;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::SS_MF_I_MANUAL_PROXY:
+				case CarenRengine::CarenStatus::ResultCode::SS_MF_I_MANUAL_PROXY:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_I_MANUAL_PROXY;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::SS_MF_S_PROTECTION_NOT_REQUIRED:
+				case CarenRengine::CarenStatus::ResultCode::SS_MF_S_PROTECTION_NOT_REQUIRED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_S_PROTECTION_NOT_REQUIRED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::SS_MF_S_WAIT_FOR_POLICY_SET:
+				case CarenRengine::CarenStatus::ResultCode::SS_MF_S_WAIT_FOR_POLICY_SET:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_S_WAIT_FOR_POLICY_SET;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::SS_MF_S_VIDEO_DISABLED_WITH_UNKNOWN_SOFTWARE_OUTPUT:
+				case CarenRengine::CarenStatus::ResultCode::SS_MF_S_VIDEO_DISABLED_WITH_UNKNOWN_SOFTWARE_OUTPUT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_S_VIDEO_DISABLED_WITH_UNKNOWN_SOFTWARE_OUTPUT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::SS_MF_S_SINK_NOT_FINALIZED:
+				case CarenRengine::CarenStatus::ResultCode::SS_MF_S_SINK_NOT_FINALIZED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_S_SINK_NOT_FINALIZED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::SS_MF_S_PE_TRUSTED:
+				case CarenRengine::CarenStatus::ResultCode::SS_MF_S_PE_TRUSTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_S_PE_TRUSTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::SS_MF_S_TRANSFORM_DO_NOT_PROPAGATE_EVENT:
+				case CarenRengine::CarenStatus::ResultCode::SS_MF_S_TRANSFORM_DO_NOT_PROPAGATE_EVENT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_S_TRANSFORM_DO_NOT_PROPAGATE_EVENT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::SS_MF_S_SEQUENCER_CONTEXT_CANCELED:
+				case CarenRengine::CarenStatus::ResultCode::SS_MF_S_SEQUENCER_CONTEXT_CANCELED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_S_SEQUENCER_CONTEXT_CANCELED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::SS_MF_S_SEQUENCER_SEGMENT_AT_END_OF_STREAM:
+				case CarenRengine::CarenStatus::ResultCode::SS_MF_S_SEQUENCER_SEGMENT_AT_END_OF_STREAM:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_S_SEQUENCER_SEGMENT_AT_END_OF_STREAM;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NOT_FOUND:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NOT_FOUND:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NOT_FOUND;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TOPO_INVALID_TIME_ATTRIBUTES:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TOPO_INVALID_TIME_ATTRIBUTES:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TOPO_INVALID_TIME_ATTRIBUTES;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_SESSION_PAUSEWHILESTOPPED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_SESSION_PAUSEWHILESTOPPED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_SESSION_PAUSEWHILESTOPPED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NOTACCEPTING:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NOTACCEPTING:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NOTACCEPTING;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_INVALIDREQUEST:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_INVALIDREQUEST:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_INVALIDREQUEST;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_SAMPLEALLOCATOR_EMPTY:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_SAMPLEALLOCATOR_EMPTY:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_SAMPLEALLOCATOR_EMPTY;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_UNSUPPORTED_RATE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_UNSUPPORTED_RATE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_UNSUPPORTED_RATE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_UNSUPPORTED_RATE_TRANSITION:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_UNSUPPORTED_RATE_TRANSITION:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_UNSUPPORTED_RATE_TRANSITION;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_REVERSE_UNSUPPORTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_REVERSE_UNSUPPORTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_REVERSE_UNSUPPORTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_THINNING_UNSUPPORTEDE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_THINNING_UNSUPPORTEDE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_THINNING_UNSUPPORTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_INVALIDINDEX:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_INVALIDINDEX:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_INVALIDINDEX;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_UNSUPPORTED_SERVICE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_UNSUPPORTED_SERVICE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_UNSUPPORTED_SERVICE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TOPO_SINK_ACTIVATES_UNSUPPORTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TOPO_SINK_ACTIVATES_UNSUPPORTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TOPO_SINK_ACTIVATES_UNSUPPORTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_MEDIA_SOURCE_WRONGSTATE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_MEDIA_SOURCE_WRONGSTATE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_MEDIA_SOURCE_WRONGSTATE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_END_OF_STREAM:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_END_OF_STREAM:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_END_OF_STREAM;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_UNSUPPORTED_SCHEME:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_UNSUPPORTED_SCHEME:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_UNSUPPORTED_SCHEME;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_BYTESTREAM_NOT_SEEKABLE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_BYTESTREAM_NOT_SEEKABLE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_BYTESTREAM_NOT_SEEKABLE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_UNSUPPORTED_BYTESTREAM_TYPE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_UNSUPPORTED_BYTESTREAM_TYPE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_UNSUPPORTED_BYTESTREAM_TYPE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_SOURCERESOLVER_MUTUALLY_EXCLUSIVE_FLAGS:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_SOURCERESOLVER_MUTUALLY_EXCLUSIVE_FLAGS:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_SOURCERESOLVER_MUTUALLY_EXCLUSIVE_FLAGS;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_ASF_OUTOFRANGE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_ASF_OUTOFRANGE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_ASF_OUTOFRANGE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_HW_MFT_FAILED_START_STREAMING:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_HW_MFT_FAILED_START_STREAMING:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_HW_MFT_FAILED_START_STREAMING;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_UNSUPPORTED_TIME_FORMAT:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_UNSUPPORTED_TIME_FORMAT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_UNSUPPORTED_TIME_FORMAT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_INVALID_STATE_TRANSITION:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_INVALID_STATE_TRANSITION:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_INVALID_STATE_TRANSITION;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_INVALID_WORKQUEUE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_INVALID_WORKQUEUE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_INVALID_WORKQUEUE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NO_EVENTS_AVAILABLE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NO_EVENTS_AVAILABLE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NO_EVENTS_AVAILABLE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_MULTIPLE_SUBSCRIBERS:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_MULTIPLE_SUBSCRIBERS:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_MULTIPLE_SUBSCRIBERS;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_MULTIPLE_BEGIN:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_MULTIPLE_BEGIN:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_MULTIPLE_BEGIN;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_STREAMSINK_REMOVED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_STREAMSINK_REMOVED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_STREAMSINK_REMOVED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_CLOCK_NOT_SIMPLE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_CLOCK_NOT_SIMPLE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_CLOCK_NOT_SIMPLE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NO_CLOCK:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NO_CLOCK:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NO_CLOCK;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_CLOCK_NO_TIME_SOURCE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_CLOCK_NO_TIME_SOURCE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_CLOCK_NO_TIME_SOURCE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_CLOCK_STATE_ALREADY_SET:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_CLOCK_STATE_ALREADY_SET:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_CLOCK_STATE_ALREADY_SET;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_SHUTDOWN:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_SHUTDOWN:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_SHUTDOWN;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_INVALIDSTREAMNUMBER:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_INVALIDSTREAMNUMBER:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_INVALIDSTREAMNUMBER;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TRANSFORM_INPUT_REMAINING:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TRANSFORM_INPUT_REMAINING:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TRANSFORM_INPUT_REMAINING;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NO_MORE_TYPES:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NO_MORE_TYPES:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NO_MORE_TYPES;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TRANSFORM_TYPE_NOT_SET:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TRANSFORM_TYPE_NOT_SET:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TRANSFORM_TYPE_NOT_SET;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TRANSFORM_NEED_MORE_INPUT:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TRANSFORM_NEED_MORE_INPUT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TRANSFORM_NEED_MORE_INPUT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TRANSFORM_STREAM_CHANGE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TRANSFORM_STREAM_CHANGE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TRANSFORM_STREAM_CHANGE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_STREAMSINK_EXISTS:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_STREAMSINK_EXISTS:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_STREAMSINK_EXISTS;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_STREAMSINKS_FIXED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_STREAMSINKS_FIXED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_STREAMSINKS_FIXED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NOT_INITIALIZED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NOT_INITIALIZED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NOT_INITIALIZED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TRANSFORM_CANNOT_CHANGE_MEDIATYPE_WHILE_PROCESSING:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TRANSFORM_CANNOT_CHANGE_MEDIATYPE_WHILE_PROCESSING:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TRANSFORM_CANNOT_CHANGE_MEDIATYPE_WHILE_PROCESSING;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_INVALIDTYPE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_INVALIDTYPE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_INVALIDTYPE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_ATTRIBUTENOTFOUND:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_ATTRIBUTENOTFOUND:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_ATTRIBUTENOTFOUND;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_BUFFERTOOSMALL:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_BUFFERTOOSMALL:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_BUFFERTOOSMALL;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TOPO_CODEC_NOT_FOUND:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TOPO_CODEC_NOT_FOUND:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TOPO_CODEC_NOT_FOUND;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_INVALIDMEDIATYPE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_INVALIDMEDIATYPE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_INVALIDMEDIATYPE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NO_SAMPLE_DURATION:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NO_SAMPLE_DURATION:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NO_SAMPLE_DURATION;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NO_SAMPLE_TIMESTAMP:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NO_SAMPLE_TIMESTAMP:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NO_SAMPLE_TIMESTAMP;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_INVALID_TIMESTAMP:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_INVALID_TIMESTAMP:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_INVALID_TIMESTAMP;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_UNSUPPORTED_D3D_TYPE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_UNSUPPORTED_D3D_TYPE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_UNSUPPORTED_D3D_TYPE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_DXGI_VIDEO_DEVICE_LOCKED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_DXGI_VIDEO_DEVICE_LOCKED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_DXGI_VIDEO_DEVICE_LOCKED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_DXGI_NEW_VIDEO_DEVICE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_DXGI_NEW_VIDEO_DEVICE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_DXGI_NEW_VIDEO_DEVICE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_DXGI_DEVICE_NOT_INITIALIZED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_DXGI_DEVICE_NOT_INITIALIZED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_DXGI_DEVICE_NOT_INITIALIZED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_LICENSE_INCORRECT_RIGHTS:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_LICENSE_INCORRECT_RIGHTS:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_LICENSE_INCORRECT_RIGHTS;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_PLATFORM_NOT_INITIALIZED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_PLATFORM_NOT_INITIALIZED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_PLATFORM_NOT_INITIALIZED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_UNSUPPORTED_REPRESENTATION:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_UNSUPPORTED_REPRESENTATION:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_UNSUPPORTED_REPRESENTATION;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_UNEXPECTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_UNEXPECTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_UNEXPECTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_INVALIDNAME:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_INVALIDNAME:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_INVALIDNAME;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_INVALID_FILE_FORMAT:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_INVALID_FILE_FORMAT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_INVALID_FILE_FORMAT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_INVALID_STREAM_DATA:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_INVALID_STREAM_DATA:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_INVALID_STREAM_DATA;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_RT_UNAVAILABLE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_RT_UNAVAILABLE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_RT_UNAVAILABLE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_THINNING_UNSUPPORTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_THINNING_UNSUPPORTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_THINNING_UNSUPPORTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_RATE_CHANGE_PREEMPTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_RATE_CHANGE_PREEMPTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_RATE_CHANGE_PREEMPTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NOT_AVAILABLE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NOT_AVAILABLE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NOT_AVAILABLE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TIMER_ORPHANED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TIMER_ORPHANED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TIMER_ORPHANED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_STATE_TRANSITION_PENDING:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_STATE_TRANSITION_PENDING:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_STATE_TRANSITION_PENDING;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_UNSUPPORTED_STATE_TRANSITION:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_UNSUPPORTED_STATE_TRANSITION:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_UNSUPPORTED_STATE_TRANSITION;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_UNRECOVERABLE_ERROR_OCCURRED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_UNRECOVERABLE_ERROR_OCCURRED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_UNRECOVERABLE_ERROR_OCCURRED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_SAMPLE_HAS_TOO_MANY_BUFFERS:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_SAMPLE_HAS_TOO_MANY_BUFFERS:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_SAMPLE_HAS_TOO_MANY_BUFFERS;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_SAMPLE_NOT_WRITABLE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_SAMPLE_NOT_WRITABLE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_SAMPLE_NOT_WRITABLE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_INVALID_KEY:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_INVALID_KEY:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_INVALID_KEY;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_BAD_STARTUP_VERSION:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_BAD_STARTUP_VERSION:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_BAD_STARTUP_VERSION;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_UNSUPPORTED_CAPTION:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_UNSUPPORTED_CAPTION:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_UNSUPPORTED_CAPTION;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_INVALID_POSITION:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_INVALID_POSITION:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_INVALID_POSITION;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_PROPERTY_TYPE_NOT_ALLOWED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_PROPERTY_TYPE_NOT_ALLOWED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_PROPERTY_TYPE_NOT_ALLOWED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_PROPERTY_TYPE_NOT_SUPPORTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_PROPERTY_TYPE_NOT_SUPPORTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_PROPERTY_TYPE_NOT_SUPPORTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_PROPERTY_EMPTY:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_PROPERTY_EMPTY:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_PROPERTY_EMPTY;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_PROPERTY_NOT_EMPTY:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_PROPERTY_NOT_EMPTY:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_PROPERTY_NOT_EMPTY;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_PROPERTY_VECTOR_NOT_ALLOWED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_PROPERTY_VECTOR_NOT_ALLOWED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_PROPERTY_VECTOR_NOT_ALLOWED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_PROPERTY_VECTOR_REQUIRED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_PROPERTY_VECTOR_REQUIRED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_PROPERTY_VECTOR_REQUIRED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_OPERATION_CANCELLED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_OPERATION_CANCELLED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_OPERATION_CANCELLED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_DISABLED_IN_SAFEMODE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_DISABLED_IN_SAFEMODE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_DISABLED_IN_SAFEMODE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_CANNOT_PARSE_BYTESTREAM:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_CANNOT_PARSE_BYTESTREAM:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_CANNOT_PARSE_BYTESTREAM;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_MEDIAPROC_WRONGSTATE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_MEDIAPROC_WRONGSTATE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_MEDIAPROC_WRONGSTATE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_RT_THROUGHPUT_NOT_AVAILABLE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_RT_THROUGHPUT_NOT_AVAILABLE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_RT_THROUGHPUT_NOT_AVAILABLE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_RT_TOO_MANY_CLASSES:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_RT_TOO_MANY_CLASSES:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_RT_TOO_MANY_CLASSES;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_RT_WOULDBLOCK:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_RT_WOULDBLOCK:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_RT_WOULDBLOCK;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NO_BITPUMP:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NO_BITPUMP:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NO_BITPUMP;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_RT_OUTOFMEMORY:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_RT_OUTOFMEMORY:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_RT_OUTOFMEMORY;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_RT_WORKQUEUE_CLASS_NOT_SPECIFIED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_RT_WORKQUEUE_CLASS_NOT_SPECIFIED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_RT_WORKQUEUE_CLASS_NOT_SPECIFIED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_INSUFFICIENT_BUFFER:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_INSUFFICIENT_BUFFER:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_INSUFFICIENT_BUFFER;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_CANNOT_CREATE_SINK:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_CANNOT_CREATE_SINK:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_CANNOT_CREATE_SINK;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_BYTESTREAM_UNKNOWN_LENGTH:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_BYTESTREAM_UNKNOWN_LENGTH:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_BYTESTREAM_UNKNOWN_LENGTH;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_S_ACTIVATE_REPLACED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_S_ACTIVATE_REPLACED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_S_ACTIVATE_REPLACED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_FORMAT_CHANGE_NOT_SUPPORTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_FORMAT_CHANGE_NOT_SUPPORTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_FORMAT_CHANGE_NOT_SUPPORTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_DRM_UNSUPPORTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_DRM_UNSUPPORTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_DRM_UNSUPPORTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_UNAUTHORIZED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_UNAUTHORIZED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_UNAUTHORIZED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_OUT_OF_RANGE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_OUT_OF_RANGE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_OUT_OF_RANGE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_INVALID_CODEC_MERIT:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_INVALID_CODEC_MERIT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_INVALID_CODEC_MERIT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_OPERATION_IN_PROGRESS:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_OPERATION_IN_PROGRESS:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_OPERATION_IN_PROGRESS;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_HARDWARE_DRM_UNSUPPORTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_HARDWARE_DRM_UNSUPPORTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_HARDWARE_DRM_UNSUPPORTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_DURATION_TOO_LONG:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_DURATION_TOO_LONG:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_DURATION_TOO_LONG;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_OPERATION_UNSUPPORTED_AT_D3D_FEATURE_LEVEL:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_OPERATION_UNSUPPORTED_AT_D3D_FEATURE_LEVEL:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = _HRESULT_TYPEDEF_(0xc00d3708);
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_UNSUPPORTED_MEDIATYPE_AT_D3D_FEATURE_LEVEL:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_UNSUPPORTED_MEDIATYPE_AT_D3D_FEATURE_LEVEL:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = _HRESULT_TYPEDEF_(0xc00d3709);
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_ASF_PARSINGINCOMPLETE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_ASF_PARSINGINCOMPLETE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_ASF_PARSINGINCOMPLETE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_ASF_MISSINGDATA:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_ASF_MISSINGDATA:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_ASF_MISSINGDATA;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_ASF_INVALIDDATA:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_ASF_INVALIDDATA:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_ASF_INVALIDDATA;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_ASF_OPAQUEPACKET:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_ASF_OPAQUEPACKET:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_ASF_OPAQUEPACKET;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_ASF_NOINDEX:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_ASF_NOINDEX:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_ASF_NOINDEX;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_ASF_INDEXNOTLOADED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_ASF_INDEXNOTLOADED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_ASF_INDEXNOTLOADED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_ASF_TOO_MANY_PAYLOADS:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_ASF_TOO_MANY_PAYLOADS:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_ASF_TOO_MANY_PAYLOADS;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_ASF_UNSUPPORTED_STREAM_TYPE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_ASF_UNSUPPORTED_STREAM_TYPE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_ASF_UNSUPPORTED_STREAM_TYPE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_ASF_DROPPED_PACKET:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_ASF_DROPPED_PACKET:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_ASF_DROPPED_PACKET;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_MP3_NOTFOUND:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_MP3_NOTFOUND:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_MP3_NOTFOUND;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_MP3_OUTOFDATA:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_MP3_OUTOFDATA:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_MP3_OUTOFDATA;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_MP3_NOTMP3:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_MP3_NOTMP3:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_MP3_NOTMP3;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_MP3_NOTSUPPORTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_MP3_NOTSUPPORTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_MP3_NOTSUPPORTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NO_DURATION:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NO_DURATION:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NO_DURATION;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_INVALID_FORMAT:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_INVALID_FORMAT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_INVALID_FORMAT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_PROPERTY_NOT_FOUND:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_PROPERTY_NOT_FOUND:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_PROPERTY_NOT_FOUND;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_PROPERTY_READ_ONLY:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_PROPERTY_READ_ONLY:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_PROPERTY_READ_ONLY;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_PROPERTY_NOT_ALLOWED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_PROPERTY_NOT_ALLOWED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_PROPERTY_NOT_ALLOWED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_MEDIA_SOURCE_NOT_STARTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_MEDIA_SOURCE_NOT_STARTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_MEDIA_SOURCE_NOT_STARTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_UNSUPPORTED_FORMAT:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_UNSUPPORTED_FORMAT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_UNSUPPORTED_FORMAT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_MP3_BAD_CRC:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_MP3_BAD_CRC:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_MP3_BAD_CRC;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NOT_PROTECTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NOT_PROTECTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NOT_PROTECTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_MEDIA_SOURCE_NO_STREAMS_SELECTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_MEDIA_SOURCE_NO_STREAMS_SELECTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_MEDIA_SOURCE_NO_STREAMS_SELECTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_CANNOT_FIND_KEYFRAME_SAMPLE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_CANNOT_FIND_KEYFRAME_SAMPLE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_CANNOT_FIND_KEYFRAME_SAMPLE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_UNSUPPORTED_CHARACTERISTICS:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_UNSUPPORTED_CHARACTERISTICS:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_UNSUPPORTED_CHARACTERISTICS;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NO_AUDIO_RECORDING_DEVICE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NO_AUDIO_RECORDING_DEVICE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NO_AUDIO_RECORDING_DEVICE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_AUDIO_RECORDING_DEVICE_IN_USE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_AUDIO_RECORDING_DEVICE_IN_USE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_AUDIO_RECORDING_DEVICE_IN_USE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_AUDIO_RECORDING_DEVICE_INVALIDATED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_AUDIO_RECORDING_DEVICE_INVALIDATED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_AUDIO_RECORDING_DEVICE_INVALIDATED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_VIDEO_RECORDING_DEVICE_INVALIDATED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_VIDEO_RECORDING_DEVICE_INVALIDATED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_VIDEO_RECORDING_DEVICE_INVALIDATED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_VIDEO_RECORDING_DEVICE_PREEMPTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_VIDEO_RECORDING_DEVICE_PREEMPTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_VIDEO_RECORDING_DEVICE_PREEMPTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NETWORK_RESOURCE_FAILURE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NETWORK_RESOURCE_FAILURE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NETWORK_RESOURCE_FAILURE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NET_WRITE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NET_WRITE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NET_WRITE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NET_READ:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NET_READ:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NET_READ;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NET_REQUIRE_NETWORK:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NET_REQUIRE_NETWORK:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NET_REQUIRE_NETWORK;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NET_REQUIRE_ASYNC:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NET_REQUIRE_ASYNC:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NET_REQUIRE_ASYNC;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NET_BWLEVEL_NOT_SUPPORTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NET_BWLEVEL_NOT_SUPPORTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NET_BWLEVEL_NOT_SUPPORTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NET_STREAMGROUPS_NOT_SUPPORTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NET_STREAMGROUPS_NOT_SUPPORTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NET_STREAMGROUPS_NOT_SUPPORTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NET_MANUALSS_NOT_SUPPORTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NET_MANUALSS_NOT_SUPPORTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NET_MANUALSS_NOT_SUPPORTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NET_INVALID_PRESENTATION_DESCRIPTOR:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NET_INVALID_PRESENTATION_DESCRIPTOR:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NET_INVALID_PRESENTATION_DESCRIPTOR;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NET_CACHESTREAM_NOT_FOUND:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NET_CACHESTREAM_NOT_FOUND:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NET_CACHESTREAM_NOT_FOUND;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NET_REQUIRE_INPUT:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NET_REQUIRE_INPUT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NET_REQUIRE_INPUT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NET_REDIRECT:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NET_REDIRECT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NET_REDIRECT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NET_REDIRECT_TO_PROXY:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NET_REDIRECT_TO_PROXY:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NET_REDIRECT_TO_PROXY;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NET_TOO_MANY_REDIRECTS:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NET_TOO_MANY_REDIRECTS:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NET_TOO_MANY_REDIRECTS;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NET_TIMEOUT:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NET_TIMEOUT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NET_TIMEOUT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NET_CLIENT_CLOSE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NET_CLIENT_CLOSE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NET_CLIENT_CLOSE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NET_BAD_CONTROL_DATA:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NET_BAD_CONTROL_DATA:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NET_BAD_CONTROL_DATA;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NET_INCOMPATIBLE_SERVER:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NET_INCOMPATIBLE_SERVER:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NET_INCOMPATIBLE_SERVER;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NET_UNSAFE_URL:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NET_UNSAFE_URL:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NET_UNSAFE_URL;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NET_CACHE_NO_DATA:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NET_CACHE_NO_DATA:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NET_CACHE_NO_DATA;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NET_EOL:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NET_EOL:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NET_EOL;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NET_BAD_REQUEST:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NET_BAD_REQUEST:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NET_BAD_REQUEST;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NET_INTERNAL_SERVER_ERROR:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NET_INTERNAL_SERVER_ERROR:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NET_INTERNAL_SERVER_ERROR;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NET_SESSION_NOT_FOUND:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NET_SESSION_NOT_FOUND:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NET_SESSION_NOT_FOUND;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NET_NOCONNECTION:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NET_NOCONNECTION:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NET_NOCONNECTION;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NET_CONNECTION_FAILURE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NET_CONNECTION_FAILURE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NET_CONNECTION_FAILURE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NET_INCOMPATIBLE_PUSHSERVER:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NET_INCOMPATIBLE_PUSHSERVER:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NET_INCOMPATIBLE_PUSHSERVER;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NET_SERVER_ACCESSDENIED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NET_SERVER_ACCESSDENIED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NET_SERVER_ACCESSDENIED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NET_PROXY_ACCESSDENIED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NET_PROXY_ACCESSDENIED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NET_PROXY_ACCESSDENIED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NET_CANNOTCONNECT:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NET_CANNOTCONNECT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NET_CANNOTCONNECT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NET_INVALID_PUSH_TEMPLATE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NET_INVALID_PUSH_TEMPLATE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NET_INVALID_PUSH_TEMPLATE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NET_INVALID_PUSH_PUBLISHING_POINT:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NET_INVALID_PUSH_PUBLISHING_POINT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NET_INVALID_PUSH_PUBLISHING_POINT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NET_BUSY:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NET_BUSY:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NET_BUSY;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NET_RESOURCE_GONE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NET_RESOURCE_GONE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NET_RESOURCE_GONE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NET_ERROR_FROM_PROXY:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NET_ERROR_FROM_PROXY:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NET_ERROR_FROM_PROXY;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NET_PROXY_TIMEOUT:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NET_PROXY_TIMEOUT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NET_PROXY_TIMEOUT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NET_SERVER_UNAVAILABLE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NET_SERVER_UNAVAILABLE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NET_SERVER_UNAVAILABLE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NET_TOO_MUCH_DATA:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NET_TOO_MUCH_DATA:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NET_TOO_MUCH_DATA;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NET_SESSION_INVALID:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NET_SESSION_INVALID:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NET_SESSION_INVALID;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_OFFLINE_MODE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_OFFLINE_MODE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_OFFLINE_MODE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NET_UDP_BLOCKED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NET_UDP_BLOCKED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NET_UDP_BLOCKED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NET_UNSUPPORTED_CONFIGURATION:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NET_UNSUPPORTED_CONFIGURATION:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NET_UNSUPPORTED_CONFIGURATION;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NET_PROTOCOL_DISABLED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NET_PROTOCOL_DISABLED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NET_PROTOCOL_DISABLED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NET_COMPANION_DRIVER_DISCONNECT:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NET_COMPANION_DRIVER_DISCONNECT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NET_COMPANION_DRIVER_DISCONNECT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_ALREADY_INITIALIZED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_ALREADY_INITIALIZED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_ALREADY_INITIALIZED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_BANDWIDTH_OVERRUN:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_BANDWIDTH_OVERRUN:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_BANDWIDTH_OVERRUN;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_LATE_SAMPLE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_LATE_SAMPLE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_LATE_SAMPLE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_FLUSH_NEEDED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_FLUSH_NEEDED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_FLUSH_NEEDED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_INVALID_PROFILE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_INVALID_PROFILE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_INVALID_PROFILE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_INDEX_NOT_COMMITTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_INDEX_NOT_COMMITTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_INDEX_NOT_COMMITTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NO_INDEX:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NO_INDEX:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NO_INDEX;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_CANNOT_INDEX_IN_PLACE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_CANNOT_INDEX_IN_PLACE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_CANNOT_INDEX_IN_PLACE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_MISSING_ASF_LEAKYBUCKET:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_MISSING_ASF_LEAKYBUCKET:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_MISSING_ASF_LEAKYBUCKET;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_INVALID_ASF_STREAMID:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_INVALID_ASF_STREAMID:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_INVALID_ASF_STREAMID;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_STREAMSINKS_OUT_OF_SYNC:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_STREAMSINKS_OUT_OF_SYNC:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_STREAMSINKS_OUT_OF_SYNC;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_SAMPLEALLOCATOR_CANCELED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_SAMPLEALLOCATOR_CANCELED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_SAMPLEALLOCATOR_CANCELED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_SINK_ALREADYSTOPPED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_SINK_ALREADYSTOPPED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_SINK_ALREADYSTOPPED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_ASF_FILESINK_BITRATE_UNKNOWN:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_ASF_FILESINK_BITRATE_UNKNOWN:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_ASF_FILESINK_BITRATE_UNKNOWN;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_SINK_NO_STREAMS:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_SINK_NO_STREAMS:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_SINK_NO_STREAMS;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_METADATA_TOO_LONG:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_METADATA_TOO_LONG:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_METADATA_TOO_LONG;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_SINK_NO_SAMPLES_PROCESSED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_SINK_NO_SAMPLES_PROCESSED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_SINK_NO_SAMPLES_PROCESSED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_SINK_HEADERS_NOT_FOUND:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_SINK_HEADERS_NOT_FOUND:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_SINK_HEADERS_NOT_FOUND;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_VIDEO_REN_NO_PROCAMP_HW:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_VIDEO_REN_NO_PROCAMP_HW:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_VIDEO_REN_NO_PROCAMP_HW;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_VIDEO_REN_NO_DEINTERLACE_HW:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_VIDEO_REN_NO_DEINTERLACE_HW:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_VIDEO_REN_NO_DEINTERLACE_HW;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_VIDEO_REN_COPYPROT_FAILED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_VIDEO_REN_COPYPROT_FAILED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_VIDEO_REN_COPYPROT_FAILED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_VIDEO_REN_SURFACE_NOT_SHARED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_VIDEO_REN_SURFACE_NOT_SHARED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_VIDEO_REN_SURFACE_NOT_SHARED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_VIDEO_DEVICE_LOCKED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_VIDEO_DEVICE_LOCKED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_VIDEO_DEVICE_LOCKED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NEW_VIDEO_DEVICE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NEW_VIDEO_DEVICE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NEW_VIDEO_DEVICE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NO_VIDEO_SAMPLE_AVAILABLE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NO_VIDEO_SAMPLE_AVAILABLE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NO_VIDEO_SAMPLE_AVAILABLE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NO_AUDIO_PLAYBACK_DEVICE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NO_AUDIO_PLAYBACK_DEVICE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NO_AUDIO_PLAYBACK_DEVICE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_AUDIO_PLAYBACK_DEVICE_IN_USE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_AUDIO_PLAYBACK_DEVICE_IN_USE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_AUDIO_PLAYBACK_DEVICE_IN_USE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_AUDIO_PLAYBACK_DEVICE_INVALIDATED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_AUDIO_PLAYBACK_DEVICE_INVALIDATED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_AUDIO_PLAYBACK_DEVICE_INVALIDATED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_AUDIO_SERVICE_NOT_RUNNING:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_AUDIO_SERVICE_NOT_RUNNING:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_AUDIO_SERVICE_NOT_RUNNING;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_AUDIO_BUFFER_SIZE_ERROR:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_AUDIO_BUFFER_SIZE_ERROR:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = _HRESULT_TYPEDEF_(0xc00d4e88);
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_AUDIO_CLIENT_WRAPPER_SPOOF_ERROR:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_AUDIO_CLIENT_WRAPPER_SPOOF_ERROR:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = _HRESULT_TYPEDEF_(0xc00d4e89);
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TOPO_INVALID_OPTIONAL_NODE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TOPO_INVALID_OPTIONAL_NODE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TOPO_INVALID_OPTIONAL_NODE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TOPO_CANNOT_FIND_DECRYPTOR:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TOPO_CANNOT_FIND_DECRYPTOR:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TOPO_CANNOT_FIND_DECRYPTOR;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TOPO_CANNOT_CONNECT:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TOPO_CANNOT_CONNECT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TOPO_CANNOT_CONNECT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TOPO_UNSUPPORTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TOPO_UNSUPPORTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TOPO_UNSUPPORTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TOPO_LOOPS_IN_TOPOLOGY:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TOPO_LOOPS_IN_TOPOLOGY:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TOPO_LOOPS_IN_TOPOLOGY;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TOPO_MISSING_PRESENTATION_DESCRIPTOR:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TOPO_MISSING_PRESENTATION_DESCRIPTOR:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TOPO_MISSING_PRESENTATION_DESCRIPTOR;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TOPO_MISSING_STREAM_DESCRIPTOR:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TOPO_MISSING_STREAM_DESCRIPTOR:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TOPO_MISSING_STREAM_DESCRIPTOR;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TOPO_STREAM_DESCRIPTOR_NOT_SELECTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TOPO_STREAM_DESCRIPTOR_NOT_SELECTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TOPO_STREAM_DESCRIPTOR_NOT_SELECTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TOPO_MISSING_SOURCE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TOPO_MISSING_SOURCE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TOPO_MISSING_SOURCE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_SEQUENCER_UNKNOWN_SEGMENT_ID:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_SEQUENCER_UNKNOWN_SEGMENT_ID:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_SEQUENCER_UNKNOWN_SEGMENT_ID;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NO_SOURCE_IN_CACHE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NO_SOURCE_IN_CACHE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NO_SOURCE_IN_CACHE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TRANSFORM_PROFILE_MISSING:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TRANSFORM_PROFILE_MISSING:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TRANSFORM_PROFILE_MISSING;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TRANSFORM_PROFILE_INVALID_OR_CORRUPT:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TRANSFORM_PROFILE_INVALID_OR_CORRUPT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TRANSFORM_PROFILE_INVALID_OR_CORRUPT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TRANSFORM_PROFILE_TRUNCATED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TRANSFORM_PROFILE_TRUNCATED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TRANSFORM_PROFILE_TRUNCATED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TRANSFORM_PROPERTY_PID_NOT_RECOGNIZED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TRANSFORM_PROPERTY_PID_NOT_RECOGNIZED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TRANSFORM_PROPERTY_PID_NOT_RECOGNIZED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TRANSFORM_PROPERTY_VARIANT_TYPE_WRONG:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TRANSFORM_PROPERTY_VARIANT_TYPE_WRONG:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TRANSFORM_PROPERTY_VARIANT_TYPE_WRONG;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TRANSFORM_PROPERTY_NOT_WRITEABLE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TRANSFORM_PROPERTY_NOT_WRITEABLE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TRANSFORM_PROPERTY_NOT_WRITEABLE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TRANSFORM_PROPERTY_ARRAY_VALUE_WRONG_NUM_DIM:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TRANSFORM_PROPERTY_ARRAY_VALUE_WRONG_NUM_DIM:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TRANSFORM_PROPERTY_ARRAY_VALUE_WRONG_NUM_DIM;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TRANSFORM_PROPERTY_VALUE_SIZE_WRONG:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TRANSFORM_PROPERTY_VALUE_SIZE_WRONG:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TRANSFORM_PROPERTY_VALUE_SIZE_WRONG;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TRANSFORM_PROPERTY_VALUE_OUT_OF_RANGE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TRANSFORM_PROPERTY_VALUE_OUT_OF_RANGE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TRANSFORM_PROPERTY_VALUE_OUT_OF_RANGE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TRANSFORM_PROPERTY_VALUE_INCOMPATIBLE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TRANSFORM_PROPERTY_VALUE_INCOMPATIBLE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TRANSFORM_PROPERTY_VALUE_INCOMPATIBLE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TRANSFORM_NOT_POSSIBLE_FOR_CURRENT_OUTPUT_MEDIATYPE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TRANSFORM_NOT_POSSIBLE_FOR_CURRENT_OUTPUT_MEDIATYPE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TRANSFORM_NOT_POSSIBLE_FOR_CURRENT_OUTPUT_MEDIATYPE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TRANSFORM_NOT_POSSIBLE_FOR_CURRENT_INPUT_MEDIATYPE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TRANSFORM_NOT_POSSIBLE_FOR_CURRENT_INPUT_MEDIATYPE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TRANSFORM_NOT_POSSIBLE_FOR_CURRENT_INPUT_MEDIATYPE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TRANSFORM_NOT_POSSIBLE_FOR_CURRENT_MEDIATYPE_COMBINATION:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TRANSFORM_NOT_POSSIBLE_FOR_CURRENT_MEDIATYPE_COMBINATION:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TRANSFORM_NOT_POSSIBLE_FOR_CURRENT_MEDIATYPE_COMBINATION;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TRANSFORM_CONFLICTS_WITH_OTHER_CURRENTLY_ENABLED_FEATURES:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TRANSFORM_CONFLICTS_WITH_OTHER_CURRENTLY_ENABLED_FEATURES:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TRANSFORM_CONFLICTS_WITH_OTHER_CURRENTLY_ENABLED_FEATURES;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TRANSFORM_NOT_POSSIBLE_FOR_CURRENT_SPKR_CONFIG:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TRANSFORM_NOT_POSSIBLE_FOR_CURRENT_SPKR_CONFIG:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TRANSFORM_NOT_POSSIBLE_FOR_CURRENT_SPKR_CONFIG;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TRANSFORM_ASYNC_LOCKED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TRANSFORM_ASYNC_LOCKED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TRANSFORM_ASYNC_LOCKED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TRANSFORM_CANNOT_INITIALIZE_ACM_DRIVER:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TRANSFORM_CANNOT_INITIALIZE_ACM_DRIVER:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TRANSFORM_CANNOT_INITIALIZE_ACM_DRIVER;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TRANSFORM_STREAM_INVALID_RESOLUTION:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TRANSFORM_STREAM_INVALID_RESOLUTION:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TRANSFORM_STREAM_INVALID_RESOLUTION;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TRANSFORM_ASYNC_MFT_NOT_SUPPORTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TRANSFORM_ASYNC_MFT_NOT_SUPPORTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TRANSFORM_ASYNC_MFT_NOT_SUPPORTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TRANSFORM_EXATTRIBUTE_NOT_SUPPORTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TRANSFORM_EXATTRIBUTE_NOT_SUPPORTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TRANSFORM_EXATTRIBUTE_NOT_SUPPORTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_LICENSE_OUTOFDATE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_LICENSE_OUTOFDATE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_LICENSE_OUTOFDATE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_LICENSE_REQUIRED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_LICENSE_REQUIRED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_LICENSE_REQUIRED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_DRM_HARDWARE_INCONSISTENT:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_DRM_HARDWARE_INCONSISTENT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_DRM_HARDWARE_INCONSISTENT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NO_CONTENT_PROTECTION_MANAGER:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NO_CONTENT_PROTECTION_MANAGER:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NO_CONTENT_PROTECTION_MANAGER;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_LICENSE_RESTORE_NO_RIGHTS:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_LICENSE_RESTORE_NO_RIGHTS:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_LICENSE_RESTORE_NO_RIGHTS;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_BACKUP_RESTRICTED_LICENSE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_BACKUP_RESTRICTED_LICENSE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_BACKUP_RESTRICTED_LICENSE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_LICENSE_RESTORE_NEEDS_INDIVIDUALIZATION:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_LICENSE_RESTORE_NEEDS_INDIVIDUALIZATION:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_LICENSE_RESTORE_NEEDS_INDIVIDUALIZATION;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_COMPONENT_REVOKED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_COMPONENT_REVOKED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_COMPONENT_REVOKED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TRUST_DISABLED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TRUST_DISABLED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TRUST_DISABLED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_WMDRMOTA_NO_ACTION:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_WMDRMOTA_NO_ACTION:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_WMDRMOTA_NO_ACTION;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_WMDRMOTA_ACTION_ALREADY_SET:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_WMDRMOTA_ACTION_ALREADY_SET:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_WMDRMOTA_ACTION_ALREADY_SET;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_WMDRMOTA_DRM_HEADER_NOT_AVAILABLE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_WMDRMOTA_DRM_HEADER_NOT_AVAILABLE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_WMDRMOTA_DRM_HEADER_NOT_AVAILABLE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_WMDRMOTA_DRM_ENCRYPTION_SCHEME_NOT_SUPPORTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_WMDRMOTA_DRM_ENCRYPTION_SCHEME_NOT_SUPPORTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_WMDRMOTA_DRM_ENCRYPTION_SCHEME_NOT_SUPPORTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_WMDRMOTA_ACTION_MISMATCH:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_WMDRMOTA_ACTION_MISMATCH:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_WMDRMOTA_ACTION_MISMATCH;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_WMDRMOTA_INVALID_POLICY:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_WMDRMOTA_INVALID_POLICY:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_WMDRMOTA_INVALID_POLICY;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_POLICY_UNSUPPORTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_POLICY_UNSUPPORTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_POLICY_UNSUPPORTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_OPL_NOT_SUPPORTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_OPL_NOT_SUPPORTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_OPL_NOT_SUPPORTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TOPOLOGY_VERIFICATION_FAILED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TOPOLOGY_VERIFICATION_FAILED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TOPOLOGY_VERIFICATION_FAILED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_SIGNATURE_VERIFICATION_FAILED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_SIGNATURE_VERIFICATION_FAILED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_SIGNATURE_VERIFICATION_FAILED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_DEBUGGING_NOT_ALLOWED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_DEBUGGING_NOT_ALLOWED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_DEBUGGING_NOT_ALLOWED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_CODE_EXPIRED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_CODE_EXPIRED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_CODE_EXPIRED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_GRL_VERSION_TOO_LOW:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_GRL_VERSION_TOO_LOW:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_GRL_VERSION_TOO_LOW;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_GRL_RENEWAL_NOT_FOUND:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_GRL_RENEWAL_NOT_FOUND:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_GRL_RENEWAL_NOT_FOUND;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_GRL_EXTENSIBLE_ENTRY_NOT_FOUND:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_GRL_EXTENSIBLE_ENTRY_NOT_FOUND:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_GRL_EXTENSIBLE_ENTRY_NOT_FOUND;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_KERNEL_UNTRUSTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_KERNEL_UNTRUSTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_KERNEL_UNTRUSTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_PEAUTH_UNTRUSTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_PEAUTH_UNTRUSTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_PEAUTH_UNTRUSTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NON_PE_PROCESS:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NON_PE_PROCESS:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NON_PE_PROCESS;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_REBOOT_REQUIRED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_REBOOT_REQUIRED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_REBOOT_REQUIRED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_GRL_INVALID_FORMAT:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_GRL_INVALID_FORMAT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_GRL_INVALID_FORMAT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_GRL_UNRECOGNIZED_FORMAT:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_GRL_UNRECOGNIZED_FORMAT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_GRL_UNRECOGNIZED_FORMAT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_ALL_PROCESS_RESTART_REQUIRED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_ALL_PROCESS_RESTART_REQUIRED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_ALL_PROCESS_RESTART_REQUIRED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_PROCESS_RESTART_REQUIRED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_PROCESS_RESTART_REQUIRED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_PROCESS_RESTART_REQUIRED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_USERMODE_UNTRUSTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_USERMODE_UNTRUSTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_USERMODE_UNTRUSTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_PEAUTH_SESSION_NOT_STARTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_PEAUTH_SESSION_NOT_STARTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_PEAUTH_SESSION_NOT_STARTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_PEAUTH_PUBLICKEY_REVOKED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_PEAUTH_PUBLICKEY_REVOKED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_PEAUTH_PUBLICKEY_REVOKED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_GRL_ABSENT:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_GRL_ABSENT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_GRL_ABSENT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_S_PE_TRUSTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_S_PE_TRUSTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_S_PE_TRUSTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_PE_UNTRUSTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_PE_UNTRUSTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_PE_UNTRUSTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_PEAUTH_NOT_STARTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_PEAUTH_NOT_STARTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_PEAUTH_NOT_STARTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_INCOMPATIBLE_SAMPLE_PROTECTION:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_INCOMPATIBLE_SAMPLE_PROTECTION:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_INCOMPATIBLE_SAMPLE_PROTECTION;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_PE_SESSIONS_MAXED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_PE_SESSIONS_MAXED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_PE_SESSIONS_MAXED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_HIGH_SECURITY_LEVEL_CONTENT_NOT_ALLOWED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_HIGH_SECURITY_LEVEL_CONTENT_NOT_ALLOWED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_HIGH_SECURITY_LEVEL_CONTENT_NOT_ALLOWED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TEST_SIGNED_COMPONENTS_NOT_ALLOWED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TEST_SIGNED_COMPONENTS_NOT_ALLOWED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TEST_SIGNED_COMPONENTS_NOT_ALLOWED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_ITA_UNSUPPORTED_ACTION:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_ITA_UNSUPPORTED_ACTION:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_ITA_UNSUPPORTED_ACTION;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_ITA_ERROR_PARSING_SAP_PARAMETERS:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_ITA_ERROR_PARSING_SAP_PARAMETERS:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_ITA_ERROR_PARSING_SAP_PARAMETERS;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_POLICY_MGR_ACTION_OUTOFBOUNDS:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_POLICY_MGR_ACTION_OUTOFBOUNDS:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_POLICY_MGR_ACTION_OUTOFBOUNDS;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_BAD_OPL_STRUCTURE_FORMAT:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_BAD_OPL_STRUCTURE_FORMAT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_BAD_OPL_STRUCTURE_FORMAT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_ITA_UNRECOGNIZED_ANALOG_VIDEO_PROTECTION_GUID:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_ITA_UNRECOGNIZED_ANALOG_VIDEO_PROTECTION_GUID:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_ITA_UNRECOGNIZED_ANALOG_VIDEO_PROTECTION_GUID;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NO_PMP_HOST:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NO_PMP_HOST:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NO_PMP_HOST;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_ITA_OPL_DATA_NOT_INITIALIZED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_ITA_OPL_DATA_NOT_INITIALIZED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_ITA_OPL_DATA_NOT_INITIALIZED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_ITA_UNRECOGNIZED_ANALOG_VIDEO_OUTPUT:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_ITA_UNRECOGNIZED_ANALOG_VIDEO_OUTPUT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_ITA_UNRECOGNIZED_ANALOG_VIDEO_OUTPUT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_ITA_UNRECOGNIZED_DIGITAL_VIDEO_OUTPUT:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_ITA_UNRECOGNIZED_DIGITAL_VIDEO_OUTPUT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_ITA_UNRECOGNIZED_DIGITAL_VIDEO_OUTPUT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_RESOLUTION_REQUIRES_PMP_CREATION_CALLBACK:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_RESOLUTION_REQUIRES_PMP_CREATION_CALLBACK:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_RESOLUTION_REQUIRES_PMP_CREATION_CALLBACK;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_INVALID_AKE_CHANNEL_PARAMETERS:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_INVALID_AKE_CHANNEL_PARAMETERS:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_INVALID_AKE_CHANNEL_PARAMETERS;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_CONTENT_PROTECTION_SYSTEM_NOT_ENABLED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_CONTENT_PROTECTION_SYSTEM_NOT_ENABLED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_CONTENT_PROTECTION_SYSTEM_NOT_ENABLED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_UNSUPPORTED_CONTENT_PROTECTION_SYSTEM:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_UNSUPPORTED_CONTENT_PROTECTION_SYSTEM:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_UNSUPPORTED_CONTENT_PROTECTION_SYSTEM;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_DRM_MIGRATION_NOT_SUPPORTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_DRM_MIGRATION_NOT_SUPPORTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_DRM_MIGRATION_NOT_SUPPORTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_HDCP_AUTHENTICATION_FAILURE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_HDCP_AUTHENTICATION_FAILURE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_HDCP_AUTHENTICATION_FAILURE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_HDCP_LINK_FAILURE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_HDCP_LINK_FAILURE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_HDCP_LINK_FAILURE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_CLOCK_INVALID_CONTINUITY_KEY:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_CLOCK_INVALID_CONTINUITY_KEY:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_CLOCK_INVALID_CONTINUITY_KEY;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_S_CLOCK_STOPPED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_S_CLOCK_STOPPED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_S_CLOCK_STOPPED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_CLOCK_AUDIO_DEVICE_POSITION_UNEXPECTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_CLOCK_AUDIO_DEVICE_POSITION_UNEXPECTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = _HRESULT_TYPEDEF_(0x000d9c45);
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_CLOCK_AUDIO_RENDER_POSITION_UNEXPECTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_CLOCK_AUDIO_RENDER_POSITION_UNEXPECTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = _HRESULT_TYPEDEF_(0x000d9c46);
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_CLOCK_AUDIO_RENDER_TIME_UNEXPECTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_CLOCK_AUDIO_RENDER_TIME_UNEXPECTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = _HRESULT_TYPEDEF_(0x000d9c47);
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NO_MORE_DROP_MODES:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NO_MORE_DROP_MODES:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NO_MORE_DROP_MODES;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NO_MORE_QUALITY_LEVELS:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NO_MORE_QUALITY_LEVELS:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NO_MORE_QUALITY_LEVELS;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_DROPTIME_NOT_SUPPORTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_DROPTIME_NOT_SUPPORTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_DROPTIME_NOT_SUPPORTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_QUALITYKNOB_WAIT_LONGER:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_QUALITYKNOB_WAIT_LONGER:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_QUALITYKNOB_WAIT_LONGER;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_QM_INVALIDSTATE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_QM_INVALIDSTATE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_QM_INVALIDSTATE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TRANSCODE_NO_CONTAINERTYPE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TRANSCODE_NO_CONTAINERTYPE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TRANSCODE_NO_CONTAINERTYPE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TRANSCODE_PROFILE_NO_MATCHING_STREAMS:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TRANSCODE_PROFILE_NO_MATCHING_STREAMS:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TRANSCODE_PROFILE_NO_MATCHING_STREAMS;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TRANSCODE_NO_MATCHING_ENCODER:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TRANSCODE_NO_MATCHING_ENCODER:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TRANSCODE_NO_MATCHING_ENCODER;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TRANSCODE_INVALID_PROFILE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TRANSCODE_INVALID_PROFILE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TRANSCODE_INVALID_PROFILE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_ALLOCATOR_NOT_INITIALIZED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_ALLOCATOR_NOT_INITIALIZED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_ALLOCATOR_NOT_INITIALIZED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_ALLOCATOR_NOT_COMMITED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_ALLOCATOR_NOT_COMMITED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_ALLOCATOR_NOT_COMMITED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_ALLOCATOR_ALREADY_COMMITED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_ALLOCATOR_ALREADY_COMMITED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_ALLOCATOR_ALREADY_COMMITED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_STREAM_ERROR:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_STREAM_ERROR:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_STREAM_ERROR;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_INVALID_STREAM_STATE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_INVALID_STREAM_STATE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_INVALID_STREAM_STATE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_HW_STREAM_NOT_CONNECTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_HW_STREAM_NOT_CONNECTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_HW_STREAM_NOT_CONNECTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_NO_CAPTURE_DEVICES_AVAILABLE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_NO_CAPTURE_DEVICES_AVAILABLE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_NO_CAPTURE_DEVICES_AVAILABLE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_CAPTURE_SINK_OUTPUT_NOT_SET:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_CAPTURE_SINK_OUTPUT_NOT_SET:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_CAPTURE_SINK_OUTPUT_NOT_SET;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_CAPTURE_SINK_MIRROR_ERROR:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_CAPTURE_SINK_MIRROR_ERROR:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_CAPTURE_SINK_MIRROR_ERROR;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_CAPTURE_SINK_ROTATE_ERROR:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_CAPTURE_SINK_ROTATE_ERROR:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_CAPTURE_SINK_ROTATE_ERROR;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_CAPTURE_ENGINE_INVALID_OP:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_CAPTURE_ENGINE_INVALID_OP:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_CAPTURE_ENGINE_INVALID_OP;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_CAPTURE_ENGINE_ALL_EFFECTS_REMOVED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_CAPTURE_ENGINE_ALL_EFFECTS_REMOVED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_CAPTURE_ENGINE_ALL_EFFECTS_REMOVED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_CAPTURE_SOURCE_NO_INDEPENDENT_PHOTO_STREAM_PRESENT:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_CAPTURE_SOURCE_NO_INDEPENDENT_PHOTO_STREAM_PRESENT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_CAPTURE_SOURCE_NO_INDEPENDENT_PHOTO_STREAM_PRESENT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_CAPTURE_SOURCE_NO_VIDEO_STREAM_PRESENT:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_CAPTURE_SOURCE_NO_VIDEO_STREAM_PRESENT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_CAPTURE_SOURCE_NO_VIDEO_STREAM_PRESENT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_CAPTURE_SOURCE_NO_AUDIO_STREAM_PRESENT:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_CAPTURE_SOURCE_NO_AUDIO_STREAM_PRESENT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_CAPTURE_SOURCE_NO_AUDIO_STREAM_PRESENT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_CAPTURE_SOURCE_DEVICE_EXTENDEDPROP_OP_IN_PROGRESS:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_CAPTURE_SOURCE_DEVICE_EXTENDEDPROP_OP_IN_PROGRESS:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_CAPTURE_SOURCE_DEVICE_EXTENDEDPROP_OP_IN_PROGRESS;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_CAPTURE_PROPERTY_SET_DURING_PHOTO:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_CAPTURE_PROPERTY_SET_DURING_PHOTO:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_CAPTURE_PROPERTY_SET_DURING_PHOTO;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_CAPTURE_NO_SAMPLES_IN_QUEUE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_CAPTURE_NO_SAMPLES_IN_QUEUE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_CAPTURE_NO_SAMPLES_IN_QUEUE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_HW_ACCELERATED_THUMBNAIL_NOT_SUPPORTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_HW_ACCELERATED_THUMBNAIL_NOT_SUPPORTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_HW_ACCELERATED_THUMBNAIL_NOT_SUPPORTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TIMELINECONTROLLER_UNSUPPORTED_SOURCE_TYPE:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TIMELINECONTROLLER_UNSUPPORTED_SOURCE_TYPE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TIMELINECONTROLLER_UNSUPPORTED_SOURCE_TYPE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TIMELINECONTROLLER_NOT_ALLOWED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TIMELINECONTROLLER_NOT_ALLOWED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TIMELINECONTROLLER_NOT_ALLOWED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_TIMELINECONTROLLER_CANNOT_ATTACH:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_TIMELINECONTROLLER_CANNOT_ATTACH:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_TIMELINECONTROLLER_CANNOT_ATTACH;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_MEDIA_EXTENSION_APPSERVICE_CONNECTION_FAILED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_MEDIA_EXTENSION_APPSERVICE_CONNECTION_FAILED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_MEDIA_EXTENSION_APPSERVICE_CONNECTION_FAILED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_MEDIA_EXTENSION_APPSERVICE_REQUEST_FAILED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_MEDIA_EXTENSION_APPSERVICE_REQUEST_FAILED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_MEDIA_EXTENSION_APPSERVICE_REQUEST_FAILED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_MEDIA_EXTENSION_PACKAGE_INTEGRITY_CHECK_FAILED:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_MEDIA_EXTENSION_PACKAGE_INTEGRITY_CHECK_FAILED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_MEDIA_EXTENSION_PACKAGE_INTEGRITY_CHECK_FAILED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_MEDIA_EXTENSION_PACKAGE_LICENSE_INVALID:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_MEDIA_EXTENSION_PACKAGE_LICENSE_INVALID:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_MEDIA_EXTENSION_PACKAGE_LICENSE_INVALID;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_MF_E_UNSUPPORTED_CAPTURE_DEVICE_PRESENT:
+				case CarenRengine::CarenStatus::ResultCode::ER_MF_E_UNSUPPORTED_CAPTURE_DEVICE_PRESENT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = MF_E_UNSUPPORTED_CAPTURE_DEVICE_PRESENT;
 					break;
@@ -10512,163 +10512,163 @@ namespace CarenRengine
 
 
 
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_WINCODEC_ERR_WRONGSTATE:
+				case CarenRengine::CarenStatus::ResultCode::ER_WINCODEC_ERR_WRONGSTATE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WINCODEC_ERR_WRONGSTATE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_WINCODEC_ERR_VALUEOUTOFRANGE:
+				case CarenRengine::CarenStatus::ResultCode::ER_WINCODEC_ERR_VALUEOUTOFRANGE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WINCODEC_ERR_VALUEOUTOFRANGE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_WINCODEC_ERR_UNKNOWNIMAGEFORMAT:
+				case CarenRengine::CarenStatus::ResultCode::ER_WINCODEC_ERR_UNKNOWNIMAGEFORMAT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WINCODEC_ERR_UNKNOWNIMAGEFORMAT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_WINCODEC_ERR_NOTINITIALIZED:
+				case CarenRengine::CarenStatus::ResultCode::ER_WINCODEC_ERR_NOTINITIALIZED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WINCODEC_ERR_NOTINITIALIZED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_WINCODEC_ERR_ALREADYLOCKED:
+				case CarenRengine::CarenStatus::ResultCode::ER_WINCODEC_ERR_ALREADYLOCKED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WINCODEC_ERR_ALREADYLOCKED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_WINCODEC_ERR_PROPERTYNOTFOUND:
+				case CarenRengine::CarenStatus::ResultCode::ER_WINCODEC_ERR_PROPERTYNOTFOUND:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WINCODEC_ERR_PROPERTYNOTFOUND;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_WINCODEC_ERR_PROPERTYNOTSUPPORTED:
+				case CarenRengine::CarenStatus::ResultCode::ER_WINCODEC_ERR_PROPERTYNOTSUPPORTED:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WINCODEC_ERR_PROPERTYNOTSUPPORTED;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_WINCODEC_ERR_PROPERTYSIZE:
+				case CarenRengine::CarenStatus::ResultCode::ER_WINCODEC_ERR_PROPERTYSIZE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WINCODEC_ERR_PROPERTYSIZE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_WINCODEC_ERR_CODECPRESENT:
+				case CarenRengine::CarenStatus::ResultCode::ER_WINCODEC_ERR_CODECPRESENT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WINCODEC_ERR_CODECPRESENT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_WINCODEC_ERR_CODECNOTHUMBNAIL:
+				case CarenRengine::CarenStatus::ResultCode::ER_WINCODEC_ERR_CODECNOTHUMBNAIL:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WINCODEC_ERR_CODECNOTHUMBNAIL;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_WINCODEC_ERR_PALETTEUNAVAILABLE:
+				case CarenRengine::CarenStatus::ResultCode::ER_WINCODEC_ERR_PALETTEUNAVAILABLE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WINCODEC_ERR_PALETTEUNAVAILABLE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_WINCODEC_ERR_CODECTOOMANYSCANLINES:
+				case CarenRengine::CarenStatus::ResultCode::ER_WINCODEC_ERR_CODECTOOMANYSCANLINES:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WINCODEC_ERR_CODECTOOMANYSCANLINES;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_WINCODEC_ERR_INTERNALERROR:
+				case CarenRengine::CarenStatus::ResultCode::ER_WINCODEC_ERR_INTERNALERROR:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WINCODEC_ERR_INTERNALERROR;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_WINCODEC_ERR_SOURCERECTDOESNOTMATCHDIMENSIONS:
+				case CarenRengine::CarenStatus::ResultCode::ER_WINCODEC_ERR_SOURCERECTDOESNOTMATCHDIMENSIONS:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WINCODEC_ERR_SOURCERECTDOESNOTMATCHDIMENSIONS;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_WINCODEC_ERR_COMPONENTNOTFOUND:
+				case CarenRengine::CarenStatus::ResultCode::ER_WINCODEC_ERR_COMPONENTNOTFOUND:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WINCODEC_ERR_COMPONENTNOTFOUND;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_WINCODEC_ERR_IMAGESIZEOUTOFRANGE:
+				case CarenRengine::CarenStatus::ResultCode::ER_WINCODEC_ERR_IMAGESIZEOUTOFRANGE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WINCODEC_ERR_IMAGESIZEOUTOFRANGE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_WINCODEC_ERR_TOOMUCHMETADATA:
+				case CarenRengine::CarenStatus::ResultCode::ER_WINCODEC_ERR_TOOMUCHMETADATA:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WINCODEC_ERR_TOOMUCHMETADATA;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_WINCODEC_ERR_BADIMAGE:
+				case CarenRengine::CarenStatus::ResultCode::ER_WINCODEC_ERR_BADIMAGE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WINCODEC_ERR_BADIMAGE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_WINCODEC_ERR_BADHEADER:
+				case CarenRengine::CarenStatus::ResultCode::ER_WINCODEC_ERR_BADHEADER:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WINCODEC_ERR_BADHEADER;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_WINCODEC_ERR_FRAMEMISSING:
+				case CarenRengine::CarenStatus::ResultCode::ER_WINCODEC_ERR_FRAMEMISSING:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WINCODEC_ERR_FRAMEMISSING;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_WINCODEC_ERR_BADMETADATAHEADER:
+				case CarenRengine::CarenStatus::ResultCode::ER_WINCODEC_ERR_BADMETADATAHEADER:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WINCODEC_ERR_BADMETADATAHEADER;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_WINCODEC_ERR_BADSTREAMDATA:
+				case CarenRengine::CarenStatus::ResultCode::ER_WINCODEC_ERR_BADSTREAMDATA:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WINCODEC_ERR_BADSTREAMDATA;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_WINCODEC_ERR_STREAMWRITE:
+				case CarenRengine::CarenStatus::ResultCode::ER_WINCODEC_ERR_STREAMWRITE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WINCODEC_ERR_STREAMWRITE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_WINCODEC_ERR_STREAMREAD:
+				case CarenRengine::CarenStatus::ResultCode::ER_WINCODEC_ERR_STREAMREAD:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WINCODEC_ERR_STREAMREAD;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_WINCODEC_ERR_STREAMNOTAVAILABLE:
+				case CarenRengine::CarenStatus::ResultCode::ER_WINCODEC_ERR_STREAMNOTAVAILABLE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WINCODEC_ERR_STREAMNOTAVAILABLE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_WINCODEC_ERR_UNSUPPORTEDPIXELFORMAT:
+				case CarenRengine::CarenStatus::ResultCode::ER_WINCODEC_ERR_UNSUPPORTEDPIXELFORMAT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WINCODEC_ERR_UNSUPPORTEDPIXELFORMAT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_WINCODEC_ERR_UNSUPPORTEDOPERATION:
+				case CarenRengine::CarenStatus::ResultCode::ER_WINCODEC_ERR_UNSUPPORTEDOPERATION:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WINCODEC_ERR_UNSUPPORTEDOPERATION;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_WINCODEC_ERR_INVALIDREGISTRATION:
+				case CarenRengine::CarenStatus::ResultCode::ER_WINCODEC_ERR_INVALIDREGISTRATION:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WINCODEC_ERR_INVALIDREGISTRATION;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_WINCODEC_ERR_COMPONENTINITIALIZEFAILURE:
+				case CarenRengine::CarenStatus::ResultCode::ER_WINCODEC_ERR_COMPONENTINITIALIZEFAILURE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WINCODEC_ERR_COMPONENTINITIALIZEFAILURE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_WINCODEC_ERR_INSUFFICIENTBUFFER:
+				case CarenRengine::CarenStatus::ResultCode::ER_WINCODEC_ERR_INSUFFICIENTBUFFER:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WINCODEC_ERR_INSUFFICIENTBUFFER;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_WINCODEC_ERR_DUPLICATEMETADATAPRESENT:
+				case CarenRengine::CarenStatus::ResultCode::ER_WINCODEC_ERR_DUPLICATEMETADATAPRESENT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WINCODEC_ERR_DUPLICATEMETADATAPRESENT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_WINCODEC_ERR_PROPERTYUNEXPECTEDTYPE:
+				case CarenRengine::CarenStatus::ResultCode::ER_WINCODEC_ERR_PROPERTYUNEXPECTEDTYPE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WINCODEC_ERR_PROPERTYUNEXPECTEDTYPE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_WINCODEC_ERR_UNEXPECTEDSIZE:
+				case CarenRengine::CarenStatus::ResultCode::ER_WINCODEC_ERR_UNEXPECTEDSIZE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WINCODEC_ERR_UNEXPECTEDSIZE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_WINCODEC_ERR_INVALIDQUERYREQUEST:
+				case CarenRengine::CarenStatus::ResultCode::ER_WINCODEC_ERR_INVALIDQUERYREQUEST:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WINCODEC_ERR_INVALIDQUERYREQUEST;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_WINCODEC_ERR_UNEXPECTEDMETADATATYPE:
+				case CarenRengine::CarenStatus::ResultCode::ER_WINCODEC_ERR_UNEXPECTEDMETADATATYPE:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WINCODEC_ERR_UNEXPECTEDMETADATATYPE;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_WINCODEC_ERR_REQUESTONLYVALIDATMETADATAROOT:
+				case CarenRengine::CarenStatus::ResultCode::ER_WINCODEC_ERR_REQUESTONLYVALIDATMETADATAROOT:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WINCODEC_ERR_REQUESTONLYVALIDATMETADATAROOT;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_WINCODEC_ERR_INVALIDQUERYCHARACTER:
+				case CarenRengine::CarenStatus::ResultCode::ER_WINCODEC_ERR_INVALIDQUERYCHARACTER:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WINCODEC_ERR_INVALIDQUERYCHARACTER;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_WINCODEC_ERR_WIN32ERROR:
+				case CarenRengine::CarenStatus::ResultCode::ER_WINCODEC_ERR_WIN32ERROR:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WINCODEC_ERR_WIN32ERROR;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_WINCODEC_ERR_INVALIDPROGRESSIVELEVEL:
+				case CarenRengine::CarenStatus::ResultCode::ER_WINCODEC_ERR_INVALIDPROGRESSIVELEVEL:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WINCODEC_ERR_INVALIDPROGRESSIVELEVEL;
 					break;
-				case CarenRengine::CarenCodesStatus::ResultCode::ER_WINCODEC_ERR_INVALIDJPEGSCANINDEX:
+				case CarenRengine::CarenStatus::ResultCode::ER_WINCODEC_ERR_INVALIDJPEGSCANINDEX:
 					//Define o código HRESULT referente ao ResultCode informado.
 					Resultado = WINCODEC_ERR_INVALIDJPEGSCANINDEX;
 					break;				

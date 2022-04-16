@@ -449,7 +449,7 @@ template<class Destino, class Source> Destino ConverterPara(Source Param_Tipo)
 #include "CodeResults.h"
 
 //NAMESPACES ORIGINAIS DA BIBLIOTECA
-using namespace CarenRengine::CarenCodesStatus;
+using namespace CarenRengine::CarenStatus;
 typedef CarenResult CarenResultado;
 
 

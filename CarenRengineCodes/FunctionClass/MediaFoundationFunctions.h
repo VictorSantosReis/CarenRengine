@@ -60,7 +60,7 @@ public:
 	/// <summary>
 	/// Cria um FOURCC a parti dos caracters informado.
 	/// FOURCC é abreviação de "código de quatro caracteres" - um identificador para um codec de vídeo, formato de compressão, formato de cor ou pixel usado em arquivos de mídia.
-	/// Esse método é muito utilizado pela Media Foundation e parar escrever cabeçalhos para arquivos de mídia.
+	/// Esse método é muito utilizado pela Media Foundation para escrever cabeçalhos para arquivos de mídia.
 	/// </summary>
 	/// <param name="Param_Dados">Os caracters a serem converidos. A quantidade maxima de caracters é de 4.</param>
 	/// <returns></returns>
@@ -119,34 +119,34 @@ public:
 	CarenResult _MFAddPeriodicCallback(IntPtr Param_Callback, ICaren^ Param_Context, OutParam UInt32% Param_Out_Key);
 
 	/// <summary>
-	/// ‎Cancela uma função de retorno de chamada que foi definida pela função ‎‎MFAddPeriodicCallback.‎
+	/// Cancela uma função de retorno de chamada que foi definida pela função MFAddPeriodicCallback.
 	/// </summary>
-	/// <param name="Param_Key">‎Chave que identifica o retorno da chamada. Este valor é recuperado pela função ‎‎MFAddPeriodicCallback.‎</param>
+	/// <param name="Param_Key">Chave que identifica o retorno da chamada. Este valor é recuperado pela função MFAddPeriodicCallback.</param>
 	/// <returns></returns>
 	CarenResult _MFRemovePeriodicCallback(UInt32 Param_Key);
 
 	/// <summary>
-	/// ‎Calcula a taxa de frames, em frames por segundo, a partir da duração média de um quadro de vídeo.‎
+	/// Calcula a taxa de frames, em frames por segundo, a partir da duração média de um quadro de vídeo.
 	/// </summary>
-	/// <param name="Param_AverageTimePerFrame">‎A duração média de um frame de vídeo, em unidades de 100 nanossegundos.‎</param>
-	/// <param name="Param_Out_Numerator">‎Recebe o numerador da taxa de frames.‎</param>
-	/// <param name="Param_Out_Denominator">‎Recebe o denominador da taxa de frames.</param>
+	/// <param name="Param_AverageTimePerFrame">A duração média de um frame de vídeo, em unidades de 100 nanossegundos.</param>
+	/// <param name="Param_Out_Numerator">Recebe o numerador da taxa de frames.</param>
+	/// <param name="Param_Out_Denominator">Recebe o denominador da taxa de frames.</param>
 	/// <returns></returns>
 	CarenResult _MFAverageTimePerFrameToFrameRate(UInt64 Param_AverageTimePerFrame, OutParam UInt32% Param_Out_Numerator, OutParam UInt32% Param_Out_Denominator);
 
 	/// <summary>
-	/// ‎Converte uma taxa de frame de vídeo em uma duração de frame.‎
+	/// Converte uma taxa de frame de vídeo em uma duração de frame.
 	/// </summary>
-	/// <param name="Param_Numerator">‎O numerador da taxa de frames.‎</param>
-	/// <param name="Param_Denominator">‎O denominador da taxa de frames.‎</param>
-	/// <param name="Param_Out_AverageTimePerFrame">‎Recebe a duração média de um frame de vídeo, em unidades de 100 nanossegundos.‎</param>
+	/// <param name="Param_Numerator">O numerador da taxa de frames.</param>
+	/// <param name="Param_Denominator">O denominador da taxa de frames.</param>
+	/// <param name="Param_Out_AverageTimePerFrame">Recebe a duração média de um frame de vídeo, em unidades de 100 nanossegundos.</param>
 	/// <returns></returns>
 	CarenResult _MFFrameRateToAverageTimePerFrame(UInt32 Param_Numerator, UInt32 Param_Denominator, OutParam UInt64% Param_Out_AverageTimePerFrame);
 	
 	/// <summary>
 	/// ‎Recupera o tamanho da imagem para um formato de vídeo. Dada uma estrutura ‎‎CA_BITMAPINFOHEADER,‎‎ esta função calcula o valor correto do membro ‎‎(CA_BITMAPINFOHEADER->biSizeImage).‎
 	/// </summary>
-	/// <param name="Param_BmpHeader">Uma estrutura ‎‎BITMAPINFOHEADER‎‎ que descreve o formato.‎</param>
+	/// <param name="Param_BmpHeader">Uma estrutura ‎BITMAPINFOHEADER‎‎que descreve o formato.‎</param>
 	/// <param name="Param_Size">Defina como 0. Esse valor é definido internamente.</param>
 	/// <param name="Param_Out_SizeImage">Recebe o tamanho da imagem, em bytes.</param>
 	/// <param name="Param_Out_Known">‎Recebe o valor ‎‎TRUE‎‎ se a função reconhecer o formato de vídeo. Caso contrário, recebe o valor ‎‎FALSE‎‎.‎</param>

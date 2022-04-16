@@ -55,7 +55,7 @@ public:
 		ICarenWICBitmapSource^ Param_Out_BmpDst);
 
 	/// <summary>
-	/// ‎Retorna uma ICarenWICBitmapSource‎‎ que é apoiada pelos pixels de uma Handle de seção GDI (Windows Graphics Device Interface, interface de dispositivo gráficos do Windows).‎
+	/// Retorna uma ICarenWICBitmapSource que é apoiada pelos pixels de uma Handle de seção GDI (Windows Graphics Device Interface, interface de dispositivo gráficos do Windows).
 	/// </summary>
 	/// <param name="Param_Width">A largura dos pixels do bitmap.</param>
 	/// <param name="Param_Height">A altura dos pixels do bitmap.</param>
@@ -74,7 +74,7 @@ public:
 		ICarenWICBitmap^ Param_Out_Bitmap);
 
 	/// <summary>
-	/// ‎Retorna uma ICarenWICBitmapSource‎‎ que é apoiada pelos pixels de uma Handle de seção GDI (Windows Graphics Device Interface, interface de dispositivo gráficos do Windows).‎
+	/// Retorna uma ICarenWICBitmapSource que é apoiada pelos pixels de uma Handle de seção GDI (Windows Graphics Device Interface, interface de dispositivo gráficos do Windows).
 	/// </summary>
 	/// <param name="Param_Width">A largura dos pixels do bitmap.</param>
 	/// <param name="Param_Height">A altura dos pixels do bitmap.</param>
@@ -82,7 +82,7 @@ public:
 	/// <param name="Param_Section">A Handle da seção. Esta é uma alça de objeto de mapeamento de arquivos devolvida pela função _CreateFileMappingW na Classe de funções do Windows.</param>
 	/// <param name="Param_Stride">A contagem de byte de cada scanline.</param>
 	/// <param name="Param_Offset">O deslocamento para a seção.</param>
-	/// <param name="Param_AccessLevel">‎O nível de acesso desejado.‎</param>
+	/// <param name="Param_AccessLevel"> nível de acesso desejado.</param>
 	/// <param name="Param_Out_Bitmap">Retorna uma interface (ICarenWICBitmap) para o bitmap. O usuário é responsável por inicializar a interface antes de chamar este metódo.</param>
 	CarenResult _WICCreateBitmapFromSectionEx(
 		UInt32 Param_Width,

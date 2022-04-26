@@ -12,7 +12,7 @@ using System.Windows.Forms;
 using CarenRengine;
 using CarenRengine.SDKBase;
 using CarenRengine.SDKBase.GUIDs;
-using CarenRengine.CarenCodesStatus;
+using CarenRengine.CarenStatus;
 using CarenRengine.MediaFoundation;
 using CarenRengine.MediaFoundationExtended;
 

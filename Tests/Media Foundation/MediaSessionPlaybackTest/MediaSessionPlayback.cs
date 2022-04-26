@@ -15,7 +15,7 @@ using CarenRengine.SDKBase;
 using CarenRengine.SDKBase.Enumeracoes;
 using CarenRengine.SDKBase.Estruturas;
 using CarenRengine.SDKBase.GUIDs;
-using CarenRengine.CarenCodesStatus;
+using CarenRengine.CarenStatus;
 
 //Importa o SDK da Media Foundation.
 using CarenRengine.MediaFoundation;

@@ -154,6 +154,7 @@ limitations under the License.
 //Namespaces
 using namespace System;
 using namespace System::ComponentModel;
+using namespace System::Diagnostics;
 using namespace System::Buffers;
 using namespace System::Runtime::InteropServices;
 using namespace System::Runtime::Serialization;

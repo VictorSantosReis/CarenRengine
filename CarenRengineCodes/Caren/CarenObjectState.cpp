@@ -84,105 +84,8 @@ CarenObjectState::CarenObjectState(String^ Param_NomeObjeto)
 /// <param name="Param_InterfaceSolicitada">A interface que vai receber o ponteiro nativo. O usuário deve inicializar a interface antes de chamar o método. Libere a interface quando não for mais usá-la.</param>
 CarenResult CarenObjectState::ConsultarInterface(String^ Param_Guid, ICaren^ Param_InterfaceSolicitada)
 {
-	//Variavel que vai retornar o resultado.
-	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
-
-	//Resultado COM
-	HRESULT Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas
-	GUID GuidInterface = GUID_NULL;
-	wchar_t* DadosGuid = NULL;
-	LPVOID* pInterfaceSolcitada = NULL;
-
-	//Setor onde será criado o GUID para realizar a operação.
-	{
-		//Context Marshal.
-		marshal_context ctx;
-		//Lagrura da string
-		int LarguraString = 0;
-		//Variavel que vai conter os dados da String para o tipo não gerenciado.
-		const char* DadosConvertidos = NULL;
-
-		//Verifica se a string é valida.
-		if (Param_Guid != nullptr && !String::IsNullOrEmpty(Param_Guid))
-		{
-			//Obtém a largura da String.
-			LarguraString = Param_Guid->Length + 1;
-
-			//Converte os dados para um buffer de char.
-			//O Proprio marshal_context destroi o buffer.
-			DadosConvertidos = ctx.marshal_as<const char*>(Param_Guid);
-
-			//Aloca memoria para o Dados do Guid.
-			DadosGuid = new wchar_t[LarguraString];
-
-			//Copia os dados para o OLECHAR.
-			mbstowcs_s(NULL, DadosGuid, LarguraString, DadosConvertidos, LarguraString - 1);
-
-			//Chama o método que vai criar o CLSID adequado a aparti do guid
-			Hr = CLSIDFromString(DadosGuid, (LPCLSID)&GuidInterface);
-		}
-		else
-		{
-			//Falhou ao criar o GUID
-			Resultado.AdicionarCodigo(ResultCode::ER_GUID_INVALIDO, false);
-
-			//A string não é valida
-			goto Done;
-		}
-	}
-
-	//Verifica se o guid foi criado com sucesso.
-	if (GuidInterface == GUID_NULL)
-	{
-		//Falhou ao criar o GUID
-		Resultado.AdicionarCodigo(ResultCode::ER_GUID_INVALIDO, false);
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Chama o método para realizara operação
-	Hr = PonteiroTrabalho->QueryInterface(GuidInterface, (LPVOID*)&pInterfaceSolcitada);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-	//Define o ponteiro na interface solicitada.
-	//A interface deve ter sido incializada pelo usuário.
-	Resultado = Param_InterfaceSolicitada->AdicionarPonteiro(pInterfaceSolcitada);
-
-	//Verifica o resultado da operação.
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Libera a referência obtida a parti do QueryInterface.
-		((IUnknown*)pInterfaceSolcitada)->Release();
-		pInterfaceSolcitada = NULL;
-	}
-
-Done:;
-	//Verifica se o OLECHAR é valido e destroi
-	if (ObjetoValido(DadosGuid))
-	{
-		//Libera os dados.
-		delete[] DadosGuid;
-	}
-
-	//Retorna o resultado
-	return Resultado;
+	//Chama o método de QueryInterface na classe base(Caren).
+	return Caren::Shared_ConsultarInterface(PonteiroTrabalho, Param_Guid, Param_InterfaceSolicitada);
 }
 
 /// <summary>
@@ -192,38 +95,11 @@ Done:;
 /// <param name="Param_PonteiroNativo">Variável (GERENCIADA) para o ponteiro nativo a ser adicionado.</param>
 CarenResult CarenObjectState::AdicionarPonteiro(IntPtr Param_PonteiroNativo)
 {
-	//Variavel que vai retornar o resultado.
-	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+	//Fixa o ponteiro.
+	cli::pin_ptr<INACarenObjectState*> p = &PonteiroTrabalho;
 
-	//Verifica se o objeto é valido
-	if (Param_PonteiroNativo == IntPtr::Zero)
-	{
-		//O objeto não é valido
-		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
-
-		//Sai do método.
-		goto Done;
-	}
-
-	//Converte o ponteiro para o tipo especifico da classe.
-	PonteiroTrabalho = reinterpret_cast<INACarenObjectState*>(Param_PonteiroNativo.ToPointer());
-
-	//Verifica o ponteiro
-	if (ObjetoValido(PonteiroTrabalho))
-	{
-		//Define que o ponteiro foi definido com sucesso.
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-	}
-	else
-	{
-		//Define falha na operação
-		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
-	}
-
-Done:;
-	//Retornao resultado
-	return Resultado;
-
+	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
+	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(p));
 }
 
 /// <summary>
@@ -233,41 +109,11 @@ Done:;
 /// <param name="Param_PonteiroNativo">Variável (NATIVA) para o ponteiro nativo a ser adicionado.</param>
 CarenResult CarenObjectState::AdicionarPonteiro(LPVOID Param_PonteiroNativo)
 {
-	//Variavel que vai retornar o resultado.
-	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+	//Fixa o ponteiro interno da classe que vai receber o ponteiro passado pela função.
+	cli::pin_ptr<INACarenObjectState*> p = &PonteiroTrabalho;
 
-	//Verifica se o objeto é valido
-	if (!ObjetoValido(Param_PonteiroNativo))
-	{
-		//O objeto não é valido
-		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Converte o ponteiro para o tipo especifico da classe.
-	PonteiroTrabalho = reinterpret_cast<INACarenObjectState*>(Param_PonteiroNativo);
-
-	//Verifica se o ponteiro é valido
-	if (ObjetoValido(PonteiroTrabalho))
-	{
-		//Ponteiro convertido com sucesso!
-
-		//Define sucesso na operação
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-	}
-	else
-	{
-		//Falhou ao converter o ponteiro vazio para sua real representação.
-
-		//Define falha no ponteiro
-		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
-	}
-
-Done:;
-	//Retornao resultado
-	return Resultado;
+	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
+	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(p));
 }
 
 /// <summary>

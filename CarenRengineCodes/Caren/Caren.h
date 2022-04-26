@@ -31,8 +31,14 @@ public ref class Caren : public ICaren
 	//Objeto gerenciado por essa interface.//
 	/////////////////////////////////////////
 
-	//Ponteiro para a interface (LPVOID).
-	LPVOID PonteiroTrabalho = NULL;
+	//Ponteiro para a interface (IUnknown*).
+	IUnknown* PonteiroTrabalho = NULL;
+
+internal:
+	static CarenResult Shared_ConsultarInterface(IUnknown* Param_Interface, String^ Param_Guid, ICaren^ Param_InterfaceSolicitada);
+	static CarenResult Shared_AdicionarPonteiro(IntPtr Param_PonteiroNativo, IUnknown** Param_MyPointerWork);
+	template <typename t>
+	static CarenResult Shared_AdicionarPonteiro(LPVOID Param_PonteiroNativo, t** Param_MyPointerWork);
 
 
 	//Construtor e destruidor da classe.
@@ -60,7 +66,7 @@ public:
 		ClassResultado = gcnew Caren();
 
 		//Define o ponteiro na classe.
-		ClassResultado->PonteiroTrabalho = Param_Pointer.ToPointer();
+		ClassResultado->PonteiroTrabalho =  reinterpret_cast<IUnknown*>(Param_Pointer.ToPointer());
 
 	Done:;
 

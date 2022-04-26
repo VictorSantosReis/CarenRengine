@@ -2630,7 +2630,7 @@
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMetadata.cpp">
       <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
     </ClCompile>
-    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMetadataProvider .cpp">
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMetadataProvider.cpp">
       <Filter>Arquivos de Origem\Classes\MediaFoundation</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMuxStreamAttributesManager.cpp">

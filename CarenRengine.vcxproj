@@ -756,7 +756,7 @@
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaSourceExtension.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMediaTimeRange.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMetadata.cpp" />
-    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMetadataProvider .cpp" />
+    <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMetadataProvider.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMuxStreamAttributesManager.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMuxStreamMediaTypeManager.cpp" />
     <ClCompile Include="CarenRengineCodes\Media Foundation\CarenMFMuxStreamSampleManager.cpp" />

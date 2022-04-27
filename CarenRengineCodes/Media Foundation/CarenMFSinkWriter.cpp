@@ -162,40 +162,12 @@ CarenResult CarenMFSinkWriter::ConsultarInterface(String^ Param_Guid, ICaren^ Pa
 /// <param name="Param_PonteiroNativo">Variável (GERENCIADA) para o ponteiro nativo a ser adicionado.</param>
 CarenResult CarenMFSinkWriter::AdicionarPonteiro(IntPtr Param_PonteiroNativo)
 {
-	//Variavel que vai retornar o resultado.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
+	//Fixa o ponteiro.
+	cli::pin_ptr<IMFSinkWriter*> p = &PonteiroTrabalho;
 
-	//Verifica se o objeto é valido
-	if (Param_PonteiroNativo == IntPtr::Zero)
-	{
-		//O objeto não é valido
-		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
-
-		//Sai do método.
-		goto Done;
-	}
-
-	//Converte o ponteiro para o tipo especifico da classe.
-	PonteiroTrabalho = reinterpret_cast<IMFSinkWriter*>(Param_PonteiroNativo.ToPointer());
-
-	//Verifica o ponteiro
-	if (ObjetoValido(PonteiroTrabalho))
-	{
-		//Define que o ponteiro foi definido com sucesso.
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-	}
-	else
-	{
-		//Define falha na operação
-		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
-	}
-
-Done:;
-	//Retornao resultado
-	return Resultado;
-
+	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
+	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IMFSinkWriter**>(p)));
 }
-
 /// <summary>
 /// Método responsável por adicionar um novo ponteiro nativo a classe atual.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -203,43 +175,12 @@ Done:;
 /// <param name="Param_PonteiroNativo">Variável (NATIVA) para o ponteiro nativo a ser adicionado.</param>
 CarenResult CarenMFSinkWriter::AdicionarPonteiro(LPVOID Param_PonteiroNativo)
 {
-	//Variavel que vai retornar o resultado.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
+	//Fixa o ponteiro.
+	cli::pin_ptr<IMFSinkWriter*> p = &PonteiroTrabalho;
 
-	//Verifica se o objeto é valido
-	if (!ObjetoValido(Param_PonteiroNativo))
-	{
-		//O objeto não é valido
-		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Converte o ponteiro para o tipo especifico da classe.
-	PonteiroTrabalho = reinterpret_cast<IMFSinkWriter*>(Param_PonteiroNativo);
-
-	//Verifica se o ponteiro é valido
-	if (ObjetoValido(PonteiroTrabalho))
-	{
-		//Ponteiro convertido com sucesso!
-
-		//Define sucesso na operação
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-	}
-	else
-	{
-		//Falhou ao converter o ponteiro vazio para sua real representação.
-
-		//Define falha no ponteiro
-		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
-	}
-
-Done:;
-	//Retornao resultado
-	return Resultado;
+	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
+	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IMFSinkWriter**>(p)));
 }
-
 /// <summary>
 /// Método responsável por recuperar o ponteiro atual da classe. Se o ponteiro não for valido, o método retornar ResultCode::ER_PONTEIRO.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -247,28 +188,8 @@ Done:;
 /// <param name="Param_Out_PonteiroNativo">Variável (GERENCIADA) que vai receber o ponteiro nativo.</param>
 CarenResult CarenMFSinkWriter::RecuperarPonteiro([Out] IntPtr% Param_Out_PonteiroNativo)
 {
-	//Variavel que vai retornar o resultado.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Verifica se o ponteiro é valido
-	if (!ObjetoValido(PonteiroTrabalho))
-	{
-		//O ponteiro de trabalho é invalido.
-		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Cria e define o ponteiro gerenciado no parametro de saida.
-	Param_Out_PonteiroNativo = IntPtr((LPVOID)PonteiroTrabalho);
-
-	//Define o resultado
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Retorna o resultado
-	return Resultado;
+	//Chama o método para recuperar o ponteiro de trabalho da classe atual.
+	return Caren::Shared_RecuperarPonteiro(Param_Out_PonteiroNativo, PonteiroTrabalho);
 }
 
 /// <summary>
@@ -278,29 +199,8 @@ Done:;
 /// <param name="Param_Out_PonteiroNativo">Variável (NATIVA) que vai receber o ponteiro nativo.</param>
 CarenResult CarenMFSinkWriter::RecuperarPonteiro(LPVOID* Param_Out_PonteiroNativo)
 {
-	//Variavel que vai retornar o resultado.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Verifica se o ponteiro é valido
-	if (!ObjetoValido(PonteiroTrabalho))
-	{
-		//O ponteiro de trabalho é invalido.
-		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Define o ponteiro de trabalho no parametro de saida.
-	*Param_Out_PonteiroNativo = PonteiroTrabalho;
-
-	//Define o resultado
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Retorna o resultado
-	return Resultado;
-
+	//Chama o método para recuperar o ponteiro de trabalho da classe atual.
+	return Caren::Shared_RecuperarPonteiro(Param_Out_PonteiroNativo, PonteiroTrabalho);
 }
 
 /// <summary>
@@ -309,34 +209,8 @@ Done:;
 /// <param name="Param_Out_Referencias">Variável que vai receber a quantidade de referências do objeto.</param>
 CarenResult CarenMFSinkWriter::RecuperarReferencias([Out] UInt64% Param_Out_Referencias)
 {
-	//Variavel que vai retornar o resultado.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Verifica se o ponteiro é valido
-	if (!ObjetoValido(PonteiroTrabalho))
-	{
-		//O ponteiro de trabalho é invalido.
-		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Adiciona uma referência ao ponteiro
-	ULONG CountRefs = PonteiroTrabalho->AddRef();
-
-	//Libera a referência adicional
-	PonteiroTrabalho->Release();
-
-	//Decrementa o valor da quantidade de referência retornada em (-1) e define no parametro de saida.
-	Param_Out_Referencias = static_cast<UInt64>(CountRefs - 1);
-
-	//Define o resultado
-	Resultado.AdicionarCodigo(ResultCode::SS_OK,true);
-
-Done:;
-	//Retorna o resultado
-	return Resultado;
+	//Chama o método para recuperar a quantidade de referencias atuais da interface.
+	return Caren::Shared_RecuperarReferencias(Param_Out_Referencias, PonteiroTrabalho);
 }
 
 /// <summary>
@@ -362,8 +236,8 @@ Int32 CarenMFSinkWriter::ObterCodigoErro()
 /// </summary>
 void CarenMFSinkWriter::AdicionarReferencia()
 {
-	//Adiciona uma referência ao ponteiro
-	PonteiroTrabalho->AddRef();
+	//Chama o método para incrementar a quantidade de referencias atuais da interface.
+	Caren::Shared_IncrementarReferencia(PonteiroTrabalho);
 }
 
 /// <summary>
@@ -371,16 +245,8 @@ void CarenMFSinkWriter::AdicionarReferencia()
 /// </summary>
 void CarenMFSinkWriter::LiberarReferencia()
 {
-	//Libera a referência e obtém a quantidade atual.
-	ULONG RefCount = PonteiroTrabalho->Release();
-
-	//Verifica se a quantidade é zero e se o ponteiro ainda é valido.
-	//Se sim, vai deletar o ponteiro.
-	if (RefCount == 0 && ObjetoValido(PonteiroTrabalho))
-	{
-		//NULA o ponteiro vazio.
-		PonteiroTrabalho = NULL;
-	}
+	//Chama o método para liberar em UM (1) a quantidade de referencias atuais da interface.
+	Caren::Shared_LiberarReferencia(PonteiroTrabalho);
 }
 
 /// <summary>

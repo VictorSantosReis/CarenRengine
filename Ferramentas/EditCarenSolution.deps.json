@@ -1,0 +1,88 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v5.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v5.0": {
+      "EditCarenSolution/1.0.0": {
+        "dependencies": {
+          "CarenIO": "2020.0.0",
+          "CarenSDK": "2020.0.0",
+          "ILMerge": "3.0.41"
+        },
+        "runtime": {
+          "EditCarenSolution.dll": {}
+        }
+      },
+      "CarenIO/2020.0.0": {
+        "dependencies": {
+          "CarenReturn": "2020.0.0",
+          "CarenSDK": "2020.0.0"
+        },
+        "runtime": {
+          "lib/netstandard2.1/CarenIO.dll": {
+            "assemblyVersion": "2020.0.0.0",
+            "fileVersion": "2020.0.0.0"
+          }
+        }
+      },
+      "CarenReturn/2020.0.0": {
+        "dependencies": {
+          "CarenSDK": "2020.0.0"
+        },
+        "runtime": {
+          "lib/netstandard2.1/CarenReturn.dll": {
+            "assemblyVersion": "2020.0.0.0",
+            "fileVersion": "2020.0.0.0"
+          }
+        }
+      },
+      "CarenSDK/2020.0.0": {
+        "runtime": {
+          "lib/netstandard2.1/CarenSDK.dll": {
+            "assemblyVersion": "2020.0.0.0",
+            "fileVersion": "2020.0.0.0"
+          }
+        }
+      },
+      "ILMerge/3.0.41": {}
+    }
+  },
+  "libraries": {
+    "EditCarenSolution/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "CarenIO/2020.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-lAGXUnQxJ+MS58dDg56p3T80Sz5UUOCtHYIATgFVtkn77janBwUjX4eKx5w34uBiP/G70Vzua1QLhiklasrcAw==",
+      "path": "carenio/2020.0.0",
+      "hashPath": "carenio.2020.0.0.nupkg.sha512"
+    },
+    "CarenReturn/2020.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-VdnF1zVkh2zLeHDvyyOMUMXLqBXqsWU4SQFQAK0r3xYKXGu2V23s6ZP1Cmxarhr8zpsuzVQ2pxZtNV97w1IJMw==",
+      "path": "carenreturn/2020.0.0",
+      "hashPath": "carenreturn.2020.0.0.nupkg.sha512"
+    },
+    "CarenSDK/2020.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ds/eU1mCmXboyLb2NcU3AtlqrOtk2MaDs4a9XWPnFsVSY+IHUXxxjVSefrGRAvF4trsCMgapSGGmAYmLAtOTBQ==",
+      "path": "carensdk/2020.0.0",
+      "hashPath": "carensdk.2020.0.0.nupkg.sha512"
+    },
+    "ILMerge/3.0.41": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-u9n45xs40bSGoNFcmMYJkh3zkGYKR4BqzQaX2uHc2Ay4drdiQOTeo/1ECps3ttDXOu4Q6qbTnsIbQWb/06ShqA==",
+      "path": "ilmerge/3.0.41",
+      "hashPath": "ilmerge.3.0.41.nupkg.sha512"
+    }
+  }
+}

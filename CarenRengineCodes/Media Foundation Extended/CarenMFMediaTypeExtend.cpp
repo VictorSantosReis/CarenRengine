@@ -52,38 +52,11 @@ CarenResult CarenMFMediaTypeExtend::ConsultarInterface(String^ Param_Guid, ICare
 /// <param name="Param_PonteiroNativo">Variável (GERENCIADA) para o ponteiro nativo a ser adicionado.</param>
 CarenResult CarenMFMediaTypeExtend::AdicionarPonteiro(IntPtr Param_PonteiroNativo)
 {
-	//Variavel que vai retornar o resultado.
-	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+	//Fixa o ponteiro.
+	cli::pin_ptr<IMFMediaType*> p = &PonteiroTrabalho;
 
-	//Verifica se o objeto é valido
-	if (Param_PonteiroNativo == IntPtr::Zero)
-	{
-		//O objeto não é valido
-		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
-
-		//Sai do método.
-		goto Done;
-	}
-
-	//Converte o ponteiro para o tipo especifico da classe.
-	PonteiroTrabalho = reinterpret_cast<IMFMediaType*>(Param_PonteiroNativo.ToPointer());
-
-	//Verifica o ponteiro
-	if (ObjetoValido(PonteiroTrabalho))
-	{
-		//Define que o ponteiro foi definido com sucesso.
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-	}
-	else
-	{
-		//Define falha na operação
-		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
-	}
-
-Done:;
-	//Retornao resultado
-	return Resultado;
-
+	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
+	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IMFMediaType**>(p)));
 }
 
 /// <summary>
@@ -93,41 +66,11 @@ Done:;
 /// <param name="Param_PonteiroNativo">Variável (NATIVA) para o ponteiro nativo a ser adicionado.</param>
 CarenResult CarenMFMediaTypeExtend::AdicionarPonteiro(LPVOID Param_PonteiroNativo)
 {
-	//Variavel que vai retornar o resultado.
-	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
+	//Fixa o ponteiro.
+	cli::pin_ptr<IMFMediaType*> p = &PonteiroTrabalho;
 
-	//Verifica se o objeto é valido
-	if (!ObjetoValido(Param_PonteiroNativo))
-	{
-		//O objeto não é valido
-		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Converte o ponteiro para o tipo especifico da classe.
-	PonteiroTrabalho = reinterpret_cast<IMFMediaType*>(Param_PonteiroNativo);
-
-	//Verifica se o ponteiro é valido
-	if (ObjetoValido(PonteiroTrabalho))
-	{
-		//Ponteiro convertido com sucesso!
-
-		//Define sucesso na operação
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-	}
-	else
-	{
-		//Falhou ao converter o ponteiro vazio para sua real representação.
-
-		//Define falha no ponteiro
-		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
-	}
-
-Done:;
-	//Retornao resultado
-	return Resultado;
+	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
+	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IMFMediaType**>(p)));
 }
 
 /// <summary>
@@ -137,28 +80,8 @@ Done:;
 /// <param name="Param_Out_PonteiroNativo">Variável (GERENCIADA) que vai receber o ponteiro nativo.</param>
 CarenResult CarenMFMediaTypeExtend::RecuperarPonteiro([Out] IntPtr% Param_Out_PonteiroNativo)
 {
-	//Variavel que vai retornar o resultado.
-	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
-
-	//Verifica se o ponteiro é valido
-	if (!ObjetoValido(PonteiroTrabalho))
-	{
-		//O ponteiro de trabalho é invalido.
-		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Cria e define o ponteiro gerenciado no parametro de saida.
-	Param_Out_PonteiroNativo = IntPtr((LPVOID)PonteiroTrabalho);
-
-	//Define o resultado
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Retorna o resultado
-	return Resultado;
+	//Chama o método para recuperar o ponteiro de trabalho da classe atual.
+	return Caren::Shared_RecuperarPonteiro(Param_Out_PonteiroNativo, PonteiroTrabalho);
 }
 
 /// <summary>
@@ -168,29 +91,8 @@ Done:;
 /// <param name="Param_Out_PonteiroNativo">Variável (NATIVA) que vai receber o ponteiro nativo.</param>
 CarenResult CarenMFMediaTypeExtend::RecuperarPonteiro(LPVOID* Param_Out_PonteiroNativo)
 {
-	//Variavel que vai retornar o resultado.
-	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
-
-	//Verifica se o ponteiro é valido
-	if (!ObjetoValido(PonteiroTrabalho))
-	{
-		//O ponteiro de trabalho é invalido.
-		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Define o ponteiro de trabalho no parametro de saida.
-	*Param_Out_PonteiroNativo = PonteiroTrabalho;
-
-	//Define o resultado
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Retorna o resultado
-	return Resultado;
-
+	//Chama o método para recuperar o ponteiro de trabalho da classe atual.
+	return Caren::Shared_RecuperarPonteiro(Param_Out_PonteiroNativo, PonteiroTrabalho);
 }
 
 /// <summary>
@@ -199,35 +101,8 @@ Done:;
 /// <param name="Param_Out_Referencias">Variável que vai receber a quantidade de referências do objeto.</param>
 CarenResult CarenMFMediaTypeExtend::RecuperarReferencias([Out] UInt64% Param_Out_Referencias)
 {
-	//Variavel que vai retornar o resultado.
-	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
-
-	//Verifica se o ponteiro é valido
-	if (!ObjetoValido(PonteiroTrabalho))
-	{
-		//O ponteiro de trabalho é invalido.
-		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Adiciona uma referência ao ponteiro
-	ULONG CountRefs = PonteiroTrabalho->AddRef();
-
-	//Libera a referência adicional
-	PonteiroTrabalho->Release();
-
-	//Decrementa o valor da quantidade de referência retornada em (-1) e define no parametro de saida.
-	Param_Out_Referencias = static_cast<UInt64>(CountRefs - 1);
-
-	//Define o resultado
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-
-	//Retorna o resultado
-	return Resultado;
+	//Chama o método para recuperar a quantidade de referencias atuais da interface.
+	return Caren::Shared_RecuperarReferencias(Param_Out_Referencias, PonteiroTrabalho);
 }
 
 /// <summary>
@@ -253,8 +128,8 @@ Int32 CarenMFMediaTypeExtend::ObterCodigoErro()
 /// </summary>
 void CarenMFMediaTypeExtend::AdicionarReferencia()
 {
-	//Adiciona uma referência ao ponteiro
-	PonteiroTrabalho->AddRef();
+	//Chama o método para incrementar a quantidade de referencias atuais da interface.
+	Caren::Shared_IncrementarReferencia(PonteiroTrabalho);
 }
 
 /// <summary>
@@ -262,16 +137,8 @@ void CarenMFMediaTypeExtend::AdicionarReferencia()
 /// </summary>
 void CarenMFMediaTypeExtend::LiberarReferencia()
 {
-	//Libera a referência e obtém a quantidade atual.
-	ULONG RefCount = PonteiroTrabalho->Release();
-
-	//Verifica se a quantidade é zero e se o ponteiro ainda é valido.
-	//Se sim, vai deletar o ponteiro.
-	if (RefCount == 0 && ObjetoValido(PonteiroTrabalho))
-	{
-		//NULA o ponteiro vazio.
-		PonteiroTrabalho = NULL;
-	}
+	//Chama o método para liberar em UM (1) a quantidade de referencias atuais da interface.
+	Caren::Shared_LiberarReferencia(PonteiroTrabalho);
 }
 
 /// <summary>

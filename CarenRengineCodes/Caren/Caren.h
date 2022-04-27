@@ -34,12 +34,25 @@ public ref class Caren : public ICaren
 	//Ponteiro para a interface (IUnknown*).
 	IUnknown* PonteiroTrabalho = NULL;
 
+	//MÉTODOS QUE SÃO COMPARTILHADOS COM TODAS AS CLASSES QUE HERDAM DE ICAREN.
 internal:
 	static CarenResult Shared_ConsultarInterface(IUnknown* Param_Interface, String^ Param_Guid, ICaren^ Param_InterfaceSolicitada);
-	static CarenResult Shared_AdicionarPonteiro(IntPtr Param_PonteiroNativo, IUnknown** Param_MyPointerWork);
-	template <typename t>
-	static CarenResult Shared_AdicionarPonteiro(LPVOID Param_PonteiroNativo, t** Param_MyPointerWork);
 
+	template <typename PointerWork>
+	static CarenResult Shared_AdicionarPonteiro(IntPtr Param_PonteiroNativo, PointerWork** Param_MyPointerWork);
+	
+	template <typename PointerWork>
+	static CarenResult Shared_AdicionarPonteiro(LPVOID Param_PonteiroNativo, PointerWork** Param_MyPointerWork);
+	
+	static CarenResult Shared_RecuperarPonteiro([Out] IntPtr% Param_Out_PonteiroNativo, IUnknown* Param_MyPointerWork);
+
+	static CarenResult Shared_RecuperarPonteiro(LPVOID* Param_Out_PonteiroNativo, IUnknown* Param_MyPointerWork);
+
+	static CarenResult Shared_RecuperarReferencias([Out] UInt64% Param_Out_Referencias, IUnknown* Param_MyPointerWork);
+
+	static void Shared_IncrementarReferencia(IUnknown* Param_MyPointerWork);
+
+	static void Shared_LiberarReferencia(IUnknown* Param_MyPointerWork);
 
 	//Construtor e destruidor da classe.
 public:

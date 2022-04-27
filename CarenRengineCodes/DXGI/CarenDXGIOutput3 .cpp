@@ -54,40 +54,12 @@ CarenResult CarenDXGIOutput3 ::ConsultarInterface(String^ Param_Guid, ICaren^ Pa
 /// <param name="Param_PonteiroNativo">Variável (GERENCIADA) para o ponteiro nativo a ser adicionado.</param>
 CarenResult CarenDXGIOutput3 ::AdicionarPonteiro(IntPtr Param_PonteiroNativo)
 {
-	//Variavel que vai retornar o resultado.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
+	//Fixa o ponteiro.
+	cli::pin_ptr<IDXGIOutput3*> p = &PonteiroTrabalho;
 
-	//Verifica se o objeto é valido
-	if (Param_PonteiroNativo == IntPtr::Zero)
-	{
-		//O objeto não é valido
-		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
-
-		//Sai do método.
-		goto Done;
-	}
-
-	//Converte o ponteiro para o tipo especifico da classe.
-	PonteiroTrabalho = reinterpret_cast<IDXGIOutput3*>(Param_PonteiroNativo.ToPointer());
-
-	//Verifica o ponteiro
-	if (ObjetoValido(PonteiroTrabalho))
-	{
-		//Define que o ponteiro foi definido com sucesso.
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-	}
-	else
-	{
-		//Define falha na operação
-		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
-	}
-
-Done:;
-	//Retornao resultado
-	return Resultado;
-
+	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
+	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IDXGIOutput3**>(p)));
 }
-
 /// <summary>
 /// Método responsável por adicionar um novo ponteiro nativo a classe atual.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -139,28 +111,8 @@ Done:;
 /// <param name="Param_Out_PonteiroNativo">Variável (GERENCIADA) que vai receber o ponteiro nativo.</param>
 CarenResult CarenDXGIOutput3 ::RecuperarPonteiro([Out] IntPtr% Param_Out_PonteiroNativo)
 {
-	//Variavel que vai retornar o resultado.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Verifica se o ponteiro é valido
-	if (!ObjetoValido(PonteiroTrabalho))
-	{
-		//O ponteiro de trabalho é invalido.
-		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Cria e define o ponteiro gerenciado no parametro de saida.
-	Param_Out_PonteiroNativo = IntPtr((LPVOID)PonteiroTrabalho);
-
-	//Define o resultado
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Retorna o resultado
-	return Resultado;
+	//Chama o método para recuperar o ponteiro de trabalho da classe atual.
+	return Caren::Shared_RecuperarPonteiro(Param_Out_PonteiroNativo, PonteiroTrabalho);
 }
 
 /// <summary>
@@ -170,29 +122,8 @@ Done:;
 /// <param name="Param_Out_PonteiroNativo">Variável (NATIVA) que vai receber o ponteiro nativo.</param>
 CarenResult CarenDXGIOutput3 ::RecuperarPonteiro(LPVOID* Param_Out_PonteiroNativo)
 {
-	//Variavel que vai retornar o resultado.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Verifica se o ponteiro é valido
-	if (!ObjetoValido(PonteiroTrabalho))
-	{
-		//O ponteiro de trabalho é invalido.
-		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Define o ponteiro de trabalho no parametro de saida.
-	*Param_Out_PonteiroNativo = PonteiroTrabalho;
-
-	//Define o resultado
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Retorna o resultado
-	return Resultado;
-
+	//Chama o método para recuperar o ponteiro de trabalho da classe atual.
+	return Caren::Shared_RecuperarPonteiro(Param_Out_PonteiroNativo, PonteiroTrabalho);
 }
 
 /// <summary>
@@ -201,47 +132,8 @@ Done:;
 /// <param name="Param_Out_Referencias">Variável que vai receber a quantidade de referências do objeto.</param>
 CarenResult CarenDXGIOutput3 ::RecuperarReferencias([Out] UInt64% Param_Out_Referencias)
 {
-	//Variavel que vai retornar o resultado.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Ponteiro de trabalho convertido.
-	IUnknown* pInterface = NULL;
-
-	//Verifica se o ponteiro é valido
-	if (!ObjetoValido(PonteiroTrabalho))
-	{
-		//O ponteiro de trabalho é invalido.
-		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Converte para a interface COM base.
-	pInterface = reinterpret_cast<IUnknown*>(PonteiroTrabalho);
-
-	//Adiciona uma referência ao ponteiro
-	ULONG CountRefs = pInterface->AddRef();
-
-	//Libera a referência adicional
-	pInterface->Release();
-
-	//Decrementa o valor da quantidade de referência retornada em (-1) e define no parametro de saida.
-	Param_Out_Referencias = static_cast<UInt64>(CountRefs - 1);
-
-	//Define o resultado
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Nula a conversão
-	if (ObjetoValido(pInterface))
-	{
-		//Zera.
-		pInterface = NULL;
-	}
-
-	//Retorna o resultado
-	return Resultado;
+	//Chama o método para recuperar a quantidade de referencias atuais da interface.
+	return Caren::Shared_RecuperarReferencias(Param_Out_Referencias, PonteiroTrabalho);
 }
 
 /// <summary>

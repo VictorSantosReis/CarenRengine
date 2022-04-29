@@ -87,6 +87,7 @@ CarenResult CarenMFPresentationClock::AdicionarPonteiro(IntPtr Param_PonteiroNat
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IMFPresentationClock**>(p)));
 }
+
 /// <summary>
 /// Método responsável por adicionar um novo ponteiro nativo a classe atual.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -100,6 +101,7 @@ CarenResult CarenMFPresentationClock::AdicionarPonteiro(LPVOID Param_PonteiroNat
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IMFPresentationClock**>(p)));
 }
+
 /// <summary>
 /// Método responsável por recuperar o ponteiro atual da classe. Se o ponteiro não for valido, o método retornar ResultCode::ER_PONTEIRO.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -224,9 +226,6 @@ CarenResult CarenMFPresentationClock::AddClockStateSink(ICarenMFClockStateSink^ 
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -261,9 +260,6 @@ CarenResult CarenMFPresentationClock::GetTime([Out] Int64% Param_Out_NsHoraRelog
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -303,9 +299,6 @@ CarenResult CarenMFPresentationClock::GetTimeSource([Out] ICarenMFPresentationTi
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -344,9 +337,6 @@ CarenResult CarenMFPresentationClock::Pause()
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -384,9 +374,6 @@ CarenResult CarenMFPresentationClock::RemoveClockStateSink(ICarenMFClockStateSin
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -427,9 +414,6 @@ CarenResult CarenMFPresentationClock::SetTimeSource(ICarenMFPresentationTimeSour
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -465,9 +449,6 @@ CarenResult CarenMFPresentationClock::Start(Int64 Param_PosiçãoInicio, Boolean
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -499,9 +480,6 @@ CarenResult CarenMFPresentationClock::Stop()
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -545,9 +523,6 @@ CarenResult CarenMFPresentationClock::GetClockCharacteristics([Out] Enumeracoes:
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -585,9 +560,6 @@ CarenResult CarenMFPresentationClock::GetContinuityKey([Out] UInt32% Param_Out_C
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -630,9 +602,6 @@ CarenResult CarenMFPresentationClock::GetCorrelatedTime(UInt32 Param_ValorReserv
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -673,9 +642,6 @@ CarenResult CarenMFPresentationClock::GetProperties([Out] Estruturas::CA_MFCLOCK
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -714,9 +680,6 @@ CarenResult CarenMFPresentationClock::GetState(UInt32 Param_ValorReservado, [Out
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;

@@ -249,6 +249,7 @@ CarenResult CarenD3D11Device::AdicionarPonteiro(IntPtr Param_PonteiroNativo)
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<ID3D11Device**>(p)));
 }
+
 /// <summary>
 /// Método responsável por adicionar um novo ponteiro nativo a classe atual.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -262,6 +263,7 @@ CarenResult CarenD3D11Device::AdicionarPonteiro(LPVOID Param_PonteiroNativo)
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<ID3D11Device**>(p)));
 }
+
 /// <summary>
 /// Método responsável por recuperar o ponteiro atual da classe. Se o ponteiro não for valido, o método retornar ResultCode::ER_PONTEIRO.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -353,11 +355,7 @@ void CarenD3D11Device::Finalizar()
 
 
 
-
-
-//
-// Métodos da interface proprietária(ICarenD3D11Device)
-//
+//Métodos da interface ICarenD3D11Device
 
 /// <summary>
 /// (CheckCounter) - Obtém o tipo, nome, unidades de medida e uma descrição de um contador existente.
@@ -372,71 +370,29 @@ void CarenD3D11Device::Finalizar()
 /// <param name="Param_Out_DescContador">Uma descrição do contador, desde que a memória o ponteiro aponte para tem espaço suficiente para armazenar a string. Pode ser nulo. A sequência de caracteres retornada será sempre em inglês.</param>
 /// <param name="Param_Out_LarguraDescContador">Comprimento da sequência de caracteres retornada para Param_Out_DescContador. Pode ser nulo.</param>
 CarenResult CarenD3D11Device::CheckCounter(
-					Estruturas::CA_D3D11_DESC_CONTADOR^ Param_DescContador,
-					[Out] Enumeracoes::CA_D3D11_TIPO_DADO_CONTADOR% Param_Out_TipoDadoContador, 
-					[Out] UInt32% Param_Out_NumeroContadores,
-					[Out] String^% Param_Out_NomeContador,
-					[Out] UInt32% Param_Out_LarguraNomeContador,
-					[Out] String^% Param_Out_NomeUnidadeMedidas,
-					[Out] UInt32% Param_Out_LarguraNomeUnidade,
-					[Out] String^% Param_Out_DescContador,
-					[Out] UInt32% Param_Out_LarguraDescContador
-				)
+	Estruturas::CA_D3D11_DESC_CONTADOR^ Param_DescContador,
+	[Out] Enumeracoes::CA_D3D11_TIPO_DADO_CONTADOR% Param_Out_TipoDadoContador,
+	[Out] UInt32% Param_Out_NumeroContadores,
+	[Out] String^% Param_Out_NomeContador,
+	[Out] UInt32% Param_Out_LarguraNomeContador,
+	[Out] String^% Param_Out_NomeUnidadeMedidas,
+	[Out] UInt32% Param_Out_LarguraNomeUnidade,
+	[Out] String^% Param_Out_DescContador,
+	[Out] UInt32% Param_Out_LarguraDescContador
+)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	D3D11_COUNTER_DESC* pDesc;
-	D3D11_COUNTER_TYPE TipoContador;
-	UINT pNumeroContadores = 0;
-	LPSTR pNomeContador = NULL;
-	UINT pLarguraNomeContador = 0;
-	LPSTR pNomeUnidadeMedidas = NULL;
-	UINT pLarguraUnidadeMedidas = 0;
-	LPSTR pDescricaoContador = NULL;
-	UINT pLarguraDescricaoContador = 0;
-
-	//Converte a estrutura.
-	pDesc = Util.ConverterD3D11_COUNTER_DESCManaged_ToUnManaged(Param_DescContador);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->CheckCounter(pDesc, &TipoContador, &pNumeroContadores, pNomeContador, &pLarguraNomeContador, pNomeUnidadeMedidas, &pLarguraUnidadeMedidas, pDescricaoContador, &pLarguraDescricaoContador);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-	//Define os dados nos parametros de saida.
-	Param_Out_TipoDadoContador = static_cast<CA_D3D11_TIPO_DADO_CONTADOR>(TipoContador);
-	Param_Out_NumeroContadores = pNumeroContadores;
-	Param_Out_NomeContador = gcnew String(pNomeContador);
-	Param_Out_LarguraNomeContador = pLarguraNomeContador;
-	Param_Out_NomeUnidadeMedidas = gcnew String(pNomeUnidadeMedidas);
-	Param_Out_LarguraNomeUnidade = pLarguraUnidadeMedidas;
-	Param_Out_DescContador = gcnew String(pDescricaoContador);
-	Param_Out_LarguraDescContador = pLarguraDescricaoContador;
-
-
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11Device::CheckCounter(PonteiroTrabalho,
+		Param_DescContador,
+		Param_Out_TipoDadoContador,
+		Param_Out_NumeroContadores,
+		Param_Out_NomeContador,
+		Param_Out_LarguraNomeContador,
+		Param_Out_NomeUnidadeMedidas,
+		Param_Out_LarguraNomeUnidade,
+		Param_Out_DescContador,
+		Param_Out_LarguraDescContador
+	);
 }
 
 /// <summary>
@@ -445,27 +401,10 @@ Done:;
 /// <param name="Param_Out_InfoContador">Recebe uma estrutura com as informações do contador.</param>
 CarenResult CarenD3D11Device::CheckCounterInfo([Out] Estruturas::CA_D3D11_INFO_CONTADOR^% Param_Out_InfoContador)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	D3D11_COUNTER_INFO pCounterInfo;
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->CheckCounterInfo(&pCounterInfo);
-
-	//Converte a estrutura para o parametro de saida.
-	Param_Out_InfoContador = Util.ConverterD3D11_COUNTER_INFOUnManaged_ToManaged(&pCounterInfo);
-
-	//Define sucesso por default a operação.
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11Device::CheckCounterInfo(PonteiroTrabalho,
+		Param_Out_InfoContador
+	);
 }
 
 /// <summary>
@@ -475,46 +414,17 @@ CarenResult CarenD3D11Device::CheckCounterInfo([Out] Estruturas::CA_D3D11_INFO_C
 /// <param name="Param_Out_SuporteRecurso">Após a conclusão do método, a passado estrutura é preenchida com dados que descreve o suporte para o recurso.</param>
 /// <param name="Param_Out_TamanhoEstrutura">O tamanho da estrutura passado para o parâmetro Param_Out_SuporteRecurso.</param>
 CarenResult CarenD3D11Device::CheckFeatureSupport(
-					Enumeracoes::CA_D3D11_RECURSO Param_RecursoPesquisa, 
-					[Out] Estruturas::CA_D3D11_FEATURE_DATA_THREADING^% Param_Out_SuporteRecurso, 
-					[Out] UInt32% Param_Out_TamanhoEstrutura
-				)
+	Enumeracoes::CA_D3D11_RECURSO Param_RecursoPesquisa,
+	[Out] Estruturas::CA_D3D11_FEATURE_DATA_THREADING^% Param_Out_SuporteRecurso,
+	[Out] UInt32% Param_Out_TamanhoEstrutura
+)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	D3D11_FEATURE FeatureEnum = static_cast<D3D11_FEATURE>(Param_RecursoPesquisa);
-	D3D11_FEATURE_DATA_THREADING FeatureData;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->CheckFeatureSupport(FeatureEnum, &FeatureData, sizeof(D3D11_FEATURE_DATA_THREADING));
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-	//Converte a estrutura nativa para o parametro de saida.
-	Param_Out_SuporteRecurso = Util.ConverterD3D11_FEATURE_DATA_THREADINGUnManaged_ToManaged(&FeatureData);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11Device::CheckFeatureSupport(PonteiroTrabalho,
+		Param_RecursoPesquisa,
+		Param_Out_SuporteRecurso,
+		Param_Out_TamanhoEstrutura
+	);
 }
 
 /// <summary>
@@ -524,44 +434,14 @@ Done:;
 /// <param name="Param_Out_RecursosSuportados">Um campo de bits de D3D11_FORMAT_SUPPORT valores de enumeração que descreve como o formato especificado 
 /// é suportado no dispositivo instalado. Os valores são ORed juntos.</param>
 CarenResult CarenD3D11Device::CheckFormatSupport(
-					Enumeracoes::CA_DXGI_FORMAT Param_Formato,
-					[Out] Enumeracoes::CA_D3D11_FORMAT_SUPPORT% Param_Out_RecursosSuportados)
+	Enumeracoes::CA_DXGI_FORMAT Param_Formato,
+	[Out] Enumeracoes::CA_D3D11_FORMAT_SUPPORT% Param_Out_RecursosSuportados)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	DXGI_FORMAT Formato = static_cast<DXGI_FORMAT>(Param_Formato);
-	UINT pFormatoD3D11Suportado = 0;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->CheckFormatSupport(Formato, &pFormatoD3D11Suportado);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-	//Converte o bitfield para sua enumeração correspondente.
-	Param_Out_RecursosSuportados = static_cast<CA_D3D11_FORMAT_SUPPORT>(pFormatoD3D11Suportado);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11Device::CheckFormatSupport(PonteiroTrabalho,
+		Param_Formato,
+		Param_Out_RecursosSuportados
+	);
 }
 
 /// <summary>
@@ -574,47 +454,16 @@ Done:;
 /// <param name="Param_NumeroAmostras">O número de amostras durante multisampling completo.</param>
 /// <param name="Param_Out_NumeroNiveisQualidade">Recebe o número de níveis de qualidade suportada pelo adaptador.</param>
 CarenResult CarenD3D11Device::CheckMultisampleQualityLevels(
-					Enumeracoes::CA_DXGI_FORMAT Param_Formato, 
-					UInt32 Param_NumeroAmostras, 
-	                [Out] UInt32% Param_Out_NumeroNiveisQualidade)
+	Enumeracoes::CA_DXGI_FORMAT Param_Formato,
+	UInt32 Param_NumeroAmostras,
+	[Out] UInt32% Param_Out_NumeroNiveisQualidade)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	DXGI_FORMAT Formato = static_cast<DXGI_FORMAT>(Param_Formato);
-	UINT QuantidadeNiveisQualidade = 0;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->CheckMultisampleQualityLevels(Formato, Param_NumeroAmostras, &QuantidadeNiveisQualidade);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-	//Define o numero de niveis de qualidade no parametro de saida.
-	Param_Out_NumeroNiveisQualidade = QuantidadeNiveisQualidade;
-
-
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11Device::CheckMultisampleQualityLevels(PonteiroTrabalho,
+		Param_Formato,
+		Param_NumeroAmostras,
+		Param_Out_NumeroNiveisQualidade
+	);
 }
 
 /// <summary>
@@ -623,52 +472,14 @@ Done:;
 /// <param name="Param_DescMistura">Uma descrição do estado de mistura.</param>
 /// <param name="Param_Out_BlendState">Recebe uma interface para o objeto de estado de mistura criado.</param>
 CarenResult CarenD3D11Device::CreateBlendState(
-					Estruturas::CA_D3D11_BLEND_DESC^% Param_DescMistura, 
-					[Out] ICarenD3D11BlendState^% Param_Out_BlendState)
+	Estruturas::CA_D3D11_BLEND_DESC^% Param_DescMistura,
+	[Out] ICarenD3D11BlendState^% Param_Out_BlendState)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	D3D11_BLEND_DESC *pBlendDesc = NULL;
-	ID3D11BlendState* pBlendState = NULL;
-
-	//Converte a estrutura
-	pBlendDesc = Util.ConverterD3D11_BLEND_DESCManaged_ToUnManaged(Param_DescMistura);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->CreateBlendState(pBlendDesc, &pBlendState);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria a interface que será retornada no parametro.
-	Param_Out_BlendState = gcnew CarenD3D11BlendState();
-
-	//Define o ponteiro de trabalho
-	Param_Out_BlendState->AdicionarPonteiro(pBlendState);
-
-
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11Device::CreateBlendState(PonteiroTrabalho,
+		Param_DescMistura,
+		Param_Out_BlendState
+	);
 }
 
 /// <summary>
@@ -681,100 +492,18 @@ Done:;
 /// <param name="Param_ValidarPametros">Defina como TRUE para validar os paramêtros de entrada do método. Se TRUE, Param_Out_InterfaceBuffer retorna NULO.</param>
 /// <param name="Param_Out_InterfaceBuffer">Recebe a interface ICarenD3D11Buffer para o objeto de buffer criado.</param>
 CarenResult CarenD3D11Device::CreateBuffer(
-					Estruturas::CA_D3D11_BUFFER_DESC^% Param_DescBuffer, 
-					Estruturas::CA_D3D11_SUBRESOURCE_DATA^% Param_DescDadosInit, 
-					Boolean Param_ValidarPametros,
-					[Out] ICarenD3D11Buffer^% Param_Out_InterfaceBuffer)
+	Estruturas::CA_D3D11_BUFFER_DESC^% Param_DescBuffer,
+	Estruturas::CA_D3D11_SUBRESOURCE_DATA^% Param_DescDadosInit,
+	Boolean Param_ValidarPametros,
+	[Out] ICarenD3D11Buffer^% Param_Out_InterfaceBuffer)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	D3D11_BUFFER_DESC* pBufferDesc = NULL;
-	D3D11_SUBRESOURCE_DATA* pSubresourceDesc = NULL;
-	ID3D11Buffer* pBuffer = NULL;
-
-	//Converte as estruturas.
-	pBufferDesc = Util.ConverterD3D11_BUFFER_DESCManaged_ToUnmanaged(Param_DescBuffer);
-
-	//Verifica se forneceu um estrutura de sub recursos
-	if (ObjetoGerenciadoValido(Param_DescDadosInit))
-	{
-		//O usuário forneceu a estrutura.
-
-		//Converte a estrutura gerenciada para a nativa.
-		pSubresourceDesc = Util.ConverterD3D11_SUBRESOURCE_DATAManaged_ToUnmanaged(Param_DescDadosInit);
-	}
-
-	//Verifica se só está validando os dados.
-	// e chama o método de acordo com cada situação.
-	if (Param_ValidarPametros)
-	{
-		//Está tentando validar os parametros.
-		//Como está tentando validar os dados, o ponteiro de retorno da interface é NULO.
-
-		//Chama o método para realizar a operação.
-		Hr = PonteiroTrabalho->CreateBuffer(pBufferDesc, ObjetoValido(pSubresourceDesc)? pSubresourceDesc: NULL, NULL);
-	}
-	else
-	{
-		//Vai realizar a função normalmente esperando o retorno do buffer.
-
-		//Chama o método para realizar a operação.
-		Hr = PonteiroTrabalho->CreateBuffer(pBufferDesc, ObjetoValido(pSubresourceDesc) ? pSubresourceDesc : NULL, &pBuffer);
-	}
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-	//Verifica se só estava validando os parametros
-	//Se sim, define SS_FALSE e pula para Done.
-	if (Param_ValidarPametros)
-	{
-		//Define SS_FALSE como é necessário e não retorna nada para o usuario.
-
-		//Define SS_FALSE.
-		Resultado.AdicionarCodigo(ResultCode::SS_FALSE, false);
-
-		//Sai do método
-		goto Done;
-	}
-
-
-
-	//Cria a interface a ser retornada.
-	Param_Out_InterfaceBuffer = gcnew CarenD3D11Buffer();
-
-	//Define o ponteiro de trabalho
-	Param_Out_InterfaceBuffer->AdicionarPonteiro(pBuffer);
-
-
-
-Done:;
-	//Libera a memória para as estruturas criadas anteriormente.
-	DeletarEstruturaSafe(&pBufferDesc);
-	//Libera a memoria para a estrutura.
-	DeletarEstruturaSafe(&pSubresourceDesc);
-	
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11Device::CreateBuffer(PonteiroTrabalho,
+		Param_DescBuffer,
+		Param_DescDadosInit,
+		Param_ValidarPametros,
+		Param_Out_InterfaceBuffer
+	);
 }
 
 /// <summary>
@@ -783,46 +512,10 @@ Done:;
 /// <param name="Param_Out_ClassLinkage">Recebe a interface(ICarenD3D11ClassLinkage) de ligação de classe.</param>
 CarenResult CarenD3D11Device::CreateClassLinkage([Out] ICarenD3D11ClassLinkage^% Param_Out_ClassLinkage)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	ID3D11ClassLinkage* pLinkage = NULL;
-	
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->CreateClassLinkage(&pLinkage);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-
-	//Cria a interface que será retornada no parametro.
-	Param_Out_ClassLinkage = gcnew CarenD3D11ClassLinkage();
-
-	//Define o ponteiro de trabalho
-	Param_Out_ClassLinkage->AdicionarPonteiro(pLinkage);
-
-
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11Device::CreateClassLinkage(PonteiroTrabalho,
+		Param_Out_ClassLinkage
+	);
 }
 
 /// <summary>
@@ -830,115 +523,24 @@ Done:;
 /// </summary>
 /// <param name="Param_SombreadorCompilado">Um ponteiro para um objeto que contém um sombreador compilado. Geralmente se obtém esse ponteiro através do método (ICarenD3D10Blod::ObterPonteiroBuffer).</param>
 /// <param name="Param_TamanhoSombreador">O Tamanho do sombreador no paramêtro(Param_SombreadorCompilado). Se está compilado com o ICarenD3D10Blod, utilize o método (ObterTamanhoBuffer) para recuperar esse valor.</param>
-/// <param name="Param_ClasseLigação">Um ponteiro para um ICarenD3D11ClassLinkage, que representa a interface de ligação de classe; o valor pode ser NULO.</param>
+/// <param name="Param_LinkageClass">Um ponteiro para um ICarenD3D11ClassLinkage, que representa a interface de ligação de classe; o valor pode ser NULO.</param>
 /// <param name="Param_ValidarParametros">Se TRUE, o método vai validar os paramêtros de entrada. Se for validado com sucesso, o método retorna SS_FALSE em vez de S_OK.</param>
 /// <param name="Param_Out_ComputeShader">Recebe a interface(ICarenD3D11ComputeShader). Se (Param_ValidarPametros) for TRUE, esse parametro retorna um objeto NULO.</param>
 CarenResult CarenD3D11Device::CreateComputeShader(
-					ICaren^ Param_SombreadorCompilado, 
-					UInt64 Param_TamanhoSombreador, 
-					ICarenD3D11ClassLinkage^ Param_ClasseLigação, 
-					Boolean Param_ValidarParametros, 
-					[Out] ICarenD3D11ComputeShader^% Param_Out_ComputeShader)
+	ICaren^ Param_SombreadorCompilado,
+	UInt64 Param_TamanhoSombreador,
+	ICarenD3D11ClassLinkage^ Param_LinkageClass,
+	Boolean Param_ValidarParametros,
+	[Out] ICarenD3D11ComputeShader^% Param_Out_ComputeShader)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	PVOID pSombreadorCompilado = NULL;
-	ID3D11ClassLinkage* pLinkage = NULL; //Pode ser NULO.
-	ID3D11ComputeShader* pComputeShader = NULL;
-	SIZE_T SizeSombreador = static_cast<SIZE_T>(Param_TamanhoSombreador);
-
-	//Obtém o ponteiro para o sombreador compilado.
-	Resultado = Param_SombreadorCompilado->RecuperarPonteiro(&pSombreadorCompilado);
-
-	//Verifica se obteve com sucesso
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//O ponteiro para o sombreador é invalido
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Veririfica se forneceu o Class Linkage
-	if (ObjetoGerenciadoValido(Param_ClasseLigação))
-	{
-		//Obtém um ponteiro para a interface.
-		Resultado = Param_ClasseLigação->RecuperarPonteiro((LPVOID*)&pLinkage);
-	}
-
-	//Verifica se obteve com sucesso
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//O ponteiro para o sombreador é invalido
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Verifica se só vai validar os parametros
-	//E chama a função corretamente para cada ocasião
-	if (Param_ValidarParametros)
-	{
-		//Só está validando os parametros, portanto, a interface de retorno é NULA.
-
-		//Chama o método para realizar a operação.
-		Hr = PonteiroTrabalho->CreateComputeShader(pSombreadorCompilado, SizeSombreador, ObjetoValido(pLinkage)? pLinkage: NULL, NULL);
-	}
-	else
-	{
-		//Não está validando os parametros, portanto, a interface de retorno não é NULA.
-
-		//Chama o método para realizar a operação.
-		Hr = PonteiroTrabalho->CreateComputeShader(pSombreadorCompilado, SizeSombreador, ObjetoValido(pLinkage) ? pLinkage : NULL, &pComputeShader);
-	}
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-	//Verifica se só estava validando os parametros
-	//Se sim, define SS_FALSE e pula para Done.
-	if (Param_ValidarParametros)
-	{
-		//Define SS_FALSE como é necessário e não retorna nada para o usuario.
-
-		//Define SS_FALSE.
-		Resultado.AdicionarCodigo(ResultCode::SS_FALSE, false);
-
-		//Sai do método
-		goto Done;
-	}
-
-
-
-	//Cria a interface do parametro que vai ser retornada ao usuário
-	Param_Out_ComputeShader = gcnew CarenD3D11ComputeShader();
-
-	//Define o ponteiro de trabalho
-	Param_Out_ComputeShader->AdicionarPonteiro(pComputeShader);
-
-
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11Device::CreateComputeShader(PonteiroTrabalho,
+		Param_SombreadorCompilado,
+		Param_TamanhoSombreador,
+		Param_LinkageClass,
+		Param_ValidarParametros,
+		Param_Out_ComputeShader
+	);
 }
 
 /// <summary>
@@ -947,72 +549,14 @@ Done:;
 /// <param name="Param_DescContador">Uma estrutura que contém a descrição do contador a ser criado.</param>
 /// <param name="Param_Out_ContadorGPU">Recebe a interface que contem uma descrição do contador.</param>
 CarenResult CarenD3D11Device::CreateCounter(
-					Estruturas::CA_D3D11_DESC_CONTADOR^% Param_DescContador, 
-					[Out] ICarenD3D11Counter^% Param_Out_ContadorGPU)
+	Estruturas::CA_D3D11_DESC_CONTADOR^% Param_DescContador,
+	[Out] ICarenD3D11Counter^% Param_Out_ContadorGPU)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	D3D11_COUNTER_DESC* pDescCounter = NULL;
-	ID3D11Counter* pCounter = NULL;
-
-	//Converte a estrutura
-	pDescCounter = Util.ConverterD3D11_COUNTER_DESCManaged_ToUnManaged(Param_DescContador);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->CreateCounter(pDescCounter, &pCounter);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se não retornou S_FALSE
-	if (Hr == S_FALSE)
-	{
-		//Verifica se retornou a interface
-		if (ObjetoValido(pCounter))
-		{
-			//Retornou a interface 
-
-	//Cria a interface a ser retornada ao usuário
-	Param_Out_ContadorGPU = gcnew CarenD3D11Counter();
-
-	//Define o ponteiro de trabalho
-	Param_Out_ContadorGPU->AdicionarPonteiro(pCounter);
-		}
-		else
-		{
-			//A interface é invalida
-		}
-	}
-
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Libera a memoria para a estrutura nativa.
-	if (ObjetoValido(pDescCounter))
-	{
-		//Libera a memoria
-		DeletarEstrutura(&pDescCounter);
-	}
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11Device::CreateCounter(PonteiroTrabalho,
+		Param_DescContador,
+		Param_Out_ContadorGPU
+	);
 }
 
 /// <summary>
@@ -1021,46 +565,14 @@ Done:;
 /// <param name="Param_FlagsContexto">Reservado. Use 0.</param>
 /// <param name="Param_Out_D3D11Contexto">Recebe a interface ICarenD3D11DeviceContext.</param>
 CarenResult CarenD3D11Device::CreateDeferredContext(
-					UInt32 Param_FlagsContexto, 
-					[Out] ICarenD3D11DeviceContext^% Param_Out_D3D11Contexto)
+	UInt32 Param_FlagsContexto,
+	[Out] ICarenD3D11DeviceContext^% Param_Out_D3D11Contexto)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	ID3D11DeviceContext* pContexto = NULL;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->CreateDeferredContext(Param_FlagsContexto, &pContexto);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria a interface que vai ser retornada para o usuário
-	Param_Out_D3D11Contexto = gcnew CarenD3D11DeviceContext();
-
-	//Define o ponteiro de trabalho
-	Param_Out_D3D11Contexto->AdicionarPonteiro(pContexto);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11Device::CreateDeferredContext(PonteiroTrabalho,
+		Param_FlagsContexto,
+		Param_Out_D3D11Contexto
+	);
 }
 
 /// <summary>
@@ -1069,56 +581,14 @@ Done:;
 /// <param name="Param_DepthStencil">Uma estrutura(CA_D3D11_DEPTH_STENCIL_DESC) que descreve o estado de profundidade do Stencil.</param>
 /// <param name="Param_Out_InterfaceStencil">Recebe a interface (ICarenD3D11DepthStencilState) de estado de profundidade do Stencil.</param>
 CarenResult CarenD3D11Device::CreateDepthStencilState(
-					Estruturas::CA_D3D11_DEPTH_STENCIL_DESC^% Param_DepthStencil, 
-					[Out] ICarenD3D11DepthStencilState^% Param_Out_InterfaceStencil)
+	Estruturas::CA_D3D11_DEPTH_STENCIL_DESC^% Param_DepthStencil,
+	[Out] ICarenD3D11DepthStencilState^% Param_Out_InterfaceStencil)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	D3D11_DEPTH_STENCIL_DESC* pDescStencil = NULL;
-	ID3D11DepthStencilState* pStencilState = NULL;
-
-	//Converte a estrutura.
-	pDescStencil = Util.ConverterD3D11_DEPTH_STENCIL_DESCManaged_ToUnManaged(Param_DepthStencil);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->CreateDepthStencilState(pDescStencil, &pStencilState);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria a interface que será retornada para o usuário
-	Param_Out_InterfaceStencil = gcnew CarenD3D11DepthStencilState();
-
-	//Define o ponteiro de trabalho
-	Param_Out_InterfaceStencil->AdicionarPonteiro(pStencilState);
-
-
-
-Done:;
-	//Libera a memoria para a estrutura nativa.
-	DeletarEstruturaSafe(&pDescStencil);
-	
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11Device::CreateDepthStencilState(PonteiroTrabalho,
+		Param_DepthStencil,
+		Param_Out_InterfaceStencil
+	);
 }
 
 /// <summary>
@@ -1130,91 +600,19 @@ Done:;
 /// <param name="Param_ValidarParametros">Defina True para validar os outros parmetros. Param_Out_InterfaceStencilView retorna NULL se esse paramêtro for verdadeiro.</param>
 /// <param name="Param_Out_InterfaceStencilView">Recebe a interface do Depth Stencil View do D3D11.</param>
 CarenResult CarenD3D11Device::CreateDepthStencilView(
-					ICarenD3D11Resource^ Param_Resource, 
-					Estruturas::CA_D3D11_DEPTH_STENCIL_VIEW_DESC^% Param_DepthStencilView, 
-					Boolean Param_ValidarParametros,
-					[Out] ICarenD3D11DepthStencilView^% Param_Out_InterfaceStencilView
-				)
+	ICarenD3D11Resource^ Param_Resource,
+	Estruturas::CA_D3D11_DEPTH_STENCIL_VIEW_DESC^% Param_DepthStencilView,
+	Boolean Param_ValidarParametros,
+	[Out] ICarenD3D11DepthStencilView^% Param_Out_InterfaceStencilView
+)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	ID3D11Resource* pRecurso = NULL;
-	D3D11_DEPTH_STENCIL_VIEW_DESC* pDescStencilView = NULL;
-	ID3D11DepthStencilView* pStencilView= NULL;
-
-	//Recupera o ponteiro para o recurso
-	Param_Resource->RecuperarPonteiro((PVOID*)&pRecurso);
-
-	//Verifica se forneceu uma estrutura.
-	if (ObjetoGerenciadoValido(Param_DepthStencilView))
-	{
-		//Converte a estrutura.
-		pDescStencilView = Util.ConverterD3D11_DEPTH_STENCIL_VIEW_DESCManaged_ToUnManaged(Param_DepthStencilView);
-	}
-
-	//Verifica como vai realizar a chamada para o método
-	if (Param_ValidarParametros)
-	{
-		//Está validando os parametros, sendo assim, a interface de retorno é NULA.
-
-		//Chama o método para realizar a operação.
-		Hr = PonteiroTrabalho->CreateDepthStencilView(pRecurso, pDescStencilView ? pDescStencilView : NULL, NULL);
-	}
-	else
-	{
-		//Não está validando os parametros, sendo assim, deve retornar uma interface.
-
-		//Chama o método para realizar a operação.
-		Hr = PonteiroTrabalho->CreateDepthStencilView(pRecurso, pDescStencilView ? pDescStencilView : NULL, &pStencilView);
-	}
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-
-	//Verifica se só estava validando os parametros
-	//Se sim, define SS_FALSE e pula para Done.
-	if (Param_ValidarParametros)
-	{
-		//Define SS_FALSE como é necessário e não retorna nada para o usuario.
-
-		//Define SS_FALSE.
-		Resultado.AdicionarCodigo(ResultCode::SS_FALSE, false);
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Cria a interface que será retornada para o usuário
-	Param_Out_InterfaceStencilView = gcnew CarenD3D11DepthStencilView();
-
-	//Define o ponteiro de trabalho
-	Param_Out_InterfaceStencilView->AdicionarPonteiro(pStencilView);
-
-Done:;
-	//Libera a memoria para a estrutura nativa se ela for valida.
-	DeletarEstruturaSafe(&pDescStencilView);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11Device::CreateDepthStencilView(PonteiroTrabalho,
+		Param_Resource,
+		Param_DepthStencilView,
+		Param_ValidarParametros,
+		Param_Out_InterfaceStencilView
+	);
 }
 
 /// <summary>
@@ -1226,111 +624,20 @@ Done:;
 /// <param name="Param_ValidarParametros">Defina True para validar os outros parmetros. Param_Out_DomainShader retorna NULL se esse paramêtro for verdadeiro.</param>
 /// <param name="Param_Out_DomainShader">Recebe a interface do Domain Shader.</param>
 CarenResult CarenD3D11Device::CreateDomainShader(
-	                ICaren^ Param_ShaderByteCode,
-					UInt64 Param_TamanhoByteCode,
-					ICarenD3D11ClassLinkage^ Param_Linkage, 
-					Boolean Param_ValidarParametros,
-					[Out] ICarenD3D11DomainShader^% Param_Out_DomainShader)
+	ICaren^ Param_ShaderByteCode,
+	UInt64 Param_TamanhoByteCode,
+	ICarenD3D11ClassLinkage^ Param_Linkage,
+	Boolean Param_ValidarParametros,
+	[Out] ICarenD3D11DomainShader^% Param_Out_DomainShader)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	PVOID pShader = NULL;
-	SIZE_T SizeShader = static_cast<SIZE_T>(Param_TamanhoByteCode);
-	ID3D11ClassLinkage* pLinkage = NULL;
-	ID3D11DomainShader* pDomainShader = NULL;
-
-	//Obtém o ponteiro para o sombreador compilado.
-	Resultado = Param_ShaderByteCode->RecuperarPonteiro(&pShader);
-
-	//Verifica se obteve com sucesso
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//O ponteiro para o sombreador é invalido
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Veririfica se forneceu o Class Linkage
-	if (ObjetoGerenciadoValido(Param_Linkage))
-	{
-		//Obtém um ponteiro para a interface.
-		Resultado = Param_Linkage->RecuperarPonteiro((LPVOID*)&pLinkage);
-	}
-
-	//Verifica se obteve com sucesso
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//O ponteiro para o sombreador é invalido
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Verifica se só vai validar os parametros
-	//E chama a função corretamente para cada ocasião
-	if (Param_ValidarParametros)
-	{
-		//Só está validando os parametros, portanto, a interface de retorno é NULA.
-
-		//Chama o método para realizar a operação.
-		Hr = PonteiroTrabalho->CreateDomainShader(pShader, SizeShader, ObjetoValido(pLinkage) ? pLinkage : NULL, NULL);
-	}
-	else
-	{
-		//Não está validando os parametros, portanto, a interface de retorno não é NULA.
-
-		//Chama o método para realizar a operação.
-		Hr = PonteiroTrabalho->CreateDomainShader(pShader, SizeShader, ObjetoValido(pLinkage) ? pLinkage : NULL, &pDomainShader);
-	}
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-	//Verifica se só estava validando os parametros
-	//Se sim, define SS_FALSE e pula para Done.
-	if (Param_ValidarParametros)
-	{
-		//Define SS_FALSE como é necessário e não retorna nada para o usuario.
-
-		//Define SS_FALSE.
-		Resultado.AdicionarCodigo(ResultCode::SS_FALSE, false);
-
-		//Sai do método
-		goto Done;
-	}
-
-
-
-	//Cria a interface do parametro que vai ser retornada ao usuário
-	Param_Out_DomainShader = gcnew CarenD3D11DomainShader();
-
-	//Define o ponteiro de trabalho
-	Param_Out_DomainShader->AdicionarPonteiro(pDomainShader);
-
-
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11Device::CreateDomainShader(PonteiroTrabalho,
+		Param_ShaderByteCode,
+		Param_TamanhoByteCode,
+		Param_Linkage,
+		Param_ValidarParametros,
+		Param_Out_DomainShader
+	);
 }
 
 /// <summary>
@@ -1342,110 +649,20 @@ Done:;
 /// <param name="Param_ValidarParametros">Defina True para validar os outros parmetros. Param_Out_GeometryShader retorna NULL se esse paramêtro for verdadeiro.</param>
 /// <param name="Param_Out_GeometryShader">Recebe a interface do Geometry Shader.</param>
 CarenResult CarenD3D11Device::CreateGeometryShader(
-					ICaren^ Param_ShaderByteCode,
-					UInt64 Param_TamanhoByteCode,
-					ICarenD3D11ClassLinkage^ Param_Linkage,
-					Boolean Param_ValidarParametros,
-					[Out] ICarenD3D11GeometryShader^% Param_Out_GeometryShader)
+	ICaren^ Param_ShaderByteCode,
+	UInt64 Param_TamanhoByteCode,
+	ICarenD3D11ClassLinkage^ Param_Linkage,
+	Boolean Param_ValidarParametros,
+	[Out] ICarenD3D11GeometryShader^% Param_Out_GeometryShader)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	PVOID pShader = NULL;
-	SIZE_T SizeShader = static_cast<SIZE_T>(Param_TamanhoByteCode);
-	ID3D11ClassLinkage* pLinkage = NULL;
-	ID3D11GeometryShader* pInterfaceReturn = NULL;
-
-	//Obtém o ponteiro para o sombreador compilado.
-	Resultado = Param_ShaderByteCode->RecuperarPonteiro(&pShader);
-
-	//Verifica se obteve com sucesso
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//O ponteiro para o sombreador é invalido
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Veririfica se forneceu o Class Linkage
-	if (ObjetoGerenciadoValido(Param_Linkage))
-	{
-		//Obtém um ponteiro para a interface.
-		Resultado = Param_Linkage->RecuperarPonteiro((LPVOID*)&pLinkage);
-	}
-
-	//Verifica se obteve com sucesso
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//O ponteiro para o sombreador é invalido
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Verifica se só vai validar os parametros
-	//E chama a função corretamente para cada ocasião
-	if (Param_ValidarParametros)
-	{
-		//Só está validando os parametros, portanto, a interface de retorno é NULA.
-
-		//Chama o método para realizar a operação.
-		Hr = PonteiroTrabalho->CreateGeometryShader(pShader, SizeShader, ObjetoValido(pLinkage) ? pLinkage : NULL, NULL);
-	}
-	else
-	{
-		//Não está validando os parametros, portanto, a interface de retorno não é NULA.
-
-		//Chama o método para realizar a operação.
-		Hr = PonteiroTrabalho->CreateGeometryShader(pShader, SizeShader, ObjetoValido(pLinkage) ? pLinkage : NULL, &pInterfaceReturn);
-	}
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-	//Verifica se só estava validando os parametros
-	//Se sim, define SS_FALSE e pula para Done.
-	if (Param_ValidarParametros)
-	{
-		//Define SS_FALSE como é necessário e não retorna nada para o usuario.
-
-		//Define SS_FALSE.
-		Resultado.AdicionarCodigo(ResultCode::SS_FALSE, false);
-
-		//Sai do método
-		goto Done;
-	}
-
-
-	//Cria a interface do parametro que vai ser retornada ao usuário
-	Param_Out_GeometryShader = gcnew CarenD3D11GeometryShader();
-
-	//Define o ponteiro de trabalho
-	Param_Out_GeometryShader->AdicionarPonteiro(pInterfaceReturn);
-
-
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11Device::CreateGeometryShader(PonteiroTrabalho,
+		Param_ShaderByteCode,
+		Param_TamanhoByteCode,
+		Param_Linkage,
+		Param_ValidarParametros,
+		Param_Out_GeometryShader
+	);
 }
 
 /// <summary>
@@ -1462,151 +679,32 @@ Done:;
 /// <param name="Param_ValidarParametros">Defina True para validar os outros parmetros. Param_Out_GeometryShader retorna NULL se esse paramêtro for verdadeiro.</param>
 /// <param name="Param_Out_GeometryShader">Recebe a interface do Geometry Shader.</param>
 CarenResult CarenD3D11Device::CreateGeometryShaderWithStreamOutput
-				(
-					ICaren^ Param_ShaderByteCode,
-					UInt64 Param_TamanhoByteCode,
-					cli::array<Estruturas::CA_D3D11_SO_DECLARATION_ENTRY^>^ Param_SODeclarationArray,
-					UInt32 Param_NumeroEntradas,
-					cli::array<UInt32>^ Param_BufferStrideArray,
-					UInt32 Param_NumeroStrides,
-					UInt32 Param_NumeroIndicesFluxo,
-					ICarenD3D11ClassLinkage^ Param_Linkage,
-					Boolean Param_ValidarParametros,
-					[Out] ICarenD3D11GeometryShader^% Param_Out_GeometryShader
-				)
+(
+	ICaren^ Param_ShaderByteCode,
+	UInt64 Param_TamanhoByteCode,
+	cli::array<Estruturas::CA_D3D11_SO_DECLARATION_ENTRY^>^ Param_SODeclarationArray,
+	UInt32 Param_NumeroEntradas,
+	cli::array<UInt32>^ Param_BufferStrideArray,
+	UInt32 Param_NumeroStrides,
+	UInt32 Param_NumeroIndicesFluxo,
+	ICarenD3D11ClassLinkage^ Param_Linkage,
+	Boolean Param_ValidarParametros,
+	[Out] ICarenD3D11GeometryShader^% Param_Out_GeometryShader
+)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	LPVOID pShaderByteCode = NULL;
-	SIZE_T SizeShader = static_cast<SIZE_T>(Param_TamanhoByteCode);
-	D3D11_SO_DECLARATION_ENTRY* pArrayEntry = NULL; //Pode ser NULO.
-	UINT32* pArrayStrides = CriarMatrizEstruturas<UINT32>(Param_NumeroStrides);
-	ID3D11ClassLinkage* pLinkage = NULL; //Pode ser NULO.
-	ID3D11GeometryShader* pInterfaceReturn = NULL;
-
-	//Verifica se vai criar o array de SODeclarationArray.
-	if (Param_NumeroEntradas > 0)
-	{
-		//vai criar o array.
-
-		//Inicializa com a quantidade de entradas especificadas.
-		pArrayEntry = CriarMatrizEstruturas<D3D11_SO_DECLARATION_ENTRY>(Param_NumeroEntradas);
-
-		//Converte as estruturas gerenciadas para a nativa.
-		for (UINT32 i = 0; i < Param_NumeroEntradas; i++)
-		{
-			//Converte a estrutura e define no array de estruturas nativas.
-			pArrayEntry[i] = *Util.ConverterD3D11_SO_DECLARATION_ENTRYManaged_ToUnManaged(Param_SODeclarationArray[i]);
-		}
-	}
-
-	//Preenche os dados do array de strides
-	for (UINT32 i = 0; i < Param_NumeroStrides; i++)
-	{
-		//Define o valor de stride no array nativo.
-		pArrayStrides[i] = Param_BufferStrideArray[i];
-	}
-
-	//Verifica se forneceu uma classe de ligação
-	if (ObjetoGerenciadoValido(Param_Linkage))
-	{
-		//Obtém o ponteiro para a classe de ligação
-		Param_Linkage->RecuperarPonteiro((LPVOID*)&pLinkage);
-	}
-
-	//Verifica como o método vai ser chamado
-	if (Param_ValidarParametros)
-	{
-		//Só está validando os parametros. Portanto, a interface de saida deve ser NULL;
-		Hr = PonteiroTrabalho->CreateGeometryShaderWithStreamOutput(pShaderByteCode, 
-			SizeShader, 
-			pArrayEntry ? pArrayEntry : NULL, 
-			Param_NumeroEntradas, 
-			pArrayStrides, 
-			Param_NumeroStrides, 
-			Param_NumeroIndicesFluxo,
-			pLinkage ? pLinkage : NULL, 
-			NULL);
-	}
-	else
-	{
-		//Não está validando os parametros. Portanto, a interface de saida deve ser valida.
-		Hr = PonteiroTrabalho->CreateGeometryShaderWithStreamOutput(pShaderByteCode,
-			SizeShader,
-			pArrayEntry ? pArrayEntry : NULL,
-			Param_NumeroEntradas,
-			pArrayStrides,
-			Param_NumeroStrides,
-			Param_NumeroIndicesFluxo,
-			pLinkage ? pLinkage : NULL,
-			&pInterfaceReturn);
-	}
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-
-	//Verifica se só estava validando os parametros
-	//Se sim, define SS_FALSE e pula para Done.
-	if (Param_ValidarParametros)
-	{
-		//Define SS_FALSE como é necessário e não retorna nada para o usuario.
-
-		//Define SS_FALSE.
-		Resultado.AdicionarCodigo(ResultCode::SS_FALSE, false);
-
-		//Sai do método
-		goto Done;
-	}
-
-
-
-	//Cria a interface do parametro que vai ser retornada ao usuário
-	Param_Out_GeometryShader = gcnew CarenD3D11GeometryShader();
-
-	//Define o ponteiro de trabalho
-	Param_Out_GeometryShader->AdicionarPonteiro(pInterfaceReturn);
-
-
-
-Done:;
-	//Liberação de memória.
-
-	//Verifica se o array de matriz é valido e libera a memoria para ele.
-	if (ObjetoValido(pArrayEntry))
-	{
-		//Libera a memoria das strings que contém em cada estrutura.
-		for (UINT32 i = 0; i < Param_NumeroEntradas; i++)
-		{
-			//Libera a memoria para a string.
-			delete pArrayEntry[i].SemanticName;
-		}
-
-		//Libera a memoria geral do array.
-		DeletarMatrizEstruturasSafe(&pArrayEntry);
-	}
-	DeletarMatrizEstruturasSafe(&pArrayStrides);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11Device::CreateGeometryShaderWithStreamOutput(PonteiroTrabalho,
+		Param_ShaderByteCode,
+		Param_TamanhoByteCode,
+		Param_SODeclarationArray,
+		Param_NumeroEntradas,
+		Param_BufferStrideArray,
+		Param_NumeroStrides,
+		Param_NumeroIndicesFluxo,
+		Param_Linkage,
+		Param_ValidarParametros,
+		Param_Out_GeometryShader
+	);
 }
 
 /// <summary>
@@ -1623,76 +721,13 @@ CarenResult CarenD3D11Device::CreateHullShader(
 	[Out] ICarenD3D11HullShader^% Param_Out_HullShader
 )
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	PVOID pShader = NULL;
-	SIZE_T SizeShader = static_cast<SIZE_T>(Param_TamanhoByteCode);
-	ID3D11ClassLinkage* pLinkage = NULL;
-	ID3D11HullShader* pHullShader = NULL;
-
-	//Obtém o ponteiro para o sombreador compilado.
-	Resultado = Param_ShaderByteCode->RecuperarPonteiro(&pShader);
-
-	//Verifica se obteve com sucesso
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//O ponteiro para o sombreador é invalido
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Veririfica se forneceu o Class Linkage
-	if (ObjetoGerenciadoValido(Param_Linkage))
-	{
-		//Obtém um ponteiro para a interface.
-		Resultado = Param_Linkage->RecuperarPonteiro((LPVOID*)&pLinkage);
-	}
-
-	//Verifica se obteve com sucesso
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//O ponteiro para o sombreador é invalido
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->CreateHullShader(pShader, SizeShader, ObjetoValido(pLinkage) ? pLinkage : NULL, &pHullShader);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria a interface do parametro que vai ser retornada ao usuário
-	Param_Out_HullShader = gcnew CarenD3D11HullShader();
-
-	//Define o ponteiro de trabalho
-	Param_Out_HullShader->AdicionarPonteiro(pHullShader);
-
-
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11Device::CreateHullShader(PonteiroTrabalho,
+		Param_ShaderByteCode,
+		Param_TamanhoByteCode,
+		Param_Linkage,
+		Param_Out_HullShader
+	);
 }
 
 /// <summary>
@@ -1704,80 +739,21 @@ Done:;
 /// <param name="Param_TamanhoByteCode">Tamanho do sombreador compilado.</param>
 /// <param name="Param_Out_InputLayout">Recebe a interface do Input Layout.</param>
 CarenResult CarenD3D11Device::CreateInputLayout(
-					cli::array<Estruturas::CA_D3D11_INPUT_ELEMENT_DESC^>^ Param_ArrayTiposDadosEntrada, 
-					UInt32 Param_CountElementos, 
-					ICaren^ Param_ShaderByteCode, 
-					UInt64 Param_TamanhoByteCode,
-					[Out] ICarenD3D11InputLayout^% Param_Out_InputLayout
-				)
+	cli::array<Estruturas::CA_D3D11_INPUT_ELEMENT_DESC^>^ Param_ArrayTiposDadosEntrada,
+	UInt32 Param_CountElementos,
+	ICaren^ Param_ShaderByteCode,
+	UInt64 Param_TamanhoByteCode,
+	[Out] ICarenD3D11InputLayout^% Param_Out_InputLayout
+)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	D3D11_INPUT_ELEMENT_DESC* pArrayDesc = CriarMatrizEstruturas<D3D11_INPUT_ELEMENT_DESC>(Param_CountElementos);
-	LPVOID pShaderByteCode = NULL;
-	SIZE_T SizeByteCode = static_cast<SIZE_T>(Param_TamanhoByteCode);
-	ID3D11InputLayout* pInterfaceReturn = NULL;
-
-	//Obtém o ponteiro para o Shader Compilado.
-	Param_ShaderByteCode->RecuperarPonteiro(&pShaderByteCode);
-
-	//Converte as estruturas da matriz gerenciada para a nativa.
-	for (UINT32 i = 0; i < Param_CountElementos; i++)
-	{
-		//Converte e define a estrutura no array nativo.
-		pArrayDesc[i] = *Util.ConverterD3D11_INPUT_ELEMENT_DESCManaged_ToUnManaged(Param_ArrayTiposDadosEntrada[i]);
-	}
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->CreateInputLayout(pArrayDesc, Param_CountElementos, pShaderByteCode, SizeByteCode, &pInterfaceReturn);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria a interface que vai ser retornada ao usuário.
-	Param_Out_InputLayout = gcnew CarenD3D11InputLayout();
-
-	//Define o ponteiro de trabalho
-	Param_Out_InputLayout->AdicionarPonteiro(pInterfaceReturn);
-
-
-
-Done:;
-	//Verifica se o array de matriz é valido e libera a memoria para ele.
-	if (ObjetoValido(pArrayDesc))
-	{
-		//Libera a memoria das strings que contém em cada estrutura.
-		for (UINT32 i = 0; i < Param_CountElementos; i++)
-		{
-			//Libera a memoria para a string.
-			delete pArrayDesc[i].SemanticName;
-		}
-
-		//Libera a memoria geral do array.
-		DeletarMatrizEstruturasSafe(&pArrayDesc);
-	}
-	
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11Device::CreateInputLayout(PonteiroTrabalho,
+		Param_ArrayTiposDadosEntrada,
+		Param_CountElementos,
+		Param_ShaderByteCode,
+		Param_TamanhoByteCode,
+		Param_Out_InputLayout
+	);
 }
 
 /// <summary>
@@ -1789,112 +765,20 @@ Done:;
 /// <param name="Param_ValidarParametros">Defina True para validar os outros parmetros. Param_Out_PixelShader retorna NULL se esse paramêtro for verdadeiro.</param>
 /// <param name="Param_Out_PixelShader">Recebe a interface do Hull Shader.</param>
 CarenResult CarenD3D11Device::CreatePixelShader(
-					ICaren^ Param_ShaderByteCode,
-					UInt64 Param_TamanhoByteCode,
-					ICarenD3D11ClassLinkage^ Param_Linkage,
-					Boolean Param_ValidarParametros,
-					[Out] ICarenD3D11PixelShader^% Param_Out_PixelShader)
+	ICaren^ Param_ShaderByteCode,
+	UInt64 Param_TamanhoByteCode,
+	ICarenD3D11ClassLinkage^ Param_Linkage,
+	Boolean Param_ValidarParametros,
+	[Out] ICarenD3D11PixelShader^% Param_Out_PixelShader)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	PVOID pShader = NULL;
-	SIZE_T SizeShader = static_cast<SIZE_T>(Param_TamanhoByteCode);
-	ID3D11ClassLinkage* pLinkage = NULL;
-	ID3D11PixelShader* pPixelShader = NULL;
-
-	//Obtém o ponteiro para o sombreador compilado.
-	Resultado = Param_ShaderByteCode->RecuperarPonteiro(&pShader);
-
-	//Verifica se obteve com sucesso
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//O ponteiro para o sombreador é invalido
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Veririfica se forneceu o Class Linkage
-	if (ObjetoGerenciadoValido(Param_Linkage))
-	{
-		//Obtém um ponteiro para a interface.
-		Resultado = Param_Linkage->RecuperarPonteiro((LPVOID*)&pLinkage);
-	}
-
-	//Verifica se obteve com sucesso
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//O ponteiro para o sombreador é invalido
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Verifica se só vai validar os parametros
-	//E chama a função corretamente para cada ocasião
-	if (Param_ValidarParametros)
-	{
-		//Só está validando os parametros, portanto, a interface de retorno é NULA.
-
-		//Chama o método para realizar a operação.
-		Hr = PonteiroTrabalho->CreatePixelShader(pShader, SizeShader, ObjetoValido(pLinkage) ? pLinkage : NULL, NULL);
-	}
-	else
-	{
-		//Não está validando os parametros, portanto, a interface de retorno não é NULA.
-
-		//Chama o método para realizar a operação.
-		Hr = PonteiroTrabalho->CreatePixelShader(pShader, SizeShader, ObjetoValido(pLinkage) ? pLinkage : NULL, &pPixelShader);
-	}
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-	//Verifica se só estava validando os parametros
-	//Se sim, define SS_FALSE e pula para Done.
-	if (Param_ValidarParametros)
-	{
-		//Define SS_FALSE como é necessário e não retorna nada para o usuario.
-
-		//Define SS_FALSE.
-		Resultado.AdicionarCodigo(ResultCode::SS_FALSE, false);
-
-		//Sai do método
-		goto Done;
-	}
-
-
-
-
-	//Cria a interface do parametro que vai ser retornada ao usuário
-	Param_Out_PixelShader = gcnew CarenD3D11PixelShader();
-
-	//Define o ponteiro de trabalho
-	Param_Out_PixelShader->AdicionarPonteiro(pPixelShader);
-
-
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11Device::CreatePixelShader(PonteiroTrabalho,
+		Param_ShaderByteCode,
+		Param_TamanhoByteCode,
+		Param_Linkage,
+		Param_ValidarParametros,
+		Param_Out_PixelShader
+	);
 }
 
 /// <summary>
@@ -1902,54 +786,15 @@ Done:;
 /// </summary>
 /// <param name="Param_DescPredicado">Ponteiro para uma descrição de consulta onde o tipo de consulta deve ser uma D3D11_QUERY_SO_OVERFLOW_PREDICATE ou D3D11_QUERY_OCCLUSION_PREDICATE</param>
 /// <param name="Param_Out_Predicado">Recebe a interface do Predicado criado.</param>
-CarenResult CarenD3D11Device::CriarPredicado(
-					Estruturas::CA_D3D11_QUERY_DESC^% Param_DescPredicado, 
-					[Out] ICarenD3D11Predicate^% Param_Out_Predicado)
+CarenResult CarenD3D11Device::CreatePredicate(
+	Estruturas::CA_D3D11_QUERY_DESC^% Param_DescPredicado,
+	[Out] ICarenD3D11Predicate^% Param_Out_Predicado)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	D3D11_QUERY_DESC* pDesc = NULL;
-	ID3D11Predicate* pInterfaceReturn = NULL;
-
-	//Converte a estrutura.
-	pDesc = Util.ConverterD3D11_QUERY_DESCManaged_ToUnManaged(Param_DescPredicado);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->CreatePredicate(pDesc, &pInterfaceReturn);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria a interface a ser retornada
-	Param_Out_Predicado = gcnew CarenD3D11Predicate();
-
-	//Define o ponteiro de trabalho
-	Param_Out_Predicado->AdicionarPonteiro(pInterfaceReturn);
-
-Done:;
-	//Deleta a memoria para a estrutura se ela for valida
-	DeletarEstruturaSafe(&pDesc);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11Device::CreatePredicate(PonteiroTrabalho,
+		Param_DescPredicado,
+		Param_Out_Predicado
+	);
 }
 
 /// <summary>
@@ -1958,53 +803,14 @@ Done:;
 /// <param name="Param_DescQuery">Uma descrição da interface de consulta a ser criada.</param>
 /// <param name="Param_Out_Query">Recebe a interface de consulta criada.</param>
 CarenResult CarenD3D11Device::CreateQuery(
-					Estruturas::CA_D3D11_QUERY_DESC^% Param_DescQuery, 
-					[Out] ICarenD3D11Query^% Param_Out_Query)
+	Estruturas::CA_D3D11_QUERY_DESC^% Param_DescQuery,
+	[Out] ICarenD3D11Query^% Param_Out_Query)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	D3D11_QUERY_DESC* pDesc = NULL;
-	ID3D11Query* pInterfaceReturn = NULL;
-
-	//Converte a estrutura.
-	pDesc = Util.ConverterD3D11_QUERY_DESCManaged_ToUnManaged(Param_DescQuery);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->CreateQuery(pDesc, &pInterfaceReturn);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria a interface a ser retornada
-	Param_Out_Query = gcnew CarenD3D11Query();
-
-	//Define o ponteiro de trabalho
-	Param_Out_Query->AdicionarPonteiro(pInterfaceReturn);
-
-Done:;
-	//Deleta a memoria para a estrutura se ela for valida
-	DeletarEstruturaSafe(&pDesc);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11Device::CreateQuery(PonteiroTrabalho,
+		Param_DescQuery,
+		Param_Out_Query
+	);
 }
 
 /// <summary>
@@ -2013,55 +819,14 @@ Done:;
 /// <param name="Param_DescRasterizador">Uma estrutura com a descrição do estado do rasterizador.</param>
 /// <param name="Param_Out_Rasterizador">Recebe a interface de Rasterização criada.</param>
 CarenResult CarenD3D11Device::CreateRasterizerState(
-					Estruturas::CA_D3D11_RASTERIZER_DESC^% Param_DescRasterizador, 
-					[Out] ICarenD3D11RasterizerState^% Param_Out_Rasterizador)
+	Estruturas::CA_D3D11_RASTERIZER_DESC^% Param_DescRasterizador,
+	[Out] ICarenD3D11RasterizerState^% Param_Out_Rasterizador)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	D3D11_RASTERIZER_DESC* pDesc = NULL;
-	ID3D11RasterizerState* pInterfaceReturn = NULL;
-
-	//Converte a estrutura.
-	pDesc = Util.ConverterD3D11_RASTERIZER_DESCManaged_ToUnManaged(Param_DescRasterizador);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->CreateRasterizerState(pDesc, &pInterfaceReturn);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria a interface que será retornada
-	Param_Out_Rasterizador = gcnew CarenD3D11RasterizerState();
-
-	//Define o ponteiro de trabalho
-	Param_Out_Rasterizador->AdicionarPonteiro(pInterfaceReturn);
-
-
-
-Done:;
-	//Deleta a memoria para a estrutua se ela for valida
-	DeletarEstruturaSafe(&pDesc);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11Device::CreateRasterizerState(PonteiroTrabalho,
+		Param_DescRasterizador,
+		Param_Out_Rasterizador
+	);
 }
 
 /// <summary>
@@ -2073,99 +838,18 @@ Done:;
 /// <param name="Param_ValidarParametros">Defina True para validar os outros parmetros. Param_Out_ViewRender retorna NULL se esse paramêtro for verdadeiro.</param>
 /// <param name="Param_Out_ViewRender">Recebe a interface do visualizador de render.</param>
 CarenResult CarenD3D11Device::CreateRenderTargetView(
-					ICarenD3D11Resource^ Param_Resource, 
-					Estruturas::CA_D3D11_RENDER_TARGET_VIEW_DESC^ Param_DescRender,
-					Boolean Param_ValidarParametros,
-					[Out] ICarenD3D11RenderTargetView^% Param_Out_ViewRender)
+	ICarenD3D11Resource^ Param_Resource,
+	Estruturas::CA_D3D11_RENDER_TARGET_VIEW_DESC^ Param_DescRender,
+	Boolean Param_ValidarParametros,
+	[Out] ICarenD3D11RenderTargetView^% Param_Out_ViewRender)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	ID3D11Resource* pRecurso = NULL;
-	D3D11_RENDER_TARGET_VIEW_DESC* pDesc = NULL;
-	ID3D11RenderTargetView* pInterfaceReturn = NULL;
-
-	//Obtém a interface de recurso
-	Resultado = Param_Resource->RecuperarPonteiro((LPVOID*)&pRecurso);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falha.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Verifica se forneceu uma estrutura.
-	if (ObjetoGerenciadoValido(Param_DescRender))
-	{
-		//Converte a estrutura.
-		pDesc = Util.ConverterD3D11_RENDER_TARGET_VIEW_DESCManaged_ToUnManaged(Param_DescRender);
-	}
-
-	//Verifica como vai ser chamado a função do método.
-	if (Param_ValidarParametros)
-	{
-		//Só está validando os parametros.
-		//Sendo assm, uma interface não será retornada e deve ser definida como NULL.
-		Hr = PonteiroTrabalho->CreateRenderTargetView(pRecurso, pDesc? pDesc: NULL, NULL);
-	}
-	else
-	{
-		//Não está validando os parametros.
-		//Sendo assim, deve esperar que uma interface seja retornada.
-		Hr = PonteiroTrabalho->CreateRenderTargetView(pRecurso, pDesc ? pDesc : NULL, &pInterfaceReturn);
-	}
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-	//Verifica se só estava validando os parametros
-	//Se sim, define SS_FALSE e pula para Done.
-	if (Param_ValidarParametros)
-	{
-		//Define SS_FALSE como é necessário e não retorna nada para o usuario.
-
-		//Define SS_FALSE.
-		Resultado.AdicionarCodigo(ResultCode::SS_FALSE, false);
-
-		//Sai do método
-		goto Done;
-	}
-
-
-	//Cria a interface que vai ser retornada
-	Param_Out_ViewRender = gcnew CarenD3D11RenderTargetView();
-
-	//Chama o método para definir o ponteiro de trabalho
-	Param_Out_ViewRender->AdicionarPonteiro(pInterfaceReturn);
-
-
-
-Done:;
-	//Deleta a memoria para a estrutua se ela for valida
-	DeletarEstruturaSafe(&pDesc);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11Device::CreateRenderTargetView(PonteiroTrabalho,
+		Param_Resource,
+		Param_DescRender,
+		Param_ValidarParametros,
+		Param_Out_ViewRender
+	);
 }
 
 /// <summary>
@@ -2174,55 +858,16 @@ Done:;
 /// <param name="Param_DescSampler">Uma descrição do estado do amostrador</param>
 /// <param name="Param_Out_SamplerState">Recebe a interface do Sampler Sate.</param>
 CarenResult CarenD3D11Device::CreateSamplerState(
-					Estruturas::CA_D3D11_SAMPLER_DESC^% Param_DescSampler, 
-					[Out] ICarenD3D11SamplerState^% Param_Out_SamplerState)
+	Estruturas::CA_D3D11_SAMPLER_DESC^% Param_DescSampler,
+	[Out] ICarenD3D11SamplerState^% Param_Out_SamplerState)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	D3D11_SAMPLER_DESC* pDesc;
-	ID3D11SamplerState* pInterfaceReturn = NULL;
-
-	//Converte a estrutura
-	pDesc = Util.ConverterD3D11_SAMPLER_DESCManaged_ToUnManaged(Param_DescSampler);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->CreateSamplerState(pDesc, &pInterfaceReturn);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria a interface que será retornada
-	Param_Out_SamplerState = gcnew CarenD3D11SamplerState();
-	
-	//Define o ponteiro de trabalho
-	Param_Out_SamplerState->AdicionarPonteiro(pInterfaceReturn);
-
-Done:;
-	//Deleta a memoria para a estrutura se ela for valida
-	DeletarEstruturaSafe(&pDesc);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11Device::CreateSamplerState(PonteiroTrabalho,
+		Param_DescSampler,
+		Param_Out_SamplerState
+	);
 }
-																
+
 /// <summary>
 /// (CreateShaderResourceView) - Crie uma exibição de sombreador-recurso para acessar dados em um recurso.
 /// </summary>
@@ -2232,97 +877,18 @@ Done:;
 /// <param name="Param_ValidarParametros">Defina True para validar os outros parmetros. Param_Out_ShaderView retorna NULL se esse paramêtro for verdadeiro.</param>
 /// <param name="Param_Out_ShaderView">Recebe a interface para o visualizador de Shader.</param>
 CarenResult CarenD3D11Device::CreateShaderResourceView(
-					ICarenD3D11Resource^ Param_Recurso, 
-					Estruturas::CA_D3D11_SHADER_RESOURCE_VIEW_DESC^% Param_DescExbi,
-					Boolean Param_ValidarParametros,
-					[Out] ICarenD3D11ShaderResourceView^% Param_Out_ShaderView)
+	ICarenD3D11Resource^ Param_Recurso,
+	Estruturas::CA_D3D11_SHADER_RESOURCE_VIEW_DESC^% Param_DescExbi,
+	Boolean Param_ValidarParametros,
+	[Out] ICarenD3D11ShaderResourceView^% Param_Out_ShaderView)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	ID3D11Resource* pRecurso = NULL;
-	D3D11_SHADER_RESOURCE_VIEW_DESC* pDesc = NULL;
-	ID3D11ShaderResourceView* pInterfaceReturn = NULL;
-
-	//Obtém a interface de recurso
-	Resultado = Param_Recurso->RecuperarPonteiro((LPVOID*)&pRecurso);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falha.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Verifica se forneceu uma estrutura.
-	if (ObjetoGerenciadoValido(Param_DescExbi))
-	{
-		//Converte a estrutura.
-		pDesc = Util.ConverterD3D11_SHADER_RESOURCE_VIEW_DESCManaged_ToUnManaged(Param_DescExbi);
-	}
-
-	//Verifica como vai ser chamado a função do método.
-	if (Param_ValidarParametros)
-	{
-		//Só está validando os parametros.
-		//Sendo assm, uma interface não será retornada e deve ser definida como NULL.
-		Hr = PonteiroTrabalho->CreateShaderResourceView(pRecurso, pDesc? pDesc: NULL, NULL);
-	}
-	else
-	{
-		//Não está validando os parametros.
-		//Sendo assim, deve esperar que uma interface seja retornada.
-		Hr = PonteiroTrabalho->CreateShaderResourceView(pRecurso, pDesc ? pDesc : NULL, &pInterfaceReturn);
-	}
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-	//Verifica se só estava validando os parametros
-	//Se sim, define SS_FALSE e pula para Done.
-	if (Param_ValidarParametros)
-	{
-		//Define SS_FALSE como é necessário e não retorna nada para o usuario.
-
-		//Define SS_FALSE.
-		Resultado.AdicionarCodigo(ResultCode::SS_FALSE, false);
-
-		//Sai do método
-		goto Done;
-	}
-
-
-	//Cria a interface que vai ser retornada
-	Param_Out_ShaderView = gcnew CarenD3D11ShaderResourceView();
-
-	//Chama o método para definir o ponteiro de trabalho
-	Param_Out_ShaderView->AdicionarPonteiro(pInterfaceReturn);
-
-Done:;
-	//Deleta a memoria para a estrutura se ela for valida
-	DeletarEstruturaSafe(&pDesc);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11Device::CreateShaderResourceView(PonteiroTrabalho,
+		Param_Recurso,
+		Param_DescExbi,
+		Param_ValidarParametros,
+		Param_Out_ShaderView
+	);
 }
 
 /// <summary>
@@ -2338,104 +904,20 @@ Done:;
 /// <param name="Param_ValidarParametros">Defina True para validar os outros parmetros. Param_Out_Textura1D retorna NULL se esse paramêtro for verdadeiro.</param>
 /// <param name="Param_Out_Textura1D">Recebe a interface que contém o buffer da interface de Textura 1D.</param>
 CarenResult CarenD3D11Device::CreateTexture1D(
-					Estruturas::CA_D3D11_TEXTURE1D_DESC^% Param_DescTextura1D, 
-					cli::array<Estruturas::CA_D3D11_SUBRESOURCE_DATA^>^ Param_ArrayDescSubRecursos,
-					UInt32 Param_TamanhoArraySubRecursos,
-					Boolean Param_ValidarParametros,
-					[Out] ICarenD3D11Texture1D^% Param_Out_Textura1D)
+	Estruturas::CA_D3D11_TEXTURE1D_DESC^% Param_DescTextura1D,
+	cli::array<Estruturas::CA_D3D11_SUBRESOURCE_DATA^>^ Param_ArrayDescSubRecursos,
+	UInt32 Param_TamanhoArraySubRecursos,
+	Boolean Param_ValidarParametros,
+	[Out] ICarenD3D11Texture1D^% Param_Out_Textura1D)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	D3D11_TEXTURE1D_DESC* pDesc = NULL;
-	D3D11_SUBRESOURCE_DATA* pArraySubresourceData = NULL;
-	ID3D11Texture1D* pInterfaceReturn = NULL;
-
-	//Converte a estrutura de descrição da textura
-	pDesc = Util.ConverterD3D11_TEXTURE1D_DESCManaged_ToUnManaged(Param_DescTextura1D);
-
-	//Verfica se foi fornecido um array com os dados de subrecursos
-	if(ObjetoGerenciadoValido(Param_ArrayDescSubRecursos))
-	{ 
-		//Cria um array com a quantidade informada.
-		pArraySubresourceData = CriarMatrizEstruturas<D3D11_SUBRESOURCE_DATA>(Param_TamanhoArraySubRecursos);
-
-		//Faz um for para converter todas as estruturas.
-		for (UINT32 i = 0; i < Param_TamanhoArraySubRecursos; i++)
-		{
-			//Converte a estrutura e define no array nativo.
-			pArraySubresourceData[i] = *Util.ConverterD3D11_SUBRESOURCE_DATAManaged_ToUnmanaged(Param_ArrayDescSubRecursos[i]);
-		}
-	}
-
-	//Verifica se só vai validar os parametros
-	//E chama a função corretamente para cada ocasião
-	if (Param_ValidarParametros)
-	{
-		//Só está validando os parametros, portanto, a interface de retorno é NULA.
-
-		//Chama o método para realizar a operação.
-		Hr = PonteiroTrabalho->CreateTexture1D(pDesc, pArraySubresourceData ? pArraySubresourceData : NULL, NULL);
-	}
-	else
-	{
-		//Não está validando os parametros, portanto, a interface de retorno não é NULA.
-
-		//Chama o método para realizar a operação.
-		Hr = PonteiroTrabalho->CreateTexture1D(pDesc, pArraySubresourceData ? pArraySubresourceData : NULL, &pInterfaceReturn);
-	}
-
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-	//Verifica se só estava validando os parametros
-	//Se sim, define SS_FALSE e pula para Done.
-	if (Param_ValidarParametros)
-	{
-		//Define SS_FALSE como é necessário e não retorna nada para o usuario.
-
-		//Define SS_FALSE.
-		Resultado.AdicionarCodigo(ResultCode::SS_FALSE, false);
-
-		//Sai do método
-		Sair;
-	}
-
-
-
-	//Cria a interface do parametro que vai ser retornada ao usuário
-	Param_Out_Textura1D = gcnew CarenD3D11Texture1D();
-
-	//Define o ponteiro de trabalho
-	Param_Out_Textura1D->AdicionarPonteiro(pInterfaceReturn);
-
-
-
-Done:;
-	//Deleta as esturturas se elas forem validas
-	DeletarEstruturaSafe(&pDesc);
-	DeletarMatrizEstruturasSafe(&pArraySubresourceData);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11Device::CreateTexture1D(PonteiroTrabalho,
+		Param_DescTextura1D,
+		Param_ArrayDescSubRecursos,
+		Param_TamanhoArraySubRecursos,
+		Param_ValidarParametros,
+		Param_Out_Textura1D
+	);
 }
 
 /// <summary>
@@ -2451,104 +933,20 @@ Done:;
 /// <param name="Param_ValidarParametros">Defina True para validar os outros parmetros. Param_Out_Textura2D retorna NULL se esse paramêtro for verdadeiro.</param>
 /// <param name="Param_Out_Textura2D">Recebe a interface que contém o buffer da interface de Textura 2D.</param>
 CarenResult CarenD3D11Device::CreateTexture2D(
-					Estruturas::CA_D3D11_TEXTURE2D_DESC^% Param_DescTextura2D,
-					cli::array<Estruturas::CA_D3D11_SUBRESOURCE_DATA^>^ Param_ArrayDescSubRecursos,
-					UInt32 Param_TamanhoArraySubRecursos,
-					Boolean Param_ValidarParametros,
-					[Out] ICarenD3D11Texture2D^% Param_Out_Textura2D)
+	Estruturas::CA_D3D11_TEXTURE2D_DESC^% Param_DescTextura2D,
+	cli::array<Estruturas::CA_D3D11_SUBRESOURCE_DATA^>^ Param_ArrayDescSubRecursos,
+	UInt32 Param_TamanhoArraySubRecursos,
+	Boolean Param_ValidarParametros,
+	[Out] ICarenD3D11Texture2D^% Param_Out_Textura2D)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	D3D11_TEXTURE2D_DESC* pDesc = NULL;
-	D3D11_SUBRESOURCE_DATA* pArraySubresourceData = NULL;
-	ID3D11Texture2D* pInterfaceReturn = NULL;
-
-	//Converte a estrutura de descrição da textura
-	pDesc = Util.ConverterD3D11_TEXTURE2D_DESCManaged_ToUnManaged(Param_DescTextura2D);
-
-	//Verfica se foi fornecido um array com os dados de subrecursos
-	if (ObjetoGerenciadoValido(Param_ArrayDescSubRecursos))
-	{
-		//Cria um array com a quantidade informada.
-		pArraySubresourceData = CriarMatrizEstruturas<D3D11_SUBRESOURCE_DATA>(Param_TamanhoArraySubRecursos);
-
-		//Faz um for para converter todas as estruturas.
-		for (UINT32 i = 0; i < Param_TamanhoArraySubRecursos; i++)
-		{
-			//Converte a estrutura e define no array nativo.
-			pArraySubresourceData[i] = *Util.ConverterD3D11_SUBRESOURCE_DATAManaged_ToUnmanaged(Param_ArrayDescSubRecursos[i]);
-		}
-	}
-
-	//Verifica se só vai validar os parametros
-	//E chama a função corretamente para cada ocasião
-	if (Param_ValidarParametros)
-	{
-		//Só está validando os parametros, portanto, a interface de retorno é NULA.
-
-		//Chama o método para realizar a operação.
-		Hr = PonteiroTrabalho->CreateTexture2D(pDesc, pArraySubresourceData ? pArraySubresourceData : NULL, NULL);
-	}
-	else
-	{
-		//Não está validando os parametros, portanto, a interface de retorno não é NULA.
-
-		//Chama o método para realizar a operação.
-		Hr = PonteiroTrabalho->CreateTexture2D(pDesc, pArraySubresourceData ? pArraySubresourceData : NULL, &pInterfaceReturn);
-	}
-
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-	//Verifica se só estava validando os parametros
-	//Se sim, define SS_FALSE e pula para Done.
-	if (Param_ValidarParametros)
-	{
-		//Define SS_FALSE como é necessário e não retorna nada para o usuario.
-
-		//Define SS_FALSE.
-		Resultado.AdicionarCodigo(ResultCode::SS_FALSE, false);
-
-		//Sai do método
-		Sair;
-	}
-
-
-
-	//Cria a interface do parametro que vai ser retornada ao usuário
-	Param_Out_Textura2D = gcnew CarenD3D11Texture2D();
-
-	//Define o ponteiro de trabalho
-	Param_Out_Textura2D->AdicionarPonteiro(pInterfaceReturn);
-
-
-
-Done:;
-	//Deleta as esturturas se elas forem validas
-	DeletarEstruturaSafe(&pDesc);
-	DeletarMatrizEstruturasSafe(&pArraySubresourceData);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11Device::CreateTexture2D(PonteiroTrabalho,
+		Param_DescTextura2D,
+		Param_ArrayDescSubRecursos,
+		Param_TamanhoArraySubRecursos,
+		Param_ValidarParametros,
+		Param_Out_Textura2D
+	);
 }
 
 /// <summary>
@@ -2564,104 +962,20 @@ Done:;
 /// <param name="Param_ValidarParametros">Defina True para validar os outros parmetros. Param_Out_Textura3D retorna NULL se esse paramêtro for verdadeiro.</param>
 /// <param name="Param_Out_Textura3D">Recebe a interface que contém o buffer da interface de Textura 3D.</param>
 CarenResult CarenD3D11Device::CreateTexture3D(
-					Estruturas::CA_D3D11_TEXTURE3D_DESC^% Param_DescTextura3D,
-					cli::array<Estruturas::CA_D3D11_SUBRESOURCE_DATA^>^ Param_ArrayDescSubRecursos,
-					UInt32 Param_TamanhoArraySubRecursos,
-					Boolean Param_ValidarParametros,
-					[Out] ICarenD3D11Texture3D^% Param_Out_Textura3D)
+	Estruturas::CA_D3D11_TEXTURE3D_DESC^% Param_DescTextura3D,
+	cli::array<Estruturas::CA_D3D11_SUBRESOURCE_DATA^>^ Param_ArrayDescSubRecursos,
+	UInt32 Param_TamanhoArraySubRecursos,
+	Boolean Param_ValidarParametros,
+	[Out] ICarenD3D11Texture3D^% Param_Out_Textura3D)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	D3D11_TEXTURE3D_DESC* pDesc = NULL;
-	D3D11_SUBRESOURCE_DATA* pArraySubresourceData = NULL;
-	ID3D11Texture3D* pInterfaceReturn = NULL;
-
-	//Converte a estrutura de descrição da textura
-	pDesc = Util.ConverterD3D11_TEXTURE3D_DESCManaged_ToUnManaged(Param_DescTextura3D);
-
-	//Verfica se foi fornecido um array com os dados de subrecursos
-	if (ObjetoGerenciadoValido(Param_ArrayDescSubRecursos))
-	{
-		//Cria um array com a quantidade informada.
-		pArraySubresourceData = CriarMatrizEstruturas<D3D11_SUBRESOURCE_DATA>(Param_TamanhoArraySubRecursos);
-
-		//Faz um for para converter todas as estruturas.
-		for (UINT32 i = 0; i < Param_TamanhoArraySubRecursos; i++)
-		{
-			//Converte a estrutura e define no array nativo.
-			pArraySubresourceData[i] = *Util.ConverterD3D11_SUBRESOURCE_DATAManaged_ToUnmanaged(Param_ArrayDescSubRecursos[i]);
-		}
-	}
-
-	//Verifica se só vai validar os parametros
-	//E chama a função corretamente para cada ocasião
-	if (Param_ValidarParametros)
-	{
-		//Só está validando os parametros, portanto, a interface de retorno é NULA.
-
-		//Chama o método para realizar a operação.
-		Hr = PonteiroTrabalho->CreateTexture3D(pDesc, pArraySubresourceData ? pArraySubresourceData : NULL, NULL);
-	}
-	else
-	{
-		//Não está validando os parametros, portanto, a interface de retorno não é NULA.
-
-		//Chama o método para realizar a operação.
-		Hr = PonteiroTrabalho->CreateTexture3D(pDesc, pArraySubresourceData ? pArraySubresourceData : NULL, &pInterfaceReturn);
-	}
-
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-	//Verifica se só estava validando os parametros
-	//Se sim, define SS_FALSE e pula para Done.
-	if (Param_ValidarParametros)
-	{
-		//Define SS_FALSE como é necessário e não retorna nada para o usuario.
-
-		//Define SS_FALSE.
-		Resultado.AdicionarCodigo(ResultCode::SS_FALSE, false);
-
-		//Sai do método
-		Sair;
-	}
-
-
-
-	//Cria a interface do parametro que vai ser retornada ao usuário
-	Param_Out_Textura3D = gcnew CarenD3D11Texture3D();
-
-	//Define o ponteiro de trabalho
-	Param_Out_Textura3D->AdicionarPonteiro(pInterfaceReturn);
-
-
-
-Done:;
-	//Deleta as esturturas se elas forem validas
-	DeletarEstruturaSafe(&pDesc);
-	DeletarMatrizEstruturasSafe(&pArraySubresourceData);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11Device::CreateTexture3D(PonteiroTrabalho,
+		Param_DescTextura3D,
+		Param_ArrayDescSubRecursos,
+		Param_TamanhoArraySubRecursos,
+		Param_ValidarParametros,
+		Param_Out_Textura3D
+	);
 }
 
 /// <summary>
@@ -2672,73 +986,16 @@ Done:;
 /// visualização que acesse todo o recurso (usando o formato com o qual o recurso foi criado). </param>
 /// <param name="Param_Out_Interface">Recebe a interface do Recurso de acesso não ordenado.</param>
 CarenResult CarenD3D11Device::CreateUnorderedAccessView(
-					ICarenD3D11Resource^ Param_Recurso,
-					Estruturas::CA_D3D11_UNORDERED_ACCESS_VIEW_DESC^% Param_DescSombreador, 
-					[Out] ICarenD3D11UnorderedAccessView^% Param_Out_Interface)
+	ICarenD3D11Resource^ Param_Recurso,
+	Estruturas::CA_D3D11_UNORDERED_ACCESS_VIEW_DESC^% Param_DescSombreador,
+	[Out] ICarenD3D11UnorderedAccessView^% Param_Out_Interface)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	ID3D11Resource* pRecurso = NULL;
-	D3D11_UNORDERED_ACCESS_VIEW_DESC* pDesc = NULL;
-	ID3D11UnorderedAccessView* pInterfaceReturn = NULL;
-
-	//Obtém a interface de recurso
-	Resultado = Param_Recurso->RecuperarPonteiro((LPVOID*)&pRecurso);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falha.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Verifica se forneceu uma estrutura
-	if (ObjetoGerenciadoValido(Param_DescSombreador))
-	{
-		//Converte a estrutura.
-		pDesc = Util.ConverterD3D11_UNORDERED_ACCESS_VIEW_DESCManaged_ToUnManaged(Param_DescSombreador);
-	}
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->CreateUnorderedAccessView(pRecurso, pDesc? pDesc: NULL, &pInterfaceReturn);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria a interface que será retornada no parametro.
-	Param_Out_Interface = gcnew CarenD3D11UnorderedAccessView();
-
-	//Define o ponteiro de trabalho
-	Param_Out_Interface->AdicionarPonteiro(pInterfaceReturn);
-
-
-
-Done:;
-	//Libera a memoria para a estrutura
-	DeletarEstruturaSafe(&pDesc);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11Device::CreateUnorderedAccessView(PonteiroTrabalho,
+		Param_Recurso,
+		Param_DescSombreador,
+		Param_Out_Interface
+	);
 }
 
 /// <summary>
@@ -2750,112 +1007,20 @@ Done:;
 /// <param name="Param_ValidarParametros">Defina True para validar os outros parmetros. Param_Out_VertexShaderInterface retorna NULL se esse paramêtro for verdadeiro.</param>
 /// <param name="Param_Out_VertexShader">Recebe a interface do Vertex Shader.</param>
 CarenResult CarenD3D11Device::CreateVertexShader(
-					ICaren^ Param_ShaderByteCode,
-					UInt64 Param_TamanhoByteCode,
-					ICarenD3D11ClassLinkage^ Param_Linkage, 
-					Boolean Param_ValidarParametros,
-					[Out] ICarenD3D11VertexShader^% Param_Out_VertexShader)
+	ICaren^ Param_ShaderByteCode,
+	UInt64 Param_TamanhoByteCode,
+	ICarenD3D11ClassLinkage^ Param_Linkage,
+	Boolean Param_ValidarParametros,
+	[Out] ICarenD3D11VertexShader^% Param_Out_VertexShader)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	PVOID pShader = NULL;
-	SIZE_T SizeShader = static_cast<SIZE_T>(Param_TamanhoByteCode);
-	ID3D11ClassLinkage* pLinkage = NULL;
-	ID3D11VertexShader* pVertexShader = NULL;
-
-	//Obtém o ponteiro para o sombreador compilado.
-	Resultado = Param_ShaderByteCode->RecuperarPonteiro(&pShader);
-
-	//Verifica se obteve com sucesso
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//O ponteiro para o sombreador é invalido
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Veririfica se forneceu o Class Linkage
-	if (ObjetoGerenciadoValido(Param_Linkage))
-	{
-		//Obtém um ponteiro para a interface.
-		Resultado = Param_Linkage->RecuperarPonteiro((LPVOID*)&pLinkage);
-	}
-
-	//Verifica se obteve com sucesso
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//O ponteiro para o sombreador é invalido
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Verifica se só vai validar os parametros
-	//E chama a função corretamente para cada ocasião
-	if (Param_ValidarParametros)
-	{
-		//Só está validando os parametros, portanto, a interface de retorno é NULA.
-
-		//Chama o método para realizar a operação.
-		Hr = PonteiroTrabalho->CreateVertexShader(pShader, SizeShader, ObjetoValido(pLinkage) ? pLinkage : NULL, NULL);
-	}
-	else
-	{
-		//Não está validando os parametros, portanto, a interface de retorno não é NULA.
-
-		//Chama o método para realizar a operação.
-		Hr = PonteiroTrabalho->CreateVertexShader(pShader, SizeShader, ObjetoValido(pLinkage) ? pLinkage : NULL, &pVertexShader);
-	}
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-	//Verifica se só estava validando os parametros
-	//Se sim, define SS_FALSE e pula para Done.
-	if (Param_ValidarParametros)
-	{
-		//Define SS_FALSE como é necessário e não retorna nada para o usuario.
-
-		//Define SS_FALSE.
-		Resultado.AdicionarCodigo(ResultCode::SS_FALSE, false);
-
-		//Sai do método
-		goto Done;
-	}
-
-
-
-
-	//Cria a interface do parametro que vai ser retornada ao usuário
-	Param_Out_VertexShader = gcnew CarenD3D11VertexShader();
-
-	//Define o ponteiro de trabalho
-	Param_Out_VertexShader->AdicionarPonteiro(pVertexShader);
-
-
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11Device::CreateVertexShader(PonteiroTrabalho,
+		Param_ShaderByteCode,
+		Param_TamanhoByteCode,
+		Param_Linkage,
+		Param_ValidarParametros,
+		Param_Out_VertexShader
+	);
 }
 
 /// <summary>
@@ -2864,17 +1029,10 @@ Done:;
 /// <param name="Param_Out_Flags">Recebe um flags de bit a bits da enumerção (CA_D3D11_CREATE_DEVICE_FLAG) que contém o modo de criaçã do dispositivo.</param>
 CarenResult CarenD3D11Device::GetCreationFlags([Out] Enumeracoes::CA_D3D11_CREATE_DEVICE_FLAG% Param_Out_Flags)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Chama o método para realizar a operação.
-	Param_Out_Flags = static_cast<Enumeracoes::CA_D3D11_CREATE_DEVICE_FLAG>(PonteiroTrabalho->GetCreationFlags());
-
-	//Define sucesso por default a operação.
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11Device::GetCreationFlags(PonteiroTrabalho,
+		Param_Out_Flags
+	);
 }
 
 /// <summary>
@@ -2882,33 +1040,8 @@ CarenResult CarenD3D11Device::GetCreationFlags([Out] Enumeracoes::CA_D3D11_CREAT
 /// </summary>
 CarenResult CarenD3D11Device::GetDeviceRemovedReason()
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetDeviceRemovedReason();
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11Device::GetDeviceRemovedReason(PonteiroTrabalho);
 }
 
 /// <summary>
@@ -2918,17 +1051,10 @@ Done:;
 /// listados em D3D11_RAISE_FLAG. Um valor padrão de 0 significa que não há sinalizadores.</param>
 CarenResult CarenD3D11Device::GetExceptionMode([Out] Enumeracoes::CA_D3D11_RAISE_FLAG% Param_Out_Except)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Chama o método para realizar a operação.
-	Param_Out_Except = static_cast<Enumeracoes::CA_D3D11_RAISE_FLAG>(PonteiroTrabalho->GetExceptionMode());
-
-	//Define sucesso por default a operação.
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11Device::GetExceptionMode(PonteiroTrabalho,
+		Param_Out_Except
+	);
 }
 
 /// <summary>
@@ -2937,23 +1063,10 @@ CarenResult CarenD3D11Device::GetExceptionMode([Out] Enumeracoes::CA_D3D11_RAISE
 /// <param name="Param_Out_NivelRecurso">Recebe um flag de bits a bits de um ou mais sinlizadores de niveis de recuso do dispositivo de hardware.</param>
 CarenResult CarenD3D11Device::GetFeatureLevel([Out] Enumeracoes::CA_D3D_FEATURE_LEVEL% Param_Out_NivelRecurso)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	D3D_FEATURE_LEVEL NivelRecursoHardware;
-
-	//Chama o método para realizar a operação.
-	NivelRecursoHardware = PonteiroTrabalho->GetFeatureLevel();
-
-	//Define o nivel de recurso no parametro de saida
-	Param_Out_NivelRecurso = static_cast<Enumeracoes::CA_D3D_FEATURE_LEVEL>(NivelRecursoHardware);
-
-	//Define sucesso por default a operação.
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11Device::GetFeatureLevel(PonteiroTrabalho,
+		Param_Out_NivelRecurso
+	);
 }
 
 /// <summary>
@@ -2962,38 +1075,10 @@ CarenResult CarenD3D11Device::GetFeatureLevel([Out] Enumeracoes::CA_D3D_FEATURE_
 /// <param name="Param_Out_ImediateContextInterface">Recebe a interface do contexto do dispositivo.</param>
 CarenResult CarenD3D11Device::GetImmediateContext([Out] ICarenD3D11DeviceContext^% Param_Out_ImediateContextInterface)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	ID3D11DeviceContext* pContexto = NULL;
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->GetImmediateContext(&pContexto);
-
-	//Verifica se a operação obteve sucesso.
-	if (ObjetoValido(pContexto))
-	{
-		//Deixa o método continuar.
-	}
-	else
-	{
-		//Falha
-		Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria a interface que será retornada no parametro.
-	Param_Out_ImediateContextInterface = gcnew CarenD3D11DeviceContext();
-
-	//Define o ponteiro de trabalho
-	Param_Out_ImediateContextInterface->AdicionarPonteiro(pContexto);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11Device::GetImmediateContext(PonteiroTrabalho,
+		Param_Out_ImediateContextInterface
+	);
 }
 
 /// <summary>
@@ -3004,55 +1089,18 @@ Done:;
 /// <param name="Param_Out_TamanhoBufferSaida">Recebe o tamanho que total do buffer no parametro (Param_Out_Buffer).</param>
 /// <param name="Param_Out_Buffer">Recebe a interface que gerencia o buffer retornado.</param>
 CarenResult CarenD3D11Device::GetPrivateData(
-					String^ Param_Guid, 
-					UInt32 Param_TamanhoBuffer, 
-					[Out] UInt32% Param_Out_TamanhoBufferSaida, 
-					[Out] ICarenBuffer^% Param_Out_Buffer)
+	String^ Param_Guid,
+	UInt32 Param_TamanhoBuffer,
+	[Out] UInt32% Param_Out_TamanhoBufferSaida,
+	[Out] ICarenBuffer^% Param_Out_Buffer)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	GUID GuidBuffer = GUID_NULL;
-	UINT TamanhoBuffer = Param_TamanhoBuffer; //Define o tamanho do buffer que será retornado em (Param_Out_Buffer).
-	PBYTE pData = NULL;
-
-	//Cria o guid associado a interface.
-	GuidBuffer = Util.CreateGuidFromString(Param_Guid);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetPrivateData(GuidBuffer, &TamanhoBuffer, &pData);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria a interface que vai conter o ponteiro de dados.
-	Param_Out_Buffer = gcnew CarenBuffer();
-
-	//Define o ponteiro de dados na interface de buffer.
-	Param_Out_Buffer->CreateBuffer(IntPtr(pData), false, TamanhoBuffer, TamanhoBuffer);
-
-
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11Device::GetPrivateData(PonteiroTrabalho,
+		Param_Guid,
+		Param_TamanhoBuffer,
+		Param_Out_TamanhoBufferSaida,
+		Param_Out_Buffer
+	);
 }
 
 /// <summary>
@@ -3060,56 +1108,18 @@ Done:;
 /// </summary>
 /// <param name="Param_Handle">Um identificador de recurso.</param>
 /// <param name="Param_GuidInterface">O identificador globalmente exclusivo (GUID) para a interface do recurso.</param>
-/// <param name="Param_Out_InterfaceSolicitada">Recebe a interface do recurso que foi ganhado acesso.</param>
+/// <param name="Param_Out_InterfaceSolicitada">Recebe a interface do recurso que foi ganhado acesso. O usuário deve criar a interfaces antes de chamar este método.</param>
 CarenResult CarenD3D11Device::OpenSharedResource(
-					IntPtr Param_Handle, 
-					String^ Param_GuidInterface, 
-					ICaren^ Param_Out_InterfaceSolicitada)
+	IntPtr Param_Handle,
+	String^ Param_GuidInterface,
+	ICaren^ Param_Out_InterfaceSolicitada)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	HANDLE pHandle = NULL;
-	GUID GuidInterface = GUID_NULL;
-	LPVOID pInterface = NULL;
-
-	//Obtém a handle
-	pHandle = Util.ConverterIntPtrToHWND(Param_Handle);
-
-	//Cria o guid associado a interface.
-	GuidInterface = Util.CreateGuidFromString(Param_GuidInterface);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->OpenSharedResource(pHandle, GuidInterface, &pInterface);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-	//Define o ponteiro de trabalho
-	Param_Out_InterfaceSolicitada->AdicionarPonteiro(pInterface);
-
-
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11Device::OpenSharedResource(PonteiroTrabalho,
+		Param_Handle,
+		Param_GuidInterface,
+		Param_Out_InterfaceSolicitada
+	);
 }
 
 /// <summary>
@@ -3118,35 +1128,10 @@ Done:;
 /// <param name="Param_RaiseFlags">Os flags de modo de exceção.</param>
 CarenResult CarenD3D11Device::SetExceptionMode(UInt32 Param_RaiseFlags)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->SetExceptionMode(Param_RaiseFlags);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11Device::SetExceptionMode(PonteiroTrabalho,
+		Param_RaiseFlags
+	);
 }
 
 /// <summary>
@@ -3161,59 +1146,12 @@ CarenResult CarenD3D11Device::SetPrivateData(
 	UInt32 Param_TamanhoBuffer,
 	ICarenBuffer^ Param_Buffer)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	GUID GuidBuffer = GUID_NULL;
-	PBYTE pData = NULL;
-	IntPtr PonteiroDados = IntPtr::Zero;
-
-	//Cria o guid associado a interface.
-	GuidBuffer = Util.CreateGuidFromString(Param_Guid);
-
-	//Obtém o ponteiro para os dados.
-	Resultado = Param_Buffer->GetInternalPointer(PonteiroDados);
-
-	//Verifica se é valido
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou.. O buffer não é valido.
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Define o ponteiro de dados.
-	pData = (PBYTE)PonteiroDados.ToPointer();
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->SetPrivateData(GuidBuffer, Param_TamanhoBuffer, pData);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11Device::SetPrivateData(PonteiroTrabalho,
+		Param_Guid,
+		Param_TamanhoBuffer,
+		Param_Buffer
+	);
 }
 
 /// <summary>
@@ -3222,56 +1160,12 @@ Done:;
 /// <param name="Param_Guid">O Guid associado a interface a ser definida.</param>
 /// <param name="Param_Interface">Ponteiro para uma interface derivada de IUnknown para ser associado ao filho do dispositivo.</param>
 CarenResult CarenD3D11Device::SetPrivateDataInterface(
-	String^ Param_Guid, 
+	String^ Param_Guid,
 	ICaren^ Param_Interface)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	GUID GuidInterface = GUID_NULL;
-	IUnknown* pInterface = NULL;
-
-	//Cria o guid associado a interface.
-	GuidInterface = Util.CreateGuidFromString(Param_Guid);
-
-	//Obtém a interface 
-	Resultado = Param_Interface->RecuperarPonteiro((LPVOID*)&pInterface);
-
-	//Verifica se não falhou
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou.
-
-		//Sai do método.
-		Sair;
-	}
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->SetPrivateDataInterface(GuidInterface, pInterface);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11Device::SetPrivateDataInterface(PonteiroTrabalho,
+		Param_Guid,
+		Param_Interface
+	);
 }

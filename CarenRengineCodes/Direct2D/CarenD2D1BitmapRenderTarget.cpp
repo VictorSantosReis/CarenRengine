@@ -59,6 +59,7 @@ CarenResult CarenD2D1BitmapRenderTarget::AdicionarPonteiro(IntPtr Param_Ponteiro
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<ID2D1BitmapRenderTarget**>(p)));
 }
+
 /// <summary>
 /// Método responsável por adicionar um novo ponteiro nativo a classe atual.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -72,6 +73,7 @@ CarenResult CarenD2D1BitmapRenderTarget::AdicionarPonteiro(LPVOID Param_Ponteiro
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<ID2D1BitmapRenderTarget**>(p)));
 }
+
 /// <summary>
 /// Método responsável por recuperar o ponteiro atual da classe. Se o ponteiro não for valido, o método retornar ResultCode::ER_PONTEIRO.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -194,9 +196,6 @@ CarenResult CarenD2D1BitmapRenderTarget::GetBitmap([Out] ICarenD2D1Bitmap^% Para
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -302,9 +301,6 @@ CarenResult CarenD2D1BitmapRenderTarget::CreateBitmap(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -373,9 +369,6 @@ CarenResult CarenD2D1BitmapRenderTarget::CreateBitmap(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -463,9 +456,6 @@ CarenResult CarenD2D1BitmapRenderTarget::CreateBitmapBrush(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -538,9 +528,6 @@ CarenResult CarenD2D1BitmapRenderTarget::CreateBitmapBrush(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -618,9 +605,6 @@ CarenResult CarenD2D1BitmapRenderTarget::CreateBitmapBrush(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -703,9 +687,6 @@ CarenResult CarenD2D1BitmapRenderTarget::CreateBitmapFromWicBitmap(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -777,9 +758,6 @@ CarenResult CarenD2D1BitmapRenderTarget::CreateBitmapFromWicBitmap(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -854,9 +832,6 @@ CarenResult CarenD2D1BitmapRenderTarget::CreateCompatibleRenderTarget(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -901,9 +876,6 @@ CarenResult CarenD2D1BitmapRenderTarget::CreateCompatibleRenderTarget(ICaren^ Pa
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -954,9 +926,6 @@ CarenResult CarenD2D1BitmapRenderTarget::CreateCompatibleRenderTarget(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1010,9 +979,6 @@ CarenResult CarenD2D1BitmapRenderTarget::CreateCompatibleRenderTarget(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1071,9 +1037,6 @@ CarenResult CarenD2D1BitmapRenderTarget::CreateCompatibleRenderTarget(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1146,9 +1109,6 @@ CarenResult CarenD2D1BitmapRenderTarget::CreateGradientStopCollection(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1216,9 +1176,6 @@ CarenResult CarenD2D1BitmapRenderTarget::CreateGradientStopCollection(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1271,9 +1228,6 @@ CarenResult CarenD2D1BitmapRenderTarget::CreateLayer(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1317,9 +1271,6 @@ CarenResult CarenD2D1BitmapRenderTarget::CreateLayer([Out] ICarenD2D1Layer^% Par
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1383,9 +1334,6 @@ CarenResult CarenD2D1BitmapRenderTarget::CreateLinearGradientBrush(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1448,9 +1396,6 @@ CarenResult CarenD2D1BitmapRenderTarget::CreateLinearGradientBrush(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1494,9 +1439,6 @@ CarenResult CarenD2D1BitmapRenderTarget::CreateMesh([Out] ICarenD2D1Mesh^% Param
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1560,9 +1502,6 @@ CarenResult CarenD2D1BitmapRenderTarget::CreateRadialGradientBrush(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1624,9 +1563,6 @@ CarenResult CarenD2D1BitmapRenderTarget::CreateRadialGradientBrush(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1692,9 +1628,6 @@ CarenResult CarenD2D1BitmapRenderTarget::CreateSharedBitmap(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1751,9 +1684,6 @@ CarenResult CarenD2D1BitmapRenderTarget::CreateSolidColorBrush(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1806,9 +1736,6 @@ CarenResult CarenD2D1BitmapRenderTarget::CreateSolidColorBrush(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -2403,9 +2330,6 @@ CarenResult CarenD2D1BitmapRenderTarget::EndDraw(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -2739,9 +2663,6 @@ CarenResult CarenD2D1BitmapRenderTarget::Flush(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;

@@ -58,6 +58,7 @@ CarenResult CarenMFCapturePreviewSink::AdicionarPonteiro(IntPtr Param_PonteiroNa
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IMFCapturePreviewSink**>(p)));
 }
+
 /// <summary>
 /// Método responsável por adicionar um novo ponteiro nativo a classe atual.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -71,6 +72,7 @@ CarenResult CarenMFCapturePreviewSink::AdicionarPonteiro(LPVOID Param_PonteiroNa
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IMFCapturePreviewSink**>(p)));
 }
+
 /// <summary>
 /// Método responsável por recuperar o ponteiro atual da classe. Se o ponteiro não for valido, o método retornar ResultCode::ER_PONTEIRO.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -191,9 +193,6 @@ CarenResult CarenMFCapturePreviewSink::GetMirrorState(OutParam Boolean% Param_Ou
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -235,9 +234,6 @@ OutParam UInt32% Param_Out_RotacaoValue)
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -281,9 +277,6 @@ CarenResult CarenMFCapturePreviewSink::SetCustomSink(ICarenMFMediaSink^ Param_Me
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -316,9 +309,6 @@ CarenResult CarenMFCapturePreviewSink::SetMirrorState(Boolean Param_MirrorState)
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -355,9 +345,6 @@ CarenResult CarenMFCapturePreviewSink::SetRenderHandle(IntPtr Param_HandleWindow
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -398,9 +385,6 @@ CarenResult CarenMFCapturePreviewSink::SetRenderSurface(ICaren^ Param_Surface)
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -436,9 +420,6 @@ UInt32 Param_RotacaoValue)
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -482,9 +463,6 @@ ICarenMFCaptureEngineOnSampleCallback^ Param_Callback)
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -539,9 +517,6 @@ CA_MFARGB^ Param_CorBorda)
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -604,9 +579,6 @@ CarenResult CarenMFCapturePreviewSink::AddStream(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -647,9 +619,6 @@ CarenResult CarenMFCapturePreviewSink::GetOutputMediaType(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -709,9 +678,6 @@ CarenResult CarenMFCapturePreviewSink::GetService(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -747,9 +713,6 @@ CarenResult CarenMFCapturePreviewSink::Prepare()
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -781,9 +744,6 @@ CarenResult CarenMFCapturePreviewSink::RemoveAllStreams()
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;

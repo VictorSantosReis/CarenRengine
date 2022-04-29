@@ -60,6 +60,7 @@ CarenResult CarenDXGISwapChain2::AdicionarPonteiro(IntPtr Param_PonteiroNativo)
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IDXGISwapChain2**>(p)));
 }
+
 /// <summary>
 /// Método responsável por adicionar um novo ponteiro nativo a classe atual.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -73,6 +74,7 @@ CarenResult CarenDXGISwapChain2::AdicionarPonteiro(LPVOID Param_PonteiroNativo)
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IDXGISwapChain2**>(p)));
 }
+
 /// <summary>
 /// Método responsável por recuperar o ponteiro atual da classe. Se o ponteiro não for valido, o método retornar ResultCode::ER_PONTEIRO.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -230,9 +232,6 @@ CarenResult CarenDXGISwapChain2::GetMatrixTransform([Out] CA_DXGI_MATRIX_3X2_F^%
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -271,9 +270,6 @@ CarenResult CarenDXGISwapChain2::GetMaximumFrameLatency([Out] UInt32% Param_Out_
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -316,9 +312,6 @@ CarenResult CarenDXGISwapChain2::GetSourceSize([Out] UInt32% Param_Out_Largura, 
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -365,9 +358,6 @@ CarenResult CarenDXGISwapChain2::SetMatrixTransform(CA_DXGI_MATRIX_3X2_F^ Param_
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -402,9 +392,6 @@ CarenResult CarenDXGISwapChain2::SetMaximumFrameLatency(UInt32 Param_MaximoBackB
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -443,9 +430,6 @@ CarenResult CarenDXGISwapChain2::SetSourceSize(UInt32 Param_Largura, UInt32 Para
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -487,9 +471,6 @@ CarenResult CarenDXGISwapChain2::GetBackgroundColor([Out] CA_DXGI_RGBA^% Param_O
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -535,9 +516,6 @@ CarenResult CarenDXGISwapChain2::GetCoreWindow(String^ Param_RIID, ICaren^ Param
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -576,9 +554,6 @@ CarenResult CarenDXGISwapChain2::GetDesc1([Out] CA_DXGI_SWAP_CHAIN_DESC1^% Param
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -619,9 +594,6 @@ CarenResult CarenDXGISwapChain2::GetFullscreenDesc([Out] CA_DXGI_SWAP_CHAIN_FULL
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -661,9 +633,6 @@ CarenResult CarenDXGISwapChain2::GetHwnd([Out] IntPtr% Param_Out_HWND)
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -702,9 +671,6 @@ CarenResult CarenDXGISwapChain2::GetRestrictToOutput([Out] ICarenDXGIOutput^% Pa
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -746,9 +712,6 @@ CarenResult CarenDXGISwapChain2::GetRotation([Out] CA_DXGI_MODE_ROTATION% Param_
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -823,9 +786,6 @@ CarenResult CarenDXGISwapChain2::Present1(UInt32 Param_IntervaloSincronizacao, C
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -872,9 +832,6 @@ CarenResult CarenDXGISwapChain2::SetBackgroundColor(CA_DXGI_RGBA^ Param_Cor)
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -912,9 +869,6 @@ CarenResult CarenDXGISwapChain2::SetRotation(CA_DXGI_MODE_ROTATION Param_Rotacao
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -965,9 +919,6 @@ CarenResult CarenDXGISwapChain2::GetBuffer(UInt32 Param_IndexBuffer, String^ Par
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1008,9 +959,6 @@ CarenResult CarenDXGISwapChain2::GetContainingOutput([Out] ICarenDXGIOutput^% Pa
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1054,9 +1002,6 @@ CarenResult CarenDXGISwapChain2::GetDesc([Out] Estruturas::CA_DXGI_SWAP_CHAIN_DE
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1095,9 +1040,6 @@ CarenResult CarenDXGISwapChain2::GetFrameStatistics([Out] Estruturas::CA_DXGI_FR
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1139,9 +1081,6 @@ CarenResult CarenDXGISwapChain2::GetFullscreenState([Out] Boolean% Param_Out_Est
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1198,9 +1137,6 @@ CarenResult CarenDXGISwapChain2::GetLastPresentCount([Out] UInt32% Param_Out_Qua
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1240,9 +1176,6 @@ CarenResult CarenDXGISwapChain2::Present(UInt32 Param_IntervaloSincronizacao, En
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1287,9 +1220,6 @@ CarenResult CarenDXGISwapChain2::ResizeBuffers(UInt32 Param_NumeroBuffers, UInt3
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1329,9 +1259,6 @@ CarenResult CarenDXGISwapChain2::ResizeTarget(Estruturas::CA_DXGI_MODE_DESC^ Par
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1379,9 +1306,6 @@ CarenResult CarenDXGISwapChain2::SetFullscreenState(Boolean Param_EstadoFullScre
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1439,9 +1363,6 @@ CarenResult CarenDXGISwapChain2::GetDevice(String^ Param_RIIDInterface, ICaren^ 
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1491,9 +1412,6 @@ CarenResult CarenDXGISwapChain2::GetParent(String^ Param_RIIDInterface, ICaren^ 
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1552,9 +1470,6 @@ CarenResult CarenDXGISwapChain2::SetPrivateData(String^ Param_GuidIdentificao, U
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1598,9 +1513,6 @@ CarenResult CarenDXGISwapChain2::GetPrivateData(String^ Param_GuidIdentificao, U
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1660,9 +1572,6 @@ CarenResult CarenDXGISwapChain2::SetPrivateDataInterface(String^ Param_GuidInter
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;

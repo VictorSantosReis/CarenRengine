@@ -60,6 +60,7 @@ CarenResult CarenDXGIResource1::AdicionarPonteiro(IntPtr Param_PonteiroNativo)
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IDXGIResource1**>(p)));
 }
+
 /// <summary>
 /// Método responsável por adicionar um novo ponteiro nativo a classe atual.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -73,6 +74,7 @@ CarenResult CarenDXGIResource1::AdicionarPonteiro(LPVOID Param_PonteiroNativo)
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IDXGIResource1**>(p)));
 }
+
 /// <summary>
 /// Método responsável por recuperar o ponteiro atual da classe. Se o ponteiro não for valido, o método retornar ResultCode::ER_PONTEIRO.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -223,9 +225,6 @@ CarenResult CarenDXGIResource1::CreateSharedHandle(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -278,9 +277,6 @@ CarenResult CarenDXGIResource1::CreateSubresourceSurface(UInt32 Param_Index, ICa
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -325,9 +321,6 @@ CarenResult CarenDXGIResource1::GetEvictionPriority([Out] CA_DXGI_RESOURCE_PRIOR
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -371,9 +364,6 @@ CarenResult CarenDXGIResource1::GetSharedHandle([Out] IntPtr% Param_Out_SharedHa
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -413,9 +403,6 @@ CarenResult CarenDXGIResource1::GetUsage([Out] CA_DXGI_USAGE% Param_Out_Usage)
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -453,9 +440,6 @@ CarenResult CarenDXGIResource1::SetEvictionPriority(CA_DXGI_RESOURCE_PRIORITY Pa
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -512,9 +496,6 @@ CarenResult CarenDXGIResource1::GetDevice(String^ Param_RIIDInterface, ICaren^ P
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -564,9 +545,6 @@ CarenResult CarenDXGIResource1::GetParent(String^ Param_RIIDInterface, ICaren^ P
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -625,9 +603,6 @@ CarenResult CarenDXGIResource1::SetPrivateData(String^ Param_GuidIdentificao, UI
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -671,9 +646,6 @@ CarenResult CarenDXGIResource1::GetPrivateData(String^ Param_GuidIdentificao, UI
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -733,9 +705,6 @@ CarenResult CarenDXGIResource1::SetPrivateDataInterface(String^ Param_GuidInterf
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;

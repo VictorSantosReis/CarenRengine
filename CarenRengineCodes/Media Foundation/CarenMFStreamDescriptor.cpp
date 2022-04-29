@@ -107,6 +107,7 @@ CarenResult CarenMFStreamDescriptor::AdicionarPonteiro(IntPtr Param_PonteiroNati
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IMFStreamDescriptor**>(p)));
 }
+
 /// <summary>
 /// Método responsável por adicionar um novo ponteiro nativo a classe atual.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -120,6 +121,7 @@ CarenResult CarenMFStreamDescriptor::AdicionarPonteiro(LPVOID Param_PonteiroNati
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IMFStreamDescriptor**>(p)));
 }
+
 /// <summary>
 /// Método responsável por recuperar o ponteiro atual da classe. Se o ponteiro não for valido, o método retornar ResultCode::ER_PONTEIRO.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -242,9 +244,6 @@ CarenResult CarenMFStreamDescriptor::GetMediaTypeHandler([Out] ICarenMFMediaType
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -285,9 +284,6 @@ CarenResult CarenMFStreamDescriptor::GetStreamIdentifier([Out] UInt32% Param_Out
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -344,9 +340,6 @@ CarenResult CarenMFStreamDescriptor::Compare(ICarenMFAttributes^ Param_Interface
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -402,9 +395,6 @@ CarenResult CarenMFStreamDescriptor::CompareItem(String^ Param_GuidChave, CA_PRO
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -452,9 +442,6 @@ CarenResult CarenMFStreamDescriptor::CopyAllItems(ICarenMFAttributes^ Param_Out_
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -485,9 +472,6 @@ CarenResult CarenMFStreamDescriptor::DeleteAllItems()
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -527,9 +511,6 @@ CarenResult CarenMFStreamDescriptor::DeleteItem(String^ Param_GuidChave)
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -576,9 +557,6 @@ CarenResult CarenMFStreamDescriptor::GetAllocatedBlob(String^ Param_GuidChave, [
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -639,9 +617,6 @@ CarenResult CarenMFStreamDescriptor::GetAllocatedString(String^ Param_GuidChave,
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -693,9 +668,6 @@ CarenResult CarenMFStreamDescriptor::GetBlob(String^ Param_GuidChave, UInt32 Par
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -752,9 +724,6 @@ CarenResult CarenMFStreamDescriptor::GetBlobSize(String^ Param_GuidChave, [Out] 
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -792,9 +761,6 @@ CarenResult CarenMFStreamDescriptor::GetCount([Out] UInt32% Param_QuantidadeAtri
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -839,9 +805,6 @@ CarenResult CarenMFStreamDescriptor::GetDouble(String^ Param_GuidChave, [Out] Do
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -885,9 +848,6 @@ CarenResult CarenMFStreamDescriptor::GetGUID(String^ Param_GuidChave, [Out] Stri
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -935,9 +895,6 @@ CarenResult CarenMFStreamDescriptor::GetItem(String^ Param_GuidChave, [Out] CA_P
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -988,9 +945,6 @@ CarenResult CarenMFStreamDescriptor::GetItemByIndex(UInt32 Param_IdItem, [Out] S
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1040,9 +994,6 @@ CarenResult CarenMFStreamDescriptor::GetItemType(String^ Param_GuidChave, [Out] 
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1089,9 +1040,6 @@ CarenResult CarenMFStreamDescriptor::GetString(String^ Param_GuidChave, UInt32 P
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1140,9 +1088,6 @@ CarenResult CarenMFStreamDescriptor::GetStringLength(String^ Param_GuidChave, [O
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1186,9 +1131,6 @@ CarenResult CarenMFStreamDescriptor::GetUINT32(String^ Param_GuidChave, [Out] UI
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1231,9 +1173,6 @@ CarenResult CarenMFStreamDescriptor::GetUINT64(String^ Param_GuidChave, [Out] UI
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1282,9 +1221,6 @@ CarenResult CarenMFStreamDescriptor::_MFGetAttributeRatio(String^ Param_GuidChav
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1331,9 +1267,6 @@ CarenResult CarenMFStreamDescriptor::_MFGetAttributeSize(String^ Param_GuidChave
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1382,9 +1315,6 @@ CarenResult CarenMFStreamDescriptor::GetUnknown(String^ Param_GuidChave, String^
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1481,9 +1411,6 @@ CarenResult CarenMFStreamDescriptor::SetBlob(String^ Param_GuidChave, ICarenBuff
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1523,9 +1450,6 @@ CarenResult CarenMFStreamDescriptor::SetDouble(String^ Param_GuidChave, Double P
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1567,9 +1491,6 @@ CarenResult CarenMFStreamDescriptor::SetGUID(String^ Param_GuidChave, String^ Pa
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1615,9 +1536,6 @@ CarenResult CarenMFStreamDescriptor::SetItem(String^ Param_GuidChave, Estruturas
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1666,9 +1584,6 @@ CarenResult CarenMFStreamDescriptor::SetString(String^ Param_GuidChave, String^ 
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1711,9 +1626,6 @@ CarenResult CarenMFStreamDescriptor::SetUINT32(String^ Param_GuidChave, UInt32 P
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1752,9 +1664,6 @@ CarenResult CarenMFStreamDescriptor::SetUINT64(String^ Param_GuidChave, UInt64 P
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1798,9 +1707,6 @@ CarenResult CarenMFStreamDescriptor::_MFSetAttributeRatio(String^ Param_GuidChav
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1842,9 +1748,6 @@ CarenResult CarenMFStreamDescriptor::_MFSetAttributeSize(String^ Param_GuidChave
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1890,9 +1793,6 @@ CarenResult CarenMFStreamDescriptor::SetUnknown(String^ Param_GuidChave, ICaren^
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1924,9 +1824,6 @@ CarenResult CarenMFStreamDescriptor::UnlockStore()
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;

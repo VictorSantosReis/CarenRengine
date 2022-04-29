@@ -58,6 +58,7 @@ CarenResult CarenD2D1SvgPaint::AdicionarPonteiro(IntPtr Param_PonteiroNativo)
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<ID2D1SvgPaint**>(p)));
 }
+
 /// <summary>
 /// Método responsável por adicionar um novo ponteiro nativo a classe atual.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -71,6 +72,7 @@ CarenResult CarenD2D1SvgPaint::AdicionarPonteiro(LPVOID Param_PonteiroNativo)
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<ID2D1SvgPaint**>(p)));
 }
+
 /// <summary>
 /// Método responsável por recuperar o ponteiro atual da classe. Se o ponteiro não for valido, o método retornar ResultCode::ER_PONTEIRO.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -214,9 +216,6 @@ UInt32 Param_IdCount)
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -289,9 +288,6 @@ CarenResult CarenD2D1SvgPaint::SetColor(CA_D2D1_COLOR_F^ Param_Color)
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -334,9 +330,6 @@ CarenResult CarenD2D1SvgPaint::SetId(String^ Param_Id)
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -371,9 +364,6 @@ CarenResult CarenD2D1SvgPaint::SetPaintType(CA_D2D1_SVG_PAINT_TYPE Param_PaintTy
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -415,9 +405,6 @@ CarenResult CarenD2D1SvgPaint::Clone([Out] ICarenD2D1SvgAttribute^% Param_Out_Cl
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;

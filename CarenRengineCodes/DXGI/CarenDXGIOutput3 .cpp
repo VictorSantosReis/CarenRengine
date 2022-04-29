@@ -253,9 +253,6 @@ CarenResult CarenDXGIOutput3 ::CheckOverlaySupport(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -348,9 +345,6 @@ CarenResult CarenDXGIOutput3::DuplicateOutput(ICaren^ Param_Dispositivo3D, [Out]
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -427,9 +421,6 @@ CarenResult CarenDXGIOutput3::FindClosestMatchingMode1(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -501,9 +492,6 @@ CarenResult CarenDXGIOutput3::GetDisplayModeList1(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -586,9 +574,6 @@ CarenResult CarenDXGIOutput3::GetDisplaySurfaceData1(ICarenDXGIResource^ Param_S
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -649,9 +634,6 @@ CarenResult CarenDXGIOutput3::FindClosestMatchingMode(CA_DXGI_MODE_DESC^ Param_M
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -696,9 +678,6 @@ CarenResult CarenDXGIOutput3::GetDesc([Out] CA_DXGI_OUTPUT_DESC^% Param_Out_Desc
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -767,9 +746,6 @@ CarenResult CarenDXGIOutput3::GetDisplayModeList(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -845,9 +821,6 @@ CarenResult CarenDXGIOutput3::GetDisplaySurfaceData(ICarenDXGISurface^% Param_Su
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -883,9 +856,6 @@ CarenResult CarenDXGIOutput3::GetFrameStatistics([Out] CA_DXGI_FRAME_STATISTICS^
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -926,9 +896,6 @@ CarenResult CarenDXGIOutput3::GetGammaControl([Out] CA_DXGI_GAMMA_CONTROL^% Para
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -967,9 +934,6 @@ CarenResult CarenDXGIOutput3::GetGammaControlCapabilities([Out] CA_DXGI_GAMMA_CO
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1042,9 +1006,6 @@ CarenResult CarenDXGIOutput3::SetDisplaySurface(ICarenDXGISurface^% Param_Superf
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1083,9 +1044,6 @@ CarenResult CarenDXGIOutput3::SetGammaControl(CA_DXGI_GAMMA_CONTROL^ Param_Contr
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1142,9 +1100,6 @@ CarenResult CarenDXGIOutput3::TakeOwnership(ICaren^ Param_DispositivoD3D, Boolea
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1175,9 +1130,6 @@ CarenResult CarenDXGIOutput3::WaitForVBlank()
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1224,9 +1176,6 @@ CarenResult CarenDXGIOutput3::GetParent(String^ Param_RIIDInterface, ICaren^ Par
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1285,9 +1234,6 @@ CarenResult CarenDXGIOutput3::SetPrivateData(String^ Param_GuidIdentificao, UInt
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1331,9 +1277,6 @@ CarenResult CarenDXGIOutput3::GetPrivateData(String^ Param_GuidIdentificao, UInt
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1393,9 +1336,6 @@ CarenResult CarenDXGIOutput3::SetPrivateDataInterface(String^ Param_GuidInterfac
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;

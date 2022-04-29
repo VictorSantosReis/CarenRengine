@@ -914,7 +914,9 @@
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFSourceOpenMonitor.cpp" />
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IWICDevelopRawNotificationCallback.cpp" />
     <ClCompile Include="CarenRengineCodes\PropVariantManager\PropVariantManager.cpp" />
-    <ClCompile Include="CarenRengineCodes\SharedClass\Shared_Direct3D11.cpp" />
+    <ClCompile Include="CarenRengineCodes\SharedClass\Shared_Direct3D11_Device.cpp" />
+    <ClCompile Include="CarenRengineCodes\SharedClass\Shared_Direct3D11_DeviceChild.cpp" />
+    <ClCompile Include="CarenRengineCodes\SharedClass\Shared_Direct3D11_DeviceContext.cpp" />
     <ClCompile Include="CarenRengineCodes\WIC\CarenWICBitmap.cpp" />
     <ClCompile Include="CarenRengineCodes\WIC\CarenWICBitmapClipper.cpp" />
     <ClCompile Include="CarenRengineCodes\WIC\CarenWICBitmapCodecInfo.cpp" />

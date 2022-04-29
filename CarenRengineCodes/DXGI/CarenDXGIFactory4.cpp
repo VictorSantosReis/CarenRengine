@@ -61,6 +61,7 @@ CarenResult CarenDXGIFactory4::AdicionarPonteiro(IntPtr Param_PonteiroNativo)
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IDXGIFactory4**>(p)));
 }
+
 /// <summary>
 /// Método responsável por adicionar um novo ponteiro nativo a classe atual.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -74,6 +75,7 @@ CarenResult CarenDXGIFactory4::AdicionarPonteiro(LPVOID Param_PonteiroNativo)
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IDXGIFactory4**>(p)));
 }
+
 /// <summary>
 /// Método responsável por recuperar o ponteiro atual da classe. Se o ponteiro não for valido, o método retornar ResultCode::ER_PONTEIRO.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -198,9 +200,6 @@ CarenResult CarenDXGIFactory4::EnumAdapterByLuid(CA_LUID^ Param_LUID, String^ Pa
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -250,9 +249,6 @@ CarenResult CarenDXGIFactory4::EnumWarpAdapter(String^ Param_RIID, [Out] ICaren^
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -381,9 +377,6 @@ CarenResult CarenDXGIFactory4::CreateSwapChainForComposition(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -490,9 +483,6 @@ CarenResult CarenDXGIFactory4::CreateSwapChainForCoreWindow(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -603,9 +593,6 @@ CarenResult CarenDXGIFactory4::CreateSwapChainForHwnd(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -659,9 +646,6 @@ CarenResult CarenDXGIFactory4::GetSharedResourceAdapterLuid(IntPtr Param_HandleR
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -743,9 +727,6 @@ CarenResult CarenDXGIFactory4::RegisterOcclusionStatusEvent(ICarenEvent^ Param_E
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -788,9 +769,6 @@ CarenResult CarenDXGIFactory4::RegisterOcclusionStatusWindow(IntPtr Param_Handle
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -847,9 +825,6 @@ CarenResult CarenDXGIFactory4::RegisterStereoStatusEvent(ICarenEvent^ Param_Even
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -892,9 +867,6 @@ CarenResult CarenDXGIFactory4::RegisterStereoStatusWindow(IntPtr Param_HandleJan
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -981,9 +953,6 @@ CarenResult CarenDXGIFactory4::EnumAdapters1(UInt32 Param_IdAdaptador, [Out] ICa
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1059,9 +1028,6 @@ CarenResult CarenDXGIFactory4::CreateSoftwareAdapter(IntPtr Param_ModuleHandle, 
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1126,9 +1092,6 @@ CarenResult CarenDXGIFactory4::CreateSwapChain(ICaren^ Param_Dispositivo3D, CA_D
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1176,9 +1139,6 @@ CarenResult CarenDXGIFactory4::EnumAdapters(UInt32 Param_IdAdaptador, [Out] ICar
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1220,9 +1180,6 @@ CarenResult CarenDXGIFactory4::GetWindowAssociation([Out] IntPtr% Param_HandleJa
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1269,9 +1226,6 @@ CarenResult CarenDXGIFactory4::MakeWindowAssociation(IntPtr Param_HandleJanela, 
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1316,9 +1270,6 @@ CarenResult CarenDXGIFactory4::GetParent(String^ Param_RIIDInterface, ICaren^ Pa
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1377,9 +1328,6 @@ CarenResult CarenDXGIFactory4::SetPrivateData(String^ Param_GuidIdentificao, UIn
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1423,9 +1371,6 @@ CarenResult CarenDXGIFactory4::GetPrivateData(String^ Param_GuidIdentificao, UIn
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1485,9 +1430,6 @@ CarenResult CarenDXGIFactory4::SetPrivateDataInterface(String^ Param_GuidInterfa
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;

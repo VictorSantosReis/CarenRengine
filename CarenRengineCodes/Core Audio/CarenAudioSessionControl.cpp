@@ -61,6 +61,7 @@ CarenResult CarenAudioSessionControl::AdicionarPonteiro(IntPtr Param_PonteiroNat
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IAudioSessionControl**>(p)));
 }
+
 /// <summary>
 /// Método responsável por adicionar um novo ponteiro nativo a classe atual.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -74,6 +75,7 @@ CarenResult CarenAudioSessionControl::AdicionarPonteiro(LPVOID Param_PonteiroNat
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IAudioSessionControl**>(p)));
 }
+
 /// <summary>
 /// Método responsável por recuperar o ponteiro atual da classe. Se o ponteiro não for valido, o método retornar ResultCode::ER_PONTEIRO.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -197,9 +199,6 @@ CarenResult CarenAudioSessionControl::GetDisplayName([Out] String^% Param_Out_No
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -247,9 +246,6 @@ CarenResult CarenAudioSessionControl::GetGroupingParam([Out] String^% Param_Out_
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -287,9 +283,6 @@ CarenResult CarenAudioSessionControl::GetIconPath([Out] String^% Param_Out_Url)
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -332,9 +325,6 @@ CarenResult CarenAudioSessionControl::GetState([Out] Enumeracoes::CA_ESTADO_SESS
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -387,9 +377,6 @@ CarenResult CarenAudioSessionControl::RegisterAudioSessionNotification(ICarenAud
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -441,9 +428,6 @@ CarenResult CarenAudioSessionControl::SetDisplayName(String^ Param_Nome, String^
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -500,9 +484,6 @@ CarenResult CarenAudioSessionControl::SetGroupingParam(String^ Param_GuidNovoPar
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -555,9 +536,6 @@ CarenResult CarenAudioSessionControl::SetIconPath(String^ Param_UrlCompletaIco, 
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -606,9 +584,6 @@ CarenResult CarenAudioSessionControl::UnregisterAudioSessionNotification(ICarenA
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;

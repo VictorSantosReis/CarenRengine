@@ -58,6 +58,7 @@ CarenResult CarenWICPixelFormatInfo::AdicionarPonteiro(IntPtr Param_PonteiroNati
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IWICPixelFormatInfo**>(p)));
 }
+
 /// <summary>
 /// Método responsável por adicionar um novo ponteiro nativo a classe atual.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -71,6 +72,7 @@ CarenResult CarenWICPixelFormatInfo::AdicionarPonteiro(LPVOID Param_PonteiroNati
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IWICPixelFormatInfo**>(p)));
 }
+
 /// <summary>
 /// Método responsável por recuperar o ponteiro atual da classe. Se o ponteiro não for valido, o método retornar ResultCode::ER_PONTEIRO.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -190,9 +192,6 @@ CarenResult CarenWICPixelFormatInfo::GetBitsPerPixel([Out] UInt32% Param_Out_Bit
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -230,9 +229,6 @@ CarenResult CarenWICPixelFormatInfo::GetChannelCount([Out] UInt32% Param_Out_Cha
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -289,9 +285,6 @@ ICarenBuffer^% Param_Ref_MaskBuffer,
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -331,9 +324,6 @@ CarenResult CarenWICPixelFormatInfo::GetColorContext([Out] ICarenWICColorContext
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -376,9 +366,6 @@ CarenResult CarenWICPixelFormatInfo::GetFormatGUID([Out] String^% Param_Out_Form
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -437,9 +424,6 @@ CarenResult CarenWICPixelFormatInfo::GetAuthor(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -486,9 +470,6 @@ CarenResult CarenWICPixelFormatInfo::GetCLSID([Out] String^% Param_Out_CLSID)
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -526,9 +507,6 @@ CarenResult CarenWICPixelFormatInfo::GetComponentType([Out] CA_WICComponentType%
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -582,9 +560,6 @@ CarenResult CarenWICPixelFormatInfo::GetFriendlyName(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -631,9 +606,6 @@ CarenResult CarenWICPixelFormatInfo::GetSigningStatus([Out] CA_WICComponentSigni
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -687,9 +659,6 @@ CarenResult CarenWICPixelFormatInfo::GetSpecVersion(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -735,9 +704,6 @@ CarenResult CarenWICPixelFormatInfo::GetVendorGUID([Out] String^% Param_Out_Guid
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -789,9 +755,6 @@ CarenResult CarenWICPixelFormatInfo::GetVersion(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;

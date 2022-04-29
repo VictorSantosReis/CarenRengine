@@ -58,6 +58,7 @@ CarenResult CarenD2D1DeviceContext4::AdicionarPonteiro(IntPtr Param_PonteiroNati
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<ID2D1DeviceContext4**>(p)));
 }
+
 /// <summary>
 /// Método responsável por adicionar um novo ponteiro nativo a classe atual.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -71,6 +72,7 @@ CarenResult CarenD2D1DeviceContext4::AdicionarPonteiro(LPVOID Param_PonteiroNati
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<ID2D1DeviceContext4**>(p)));
 }
+
 /// <summary>
 /// Método responsável por recuperar o ponteiro atual da classe. Se o ponteiro não for valido, o método retornar ResultCode::ER_PONTEIRO.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -190,9 +192,6 @@ CarenResult CarenD2D1DeviceContext4::CreateSvgGlyphStyle(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -480,9 +479,6 @@ float Param_DpiY,
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -594,9 +590,6 @@ UInt32 Param_ColorPaletteIndex,
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -650,9 +643,6 @@ CarenResult CarenD2D1DeviceContext4::CreateSpriteBatch(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -789,9 +779,6 @@ CarenResult CarenD2D1DeviceContext4::CreateGradientMesh(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -863,9 +850,6 @@ CarenResult CarenD2D1DeviceContext4::CreateImageSourceFromDxgi(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -929,9 +913,6 @@ CarenResult CarenD2D1DeviceContext4::CreateImageSourceFromWic(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -986,9 +967,6 @@ CarenResult CarenD2D1DeviceContext4::CreateImageSourceFromWic(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1045,9 +1023,6 @@ CarenResult CarenD2D1DeviceContext4::CreateImageSourceFromWic(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1097,9 +1072,6 @@ CarenResult CarenD2D1DeviceContext4::CreateInk(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1153,9 +1125,6 @@ CarenResult CarenD2D1DeviceContext4::CreateInkStyle(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1235,9 +1204,6 @@ CarenResult CarenD2D1DeviceContext4::CreateLookupTable3D(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1300,9 +1266,6 @@ CarenResult CarenD2D1DeviceContext4::CreateTransformedImageSource(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1436,9 +1399,6 @@ CarenResult CarenD2D1DeviceContext4::GetGradientMeshWorldBounds(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1494,9 +1454,6 @@ CarenResult CarenD2D1DeviceContext4::CreateFilledGeometryRealization(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1565,9 +1522,6 @@ CarenResult CarenD2D1DeviceContext4::CreateStrokedGeometryRealization(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1666,9 +1620,6 @@ CarenResult CarenD2D1DeviceContext4::CreateBitmap(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1735,9 +1686,6 @@ CarenResult CarenD2D1DeviceContext4::CreateBitmapBrush(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1792,9 +1740,6 @@ CarenResult CarenD2D1DeviceContext4::CreateBitmapBrush(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1854,9 +1799,6 @@ CarenResult CarenD2D1DeviceContext4::CreateBitmapBrush(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1919,9 +1861,6 @@ CarenResult CarenD2D1DeviceContext4::CreateBitmapFromDxgiSurface(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1983,9 +1922,6 @@ CarenResult CarenD2D1DeviceContext4::CreateBitmapFromWicBitmap(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -2039,9 +1975,6 @@ CarenResult CarenD2D1DeviceContext4::CreateBitmapFromWicBitmap(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -2103,9 +2036,6 @@ CarenResult CarenD2D1DeviceContext4::CreateColorContext(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -2155,9 +2085,6 @@ CarenResult CarenD2D1DeviceContext4::CreateColorContextFromFilename(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -2214,9 +2141,6 @@ CarenResult CarenD2D1DeviceContext4::CreateColorContextFromWicColorContext(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -2260,9 +2184,6 @@ CarenResult CarenD2D1DeviceContext4::CreateCommandList(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -2312,9 +2233,6 @@ CarenResult CarenD2D1DeviceContext4::CreateEffect(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -2401,9 +2319,6 @@ CarenResult CarenD2D1DeviceContext4::CreateGradientStopCollection(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -2470,9 +2385,6 @@ CarenResult CarenD2D1DeviceContext4::CreateImageBrush(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -2535,9 +2447,6 @@ CarenResult CarenD2D1DeviceContext4::CreateImageBrush(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -2966,9 +2875,6 @@ CarenResult CarenD2D1DeviceContext4::GetEffectInvalidRectangleCount(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -3016,9 +2922,6 @@ CarenResult CarenD2D1DeviceContext4::GetEffectInvalidRectangles(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -3106,9 +3009,6 @@ CarenResult CarenD2D1DeviceContext4::GetEffectRequiredInputRectangles(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -3175,9 +3075,6 @@ CarenResult CarenD2D1DeviceContext4::GetGlyphRunWorldBounds(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -3235,9 +3132,6 @@ CarenResult CarenD2D1DeviceContext4::GetImageLocalBounds(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -3289,9 +3183,6 @@ CarenResult CarenD2D1DeviceContext4::GetImageWorldBounds(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -3422,9 +3313,6 @@ CarenResult CarenD2D1DeviceContext4::InvalidateEffectInputRectangle(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -3666,9 +3554,6 @@ CarenResult CarenD2D1DeviceContext4::CreateBitmap(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -3737,9 +3622,6 @@ CarenResult CarenD2D1DeviceContext4::CreateBitmap(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -3827,9 +3709,6 @@ CarenResult CarenD2D1DeviceContext4::CreateBitmapBrush(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -3902,9 +3781,6 @@ CarenResult CarenD2D1DeviceContext4::CreateBitmapBrush(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -3982,9 +3858,6 @@ CarenResult CarenD2D1DeviceContext4::CreateBitmapBrush(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -4067,9 +3940,6 @@ CarenResult CarenD2D1DeviceContext4::CreateBitmapFromWicBitmap(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -4141,9 +4011,6 @@ CarenResult CarenD2D1DeviceContext4::CreateBitmapFromWicBitmap(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -4218,9 +4085,6 @@ CarenResult CarenD2D1DeviceContext4::CreateCompatibleRenderTarget(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -4265,9 +4129,6 @@ CarenResult CarenD2D1DeviceContext4::CreateCompatibleRenderTarget(ICaren^ Param_
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -4318,9 +4179,6 @@ CarenResult CarenD2D1DeviceContext4::CreateCompatibleRenderTarget(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -4374,9 +4232,6 @@ CarenResult CarenD2D1DeviceContext4::CreateCompatibleRenderTarget(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -4435,9 +4290,6 @@ CarenResult CarenD2D1DeviceContext4::CreateCompatibleRenderTarget(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -4510,9 +4362,6 @@ CarenResult CarenD2D1DeviceContext4::CreateGradientStopCollection(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -4580,9 +4429,6 @@ CarenResult CarenD2D1DeviceContext4::CreateGradientStopCollection(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -4635,9 +4481,6 @@ CarenResult CarenD2D1DeviceContext4::CreateLayer(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -4681,9 +4524,6 @@ CarenResult CarenD2D1DeviceContext4::CreateLayer([Out] ICarenD2D1Layer^% Param_O
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -4747,9 +4587,6 @@ CarenResult CarenD2D1DeviceContext4::CreateLinearGradientBrush(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -4812,9 +4649,6 @@ CarenResult CarenD2D1DeviceContext4::CreateLinearGradientBrush(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -4858,9 +4692,6 @@ CarenResult CarenD2D1DeviceContext4::CreateMesh([Out] ICarenD2D1Mesh^% Param_Out
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -4924,9 +4755,6 @@ CarenResult CarenD2D1DeviceContext4::CreateRadialGradientBrush(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -4988,9 +4816,6 @@ CarenResult CarenD2D1DeviceContext4::CreateRadialGradientBrush(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -5056,9 +4881,6 @@ CarenResult CarenD2D1DeviceContext4::CreateSharedBitmap(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -5115,9 +4937,6 @@ CarenResult CarenD2D1DeviceContext4::CreateSolidColorBrush(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -5170,9 +4989,6 @@ CarenResult CarenD2D1DeviceContext4::CreateSolidColorBrush(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -5767,9 +5583,6 @@ CarenResult CarenD2D1DeviceContext4::EndDraw(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -6103,9 +5916,6 @@ CarenResult CarenD2D1DeviceContext4::Flush(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;

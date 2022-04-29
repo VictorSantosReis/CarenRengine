@@ -206,9 +206,6 @@ CarenResult CarenMFMetadataProvider::GetMFMetadata(ICarenMFPresentationDescripto
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}

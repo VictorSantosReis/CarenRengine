@@ -60,6 +60,7 @@ CarenResult CarenDXGIOutputDuplication::AdicionarPonteiro(IntPtr Param_PonteiroN
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IDXGIOutputDuplication**>(p)));
 }
+
 /// <summary>
 /// Método responsável por adicionar um novo ponteiro nativo a classe atual.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -73,6 +74,7 @@ CarenResult CarenDXGIOutputDuplication::AdicionarPonteiro(LPVOID Param_PonteiroN
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IDXGIOutputDuplication**>(p)));
 }
+
 /// <summary>
 /// Método responsável por recuperar o ponteiro atual da classe. Se o ponteiro não for valido, o método retornar ResultCode::ER_PONTEIRO.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -200,9 +202,6 @@ CarenResult CarenDXGIOutputDuplication::AcquireNextFrame(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -298,9 +297,6 @@ CarenResult CarenDXGIOutputDuplication::GetFrameDirtyRects(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -373,9 +369,6 @@ CarenResult CarenDXGIOutputDuplication::GetFrameMoveRects(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -469,9 +462,6 @@ CarenResult CarenDXGIOutputDuplication::GetFramePointerShape(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -526,9 +516,6 @@ CarenResult CarenDXGIOutputDuplication::MapDesktopSurface([Out] CA_DXGI_MAPPED_R
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -563,9 +550,6 @@ CarenResult CarenDXGIOutputDuplication::ReleaseFrame()
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -596,9 +580,6 @@ CarenResult CarenDXGIOutputDuplication::UnMapDesktopSurface()
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -644,9 +625,6 @@ CarenResult CarenDXGIOutputDuplication::GetParent(String^ Param_RIIDInterface, I
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -705,9 +683,6 @@ CarenResult CarenDXGIOutputDuplication::SetPrivateData(String^ Param_GuidIdentif
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -751,9 +726,6 @@ CarenResult CarenDXGIOutputDuplication::GetPrivateData(String^ Param_GuidIdentif
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -813,9 +785,6 @@ CarenResult CarenDXGIOutputDuplication::SetPrivateDataInterface(String^ Param_Gu
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;

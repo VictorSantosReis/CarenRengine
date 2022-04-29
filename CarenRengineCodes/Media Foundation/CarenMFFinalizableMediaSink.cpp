@@ -58,6 +58,7 @@ CarenResult CarenMFFinalizableMediaSink::AdicionarPonteiro(IntPtr Param_Ponteiro
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IMFFinalizableMediaSink**>(p)));
 }
+
 /// <summary>
 /// Método responsável por adicionar um novo ponteiro nativo a classe atual.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -71,6 +72,7 @@ CarenResult CarenMFFinalizableMediaSink::AdicionarPonteiro(LPVOID Param_Ponteiro
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IMFFinalizableMediaSink**>(p)));
 }
+
 /// <summary>
 /// Método responsável por recuperar o ponteiro atual da classe. Se o ponteiro não for valido, o método retornar ResultCode::ER_PONTEIRO.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -202,9 +204,6 @@ CarenResult CarenMFFinalizableMediaSink::BeginFinalize(ICarenMFAsyncCallback^ Pa
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -243,9 +242,6 @@ CarenResult CarenMFFinalizableMediaSink::EndFinalize(ICarenMFAsyncResult^ Param_
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -296,9 +292,6 @@ CarenResult CarenMFFinalizableMediaSink::AddStreamSink(UInt32 Param_Identificado
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -340,9 +333,6 @@ CarenResult CarenMFFinalizableMediaSink::GetCharacteristics([Out] Enumeracoes::C
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -380,9 +370,6 @@ CarenResult CarenMFFinalizableMediaSink::GetPresentationClock([Out] ICarenMFPres
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -426,9 +413,6 @@ CarenResult CarenMFFinalizableMediaSink::GetStreamSinkById(UInt32 Param_Identifi
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -471,9 +455,6 @@ CarenResult CarenMFFinalizableMediaSink::GetStreamSinkByIndex(UInt32 Param_IdFlu
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -515,9 +496,6 @@ CarenResult CarenMFFinalizableMediaSink::GetStreamSinkCount([Out] UInt32% Param_
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -552,9 +530,6 @@ CarenResult CarenMFFinalizableMediaSink::RemoveStreamSink(UInt32 Param_Identific
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -596,9 +571,6 @@ CarenResult CarenMFFinalizableMediaSink::SetPresentationClock(ICarenMFPresentati
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -629,9 +601,6 @@ CarenResult CarenMFFinalizableMediaSink::Shutdown()
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;

@@ -61,6 +61,7 @@ CarenResult CarenMF2DBuffer2::AdicionarPonteiro(IntPtr Param_PonteiroNativo)
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IMF2DBuffer2**>(p)));
 }
+
 /// <summary>
 /// Método responsável por adicionar um novo ponteiro nativo a classe atual.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -74,6 +75,7 @@ CarenResult CarenMF2DBuffer2::AdicionarPonteiro(LPVOID Param_PonteiroNativo)
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IMF2DBuffer2**>(p)));
 }
+
 /// <summary>
 /// Método responsável por recuperar o ponteiro atual da classe. Se o ponteiro não for valido, o método retornar ResultCode::ER_PONTEIRO.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -209,9 +211,6 @@ CarenResult CarenMF2DBuffer2::Lock2DSize(Enumeracoes::CA_MF2DBuffer_LockFlags Pa
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -263,9 +262,6 @@ CarenResult CarenMF2DBuffer2::Copy2DTo(ICarenMF2DBuffer2^% Param_Interface2DBuff
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -314,9 +310,6 @@ CarenResult CarenMF2DBuffer2::ContiguousCopyFrom(ICarenBuffer^ Param_BufferConti
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -358,9 +351,6 @@ CarenResult CarenMF2DBuffer2::ContiguousCopyTo(ICarenBuffer^% Param_DestinoBuffe
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -396,9 +386,6 @@ CarenResult CarenMF2DBuffer2::GetContiguousLength([Out] UInt32% Param_Out_Largur
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -441,9 +428,6 @@ CarenResult CarenMF2DBuffer2::GetScanline0AndPitch([Out] ICarenBuffer^% Param_Ou
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -489,9 +473,6 @@ CarenResult CarenMF2DBuffer2::IsContiguousFormat([Out] Boolean% Param_Out_Buffer
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -534,9 +515,6 @@ CarenResult CarenMF2DBuffer2::Lock2D([Out] ICarenBuffer^% Param_Out_Buffer, [Out
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -577,9 +555,6 @@ CarenResult CarenMF2DBuffer2::Unlock2D()
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;

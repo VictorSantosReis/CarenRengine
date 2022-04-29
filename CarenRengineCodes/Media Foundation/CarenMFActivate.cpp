@@ -61,6 +61,7 @@ CarenResult CarenMFActivate::AdicionarPonteiro(IntPtr Param_PonteiroNativo)
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IMFActivate**>(p)));
 }
+
 /// <summary>
 /// Método responsável por adicionar um novo ponteiro nativo a classe atual.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -74,6 +75,7 @@ CarenResult CarenMFActivate::AdicionarPonteiro(LPVOID Param_PonteiroNativo)
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IMFActivate**>(p)));
 }
+
 /// <summary>
 /// Método responsável por recuperar o ponteiro atual da classe. Se o ponteiro não for valido, o método retornar ResultCode::ER_PONTEIRO.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -203,9 +205,6 @@ CarenResult CarenMFActivate::ActivateObject(String^ Param_IIDInterface, ICaren^ 
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -244,9 +243,6 @@ CarenResult CarenMFActivate::DetachObject()
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -281,9 +277,6 @@ CarenResult CarenMFActivate::ShutdownObject()
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -336,9 +329,6 @@ CarenResult CarenMFActivate::Compare(ICarenMFAttributes^ Param_InterfaceCompare,
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -407,9 +397,6 @@ CarenResult CarenMFActivate::CompareItem(String^ Param_GuidChave, CA_PROPVARIANT
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -457,9 +444,6 @@ CarenResult CarenMFActivate::CopyAllItems(ICarenMFAttributes^ Param_Out_Interfac
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -490,9 +474,6 @@ CarenResult CarenMFActivate::DeleteAllItems()
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -532,9 +513,6 @@ CarenResult CarenMFActivate::DeleteItem(String^ Param_GuidChave)
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -581,9 +559,6 @@ CarenResult CarenMFActivate::GetAllocatedBlob(String^ Param_GuidChave, [Out] Est
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -644,9 +619,6 @@ CarenResult CarenMFActivate::GetAllocatedString(String^ Param_GuidChave, [Out] S
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -698,9 +670,6 @@ CarenResult CarenMFActivate::GetBlob(String^ Param_GuidChave, UInt32 Param_Taman
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -757,9 +726,6 @@ CarenResult CarenMFActivate::GetBlobSize(String^ Param_GuidChave, [Out] UInt32% 
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -797,9 +763,6 @@ CarenResult CarenMFActivate::GetCount([Out] UInt32% Param_QuantidadeAtributos)
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -844,9 +807,6 @@ CarenResult CarenMFActivate::GetDouble(String^ Param_GuidChave, [Out] Double% Pa
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -890,9 +850,6 @@ CarenResult CarenMFActivate::GetGUID(String^ Param_GuidChave, [Out] String^% Par
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -940,9 +897,6 @@ CarenResult CarenMFActivate::GetItem(String^ Param_GuidChave, [Out] CA_PROPVARIA
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -993,9 +947,6 @@ CarenResult CarenMFActivate::GetItemByIndex(UInt32 Param_IdItem, [Out] String^% 
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1045,9 +996,6 @@ CarenResult CarenMFActivate::GetItemType(String^ Param_GuidChave, [Out] CA_MF_AT
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1094,9 +1042,6 @@ CarenResult CarenMFActivate::GetString(String^ Param_GuidChave, UInt32 Param_Lag
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1145,9 +1090,6 @@ CarenResult CarenMFActivate::GetStringLength(String^ Param_GuidChave, [Out] UInt
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1191,9 +1133,6 @@ CarenResult CarenMFActivate::GetUINT32(String^ Param_GuidChave, [Out] UInt32% Pa
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1236,9 +1175,6 @@ CarenResult CarenMFActivate::GetUINT64(String^ Param_GuidChave, [Out] UInt64% Pa
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1287,9 +1223,6 @@ CarenResult CarenMFActivate::_MFGetAttributeRatio(String^ Param_GuidChave, [Out]
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1336,9 +1269,6 @@ CarenResult CarenMFActivate::_MFGetAttributeSize(String^ Param_GuidChave, [Out] 
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1387,9 +1317,6 @@ CarenResult CarenMFActivate::GetUnknown(String^ Param_GuidChave, String^ Param_G
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1486,9 +1413,6 @@ CarenResult CarenMFActivate::SetBlob(String^ Param_GuidChave, ICarenBuffer^ Para
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1528,9 +1452,6 @@ CarenResult CarenMFActivate::SetDouble(String^ Param_GuidChave, Double Param_Val
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1572,9 +1493,6 @@ CarenResult CarenMFActivate::SetGUID(String^ Param_GuidChave, String^ Param_Valo
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1620,9 +1538,6 @@ CarenResult CarenMFActivate::SetItem(String^ Param_GuidChave, Estruturas::CA_PRO
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1671,9 +1586,6 @@ CarenResult CarenMFActivate::SetString(String^ Param_GuidChave, String^ Param_Va
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1716,9 +1628,6 @@ CarenResult CarenMFActivate::SetUINT32(String^ Param_GuidChave, UInt32 Param_Val
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1757,9 +1666,6 @@ CarenResult CarenMFActivate::SetUINT64(String^ Param_GuidChave, UInt64 Param_Val
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1803,9 +1709,6 @@ CarenResult CarenMFActivate::_MFSetAttributeRatio(String^ Param_GuidChave, UInt3
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1847,9 +1750,6 @@ CarenResult CarenMFActivate::_MFSetAttributeSize(String^ Param_GuidChave, UInt32
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1895,9 +1795,6 @@ CarenResult CarenMFActivate::SetUnknown(String^ Param_GuidChave, ICaren^ Param_I
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1929,9 +1826,6 @@ CarenResult CarenMFActivate::UnlockStore()
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;

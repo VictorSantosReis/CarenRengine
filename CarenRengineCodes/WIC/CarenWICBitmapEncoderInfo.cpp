@@ -58,6 +58,7 @@ CarenResult CarenWICBitmapEncoderInfo::AdicionarPonteiro(IntPtr Param_PonteiroNa
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IWICBitmapEncoderInfo**>(p)));
 }
+
 /// <summary>
 /// Método responsável por adicionar um novo ponteiro nativo a classe atual.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -71,6 +72,7 @@ CarenResult CarenWICBitmapEncoderInfo::AdicionarPonteiro(LPVOID Param_PonteiroNa
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IWICBitmapEncoderInfo**>(p)));
 }
+
 /// <summary>
 /// Método responsável por recuperar o ponteiro atual da classe. Se o ponteiro não for valido, o método retornar ResultCode::ER_PONTEIRO.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -190,9 +192,6 @@ CarenResult CarenWICBitmapEncoderInfo::CreateInstance(ICaren^ Param_Out_BitmapEn
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -237,9 +236,6 @@ CarenResult CarenWICBitmapEncoderInfo::DoesSupportAnimation([Out] Boolean% Param
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -277,9 +273,6 @@ CarenResult CarenWICBitmapEncoderInfo::DoesSupportChromakey([Out] Boolean% Param
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -319,9 +312,6 @@ CarenResult CarenWICBitmapEncoderInfo::DoesSupportLossless([Out] Boolean% Param_
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -359,9 +349,6 @@ CarenResult CarenWICBitmapEncoderInfo::DoesSupportMultiframe([Out] Boolean% Para
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -416,9 +403,6 @@ CarenResult CarenWICBitmapEncoderInfo::GetColorManagementVersion(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -464,9 +448,6 @@ CarenResult CarenWICBitmapEncoderInfo::GetContainerFormat([Out] String^% Param_O
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -521,9 +502,6 @@ CarenResult CarenWICBitmapEncoderInfo::GetDeviceManufacturer(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -584,9 +562,6 @@ CarenResult CarenWICBitmapEncoderInfo::GetDeviceModels(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -646,9 +621,6 @@ CarenResult CarenWICBitmapEncoderInfo::GetFileExtensions(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -707,9 +679,6 @@ CarenResult CarenWICBitmapEncoderInfo::GetMimeTypes(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -767,9 +736,6 @@ CarenResult CarenWICBitmapEncoderInfo::GetPixelFormats(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -834,9 +800,6 @@ CarenResult CarenWICBitmapEncoderInfo::MatchesMimeType(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -897,9 +860,6 @@ CarenResult CarenWICBitmapEncoderInfo::GetAuthor(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -946,9 +906,6 @@ CarenResult CarenWICBitmapEncoderInfo::GetCLSID([Out] String^% Param_Out_CLSID)
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -986,9 +943,6 @@ CarenResult CarenWICBitmapEncoderInfo::GetComponentType([Out] CA_WICComponentTyp
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1042,9 +996,6 @@ CarenResult CarenWICBitmapEncoderInfo::GetFriendlyName(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1091,9 +1042,6 @@ CarenResult CarenWICBitmapEncoderInfo::GetSigningStatus([Out] CA_WICComponentSig
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1147,9 +1095,6 @@ CarenResult CarenWICBitmapEncoderInfo::GetSpecVersion(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1195,9 +1140,6 @@ CarenResult CarenWICBitmapEncoderInfo::GetVendorGUID([Out] String^% Param_Out_Gu
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1249,9 +1191,6 @@ CarenResult CarenWICBitmapEncoderInfo::GetVersion(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;

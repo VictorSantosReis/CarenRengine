@@ -3123,13 +3123,13 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_SombreadorCompilado">Um ponteiro para um objeto que contém um sombreador compilado. Geralmente se obtém esse ponteiro através do método (ICarenD3D10Blod::ObterPonteiroBuffer).</param>
 			/// <param name="Param_TamanhoSombreador">O Tamanho do sombreador no paramêtro(Param_SombreadorCompilado). Se está compilado com o ICarenD3D10Blod, utilize o método (ObterTamanhoBuffer) para recuperar esse valor.</param>
-			/// <param name="Param_ClasseLigação">Um ponteiro para um ICarenD3D11ClassLinkage, que representa a interface de ligação de classe; o valor pode ser NULO.</param>
+			/// <param name="Param_LinkageClass">Um ponteiro para um ICarenD3D11ClassLinkage, que representa a interface de ligação de classe; o valor pode ser NULO.</param>
 			/// <param name="Param_ValidarParametros">Se TRUE, o método vai validar os paramêtros de entrada. Se for validado com sucesso, o método retorna SS_FALSE em vez de S_OK.</param>
 			/// <param name="Param_Out_ComputeShader">Recebe a interface(ICarenD3D11ComputeShader). Se (Param_ValidarPametros) for TRUE, esse parametro retorna um objeto NULO.</param>
 			CarenResult CreateComputeShader(
 				ICaren^ Param_SombreadorCompilado,
 				UInt64 Param_TamanhoSombreador,
-				ICarenD3D11ClassLinkage^ Param_ClasseLigação,
+				ICarenD3D11ClassLinkage^ Param_LinkageClass,
 				Boolean Param_ValidarParametros,
 				[Out] ICarenD3D11ComputeShader^% Param_Out_ComputeShader);
 
@@ -3282,7 +3282,7 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_DescPredicado">Ponteiro para uma descrição de consulta onde o tipo de consulta deve ser uma D3D11_QUERY_SO_OVERFLOW_PREDICATE ou D3D11_QUERY_OCCLUSION_PREDICATE</param>
 			/// <param name="Param_Out_Predicado">Recebe a interface do Predicado criado.</param>
-			CarenResult CriarPredicado(
+			CarenResult CreatePredicate(
 				Estruturas::CA_D3D11_QUERY_DESC^% Param_DescPredicado,
 				[Out] ICarenD3D11Predicate^% Param_Out_Predicado);
 

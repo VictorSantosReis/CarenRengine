@@ -87,6 +87,7 @@ CarenResult CarenMFPresentationTimeSource::AdicionarPonteiro(IntPtr Param_Pontei
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IMFPresentationTimeSource**>(p)));
 }
+
 /// <summary>
 /// Método responsável por adicionar um novo ponteiro nativo a classe atual.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -100,6 +101,7 @@ CarenResult CarenMFPresentationTimeSource::AdicionarPonteiro(LPVOID Param_Pontei
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IMFPresentationTimeSource**>(p)));
 }
+
 /// <summary>
 /// Método responsável por recuperar o ponteiro atual da classe. Se o ponteiro não for valido, o método retornar ResultCode::ER_PONTEIRO.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -221,9 +223,6 @@ CarenResult CarenMFPresentationTimeSource::GetUnderlyingClock(ICarenMFClock ^% P
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -272,9 +271,6 @@ CarenResult CarenMFPresentationTimeSource::GetClockCharacteristics([Out] Enumera
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -312,9 +308,6 @@ CarenResult CarenMFPresentationTimeSource::GetContinuityKey([Out] UInt32% Param_
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -357,9 +350,6 @@ CarenResult CarenMFPresentationTimeSource::GetCorrelatedTime(UInt32 Param_ValorR
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -400,9 +390,6 @@ CarenResult CarenMFPresentationTimeSource::GetProperties([Out] Estruturas::CA_MF
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -441,9 +428,6 @@ CarenResult CarenMFPresentationTimeSource::GetState(UInt32 Param_ValorReservado,
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;

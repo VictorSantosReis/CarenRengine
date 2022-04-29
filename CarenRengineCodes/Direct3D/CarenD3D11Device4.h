@@ -21,45 +21,7 @@ limitations under the License.
 #include "../SDK_Utilidades.h"
 #include "../Caren/Caren.h"
 #include "../Caren/CarenBuffer.h"
-#include "CarenD3D11DeviceContext.h"
-#include "CarenD3D11DeviceContext1.h"
-#include "CarenD3D11DeviceContext2.h"
-#include "CarenD3D11DeviceContext3.h"
-#include "CarenD3DDeviceContextState.h"
-#include "CarenD3D11Texture1D.h"
-#include "CarenD3D11Texture2D.h"
-#include "CarenD3D11Texture2D1.h"
-#include "CarenD3D11Texture3D.h"
-#include "CarenD3D11Texture3D1.h"
-#include "CarenD3D11BlendState.h"
-#include "CarenD3D11BlendState1.h"
-#include "CarenD3D11Buffer.h"
-#include "CarenD3D11ClassLinkage.h"
-#include "CarenD3D11ClassInstance.h"
-#include "CarenD3D11Counter.h"
-#include "CarenD3D11Predicate.h"
-#include "CarenD3D11Query.h"
-#include "CarenD3D11Query1.h"
-#include "CarenD3D11RasterizerState.h"
-#include "CarenD3D11RasterizerState1.h"
-#include "CarenD3D11RasterizerState2.h"
-#include "CarenD3D11RenderTargetView.h"
-#include "CarenD3D11RenderTargetView1.h"
-#include "CarenD3D11SamplerState.h"
-#include "CarenD3D11UnorderedAccessView.h"
-#include "CarenD3D11UnorderedAccessView1.h"
-#include "CarenD3D11ShaderResourceView.h"
-#include "CarenD3D11ShaderResourceView1.h"
-#include "CarenD3D11VertexShader.h"
-#include "CarenD3D11ComputeShader.h"
-#include "CarenD3D11HullShader.h"
-#include "CarenD3D11DomainShader.h"
-#include "CarenD3D11GeometryShader.h"
-#include "CarenD3D11PixelShader.h"
-#include "CarenD3D11InputLayout.h"
-#include "CarenD3D11DepthStencilState.h"
-#include "CarenD3D11DepthStencilView.h"
-#include "../DXGI\CarenDXGISwapChain.h"
+#include "../SharedClass/Shared_Direct3D11.h"
 
 //Importa o namespace que contém as interfaces da API primária.
 using namespace CarenRengine::Direct3D11;
@@ -698,13 +660,13 @@ public:
 	/// </summary>
 	/// <param name="Param_SombreadorCompilado">Um ponteiro para um objeto que contém um sombreador compilado. Geralmente se obtém esse ponteiro através do método (ICarenD3D10Blod::ObterPonteiroBuffer)</param>
 	/// <param name="Param_TamanhoSombreador">O Tamanho do sombreador no paramêtro(Param_SombreadorCompilado). Se está compilado com o ICarenD3D10Blod, utilize o método (ObterTamanhoBuffer) para recuperar esse valor.</param>
-	/// <param name="Param_ClasseLigação">Um ponteiro para um ICarenD3D11ClassLinkage, que representa a interface de ligação de classe; o valor pode ser NULO.</param>
+	/// <param name="Param_LinkageClass">Um ponteiro para um ICarenD3D11ClassLinkage, que representa a interface de ligação de classe; o valor pode ser NULO.</param>
 	/// <param name="Param_ValidarParametros">Se TRUE, o método vai validar os paramêtros de entrada. Se for validado com sucesso, o método retorna SS_FALSE em vez de S_OK.</param>
 	/// <param name="Param_Out_ComputeShader">Recebe a interface(ICarenD3D11ComputeShader). Se (Param_ValidarPametros) for TRUE, esse parametro retorna um objeto NULO.</param>
 	virtual CarenResult CreateComputeShader(
 		ICaren^ Param_SombreadorCompilado,
 		UInt64 Param_TamanhoSombreador,
-		ICarenD3D11ClassLinkage^ Param_ClasseLigação,
+		ICarenD3D11ClassLinkage^ Param_LinkageClass,
 		Boolean Param_ValidarParametros,
 		[Out] ICarenD3D11ComputeShader^% Param_Out_ComputeShader);
 
@@ -857,7 +819,7 @@ public:
 	/// </summary>
 	/// <param name="Param_DescPredicado">Ponteiro para uma descrição de consulta onde o tipo de consulta deve ser uma D3D11_QUERY_SO_OVERFLOW_PREDICATE ou D3D11_QUERY_OCCLUSION_PREDICATE</param>
 	/// <param name="Param_Out_Predicado">Recebe a interface do Predicado criado.</param>
-	virtual CarenResult CriarPredicado(
+	virtual CarenResult CreatePredicate(
 		Estruturas::CA_D3D11_QUERY_DESC^% Param_DescPredicado,
 		[Out] ICarenD3D11Predicate^% Param_Out_Predicado);
 

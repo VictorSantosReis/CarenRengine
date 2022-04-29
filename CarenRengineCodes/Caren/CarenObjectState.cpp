@@ -236,9 +236,6 @@ CarenResult CarenObjectState::GetName(OutParam String^% Param_Out_NomeObjeto)
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -280,9 +277,6 @@ CarenResult CarenObjectState::GetNameLenght(OutParam UInt32% Param_Out_Size)
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -341,9 +335,6 @@ CarenResult CarenObjectState::SetName(String^ Param_Nome, UInt32 Param_SizeNome)
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;

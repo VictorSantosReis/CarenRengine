@@ -58,6 +58,7 @@ CarenResult CarenMFTranscodeSinkInfoProvider::AdicionarPonteiro(IntPtr Param_Pon
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IMFTranscodeSinkInfoProvider**>(p)));
 }
+
 /// <summary>
 /// Método responsável por adicionar um novo ponteiro nativo a classe atual.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -71,6 +72,7 @@ CarenResult CarenMFTranscodeSinkInfoProvider::AdicionarPonteiro(LPVOID Param_Pon
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IMFTranscodeSinkInfoProvider**>(p)));
 }
+
 /// <summary>
 /// Método responsável por recuperar o ponteiro atual da classe. Se o ponteiro não for valido, o método retornar ResultCode::ER_PONTEIRO.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -193,9 +195,6 @@ CarenResult CarenMFTranscodeSinkInfoProvider::GetSinkInfo([Out] CA_MF_TRANSCODE_
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -237,9 +236,6 @@ CarenResult CarenMFTranscodeSinkInfoProvider::SetOutputByteStream(ICarenMFActiva
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -278,9 +274,6 @@ CarenResult CarenMFTranscodeSinkInfoProvider::SetOutputFile(String^ Param_NomeAr
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -322,9 +315,6 @@ CarenResult CarenMFTranscodeSinkInfoProvider::SetProfile(ICarenMFTranscodeProfil
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;

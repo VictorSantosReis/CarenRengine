@@ -196,9 +196,6 @@ CarenResult CarenMFMediaTypeExtend::ExGetMajorMediaType(OutParam Enumeracoes::CA
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -261,9 +258,6 @@ CarenResult CarenMFMediaTypeExtend::ExGetFormatSubtype(OutParam Enumeracoes::CA_
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -317,9 +311,6 @@ CarenResult CarenMFMediaTypeExtend::GetMajorType([Out] String^% Param_Out_GuidTi
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -389,9 +380,6 @@ CarenResult CarenMFMediaTypeExtend::IsCompressedFormat([Out] Boolean% Param_Out_
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -441,9 +429,6 @@ CarenResult CarenMFMediaTypeExtend::IsEqual(ICarenMFMediaType^ Param_MidiaCompar
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -496,9 +481,6 @@ CarenResult CarenMFMediaTypeExtend::Compare(ICarenMFAttributes^ Param_InterfaceC
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -555,9 +537,6 @@ CarenResult CarenMFMediaTypeExtend::CompareItem(String^ Param_GuidChave, CA_PROP
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -605,9 +584,6 @@ CarenResult CarenMFMediaTypeExtend::CopyAllItems(ICarenMFAttributes^ Param_Out_I
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -638,9 +614,6 @@ CarenResult CarenMFMediaTypeExtend::DeleteAllItems()
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -680,9 +653,6 @@ CarenResult CarenMFMediaTypeExtend::DeleteItem(String^ Param_GuidChave)
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -729,9 +699,6 @@ CarenResult CarenMFMediaTypeExtend::GetAllocatedBlob(String^ Param_GuidChave, [O
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -792,9 +759,6 @@ CarenResult CarenMFMediaTypeExtend::GetAllocatedString(String^ Param_GuidChave, 
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -846,9 +810,6 @@ CarenResult CarenMFMediaTypeExtend::GetBlob(String^ Param_GuidChave, UInt32 Para
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -905,9 +866,6 @@ CarenResult CarenMFMediaTypeExtend::GetBlobSize(String^ Param_GuidChave, [Out] U
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -945,9 +903,6 @@ CarenResult CarenMFMediaTypeExtend::GetCount([Out] UInt32% Param_QuantidadeAtrib
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -992,9 +947,6 @@ CarenResult CarenMFMediaTypeExtend::GetDouble(String^ Param_GuidChave, [Out] Dou
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1038,9 +990,6 @@ CarenResult CarenMFMediaTypeExtend::GetGUID(String^ Param_GuidChave, [Out] Strin
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1088,9 +1037,6 @@ CarenResult CarenMFMediaTypeExtend::GetItem(String^ Param_GuidChave, [Out] CA_PR
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1141,9 +1087,6 @@ CarenResult CarenMFMediaTypeExtend::GetItemByIndex(UInt32 Param_IdItem, [Out] St
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1193,9 +1136,6 @@ CarenResult CarenMFMediaTypeExtend::GetItemType(String^ Param_GuidChave, [Out] C
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1242,9 +1182,6 @@ CarenResult CarenMFMediaTypeExtend::GetString(String^ Param_GuidChave, UInt32 Pa
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1293,9 +1230,6 @@ CarenResult CarenMFMediaTypeExtend::GetStringLength(String^ Param_GuidChave, [Ou
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1339,9 +1273,6 @@ CarenResult CarenMFMediaTypeExtend::GetUINT32(String^ Param_GuidChave, [Out] UIn
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1384,9 +1315,6 @@ CarenResult CarenMFMediaTypeExtend::GetUINT64(String^ Param_GuidChave, [Out] UIn
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1435,9 +1363,6 @@ CarenResult CarenMFMediaTypeExtend::_MFGetAttributeRatio(String^ Param_GuidChave
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1484,9 +1409,6 @@ CarenResult CarenMFMediaTypeExtend::_MFGetAttributeSize(String^ Param_GuidChave,
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1535,9 +1457,6 @@ CarenResult CarenMFMediaTypeExtend::GetUnknown(String^ Param_GuidChave, String^ 
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1634,9 +1553,6 @@ CarenResult CarenMFMediaTypeExtend::SetBlob(String^ Param_GuidChave, ICarenBuffe
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1676,9 +1592,6 @@ CarenResult CarenMFMediaTypeExtend::SetDouble(String^ Param_GuidChave, Double Pa
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1720,9 +1633,6 @@ CarenResult CarenMFMediaTypeExtend::SetGUID(String^ Param_GuidChave, String^ Par
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1768,9 +1678,6 @@ CarenResult CarenMFMediaTypeExtend::SetItem(String^ Param_GuidChave, Estruturas:
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1819,9 +1726,6 @@ CarenResult CarenMFMediaTypeExtend::SetString(String^ Param_GuidChave, String^ P
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1864,9 +1768,6 @@ CarenResult CarenMFMediaTypeExtend::SetUINT32(String^ Param_GuidChave, UInt32 Pa
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1905,9 +1806,6 @@ CarenResult CarenMFMediaTypeExtend::SetUINT64(String^ Param_GuidChave, UInt64 Pa
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1951,9 +1849,6 @@ CarenResult CarenMFMediaTypeExtend::_MFSetAttributeRatio(String^ Param_GuidChave
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1995,9 +1890,6 @@ CarenResult CarenMFMediaTypeExtend::_MFSetAttributeSize(String^ Param_GuidChave,
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -2043,9 +1935,6 @@ CarenResult CarenMFMediaTypeExtend::SetUnknown(String^ Param_GuidChave, ICaren^ 
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -2077,9 +1966,6 @@ CarenResult CarenMFMediaTypeExtend::UnlockStore()
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;

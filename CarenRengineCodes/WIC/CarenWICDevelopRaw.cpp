@@ -58,6 +58,7 @@ CarenResult CarenWICDevelopRaw::AdicionarPonteiro(IntPtr Param_PonteiroNativo)
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IWICDevelopRaw**>(p)));
 }
+
 /// <summary>
 /// Método responsável por adicionar um novo ponteiro nativo a classe atual.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -71,6 +72,7 @@ CarenResult CarenWICDevelopRaw::AdicionarPonteiro(LPVOID Param_PonteiroNativo)
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IWICDevelopRaw**>(p)));
 }
+
 /// <summary>
 /// Método responsável por recuperar o ponteiro atual da classe. Se o ponteiro não for valido, o método retornar ResultCode::ER_PONTEIRO.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -192,9 +194,6 @@ CarenResult CarenWICDevelopRaw::GetContrast([Out] double% Param_Out_Contraste)
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -232,9 +231,6 @@ CarenResult CarenWICDevelopRaw::GetCurrentParameterSet([Out] ICarenPropertyBag2^
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -277,9 +273,6 @@ CarenResult CarenWICDevelopRaw::GetExposureCompensation([Out] double% Param_Out_
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -317,9 +310,6 @@ CarenResult CarenWICDevelopRaw::GetGamma([Out] double% Param_Out_Gamma)
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -364,9 +354,6 @@ CarenResult CarenWICDevelopRaw::GetKelvinRangeInfo(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -410,9 +397,6 @@ CarenResult CarenWICDevelopRaw::GetNamedWhitePoint([Out] CA_WICNamedWhitePoint% 
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -453,9 +437,6 @@ CarenResult CarenWICDevelopRaw::GetNoiseReduction([Out] double% Param_Out_Noise)
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -494,9 +475,6 @@ CarenResult CarenWICDevelopRaw::GetRenderMode([Out] CA_WICRawRenderMode% Param_O
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -534,9 +512,6 @@ CarenResult CarenWICDevelopRaw::GetRotation([Out] double% Param_Out_Rotacao)
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -578,9 +553,6 @@ CarenResult CarenWICDevelopRaw::GetSaturation([Out] double% Param_Out_Saturacao)
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -621,9 +593,6 @@ CarenResult CarenWICDevelopRaw::GetSharpness([Out] double% Param_Out_Shapness)
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -663,9 +632,6 @@ CarenResult CarenWICDevelopRaw::GetTint([Out] double% Param_Out_Tint)
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -712,9 +678,6 @@ CA_WICRawToneCurve^% Param_Ref_ToneCurve,
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -756,9 +719,6 @@ CarenResult CarenWICDevelopRaw::GetWhitePointKelvin([Out] UInt32% Param_Out_Whit
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -803,9 +763,6 @@ CarenResult CarenWICDevelopRaw::GetWhitePointRGB(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -843,9 +800,6 @@ CarenResult CarenWICDevelopRaw::LoadParameterSet(CA_WICRawParameterSet Param_Par
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -882,9 +836,6 @@ CarenResult CarenWICDevelopRaw::QueryRawCapabilitiesInfo([Out] CA_WICRawCapabili
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -924,9 +875,6 @@ CarenResult CarenWICDevelopRaw::SetContrast(double Param_Contraste)
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -965,9 +913,6 @@ CarenResult CarenWICDevelopRaw::SetDestinationColorContext(ICarenWICColorContext
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1001,9 +946,6 @@ CarenResult CarenWICDevelopRaw::SetExposureCompensation(double Param_EV)
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1036,9 +978,6 @@ CarenResult CarenWICDevelopRaw::SetGamma(double Param_Gamma)
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1070,9 +1009,6 @@ CarenResult CarenWICDevelopRaw::SetNamedWhitePoint(CA_WICNamedWhitePoint Param_W
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1108,9 +1044,6 @@ CarenResult CarenWICDevelopRaw::SetNoiseReduction(double Param_Noise)
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1150,9 +1083,6 @@ CarenResult CarenWICDevelopRaw::SetNotificationCallback(ICarenWICDevelopRawNotif
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1185,9 +1115,6 @@ CarenResult CarenWICDevelopRaw::SetRenderMode(CA_WICRawRenderMode Param_ModoRend
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1219,9 +1146,6 @@ CarenResult CarenWICDevelopRaw::SetRotation(double Param_Rotacao)
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1258,9 +1182,6 @@ CarenResult CarenWICDevelopRaw::SetSaturation(double Param_Saturacao)
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1296,9 +1217,6 @@ CarenResult CarenWICDevelopRaw::SetSharpness(double Param_Sharpness)
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1333,9 +1251,6 @@ CarenResult CarenWICDevelopRaw::SetTint(double Param_Tint)
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1379,9 +1294,6 @@ CA_WICRawToneCurve^ Param_ToneCurve)
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1418,9 +1330,6 @@ CarenResult CarenWICDevelopRaw::SetWhitePointKelvin(UInt32 Param_WhitePointKelvi
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1461,9 +1370,6 @@ UInt32 Param_Blue)
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1519,9 +1425,6 @@ CarenResult CarenWICDevelopRaw::GetColorContexts(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1583,9 +1486,6 @@ CarenResult CarenWICDevelopRaw::GetMetadataQueryReader(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1627,9 +1527,6 @@ CarenResult CarenWICDevelopRaw::GetThumbnail(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1684,9 +1581,6 @@ CarenResult CarenWICDevelopRaw::CopyPalette(ICaren^ Param_Palette)
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1739,9 +1633,6 @@ CarenResult CarenWICDevelopRaw::CopyPixels(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1778,9 +1669,6 @@ CarenResult CarenWICDevelopRaw::GetPixelFormat([Out] String^% Param_Out_FormatoP
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1827,9 +1715,6 @@ CarenResult CarenWICDevelopRaw::GetResolution(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1873,9 +1758,6 @@ CarenResult CarenWICDevelopRaw::GetSize(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;

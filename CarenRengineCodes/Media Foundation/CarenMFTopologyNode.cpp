@@ -86,6 +86,7 @@ CarenResult CarenMFTopologyNode::AdicionarPonteiro(IntPtr Param_PonteiroNativo)
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IMFTopologyNode**>(p)));
 }
+
 /// <summary>
 /// Método responsável por adicionar um novo ponteiro nativo a classe atual.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -99,6 +100,7 @@ CarenResult CarenMFTopologyNode::AdicionarPonteiro(LPVOID Param_PonteiroNativo)
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IMFTopologyNode**>(p)));
 }
+
 /// <summary>
 /// Método responsável por recuperar o ponteiro atual da classe. Se o ponteiro não for valido, o método retornar ResultCode::ER_PONTEIRO.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -223,9 +225,6 @@ CarenResult CarenMFTopologyNode::CloneFrom(ICarenMFTopologyNode^ Param_NodeClone
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -267,9 +266,6 @@ CarenResult CarenMFTopologyNode::ConnectOutput(UInt32 Param_IndexFluxoSaida, ICa
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -301,9 +297,6 @@ CarenResult CarenMFTopologyNode::DisconnectOutput(UInt32 Param_IndexSaida)
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -342,9 +335,6 @@ CarenResult CarenMFTopologyNode::GetInput(UInt32 Param_IndexEntrada, [Out] ICare
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -390,9 +380,6 @@ CarenResult CarenMFTopologyNode::GetInputCount([Out] UInt32% Param_Out_Quantidad
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -431,9 +418,6 @@ CarenResult CarenMFTopologyNode::GetInputPrefType(UInt32 Param_IndexEntrada, [Ou
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -476,9 +460,6 @@ CarenResult CarenMFTopologyNode::GetNodeType([Out] Enumeracoes::CA_MF_TOPOLOGY_T
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -516,9 +497,6 @@ CarenResult CarenMFTopologyNode::GetObject(ICaren^ Param_Out_Objeto)
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -560,9 +538,6 @@ CarenResult CarenMFTopologyNode::GetOutput(UInt32 Param_IndexSaidaFluxo, [Out] I
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -608,9 +583,6 @@ CarenResult CarenMFTopologyNode::GetOutputCount([Out] UInt32% Param_Out_Quantida
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -649,9 +621,6 @@ CarenResult CarenMFTopologyNode::GetOutputPrefType(UInt32 Param_IndexSaida, [Out
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -696,9 +665,6 @@ CarenResult CarenMFTopologyNode::GetTopoNodeID([Out] UInt64% Param_Out_Identific
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -741,9 +707,6 @@ CarenResult CarenMFTopologyNode::SetInputPrefType(UInt32 Param_IndexFluxoEntrada
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -781,9 +744,6 @@ CarenResult CarenMFTopologyNode::SetObject(ICaren^ Param_Objeto)
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -824,9 +784,6 @@ CarenResult CarenMFTopologyNode::SetOutputPrefType(UInt32 Param_IndexFluxoSaida,
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -859,9 +816,6 @@ CarenResult CarenMFTopologyNode::SetTopoNodeID(UInt64 Param_IdentificadorNode)
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -914,9 +868,6 @@ CarenResult CarenMFTopologyNode::Compare(ICarenMFAttributes^ Param_InterfaceComp
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -973,9 +924,6 @@ CarenResult CarenMFTopologyNode::CompareItem(String^ Param_GuidChave, CA_PROPVAR
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1023,9 +971,6 @@ CarenResult CarenMFTopologyNode::CopyAllItems(ICarenMFAttributes^ Param_Out_Inte
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1056,9 +1001,6 @@ CarenResult CarenMFTopologyNode::DeleteAllItems()
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1098,9 +1040,6 @@ CarenResult CarenMFTopologyNode::DeleteItem(String^ Param_GuidChave)
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1147,9 +1086,6 @@ CarenResult CarenMFTopologyNode::GetAllocatedBlob(String^ Param_GuidChave, [Out]
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1210,9 +1146,6 @@ CarenResult CarenMFTopologyNode::GetAllocatedString(String^ Param_GuidChave, [Ou
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1264,9 +1197,6 @@ CarenResult CarenMFTopologyNode::GetBlob(String^ Param_GuidChave, UInt32 Param_T
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1323,9 +1253,6 @@ CarenResult CarenMFTopologyNode::GetBlobSize(String^ Param_GuidChave, [Out] UInt
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1363,9 +1290,6 @@ CarenResult CarenMFTopologyNode::GetCount([Out] UInt32% Param_QuantidadeAtributo
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1410,9 +1334,6 @@ CarenResult CarenMFTopologyNode::GetDouble(String^ Param_GuidChave, [Out] Double
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1456,9 +1377,6 @@ CarenResult CarenMFTopologyNode::GetGUID(String^ Param_GuidChave, [Out] String^%
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1506,9 +1424,6 @@ CarenResult CarenMFTopologyNode::GetItem(String^ Param_GuidChave, [Out] CA_PROPV
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1559,9 +1474,6 @@ CarenResult CarenMFTopologyNode::GetItemByIndex(UInt32 Param_IdItem, [Out] Strin
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1611,9 +1523,6 @@ CarenResult CarenMFTopologyNode::GetItemType(String^ Param_GuidChave, [Out] CA_M
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1660,9 +1569,6 @@ CarenResult CarenMFTopologyNode::GetString(String^ Param_GuidChave, UInt32 Param
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1711,9 +1617,6 @@ CarenResult CarenMFTopologyNode::GetStringLength(String^ Param_GuidChave, [Out] 
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1757,9 +1660,6 @@ CarenResult CarenMFTopologyNode::GetUINT32(String^ Param_GuidChave, [Out] UInt32
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1802,9 +1702,6 @@ CarenResult CarenMFTopologyNode::GetUINT64(String^ Param_GuidChave, [Out] UInt64
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1853,9 +1750,6 @@ CarenResult CarenMFTopologyNode::_MFGetAttributeRatio(String^ Param_GuidChave, [
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1902,9 +1796,6 @@ CarenResult CarenMFTopologyNode::_MFGetAttributeSize(String^ Param_GuidChave, [O
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1953,9 +1844,6 @@ CarenResult CarenMFTopologyNode::GetUnknown(String^ Param_GuidChave, String^ Par
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -2052,9 +1940,6 @@ CarenResult CarenMFTopologyNode::SetBlob(String^ Param_GuidChave, ICarenBuffer^ 
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -2094,9 +1979,6 @@ CarenResult CarenMFTopologyNode::SetDouble(String^ Param_GuidChave, Double Param
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -2138,9 +2020,6 @@ CarenResult CarenMFTopologyNode::SetGUID(String^ Param_GuidChave, String^ Param_
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -2186,9 +2065,6 @@ CarenResult CarenMFTopologyNode::SetItem(String^ Param_GuidChave, Estruturas::CA
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -2237,9 +2113,6 @@ CarenResult CarenMFTopologyNode::SetString(String^ Param_GuidChave, String^ Para
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -2282,9 +2155,6 @@ CarenResult CarenMFTopologyNode::SetUINT32(String^ Param_GuidChave, UInt32 Param
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -2323,9 +2193,6 @@ CarenResult CarenMFTopologyNode::SetUINT64(String^ Param_GuidChave, UInt64 Param
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -2369,9 +2236,6 @@ CarenResult CarenMFTopologyNode::_MFSetAttributeRatio(String^ Param_GuidChave, U
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -2413,9 +2277,6 @@ CarenResult CarenMFTopologyNode::_MFSetAttributeSize(String^ Param_GuidChave, UI
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -2461,9 +2322,6 @@ CarenResult CarenMFTopologyNode::SetUnknown(String^ Param_GuidChave, ICaren^ Par
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -2495,9 +2353,6 @@ CarenResult CarenMFTopologyNode::UnlockStore()
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;

@@ -190,6 +190,9 @@
     <Filter Include="Arquivos de Origem\Shared Classes">
       <UniqueIdentifier>{61320c90-b412-4653-ba21-f4d9c95a2929}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Arquivos de Origem\Shared Classes\D3D11">
+      <UniqueIdentifier>{18f2716f-aebe-4c8c-9dad-587027b944c3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CarenRengineCodes\pch.h">
@@ -2810,8 +2813,14 @@
     <ClCompile Include="CarenRengineCodes\Caren\CarenEvent.cpp">
       <Filter>Arquivos de Origem\Classes\Caren</Filter>
     </ClCompile>
-    <ClCompile Include="CarenRengineCodes\SharedClass\Shared_Direct3D11.cpp">
-      <Filter>Arquivos de Origem\Shared Classes</Filter>
+    <ClCompile Include="CarenRengineCodes\SharedClass\Shared_Direct3D11_DeviceContext.cpp">
+      <Filter>Arquivos de Origem\Shared Classes\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\SharedClass\Shared_Direct3D11_DeviceChild.cpp">
+      <Filter>Arquivos de Origem\Shared Classes\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\SharedClass\Shared_Direct3D11_Device.cpp">
+      <Filter>Arquivos de Origem\Shared Classes\D3D11</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

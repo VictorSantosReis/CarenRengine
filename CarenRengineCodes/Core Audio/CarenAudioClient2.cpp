@@ -217,9 +217,6 @@ Boolean Param_EventDriven,
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -270,9 +267,6 @@ CA_AUDIO_STREAM_CATEGORY Param_Categoria,
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -315,9 +309,6 @@ CarenResult CarenAudioClient2::SetClientProperties(CA_AudioClientProperties^ Par
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -364,9 +355,6 @@ CarenResult CarenAudioClient2::GetBufferSize([Out] UInt32% Param_Out_NumeroFrame
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -404,9 +392,6 @@ CarenResult CarenAudioClient2::GetCurrentPadding([Out] UInt32% Param_Out_NumeroQ
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -447,9 +432,6 @@ CarenResult CarenAudioClient2::GetDevicePeriod([Out] Int64% Param_Out_IntervaloP
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -492,9 +474,6 @@ CarenResult CarenAudioClient2::GetMixFormat([Out] Estruturas::CA_WAVEFORMATEXEXT
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -547,9 +526,6 @@ CarenResult CarenAudioClient2::GetService(String^ Param_RIID, ICaren^ Param_Out_
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -587,9 +563,6 @@ CarenResult CarenAudioClient2::GetStreamLatency([Out] Int64% Param_Out_Latencia)
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -662,9 +635,6 @@ CarenResult CarenAudioClient2::Initialize(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -721,9 +691,6 @@ CarenResult CarenAudioClient2::IsFormatSupported(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -775,9 +742,6 @@ CarenResult CarenAudioClient2::Reset() {
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -820,9 +784,6 @@ CarenResult CarenAudioClient2::SetEventHandle(ICarenEvent^ Param_EventHandle)
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -854,9 +815,6 @@ CarenResult CarenAudioClient2::Start() {
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -891,9 +849,6 @@ CarenResult CarenAudioClient2::Stop()
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;

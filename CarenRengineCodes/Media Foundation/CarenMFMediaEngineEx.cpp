@@ -58,6 +58,7 @@ CarenResult CarenMFMediaEngineEx::AdicionarPonteiro(IntPtr Param_PonteiroNativo)
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IMFMediaEngineEx**>(p)));
 }
+
 /// <summary>
 /// Método responsável por adicionar um novo ponteiro nativo a classe atual.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -71,6 +72,7 @@ CarenResult CarenMFMediaEngineEx::AdicionarPonteiro(LPVOID Param_PonteiroNativo)
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IMFMediaEngineEx**>(p)));
 }
+
 /// <summary>
 /// Método responsável por recuperar o ponteiro atual da classe. Se o ponteiro não for valido, o método retornar ResultCode::ER_PONTEIRO.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -186,9 +188,6 @@ CarenResult CarenMFMediaEngineEx::ApplyStreamSelections()
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -219,9 +218,6 @@ CarenResult CarenMFMediaEngineEx::CancelTimelineMarkerTimer()
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -255,9 +251,6 @@ CarenResult CarenMFMediaEngineEx::EnableHorizontalMirrorMode(Boolean Param_Ativa
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -289,9 +282,6 @@ CarenResult CarenMFMediaEngineEx::EnableTimeUpdateTimer(Boolean Param_AtivarTime
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -325,9 +315,6 @@ CarenResult CarenMFMediaEngineEx::EnableWindowlessSwapchainMode(Boolean Param_At
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -359,9 +346,6 @@ CarenResult CarenMFMediaEngineEx::FrameStep(Boolean Param_Avancar)
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -397,9 +381,6 @@ CarenResult CarenMFMediaEngineEx::GetAudioEndpointRole([Out] CA_ERole% Param_Out
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -438,9 +419,6 @@ CarenResult CarenMFMediaEngineEx::GetAudioStreamCategory([Out] CA_AUDIO_STREAM_C
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -490,9 +468,6 @@ CarenResult CarenMFMediaEngineEx::GetNumberOfStreams([Out] UInt32% Param_Out_Num
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -545,9 +520,6 @@ String^ Param_GuidMFAtributos,
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -589,9 +561,6 @@ CarenResult CarenMFMediaEngineEx::GetRealTimeMode([Out] Boolean% Param_Out_Habil
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -629,9 +598,6 @@ CarenResult CarenMFMediaEngineEx::GetResourceCharacteristics([Out] CA_MFMEDIASOU
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -678,9 +644,6 @@ CA_MF_MEDIA_ENGINE_STATISTIC Param_TipoEstatistica,
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -722,9 +685,6 @@ CarenResult CarenMFMediaEngineEx::GetStereo3DFramePackingMode([Out] CA_MF_MEDIA_
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -762,9 +722,6 @@ CarenResult CarenMFMediaEngineEx::GetStereo3DRenderMode([Out] CA_MF3DVideoOutput
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -818,9 +775,6 @@ String^ Param_GuidMfAtributo,
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -865,9 +819,6 @@ UInt32 Param_IdFluxo,
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -906,9 +857,6 @@ CarenResult CarenMFMediaEngineEx::GetTimelineMarkerTimer([Out] double% Param_Out
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -946,9 +894,6 @@ CarenResult CarenMFMediaEngineEx::GetVideoSwapchainHandle([Out] IntPtr% Param_Ou
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -994,9 +939,6 @@ Boolean Param_Opcional)
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1037,9 +979,6 @@ Boolean Param_Opcional)
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1089,9 +1028,6 @@ CarenResult CarenMFMediaEngineEx::IsProtected([Out] Boolean% Param_Out_Protegido
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1136,9 +1072,6 @@ CarenResult CarenMFMediaEngineEx::RemoveAllEffects()
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1170,9 +1103,6 @@ CarenResult CarenMFMediaEngineEx::SetAudioEndpointRole(CA_ERole Param_Role)
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1206,9 +1136,6 @@ CarenResult CarenMFMediaEngineEx::SetAudioStreamCategory(CA_AUDIO_STREAM_CATEGOR
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1240,9 +1167,6 @@ CarenResult CarenMFMediaEngineEx::SetBalance(double Param_Balance)
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1279,9 +1203,6 @@ CA_MF_MEDIA_ENGINE_SEEK_MODE Param_Modo)
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1313,9 +1234,6 @@ CarenResult CarenMFMediaEngineEx::SetRealTimeMode(Boolean Param_Habilitar)
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1364,9 +1282,6 @@ String^ Param_Url)
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1403,9 +1318,6 @@ CarenResult CarenMFMediaEngineEx::SetStereo3DFramePackingMode(CA_MF_MEDIA_ENGINE
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1437,9 +1349,6 @@ CarenResult CarenMFMediaEngineEx::SetStereo3DRenderMode(CA_MF3DVideoOutputType P
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1476,9 +1385,6 @@ Boolean Param_Habilitar)
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1510,9 +1416,6 @@ CarenResult CarenMFMediaEngineEx::SetTimelineMarkerTimer(double Param_TimeToFire
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1563,9 +1466,6 @@ CA_MFARGB^ Param_CorBorda)
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1621,9 +1521,6 @@ CarenResult CarenMFMediaEngineEx::CanPlayType(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1675,9 +1572,6 @@ CarenResult CarenMFMediaEngineEx::GetBuffered([Out] ICarenMFMediaTimeRange^% Par
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1718,9 +1612,6 @@ CarenResult CarenMFMediaEngineEx::GetCurrentSource([Out] String^% Param_Out_Url)
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1793,9 +1684,6 @@ CarenResult CarenMFMediaEngineEx::GetError([Out] ICarenMFMediaError^% Param_Out_
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1860,9 +1748,6 @@ CarenResult CarenMFMediaEngineEx::GetNativeVideoSize(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1921,9 +1806,6 @@ CarenResult CarenMFMediaEngineEx::GetPlayed([Out] ICarenMFMediaTimeRange^% Param
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1992,9 +1874,6 @@ CarenResult CarenMFMediaEngineEx::GetSeekable([Out] ICarenMFMediaTimeRange^% Par
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -2048,9 +1927,6 @@ CarenResult CarenMFMediaEngineEx::GetVideoAspectRatio(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -2147,9 +2023,6 @@ CarenResult CarenMFMediaEngineEx::Load()
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -2185,9 +2058,6 @@ CarenResult CarenMFMediaEngineEx::OnVideoStreamTick([Out] Int64% Param_Out_Tempo
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -2222,9 +2092,6 @@ CarenResult CarenMFMediaEngineEx::Pause()
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -2255,9 +2122,6 @@ CarenResult CarenMFMediaEngineEx::Play()
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -2291,9 +2155,6 @@ CarenResult CarenMFMediaEngineEx::SetAutoPlay(Boolean Param_AutoPlay)
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -2325,9 +2186,6 @@ CarenResult CarenMFMediaEngineEx::SetCurrentTime(double Param_NovaPosicao)
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -2361,9 +2219,6 @@ CarenResult CarenMFMediaEngineEx::SetDefaultPlaybackRate(double Param_TaxaReprod
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -2395,9 +2250,6 @@ CarenResult CarenMFMediaEngineEx::SetErrorCode(CA_MF_MEDIA_ENGINE_ERR Param_Erro
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -2431,9 +2283,6 @@ CarenResult CarenMFMediaEngineEx::SetLoop(Boolean Param_Loop)
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -2465,9 +2314,6 @@ CarenResult CarenMFMediaEngineEx::SetMuted(Boolean Param_Mudo)
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -2501,9 +2347,6 @@ CarenResult CarenMFMediaEngineEx::SetPlaybackRate(double Param_TaxaReproducaoAtu
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -2535,9 +2378,6 @@ CarenResult CarenMFMediaEngineEx::SetPreload(CA_MF_MEDIA_ENGINE_PRELOAD Param_Pr
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -2577,9 +2417,6 @@ CarenResult CarenMFMediaEngineEx::SetSource(String^ Param_Url)
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -2622,9 +2459,6 @@ CarenResult CarenMFMediaEngineEx::SetSourceElements(ICarenMFMediaEngineSrcElemen
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -2657,9 +2491,6 @@ CarenResult CarenMFMediaEngineEx::SetVolume(double Param_Volume)
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -2690,9 +2521,6 @@ CarenResult CarenMFMediaEngineEx::Shutdown()
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -2751,9 +2579,6 @@ CarenResult CarenMFMediaEngineEx::TransferVideoFrame(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;

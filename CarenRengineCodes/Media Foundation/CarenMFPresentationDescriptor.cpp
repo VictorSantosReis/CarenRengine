@@ -96,6 +96,7 @@ CarenResult CarenMFPresentationDescriptor::AdicionarPonteiro(IntPtr Param_Pontei
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IMFPresentationDescriptor**>(p)));
 }
+
 /// <summary>
 /// Método responsável por adicionar um novo ponteiro nativo a classe atual.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -109,6 +110,7 @@ CarenResult CarenMFPresentationDescriptor::AdicionarPonteiro(LPVOID Param_Pontei
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IMFPresentationDescriptor**>(p)));
 }
+
 /// <summary>
 /// Método responsável por recuperar o ponteiro atual da classe. Se o ponteiro não for valido, o método retornar ResultCode::ER_PONTEIRO.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -231,9 +233,6 @@ CarenResult CarenMFPresentationDescriptor::Clone([Out] ICarenMFPresentationDescr
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -279,9 +278,6 @@ CarenResult CarenMFPresentationDescriptor::DeselectStream(UInt32 Param_IdFluxo)
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -323,9 +319,6 @@ CarenResult CarenMFPresentationDescriptor::GetStreamDescriptorByIndex(UInt32 Par
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -378,9 +371,6 @@ CarenResult CarenMFPresentationDescriptor::GetStreamDescriptorCount([Out] UInt32
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -419,9 +409,6 @@ CarenResult CarenMFPresentationDescriptor::SelectStream(UInt32 Param_IdFluxo)
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -478,9 +465,6 @@ CarenResult CarenMFPresentationDescriptor::Compare(ICarenMFAttributes^ Param_Int
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -536,9 +520,6 @@ CarenResult CarenMFPresentationDescriptor::CompareItem(String^ Param_GuidChave, 
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -586,9 +567,6 @@ CarenResult CarenMFPresentationDescriptor::CopyAllItems(ICarenMFAttributes^ Para
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -619,9 +597,6 @@ CarenResult CarenMFPresentationDescriptor::DeleteAllItems()
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -661,9 +636,6 @@ CarenResult CarenMFPresentationDescriptor::DeleteItem(String^ Param_GuidChave)
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -710,9 +682,6 @@ CarenResult CarenMFPresentationDescriptor::GetAllocatedBlob(String^ Param_GuidCh
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -773,9 +742,6 @@ CarenResult CarenMFPresentationDescriptor::GetAllocatedString(String^ Param_Guid
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -827,9 +793,6 @@ CarenResult CarenMFPresentationDescriptor::GetBlob(String^ Param_GuidChave, UInt
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -886,9 +849,6 @@ CarenResult CarenMFPresentationDescriptor::GetBlobSize(String^ Param_GuidChave, 
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -926,9 +886,6 @@ CarenResult CarenMFPresentationDescriptor::GetCount([Out] UInt32% Param_Quantida
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -973,9 +930,6 @@ CarenResult CarenMFPresentationDescriptor::GetDouble(String^ Param_GuidChave, [O
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1019,9 +973,6 @@ CarenResult CarenMFPresentationDescriptor::GetGUID(String^ Param_GuidChave, [Out
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1069,9 +1020,6 @@ CarenResult CarenMFPresentationDescriptor::GetItem(String^ Param_GuidChave, [Out
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1122,9 +1070,6 @@ CarenResult CarenMFPresentationDescriptor::GetItemByIndex(UInt32 Param_IdItem, [
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1174,9 +1119,6 @@ CarenResult CarenMFPresentationDescriptor::GetItemType(String^ Param_GuidChave, 
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1223,9 +1165,6 @@ CarenResult CarenMFPresentationDescriptor::GetString(String^ Param_GuidChave, UI
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1274,9 +1213,6 @@ CarenResult CarenMFPresentationDescriptor::GetStringLength(String^ Param_GuidCha
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1320,9 +1256,6 @@ CarenResult CarenMFPresentationDescriptor::GetUINT32(String^ Param_GuidChave, [O
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1365,9 +1298,6 @@ CarenResult CarenMFPresentationDescriptor::GetUINT64(String^ Param_GuidChave, [O
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1416,9 +1346,6 @@ CarenResult CarenMFPresentationDescriptor::_MFGetAttributeRatio(String^ Param_Gu
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1465,9 +1392,6 @@ CarenResult CarenMFPresentationDescriptor::_MFGetAttributeSize(String^ Param_Gui
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1516,9 +1440,6 @@ CarenResult CarenMFPresentationDescriptor::GetUnknown(String^ Param_GuidChave, S
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1615,9 +1536,6 @@ CarenResult CarenMFPresentationDescriptor::SetBlob(String^ Param_GuidChave, ICar
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1657,9 +1575,6 @@ CarenResult CarenMFPresentationDescriptor::SetDouble(String^ Param_GuidChave, Do
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1701,9 +1616,6 @@ CarenResult CarenMFPresentationDescriptor::SetGUID(String^ Param_GuidChave, Stri
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1749,9 +1661,6 @@ CarenResult CarenMFPresentationDescriptor::SetItem(String^ Param_GuidChave, Estr
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1800,9 +1709,6 @@ CarenResult CarenMFPresentationDescriptor::SetString(String^ Param_GuidChave, St
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1845,9 +1751,6 @@ CarenResult CarenMFPresentationDescriptor::SetUINT32(String^ Param_GuidChave, UI
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1886,9 +1789,6 @@ CarenResult CarenMFPresentationDescriptor::SetUINT64(String^ Param_GuidChave, UI
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -1932,9 +1832,6 @@ CarenResult CarenMFPresentationDescriptor::_MFSetAttributeRatio(String^ Param_Gu
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -1976,9 +1873,6 @@ CarenResult CarenMFPresentationDescriptor::_MFSetAttributeSize(String^ Param_Gui
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -2024,9 +1918,6 @@ CarenResult CarenMFPresentationDescriptor::SetUnknown(String^ Param_GuidChave, I
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -2058,9 +1949,6 @@ CarenResult CarenMFPresentationDescriptor::UnlockStore()
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;

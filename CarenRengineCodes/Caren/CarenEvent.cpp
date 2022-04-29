@@ -125,9 +125,6 @@ CarenResult CarenEvent::CriarEvento(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -207,9 +204,6 @@ CarenResult CarenEvent::CriarEventoEx(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -349,9 +343,6 @@ CarenResult CarenEvent::AguardarObjetoUnico(UInt32 Param_TempoMilliseconds)
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -389,9 +380,6 @@ CarenResult CarenEvent::AguardarObjetoUnicoEx(UInt32 Param_TempoMilliseconds, Bo
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;

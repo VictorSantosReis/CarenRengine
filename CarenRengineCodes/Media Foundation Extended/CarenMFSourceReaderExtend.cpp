@@ -360,9 +360,6 @@ CarenResult CarenMFSourceReaderExtend::ExReadSampleAsync(UInt32 Param_StreamInde
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -407,9 +404,6 @@ CarenResult CarenMFSourceReaderExtend::GetCurrentMediaType(UInt32 Param_IdFluxo,
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -453,9 +447,6 @@ CarenResult CarenMFSourceReaderExtend::GetNativeMediaType(UInt32 Param_IdFluxo, 
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -518,9 +509,6 @@ CarenResult CarenMFSourceReaderExtend::GetPresentationAttribute(UInt32 Param_IdF
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -652,9 +640,6 @@ CarenResult CarenMFSourceReaderExtend::GetStreamSelection(UInt32 Param_IdFluxo, 
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -717,9 +702,6 @@ CarenResult CarenMFSourceReaderExtend::ReadSample
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -789,9 +771,6 @@ CarenResult CarenMFSourceReaderExtend::SetCurrentMediaType(UInt32 Param_IdFluxo,
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -838,9 +817,6 @@ CarenResult CarenMFSourceReaderExtend::SetCurrentPosition(Int64 Param_PosiçãoN
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -880,9 +856,6 @@ CarenResult CarenMFSourceReaderExtend::SetStreamSelection(UInt32 Param_IdFluxo, 
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -914,9 +887,6 @@ CarenResult CarenMFSourceReaderExtend::Flush(UInt32 Param_IdFluxo)
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;

@@ -61,6 +61,7 @@ CarenResult CarenMFVideoDisplayControl::AdicionarPonteiro(IntPtr Param_PonteiroN
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IMFVideoDisplayControl**>(p)));
 }
+
 /// <summary>
 /// Método responsável por adicionar um novo ponteiro nativo a classe atual.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -74,6 +75,7 @@ CarenResult CarenMFVideoDisplayControl::AdicionarPonteiro(LPVOID Param_PonteiroN
 	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
 	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IMFVideoDisplayControl**>(p)));
 }
+
 /// <summary>
 /// Método responsável por recuperar o ponteiro atual da classe. Se o ponteiro não for valido, o método retornar ResultCode::ER_PONTEIRO.
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
@@ -198,9 +200,6 @@ CarenResult CarenMFVideoDisplayControl::GetAspectRatioMode([Out] Enumeracoes::CA
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -238,9 +237,6 @@ CarenResult CarenMFVideoDisplayControl::GetBorderColor([Out] UInt32% Param_Out_C
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -296,9 +292,6 @@ CarenResult CarenMFVideoDisplayControl::GetCurrentImage(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -368,9 +361,6 @@ CarenResult CarenMFVideoDisplayControl::GetFullscreen([Out] Boolean% Param_Out_F
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -418,9 +408,6 @@ CarenResult CarenMFVideoDisplayControl::GetIdealVideoSize(
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -484,9 +471,6 @@ CarenResult CarenMFVideoDisplayControl::GetNativeVideoSize(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -543,9 +527,6 @@ CarenResult CarenMFVideoDisplayControl::GetRenderingPrefs([Out] Enumeracoes::CA_
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -592,9 +573,6 @@ CarenResult CarenMFVideoDisplayControl::GetVideoPosition(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -635,9 +613,6 @@ CarenResult CarenMFVideoDisplayControl::GetVideoWindow([Out] IntPtr% Param_Out_H
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -676,9 +651,6 @@ CarenResult CarenMFVideoDisplayControl::RepaintSuperfice()
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -711,9 +683,6 @@ CarenResult CarenMFVideoDisplayControl::SetAspectRatioMode(Enumeracoes::CA_MFVid
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -745,9 +714,6 @@ CarenResult CarenMFVideoDisplayControl::SetBorderColor(UInt32 Param_ColorRef)
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -785,9 +751,6 @@ CarenResult CarenMFVideoDisplayControl::SetFullScreen(Boolean Param_EstadoFullSc
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -824,9 +787,6 @@ CarenResult CarenMFVideoDisplayControl::SetRenderingPrefs(Enumeracoes::CA_MFVide
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;
@@ -883,9 +843,6 @@ CarenResult CarenMFVideoDisplayControl::SetVideoPosition(
 	{
 		//Falhou ao realizar a operação.
 
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
 		//Sai do método
 		Sair;
 	}
@@ -928,9 +885,6 @@ CarenResult CarenMFVideoDisplayControl::SetVideoWindow(IntPtr Param_JanelaVideo)
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		Sair;

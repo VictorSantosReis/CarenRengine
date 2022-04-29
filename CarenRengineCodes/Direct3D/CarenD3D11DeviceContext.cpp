@@ -164,7 +164,7 @@ void CarenD3D11DeviceContext::Finalizar()
 
 
 
-//Métodos da interface proprietária(ICarenD3D11DeviceContext)
+//Métodos da interface ICarenD3D11DeviceContext
 
 /// <summary>
 /// (Begin) - Marca o início de uma série de comandos.
@@ -172,30 +172,10 @@ void CarenD3D11DeviceContext::Finalizar()
 /// <param name="Param_Async">Um ponteiro para a interface de sincronização.</param>
 CarenResult CarenD3D11DeviceContext::Begin(ICarenD3D11Asynchronous^ Param_Async)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	ID3D11Asynchronous* pAsync = NULL;
-
-	//Recupera o ponteiro para a interface
-	Resultado = Param_Async->RecuperarPonteiro((LPVOID*)&pAsync);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou..
-
-		//Sai do método
-		Sair;
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->Begin(pAsync);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::Begin(PonteiroTrabalho,
+		Param_Async
+	);
 }
 
 /// <summary>
@@ -206,36 +186,18 @@ Done:;
 /// <param name="Param_Depth">Limpe o buffer de profundidade com esse valor. Este valor irá ser fixada entre 0 e 1.</param>
 /// <param name="Param_Stencil">Limpe o buffer de estêncil com esse valor.</param>
 CarenResult CarenD3D11DeviceContext::ClearDepthStencilView(
-					ICarenD3D11DepthStencilView^ Param_DepthStencil, 
-					Enumeracoes::CA_D3D11_CLEAR_FLAG Param_ClearFlags, 
-					float Param_Depth, 
-					Byte Param_Stencil)
+	ICarenD3D11DepthStencilView^ Param_DepthStencil,
+	Enumeracoes::CA_D3D11_CLEAR_FLAG Param_ClearFlags,
+	float Param_Depth,
+	Byte Param_Stencil)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	ID3D11DepthStencilView* pStencil = NULL;
-	UINT FlagClear = static_cast<UINT>(Param_ClearFlags);
-
-	//Recupera o ponteiro para a interface
-	Resultado = Param_DepthStencil->RecuperarPonteiro((LPVOID*)&pStencil);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou..
-
-		//Sai do método
-		Sair;
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->ClearDepthStencilView(pStencil, FlagClear, Param_Depth, Param_Stencil);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::ClearDepthStencilView(PonteiroTrabalho,
+		Param_DepthStencil,
+		Param_ClearFlags,
+		Param_Depth,
+		Param_Stencil
+	);
 }
 
 /// <summary>
@@ -244,41 +206,14 @@ Done:;
 /// <param name="Param_RenderTarget">Ponteiro para o destino de processamento.</param>
 /// <param name="Param_Cor">Uma estrutura de 4 componentes que representam a cor para preencher o destino de processamento.</param>
 CarenResult CarenD3D11DeviceContext::ClearRenderTargetView(
-					ICarenD3D11RenderTargetView^ Param_RenderTarget, 
-					Estruturas::CA_DXGI_RGBA^ Param_Cor)
+	ICarenD3D11RenderTargetView^ Param_RenderTarget,
+	Estruturas::CA_DXGI_RGBA^ Param_Cor)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	ID3D11RenderTargetView *pView = NULL;
-	FLOAT *pRGBAColor = Util.Converter_DXGIRGBATo_FloatColor(Param_Cor);
-
-	//Recupera o ponteiro para render target
-	Resultado = Param_RenderTarget->RecuperarPonteiro((LPVOID*)&pView);
-
-	//Verifica se não houve erro.
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou...
-
-		//Sai do método
-		Sair;
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->ClearRenderTargetView(pView, pRGBAColor);
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Libera a memoria para a matriz.
-	delete[] pRGBAColor;
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::ClearRenderTargetView(PonteiroTrabalho,
+		Param_RenderTarget,
+		Param_Cor
+	);
 }
 
 /// <summary>
@@ -286,17 +221,8 @@ Done:;
 /// </summary>
 CarenResult CarenD3D11DeviceContext::ClearState()
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->ClearState();
-
-	//Define sucesso por default a operação.
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::ClearState(PonteiroTrabalho);
 }
 
 /// <summary>
@@ -307,38 +233,14 @@ CarenResult CarenD3D11DeviceContext::ClearState()
 /// <param name="Param_UnorderedAccess">O ID3D11UnorderedAccessView para limpar.</param>
 /// <param name="Param_Valores">Valores para copiar para canais correspondentes.</param>
 CarenResult CarenD3D11DeviceContext::ClearUnorderedAccessViewFloat(
-					ICarenD3D11UnorderedAccessView^ Param_UnorderedAccess, 
-					cli::array<float>^ Param_Valores)
+	ICarenD3D11UnorderedAccessView^ Param_UnorderedAccess,
+	cli::array<float>^ Param_Valores)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	ID3D11UnorderedAccessView *pAcessView = NULL;
-	FLOAT* pValores = new FLOAT[4]; //4 é um valor fixo.
-
-	//Recupera o ponteiro para a interface
-	Resultado = Param_UnorderedAccess->RecuperarPonteiro((LPVOID*)&pAcessView);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou..
-
-		//Sai do método
-		Sair;
-	}
-
-	//Copia os dados do array
-	Util.CopiarItensTo_ArrayNativo(&pValores, Param_Valores, Param_Valores->Length);
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->ClearUnorderedAccessViewFloat(pAcessView, pValores);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::ClearUnorderedAccessViewFloat(PonteiroTrabalho,
+		Param_UnorderedAccess,
+		Param_Valores
+	);
 }
 
 /// <summary>
@@ -349,40 +251,14 @@ Done:;
 /// <param name="Param_UnorderedAccess">O ID3D11UnorderedAccessView para limpar.</param>
 /// <param name="Param_Valores">Valores para copiar para canais correspondentes.</param>
 CarenResult CarenD3D11DeviceContext::ClearUnorderedAccessViewUint(
-					ICarenD3D11UnorderedAccessView^ Param_UnorderedAccess, 
-					cli::array<UInt32>^ Param_Valores)
+	ICarenD3D11UnorderedAccessView^ Param_UnorderedAccess,
+	cli::array<UInt32>^ Param_Valores)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	Utilidades Util;
-	ID3D11UnorderedAccessView* pAcessView = NULL;
-	UINT* pValores = new UINT[4]; //4 É um valor fixo.
-
-	//Recupera o ponteiro para a interface
-	Resultado = Param_UnorderedAccess->RecuperarPonteiro((LPVOID*)&pAcessView);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou..
-
-		//Sai do método
-		Sair;
-	}
-
-	//Copia os dados do array
-	Util.CopiarItensTo_ArrayNativo(&pValores, Param_Valores, Param_Valores->Length);
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->ClearUnorderedAccessViewUint(pAcessView, pValores);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::ClearUnorderedAccessViewUint(PonteiroTrabalho,
+		Param_UnorderedAccess,
+		Param_Valores
+	);
 }
 
 /// <summary>
@@ -391,49 +267,14 @@ Done:;
 /// <param name="Param_DestinoRecurso">Um ponteiro para a interface ID3D11Resource que representa o DESTINO do recurso.</param>
 /// <param name="Param_OrigemRecurso">Um ponteiro para a interface ID3D11Resource que representa a FONTE de recursos.</param>
 CarenResult CarenD3D11DeviceContext::CopyResource(
-					ICarenD3D11Resource^ Param_DestinoRecurso,
-					ICarenD3D11Resource^ Param_OrigemRecurso)
+	ICarenD3D11Resource^ Param_DestinoRecurso,
+	ICarenD3D11Resource^ Param_OrigemRecurso)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	ID3D11Resource *pRecursoDestino = NULL;
-	ID3D11Resource* pRecursoOrigem = NULL;
-
-	//Obtém o ponteiro para o recurso de DESTINO
-	Resultado = Param_DestinoRecurso->RecuperarPonteiro((LPVOID*)&pRecursoDestino);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou..
-
-		//Sai do método
-		Sair;
-	}
-
-	//Obtém o ponteiro para o recurso de ORIGEM
-	Resultado = Param_OrigemRecurso->RecuperarPonteiro((LPVOID*)&pRecursoOrigem);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou..
-
-		//Sai do método
-		Sair;
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->CopyResource(pRecursoDestino, pRecursoOrigem);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::CopyResource(PonteiroTrabalho,
+		Param_DestinoRecurso,
+		Param_OrigemRecurso
+	);
 }
 
 /// <summary>
@@ -445,48 +286,16 @@ Done:;
 /// <param name="Param_OrigemView">Ponteiro para um ID3D11UnorderedAccessView de um recurso de Buffer estruturado criado com D3D11_BUFFER_UAV_FLAG_APPEND ou D3D11_BUFFER_UAV_FLAG_COUNTER especificado 
 /// quando o UAV foi criado. Esses tipos de recursos tem escondido os contadores foram escritos "Quantos" registros de rastreamento.</param>
 CarenResult CarenD3D11DeviceContext::CopyStructureCount(
-					ICarenD3D11Buffer^ Param_DestinoBuffer, 
-					UInt32 Param_DestinoAlignedOffsetByte, 
-					ICarenD3D11UnorderedAccessView^ Param_OrigemView)
+	ICarenD3D11Buffer^ Param_DestinoBuffer,
+	UInt32 Param_DestinoAlignedOffsetByte,
+	ICarenD3D11UnorderedAccessView^ Param_OrigemView)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	ID3D11Buffer* pBufferDestino = NULL;
-	ID3D11UnorderedAccessView* pAcessView = NULL;
-
-	//Obtém o ponteiro para a interface do buffer.
-	Resultado = Param_DestinoBuffer->RecuperarPonteiro((LPVOID*)&pBufferDestino);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou..
-
-		//Sai do método
-		Sair;
-	}
-
-	//Obtém o ponteiro para a interface do Acess View.
-	Resultado = Param_OrigemView->RecuperarPonteiro((LPVOID*)&pAcessView);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou..
-
-		//Sai do método
-		Sair;
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->CopyStructureCount(pBufferDestino, Param_DestinoAlignedOffsetByte, pAcessView);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::CopyStructureCount(PonteiroTrabalho,
+		Param_DestinoBuffer,
+		Param_DestinoAlignedOffsetByte,
+		Param_OrigemView
+	);
 }
 
 /// <summary>
@@ -502,70 +311,27 @@ Done:;
 /// <param name="Param_OrigemBox">Uma estrutura(CAIXA 3D) que define o sub-recurso de fonte que pode ser copiado. Se nulo, o sub-recurso fonte inteiro é copiado. A caixa deve caber dentro da fonte 
 /// de recurso.</param>
 CarenResult CarenD3D11DeviceContext::CopySubresourceRegion(
-					ICarenD3D11Resource^ Param_DestinoRecurso, 
-					UInt32 Param_IndiceSubrecrusoDestino, 
-					UInt32 Param_DestX, 
-					UInt32 Param_DestY, 
-					UInt32 Param_DestZ, 
-					ICarenD3D11Resource^ Param_FonteRecurso,
-					UInt32 Param_IndiceSubrecrusoFonte,
-					Estruturas::CA_D3D11_BOX^ Param_OrigemBox
-				)
+	ICarenD3D11Resource^ Param_DestinoRecurso,
+	UInt32 Param_IndiceSubrecrusoDestino,
+	UInt32 Param_DestX,
+	UInt32 Param_DestY,
+	UInt32 Param_DestZ,
+	ICarenD3D11Resource^ Param_FonteRecurso,
+	UInt32 Param_IndiceSubrecrusoFonte,
+	Estruturas::CA_D3D11_BOX^ Param_OrigemBox
+)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	ID3D11Resource* pRecursoDestino = NULL;
-	ID3D11Resource* pRecursoOrigem = NULL;
-	D3D11_BOX* pCaixa = NULL; //Pode ser NULO.
-
-	//Obtém o ponteiro para o recurso de DESTINO
-	Resultado = Param_DestinoRecurso->RecuperarPonteiro((LPVOID*)&pRecursoDestino);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou..
-
-		//Sai do método
-		Sair;
-	}
-
-	//Obtém o ponteiro para o recurso de ORIGEM
-	Resultado = Param_FonteRecurso->RecuperarPonteiro((LPVOID*)&pRecursoOrigem);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou..
-
-		//Sai do método
-		Sair;
-	}
-
-	//Verifica se forneceu uma caixa e converte a estrutura.
-	if (ObjetoGerenciadoValido(Param_OrigemBox))
-	{
-		//Converte a estrutura gerenciada para nativa.
-		pCaixa = Util.ConverterD3D11_BOXManaged_ToUnManaged(Param_OrigemBox);
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->CopySubresourceRegion(pRecursoDestino, Param_IndiceSubrecrusoDestino, Param_DestX, Param_DestY, Param_DestZ, pRecursoOrigem, Param_IndiceSubrecrusoFonte, pCaixa ? pCaixa : NULL);
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Libera a memoria para a estrutura se valida
-	DeletarEstruturaSafe(&pCaixa);
-
-
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::CopySubresourceRegion(PonteiroTrabalho,
+		Param_DestinoRecurso,
+		Param_IndiceSubrecrusoDestino,
+		Param_DestX,
+		Param_DestY,
+		Param_DestZ,
+		Param_FonteRecurso,
+		Param_IndiceSubrecrusoFonte,
+		Param_OrigemBox
+	);
 }
 
 /// <summary>
@@ -577,66 +343,16 @@ Done:;
 /// <param name="Param_NumerosBuffers">Número de buffers para recuperar (varia de 0 a D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_Out_BuffersConstantes">Recebe uma matriz com os ponteiros para os buffers constantes.</param>
 CarenResult CarenD3D11DeviceContext::CSGetConstantBuffers(
-					UInt32 Param_StartSlot, 
-					UInt32 Param_NumerosBuffers, 
-					[Out] cli::array<ICarenD3D11Buffer^>^% Param_Out_BuffersConstantes)
+	UInt32 Param_StartSlot,
+	UInt32 Param_NumerosBuffers,
+	[Out] cli::array<ICarenD3D11Buffer^>^% Param_Out_BuffersConstantes)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	std::vector<ID3D11Buffer*> VetorDataInterface;
-	bool VetorVazio = FALSE;
-
-	//Define a quantidade de itens que o vetor vai conter.
-	VetorDataInterface.reserve(static_cast<size_t>(Param_NumerosBuffers));
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->CSGetConstantBuffers(Param_StartSlot, Param_NumerosBuffers, VetorDataInterface.data());
-
-	//Verifica se o Vetor está vazio
-	VetorVazio = VetorDataInterface.empty();
-
-	//Verifica o resultado
-	if (!VetorVazio)
-	{
-		//Deixa o método continuar.
-	}
-	else
-	{
-		//O vetor está vazio.
-		Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria o array que vai conter o ponteiros.
-	Param_Out_BuffersConstantes = gcnew cli::array<ICarenD3D11Buffer^>(Param_NumerosBuffers);
-
-	//Faz um for para criar e definir os dados.
-	for (UINT i = 0; i < Param_NumerosBuffers; i++)
-	{
-		//Cria a interface no id especificado.
-		Param_Out_BuffersConstantes[i] = gcnew CarenD3D11Buffer();
-
-		//Define o ponteiro de trabalho.
-		Param_Out_BuffersConstantes[i]->AdicionarPonteiro((LPVOID*)&VetorDataInterface[i]);
-	}
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Limpa o vetor
-	VetorDataInterface.clear();
-	VetorDataInterface.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::CSGetConstantBuffers(PonteiroTrabalho,
+		Param_StartSlot,
+		Param_NumerosBuffers,
+		Param_Out_BuffersConstantes
+	);
 }
 
 /// <summary>
@@ -647,63 +363,16 @@ Done:;
 /// (varia de 0 a D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT - StartSlot).</param>
 /// <param name="Param_Out_SamplersState">Recebe uma matriz com os ponteiros para os amostradores de estado(Samplers States).</param>
 CarenResult CarenD3D11DeviceContext::CSGetSamplers(
-					UInt32 Param_StartSlot, 
-					UInt32 Param_NumeroSamplers, 
-					[Out] cli::array<ICarenD3D11SamplerState^>^% Param_Out_SamplersState)
+	UInt32 Param_StartSlot,
+	UInt32 Param_NumeroSamplers,
+	[Out] cli::array<ICarenD3D11SamplerState^>^% Param_Out_SamplersState)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	std::vector<ID3D11SamplerState*> VetorDataInterface;
-	bool VetorVazio = FALSE;
-
-	//Define a quantidade de itens que o vetor vai conter.
-	VetorDataInterface.reserve(static_cast<size_t>(Param_NumeroSamplers));
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->CSGetSamplers(Param_StartSlot, Param_NumeroSamplers, VetorDataInterface.data());
-
-	//Verifica se o Vetor está vazio
-	VetorVazio = VetorDataInterface.empty();
-
-	//Verifica o resultado
-	if (!VetorVazio)
-	{
-		//Deixa o método continuar.
-	}
-	else
-	{
-		//O vetor está vazio.
-		Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria o array que vai conter o ponteiros.
-	Param_Out_SamplersState = gcnew cli::array<ICarenD3D11SamplerState^>(Param_NumeroSamplers);
-
-	//Faz um for para criar e definir os dados.
-	for (UINT i = 0; i < Param_NumeroSamplers; i++)
-	{
-		//Cria a interface no id especificado.
-		Param_Out_SamplersState[i] = gcnew CarenD3D11SamplerState();
-
-		//Define o ponteiro de trabalho.
-		Param_Out_SamplersState[i]->AdicionarPonteiro(VetorDataInterface[i]);
-	}
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Limpa o vetor
-	VetorDataInterface.clear();
-	VetorDataInterface.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::CSGetSamplers(PonteiroTrabalho,
+		Param_StartSlot,
+		Param_NumeroSamplers,
+		Param_Out_SamplersState
+	);
 }
 
 /// <summary>
@@ -713,76 +382,16 @@ Done:;
 /// <param name="Param_Out_ArrayClassInstance">Retorna um Array que contém ponteiros para Instâncias de Classe.</param>
 /// <param name="Param_Out_QuantidadeClass">Retorna a quantidade de itens no array do parametro (Param_Out_ArrayClassInstance).</param>
 CarenResult CarenD3D11DeviceContext::CSGetShader(
-					[Out] ICarenD3D11ComputeShader^% Param_Out_ComputeShader, 
-					[Out] cli::array<ICarenD3D11ClassInstance^>^% Param_Out_ArrayClassInstance, 
-					[Out] UInt32% Param_Out_QuantidadeClass)
+	[Out] ICarenD3D11ComputeShader^% Param_Out_ComputeShader,
+	[Out] cli::array<ICarenD3D11ClassInstance^>^% Param_Out_ArrayClassInstance,
+	[Out] UInt32% Param_Out_QuantidadeClass)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	ID3D11ComputeShader* pComputeShader = NULL;
-	vector<ID3D11ClassInstance*> VetorInterfaces;
-	UINT CountInterfacesInArray = 0;
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->CSGetShader(&pComputeShader, VetorInterfaces.data(), &CountInterfacesInArray);
-
-	//Verifica se interface do Shader Computer é valida
-	if (ObjetoValido(pComputeShader))
-	{
-		//Cria a interface que será retornada no parametro.
-		Param_Out_ComputeShader = gcnew CarenD3D11ComputeShader();
-
-		//Define o ponteiro de trabalho
-		Param_Out_ComputeShader->AdicionarPonteiro(pComputeShader);
-	}
-
-	//Verifica se o foi retornado algum item para o vetor.
-	if (CountInterfacesInArray > 0)
-	{
-		//Deixa  continuar.
-	}
-	else
-	{
-		//Nenhuma interface foi retornada para o vetor.
-
-		//Define o resultado com base na interface de computação do shader.
-		Resultado = ObjetoValido(pComputeShader) ? CarenResult(ResultCode::SS_OK, true): CarenResult(ResultCode::ER_FAIL, false);
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria o array que vai ser retornado.
-	Param_Out_ArrayClassInstance = gcnew cli::array<ICarenD3D11ClassInstance^>(CountInterfacesInArray);
-
-	//Copia os dados para o array
-	for (UINT i = 0; i < CountInterfacesInArray; i++)
-	{
-		//Cria a interface no id especificado.
-		Param_Out_ArrayClassInstance[i] = gcnew CarenD3D11ClassInstance();
-
-		//Define o ponteiro de trabalho.
-		Param_Out_ArrayClassInstance[i]->AdicionarPonteiro(VetorInterfaces[i]);
-	}
-
-	//Define a quantidade de itens na matriz.
-	Param_Out_QuantidadeClass = CountInterfacesInArray;
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Limpa o vetor
-	VetorInterfaces.clear();
-	VetorInterfaces.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::CSGetShader(PonteiroTrabalho,
+		Param_Out_ComputeShader,
+		Param_Out_ArrayClassInstance,
+		Param_Out_QuantidadeClass
+	);
 }
 
 /// <summary>
@@ -795,58 +404,16 @@ Done:;
 /// (varia de 0 a D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_Out_MatrizShaderRecursoSombreador">Retorna uma Matriz com ponteiros de exibição de recurso de sombreador retornado pelo Dispositivo.</param>
 CarenResult CarenD3D11DeviceContext::CSGetShaderResources(
-					UInt32 Param_StartSlot, 
-					UInt32 Param_NumeroRecursos, 
-					[Out] cli::array<ICarenD3D11ShaderResourceView^>^% Param_Out_MatrizShaderRecursoSombreador)
+	UInt32 Param_StartSlot,
+	UInt32 Param_NumeroRecursos,
+	[Out] cli::array<ICarenD3D11ShaderResourceView^>^% Param_Out_MatrizShaderRecursoSombreador)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	vector<ID3D11ShaderResourceView*> VectorResourceView;
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->CSGetShaderResources(Param_StartSlot, Param_NumeroRecursos, VectorResourceView.data());
-
-	//Verifica se obteve alguma interface.
-	if (!VectorResourceView.empty())
-	{
-		//Deixa o método continuar.
-	}
-	else
-	{
-		//Falhou.. Nenhuma interface foi retornada.
-
-		//Define falha.
-		Resultado.AdicionarCodigo(ResultCode::SS_FALSE, false);
-
-		//Sai
-		Sair;
-	}
-
-	//Cria a matriz a ser retornada ao usuário.
-	Param_Out_MatrizShaderRecursoSombreador = gcnew cli::array<ICarenD3D11ShaderResourceView^>(Param_NumeroRecursos);
-
-	//faz um for para criar cada interface e definir o ponteiro de trabalho.
-	for (UINT i = 0; i < Param_NumeroRecursos; i++)
-	{
-		//Cria a interface no id especificado.
-		Param_Out_MatrizShaderRecursoSombreador[i] = gcnew CarenD3D11ShaderResourceView();
-
-		//Define o ponteiro de trabalho.
-		Param_Out_MatrizShaderRecursoSombreador[i]->AdicionarPonteiro(VectorResourceView[i]);
-	}
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Libera o vetor.
-	VectorResourceView.clear();
-	VectorResourceView.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::CSGetShaderResources(PonteiroTrabalho,
+		Param_StartSlot,
+		Param_NumeroRecursos,
+		Param_Out_MatrizShaderRecursoSombreador
+	);
 }
 
 /// <summary>
@@ -858,55 +425,16 @@ Done:;
 /// <param name="Param_NumeroUAVs">Número de pontos de vista para obter (varia de 0 a D3D11_1_UAV_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_Out_MatrizInterfacesNaoOrdenadas">Retorna uma Matriz que contém ponteiros para as interfaces ID3D11UnorderedAccessView.</param>
 CarenResult CarenD3D11DeviceContext::CSGetUnorderedAccessViews(
-					UInt32 Param_StartSlot, 
-					UInt32 Param_NumeroUAVs, 
-					[Out] cli::array<ICarenD3D11UnorderedAccessView^>^% Param_Out_MatrizInterfacesNaoOrdenadas)
+	UInt32 Param_StartSlot,
+	UInt32 Param_NumeroUAVs,
+	[Out] cli::array<ICarenD3D11UnorderedAccessView^>^% Param_Out_MatrizInterfacesNaoOrdenadas)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	vector<ID3D11UnorderedAccessView*> VectorUnordered;
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->CSGetUnorderedAccessViews(Param_StartSlot, Param_NumeroUAVs, VectorUnordered.data());
-
-	//Verifica se obteve alguma interface.
-	if (!VectorUnordered.empty())
-	{
-		//Deixa o método continuar.
-	}
-	else
-	{
-		//Falhou.. Nenhuma interface foi retornada.
-
-		//Define falha.
-		Resultado.AdicionarCodigo(ResultCode::SS_FALSE, false);
-
-		//Sai
-		Sair;
-	}
-
-	//Cria a matriz a ser retornada ao usuário.
-	Param_Out_MatrizInterfacesNaoOrdenadas = gcnew cli::array<ICarenD3D11UnorderedAccessView^>(Param_NumeroUAVs);
-
-	//faz um for para criar cada interface e definir o ponteiro de trabalho.
-	for (UINT i = 0; i < Param_NumeroUAVs; i++)
-	{
-		//Cria a interface no id especificado.
-		Param_Out_MatrizInterfacesNaoOrdenadas[i] = gcnew CarenD3D11UnorderedAccessView();
-
-		//Define o ponteiro de trabalho.
-		Param_Out_MatrizInterfacesNaoOrdenadas[i]->AdicionarPonteiro(VectorUnordered[i]);
-	}
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::CSGetUnorderedAccessViews(PonteiroTrabalho,
+		Param_StartSlot,
+		Param_NumeroUAVs,
+		Param_Out_MatrizInterfacesNaoOrdenadas
+	);
 }
 
 /// <summary>
@@ -918,46 +446,16 @@ Done:;
 /// <param name="Param_NumeroBuffers">Número de buffers para definir (varia de 0 a D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_MatrizBuffers">Matriz de buffers constantes a ser dada ao dispositivo.</param>
 CarenResult CarenD3D11DeviceContext::CSSetConstantBuffers(
-					UInt32 Param_StartSlot, 
-					UInt32 Param_NumeroBuffers, 
-					cli::array<ICarenD3D11Buffer^>^ Param_MatrizBuffers)
+	UInt32 Param_StartSlot,
+	UInt32 Param_NumeroBuffers,
+	cli::array<ICarenD3D11Buffer^>^ Param_MatrizBuffers)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	std::vector<ID3D11Buffer*> VectorInterfaces;
-	ID3D11Buffer* pBuff = NULL;
-
-	//Define a quantidade de dados que vai conter no vetor.
-	VectorInterfaces.reserve(static_cast<size_t>(Param_NumeroBuffers));
-
-	//Faz um for para obter os buffers e definir no vetor.
-	for (UINT i = 0; i < Param_NumeroBuffers; i++)
-	{
-		//Recupera o ponteiro para o buffer.
-		Resultado = Param_MatrizBuffers[i]->RecuperarPonteiro((LPVOID*)&pBuff);
-
-		//Define o ponteiro no vetor.
-		VectorInterfaces.push_back(pBuff);
-
-		//Limpa
-		pBuff = NULL;
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->CSSetConstantBuffers(Param_StartSlot, Param_NumeroBuffers, VectorInterfaces.data());
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Limpa o vetor.
-	VectorInterfaces.clear();
-	VectorInterfaces.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::CSSetConstantBuffers(PonteiroTrabalho,
+		Param_StartSlot,
+		Param_NumeroBuffers,
+		Param_MatrizBuffers
+	);
 }
 
 /// <summary>
@@ -968,46 +466,16 @@ CarenResult CarenD3D11DeviceContext::CSSetConstantBuffers(
 /// (varia de 0 a D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_MatrizSamplers">Uma matriz de interfaces do amostrador de estado a serem definidas no dispositivo.</param>
 CarenResult CarenD3D11DeviceContext::CSSetSamplers(
-					UInt32 Param_StartSlot, 
-					UInt32 Param_NumeroSamplers, 
-					cli::array<ICarenD3D11SamplerState^>^ Param_MatrizSamplers)
+	UInt32 Param_StartSlot,
+	UInt32 Param_NumeroSamplers,
+	cli::array<ICarenD3D11SamplerState^>^ Param_MatrizSamplers)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	std::vector<ID3D11SamplerState*> VectorInterfaces;
-	ID3D11SamplerState* pSample = NULL;
-
-	//Define a quantidade de dados que vai conter no vetor.
-	VectorInterfaces.reserve(static_cast<size_t>(Param_NumeroSamplers));
-
-	//Faz um for para obter os buffers e definir no vetor.
-	for (UINT i = 0; i < Param_NumeroSamplers; i++)
-	{
-		//Recupera o ponteiro para o buffer.
-		Param_MatrizSamplers[i]->RecuperarPonteiro((LPVOID*)&pSample);
-
-		//Define o ponteiro no vetor.
-		VectorInterfaces.push_back(pSample);
-
-		//Limpa
-		pSample = NULL;
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->CSSetSamplers(Param_StartSlot, Param_NumeroSamplers, VectorInterfaces.data());
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Limpa o vetor.
-	VectorInterfaces.clear();
-	VectorInterfaces.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::CSSetSamplers(PonteiroTrabalho,
+		Param_StartSlot,
+		Param_NumeroSamplers,
+		Param_MatrizSamplers
+	);
 }
 
 /// <summary>
@@ -1019,59 +487,16 @@ CarenResult CarenD3D11DeviceContext::CSSetSamplers(
 /// vai ser desativado. Definir Param_MatrizClassInstance para NULO se o sombreador não usa quaisquer interfaces.</param>
 /// <param name="Param_QuantidadeClassInstances">A quantidade de itens no array do parametro (Param_MatrizClassInstance).</param>
 CarenResult CarenD3D11DeviceContext::CSSetShader(
-					ICarenD3D11ComputeShader^ Param_ComputeShader, 
-					cli::array<ICarenD3D11ClassInstance^>^ Param_MatrizClassInstance,
-					UInt32 Param_QuantidadeClassInstances)
+	ICarenD3D11ComputeShader^ Param_ComputeShader,
+	cli::array<ICarenD3D11ClassInstance^>^ Param_MatrizClassInstance,
+	UInt32 Param_QuantidadeClassInstances)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	ID3D11ComputeShader* pComputeShader = NULL; //Pode ser nulo.
-	std::vector<ID3D11ClassInstance*> VectorInterfaces; //Pode ser nulo.
-	ID3D11ClassInstance* pInstance = NULL;
-
-	//Reserva o vetor para a quantidade especificada pelo usuário se for maior que zero.
-	//Se for, vai copiar as interfaces aqui mesmo.
-	if (Param_QuantidadeClassInstances > 0)
-	{
-		//Reverva uma quantidade para o vetor.
-		VectorInterfaces.reserve(static_cast<size_t>(Param_QuantidadeClassInstances));
-
-		//Obtem e define as interfaces no vetor.
-		for (UINT i = 0; i < Param_QuantidadeClassInstances; i++)
-		{
-			//Recupera o ponteiro para a interface.
-			Param_MatrizClassInstance[i]->RecuperarPonteiro((LPVOID*)&pInstance);
-
-			//Define o ponteiro no vetor.
-			VectorInterfaces.push_back(pInstance);
-
-			//Limpa
-			pInstance = NULL;
-		}
-	}
-
-	//Recupera o ponteiro para o Sombreador se ele tiver sido fornecido.
-	if (ObjetoGerenciadoValido(Param_ComputeShader))
-	{
-		//Recupera o ponteiro para a interface.
-		Param_ComputeShader->RecuperarPonteiro((LPVOID*)&pComputeShader);
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->CSSetShader(pComputeShader ? pComputeShader : NULL, Param_QuantidadeClassInstances > 0 ? VectorInterfaces.data() : NULL, Param_QuantidadeClassInstances);
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Limpa o vetor.
-	VectorInterfaces.clear();
-	VectorInterfaces.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::CSSetShader(PonteiroTrabalho,
+		Param_ComputeShader,
+		Param_MatrizClassInstance,
+		Param_QuantidadeClassInstances
+	);
 }
 
 /// <summary>
@@ -1082,45 +507,16 @@ CarenResult CarenD3D11DeviceContext::CSSetShader(
 /// (varia de 0 a D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - StartSlot).</param>
 /// <param name="Param_MatrizShaderRecursoSombreador">Matriz de interfaces de exibição de recurso de sombreador definir para o dispositivo.</param>
 CarenResult CarenD3D11DeviceContext::CSSetShaderResources(
-					UInt32 Param_StartSlot, 
-					UInt32 Param_NumeroRecursos, 
-					cli::array<ICarenD3D11ShaderResourceView^>^ Param_MatrizShaderRecursoSombreador)
+	UInt32 Param_StartSlot,
+	UInt32 Param_NumeroRecursos,
+	cli::array<ICarenD3D11ShaderResourceView^>^ Param_MatrizShaderRecursoSombreador)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	std::vector<ID3D11ShaderResourceView*> VectorInterfaces;
-	ID3D11ShaderResourceView* pShaderView = NULL;
-
-	//Define a quantidade de dados que vai conter no vetor.
-	VectorInterfaces.reserve(static_cast<size_t>(Param_NumeroRecursos));
-
-	//Faz um for para obter os buffers e definir no vetor.
-	for (UINT i = 0; i < Param_NumeroRecursos; i++)
-	{
-		//Recupera o ponteiro para o buffer.
-		Param_MatrizShaderRecursoSombreador[i]->RecuperarPonteiro((LPVOID*)&pShaderView);
-
-		//Define o ponteiro no vetor.
-		VectorInterfaces.push_back(pShaderView);
-
-		//Limpa
-		pShaderView = NULL;
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->CSSetShaderResources(Param_StartSlot, Param_NumeroRecursos, VectorInterfaces.data());
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Limpa o vetor.
-	VectorInterfaces.clear();
-	VectorInterfaces.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::CSSetShaderResources(PonteiroTrabalho,
+		Param_StartSlot,
+		Param_NumeroRecursos,
+		Param_MatrizShaderRecursoSombreador
+	);
 }
 
 /// <summary>
@@ -1133,72 +529,18 @@ CarenResult CarenD3D11DeviceContext::CSSetShaderResources(
 /// contador oculto para aquele UAV (APPENDABLE) e consumíveis. Param_MatrizInitialUAVsCount só é relevante para UAVs que foram criados com qualquer D3D11_BUFFER_UAV_FLAG_APPEND ou 
 /// D3D11_BUFFER_UAV_FLAG_COUNTER especificado quando o UAV foi criado; caso contrário, o argumento é ignorado.</param>
 CarenResult CarenD3D11DeviceContext::CSSetUnorderedAccessViews(
-					UInt32 Param_StartSlot, 
-					UInt32 Param_NumeroUAVs, 
-					cli::array<ICarenD3D11UnorderedAccessView^>^ Param_MatrizInterfacesNaoOrdenadas, 
-					cli::array<UInt32>^ Param_MatrizInitialUAVsCount)
+	UInt32 Param_StartSlot,
+	UInt32 Param_NumeroUAVs,
+	cli::array<ICarenD3D11UnorderedAccessView^>^ Param_MatrizInterfacesNaoOrdenadas,
+	cli::array<UInt32>^ Param_MatrizInitialUAVsCount)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	std::vector<ID3D11UnorderedAccessView*> VectorInterfaces;
-	UINT* pUAVsMatriz = NULL;
-	ID3D11UnorderedAccessView* pUnorderedView = NULL;
-	UINT CountMatrizInterfaces = static_cast<UINT>(Param_MatrizInterfacesNaoOrdenadas->Length);
-	UINT CountMatrizUAVs = 0;
-
-	//Define a quantidade de dados que vai conter no vetor.
-	VectorInterfaces.reserve(static_cast<size_t>(CountMatrizInterfaces));
-
-	//Faz um for para obter os buffers e definir no vetor.
-	for (UINT i = 0; i < CountMatrizInterfaces; i++)
-	{
-		//Recupera o ponteiro para a interface.
-		Param_MatrizInterfacesNaoOrdenadas[i]->RecuperarPonteiro((LPVOID*)&pUnorderedView);
-
-		//Define o ponteiro no vetor.
-		VectorInterfaces.push_back(pUnorderedView);
-
-		//Limpa
-		pUnorderedView = NULL;
-	}
-
-	//Verifica se forneceu uma matriz de uavs
-	if (ObjetoGerenciadoValido(Param_MatrizInitialUAVsCount))
-	{
-		//Foreneceu a matriz.
-
-		//Obtém a quantidade de itens.
-		CountMatrizUAVs = static_cast<UINT>(Param_MatrizInitialUAVsCount->Length);
-
-		//Inicializa a matriz.
-		pUAVsMatriz = new UINT[CountMatrizUAVs];
-
-		//Copia os dados do array gerenciado para o nativo.
-		Util.CopiarItensTo_ArrayNativo(&pUAVsMatriz, Param_MatrizInitialUAVsCount, CountMatrizUAVs);
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->CSSetUnorderedAccessViews(Param_StartSlot, Param_NumeroUAVs, VectorInterfaces.data(), pUAVsMatriz? pUAVsMatriz: NULL);
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Limpa o vetor.
-	VectorInterfaces.clear();
-	VectorInterfaces.shrink_to_fit();
-
-	//Libera a memoria do array de unsigned int se ele for valido.
-	if (ObjetoValido(pUAVsMatriz))
-	{
-		//Libera a memoria para o array.
-		delete[] pUAVsMatriz;
-	}
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::CSSetUnorderedAccessViews(PonteiroTrabalho,
+		Param_StartSlot,
+		Param_NumeroUAVs,
+		Param_MatrizInterfacesNaoOrdenadas,
+		Param_MatrizInitialUAVsCount
+	);
 }
 
 /// <summary>
@@ -1209,21 +551,16 @@ CarenResult CarenD3D11DeviceContext::CSSetUnorderedAccessViews(
 /// <param name="Param_NumeroGrupoExpedidoZ">O número de grupos expedidos na direção Z. NumeroGrupoExpedidoZ deve ser menor ou igual a D3D11_CS_DISPATCH_MAX_THREAD_GROUPS_PER_DIMENSION (65535). 
 /// Em nível de recurso 10 o valor para NumeroGrupoExpedidoZ deve ser 1.</param>
 CarenResult CarenD3D11DeviceContext::Dispatch(
-					UInt32 Param_NumeroGrupoExpedidoX,
-					UInt32 Param_NumeroGrupoExpedidoY,
-					UInt32 Param_NumeroGrupoExpedidoZ)
+	UInt32 Param_NumeroGrupoExpedidoX,
+	UInt32 Param_NumeroGrupoExpedidoY,
+	UInt32 Param_NumeroGrupoExpedidoZ)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->Dispatch(Param_NumeroGrupoExpedidoX, Param_NumeroGrupoExpedidoY, Param_NumeroGrupoExpedidoZ);
-
-	//Define sucesso por default a operação.
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::Dispatch(PonteiroTrabalho,
+		Param_NumeroGrupoExpedidoX,
+		Param_NumeroGrupoExpedidoY,
+		Param_NumeroGrupoExpedidoZ
+	);
 }
 
 /// <summary>
@@ -1233,33 +570,14 @@ CarenResult CarenD3D11DeviceContext::Dispatch(
 /// <param name="Param_BufferForArgs">Um ponteiro para um ID3D11Buffer, que deve ser carregado com os dados que corresponde à lista de argumento para ICarenD3D11DeviceContext::Dispatch.</param>
 /// <param name="Param_AlinhamentoBytesOffsetForArgs">Um deslocamento de byte alinhado entre o início do buffer e os argumentos.</param>
 CarenResult CarenD3D11DeviceContext::DispatchIndirect(
-					ICarenD3D11Buffer^ Param_BufferForArgs, 
-					UInt32 Param_AlinhamentoBytesOffsetForArgs)
+	ICarenD3D11Buffer^ Param_BufferForArgs,
+	UInt32 Param_AlinhamentoBytesOffsetForArgs)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	ID3D11Buffer* pBuffer = NULL;
-
-	//Recupera o ponteiro para o buffer
-	Resultado = Param_BufferForArgs->RecuperarPonteiro((LPVOID*)&pBuffer);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou..
-
-		//Sai do método
-		Sair;
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->DispatchIndirect(pBuffer, Param_AlinhamentoBytesOffsetForArgs);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::DispatchIndirect(PonteiroTrabalho,
+		Param_BufferForArgs,
+		Param_AlinhamentoBytesOffsetForArgs
+	);
 }
 
 /// <summary>
@@ -1271,20 +589,14 @@ Done:;
 /// <param name="Param_NumeroVertices">Número de vértices para desenhar.</param>
 /// <param name="Param_LocalizacaoVertice">Índice do primeiro vértice, que é geralmente um deslocamento em um buffer de vértice.</param>
 CarenResult CarenD3D11DeviceContext::Draw(
-					UInt32 Param_NumeroVertices, 
-					UInt32 Param_LocalizacaoVertice)
+	UInt32 Param_NumeroVertices,
+	UInt32 Param_LocalizacaoVertice)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->Draw(Param_NumeroVertices, Param_LocalizacaoVertice);
-
-	//Define sucesso por default a operação.
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::Draw(PonteiroTrabalho,
+		Param_NumeroVertices,
+		Param_LocalizacaoVertice
+	);
 }
 
 /// <summary>
@@ -1294,17 +606,8 @@ CarenResult CarenD3D11DeviceContext::Draw(
 /// </summary>
 CarenResult CarenD3D11DeviceContext::DrawAuto()
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->DrawAuto();
-
-	//Define sucesso por default a operação.
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::DrawAuto(PonteiroTrabalho);
 }
 
 /// <summary>
@@ -1315,49 +618,41 @@ CarenResult CarenD3D11DeviceContext::DrawAuto()
 /// <param name="Param_StartIndexLocalizacao">A localização do índice primeiro ler pela GPU do buffer do índice.</param>
 /// <param name="Param_BaseVerticeLocalizacao">Um valor acrescentado para cada índice antes de ler um vértice de buffer vértice.</param>
 CarenResult CarenD3D11DeviceContext::DrawIndexed(
-					UInt32 Param_NumeroIndices, 
-					UInt32 Param_StartIndexLocalizacao, 
-					Int32 Param_BaseVerticeLocalizacao)
+	UInt32 Param_NumeroIndices,
+	UInt32 Param_StartIndexLocalizacao,
+	Int32 Param_BaseVerticeLocalizacao)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->DrawIndexed(Param_NumeroIndices, Param_StartIndexLocalizacao, Param_BaseVerticeLocalizacao);
-
-	//Define sucesso por default a operação.
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::DrawIndexed(PonteiroTrabalho,
+		Param_NumeroIndices,
+		Param_StartIndexLocalizacao,
+		Param_BaseVerticeLocalizacao
+	);
 }
 
 /// <summary>
 /// (DrawIndexedInstanced) - Desenhe indexados, instanciados primitivos.
 /// </summary>
-/// <param name="Param_QuantidadeIndicesPorInstnacia">Número de índices de ler o buffer de índice para cada instância.</param>
-/// <param name="Param_QuantidadeInstnacias">Número de instâncias para desenhar.</param>
+/// <param name="Param_QuantidadeIndicesPorInstancia">Número de índices de ler o buffer de índice para cada instância.</param>
+/// <param name="Param_QuantidadeInstancias">Número de instâncias para desenhar.</param>
 /// <param name="Param_StartIndexLocalizacao">A localização do índice primeiro ler pela GPU do buffer do índice.</param>
 /// <param name="Param_BaseVerticeLocalizacao">Um valor acrescentado para cada índice antes de ler um vértice de buffer vértice.</param>
 /// <param name="Param_StartInstanciaLocalizacao">Um valor acrescentado para cada índice antes de ler dados por instância de um buffer de vértice.</param>
 CarenResult CarenD3D11DeviceContext::DrawIndexedInstanced(
-					UInt32 Param_QuantidadeIndicesPorInstnacia, 
-					UInt32 Param_QuantidadeInstnacias, 
-					UInt32 Param_StartIndexLocalizacao, 
-					Int32 Param_BaseVerticeLocalizacao, 
-					UInt32 Param_StartInstanciaLocalizacao)
+	UInt32 Param_QuantidadeIndicesPorInstancia,
+	UInt32 Param_QuantidadeInstancias,
+	UInt32 Param_StartIndexLocalizacao,
+	Int32 Param_BaseVerticeLocalizacao,
+	UInt32 Param_StartInstanciaLocalizacao)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->DrawIndexedInstanced(Param_QuantidadeIndicesPorInstnacia, Param_QuantidadeInstnacias, Param_StartIndexLocalizacao, Param_BaseVerticeLocalizacao, Param_StartInstanciaLocalizacao);
-
-	//Define sucesso por default a operação.
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::DrawIndexedInstanced(PonteiroTrabalho,
+		Param_QuantidadeIndicesPorInstancia,
+		Param_QuantidadeInstancias,
+		Param_StartIndexLocalizacao,
+		Param_BaseVerticeLocalizacao,
+		Param_StartInstanciaLocalizacao
+	);
 }
 
 /// <summary>
@@ -1366,33 +661,14 @@ CarenResult CarenD3D11DeviceContext::DrawIndexedInstanced(
 /// <param name="Param_BufferForArgs">Um ponteiro para um ID3D11Buffer, que é um buffer contendo o GPU gerado primitivos.</param>
 /// <param name="Param_AlinhamentoBytesOffsetForArgs">Deslocamento em Param_BufferForArgs para o início da GPU gerado primitivos.</param>
 CarenResult CarenD3D11DeviceContext::DrawIndexedInstancedIndirect(
-					ICarenD3D11Buffer^ Param_BufferForArgs, 
-					UInt32 Param_AlinhamentoBytesOffsetForArgs)
+	ICarenD3D11Buffer^ Param_BufferForArgs,
+	UInt32 Param_AlinhamentoBytesOffsetForArgs)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	ID3D11Buffer* pBuffer = NULL;
-
-	//Recupera o ponteiro para o buffer
-	Resultado = Param_BufferForArgs->RecuperarPonteiro((LPVOID*)&pBuffer);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou..
-
-		//Sai do método
-		Sair;
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->DrawIndexedInstancedIndirect(pBuffer, Param_AlinhamentoBytesOffsetForArgs);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::DrawIndexedInstancedIndirect(PonteiroTrabalho,
+		Param_BufferForArgs,
+		Param_AlinhamentoBytesOffsetForArgs
+	);
 }
 
 /// <summary>
@@ -1400,27 +676,23 @@ Done:;
 /// Instância pode prolongar o desempenho, reutilizando a mesma geometria para desenhar vários objetos em uma cena. Um exemplo de criação de instância pode ser desenhar o mesmo objeto com posições 
 /// diferentes e cores.
 /// </summary>
-/// <param name="Param_QuantidadeVerticiesPorInstnacia">Número de vértices para desenhar.</param>
-/// <param name="Param_QuantidadeInstnacias">Número de instâncias para desenhar.</param>
+/// <param name="Param_QuantidadeVerticiesPorInstancia">Número de vértices para desenhar.</param>
+/// <param name="Param_QuantidadeInstancias">Número de instâncias para desenhar.</param>
 /// <param name="Param_StartVerticeLocalizacao">Índice do primeiro vértice.</param>
 /// <param name="Param_StartInstanciaLocalizacao">Um valor acrescentado para cada índice antes de ler dados por instância de um buffer de vértice.</param>			
 CarenResult CarenD3D11DeviceContext::DrawInstanced(
-					UInt32 Param_QuantidadeVerticiesPorInstnacia,
-					UInt32 Param_QuantidadeInstnacias,
-					UInt32 Param_StartVerticeLocalizacao,
-					UInt32 Param_StartInstanciaLocalizacao)
+	UInt32 Param_QuantidadeVerticiesPorInstancia,
+	UInt32 Param_QuantidadeInstancias,
+	UInt32 Param_StartVerticeLocalizacao,
+	UInt32 Param_StartInstanciaLocalizacao)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->DrawInstanced(Param_QuantidadeVerticiesPorInstnacia, Param_QuantidadeInstnacias, Param_StartVerticeLocalizacao, Param_StartInstanciaLocalizacao);
-
-	//Define sucesso por default a operação.
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::DrawInstanced(PonteiroTrabalho,
+		Param_QuantidadeVerticiesPorInstancia,
+		Param_QuantidadeInstancias,
+		Param_StartVerticeLocalizacao,
+		Param_StartInstanciaLocalizacao
+	);
 }
 
 /// <summary>
@@ -1429,33 +701,14 @@ CarenResult CarenD3D11DeviceContext::DrawInstanced(
 /// <param name="Param_BufferDadosPrimitivos">Um ponteiro para um ID3D11Buffer, que é um buffer contendo o GPU gerado primitivos.</param>
 /// <param name="Param_DeslocamentoDados">Deslocamento em (Param_BufferDadosPrimitivos) para o início da GPU gerado primitivos.</param>
 CarenResult CarenD3D11DeviceContext::DrawInstancedIndirect(
-					ICarenD3D11Buffer^% Param_BufferDadosPrimitivos, 
-					UInt32 Param_DeslocamentoDados)
+	ICarenD3D11Buffer^% Param_BufferDadosPrimitivos,
+	UInt32 Param_DeslocamentoDados)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	ID3D11Buffer* pBuffer = NULL;
-
-	//Recupera o ponteiro para o buffer
-	Resultado = Param_BufferDadosPrimitivos->RecuperarPonteiro((LPVOID*)&pBuffer);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou..
-
-		//Sai do método
-		Sair;
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->DrawIndexedInstancedIndirect(pBuffer, Param_DeslocamentoDados);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::DrawInstancedIndirect(PonteiroTrabalho,
+		Param_BufferDadosPrimitivos,
+		Param_DeslocamentoDados
+	);
 }
 
 /// <summary>
@@ -1466,66 +719,16 @@ Done:;
 /// <param name="Param_NumeroBuffers">Número de buffers para recuperar (varia de 0 a D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_Out_MatrizBuffers">Retorna uma matriz que contém as interfaces para o Buffers constantes.</param>
 CarenResult CarenD3D11DeviceContext::DSGetConstantBuffers(
-					UInt32 Param_StartSlot,
-					UInt32 Param_NumeroBuffers,
-					[Out] cli::array<ICarenD3D11Buffer^>^% Param_Out_MatrizBuffers)
+	UInt32 Param_StartSlot,
+	UInt32 Param_NumeroBuffers,
+	[Out] cli::array<ICarenD3D11Buffer^>^% Param_Out_MatrizBuffers)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	std::vector<ID3D11Buffer*> VetorDataInterface;
-	bool VetorVazio = FALSE;
-
-	//Define a quantidade de itens que o vetor vai conter.
-	VetorDataInterface.reserve(static_cast<size_t>(Param_NumeroBuffers));
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->DSGetConstantBuffers(Param_StartSlot, Param_NumeroBuffers, VetorDataInterface.data());
-
-	//Verifica se o Vetor está vazio
-	VetorVazio = VetorDataInterface.empty();
-
-	//Verifica o resultado
-	if (!VetorVazio)
-	{
-		//Deixa o método continuar.
-	}
-	else
-	{
-		//O vetor está vazio.
-		Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria o array que vai conter o ponteiros.
-	Param_Out_MatrizBuffers = gcnew cli::array<ICarenD3D11Buffer^>(Param_NumeroBuffers);
-
-	//Faz um for para criar e definir os dados.
-	for (UINT i = 0; i < Param_NumeroBuffers; i++)
-	{
-		//Cria a interface no id especificado.
-		Param_Out_MatrizBuffers[i] = gcnew CarenD3D11Buffer();
-
-		//Define o ponteiro de trabalho.
-		Param_Out_MatrizBuffers[i]->AdicionarPonteiro((LPVOID*)&VetorDataInterface[i]);
-	}
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Limpa o vetor
-	VetorDataInterface.clear();
-	VetorDataInterface.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::DSGetConstantBuffers(PonteiroTrabalho,
+		Param_StartSlot,
+		Param_NumeroBuffers,
+		Param_Out_MatrizBuffers
+	);
 }
 
 /// <summary>
@@ -1536,63 +739,16 @@ Done:;
 /// (varia de 0 a D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_Out_MatrizAmostradoresEstado">Uma matriz para as interfaces com amostradores de estado.</param>
 CarenResult CarenD3D11DeviceContext::DSGetSamplers(
-					UInt32 Param_StartSlot,
-					UInt32 Param_Amostradores,
-					[Out] cli::array<ICarenD3D11SamplerState^>^% Param_Out_MatrizAmostradoresEstado)
+	UInt32 Param_StartSlot,
+	UInt32 Param_Amostradores,
+	[Out] cli::array<ICarenD3D11SamplerState^>^% Param_Out_MatrizAmostradoresEstado)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	std::vector<ID3D11SamplerState*> VetorDataInterface;
-	bool VetorVazio = FALSE;
-
-	//Define a quantidade de itens que o vetor vai conter.
-	VetorDataInterface.reserve(static_cast<size_t>(Param_Amostradores));
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->DSGetSamplers(Param_StartSlot, Param_Amostradores, VetorDataInterface.data());
-
-	//Verifica se o Vetor está vazio
-	VetorVazio = VetorDataInterface.empty();
-
-	//Verifica o resultado
-	if (!VetorVazio)
-	{
-		//Deixa o método continuar.
-	}
-	else
-	{
-		//O vetor está vazio.
-		Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria o array que vai conter o ponteiros.
-	Param_Out_MatrizAmostradoresEstado = gcnew cli::array<ICarenD3D11SamplerState^>(Param_Amostradores);
-
-	//Faz um for para criar e definir os dados.
-	for (UINT i = 0; i < Param_Amostradores; i++)
-	{
-		//Cria a interface no id especificado.
-		Param_Out_MatrizAmostradoresEstado[i] = gcnew CarenD3D11SamplerState();
-
-		//Define o ponteiro de trabalho.
-		Param_Out_MatrizAmostradoresEstado[i]->AdicionarPonteiro(VetorDataInterface[i]);
-	}
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Limpa o vetor
-	VetorDataInterface.clear();
-	VetorDataInterface.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::DSGetSamplers(PonteiroTrabalho,
+		Param_StartSlot,
+		Param_Amostradores,
+		Param_Out_MatrizAmostradoresEstado
+	);
 }
 
 /// <summary>
@@ -1603,76 +759,16 @@ Done:;
 /// <param name="Param_Out_MatrizInstanciasClasse">Retorna uma matriz que contém interface de instâncias de classe.</param>
 /// <param name="Param_Out_ElementosMatriz">Retorna a quantidade de elementos na matriz(Param_Out_MatrizInstanciasClasse).</param>
 CarenResult CarenD3D11DeviceContext::DSGetShader(
-					[Out] ICarenD3D11DomainShader^% Param_Out_SombreadorDominio, 
-					[Out] cli::array<ICarenD3D11ClassInstance^>^% Param_Out_MatrizInstanciasClasse, 
-					[Out] UInt32% Param_Out_ElementosMatriz)
+	[Out] ICarenD3D11DomainShader^% Param_Out_SombreadorDominio,
+	[Out] cli::array<ICarenD3D11ClassInstance^>^% Param_Out_MatrizInstanciasClasse,
+	[Out] UInt32% Param_Out_ElementosMatriz)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	ID3D11DomainShader* pDomainShader = NULL;
-	vector<ID3D11ClassInstance*> VetorInterfaces;
-	UINT CountInterfacesInArray = 0;
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->DSGetShader(&pDomainShader, VetorInterfaces.data(), &CountInterfacesInArray);
-
-	//Verifica se interface do Shader Computer é valida
-	if (ObjetoValido(pDomainShader))
-	{
-		//Cria a interface que será retornada no parametro.
-		Param_Out_SombreadorDominio = gcnew CarenD3D11DomainShader();
-
-		//Define o ponteiro de trabalho
-		Param_Out_SombreadorDominio->AdicionarPonteiro(pDomainShader);
-	}
-
-	//Verifica se o foi retornado algum item para o vetor.
-	if (CountInterfacesInArray > 0)
-	{
-		//Deixa  continuar.
-	}
-	else
-	{
-		//Nenhuma interface foi retornada para o vetor.
-
-		//Define o resultado com base na interface de computação do shader.
-		Resultado = ObjetoValido(pDomainShader) ? CarenResult(ResultCode::SS_OK, true): CarenResult(ResultCode::ER_FAIL, false);
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria o array que vai ser retornado.
-	Param_Out_MatrizInstanciasClasse = gcnew cli::array<ICarenD3D11ClassInstance^>(CountInterfacesInArray);
-
-	//Copia os dados para o array
-	for (UINT i = 0; i < CountInterfacesInArray; i++)
-	{
-		//Cria a interface no id especificado.
-		Param_Out_MatrizInstanciasClasse[i] = gcnew CarenD3D11ClassInstance();
-
-		//Define o ponteiro de trabalho.
-		Param_Out_MatrizInstanciasClasse[i]->AdicionarPonteiro(VetorInterfaces[i]);
-	}
-
-	//Define a quantidade de itens no array.
-	Param_Out_ElementosMatriz = CountInterfacesInArray;
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Limpa o vetor
-	VetorInterfaces.clear();
-	VetorInterfaces.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::DSGetShader(PonteiroTrabalho,
+		Param_Out_SombreadorDominio,
+		Param_Out_MatrizInstanciasClasse,
+		Param_Out_ElementosMatriz
+	);
 }
 
 /// <summary>
@@ -1683,58 +779,16 @@ Done:;
 /// (varia de 0 a D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_Out_MatrizRecursoShader">Matriz de interfaces de exibição de recurso de sombreador a ser retornado pelo dispositivo.</param>
 CarenResult CarenD3D11DeviceContext::DSGetShaderResources(
-					UInt32 Param_StartSlot,
-					UInt32 Param_QuantidadeRecursos,
-					[Out] cli::array<ICarenD3D11ShaderResourceView^>^% Param_Out_MatrizRecursoShader)
+	UInt32 Param_StartSlot,
+	UInt32 Param_QuantidadeRecursos,
+	[Out] cli::array<ICarenD3D11ShaderResourceView^>^% Param_Out_MatrizRecursoShader)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	vector<ID3D11ShaderResourceView*> VectorResourceView;
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->DSGetShaderResources(Param_StartSlot, Param_QuantidadeRecursos, VectorResourceView.data());
-
-	//Verifica se obteve alguma interface.
-	if (!VectorResourceView.empty())
-	{
-		//Deixa o método continuar.
-	}
-	else
-	{
-		//Falhou.. Nenhuma interface foi retornada.
-
-		//Define falha.
-		Resultado.AdicionarCodigo(ResultCode::SS_FALSE, false);
-
-		//Sai
-		Sair;
-	}
-
-	//Cria a matriz a ser retornada ao usuário.
-	Param_Out_MatrizRecursoShader = gcnew cli::array<ICarenD3D11ShaderResourceView^>(Param_QuantidadeRecursos);
-
-	//faz um for para criar cada interface e definir o ponteiro de trabalho.
-	for (UINT i = 0; i < Param_QuantidadeRecursos; i++)
-	{
-		//Cria a interface no id especificado.
-		Param_Out_MatrizRecursoShader[i] = gcnew CarenD3D11ShaderResourceView();
-
-		//Define o ponteiro de trabalho.
-		Param_Out_MatrizRecursoShader[i]->AdicionarPonteiro(VectorResourceView[i]);
-	}
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Libera o vetor.
-	VectorResourceView.clear();
-	VectorResourceView.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::DSGetShaderResources(PonteiroTrabalho,
+		Param_StartSlot,
+		Param_QuantidadeRecursos,
+		Param_Out_MatrizRecursoShader
+	);
 }
 
 /// <summary>
@@ -1744,46 +798,16 @@ Done:;
 /// <param name="Param_NumeroBuffers">Número de buffers para definir (varia de 0 a D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_MatrizBuffers">Matriz de buffers constantes a ser dada ao dispositivo.</param>
 CarenResult CarenD3D11DeviceContext::DSSetConstantBuffers(
-					UInt32 Param_StartSlot,
-					UInt32 Param_NumeroBuffers,
-					cli::array<ICarenD3D11Buffer^>^ Param_MatrizBuffers)
+	UInt32 Param_StartSlot,
+	UInt32 Param_NumeroBuffers,
+	cli::array<ICarenD3D11Buffer^>^ Param_MatrizBuffers)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	std::vector<ID3D11Buffer*> VectorInterfaces;
-	ID3D11Buffer* pBuff = NULL;
-
-	//Define a quantidade de dados que vai conter no vetor.
-	VectorInterfaces.reserve(static_cast<size_t>(Param_NumeroBuffers));
-
-	//Faz um for para obter os buffers e definir no vetor.
-	for (UINT i = 0; i < Param_NumeroBuffers; i++)
-	{
-		//Recupera o ponteiro para o buffer.
-		Param_MatrizBuffers[i]->RecuperarPonteiro((LPVOID*)&pBuff);
-
-		//Define o ponteiro no vetor.
-		VectorInterfaces.push_back(pBuff);
-
-		//Limpa
-		pBuff = NULL;
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->DSSetConstantBuffers(Param_StartSlot, Param_NumeroBuffers, VectorInterfaces.data());
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Limpa o vetor.
-	VectorInterfaces.clear();
-	VectorInterfaces.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::DSSetConstantBuffers(PonteiroTrabalho,
+		Param_StartSlot,
+		Param_NumeroBuffers,
+		Param_MatrizBuffers
+	);
 }
 
 /// <summary>
@@ -1794,46 +818,16 @@ CarenResult CarenD3D11DeviceContext::DSSetConstantBuffers(
 /// (varia de 0 a D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_MatrizAmostradoresEstado">Uma matriz de interfaces amostrador-estado a ser dado ao dispositivo.</param>
 CarenResult CarenD3D11DeviceContext::DSSetSamplers(
-					UInt32 Param_StartSlot,
-					UInt32 Param_Amostradores,
-					cli::array<ICarenD3D11SamplerState^>^ Param_MatrizAmostradoresEstado)
+	UInt32 Param_StartSlot,
+	UInt32 Param_Amostradores,
+	cli::array<ICarenD3D11SamplerState^>^ Param_MatrizAmostradoresEstado)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	std::vector<ID3D11SamplerState*> VectorInterfaces;
-	ID3D11SamplerState* pSample = NULL;
-
-	//Define a quantidade de dados que vai conter no vetor.
-	VectorInterfaces.reserve(static_cast<size_t>(Param_Amostradores));
-	                                                                                     
-	//Faz um for para obter os buffers e definir no vetor.
-	for (UINT i = 0; i < Param_Amostradores; i++)
-	{
-		//Recupera o ponteiro para o buffer.
-		Param_MatrizAmostradoresEstado[i]->RecuperarPonteiro((LPVOID*)&pSample);
-
-		//Define o ponteiro no vetor.
-		VectorInterfaces.push_back(pSample);
-
-		//Limpa
-		pSample = NULL;
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->DSSetSamplers(Param_StartSlot, Param_Amostradores, VectorInterfaces.data());
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Limpa o vetor.
-	VectorInterfaces.clear();
-	VectorInterfaces.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::DSSetSamplers(PonteiroTrabalho,
+		Param_StartSlot,
+		Param_Amostradores,
+		Param_MatrizAmostradoresEstado
+	);
 }
 
 /// <summary>
@@ -1844,59 +838,16 @@ CarenResult CarenD3D11DeviceContext::DSSetSamplers(
 /// classe correspondente ou o shader vai ser desativado. Definir Param_MatrizInstanciasClasse para NULO se o sombreador não usa quaisquer interfaces.</param>
 /// <param name="Param_ElementosMatriz">A quantidade de elementos na matriz(Param_Out_MatrizInstanciasClasse).</param>
 CarenResult CarenD3D11DeviceContext::DSSetShader(
-					ICarenD3D11DomainShader^ Param_SombreadorDominio,
-					cli::array<ICarenD3D11ClassInstance^>^ Param_MatrizInstanciasClasse,
-					UInt32 Param_ElementosMatriz)
+	ICarenD3D11DomainShader^ Param_SombreadorDominio,
+	cli::array<ICarenD3D11ClassInstance^>^ Param_MatrizInstanciasClasse,
+	UInt32 Param_ElementosMatriz)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	ID3D11DomainShader* pDomainShader = NULL; //Pode ser nulo.
-	std::vector<ID3D11ClassInstance*> VectorInterfaces; //Pode ser nulo.
-	ID3D11ClassInstance* pInstance = NULL;
-
-	//Reserva o vetor para a quantidade especificada pelo usuário se for maior que zero.
-	//Se for, vai copiar as interfaces aqui mesmo.
-	if (Param_ElementosMatriz > 0)
-	{
-		//Reverva uma quantidade para o vetor.
-		VectorInterfaces.reserve(static_cast<size_t>(Param_ElementosMatriz));
-
-		//Obtem e define as interfaces no vetor.
-		for (UINT i = 0; i < Param_ElementosMatriz; i++)
-		{
-			//Recupera o ponteiro para a interface.
-			Param_MatrizInstanciasClasse[i]->RecuperarPonteiro((LPVOID*)&pInstance);
-
-			//Define o ponteiro no vetor.
-			VectorInterfaces.push_back(pInstance);
-
-			//Limpa
-			pInstance = NULL;
-		}
-	}
-
-	//Recupera o ponteiro para o Sombreador se ele tiver sido fornecido.
-	if (ObjetoGerenciadoValido(Param_SombreadorDominio))
-	{
-		//Recupera o ponteiro para a interface.
-		Param_SombreadorDominio->RecuperarPonteiro((LPVOID*)&pDomainShader);
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->DSSetShader(pDomainShader ? pDomainShader : NULL, Param_ElementosMatriz > 0 ? VectorInterfaces.data() : NULL, Param_ElementosMatriz);
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Limpa o vetor.
-	VectorInterfaces.clear();
-	VectorInterfaces.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::DSSetShader(PonteiroTrabalho,
+		Param_SombreadorDominio,
+		Param_MatrizInstanciasClasse,
+		Param_ElementosMatriz
+	);
 }
 
 /// <summary>
@@ -1907,45 +858,16 @@ CarenResult CarenD3D11DeviceContext::DSSetShader(
 /// (varia de 0 a D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_MatrizRecursoShader">Matriz de interfaces de exibição de recurso de sombreador definir para o dispositivo.</param>
 CarenResult CarenD3D11DeviceContext::DSSetShaderResources(
-					UInt32 Param_StartSlot,
-					UInt32 Param_QuantidadeRecursos,
-					cli::array<ICarenD3D11ShaderResourceView^>^ Param_MatrizRecursoShader)
+	UInt32 Param_StartSlot,
+	UInt32 Param_QuantidadeRecursos,
+	cli::array<ICarenD3D11ShaderResourceView^>^ Param_MatrizRecursoShader)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	std::vector<ID3D11ShaderResourceView*> VectorInterfaces;
-	ID3D11ShaderResourceView* pShaderView = NULL;
-
-	//Define a quantidade de dados que vai conter no vetor.
-	VectorInterfaces.reserve(static_cast<size_t>(Param_QuantidadeRecursos));
-
-	//Faz um for para obter os buffers e definir no vetor.
-	for (UINT i = 0; i < Param_QuantidadeRecursos; i++)
-	{
-		//Recupera o ponteiro para o buffer.
-		Param_MatrizRecursoShader[i]->RecuperarPonteiro((LPVOID*)&pShaderView);
-
-		//Define o ponteiro no vetor.
-		VectorInterfaces.push_back(pShaderView);
-
-		//Limpa
-		pShaderView = NULL;
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->DSSetShaderResources(Param_StartSlot, Param_QuantidadeRecursos, VectorInterfaces.data());
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Limpa o vetor.
-	VectorInterfaces.clear();
-	VectorInterfaces.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::DSSetShaderResources(PonteiroTrabalho,
+		Param_StartSlot,
+		Param_QuantidadeRecursos,
+		Param_MatrizRecursoShader
+	);
 }
 
 /// <summary>
@@ -1955,30 +877,10 @@ CarenResult CarenD3D11DeviceContext::DSSetShaderResources(
 /// <param name="Param_Async">Um ponteiro para uma interface de ID3D11Asynchronous .</param>
 CarenResult CarenD3D11DeviceContext::End(ICarenD3D11Asynchronous^ Param_Async)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	ID3D11Asynchronous* pAsync = NULL;
-
-	//Obtém o ponteiro
-	Resultado = Param_Async->RecuperarPonteiro((LPVOID*)&pAsync);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou..
-
-		//Sai do método
-		Sair;
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->End(pAsync);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::End(PonteiroTrabalho,
+		Param_Async
+	);
 }
 
 /// <summary>
@@ -1990,33 +892,14 @@ Done:;
 /// execução da lista de comandos. Normalmente, os aplicativos devem usar FALSE, a menos que restaurem o estado para ser quase equivalente ao estado que o tempo de execução restauraria se TRUE fosse 
 /// passado. Quando os aplicativos usam FALSE , eles podem evitar transições de estado desnecessárias e ineficientes.</param>
 CarenResult CarenD3D11DeviceContext::ExecuteCommandList(
-					ICarenD3D11CommandList^ Param_FilaComandos,
-					Boolean Param_RestaurarEstadoContexto)
+	ICarenD3D11CommandList^ Param_FilaComandos,
+	Boolean Param_RestaurarEstadoContexto)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	ID3D11CommandList* pCommandList = NULL;
-
-	//Obtém o ponteiro
-	Resultado = Param_FilaComandos->RecuperarPonteiro((LPVOID*)&pCommandList);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou..
-
-		//Sai do método
-		Sair;
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->ExecuteCommandList(pCommandList, Param_RestaurarEstadoContexto? TRUE: FALSE);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::ExecuteCommandList(PonteiroTrabalho,
+		Param_FilaComandos,
+		Param_RestaurarEstadoContexto
+	);
 }
 
 /// <summary>
@@ -2029,46 +912,14 @@ Done:;
 /// <param name="Param_Out_FilaComandos">Retorna um ponteiro da interface ICarenD3D11CommandList que é inicializado com as informações da lista de comandos gravados. O objeto ICarenD3D11CommandList 
 /// resultante é imutável e só pode ser usado com ICarenD3D11DeviceContext::ExecutarListaComandos.</param>
 CarenResult CarenD3D11DeviceContext::FinishCommandList(
-					Boolean Param_RestDeferidoEstadoContexto,
-					[Out] ICarenD3D11CommandList^% Param_Out_FilaComandos)
+	Boolean Param_RestDeferidoEstadoContexto,
+	[Out] ICarenD3D11CommandList^% Param_Out_FilaComandos)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	ID3D11CommandList* pCommandList = NULL;
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->FinishCommandList(Param_RestDeferidoEstadoContexto ? TRUE : FALSE, &pCommandList);
-
-	//Verifica se o ponteiro para o objeto é valido
-	if (ObjetoValido(pCommandList))
-	{
-		//Deixa o método continuar.
-	}
-	else
-	{
-		//Falhou..
-
-		//Define erro.
-		Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria a interface a ser retornada.
-	Param_Out_FilaComandos = gcnew CarenD3D11CommandList();
-
-	//Define o ponteiro de trabalho
-	Param_Out_FilaComandos->AdicionarPonteiro(pCommandList);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::FinishCommandList(PonteiroTrabalho,
+		Param_RestDeferidoEstadoContexto,
+		Param_Out_FilaComandos
+	);
 }
 
 /// <summary>
@@ -2076,17 +927,8 @@ Done:;
 /// </summary>
 CarenResult CarenD3D11DeviceContext::Flush()
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->Flush();
-
-	//Define sucesso por default a operação.
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::Flush(PonteiroTrabalho);
 }
 
 /// <summary>
@@ -2095,30 +937,10 @@ CarenResult CarenD3D11DeviceContext::Flush()
 /// <param name="Param_RecursoSombreador">Um ponteiro para uma interface ICarenD3D11ShaderResourceView que representa o recurso de sombreador.</param>
 CarenResult CarenD3D11DeviceContext::GenerateMips(ICarenD3D11ShaderResourceView^ Param_RecursoSombreador)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas
-	ID3D11ShaderResourceView* pRecursoView = NULL;
-
-	//Obtém o ponteiro
-	Resultado = Param_RecursoSombreador->RecuperarPonteiro((LPVOID*)&pRecursoView);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou..
-
-		//Sai do método
-		Sair;
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->GenerateMips(pRecursoView);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::GenerateMips(PonteiroTrabalho,
+		Param_RecursoSombreador
+	);
 }
 
 /// <summary>
@@ -2128,17 +950,10 @@ Done:;
 /// uso futuro.</param>
 CarenResult CarenD3D11DeviceContext::GetContextFlags([Out] UInt32% Param_Out_ContextFlags)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Chama o método para realizar a operação.
-	Param_Out_ContextFlags = PonteiroTrabalho->GetContextFlags();
-
-	//Define sucesso por default a operação.
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::GetContextFlags(PonteiroTrabalho,
+		Param_Out_ContextFlags
+	);
 }
 
 /// <summary>
@@ -2149,70 +964,18 @@ CarenResult CarenD3D11DeviceContext::GetContextFlags([Out] UInt32% Param_Out_Con
 /// <param name="Param_TamanhoDados">Tamanho dos dados a serem recuperados ou 0. Deve ser 0 quando (Param_Dados) for NULO.</param>
 /// <param name="Param_FlagsGetData">Bandeiras opcionais. Pode ser 0 ou qualquer combinação das bandeiras enumeradas por CA_D3D11_ASYNC_GETDATA_FLAG.</param>
 CarenResult CarenD3D11DeviceContext::GetData(
-					ICarenD3D11Asynchronous^ Param_Async,
-					ICarenBuffer^% Param_Dados,
-					UInt32 Param_TamanhoDados,
-					Enumeracoes::CA_D3D11_ASYNC_GETDATA_FLAG Param_FlagsGetData)
+	ICarenD3D11Asynchronous^ Param_Async,
+	ICarenBuffer^% Param_Dados,
+	UInt32 Param_TamanhoDados,
+	Enumeracoes::CA_D3D11_ASYNC_GETDATA_FLAG Param_FlagsGetData)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	ID3D11Asynchronous* pAsync = NULL;
-	UINT FlagsGetData = static_cast<UINT>(Param_FlagsGetData);
-	IntPtr PonteiroDados = IntPtr::Zero;
-	void* pData = NULL;
-
-	//Obtém o ponteiro para a matriz que vai conter os dados.
-	Resultado = Param_Async->RecuperarPonteiro((LPVOID*)&pAsync);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou..
-
-		//Sai do método
-		Sair;
-	}
-
-	//Verifica se forneceu um ponteiro que receberá os dados.
-	if (ObjetoGerenciadoValido(Param_Dados))
-	{
-		//Forneceu.
-
-		//Recuper ao ponteiro para a memoria que vai conter os dados.
-		Param_Dados->GetInternalPointer(PonteiroDados); pData = PonteiroDados.ToPointer();
-	}
-	else
-	{
-		//Não forneceu um ponteiro.
-	}
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetData(pAsync, pData ? pData : NULL, Param_TamanhoDados, FlagsGetData);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::GetData(PonteiroTrabalho,
+		Param_Async,
+		Param_Dados,
+		Param_TamanhoDados,
+		Param_FlagsGetData
+	);
 }
 
 /// <summary>
@@ -2221,38 +984,14 @@ Done:;
 /// <param name="Param_Out_Predicado">Recebe um ponteiro para um predicado. O valor armazenado aqui será NULO na criação do dispositivo.</param> 
 /// <param name="Param_Out_ValuePredicado">Recebe um valor booleano para preencher o valor de comparação de predicado. FALSE na criação do dispositivo.</param>
 CarenResult CarenD3D11DeviceContext::GetPredication(
-					[Out] ICarenD3D11Predicate^% Param_Out_Predicado,
-					[Out] Boolean% Param_Out_ValuePredicado)
+	[Out] ICarenD3D11Predicate^% Param_Out_Predicado,
+	[Out] Boolean% Param_Out_ValuePredicado)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	ID3D11Predicate* pPredicate = NULL;
-	BOOL ValuePredicado = FALSE;
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->GetPredication(&pPredicate, &ValuePredicado);
-
-	//Verifica se o ponteiro retornado é valido e define na interface.
-	//Se não for valido, isso não vai representar um erro, porque ele pode retornar NULO na criação.
-	if (ObjetoValido(pPredicate))
-	{
-		//Cria a interface que vai ser retornada.
-		Param_Out_Predicado = gcnew CarenD3D11Predicate();
-
-		//Define o ponteiro de trabalho
-		Param_Out_Predicado->AdicionarPonteiro(pPredicate);
-	}
-
-	//Define o value
-	Param_Out_ValuePredicado = ValuePredicado ? TRUE : FALSE;
-
-	//Define sucesso por default a operação.
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::GetPredication(PonteiroTrabalho,
+		Param_Out_Predicado,
+		Param_Out_ValuePredicado
+	);
 }
 
 /// <summary>
@@ -2260,32 +999,15 @@ CarenResult CarenD3D11DeviceContext::GetPredication(
 /// </summary>
 /// <param name="Param_Recurso">Um ponteiro para uma interface que representa um recurso.</param> 
 /// <param name="Param_Out_LODMinimo">Retorna o LOD minímo.</param> 
-CarenResult CarenD3D11DeviceContext::GetResourceMinLOD(ICarenD3D11Resource^ Param_Recurso, [Out] float% Param_Out_LODMinimo)
+CarenResult CarenD3D11DeviceContext::GetResourceMinLOD(
+	ICarenD3D11Resource^ Param_Recurso,
+	[Out] float% Param_Out_LODMinimo)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	ID3D11Resource* pRecurso = NULL;
-
-	//Recupera o ponteiro para a interface.
-	Resultado = Param_Recurso->RecuperarPonteiro((LPVOID*)&pRecurso);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou..
-
-		//Sai do método
-		Sair;
-	}
-
-	//Chama o método para realizar a operação.
-	Param_Out_LODMinimo = PonteiroTrabalho->GetResourceMinLOD(pRecurso);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::GetResourceMinLOD(PonteiroTrabalho,
+		Param_Recurso,
+		Param_Out_LODMinimo
+	);
 }
 
 /// <summary>
@@ -2294,17 +1016,10 @@ Done:;
 /// <param name="Param_Out_ContextoDispositivo">Retorna as opções de contexto do dispositivo.</param> 
 CarenResult CarenD3D11DeviceContext::GetType([Out] Enumeracoes::CA_D3D11_DEVICE_CONTEXT_TYPE% Param_Out_ContextoDispositivo)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Chama o método para realizar a operação.
-	Param_Out_ContextoDispositivo = static_cast<CA_D3D11_DEVICE_CONTEXT_TYPE>(PonteiroTrabalho->GetType());
-
-	//Define sucesso por default a operação.
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::GetType(PonteiroTrabalho,
+		Param_Out_ContextoDispositivo
+	);
 }
 
 /// <summary>
@@ -2314,66 +1029,16 @@ CarenResult CarenD3D11DeviceContext::GetType([Out] Enumeracoes::CA_D3D11_DEVICE_
 /// <param name="Param_NumeroBuffers">Número de buffers a serem recuperados (varia de 0 a D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_Out_MatrizBuffers">Retorna uma matriz de ponteiros de interface de buffer constante.</param>
 CarenResult CarenD3D11DeviceContext::GSGetConstantBuffers(
-					UInt32 Param_StartSlot,
-					UInt32 Param_NumeroBuffers,
-					[Out] cli::array<ICarenD3D11Buffer^>^% Param_Out_MatrizBuffers)
+	UInt32 Param_StartSlot,
+	UInt32 Param_NumeroBuffers,
+	[Out] cli::array<ICarenD3D11Buffer^>^% Param_Out_MatrizBuffers)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	std::vector<ID3D11Buffer*> VetorDataInterface;
-	bool VetorVazio = FALSE;
-
-	//Define a quantidade de itens que o vetor vai conter.
-	VetorDataInterface.reserve(static_cast<size_t>(Param_NumeroBuffers));
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->GSGetConstantBuffers(Param_StartSlot, Param_NumeroBuffers, VetorDataInterface.data());
-
-	//Verifica se o Vetor está vazio
-	VetorVazio = VetorDataInterface.empty();
-
-	//Verifica o resultado
-	if (!VetorVazio)
-	{
-		//Deixa o método continuar.
-	}
-	else
-	{
-		//O vetor está vazio.
-		Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria o array que vai conter o ponteiros.
-	Param_Out_MatrizBuffers = gcnew cli::array<ICarenD3D11Buffer^>(Param_NumeroBuffers);
-
-	//Faz um for para criar e definir os dados.
-	for (UINT i = 0; i < Param_NumeroBuffers; i++)
-	{
-		//Cria a interface no id especificado.
-		Param_Out_MatrizBuffers[i] = gcnew CarenD3D11Buffer();
-
-		//Define o ponteiro de trabalho.
-		Param_Out_MatrizBuffers[i]->AdicionarPonteiro((LPVOID*)&VetorDataInterface[i]);
-	}
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Limpa o vetor
-	VetorDataInterface.clear();
-	VetorDataInterface.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::GSGetConstantBuffers(PonteiroTrabalho,
+		Param_StartSlot,
+		Param_NumeroBuffers,
+		Param_Out_MatrizBuffers
+	);
 }
 
 /// <summary>
@@ -2383,63 +1048,16 @@ Done:;
 /// <param name="Param_NumeroAmostradores">Número de (Samplers) para obter de um contexto de dispositivo. Cada estágio de pipeline tem um total de 16 slots disponíveis (varia de 0 a D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_Out_MatrizEstadoAmostrado">Retorna uma matriz com interfaces do amostrador de estado.</param>
 CarenResult CarenD3D11DeviceContext::GSGetSamplers(
-					UInt32 Param_StartSlot,
-					UInt32 Param_NumeroAmostradores,
-					[Out] cli::array<ICarenD3D11SamplerState^>^% Param_Out_MatrizEstadoAmostrado)
+	UInt32 Param_StartSlot,
+	UInt32 Param_NumeroAmostradores,
+	[Out] cli::array<ICarenD3D11SamplerState^>^% Param_Out_MatrizEstadoAmostrado)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	std::vector<ID3D11SamplerState*> VetorDataInterface;
-	bool VetorVazio = FALSE;
-
-	//Define a quantidade de itens que o vetor vai conter.
-	VetorDataInterface.reserve(static_cast<size_t>(Param_NumeroAmostradores));
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->GSGetSamplers(Param_StartSlot, Param_NumeroAmostradores, VetorDataInterface.data());
-
-	//Verifica se o Vetor está vazio
-	VetorVazio = VetorDataInterface.empty();
-
-	//Verifica o resultado
-	if (!VetorVazio)
-	{
-		//Deixa o método continuar.
-	}
-	else
-	{
-		//O vetor está vazio.
-		Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria o array que vai conter o ponteiros.
-	Param_Out_MatrizEstadoAmostrado = gcnew cli::array<ICarenD3D11SamplerState^>(Param_NumeroAmostradores);
-
-	//Faz um for para criar e definir os dados.
-	for (UINT i = 0; i < Param_NumeroAmostradores; i++)
-	{
-		//Cria a interface no id especificado.
-		Param_Out_MatrizEstadoAmostrado[i] = gcnew CarenD3D11SamplerState();
-
-		//Define o ponteiro de trabalho.
-		Param_Out_MatrizEstadoAmostrado[i]->AdicionarPonteiro(VetorDataInterface[i]);
-	}
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Limpa o vetor
-	VetorDataInterface.clear();
-	VetorDataInterface.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::GSGetSamplers(PonteiroTrabalho,
+		Param_StartSlot,
+		Param_NumeroAmostradores,
+		Param_Out_MatrizEstadoAmostrado
+	);
 }
 
 /// <summary>
@@ -2449,76 +1067,16 @@ Done:;
 /// <param name="Param_Out_MatrizInstanciasClasse">Retorna uma matriz com interfaces de Instancias de classe.</param>
 /// <param name="Param_Out_QuantidadeInstancias">Retorna a quantidade de de instancias de classe na matriz do parametro (Param_Out_MatrizInstanciasClasse).</param>
 CarenResult CarenD3D11DeviceContext::GSGetShader(
-					[Out] ICarenD3D11GeometryShader^% Param_Out_SombreadorGeometria,
-					[Out] cli::array<ICarenD3D11ClassInstance^>^% Param_Out_MatrizInstanciasClasse,
-					[Out] UInt32% Param_Out_QuantidadeInstancias)
+	[Out] ICarenD3D11GeometryShader^% Param_Out_SombreadorGeometria,
+	[Out] cli::array<ICarenD3D11ClassInstance^>^% Param_Out_MatrizInstanciasClasse,
+	[Out] UInt32% Param_Out_QuantidadeInstancias)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	ID3D11GeometryShader* pGeometryShader = NULL;
-	vector<ID3D11ClassInstance*> VetorInterfaces;
-	UINT CountInterfacesInArray = 0;
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->GSGetShader(&pGeometryShader, VetorInterfaces.data(), &CountInterfacesInArray);
-
-	//Verifica se interface do Shader Computer é valida
-	if (ObjetoValido(pGeometryShader))
-	{
-		//Cria a interface que será retornada no parametro.
-		Param_Out_SombreadorGeometria = gcnew CarenD3D11GeometryShader();
-
-		//Define o ponteiro de trabalho
-		Param_Out_SombreadorGeometria->AdicionarPonteiro(pGeometryShader);
-	}
-
-	//Verifica se o foi retornado algum item para o vetor.
-	if (CountInterfacesInArray > 0)
-	{
-		//Deixa  continuar.
-	}
-	else
-	{
-		//Nenhuma interface foi retornada para o vetor.
-
-		//Define o resultado com base na interface de computação do shader.
-		Resultado = ObjetoValido(pGeometryShader) ? CarenResult(ResultCode::SS_OK, true): CarenResult(ResultCode::ER_FAIL, true);
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria o array que vai ser retornado.
-	Param_Out_MatrizInstanciasClasse = gcnew cli::array<ICarenD3D11ClassInstance^>(CountInterfacesInArray);
-
-	//Copia os dados para o array
-	for (UINT i = 0; i < CountInterfacesInArray; i++)
-	{
-		//Cria a interface no id especificado.
-		Param_Out_MatrizInstanciasClasse[i] = gcnew CarenD3D11ClassInstance();
-
-		//Define o ponteiro de trabalho.
-		Param_Out_MatrizInstanciasClasse[i]->AdicionarPonteiro(VetorInterfaces[i]);
-	}
-
-	//Define a quantidade de itens no array.
-	Param_Out_QuantidadeInstancias = CountInterfacesInArray;
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Limpa o vetor
-	VetorInterfaces.clear();
-	VetorInterfaces.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::GSGetShader(PonteiroTrabalho,
+		Param_Out_SombreadorGeometria,
+		Param_Out_MatrizInstanciasClasse,
+		Param_Out_QuantidadeInstancias
+	);
 }
 
 /// <summary>
@@ -2528,58 +1086,16 @@ Done:;
 /// <param name="Param_NumeroViews">O número de recursos para obter do dispositivo. Até um máximo de 128 slots estão disponíveis para recursos de sombreador (varia de 0 a D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_Out_MatrizVisualizadoresSombreador">Matriz de interfaces de visualização de recursos do sombreador a serem retornadas pelo dispositivo.</param>
 CarenResult CarenD3D11DeviceContext::GSGetShaderResources(
-					UInt32 Param_StartSlot,
-					UInt32 Param_NumeroViews,
-					[Out] cli::array<ICarenD3D11ShaderResourceView^>^% Param_Out_MatrizVisualizadoresSombreador)
+	UInt32 Param_StartSlot,
+	UInt32 Param_NumeroViews,
+	[Out] cli::array<ICarenD3D11ShaderResourceView^>^% Param_Out_MatrizVisualizadoresSombreador)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	vector<ID3D11ShaderResourceView*> VectorResourceView;
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->GSGetShaderResources(Param_StartSlot, Param_NumeroViews, VectorResourceView.data());
-
-	//Verifica se obteve alguma interface.
-	if (!VectorResourceView.empty())
-	{
-		//Deixa o método continuar.
-	}
-	else
-	{
-		//Falhou.. Nenhuma interface foi retornada.
-
-		//Define falha.
-		Resultado.AdicionarCodigo(ResultCode::SS_FALSE, false);
-
-		//Sai
-		Sair;
-	}
-
-	//Cria a matriz a ser retornada ao usuário.
-	Param_Out_MatrizVisualizadoresSombreador = gcnew cli::array<ICarenD3D11ShaderResourceView^>(Param_NumeroViews);
-
-	//faz um for para criar cada interface e definir o ponteiro de trabalho.
-	for (UINT i = 0; i < Param_NumeroViews; i++)
-	{
-		//Cria a interface no id especificado.
-		Param_Out_MatrizVisualizadoresSombreador[i] = gcnew CarenD3D11ShaderResourceView();
-
-		//Define o ponteiro de trabalho.
-		Param_Out_MatrizVisualizadoresSombreador[i]->AdicionarPonteiro(VectorResourceView[i]);
-	}
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Libera o vetor.
-	VectorResourceView.clear();
-	VectorResourceView.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::GSGetShaderResources(PonteiroTrabalho,
+		Param_StartSlot,
+		Param_NumeroViews,
+		Param_Out_MatrizVisualizadoresSombreador
+	);
 }
 
 /// <summary>
@@ -2589,46 +1105,16 @@ Done:;
 /// <param name="Param_NumeroBuffers">Número de buffers a definir (varia de 0 a D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - Param_StartSlot).</param> 
 /// <param name="Param_MatrizBuffers">Matriz de buffers constantes sendo fornecidos ao dispositivo.</param> 
 CarenResult CarenD3D11DeviceContext::GSSetConstantBuffers(
-					UInt32 Param_StartSlot,
-					UInt32 Param_NumeroBuffers,
-					cli::array<ICarenD3D11Buffer^>^ Param_MatrizBuffers)
+	UInt32 Param_StartSlot,
+	UInt32 Param_NumeroBuffers,
+	cli::array<ICarenD3D11Buffer^>^ Param_MatrizBuffers)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	std::vector<ID3D11Buffer*> VectorInterfaces;
-	ID3D11Buffer* pBuff = NULL;
-
-	//Define a quantidade de dados que vai conter no vetor.
-	VectorInterfaces.reserve(static_cast<size_t>(Param_NumeroBuffers));
-
-	//Faz um for para obter os buffers e definir no vetor.
-	for (UINT i = 0; i < Param_NumeroBuffers; i++)
-	{
-		//Recupera o ponteiro para o buffer.
-		Param_MatrizBuffers[i]->RecuperarPonteiro((LPVOID*)&pBuff);
-
-		//Define o ponteiro no vetor.
-		VectorInterfaces.push_back(pBuff);
-
-		//Limpa
-		pBuff = NULL;
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->GSSetConstantBuffers(Param_StartSlot, Param_NumeroBuffers, VectorInterfaces.data());
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Limpa o vetor.
-	VectorInterfaces.clear();
-	VectorInterfaces.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::GSSetConstantBuffers(PonteiroTrabalho,
+		Param_StartSlot,
+		Param_NumeroBuffers,
+		Param_MatrizBuffers
+	);
 }
 
 /// <summary>
@@ -2638,46 +1124,16 @@ CarenResult CarenD3D11DeviceContext::GSSetConstantBuffers(
 /// <param name="Param_NumeroAmostradores">Número de amostradores na matriz. Cada estágio de pipeline tem um total de 16 slots disponíveis (varia de 0 a D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_MatrizAmostradoresEstado">Uma matriz de interfaces de estado do amostrador.</param>
 CarenResult CarenD3D11DeviceContext::GSSetSamplers(
-					UInt32 Param_StartSlot,
-					UInt32 Param_NumeroAmostradores,
-					cli::array<ICarenD3D11SamplerState^>^ Param_MatrizAmostradoresEstado)
+	UInt32 Param_StartSlot,
+	UInt32 Param_NumeroAmostradores,
+	cli::array<ICarenD3D11SamplerState^>^ Param_MatrizAmostradoresEstado)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	std::vector<ID3D11SamplerState*> VectorInterfaces;
-	ID3D11SamplerState* pSample = NULL;
-
-	//Define a quantidade de dados que vai conter no vetor.
-	VectorInterfaces.reserve(static_cast<size_t>(Param_NumeroAmostradores));
-
-	//Faz um for para obter os buffers e definir no vetor.
-	for (UINT i = 0; i < Param_NumeroAmostradores; i++)
-	{
-		//Recupera o ponteiro para o buffer.
-		Param_MatrizAmostradoresEstado[i]->RecuperarPonteiro((LPVOID*)&pSample);
-
-		//Define o ponteiro no vetor.
-		VectorInterfaces.push_back(pSample);
-
-		//Limpa
-		pSample = NULL;
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->GSSetSamplers(Param_StartSlot, Param_NumeroAmostradores, VectorInterfaces.data());
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Limpa o vetor.
-	VectorInterfaces.clear();
-	VectorInterfaces.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::GSSetSamplers(PonteiroTrabalho,
+		Param_StartSlot,
+		Param_NumeroAmostradores,
+		Param_MatrizAmostradoresEstado
+	);
 }
 
 /// <summary>
@@ -2687,59 +1143,16 @@ CarenResult CarenD3D11DeviceContext::GSSetSamplers(
 /// <param name="Param_MatrizInstanciaClasse">Uma matriz de interfaces de instância de classe. Cada interface usada por um sombreador deve ter uma instância de classe correspondente ou o shader será desativado. Defina como NULO se o sombreador não usar nenhuma interface.</param>
 /// <param name="Param_NumeroInstanciasClasse">O numero de (ICarenD3D11ClassInstance) dentro da matriz (Param_MatrizInstanciaClasse).</param>
 CarenResult CarenD3D11DeviceContext::GSSetShader(
-					ICarenD3D11GeometryShader^ Param_SombreadorGeometria,
-					cli::array<ICarenD3D11ClassInstance^>^ Param_MatrizInstanciaClasse,
-					UInt32 Param_NumeroInstanciasClasse)
+	ICarenD3D11GeometryShader^ Param_SombreadorGeometria,
+	cli::array<ICarenD3D11ClassInstance^>^ Param_MatrizInstanciaClasse,
+	UInt32 Param_NumeroInstanciasClasse)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	ID3D11GeometryShader* pGeometryShader = NULL; //Pode ser nulo.
-	std::vector<ID3D11ClassInstance*> VectorInterfaces; //Pode ser nulo.
-	ID3D11ClassInstance* pInstance = NULL;
-
-	//Reserva o vetor para a quantidade especificada pelo usuário se for maior que zero.
-	//Se for, vai copiar as interfaces aqui mesmo.
-	if (Param_NumeroInstanciasClasse > 0)
-	{
-		//Reverva uma quantidade para o vetor.
-		VectorInterfaces.reserve(static_cast<size_t>(Param_NumeroInstanciasClasse));
-
-		//Obtem e define as interfaces no vetor.
-		for (UINT i = 0; i < Param_NumeroInstanciasClasse; i++)
-		{
-			//Recupera o ponteiro para a interface.
-			Param_MatrizInstanciaClasse[i]->RecuperarPonteiro((LPVOID*)&pInstance);
-
-			//Define o ponteiro no vetor.
-			VectorInterfaces.push_back(pInstance);
-
-			//Limpa
-			pInstance = NULL;
-		}
-	}
-
-	//Recupera o ponteiro para o Sombreador de geometria se tiver sido fornecido
-	if (ObjetoGerenciadoValido(Param_SombreadorGeometria))
-	{
-		//Recupera o ponteiro para a interface.
-		Param_SombreadorGeometria->RecuperarPonteiro((LPVOID*)&pGeometryShader);
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->GSSetShader(pGeometryShader ? pGeometryShader : NULL, Param_NumeroInstanciasClasse > 0 ? VectorInterfaces.data() : NULL, Param_NumeroInstanciasClasse);
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Limpa o vetor.
-	VectorInterfaces.clear();
-	VectorInterfaces.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::GSSetShader(PonteiroTrabalho,
+		Param_SombreadorGeometria,
+		Param_MatrizInstanciaClasse,
+		Param_NumeroInstanciasClasse
+	);
 }
 
 /// <summary>
@@ -2749,45 +1162,16 @@ CarenResult CarenD3D11DeviceContext::GSSetShader(
 /// <param name="Param_NumeroViews">Número de recursos do shader a serem definidos. Até um máximo de 128 slots estão disponíveis para recursos de sombreador (o intervalo é de 0 a D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_MatrizVisualizadoresSombreador">Uma matriz que contém os Visualizadores de recurso do sombreador para serem definidos no Disposiivo.</param>
 CarenResult CarenD3D11DeviceContext::GSSetShaderResources(
-					UInt32 Param_StartSlot,
-					UInt32 Param_NumeroViews,
-					cli::array<ICarenD3D11ShaderResourceView^>^ Param_MatrizVisualizadoresSombreador)
+	UInt32 Param_StartSlot,
+	UInt32 Param_NumeroViews,
+	cli::array<ICarenD3D11ShaderResourceView^>^ Param_MatrizVisualizadoresSombreador)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	std::vector<ID3D11ShaderResourceView*> VectorInterfaces;
-	ID3D11ShaderResourceView* pShaderView = NULL;
-
-	//Define a quantidade de dados que vai conter no vetor.
-	VectorInterfaces.reserve(static_cast<size_t>(Param_NumeroViews));
-
-	//Faz um for para obter os buffers e definir no vetor.
-	for (UINT i = 0; i < Param_NumeroViews; i++)
-	{
-		//Recupera o ponteiro para a interface.
-		Param_MatrizVisualizadoresSombreador[i]->RecuperarPonteiro((LPVOID*)&pShaderView);
-
-		//Define o ponteiro no vetor.
-		VectorInterfaces.push_back(pShaderView);
-
-		//Limpa
-		pShaderView = NULL;
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->GSSetShaderResources(Param_StartSlot, Param_NumeroViews, VectorInterfaces.data());
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Limpa o vetor.
-	VectorInterfaces.clear();
-	VectorInterfaces.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::GSSetShaderResources(PonteiroTrabalho,
+		Param_StartSlot,
+		Param_NumeroViews,
+		Param_MatrizVisualizadoresSombreador
+	);
 }
 
 /// <summary>
@@ -2797,66 +1181,16 @@ CarenResult CarenD3D11DeviceContext::GSSetShaderResources(
 /// <param name="Param_NumeroBuffers">Número de buffers a serem recuperados (varia de 0 a D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_Out_MatrizBuffers">Retorna uma matriz de ponteiros de interface de buffer constante.</param>
 CarenResult CarenD3D11DeviceContext::HSGetConstantBuffers(
-					UInt32 Param_StartSlot,
-					UInt32 Param_NumeroBuffers,
-					[Out] cli::array<ICarenD3D11Buffer^>^% Param_Out_MatrizBuffers)
+	UInt32 Param_StartSlot,
+	UInt32 Param_NumeroBuffers,
+	[Out] cli::array<ICarenD3D11Buffer^>^% Param_Out_MatrizBuffers)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	std::vector<ID3D11Buffer*> VetorDataInterface;
-	bool VetorVazio = FALSE;
-
-	//Define a quantidade de itens que o vetor vai conter.
-	VetorDataInterface.reserve(static_cast<size_t>(Param_NumeroBuffers));
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->HSGetConstantBuffers(Param_StartSlot, Param_NumeroBuffers, VetorDataInterface.data());
-
-	//Verifica se o Vetor está vazio
-	VetorVazio = VetorDataInterface.empty();
-
-	//Verifica o resultado
-	if (!VetorVazio)
-	{
-		//Deixa o método continuar.
-	}
-	else
-	{
-		//O vetor está vazio.
-		Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria o array que vai conter o ponteiros.
-	Param_Out_MatrizBuffers = gcnew cli::array<ICarenD3D11Buffer^>(Param_NumeroBuffers);
-
-	//Faz um for para criar e definir os dados.
-	for (UINT i = 0; i < Param_NumeroBuffers; i++)
-	{
-		//Cria a interface no id especificado.
-		Param_Out_MatrizBuffers[i] = gcnew CarenD3D11Buffer();
-
-		//Define o ponteiro de trabalho.
-		Param_Out_MatrizBuffers[i]->AdicionarPonteiro((LPVOID*)&VetorDataInterface[i]);
-	}
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Limpa o vetor
-	VetorDataInterface.clear();
-	VetorDataInterface.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::HSGetConstantBuffers(PonteiroTrabalho,
+		Param_StartSlot,
+		Param_NumeroBuffers,
+		Param_Out_MatrizBuffers
+	);
 }
 
 /// <summary>
@@ -2866,63 +1200,16 @@ Done:;
 /// <param name="Param_NumeroAmostradores">Número de (Samplers) para obter de um contexto de dispositivo. Cada estágio de pipeline tem um total de 16 slots disponíveis (varia de 0 a D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_Out_MatrizEstadoAmostrado">Retorna uma matriz com interfaces do amostrador de estado.</param>
 CarenResult CarenD3D11DeviceContext::HSGetSamplers(
-					UInt32 Param_StartSlot,
-					UInt32 Param_NumeroAmostradores,
-					[Out] cli::array<ICarenD3D11SamplerState^>^% Param_Out_MatrizEstadoAmostrado)
+	UInt32 Param_StartSlot,
+	UInt32 Param_NumeroAmostradores,
+	[Out] cli::array<ICarenD3D11SamplerState^>^% Param_Out_MatrizEstadoAmostrado)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	std::vector<ID3D11SamplerState*> VetorDataInterface;
-	bool VetorVazio = FALSE;
-
-	//Define a quantidade de itens que o vetor vai conter.
-	VetorDataInterface.reserve(static_cast<size_t>(Param_NumeroAmostradores));
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->HSGetSamplers(Param_StartSlot, Param_NumeroAmostradores, VetorDataInterface.data());
-
-	//Verifica se o Vetor está vazio
-	VetorVazio = VetorDataInterface.empty();
-
-	//Verifica o resultado
-	if (!VetorVazio)
-	{
-		//Deixa o método continuar.
-	}
-	else
-	{
-		//O vetor está vazio.
-		Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria o array que vai conter o ponteiros.
-	Param_Out_MatrizEstadoAmostrado = gcnew cli::array<ICarenD3D11SamplerState^>(Param_NumeroAmostradores);
-
-	//Faz um for para criar e definir os dados.
-	for (UINT i = 0; i < Param_NumeroAmostradores; i++)
-	{
-		//Cria a interface no id especificado.
-		Param_Out_MatrizEstadoAmostrado[i] = gcnew CarenD3D11SamplerState();
-
-		//Define o ponteiro de trabalho.
-		Param_Out_MatrizEstadoAmostrado[i]->AdicionarPonteiro(VetorDataInterface[i]);
-	}
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Limpa o vetor
-	VetorDataInterface.clear();
-	VetorDataInterface.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::HSGetSamplers(PonteiroTrabalho,
+		Param_StartSlot,
+		Param_NumeroAmostradores,
+		Param_Out_MatrizEstadoAmostrado
+	);
 }
 
 /// <summary>
@@ -2932,76 +1219,16 @@ Done:;
 /// <param name="Param_Out_MatrizInstanciasClasse">Retorna uma matriz com interfaces de Instancias de classe.</param>
 /// <param name="Param_Out_QuantidadeInstancias">Retorna a quantidade de de instancias de classe na matriz do parametro (Param_Out_MatrizInstanciasClasse).</param>
 CarenResult CarenD3D11DeviceContext::HSGetShader(
-					[Out] ICarenD3D11HullShader^% Param_Out_SombreadorCasco,
-					[Out] cli::array<ICarenD3D11ClassInstance^>^% Param_Out_MatrizInstanciasClasse,
-					[Out] UInt32% Param_Out_QuantidadeInstancias)
+	[Out] ICarenD3D11HullShader^% Param_Out_SombreadorCasco,
+	[Out] cli::array<ICarenD3D11ClassInstance^>^% Param_Out_MatrizInstanciasClasse,
+	[Out] UInt32% Param_Out_QuantidadeInstancias)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	ID3D11HullShader* pHullShader = NULL;
-	vector<ID3D11ClassInstance*> VetorInterfaces;
-	UINT CountInterfacesInArray = 0;
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->HSGetShader(&pHullShader, VetorInterfaces.data(), &CountInterfacesInArray);
-
-	//Verifica se interface do Shader Computer é valida
-	if (ObjetoValido(pHullShader))
-	{
-		//Cria a interface que será retornada no parametro.
-		Param_Out_SombreadorCasco = gcnew CarenD3D11HullShader();
-
-		//Define o ponteiro de trabalho
-		Param_Out_SombreadorCasco->AdicionarPonteiro(pHullShader);
-	}
-
-	//Verifica se o foi retornado algum item para o vetor.
-	if (CountInterfacesInArray > 0)
-	{
-		//Deixa  continuar.
-	}
-	else
-	{
-		//Nenhuma interface foi retornada para o vetor.
-
-		//Define o resultado com base na interface de computação do shader.
-		Resultado = ObjetoValido(pHullShader) ? CarenResult(ResultCode::SS_OK, true): CarenResult(ResultCode::ER_FAIL, true);
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria o array que vai ser retornado.
-	Param_Out_MatrizInstanciasClasse = gcnew cli::array<ICarenD3D11ClassInstance^>(CountInterfacesInArray);
-
-	//Copia os dados para o array
-	for (UINT i = 0; i < CountInterfacesInArray; i++)
-	{
-		//Cria a interface no id especificado.
-		Param_Out_MatrizInstanciasClasse[i] = gcnew CarenD3D11ClassInstance();
-
-		//Define o ponteiro de trabalho.
-		Param_Out_MatrizInstanciasClasse[i]->AdicionarPonteiro(VetorInterfaces[i]);
-	}
-
-	//Define a quantidade de itens no array.
-	Param_Out_QuantidadeInstancias = CountInterfacesInArray;
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Limpa o vetor
-	VetorInterfaces.clear();
-	VetorInterfaces.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::HSGetShader(PonteiroTrabalho,
+		Param_Out_SombreadorCasco,
+		Param_Out_MatrizInstanciasClasse,
+		Param_Out_QuantidadeInstancias
+	);
 }
 
 /// <summary>
@@ -3011,58 +1238,16 @@ Done:;
 /// <param name="Param_NumeroViews">O número de recursos para obter do dispositivo. Até um máximo de 128 slots estão disponíveis para recursos de sombreador (varia de 0 a D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_Out_MatrizVisualizadoresSombreador">Matriz de interfaces de visualização de recursos do sombreador a serem retornadas pelo dispositivo.</param>
 CarenResult CarenD3D11DeviceContext::HSGetShaderResources(
-					UInt32 Param_StartSlot,
-					UInt32 Param_NumeroViews,
-					[Out] cli::array<ICarenD3D11ShaderResourceView^>^% Param_Out_MatrizVisualizadoresSombreador)
+	UInt32 Param_StartSlot,
+	UInt32 Param_NumeroViews,
+	[Out] cli::array<ICarenD3D11ShaderResourceView^>^% Param_Out_MatrizVisualizadoresSombreador)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	vector<ID3D11ShaderResourceView*> VectorResourceView;
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->HSGetShaderResources(Param_StartSlot, Param_NumeroViews, VectorResourceView.data());
-
-	//Verifica se obteve alguma interface.
-	if (!VectorResourceView.empty())
-	{
-		//Deixa o método continuar.
-	}
-	else
-	{
-		//Falhou.. Nenhuma interface foi retornada.
-
-		//Define falha.
-		Resultado.AdicionarCodigo(ResultCode::SS_FALSE, false);
-
-		//Sai
-		Sair;
-	}
-
-	//Cria a matriz a ser retornada ao usuário.
-	Param_Out_MatrizVisualizadoresSombreador = gcnew cli::array<ICarenD3D11ShaderResourceView^>(Param_NumeroViews);
-
-	//faz um for para criar cada interface e definir o ponteiro de trabalho.
-	for (UINT i = 0; i < Param_NumeroViews; i++)
-	{
-		//Cria a interface no id especificado.
-		Param_Out_MatrizVisualizadoresSombreador[i] = gcnew CarenD3D11ShaderResourceView();
-
-		//Define o ponteiro de trabalho.
-		Param_Out_MatrizVisualizadoresSombreador[i]->AdicionarPonteiro(VectorResourceView[i]);
-	}
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Libera o vetor.
-	VectorResourceView.clear();
-	VectorResourceView.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::HSGetShaderResources(PonteiroTrabalho,
+		Param_StartSlot,
+		Param_NumeroViews,
+		Param_Out_MatrizVisualizadoresSombreador
+	);
 }
 
 /// <summary>
@@ -3072,46 +1257,16 @@ Done:;
 /// <param name="Param_NumeroBuffers">Número de buffers a definir (varia de 0 a D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - Param_StartSlot).</param> 
 /// <param name="Param_MatrizBuffers">Matriz de buffers constantes sendo fornecidos ao dispositivo.</param> 
 CarenResult CarenD3D11DeviceContext::HSSetConstantBuffers(
-					UInt32 Param_StartSlot,
-					UInt32 Param_NumeroBuffers,
-					cli::array<ICarenD3D11Buffer^>^ Param_MatrizBuffers)
+	UInt32 Param_StartSlot,
+	UInt32 Param_NumeroBuffers,
+	cli::array<ICarenD3D11Buffer^>^ Param_MatrizBuffers)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	std::vector<ID3D11Buffer*> VectorInterfaces;
-	ID3D11Buffer* pBuff = NULL;
-
-	//Define a quantidade de dados que vai conter no vetor.
-	VectorInterfaces.reserve(static_cast<size_t>(Param_NumeroBuffers));
-
-	//Faz um for para obter os buffers e definir no vetor.
-	for (UINT i = 0; i < Param_NumeroBuffers; i++)
-	{
-		//Recupera o ponteiro para o buffer.
-		Param_MatrizBuffers[i]->RecuperarPonteiro((LPVOID*)&pBuff);
-
-		//Define o ponteiro no vetor.
-		VectorInterfaces.push_back(pBuff);
-
-		//Limpa
-		pBuff = NULL;
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->HSSetConstantBuffers(Param_StartSlot, Param_NumeroBuffers, VectorInterfaces.data());
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Limpa o vetor.
-	VectorInterfaces.clear();
-	VectorInterfaces.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::HSSetConstantBuffers(PonteiroTrabalho,
+		Param_StartSlot,
+		Param_NumeroBuffers,
+		Param_MatrizBuffers
+	);
 }
 
 /// <summary>
@@ -3121,45 +1276,16 @@ CarenResult CarenD3D11DeviceContext::HSSetConstantBuffers(
 /// <param name="Param_NumeroAmostradores">Número de amostradores na matriz. Cada estágio de pipeline tem um total de 16 slots disponíveis (varia de 0 a D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_MatrizAmostradoresEstado">Uma matriz de interfaces de estado do amostrador.</param>
 CarenResult CarenD3D11DeviceContext::HSSetSamplers(
-					UInt32 Param_StartSlot,
-					UInt32 Param_NumeroAmostradores,
-					cli::array<ICarenD3D11SamplerState^>^ Param_MatrizAmostradoresEstado)
+	UInt32 Param_StartSlot,
+	UInt32 Param_NumeroAmostradores,
+	cli::array<ICarenD3D11SamplerState^>^ Param_MatrizAmostradoresEstado)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	std::vector<ID3D11SamplerState*> VectorInterfaces;
-	ID3D11SamplerState* pSample = NULL;
-
-	//Define a quantidade de dados que vai conter no vetor.
-	VectorInterfaces.reserve(static_cast<size_t>(Param_NumeroAmostradores));
-
-	//Faz um for para obter os buffers e definir no vetor.
-	for (UINT i = 0; i < Param_NumeroAmostradores; i++)
-	{
-		//Recupera o ponteiro para o buffer.
-		Param_MatrizAmostradoresEstado[i]->RecuperarPonteiro((LPVOID*)&pSample);
-
-		//Define o ponteiro no vetor.
-		VectorInterfaces.push_back(pSample);
-
-		//Limpa
-		pSample = NULL;
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->HSSetSamplers(Param_StartSlot, Param_NumeroAmostradores, VectorInterfaces.data());
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Limpa o vetor.
-	VectorInterfaces.clear();
-	VectorInterfaces.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::HSSetSamplers(PonteiroTrabalho,
+		Param_StartSlot,
+		Param_NumeroAmostradores,
+		Param_MatrizAmostradoresEstado
+	);
 }
 
 /// <summary>
@@ -3169,59 +1295,16 @@ CarenResult CarenD3D11DeviceContext::HSSetSamplers(
 /// <param name="Param_MatrizInstanciaClasse">Uma matriz de interfaces de instância de classe. Cada interface usada por um sombreador deve ter uma instância de classe correspondente ou o shader será desativado. Defina como NULO se o sombreador não usar nenhuma interface.</param>
 /// <param name="Param_NumeroInstanciasClasse">O numero de (ICarenD3D11ClassInstance) dentro da matriz (Param_MatrizInstanciaClasse).</param>
 CarenResult CarenD3D11DeviceContext::HSSetShader(
-					ICarenD3D11HullShader^ Param_SombreadorCasco,
-					cli::array<ICarenD3D11ClassInstance^>^ Param_MatrizInstanciaClasse,
-					UInt32 Param_NumeroInstanciasClasse)
+	ICarenD3D11HullShader^ Param_SombreadorCasco,
+	cli::array<ICarenD3D11ClassInstance^>^ Param_MatrizInstanciaClasse,
+	UInt32 Param_NumeroInstanciasClasse)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	ID3D11HullShader* pHullShader = NULL; //Pode ser nulo.
-	std::vector<ID3D11ClassInstance*> VectorInterfaces; //Pode ser nulo.
-	ID3D11ClassInstance* pInstance = NULL;
-
-	//Reserva o vetor para a quantidade especificada pelo usuário se for maior que zero.
-	//Se for, vai copiar as interfaces aqui mesmo.
-	if (Param_NumeroInstanciasClasse > 0)
-	{
-		//Reverva uma quantidade para o vetor.
-		VectorInterfaces.reserve(static_cast<size_t>(Param_NumeroInstanciasClasse));
-
-		//Obtem e define as interfaces no vetor.
-		for (UINT i = 0; i < Param_NumeroInstanciasClasse; i++)
-		{
-			//Recupera o ponteiro para a interface.
-			Param_MatrizInstanciaClasse[i]->RecuperarPonteiro((LPVOID*)&pInstance);
-
-			//Define o ponteiro no vetor.
-			VectorInterfaces.push_back(pInstance);
-
-			//Limpa
-			pInstance = NULL;
-		}
-	}
-
-	//Recupera o ponteiro para o Sombreador de geometria se tiver sido fornecido
-	if (ObjetoGerenciadoValido(Param_SombreadorCasco))
-	{
-		//Recupera o ponteiro para a interface.
-		Param_SombreadorCasco->RecuperarPonteiro((LPVOID*)&pHullShader);
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->HSSetShader(pHullShader ? pHullShader : NULL, Param_NumeroInstanciasClasse > 0 ? VectorInterfaces.data() : NULL, Param_NumeroInstanciasClasse);
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Limpa o vetor.
-	VectorInterfaces.clear();
-	VectorInterfaces.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::HSSetShader(PonteiroTrabalho,
+		Param_SombreadorCasco,
+		Param_MatrizInstanciaClasse,
+		Param_NumeroInstanciasClasse
+	);
 }
 
 /// <summary>
@@ -3231,45 +1314,16 @@ CarenResult CarenD3D11DeviceContext::HSSetShader(
 /// <param name="Param_NumeroViews">Número de recursos do shader a serem definidos. Até um máximo de 128 slots estão disponíveis para recursos de sombreador (o intervalo é de 0 a D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_MatrizVisualizadoresSombreador">Uma matriz que contém os Visualizadores de recurso do sombreador para serem definidos no Disposiivo.</param>
 CarenResult CarenD3D11DeviceContext::HSSetShaderResources(
-					UInt32 Param_StartSlot,
-					UInt32 Param_NumeroViews,
-					cli::array<ICarenD3D11ShaderResourceView^>^ Param_MatrizVisualizadoresSombreador)
+	UInt32 Param_StartSlot,
+	UInt32 Param_NumeroViews,
+	cli::array<ICarenD3D11ShaderResourceView^>^ Param_MatrizVisualizadoresSombreador)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	std::vector<ID3D11ShaderResourceView*> VectorInterfaces;
-	ID3D11ShaderResourceView* pShaderView = NULL;
-
-	//Define a quantidade de dados que vai conter no vetor.
-	VectorInterfaces.reserve(static_cast<size_t>(Param_NumeroViews));
-
-	//Faz um for para obter os buffers e definir no vetor.
-	for (UINT i = 0; i < Param_NumeroViews; i++)
-	{
-		//Recupera o ponteiro para a interface.
-		Param_MatrizVisualizadoresSombreador[i]->RecuperarPonteiro((LPVOID*)&pShaderView);
-
-		//Define o ponteiro no vetor.
-		VectorInterfaces.push_back(pShaderView);
-
-		//Limpa
-		pShaderView = NULL;
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->HSSetShaderResources(Param_StartSlot, Param_NumeroViews, VectorInterfaces.data());
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Limpa o vetor.
-	VectorInterfaces.clear();
-	VectorInterfaces.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::HSSetShaderResources(PonteiroTrabalho,
+		Param_StartSlot,
+		Param_NumeroViews,
+		Param_MatrizVisualizadoresSombreador
+	);
 }
 
 /// <summary>
@@ -3280,54 +1334,18 @@ CarenResult CarenD3D11DeviceContext::HSSetShaderResources(
 /// de reserva de índice são (DXGI_FORMAT_R16_UINT) de 16-bit e 32-bit inteiros (DXGI_FORMAT_R32_UINT).</param>
 /// <param name="Param_Out_Deslocamento">Retorna o Deslocamento(Offset) (em bytes) desde o início do buffer de índice, o primeiro índice para usar.</param>
 CarenResult CarenD3D11DeviceContext::IAGetIndexBuffer(
-					[Out] ICarenD3D11Buffer^% Param_Out_Buffer, 
-					[Out] Enumeracoes::CA_DXGI_FORMAT% Param_Out_Formato,
-					[Out] UInt32% Param_Out_Deslocamento)
+	[Out] ICarenD3D11Buffer^% Param_Out_Buffer,
+	[Out] Enumeracoes::CA_DXGI_FORMAT% Param_Out_Formato,
+	[Out] UInt32% Param_Out_Deslocamento)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	ID3D11Buffer* pBuffer = NULL;
-	DXGI_FORMAT FormatoDadosBuffer;
-	UINT DeslocamentoBuffer = 0;
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->IAGetIndexBuffer(&pBuffer, &FormatoDadosBuffer, &DeslocamentoBuffer);
-
-	//Verifica se o buffer é valido
-	if (ObjetoValido(pBuffer))
-	{
-		//Deixa o método continuar.
-	}
-	else
-	{
-		//Falhou.
-
-		//Define erro na operação.
-		Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria a interface que vai conter o buffer.
-	Param_Out_Buffer = gcnew CarenD3D11Buffer();
-
-	//Define o ponteiro de trabalho
-	Param_Out_Buffer->AdicionarPonteiro(pBuffer);
-
-	//Define o parametro de formato
-	Param_Out_Formato = static_cast<CA_DXGI_FORMAT>(FormatoDadosBuffer);
-
-	//Define o deslocamento do buffer.
-	Param_Out_Deslocamento = DeslocamentoBuffer;
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::IAGetIndexBuffer(PonteiroTrabalho,
+		Param_Out_Buffer,
+		Param_Out_Formato,
+		Param_Out_Deslocamento
+	);
 }
-						  
+
 /// <summary>
 /// (IAGetInputLayout) - Obter um ponteiro para o objeto de entrada-layout que está vinculado para o estágio de entrada-montador.
 /// Qualquer interface retornada terão sua contagem de referência, incrementada por um. Aplicativos devem chamar ICaren::LiberarReferencia sobre as interfaces retornadas quando eles não são mais 
@@ -3336,40 +1354,10 @@ Done:;
 /// <param name="Param_Out_InputLayout">Reretorna um ponteiro para o layout de entrada de objeto, que descreve os buffers de entrada que serão lido pelo palco IA.</param>
 CarenResult CarenD3D11DeviceContext::IAGetInputLayout([Out] ICarenD3D11InputLayout^% Param_Out_InputLayout)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	ID3D11InputLayout *pInputLayout = NULL;
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->IAGetInputLayout(&pInputLayout);
-
-	//Verifica se a interface é valida.
-	if (ObjetoValido(pInputLayout))
-	{
-		//Deixa o método continuar.
-	}
-	else
-	{
-		//Falhou.
-
-		//Define erro na operação.
-		Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria a interface que vai conter o buffer.
-	Param_Out_InputLayout = gcnew CarenD3D11InputLayout();
-
-	//Define o ponteiro de trabalho
-	Param_Out_InputLayout->AdicionarPonteiro(pInputLayout);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::IAGetInputLayout(PonteiroTrabalho,
+		Param_Out_InputLayout
+	);
 }
 
 /// <summary>
@@ -3378,23 +1366,10 @@ Done:;
 /// <param name="Param_Out_TipoPrimitivo"></param>
 CarenResult CarenD3D11DeviceContext::IAGetPrimitiveTopology([Out] Enumeracoes::CA_D3D11_PRIMITIVE_TOPOLOGY% Param_Out_TipoPrimitivo)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	D3D11_PRIMITIVE_TOPOLOGY PrimiteTopology;
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->IAGetPrimitiveTopology(&PrimiteTopology);
-
-	//Define no parametro de saida.
-	Param_Out_TipoPrimitivo = static_cast<CA_D3D11_PRIMITIVE_TOPOLOGY>(PrimiteTopology);
-
-	//Define sucesso por default a operação.
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::IAGetPrimitiveTopology(PonteiroTrabalho,
+		Param_Out_TipoPrimitivo
+	);
 }
 
 /// <summary>
@@ -3410,78 +1385,20 @@ CarenResult CarenD3D11DeviceContext::IAGetPrimitiveTopology([Out] Enumeracoes::C
 /// <param name="Param_Out_MatrizDeslocamentos">uma matriz de valores de deslocamento retornado pelo método; um valor para cada buffer na matriz de buffer de vértice de deslocamento. Cada deslocamento é o 
 /// número de bytes entre o primeiro elemento de um buffer de vértice e o primeiro elemento que será usado.</param>
 CarenResult CarenD3D11DeviceContext::IAGetVertexBuffers(
-					UInt32 Param_StartSlot,
-					UInt32 Param_NumeroBuffers,
-					[Out] cli::array<ICarenD3D11Buffer^>^% Param_Out_MatrizVertexBuffers,
-					[Out] cli::array<UInt32>^% Param_Out_MatrizStrides,
-					[Out] cli::array<UInt32>^% Param_Out_MatrizDeslocamentos)
+	UInt32 Param_StartSlot,
+	UInt32 Param_NumeroBuffers,
+	[Out] cli::array<ICarenD3D11Buffer^>^% Param_Out_MatrizVertexBuffers,
+	[Out] cli::array<UInt32>^% Param_Out_MatrizStrides,
+	[Out] cli::array<UInt32>^% Param_Out_MatrizDeslocamentos)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	std::vector<ID3D11Buffer*> VectorInterfaceBuffer;
-	UINT* pMatrizStrides = new UINT[Param_NumeroBuffers];
-	UINT* pMatrizDeslocamentos = new UINT[Param_NumeroBuffers];
-
-	//Reserva a quantidade de ponteiros no vetor.
-	VectorInterfaceBuffer.reserve(Param_NumeroBuffers);
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->IAGetVertexBuffers(Param_StartSlot, Param_NumeroBuffers, VectorInterfaceBuffer.data(), pMatrizStrides, pMatrizDeslocamentos);
-
-	//Verifica se o vetor com os ponteiros é valido.
-	if (!VectorInterfaceBuffer.empty())
-	{
-		//Deixa o método continuar.
-	}
-	else
-	{
-		//Falhou..
-
-		//Define falha na operação.
-		Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria o array que vai retornar as interfaces ponteiros.
-	Param_Out_MatrizVertexBuffers = gcnew cli::array<ICarenD3D11Buffer^>(Param_NumeroBuffers);
-
-	//Cria e define os ponteiros do buffer em cada id no array.
-	for (UINT i = 0; i < Param_NumeroBuffers; i++)
-	{
-		//Cria a interface do buffer no id especificado.
-		Param_Out_MatrizVertexBuffers[i] = gcnew CarenD3D11Buffer();
-
-		//Define o ponteiro para o buffer no id.
-		Param_Out_MatrizVertexBuffers[i]->AdicionarPonteiro(VectorInterfaceBuffer[i]);
-	}
-
-	//Cria as matrizes de tipo simples.
-	Param_Out_MatrizStrides = gcnew cli::array<UInt32>(Param_NumeroBuffers);
-	Param_Out_MatrizDeslocamentos = gcnew cli::array<UInt32>(Param_NumeroBuffers);
-
-	//Copia os dados das matrizes simples.
-	Util.CopiarItensTo_ArrayGerenciado(Param_Out_MatrizStrides, pMatrizStrides, Param_NumeroBuffers);
-	Util.CopiarItensTo_ArrayGerenciado(Param_Out_MatrizDeslocamentos, pMatrizDeslocamentos, Param_NumeroBuffers);
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Libera a memoria para as matrizes
-	delete[] pMatrizStrides;
-	delete[] pMatrizDeslocamentos;
-
-	//Limpa o vetor.
-	VectorInterfaceBuffer.clear();
-	VectorInterfaceBuffer.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::IAGetVertexBuffers(PonteiroTrabalho,
+		Param_StartSlot,
+		Param_NumeroBuffers,
+		Param_Out_MatrizVertexBuffers,
+		Param_Out_MatrizStrides,
+		Param_Out_MatrizDeslocamentos
+	);
 }
 
 /// <summary>
@@ -3491,35 +1408,16 @@ Done:;
 /// <param name="Param_Formato">Um CA_D3D11_DXGI_FORMAT que especifica o formato dos dados no buffer de índice. Os formatos só permitidos para dados de reserva de índice são (DXGI_FORMAT_R16_UINT) de 16-bit e 32-bit inteiros (DXGI_FORMAT_R32_UINT).</param>
 /// <param name="Param_Deslocamento">Offset (em bytes) do início do buffer de índice para o primeiro índice para usar.</param>
 CarenResult CarenD3D11DeviceContext::IASetIndexBuffer(
-					ICarenD3D11Buffer^ Param_Buffer,
-					Enumeracoes::CA_DXGI_FORMAT Param_Formato,
-					UInt32 Param_Deslocamento)
+	ICarenD3D11Buffer^ Param_Buffer,
+	Enumeracoes::CA_DXGI_FORMAT Param_Formato,
+	UInt32 Param_Deslocamento)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	ID3D11Buffer* pBuffer = NULL;
-	DXGI_FORMAT FormatoBuffer = static_cast<DXGI_FORMAT>(Param_Formato);
-
-	//Obtém o ponteiro para a interface.
-	Resultado = Param_Buffer->RecuperarPonteiro((LPVOID*)&pBuffer);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou...
-
-		//Sai do método
-		Sair;
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->IASetIndexBuffer(pBuffer, FormatoBuffer, Param_Deslocamento);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::IASetIndexBuffer(PonteiroTrabalho,
+		Param_Buffer,
+		Param_Formato,
+		Param_Deslocamento
+	);
 }
 
 /// <summary>
@@ -3528,30 +1426,10 @@ Done:;
 /// <param name="Param_InputLayout">Um ponteiro para o layout de entrada de objeto, que descreve os buffers de entrada que serão lido pelo palco IA.</param>
 CarenResult CarenD3D11DeviceContext::IASetInputLayout(ICarenD3D11InputLayout^ Param_InputLayout)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	ID3D11InputLayout* pInputLayout = NULL;
-
-	//Obtém o ponteiro para a interface.
-	Resultado = Param_InputLayout->RecuperarPonteiro((LPVOID*)&pInputLayout);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou...
-
-		//Sai do método
-		Sair;
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->IASetInputLayout(pInputLayout);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::IASetInputLayout(PonteiroTrabalho,
+		Param_InputLayout
+	);
 }
 
 /// <summary>
@@ -3560,20 +1438,10 @@ Done:;
 /// <param name="Param_TipoPrimitivo">O tipo de primitivo e ordenação dos dados primitivos.</param>
 CarenResult CarenD3D11DeviceContext::IASetPrimitiveTopology(Enumeracoes::CA_D3D11_PRIMITIVE_TOPOLOGY Param_TipoPrimitivo)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	D3D11_PRIMITIVE_TOPOLOGY PrimitiveTopo = static_cast<D3D11_PRIMITIVE_TOPOLOGY>(Param_TipoPrimitivo);
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->IASetPrimitiveTopology(PrimitiveTopo);
-
-	//Define sucesso por default a operação.
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::IASetPrimitiveTopology(PonteiroTrabalho,
+		Param_TipoPrimitivo
+	);
 }
 
 /// <summary>
@@ -3590,58 +1458,20 @@ CarenResult CarenD3D11DeviceContext::IASetPrimitiveTopology(Enumeracoes::CA_D3D1
 /// <param name="Param_MatrizDeslocamentos">uma matriz de valores de deslocamento; um valor para cada buffer na matriz de buffer de vértice de deslocamento. Cada deslocamento é o número de bytes entre o 
 /// primeiro elemento de um buffer de vértice e o primeiro elemento que será usado.</param>
 CarenResult CarenD3D11DeviceContext::IASetVertexBuffers(
-					UInt32 Param_StartSlot,
-					UInt32 Param_NumeroBuffers,
-					cli::array<ICarenD3D11Buffer^>^ Param_MatrizVertexBuffers,
-					cli::array<UInt32>^ Param_MatrizStrides,
-					cli::array<UInt32>^ Param_MatrizDeslocamentos)
+	UInt32 Param_StartSlot,
+	UInt32 Param_NumeroBuffers,
+	cli::array<ICarenD3D11Buffer^>^ Param_MatrizVertexBuffers,
+	cli::array<UInt32>^ Param_MatrizStrides,
+	cli::array<UInt32>^ Param_MatrizDeslocamentos)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	std::vector<ID3D11Buffer*> VectorInterfaceBuffer;
-	UINT* pMatrizStrides = new UINT[Param_NumeroBuffers];
-	UINT* pMatrizDeslocamentos = new UINT[Param_NumeroBuffers];
-	ID3D11Buffer* pBuffer = NULL;
-
-	//Reserva a quantidade de ponteiros no vetor.
-	VectorInterfaceBuffer.reserve(Param_NumeroBuffers);
-
-	//Copia os dados do array gerenciado para o vetor nativo.
-	for (UINT i = 0; i < Param_NumeroBuffers; i++)
-	{
-		//Recupera o ponteiro para o buffer.
-		Param_MatrizVertexBuffers[i]->RecuperarPonteiro((LPVOID*)&pBuffer);
-
-		//Define o ponteiro no vetor.
-		VectorInterfaceBuffer.push_back(pBuffer);
-
-		//Limpa
-		pBuffer = NULL;
-	}
-
-	//Copia os dados para as matrizes simples.
-	Util.CopiarItensTo_ArrayNativo(&pMatrizStrides, Param_MatrizStrides, Param_NumeroBuffers);
-	Util.CopiarItensTo_ArrayNativo(&pMatrizDeslocamentos, Param_MatrizDeslocamentos, Param_NumeroBuffers);
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->IASetVertexBuffers(Param_StartSlot, Param_NumeroBuffers, VectorInterfaceBuffer.data(), pMatrizStrides, pMatrizDeslocamentos);
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Libera a memoria para as matrizes
-	delete[] pMatrizStrides;
-	delete[] pMatrizDeslocamentos;
-
-	//Limpa o vetor.
-	VectorInterfaceBuffer.clear();
-	VectorInterfaceBuffer.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::IAGetVertexBuffers(PonteiroTrabalho,
+		Param_StartSlot,
+		Param_NumeroBuffers,
+		Param_MatrizVertexBuffers,
+		Param_MatrizStrides,
+		Param_MatrizDeslocamentos
+	);
 }
 
 /// <summary>
@@ -3654,132 +1484,39 @@ CarenResult CarenD3D11DeviceContext::IASetVertexBuffers(
 /// <param name="Param_MapFlags">Sinalizador que especifica que a CPU faz quando a GPU está ocupado. Este sinalizador é opcional. Define como (CA_D3D11_MAP_FLAG::Zero) para deixar como opcional.</param>
 /// <param name="Param_Out_RecrusoMapeado">Uma estrutura de CA_D3D11_MAPPED_SUBRESOURCE para o sub-recurso mapeado. Essa estrutura pode ser NULA as vezes. Consulte a documentação.</param>
 CarenResult CarenD3D11DeviceContext::Map(
-					ICarenD3D11Resource^ Param_Recurso,
-					UInt32 Param_IndiceSubRecurso,
-					Enumeracoes::CA_D3D11_MAP Param_PermissõesAcessoRecurso,
-					Enumeracoes::CA_D3D11_MAP_FLAG Param_MapFlags,
-					[Out] Estruturas::CA_D3D11_MAPPED_SUBRESOURCE^% Param_Out_RecrusoMapeado)
+	ICarenD3D11Resource^ Param_Recurso,
+	UInt32 Param_IndiceSubRecurso,
+	Enumeracoes::CA_D3D11_MAP Param_PermissõesAcessoRecurso,
+	Enumeracoes::CA_D3D11_MAP_FLAG Param_MapFlags,
+	[Out] Estruturas::CA_D3D11_MAPPED_SUBRESOURCE^% Param_Out_RecrusoMapeado)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	ID3D11Resource* pRecurso = NULL;
-	D3D11_MAP PermissaoAcesso = static_cast<D3D11_MAP>(Param_PermissõesAcessoRecurso);
-	UINT Flags = static_cast<UINT>(Param_PermissõesAcessoRecurso);
-	D3D11_MAPPED_SUBRESOURCE *pEstruturaData = NULL;
-
-	//Obtém o ponteiro para a interface.
-	Resultado = Param_Recurso->RecuperarPonteiro((LPVOID*)&pRecurso);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou...
-
-		//Sai do método
-		Sair;
-	}
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->Map(pRecurso, Param_IndiceSubRecurso, PermissaoAcesso, Flags, pEstruturaData);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-	//Verifica se a estrutura é valida.
-	//De acordo com a documentação, ela pode retornar NULL se tiver sido criada com D3D11_USAGE_DEFAULT e ter sido chamado de um contexto imediato.
-	if (ObjetoValido(pEstruturaData))
-	{
-		//Deixa o método continuar.
-	}
-	else
-	{
-		//Não vai ser setado como erro.
-		//Só vai vai criar uma estrutura valida para retornar ao usuario.
-
-		//Define sucesso na operação
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-		//Sai do método
-		Sair;
-	}
-
-	//Converte a interface nativa para a gerenciada e define no parametro.
-	//Parametro 'gcnew CarenBuffer()' é utilizado para armazenar o ponteiro de dados que a estrutura nativa pede.
-	Param_Out_RecrusoMapeado = Util.ConverterD3D11_MAPPED_SUBRESOURCEUnManaged_ToManaged(pEstruturaData, gcnew CarenBuffer());
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::Map(PonteiroTrabalho,
+		Param_Recurso,
+		Param_IndiceSubRecurso,
+		Param_PermissõesAcessoRecurso,
+		Param_MapFlags,
+		Param_Out_RecrusoMapeado
+	);
 }
 
 /// <summary>
 /// (OMGetBlendState) - Obtém o estado de mistura da fase de saída-fusão.
 /// </summary>
-/// <param name="Param_Out_EstadoMitura">Retorna um ponteiro para a interface de estado de mistura.</param>
+/// <param name="Param_Out_EstadoMistura">Retorna um ponteiro para a interface de estado de mistura.</param>
 /// <param name="Param_Out_MatrizFatoresMistura">Matriz de mistura de fatores, um para cada componente RGBA.</param>
 /// <param name="Param_Out_SampleMask">Retorna um valor para uma máscara de amostra.</param>
 CarenResult CarenD3D11DeviceContext::OMGetBlendState(
-					[Out] ICarenD3D11BlendState^% Param_Out_EstadoMitura,
-					[Out] cli::array<float>^% Param_Out_MatrizFatoresMistura,
-					[Out] UInt32% Param_Out_SampleMask)
+	[Out] ICarenD3D11BlendState^% Param_Out_EstadoMistura,
+	[Out] cli::array<float>^% Param_Out_MatrizFatoresMistura,
+	[Out] UInt32% Param_Out_SampleMask)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	ID3D11BlendState* pBlendState = NULL;
-	FLOAT *pMatrizMisturaRGBA = new FLOAT[4]; //4 é um valor fixo.
-	UINT SampleMask = 0;
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->OMGetBlendState(&pBlendState, pMatrizMisturaRGBA, &SampleMask);
-
-	//Verifica se o ponteiro é valido
-	if (ObjetoValido(pBlendState))
-	{
-		//Cria a interface que vai conter o ponteiro da interface a ser retornada.
-		Param_Out_EstadoMitura = gcnew CarenD3D11BlendState();
-
-		//Define o ponteiro de trabalho
-		Param_Out_EstadoMitura->AdicionarPonteiro(pBlendState);
-	}
-
-	//Cria a matriz de mistura de fatores
-	Param_Out_MatrizFatoresMistura = gcnew cli::array<float>(4); //4 é um valor fixo (RGBA)
-
-	//Copia os dados dos componentes RGBA na matriz nativa para a gerenciada.
-	Util.CopiarItensTo_ArrayGerenciado(Param_Out_MatrizFatoresMistura, pMatrizMisturaRGBA, 4);
-
-	//Define a Sample Mask
-	Param_Out_SampleMask = SampleMask;
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, false);
-
-	//Libera a memoria para a matriz de float.
-	delete[] pMatrizMisturaRGBA;
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::OMGetBlendState(PonteiroTrabalho,
+		Param_Out_EstadoMistura,
+		Param_Out_MatrizFatoresMistura,
+		Param_Out_SampleMask
+	);
 }
 
 /// <summary>
@@ -3788,37 +1525,14 @@ CarenResult CarenD3D11DeviceContext::OMGetBlendState(
 /// <param name="Param_Out_DepthStencilState">Retorna um ponteiro para interface de estado de profundidade-estêncil para ser preenchido com informações do dispositivo.</param>
 /// <param name="Param_Out_StencilRef">Retorna um valor para um estado de profundidade-estêncil para ser preenchido com informações do dispositivo.</param>
 CarenResult CarenD3D11DeviceContext::OMGetDepthStencilState(
-					[Out] ICarenD3D11DepthStencilState^% Param_Out_DepthStencilState,
-					[Out] UInt32% Param_Out_StencilRef)
+	[Out] ICarenD3D11DepthStencilState^% Param_Out_DepthStencilState,
+	[Out] UInt32% Param_Out_StencilRef)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	ID3D11DepthStencilState* pStencilState = NULL;
-	UINT StencilRef = 0;
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->OMGetDepthStencilState(&pStencilState, &StencilRef);
-
-	//Verifica se o ponteiro é valido
-	if (ObjetoValido(pStencilState))
-	{
-		//Cria a interface que vai conter o ponteiro da interface a ser retornada.
-		Param_Out_DepthStencilState = gcnew CarenD3D11DepthStencilState();
-
-		//Define o ponteiro de trabalho
-		Param_Out_DepthStencilState->AdicionarPonteiro(pStencilState);
-	}
-
-	//Define o Ref do Stencil
-	Param_Out_StencilRef = StencilRef;
-
-	//Define sucesso por default a operação.
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::OMGetDepthStencilState(PonteiroTrabalho,
+		Param_Out_DepthStencilState,
+		Param_Out_StencilRef
+	);
 }
 
 /// <summary>
@@ -3832,69 +1546,20 @@ CarenResult CarenD3D11DeviceContext::OMGetDepthStencilState(
 /// O parametro (Param_Out_DepthStencilView) retorna NULO se esse valor for verdadeiro.</param>
 /// <param name="Param_Out_DepthStencilView">Ponteiro para um ID3D11DepthStencilView, que representa uma visão de profundidade-estêncil.</param>
 CarenResult CarenD3D11DeviceContext::OMGetRenderTargets(
-					UInt32 Param_NumeroViews,
-					Boolean Param_IgnorarRecuperaçãoDestino,
-					[Out] cli::array<ICarenD3D11RenderTargetView^>^% Param_Out_MatrizRenderTargetViews,
-					Boolean Param_IgnorarRecuperaçãoModoExibição,
-					[Out] ICarenD3D11DepthStencilView^% Param_Out_DepthStencilView)
+	UInt32 Param_NumeroViews,
+	Boolean Param_IgnorarRecuperaçãoDestino,
+	[Out] cli::array<ICarenD3D11RenderTargetView^>^% Param_Out_MatrizRenderTargetViews,
+	Boolean Param_IgnorarRecuperaçãoModoExibição,
+	[Out] ICarenD3D11DepthStencilView^% Param_Out_DepthStencilView)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	std::vector<ID3D11RenderTargetView*> VectorInterfacesTargetView; //Pode ser vazio.
-	ID3D11DepthStencilView* pStencilView = NULL; //Pode ser NULO.
-
-	//Reserva o vetor se os destinos de processamento forem necessários
-	if (!Param_IgnorarRecuperaçãoDestino)
-	{
-		//Reserva a quantidade de ponteiro que vai conter no vetor.
-		VectorInterfacesTargetView.reserve(Param_NumeroViews);
-	}
-	else
-	{
-		//Deve ignorar a recuperação de destino.
-
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->OMGetRenderTargets(Param_NumeroViews, Param_IgnorarRecuperaçãoDestino ? NULL : VectorInterfacesTargetView.data(), Param_IgnorarRecuperaçãoModoExibição ? NULL: &pStencilView);
-
-	//Verifica quais os dados seram retornados
-	if (!Param_IgnorarRecuperaçãoDestino)
-	{
-		//O usuário deseja obter a matriz com as interfaces de destino.
-		Param_Out_MatrizRenderTargetViews = gcnew cli::array<ICarenD3D11RenderTargetView^>(Param_NumeroViews);
-
-		//Faz um for para criar e adicionar o ponteiro de trabalho
-		for (UINT i = 0; i < Param_NumeroViews; i++)
-		{
-			//Cria a interface no id especificado.
-			Param_Out_MatrizRenderTargetViews[i] = gcnew CarenD3D11RenderTargetView();
-
-			//Define o ponteiro de trabalho na interface.
-			Param_Out_MatrizRenderTargetViews[i]->AdicionarPonteiro(VectorInterfacesTargetView[i]);
-		}
-	}
-	if (!Param_IgnorarRecuperaçãoModoExibição)
-	{
-		//Cria a interface a ser retornada
-		Param_Out_DepthStencilView = gcnew CarenD3D11DepthStencilView();
-
-		//Define o ponteiro de trabalho
-		Param_Out_DepthStencilView->AdicionarPonteiro(pStencilView);
-	}
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Libera o vetor.
-	VectorInterfacesTargetView.clear();
-	VectorInterfacesTargetView.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::OMGetRenderTargets(PonteiroTrabalho,
+		Param_NumeroViews,
+		Param_IgnorarRecuperaçãoDestino,
+		Param_Out_MatrizRenderTargetViews,
+		Param_IgnorarRecuperaçãoModoExibição,
+		Param_Out_DepthStencilView
+	);
 }
 
 /// <summary>
@@ -3916,116 +1581,35 @@ CarenResult CarenD3D11DeviceContext::OMGetRenderTargets(
 ///  O parametro (Param_Out_MatrizUnorderedAccessViews) retorna NULO se esse valor for verdadeiro.</param>
 /// <param name="Param_Out_MatrizUnorderedAccessViews">Retorna uma matriz de ICarenD3D11UnorderedAccessViews, que representam vistas de acesso não ordenada que são recuperadas.</param>
 CarenResult CarenD3D11DeviceContext::OMGetRenderTargetsAndUnorderedAccessViews(
-					UInt32 Param_NumeroRTVs,
-					Boolean Param_IgnorarRenderTargetView,
-					[Out] cli::array<ICarenD3D11RenderTargetView^>^% Param_Out_MatrizRenderTarget,
-					Boolean Param_IgnorarDepthStencilView,
-					[Out] ICarenD3D11DepthStencilView^ Param_Out_DepthStencilView,
-					UInt32  Param_UAVStartSlot,
-					UInt32  Param_NumeroUAVs,
-					Boolean Param_IgnorarUnorderedAccessView,
-					[Out] cli::array<ICarenD3D11UnorderedAccessView^>^% Param_Out_MatrizUnorderedAccessViews)
+	UInt32 Param_NumeroRTVs,
+	Boolean Param_IgnorarRenderTargetView,
+	[Out] cli::array<ICarenD3D11RenderTargetView^>^% Param_Out_MatrizRenderTarget,
+	Boolean Param_IgnorarDepthStencilView,
+	[Out] ICarenD3D11DepthStencilView^ Param_Out_DepthStencilView,
+	UInt32  Param_UAVStartSlot,
+	UInt32  Param_NumeroUAVs,
+	Boolean Param_IgnorarUnorderedAccessView,
+	[Out] cli::array<ICarenD3D11UnorderedAccessView^>^% Param_Out_MatrizUnorderedAccessViews)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	std::vector<ID3D11RenderTargetView*> VectorInterfacesTargetView; //Pode ser vazio.
-	ID3D11DepthStencilView* pStencilView = NULL; //Pode ser NULO.
-	std::vector <ID3D11UnorderedAccessView*> VectorInterfacesUnorderedView; //Pode ser vazio.
-
-	//Reserva a quantidade de ponteiro para cada vetor se ele não for ignorado.
-	if (!Param_IgnorarRenderTargetView)
-	{
-		//Reserva a quantidade de ponteiro que vai conter no vetor.
-		VectorInterfacesTargetView.reserve(Param_NumeroRTVs);
-	}
-	else
-	{
-		//Deve ignorar a recuperação de destino.
-
-	}
-	if (!Param_IgnorarUnorderedAccessView)
-	{
-		//Reserva a quantidade de ponteiro que vai conter no vetor.
-		VectorInterfacesUnorderedView.reserve(Param_NumeroUAVs);
-	}
-	else
-	{
-		//Deve ignorar a recuperação de destino.
-
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->OMGetRenderTargetsAndUnorderedAccessViews(
-		Param_NumeroRTVs, 
-		Param_IgnorarRenderTargetView ? NULL : VectorInterfacesTargetView.data(), 
-		Param_IgnorarDepthStencilView? NULL: &pStencilView, 
-		Param_UAVStartSlot, 
-		Param_NumeroUAVs, 
-		Param_IgnorarUnorderedAccessView? NULL: VectorInterfacesUnorderedView.data()
-		);
-
-	//Verifica quais os dados seram retornados
-	if (!Param_IgnorarRenderTargetView)
-	{
-		//O usuário deseja obter a matriz com as interfaces de destino.
-		Param_Out_MatrizRenderTarget = gcnew cli::array<ICarenD3D11RenderTargetView^>(Param_NumeroRTVs);
-
-		//Faz um for para criar e adicionar o ponteiro de trabalho
-		for (UINT i = 0; i < Param_NumeroRTVs; i++)
-		{
-			//Cria a interface no id especificado.
-			Param_Out_MatrizRenderTarget[i] = gcnew CarenD3D11RenderTargetView();
-
-			//Define o ponteiro de trabalho na interface.
-			Param_Out_MatrizRenderTarget[i]->AdicionarPonteiro(VectorInterfacesTargetView[i]);
-		}
-	}
-	if (!Param_IgnorarDepthStencilView)
-	{
-		//Cria a interface a ser retornada
-		Param_Out_DepthStencilView = gcnew CarenD3D11DepthStencilView();
-
-		//Define o ponteiro de trabalho
-		Param_Out_DepthStencilView->AdicionarPonteiro(pStencilView);
-	}
-	if (!Param_IgnorarUnorderedAccessView)
-	{
-		//O usuário deseja obter a matriz com as interfaces de destino.
-		Param_Out_MatrizUnorderedAccessViews = gcnew  cli::array<ICarenD3D11UnorderedAccessView^>(Param_NumeroUAVs);
-
-		//Faz um for para criar e adicionar o ponteiro de trabalho
-		for (UINT i = 0; i < Param_NumeroUAVs; i++)
-		{
-			//Cria a interface no id especificado.
-			Param_Out_MatrizUnorderedAccessViews[i] = gcnew CarenD3D11UnorderedAccessView();
-
-			//Define o ponteiro de trabalho na interface.
-			Param_Out_MatrizUnorderedAccessViews[i]->AdicionarPonteiro(VectorInterfacesUnorderedView[i]);
-		}
-	}
-	
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Libera os vetores.
-	VectorInterfacesTargetView.clear();
-	VectorInterfacesTargetView.shrink_to_fit();
-	VectorInterfacesUnorderedView.clear();
-	VectorInterfacesUnorderedView.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::OMGetRenderTargetsAndUnorderedAccessViews(PonteiroTrabalho,
+		Param_NumeroRTVs,
+		Param_IgnorarRenderTargetView,
+		Param_Out_MatrizRenderTarget,
+		Param_IgnorarDepthStencilView,
+		Param_Out_DepthStencilView,
+		Param_UAVStartSlot,
+		Param_NumeroUAVs,
+		Param_IgnorarUnorderedAccessView,
+		Param_Out_MatrizUnorderedAccessViews
+	);
 }
 
 /// <summary>
 /// (OMSetBlendState) - Defina o estado de mistura da fase de saída-fusão.
 /// Para criar uma interface de mistura-estado, chamade o método ICarenD3D11Device::CreateBlendState.
 /// </summary>
-/// <param name="Param_EstadoMitura">Ponteiro para um estado de mistura interface. Passe nulo para um estado de mistura padrão.</param>
+/// <param name="Param_EstadoMistura">Ponteiro para um estado de mistura interface. Passe nulo para um estado de mistura padrão.</param>
 /// <param name="Param_MatrizFatoresMistura">Matriz de mistura de fatores, um para cada componente RGBA. Os fatores de mistura modulate valores para o shader de pixel, processar o alvo, ou ambos. Se você 
 /// tiver criado o objeto de mistura-estado com D3D11_BLEND_BLEND_FACTOR ou D3D11_BLEND_INV_BLEND_FACTOR, a fase de mistura usa a matriz não-nulos de mistura fatores. Se você não criar o objeto de 
 /// mistura-estado com D3D11_BLEND_BLEND_FACTOR ou D3D11_BLEND_INV_BLEND_FACTOR, fase de mesclagem não usa a matriz não-nulos de misturam fatores; o tempo de execução armazena os mistura de fatores, 
@@ -4035,59 +1619,16 @@ CarenResult CarenD3D11DeviceContext::OMGetRenderTargetsAndUnorderedAccessViews(
 /// O mapeamento de bits em uma máscara de amostra para amostras em um destino processar multisample é da responsabilidade de um aplicativo individual. Sempre é aplicada uma máscara de amostra; 
 /// é independente de se multisampling é habilitado e não depende de se um aplicativo usa multisample render destinos.</param>
 CarenResult CarenD3D11DeviceContext::OMSetBlendState(
-					ICarenD3D11BlendState^ Param_EstadoMitura,
-					cli::array<float>^ Param_MatrizFatoresMistura,
-					UInt32 Param_SampleMask)
+	ICarenD3D11BlendState^ Param_EstadoMistura,
+	cli::array<float>^ Param_MatrizFatoresMistura,
+	UInt32 Param_SampleMask)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	ID3D11BlendState* pBlendState = NULL; //Pode ser NULO.
-	FLOAT* pFatoresMistura = NULL;
-
-	//Verifica se forneceu o blend
-	if (ObjetoGerenciadoValido(Param_EstadoMitura))
-	{
-		//Recupera o ponteiro para a interface.
-		Resultado = Param_EstadoMitura->RecuperarPonteiro((LPVOID*)&pBlendState);
-
-		//Verifica se não houve erro
-		if (Resultado.StatusCode != ResultCode::SS_OK)
-		{
-			//Falhou..
-
-			//Sai do método
-			Sair;
-		}
-	}
-	//Verifica se forneceu uma matriz de fatores de mistura
-	if (ObjetoGerenciadoValido(Param_MatrizFatoresMistura))
-	{
-		//Inicializa a matriz.
-		pFatoresMistura = new FLOAT[4];	 //4 é um valor Fixo(RGBA).
-
-		//Copia os dados.
-		Util.CopiarItensTo_ArrayNativo(&pFatoresMistura, Param_MatrizFatoresMistura, 4);
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->OMSetBlendState(pBlendState? NULL: pBlendState, pFatoresMistura? pFatoresMistura: NULL, Param_SampleMask);
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Libera a matriz se ela for valida
-	if (ObjetoValido(pFatoresMistura))
-	{
-		//Libera a memoria para a matriz.
-		delete[] pFatoresMistura;
-	}
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::OMSetBlendState(PonteiroTrabalho,
+		Param_EstadoMistura,
+		Param_MatrizFatoresMistura,
+		Param_SampleMask
+	);
 }
 
 /// <summary>
@@ -4097,38 +1638,14 @@ Done:;
 /// <param name="Param_DepthStencilState">Ponteiro para um estado de profundidade-estêncil interface para ligar o dispositivo. Defina NULO para usar o estado padrão listado em D3D11_DEPTH_STENCIL_DESC.</param>
 /// <param name="Param_StencilRef">Valor de referência para executar contra ao fazer um teste de profundidade-estêncil.</param>
 CarenResult CarenD3D11DeviceContext::OMSetDepthStencilState(
-					ICarenD3D11DepthStencilState^ Param_DepthStencilState,
-					UInt32 Param_StencilRef)
+	ICarenD3D11DepthStencilState^ Param_DepthStencilState,
+	UInt32 Param_StencilRef)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	ID3D11DepthStencilState* pDepthStencil = NULL; //Pode ser NULO.
-
-	//Verifica se forneceu um ponteiro para o stencil e recupera
-	if(ObjetoGerenciadoValido(Param_DepthStencilState))
-	{
-		//Recupera o ponteiro para a interface.
-		Resultado = Param_DepthStencilState->RecuperarPonteiro((LPVOID*)&pDepthStencil);
-
-		//Verifica se não houve erro
-		if (Resultado.StatusCode != ResultCode::SS_OK)
-		{
-			//Falhou..
-
-			//Sai do método
-			Sair;
-		}
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->OMSetDepthStencilState(pDepthStencil? pDepthStencil: NULL, Param_StencilRef);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::OMSetDepthStencilState(PonteiroTrabalho,
+		Param_DepthStencilState,
+		Param_StencilRef
+	);
 }
 
 /// <summary>
@@ -4139,54 +1656,16 @@ Done:;
 /// <param name="Param_MatizRenderTargetViews">Uma matriz de ICarenD3D11RenderTargetView que representam as metas de render para ligar o dispositivo. Se este parâmetro for NULO, e NumViews é 0, não render destinos são vinculados.</param>
 /// <param name="Param_DepthStencilView">Ponteiro para um ICarenD3D11DepthStencilView que representa a exibição de profundidade-estêncil para ligar o dispositivo. Se este parâmetro for NULO, o estado de profundidade-estêncil não está ligado.</param>
 CarenResult CarenD3D11DeviceContext::OMSetRenderTargets(
-					UInt32 Param_NumeroViews,
-					cli::array<ICarenD3D11RenderTargetView^>^ Param_MatizRenderTargetViews,
-					ICarenD3D11DepthStencilView^ Param_DepthStencilView)
+	UInt32 Param_NumeroViews,
+	cli::array<ICarenD3D11RenderTargetView^>^ Param_MatizRenderTargetViews,
+	ICarenD3D11DepthStencilView^ Param_DepthStencilView)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	ID3D11DepthStencilView* pDepthStencilView = NULL;
-	std::vector<ID3D11RenderTargetView*> ppMatrizRendersDestino;
-	LPVOID pPointer = NULL;
-
-	//Define o tamanho do vetor.
-	ppMatrizRendersDestino.reserve(Param_NumeroViews);
-
-	//Verifica se forneceu uma matriz de renders de destino
-	if (ObjetoGerenciadoValido(Param_MatizRenderTargetViews))
-	{
-		//Define os dados
-		for (UINT i = 0; i < Param_NumeroViews; i++)
-		{
-			//Recupera o ponteiro.
-			Param_MatizRenderTargetViews[i]->RecuperarPonteiro((LPVOID*)&pPointer);
-
-			//Adiciona no vetor.
-			ppMatrizRendersDestino.push_back((ID3D11RenderTargetView*)pPointer);
-
-			//Limpa
-			pPointer = NULL;
-		}
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->OMSetRenderTargets(Param_NumeroViews, ObjetoGerenciadoValido(Param_MatizRenderTargetViews) ? ppMatrizRendersDestino.data() : NULL, pDepthStencilView ? pDepthStencilView : NULL);
-
-	//Limpa o vetor.
-	ppMatrizRendersDestino.clear();
-	ppMatrizRendersDestino.shrink_to_fit();
-
-	//Define sucesso por default a operação.
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::OMSetRenderTargets(PonteiroTrabalho,
+		Param_NumeroViews,
+		Param_MatizRenderTargetViews,
+		Param_DepthStencilView
+	);
 }
 
 /// <summary>
@@ -4214,123 +1693,24 @@ CarenResult CarenD3D11DeviceContext::OMSetRenderTargets(
 /// contador oculto para aquele UAV appendable e consumíveis. Param_MatrizUAVInitialCounts é relevante apenas para UAVs que foram criados com qualquer D3D11_BUFFER_UAV_FLAG_APPEND ou D3D11_BUFFER_UAV_FLAG_COUNTER 
 /// especificado quando o UAV foi criado; caso contrário, o argumento é ignorado.</param>
 CarenResult CarenD3D11DeviceContext::OMSetRenderTargetsAndUnorderedAccessViews(
-					UInt32 Param_NumeroRTVs,
-					cli::array <ICarenD3D11RenderTargetView^>^ Param_MatrizRenderTargetViews,
-					ICarenD3D11DepthStencilView^ Param_DepthStencil,
-					UInt32 Param_UAVStartSlot,
-					UInt32 Param_NumeroUAVs,
-					cli::array<ICarenD3D11UnorderedAccessView^>^ Param_MatrizUnorderedAccessViews,
-					cli::array<UInt32>^ Param_MatrizUAVInitialCounts)
+	UInt32 Param_NumeroRTVs,
+	cli::array <ICarenD3D11RenderTargetView^>^ Param_MatrizRenderTargetViews,
+	ICarenD3D11DepthStencilView^ Param_DepthStencil,
+	UInt32 Param_UAVStartSlot,
+	UInt32 Param_NumeroUAVs,
+	cli::array<ICarenD3D11UnorderedAccessView^>^ Param_MatrizUnorderedAccessViews,
+	cli::array<UInt32>^ Param_MatrizUAVInitialCounts)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	std::vector<ID3D11RenderTargetView*> VectorInterfacesTargetView; //Pode ser vazio.
-	ID3D11RenderTargetView* pRenderTarget = NULL;
-	ID3D11DepthStencilView* pStencilView = NULL; //Pode ser NULO.
-	std::vector <ID3D11UnorderedAccessView*> VectorInterfacesUnorderedView; //Pode ser vazio.
-	ID3D11UnorderedAccessView* pUnorderedView = NULL;
-	UINT* pMatrizUAV = NULL; //Pode ser NULO.
-	UINT LarguraArrayUVAInitialCount = 0;
-
-	//Verifica se forneceu as interfaces e copia os dados.
-	if (ObjetoGerenciadoValido(Param_MatrizRenderTargetViews))
-	{
-		//Reserva a quantidade de itens para o vetor.
-		VectorInterfacesTargetView.reserve(Param_NumeroRTVs);
-
-		//Copia os dados para o vetor.
-		for (UINT i = 0; i < Param_NumeroRTVs; i++)
-		{
-			//Recupera o ponteiro.
-			Param_MatrizRenderTargetViews[i]->RecuperarPonteiro((LPVOID*)&pRenderTarget);
-
-			//Define no vetor.
-			VectorInterfacesTargetView.push_back(pRenderTarget);
-
-			//Limpa.
-			pRenderTarget = NULL;
-		}
-	}
-	if (ObjetoGerenciadoValido(Param_DepthStencil))
-	{
-		//Recupera o ponteiro para a interface.
-		Resultado = Param_DepthStencil->RecuperarPonteiro((LPVOID*)&pStencilView);
-
-		//Verifica se não houve erro
-		if (Resultado.StatusCode != ResultCode::SS_OK)
-		{
-			//Falhou...
-
-			//Sai do método
-			Sair;
-		}
-	}
-	if (ObjetoGerenciadoValido(Param_MatrizUnorderedAccessViews))
-	{
-		//Reserva a quantidade de itens para o vetor.
-		VectorInterfacesUnorderedView.reserve(Param_NumeroUAVs);
-
-		//Copia os dados para o vetor.
-		for (UINT i = 0; i < Param_NumeroUAVs; i++)
-		{
-			//Recupera o ponteiro.
-			Param_MatrizUnorderedAccessViews[i]->RecuperarPonteiro((LPVOID*)&pUnorderedView);
-
-			//Define no vetor.
-			VectorInterfacesUnorderedView.push_back(pUnorderedView);
-
-			//Limpa.
-			pUnorderedView = NULL;
-		}
-	}
-	if (ObjetoGerenciadoValido(Param_MatrizUAVInitialCounts))
-	{
-		//Obtém a largura do array.
-		LarguraArrayUVAInitialCount = Param_MatrizUAVInitialCounts->Length;
-		
-		//Cria a matriz.
-		pMatrizUAV = new UINT[LarguraArrayUVAInitialCount];
-
-		//Copia os dados.
-		Util.CopiarItensTo_ArrayNativo(&pMatrizUAV, Param_MatrizUAVInitialCounts, LarguraArrayUVAInitialCount);
-	}
-
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->OMSetRenderTargetsAndUnorderedAccessViews(
-		Param_NumeroRTVs, 
-		VectorInterfacesTargetView.empty() ? NULL : VectorInterfacesTargetView.data(), 
-		pStencilView ? pStencilView : NULL, 
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::OMSetRenderTargetsAndUnorderedAccessViews(PonteiroTrabalho,
+		Param_NumeroRTVs,
+		Param_MatrizRenderTargetViews,
+		Param_DepthStencil,
 		Param_UAVStartSlot,
-		Param_NumeroUAVs, 
-		VectorInterfacesUnorderedView.empty() ? NULL : VectorInterfacesUnorderedView.data(), 
-		pMatrizUAV ? pMatrizUAV : NULL);
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Libera os vetores.
-	VectorInterfacesTargetView.clear();
-	VectorInterfacesTargetView.shrink_to_fit();
-	VectorInterfacesUnorderedView.clear();
-	VectorInterfacesUnorderedView.shrink_to_fit();
-
-	//Libera a memória da matriz se ela for valida.
-	if (ObjetoValido(pMatrizUAV))
-	{
-		//Libera a memoria para a matriz.
-		delete[] pMatrizUAV;
-	}
-
-	//Retorna o resultado.
-	return Resultado;
+		Param_NumeroUAVs,
+		Param_MatrizUnorderedAccessViews,
+		Param_MatrizUAVInitialCounts
+	);
 }
 
 /// <summary>
@@ -4340,66 +1720,16 @@ Done:;
 /// <param name="Param_NumeroBuffers">Número de buffers a serem recuperados (varia de 0 a D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_Out_MatrizBuffers">Retorna uma matriz de ponteiros de interface de buffer constante.</param>
 CarenResult CarenD3D11DeviceContext::PSGetConstantBuffers(
-					UInt32 Param_StartSlot,
-					UInt32 Param_NumeroBuffers,
-					[Out] cli::array<ICarenD3D11Buffer^>^% Param_Out_MatrizBuffers)
+	UInt32 Param_StartSlot,
+	UInt32 Param_NumeroBuffers,
+	[Out] cli::array<ICarenD3D11Buffer^>^% Param_Out_MatrizBuffers)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	std::vector<ID3D11Buffer*> VetorDataInterface;
-	bool VetorVazio = FALSE;
-
-	//Define a quantidade de itens que o vetor vai conter.
-	VetorDataInterface.reserve(static_cast<size_t>(Param_NumeroBuffers));
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->PSGetConstantBuffers(Param_StartSlot, Param_NumeroBuffers, VetorDataInterface.data());
-
-	//Verifica se o Vetor está vazio
-	VetorVazio = VetorDataInterface.empty();
-
-	//Verifica o resultado
-	if (!VetorVazio)
-	{
-		//Deixa o método continuar.
-	}
-	else
-	{
-		//O vetor está vazio.
-		Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria o array que vai conter o ponteiros.
-	Param_Out_MatrizBuffers = gcnew cli::array<ICarenD3D11Buffer^>(Param_NumeroBuffers);
-
-	//Faz um for para criar e definir os dados.
-	for (UINT i = 0; i < Param_NumeroBuffers; i++)
-	{
-		//Cria a interface no id especificado.
-		Param_Out_MatrizBuffers[i] = gcnew CarenD3D11Buffer();
-
-		//Define o ponteiro de trabalho.
-		Param_Out_MatrizBuffers[i]->AdicionarPonteiro((LPVOID*)&VetorDataInterface[i]);
-	}
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Limpa o vetor
-	VetorDataInterface.clear();
-	VetorDataInterface.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::PSGetConstantBuffers(PonteiroTrabalho,
+		Param_StartSlot,
+		Param_NumeroBuffers,
+		Param_Out_MatrizBuffers
+	);
 }
 
 /// <summary>
@@ -4409,63 +1739,16 @@ Done:;
 /// <param name="Param_NumeroAmostradores">Número de (Samplers) para obter de um contexto de dispositivo. Cada estágio de pipeline tem um total de 16 slots disponíveis (varia de 0 a D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_Out_MatrizEstadoAmostrado">Retorna uma matriz com interfaces do amostrador de estado.</param>
 CarenResult CarenD3D11DeviceContext::PSGetSamplers(
-					UInt32 Param_StartSlot,
-					UInt32 Param_NumeroAmostradores,
-					[Out] cli::array<ICarenD3D11SamplerState^>^% Param_Out_MatrizEstadoAmostrado)
+	UInt32 Param_StartSlot,
+	UInt32 Param_NumeroAmostradores,
+	[Out] cli::array<ICarenD3D11SamplerState^>^% Param_Out_MatrizEstadoAmostrado)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	std::vector<ID3D11SamplerState*> VetorDataInterface;
-	bool VetorVazio = FALSE;
-
-	//Define a quantidade de itens que o vetor vai conter.
-	VetorDataInterface.reserve(static_cast<size_t>(Param_NumeroAmostradores));
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->PSGetSamplers(Param_StartSlot, Param_NumeroAmostradores, VetorDataInterface.data());
-
-	//Verifica se o Vetor está vazio
-	VetorVazio = VetorDataInterface.empty();
-
-	//Verifica o resultado
-	if (!VetorVazio)
-	{
-		//Deixa o método continuar.
-	}
-	else
-	{
-		//O vetor está vazio.
-		Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria o array que vai conter o ponteiros.
-	Param_Out_MatrizEstadoAmostrado = gcnew cli::array<ICarenD3D11SamplerState^>(Param_NumeroAmostradores);
-
-	//Faz um for para criar e definir os dados.
-	for (UINT i = 0; i < Param_NumeroAmostradores; i++)
-	{
-		//Cria a interface no id especificado.
-		Param_Out_MatrizEstadoAmostrado[i] = gcnew CarenD3D11SamplerState();
-
-		//Define o ponteiro de trabalho.
-		Param_Out_MatrizEstadoAmostrado[i]->AdicionarPonteiro(VetorDataInterface[i]);
-	}
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Limpa o vetor
-	VetorDataInterface.clear();
-	VetorDataInterface.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::PSGetSamplers(PonteiroTrabalho,
+		Param_StartSlot,
+		Param_NumeroAmostradores,
+		Param_Out_MatrizEstadoAmostrado
+	);
 }
 
 /// <summary>
@@ -4475,76 +1758,16 @@ Done:;
 /// <param name="Param_Out_MatrizInstanciasClasse">Retorna uma matriz com interfaces de Instancias de classe.</param>
 /// <param name="Param_Out_QuantidadeInstancias">Retorna a quantidade de de instancias de classe na matriz do parametro (Param_Out_MatrizInstanciasClasse).</param>
 CarenResult CarenD3D11DeviceContext::PSGetShader(
-					[Out] ICarenD3D11PixelShader^% Param_Out_SombreadorPixel,
-					[Out] cli::array<ICarenD3D11ClassInstance^>^% Param_Out_MatrizInstanciasClasse,
-					[Out] UInt32% Param_Out_QuantidadeInstancias)
+	[Out] ICarenD3D11PixelShader^% Param_Out_SombreadorPixel,
+	[Out] cli::array<ICarenD3D11ClassInstance^>^% Param_Out_MatrizInstanciasClasse,
+	[Out] UInt32% Param_Out_QuantidadeInstancias)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	ID3D11PixelShader* pPixelShader = NULL;
-	vector<ID3D11ClassInstance*> VetorInterfaces;
-	UINT CountInterfacesInArray = 0;
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->PSGetShader(&pPixelShader, VetorInterfaces.data(), &CountInterfacesInArray);
-
-	//Verifica se interface do Shader Computer é valida
-	if (ObjetoValido(pPixelShader))
-	{
-		//Cria a interface que será retornada no parametro.
-		Param_Out_SombreadorPixel = gcnew CarenD3D11PixelShader();
-
-		//Define o ponteiro de trabalho
-		Param_Out_SombreadorPixel->AdicionarPonteiro(pPixelShader);
-	}
-
-	//Verifica se o foi retornado algum item para o vetor.
-	if (CountInterfacesInArray > 0)
-	{
-		//Deixa  continuar.
-	}
-	else
-	{
-		//Nenhuma interface foi retornada para o vetor.
-
-		//Define o resultado com base na interface de computação do shader.
-		Resultado = ObjetoValido(pPixelShader) ? CarenResult(ResultCode::SS_OK, true) : CarenResult(ResultCode::ER_FAIL, false);
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria o array que vai ser retornado.
-	Param_Out_MatrizInstanciasClasse = gcnew cli::array<ICarenD3D11ClassInstance^>(CountInterfacesInArray);
-
-	//Copia os dados para o array
-	for (UINT i = 0; i < CountInterfacesInArray; i++)
-	{
-		//Cria a interface no id especificado.
-		Param_Out_MatrizInstanciasClasse[i] = gcnew CarenD3D11ClassInstance();
-
-		//Define o ponteiro de trabalho.
-		Param_Out_MatrizInstanciasClasse[i]->AdicionarPonteiro(VetorInterfaces[i]);
-	}
-
-	//Define a quantidade de itens no array.
-	Param_Out_QuantidadeInstancias = CountInterfacesInArray;
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Limpa o vetor
-	VetorInterfaces.clear();
-	VetorInterfaces.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::PSGetShader(PonteiroTrabalho,
+		Param_Out_SombreadorPixel,
+		Param_Out_MatrizInstanciasClasse,
+		Param_Out_QuantidadeInstancias
+	);
 }
 
 /// <summary>
@@ -4554,58 +1777,16 @@ Done:;
 /// <param name="Param_NumeroViews">O número de recursos para obter do dispositivo. Até um máximo de 128 slots estão disponíveis para recursos de sombreador (varia de 0 a D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_Out_MatrizVisualizadoresSombreador">Matriz de interfaces de visualização de recursos do sombreador a serem retornadas pelo dispositivo.</param>
 CarenResult CarenD3D11DeviceContext::PSGetShaderResources(
-					UInt32 Param_StartSlot,
-					UInt32 Param_NumeroViews,
-					[Out] cli::array<ICarenD3D11ShaderResourceView^>^% Param_Out_MatrizVisualizadoresSombreador)
+	UInt32 Param_StartSlot,
+	UInt32 Param_NumeroViews,
+	[Out] cli::array<ICarenD3D11ShaderResourceView^>^% Param_Out_MatrizVisualizadoresSombreador)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	vector<ID3D11ShaderResourceView*> VectorResourceView;
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->PSGetShaderResources(Param_StartSlot, Param_NumeroViews, VectorResourceView.data());
-
-	//Verifica se obteve alguma interface.
-	if (!VectorResourceView.empty())
-	{
-		//Deixa o método continuar.
-	}
-	else
-	{
-		//Falhou.. Nenhuma interface foi retornada.
-
-		//Define falha.
-		Resultado.AdicionarCodigo(ResultCode::SS_FALSE, false);
-
-		//Sai
-		Sair;
-	}
-
-	//Cria a matriz a ser retornada ao usuário.
-	Param_Out_MatrizVisualizadoresSombreador = gcnew cli::array<ICarenD3D11ShaderResourceView^>(Param_NumeroViews);
-
-	//faz um for para criar cada interface e definir o ponteiro de trabalho.
-	for (UINT i = 0; i < Param_NumeroViews; i++)
-	{
-		//Cria a interface no id especificado.
-		Param_Out_MatrizVisualizadoresSombreador[i] = gcnew CarenD3D11ShaderResourceView();
-
-		//Define o ponteiro de trabalho.
-		Param_Out_MatrizVisualizadoresSombreador[i]->AdicionarPonteiro(VectorResourceView[i]);
-	}
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Libera o vetor.
-	VectorResourceView.clear();
-	VectorResourceView.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::PSGetShaderResources(PonteiroTrabalho,
+		Param_StartSlot,
+		Param_NumeroViews,
+		Param_Out_MatrizVisualizadoresSombreador
+	);
 }
 
 /// <summary>
@@ -4615,45 +1796,16 @@ Done:;
 /// <param name="Param_NumeroBuffers">Número de buffers a definir (varia de 0 a D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - Param_StartSlot).</param> 
 /// <param name="Param_MatrizBuffers">Matriz de buffers constantes sendo fornecidos ao dispositivo.</param>
 CarenResult CarenD3D11DeviceContext::PSSetConstantBuffers(
-					UInt32 Param_StartSlot,
-					UInt32 Param_NumeroBuffers,
-					cli::array<ICarenD3D11Buffer^>^ Param_MatrizBuffers)
+	UInt32 Param_StartSlot,
+	UInt32 Param_NumeroBuffers,
+	cli::array<ICarenD3D11Buffer^>^ Param_MatrizBuffers)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	std::vector<ID3D11Buffer*> VectorInterfaces;
-	ID3D11Buffer* pBuff = NULL;
-
-	//Define a quantidade de dados que vai conter no vetor.
-	VectorInterfaces.reserve(static_cast<size_t>(Param_NumeroBuffers));
-
-	//Faz um for para obter os buffers e definir no vetor.
-	for (UINT i = 0; i < Param_NumeroBuffers; i++)
-	{
-		//Recupera o ponteiro para o buffer.
-		Param_MatrizBuffers[i]->RecuperarPonteiro((LPVOID*)&pBuff);
-
-		//Define o ponteiro no vetor.
-		VectorInterfaces.push_back(pBuff);
-
-		//Limpa
-		pBuff = NULL;
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->PSSetConstantBuffers(Param_StartSlot, Param_NumeroBuffers, VectorInterfaces.data());
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Limpa o vetor.
-	VectorInterfaces.clear();
-	VectorInterfaces.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::PSSetConstantBuffers(PonteiroTrabalho,
+		Param_StartSlot,
+		Param_NumeroBuffers,
+		Param_MatrizBuffers
+	);
 }
 
 /// <summary>
@@ -4663,45 +1815,16 @@ CarenResult CarenD3D11DeviceContext::PSSetConstantBuffers(
 /// <param name="Param_NumeroAmostradores">Número de amostradores na matriz. Cada estágio de pipeline tem um total de 16 slots disponíveis (varia de 0 a D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_MatrizAmostradoresEstado">Uma matriz de interfaces de estado do amostrador.</param>
 CarenResult CarenD3D11DeviceContext::PSSetSamplers(
-					UInt32 Param_StartSlot,
-					UInt32 Param_NumeroAmostradores,
-					cli::array<ICarenD3D11SamplerState^>^ Param_MatrizAmostradoresEstado)
+	UInt32 Param_StartSlot,
+	UInt32 Param_NumeroAmostradores,
+	cli::array<ICarenD3D11SamplerState^>^ Param_MatrizAmostradoresEstado)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	std::vector<ID3D11SamplerState*> VectorInterfaces;
-	ID3D11SamplerState* pSample = NULL;
-
-	//Define a quantidade de dados que vai conter no vetor.
-	VectorInterfaces.reserve(static_cast<size_t>(Param_NumeroAmostradores));
-
-	//Faz um for para obter os buffers e definir no vetor.
-	for (UINT i = 0; i < Param_NumeroAmostradores; i++)
-	{
-		//Recupera o ponteiro para o buffer.
-		Param_MatrizAmostradoresEstado[i]->RecuperarPonteiro((LPVOID*)&pSample);
-
-		//Define o ponteiro no vetor.
-		VectorInterfaces.push_back(pSample);
-
-		//Limpa
-		pSample = NULL;
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->PSSetSamplers(Param_StartSlot, Param_NumeroAmostradores, VectorInterfaces.data());
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Limpa o vetor.
-	VectorInterfaces.clear();
-	VectorInterfaces.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::PSSetSamplers(PonteiroTrabalho,
+		Param_StartSlot,
+		Param_NumeroAmostradores,
+		Param_MatrizAmostradoresEstado
+	);
 }
 
 /// <summary>
@@ -4711,59 +1834,16 @@ CarenResult CarenD3D11DeviceContext::PSSetSamplers(
 /// <param name="Param_MatrizInstanciaClasse">Uma matriz de interfaces de instância de classe. Cada interface usada por um sombreador deve ter uma instância de classe correspondente ou o shader será desativado. Defina como NULO se o sombreador não usar nenhuma interface.</param>
 /// <param name="Param_NumeroInstanciasClasse">O numero de (ICarenD3D11ClassInstance) dentro da matriz (Param_MatrizInstanciaClasse).</param>
 CarenResult CarenD3D11DeviceContext::PSSetShader(
-					ICarenD3D11PixelShader^ Param_ShaderPixel,
-					cli::array<ICarenD3D11ClassInstance^>^ Param_MatrizInstanciaClasse,
-					UInt32 Param_NumeroInstanciasClasse)
+	ICarenD3D11PixelShader^ Param_ShaderPixel,
+	cli::array<ICarenD3D11ClassInstance^>^ Param_MatrizInstanciaClasse,
+	UInt32 Param_NumeroInstanciasClasse)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	ID3D11PixelShader* pPixelShader = NULL; //Pode ser nulo.
-	std::vector<ID3D11ClassInstance*> VectorInterfaces; //Pode ser nulo.
-	ID3D11ClassInstance* pInstance = NULL;
-
-	//Reserva o vetor para a quantidade especificada pelo usuário se for maior que zero.
-	//Se for, vai copiar as interfaces aqui mesmo.
-	if (Param_NumeroInstanciasClasse > 0)
-	{
-		//Reverva uma quantidade para o vetor.
-		VectorInterfaces.reserve(static_cast<size_t>(Param_NumeroInstanciasClasse));
-
-		//Obtem e define as interfaces no vetor.
-		for (UINT i = 0; i < Param_NumeroInstanciasClasse; i++)
-		{
-			//Recupera o ponteiro para a interface.
-			Param_MatrizInstanciaClasse[i]->RecuperarPonteiro((LPVOID*)&pInstance);
-
-			//Define o ponteiro no vetor.
-			VectorInterfaces.push_back(pInstance);
-
-			//Limpa
-			pInstance = NULL;
-		}
-	}
-
-	//Recupera o ponteiro para o Sombreador de Pixel se tiver sido fornecido
-	if (ObjetoGerenciadoValido(Param_ShaderPixel))
-	{
-		//Recupera o ponteiro para a interface.
-		Param_ShaderPixel->RecuperarPonteiro((LPVOID*)&pPixelShader);
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->PSSetShader(pPixelShader ? pPixelShader : NULL, Param_NumeroInstanciasClasse > 0 ? VectorInterfaces.data() : NULL, Param_NumeroInstanciasClasse);
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Limpa o vetor.
-	VectorInterfaces.clear();
-	VectorInterfaces.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::PSSetShader(PonteiroTrabalho,
+		Param_ShaderPixel,
+		Param_MatrizInstanciaClasse,
+		Param_NumeroInstanciasClasse
+	);
 }
 
 /// <summary>
@@ -4773,45 +1853,16 @@ CarenResult CarenD3D11DeviceContext::PSSetShader(
 /// <param name="Param_NumeroViews">Número de recursos do shader a serem definidos. Até um máximo de 128 slots estão disponíveis para recursos de sombreador (o intervalo é de 0 a D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_MatrizVisualizadoresSombreador">Uma matriz que contém os Visualizadores de recurso do sombreador para serem definidos no Disposiivo.</param>
 CarenResult CarenD3D11DeviceContext::PSSetShaderResources(
-					UInt32 Param_StartSlot,
-					UInt32 Param_NumeroViews,
-					cli::array<ICarenD3D11ShaderResourceView^>^ Param_MatrizVisualizadoresSombreador)
+	UInt32 Param_StartSlot,
+	UInt32 Param_NumeroViews,
+	cli::array<ICarenD3D11ShaderResourceView^>^ Param_MatrizVisualizadoresSombreador)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	std::vector<ID3D11ShaderResourceView*> VectorInterfaces;
-	ID3D11ShaderResourceView* pShaderView = NULL;
-
-	//Define a quantidade de dados que vai conter no vetor.
-	VectorInterfaces.reserve(static_cast<size_t>(Param_NumeroViews));
-
-	//Faz um for para obter os buffers e definir no vetor.
-	for (UINT i = 0; i < Param_NumeroViews; i++)
-	{
-		//Recupera o ponteiro para a interface.
-		Param_MatrizVisualizadoresSombreador[i]->RecuperarPonteiro((LPVOID*)&pShaderView);
-
-		//Define o ponteiro no vetor.
-		VectorInterfaces.push_back(pShaderView);
-
-		//Limpa
-		pShaderView = NULL;
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->PSSetShaderResources(Param_StartSlot, Param_NumeroViews, VectorInterfaces.data());
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Limpa o vetor.
-	VectorInterfaces.clear();
-	VectorInterfaces.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::PSSetShaderResources(PonteiroTrabalho,
+		Param_StartSlot,
+		Param_NumeroViews,
+		Param_MatrizVisualizadoresSombreador
+	);
 }
 
 /// <summary>
@@ -4823,37 +1874,20 @@ CarenResult CarenD3D11DeviceContext::PSSetShaderResources(
 /// <param name="Param_IndiceSubRecursoOrigem">O sub-recurso fonte de fonte de recursos.</param>
 /// <param name="Param_DXGIFormato">Um CA_DXGI_FORMAT que indica como o recurso multisampled será resolvido para um recurso único-amostrados.</param>
 CarenResult CarenD3D11DeviceContext::ResolveSubresource(
-					ICarenD3D11Resource^ Param_RecursoDestino,
-					UInt32 Param_IndiceSubRecursoDestino,
-					ICarenD3D11Resource^ Param_RecursoOrigem,
-					UInt32 Param_IndiceSubRecursoOrigem,
-					Enumeracoes::CA_DXGI_FORMAT Param_DXGIFormato)
+	ICarenD3D11Resource^ Param_RecursoDestino,
+	UInt32 Param_IndiceSubRecursoDestino,
+	ICarenD3D11Resource^ Param_RecursoOrigem,
+	UInt32 Param_IndiceSubRecursoOrigem,
+	Enumeracoes::CA_DXGI_FORMAT Param_DXGIFormato)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	ID3D11Resource* pRecursoDestino = NULL;
-	ID3D11Resource* pRecursoOrigem = NULL;
-	DXGI_FORMAT FormatoDXGI = static_cast<DXGI_FORMAT>(Param_DXGIFormato);
-
-	//Obtém os ponteiros para os recursos.
-	//Não vai ser verificado se valido ou se obteve com sucesso.
-	//Os ponteiros são obrigatorios.
-	Param_RecursoDestino->RecuperarPonteiro((LPVOID*)&pRecursoDestino);
-	Param_RecursoOrigem->RecuperarPonteiro((LPVOID*)&pRecursoOrigem);
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->ResolveSubresource(pRecursoDestino, Param_IndiceSubRecursoDestino, pRecursoOrigem, Param_IndiceSubRecursoOrigem, FormatoDXGI);
-
-	//Define sucesso por default a operação.
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::ResolveSubresource(PonteiroTrabalho,
+		Param_RecursoDestino,
+		Param_IndiceSubRecursoDestino,
+		Param_RecursoOrigem,
+		Param_IndiceSubRecursoOrigem,
+		Param_DXGIFormato
+	);
 }
 
 /// <summary>
@@ -4864,82 +1898,16 @@ CarenResult CarenD3D11DeviceContext::ResolveSubresource(
 /// <param name="Param_ChecarQuantidade">Define como (TRUE) para obter a quantidade de retangulos que seriam retornados. Se esse valor for TRUE, o parametro (Param_Out_Rects) não retorna nada.</param>
 /// <param name="Param_Out_Rects">Uma matriz de retângulos scissor. Se Param_NumeroRects for maior que o número de (Scissor Rects) atualmente vinculada, membros não utilizados da matriz conterá 0.</param>
 CarenResult CarenD3D11DeviceContext::RSGetScissorRects(
-					[Out] UInt32% Param_Out_NumeroRects,
-					Boolean Param_ChecarQuantidade,
-					[Out] cli::array<Estruturas::CA_RECT^>^% Param_Out_Rects)
+	[Out] UInt32% Param_Out_NumeroRects,
+	Boolean Param_ChecarQuantidade,
+	[Out] cli::array<Estruturas::CA_RECT^>^% Param_Out_Rects)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	UINT NumeroRects = Param_Out_NumeroRects; //[IN, OUT]
-	std::vector<RECT> VectorRects;
-
-	//Reserva a quantidade de retangulos que vai conter.
-	VectorRects.reserve(Param_Out_NumeroRects);
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->RSGetScissorRects(&NumeroRects, Param_ChecarQuantidade? NULL: VectorRects.data());
-
-	//Verifica se só estava verificando a quantidade.
-	//Se sim, só vai retornar a quantidade de rects.
-	if (Param_ChecarQuantidade)
-	{
-		//Define a quantidade de rects.
-		Param_Out_NumeroRects = NumeroRects;
-
-		//Define sucesso
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-		//Sai do método
-		Sair;
-	}
-	else
-	{
-		//Verifica se o vetor não está vazio
-		if (!VectorRects.empty())
-		{
-			//Deixa o método continuar.
-		}
-		else
-		{
-			//O vetor está vazio.
-
-			//Define falha.
-			Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-			//Sai do metodo
-			Sair;
-		}
-	}
-
-	//Cria o array que vai conter os RECTS a serem retornados.
-	Param_Out_Rects = gcnew cli::array<Estruturas::CA_RECT^>(NumeroRects);
-
-	//Faz um for para converter os rects nativos para o gerenciado.
-	for (UINT i = 0; i < NumeroRects; i++)
-	{
-		//Converte o Rect e define no array gerenciado.
-		Param_Out_Rects[i] = Util.ConverterRECTUnmanagedToManaged(&VectorRects[i]);
-	}
-
-	//Define a quantidade de rects.
-	Param_Out_NumeroRects = NumeroRects;
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Libera o vetor e os dados.
-	VectorRects.clear();
-	VectorRects.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::RSGetScissorRects(PonteiroTrabalho,
+		Param_Out_NumeroRects,
+		Param_ChecarQuantidade,
+		Param_Out_Rects
+	);
 }
 
 /// <summary>
@@ -4948,43 +1916,10 @@ Done:;
 /// <param name="Param_Out_EstadoRasterizador">Um ponteiro para um estado de rasterizador interface para preencher com as informações do dispositivo.</param>
 CarenResult CarenD3D11DeviceContext::RSGetState([Out] ICarenD3D11RasterizerState^% Param_Out_EstadoRasterizador)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	ID3D11RasterizerState* pRasterizador = NULL;
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->RSGetState(&pRasterizador);
-
-	//Verifica se o objeto é valido
-	if (ObjetoValido(pRasterizador))
-	{
-		//Deixa  o método continuar.
-	}
-	else
-	{
-		//O objeto não era valido.
-
-		//Define erro.
-		Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria a interface que vai retornar a interface.
-	Param_Out_EstadoRasterizador = gcnew CarenD3D11RasterizerState();
-
-	//Define o ponteiro de trabalho
-	Param_Out_EstadoRasterizador->AdicionarPonteiro(pRasterizador);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::RSGetState(PonteiroTrabalho,
+		Param_Out_EstadoRasterizador
+	);
 }
 
 /// <summary>
@@ -4995,86 +1930,16 @@ Done:;
 /// parametro (Param_Out_MatrizViewports).</param>
 /// <param name="Param_Out_MatrizViewports">Uma matriz de estruturas CA_D3D11_VIEWPORT para as viewports que estão vinculadas à fase do rasterizador.</param>
 CarenResult CarenD3D11DeviceContext::RSGetViewports(
-					Boolean Param_ObterQuantidadeViewports,
-					UInt32% Param_Ref_NumeroViewports,
-					[Out] cli::array<Estruturas::CA_D3D11_VIEWPORT^>^% Param_Out_MatrizViewports)
+	Boolean Param_ObterQuantidadeViewports,
+	UInt32% Param_Ref_NumeroViewports,
+	[Out] cli::array<Estruturas::CA_D3D11_VIEWPORT^>^% Param_Out_MatrizViewports)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	UINT NumeroViewPorts = Param_Ref_NumeroViewports; //[IN, OUT]
-	std::vector<D3D11_VIEWPORT> VectorViewPort;
-
-	//Reserva a quantidade de estruturas que o vetor vai conter
-	if (!Param_ObterQuantidadeViewports)
-	{
-		//Reserva a quantidade informada pelo usuário.
-		VectorViewPort.reserve(NumeroViewPorts);
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->RSGetViewports(&NumeroViewPorts, Param_ObterQuantidadeViewports? NULL: VectorViewPort.data());
-
-	//Verifica se o usuário só chamaou para obter a quantidade de viewports
-	if (!Param_ObterQuantidadeViewports)
-	{
-		//Deixa continuar.
-	}
-	else
-	{
-		//Estava só obtendo a quantidade de viewports.
-
-		//Define a quantidade no parametro de saida e entrada.
-		Param_Ref_NumeroViewports = NumeroViewPorts;
-
-		//Define sucesso
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-		//Sai do método
-		Sair;
-	}
-
-	//Verifica se o ponteiro não está vazio.
-	if (!VectorViewPort.empty())
-	{
-		//Deixa continuar.
-	}
-	else
-	{
-		//O vetor está vazio.
-
-		//Define falha.
-		Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria a matriz que vai retornar as viewports.
-	Param_Out_MatrizViewports = gcnew cli::array<Estruturas::CA_D3D11_VIEWPORT^>(NumeroViewPorts);
-
-	//Faz um for para converter e definir na matriz.
-	for (UINT i = 0; i < NumeroViewPorts; i++)
-	{
-		//Converter a viewport no id especificado e define na matriz de saida.
-		Param_Out_MatrizViewports[i] = Util.ConverterD3D11_VIEWPORTUnManaged_ToManaged(&VectorViewPort[i]);
-	}
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Libera o vetor.
-	VectorViewPort.clear();
-	VectorViewPort.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::RSGetViewports(PonteiroTrabalho,
+		Param_ObterQuantidadeViewports,
+		Param_Ref_NumeroViewports,
+		Param_Out_MatrizViewports
+	);
 }
 
 /// <summary>
@@ -5083,34 +1948,14 @@ Done:;
 /// <param name="Param_NumeroRects">Número de retângulos de tesoura para ligar.</param>
 /// <param name="Param_MatrizRects">Uma matriz de retângulos scissor.</param>
 CarenResult CarenD3D11DeviceContext::RSSetScissorRects(
-					UInt32 Param_NumeroRects,
-					cli::array<Estruturas::CA_RECT^>^ Param_MatrizRects)
+	UInt32 Param_NumeroRects,
+	cli::array<Estruturas::CA_RECT^>^ Param_MatrizRects)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	RECT* pRECTS = CriarMatrizEstruturas<RECT>(Param_NumeroRects);
-
-	//Faz um for para converter a estrutura gerenciada para a nativa.
-	for (UINT i = 0; i < Param_NumeroRects; i++)
-	{
-		//Converte e define na matriz nativa.
-		pRECTS[i] = *Util.ConverterRECTManagedToUnmanaged(Param_MatrizRects[i]);
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->RSSetScissorRects(Param_NumeroRects, pRECTS);
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Chama o método para liberar a memoria para a matriz de rects
-	DeletarMatrizEstruturasSafe(&pRECTS);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::RSSetScissorRects(PonteiroTrabalho,
+		Param_NumeroRects,
+		Param_MatrizRects
+	);
 }
 
 /// <summary>
@@ -5119,30 +1964,10 @@ CarenResult CarenD3D11DeviceContext::RSSetScissorRects(
 /// <param name="Param_EstadoRasterizador">Ponteiro para uma interface de estado rasterizador para vincular ao pipeline.</param>
 CarenResult CarenD3D11DeviceContext::RSSetState(ICarenD3D11RasterizerState^ Param_EstadoRasterizador)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	ID3D11RasterizerState* pRasterizador = NULL;
-
-	//Recupera o ponteiro para a interface.
-	Resultado = Param_EstadoRasterizador->RecuperarPonteiro((LPVOID*)&pRasterizador);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou..
-
-		//Sai do método
-		Sair;
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->RSSetState(pRasterizador);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::RSSetState(PonteiroTrabalho,
+		Param_EstadoRasterizador
+	);
 }
 
 /// <summary>
@@ -5152,37 +1977,14 @@ Done:;
 /// <param name="Param_MatrizViewports">Uma matriz de estruturas D3D11_VIEWPORT para vincular ao dispositivo. Consulte a página de estrutura para obter detalhes sobre como o tamanho da viewport depende do nível de recurso do dispositivo que foi alterado 
 /// entre o Direct3D 11 e o Direct3D 10.</param>
 CarenResult CarenD3D11DeviceContext::RSSetViewports(
-					UInt32 Param_NumeroViewports,
-					cli::array<Estruturas::CA_D3D11_VIEWPORT^>^ Param_MatrizViewports)
+	UInt32 Param_NumeroViewports,
+	cli::array<Estruturas::CA_D3D11_VIEWPORT^>^ Param_MatrizViewports)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	D3D11_VIEWPORT* pArrayViewPorts = CriarMatrizEstruturas<D3D11_VIEWPORT>(Param_NumeroViewports);
-
-	//Covnerte as ViewPorts gerenciadas
-	for (UINT i = 0; i < Param_NumeroViewports; i++)
-	{
-		//Converte e define no array.
-		pArrayViewPorts[i] = *Util.ConverterD3D11_VIEWPORTManaged_ToUnManaged(Param_MatrizViewports[i]);
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->RSSetViewports(Param_NumeroViewports, pArrayViewPorts);
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Libera a memoria para a estrutura
-	DeletarMatrizEstruturasSafe(&pArrayViewPorts);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::RSSetViewports(PonteiroTrabalho,
+		Param_NumeroViewports,
+		Param_MatrizViewports
+	);
 }
 
 /// <summary>
@@ -5192,37 +1994,14 @@ CarenResult CarenD3D11DeviceContext::RSSetViewports(
 /// (Param_ValorPredicado) é irrelevante, mas será preservado para ICarenD3D11DeviceContext::GetPredication.</param>
 /// <param name="Param_ValorPredicado">Se TRUE, a renderização será afetada quando as condições do predicado forem cumpridas. Se FALSE, a renderização será afetada quando as condições não forem atendidas.</param>
 CarenResult CarenD3D11DeviceContext::SetPredication(
-					ICarenD3D11Predicate^ Param_Predicate,
-					Boolean Param_ValorPredicado)
+	ICarenD3D11Predicate^ Param_Predicate,
+	Boolean Param_ValorPredicado)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	ID3D11Predicate* pPredicado = NULL; //Pode ser nulo.
-
-	//Verifica se forneceu um ponteiro para o predicado
-	if(ObjetoGerenciadoValido(Param_Predicate))
-	{
-		//Recupera o ponteiro para o predicado
-		Resultado = Param_Predicate->RecuperarPonteiro((LPVOID*)&pPredicado);
-
-		//Verifica se não houve erro
-		if (Resultado.StatusCode != ResultCode::SS_OK)
-		{
-			//Falhou...
-
-			//Sai do método
-			Sair;
-		}
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->SetPredication(pPredicado? pPredicado: NULL, Param_ValorPredicado? TRUE: FALSE);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::SetPredication(PonteiroTrabalho,
+		Param_Predicate,
+		Param_ValorPredicado
+	);
 }
 
 /// <summary>
@@ -5232,33 +2011,14 @@ Done:;
 /// <param name="Param_MinLOD">O nível de detalhamento, que varia entre 0 e o número máximo de níveis de mipmap do recurso. Por exemplo, o número máximo de níveis mipmap de uma textura 1D é especificado na 
 /// MipLevels membro do D3D11_TEXTURE1D_DESC estrutura.</param>
 CarenResult CarenD3D11DeviceContext::SetResourceMinLOD(
-					ICarenD3D11Resource^ Param_Recurso,
-					float Param_MinLOD)
+	ICarenD3D11Resource^ Param_Recurso,
+	float Param_MinLOD)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	ID3D11Resource* pRecurso = NULL;
-
-	//Recupera o ponteiro para a interface.
-	Resultado = Param_Recurso->RecuperarPonteiro((LPVOID*)&pRecurso);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou...
-
-		//Sai do método
-		Sair;
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->SetResourceMinLOD(pRecurso, Param_MinLOD);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::SetResourceMinLOD(PonteiroTrabalho,
+		Param_Recurso,
+		Param_MinLOD
+	);
 }
 
 /// <summary>
@@ -5267,60 +2027,14 @@ Done:;
 /// <param name="Param_NumeroBuffers">O número de Buffers a serem obtidos.</param>
 /// <param name="Param_Out_MatrizBuffers">Recebe a matriz com os buffers de saida retornado do dispositivo.</param>
 CarenResult CarenD3D11DeviceContext::SOGetTargets(
-					UInt32 Param_NumeroBuffers,
-					[Out] cli::array<ICarenD3D11Buffer^>^% Param_Out_MatrizBuffers)
+	UInt32 Param_NumeroBuffers,
+	[Out] cli::array<ICarenD3D11Buffer^>^% Param_Out_MatrizBuffers)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	std::vector<ID3D11Buffer*> VectorBuffers;
-
-	//Reserva a quantidad de interfaces que vai conter no vetor
-	VectorBuffers.reserve(Param_NumeroBuffers);
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->SOGetTargets(Param_NumeroBuffers, VectorBuffers.data());
-
-	//Verifica se o vetor contém dados
-	if (!VectorBuffers.empty())
-	{
-		//Deixa o método continuar.
-	}
-	else
-	{
-		//Falhou..
-
-		//Define falha.
-		Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-		//Sai do método 
-		Sair;
-	}
-
-	//Cria a matriz que vai conter as interfaces.
-	Param_Out_MatrizBuffers = gcnew cli::array<ICarenD3D11Buffer^>(Param_NumeroBuffers);
-
-	//Faz um for para criar e definir os ponteiros
-	for (UINT i = 0; i < Param_NumeroBuffers; i++)
-	{
-		//Cria a interface.
-		Param_Out_MatrizBuffers[i] = gcnew CarenD3D11Buffer();
-
-		//Define o ponteiro de trabalho
-		Param_Out_MatrizBuffers[i]->AdicionarPonteiro(VectorBuffers[i]);
-	}
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Limpa o vetor
-	VectorBuffers.clear();
-	VectorBuffers.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::SOGetTargets(PonteiroTrabalho,
+		Param_NumeroBuffers,
+		Param_Out_MatrizBuffers
+	);
 }
 
 /// <summary>
@@ -5332,54 +2046,16 @@ Done:;
 /// <param name="Param_DeslocamentosBuffers">Matriz de deslocamentos para os buffers de saída de (Param_MatrizBuffers), um deslocamento para cada buffer. Os valores de deslocamento devem estar 
 /// em bytes.</param>
 CarenResult CarenD3D11DeviceContext::SOSetTargets(
-					UInt32 Param_NumeroBuffers,
-					cli::array<ICarenD3D11Buffer^>^ Param_MatrizBuffers,
-					cli::array<UInt32>^ Param_DeslocamentosBuffers)
+	UInt32 Param_NumeroBuffers,
+	cli::array<ICarenD3D11Buffer^>^ Param_MatrizBuffers,
+	cli::array<UInt32>^ Param_DeslocamentosBuffers)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	std::vector<ID3D11Buffer*> VectorMatrizBuffer;
-	UINT* pDeslocamentos = new UINT[Param_NumeroBuffers];
-	ID3D11Buffer* pBuff = NULL;
-
-	//Faz um for para obter as interfaces e os deslocamentos.
-	for (UINT i = 0; i < Param_NumeroBuffers; i++)
-	{
-		//Preenche o vetor.
-
-		//Recupera o ponteiro para a interface.
-		Param_MatrizBuffers[i]->RecuperarPonteiro((LPVOID*)&pBuff);
-
-		//Define no vetor
-		VectorMatrizBuffer.push_back(pBuff);
-
-		//Limpa
-		pBuff = NULL;
-
-
-		//Preenche a matriz de deslocamentos.
-
-		//Define o deslocamento no id
-		pDeslocamentos[i] = Param_DeslocamentosBuffers[i];
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->SOSetTargets(Param_NumeroBuffers, VectorMatrizBuffer.data(), pDeslocamentos);
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Limpa o vetor.
-	VectorMatrizBuffer.clear();
-	VectorMatrizBuffer.shrink_to_fit();
-
-	//Libera a memoria da matriz.
-	delete[] pDeslocamentos;
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::SOSetTargets(PonteiroTrabalho,
+		Param_NumeroBuffers,
+		Param_MatrizBuffers,
+		Param_DeslocamentosBuffers
+	);
 }
 
 /// <summary>
@@ -5388,33 +2064,14 @@ CarenResult CarenD3D11DeviceContext::SOSetTargets(
 /// <param name="Param_Recurso">Um ponteiro para o recurso a ser invalido.</param>
 /// <param name="Param_SubrecursoInvalidado">O Id do subrecurso a ser (Desmapeado).</param>
 CarenResult CarenD3D11DeviceContext::Unmap(
-					ICarenD3D11Resource^ Param_Recurso,
-					UInt32 Param_SubrecursoInvalidado)
+	ICarenD3D11Resource^ Param_Recurso,
+	UInt32 Param_SubrecursoInvalidado)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	ID3D11Resource* pRecurso = NULL;
-
-	//Recupera o ponteiro para a interface.
-	Resultado = Param_Recurso->RecuperarPonteiro((LPVOID*)&pRecurso);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou...
-
-		//Sai do método
-		Sair;
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->Unmap(pRecurso, Param_SubrecursoInvalidado);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::Unmap(PonteiroTrabalho,
+		Param_Recurso,
+		Param_SubrecursoInvalidado
+	);
 }
 
 /// <summary>
@@ -5428,72 +2085,22 @@ Done:;
 /// <param name="Param_TamanhoLinhaOrigem">(SrcRowPitch) - O tamanho de uma linha dos dados de origem.</param>
 /// <param name="Param_TamhoFatiaProdundidade">(SrcDepthPitch) - O tamanho de uma fatia de profundidade dos dados de origem.</param>
 CarenResult CarenD3D11DeviceContext::UpdateSubresource(
-					ICarenD3D11Resource^ Param_RecursoDestino,
-					UInt32 Param_SubrecursoDestino,
-					Estruturas::CA_D3D11_BOX^ Param_Caixa,
-					ICarenBuffer^ Param_DadosOrigemMemoria,
-					UInt32 Param_TamanhoLinhaOrigem,
-					UInt32 Param_TamhoFatiaProdundidade)
+	ICarenD3D11Resource^ Param_RecursoDestino,
+	UInt32 Param_SubrecursoDestino,
+	Estruturas::CA_D3D11_BOX^ Param_Caixa,
+	ICarenBuffer^ Param_DadosOrigemMemoria,
+	UInt32 Param_TamanhoLinhaOrigem,
+	UInt32 Param_TamhoFatiaProdundidade)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	ID3D11Resource* pRecursoDestino = NULL;
-	D3D11_BOX* pBOX = NULL; //Pode ser NULO.
-	PVOID pDadosOrigem = NULL;
-	IntPtr PonteiroDados = IntPtr::Zero;
-
-	//Recupera o ponteiro para a interface de recurso.
-	Resultado = Param_RecursoDestino->RecuperarPonteiro((LPVOID*)&pRecursoDestino);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou...
-
-		//Sai do método
-		Sair;
-	}
-
-	//Converte a caixa do d3d11 se valida
-	if (ObjetoGerenciadoValido(Param_Caixa))
-	{
-		//Converte a caixa gerenciada para a nativa.
-		pBOX = Util.ConverterD3D11_BOXManaged_ToUnManaged(Param_Caixa);
-	}
-
-	//Recupera o ponteiros para os dados de origem.
-	Resultado = Param_DadosOrigemMemoria->GetInternalPointer(PonteiroDados);
-
-	//Verifica se obteve com sucesso
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou ao obter o buffer.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Define o ponteiro dos dados.
-	pDadosOrigem = PonteiroDados.ToPointer();
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->UpdateSubresource(pRecursoDestino, Param_SubrecursoDestino, pBOX ? pBOX : NULL, pDadosOrigem, Param_TamanhoLinhaOrigem, Param_TamhoFatiaProdundidade);
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Deleta a estrutura se ela for valida
-	DeletarEstruturaSafe(&pBOX);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::UpdateSubresource(PonteiroTrabalho,
+		Param_RecursoDestino,
+		Param_SubrecursoDestino,
+		Param_Caixa,
+		Param_DadosOrigemMemoria,
+		Param_TamanhoLinhaOrigem,
+		Param_TamhoFatiaProdundidade
+	);
 }
 
 /// <summary>
@@ -5503,66 +2110,16 @@ Done:;
 /// <param name="Param_NumeroBuffers">Número de buffers a serem recuperados (varia de 0 a D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_Out_MatrizBuffers">Retorna uma matriz de ponteiros de interface de buffer constante.</param>
 CarenResult CarenD3D11DeviceContext::VSGetConstantBuffers(
-					UInt32 Param_StartSlot,
-					UInt32 Param_NumeroBuffers,
-					[Out] cli::array<ICarenD3D11Buffer^>^% Param_Out_MatrizBuffers)
+	UInt32 Param_StartSlot,
+	UInt32 Param_NumeroBuffers,
+	[Out] cli::array<ICarenD3D11Buffer^>^% Param_Out_MatrizBuffers)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	std::vector<ID3D11Buffer*> VetorDataInterface;
-	bool VetorVazio = FALSE;
-
-	//Define a quantidade de itens que o vetor vai conter.
-	VetorDataInterface.reserve(static_cast<size_t>(Param_NumeroBuffers));
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->VSGetConstantBuffers(Param_StartSlot, Param_NumeroBuffers, VetorDataInterface.data());
-
-	//Verifica se o Vetor está vazio
-	VetorVazio = VetorDataInterface.empty();
-
-	//Verifica o resultado
-	if (!VetorVazio)
-	{
-		//Deixa o método continuar.
-	}
-	else
-	{
-		//O vetor está vazio.
-		Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria o array que vai conter o ponteiros.
-	Param_Out_MatrizBuffers = gcnew cli::array<ICarenD3D11Buffer^>(Param_NumeroBuffers);
-
-	//Faz um for para criar e definir os dados.
-	for (UINT i = 0; i < Param_NumeroBuffers; i++)
-	{
-		//Cria a interface no id especificado.
-		Param_Out_MatrizBuffers[i] = gcnew CarenD3D11Buffer();
-
-		//Define o ponteiro de trabalho.
-		Param_Out_MatrizBuffers[i]->AdicionarPonteiro((LPVOID*)&VetorDataInterface[i]);
-	}
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Limpa o vetor
-	VetorDataInterface.clear();
-	VetorDataInterface.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::VSGetConstantBuffers(PonteiroTrabalho,
+		Param_StartSlot,
+		Param_NumeroBuffers,
+		Param_Out_MatrizBuffers
+	);
 }
 
 /// <summary>
@@ -5572,63 +2129,16 @@ Done:;
 /// <param name="Param_NumeroAmostradores">Número de (Samplers) para obter de um contexto de dispositivo. Cada estágio de pipeline tem um total de 16 slots disponíveis (varia de 0 a D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_Out_MatrizEstadoAmostrado">Retorna uma matriz com interfaces do amostrador de estado.</param>
 CarenResult CarenD3D11DeviceContext::VSGetSamplers(
-					UInt32 Param_StartSlot,
-					UInt32 Param_NumeroAmostradores,
-					[Out] cli::array<ICarenD3D11SamplerState^>^% Param_Out_MatrizEstadoAmostrado)
+	UInt32 Param_StartSlot,
+	UInt32 Param_NumeroAmostradores,
+	[Out] cli::array<ICarenD3D11SamplerState^>^% Param_Out_MatrizEstadoAmostrado)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	std::vector<ID3D11SamplerState*> VetorDataInterface;
-	bool VetorVazio = FALSE;
-
-	//Define a quantidade de itens que o vetor vai conter.
-	VetorDataInterface.reserve(static_cast<size_t>(Param_NumeroAmostradores));
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->VSGetSamplers(Param_StartSlot, Param_NumeroAmostradores, VetorDataInterface.data());
-
-	//Verifica se o Vetor está vazio
-	VetorVazio = VetorDataInterface.empty();
-
-	//Verifica o resultado
-	if (!VetorVazio)
-	{
-		//Deixa o método continuar.
-	}
-	else
-	{
-		//O vetor está vazio.
-		Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria o array que vai conter o ponteiros.
-	Param_Out_MatrizEstadoAmostrado = gcnew cli::array<ICarenD3D11SamplerState^>(Param_NumeroAmostradores);
-
-	//Faz um for para criar e definir os dados.
-	for (UINT i = 0; i < Param_NumeroAmostradores; i++)
-	{
-		//Cria a interface no id especificado.
-		Param_Out_MatrizEstadoAmostrado[i] = gcnew CarenD3D11SamplerState();
-
-		//Define o ponteiro de trabalho.
-		Param_Out_MatrizEstadoAmostrado[i]->AdicionarPonteiro(VetorDataInterface[i]);
-	}
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Limpa o vetor
-	VetorDataInterface.clear();
-	VetorDataInterface.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::VSGetSamplers(PonteiroTrabalho,
+		Param_StartSlot,
+		Param_NumeroAmostradores,
+		Param_Out_MatrizEstadoAmostrado
+	);
 }
 
 /// <summary>
@@ -5638,74 +2148,16 @@ Done:;
 /// <param name="Param_Out_MatrizInstanciasClasse">Retorna uma matriz com interfaces de Instancias de classe.</param>
 /// <param name="Param_Out_QuantidadeInstancias">Retorna a quantidade de de instancias de classe na matriz do parametro (Param_Out_MatrizInstanciasClasse).</param>
 CarenResult CarenD3D11DeviceContext::VSGetShader(
-					[Out] ICarenD3D11VertexShader^% Param_Out_SombreadorVertice,
-					[Out] cli::array<ICarenD3D11ClassInstance^>^% Param_Out_MatrizInstanciasClasse,
-					[Out] UInt32% Param_Out_QuantidadeInstancias)
+	[Out] ICarenD3D11VertexShader^% Param_Out_SombreadorVertice,
+	[Out] cli::array<ICarenD3D11ClassInstance^>^% Param_Out_MatrizInstanciasClasse,
+	[Out] UInt32% Param_Out_QuantidadeInstancias)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-
-	//Variaveis a serem utilizadas.
-	ID3D11VertexShader* pVertexShader = NULL;
-	vector<ID3D11ClassInstance*> VetorInterfaces;
-	UINT CountInterfacesInArray = 0;
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->VSGetShader(&pVertexShader, VetorInterfaces.data(), &CountInterfacesInArray);
-
-	//Verifica se interface do Shader Computer é valida
-	if (ObjetoValido(pVertexShader))
-	{
-		//Cria a interface que será retornada no parametro.
-		Param_Out_SombreadorVertice = gcnew CarenD3D11VertexShader();
-
-		//Define o ponteiro de trabalho
-		Param_Out_SombreadorVertice->AdicionarPonteiro(pVertexShader);
-	}
-
-	//Verifica se o foi retornado algum item para o vetor.
-	if (CountInterfacesInArray > 0)
-	{
-		//Deixa  continuar.
-	}
-	else
-	{
-		//Nenhuma interface foi retornada para o vetor.
-
-		//Define o resultado com base na interface de computação do shader.
-		Resultado = ObjetoValido(pVertexShader) ? CarenResult(ResultCode::SS_OK , true): CarenResult(ResultCode::ER_FAIL , false);
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria o array que vai ser retornado.
-	Param_Out_MatrizInstanciasClasse = gcnew cli::array<ICarenD3D11ClassInstance^>(CountInterfacesInArray);
-
-	//Copia os dados para o array
-	for (UINT i = 0; i < CountInterfacesInArray; i++)
-	{
-		//Cria a interface no id especificado.
-		Param_Out_MatrizInstanciasClasse[i] = gcnew CarenD3D11ClassInstance();
-
-		//Define o ponteiro de trabalho.
-		Param_Out_MatrizInstanciasClasse[i]->AdicionarPonteiro(VetorInterfaces[i]);
-	}
-
-	//Define a quantidade de itens no array.
-	Param_Out_QuantidadeInstancias = CountInterfacesInArray;
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Limpa o vetor
-	VetorInterfaces.clear();
-	VetorInterfaces.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::VSGetShader(PonteiroTrabalho,
+		Param_Out_SombreadorVertice,
+		Param_Out_MatrizInstanciasClasse,
+		Param_Out_QuantidadeInstancias
+	);
 }
 
 /// <summary>
@@ -5715,58 +2167,16 @@ Done:;
 /// <param name="Param_NumeroViews">O número de recursos para obter do dispositivo. Até um máximo de 128 slots estão disponíveis para recursos de sombreador (varia de 0 a D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_Out_MatrizVisualizadoresSombreador">Matriz de interfaces de visualização de recursos do sombreador a serem retornadas pelo dispositivo.</param>
 CarenResult CarenD3D11DeviceContext::VSGetShaderResources(
-					UInt32 Param_StartSlot,
-					UInt32 Param_NumeroViews,
-					[Out] cli::array<ICarenD3D11ShaderResourceView^>^% Param_Out_MatrizVisualizadoresSombreador)
+	UInt32 Param_StartSlot,
+	UInt32 Param_NumeroViews,
+	[Out] cli::array<ICarenD3D11ShaderResourceView^>^% Param_Out_MatrizVisualizadoresSombreador)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	vector<ID3D11ShaderResourceView*> VectorResourceView;
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->VSGetShaderResources(Param_StartSlot, Param_NumeroViews, VectorResourceView.data());
-
-	//Verifica se obteve alguma interface.
-	if (!VectorResourceView.empty())
-	{
-		//Deixa o método continuar.
-	}
-	else
-	{
-		//Falhou.. Nenhuma interface foi retornada.
-
-		//Define falha.
-		Resultado.AdicionarCodigo(ResultCode::SS_FALSE, false);
-
-		//Sai
-		Sair;
-	}
-
-	//Cria a matriz a ser retornada ao usuário.
-	Param_Out_MatrizVisualizadoresSombreador = gcnew cli::array<ICarenD3D11ShaderResourceView^>(Param_NumeroViews);
-
-	//faz um for para criar cada interface e definir o ponteiro de trabalho.
-	for (UINT i = 0; i < Param_NumeroViews; i++)
-	{
-		//Cria a interface no id especificado.
-		Param_Out_MatrizVisualizadoresSombreador[i] = gcnew CarenD3D11ShaderResourceView();
-
-		//Define o ponteiro de trabalho.
-		Param_Out_MatrizVisualizadoresSombreador[i]->AdicionarPonteiro(VectorResourceView[i]);
-	}
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Libera o vetor.
-	VectorResourceView.clear();
-	VectorResourceView.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::VSGetShaderResources(PonteiroTrabalho,
+		Param_StartSlot,
+		Param_NumeroViews,
+		Param_Out_MatrizVisualizadoresSombreador
+	);
 }
 
 /// <summary>
@@ -5776,45 +2186,16 @@ Done:;
 /// <param name="Param_NumeroBuffers">Número de buffers a definir (varia de 0 a D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - Param_StartSlot).</param> 
 /// <param name="Param_MatrizBuffers">Matriz de buffers constantes sendo fornecidos ao dispositivo.</param> 
 CarenResult CarenD3D11DeviceContext::VSSetConstantBuffers(
-					UInt32 Param_StartSlot,
-					UInt32 Param_NumeroBuffers,
-					cli::array<ICarenD3D11Buffer^>^ Param_MatrizBuffers)
+	UInt32 Param_StartSlot,
+	UInt32 Param_NumeroBuffers,
+	cli::array<ICarenD3D11Buffer^>^ Param_MatrizBuffers)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	std::vector<ID3D11Buffer*> VectorInterfaces;
-	ID3D11Buffer* pBuff = NULL;
-
-	//Define a quantidade de dados que vai conter no vetor.
-	VectorInterfaces.reserve(Param_NumeroBuffers);
-
-	//Faz um for para obter os buffers e definir no vetor.
-	for (UINT i = 0; i < Param_NumeroBuffers; i++)
-	{
-		//Recupera o ponteiro para o buffer.
-		Param_MatrizBuffers[i]->RecuperarPonteiro((LPVOID*)&pBuff);
-
-		//Define o ponteiro no vetor.
-		VectorInterfaces.push_back(pBuff);
-
-		//Limpa
-		pBuff = NULL;
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->VSSetConstantBuffers(Param_StartSlot, Param_NumeroBuffers, VectorInterfaces.data());
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Limpa o vetor.
-	VectorInterfaces.clear();
-	VectorInterfaces.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::VSSetConstantBuffers(PonteiroTrabalho,
+		Param_StartSlot,
+		Param_NumeroBuffers,
+		Param_MatrizBuffers
+	);
 }
 
 /// <summary>
@@ -5824,45 +2205,16 @@ CarenResult CarenD3D11DeviceContext::VSSetConstantBuffers(
 /// <param name="Param_NumeroAmostradores">Número de amostradores na matriz. Cada estágio de pipeline tem um total de 16 slots disponíveis (varia de 0 a D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_MatrizAmostradoresEstado">Uma matriz de interfaces de estado do amostrador.</param>
 CarenResult CarenD3D11DeviceContext::VSSetSamplers(
-					UInt32 Param_StartSlot,
-					UInt32 Param_NumeroAmostradores,
-					cli::array<ICarenD3D11SamplerState^>^ Param_MatrizAmostradoresEstado)
+	UInt32 Param_StartSlot,
+	UInt32 Param_NumeroAmostradores,
+	cli::array<ICarenD3D11SamplerState^>^ Param_MatrizAmostradoresEstado)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	std::vector<ID3D11SamplerState*> VectorInterfaces;
-	ID3D11SamplerState* pSample = NULL;
-
-	//Define a quantidade de dados que vai conter no vetor.
-	VectorInterfaces.reserve(Param_NumeroAmostradores);
-
-	//Faz um for para obter os buffers e definir no vetor.
-	for (UINT i = 0; i < Param_NumeroAmostradores; i++)
-	{
-		//Recupera o ponteiro para o buffer.
-		Param_MatrizAmostradoresEstado[i]->RecuperarPonteiro((LPVOID*)&pSample);
-
-		//Define o ponteiro no vetor.
-		VectorInterfaces.push_back(pSample);
-
-		//Limpa
-		pSample = NULL;
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->VSSetSamplers(Param_StartSlot, Param_NumeroAmostradores, VectorInterfaces.data());
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Limpa o vetor.
-	VectorInterfaces.clear();
-	VectorInterfaces.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::VSSetSamplers(PonteiroTrabalho,
+		Param_StartSlot,
+		Param_NumeroAmostradores,
+		Param_MatrizAmostradoresEstado
+	);
 }
 
 /// <summary>
@@ -5872,59 +2224,16 @@ CarenResult CarenD3D11DeviceContext::VSSetSamplers(
 /// <param name="Param_MatrizInstanciaClasse">Uma matriz de interfaces de instância de classe. Cada interface usada por um sombreador deve ter uma instância de classe correspondente ou o shader será desativado. Defina como NULO se o sombreador não usar nenhuma interface.</param>
 /// <param name="Param_NumeroInstanciasClasse">O numero de (ICarenD3D11ClassInstance) dentro da matriz (Param_MatrizInstanciaClasse).</param>
 CarenResult CarenD3D11DeviceContext::VSSetShader(
-					ICarenD3D11VertexShader^ Param_ShaderVertice,
-					cli::array<ICarenD3D11ClassInstance^>^ Param_MatrizInstanciaClasse,
-					UInt32 Param_NumeroInstanciasClasse)
+	ICarenD3D11VertexShader^ Param_ShaderVertice,
+	cli::array<ICarenD3D11ClassInstance^>^ Param_MatrizInstanciaClasse,
+	UInt32 Param_NumeroInstanciasClasse)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	ID3D11VertexShader* pVertexShader = NULL; //Pode ser nulo.
-	std::vector<ID3D11ClassInstance*> VectorInterfaces; //Pode ser nulo.
-	ID3D11ClassInstance* pInstance = NULL;
-
-	//Reserva o vetor para a quantidade especificada pelo usuário se for maior que zero.
-	//Se for, vai copiar as interfaces aqui mesmo.
-	if (Param_NumeroInstanciasClasse > 0)
-	{
-		//Reverva uma quantidade para o vetor.
-		VectorInterfaces.reserve(static_cast<size_t>(Param_NumeroInstanciasClasse));
-
-		//Obtem e define as interfaces no vetor.
-		for (UINT i = 0; i < Param_NumeroInstanciasClasse; i++)
-		{
-			//Recupera o ponteiro para a interface.
-			Param_MatrizInstanciaClasse[i]->RecuperarPonteiro((LPVOID*)&pInstance);
-
-			//Define o ponteiro no vetor.
-			VectorInterfaces.push_back(pInstance);
-
-			//Limpa
-			pInstance = NULL;
-		}
-	}
-
-	//Recupera o ponteiro para o Sombreador de Pixel se tiver sido fornecido
-	if (ObjetoGerenciadoValido(Param_ShaderVertice))
-	{
-		//Recupera o ponteiro para a interface.
-		Param_ShaderVertice->RecuperarPonteiro((LPVOID*)&pVertexShader);
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->VSSetShader(pVertexShader ? pVertexShader : NULL, Param_NumeroInstanciasClasse > 0 ? VectorInterfaces.data() : NULL, Param_NumeroInstanciasClasse);
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Limpa o vetor.
-	VectorInterfaces.clear();
-	VectorInterfaces.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::VSSetShader(PonteiroTrabalho,
+		Param_ShaderVertice,
+		Param_MatrizInstanciaClasse,
+		Param_NumeroInstanciasClasse
+	);
 }
 
 /// <summary>
@@ -5934,45 +2243,16 @@ CarenResult CarenD3D11DeviceContext::VSSetShader(
 /// <param name="Param_NumeroViews">Número de recursos do shader a serem definidos. Até um máximo de 128 slots estão disponíveis para recursos de sombreador (o intervalo é de 0 a D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT - Param_StartSlot).</param>
 /// <param name="Param_MatrizVisualizadoresSombreador">Uma matriz que contém os Visualizadores de recurso do sombreador para serem definidos no Disposiivo.</param>
 CarenResult CarenD3D11DeviceContext::VSSetShaderResources(
-					UInt32 Param_StartSlot,
-					UInt32 Param_NumeroViews,
-					cli::array<ICarenD3D11ShaderResourceView^>^ Param_MatrizVisualizadoresSombreador)
+	UInt32 Param_StartSlot,
+	UInt32 Param_NumeroViews,
+	cli::array<ICarenD3D11ShaderResourceView^>^ Param_MatrizVisualizadoresSombreador)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	std::vector<ID3D11ShaderResourceView*> VectorInterfaces;
-	ID3D11ShaderResourceView* pShaderView = NULL;
-
-	//Define a quantidade de dados que vai conter no vetor.
-	VectorInterfaces.reserve(static_cast<size_t>(Param_NumeroViews));
-
-	//Faz um for para obter os buffers e definir no vetor.
-	for (UINT i = 0; i < Param_NumeroViews; i++)
-	{
-		//Recupera o ponteiro para a interface.
-		Param_MatrizVisualizadoresSombreador[i]->RecuperarPonteiro((LPVOID*)&pShaderView);
-
-		//Define o ponteiro no vetor.
-		VectorInterfaces.push_back(pShaderView);
-
-		//Limpa
-		pShaderView = NULL;
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->VSSetShaderResources(Param_StartSlot, Param_NumeroViews, VectorInterfaces.data());
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Limpa o vetor.
-	VectorInterfaces.clear();
-	VectorInterfaces.shrink_to_fit();
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_Direct3D11DeviceContext::VSSetShaderResources(PonteiroTrabalho,
+		Param_StartSlot,
+		Param_NumeroViews,
+		Param_MatrizVisualizadoresSombreador
+	);
 }
 
 
@@ -5987,44 +2267,10 @@ CarenResult CarenD3D11DeviceContext::VSSetShaderResources(
 /// para transforma em sua interface original.</param>
 CarenResult CarenD3D11DeviceContext::GetDevice(ICaren^ Param_Out_DispositivoD3D11)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	ID3D11Device* pDevice = NULL;
-
-	//Chama o método
-	PonteiroTrabalho->GetDevice(&pDevice);
-
-	//Verifica se a operação obteve sucesso.
-	if (ObjetoValido(pDevice))
-	{
-		//Deixa o método continuar.
-	}
-	else
-	{
-		//Define falha
-		Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-		//Define o código HRESULT.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método.
-		goto Done;
-	}
-
-	//Define o ponteiro do dispositivo.
-	Param_Out_DispositivoD3D11->AdicionarPonteiro(pDevice);
-
-	//Define sucesso por default a operação.
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11DeviceChild::GetDevice(PonteiroTrabalho,
+		Param_Out_DispositivoD3D11
+	);
 }
 
 /// <summary>
@@ -6041,61 +2287,13 @@ CarenResult CarenD3D11DeviceContext::GetPrivateData(
 	[Out] UInt32% Param_Out_TamanhoBufferSaida,
 	[Out] ICarenBuffer^% Param_Out_BufferDados)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	GUID GuidDados = GUID_NULL;
-	UINT OutLarguraDados = Param_TamanhoBuffer;
-	LPVOID pDados = NULL;
-
-	//Verifica se a string do guid é valido.
-	if (String::IsNullOrEmpty(Param_Guid))
-	{
-		//Determina que o guid é invalido.
-		Resultado.AdicionarCodigo(ResultCode::ER_GUID_INVALIDO, false);
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Cria o Guid
-	GuidDados = Util.CreateGuidFromString(Param_Guid);
-
-	//Chama o método
-	Hr = PonteiroTrabalho->GetPrivateData(GuidDados, &OutLarguraDados, &pDados);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria a interface que vai conter o ponteiro de dados.
-	Param_Out_BufferDados = gcnew CarenBuffer();
-
-	//Define o ponteiro de dados na interface de buffer.
-	Param_Out_BufferDados->CreateBuffer(IntPtr(pDados), false, OutLarguraDados, OutLarguraDados);
-
-	//Define o tamanho real dos dados retornados.
-	Param_Out_TamanhoBufferSaida = OutLarguraDados;
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11DeviceChild::GetPrivateData(PonteiroTrabalho,
+		Param_Guid,
+		Param_TamanhoBuffer,
+		Param_Out_TamanhoBufferSaida,
+		Param_Out_BufferDados
+	);
 }
 
 /// <summary>
@@ -6107,71 +2305,15 @@ Done:;
 /// dados anteriormente associados com o especificado GUID serão destruídos.</param>
 CarenResult CarenD3D11DeviceContext::SetPrivateData(
 	String^ Param_Guid,
-
-	UInt32 Param_TamanhoBuffer, ICarenBuffer^ Param_Buffer)
+	UInt32 Param_TamanhoBuffer,
+	ICarenBuffer^ Param_Buffer)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	GUID GuidDados = GUID_NULL;
-	UINT OutLarguraDados = Param_TamanhoBuffer;
-	PBYTE pDados = NULL;
-	IntPtr PonteiroDados = IntPtr::Zero;
-
-	//Verifica se a string do guid é valido.
-	if (String::IsNullOrEmpty(Param_Guid))
-	{
-		//Determina que o guid é invalido.
-		Resultado.AdicionarCodigo(ResultCode::ER_GUID_INVALIDO, false);
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Cria o Guid
-	GuidDados = Util.CreateGuidFromString(Param_Guid);
-
-	//Obtém o ponteiro para os dados.
-	Resultado = Param_Buffer->GetInternalPointer(PonteiroDados);
-
-	//Verifica se é valido
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou.. O buffer não é valido.
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Define o ponteiro de dados.
-	pDados = (PBYTE)PonteiroDados.ToPointer();
-
-	//Chama o método que vai definir os dados.
-	Hr = PonteiroTrabalho->SetPrivateData(GuidDados, Param_TamanhoBuffer, pDados);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11DeviceChild::SetPrivateData(PonteiroTrabalho,
+		Param_Guid,
+		Param_TamanhoBuffer,
+		Param_Buffer
+	);
 }
 
 /// <summary>
@@ -6180,63 +2322,12 @@ Done:;
 /// <param name="Param_Guid">GUID associado com a interface a ser definida.</param>
 /// <param name="Param_Interface">Ponteiro para uma interface IUnknown-derivado a ser associado com a criança do dispositivo.</param>
 CarenResult CarenD3D11DeviceContext::SetPrivateDataInterface(
-	String^ Param_Guid, ICaren^ Param_Interface)
+	String^ Param_Guid,
+	ICaren^ Param_Interface)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	GUID GuidAssociado = GUID_NULL;
-	IUnknown* pInterface = NULL;
-
-	//Verifica se a string do guid é valido.
-	if (String::IsNullOrEmpty(Param_Guid))
-	{
-		//Determina que o guid é invalido.
-		Resultado.AdicionarCodigo(ResultCode::ER_GUID_INVALIDO, false);
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Cria o Guid
-	GuidAssociado = Util.CreateGuidFromString(Param_Guid);
-
-	//Recupera a interface a ser definida.
-	Resultado = Param_Interface->RecuperarPonteiro((LPVOID*)pInterface);
-
-	//Verifica se a interface não é invalida
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//A interface é invalida
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Chama o método para definir a interface.
-	Hr = PonteiroTrabalho->SetPrivateDataInterface(GuidAssociado, pInterface);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11DeviceChild::SetPrivateDataInterface(PonteiroTrabalho,
+		Param_Guid,
+		Param_Interface
+	);
 }

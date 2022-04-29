@@ -214,4 +214,7 @@ limitations under the License.
 #include "Windows/CarenSequentialStream.h"
 #include "Windows/CarenStream.h"
 
+//Arquivo de classes compartilhadas
+#include "SharedClass/Shared_Direct3D11.h"
+
 #endif//PCH_H

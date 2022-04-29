@@ -1322,14 +1322,14 @@ namespace CarenRengine
 			/// <summary>
 			/// (DrawIndexedInstanced) - Desenhe indexados, instanciados primitivos.
 			/// </summary>
-			/// <param name="Param_QuantidadeIndicesPorInstnacia">Número de índices de ler o buffer de índice para cada instância.</param>
-			/// <param name="Param_QuantidadeInstnacias">Número de instâncias para desenhar.</param>
+			/// <param name="Param_QuantidadeIndicesPorInstancia">Número de índices de ler o buffer de índice para cada instância.</param>
+			/// <param name="Param_QuantidadeInstancias">Número de instâncias para desenhar.</param>
 			/// <param name="Param_StartIndexLocalizacao">A localização do índice primeiro ler pela GPU do buffer do índice.</param>
 			/// <param name="Param_BaseVerticeLocalizacao">Um valor acrescentado para cada índice antes de ler um vértice de buffer vértice.</param>
 			/// <param name="Param_StartInstanciaLocalizacao">Um valor acrescentado para cada índice antes de ler dados por instância de um buffer de vértice.</param>
 			CarenResult DrawIndexedInstanced(
-				UInt32 Param_QuantidadeIndicesPorInstnacia,
-				UInt32 Param_QuantidadeInstnacias,
+				UInt32 Param_QuantidadeIndicesPorInstancia,
+				UInt32 Param_QuantidadeInstancias,
 				UInt32 Param_StartIndexLocalizacao,
 				Int32 Param_BaseVerticeLocalizacao,
 				UInt32 Param_StartInstanciaLocalizacao);
@@ -1348,13 +1348,13 @@ namespace CarenRengine
 			/// Instância pode prolongar o desempenho, reutilizando a mesma geometria para desenhar vários objetos em uma cena. Um exemplo de criação de instância pode ser desenhar o mesmo objeto com posições 
 			/// diferentes e cores.
 			/// </summary>
-			/// <param name="Param_QuantidadeVerticiesPorInstnacia">Número de vértices para desenhar.</param>
-			/// <param name="Param_QuantidadeInstnacias">Número de instâncias para desenhar.</param>
+			/// <param name="Param_QuantidadeVerticiesPorInstancia">Número de vértices para desenhar.</param>
+			/// <param name="Param_QuantidadeInstancias">Número de instâncias para desenhar.</param>
 			/// <param name="Param_StartVerticeLocalizacao">Índice do primeiro vértice.</param>
 			/// <param name="Param_StartInstanciaLocalizacao">Um valor acrescentado para cada índice antes de ler dados por instância de um buffer de vértice.</param>			
 			CarenResult DrawInstanced(
-				UInt32 Param_QuantidadeVerticiesPorInstnacia,
-				UInt32 Param_QuantidadeInstnacias,
+				UInt32 Param_QuantidadeVerticiesPorInstancia,
+				UInt32 Param_QuantidadeInstancias,
 				UInt32 Param_StartVerticeLocalizacao,
 				UInt32 Param_StartInstanciaLocalizacao);
 
@@ -1830,11 +1830,11 @@ namespace CarenRengine
 			/// <summary>
 			/// (OMGetBlendState) - Obtém o estado de mistura da fase de saída-fusão.
 			/// </summary>
-			/// <param name="Param_Out_EstadoMitura">Retorna um ponteiro para a interface de estado de mistura.</param>
+			/// <param name="Param_Out_EstadoMistura">Retorna um ponteiro para a interface de estado de mistura.</param>
 			/// <param name="Param_Out_MatrizFatoresMistura">Matriz de mistura de fatores, um para cada componente RGBA.</param>
 			/// <param name="Param_Out_SampleMask">Retorna um valor para uma máscara de amostra.</param>
 			CarenResult OMGetBlendState(
-				[Out] ICarenD3D11BlendState^% Param_Out_EstadoMitura,
+				[Out] ICarenD3D11BlendState^% Param_Out_EstadoMistura,
 				[Out] cli::array<float>^% Param_Out_MatrizFatoresMistura,
 				[Out] UInt32% Param_Out_SampleMask);
 
@@ -1897,7 +1897,7 @@ namespace CarenRengine
 			/// (OMSetBlendState) - Defina o estado de mistura da fase de saída-fusão.
 			/// Para criar uma interface de mistura-estado, chamade o método ICarenD3D11Device::CreateBlendState.
 			/// </summary>
-			/// <param name="Param_EstadoMitura">Ponteiro para um estado de mistura interface. Passe nulo para um estado de mistura padrão.</param>
+			/// <param name="Param_EstadoMistura">Ponteiro para um estado de mistura interface. Passe nulo para um estado de mistura padrão.</param>
 			/// <param name="Param_MatrizFatoresMistura">Matriz de mistura de fatores, um para cada componente RGBA. Os fatores de mistura modulate valores para o shader de pixel, processar o alvo, ou ambos. Se você 
 			/// tiver criado o objeto de mistura-estado com D3D11_BLEND_BLEND_FACTOR ou D3D11_BLEND_INV_BLEND_FACTOR, a fase de mistura usa a matriz não-nulos de mistura fatores. Se você não criar o objeto de 
 			/// mistura-estado com D3D11_BLEND_BLEND_FACTOR ou D3D11_BLEND_INV_BLEND_FACTOR, fase de mesclagem não usa a matriz não-nulos de misturam fatores; o tempo de execução armazena os mistura de fatores, 
@@ -1907,7 +1907,7 @@ namespace CarenRengine
 			/// O mapeamento de bits em uma máscara de amostra para amostras em um destino processar multisample é da responsabilidade de um aplicativo individual. Sempre é aplicada uma máscara de amostra; 
 			/// é independente de se multisampling é habilitado e não depende de se um aplicativo usa multisample render destinos.</param>
 			CarenResult OMSetBlendState(
-				ICarenD3D11BlendState^ Param_EstadoMitura,
+				ICarenD3D11BlendState^ Param_EstadoMistura,
 				cli::array<float>^ Param_MatrizFatoresMistura,
 				UInt32 Param_SampleMask);
 

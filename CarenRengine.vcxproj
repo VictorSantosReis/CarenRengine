@@ -479,6 +479,7 @@
     <ClInclude Include="CarenRengineCodes\Core Audio\CarenMMDeviceEnumerator.h" />
     <ClInclude Include="CarenRengineCodes\Core Audio\CarenMMNotificationClient.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFGetService.h" />
+    <ClInclude Include="CarenRengineCodes\SharedClass\Shared_Direct3D11.h" />
     <ClInclude Include="CarenRengineCodes\version.h" />
     <ClInclude Include="CarenRengineCodes\WIC\CarenWICBitmap.h" />
     <ClInclude Include="CarenRengineCodes\WIC\CarenWICBitmapClipper.h" />
@@ -913,6 +914,7 @@
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFSourceOpenMonitor.cpp" />
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IWICDevelopRawNotificationCallback.cpp" />
     <ClCompile Include="CarenRengineCodes\PropVariantManager\PropVariantManager.cpp" />
+    <ClCompile Include="CarenRengineCodes\SharedClass\Shared_Direct3D11.cpp" />
     <ClCompile Include="CarenRengineCodes\WIC\CarenWICBitmap.cpp" />
     <ClCompile Include="CarenRengineCodes\WIC\CarenWICBitmapClipper.cpp" />
     <ClCompile Include="CarenRengineCodes\WIC\CarenWICBitmapCodecInfo.cpp" />

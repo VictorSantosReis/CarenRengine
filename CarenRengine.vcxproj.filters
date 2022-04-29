@@ -184,6 +184,12 @@
     <Filter Include="Arquivos de Cabeçalho\Classes em desenvolvimento">
       <UniqueIdentifier>{f444ebd5-7122-4bbe-b57d-725457a99eba}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Shared Classes">
+      <UniqueIdentifier>{b1bfbd63-0f7d-4101-b068-734f2e1bcf13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Shared Classes">
+      <UniqueIdentifier>{61320c90-b412-4653-ba21-f4d9c95a2929}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CarenRengineCodes\pch.h">
@@ -1518,6 +1524,9 @@
     <ClInclude Include="CarenRengineCodes\Caren\CarenEvent.h">
       <Filter>Arquivos de Cabeçalho\Classes\Caren</Filter>
     </ClInclude>
+    <ClInclude Include="CarenRengineCodes\SharedClass\Shared_Direct3D11.h">
+      <Filter>Arquivos de Cabeçalho\Shared Classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D10Multithread.cpp">
@@ -2800,6 +2809,9 @@
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\Caren\CarenEvent.cpp">
       <Filter>Arquivos de Origem\Classes\Caren</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\SharedClass\Shared_Direct3D11.cpp">
+      <Filter>Arquivos de Origem\Shared Classes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

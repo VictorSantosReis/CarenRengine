@@ -40,7 +40,7 @@ CarenResult Caren::Shared_ConsultarInterface(IUnknown* Param_Interface, String^ 
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
-	Debug::Assert(Debugger::IsAttached? false: true, " MÉTODO SHARED (Caren:Shared_ConsultarInterface) FOI CHAMADO!!");
+
 	//Resultado COM
 	HRESULT Hr = E_FAIL;
 

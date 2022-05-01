@@ -167,7 +167,6 @@ void CarenDXGIResource1::Finalizar()
 
 // Métodos da interface proprietária(ICarenDXGIResource1)
 
-
 /// <summary>
 /// (CreateSharedHandle) - Cria uma Handle para um recurso compartilhado. Em seguida, você pode usar a Handle devolvida com vários dispositivos Direct3D.
 /// </summary>
@@ -183,69 +182,18 @@ void CarenDXGIResource1::Finalizar()
 /// <param name="Param_Out_Handle">Recebe o ponteiro para uma variável que recebe o valor NT HANDLE para o recurso para compartilhar. Você pode usar esta Handle em 
 /// chamadas para acessar o recurso.</param>
 CarenResult CarenDXGIResource1::CreateSharedHandle(
-				CA_SECURITY_ATTRIBUTES^ Param_Atributos,
-				UInt64 Param_Acesso,
-				String^ Param_Nome,
-				[Out] IntPtr% Param_Out_Handle)
+	CA_SECURITY_ATTRIBUTES^ Param_Atributos,
+	UInt64 Param_Acesso,
+	String^ Param_Nome,
+	[Out] IntPtr% Param_Out_Handle)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	SECURITY_ATTRIBUTES* pSecAtributes = NULL;
-	LPWSTR pNome = NULL;
-	HANDLE pHandleShared = NULL;
-
-	//Verifica se foi fornecido uma estrutura de segurança
-	if (ObjetoGerenciadoValido(Param_Atributos))
-	{
-		//Converte a estrutura gerenciada para a nativa.
-		pSecAtributes = Util.ConverterSECURITY_ATTRIBUTESManagedToUnamaged(Param_Atributos);
-	}
-
-	//Verifica se forneceu um nome
-	if (!String::IsNullOrEmpty(Param_Nome))
-	{
-		//Obtém o nome
-		pNome = Util.ConverterStringToWCHAR(Param_Nome);
-	}
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->CreateSharedHandle(pSecAtributes, static_cast<DWORD>(Param_Acesso), pNome, &pHandleShared);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Converte e define no parametro de saida
-	Param_Out_Handle = Util.ConverterHandleToIntPtr(pHandleShared);
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Limpa os dados e libera a memoria.
-	DeletarEstruturaSafe(&pSecAtributes);
-	if (ObjetoValido(pNome))
-	{
-		//Libera a memoria.
-		delete pNome;
-	}
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIResource::CreateSharedHandle(PonteiroTrabalho,
+		Param_Atributos,
+		Param_Acesso,
+		Param_Nome,
+		Param_Out_Handle
+	);
 }
 
 /// <summary>
@@ -254,39 +202,15 @@ Done:;
 /// <param name="Param_Index">O índice do objeto de superfície do subrecurso a ser enumerado.</param>
 /// <param name="Param_Out_DXGISurface2">Recebe um ponteiro para uma interface ICarenDXGISurface2 que representa o objeto de superfície do subrecurso criado na posição 
 /// especificada pelo parâmetro (Param_Index). O usuário deve inicializar a interface antes de chamar este método.</param>
-CarenResult CarenDXGIResource1::CreateSubresourceSurface(UInt32 Param_Index, ICaren^ Param_Out_DXGISurface2)
+CarenResult CarenDXGIResource1::CreateSubresourceSurface(
+	UInt32 Param_Index, 
+	ICaren^ Param_Out_DXGISurface2)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	IDXGISurface2* pSurfaceDXGI2 = NULL;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->CreateSubresourceSurface(Param_Index, &pSurfaceDXGI2);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Define o ponteiro da superfice na interface criada pelo usuário.
-	Param_Out_DXGISurface2->AdicionarPonteiro(pSurfaceDXGI2);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIResource::CreateSubresourceSurface(PonteiroTrabalho,
+		Param_Index,
+	    Param_Out_DXGISurface2
+	);
 }
 
 
@@ -294,43 +218,16 @@ Done:;
 
 // Métodos da interface ICarenDXGIResource
 
-
 /// <summary>
 /// (GetEvictionPriority) - Obtenha a prioridade de despejo.
 /// </summary>
 /// <param name="Param_Out_PrioridadeDespejo">Recebe valores da enumeração CA_DXGI_RESOURCE_PRIORITY, que determinam quando o recurso pode ser despejado.</param>
 CarenResult CarenDXGIResource1::GetEvictionPriority([Out] CA_DXGI_RESOURCE_PRIORITY% Param_Out_PrioridadeDespejo)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	UINT OutPrioridade = 0;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetEvictionPriority(&OutPrioridade);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Converte e define o valor no parametro de saida.
-	Param_Out_PrioridadeDespejo = static_cast<CA_DXGI_RESOURCE_PRIORITY>(OutPrioridade);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIResource::GetEvictionPriority(PonteiroTrabalho,
+		Param_Out_PrioridadeDespejo
+	);
 }
 
 /// <summary>
@@ -343,37 +240,10 @@ Done:;
 /// <param name="Param_Out_SharedHandle">Retorna um ponteiro para a Handle compartilhada.</param>
 CarenResult CarenDXGIResource1::GetSharedHandle([Out] IntPtr% Param_Out_SharedHandle)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	HANDLE pHandleShared = NULL;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetSharedHandle(&pHandleShared);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Converte e define no parametro de saida.
-	Param_Out_SharedHandle = Util.ConverterHandleToIntPtr(pHandleShared);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIResource::GetSharedHandle(PonteiroTrabalho,
+		Param_Out_SharedHandle
+	);
 }
 
 /// <summary>
@@ -383,36 +253,10 @@ Done:;
 /// destino renderizado.</param>
 CarenResult CarenDXGIResource1::GetUsage([Out] CA_DXGI_USAGE% Param_Out_Usage)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	DXGI_USAGE dxgiUsage;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetUsage(&dxgiUsage);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Converte e define no parametro de saida.
-	Param_Out_Usage = static_cast<CA_DXGI_USAGE>(dxgiUsage);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIResource::GetUsage(PonteiroTrabalho,
+		Param_Out_Usage
+	);
 }
 
 /// <summary>
@@ -421,38 +265,16 @@ Done:;
 /// <param name="Param_PrioridadeDespejo">Um valor da enumeração CA_DXGI_RESOURCE_PRIORITY que define a prioridade do despejo.</param>
 CarenResult CarenDXGIResource1::SetEvictionPriority(CA_DXGI_RESOURCE_PRIORITY Param_PrioridadeDespejo)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	UINT Prioridade = static_cast<UINT>(Param_PrioridadeDespejo);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->SetEvictionPriority(Prioridade);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIResource::SetEvictionPriority(PonteiroTrabalho,
+		Param_PrioridadeDespejo
+	);
 }
 
 
-// Métodos da interface proprietária(ICarenDXGIDeviceSubObject)
 
+
+// Métodos da interface ICarenDXGIDeviceSubObject
 
 /// <summary>
 /// Recupera o dispositivo.
@@ -474,7 +296,6 @@ CarenResult CarenDXGIResource1::GetDevice(
 
 
 // Métodos da interface ICarenDXGIObject
-
 
 /// <summary>
 /// Recupera o objeto pai deste objeto.

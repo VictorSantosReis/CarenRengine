@@ -239,37 +239,10 @@ Done:;
 /// <param name="Param_Out_DescSaida">Retorna uma estrutura que contém a descrição da saida.</param>
 CarenResult CarenDXGIOutput::GetDesc([Out] CA_DXGI_OUTPUT_DESC^% Param_Out_DescSaida)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	DXGI_OUTPUT_DESC OutDesc = {};
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetDesc(&OutDesc);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Converte e define no parametro de saida.
-	Param_Out_DescSaida = Util.ConverterDXGI_OUTPUT_DESCUnManaged_ToManaged(&OutDesc);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIOutput::GetDesc(PonteiroTrabalho,
+		Param_Out_DescSaida
+	);
 }
 
 /// <summary>
@@ -278,7 +251,7 @@ Done:;
 /// <param name="Param_Formato">O formato de cor.</param>
 /// <param name="Param_Flags">Opções para os modos de incluir. DXGI_ENUM_MODES_SCALING precisa ser especificado para expor os modos de exibição que exigem escala. Os modos centrados, que não exigem escala e correspondentes diretamente à 
 /// saída da tela, são enumerados por padrão.</param>
-/// <param name="Param_Ref_QuantidadeModos">Na entrada define a quantidade de dados que seram retornadados na matriz (Param_Out_MatrizDecModos). Na saida contém a quantidade de dados de (Param_Out_MatrizDecModos).</param>
+/// <param name="Param_Ref_QuantidadeModos">Na entrada define a quantidade de dados que seram retornadados na matriz (Param_Out_MatrizDescModos). Na saida contém a quantidade de dados de (Param_Out_MatrizDescModos).</param>
 /// <param name="Param_RecuperaQuantidadeModos">Defina para TRUE para obter o número de modos de exibição. Se TRUE, Param_Out_MatrizDescModos retorna NULO e (Param_QuantidadeModos) retorna a quantidade total de modos.</param>
 /// <param name="Param_Out_MatrizDescModos">Retorna uma lista de modos de exibição.</param>
 CarenResult CarenDXGIOutput::GetDisplayModeList(
@@ -369,46 +342,10 @@ Done:;
 /// <param name="Param_SuperficeDestino">Um ponteiro para uma superfície de destino que vai receber a superfice.</param>
 CarenResult CarenDXGIOutput::GetDisplaySurfaceData(ICarenDXGISurface^% Param_SuperficeDestino)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	IDXGISurface* pSuperfice = NULL;
-
-	//Recupera o ponteiro para a superfice que ira receber os dados.
-	Resultado = Param_SuperficeDestino->RecuperarPonteiro((LPVOID*)&pSuperfice);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou..
-
-		//Sai do método
-		Sair;
-	}
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetDisplaySurfaceData(pSuperfice);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIOutput::GetDisplaySurfaceData(PonteiroTrabalho,
+		Param_SuperficeDestino
+	);
 }
 
 /// <summary>
@@ -417,37 +354,10 @@ Done:;
 /// <param name="Param_Out_EstatisticasFrame">Retorna uma estrutura com as informações.</param>
 CarenResult CarenDXGIOutput::GetFrameStatistics([Out] CA_DXGI_FRAME_STATISTICS^% Param_Out_EstatisticasFrame)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	DXGI_FRAME_STATISTICS FrameStatistics = {};
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetFrameStatistics(&FrameStatistics);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Converte e define na estrutura de saida.
-	Param_Out_EstatisticasFrame = Util.ConverterDXGI_FRAME_STATISTICSUnManaged_ToManaged(&FrameStatistics);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIOutput::GetFrameStatistics(PonteiroTrabalho,
+		Param_Out_EstatisticasFrame
+	);
 }
 
 /// <summary>
@@ -456,37 +366,10 @@ Done:;
 /// <param name="Param_Out_ControleGamma">Retorna uma estrutura que contém as informações do controle gamma.</param>
 CarenResult CarenDXGIOutput::GetGammaControl([Out] CA_DXGI_GAMMA_CONTROL^% Param_Out_ControleGamma)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	DXGI_GAMMA_CONTROL ControleGamma = DXGI_GAMMA_CONTROL();
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetGammaControl(&ControleGamma);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Converte e define no parametro de saida.
-	Param_Out_ControleGamma = Util.ConverterDXGI_GAMMA_CONTROLUnManaged_ToManaged(&ControleGamma);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIOutput::GetGammaControl(PonteiroTrabalho,
+		Param_Out_ControleGamma
+	);
 }
 
 /// <summary>
@@ -495,37 +378,10 @@ Done:;
 /// <param name="Param_Out_GammaCaps">Retorna uma estrutura que contém as descrições das capcidades do controle Gamma.</param>
 CarenResult CarenDXGIOutput::GetGammaControlCapabilities([Out] CA_DXGI_GAMMA_CONTROL_CAPABILITIES^% Param_Out_GammaCaps)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	DXGI_GAMMA_CONTROL_CAPABILITIES CapGammaControl = {};
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetGammaControlCapabilities(&CapGammaControl);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Converte a estrutura e define no parametro de saida
-	Param_Out_GammaCaps = Util.ConverterDXGI_GAMMA_CONTROL_CAPABILITIESUnManaged_ToManaged(&CapGammaControl);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIOutput::GetGammaControlCapabilities(PonteiroTrabalho,
+		Param_Out_GammaCaps
+	);
 }
 
 /// <summary>
@@ -533,20 +389,8 @@ Done:;
 /// </summary>
 CarenResult CarenDXGIOutput::ReleaseOwnership()
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->ReleaseOwnership();
-
-	//Define sucesso por default a operação.
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIOutput::ReleaseOwnership(PonteiroTrabalho);
 }
 
 /// <summary>
@@ -555,45 +399,10 @@ CarenResult CarenDXGIOutput::ReleaseOwnership()
 /// <param name="Param_Superfice">Um ponteiro para uma superfície usado para renderizar uma imagem para a tela. A superfície deve ter sido criada como um amortecedor traseiro (DXGI_USAGE_BACKBUFFER).</param>
 CarenResult CarenDXGIOutput::SetDisplaySurface(ICarenDXGISurface^% Param_Superfice)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	IDXGISurface* pSuperfice = NULL;
-
-	//Recupera o ponteiro para a superfice
-	Resultado = Param_Superfice->RecuperarPonteiro((LPVOID*)&pSuperfice);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou
-
-		//Sai do método
-		Sair;
-	}
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->SetDisplaySurface(pSuperfice);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIOutput::SetDisplaySurface(PonteiroTrabalho,
+		Param_Superfice
+	);
 }
 
 /// <summary>
@@ -645,49 +454,15 @@ Done:;
 /// </summary>
 /// <param name="Param_DispositivoD3D">Um ponteiro para a interface IUnknown de um dispositivo do Direct3D.</param>
 /// <param name="Param_Exclusivo">Definido para TRUE para permitir que outros tópicos ou aplicativos para assumir a propriedade do dispositivo; caso contrário, definido como FALSE.</param>
-CarenResult CarenDXGIOutput::TakeOwnership(ICaren^ Param_DispositivoD3D, Boolean Param_Exclusivo)
+CarenResult CarenDXGIOutput::TakeOwnership(
+	ICaren^ Param_DispositivoD3D, 
+	Boolean Param_Exclusivo)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	IUnknown* pDispositovo3D = NULL;
-	BOOL Exclusivo = Param_Exclusivo ? TRUE : FALSE;
-
-	//Recupera o dispositivo.
-	Resultado = Param_DispositivoD3D->RecuperarPonteiro((LPVOID*)&pDispositovo3D);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->TakeOwnership(pDispositovo3D, Exclusivo);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIOutput::TakeOwnership(PonteiroTrabalho,
+		Param_DispositivoD3D,
+		Param_Exclusivo
+	);
 }
 
 /// <summary>
@@ -695,35 +470,12 @@ Done:;
 /// </summary>
 CarenResult CarenDXGIOutput::WaitForVBlank()
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->WaitForVBlank();
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIOutput::WaitForVBlank(PonteiroTrabalho);
 }
 
 
 // Métodos da interface ICarenDXGIObject
-
 
 /// <summary>
 /// Recupera o objeto pai deste objeto.

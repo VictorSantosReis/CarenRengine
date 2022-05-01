@@ -165,7 +165,7 @@ void CarenDXGIDeviceSubObject::Finalizar()
 
 
 
-// Métodos da interface proprietária(ICarenDXGIDeviceSubObject)
+// Métodos da interface ICarenDXGIDeviceSubObject
 
 
 /// <summary>
@@ -188,7 +188,6 @@ CarenResult CarenDXGIDeviceSubObject::GetDevice(
 
 
 // Métodos da interface ICarenDXGIObject
-
 
 /// <summary>
 /// Recupera o objeto pai deste objeto.

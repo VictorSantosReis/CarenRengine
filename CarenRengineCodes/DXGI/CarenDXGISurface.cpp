@@ -174,37 +174,10 @@ void CarenDXGISurface::Finalizar()
 /// <param name="Param_Out_DescSuperfice">Recebe uma estrutura descrevendo a superfice.</param>
 CarenResult CarenDXGISurface::GetDesc([Out] CA_DXGI_SURFACE_DESC^% Param_Out_DescSuperfice)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	DXGI_SURFACE_DESC DescSuperfice = { 0 };
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetDesc(&DescSuperfice);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Converte a estrutura nativa para a gerenciada e define no parametro de saida
-	Param_Out_DescSuperfice = Util.ConverterDXGI_SURFACE_DESCUnManaged_ToManaged(&DescSuperfice);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGISurface::GetDesc(PonteiroTrabalho,
+		Param_Out_DescSuperfice
+	);
 }
 
 /// <summary>
@@ -212,40 +185,15 @@ Done:;
 /// </summary>
 /// <param name="Param_Flags">Bandeiras de leitura da CPU que definem o tipo de acesso ao dados da superfice.</param>
 /// <param name="Param_Out_RectMapeado">Recebe uma estrutura que contém os dados mapeados da superfice.</param>
-CarenResult CarenDXGISurface::Map(CA_DXGI_MAP_FLAGS Param_Flags, [Out] CA_DXGI_MAPPED_RECT^% Param_Out_RectMapeado)
+CarenResult CarenDXGISurface::Map(
+	CA_DXGI_MAP_FLAGS Param_Flags, 
+	[Out] CA_DXGI_MAPPED_RECT^% Param_Out_RectMapeado)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	UINT FlagsMap = static_cast<UINT>(Param_Flags);
-	DXGI_MAPPED_RECT MapBufferSuperfice = {};
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->Map(&MapBufferSuperfice, FlagsMap);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Converte a estrutura nativa para gerenciada e define no parametro de saida.
-	Param_Out_RectMapeado = Util.ConverterDXGI_MAPPED_RECTUnManaged_ToManaged(&MapBufferSuperfice);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGISurface::Map(PonteiroTrabalho,
+		Param_Flags,
+		Param_Out_RectMapeado
+	);
 }
 
 /// <summary>
@@ -254,31 +202,10 @@ Done:;
 /// </summary>
 CarenResult CarenDXGISurface::Unmap()
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->Unmap();
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGISurface::Unmap(PonteiroTrabalho);
 }
+
 
 
 
@@ -305,7 +232,6 @@ CarenResult CarenDXGISurface::GetDevice(
 
 
 // Métodos da interface ICarenDXGIObject
-
 
 /// <summary>
 /// Recupera o objeto pai deste objeto.

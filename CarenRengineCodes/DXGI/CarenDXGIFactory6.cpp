@@ -1350,7 +1350,6 @@ Done:;
 
 // Métodos da interface ICarenDXGIObject
 
-
 /// <summary>
 /// Recupera o objeto pai deste objeto.
 /// </summary>

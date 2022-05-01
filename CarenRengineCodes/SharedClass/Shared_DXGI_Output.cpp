@@ -16,194 +16,254 @@ limitations under the License.
 
 
 #include "../pch.h"
-#include "CarenDXGIOutput3.h"
-
-//Destruidor.
-CarenDXGIOutput3::~CarenDXGIOutput3()
-{
-	//Define que a classe foi descartada
-	Prop_DisposedClasse = true;
-}
-//Construtor.
-CarenDXGIOutput3::CarenDXGIOutput3()
-{
-	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
-}
+#include "Shared_DXGI.h"
 
 
-// Métodos da interface ICaren
+//MÉTODOS DA CLASSE COMPARTILHADA (Shared_DXGIOutput)
 
+
+// Métodos da interface ICarenDXGIOutput6
 
 /// <summary>
-/// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 
-/// referência ao identificador de interface (IID). Se o objeto COM implementar a interface, o método retorna um ponteiro para essa
-/// interface depois de adicionar uma nova referência(AddRef).
+/// (CheckHardwareCompositionSupport) - Notifica aplicativos de que o alongamento de hardware é suportado.
 /// </summary>
-/// <param name="Param_Guid">O IID(Identificador de Interface) ou GUID para a interface desejada.</param>
-/// <param name="Param_InterfaceSolicitada">A interface que vai receber o ponteiro nativo. O usuário deve inicializar a interface antes de chamar o método. Libere a interface quando não for mais usá-la.</param>
-CarenResult CarenDXGIOutput3 ::ConsultarInterface(String^ Param_Guid, ICaren^ Param_InterfaceSolicitada)
+/// <param name="Param_Out_FlagsSuporte">Retorna um bitfield de CA_DXGI_HARDWARE_COMPOSITION_SUPPORT_FLAGS valores de 
+/// enumeração descrevendo quais tipos de composição de hardware são suportados. Os valores são bitwise OR juntos.</param>
+CarenResult Shared_DXGIOutput::CheckHardwareCompositionSupport(
+	IDXGIOutput6* Param_MyPointerWork,
+	[Out] CA_DXGI_HARDWARE_COMPOSITION_SUPPORT_FLAGS% Param_Out_FlagsSuporte)
 {
-	//Chama o método de QueryInterface na classe base(Caren).
-	return Caren::Shared_ConsultarInterface(PonteiroTrabalho, Param_Guid, Param_InterfaceSolicitada);
-}
-
-/// <summary>
-/// Método responsável por adicionar um novo ponteiro nativo a classe atual.
-/// Este método não é responsável por adicionar uma nova referência ao objeto COM.
-/// </summary>
-/// <param name="Param_PonteiroNativo">Variável (GERENCIADA) para o ponteiro nativo a ser adicionado.</param>
-CarenResult CarenDXGIOutput3 ::AdicionarPonteiro(IntPtr Param_PonteiroNativo)
-{
-	//Fixa o ponteiro.
-	cli::pin_ptr<IDXGIOutput3*> p = &PonteiroTrabalho;
-
-	//Chama o método de ADICIONAR PONTEIRO na classe base(Caren).
-	return Caren::Shared_AdicionarPonteiro(Param_PonteiroNativo, reinterpret_cast<IUnknown**>(static_cast<IDXGIOutput3**>(p)));
-}
-/// <summary>
-/// Método responsável por adicionar um novo ponteiro nativo a classe atual.
-/// Este método não é responsável por adicionar uma nova referência ao objeto COM.
-/// </summary>
-/// <param name="Param_PonteiroNativo">Variável (NATIVA) para o ponteiro nativo a ser adicionado.</param>
-CarenResult CarenDXGIOutput3 ::AdicionarPonteiro(LPVOID Param_PonteiroNativo)
-{
-	//Variavel que vai retornar o resultado.
+	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
 
-	//Verifica se o objeto é valido
-	if (!ObjetoValido(Param_PonteiroNativo))
+	//Resultado COM.
+	ResultadoCOM Hr = E_FAIL;
+
+	//Variaveis a serem utilizadas.
+	UINT OutFlags = 0;
+
+	//Chama o método para realizar a operação.
+	Hr = Param_MyPointerWork->CheckHardwareCompositionSupport(&OutFlags);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
-		//O objeto não é valido
-		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Define os flags no parametro de saida do método.
+	Param_Out_FlagsSuporte = static_cast<CA_DXGI_HARDWARE_COMPOSITION_SUPPORT_FLAGS>(OutFlags);
+
+Done:;
+	//Retorna o resultado.
+	return Resultado;
+}
+
+/// <summary>
+/// (GetDesc1) - Obtém uma descrição estendida da saída que inclui características de cores e tipo de conexão.
+/// </summary>
+/// <param name="Param_Out_Desc">Retorna uma estrutura com a descrição da saida.</param>
+CarenResult Shared_DXGIOutput::GetDesc1(
+	IDXGIOutput6* Param_MyPointerWork, 
+	[Out] CA_DXGI_OUTPUT_DESC1^% Param_Out_Desc)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM.
+	ResultadoCOM Hr = E_FAIL;
+
+	//Variaveis a serem utilizadas.
+	Utilidades Util;
+	DXGI_OUTPUT_DESC1 OutDesc = { 0 };
+
+	//Chama o método para realizar a operação.
+	Hr = Param_MyPointerWork->GetDesc1(&OutDesc);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Converte a estrutura nativa para gerenciada e define no parametro de saida.
+	Param_Out_Desc = Util.ConverterDXGI_OUTPUT_DESC1UnManaged_ToManaged(&OutDesc);
+
+Done:;
+	//Retorna o resultado.
+	return Resultado;
+}
+
+
+
+
+// Métodos da interface ICarenDXGIOutput5
+
+/// <summary>
+/// Permite especificar uma lista de formatos suportados para superfícies fullscreen que podem ser devolvidas pelo objeto ICarenDXGIOutputDuplication.
+/// </summary>
+/// <param name="Param_Dispositivo3D">Um ponteiro para a interface do dispositivo Direct3D que você pode usar para 
+/// processar a imagem da área de trabalho. Este dispositivo deve ser criado a partir do adaptador ao qual a saída 
+/// está conectada.</param>
+/// <param name="Param_Flags">Reservado para uso futuro. Deixe como 0.</param>
+/// <param name="Param_QuantidadeFormatosSuportados">Especifica o número de formatos suportados.</param>
+/// <param name="Param_ListaFormatosSuportados">Uma matriz de formatos suportados que tem como contagem igual a (Param_QuantidadeFormatosSuportados).</param>
+/// <param name="Param_Out_SaidaDuplicada">Recebe um ponteiro da interface para a nova saida duplicada.</param>
+CarenResult Shared_DXGIOutput::DuplicateOutput1(
+	IDXGIOutput5* Param_MyPointerWork,
+	ICaren^ Param_Dispositivo3D,
+	UInt32 Param_Flags,
+	UInt32 Param_QuantidadeFormatosSuportados,
+	cli::array<CA_DXGI_FORMAT>^ Param_ListaFormatosSuportados,
+	[Out] ICarenDXGIOutputDuplication^% Param_Out_SaidaDuplicada)
+{
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
+
+	//Resultado COM.
+	ResultadoCOM Hr = E_FAIL;
+
+	//Variaveis a serem utilizadas.
+	Utilidades Util;
+	IUnknown* pDispositivoD3D = NULL;
+	UINT Flags = static_cast<UINT>(Param_Flags);
+	UINT CountFormatos = 0;
+	DXGI_FORMAT* pArrayFormatosDXGI = CriarMatrizUnidimensional<DXGI_FORMAT>(CountFormatos);
+	IDXGIOutputDuplication* pOutDuplication;
+
+	//Copia os dados do array gerenciado para o nativo.
+	Util.CopiarItensTo_ArrayNativo(&pArrayFormatosDXGI, Param_ListaFormatosSuportados, CountFormatos);
+
+	//Recupera o ponteiro para o dispositivo D3D
+	Resultado = Param_Dispositivo3D->RecuperarPonteiro((LPVOID*)&pDispositivoD3D);
+
+	//Verifica se recuperou com sucesso
+	if (Resultado.StatusCode != ResultCode::SS_OK)
+	{
+		//Error.. A interface não é valida.
 
 		//Sai do método
 		goto Done;
 	}
 
-	//Converte o ponteiro para o tipo especifico da classe.
-	PonteiroTrabalho = reinterpret_cast<IDXGIOutput3 *>(Param_PonteiroNativo);
+	//Chama o método para realizar a operação.
+	Hr = Param_MyPointerWork->DuplicateOutput1(pDispositivoD3D, Flags, CountFormatos, pArrayFormatosDXGI, &pOutDuplication);
 
-	//Verifica se o ponteiro é valido
-	if (ObjetoValido(PonteiroTrabalho))
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
-		//Ponteiro convertido com sucesso!
+		//Falhou ao realizar a operação.
 
-		//Define sucesso na operação
-		Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
+		//Sai do método
+		Sair;
 	}
-	else
-	{
-		//Falhou ao converter o ponteiro vazio para sua real representação.
 
-		//Define falha no ponteiro
-		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
-	}
+	//Cria a interface que será retornado no parametro de saida do método
+	Param_Out_SaidaDuplicada = gcnew CarenDXGIOutputDuplication();
+
+	//Adiciona o ponteiro.
+	Param_Out_SaidaDuplicada->AdicionarPonteiro(pOutDuplication);
+
+	//Define sucesso na operação
+	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
 
 Done:;
-	//Retornao resultado
+	//Libera a memoria para o array nativo se valido
+	DeletarMatrizUnidimensionalSafe(&pArrayFormatosDXGI);
+
+	//Retorna o resultado.
 	return Resultado;
 }
 
-/// <summary>
-/// Método responsável por recuperar o ponteiro atual da classe. Se o ponteiro não for valido, o método retornar ResultCode::ER_PONTEIRO.
-/// Este método não é responsável por adicionar uma nova referência ao objeto COM.
-/// </summary>
-/// <param name="Param_Out_PonteiroNativo">Variável (GERENCIADA) que vai receber o ponteiro nativo.</param>
-CarenResult CarenDXGIOutput3 ::RecuperarPonteiro([Out] IntPtr% Param_Out_PonteiroNativo)
-{
-	//Chama o método para recuperar o ponteiro de trabalho da classe atual.
-	return Caren::Shared_RecuperarPonteiro(Param_Out_PonteiroNativo, PonteiroTrabalho);
-}
+
+
+// Métodos da interface ICarenDXGIOutput4
+
 
 /// <summary>
-/// Método responsável por recuperar o ponteiro atual da classe. Se o ponteiro não for valido, o método retornar ResultCode::ER_PONTEIRO.
-/// Este método não é responsável por adicionar uma nova referência ao objeto COM.
+/// (CheckOverlayColorSpaceSupport) - Verifica se há suporte ao espaço de cores.
 /// </summary>
-/// <param name="Param_Out_PonteiroNativo">Variável (NATIVA) que vai receber o ponteiro nativo.</param>
-CarenResult CarenDXGIOutput3 ::RecuperarPonteiro(LPVOID* Param_Out_PonteiroNativo)
+/// <param name="Param_Formato">Um valor CA_DXGI_FORMAT digitado para o formato de cor.</param>
+/// <param name="Param_ColorSpace">Um valor CA_DXGI_COLOR_SPACE_TYPE digitado que especifica o tipo de espaço de cor 
+/// para verificar o suporte de sobreposição.</param>
+/// <param name="Param_DispositivoD3D">Um ponteiro para a interface do dispositivo Direct3D. O 
+/// (CheckOverlayColorSpaceSupport) retorna apenas informações de suporte sobre este dispositivo de varredura.</param>
+/// <param name="Param_Out_Flags">Recebe uma variável que recebe uma combinação de valores tipo tipo de 
+/// CA_DXGI_OVERLAY_COLOR_SPACE_SUPPORT_FLAG que são combinados usando uma operação ou bitwise. O valor resultante 
+/// especifica opções para suporte ao espaço de cores sobreposição.</param>
+CarenResult Shared_DXGIOutput::CheckOverlayColorSpaceSupport(
+	IDXGIOutput4* Param_MyPointerWork,
+	CA_DXGI_FORMAT Param_Formato,
+	CA_DXGI_COLOR_SPACE_TYPE Param_ColorSpace,
+	ICaren^ Param_DispositivoD3D,
+	[Out] CA_DXGI_OVERLAY_COLOR_SPACE_SUPPORT_FLAG% Param_Out_Flags)
 {
-	//Chama o método para recuperar o ponteiro de trabalho da classe atual.
-	return Caren::Shared_RecuperarPonteiro(Param_Out_PonteiroNativo, PonteiroTrabalho);
-}
+	//Variavel a ser retornada.
+	CarenResult Resultado = CarenResult(E_FAIL, false);
 
-/// <summary>
-/// Método responsável por retornar a quantidade de referências do objeto COM atual.
-/// </summary>
-/// <param name="Param_Out_Referencias">Variável que vai receber a quantidade de referências do objeto.</param>
-CarenResult CarenDXGIOutput3 ::RecuperarReferencias([Out] UInt64% Param_Out_Referencias)
-{
-	//Chama o método para recuperar a quantidade de referencias atuais da interface.
-	return Caren::Shared_RecuperarReferencias(Param_Out_Referencias, PonteiroTrabalho);
-}
+	//Resultado COM.
+	ResultadoCOM Hr = E_FAIL;
 
-/// <summary>
-/// Método responsável por indicar se o ponteiro COM atual é válido.
-/// </summary>
-CarenResult CarenDXGIOutput3 ::StatusPonteiro()
-{
-	return (ObjetoValido(PonteiroTrabalho) ? CarenResult(ResultCode::SS_OK, true) : CarenResult(ResultCode::ER_E_POINTER, false));
-}
+	//Variaveis a serem utilizadas.
+	DXGI_FORMAT FormatoDXGI = static_cast<DXGI_FORMAT>(Param_Formato);
+	DXGI_COLOR_SPACE_TYPE ColorSpaceType = static_cast<DXGI_COLOR_SPACE_TYPE>(Param_ColorSpace);
+	IUnknown* pDispositivoD3D = NULL;
+	UINT OutOverlayColorSpaceFlagSuporte = 0;
 
-/// <summary>
-/// Método responsável por retornar a variável que armazena o último código de erro desconhecido ou não documentado gerado pela classe.
-/// Esse método não chama o método nativo (GetLastError), apenas retorna o código de erro que foi armazenado na classe.
-/// </summary>
-Int32 CarenDXGIOutput3 ::ObterCodigoErro()
-{
-	return Var_Glob_LAST_HRESULT;
-}
+	//Recupera o ponteiro para o dispositivo
+	Resultado = Param_DispositivoD3D->RecuperarPonteiro((LPVOID*)&pDispositivoD3D);
 
-/// <summary>
-/// (AddRef) - Incrementa a contagem de referência para o ponteiro do objeto COM atual. Você deve chamar este método sempre que 
-/// você fazer uma cópia de um ponteiro de interface.
-/// </summary>
-void CarenDXGIOutput3 ::AdicionarReferencia()
-{
-	//Adiciona uma referência ao ponteiro
-	(reinterpret_cast<IDXGIOutput3 *>(PonteiroTrabalho))->AddRef();
-}
-
-/// <summary>
-/// (Release) - 'Decrementa' a contagem de referência do objeto COM atual.
-/// </summary>
-void CarenDXGIOutput3 ::LiberarReferencia()
-{
-	//Libera a referência e obtém a quantidade atual.
-	ULONG RefCount = (reinterpret_cast<IDXGIOutput3 *>(PonteiroTrabalho))->Release();
-
-	//Verifica se a quantidade é zero e se o ponteiro ainda é valido.
-	//Se sim, vai deletar o ponteiro.
-	if (RefCount == 0 && ObjetoValido(PonteiroTrabalho))
+	//Verifica se recuperou com sucesso
+	if (Resultado.StatusCode != ResultCode::SS_OK)
 	{
-		//NULA o ponteiro vazio.
-		PonteiroTrabalho = NULL;
+		//Error.. A interface não é valida.
+
+		//Sai do método
+		goto Done;
 	}
+
+	//Chama o método para realizar a operação.
+	Hr = Param_MyPointerWork->CheckOverlayColorSpaceSupport(FormatoDXGI, ColorSpaceType, pDispositivoD3D, &OutOverlayColorSpaceFlagSuporte);
+
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
+	{
+		//Falhou ao realizar a operação.
+
+		//Sai do método
+		Sair;
+	}
+
+	//Converte a flag e define no parametro de saida do método
+	Param_Out_Flags = static_cast<CA_DXGI_OVERLAY_COLOR_SPACE_SUPPORT_FLAG>(OutOverlayColorSpaceFlagSuporte);
+
+Done:;
+	//Retorna o resultado.
+	return Resultado;
 }
 
-/// <summary>
-/// Método responsável por chamar o finalizador da interface para realizar a limpeza e descarte de dados pendentes.
-/// Este método pode ser escrito de forma diferente para cada interface.
-/// </summary>
-void CarenDXGIOutput3 ::Finalizar()
-{
-	//////////////////////
-	//Código de descarte//
-	//////////////////////
-
-	//Informa ao GC que a classe já foi limpa e pode ser descartada.
-	GC::SuppressFinalize(this);
-	
-	//Nula o ponteiro de trabalho da classe.
-	PonteiroTrabalho = Nulo;
-
-	//Chama o finalizador da classe
-	this->~CarenDXGIOutput3 ();
-}
 
 
-//
-// Métodos da interface proprietária(ICarenDXGIOutput3 )
-//
+
+// Métodos da interface ICarenDXGIOutput3
 
 /// <summary>
 /// (CheckOverlaySupport) - Verifica o apoio ao Overlay(Sobrepor).
@@ -214,10 +274,11 @@ void CarenDXGIOutput3 ::Finalizar()
 /// <param name="Param_Out_Flags">Recebe uma variável que recebe uma combinação de valores digitados 
 /// CA_DXGI_OVERLAY_SUPPORT_FLAGque são combinados usando uma operação ou bitwise. O valor resultante especifica 
 /// opções de suporte sobreposição.</param>
-CarenResult CarenDXGIOutput3 ::CheckOverlaySupport(
-				CA_DXGI_FORMAT Param_Formato, 
-				ICaren^ Param_DispositivoD3D, 
-				[Out] CA_DXGI_OVERLAY_SUPPORT_FLAG% Param_Out_Flags)
+CarenResult Shared_DXGIOutput::CheckOverlaySupport(
+	IDXGIOutput3* Param_MyPointerWork,
+	CA_DXGI_FORMAT Param_Formato,
+	ICaren^ Param_DispositivoD3D,
+	[Out] CA_DXGI_OVERLAY_SUPPORT_FLAG% Param_Out_Flags)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -243,7 +304,7 @@ CarenResult CarenDXGIOutput3 ::CheckOverlaySupport(
 	}
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->CheckOverlaySupport(FormatoDXGI, pDispositivoD3D, &OutOverlayFlagSuporte);
+	Hr = Param_MyPointerWork->CheckOverlaySupport(FormatoDXGI, pDispositivoD3D, &OutOverlayFlagSuporte);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -268,16 +329,16 @@ Done:;
 
 
 
-//
 // Métodos da interface ICarenDXGIOutput2
-//
 
 /// <summary>
 /// (SupportsOverlays) - Consulta uma saída de adaptador para suporte de sobreposição multiplano.
 /// </summary>
 /// <param name="Param_Out_Suporte">Recebe TRUE se o adaptador de saída é o adaptador primário e suporta sobreposições multiplanárias, caso 
 /// contrário retorna FALSE.</param>
-CarenResult CarenDXGIOutput3::SupportsOverlays([Out] Boolean Param_Out_Suporte)
+CarenResult Shared_DXGIOutput::SupportsOverlays(
+	IDXGIOutput2* Param_MyPointerWork, 
+	[Out] Boolean Param_Out_Suporte)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -286,7 +347,7 @@ CarenResult CarenDXGIOutput3::SupportsOverlays([Out] Boolean Param_Out_Suporte)
 	BOOL SuporteInfo = FALSE;
 
 	//Chama o método para realizar a operação.
-	SuporteInfo = PonteiroTrabalho->SupportsOverlays();
+	SuporteInfo = Param_MyPointerWork->SupportsOverlays();
 
 	//Define no parametro de saida
 	Param_Out_Suporte = SuporteInfo ? true : false;
@@ -300,9 +361,8 @@ CarenResult CarenDXGIOutput3::SupportsOverlays([Out] Boolean Param_Out_Suporte)
 
 
 
-//
+
 // Métodos da interface ICarenDXGIOutput1
-//
 
 /// <summary>
 /// (DuplicateOutput) - Cria uma interface de duplicação de desktop a partir da interface ICarenDXGIOutput1 que representa uma saída de 
@@ -310,7 +370,10 @@ CarenResult CarenDXGIOutput3::SupportsOverlays([Out] Boolean Param_Out_Suporte)
 /// </summary>
 /// <param name="Param_Dispositivo3D">Um ponteiro para a interface do dispositivo Direct3D que você pode usar para processar a imagem da área de trabalho. Este dispositivo deve ser criado a partir do adaptador ao qual a saída está conectada.</param>
 /// <param name="Param_Out_SaidaDuplicada">Recebe um ponteiro da interface para a nova saida duplicada.</param>
-CarenResult CarenDXGIOutput3::DuplicateOutput(ICaren^ Param_Dispositivo3D, [Out] ICarenDXGIOutputDuplication^% Param_Out_SaidaDuplicada)
+CarenResult Shared_DXGIOutput::DuplicateOutput(
+	IDXGIOutput1* Param_MyPointerWork, 
+	ICaren^ Param_Dispositivo3D, 
+	[Out] ICarenDXGIOutputDuplication^% Param_Out_SaidaDuplicada)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -335,7 +398,7 @@ CarenResult CarenDXGIOutput3::DuplicateOutput(ICaren^ Param_Dispositivo3D, [Out]
 	}
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->DuplicateOutput(pDispositivoD3D, &pOutputDuplication);
+	Hr = Param_MyPointerWork->DuplicateOutput(pDispositivoD3D, &pOutputDuplication);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -373,7 +436,8 @@ Done:;
 /// aos formatos suportados para escaneamento pelo dispositivo.</param>
 /// <param name="Param_Out_DescCorrespondente"> Recebe uma estrutura CA_DXGI_MODE_DESC1 que contém uma descrição do modo de exibição que 
 /// mais corresponde ao modo de exibição descrito no Param_DescCombine.</param>
-CarenResult CarenDXGIOutput3::FindClosestMatchingMode1(
+CarenResult Shared_DXGIOutput::FindClosestMatchingMode1(
+	IDXGIOutput1* Param_MyPointerWork,
 	CA_DXGI_MODE_DESC1^ Param_DescCombine,
 	ICaren^ Param_Dispositivo3D,
 	[Out] CA_DXGI_MODE_DESC1^% Param_Out_DescCorrespondente)
@@ -411,7 +475,7 @@ CarenResult CarenDXGIOutput3::FindClosestMatchingMode1(
 	pDescCombine = Util.ConverterDXGI_MODE_DESC1Managed_ToUnManaged(Param_DescCombine);
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->FindClosestMatchingMode1(pDescCombine, &OutDescCorrespondente, pDispositivoD3D);
+	Hr = Param_MyPointerWork->FindClosestMatchingMode1(pDescCombine, &OutDescCorrespondente, pDispositivoD3D);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -443,16 +507,17 @@ Done:;
 /// enumerados por padrão.</param>
 /// <param name="Param_RecuperaQuantidadeModos">Defina para TRUE para obter o número de modos de exibição. Se TRUE, Param_Out_MatrizDescModos retorna NULO e (Param_QuantidadeModos) retorna a quantidade total de modos.</param>
 /// <param name="Param_Ref_QuantidadeModos">Recebe o número de modos de exibição que o (GetDisplayModeList1) retorna no bloco de memória
-/// para o qual o (Param_Out_MatrizDecModos) aponta. Defina (Param_Out_MatrizDecModos) para NULO para que o (Param_Ref_QuantidadeModos) 
+/// para o qual o (Param_Out_MatrizDescModos) aponta. Defina (Param_Out_MatrizDescModos) para NULO para que o (Param_Ref_QuantidadeModos) 
 /// retorne o número de modos de exibição que correspondam ao formato e às opções. Caso contrário, o (Param_Ref_QuantidadeModos) retorna o 
-/// número de modos de exibição devolvidos no (Param_Out_MatrizDecModos).</param>
-/// <param name="Param_Out_MatrizDecModos">Recebe uma lista de modos de exibição.</param>
-CarenResult CarenDXGIOutput3::GetDisplayModeList1(
+/// número de modos de exibição devolvidos no (Param_Out_MatrizDescModos).</param>
+/// <param name="Param_Out_MatrizDescModos">Recebe uma lista de modos de exibição.</param>
+CarenResult Shared_DXGIOutput::GetDisplayModeList1(
+	IDXGIOutput1* Param_MyPointerWork,
 	CA_DXGI_FORMAT Param_Formato,
 	CA_DXGI_ENUM_MODES Param_Flags,
 	Boolean Param_RecuperaQuantidadeModos,
 	UInt32% Param_Ref_QuantidadeModos,
-	[Out] cli::array<CA_DXGI_MODE_DESC1^>^% Param_Out_MatrizDecModos)
+	[Out] cli::array<CA_DXGI_MODE_DESC1^>^% Param_Out_MatrizDescModos)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -474,7 +539,7 @@ CarenResult CarenDXGIOutput3::GetDisplayModeList1(
 		//O array de modos é NULO.
 
 		//Chama o método para realizar a operação.
-		Hr = PonteiroTrabalho->GetDisplayModeList1(FormatoDXGI, FlagsEnumMode, &CountModos, NULL);
+		Hr = Param_MyPointerWork->GetDisplayModeList1(FormatoDXGI, FlagsEnumMode, &CountModos, NULL);
 	}
 	else
 	{
@@ -482,7 +547,7 @@ CarenResult CarenDXGIOutput3::GetDisplayModeList1(
 		pArrayDXGIMode = CriarMatrizUnidimensional<DXGI_MODE_DESC1>(CountModos);
 
 		//Chama o método para realizar a operação.
-		Hr = PonteiroTrabalho->GetDisplayModeList1(FormatoDXGI, FlagsEnumMode, &CountModos, pArrayDXGIMode);
+		Hr = Param_MyPointerWork->GetDisplayModeList1(FormatoDXGI, FlagsEnumMode, &CountModos, pArrayDXGIMode);
 	}
 
 	//Processa o resultado da chamada.
@@ -510,13 +575,13 @@ CarenResult CarenDXGIOutput3::GetDisplayModeList1(
 		//Está recuperando tudo.
 
 		//Cria a matriz que vai conter os dados de cada matriz.
-		Param_Out_MatrizDecModos = gcnew cli::array<CA_DXGI_MODE_DESC1^>(CountModos);
+		Param_Out_MatrizDescModos = gcnew cli::array<CA_DXGI_MODE_DESC1^>(CountModos);
 
 		//Faz um for para adicionar cada estrutura na matriz do parametro de saida.
 		for (UINT i = 0; i < CountModos; i++)
 		{
 			//Converte a estrutura nativa para gerenciada e define no indice.
-			Param_Out_MatrizDecModos[i] = Util.ConverterDXGI_MODE_DESC1UnManaged_ToManaged(&pArrayDXGIMode[i]);
+			Param_Out_MatrizDescModos[i] = Util.ConverterDXGI_MODE_DESC1UnManaged_ToManaged(&pArrayDXGIMode[i]);
 		}
 
 		//Define a quantidade de modos no parametro REF do método.
@@ -539,7 +604,9 @@ Done:;
 /// </summary>
 /// <param name="Param_SuperficeDestino">Um interface de recurso que representa o recurso para o qual o 
 /// (GetDisplaySurfaceData1) copia a superfície do display. A interface não pode ser NULA e deve reprentar uma textura 2D da interface( ICarenD3D11Texture2D)</param>
-CarenResult CarenDXGIOutput3::GetDisplaySurfaceData1(ICarenDXGIResource^ Param_SuperficeDestino)
+CarenResult Shared_DXGIOutput::GetDisplaySurfaceData1(
+	IDXGIOutput1* Param_MyPointerWork, 
+	ICarenDXGIResource^ Param_SuperficeDestino)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -564,7 +631,7 @@ CarenResult CarenDXGIOutput3::GetDisplaySurfaceData1(ICarenDXGIResource^ Param_S
 	}
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetDisplaySurfaceData1(pRecurso);
+	Hr = Param_MyPointerWork->GetDisplaySurfaceData1(pRecurso);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -586,9 +653,7 @@ Done:;
 
 
 
-//
 // Métodos da interface ICarenDXGIOutput
-//
 
 /// <summary>
 /// (FindClosestMatchingMode) - Encontra o modo de exibição que mais se corresponde ao modo de exibição solicitado.
@@ -599,7 +664,11 @@ Done:;
 /// <param name="Param_Out_ModoMaisAproximado">O modo que mais se aproxima do (Param_ModoDesc).</param>
 /// <param name="Param_Dispositivo3D">Um ponteiro para a interface do dispositivo Direct3D. Se este parâmetro é NULO, apenas modos cujo formato corresponde ao do (Param_ModoDesc) serão devolvidos; caso contrário, apenas os formatos que 
 /// são suportados para digitalização pelo dispositivo são devolvidos.</param>
-CarenResult CarenDXGIOutput3::FindClosestMatchingMode(CA_DXGI_MODE_DESC^ Param_ModoDesc, [Out] CA_DXGI_MODE_DESC^% Param_Out_ModoMaisAproximado, ICaren^ Param_Dispositivo3D)
+CarenResult Shared_DXGIOutput::FindClosestMatchingMode(
+	IDXGIOutput* Param_MyPointerWork, 
+	CA_DXGI_MODE_DESC^ Param_ModoDesc, 
+	[Out] CA_DXGI_MODE_DESC^% Param_Out_ModoMaisAproximado, 
+	ICaren^ Param_Dispositivo3D)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -624,7 +693,7 @@ CarenResult CarenDXGIOutput3::FindClosestMatchingMode(CA_DXGI_MODE_DESC^ Param_M
 	}
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->FindClosestMatchingMode(pDxgiDesc, &dxgiDescAproxaimado, pDispositivo3D ? pDispositivo3D : NULL);
+	Hr = Param_MyPointerWork->FindClosestMatchingMode(pDxgiDesc, &dxgiDescAproxaimado, pDispositivo3D ? pDispositivo3D : NULL);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -656,7 +725,9 @@ Done:;
 /// (GetDesc) - Obter uma descrição da saída.
 /// </summary>
 /// <param name="Param_Out_DescSaida">Retorna uma estrutura que contém a descrição da saida.</param>
-CarenResult CarenDXGIOutput3::GetDesc([Out] CA_DXGI_OUTPUT_DESC^% Param_Out_DescSaida)
+CarenResult Shared_DXGIOutput::GetDesc(
+	IDXGIOutput* Param_MyPointerWork, 
+	[Out] CA_DXGI_OUTPUT_DESC^% Param_Out_DescSaida)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -669,7 +740,7 @@ CarenResult CarenDXGIOutput3::GetDesc([Out] CA_DXGI_OUTPUT_DESC^% Param_Out_Desc
 	DXGI_OUTPUT_DESC OutDesc = {};
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetDesc(&OutDesc);
+	Hr = Param_MyPointerWork->GetDesc(&OutDesc);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -697,10 +768,11 @@ Done:;
 /// <param name="Param_Formato">O formato de cor.</param>
 /// <param name="Param_Flags">Opções para os modos de incluir. DXGI_ENUM_MODES_SCALING precisa ser especificado para expor os modos de exibição que exigem escala. Os modos centrados, que não exigem escala e correspondentes diretamente à 
 /// saída da tela, são enumerados por padrão.</param>
-/// <param name="Param_Ref_QuantidadeModos">Na entrada define a quantidade de dados que seram retornadados na matriz (Param_Out_MatrizDecModos). Na saida contém a quantidade de dados de (Param_Out_MatrizDecModos).</param>
+/// <param name="Param_Ref_QuantidadeModos">Na entrada define a quantidade de dados que seram retornadados na matriz (Param_Out_MatrizDescModos). Na saida contém a quantidade de dados de (Param_Out_MatrizDescModos).</param>
 /// <param name="Param_RecuperaQuantidadeModos">Defina para TRUE para obter o número de modos de exibição. Se TRUE, Param_Out_MatrizDescModos retorna NULO e (Param_QuantidadeModos) retorna a quantidade total de modos.</param>
 /// <param name="Param_Out_MatrizDescModos">Retorna uma lista de modos de exibição.</param>
-CarenResult CarenDXGIOutput3::GetDisplayModeList(
+CarenResult Shared_DXGIOutput::GetDisplayModeList(
+	IDXGIOutput* Param_MyPointerWork,
 	CA_DXGI_FORMAT Param_Formato,
 	CA_DXGI_ENUM_MODES Param_Flags,
 	Boolean Param_RecuperaQuantidadeModos,
@@ -726,7 +798,7 @@ CarenResult CarenDXGIOutput3::GetDisplayModeList(
 		//Neste caso o array é NULO e se obtém apenas a quantidade de modos.
 
 		//Chama o método para realizar a operação
-		Hr = PonteiroTrabalho->GetDisplayModeList(FormatoDXGI, Flags, &QuantidadeModos, NULL);
+		Hr = Param_MyPointerWork->GetDisplayModeList(FormatoDXGI, Flags, &QuantidadeModos, NULL);
 	}
 	else
 	{
@@ -736,7 +808,7 @@ CarenResult CarenDXGIOutput3::GetDisplayModeList(
 		pArrayModeDesc = CriarMatrizEstruturas<DXGI_MODE_DESC>(QuantidadeModos);
 
 		//Chama o método para realizar a operação
-		Hr = PonteiroTrabalho->GetDisplayModeList(FormatoDXGI, Flags, &QuantidadeModos, pArrayModeDesc);
+		Hr = Param_MyPointerWork->GetDisplayModeList(FormatoDXGI, Flags, &QuantidadeModos, pArrayModeDesc);
 	}
 
 	//Processa o resultado da chamada.
@@ -770,9 +842,6 @@ CarenResult CarenDXGIOutput3::GetDisplayModeList(
 		}
 	}
 
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
 Done:;
 	//Libera a memoria para a matriz se valida
 	DeletarMatrizEstruturasSafe(&pArrayModeDesc);
@@ -786,7 +855,9 @@ Done:;
 /// O método só pode ser chamado quando uma saída está no modo de tela cheia. Se o método for bem-sucedido, a DXGI preenche a superfície do destino.
 /// </summary>
 /// <param name="Param_SuperficeDestino">Um ponteiro para uma superfície de destino que vai receber a superfice.</param>
-CarenResult CarenDXGIOutput3::GetDisplaySurfaceData(ICarenDXGISurface^% Param_SuperficeDestino)
+CarenResult Shared_DXGIOutput::GetDisplaySurfaceData(
+	IDXGIOutput* Param_MyPointerWork, 
+	ICarenDXGISurface^% Param_SuperficeDestino)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -811,7 +882,7 @@ CarenResult CarenDXGIOutput3::GetDisplaySurfaceData(ICarenDXGISurface^% Param_Su
 	}
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetDisplaySurfaceData(pSuperfice);
+	Hr = Param_MyPointerWork->GetDisplaySurfaceData(pSuperfice);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -834,7 +905,9 @@ Done:;
 /// (GetFrameStatistics) - Obtém estatísticas sobre quadros recentemente renderizados.
 /// </summary>
 /// <param name="Param_Out_EstatisticasFrame">Retorna uma estrutura com as informações.</param>
-CarenResult CarenDXGIOutput3::GetFrameStatistics([Out] CA_DXGI_FRAME_STATISTICS^% Param_Out_EstatisticasFrame)
+CarenResult Shared_DXGIOutput::GetFrameStatistics(
+	IDXGIOutput* Param_MyPointerWork, 
+	[Out] CA_DXGI_FRAME_STATISTICS^% Param_Out_EstatisticasFrame)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -847,7 +920,7 @@ CarenResult CarenDXGIOutput3::GetFrameStatistics([Out] CA_DXGI_FRAME_STATISTICS^
 	DXGI_FRAME_STATISTICS FrameStatistics = {};
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetFrameStatistics(&FrameStatistics);
+	Hr = Param_MyPointerWork->GetFrameStatistics(&FrameStatistics);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -873,7 +946,9 @@ Done:;
 /// (GetGammaControl) - Obtém as configurações de controle gama.
 /// </summary>
 /// <param name="Param_Out_ControleGamma">Retorna uma estrutura que contém as informações do controle gamma.</param>
-CarenResult CarenDXGIOutput3::GetGammaControl([Out] CA_DXGI_GAMMA_CONTROL^% Param_Out_ControleGamma)
+CarenResult Shared_DXGIOutput::GetGammaControl(
+	IDXGIOutput* Param_MyPointerWork, 
+	[Out] CA_DXGI_GAMMA_CONTROL^% Param_Out_ControleGamma)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -886,7 +961,7 @@ CarenResult CarenDXGIOutput3::GetGammaControl([Out] CA_DXGI_GAMMA_CONTROL^% Para
 	DXGI_GAMMA_CONTROL ControleGamma = DXGI_GAMMA_CONTROL();
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetGammaControl(&ControleGamma);
+	Hr = Param_MyPointerWork->GetGammaControl(&ControleGamma);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -912,7 +987,9 @@ Done:;
 /// (GetGammaControlCapabilities) - Obtém uma descrição das capacidades de controle gama.
 /// </summary>
 /// <param name="Param_Out_GammaCaps">Retorna uma estrutura que contém as descrições das capcidades do controle Gamma.</param>
-CarenResult CarenDXGIOutput3::GetGammaControlCapabilities([Out] CA_DXGI_GAMMA_CONTROL_CAPABILITIES^% Param_Out_GammaCaps)
+CarenResult Shared_DXGIOutput::GetGammaControlCapabilities(
+	IDXGIOutput* Param_MyPointerWork, 
+	[Out] CA_DXGI_GAMMA_CONTROL_CAPABILITIES^% Param_Out_GammaCaps)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -925,7 +1002,7 @@ CarenResult CarenDXGIOutput3::GetGammaControlCapabilities([Out] CA_DXGI_GAMMA_CO
 	DXGI_GAMMA_CONTROL_CAPABILITIES CapGammaControl = {};
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetGammaControlCapabilities(&CapGammaControl);
+	Hr = Param_MyPointerWork->GetGammaControlCapabilities(&CapGammaControl);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -950,7 +1027,7 @@ Done:;
 /// <summary>
 /// (ReleaseOwnership) - Libera a propriedade da saída.
 /// </summary>
-CarenResult CarenDXGIOutput3::ReleaseOwnership()
+CarenResult Shared_DXGIOutput::ReleaseOwnership(IDXGIOutput* Param_MyPointerWork)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -959,7 +1036,7 @@ CarenResult CarenDXGIOutput3::ReleaseOwnership()
 	ResultadoCOM Hr = E_FAIL;
 
 	//Chama o método para realizar a operação.
-	PonteiroTrabalho->ReleaseOwnership();
+	Param_MyPointerWork->ReleaseOwnership();
 
 	//Define sucesso por default a operação.
 	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
@@ -972,7 +1049,9 @@ CarenResult CarenDXGIOutput3::ReleaseOwnership()
 /// (SetDisplaySurface) - Altera o modo de exibição.
 /// </summary>
 /// <param name="Param_Superfice">Um ponteiro para uma superfície usado para renderizar uma imagem para a tela. A superfície deve ter sido criada como um amortecedor traseiro (DXGI_USAGE_BACKBUFFER).</param>
-CarenResult CarenDXGIOutput3::SetDisplaySurface(ICarenDXGISurface^% Param_Superfice)
+CarenResult Shared_DXGIOutput::SetDisplaySurface(
+	IDXGIOutput* Param_MyPointerWork, 
+	ICarenDXGISurface^% Param_Superfice)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -996,7 +1075,7 @@ CarenResult CarenDXGIOutput3::SetDisplaySurface(ICarenDXGISurface^% Param_Superf
 	}
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->SetDisplaySurface(pSuperfice);
+	Hr = Param_MyPointerWork->SetDisplaySurface(pSuperfice);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -1019,7 +1098,9 @@ Done:;
 /// (SetGammaControl) - Define os controles gama.
 /// </summary>
 /// <param name="Param_ControleGama">Uma estrutura CA_DXGI_GAMMA_CONTROL que descreve a curva gama a ser definida.</param>
-CarenResult CarenDXGIOutput3::SetGammaControl(CA_DXGI_GAMMA_CONTROL^ Param_ControleGama)
+CarenResult Shared_DXGIOutput::SetGammaControl(
+	IDXGIOutput* Param_MyPointerWork, 
+	CA_DXGI_GAMMA_CONTROL^ Param_ControleGama)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1035,7 +1116,7 @@ CarenResult CarenDXGIOutput3::SetGammaControl(CA_DXGI_GAMMA_CONTROL^ Param_Contr
 	pGControl = Util.ConverterDXGI_GAMMA_CONTROLManaged_ToUnManaged(Param_ControleGama);
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->SetGammaControl(pGControl);
+	Hr = Param_MyPointerWork->SetGammaControl(pGControl);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -1064,7 +1145,10 @@ Done:;
 /// </summary>
 /// <param name="Param_DispositivoD3D">Um ponteiro para a interface IUnknown de um dispositivo do Direct3D.</param>
 /// <param name="Param_Exclusivo">Definido para TRUE para permitir que outros tópicos ou aplicativos para assumir a propriedade do dispositivo; caso contrário, definido como FALSE.</param>
-CarenResult CarenDXGIOutput3::TakeOwnership(ICaren^ Param_DispositivoD3D, Boolean Param_Exclusivo)
+CarenResult Shared_DXGIOutput::TakeOwnership(
+	IDXGIOutput* Param_MyPointerWork, 
+	ICaren^ Param_DispositivoD3D, 
+	Boolean Param_Exclusivo)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1090,7 +1174,7 @@ CarenResult CarenDXGIOutput3::TakeOwnership(ICaren^ Param_DispositivoD3D, Boolea
 	}
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->TakeOwnership(pDispositovo3D, Exclusivo);
+	Hr = Param_MyPointerWork->TakeOwnership(pDispositovo3D, Exclusivo);
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -1112,7 +1196,7 @@ Done:;
 /// <summary>
 /// (WaitForVBlank ) - Pare um Thread até que o próximo espaço em branco vertical ocorra.
 /// </summary>
-CarenResult CarenDXGIOutput3::WaitForVBlank()
+CarenResult Shared_DXGIOutput::WaitForVBlank(IDXGIOutput* Param_MyPointerWork)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -1121,7 +1205,7 @@ CarenResult CarenDXGIOutput3::WaitForVBlank()
 	ResultadoCOM Hr = E_FAIL;
 
 	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->WaitForVBlank();
+	Hr = Param_MyPointerWork->WaitForVBlank();
 
 	//Processa o resultado da chamada.
 	Resultado.ProcessarCodigoOperacao(Hr);
@@ -1138,80 +1222,4 @@ CarenResult CarenDXGIOutput3::WaitForVBlank()
 Done:;
 	//Retorna o resultado.
 	return Resultado;
-}
-
-
-
-// Métodos da interface ICarenDXGIObject
-
-
-/// <summary>
-/// Recupera o objeto pai deste objeto.
-/// </summary>
-/// <param name="Param_RIIDInterface">A identificação da interface solicitada.</param>
-/// <param name="Param_Out_ObjetoPai">Recebe o ponteiro para o objeto pai do objeto atual. O usuário deve inicializar a interface antes de chamar este método.</param>
-CarenResult CarenDXGIOutput3::GetParent(
-	String^ Param_RIIDInterface, 
-	ICaren^ Param_Out_ObjetoPai)
-{
-	//Chama o método na classe de funções compartilhadas do DXGI.
-	return Shared_DXGIObject::GetParent(PonteiroTrabalho,
-		Param_RIIDInterface,
-		Param_Out_ObjetoPai
-	);
-}
-
-/// <summary>
-/// Define dados definidos pelo aplicativo para o objeto e associa esses dados a um GUID.
-/// </summary>
-/// <param name="Param_GuidIdentificao">Um GUID que identifica os dados. Use esse GUID em uma chamada para o GetPrivateData para obter os dados.</param>
-/// <param name="Param_TamanhoDados">O tamanho dos dados.</param>
-/// <param name="Param_Dados">Ponteiro para os dados.</param>
-CarenResult CarenDXGIOutput3::SetPrivateData(
-	String^ Param_GuidIdentificao, 
-	UInt32 Param_TamanhoDados, 
-	ICaren^ Param_Dados)
-{
-	//Chama o método na classe de funções compartilhadas do DXGI.
-	return Shared_DXGIObject::SetPrivateData(PonteiroTrabalho,
-		Param_GuidIdentificao,
-		Param_TamanhoDados,
-		Param_Dados
-	);
-}
-
-/// <summary>
-/// Obtém um ponteiro para os dados do objeto.
-/// </summary>
-/// <param name="Param_GuidIdentificao">Um GUID identificando os dados.</param>
-/// <param name="Param_Ref_TamanhoDados">Retorna o tamanho dos dados.</param>
-/// <param name="Param_Out_Dados">Retorna um ponteiro para os dados. Esse ponteiro pode e não pode ser uma interface IUnknown. Sendo uma (IUnknown), o chamador é responsável por liberar a 
-/// referência para a interface. O usuário deve inicializar a interface antes de chamar este método.</param>
-CarenResult CarenDXGIOutput3::GetPrivateData(
-	String^ Param_GuidIdentificao, 
-	UInt32% Param_Ref_TamanhoDados, 
-	ICaren^ Param_Out_Dados)
-{
-	//Chama o método na classe de funções compartilhadas do DXGI.
-	return Shared_DXGIObject::GetPrivateData(PonteiroTrabalho,
-		Param_GuidIdentificao,
-		Param_Ref_TamanhoDados,
-		Param_Out_Dados
-	);
-}
-
-/// <summary>
-/// Define uma interface nos dados privados do objeto.
-/// </summary>
-/// <param name="Param_GuidInterface">Guid de identificação da interface.</param>
-/// <param name="Param_Interface">Um ponteiro para a interface a ser definida.</param>
-CarenResult CarenDXGIOutput3::SetPrivateDataInterface(
-	String^ Param_GuidInterface, 
-	ICaren^ Param_Interface)
-{
-	//Chama o método na classe de funções compartilhadas do DXGI.
-	return Shared_DXGIObject::SetPrivateDataInterface(PonteiroTrabalho,
-		Param_GuidInterface,
-		Param_Interface
-	);
 }

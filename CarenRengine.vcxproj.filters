@@ -1769,7 +1769,7 @@
     <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIOutput2.cpp">
       <Filter>Arquivos de Origem\Classes\DXGI</Filter>
     </ClCompile>
-    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIOutput3 .cpp">
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIOutput3.cpp">
       <Filter>Arquivos de Origem\Classes\DXGI</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIOutput4.cpp">
@@ -2841,6 +2841,15 @@
       <Filter>Arquivos de Origem\Shared Classes\DXGI</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\SharedClass\Shared_DXGI_Object.cpp">
+      <Filter>Arquivos de Origem\Shared Classes\DXGI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\SharedClass\Shared_DXGI_Resource.cpp">
+      <Filter>Arquivos de Origem\Shared Classes\DXGI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\SharedClass\Shared_DXGI_Surface.cpp">
+      <Filter>Arquivos de Origem\Shared Classes\DXGI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\SharedClass\Shared_DXGI_Output.cpp">
       <Filter>Arquivos de Origem\Shared Classes\DXGI</Filter>
     </ClCompile>
   </ItemGroup>

@@ -576,16 +576,16 @@ namespace CarenRengine
 			/// enumerados por padrão.</param>
 			/// <param name="Param_RecuperaQuantidadeModos">Defina para TRUE para obter o número de modos de exibição. Se TRUE, Param_Out_MatrizDescModos retorna NULO e (Param_QuantidadeModos) retorna a quantidade total de modos.</param>
 			/// <param name="Param_Ref_QuantidadeModos">Recebe o número de modos de exibição que o (GetDisplayModeList1) retorna no bloco de memória
-			/// para o qual o (Param_Out_MatrizDecModos) aponta. Defina (Param_Out_MatrizDecModos) para NULO para que o (Param_Ref_QuantidadeModos) 
+			/// para o qual o (Param_Out_MatrizDescModos) aponta. Defina (Param_Out_MatrizDescModos) para NULO para que o (Param_Ref_QuantidadeModos) 
 			/// retorne o número de modos de exibição que correspondam ao formato e às opções. Caso contrário, o (Param_Ref_QuantidadeModos) retorna o 
-			/// número de modos de exibição devolvidos no (Param_Out_MatrizDecModos).</param>
-			/// <param name="Param_Out_MatrizDecModos">Recebe uma lista de modos de exibição.</param>
+			/// número de modos de exibição devolvidos no (Param_Out_MatrizDescModos).</param>
+			/// <param name="Param_Out_MatrizDescModos">Recebe uma lista de modos de exibição.</param>
 			CarenResult GetDisplayModeList1(
 				CA_DXGI_FORMAT Param_Formato, 
 				CA_DXGI_ENUM_MODES Param_Flags, 
 				Boolean Param_RecuperaQuantidadeModos,
 				UInt32% Param_Ref_QuantidadeModos, 
-				[Out] cli::array<CA_DXGI_MODE_DESC1^>^% Param_Out_MatrizDecModos);
+				[Out] cli::array<CA_DXGI_MODE_DESC1^>^% Param_Out_MatrizDescModos);
 
 			/// <summary>
 			/// (GetDisplaySurfaceData1) - Copia a superfície do display(buffer frontal) para um recurso fornecido pelo usuário.

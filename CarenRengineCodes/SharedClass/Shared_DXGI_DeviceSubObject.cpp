@@ -22,7 +22,7 @@ limitations under the License.
 //MÉTODOS DA CLASSE COMPARTILHADA ()
 
 
-// Métodos da interface proprietária(ICarenDXGIDeviceSubObject)
+// Métodos da interface ICarenDXGIDeviceSubObject
 
 /// <summary>
 /// Recupera o dispositivo.

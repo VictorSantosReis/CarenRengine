@@ -1,4 +1,4 @@
-/*
+ï»¿/*
 Copyright 2020 Victor Santos Reis
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,10 +21,10 @@ limitations under the License.
 #include "../SDK_Utilidades.h"
 
 
-//Importa o namespace que contém as interfaces da API primária.
+//Importa o namespace que contï¿½m as interfaces da API primï¿½ria.
 using namespace CarenRengine::DXGI;
 
-//Importa o namespace (BASE) e suas demais dependências
+//Importa o namespace (BASE) e suas demais dependï¿½ncias
 using namespace CarenRengine::SDKBase;
 using namespace CarenRengine::SDKBase::Enumeracoes;
 using namespace CarenRengine::SDKBase::Estruturas;
@@ -37,13 +37,13 @@ using namespace CarenRengine::SDKUtilidades;
 /// </summary>
 class Shared_DXGIObject
 {
-	//Métodos da interface(ICarenDXGIObject)
+	//Mï¿½todos da interface(ICarenDXGIObject)
 public:
 	/// <summary>
 	/// Recupera o objeto pai deste objeto.
 	/// </summary>
-	/// <param name="Param_RIIDInterface">A identificação da interface solicitada.</param>
-	/// <param name="Param_Out_ObjetoPai">Recebe o ponteiro para o objeto pai do objeto atual. O usuário deve inicializar a interface antes de chamar este método.</param>
+	/// <param name="Param_RIIDInterface">A identificaï¿½ï¿½o da interface solicitada.</param>
+	/// <param name="Param_Out_ObjetoPai">Recebe o ponteiro para o objeto pai do objeto atual. O usuï¿½rio deve inicializar a interface antes de chamar este mï¿½todo.</param>
 	static CarenResult GetParent(
 		IDXGIObject* Param_MyPointerWork, 
 		String^ Param_RIIDInterface, 
@@ -62,12 +62,12 @@ public:
 		ICaren^ Param_Dados);
 
 	/// <summary>
-	/// Obtém um ponteiro para os dados do objeto.
+	/// Obtï¿½m um ponteiro para os dados do objeto.
 	/// </summary>
 	/// <param name="Param_GuidIdentificao">Um GUID identificando os dados.</param>
 	/// <param name="Param_Ref_TamanhoDados">Retorna o tamanho dos dados.</param>
-	/// <param name="Param_Out_Dados">Retorna um ponteiro para os dados. Esse ponteiro pode e não pode ser uma interface IUnknown. Sendo uma (IUnknown), o chamador é responsável por liberar
-	/// a referência para a interface. O usuário deve inicializar a interface antes de chamar este método.</param>
+	/// <param name="Param_Out_Dados">Retorna um ponteiro para os dados. Esse ponteiro pode e nï¿½o pode ser uma interface IUnknown. Sendo uma (IUnknown), o chamador ï¿½ responsï¿½vel por liberar
+	/// a referï¿½ncia para a interface. O usuï¿½rio deve inicializar a interface antes de chamar este mï¿½todo.</param>
 	static CarenResult GetPrivateData(
 		IDXGIObject* Param_MyPointerWork, 
 		String^ Param_GuidIdentificao, 
@@ -77,7 +77,7 @@ public:
 	/// <summary>
 	/// Define uma interface nos dados privados do objeto.
 	/// </summary>
-	/// <param name="Param_GuidInterface">Guid de identificação da interface.</param>
+	/// <param name="Param_GuidInterface">Guid de identificaï¿½ï¿½o da interface.</param>
 	/// <param name="Param_Interface">Um ponteiro para a interface a ser definida.</param>
 	static CarenResult SetPrivateDataInterface(
 		IDXGIObject* Param_MyPointerWork, 
@@ -90,15 +90,441 @@ public:
 /// </summary>
 class Shared_DXGIDeviceSubObject
 {
-	//Métodos da interface(ICarenDXGIDeviceSubObject)
+	//Mï¿½todos da interface(ICarenDXGIDeviceSubObject)
 public:
 	/// <summary>
 	/// Recupera o dispositivo.
 	/// </summary>
-	/// <param name="Param_RIIDInterface">O ID de referência para o dispositivo.</param>
-	/// <param name="Param_Out_Objeto">Recebe um ponteiro para o dispositivo solictiado. O usuário deve inicializar a interface antes de chamar este método.</param>
+	/// <param name="Param_RIIDInterface">O ID de referï¿½ncia para o dispositivo.</param>
+	/// <param name="Param_Out_Objeto">Recebe um ponteiro para o dispositivo solictiado. O usuï¿½rio deve inicializar a interface antes de chamar este mï¿½todo.</param>
 	static CarenResult GetDevice(
 		IDXGIDeviceSubObject* Param_MyPointerWork, 
 		String^ Param_RIIDInterface, 
 		ICaren^ Param_Out_Objeto);
+};
+
+/// <summary>
+/// 
+/// </summary>
+class Shared_DXGIResource
+{
+	//Mï¿½todos da interface(ICarenDXGIResource1)
+public:
+	/// <summary>
+	/// (CreateSharedHandle) - Cria uma Handle para um recurso compartilhado. Em seguida, vocï¿½ pode usar a Handle devolvida com vï¿½rios dispositivos Direct3D.
+	/// </summary>
+	/// <param name="Param_Atributos">Uma estrutura CA_SECURITY_ATTRIBUTES que contï¿½m dois membros de dados separados, mas relacionados: um descritor de seguranï¿½a opcional e 
+	/// um valor booleano que determina se os processos crianï¿½as podem herdar a Handle devolvida.
+	/// Defina esse parï¿½metro para NULO se desejar que os processos filhos que o aplicativo possa criar nï¿½o herdem a Handle retornado por CreateSharedHandle e se 
+	/// desejar que o recurso associado ao identificador retornado obtenha um descritor de seguranï¿½a padrï¿½o.</param>
+	/// <param name="Param_Acesso">Os direitos de acesso solicitados ao recurso. Vocï¿½ pode realizar um bitwise entre as enumeraï¿½ï¿½es CA_ACCESS_RIGHTS e CA_DXGI_SHARED_RESOURCE_RW 
+	/// para definir esse parametro.</param>
+	/// <param name="Param_Nome">O nome do recurso para compartilhar. O nome se limita a constante MAX_PATH. A comparaï¿½ï¿½o de nomes ï¿½ sensï¿½vel ao caso(CaseSensitive).
+	/// Vocï¿½ precisarï¿½ do nome de recurso se ligar para o mï¿½todo ICarenD3D11Device1::AbrirRecursoCompartilhadoPorNome para acessar o recurso compartilhado pelo nome. Se vocï¿½, 
+	/// em vez disso, ligar para o mï¿½todo ICarenD3D11Device1::AbrirRecursoCompartilhado1 para acessar o recurso compartilhado por cabo, defina este parï¿½metro para NULO.</param>
+	/// <param name="Param_Out_Handle">Recebe o ponteiro para uma variï¿½vel que recebe o valor NT HANDLE para o recurso para compartilhar. Vocï¿½ pode usar esta Handle em 
+	/// chamadas para acessar o recurso.</param>
+	static CarenResult CreateSharedHandle(
+		IDXGIResource1* Param_MyPointerWork,
+		CA_SECURITY_ATTRIBUTES^ Param_Atributos,
+		UInt64 Param_Acesso,
+		String^ Param_Nome,
+		[Out] IntPtr% Param_Out_Handle);
+
+	/// <summary>
+	/// (CreateSubresourceSurface) - Cria um objeto de superfï¿½cie subrecurso.
+	/// </summary>
+	/// <param name="Param_Index">O ï¿½ndice do objeto de superfï¿½cie do subrecurso a ser enumerado.</param>
+	/// <param name="Param_Out_DXGISurface2">Recebe um ponteiro para uma interface ICarenDXGISurface2 que representa o objeto de superfï¿½cie do subrecurso criado na posiï¿½ï¿½o 
+	/// especificada pelo parï¿½metro (Param_Index).  O usuï¿½rio deve inicializar a interface antes de chamar este mï¿½todo. </param>
+	static CarenResult CreateSubresourceSurface(
+		IDXGIResource1* Param_MyPointerWork, 
+		UInt32 Param_Index, 
+		ICaren^ Param_Out_DXGISurface2);
+
+
+
+	//Mï¿½todos da interface(ICarenDXGIResource)
+public:
+	/// <summary>
+	/// (GetEvictionPriority) - Obtenha a prioridade de despejo.
+	/// </summary>
+	/// <param name="Param_Out_PrioridadeDespejo">Recebe valores da enumeraï¿½ï¿½o CA_DXGI_RESOURCE_PRIORITY, que determinam quando o recurso pode ser despejado.</param>
+	static CarenResult GetEvictionPriority(
+		IDXGIResource* Param_MyPointerWork, 
+		[Out] CA_DXGI_RESOURCE_PRIORITY% Param_Out_PrioridadeDespejo);
+
+	/// <summary>
+	/// (GetSharedHandle) - Obtï¿½m a Handle para um recurso compartilhado.
+	/// [A partir do Direct3D 11.1, recomendamos nï¿½o usar o (GetSharedHandle) mais para recuperar a alï¿½a a um recurso compartilhado. Em vez disso, use o 
+	/// ICarenDXGIResource1::CreateSharedHandle para obter uma Handle para compartilhar. Para usar o ICarenDXGIResource1::CreateSharedHandle deve especificar 
+	/// que ele usa Handle NT (ou seja, vocï¿½ define a bandeira CA_D3D11_RESOURCE_MISC_SHARED_NTHANDLE). Tambï¿½m recomendamos que vocï¿½ crie recursos compartilhados que 
+	/// usam Handles NT para que vocï¿½ possa usar CloseHandle, DuplicateHandle, e assim por diante esses recursos compartilhados.]
+	/// </summary>
+	/// <param name="Param_Out_SharedHandle">Retorna um ponteiro para a Handle compartilhada.</param>
+	static CarenResult GetSharedHandle(
+		IDXGIResource* Param_MyPointerWork, 
+		[Out] IntPtr% Param_Out_SharedHandle);
+
+	/// <summary>
+	/// (GetUsage) - Obtenha o uso esperado de recursos.
+	/// </summary>
+	/// <param name="Param_Out_Usage">Recebe uma bandeira de uso(DXGI_USAGE). Para direct3D 10, uma superfï¿½cie pode ser usada como entrada sombreadora ou uma saï¿½da de 
+	/// destino renderizado.</param>
+	static CarenResult GetUsage(
+		IDXGIResource* Param_MyPointerWork, 
+		[Out] CA_DXGI_USAGE% Param_Out_Usage);
+
+	/// <summary>
+	/// (SetEvictionPriority) - Defina a prioridade para despejar o recurso da memï¿½ria.
+	/// </summary>
+	/// <param name="Param_PrioridadeDespejo">Um valor da enumeraï¿½ï¿½o CA_DXGI_RESOURCE_PRIORITY que define a prioridade do despejo.</param>
+	static CarenResult SetEvictionPriority(
+		IDXGIResource* Param_MyPointerWork, 
+		CA_DXGI_RESOURCE_PRIORITY Param_PrioridadeDespejo);
+};
+
+/// <summary>
+/// 
+/// </summary>
+class Shared_DXGISurface
+{
+	//Mï¿½todos da interface(ICarenDXGISurface2)
+public:
+	/// <summary>
+	/// (GetResource) - Obtï¿½m o ï¿½ndice de recursos parentais e subrecursos que suportam uma superfï¿½cie de subrecursos.
+	/// Os objetos atuais que implementam o IDXGISurface sï¿½o recursos ou visualizaï¿½ï¿½es. GetResource para esses objetos retorna "this" ou o 
+	/// recurso que suporta a exibiï¿½ï¿½o, respectivamente. Nesta situaï¿½ï¿½o, o ï¿½ndice de subrecursos ï¿½ 0.
+	/// </summary>
+	/// <param name="Param_RIID">O identificador globalmente ï¿½nico (GUID) do tipo de interface solicitado.</param>
+	/// <param name="Param_Out_ObjetoRecurso">Recebe um ponteiro para um buffer que recebe um ponteiro para o objeto de recurso pai para a superfï¿½cie do subrecurso.  O usuï¿½rio deve inicializar a interface antes de chamar este mï¿½todo.</param>
+	/// <param name="Param_Ref_IndexSubrecurso">Recebe o ï¿½ndice da superfï¿½cie do subrecurso.</param>
+	static CarenResult GetResource(IDXGISurface2* Param_MyPointerWork, String^ Param_RIID, ICaren^ Param_Out_ObjetoRecurso, UInt32% Param_Ref_IndexSubrecurso);
+
+
+
+	//Mï¿½todos da interface(ICarenDXGISurface1)
+public:
+	/// <summary>
+	/// (GetDC) - Retorna um contexto de dispositivo (DC) que permite que vocï¿½ se torne uma superfï¿½cie de Infraestrutura Grï¿½fica Microsoft DirectX (DXGI) usando a Interface do Dispositivo Grï¿½fico windows (GDI).
+	/// </summary>
+	/// <param name="Param_Descartar">Um valor booleano que especifica se deve preservar o conteï¿½do Direct3D no GDI DC. 
+	/// TRUE direciona o tempo de execuï¿½ï¿½o para nï¿½o preservar o conteï¿½do Direct3D no GDI DC; ou seja, o tempo de execuï¿½ï¿½o 
+	/// descarta o conteï¿½do Direct3D. False garante que o conteï¿½do Direct3D esteja disponï¿½vel no GDI DC.</param>
+	/// <param name="Param_Out_HDCHandle">Recebe um ponteiro para uma Handle(Alï¿½a) HDC que representa o contexto atual do dispositivo para renderizaï¿½ï¿½o GDI.</param>
+	static CarenResult GetDC(IDXGISurface1* Param_MyPointerWork, Boolean Param_Descartar, [Out] IntPtr% Param_Out_HDCHandle);
+
+	/// <summary>
+	/// (ReleaseDC) - Libera o contexto do dispositivo GDI (DC) que estï¿½ associado ï¿½ superfï¿½cie atual e permite que vocï¿½ use o Direct3D para renderizar.
+	/// </summary>
+	/// <param name="Param_Regiao">Um ponteiro para uma estrutura rect que identifica a regiï¿½o suja da superfï¿½cie. Uma regiï¿½o suja ï¿½ qualquer 
+	/// parte da superfï¿½cie que vocï¿½ usou para renderizaï¿½ï¿½o GDI e que vocï¿½ quer preservar.Esta ï¿½rea ï¿½ usada como uma dica de desempenho para 
+	/// subsistema grï¿½fico em certos cenï¿½rios.Nï¿½o utilize este parï¿½metro para restringir a renderizaï¿½ï¿½o ï¿½ regiï¿½o retangular especificada. 
+	/// Se vocï¿½ passar NULO, ReleaseDC considera toda a superfï¿½cie como suja. Caso contrï¿½rio, o (ReleaseDC) usa a ï¿½rea especificada pelo CA_RECT
+	/// como uma dica de desempenho para indicar quais ï¿½reas foram manipuladas pela renderizaï¿½ï¿½o GDI. Vocï¿½ pode passar um ponteiro para uma 
+	/// estrutura rect vazia(um retï¿½ngulo sem posiï¿½ï¿½o ou ï¿½rea) se vocï¿½ nï¿½o alterar qualquer conteï¿½do.</param>
+	static CarenResult ReleaseDC(IDXGISurface1* Param_MyPointerWork, CA_RECT^ Param_Regiao);
+
+
+
+	//Mï¿½todos da interface(ICarenDXGISurface)
+public:
+	/// <summary>
+	/// (GetDesc) - Mï¿½todo responsï¿½vel por obter uma descriï¿½ï¿½o da superfï¿½cie.
+	/// </summary>
+	/// <param name="Param_Out_DescSuperfice">Recebe uma estrutura descrevendo a superfice.</param>
+	static CarenResult GetDesc(IDXGISurface* Param_MyPointerWork, [Out] CA_DXGI_SURFACE_DESC^% Param_Out_DescSuperfice);
+
+	/// <summary>
+	/// (Map) - Mï¿½todo responsï¿½vel por obter um ponteiro para os dados contidos na superfï¿½cie e negue o acesso da GPU ï¿½ superfï¿½cie.
+	/// </summary>
+	/// <param name="Param_Flags">Bandeiras de leitura da CPU que definem o tipo de acesso ao dados da superfice.</param>
+	/// <param name="Param_Out_RectMapeado">Recebe uma estrutura que contï¿½m os dados mapeados da superfice.</param>
+	static CarenResult Map(IDXGISurface* Param_MyPointerWork, CA_DXGI_MAP_FLAGS Param_Flags, [Out] CA_DXGI_MAPPED_RECT^% Param_Out_RectMapeado);
+
+	/// <summary>
+	/// (Unmap) - Mï¿½todo responsï¿½vel por invalidar o ponteiro para a superfï¿½cie recuperada pelo ICarenDXGISurface::Map e 
+	/// reativar o acesso GPU ao recurso.
+	/// </summary>
+	static CarenResult Unmap(IDXGISurface* Param_MyPointerWork);
+};
+
+/// <summary>
+/// 
+/// </summary>
+class Shared_DXGIOutput
+{
+	//Mï¿½todos da interface(ICarenDXGIOutput6)
+public:
+	/// <summary>
+	/// (CheckHardwareCompositionSupport) - Notifica aplicativos de que o alongamento de hardware ï¿½ suportado.
+	/// </summary>
+	/// <param name="Param_Out_FlagsSuporte">Retorna um bitfield de CA_DXGI_HARDWARE_COMPOSITION_SUPPORT_FLAGS valores de 
+	/// enumeraï¿½ï¿½o descrevendo quais tipos de composiï¿½ï¿½o de hardware sï¿½o suportados. Os valores sï¿½o bitwise OR juntos.</param>
+	static CarenResult CheckHardwareCompositionSupport(
+		IDXGIOutput6* Param_MyPointerWork,
+		[Out] CA_DXGI_HARDWARE_COMPOSITION_SUPPORT_FLAGS% Param_Out_FlagsSuporte);
+
+	/// <summary>
+	/// (GetDesc1) - Obtï¿½m uma descriï¿½ï¿½o estendida da saï¿½da que inclui caracterï¿½sticas de cores e tipo de conexï¿½o.
+	/// </summary>
+	/// <param name="Param_Out_Desc">Retorna uma estrutura com a descriï¿½ï¿½o da saida.</param>
+	static CarenResult GetDesc1(
+		IDXGIOutput6* Param_MyPointerWork, 
+		[Out] CA_DXGI_OUTPUT_DESC1^% Param_Out_Desc);
+
+
+
+	//Mï¿½todos da interface(ICarenDXGIOutput5)
+public:
+	/// <summary>
+	/// Permite especificar uma lista de formatos suportados para superfï¿½cies fullscreen que podem ser devolvidas pelo objeto ICarenDXGIOutputDuplication.
+	/// </summary>
+	/// <param name="Param_Dispositivo3D">Um ponteiro para a interface do dispositivo Direct3D que vocï¿½ pode usar para 
+	/// processar a imagem da ï¿½rea de trabalho. Este dispositivo deve ser criado a partir do adaptador ao qual a saï¿½da 
+	/// estï¿½ conectada.</param>
+	/// <param name="Param_Flags">Reservado para uso futuro. Deixe como 0.</param>
+	/// <param name="Param_QuantidadeFormatosSuportados">Especifica o nï¿½mero de formatos suportados.</param>
+	/// <param name="Param_ListaFormatosSuportados">Uma matriz de formatos suportados que tem como contagem igual a (Param_QuantidadeFormatosSuportados).</param>
+	/// <param name="Param_Out_SaidaDuplicada">Recebe um ponteiro da interface para a nova saida duplicada.</param>
+	static CarenResult DuplicateOutput1(
+		IDXGIOutput5* Param_MyPointerWork,
+		ICaren^ Param_Dispositivo3D,
+		UInt32 Param_Flags,
+		UInt32 Param_QuantidadeFormatosSuportados,
+		cli::array<CA_DXGI_FORMAT>^ Param_ListaFormatosSuportados,
+		[Out] ICarenDXGIOutputDuplication^% Param_Out_SaidaDuplicada);
+
+
+
+	//Mï¿½todos da interface(ICarenDXGIOutput4)
+public:
+	/// <summary>
+	/// (CheckOverlayColorSpaceSupport) - Verifica se hï¿½ suporte ao espaï¿½o de cores.
+	/// </summary>
+	/// <param name="Param_Formato">Um valor CA_DXGI_FORMAT digitado para o formato de cor.</param>
+	/// <param name="Param_ColorSpace">Um valor CA_DXGI_COLOR_SPACE_TYPE digitado que especifica o tipo de espaï¿½o de cor 
+	/// para verificar o suporte de sobreposiï¿½ï¿½o.</param>
+	/// <param name="Param_DispositivoD3D">Um ponteiro para a interface do dispositivo Direct3D. O 
+	/// (CheckOverlayColorSpaceSupport) retorna apenas informaï¿½ï¿½es de suporte sobre este dispositivo de varredura.</param>
+	/// <param name="Param_Out_Flags">Recebe uma variï¿½vel que recebe uma combinaï¿½ï¿½o de valores tipo tipo de 
+	/// CA_DXGI_OVERLAY_COLOR_SPACE_SUPPORT_FLAG que sï¿½o combinados usando uma operaï¿½ï¿½o ou bitwise. O valor resultante 
+	/// especifica opï¿½ï¿½es para suporte ao espaï¿½o de cores sobreposiï¿½ï¿½o.</param>
+	static CarenResult CheckOverlayColorSpaceSupport(
+		IDXGIOutput4* Param_MyPointerWork,
+		CA_DXGI_FORMAT Param_Formato,
+		CA_DXGI_COLOR_SPACE_TYPE Param_ColorSpace,
+		ICaren^ Param_DispositivoD3D,
+		[Out] CA_DXGI_OVERLAY_COLOR_SPACE_SUPPORT_FLAG% Param_Out_Flags);
+
+
+
+	//Mï¿½todos da interface(ICarenDXGIOutput3)
+public:
+	/// <summary>
+	/// (CheckOverlaySupport) - Verifica o apoio ao Overlay(Sobrepor).
+	/// </summary>
+	/// <param name="Param_Formato">Um valor CA_DXGI_FORMAT digitado para o formato de cor.</param>
+	/// <param name="Param_DispositivoD3D">Um ponteiro para a interface do dispositivo Direct3D. O (CheckOverlaySupport)
+	/// retorna apenas informaï¿½ï¿½es de suporte sobre este dispositivo de varredura.</param>
+	/// <param name="Param_Out_Flags">Recebe uma variï¿½vel que recebe uma combinaï¿½ï¿½o de valores digitados 
+	/// CA_DXGI_OVERLAY_SUPPORT_FLAGque sï¿½o combinados usando uma operaï¿½ï¿½o ou bitwise. O valor resultante especifica 
+	/// opï¿½ï¿½es de suporte sobreposiï¿½ï¿½o.</param>
+	static CarenResult CheckOverlaySupport(
+		IDXGIOutput3* Param_MyPointerWork,
+		CA_DXGI_FORMAT Param_Formato,
+		ICaren^ Param_DispositivoD3D,
+		[Out] CA_DXGI_OVERLAY_SUPPORT_FLAG% Param_Out_Flags);
+
+
+
+	//Mï¿½todos da interface(ICarenDXGIOutput2)
+public:
+	/// <summary>
+	/// (SupportsOverlays) - Consulta uma saï¿½da de adaptador para suporte de sobreposiï¿½ï¿½o multiplano.
+	/// </summary>
+	/// <param name="Param_Out_Suporte">Recebe TRUE se o adaptador de saï¿½da ï¿½ o adaptador primï¿½rio e suporta sobreposiï¿½ï¿½es multiplanï¿½rias, caso 
+	/// contrï¿½rio retorna FALSE.</param>
+	static CarenResult SupportsOverlays(
+		IDXGIOutput2* Param_MyPointerWork, 
+		[Out] Boolean Param_Out_Suporte);
+
+
+	//Mï¿½todos da interface(ICarenDXGIOutput1)
+public:
+	/// <summary>
+	/// (DuplicateOutput) - Cria uma interface de duplicaï¿½ï¿½o de desktop a partir da interface ICarenDXGIOutput1 que representa uma saï¿½da de 
+	/// adaptador.
+	/// </summary>
+	/// <param name="Param_Dispositivo3D">Um ponteiro para a interface do dispositivo Direct3D que vocï¿½ pode usar para processar a imagem da ï¿½rea de trabalho. Este dispositivo deve ser criado a partir do adaptador ao qual a saï¿½da estï¿½ conectada.</param>
+	/// <param name="Param_Out_SaidaDuplicada">Recebe um ponteiro da interface para a nova saida duplicada.</param>
+	static CarenResult DuplicateOutput(
+		IDXGIOutput1* Param_MyPointerWork, 
+		ICaren^ Param_Dispositivo3D, 
+		[Out] ICarenDXGIOutputDuplication^% Param_Out_SaidaDuplicada);
+
+	/// <summary>
+	/// (FindClosestMatchingMode1) - Encontra o modo de exibiï¿½ï¿½o que mais combina com o modo de exibiï¿½ï¿½o solicitado.
+	/// </summary>
+	/// <param name="Param_DescCombine">Uma estrutura CA_DXGI_MODE_DESC1 que descreve o modo de exibiï¿½ï¿½o para combinar. Os membros da CA_DXGI_MODE_DESC1 
+	/// podem ser nï¿½o especificados, o que indica que nï¿½o hï¿½ preferï¿½ncia por esse membro. Um valor de 0 para Largura ou Altura indica que o valor
+	/// nï¿½o estï¿½ especificado. Se largura ou altura for 0, ambos devem ser 0. Um numerador e denominador de 0 no RefreshRate indicam que ele nï¿½o 
+	/// estï¿½ especificado. Outros membros do CA_DXGI_MODE_DESC1 possuem valores de enumeraï¿½ï¿½o que indicam que o membro nï¿½o estï¿½ especificado. 
+	/// Se o (Param_Dispositivo3D) for NULO, o membro (Formato) em CA_DXGI_MODE_DESC1 nï¿½o pode ser CA_DXGI_FORMAT_UNKNOWN.</param>
+	/// <param name="Param_Dispositivo3D">Um ponteiro para a interface do dispositivo Direct3D. Se este parï¿½metro for NULO, o (FindClosestMatchingMode1) 
+	/// retorna apenas modos cujo formato corresponde ao do Param_DescCombine; caso contrï¿½rio, o (FindClosestMatchingMode1) retorna apenas 
+	/// aos formatos suportados para escaneamento pelo dispositivo.</param>
+	/// <param name="Param_Out_DescCorrespondente"> Recebe uma estrutura CA_DXGI_MODE_DESC1 que contï¿½m uma descriï¿½ï¿½o do modo de exibiï¿½ï¿½o que 
+	/// mais corresponde ao modo de exibiï¿½ï¿½o descrito no Param_DescCombine.</param>
+	static CarenResult FindClosestMatchingMode1(
+		IDXGIOutput1* Param_MyPointerWork,
+		CA_DXGI_MODE_DESC1^ Param_DescCombine,
+		ICaren^ Param_Dispositivo3D,
+		[Out] CA_DXGI_MODE_DESC1^% Param_Out_DescCorrespondente);
+
+	/// <summary>
+	/// (GetDisplayModeList1) - Obtï¿½m os modos de exibiï¿½ï¿½o que correspondem ao formato solicitado e outras opï¿½ï¿½es de entrada.
+	/// </summary>
+	/// <param name="Param_Formato">Um valor CA_DXGI_FORMAT digitado para o formato de cor.</param>
+	/// <param name="Param_Flags">Uma combinaï¿½ï¿½o de valores CA_DXGI_ENUM_MODES digitados que sï¿½o combinados usando uma operaï¿½ï¿½o ou bitwise. O valor 
+	/// resultante especifica opï¿½ï¿½es para modos de exibiï¿½ï¿½o para incluir. Vocï¿½ deve especificar CA_DXGI_ENUM_MODES_SCALING para expor os modos 
+	/// de exibiï¿½ï¿½o que requerem dimensionamento. Os modos centrados que nï¿½o requerem escala e correspondem diretamente ï¿½ saï¿½da do display sï¿½o 
+	/// enumerados por padrï¿½o.</param>
+	/// <param name="Param_RecuperaQuantidadeModos">Defina para TRUE para obter o nï¿½mero de modos de exibiï¿½ï¿½o. Se TRUE, Param_Out_MatrizDescModos retorna NULO e (Param_QuantidadeModos) retorna a quantidade total de modos.</param>
+	/// <param name="Param_Ref_QuantidadeModos">Recebe o nï¿½mero de modos de exibiï¿½ï¿½o que o (GetDisplayModeList1) retorna no bloco de memï¿½ria
+	/// para o qual o (Param_Out_MatrizDescModos) aponta. Defina (Param_Out_MatrizDescModos) para NULO para que o (Param_Ref_QuantidadeModos) 
+	/// retorne o nï¿½mero de modos de exibiï¿½ï¿½o que correspondam ao formato e ï¿½s opï¿½ï¿½es. Caso contrï¿½rio, o (Param_Ref_QuantidadeModos) retorna o 
+	/// nï¿½mero de modos de exibiï¿½ï¿½o devolvidos no (Param_Out_MatrizDescModos).</param>
+	/// <param name="Param_Out_MatrizDescModos">Recebe uma lista de modos de exibiï¿½ï¿½o.</param>
+	static CarenResult GetDisplayModeList1(
+		IDXGIOutput1* Param_MyPointerWork,
+		CA_DXGI_FORMAT Param_Formato,
+		CA_DXGI_ENUM_MODES Param_Flags,
+		Boolean Param_RecuperaQuantidadeModos,
+		UInt32% Param_Ref_QuantidadeModos,
+		[Out] cli::array<CA_DXGI_MODE_DESC1^>^% Param_Out_MatrizDescModos);
+
+	/// <summary>
+	/// (GetDisplaySurfaceData1) - Copia a superfï¿½cie do display(buffer frontal) para um recurso fornecido pelo usuï¿½rio.
+	/// </summary>
+	/// <param name="Param_SuperficeDestino">Um interface de recurso que representa o recurso para o qual o 
+	/// (GetDisplaySurfaceData1) copia a superfï¿½cie do display. A interface nï¿½o pode ser NULA e deve reprentar uma textura 2D da interface( ICarenD3D11Texture2D)</param>
+	static CarenResult GetDisplaySurfaceData1(
+		IDXGIOutput1* Param_MyPointerWork, 
+		ICarenDXGIResource^ Param_SuperficeDestino);
+
+
+
+	//Mï¿½todos da interface(ICarenDXGIOutput)
+public:
+	/// <summary>
+	/// (FindClosestMatchingMode) - Encontra o modo de exibiï¿½ï¿½o que mais se corresponde ao modo de exibiï¿½ï¿½o solicitado.
+	/// </summary>
+	/// <param name="Param_ModoDesc">O modo de exibiï¿½ï¿½o desejado (veja DXGI_MODE_DESC). Os membros do CA_DXGI_MODE_DESC nï¿½o podem ser especificados indicando nenhuma preferï¿½ncia por esse membro. Um valor de 0 para largura ou altura indica 
+	/// que o valor nï¿½o ï¿½ especificado. Se a largura ou a altura forem 0, ambas devem ser 0. Um numerador e denominador de 0 em RefreshRate indicam que nï¿½o ï¿½ especificado. Outros membros da DXGI_MODE_DESC tï¿½m valores de enumeraï¿½ï¿½o indicando 
+	/// que o membro nï¿½o ï¿½ especificado. Se (Param_Dispositivo3D) ï¿½ NULO, formatonï¿½o pode ser DXGI_FORMAT_UNKNOWN.</param>
+	/// <param name="Param_Out_ModoMaisAproximado">O modo que mais se aproxima do (Param_ModoDesc).</param>
+	/// <param name="Param_Dispositivo3D">Um ponteiro para a interface do dispositivo Direct3D. Se este parï¿½metro ï¿½ NULO, apenas modos cujo formato corresponde ao do (Param_ModoDesc) serï¿½o devolvidos; caso contrï¿½rio, apenas os formatos que 
+	/// sï¿½o suportados para digitalizaï¿½ï¿½o pelo dispositivo sï¿½o devolvidos.</param>
+	static CarenResult FindClosestMatchingMode(
+		IDXGIOutput* Param_MyPointerWork, 
+		CA_DXGI_MODE_DESC^ Param_ModoDesc, 
+		[Out] CA_DXGI_MODE_DESC^% Param_Out_ModoMaisAproximado, 
+		ICaren^ Param_Dispositivo3D);
+
+	/// <summary>
+	/// (GetDesc) - Obter uma descriï¿½ï¿½o da saï¿½da.
+	/// </summary>
+	/// <param name="Param_Out_DescSaida">Retorna uma estrutura que contï¿½m a descriï¿½ï¿½o da saida.</param>
+	static CarenResult GetDesc(
+		IDXGIOutput* Param_MyPointerWork, 
+		[Out] CA_DXGI_OUTPUT_DESC^% Param_Out_DescSaida);
+
+	/// <summary>
+	/// (GetDisplayModeList) - Obtï¿½m os modos de exibiï¿½ï¿½o que correspondem ao formato solicitado e outras opï¿½ï¿½es de entrada.
+	/// </summary>
+	/// <param name="Param_Formato">O formato de cor.</param>
+	/// <param name="Param_Flags">Opï¿½ï¿½es para os modos de incluir. DXGI_ENUM_MODES_SCALING precisa ser especificado para expor os modos de exibiï¿½ï¿½o que exigem escala. Os modos centrados, que nï¿½o exigem escala e correspondentes diretamente ï¿½ 
+	/// saï¿½da da tela, sï¿½o enumerados por padrï¿½o.</param>
+	/// <param name="Param_Ref_QuantidadeModos">Na entrada define a quantidade de dados que seram retornadados na matriz (Param_Out_MatrizDescModos). Na saida contï¿½m a quantidade de dados de (Param_Out_MatrizDescModos).</param>
+	/// <param name="Param_RecuperaQuantidadeModos">Defina para TRUE para obter o nï¿½mero de modos de exibiï¿½ï¿½o. Se TRUE, Param_Out_MatrizDescModos retorna NULO e (Param_QuantidadeModos) retorna a quantidade total de modos.</param>
+	/// <param name="Param_Out_MatrizDescModos">Retorna uma lista de modos de exibiï¿½ï¿½o.</param>
+	static CarenResult GetDisplayModeList(
+		IDXGIOutput* Param_MyPointerWork,
+		CA_DXGI_FORMAT Param_Formato,
+		CA_DXGI_ENUM_MODES Param_Flags,
+		Boolean Param_RecuperaQuantidadeModos,
+		UInt32% Param_Ref_QuantidadeModos,
+		[Out] cli::array<CA_DXGI_MODE_DESC^>^% Param_Out_MatrizDescModos);
+
+	/// <summary>
+	/// (GetDisplaySurfaceData) - Obtï¿½m uma cï¿½pia da superfï¿½cie de exibiï¿½ï¿½o atual.
+	/// O mï¿½todo sï¿½ pode ser chamado quando uma saï¿½da estï¿½ no modo de tela cheia. Se o mï¿½todo for bem-sucedido, a DXGI preenche a superfï¿½cie do destino.
+	/// </summary>
+	/// <param name="Param_SuperficeDestino">Um ponteiro para uma superfï¿½cie de destino que vai receber a superfice.</param>
+	static CarenResult GetDisplaySurfaceData(
+		IDXGIOutput* Param_MyPointerWork, 
+		ICarenDXGISurface^% Param_SuperficeDestino);
+
+	/// <summary>
+	/// (GetFrameStatistics) - Obtï¿½m estatï¿½sticas sobre quadros recentemente renderizados.
+	/// </summary>
+	/// <param name="Param_Out_EstatisticasFrame">Retorna uma estrutura com as informaï¿½ï¿½es.</param>
+	static CarenResult GetFrameStatistics(
+		IDXGIOutput* Param_MyPointerWork, 
+		[Out] CA_DXGI_FRAME_STATISTICS^% Param_Out_EstatisticasFrame);
+
+	/// <summary>
+	/// (GetGammaControl) - Obtï¿½m as configuraï¿½ï¿½es de controle gama.
+	/// </summary>
+	/// <param name="Param_Out_ControleGamma">Retorna uma estrutura que contï¿½m as informaï¿½ï¿½es do controle gamma.</param>
+	static CarenResult GetGammaControl(
+		IDXGIOutput* Param_MyPointerWork, 
+		[Out] CA_DXGI_GAMMA_CONTROL^% Param_Out_ControleGamma);
+
+	/// <summary>
+	/// (GetGammaControlCapabilities) - Obtï¿½m uma descriï¿½ï¿½o das capacidades de controle gama.
+	/// </summary>
+	/// <param name="Param_Out_GammaCaps">Retorna uma estrutura que contï¿½m as descriï¿½ï¿½es das capcidades do controle Gamma.</param>
+	static CarenResult GetGammaControlCapabilities(
+		IDXGIOutput* Param_MyPointerWork, 
+		[Out] CA_DXGI_GAMMA_CONTROL_CAPABILITIES^% Param_Out_GammaCaps);
+
+	/// <summary>
+	/// (ReleaseOwnership) - Libera a propriedade da saï¿½da.
+	/// </summary>
+	static CarenResult ReleaseOwnership(IDXGIOutput* Param_MyPointerWork);
+
+	/// <summary>
+	/// (SetDisplaySurface) - Altera o modo de exibiï¿½ï¿½o.
+	/// </summary>
+	/// <param name="Param_Superfice">Um ponteiro para uma superfï¿½cie usado para renderizar uma imagem para a tela. A superfï¿½cie deve ter sido criada como um amortecedor traseiro (DXGI_USAGE_BACKBUFFER).</param>
+	static CarenResult SetDisplaySurface(
+		IDXGIOutput* Param_MyPointerWork, 
+		ICarenDXGISurface^% Param_Superfice);
+
+	/// <summary>
+	/// (SetGammaControl) - Define os controles gama.
+	/// </summary>
+	/// <param name="Param_ControleGama">Uma estrutura CA_DXGI_GAMMA_CONTROL que descreve a curva gama a ser definida.</param>
+	static CarenResult SetGammaControl(
+		IDXGIOutput* Param_MyPointerWork, 
+		CA_DXGI_GAMMA_CONTROL^ Param_ControleGama);
+
+	/// <summary>
+	/// (TakeOwnership) - Toma posse de uma saï¿½da. Quando vocï¿½ terminar com a saï¿½da, chame o mï¿½todo ICarenDXGIOutput::ReleaseOwnership().
+	/// Este mï¿½todo nï¿½o deve ser chamado diretamente por aplicativos, uma vez que os resultados serï¿½o imprevisï¿½veis. ï¿½ chamado implicitamente pelo objeto da cadeia de swap DXGI durante as transiï¿½ï¿½es em tela cheia, e nï¿½o deve ser usado como 
+	/// um substituto para mï¿½todos de cadeia de swap.
+	/// </summary>
+	/// <param name="Param_DispositivoD3D">Um ponteiro para a interface IUnknown de um dispositivo do Direct3D.</param>
+	/// <param name="Param_Exclusivo">Definido para TRUE para permitir que outros tï¿½picos ou aplicativos para assumir a propriedade do dispositivo; caso contrï¿½rio, definido como FALSE.</param>
+	static CarenResult TakeOwnership(
+		IDXGIOutput* Param_MyPointerWork, 
+		ICaren^ Param_DispositivoD3D, 
+		Boolean Param_Exclusivo);
+
+	/// <summary>
+	/// (WaitForVBlank ) - Pare um Thread atï¿½ que o prï¿½ximo espaï¿½o em branco vertical ocorra.
+	/// </summary>
+	static CarenResult WaitForVBlank(IDXGIOutput* Param_MyPointerWork);
 };

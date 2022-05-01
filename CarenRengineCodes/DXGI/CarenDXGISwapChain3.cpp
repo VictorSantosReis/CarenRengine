@@ -1502,7 +1502,7 @@ Done:;
 
 
 
-// Métodos da interface proprietária(ICarenDXGIDeviceSubObject)
+// Métodos da interface ICarenDXGIDeviceSubObject
 
 
 /// <summary>
@@ -1526,7 +1526,6 @@ CarenResult CarenDXGISwapChain3::GetDevice(
 
 
 // Métodos da interface ICarenDXGIObject
-
 
 /// <summary>
 /// Recupera o objeto pai deste objeto.

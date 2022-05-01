@@ -855,7 +855,7 @@
     <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIOutput.cpp" />
     <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIOutput1.cpp" />
     <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIOutput2.cpp" />
-    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIOutput3 .cpp" />
+    <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIOutput3.cpp" />
     <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIOutput4.cpp" />
     <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIOutput5.cpp" />
     <ClCompile Include="CarenRengineCodes\DXGI\CarenDXGIOutput6.cpp" />
@@ -923,6 +923,9 @@
     <ClCompile Include="CarenRengineCodes\SharedClass\Shared_Direct3D11_DeviceContext.cpp" />
     <ClCompile Include="CarenRengineCodes\SharedClass\Shared_DXGI_DeviceSubObject.cpp" />
     <ClCompile Include="CarenRengineCodes\SharedClass\Shared_DXGI_Object.cpp" />
+    <ClCompile Include="CarenRengineCodes\SharedClass\Shared_DXGI_Output.cpp" />
+    <ClCompile Include="CarenRengineCodes\SharedClass\Shared_DXGI_Resource.cpp" />
+    <ClCompile Include="CarenRengineCodes\SharedClass\Shared_DXGI_Surface.cpp" />
     <ClCompile Include="CarenRengineCodes\WIC\CarenWICBitmap.cpp" />
     <ClCompile Include="CarenRengineCodes\WIC\CarenWICBitmapClipper.cpp" />
     <ClCompile Include="CarenRengineCodes\WIC\CarenWICBitmapCodecInfo.cpp" />

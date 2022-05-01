@@ -163,9 +163,7 @@ void CarenDXGIAdapter4::Finalizar()
 }
 
 
-//
 // Métodos da interface proprietária(ICarenDXGIAdapter4)
-//
 
 /// <summary>
 /// (GetDesc3) - Obtém uma descrição 1.6 da Microsoft DirectX Graphics Infrastructure (DXGI) de um adaptador ou placa de vídeo. Esta descrição inclui 
@@ -177,44 +175,16 @@ void CarenDXGIAdapter4::Finalizar()
 /// nesses membros.</param>
 CarenResult CarenDXGIAdapter4::GetDesc3([Out] CA_DXGI_ADAPTER_DESC3^% Param_Out_DescAdaptador)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	DXGI_ADAPTER_DESC3 AdapterDesc3 = { 0 };
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetDesc3(&AdapterDesc3);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Converte a estrutura nativa para a gerenciada e define no parametro de saida.
-	Param_Out_DescAdaptador = Util.ConverterDXGI_ADAPTER_DESC3UnManaged_ToManaged(&AdapterDesc3);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIAdapter::GetDesc3(PonteiroTrabalho,
+		Param_Out_DescAdaptador
+	);
 }
 
 
 
-//
+
 // Métodos da interface ICarenDXGIAdapter3
-//
 
 /// <summary>
 /// (QueryVideoMemoryInfo) - Este método informa o processo de uso do orçamento e do processo atual.
@@ -227,37 +197,12 @@ CarenResult CarenDXGIAdapter4::QueryVideoMemoryInfo(
 	CA_DXGI_MEMORY_SEGMENT_GROUP Param_GrupoSegmento,
 	[Out] CA_DXGI_QUERY_VIDEO_MEMORY_INFO^% Param_Out_InfoMemoria)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	DXGI_QUERY_VIDEO_MEMORY_INFO DxgiMemInfo = { 0 };
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->QueryVideoMemoryInfo(Param_NodeId, static_cast<DXGI_MEMORY_SEGMENT_GROUP>(Param_GrupoSegmento), &DxgiMemInfo);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Converte a estrutura nativa e define no parametro de saida.
-	Param_Out_InfoMemoria = Util.ConverterDXGI_QUERY_VIDEO_MEMORY_INFOUnManaged_ToManaged(&DxgiMemInfo);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIAdapter::QueryVideoMemoryInfo(PonteiroTrabalho,
+		Param_NodeId,
+		Param_GrupoSegmento,
+		Param_Out_InfoMemoria
+	);
 }
 
 /// <summary>
@@ -266,52 +211,15 @@ Done:;
 /// <param name="Param_Evento">Uma Handle para o objeto de evento que o sistema operacional define quando ocorre o (TearDown) de proteção de conteúdo de hardware. </param>
 /// <param name="Param_Out_Cookie">um valor-chave que um aplicativo pode passar para o método ICarenDXGIAdapter3:::UnregisterHardwareContentProtectionTeardownStatus para 
 /// descadastrar o evento de notificação que o Param_Evento especifica.</param>
-CarenResult CarenDXGIAdapter4::RegisterHardwareContentProtectionTeardownStatusEvent(ICarenEvent^ Param_Evento, [Out] UInt32 Param_Out_Cookie)
+CarenResult CarenDXGIAdapter4::RegisterHardwareContentProtectionTeardownStatusEvent(
+	ICarenEvent^ Param_Evento, 
+	[Out] UInt32 Param_Out_Cookie)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	HANDLE pHandEvento = NULL;
-	DWORD OutCookie = 0;
-
-	//Recupera um ponteiro para o evento
-	Resultado = Param_Evento->RecuperarEvento(&pHandEvento);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Ponteiro invalido.
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->RegisterHardwareContentProtectionTeardownStatusEvent(pHandEvento, &OutCookie);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Converte o Cookie e define no parametro de saida.
-	Param_Out_Cookie = static_cast<UInt32>(OutCookie);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIAdapter::RegisterHardwareContentProtectionTeardownStatusEvent(PonteiroTrabalho,
+		Param_Evento,
+		Param_Out_Cookie
+	);
 }
 
 /// <summary>
@@ -320,52 +228,15 @@ Done:;
 /// <param name="Param_Evento">Uma Handle para o objeto de evento.</param>
 /// <param name="Param_Out_Cookie">Um valor-chave para a janela ou evento para descadastrar. O método ICarenDXGIAdapter3::RegisterHardwareContentProtectionTeardownStatusEvent
 /// retorna esse valor.</param>
-CarenResult CarenDXGIAdapter4::RegisterVideoMemoryBudgetChangeNotificationEvent(ICarenEvent^ Param_Evento, [Out] UInt32 Param_Out_Cookie)
+CarenResult CarenDXGIAdapter4::RegisterVideoMemoryBudgetChangeNotificationEvent(
+	ICarenEvent^ Param_Evento, 
+	[Out] UInt32 Param_Out_Cookie)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	HANDLE pHandEvento = NULL;
-	DWORD OutCookie = 0;
-
-	//Recupera um ponteiro para o evento
-	Resultado = Param_Evento->RecuperarEvento(&pHandEvento);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Ponteiro invalido.
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->RegisterVideoMemoryBudgetChangeNotificationEvent(pHandEvento, &OutCookie);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Converte o Cookie e define no parametro de saida.
-	Param_Out_Cookie = static_cast<UInt32>(OutCookie);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIAdapter::RegisterVideoMemoryBudgetChangeNotificationEvent(PonteiroTrabalho,
+		Param_Evento,
+		Param_Out_Cookie
+	);
 }
 
 /// <summary>
@@ -381,30 +252,12 @@ CarenResult CarenDXGIAdapter4::SetVideoMemoryReservation(
 	CA_DXGI_MEMORY_SEGMENT_GROUP Param_SegmentoGrupoMemoria,
 	UInt64 Param_ReversaMemoria)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->SetVideoMemoryReservation(Param_NodeId, static_cast<DXGI_MEMORY_SEGMENT_GROUP>(Param_SegmentoGrupoMemoria), Param_ReversaMemoria);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIAdapter::SetVideoMemoryReservation(PonteiroTrabalho,
+		Param_NodeId,
+		Param_SegmentoGrupoMemoria,
+		Param_ReversaMemoria
+	);
 }
 
 /// <summary>
@@ -415,17 +268,10 @@ Done:;
 /// retorna esse valor.</param>
 CarenResult CarenDXGIAdapter4::UnregisterHardwareContentProtectionTeardownStatus(UInt32 Param_Cookie)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->UnregisterHardwareContentProtectionTeardownStatus(static_cast<DWORD>(Param_Cookie));
-
-	//Define sucesso por default a operação.
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIAdapter::UnregisterHardwareContentProtectionTeardownStatus(PonteiroTrabalho,
+		Param_Cookie
+	);
 }
 
 /// <summary>
@@ -435,25 +281,16 @@ CarenResult CarenDXGIAdapter4::UnregisterHardwareContentProtectionTeardownStatus
 /// retorna esse valor.</param>
 CarenResult CarenDXGIAdapter4::UnregisterVideoMemoryBudgetChangeNotification(UInt32 Param_Cookie)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->UnregisterVideoMemoryBudgetChangeNotification(static_cast<DWORD>(Param_Cookie));
-
-	//Define sucesso por default a operação.
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIAdapter::UnregisterVideoMemoryBudgetChangeNotification(PonteiroTrabalho,
+		Param_Cookie
+	);
 }
 
 
 
 
-//
 // Métodos da interface ICarenDXGIAdapter2
-//
 
 /// <summary>
 /// (GetDesc2) - Obtém uma descrição 1.2 da Microsoft DirectX Graphics Infrastructure (DXGI) de um adaptador ou placa de vídeo. 
@@ -466,45 +303,16 @@ CarenResult CarenDXGIAdapter4::UnregisterVideoMemoryBudgetChangeNotification(UIn
 /// do membro (Description). O GetDesc2 retorna os valores reais de hardware nível 9 nesses membros.</param>
 CarenResult CarenDXGIAdapter4::GetDesc2([Out] CA_DXGI_ADAPTER_DESC2^% Param_Out_DescAdaptador)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	DXGI_ADAPTER_DESC2 AdapterDesc2 = { 0 };
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetDesc2(&AdapterDesc2);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Converte a estrutura nativa para a gerenciada e define no parametro de saida.
-	Param_Out_DescAdaptador = Util.ConverterDXGI_ADAPTER_DESC2UnManaged_ToManaged(&AdapterDesc2);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIAdapter::GetDesc2(PonteiroTrabalho,
+		Param_Out_DescAdaptador
+	);
 }
 
 
 
 
-//
 // Métodos da interface ICarenDXGIAdapter1
-//
 
 /// <summary>
 /// (GetDesc1) - Obtém uma descrição DXGI 1.1 de um adaptador (ou cartão de vídeo).
@@ -513,87 +321,31 @@ Done:;
 /// PCI ID no VendorId, DeviceId, SubSysId e membros de revisão de CA_DXGI_ADAPTER_DESC1 e "Adaptador de Software" para a sequencia de descrição no membro Description.</param>
 CarenResult CarenDXGIAdapter4::GetDesc1([Out] CA_DXGI_ADAPTER_DESC1^% Param_Out_DescAdaptador)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	DXGI_ADAPTER_DESC1 DescAdaptador;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetDesc1(&DescAdaptador);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Converte a esturutra e define no parametro de saida
-	Param_Out_DescAdaptador = Util.ConverterDXGI_ADAPTER_DESC1UnManaged_ToManaged(&DescAdaptador);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIAdapter::GetDesc1(PonteiroTrabalho,
+		Param_Out_DescAdaptador
+	);
 }
 
 
 
-//
+
 // Métodos da interface ICarenDXGIAdapter
-//
 
 /// <summary>
 /// (CheckInterfaceSupport) - Verifica se o sistema suporta uma interface do dispositivo para um componente gráfico.
 /// </summary>
 /// <param name="Param_GuidInterface">O GUID da interface da versão do dispositivo para a qual o suporte está sendo verificado.</param>
 /// <param name="Param_Out_UMDVersion">A versão do motorista do modo de usuário do (Param_GuidInterface). Isso só é devolvido se a interface for suportada, caso contrário, este parâmetro será -12354.</param>
-CarenResult CarenDXGIAdapter4::CheckInterfaceSupport(String^ Param_GuidInterface, [Out] Int64% Param_Out_UMDVersion)
+CarenResult CarenDXGIAdapter4::CheckInterfaceSupport(
+	String^ Param_GuidInterface, 
+	[Out] Int64% Param_Out_UMDVersion)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	GUID GuidInterface = GUID_NULL;
-	LARGE_INTEGER LargeDados = { 0 };
-
-	//Cria o guid
-	GuidInterface = Util.CreateGuidFromString(Param_GuidInterface);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->CheckInterfaceSupport(GuidInterface, &LargeDados);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Deifine os dados no parametro de saida.
-	Param_Out_UMDVersion = LargeDados.QuadPart;
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIAdapter::CheckInterfaceSupport(PonteiroTrabalho,
+		Param_GuidInterface,
+		Param_Out_UMDVersion
+	);
 }
 
 /// <summary>
@@ -601,44 +353,15 @@ Done:;
 /// </summary>
 /// <param name="Param_IndexSaida">O índice da saída.</param>
 /// <param name="Param_Out_Saida">O endereço de um ponteiro para uma interface ICarenDXGIOutput na posição especificada pelo parâmetro (Param_IndexSaida).</param>
-CarenResult CarenDXGIAdapter4::EnumOutputs(UInt32 Param_IndexSaida, [Out] ICarenDXGIOutput^% Param_Out_Saida)
+CarenResult CarenDXGIAdapter4::EnumOutputs(
+	UInt32 Param_IndexSaida, 
+	[Out] ICarenDXGIOutput^% Param_Out_Saida)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	IDXGIOutput* pSaida = NULL;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->EnumOutputs(Param_IndexSaida, &pSaida);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria a interface que será retornada.
-	Param_Out_Saida = gcnew CarenDXGIOutput();
-
-	//Define o ponteiro de trabalho
-	Param_Out_Saida->AdicionarPonteiro(pSaida);
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIAdapter::EnumOutputs(PonteiroTrabalho,
+		Param_IndexSaida,
+		Param_Out_Saida
+	);
 }
 
 /// <summary>
@@ -648,37 +371,10 @@ Done:;
 /// PCI ID no VendorId, DeviceId, SubSysId e membros de revisão de CA_DXGI_ADAPTER_DESC e "Adaptador de Software" para a sequencia de descrição no membro Description.</param>
 CarenResult CarenDXGIAdapter4::GetDesc([Out] CA_DXGI_ADAPTER_DESC^% Param_Out_DescAdaptador)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	DXGI_ADAPTER_DESC DescAdaptador;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetDesc(&DescAdaptador);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Converte a esturutra e define no parametro de saida
-	Param_Out_DescAdaptador = Util.ConverterDXGI_ADAPTER_DESCUnManaged_ToManaged(&DescAdaptador);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIAdapter::GetDesc(PonteiroTrabalho,
+		Param_Out_DescAdaptador
+	);
 }
 
 

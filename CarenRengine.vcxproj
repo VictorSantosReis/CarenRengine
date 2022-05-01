@@ -921,6 +921,7 @@
     <ClCompile Include="CarenRengineCodes\SharedClass\Shared_Direct3D11_Device.cpp" />
     <ClCompile Include="CarenRengineCodes\SharedClass\Shared_Direct3D11_DeviceChild.cpp" />
     <ClCompile Include="CarenRengineCodes\SharedClass\Shared_Direct3D11_DeviceContext.cpp" />
+    <ClCompile Include="CarenRengineCodes\SharedClass\Shared_DXGI_Adapter.cpp" />
     <ClCompile Include="CarenRengineCodes\SharedClass\Shared_DXGI_DeviceSubObject.cpp" />
     <ClCompile Include="CarenRengineCodes\SharedClass\Shared_DXGI_Object.cpp" />
     <ClCompile Include="CarenRengineCodes\SharedClass\Shared_DXGI_Output.cpp" />

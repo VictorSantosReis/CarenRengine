@@ -2852,6 +2852,9 @@
     <ClCompile Include="CarenRengineCodes\SharedClass\Shared_DXGI_Output.cpp">
       <Filter>Arquivos de Origem\Shared Classes\DXGI</Filter>
     </ClCompile>
+    <ClCompile Include="CarenRengineCodes\SharedClass\Shared_DXGI_Adapter.cpp">
+      <Filter>Arquivos de Origem\Shared Classes\DXGI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CarenRengineCodes\app.rc">

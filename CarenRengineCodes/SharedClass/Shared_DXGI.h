@@ -528,3 +528,131 @@ public:
 	/// </summary>
 	static CarenResult WaitForVBlank(IDXGIOutput* Param_MyPointerWork);
 };
+
+/// <summary>
+/// 
+/// </summary>
+class Shared_DXGIAdapter
+{
+	//Métodos da interface(ICarenDXGIAdapter4)
+public:
+	/// <summary>
+	/// (GetDesc3) - Obtém uma descrição 1.6 da Microsoft DirectX Graphics Infrastructure (DXGI) de um adaptador ou placa de vídeo. Esta descrição inclui 
+	/// informações sobre compatibilidade com ACG.
+	/// </summary>
+	/// <param name="Param_Out_DescAdaptador">Recebe uma estrutura CA_DXGI_ADAPTER_DESC3 que descreve o adaptador. Este parâmetro não deve ser NULO. No hardware gráfico nível 9, 
+	/// versões iniciais do GetDesc3(GetDesc1 GetDesc) retornam zeros para o ID PCI em (VendorId, DeviceId, SubSysId, e Revision) da estrutura de descrição do 
+	/// adaptador e "Adaptador de Software" para a string de descrição no membro (Description). GetDesc3 e GetDesc2 retornam os valores reais de hardware nível 9 
+	/// nesses membros.</param>
+	static CarenResult GetDesc3(IDXGIAdapter4* Param_MyPointerWork, [Out] CA_DXGI_ADAPTER_DESC3^% Param_Out_DescAdaptador);
+
+
+
+	//Métodos da interface(ICarenDXGIAdapter3)
+public:
+	/// <summary>
+	/// (QueryVideoMemoryInfo) - Este método informa o processo de uso do orçamento e do processo atual.
+	/// </summary>
+	/// <param name="Param_NodeId">Especifica o adaptador físico do dispositivo para o qual as informações da memória de vídeo são consultadas. Para operação de GPU única, coloque isso em zero. Se houver vários nós da GPU, coloque isso no índice do nó (adaptador físico do dispositivo) para o qual as informações de memória de vídeo são consultadas.</param>
+	/// <param name="Param_GrupoSegmento">Especifica uma CA_DXGI_MEMORY_SEGMENT_GROUP que identifica o grupo como local ou não local.</param>
+	/// <param name="Param_Out_InfoMemoria">Recebe uma estrutura CA_DXGI_QUERY_VIDEO_MEMORY_INFO com os valores atuais.</param>
+	static CarenResult QueryVideoMemoryInfo(
+		IDXGIAdapter3* Param_MyPointerWork,
+		UInt32 Param_NodeId,
+		CA_DXGI_MEMORY_SEGMENT_GROUP Param_GrupoSegmento,
+		[Out] CA_DXGI_QUERY_VIDEO_MEMORY_INFO^% Param_Out_InfoMemoria);
+
+	/// <summary>
+	/// (RegisterHardwareContentProtectionTeardownStatusEvent) - Se registra para receber notificação de eventos de proteção de proteção de conteúdo de hardware.
+	/// </summary>
+	/// <param name="Param_Evento">Uma Handle para o objeto de evento que o sistema operacional define quando ocorre o (TearDown) de proteção de conteúdo de hardware. </param>
+	/// <param name="Param_Out_Cookie">um valor-chave que um aplicativo pode passar para o método ICarenDXGIAdapter3:::UnregisterHardwareContentProtectionTeardownStatus para 
+	/// descadastrar o evento de notificação que o Param_Evento especifica.</param>
+	static CarenResult RegisterHardwareContentProtectionTeardownStatusEvent(IDXGIAdapter3* Param_MyPointerWork, ICarenEvent^ Param_Evento, [Out] UInt32 Param_Out_Cookie);
+
+	/// <summary>
+	/// (RegisterVideoMemoryBudgetChangeNotificationEvent) - Este método estabelece uma correlação entre um objeto de sincronização da CPU e o evento de mudança orçamentária.
+	/// </summary>
+	/// <param name="Param_Evento">Uma Handle para o objeto de evento.</param>
+	/// <param name="Param_Out_Cookie">Um valor-chave para a janela ou evento para descadastrar. O método ICarenDXGIAdapter3::RegisterHardwareContentProtectionTeardownStatusEvent
+	/// retorna esse valor.</param>
+	static CarenResult RegisterVideoMemoryBudgetChangeNotificationEvent(IDXGIAdapter3* Param_MyPointerWork, ICarenEvent^ Param_Evento, [Out] UInt32 Param_Out_Cookie);
+
+	/// <summary>
+	/// (SetVideoMemoryReservation) - Este método envia a memória física mínima necessária para uma aplicação, para o Sistema Operacional.
+	/// </summary>
+	/// <param name="Param_NodeId">Especifica o adaptador físico do dispositivo para o qual as informações de memória de vídeo estão sendo definidas. Para operação de GPU única, 
+	/// coloque isso em zero. Se houver vários nós da GPU, coloque isso no índice do nó (adaptador físico do dispositivo) para o qual as informações de memória de 
+	/// vídeo estão sendo definidas.</param>
+	/// <param name="Param_SegmentoGrupoMemoria">Especifica uma CA_DXGI_MEMORY_SEGMENT_GROUP que identifica o grupo como local ou não local.</param>
+	/// <param name="Param_ReversaMemoria">Especifica um UInt64 que define a memória física mínima necessária, em bytes.</param>
+	static CarenResult SetVideoMemoryReservation(
+		IDXGIAdapter3* Param_MyPointerWork,
+		UInt32 Param_NodeId,
+		CA_DXGI_MEMORY_SEGMENT_GROUP Param_SegmentoGrupoMemoria,
+		UInt64 Param_ReversaMemoria);
+
+	/// <summary>
+	/// (UnregisterHardwareContentProtectionTeardownStatus) - O Desregistra(Cancelar) um evento para impedi-lo de receber a notificação de eventos de proteção de 
+	/// conteúdo de hardware.
+	/// </summary>
+	/// <param name="Param_Cookie">Um valor-chave para a janela ou evento para descadastrar. O método ICarenDXGIAdapter3::RegisterHardwareContentProtectionTeardownStatusEvent 
+	/// retorna esse valor.</param>
+	static CarenResult UnregisterHardwareContentProtectionTeardownStatus(IDXGIAdapter3* Param_MyPointerWork, UInt32 Param_Cookie);
+
+	/// <summary>
+	/// (UnregisterVideoMemoryBudgetChangeNotification) - Este método deixa de notificar um objeto de sincronização da CPU sempre que ocorre uma mudança orçamentária. Um aplicativo pode mudar para a votação regular das informações.
+	/// </summary>
+	/// <param name="Param_Cookie">Um valor-chave para a janela ou evento para descadastrar. O método ICarenDXGIAdapter3::RegisterHardwareContentProtectionTeardownStatusEvent 
+	/// retorna esse valor.</param>
+	static CarenResult UnregisterVideoMemoryBudgetChangeNotification(IDXGIAdapter3* Param_MyPointerWork, UInt32 Param_Cookie);
+
+
+	//Métodos da interface(ICarenDXGIAdapter2)
+public:
+	/// <summary>
+	/// (GetDesc2) - Obtém uma descrição 1.2 da Microsoft DirectX Graphics Infrastructure (DXGI) de um adaptador ou placa de vídeo. 
+	/// Esta descrição inclui informações sobre a granularidade em que a unidade de processamento gráfico (GPU) pode ser impedida de realizar 
+	/// sua tarefa atual.
+	/// </summary>
+	/// <param name="Param_Out_DescAdaptador">Retorna uma estrutura CA_DXGI_ADAPTER_DESC2 que descreve o adaptador. Este parâmetro não deve ser 
+	/// NULO.No hardware gráfico nível 9, versões anteriores do GetDesc2(GetDesc e GetDesc1) retorna zero para o 
+	/// PCI ID em e (VendorId, DeviceId, SubSysId, e Revision) da estrutura de descrição do adaptador e "Adaptador de Software" para a descrição 
+	/// do membro (Description). O GetDesc2 retorna os valores reais de hardware nível 9 nesses membros.</param>
+	static CarenResult GetDesc2(IDXGIAdapter2* Param_MyPointerWork, [Out] CA_DXGI_ADAPTER_DESC2^% Param_Out_DescAdaptador);
+
+
+	//Métodos da interface(ICarenDXGIAdapter1)
+public:
+	/// <summary>
+	/// (GetDesc1) - Obtém uma descrição DXGI 1.1 de um adaptador (ou cartão de vídeo).
+	/// </summary>
+	/// <param name="Param_Out_DescAdaptador">Retorna uma estrutura CA_DXGI_ADAPTER_DESC1 que descreve o adaptador. No hardware gráfico de nível 9 de recurso, o (GetDesc1) retorna zeros para o 
+	/// PCI ID no VendorId, DeviceId, SubSysId e membros de revisão de CA_DXGI_ADAPTER_DESC1 e "Adaptador de Software" para a sequencia de descrição no membro Description.</param>
+	static CarenResult GetDesc1(IDXGIAdapter1* Param_MyPointerWork, [Out] CA_DXGI_ADAPTER_DESC1^% Param_Out_DescAdaptador);
+
+
+
+	//Métodos da interface(ICarenDXGIAdapter)
+public:
+	/// <summary>
+	/// (CheckInterfaceSupport) - Verifica se o sistema suporta uma interface do dispositivo para um componente gráfico.
+	/// </summary>
+	/// <param name="Param_GuidInterface">O GUID da interface da versão do dispositivo para a qual o suporte está sendo verificado.</param>
+	/// <param name="Param_Out_UMDVersion">A versão do motorista do modo de usuário do (Param_GuidInterface). Isso só é devolvido se a interface for suportada, caso contrário, este parâmetro será -12354.</param>
+	static CarenResult CheckInterfaceSupport(IDXGIAdapter* Param_MyPointerWork, String^ Param_GuidInterface, [Out] Int64% Param_Out_UMDVersion);
+
+	/// <summary>
+	/// (EnumOutputs) - Saídas de adaptador enumerado (cartão de vídeo).
+	/// </summary>
+	/// <param name="Param_IndexSaida">O índice da saída.</param>
+	/// <param name="Param_Out_Saida">O endereço de um ponteiro para uma interface ICarenDXGIOutput na posição especificada pelo parâmetro (Param_IndexSaida).</param>
+	static CarenResult EnumOutputs(IDXGIAdapter* Param_MyPointerWork, UInt32 Param_IndexSaida, [Out] ICarenDXGIOutput^% Param_Out_Saida);
+
+	/// <summary>
+	/// (GetDesc) - Obtém uma descrição DXGI 1.0 de um adaptador (ou cartão de vídeo).
+	/// </summary>
+	/// <param name="Param_Out_DescAdaptador">Retorna uma estrutura CA_DXGI_ADAPTER_DESC que descreve o adaptador. No hardware gráfico de nível 9 de recurso, o (GetDesc) retorna zeros para o 
+	/// PCI ID no VendorId, DeviceId, SubSysId e membros de revisão de CA_DXGI_ADAPTER_DESC e "Adaptador de Software" para a sequencia de descrição no membro Description.</param>
+	static CarenResult GetDesc(IDXGIAdapter* Param_MyPointerWork, [Out] CA_DXGI_ADAPTER_DESC^% Param_Out_DescAdaptador);
+};

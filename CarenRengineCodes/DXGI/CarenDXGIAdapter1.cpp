@@ -178,44 +178,16 @@ void CarenDXGIAdapter1::Finalizar()
 /// PCI ID no VendorId, DeviceId, SubSysId e membros de revisão de CA_DXGI_ADAPTER_DESC1 e "Adaptador de Software" para a sequencia de descrição no membro Description.</param>
 CarenResult CarenDXGIAdapter1::GetDesc1([Out] CA_DXGI_ADAPTER_DESC1^% Param_Out_DescAdaptador)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	DXGI_ADAPTER_DESC1 DescAdaptador;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetDesc1(&DescAdaptador);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Converte a esturutra e define no parametro de saida
-	Param_Out_DescAdaptador = Util.ConverterDXGI_ADAPTER_DESC1UnManaged_ToManaged(&DescAdaptador);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIAdapter::GetDesc1(PonteiroTrabalho,
+		Param_Out_DescAdaptador
+	);
 }
 
 
 
-//
+
 // Métodos da interface ICarenDXGIAdapter
-//
 
 /// <summary>
 /// (CheckInterfaceSupport) - Verifica se o sistema suporta uma interface do dispositivo para um componente gráfico.
@@ -224,41 +196,11 @@ Done:;
 /// <param name="Param_Out_UMDVersion">A versão do motorista do modo de usuário do (Param_GuidInterface). Isso só é devolvido se a interface for suportada, caso contrário, este parâmetro será -12354.</param>
 CarenResult CarenDXGIAdapter1::CheckInterfaceSupport(String^ Param_GuidInterface, [Out] Int64% Param_Out_UMDVersion)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	GUID GuidInterface = GUID_NULL;
-	LARGE_INTEGER LargeDados = { 0 };
-
-	//Cria o guid
-	GuidInterface = Util.CreateGuidFromString(Param_GuidInterface);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->CheckInterfaceSupport(GuidInterface, &LargeDados);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Deifine os dados no parametro de saida.
-	Param_Out_UMDVersion = LargeDados.QuadPart;
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIAdapter::CheckInterfaceSupport(PonteiroTrabalho,
+		Param_GuidInterface,
+		Param_Out_UMDVersion
+	);
 }
 
 /// <summary>
@@ -268,42 +210,11 @@ Done:;
 /// <param name="Param_Out_Saida">O endereço de um ponteiro para uma interface ICarenDXGIOutput na posição especificada pelo parâmetro (Param_IndexSaida).</param>
 CarenResult CarenDXGIAdapter1::EnumOutputs(UInt32 Param_IndexSaida, [Out] ICarenDXGIOutput^% Param_Out_Saida)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	IDXGIOutput* pSaida = NULL;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->EnumOutputs(Param_IndexSaida, &pSaida);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria a interface que será retornada.
-	Param_Out_Saida = gcnew CarenDXGIOutput();
-
-	//Define o ponteiro de trabalho
-	Param_Out_Saida->AdicionarPonteiro(pSaida);
-
-	//Define sucesso na operação
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIAdapter::EnumOutputs(PonteiroTrabalho,
+		Param_IndexSaida,
+		Param_Out_Saida
+	);
 }
 
 /// <summary>
@@ -313,37 +224,10 @@ Done:;
 /// PCI ID no VendorId, DeviceId, SubSysId e membros de revisão de CA_DXGI_ADAPTER_DESC e "Adaptador de Software" para a sequencia de descrição no membro Description.</param>
 CarenResult CarenDXGIAdapter1::GetDesc([Out] CA_DXGI_ADAPTER_DESC^% Param_Out_DescAdaptador)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	DXGI_ADAPTER_DESC DescAdaptador;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetDesc(&DescAdaptador);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Converte a esturutra e define no parametro de saida
-	Param_Out_DescAdaptador = Util.ConverterDXGI_ADAPTER_DESCUnManaged_ToManaged(&DescAdaptador);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIAdapter::GetDesc(PonteiroTrabalho,
+		Param_Out_DescAdaptador
+	);
 }
 
 

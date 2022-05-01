@@ -256,7 +256,7 @@ CarenResult CarenDXGIOutput3::SupportsOverlays([Out] Boolean Param_Out_Suporte)
 /// </summary>
 /// <param name="Param_Dispositivo3D">Um ponteiro para a interface do dispositivo Direct3D que você pode usar para processar a imagem da área de trabalho. Este dispositivo deve ser criado a partir do adaptador ao qual a saída está conectada.</param>
 /// <param name="Param_Out_SaidaDuplicada">Recebe um ponteiro da interface para a nova saida duplicada.</param>
-CarenResult CarenDXGIOutput6::DuplicateOutput(
+CarenResult CarenDXGIOutput3::DuplicateOutput(
 	ICaren^ Param_Dispositivo3D, 
 	[Out] ICarenDXGIOutputDuplication^% Param_Out_SaidaDuplicada)
 {

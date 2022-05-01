@@ -166,9 +166,8 @@ void CarenDXGIOutput1::Finalizar()
 
 
 
-//
-// Métodos da interface proprietária(ICarenDXGIOutput1)
-//
+
+// Métodos da interface ICarenDXGIOutput1
 
 /// <summary>
 /// (DuplicateOutput) - Cria uma interface de duplicação de desktop a partir da interface ICarenDXGIOutput1 que representa uma saída de 
@@ -176,7 +175,7 @@ void CarenDXGIOutput1::Finalizar()
 /// </summary>
 /// <param name="Param_Dispositivo3D">Um ponteiro para a interface do dispositivo Direct3D que você pode usar para processar a imagem da área de trabalho. Este dispositivo deve ser criado a partir do adaptador ao qual a saída está conectada.</param>
 /// <param name="Param_Out_SaidaDuplicada">Recebe um ponteiro da interface para a nova saida duplicada.</param>
-CarenResult CarenDXGIOutput6::DuplicateOutput(
+CarenResult CarenDXGIOutput1::DuplicateOutput(
 	ICaren^ Param_Dispositivo3D, 
 	[Out] ICarenDXGIOutputDuplication^% Param_Out_SaidaDuplicada)
 {

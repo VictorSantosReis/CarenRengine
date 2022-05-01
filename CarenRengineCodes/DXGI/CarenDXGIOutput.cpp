@@ -167,9 +167,9 @@ void CarenDXGIOutput::Finalizar()
 
 
 
-//
-// Métodos da interface proprietária ICarenDXGIOutput
-//
+
+// Métodos da interface ICarenDXGIOutput
+
 
 /// <summary>
 /// (FindClosestMatchingMode) - Encontra o modo de exibição que mais se corresponde ao modo de exibição solicitado.
@@ -473,6 +473,8 @@ CarenResult CarenDXGIOutput::WaitForVBlank()
 	//Chama o método na classe de funções compartilhadas do DXGI.
 	return Shared_DXGIOutput::WaitForVBlank(PonteiroTrabalho);
 }
+
+
 
 
 // Métodos da interface ICarenDXGIObject

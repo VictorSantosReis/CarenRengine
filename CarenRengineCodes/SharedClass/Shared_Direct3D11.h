@@ -1051,6 +1051,47 @@ public:
 /// <summary>
 /// 
 /// </summary>
+class Shared_D3D11RasterizerState
+{
+
+	//Métodos da interface(ICarenD3D11RasterizerState2)
+public:
+	/// <summary>
+	/// (GetDesc2) - Obtém a descrição para o rasterizador de estado que você usou para criar o objeto rasterizador-estado.
+	/// </summary>
+	/// <param name="Param_Out_DescRasterizador">Retorna uma estrutura que contém a descrição do rasterizador de estado.</param>
+	static CarenResult GetDesc2(
+		ID3D11RasterizerState2* Param_MyPointerWork, 
+		[Out] Estruturas::CA_D3D11_RASTERIZER_DESC2^% Param_Out_DescRasterizador);
+
+
+	//Métodos da interface ICarenD3D11RasterizerState1
+public:
+	/// <summary>
+	/// (GetDesc1) - Obtém a descrição para o rasterizador de estado que você usou para criar o objeto rasterizador-estado.
+	/// </summary>
+	/// <param name="Param_Out_DescRasterizador">Retorna uma estrutura que contém a descrição do rasterizador de estado.</param>
+	static CarenResult GetDesc1(
+		ID3D11RasterizerState1* Param_MyPointerWork, 
+		[Out] Estruturas::CA_D3D11_RASTERIZER_DESC1^% Param_Out_DescRasterizador);
+
+
+
+	//Métodos da interface ICarenD3D11RasterizerState
+public:
+	/// <summary>
+	/// (GetDesc) - Obtém a descrição para o rasterizador de estado que você usou para criar o objeto rasterizador-estado.
+	/// </summary>
+	/// <param name="Param_Out_DescRasterizador">Retorna uma estrutura que contém a descrição do rasterizador de estado.</param>
+	static CarenResult GetDesc(
+		ID3D11RasterizerState* Param_MyPointerWork, 
+		[Out] Estruturas::CA_D3D11_RASTERIZER_DESC^% Param_Out_DescRasterizador);
+
+};
+
+/// <summary>
+/// 
+/// </summary>
 class Shared_Direct3D11DeviceContext
 {
 	///////////////////////////////////////////////////////

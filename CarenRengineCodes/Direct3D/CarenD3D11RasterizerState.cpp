@@ -168,24 +168,10 @@ void CarenD3D11RasterizerState::Finalizar()
 
 CarenResult CarenD3D11RasterizerState::GetDesc([Out] Estruturas::CA_D3D11_RASTERIZER_DESC^% Param_Out_DescRasterizador)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	D3D11_RASTERIZER_DESC DescRasterizador;
-
-	//Chama o método para realizar a operação
-	PonteiroTrabalho->GetDesc(&DescRasterizador);
-
-	//Converte e define no parametro de saida.
-	Param_Out_DescRasterizador = Util.ConverterD3D11_RASTERIZER_DESCUnManaged_ToManaged(&DescRasterizador);
-
-	//Define sucesso por default a operação.
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11RasterizerState::GetDesc(PonteiroTrabalho,
+		Param_Out_DescRasterizador
+	);
 }
 
 

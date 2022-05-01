@@ -2828,6 +2828,9 @@
     <ClCompile Include="CarenRengineCodes\SharedClass\Shared_Direct3D11_View.cpp">
       <Filter>Arquivos de Origem\Shared Classes\D3D11</Filter>
     </ClCompile>
+    <ClCompile Include="CarenRengineCodes\SharedClass\Shared_Direct3D11_RasterizerState.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CarenRengineCodes\app.rc">

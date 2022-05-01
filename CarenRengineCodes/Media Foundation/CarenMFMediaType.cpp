@@ -159,9 +159,8 @@ CarenMFMediaType::CarenMFMediaType(ICarenMFCollection^ Param_MediaTypesToMux)
 	PonteiroTrabalho = vi_pOutMediaType;
 }
 
-//
 // Métodos da interface ICaren
-//
+
 
 /// <summary>
 /// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 

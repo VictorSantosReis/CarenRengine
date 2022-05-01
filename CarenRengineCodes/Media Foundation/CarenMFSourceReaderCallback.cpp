@@ -33,9 +33,8 @@ CarenMFSourceReaderCallback::CarenMFSourceReaderCallback(Boolean Param_CriarInte
 		PonteiroTrabalho = new CLN_IMFSourceReaderCallback();
 }
 
-//
 // Métodos da interface ICaren
-//
+
 
 /// <summary>
 /// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 

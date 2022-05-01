@@ -219,9 +219,8 @@ CarenD3D11Device::CarenD3D11Device(
 }
 
 
-//
 // Métodos da interface ICaren
-//
+
 
 /// <summary>
 /// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 

@@ -30,9 +30,8 @@ CarenD3D11RenderTargetView1::CarenD3D11RenderTargetView1()
 	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
-//
 // Métodos da interface ICaren
-//
+
 
 /// <summary>
 /// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 
@@ -235,41 +234,10 @@ CarenResult CarenD3D11RenderTargetView1::GetDesc(Estruturas::CA_D3D11_RENDER_TAR
 /// <param name="Param_Out_Recurso">Retorna um ponteiro para o recurso que é acessado através desta vista.</param>
 CarenResult CarenD3D11RenderTargetView1::GetResource([Out] ICarenD3D11Resource^% Param_Out_Recurso)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	ID3D11Resource* pRecurso = NULL;
-
-	//Chama o método para realizar a operação
-	PonteiroTrabalho->GetResource(&pRecurso);
-
-	//Verifica se o objeto é valido
-	if (ObjetoValido(pRecurso))
-	{
-		//Deixa o método continuar.
-	}
-	else
-	{
-		//Define falha na operação.
-		Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Cria a interface que vai ser retornada pelo parametro.
-	Param_Out_Recurso = gcnew CarenD3D11Resource();
-
-	//Define o ponteiro de trabalho
-	Param_Out_Recurso->AdicionarPonteiro(pRecurso);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11View::GetResource(PonteiroTrabalho,
+		Param_Out_Recurso
+	);
 }
 
 
@@ -282,44 +250,10 @@ Done:;
 /// para transforma em sua interface original.</param>
 CarenResult CarenD3D11RenderTargetView1::GetDevice(ICaren^ Param_Out_DispositivoD3D11)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	ID3D11Device* pDevice = NULL;
-
-	//Chama o método
-	PonteiroTrabalho->GetDevice(&pDevice);
-
-	//Verifica se a operação obteve sucesso.
-	if (ObjetoValido(pDevice))
-	{
-		//Deixa o método continuar.
-	}
-	else
-	{
-		//Define falha
-		Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-		//Define o código HRESULT.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método.
-		goto Done;
-	}
-
-	//Define o ponteiro do dispositivo.
-	Param_Out_DispositivoD3D11->AdicionarPonteiro(pDevice);
-
-	//Define sucesso por default a operação.
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11DeviceChild::GetDevice(PonteiroTrabalho,
+		Param_Out_DispositivoD3D11
+	);
 }
 
 /// <summary>
@@ -336,58 +270,13 @@ CarenResult CarenD3D11RenderTargetView1::GetPrivateData(
 	[Out] UInt32% Param_Out_TamanhoBufferSaida,
 	[Out] ICarenBuffer^% Param_Out_BufferDados)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	GUID GuidDados = GUID_NULL;
-	UINT OutLarguraDados = Param_TamanhoBuffer;
-	LPVOID pDados = NULL;
-
-	//Verifica se a string do guid é valido.
-	if (String::IsNullOrEmpty(Param_Guid))
-	{
-		//Determina que o guid é invalido.
-		Resultado.AdicionarCodigo(ResultCode::ER_GUID_INVALIDO, false);
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Cria o Guid
-	GuidDados = Util.CreateGuidFromString(Param_Guid);
-
-	//Chama o método
-	Hr = PonteiroTrabalho->GetPrivateData(GuidDados, &OutLarguraDados, &pDados);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria a interface que vai conter o ponteiro de dados.
-	Param_Out_BufferDados = gcnew CarenBuffer();
-
-	//Define o ponteiro de dados na interface de buffer.
-	Param_Out_BufferDados->CreateBuffer(IntPtr(pDados), false, OutLarguraDados, OutLarguraDados);
-
-	//Define o tamanho real dos dados retornados.
-	Param_Out_TamanhoBufferSaida = OutLarguraDados;
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11DeviceChild::GetPrivateData(PonteiroTrabalho,
+		Param_Guid,
+		Param_TamanhoBuffer,
+		Param_Out_TamanhoBufferSaida,
+		Param_Out_BufferDados
+	);
 }
 
 /// <summary>
@@ -399,68 +288,15 @@ Done:;
 /// dados anteriormente associados com o especificado GUID serão destruídos.</param>
 CarenResult CarenD3D11RenderTargetView1::SetPrivateData(
 	String^ Param_Guid,
-
-	UInt32 Param_TamanhoBuffer, ICarenBuffer^ Param_Buffer)
+	UInt32 Param_TamanhoBuffer, 
+	ICarenBuffer^ Param_Buffer)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	GUID GuidDados = GUID_NULL;
-	UINT OutLarguraDados = Param_TamanhoBuffer;
-	PBYTE pDados = NULL;
-	IntPtr PonteiroDados = IntPtr::Zero;
-
-	//Verifica se a string do guid é valido.
-	if (String::IsNullOrEmpty(Param_Guid))
-	{
-		//Determina que o guid é invalido.
-		Resultado.AdicionarCodigo(ResultCode::ER_GUID_INVALIDO, false);
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Cria o Guid
-	GuidDados = Util.CreateGuidFromString(Param_Guid);
-
-	//Obtém o ponteiro para os dados.
-	Resultado = Param_Buffer->GetInternalPointer(PonteiroDados);
-
-	//Verifica se é valido
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou.. O buffer não é valido.
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Define o ponteiro de dados.
-	pDados = (PBYTE)PonteiroDados.ToPointer();
-
-	//Chama o método que vai definir os dados.
-	Hr = PonteiroTrabalho->SetPrivateData(GuidDados, Param_TamanhoBuffer, pDados);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11DeviceChild::SetPrivateData(PonteiroTrabalho,
+		Param_Guid,
+		Param_TamanhoBuffer,
+		Param_Buffer
+	);
 }
 
 /// <summary>
@@ -469,60 +305,12 @@ Done:;
 /// <param name="Param_Guid">GUID associado com a interface a ser definida.</param>
 /// <param name="Param_Interface">Ponteiro para uma interface IUnknown-derivado a ser associado com a criança do dispositivo.</param>
 CarenResult CarenD3D11RenderTargetView1::SetPrivateDataInterface(
-	String^ Param_Guid, ICaren^ Param_Interface)
+	String^ Param_Guid, 
+	ICaren^ Param_Interface)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	GUID GuidAssociado = GUID_NULL;
-	IUnknown* pInterface = NULL;
-
-	//Verifica se a string do guid é valido.
-	if (String::IsNullOrEmpty(Param_Guid))
-	{
-		//Determina que o guid é invalido.
-		Resultado.AdicionarCodigo(ResultCode::ER_GUID_INVALIDO, false);
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Cria o Guid
-	GuidAssociado = Util.CreateGuidFromString(Param_Guid);
-
-	//Recupera a interface a ser definida.
-	Resultado = Param_Interface->RecuperarPonteiro((LPVOID*)pInterface);
-
-	//Verifica se a interface não é invalida
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//A interface é invalida
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Chama o método para definir a interface.
-	Hr = PonteiroTrabalho->SetPrivateDataInterface(GuidAssociado, pInterface);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D3D11.
+	return Shared_D3D11DeviceChild::SetPrivateDataInterface(PonteiroTrabalho,
+		Param_Guid,
+		Param_Interface
+	);
 }

@@ -33,9 +33,8 @@ CarenMFSinkWriterCallback::CarenMFSinkWriterCallback(Boolean Param_CriarInterfac
 		PonteiroTrabalho = new CLN_IMFSinkWriterCallback();
 }
 
-//
 // Métodos da interface ICaren
-//
+
 
 /// <summary>
 /// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 

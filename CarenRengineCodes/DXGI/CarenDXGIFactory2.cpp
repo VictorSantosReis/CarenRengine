@@ -56,9 +56,8 @@ CarenDXGIFactory2::CarenDXGIFactory2(UInt32 Param_Flags)
 	PonteiroTrabalho = vi_pOutFactory;
 }
 
-//
 // Métodos da interface ICaren
-//
+
 
 /// <summary>
 /// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 

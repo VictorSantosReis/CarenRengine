@@ -21,56 +21,6 @@ limitations under the License.
 #include "../SDK_Caren.h"
 #include "../SDK_Utilidades.h"
 
-/*
-#include "../Caren/CarenBuffer.h"
-#include "../Direct3D/CarenD3D11Buffer.h"
-#include "../Direct3D/CarenD3D11SamplerState.h"
-#include "../Direct3D/CarenD3D11ComputeShader.h"
-#include "../Direct3D/CarenD3D11DomainShader.h"
-#include "../Direct3D/CarenD3D11GeometryShader.h"
-#include "../Direct3D/CarenD3D11PixelShader.h"
-#include "../Direct3D/CarenD3D11VertexShader.h"
-#include "../Direct3D/CarenD3D11HullShader.h"
-#include "../Direct3D/CarenD3D11ClassInstance.h"
-#include "../Direct3D/CarenD3D11ShaderResourceView.h"
-#include "../Direct3D/CarenD3D11UnorderedAccessView.h"
-#include "../Direct3D/CarenD3D11CommandList.h"
-#include "../Direct3D/CarenD3D11Predicate.h"
-#include "../Direct3D/CarenD3D11InputLayout.h"
-#include "../Direct3D/CarenD3D11RenderTargetView.h"
-#include "../Direct3D/CarenD3D11BlendState.h"
-#include "../Direct3D/CarenD3D11DepthStencilState.h"
-#include "../Direct3D/CarenD3D11DepthStencilView.h"
-#include "../Direct3D/CarenD3D11RasterizerState.h"
-#include "../Direct3D/CarenD3DDeviceContextState.h"
-
-//D3D11Device
-#include "../Direct3D/CarenD3D11DeviceContext.h"
-#include "../Direct3D/CarenD3D11DeviceContext1.h"
-#include "../Direct3D/CarenD3D11DeviceContext2.h"
-#include "../Direct3D/CarenD3D11DeviceContext3.h"
-#include "../Direct3D/CarenD3DDeviceContextState.h"
-#include "../Direct3D/CarenD3D11Texture1D.h"
-#include "../Direct3D/CarenD3D11Texture2D.h"
-#include "../Direct3D/CarenD3D11Texture2D1.h"
-#include "../Direct3D/CarenD3D11Texture3D.h"
-#include "../Direct3D/CarenD3D11Texture3D1.h"
-#include "../Direct3D/CarenD3D11BlendState.h"
-#include "../Direct3D/CarenD3D11BlendState1.h"
-#include "../Direct3D/CarenD3D11ClassLinkage.h"
-#include "../Direct3D/CarenD3D11ClassInstance.h"
-#include "../Direct3D/CarenD3D11Counter.h"
-#include "../Direct3D/CarenD3D11Predicate.h"
-#include "../Direct3D/CarenD3D11Query.h"
-#include "../Direct3D/CarenD3D11Query1.h"
-#include "../Direct3D/CarenD3D11RasterizerState1.h"
-#include "../Direct3D/CarenD3D11RasterizerState2.h"
-#include "../Direct3D/CarenD3D11RenderTargetView.h"
-#include "../Direct3D/CarenD3D11RenderTargetView1.h"
-#include "../Direct3D/CarenD3D11SamplerState.h"
-#include "../Direct3D/CarenD3D11UnorderedAccessView1.h"
-#include "../Direct3D/CarenD3D11ShaderResourceView1.h"
-*/
 
 //Importa o namespace que contém as interfaces da API primária.
 using namespace CarenRengine::Direct3D11;
@@ -85,6 +35,39 @@ using namespace CarenRengine::SDKBase::Estruturas;
 
 //Importa o namespace de utilidades utilizado pelas classes
 using namespace CarenRengine::SDKUtilidades;
+
+/// <summary>
+///
+/// </summary>
+class Shared_D3D11Resource
+{
+public:
+	/// <summary>
+	/// (GetEvictionPriority) - Obtém a prioridade de despejo de um recurso.
+	/// </summary>
+	/// <param name="Param_Out_Prioridade">Retorna a prioridade do recurso que está sendo usado.</param>
+	static CarenResult GetEvictionPriority(
+		ID3D11Resource* Param_MyPointerWork, 
+		[Out] Enumeracoes::CA_DXGI_PRIORIDADE_RECURSO% Param_Out_Prioridade);
+
+	/// <summary>
+	/// (GetType) - Obtém o tipo de recurso.
+	/// </summary>
+	/// <param name="Param_Out_TipoRecurso">Retorna o tipo do recurso usado.</param>
+	static CarenResult GetType(
+		ID3D11Resource* Param_MyPointerWork, 
+		[Out] Enumeracoes::CA_D3D11_TIPO_RECURSO% Param_Out_TipoRecurso);
+
+	/// <summary>
+	/// (SetEvictionPriority) - Define a prioridade de despejo de um recurso.
+	/// Prioridades de recursos determinam qual recurso despejo de memória de vídeo quando o sistema ficou sem memória de vídeo. O recurso não será perdido; será removido da memória de vídeo e colocado na 
+	/// memória do sistema ou possivelmente colocado no disco rígido. O recurso será carregado volta na memória de vídeo quando for necessário.
+	/// </summary>
+	/// <param name="Param_PrioridadeRecurso">Define o tipo do recurso sendo usado.</param>
+	static CarenResult SetEvictionPriority(
+		ID3D11Resource* Param_MyPointerWork, 
+		Enumeracoes::CA_DXGI_PRIORIDADE_RECURSO Param_PrioridadeRecurso);
+};
 
 /// <summary>
 /// 
@@ -1050,6 +1033,19 @@ public:
 		ID3D11DeviceChild* Param_MyPointerWork,
 		String^ Param_Guid,
 		ICaren^ Param_Interface);
+};
+
+/// <summary>
+/// 
+/// </summary>
+class Shared_D3D11View
+{
+public:
+	/// <summary>
+	/// (GetResource) - Obtém o recurso que é acessado por meio dessa visualização.
+	/// </summary>
+	/// <param name="Param_Out_Recurso">Retorna um ponteiro para o recurso que é acessado através desta vista.</param>
+	static CarenResult GetResource(ID3D11View* Poaram_MyPointerWork, [Out] ICarenD3D11Resource^% Param_Out_Recurso);
 };
 
 /// <summary>

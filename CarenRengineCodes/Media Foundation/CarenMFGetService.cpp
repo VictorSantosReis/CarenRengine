@@ -69,9 +69,8 @@ CarenMFGetService::CarenMFGetService(ICaren^ Param_InterfaceBase)
 	PonteiroTrabalho = vi_pOutService;
 }
 
-//
 // Métodos da interface ICaren
-//
+
 
 /// <summary>
 /// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 

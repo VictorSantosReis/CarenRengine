@@ -30,9 +30,8 @@ CarenD3D11DeviceContext3::CarenD3D11DeviceContext3()
 	//INICIALIZA SEM NENHUM PONTEIRO VINCULADO.
 }
 
-//
 // Métodos da interface ICaren
-//
+
 
 /// <summary>
 /// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 

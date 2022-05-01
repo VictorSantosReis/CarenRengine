@@ -32,9 +32,8 @@ CarenMFClock::CarenMFClock()
 	//INICIALIZA SEM NENHUM PONTEIRO.
 }
 
-//
 // Métodos da interface ICaren
-//
+
 
 /// <summary>
 /// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 

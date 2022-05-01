@@ -58,9 +58,8 @@ CarenDirect3DDeviceManager9::CarenDirect3DDeviceManager9(OutParam UInt32% Param_
 	Param_Out_Resetoken = vi_OutResetToken;
 }
 
-//
 // Métodos da interface ICaren
-//
+
 
 /// <summary>
 /// (QueryInterface) - Consulta o objeto COM atual para um ponteiro para uma de suas interfaces; identificando a interface por uma 

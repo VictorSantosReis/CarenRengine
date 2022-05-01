@@ -193,6 +193,9 @@
     <Filter Include="Arquivos de Origem\Shared Classes\D3D11">
       <UniqueIdentifier>{18f2716f-aebe-4c8c-9dad-587027b944c3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Arquivos de Origem\Shared Classes\DXGI">
+      <UniqueIdentifier>{df581ae1-60ba-4886-bf6a-a86428c40199}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CarenRengineCodes\pch.h">
@@ -1530,6 +1533,9 @@
     <ClInclude Include="CarenRengineCodes\SharedClass\Shared_Direct3D11.h">
       <Filter>Arquivos de Cabeçalho\Shared Classes</Filter>
     </ClInclude>
+    <ClInclude Include="CarenRengineCodes\SharedClass\Shared_DXGI.h">
+      <Filter>Arquivos de Cabeçalho\Shared Classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D10Multithread.cpp">
@@ -2829,7 +2835,13 @@
       <Filter>Arquivos de Origem\Shared Classes\D3D11</Filter>
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\SharedClass\Shared_Direct3D11_RasterizerState.cpp">
-      <Filter>Arquivos de Origem</Filter>
+      <Filter>Arquivos de Origem\Shared Classes\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\SharedClass\Shared_DXGI_DeviceSubObject.cpp">
+      <Filter>Arquivos de Origem\Shared Classes\DXGI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\SharedClass\Shared_DXGI_Object.cpp">
+      <Filter>Arquivos de Origem\Shared Classes\DXGI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

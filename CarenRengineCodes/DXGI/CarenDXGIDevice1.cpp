@@ -174,36 +174,10 @@ void CarenDXGIDevice1::Finalizar()
 /// inadimplente em 3, mas pode variar de 1 a 16.</param>
 CarenResult CarenDXGIDevice1::GetMaximumFrameLatency([Out] UInt32% Param_Out_LatenciaMaxima)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	UINT OutFrameLatenciaMaxima = 0;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetMaximumFrameLatency(&OutFrameLatenciaMaxima);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Define a latencia maxima do frame no parametro de saida.
-	Param_Out_LatenciaMaxima = OutFrameLatenciaMaxima;
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIDevice::GetMaximumFrameLatency(PonteiroTrabalho,
+		Param_Out_LatenciaMaxima
+	);
 }
 
 /// <summary>
@@ -213,37 +187,16 @@ Done:;
 /// variar de 1 a 16. Um valor de 0 redefinirá a latência ao padrão. Para dispositivos (per-head), esse valor é especificado por cabeça(Head).</param>
 CarenResult CarenDXGIDevice1::SetMaximumFrameLatency(UInt32 Param_LatenciaMaxima)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->SetMaximumFrameLatency(Param_LatenciaMaxima);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIDevice::SetMaximumFrameLatency(PonteiroTrabalho,
+		Param_LatenciaMaxima
+	);
 }
 
 
 
-//
+
 // Métodos da interface ICarenDXGIDevice
-//
 
 /// <summary>
 /// (CreateSurface)(Não é implementado) - Este método é usado internamente e você não deve chamá-lo diretamente em sua aplicação.
@@ -259,39 +212,10 @@ CarenResult CarenDXGIDevice1::CreateSurface()
 /// <param name="Param_Out_Adaptador">Retorna um ponteiro para a interface(ICarenDXGIAdapter) do adaptador.</param>
 CarenResult CarenDXGIDevice1::GetAdapter([Out] ICarenDXGIAdapter^% Param_Out_Adaptador)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	IDXGIAdapter* pAdaptador = NULL;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetAdapter(&pAdaptador);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria a interface que vai ser devolvida no parametro de saida.
-	Param_Out_Adaptador = gcnew CarenDXGIAdapter();
-
-	//Adiciona o ponteiro na interface
-	Param_Out_Adaptador->AdicionarPonteiro(pAdaptador);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIDevice::GetAdapter(PonteiroTrabalho,
+		Param_Out_Adaptador
+	);
 }
 
 /// <summary>
@@ -300,49 +224,10 @@ Done:;
 /// <param name="Param_Out_Prioridade">recebe um valor que indica a prioridade atual da Thread GPU. O valor será entre -7 e 7, inclusive, onde 0 representa prioridade normal.</param>
 CarenResult CarenDXGIDevice1::GetGPUThreadPriority([Out] int% Param_Out_Prioridade)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	int OutPrioridade = 0;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetGPUThreadPriority(&OutPrioridade);
-
-	//Verifica se a operação obteve sucesso.
-	if (Sucesso(Hr))
-	{
-		//Deixa o método continuar.
-	}
-	else if (Hr == E_POINTER)
-	{
-		//Define o código de erro.
-		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
-
-		//Sai do método
-		goto Done;
-	}
-	else
-	{
-		//Define falha
-		Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-		//Define o código HRESULT.
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método.
-		goto Done;
-	}
-
-	//Define o valor da prioridade no parametro de saida.
-	Param_Out_Prioridade = OutPrioridade;
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIDevice::GetGPUThreadPriority(PonteiroTrabalho,
+		Param_Out_Prioridade
+	);
 }
 
 /// <summary>
@@ -361,59 +246,12 @@ CarenResult CarenDXGIDevice1::QueryResourceResidency(
 	cli::array<CA_DXGI_RESIDENCY>^% Param_Ref_StatusResidencia,
 	UInt32 Param_QuantidadeRecursos)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	IUnknown** ppMatrizRecursos = CriarMatrizUnidimensional<IUnknown*>(Param_QuantidadeRecursos);
-	DXGI_RESIDENCY* pMatrizResidencia = CriarMatrizUnidimensional<DXGI_RESIDENCY>(Param_QuantidadeRecursos);
-	IDXGIResource* pResource = NULL;
-
-	//Obtém os ponteiros de recurso para adicionar na matriz.
-	for (UINT i = 0; i < Param_QuantidadeRecursos; i++)
-	{
-		//Obtém o ponteiro para o recurso
-		Param_ArrayRecursos[i]->RecuperarPonteiro((LPVOID*)&pResource);
-
-		//Define o ponteiro na matriz.
-		ppMatrizRecursos[i] = pResource;
-
-		//NULA
-		pResource = NULL;
-	}
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->QueryResourceResidency(ppMatrizRecursos, pMatrizResidencia, Param_QuantidadeRecursos);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Passa os valores de residencia dos recursos para a matriz de referencia.
-	for (UINT i = 0; i < Param_QuantidadeRecursos; i++)
-	{
-		//Converte e define o valor da enumeração da residencia na matriz.
-		Param_Ref_StatusResidencia[i] = static_cast<CA_DXGI_RESIDENCY>(pMatrizResidencia[i]);
-	}
-
-Done:;
-	//Libera a memoria para as matrizes.
-	DeletarMatrizDePonteirosUnidimensionalSafe(ppMatrizRecursos, Param_QuantidadeRecursos);
-	DeletarMatrizUnidimensionalSafe(&pMatrizResidencia);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIDevice::QueryResourceResidency(PonteiroTrabalho,
+		Param_ArrayRecursos,
+		Param_Ref_StatusResidencia,
+		Param_QuantidadeRecursos
+	);
 }
 
 /// <summary>
@@ -423,30 +261,10 @@ Done:;
 /// prioridade normal.</param>
 CarenResult CarenDXGIDevice1::SetGPUThreadPriority(int Param_Prioridade)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->SetGPUThreadPriority(Param_Prioridade);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIDevice::SetGPUThreadPriority(PonteiroTrabalho,
+		Param_Prioridade
+	);
 }
 
 

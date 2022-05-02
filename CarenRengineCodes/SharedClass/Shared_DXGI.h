@@ -656,3 +656,527 @@ public:
 	/// PCI ID no VendorId, DeviceId, SubSysId e membros de revisão de CA_DXGI_ADAPTER_DESC e "Adaptador de Software" para a sequencia de descrição no membro Description.</param>
 	static CarenResult GetDesc(IDXGIAdapter* Param_MyPointerWork, [Out] CA_DXGI_ADAPTER_DESC^% Param_Out_DescAdaptador);
 };
+
+/// <summary>
+/// 
+/// </summary>
+class Shared_DXGISwapChain
+{
+	//Métodos da interface(ICarenDXGISwapChain4)
+public:
+	/// <summary>
+	/// (SetHDRMetaData) - Este método estabelece metadados de cabeçalho High Dynamic Range (HDR) e Wide Color Gamut (WCG).
+	/// </summary>
+	/// <param name="Param_MetadataType">Especifica um membro da enumeração CA_DXGI_HDR_METADATA_TYPE.</param>
+	/// <param name="Param_Size">Especifica o tamanho do (Param_Metadata), em bytes.</param>
+	/// <param name="Param_Metadata">Especifica um ponteiro vazio que faz referência aos metadados, se ele existe.</param>
+	static CarenResult SetHDRMetaData(
+		IDXGISwapChain4* Param_MyPointerWork,
+		CA_DXGI_HDR_METADATA_TYPE Param_MetadataType,
+		UInt32 Param_Size,
+		ICaren^ Param_Metadata);
+
+
+	//Métodos da interface(ICarenDXGISwapChain3)
+public:
+	/// <summary>
+	/// (CheckColorSpaceSupport) - Verifica o suporte da cadeia de swap para espaço de cores.
+	/// </summary>
+	/// <param name="Param_ColorSpace">Um valor CA_DXGI_COLOR_SPACE_TYPE que especifica o tipo de espaço de cor para verificar o suporte.</param>
+	/// <param name="Param_Out_ColorSpaceSuporte">Recebe Zero ou mais bandeiras da enumeração CA_DXGI_SWAP_CHAIN_COLOR_SPACE_SUPPORT_FLAG são combinados usando uma operação ou 
+	/// bitwise. O valor resultante especifica opções de suporte ao espaço colorido.</param>
+	static CarenResult CheckColorSpaceSupport(
+		IDXGISwapChain3* Param_MyPointerWork, 
+		CA_DXGI_COLOR_SPACE_TYPE Param_ColorSpace, 
+		[Out] CA_DXGI_SWAP_CHAIN_COLOR_SPACE_SUPPORT_FLAG% Param_Out_ColorSpaceSuporte);
+
+	/// <summary>
+	/// (GetCurrentBackBufferIndex) - Obtém o índice do buffer atual da cadeia de swap.
+	/// </summary>
+	/// <param name="Param_Out_IndexBackBuffer">Retorna o indice do buffer traseiro(BackBuffer) atual.</param>
+	static CarenResult GetCurrentBackBufferIndex(
+		IDXGISwapChain3* Param_MyPointerWork, 
+		[Out] UInt32% Param_Out_IndexBackBuffer);
+
+	/// <summary>
+	/// (ResizeBuffers1) - Altera o tamanho do buffer traseiro da cadeia de swap, formato e número de buffers, onde a cadeia de swap foi criada usando uma fila de 
+	/// comando D3D12 como um dispositivo de entrada. Isso deve ser chamado quando a janela de aplicação for redimensionada.
+	/// </summary>
+	/// <param name="Param_CountBuffer">O número de buffers na cadeia de swap (incluindo todos os buffers traseiros e frontais). Este número pode ser diferente do número de 
+	/// buffers com os quais você criou a cadeia de swap. Este número não pode ser maior do que DXGI_MAX_SWAP_CHAIN_BUFFERS. Defina este número a zero para preservar o 
+	/// número existente de buffers na cadeia de swap. Você não pode especificar menos de dois buffers para o modelo de apresentação flip.</param>
+	/// <param name="Param_Largura">A nova largura do buffer traseiro. Se você especificar zero, o DXGI usará a largura da área do cliente da janela de destino. Você não pode 
+	/// especificar a largura como zero se você chamou o método ICarenDXGIFactory2::CreateSwapChainForComposition para criar a cadeia de swap para uma superfície de composição.</param>
+	/// <param name="Param_Altura">A nova altura do tampão traseiro. Se você especificar zero, o DXGI usará a altura da área do cliente da janela de destino. Você não pode 
+	/// especificar a altura como zero se você chamou o método ICarenDXGIFactory2::CreateSwapChainForComposition para criar a cadeia de swap para uma superfície de composição.</param>
+	/// <param name="Param_Formato">O novo formato do buffer traseiro. Defina esse valor para DXGI_FORMAT_UNKNOWN preservar o formato existente do buffer traseiro. O modelo 
+	/// de apresentação flip suporta um conjunto mais restrito de formatos do que o modelo de transferência de bit-block (bitblt).</param>
+	/// <param name="Param_SwapChainFlags">Uma combinação de valores da enumeração CA_valoresDXGI_SWAP_CHAIN_FLAG que são combinados usando uma operação ou bitwise. O valor 
+	/// resultante especifica opções para comportamento em cadeia de swap.</param>
+	/// <param name="Param_ArrayNodeMask">Uma matriz de UInt32, de tamanho total Param_CountBuffer, onde o valor indica em qual nó o buffer traseiro deve ser criado. Buffers 
+	/// criados usando ResizeBuffers1 com um conjunto (Param_ArrayNodeMask) não-nulo são visíveis para todos os nós.</param>
+	/// <param name="Param_ArrayD3D12CommandQueue">Uma série de filas de comando (ID3D12CommandQueue), de tamanho total Param_CountBuffer. Cada fila fornecida deve coincidir com a 
+	/// máscara de nó de criação correspondente especificada na matriz Param_ArrayNodeMask. Quando o (ICarenDXGISwapChain::Apresentar) é chamado, além de girar para o próximo 
+	/// buffer para o próximo quadro, a cadeia de swap também girará através dessas filas de comando. Isso permite que o aplicativo controle qual fila requer sincronização para 
+	/// uma determinada operação presente.</param>
+	static CarenResult ResizeBuffers1(
+		IDXGISwapChain3* Param_MyPointerWork,
+		UInt32 Param_CountBuffer,
+		UInt32 Param_Largura,
+		UInt32 Param_Altura,
+		CA_DXGI_FORMAT Param_Formato,
+		CA_DXGI_SWAP_CHAIN_FLAG Param_SwapChainFlags,
+		cli::array<UInt32>^ Param_ArrayNodeMask,
+		cli::array<ICaren^>^ Param_ArrayD3D12CommandQueue);
+
+	/// <summary>
+	/// (SetColorSpace1) - Define o espaço de cores usado pela cadeia de swap.
+	/// </summary>
+	/// <param name="Param_ColorSpace">Um valor de CA_DXGI_COLOR_SPACE_TYPE que especifica o espaço de cores para definir.</param>
+	static CarenResult SetColorSpace1(
+		IDXGISwapChain3* Param_MyPointerWork, 
+		CA_DXGI_COLOR_SPACE_TYPE Param_ColorSpace);
+
+
+
+	//Métodos da interface(ICarenDXGISwapChain2)
+public:
+	/// <summary>
+	/// (GetFrameLatencyWaitableObject) - Retorna uma Handle aguardavel que sinaliza quando o adaptador DXGI terminar de apresentar um novo quadro.
+	/// O Windows 8.1 introduz novas APIs que permitem renderização de menor latência esperando até que o quadro anterior seja apresentado ao display antes de desenhar o 
+	/// quadro seguinte. Para usar este método, primeiro crie a cadeia de swap DXGI com o conjunto de bandeiras CA_DXGI_SWAP_CHAIN_FLAG::CA_DXGI_SWAP_CHAIN_FLAG_FRAME_LATENCY_WAITABLE_OBJECT, 
+	/// em seguida, ligue para GetFrameLatencyWaitableObject para recuperar a handle aguardavel. Chame o método ICarenEvent::AguardarObjetoUnicoEx para sincronizar a 
+	/// renderização de cada novo quadro com o final do quadro anterior. Para cada quadro que renderiza, o aplicativo deve esperar por essa alça antes de iniciar qualquer operação 
+	/// de renderização.
+	/// </summary>
+	/// <param name="Param_Out_HandleEvento">Recebe a interface que gerencia a Handle aguardavel.</param>
+	static CarenResult GetFrameLatencyWaitableObject(
+		IDXGISwapChain2* Param_MyPointerWork, 
+		[Out] ICarenEvent^% Param_Out_HandleEvento);
+
+	/// <summary>
+	/// (GetMatrixTransform) - Obtém a matriz de transformação que será aplicada a uma cadeia de troca de composição no proximo (Present).
+	/// A partir do Windows 8.1, os aplicativos da Windows Store são capazes de colocar os visuais da cadeia de swap DirectX em páginas XAML usando o elemento SwapChainPanel,
+	/// que pode ser colocado e dimensionado arbitrariamente. Isso expõe os visuais da cadeia de swap DirectX a cenários de dimensionamento e tradução usando UI sensível ao toque. 
+	/// Os métodos GetMatrixTransform e SetMatrixTransform são usados para sincronizar o dimensionamento da cadeia de swap DirectX com seu elemento SwapChainPanel associado. 
+	/// Apenas elementos simples de escala/tradução na matriz são permitidos - a chamada falhará se a matriz contiver elementos de distorção/rotação.
+	/// </summary>
+	/// <param name="Param_Out_Matriz_32"></param>
+	static CarenResult GetMatrixTransform(
+		IDXGISwapChain2* Param_MyPointerWork, 
+		[Out] CA_DXGI_MATRIX_3X2_F^% Param_Out_Matriz_32);
+
+	/// <summary>
+	/// (GetMaximumFrameLatency) - Obtém o número de quadros que a cadeia de swap pode enfileirar para renderização.
+	/// </summary>
+	/// <param name="Param_Out_LatenciaMaxima">Recebe o número máximo de quadros de buffer traseiros que serão enfileirados para a cadeia de swap. Esse valor é 1 por padrão, 
+	/// mas deve ser definido para 2 se a cena demorar mais do que leva para uma atualização vertical (normalmente cerca de 16ms) para desenhar.</param>
+	static CarenResult GetMaximumFrameLatency(
+		IDXGISwapChain2* Param_MyPointerWork, 
+		[Out] UInt32% Param_Out_LatenciaMaxima);
+
+	/// <summary>
+	/// (GetSourceSize) - Obtém a região de origem é usada para a cadeia de swap.
+	/// Use o (GetSourceSize) para obter a parte da cadeia de swap da qual o sistema operacional apresenta. O retângulo de origem é sempre definido pela região 
+	/// [0, 0, Largura, Altura]. Use o (SetSourceSize) para definir esta parte da cadeia de swap.
+	/// </summary>
+	/// <param name="Param_Out_Largura">Recebe a largura atual da região de origem da cadeia de swap. Esse valor pode variar de 1 até a largura geral da cadeia de swap.</param>
+	/// <param name="Param_Out_Altura">Recebe a altura atual da região de origem da cadeia de swap. Esse valor pode variar de 1 a altura global da cadeia de swap.</param>
+	static CarenResult GetSourceSize(
+		IDXGISwapChain2* Param_MyPointerWork, 
+		[Out] UInt32% Param_Out_Largura, 
+		[Out] UInt32% Param_Out_Altura);
+
+	/// <summary>
+	/// (SetMatrixTransform) - Define a matriz de transformação que será aplicada a uma cadeia de troca de composição no próximo (Present).
+	/// A partir do Windows 8.1, os aplicativos da Windows Store são capazes de colocar os visuais da cadeia de swap DirectX em páginas XAML usando o elemento SwapChainPanel, que 
+	/// pode ser colocado e dimensionado arbitrariamente. Isso expõe os visuais da cadeia de swap DirectX a cenários de dimensionamento e tradução usando UI sensível ao toque. 
+	/// Os métodos GetMatrixTransform e SetMatrixTransform são usados para sincronizar o dimensionamento da cadeia de swap DirectX com seu elemento SwapChainPanel associado. 
+	/// Apenas elementos simples de escala/tradução na matriz são permitidos - a chamada falhará se a matriz contiver elementos de distorção/rotação.
+	/// </summary>
+	/// <param name="Param_Matriz_32">A matriz de transformação para usar para o dimensionamento e tradução em cadeia de swap. Esta função só pode ser usada com cadeias de troca de 
+	/// composição(Composition) criadas por ICarenDXGIFactory2::CreateSwapChainForComposition. Somente componentes de escala e tradução são permitidos na matriz.</param>
+	static CarenResult SetMatrixTransform(
+		IDXGISwapChain2* Param_MyPointerWork, 
+		CA_DXGI_MATRIX_3X2_F^ Param_Matriz_32);
+
+	/// <summary>
+	/// (SetMaximumFrameLatency) - Define o número de quadros que a cadeia de swap pode fazer fila para renderização.
+	/// </summary>
+	/// <param name="Param_MaximoBackBufferLatencia">O número máximo de quadros de buffer traseiros que serão enfileirados para a cadeia de swap. Este valor é 1 por padrão.</param>
+	static CarenResult SetMaximumFrameLatency(
+		IDXGISwapChain2* Param_MyPointerWork, 
+		UInt32 Param_MaximoBackBufferLatencia);
+
+	/// <summary>
+	/// (SetSourceSize) - Define a região de origem para ser usada para a cadeia de swap.
+	/// Use o SetSourceSize para especificar a parte da cadeia de swap da qual o sistema operacional apresenta. Isso permite um redimensionamento eficaz sem chamar o método 
+	/// (ICarenDXGISwapChain::AlterarTamanhoBuffers) que é mais caro. Antes do Windows 8.1, ligar para ICarenDXGISwapChain::AlterarTamanhoBuffers era a única maneira de 
+	/// redimensionar a cadeia de swap. O retângulo de origem é sempre definido pela região [0, 0, Largura, Altura].
+	/// </summary>
+	/// <param name="Param_Largura">Largura de fonte para usar para a cadeia de swap. Esse valor deve ser maior que zero, e deve ser menor ou igual à largura global 
+	/// da cadeia de swap.</param>
+	/// <param name="Param_Altura">Altura de origem para usar para a cadeia de swap. Esse valor deve ser maior que zero, e deve ser menor ou igual à altura global da 
+	/// cadeia de swap.</param>
+	static CarenResult SetSourceSize(
+		IDXGISwapChain2* Param_MyPointerWork, 
+		UInt32 Param_Largura, 
+		UInt32 Param_Altura);
+
+
+	//Métodos da interface(ICarenDXGISwapChain1)
+public:
+	/// <summary>
+	/// (GetBackgroundColor) - Recupera a cor de fundo da cadeia de swaps.
+	/// </summary>
+	/// <param name="Param_Out_Cor">Retorna uma estrutura que contém as informações de cor do Background.</param>
+	static CarenResult GetBackgroundColor(
+		IDXGISwapChain1* Param_MyPointerWork, 
+		[Out] CA_DXGI_RGBA^% Param_Out_Cor);
+
+	/// <summary>
+	/// (GetCoreWindow) - Recupera o objeto CoreWindow subjacente para este objeto de cadeia de swap.
+	/// </summary>
+	/// <param name="Param_RIID">Um ponteiro para o identificador globalmente único(GUID) do objeto CoreWindow que é referenciado pelo parâmetro Param_Out_CoreWindow.</param>
+	/// <param name="Param_Out_CoreWindow">Retorna o ponteiro do objeto para a CoreWindow.  O usuário deve inicializar a interface antes de chamar este método.</param>
+	static CarenResult GetCoreWindow(
+		IDXGISwapChain1* Param_MyPointerWork, 
+		String^ Param_RIID, 
+		ICaren^ Param_Out_CoreWindow);
+
+	/// <summary>
+	/// (GetDesc1) - Obtém uma descrição da cadeia de swaps.
+	/// </summary>
+	/// <param name="Param_Out_Desc">Retorna uma estrutura que contém a descrição da cadeia de Swap.</param>
+	static CarenResult GetDesc1(
+		IDXGISwapChain1* Param_MyPointerWork, 
+		[Out] CA_DXGI_SWAP_CHAIN_DESC1^% Param_Out_Desc);
+
+	/// <summary>
+	/// (GetFullscreenDesc) - Obtém uma descrição de uma cadeia de troca em tela cheia.
+	/// </summary>
+	/// <param name="Param_Out_DescFullScreenSwap">Retorna uma estrutura que contém a descrição no modo FullScreen na cadeia de Swap.</param>
+	static CarenResult GetFullscreenDesc(
+		IDXGISwapChain1* Param_MyPointerWork, 
+		[Out] CA_DXGI_SWAP_CHAIN_FULLSCREEN_DESC^% Param_Out_DescFullScreenSwap);
+
+	/// <summary>
+	/// (GetHwnd) - Recupera o HWND subjacente para este objeto de cadeia de swap.
+	/// </summary>
+	/// <param name="Param_Out_HWND">Retorna um ponteiro para o HWND do objeto de cadeia de Swap.</param>
+	static CarenResult GetHwnd(
+		IDXGISwapChain1* Param_MyPointerWork, 
+		[Out] IntPtr% Param_Out_HWND);
+
+	/// <summary>
+	/// (GetRestrictToOutput) - Obtém a saída (o monitor de exibição) ao qual você pode restringir o conteúdo de uma operação atual.
+	/// </summary>
+	/// <param name="Param_Out_Saida">Um ponteiro para um buffer que recebe um ponteiro para a interface IDXGIOutput para a saída de restrição.  Um aplicativo passa este ponteiro para 
+	/// ICarenDXGIOutput em uma chamada para o ICarenDXGIFactory2::CreateSwapChainForHwnd, ICarenDXGIFactory2::CreateSwapChainForCoreWindow, ou ICarenDXGIFactory2::CreateSwapChainForComposition</param>
+	static CarenResult GetRestrictToOutput(
+		IDXGISwapChain1* Param_MyPointerWork, 
+		[Out] ICarenDXGIOutput^% Param_Out_Saida);
+
+	/// <summary>
+	/// (GetRotation) - Obtém a rotação dos buffers traseiros para a cadeia de swaps.
+	/// </summary>
+	/// <param name="Param_Out_Rotacao">Retorna uma enumeração que define a rotação do Buffer Traseiro(BackBuffer).</param>
+	static CarenResult GetRotation(
+		IDXGISwapChain1* Param_MyPointerWork, 
+		[Out] CA_DXGI_MODE_ROTATION% Param_Out_Rotacao);
+
+	/// <summary>
+	/// (IsTemporaryMonoSupported) - Determina se uma cadeia de swap suporta "mono temporário".
+	/// </summary>
+	/// <param name="Param_Out_Suporte">Retorna um Booleano que define o suporte ao mono.</param>
+	static CarenResult IsTemporaryMonoSupported(
+		IDXGISwapChain1* Param_MyPointerWork, 
+		[Out] Boolean% Param_Out_Suporte);
+
+	/// <summary>
+	/// (Present1) - Apresenta um Frame a tela de exibição.
+	/// </summary>
+	/// <param name="Param_IntervaloSincronizacao">Um inteiro que especifica como sincronizar a apresentação de um quadro com o espaço em branco vertical.</param>
+	/// <param name="Param_FlagsApresentacao">Um valor inteiro que contém opções de apresentação em cadeia de swaps.</param>
+	/// <param name="Param_ParametrosApresentacao">uma estrutura CA_DXGI_PRESENT_PARAMETERS que descreve retângulos atualizados e rolar informações do quadro para apresentar.</param>
+	static CarenResult Present1(
+		IDXGISwapChain1* Param_MyPointerWork, 
+		UInt32 Param_IntervaloSincronizacao, 
+		CA_DXGI_PRESENT Param_FlagsApresentacao, 
+		CA_DXGI_PRESENT_PARAMETERS^ Param_ParametrosApresentacao);
+
+	/// <summary>
+	/// (SetBackgroundColor) - Muda a cor de fundo da cadeia de swaps.
+	/// </summary>
+	/// <param name="Param_Cor">A nova cor para o Background do buffer traseiro.</param>
+	static CarenResult SetBackgroundColor(
+		IDXGISwapChain1* Param_MyPointerWork, 
+		CA_DXGI_RGBA^ Param_Cor);
+
+	/// <summary>
+	/// (SetRotation) - Define a rotação dos buffers de volta para a cadeia de swap.
+	/// </summary>
+	/// <param name="Param_Rotacao">A nova rotação dos Buffers Traseiro(BackBuffers).</param>
+	static CarenResult SetRotation(
+		IDXGISwapChain1* Param_MyPointerWork, 
+		CA_DXGI_MODE_ROTATION Param_Rotacao);
+
+
+
+	//Métodos da interface(ICarenDXGISwapChain)
+public:
+	/// <summary>
+	/// (GetBuffer) - Acessa um dos buffers de volta da cadeia de swaps.
+	/// </summary>
+	/// <param name="Param_IndexBuffer">O Indince para o buffer de volta(Back-Buffer).</param>
+	/// <param name="Param_RiidInterface">O tipo de interface usada para manipular o buffer.</param>
+	/// <param name="Param_Out_InterfaceBuffer">Retorna a interface que gerencia o Buffer de volta(Back-Buffer). O Usuário é responsável por criar a interface que será retornada.</param>
+	static CarenResult GetBuffer(
+		IDXGISwapChain* Param_MyPointerWork, 
+		UInt32 Param_IndexBuffer, 
+		String^ Param_RiidInterface, 
+		ICaren^ Param_Out_InterfaceBuffer);
+
+	/// <summary>
+	/// (GetContainingOutput) - Obtém a saída (o monitor de exibição) que contém a maior parte da área do cliente da janela alvo.
+	/// Se o método for bem-sucedido, a interface de saída será preenchida e sua contagem de referência incrementada. Quando você terminar com ele, não se esqueça de liberar a interface para evitar um vazamento de memória.
+	/// </summary>
+	/// <param name="Param_Out_MonitorSaida">Retorna a interface para o monitor de exbicão de saida.</param>
+	static CarenResult GetContainingOutput(
+		IDXGISwapChain* Param_MyPointerWork, 
+		[Out] ICarenDXGIOutput^% Param_Out_MonitorSaida);
+
+	/// <summary>
+	/// (GetDesc) - Obtém uma descrição da cadeia de swaps.
+	/// </summary>
+	/// <param name="Param_Out_DescricaoCadeiaSwap">Retorna uma estrutura com a descrição da cadeia de troca.</param>
+	static CarenResult GetDesc(
+		IDXGISwapChain* Param_MyPointerWork, 
+		[Out] Estruturas::CA_DXGI_SWAP_CHAIN_DESC^% Param_Out_DescricaoCadeiaSwap);
+
+	/// <summary>
+	/// (GetFrameStatistics) - Obtém estatísticas de desempenho sobre o último quadro render.
+	/// </summary>
+	/// <param name="Param_Out_FrameEstatisticas">Retorna uma estrutura com as estatiticas do frame.</param>
+	static CarenResult GetFrameStatistics(
+		IDXGISwapChain* Param_MyPointerWork, 
+		[Out] Estruturas::CA_DXGI_FRAME_STATISTICS^% Param_Out_FrameEstatisticas);
+
+	/// <summary>
+	/// (GetFullscreenState) - Associe o estado ao modo de tela cheia.
+	/// </summary>
+	/// <param name="Param_Out_EstadoFullScreen">Retorna o estado do FullScreen. Se TRUE, a cadeia de swap está no modo de tela cheia. Se FALSE, a cadeia de swap está em modo de janela.</param>
+	/// <param name="Param_Out_MonitorSaida">Retorna um ponteiro para o monitor de saida quando em modo de Tela Cheia(FullScreen); caso contrario retorna NULO.</param>
+	static CarenResult GetFullscreenState(
+		IDXGISwapChain* Param_MyPointerWork, 
+		[Out] Boolean% Param_Out_EstadoFullScreen, 
+		[Out] ICarenDXGIOutput^% Param_Out_MonitorSaida);
+
+	/// <summary>
+	/// (GetLastPresentCount) - Obtém o número de vezes que o método ICarenDXGISwapChain::Apresentar ou ICarenDXGISwapChain1::Present1 foi chamado.
+	/// </summary>
+	/// <param name="Param_Out_QuantidadeChamadas">Retorna a quantidade de chamadas para o método Apresentar ou Present1.</param>
+	static CarenResult GetLastPresentCount(
+		IDXGISwapChain* Param_MyPointerWork, 
+		[Out] UInt32% Param_Out_QuantidadeChamadas);
+
+	/// <summary>
+	/// (Present) - Apresenta uma imagem renderizada ao usuário.
+	/// </summary>
+	/// <param name="Param_IntervaloSincronizacao">Um inteiro que especifica como sincronizar a apresentação de um quadro com o espaço em branco vertical.</param>
+	/// <param name="Param_Flags">Um valor inteiro que contém opções de apresentação em cadeia de swaps. Essas opções são definidas pela enumeração (CA_DXGI_PRESENT).</param>
+	static CarenResult Present(
+		IDXGISwapChain* Param_MyPointerWork, 
+		UInt32 Param_IntervaloSincronizacao, 
+		Enumeracoes::CA_DXGI_PRESENT Param_Flags);
+
+	/// <summary>
+	/// (ResizeBuffers) - Altera o tamanho, o formato e o número de buffers da cadeia de swap. Isso deve ser chamado quando a janela do aplicativo é redimensionada.
+	/// Você não pode redimensionar uma cadeia de swap sem que libere todas as referências pendentes aos seus buffers traseiros. Você deve liberar todas as suas referências diretas e indiretas nos buffers de volta para que 
+	/// o (AlterarTamanhoBuffers) tenha sucesso.
+	/// </summary>
+	/// <param name="Param_NumeroBuffers">O número de buffers na cadeia de swap (incluindo todos os buffers traseiros e dianteiros). Este número pode ser diferente do número de buffers com os quais você criou a cadeia de swap. 
+	/// Este número não pode ser maior do que DXGI_MAX_SWAP_CHAIN_BUFFERS. Defina este número a zero para preservar o número existente de amortecedores na cadeia de swaps.</param>
+	/// <param name="Param_Largura">A nova largura do amortecedor traseiro. Se você especificar zero, DXGI usará a largura da área do cliente da janela do alvo.</param>
+	/// <param name="Param_Altura">A nova altura do amortecedor traseiro. Se você especificar zero, DXGI usará a altura da área do cliente da janela do alvo. </param>
+	/// <param name="Param_NovoFormato">O novo formato do buffer traseiro. Defina esse valor para DXGI_FORMAT_UNKNOWN para preservar o formato existente do buffer traseiro.</param>
+	/// <param name="Param_SwapChainFlags">Uma combinação de CA_DXGI_SWAP_CHAIN_FLAG- digitado valores que são combinados usando um bitwise ou operação. O valor resultante especifica opções para o comportamento da cadeia de swaps</param>
+	static CarenResult ResizeBuffers(
+		IDXGISwapChain* Param_MyPointerWork, 
+		UInt32 Param_NumeroBuffers,
+		UInt32 Param_Largura, 
+		UInt32 Param_Altura, 
+		Enumeracoes::CA_DXGI_FORMAT Param_NovoFormato, 
+		Enumeracoes::CA_DXGI_SWAP_CHAIN_FLAG Param_SwapChainFlags);
+
+	/// <summary>
+	/// (ResizeTarget) - Redimensiona a meta de saída.
+	/// </summary>
+	/// <param name="Param_NovaDesc">A estrutura CA_DXGI_MODE_DESC que descreve o modo, que especifica a nova largura, altura, formato e taxa de atualização do alvo. Se o formato for DXGI_FORMAT_UNKNOWN, o método (ResizeTarget)
+	/// utilizara o formato existente. Recomendamos apenas que você use DXGI_FORMAT_UNKNOWN quando a cadeia de swap está em modo de tela cheia, pois este método não é seguro para o segmento.</param>
+	static CarenResult ResizeTarget(
+		IDXGISwapChain* Param_MyPointerWork, 
+		Estruturas::CA_DXGI_MODE_DESC^ Param_NovaDesc);
+
+	/// <summary>
+	/// (SetFullscreenState) - Define o estado de exibição para janelas ou tela cheia.
+	/// </summary>
+	/// <param name="Param_EstadoFullScreen">Um valor booleano que especifica se deve definir o estado de exibição para janelas ou tela cheia. VERDADE para tela cheia, e FALSO para janelas.</param>
+	/// <param name="Param_MonitorSaida">Se você passar o TRUE para o parâmetro (Param_EstadoFullScreen) para definir o estado de exibição para tela cheia, você pode definir opcionalmente este parâmetro para um ponteiro para uma interface
+	/// IDXGIOutput para o alvo de saída que contém a cadeia de swap. Se você definir este parâmetro para NULO, DXGI escolherá a saída com base no dispositivo da cadeia de swap e na colocação da janela de saída. Se você passar FALSE 
+	/// para (Param_EstadoFullScreen), você deve definir este parâmetro para NULO.</param>
+	static CarenResult SetFullscreenState(
+		IDXGISwapChain* Param_MyPointerWork, 
+		Boolean Param_EstadoFullScreen, 
+		ICarenDXGIOutput^ Param_MonitorSaida);
+};
+
+/// <summary>
+/// 
+/// </summary>
+class Shared_DXGIDevice
+{
+	//Métodos da interface(ICarenDXGIDevice4)
+public:
+	/// <summary>
+	/// (OfferResources1) - Permite que o sistema operacional liberte a memória de vídeo dos recursos, incluindo tanto descartar o conteúdo quanto descomprometer a memória.
+	/// </summary>
+	/// <param name="Param_QuantidadeRecursos">O número de recursos na matriz de argumentos (Param_Recursos).</param>
+	/// <param name="Param_Recursos">Um array de interfaces ICarenDXGIResource para os recursos a serem oferecidos.</param>
+	/// <param name="Param_Prioridade">Um valor CA_DXGI_OFFER_RESOURCE_PRIORITY que indica o quão valiosos os dados são.</param>
+	/// <param name="Param_Flags">Especifica o DXGI_OFFER_RESOURCE_FLAGS.</param>
+	static  CarenResult OfferResources1(
+		IDXGIDevice4* Param_MyPointerWork,
+		UInt32 Param_QuantidadeRecursos,
+		cli::array<ICarenDXGIResource^>^ Param_Recursos,
+		CA_DXGI_OFFER_RESOURCE_PRIORITY Param_Prioridade,
+		CA_DXGI_OFFER_RESOURCE_FLAGS Param_Flags);
+
+	/// <summary>
+	/// (ReclaimResources) - Restaura o acesso a recursos que foram oferecidos anteriormente ligando para ICarenDXGIDevice4::OfferResources.
+	/// </summary>
+	/// <param name="Param_QuantidadeRecursos">O número de recursos no argumento (Param_Recursos) e (Param_Ref_Resultado) conjuntos de argumentos.</param>
+	/// <param name="Param_Recursos">>Um array de interfaces ICarenDXGIResource para os recursos a serem recuperados.</param>
+	/// <param name="Param_Ref_Resultado">Uma matriz que recebe valores da enumeração CA_DXGI_RECLAIM_RESOURCE_RESULTS. Cada valor na matriz corresponde a um recurso 
+	/// no mesmo índice que o parâmetro (Param_Recursos) especifica. O chamador pode passar em NULO, se o chamador pretende preencher os recursos com novos conteúdos, 
+	/// independentemente de o conteúdo antigo ter sido descartado.</param>
+	static  CarenResult ReclaimResources1(
+		IDXGIDevice4* Param_MyPointerWork,
+		Int32 Param_QuantidadeRecursos,
+		cli::array<ICarenDXGIResource^>^ Param_Recursos,
+		cli::array<CA_DXGI_RECLAIM_RESOURCE_RESULTS>^% Param_Ref_Resultado);
+
+
+	//Métodos da interface(ICarenDXGIDevice3)
+public:
+	/// <summary>
+	/// (Trim) - Apara a memória gráfica alocada pelo dispositivo DXGI ICarenDXGIDevice3 em nome do aplicativo.
+	/// Para aplicativos que renderizam com o DirectX, os drivers gráficos alocam periodicamente buffers de memória interna, a fim de acelerar as solicitações de 
+	/// renderização subsequentes. Essas alocações de memória contam com o uso de memória do aplicativo para PLM e, em geral, levam ao aumento do uso da memória pelo 
+	/// sistema geral.
+	/// A partir do Windows 8.1, os aplicativos que renderizam com Direct2D e/ou Direct3D (incluindo interop CoreWindow e XAML) devem ligar para trim em resposta ao 
+	/// (PLM suspend callback.). O tempo de execução Direct3D e o driver gráfico descartarão buffers de memória interna alocados para o aplicativo, reduzindo sua pegada 
+	/// de memória.
+	/// Semelhante ao ICarenD3D11DeviceContext::Flush, os aplicativos devem ligar para ICarenD3D11DeviceContext::ClearState antes de ligar para (Trim). ClearState limpa as 
+	/// ligações de gasodutos Direct3D, garantindo que o Direct3D não tenha referências aos objetos Direct3D que você está tentando liberar.
+	/// </summary>
+	static  CarenResult Trim(IDXGIDevice3* Param_MyPointerWork);
+
+
+	//Métodos da interface(ICarenDXGIDevice2)
+public:
+	/// <summary>
+	/// (EnqueueSetEvent) - Libera quaisquer comandos de renderização pendentes e define o objeto de evento especificado para o estado sinalizado depois de todos os 
+	/// comandos de renderização previamente enviados completos.
+	/// </summary>
+	/// <param name="Param_HandleEvento">Uma Handle para o objeto do evento. Todos os tipos de objetos de evento (manual-reset, auto-reset e assim por diante) são suportados. 
+	/// A Handle deve ter a bandeira de direito de acesso (EVENT_MODIFY_STATE).</param>
+	static  CarenResult EnqueueSetEvent(IDXGIDevice2* Param_MyPointerWork, ICarenEvent^ Param_HandleEvento);
+
+	/// <summary>
+	/// (OfferResources) - Permite que o sistema operacional liberte a memória de vídeo dos recursos descartando seu conteúdo.
+	/// </summary>
+	/// <param name="Param_QuantidadeRecursos">O número de recursos na matriz de argumentos (Param_Recursos).</param>
+	/// <param name="Param_Recursos">Um array de interfaces ICarenDXGIResource para os recursos a serem oferecidos.</param>
+	/// <param name="Param_Prioridade">Um valor CA_DXGI_OFFER_RESOURCE_PRIORITY que indica o quão valiosos os dados são.</param>
+	static  CarenResult OfferResources(
+		IDXGIDevice2* Param_MyPointerWork,
+		UInt32 Param_QuantidadeRecursos,
+		cli::array<ICarenDXGIResource^>^ Param_Recursos,
+		CA_DXGI_OFFER_RESOURCE_PRIORITY Param_Prioridade);
+
+	/// <summary>
+	/// (ReclaimResources) - Restaura o acesso a recursos que foram oferecidos anteriormente ligando para ICarenDXGIDevice2::OfferResources.
+	/// </summary>
+	/// <param name="Param_QuantidadeRecursos">O número de recursos no argumento (Param_Recursos) e (Param_Ref_Descartado) conjuntos de argumentos.</param>
+	/// <param name="Param_Recursos">>Um array de interfaces ICarenDXGIResource para os recursos a serem recuperados.</param>
+	/// <param name="Param_Ref_Descartado">Uma matriz que recebe valores booleanos. Cada valor na matriz corresponde a um recurso no mesmo índice que o parâmetro 
+	/// (Param_Recursos) especifica. O tempo de execução define cada valor booleano para TRUE se o conteúdo do recurso correspondente foi descartado e agora estiver 
+	/// indefinido, ou para FALSE se o conteúdo antigo do recurso correspondente ainda estiver intacto. O chamador pode passar NULO, se o chamador pretende preencher 
+	/// os recursos com novos conteúdos, independentemente de o conteúdo antigo ter sido descartado.</param>
+	static  CarenResult ReclaimResources(
+		IDXGIDevice2* Param_MyPointerWork,
+		Int32 Param_QuantidadeRecursos,
+		cli::array<ICarenDXGIResource^>^ Param_Recursos,
+		cli::array<bool>^% Param_Ref_Descartado);
+
+
+	//Métodos da interface(ICarenDXGIDevice1)
+public:
+	/// <summary>
+	/// (GetMaximumFrameLatency) - Obtém o número de quadros(Frames) que o sistema pode fazer fila para renderização.
+	/// </summary>
+	/// <param name="Param_Out_LatenciaMaxima">Esse valor é definido para o número de quadros que podem ser enfileirados para renderização. Esse valor está 
+	/// inadimplente em 3, mas pode variar de 1 a 16.</param>
+	static  CarenResult GetMaximumFrameLatency(IDXGIDevice1* Param_MyPointerWork, [Out] UInt32% Param_Out_LatenciaMaxima);
+
+	/// <summary>
+	/// (SetMaximumFrameLatency) - Define o número de quadros que o sistema pode fazer fila para renderização.
+	/// </summary>
+	/// <param name="Param_LatenciaMaxima">O número máximo de quadros de buffer traseiro que um motorista pode fazer fila. O valor está inadimplente a 3, mas pode 
+	/// variar de 1 a 16. Um valor de 0 redefinirá a latência ao padrão. Para dispositivos (per-head), esse valor é especificado por cabeça(Head).</param>
+	static  CarenResult SetMaximumFrameLatency(IDXGIDevice1* Param_MyPointerWork, UInt32 Param_LatenciaMaxima);
+
+	//Métodos da interface(ICarenDXGIDevice)
+public:
+	/// <summary>
+	/// (CreateSurface)(Não é implementado) - Este método é usado internamente e você não deve chamá-lo diretamente em sua aplicação.
+	/// </summary>
+	static  CarenResult CreateSurface();
+
+	/// <summary>
+	/// (GetAdapter) - Retorna o adaptador para o dispositivo especificado.
+	/// </summary>
+	/// <param name="Param_Out_Adaptador">Retorna um ponteiro para a interface(ICarenDXGIAdapter) do adaptador.</param>
+	static  CarenResult GetAdapter(IDXGIDevice* Param_MyPointerWork, [Out] ICarenDXGIAdapter^% Param_Out_Adaptador);
+
+	/// <summary>
+	/// (GetGPUThreadPriority) - Retorna a prioridade da Thread GPU.
+	/// </summary>
+	/// <param name="Param_Out_Prioridade">recebe um valor que indica a prioridade atual da Thread GPU. O valor será entre -7 e 7, inclusive, onde 0 representa prioridade normal.</param>
+	static  CarenResult GetGPUThreadPriority(IDXGIDevice* Param_MyPointerWork, [Out] int% Param_Out_Prioridade);
+
+	/// <summary>
+	/// (QueryResourceResidency) - Obtém o status de residência de uma série de recursos.
+	/// As informações devolvidas pelo conjunto de argumentos (Param_Ref_StatusResidencia) descrevem o status de residência no momento em que o método 
+	/// (QueryResourceResidency) foi chamado. 
+	/// [O status de residência mudará constantemente.]
+	/// Se você ligar para o método (QueryResourceResidency) durante um estado removido do dispositivo, o argumento (Param_Ref_StatusResidencia) devolverá 
+	/// a bandeira CA_DXGI_RESIDENCY_RESIDENT_IN_SHARED_MEMORY.
+	/// </summary>
+	/// <param name="Param_ArrayRecursos">Um array que contém uma série de interfaces(ICarenDXGIResource) a serem obtido o status de residência.</param>
+	/// <param name="Param_Ref_StatusResidencia">Um Array que vai conter o status de residência(ResidencyStatus) de cada recurso no parametro(Param_ArrayRecursos).</param>
+	/// <param name="Param_QuantidadeRecursos">A quantidade de elementos no array de recursos.</param>
+	static  CarenResult QueryResourceResidency(
+		IDXGIDevice* Param_MyPointerWork,
+		cli::array<ICarenDXGIResource^>^ Param_ArrayRecursos,
+		cli::array<CA_DXGI_RESIDENCY>^% Param_Ref_StatusResidencia,
+		UInt32 Param_QuantidadeRecursos);
+
+	/// <summary>
+	/// (SetGPUThreadPriority) - Define a prioridade da Thread GPU.
+	/// </summary>
+	/// <param name="Param_Prioridade">Um valor que especifica a prioridade necessária da Thread da GPU. Esse valor deve ser entre -7 e 7, inclusive, onde 0 representa 
+	/// prioridade normal.</param>
+	static  CarenResult SetGPUThreadPriority(IDXGIDevice* Param_MyPointerWork, int Param_Prioridade);
+};

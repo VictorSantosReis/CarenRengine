@@ -251,7 +251,9 @@ public:
 	/// <param name="Param_ColorSpace">Um valor CA_DXGI_COLOR_SPACE_TYPE que especifica o tipo de espaço de cor para verificar o suporte.</param>
 	/// <param name="Param_Out_ColorSpaceSuporte">Recebe Zero ou mais bandeiras da enumeração CA_DXGI_SWAP_CHAIN_COLOR_SPACE_SUPPORT_FLAG são combinados usando uma operação ou 
 	/// bitwise. O valor resultante especifica opções de suporte ao espaço colorido.</param>
-	virtual CarenResult CheckColorSpaceSupport(CA_DXGI_COLOR_SPACE_TYPE Param_ColorSpace, [Out] CA_DXGI_SWAP_CHAIN_COLOR_SPACE_SUPPORT_FLAG% Param_Out_ColorSpaceSuporte);
+	virtual CarenResult CheckColorSpaceSupport(
+	CA_DXGI_COLOR_SPACE_TYPE Param_ColorSpace, 
+	[Out] CA_DXGI_SWAP_CHAIN_COLOR_SPACE_SUPPORT_FLAG% Param_Out_ColorSpaceSuporte);
 
 	/// <summary>
 	/// (GetCurrentBackBufferIndex) - Obtém o índice do buffer atual da cadeia de swap.
@@ -334,7 +336,9 @@ public:
 	/// </summary>
 	/// <param name="Param_Out_Largura">Recebe a largura atual da região de origem da cadeia de swap. Esse valor pode variar de 1 até a largura geral da cadeia de swap.</param>
 	/// <param name="Param_Out_Altura">Recebe a altura atual da região de origem da cadeia de swap. Esse valor pode variar de 1 a altura global da cadeia de swap.</param>
-	virtual CarenResult GetSourceSize([Out] UInt32% Param_Out_Largura, [Out] UInt32% Param_Out_Altura);
+	virtual CarenResult GetSourceSize(
+	[Out] UInt32% Param_Out_Largura, 
+	[Out] UInt32% Param_Out_Altura);
 
 	/// <summary>
 	/// (SetMatrixTransform) - Define a matriz de transformação que será aplicada a uma cadeia de troca de composição no próximo (Present).
@@ -424,7 +428,10 @@ public:
 	/// <param name="Param_IntervaloSincronizacao">Um inteiro que especifica como sincronizar a apresentação de um quadro com o espaço em branco vertical.</param>
 	/// <param name="Param_FlagsApresentacao">Um valor inteiro que contém opções de apresentação em cadeia de swaps.</param>
 	/// <param name="Param_ParametrosApresentacao">uma estrutura CA_DXGI_PRESENT_PARAMETERS que descreve retângulos atualizados e rolar informações do quadro para apresentar.</param>
-	virtual CarenResult Present1(UInt32 Param_IntervaloSincronizacao, CA_DXGI_PRESENT Param_FlagsApresentacao, CA_DXGI_PRESENT_PARAMETERS^ Param_ParametrosApresentacao);
+	virtual CarenResult Present1(
+	UInt32 Param_IntervaloSincronizacao, 
+	CA_DXGI_PRESENT Param_FlagsApresentacao, 
+	CA_DXGI_PRESENT_PARAMETERS^ Param_ParametrosApresentacao);
 
 	/// <summary>
 	/// (SetBackgroundColor) - Muda a cor de fundo da cadeia de swaps.
@@ -448,7 +455,10 @@ public:
 	/// <param name="Param_IndexBuffer">O Indince para o buffer de volta(Back-Buffer).</param>
 	/// <param name="Param_RiidInterface">O tipo de interface usada para manipular o buffer.</param>
 	/// <param name="Param_Out_InterfaceBuffer">Retorna a interface que gerencia o Buffer de volta(Back-Buffer). O Usuário é responsável por criar a interface que será retornada.</param>
-	virtual CarenResult GetBuffer(UInt32 Param_IndexBuffer, String^ Param_RiidInterface, ICaren^ Param_Out_InterfaceBuffer);
+	virtual CarenResult GetBuffer(
+	UInt32 Param_IndexBuffer, 
+	String^ Param_RiidInterface, 
+	ICaren^ Param_Out_InterfaceBuffer);
 
 	/// <summary>
 	/// (GetContainingOutput) - Obtém a saída (o monitor de exibição) que contém a maior parte da área do cliente da janela alvo.
@@ -474,7 +484,9 @@ public:
 	/// </summary>
 	/// <param name="Param_Out_EstadoFullScreen">Retorna o estado do FullScreen. Se TRUE, a cadeia de swap está no modo de tela cheia. Se FALSE, a cadeia de swap está em modo de janela.</param>
 	/// <param name="Param_Out_MonitorSaida">Retorna um ponteiro para o monitor de saida quando em modo de Tela Cheia(FullScreen); caso contrario retorna NULO.</param>
-	virtual CarenResult GetFullscreenState([Out] Boolean% Param_Out_EstadoFullScreen, [Out] ICarenDXGIOutput^% Param_Out_MonitorSaida);
+	virtual CarenResult GetFullscreenState(
+	[Out] Boolean% Param_Out_EstadoFullScreen, 
+	[Out] ICarenDXGIOutput^% Param_Out_MonitorSaida);
 
 	/// <summary>
 	/// (GetLastPresentCount) - Obtém o número de vezes que o método ICarenDXGISwapChain::Apresentar ou ICarenDXGISwapChain1::Present1 foi chamado.
@@ -487,7 +499,9 @@ public:
 	/// </summary>
 	/// <param name="Param_IntervaloSincronizacao">Um inteiro que especifica como sincronizar a apresentação de um quadro com o espaço em branco vertical.</param>
 	/// <param name="Param_Flags">Um valor inteiro que contém opções de apresentação em cadeia de swaps. Essas opções são definidas pela enumeração (CA_DXGI_PRESENT).</param>
-	virtual CarenResult Present(UInt32 Param_IntervaloSincronizacao, Enumeracoes::CA_DXGI_PRESENT Param_Flags);
+	virtual CarenResult Present(
+	UInt32 Param_IntervaloSincronizacao, 
+	Enumeracoes::CA_DXGI_PRESENT Param_Flags);
 
 	/// <summary>
 	/// (ResizeBuffers) - Altera o tamanho, o formato e o número de buffers da cadeia de swap. Isso deve ser chamado quando a janela do aplicativo é redimensionada.
@@ -500,7 +514,12 @@ public:
 	/// <param name="Param_Altura">A nova altura do amortecedor traseiro. Se você especificar zero, DXGI usará a altura da área do cliente da janela do alvo. </param>
 	/// <param name="Param_NovoFormato">O novo formato do buffer traseiro. Defina esse valor para DXGI_FORMAT_UNKNOWN para preservar o formato existente do buffer traseiro.</param>
 	/// <param name="Param_SwapChainFlags">Uma combinação de CA_DXGI_SWAP_CHAIN_FLAG- digitado valores que são combinados usando um bitwise ou operação. O valor resultante especifica opções para o comportamento da cadeia de swaps</param>
-	virtual CarenResult ResizeBuffers(UInt32 Param_NumeroBuffers, UInt32 Param_Largura, UInt32 Param_Altura, Enumeracoes::CA_DXGI_FORMAT Param_NovoFormato, Enumeracoes::CA_DXGI_SWAP_CHAIN_FLAG Param_SwapChainFlags);
+	virtual CarenResult ResizeBuffers(
+	UInt32 Param_NumeroBuffers, 
+	UInt32 Param_Largura, 
+	UInt32 Param_Altura, 
+	Enumeracoes::CA_DXGI_FORMAT Param_NovoFormato, 
+	Enumeracoes::CA_DXGI_SWAP_CHAIN_FLAG Param_SwapChainFlags);
 
 	/// <summary>
 	/// (ResizeTarget) - Redimensiona a meta de saída.
@@ -516,7 +535,9 @@ public:
 	/// <param name="Param_MonitorSaida">Se você passar o TRUE para o parâmetro (Param_EstadoFullScreen) para definir o estado de exibição para tela cheia, você pode definir opcionalmente este parâmetro para um ponteiro para uma interface
 	/// IDXGIOutput para o alvo de saída que contém a cadeia de swap. Se você definir este parâmetro para NULO, DXGI escolherá a saída com base no dispositivo da cadeia de swap e na colocação da janela de saída. Se você passar FALSE 
 	/// para (Param_EstadoFullScreen), você deve definir este parâmetro para NULO.</param>
-	virtual CarenResult SetFullscreenState(Boolean Param_EstadoFullScreen, ICarenDXGIOutput^ Param_MonitorSaida);
+	virtual CarenResult SetFullscreenState(
+	Boolean Param_EstadoFullScreen, 
+	ICarenDXGIOutput^ Param_MonitorSaida);
 
 
 	//Métodos da interface(ICarenDXGIDeviceSubObject)

@@ -179,26 +179,10 @@ void CarenDXGISwapChain2::Finalizar()
 /// <param name="Param_Out_HandleEvento">Recebe a interface que gerencia a Handle aguardavel.</param>
 CarenResult CarenDXGISwapChain2::GetFrameLatencyWaitableObject([Out] ICarenEvent^% Param_Out_HandleEvento)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	HANDLE HandleEvento = NULL;
-
-	//Chama o método para realizar a operação.
-	HandleEvento = PonteiroTrabalho->GetFrameLatencyWaitableObject();
-
-	//Cria a interface que vai conter o evento.
-	Param_Out_HandleEvento = gcnew CarenEvent();
-
-	//Define o ponteiro do evento na interface.
-	Param_Out_HandleEvento->AssociarEvento(IntPtr(HandleEvento));
-
-	//Define sucesso por default a operação.
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGISwapChain::GetFrameLatencyWaitableObject(PonteiroTrabalho,
+		Param_Out_HandleEvento
+	);
 }
 
 /// <summary>
@@ -211,37 +195,10 @@ CarenResult CarenDXGISwapChain2::GetFrameLatencyWaitableObject([Out] ICarenEvent
 /// <param name="Param_Out_Matriz_32"></param>
 CarenResult CarenDXGISwapChain2::GetMatrixTransform([Out] CA_DXGI_MATRIX_3X2_F^% Param_Out_Matriz_32)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	DXGI_MATRIX_3X2_F MatrixTransform = { 0 };
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetMatrixTransform(&MatrixTransform);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Converte a matrix de define no parametro de saida.
-	Param_Out_Matriz_32 = Util.ConverterDXGI_MATRIX_3X2_FUnManaged_ToManaged(&MatrixTransform);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGISwapChain::GetMatrixTransform(PonteiroTrabalho,
+		Param_Out_Matriz_32
+	);
 }
 		
 /// <summary>
@@ -251,36 +208,10 @@ Done:;
 /// mas deve ser definido para 2 se a cena demorar mais do que leva para uma atualização vertical (normalmente cerca de 16ms) para desenhar.</param>
 CarenResult CarenDXGISwapChain2::GetMaximumFrameLatency([Out] UInt32% Param_Out_LatenciaMaxima)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	UINT OutLatencia = 0;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetMaximumFrameLatency(&OutLatencia);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Define a latencia no parametro de saida.
-	Param_Out_LatenciaMaxima = OutLatencia;
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGISwapChain::GetMaximumFrameLatency(PonteiroTrabalho,
+		Param_Out_LatenciaMaxima
+	);
 }
 		
 /// <summary>
@@ -290,40 +221,15 @@ Done:;
 /// </summary>
 /// <param name="Param_Out_Largura">Recebe a largura atual da região de origem da cadeia de swap. Esse valor pode variar de 1 até a largura geral da cadeia de swap.</param>
 /// <param name="Param_Out_Altura">Recebe a altura atual da região de origem da cadeia de swap. Esse valor pode variar de 1 a altura global da cadeia de swap.</param>
-CarenResult CarenDXGISwapChain2::GetSourceSize([Out] UInt32% Param_Out_Largura, [Out] UInt32% Param_Out_Altura)
+CarenResult CarenDXGISwapChain2::GetSourceSize(
+	[Out] UInt32% Param_Out_Largura, 
+	[Out] UInt32% Param_Out_Altura)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	UINT OutLargura = 0;
-	UINT OutAltura = 0;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetSourceSize(&OutLargura, &OutAltura);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Define os dados de largura e altura nos parametros de saida.
-	Param_Out_Largura = OutLargura;
-	Param_Out_Altura = OutAltura;
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGISwapChain::GetSourceSize(PonteiroTrabalho,
+		Param_Out_Largura,
+		Param_Out_Altura
+	);
 }
 		
 /// <summary>
@@ -337,37 +243,10 @@ Done:;
 /// composição(Composition) criadas por ICarenDXGIFactory2::CreateSwapChainForComposition. Somente componentes de escala e tradução são permitidos na matriz.</param>
 CarenResult CarenDXGISwapChain2::SetMatrixTransform(CA_DXGI_MATRIX_3X2_F^ Param_Matriz_32)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	DXGI_MATRIX_3X2_F* pMatrixData = Util.ConverterDXGI_MATRIX_3X2_FManaged_ToUnManaged(Param_Matriz_32);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->SetMatrixTransform(pMatrixData);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Libera a memoria para a estrutura.
-	DeletarEstruturaSafe(&pMatrixData);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGISwapChain::SetMatrixTransform(PonteiroTrabalho,
+		Param_Matriz_32
+	);
 }
 		
 /// <summary>
@@ -376,30 +255,10 @@ Done:;
 /// <param name="Param_MaximoBackBufferLatencia">O número máximo de quadros de buffer traseiros que serão enfileirados para a cadeia de swap. Este valor é 1 por padrão.</param>
 CarenResult CarenDXGISwapChain2::SetMaximumFrameLatency(UInt32 Param_MaximoBackBufferLatencia)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->SetMaximumFrameLatency(Param_MaximoBackBufferLatencia);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGISwapChain::SetMaximumFrameLatency(PonteiroTrabalho,
+		Param_MaximoBackBufferLatencia
+	);
 }
 		
 /// <summary>
@@ -414,30 +273,11 @@ Done:;
 /// cadeia de swap.</param>
 CarenResult CarenDXGISwapChain2::SetSourceSize(UInt32 Param_Largura, UInt32 Param_Altura)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->SetSourceSize(Param_Largura, Param_Altura);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGISwapChain::SetSourceSize(PonteiroTrabalho,
+		Param_Largura,
+		Param_Altura
+	);
 }
 
 
@@ -451,37 +291,10 @@ Done:;
 /// <param name="Param_Out_Cor">Retorna uma estrutura que contém as informações de cor do Background.</param>
 CarenResult CarenDXGISwapChain2::GetBackgroundColor([Out] CA_DXGI_RGBA^% Param_Out_Cor)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	DXGI_RGBA dxgiRGBAColor = { 0 };
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetBackgroundColor(&dxgiRGBAColor);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Converte e define a cor no parametro.
-	Param_Out_Cor = Util.ConverterDXGI_RGBAUnManaged_ToManaged(&dxgiRGBAColor);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGISwapChain::GetBackgroundColor(PonteiroTrabalho,
+		Param_Out_Cor
+	);
 }
 
 /// <summary>
@@ -491,41 +304,11 @@ Done:;
 /// <param name="Param_Out_CoreWindow">Retorna o ponteiro do objeto para a CoreWindow.  O usuário deve inicializar a interface antes de chamar este método.</param>
 CarenResult CarenDXGISwapChain2::GetCoreWindow(String^ Param_RIID, ICaren^ Param_Out_CoreWindow)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	GUID GuidCoreWin = GUID_NULL;
-	PVOID pCoreWin = NULL;
-
-	//Gera o guid a parti da string
-	GuidCoreWin = Util.CreateGuidFromString(Param_RIID);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetCoreWindow(GuidCoreWin, &pCoreWin);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Define o ponteiro do CoreWindow.
-	Param_Out_CoreWindow->AdicionarPonteiro(pCoreWin);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGISwapChain::GetCoreWindow(PonteiroTrabalho,
+		Param_RIID,
+		Param_Out_CoreWindow
+	);
 }
 
 /// <summary>
@@ -534,37 +317,10 @@ Done:;
 /// <param name="Param_Out_Desc">Retorna uma estrutura que contém a descrição da cadeia de Swap.</param>
 CarenResult CarenDXGISwapChain2::GetDesc1([Out] CA_DXGI_SWAP_CHAIN_DESC1^% Param_Out_Desc)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	DXGI_SWAP_CHAIN_DESC1 DescSwap = { 0 };
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetDesc1(&DescSwap);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Converte e define no parametro de saida a estrutura convertida.
-	Param_Out_Desc = Util.ConverterDXGI_SWAP_CHAIN_DESC1UnManaged_ToManaged(&DescSwap);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGISwapChain::GetDesc1(PonteiroTrabalho,
+		Param_Out_Desc
+	);
 }
 
 /// <summary>
@@ -573,37 +329,10 @@ Done:;
 /// <param name="Param_Out_DescFullScreenSwap">Retorna uma estrutura que contém a descrição no modo FullScreen na cadeia de Swap.</param>
 CarenResult CarenDXGISwapChain2::GetFullscreenDesc([Out] CA_DXGI_SWAP_CHAIN_FULLSCREEN_DESC^% Param_Out_DescFullScreenSwap)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	DXGI_SWAP_CHAIN_FULLSCREEN_DESC DescFullScreen = { 0 };
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetFullscreenDesc(&DescFullScreen);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Converte e define no parametro de saida a estrutura gerenciada.
-	Param_Out_DescFullScreenSwap = Util.ConverterDXGI_SWAP_CHAIN_FULLSCREEN_DESCUnManaged_ToManaged(&DescFullScreen);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGISwapChain::GetFullscreenDesc(PonteiroTrabalho,
+		Param_Out_DescFullScreenSwap
+	);
 }
 
 /// <summary>
@@ -612,37 +341,10 @@ Done:;
 /// <param name="Param_Out_HWND">Retorna um ponteiro para o HWND do objeto de cadeia de Swap.</param>
 CarenResult CarenDXGISwapChain2::GetHwnd([Out] IntPtr% Param_Out_HWND)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	HWND pHandle = NULL;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetHwnd(&pHandle);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Converte e define no parametro de saida
-	Param_Out_HWND = Util.ConverterHWNDToIntPtr(pHandle);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGISwapChain::GetHwnd(PonteiroTrabalho,
+		Param_Out_HWND
+	);
 }
 
 /// <summary>
@@ -652,39 +354,10 @@ Done:;
 /// ICarenDXGIOutput em uma chamada para o ICarenDXGIFactory2::CreateSwapChainForHwnd, ICarenDXGIFactory2::CreateSwapChainForCoreWindow, ou ICarenDXGIFactory2::CreateSwapChainForComposition</param>
 CarenResult CarenDXGISwapChain2::GetRestrictToOutput([Out] ICarenDXGIOutput^% Param_Out_Saida)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	IDXGIOutput* pSaida = NULL;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetRestrictToOutput(&pSaida);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria a interface que vai ser retornada para o usuario.
-	Param_Out_Saida = gcnew CarenDXGIOutput();
-
-	//Define o ponteiro de trabalho.
-	Param_Out_Saida->AdicionarPonteiro(pSaida);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGISwapChain::GetRestrictToOutput(PonteiroTrabalho,
+		Param_Out_Saida
+	);
 }
 
 /// <summary>
@@ -693,36 +366,10 @@ Done:;
 /// <param name="Param_Out_Rotacao">Retorna uma enumeração que define a rotação do Buffer Traseiro(BackBuffer).</param>
 CarenResult CarenDXGISwapChain2::GetRotation([Out] CA_DXGI_MODE_ROTATION% Param_Out_Rotacao)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	DXGI_MODE_ROTATION Rotation;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetRotation(&Rotation);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Converte e define no parametro de saida.
-	Param_Out_Rotacao = static_cast<CA_DXGI_MODE_ROTATION>(Rotation);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGISwapChain::GetRotation(PonteiroTrabalho,
+		Param_Out_Rotacao
+	);
 }
 
 /// <summary>
@@ -731,26 +378,10 @@ Done:;
 /// <param name="Param_Out_Suporte">Retorna um Booleano que define o suporte ao mono.</param>
 CarenResult CarenDXGISwapChain2::IsTemporaryMonoSupported([Out] Boolean% Param_Out_Suporte)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	BOOL Suported = FALSE;
-
-	//Chama o método para realizar a operação.
-	Suported = PonteiroTrabalho->IsTemporaryMonoSupported();
-
-	//Define o resultado no parametro de saida
-	Param_Out_Suporte = Suported ? true : false;
-
-	//Define sucesso por default a operação.
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGISwapChain::IsTemporaryMonoSupported(PonteiroTrabalho,
+		Param_Out_Suporte
+	);
 }
 
 /// <summary>
@@ -759,47 +390,17 @@ CarenResult CarenDXGISwapChain2::IsTemporaryMonoSupported([Out] Boolean% Param_O
 /// <param name="Param_IntervaloSincronizacao">Um inteiro que especifica como sincronizar a apresentação de um quadro com o espaço em branco vertical.</param>
 /// <param name="Param_FlagsApresentacao">Um valor inteiro que contém opções de apresentação em cadeia de swaps.</param>
 /// <param name="Param_ParametrosApresentacao">uma estrutura CA_DXGI_PRESENT_PARAMETERS que descreve retângulos atualizados e rolar informações do quadro para apresentar.</param>
-CarenResult CarenDXGISwapChain2::Present1(UInt32 Param_IntervaloSincronizacao, CA_DXGI_PRESENT Param_FlagsApresentacao, CA_DXGI_PRESENT_PARAMETERS^ Param_ParametrosApresentacao)
+CarenResult CarenDXGISwapChain2::Present1(
+	UInt32 Param_IntervaloSincronizacao, 
+	CA_DXGI_PRESENT Param_FlagsApresentacao, 
+	CA_DXGI_PRESENT_PARAMETERS^ Param_ParametrosApresentacao)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	UINT DxgiPresentFrameFlag = static_cast<UINT>(Param_FlagsApresentacao);
-	DXGI_PRESENT_PARAMETERS* pParametrosApresentacao = NULL;
-
-	//Converte a estrutura gerenciada
-	pParametrosApresentacao = Util.ConverterDXGI_PRESENT_PARAMETERSManaged_ToUnManaged(Param_ParametrosApresentacao);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->Present1(Param_IntervaloSincronizacao, DxgiPresentFrameFlag, pParametrosApresentacao);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	Done:;
-	//Libera a memoria para a estrutura de parametros de apresentação
-	DeletarEstruturaSafe(&pParametrosApresentacao->pDirtyRects);
-	DeletarEstruturaSafe(&pParametrosApresentacao->pScrollOffset);
-	DeletarEstruturaSafe(&pParametrosApresentacao->pScrollRect);
-	DeletarEstruturaSafe(&pParametrosApresentacao); //Deleta a memória para a estrutura principal.
-
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGISwapChain::Present1(PonteiroTrabalho,
+		Param_IntervaloSincronizacao,
+		Param_FlagsApresentacao,
+		Param_ParametrosApresentacao
+	);
 }
 
 /// <summary>
@@ -808,40 +409,10 @@ CarenResult CarenDXGISwapChain2::Present1(UInt32 Param_IntervaloSincronizacao, C
 /// <param name="Param_Cor">A nova cor para o Background do buffer traseiro.</param>
 CarenResult CarenDXGISwapChain2::SetBackgroundColor(CA_DXGI_RGBA^ Param_Cor)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	DXGI_RGBA* pCorRGBA = NULL;
-
-	//Converte a estrutura gerenciada
-	pCorRGBA = Util.ConverterDXGI_RGBAManaged_ToUnManaged(Param_Cor);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->SetBackgroundColor(pCorRGBA);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Libera a memoria para a estrutura.
-	DeletarEstruturaSafe(&pCorRGBA);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGISwapChain::SetBackgroundColor(PonteiroTrabalho,
+		Param_Cor
+	);
 }
 
 /// <summary>
@@ -850,33 +421,10 @@ Done:;
 /// <param name="Param_Rotacao">A nova rotação dos Buffers Traseiro(BackBuffers).</param>
 CarenResult CarenDXGISwapChain2::SetRotation(CA_DXGI_MODE_ROTATION Param_Rotacao)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	DXGI_MODE_ROTATION ModeRotation = static_cast<DXGI_MODE_ROTATION>(Param_Rotacao);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->SetRotation(ModeRotation);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGISwapChain::SetRotation(PonteiroTrabalho,
+		Param_Rotacao
+	);
 }
 
 
@@ -892,43 +440,17 @@ Done:;
 /// <param name="Param_IndexBuffer">O Indince para o buffer de volta(Back-Buffer).</param>
 /// <param name="Param_RiidInterface">O tipo de interface usada para manipular o buffer.</param>
 /// <param name="Param_Out_InterfaceBuffer">Retorna a interface que gerencia o Buffer de volta(Back-Buffer). O Usuário é responsável por criar a interface que será retornada.</param>
-CarenResult CarenDXGISwapChain2::GetBuffer(UInt32 Param_IndexBuffer, String^ Param_RiidInterface, ICaren^ Param_Out_InterfaceBuffer)
+CarenResult CarenDXGISwapChain2::GetBuffer(
+	UInt32 Param_IndexBuffer, 
+	String^ Param_RiidInterface, 
+	ICaren^ Param_Out_InterfaceBuffer)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	GUID RiidInterface = GUID_NULL;
-	LPVOID pInterfaceReturn = NULL;
-
-	//Cria o Riid de identificação da superfice
-	RiidInterface = Util.CreateGuidFromString(Param_RiidInterface);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetBuffer(Param_IndexBuffer, RiidInterface, &pInterfaceReturn);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Define o ponteiro de trabalho
-	Param_Out_InterfaceBuffer->AdicionarPonteiro(pInterfaceReturn);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGISwapChain::GetBuffer(PonteiroTrabalho,
+		Param_IndexBuffer,
+		Param_RiidInterface,
+		Param_Out_InterfaceBuffer
+	);
 }
 
 /// <summary>
@@ -937,42 +459,11 @@ Done:;
 /// </summary>
 /// <param name="Param_Out_MonitorSaida">Retorna a interface para o monitor de exbicão de saida.</param>
 CarenResult CarenDXGISwapChain2::GetContainingOutput([Out] ICarenDXGIOutput^% Param_Out_MonitorSaida)
-
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	IDXGIOutput* pInterfaceReturn = NULL;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetContainingOutput(&pInterfaceReturn);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria a interface que será retornada ao cliente.
-	Param_Out_MonitorSaida = gcnew CarenDXGIOutput();
-
-	//Define o ponteiro de saida
-	Param_Out_MonitorSaida->AdicionarPonteiro(pInterfaceReturn);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGISwapChain::GetContainingOutput(PonteiroTrabalho,
+		Param_Out_MonitorSaida
+	);
 }
 
 /// <summary>
@@ -981,37 +472,10 @@ Done:;
 /// <param name="Param_Out_DescricaoCadeiaSwap">Retorna uma estrutura com a descrição da cadeia de troca.</param>
 CarenResult CarenDXGISwapChain2::GetDesc([Out] Estruturas::CA_DXGI_SWAP_CHAIN_DESC^% Param_Out_DescricaoCadeiaSwap)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	DXGI_SWAP_CHAIN_DESC DescSwap;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetDesc(&DescSwap);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Converte a estrutura e define no parametro de saida.
-	Param_Out_DescricaoCadeiaSwap = Util.ConverterDXGI_SWAP_CHAIN_DESCUnManaged_ToManaged(&DescSwap);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGISwapChain::GetDesc(PonteiroTrabalho,
+		Param_Out_DescricaoCadeiaSwap
+	);
 }
 
 /// <summary>
@@ -1020,37 +484,10 @@ Done:;
 /// <param name="Param_Out_FrameEstatisticas">Retorna uma estrutura com as estatiticas do frame.</param>
 CarenResult CarenDXGISwapChain2::GetFrameStatistics([Out] Estruturas::CA_DXGI_FRAME_STATISTICS^% Param_Out_FrameEstatisticas)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	DXGI_FRAME_STATISTICS DescFrame;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetFrameStatistics(&DescFrame);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Converte e define a estrutura no parametro de saida.
-	Param_Out_FrameEstatisticas = Util.ConverterDXGI_FRAME_STATISTICSUnManaged_ToManaged(&DescFrame);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGISwapChain::GetFrameStatistics(PonteiroTrabalho,
+		Param_Out_FrameEstatisticas
+	);
 }
 
 /// <summary>
@@ -1058,56 +495,15 @@ Done:;
 /// </summary>
 /// <param name="Param_Out_EstadoFullScreen">Retorna o estado do FullScreen. Se TRUE, a cadeia de swap está no modo de tela cheia. Se FALSE, a cadeia de swap está em modo de janela.</param>
 /// <param name="Param_Out_MonitorSaida">Retorna um ponteiro para o monitor de saida quando em modo de Tela Cheia(FullScreen); caso contrario retorna NULO.</param>
-CarenResult CarenDXGISwapChain2::GetFullscreenState([Out] Boolean% Param_Out_EstadoFullScreen, [Out] ICarenDXGIOutput^% Param_Out_MonitorSaida)
+CarenResult CarenDXGISwapChain2::GetFullscreenState(
+	[Out] Boolean% Param_Out_EstadoFullScreen, 
+	[Out] ICarenDXGIOutput^% Param_Out_MonitorSaida)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	BOOL StateFullScreen = FALSE;
-	IDXGIOutput* pInterfaceReturn = NULL;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetFullscreenState(&StateFullScreen, &pInterfaceReturn);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//A interface de retorno pode ou não ser valida.
-	//Ela será valida apenas quando o modo tiver em FullScreen.
-	if (StateFullScreen)
-	{
-		//Cria a interface porque o modo é de tela cheia.
-		Param_Out_MonitorSaida = gcnew CarenDXGIOutput();
-
-		//Define o ponteiro de trabalho.
-		Param_Out_MonitorSaida->AdicionarPonteiro(pInterfaceReturn);
-	}
-	else
-	{
-		//O modo não é de tela cheia, portanto, não retorna a interface.
-		Param_Out_MonitorSaida = nullptr;
-	}
-
-	//Define o estado do fullscreen
-	Param_Out_EstadoFullScreen = StateFullScreen ? true : false;
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGISwapChain::GetFullscreenState(PonteiroTrabalho,
+		Param_Out_EstadoFullScreen,
+		Param_Out_MonitorSaida
+	);
 }
 
 /// <summary>
@@ -1116,37 +512,10 @@ Done:;
 /// <param name="Param_Out_QuantidadeChamadas">Retorna a quantidade de chamadas para o método Apresentar ou Present1.</param>
 CarenResult CarenDXGISwapChain2::GetLastPresentCount([Out] UInt32% Param_Out_QuantidadeChamadas)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	UINT CountPresentCalled = 0;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetLastPresentCount(&CountPresentCalled);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Define a quantidade no parametro de saida.
-	Param_Out_QuantidadeChamadas = CountPresentCalled;
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGISwapChain::GetLastPresentCount(PonteiroTrabalho,
+		Param_Out_QuantidadeChamadas
+	);
 }
 
 /// <summary>
@@ -1154,36 +523,15 @@ Done:;
 /// </summary>
 /// <param name="Param_IntervaloSincronizacao">Um inteiro que especifica como sincronizar a apresentação de um quadro com o espaço em branco vertical.</param>
 /// <param name="Param_Flags">Um valor inteiro que contém opções de apresentação em cadeia de swaps. Essas opções são definidas pela enumeração (CA_DXGI_PRESENT).</param>
-CarenResult CarenDXGISwapChain2::Present(UInt32 Param_IntervaloSincronizacao, Enumeracoes::CA_DXGI_PRESENT Param_Flags)
+CarenResult CarenDXGISwapChain2::Present(
+	UInt32 Param_IntervaloSincronizacao, 
+	Enumeracoes::CA_DXGI_PRESENT Param_Flags)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	UINT FlagsPresent = static_cast<UINT>(Param_Flags);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->Present(Param_IntervaloSincronizacao, FlagsPresent);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGISwapChain::Present(PonteiroTrabalho,
+		Param_IntervaloSincronizacao,
+		Param_Flags
+	);
 }
 
 /// <summary>
@@ -1197,36 +545,21 @@ Done:;
 /// <param name="Param_Altura">A nova altura do amortecedor traseiro. Se você especificar zero, DXGI usará a altura da área do cliente da janela do alvo. </param>
 /// <param name="Param_NovoFormato">O novo formato do buffer traseiro. Defina esse valor para DXGI_FORMAT_UNKNOWN para preservar o formato existente do buffer traseiro.</param>
 /// <param name="Param_SwapChainFlags">Uma combinação de CA_DXGI_SWAP_CHAIN_FLAG- digitado valores que são combinados usando um bitwise ou operação. O valor resultante especifica opções para o comportamento da cadeia de swaps</param>
-CarenResult CarenDXGISwapChain2::ResizeBuffers(UInt32 Param_NumeroBuffers, UInt32 Param_Largura, UInt32 Param_Altura, Enumeracoes::CA_DXGI_FORMAT Param_NovoFormato, Enumeracoes::CA_DXGI_SWAP_CHAIN_FLAG Param_SwapChainFlags)
+CarenResult CarenDXGISwapChain2::ResizeBuffers(
+	UInt32 Param_NumeroBuffers, 
+	UInt32 Param_Largura, 
+	UInt32 Param_Altura, 
+	Enumeracoes::CA_DXGI_FORMAT Param_NovoFormato, 
+	Enumeracoes::CA_DXGI_SWAP_CHAIN_FLAG Param_SwapChainFlags)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	DXGI_FORMAT FormatoDXGI = static_cast<DXGI_FORMAT>(Param_NovoFormato);
-	DXGI_SWAP_CHAIN_FLAG FlagSwap = static_cast<DXGI_SWAP_CHAIN_FLAG>(Param_SwapChainFlags);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->ResizeBuffers(Param_NumeroBuffers, Param_Largura, Param_Altura, FormatoDXGI, FlagSwap);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGISwapChain::ResizeBuffers(PonteiroTrabalho,
+		Param_NumeroBuffers,
+		Param_Largura,
+        Param_Altura,
+        Param_NovoFormato,
+        Param_SwapChainFlags
+	);
 }
 
 /// <summary>
@@ -1236,37 +569,10 @@ Done:;
 /// utilizara o formato existente. Recomendamos apenas que você use DXGI_FORMAT_UNKNOWN quando a cadeia de swap está em modo de tela cheia, pois este método não é seguro para o segmento.</param>
 CarenResult CarenDXGISwapChain2::ResizeTarget(Estruturas::CA_DXGI_MODE_DESC^ Param_NovaDesc)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	DXGI_MODE_DESC* pDesc = NULL;
-
-	//Converte a estrutura
-	pDesc = Util.ConverterDXGI_MODE_DESCManaged_ToUnManaged(Param_NovaDesc);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->ResizeTarget(pDesc);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGISwapChain::ResizeTarget(PonteiroTrabalho,
+		Param_NovaDesc
+	);
 }
 
 /// <summary>
@@ -1276,44 +582,15 @@ Done:;
 /// <param name="Param_MonitorSaida">Se você passar o TRUE para o parâmetro (Param_EstadoFullScreen) para definir o estado de exibição para tela cheia, você pode definir opcionalmente este parâmetro para um ponteiro para uma interface
 /// IDXGIOutput para o alvo de saída que contém a cadeia de swap. Se você definir este parâmetro para NULO, DXGI escolherá a saída com base no dispositivo da cadeia de swap e na colocação da janela de saída. Se você passar FALSE 
 /// para (Param_EstadoFullScreen), você deve definir este parâmetro para NULO.</param>
-CarenResult CarenDXGISwapChain2::SetFullscreenState(Boolean Param_EstadoFullScreen, ICarenDXGIOutput^ Param_MonitorSaida)
+CarenResult CarenDXGISwapChain2::SetFullscreenState(
+	Boolean Param_EstadoFullScreen, 
+	ICarenDXGIOutput^ Param_MonitorSaida)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	BOOL StateFullScreen = Param_EstadoFullScreen ? TRUE : FALSE;
-	IDXGIOutput* pSaida = NULL; //Pode ser NULO.
-
-	//Verifica se forneceu um monitor de saida
-	if (ObjetoGerenciadoValido(Param_MonitorSaida))
-	{
-		//Obtém o ponteiro para o objeto
-		Param_MonitorSaida->RecuperarPonteiro((LPVOID*)&pSaida);
-	}
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->SetFullscreenState(StateFullScreen, pSaida ? pSaida : NULL);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGISwapChain::SetFullscreenState(PonteiroTrabalho,
+		Param_EstadoFullScreen,
+		Param_MonitorSaida
+	);
 }
 
 

@@ -160,22 +160,13 @@ CarenResult CarenMFAsyncResult::StatusPonteiro()
 }
 
 /// <summary>
-/// Método responsável por retornar a variável que armazena o último código de erro desconhecido ou não documentado gerado pela classe.
-/// Esse método não chama o método nativo (GetLastError), apenas retorna o código de erro que foi armazenado na classe.
-/// </summary>
-Int32 CarenMFAsyncResult::ObterCodigoErro()
-{
-	return Var_Glob_LAST_HRESULT;
-}
-
-/// <summary>
 /// (AddRef) - Incrementa a contagem de referência para o ponteiro do objeto COM atual. Você deve chamar este método sempre que 
 /// você fazer uma cópia de um ponteiro de interface.
 /// </summary>
 void CarenMFAsyncResult::AdicionarReferencia()
 {
 	//Chama o método para incrementar a quantidade de referencias atuais da interface.
-	Caren::Shared_IncrementarReferencia(PonteiroTrabalho);
+	Caren::Shared_AdicionarReferencia(PonteiroTrabalho);
 }
 
 /// <summary>
@@ -234,29 +225,16 @@ CarenResult CarenMFAsyncResult::GetObject(ICaren^ Param_Out_Objeto)
 	//Chama o método para obter o objeto.
 	Hr = PonteiroTrabalho->GetObject(&pObjeto);
 
-	//Verifica o resultado da operação
-	if (Sucesso(Hr))
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
-		//Deixa o método continuar.
-	}
-	else if (Hr == E_POINTER)
-	{
-		//Não existe um objeto associado.
-		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
+		//Falhou ao realizar a operação.
 
 		//Sai do método
-		goto Done;
-	}
-	else
-	{
-		//Define falha na operação
-		Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-		//Define o códgio Hresult
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		goto Done;
+		Sair;
 	}
 
 	//Define o ponteiro de trabalho
@@ -289,29 +267,16 @@ CarenResult CarenMFAsyncResult::GetState(ICaren^ Param_Out_ObjetoEstado)
 	//Chama o método para obter o objeto de estado.
 	Hr = PonteiroTrabalho->GetState(&pObjetoEstado);
 
-	//Verifica o resultado da operação
-	if (Sucesso(Hr))
+	//Processa o resultado da chamada.
+	Resultado.ProcessarCodigoOperacao(Hr);
+
+	//Verifica se obteve sucesso na operação.
+	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
-		//Deixa o método continuar.
-	}
-	else if (Hr == E_POINTER)
-	{
-		//Não existe um objeto associado.
-		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
+		//Falhou ao realizar a operação.
 
 		//Sai do método
-		goto Done;
-	}
-	else
-	{
-		//Define falha na operação
-		Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-		//Define o códgio Hresult
-		Var_Glob_LAST_HRESULT = Hr;
-
-		//Sai do método
-		goto Done;
+		Sair;
 	}
 
 	//Define o ponteiro de trabalho

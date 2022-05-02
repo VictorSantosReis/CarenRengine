@@ -41,7 +41,7 @@ CarenDXGIOutput3::CarenDXGIOutput3()
 /// </summary>
 /// <param name="Param_Guid">O IID(Identificador de Interface) ou GUID para a interface desejada.</param>
 /// <param name="Param_InterfaceSolicitada">A interface que vai receber o ponteiro nativo. O usuário deve inicializar a interface antes de chamar o método. Libere a interface quando não for mais usá-la.</param>
-CarenResult CarenDXGIOutput3 ::ConsultarInterface(String^ Param_Guid, ICaren^ Param_InterfaceSolicitada)
+CarenResult CarenDXGIOutput3::ConsultarInterface(String^ Param_Guid, ICaren^ Param_InterfaceSolicitada)
 {
 	//Chama o método de QueryInterface na classe base(Caren).
 	return Caren::Shared_ConsultarInterface(PonteiroTrabalho, Param_Guid, Param_InterfaceSolicitada);
@@ -52,7 +52,7 @@ CarenResult CarenDXGIOutput3 ::ConsultarInterface(String^ Param_Guid, ICaren^ Pa
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
 /// </summary>
 /// <param name="Param_PonteiroNativo">Variável (GERENCIADA) para o ponteiro nativo a ser adicionado.</param>
-CarenResult CarenDXGIOutput3 ::AdicionarPonteiro(IntPtr Param_PonteiroNativo)
+CarenResult CarenDXGIOutput3::AdicionarPonteiro(IntPtr Param_PonteiroNativo)
 {
 	//Fixa o ponteiro.
 	cli::pin_ptr<IDXGIOutput3*> p = &PonteiroTrabalho;
@@ -65,7 +65,7 @@ CarenResult CarenDXGIOutput3 ::AdicionarPonteiro(IntPtr Param_PonteiroNativo)
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
 /// </summary>
 /// <param name="Param_PonteiroNativo">Variável (NATIVA) para o ponteiro nativo a ser adicionado.</param>
-CarenResult CarenDXGIOutput3 ::AdicionarPonteiro(LPVOID Param_PonteiroNativo)
+CarenResult CarenDXGIOutput3::AdicionarPonteiro(LPVOID Param_PonteiroNativo)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -109,7 +109,7 @@ Done:;
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
 /// </summary>
 /// <param name="Param_Out_PonteiroNativo">Variável (GERENCIADA) que vai receber o ponteiro nativo.</param>
-CarenResult CarenDXGIOutput3 ::RecuperarPonteiro([Out] IntPtr% Param_Out_PonteiroNativo)
+CarenResult CarenDXGIOutput3::RecuperarPonteiro([Out] IntPtr% Param_Out_PonteiroNativo)
 {
 	//Chama o método para recuperar o ponteiro de trabalho da classe atual.
 	return Caren::Shared_RecuperarPonteiro(Param_Out_PonteiroNativo, PonteiroTrabalho);
@@ -120,7 +120,7 @@ CarenResult CarenDXGIOutput3 ::RecuperarPonteiro([Out] IntPtr% Param_Out_Ponteir
 /// Este método não é responsável por adicionar uma nova referência ao objeto COM.
 /// </summary>
 /// <param name="Param_Out_PonteiroNativo">Variável (NATIVA) que vai receber o ponteiro nativo.</param>
-CarenResult CarenDXGIOutput3 ::RecuperarPonteiro(LPVOID* Param_Out_PonteiroNativo)
+CarenResult CarenDXGIOutput3::RecuperarPonteiro(LPVOID* Param_Out_PonteiroNativo)
 {
 	//Chama o método para recuperar o ponteiro de trabalho da classe atual.
 	return Caren::Shared_RecuperarPonteiro(Param_Out_PonteiroNativo, PonteiroTrabalho);
@@ -130,7 +130,7 @@ CarenResult CarenDXGIOutput3 ::RecuperarPonteiro(LPVOID* Param_Out_PonteiroNativ
 /// Método responsável por retornar a quantidade de referências do objeto COM atual.
 /// </summary>
 /// <param name="Param_Out_Referencias">Variável que vai receber a quantidade de referências do objeto.</param>
-CarenResult CarenDXGIOutput3 ::RecuperarReferencias([Out] UInt64% Param_Out_Referencias)
+CarenResult CarenDXGIOutput3::RecuperarReferencias([Out] UInt64% Param_Out_Referencias)
 {
 	//Chama o método para recuperar a quantidade de referencias atuais da interface.
 	return Caren::Shared_RecuperarReferencias(Param_Out_Referencias, PonteiroTrabalho);
@@ -139,25 +139,16 @@ CarenResult CarenDXGIOutput3 ::RecuperarReferencias([Out] UInt64% Param_Out_Refe
 /// <summary>
 /// Método responsável por indicar se o ponteiro COM atual é válido.
 /// </summary>
-CarenResult CarenDXGIOutput3 ::StatusPonteiro()
+CarenResult CarenDXGIOutput3::StatusPonteiro()
 {
 	return (ObjetoValido(PonteiroTrabalho) ? CarenResult(ResultCode::SS_OK, true) : CarenResult(ResultCode::ER_E_POINTER, false));
-}
-
-/// <summary>
-/// Método responsável por retornar a variável que armazena o último código de erro desconhecido ou não documentado gerado pela classe.
-/// Esse método não chama o método nativo (GetLastError), apenas retorna o código de erro que foi armazenado na classe.
-/// </summary>
-Int32 CarenDXGIOutput3 ::ObterCodigoErro()
-{
-	return Var_Glob_LAST_HRESULT;
 }
 
 /// <summary>
 /// (AddRef) - Incrementa a contagem de referência para o ponteiro do objeto COM atual. Você deve chamar este método sempre que 
 /// você fazer uma cópia de um ponteiro de interface.
 /// </summary>
-void CarenDXGIOutput3 ::AdicionarReferencia()
+void CarenDXGIOutput3::AdicionarReferencia()
 {
 	//Adiciona uma referência ao ponteiro
 	(reinterpret_cast<IDXGIOutput3 *>(PonteiroTrabalho))->AddRef();
@@ -166,7 +157,7 @@ void CarenDXGIOutput3 ::AdicionarReferencia()
 /// <summary>
 /// (Release) - 'Decrementa' a contagem de referência do objeto COM atual.
 /// </summary>
-void CarenDXGIOutput3 ::LiberarReferencia()
+void CarenDXGIOutput3::LiberarReferencia()
 {
 	//Libera a referência e obtém a quantidade atual.
 	ULONG RefCount = (reinterpret_cast<IDXGIOutput3 *>(PonteiroTrabalho))->Release();
@@ -184,7 +175,7 @@ void CarenDXGIOutput3 ::LiberarReferencia()
 /// Método responsável por chamar o finalizador da interface para realizar a limpeza e descarte de dados pendentes.
 /// Este método pode ser escrito de forma diferente para cada interface.
 /// </summary>
-void CarenDXGIOutput3 ::Finalizar()
+void CarenDXGIOutput3::Finalizar()
 {
 	//////////////////////
 	//Código de descarte//
@@ -214,7 +205,7 @@ void CarenDXGIOutput3 ::Finalizar()
 /// <param name="Param_Out_Flags">Recebe uma variável que recebe uma combinação de valores digitados 
 /// CA_DXGI_OVERLAY_SUPPORT_FLAGque são combinados usando uma operação ou bitwise. O valor resultante especifica 
 /// opções de suporte sobreposição.</param>
-CarenResult CarenDXGIOutput3 ::CheckOverlaySupport(
+CarenResult CarenDXGIOutput3::CheckOverlaySupport(
 				CA_DXGI_FORMAT Param_Formato, 
 				ICaren^ Param_DispositivoD3D, 
 				[Out] CA_DXGI_OVERLAY_SUPPORT_FLAG% Param_Out_Flags)

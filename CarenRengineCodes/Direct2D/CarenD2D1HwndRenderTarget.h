@@ -91,9 +91,6 @@ internal:
 	//Variavel que contém o valor da propriedade (DisposedClasse)
 	Boolean Prop_DisposedClasse = false;
 
-	//Variavel que vai conter o ultimo código HRESULT retornado.
-	Int32 Var_Glob_LAST_HRESULT = 0;
-
 
 	//Variaveis publicas
 public:
@@ -165,12 +162,6 @@ public:
 	/// Método responsável por indicar se o ponteiro COM atual é válido.
 	/// </summary>
 	virtual CarenResult StatusPonteiro();
-
-	/// <summary>
-	/// Método responsável por retornar a variável que armazena o último código de erro desconhecido ou não documentado gerado pela classe.
-	/// Esse método não chama o método nativo (GetLastError), apenas retorna o código de erro que foi armazenado na classe.
-	/// </summary>
-	virtual Int32 ObterCodigoErro();
 
 	/// <summary>
 	/// (AddRef) - Incrementa a contagem de referência para o ponteiro do objeto COM atual. Você deve chamar este método sempre que 

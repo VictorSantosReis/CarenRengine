@@ -56,9 +56,6 @@ internal:
 	//Variavel que contém o valor da propriedade (DisposedClasse)
 	Boolean Prop_DisposedClasse = false;
 
-	//Variavel que vai conter o ultimo código HRESULT retornado.
-	Int32 Var_Glob_LAST_HRESULT = 0;
-
 
 	//Variaveis publicas
 public:

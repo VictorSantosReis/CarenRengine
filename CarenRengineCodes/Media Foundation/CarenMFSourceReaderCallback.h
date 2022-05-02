@@ -234,12 +234,6 @@ public:
 	virtual CarenResult StatusPonteiro();
 
 	/// <summary>
-	/// Método responsável por retornar a variável que armazena o último código de erro desconhecido ou não documentado gerado pela classe.
-	/// Esse método não chama o método nativo (GetLastError), apenas retorna o código de erro que foi armazenado na classe.
-	/// </summary>
-	virtual Int32 ObterCodigoErro();
-
-	/// <summary>
 	/// (AddRef) - Incrementa a contagem de referência para o ponteiro do objeto COM atual. Você deve chamar este método sempre que 
 	/// você fazer uma cópia de um ponteiro de interface.
 	/// </summary>

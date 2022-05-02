@@ -411,9 +411,6 @@ CarenResult CarenEvent::ResetarEvento()
 	}
 	else
 	{
-		//Define a variavel de erro.
-		Var_Glob_LAST_HRESULT = -1;
-
 		//Define falha na operação.
 		Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
 
@@ -450,9 +447,6 @@ CarenResult CarenEvent::SinalizarEvento()
 	}
 	else
 	{
-		//Define a variavel de erro.
-		Var_Glob_LAST_HRESULT = -1;
-
 		//Define falha na operação.
 		Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
 
@@ -489,9 +483,6 @@ CarenResult CarenEvent::LiberarEvento()
 	}
 	else
 	{
-		//Define a variavel de erro.
-		Var_Glob_LAST_HRESULT = -1;
-
 		//Define falha na operação.
 		Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
 

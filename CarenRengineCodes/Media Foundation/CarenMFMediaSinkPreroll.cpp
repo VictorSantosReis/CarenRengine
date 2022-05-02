@@ -116,22 +116,13 @@ CarenResult CarenMFMediaSinkPreroll::StatusPonteiro()
 }
 
 /// <summary>
-/// Método responsável por retornar a variável que armazena o último código de erro desconhecido ou não documentado gerado pela classe.
-/// Esse método não chama o método nativo (GetLastError), apenas retorna o código de erro que foi armazenado na classe.
-/// </summary>
-Int32 CarenMFMediaSinkPreroll::ObterCodigoErro()
-{
-	return Var_Glob_LAST_HRESULT;
-}
-
-/// <summary>
 /// (AddRef) - Incrementa a contagem de referência para o ponteiro do objeto COM atual. Você deve chamar este método sempre que 
 /// você fazer uma cópia de um ponteiro de interface.
 /// </summary>
 void CarenMFMediaSinkPreroll::AdicionarReferencia()
 {
 	//Chama o método para incrementar a quantidade de referencias atuais da interface.
-	Caren::Shared_IncrementarReferencia(PonteiroTrabalho);
+	Caren::Shared_AdicionarReferencia(PonteiroTrabalho);
 }
 
 /// <summary>
@@ -196,9 +187,6 @@ CarenResult CarenMFMediaSinkPreroll::NotifyPreroll(Int64 Param_ProximaHoraInicio
 	{
 		//O método falhou.
 		Resultado.AdicionarCodigo(ResultCode::ER_FAIL, false);
-
-		//Define o código HRESULT.
-		Var_Glob_LAST_HRESULT = Hr;
 
 		//Sai do método
 		goto Done;

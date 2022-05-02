@@ -195,22 +195,13 @@ CarenResult CarenMFMediaSession::StatusPonteiro()
 }
 
 /// <summary>
-/// Método responsável por retornar a variável que armazena o último código de erro desconhecido ou não documentado gerado pela classe.
-/// Esse método não chama o método nativo (GetLastError), apenas retorna o código de erro que foi armazenado na classe.
-/// </summary>
-Int32 CarenMFMediaSession::ObterCodigoErro()
-{
-	return Var_Glob_LAST_HRESULT;
-}
-
-/// <summary>
 /// (AddRef) - Incrementa a contagem de referência para o ponteiro do objeto COM atual. Você deve chamar este método sempre que 
 /// você fazer uma cópia de um ponteiro de interface.
 /// </summary>
 void CarenMFMediaSession::AdicionarReferencia()
 {
 	//Chama o método para incrementar a quantidade de referencias atuais da interface.
-	Caren::Shared_IncrementarReferencia(PonteiroTrabalho);
+	Caren::Shared_AdicionarReferencia(PonteiroTrabalho);
 }
 
 /// <summary>
@@ -662,9 +653,6 @@ Done:;
 	 {
 		 //Falhou ao realizar a operação.
 
-		 //Define o código na classe.
-		 Var_Glob_LAST_HRESULT = Hr;
-
 		 //Sai do método
 		 Sair;
 	 }
@@ -717,9 +705,6 @@ Done:;
 	 {
 		 //Falhou ao realizar a operação.
 
-		 //Define o código na classe.
-		 Var_Glob_LAST_HRESULT = Hr;
-
 		 //Sai do método
 		 Sair;
 	 }
@@ -760,13 +745,10 @@ Done:;
 	 {
 		 //Falhou ao realizar a operação.
 
-		 //Define o código na classe.
-		 Var_Glob_LAST_HRESULT = Hr;
-
 		 //Sai do método
 		 Sair;
 	 }
-
+	
 	 //Cria a interface a ser retornada.
 	 Param_Out_MidiaEvent = gcnew CarenMFMediaEvent();
 
@@ -812,7 +794,10 @@ Done:;
 
 	 //Verifica se forneceu uma estrutura PROPVARIANT com o valor do evento.
 	 if (ObjetoGerenciadoValido(Param_Dados))
+	 {
+		 //Tenta converter a Propvariant.
 		 CarenConvertPropvariantToNativeSafe(Param_Dados, vi_Propvar); //Converte CA_PROPVARIANT
+	 }
 
 	 //Chama o método para realizar a operação.
 	 Hr = PonteiroTrabalho->QueueEvent(
@@ -829,9 +814,6 @@ Done:;
 	 if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	 {
 		 //Falhou ao realizar a operação.
-
-		 //Define o código na classe.
-		 Var_Glob_LAST_HRESULT = Hr;
 
 		 //Sai do método
 		 Sair;

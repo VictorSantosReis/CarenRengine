@@ -222,22 +222,13 @@ CarenResult CarenMFMediaEvent::StatusPonteiro()
 }
 
 /// <summary>
-/// Método responsável por retornar a variável que armazena o último código de erro desconhecido ou não documentado gerado pela classe.
-/// Esse método não chama o método nativo (GetLastError), apenas retorna o código de erro que foi armazenado na classe.
-/// </summary>
-Int32 CarenMFMediaEvent::ObterCodigoErro()
-{
-	return Var_Glob_LAST_HRESULT;
-}
-
-/// <summary>
 /// (AddRef) - Incrementa a contagem de referência para o ponteiro do objeto COM atual. Você deve chamar este método sempre que 
 /// você fazer uma cópia de um ponteiro de interface.
 /// </summary>
 void CarenMFMediaEvent::AdicionarReferencia()
 {
 	//Chama o método para incrementar a quantidade de referencias atuais da interface.
-	Caren::Shared_IncrementarReferencia(PonteiroTrabalho);
+	Caren::Shared_AdicionarReferencia(PonteiroTrabalho);
 }
 
 /// <summary>
@@ -1489,9 +1480,6 @@ CarenResult CarenMFMediaEvent::LockStore()
 	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
 	{
 		//Falhou ao realizar a operação.
-
-		//Define o código na classe.
-		Var_Glob_LAST_HRESULT = Hr;
 	}
 
 	//Retorna o resultado.

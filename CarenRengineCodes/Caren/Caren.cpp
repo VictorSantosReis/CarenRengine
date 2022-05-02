@@ -327,7 +327,7 @@ Done:;
 }
 
 //INCREMENT_REFENCE_POINTER
-void Caren::Shared_IncrementarReferencia(IUnknown* Param_MyPointerWork)
+void Caren::Shared_AdicionarReferencia(IUnknown* Param_MyPointerWork)
 {
 	//Verifica se o ponteiro é valido
 	if (!ObjetoValido(Param_MyPointerWork))
@@ -452,22 +452,13 @@ CarenResult Caren::StatusPonteiro()
 }
 
 /// <summary>
-/// Método responsável por retornar a variável que armazena o último código de erro desconhecido ou não documentado gerado pela classe.
-/// Esse método não chama o método nativo (GetLastError), apenas retorna o código de erro que foi armazenado na classe.
-/// </summary>
-Int32 Caren::ObterCodigoErro()
-{
-	return Var_Glob_LAST_HRESULT;
-}
-
-/// <summary>
 /// (AddRef) - Incrementa a contagem de referência para o ponteiro do objeto COM atual. Você deve chamar este método sempre que 
 /// você fazer uma cópia de um ponteiro de interface.
 /// </summary>
 void Caren::AdicionarReferencia()
 {
 	//Chama o método para incrementar a quantidade de referencias atuais da interface.
-	Caren::Shared_IncrementarReferencia(PonteiroTrabalho);
+	Caren::Shared_AdicionarReferencia(PonteiroTrabalho);
 }
 
 /// <summary>

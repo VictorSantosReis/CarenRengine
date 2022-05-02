@@ -18,7 +18,6 @@ limitations under the License.
 #pragma once
 #include "../SDK_DXGI.h"
 #include "../SDK_Caren.h"
-#include "CarenDXGIOutput.h"
 #include "../SDK_Utilidades.h"
 
 //Importa o namespace que contém as interfaces da API primária.

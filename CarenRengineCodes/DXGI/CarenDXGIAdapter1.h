@@ -19,7 +19,6 @@ limitations under the License.
 #include "../SDK_DXGI.h"
 #include "../Caren/Caren.h"
 #include "../SDK_Utilidades.h"
-#include "CarenDXGIOutput.h"
 
 //Importa o namespace que contém as interfaces do Microsoft DirectX Graphics Infrastructure(DXGI).
 using namespace CarenRengine::DXGI;

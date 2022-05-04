@@ -263,7 +263,10 @@ public:
 	/// <param name="Param_Recurso">Especifica um membro da CA_DXGI_FEATURE para consultar o suporte.</param>
 	/// <param name="Param_SizeBuffer">O tamanho de Param_Ref_BufferDescFeature, em bytes.</param>
 	/// <param name="Param_Ref_BufferDescFeature">Especifica um ponteiro para um buffer que será preenchido com dados que descrevem o suporte ao recurso.</param>
-	virtual CarenResult CheckFeatureSupport(CA_DXGI_FEATURE Param_Recurso, UInt32 Param_SizeBuffer, ICarenBuffer^% Param_Ref_BufferDescFeature);
+	virtual CarenResult CheckFeatureSupport(
+	CA_DXGI_FEATURE Param_Recurso, 
+	UInt32 Param_SizeBuffer, 
+	ICarenBuffer^% Param_Ref_BufferDescFeature);
 
 
 
@@ -275,7 +278,10 @@ public:
 	/// <param name="Param_LUID">Um valor único que identifica o adaptador.</param>
 	/// <param name="Param_RIID">O identificador globalmente único (GUID) do objeto ICarenDXGIAdapter referenciado pelo parâmetro (Param_InterfaceAdapter).</param>
 	/// <param name="Param_Out_InterfaceAdapter">Recebe um ponteiro de interface ICarenDXGIAdapter para o adaptador.</param>
-	virtual CarenResult EnumAdapterByLuid(CA_LUID^ Param_LUID, String^ Param_RIID, [Out] ICaren^ Param_Out_InterfaceAdapter);
+	virtual CarenResult EnumAdapterByLuid(
+	CA_LUID^ Param_LUID, 
+	String^ Param_RIID, 
+	[Out] ICaren^ Param_Out_InterfaceAdapter);
 
 	/// <summary>
 	/// (EnumWarpAdapter) - Fornece um adaptador que pode ser fornecido a função D3D12CreateDevice para usar o renderizador WARP.
@@ -291,7 +297,8 @@ public:
 	/// (GetCreationFlags) - Recebe as bandeiras que foram usadas quando um objeto Microsoft DirectX Graphics Infrastructure (DXGI) foi criado.
 	/// </summary>
 	/// <param name="Param_Out_Flags">Retorna o flag utilizada na criação da fabrica(DXGIFactory).</param>
-	virtual CarenResult GetCreationFlags([Out] UInt32% Param_Out_Flags);
+	virtual CarenResult GetCreationFlags(
+	[Out] UInt32% Param_Out_Flags);
 
 
 	//Métodos da interface(ICarenDXGIFactory2)
@@ -368,13 +375,16 @@ public:
 	/// <param name="Param_Out_Luid">Retorna uma variavel que recebe um identificador localmente único(LUID). Valor que identifica o adaptador. Um CA_LUID é um valor de 64 bits 
 	/// que é garantido para ser único apenas no sistema operacional em que foi gerado. A singularidade de um LUID é garantida apenas até que o sistema operacional seja 
 	/// reiniciado.</param>
-	virtual CarenResult GetSharedResourceAdapterLuid(IntPtr Param_HandleRecurso, [Out] CA_LUID^% Param_Out_Luid);
+	virtual CarenResult GetSharedResourceAdapterLuid(
+	IntPtr Param_HandleRecurso, 
+	[Out] CA_LUID^% Param_Out_Luid);
 
 	/// <summary>
 	/// (IsWindowedStereoEnabled) - Determina se deve usar o modo estéreo.
 	/// </summary>
 	/// <param name="Param_Out_ModoEstereoHabilitado">Retorna um valor que indica se deve usar o modo estéreo. TRUE indica que você pode usar o modo estéreo; se não, FALSO.</param>
-	virtual CarenResult IsWindowedStereoEnabled([Out] Boolean% Param_Out_ModoEstereoHabilitado);
+	virtual CarenResult IsWindowedStereoEnabled(
+	[Out] Boolean% Param_Out_ModoEstereoHabilitado);
 
 	/// <summary>
 	/// (RegisterOcclusionStatusEvent) - Registra-se para receber notificação de alterações no status de oclusão usando a sinalização do evento.
@@ -383,7 +393,9 @@ public:
 	/// A função CriarEvento ou AbrirEvento retorna essa alça.</param>
 	/// <param name="Param_Out_Cookie">Retorna um valor-chave que um aplicativo pode passar para o método ICarenDXGIFactory2::UnregisterOcclusionStatus para cancelar o 
 	/// registro do evento de notificação que (Param_Evento) especifica.</param>
-	virtual CarenResult RegisterOcclusionStatusEvent(ICarenEvent^ Param_Evento, [Out] UInt32% Param_Out_Cookie);
+	virtual CarenResult RegisterOcclusionStatusEvent(
+	ICarenEvent^ Param_Evento, 
+	[Out] UInt32% Param_Out_Cookie);
 
 	/// <summary>
 	/// (RegisterOcclusionStatusWindow) - Registra uma janela de inscrição para receber mensagens de notificação de alterações do status de oclusão.
@@ -392,7 +404,10 @@ public:
 	/// <param name="Param_WinMensagemCode">Especifica a mensagem de notificação para enviar para a janela define em (Param_HandleJanela).</param>
 	/// <param name="Param_Out_Cookie">Retorna um valor-chave que um aplicativo pode passar para o método ICarenDXGIFactory2::UnregisterOcclusionStatus para cancelar o registro da mensagem 
 	/// de notificação que (Param_WinMensagemCode) especifica.</param>
-	virtual CarenResult RegisterOcclusionStatusWindow(IntPtr Param_HandleJanela, UInt32 Param_WinMensagemCode, [Out] UInt32% Param_Out_Cookie);
+	virtual CarenResult RegisterOcclusionStatusWindow(
+	IntPtr Param_HandleJanela, 
+	UInt32 Param_WinMensagemCode, 
+	[Out] UInt32% Param_Out_Cookie);
 
 	/// <summary>
 	/// (RegisterStereoStatusEvent) - Registra-se para receber notificação de alterações no status estéreo usando a sinalização do evento.
@@ -401,7 +416,9 @@ public:
 	/// A função CriarEvento ou AbrirEvento retorna essa alça.</param>
 	/// <param name="Param_Out_Cookie">Retorna um valor-chave que um aplicativo pode passar para o método ICarenDXGIFactory2::UnregisterStereoStatus para cancelar o 
 	/// registro do evento de notificação que (Param_Evento) especifica.</param>
-	virtual CarenResult RegisterStereoStatusEvent(ICarenEvent^ Param_Evento, [Out] UInt32% Param_Out_Cookie);
+	virtual CarenResult RegisterStereoStatusEvent(
+	ICarenEvent^ Param_Evento, 
+	[Out] UInt32% Param_Out_Cookie);
 
 	/// <summary>
 	/// (RegisterStereoStatusWindow) - Registra uma janela de inscrição para receber mensagens de notificação de alterações de status estéreo.
@@ -410,19 +427,24 @@ public:
 	/// <param name="Param_WinMensagemCode">Especifica a mensagem de notificação para enviar para a janela define em (Param_HandleJanela).</param>
 	/// <param name="Param_Out_Cookie">Retorna um valor-chave que um aplicativo pode passar para o método ICarenDXGIFactory2::UnregisterStereoStatus para cancelar o registro da mensagem 
 	/// de notificação que (Param_WinMensagemCode) especifica.</param>
-	virtual CarenResult RegisterStereoStatusWindow(IntPtr Param_HandleJanela, UInt32 Param_WinMensagemCode, [Out] UInt32% Param_Out_Cookie);
+	virtual CarenResult RegisterStereoStatusWindow(
+	IntPtr Param_HandleJanela, 
+	UInt32 Param_WinMensagemCode, 
+	[Out] UInt32% Param_Out_Cookie);
 
 	/// <summary>
-	/// (UnregisterOcclusionStatus) - Desregistrar uma janela ou um evento para impedi-lo de receber notificação quando o status de oclusão muda.
+	/// (UnregisterOcclusionStatus) - Remove o registro feito por uma chamada (RegisterOcclusionStatusWindow) para uma janela ou um evento para impedi-lo de receber notificação quando o status de oclusão muda.
 	/// </summary>
 	/// <param name="Param_Cookie">Um valor-chave para a janela ou evento para cancelar o registro. Esse valor é retornado nos métodos de registro de evento e janela desta interface.</param>
-	virtual CarenResult UnregisterOcclusionStatus(UInt32 Param_Cookie);
+	virtual CarenResult UnregisterOcclusionStatus(
+	UInt32 Param_Cookie);
 
 	/// <summary>
-	/// (UnregisterStereoStatus) - Desregistrar uma janela ou um evento para impedi-lo de receber notificação quando o status estéreo muda.
+	/// (UnregisterStereoStatus) - Remove o registro feito por uma chamada (RegisterOcclusionStatusWindow) para uma janela ou um evento para impedi-lo de receber notificação quando o status estéreo muda.
 	/// </summary>
 	/// <param name="Param_Cookie">Um valor-chave para a janela ou evento para cancelar o registro. Esse valor é retornado nos métodos de registro de evento e janela desta interface.</param>
-	virtual CarenResult UnregisterStereoStatus(UInt32 Param_Cookie);
+	virtual CarenResult UnregisterStereoStatus(
+	UInt32 Param_Cookie);
 
 
 	//Métodos da interface(ICarenDXGIFactory1)
@@ -434,13 +456,16 @@ public:
 	/// </summary>
 	/// <param name="Param_IdAdaptador">O Indice para o adaptador a ser enumerado.</param>
 	/// <param name="Param_Out_Adaptador">Recebe um ponteiro para a interface do adaptador no indice especificado. O chamador é responsável por liberar a interface.</param>
-	virtual CarenResult EnumAdapters1(UInt32 Param_IdAdaptador, [Out] ICarenDXGIAdapter1^% Param_Out_Adaptador);
+	virtual CarenResult EnumAdapters1(
+	UInt32 Param_IdAdaptador, 
+	[Out] ICarenDXGIAdapter1^% Param_Out_Adaptador);
 
 	/// <summary>
 	/// (IsCurrent) - Informa uma aplicação da possível necessidade de reenumerar adaptadores.
 	/// </summary>
 	/// <param name="Param_Out_Atual">Retorna FALSO para informar o aplicativo de chamada para re-enumerar adaptadores.</param>
-	virtual CarenResult IsCurrent([Out] Boolean% Param_Out_Atual);
+	virtual CarenResult IsCurrent(
+	[Out] Boolean% Param_Out_Atual);
 
 
 	//Métodos da interface(ICarenDXGIFactory)
@@ -450,7 +475,9 @@ public:
 	/// </summary>
 	/// <param name="Param_ModuleHandle">Uma handle para a (.dll) do adaptador de software.</param>
 	/// <param name="Param_Out_Adaptador">Recebe um ponteiro para o adaptador criado.</param>
-	virtual CarenResult CreateSoftwareAdapter(IntPtr Param_ModuleHandle, [Out] ICarenDXGIAdapter^% Param_Out_Adaptador);
+	virtual CarenResult CreateSoftwareAdapter(
+	IntPtr Param_ModuleHandle, 
+	[Out] ICarenDXGIAdapter^% Param_Out_Adaptador);
 
 	/// <summary>
 	/// (CreateSwapChain) - Cria uma cadeia de swaps.
@@ -461,7 +488,10 @@ public:
 	/// um ponteiro para uma fila de comando direto(D3D12CommandQueue). Este parâmetro não pode ser NULO.</param>
 	/// <param name="Param_Desc">Uma estrutura CA_DXGI_SWAP_CHAIN_DESC para a descrição da cadeia de swap. Este parâmetro não pode ser NULO.</param>
 	/// <param name="Param_Out_SwapChain">Recebe um ponteiro para a interface do SwapChain.</param>
-	virtual CarenResult CreateSwapChain(ICaren^ Param_Dispositivo3D, CA_DXGI_SWAP_CHAIN_DESC^ Param_Desc, [Out] ICarenDXGISwapChain^% Param_Out_SwapChain);
+	virtual CarenResult CreateSwapChain(
+	ICaren^ Param_Dispositivo3D, 
+	CA_DXGI_SWAP_CHAIN_DESC^ Param_Desc, 
+	[Out] ICarenDXGISwapChain^% Param_Out_SwapChain);
 
 	/// <summary>
 	/// (EnumAdapters) - Enumera os adaptadores (Placas Graficas).
@@ -470,13 +500,16 @@ public:
 	/// </summary>
 	/// <param name="Param_IdAdaptador">O Indice para o adaptador a ser enumerado.</param>
 	/// <param name="Param_Out_Adaptador">Recebe um ponteiro para a interface do adaptador no indice especificado. O chamador é responsável por liberar a interface.</param>
-	virtual CarenResult EnumAdapters(UInt32 Param_IdAdaptador, [Out] ICarenDXGIAdapter^% Param_Out_Adaptador);
+	virtual CarenResult EnumAdapters(
+	UInt32 Param_IdAdaptador, 
+	[Out] ICarenDXGIAdapter^% Param_Out_Adaptador);
 
 	/// <summary>
 	/// (GetWindowAssociation) - Obtenha a janela através da qual o usuário controla a transição de e para a tela cheia.
 	/// </summary>
 	/// <param name="Param_HandleJanela">Retorna um ponteiro para a alça da janela.</param>
-	virtual CarenResult GetWindowAssociation([Out] IntPtr% Param_HandleJanela);
+	virtual CarenResult GetWindowAssociation(
+	[Out] IntPtr% Param_HandleJanela);
 
 	/// <summary>
 	/// (MakeWindowAssociation) - Permite que a DXGI monitore a fila de mensagens de um aplicativo para a sequência de chave de entrada em alt (que faz com que o aplicativo mude de janelas 
@@ -484,7 +517,9 @@ public:
 	/// </summary>
 	/// <param name="Param_HandleJanela">A handle da janela que deve ser monitorada. Este parâmetro pode ser NULO; mas somente se as bandeiras também forem 0.</param>
 	/// <param name="Param_Flags"></param>
-	virtual CarenResult MakeWindowAssociation(IntPtr Param_HandleJanela, CA_DXGI_MWA_FLAGS Param_Flags);
+	virtual CarenResult MakeWindowAssociation(
+	IntPtr Param_HandleJanela, 
+	CA_DXGI_MWA_FLAGS Param_Flags);
 
 
 	//Métodos da interface(ICarenDXGIObject)

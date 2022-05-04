@@ -582,6 +582,7 @@ Done:;
 }
 
 
+
 // Métodos da interface ICarenDXGIObject
 
 /// <summary>

@@ -184,9 +184,7 @@ void CarenDXGIFactory2::Finalizar()
 
 
 
-//
-// Métodos da interface proprietária(ICarenDXGIFactory2)
-//
+// Métodos da interface ICarenDXGIFactory2
 
 /// <summary>
 /// (CreateSwapChainForComposition) - Cria uma cadeia de swaps que você pode usar para enviar conteúdo Direct3D para a API de Composição Direta ou a estrutura Windows.UI.Xaml para compor em uma janela.
@@ -210,79 +208,13 @@ CarenResult CarenDXGIFactory2::CreateSwapChainForComposition(
 				ICarenDXGIOutput^ Param_SaidaRestrita, 
 				[Out] ICarenDXGISwapChain1^% Param_Out_SwapChain)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	IUnknown* pDispositivo3D = NULL;
-	DXGI_SWAP_CHAIN_DESC1* pDescSwapChain = NULL;
-	IDXGIOutput* pSaidaRestrita = NULL;
-	IDXGISwapChain1* pSwapChain1 = NULL;
-
-	//Recupera o ponteiro
-
-	//Obtém o ponteiro para o dispositivo.
-	Resultado = Param_DispositivoDirect3D->RecuperarPonteiro((LPVOID*)&pDispositivo3D);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou...
-
-		//Sai do método
-		Sair;
-	}
-
-	//Converte a estrutura gerenciada para nativa da descrição do Swap.
-	pDescSwapChain = Util.ConverterDXGI_SWAP_CHAIN_DESC1Managed_ToUnManaged(Param_DescSwap);
-
-	//Verifica se forneceu uma interface para restringir a saida
-	if (ObjetoGerenciadoValido(Param_SaidaRestrita))
-	{
-		//Recupera o objeto
-		Resultado = Param_SaidaRestrita->RecuperarPonteiro((LPVOID*)&pSaidaRestrita);
-
-		//Verifica se não houve erro
-		if (Resultado.StatusCode != ResultCode::SS_OK)
-		{
-			//Falhou...
-
-			//Sai do método
-			Sair;
-		}
-	}
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->CreateSwapChainForComposition(pDispositivo3D, pDescSwapChain, pSaidaRestrita ? pSaidaRestrita : NULL, &pSwapChain1);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria a interface gerenciada que vai conter o ponteiro para a nativa
-	Param_Out_SwapChain = gcnew CarenDXGISwapChain1();
-
-	//Define o ponteiro de trabalho
-	Param_Out_SwapChain->AdicionarPonteiro(pSwapChain1);
-
-Done:;
-	//Libera a memoria para a estrutura
-	DeletarEstruturaSafe(&pDescSwapChain);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIFactory::CreateSwapChainForComposition(PonteiroTrabalho,
+		Param_DispositivoDirect3D,
+		Param_DescSwap,
+		Param_SaidaRestrita,
+		Param_Out_SwapChain
+	);
 }
 
 /// <summary>
@@ -304,92 +236,14 @@ CarenResult CarenDXGIFactory2::CreateSwapChainForCoreWindow(
 				ICarenDXGIOutput^ Param_SaidaRestrita,
 				[Out] ICarenDXGISwapChain1^% Param_Out_SwapChain)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	IUnknown* pDispositivo3D = NULL;
-	IUnknown* pCoreWindow = NULL;
-	DXGI_SWAP_CHAIN_DESC1* pDescSwapChain = NULL;
-	IDXGIOutput* pSaidaRestrita = NULL;
-	IDXGISwapChain1* pSwapChain1 = NULL;
-
-	//Recupera o ponteiro
-
-	//Obtém o ponteiro para o dispositivo.
-	Resultado = Param_DispositivoDirect3D->RecuperarPonteiro((LPVOID*)&pDispositivo3D);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou...
-
-		//Sai do método
-		Sair;
-	}
-
-	//Obtém o ponteiro para o CoreWindow.
-	Resultado = Param_CoreWindow->RecuperarPonteiro((LPVOID*)&pCoreWindow);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou...
-
-		//Sai do método
-		Sair;
-	}
-
-	//Converte a estrutura gerenciada para nativa da descrição do Swap.
-	pDescSwapChain = Util.ConverterDXGI_SWAP_CHAIN_DESC1Managed_ToUnManaged(Param_DescSwap);
-
-	//Verifica se forneceu uma interface para restringir a saida
-	if (ObjetoGerenciadoValido(Param_SaidaRestrita))
-	{
-		//Recupera o objeto
-		Resultado = Param_SaidaRestrita->RecuperarPonteiro((LPVOID*)&pSaidaRestrita);
-
-		//Verifica se não houve erro
-		if (Resultado.StatusCode != ResultCode::SS_OK)
-		{
-			//Falhou...
-
-			//Sai do método
-			Sair;
-		}
-	}
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->CreateSwapChainForCoreWindow(pDispositivo3D, pCoreWindow, pDescSwapChain, pSaidaRestrita ? pSaidaRestrita : NULL, &pSwapChain1);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria a interface gerenciada que vai conter o ponteiro para a nativa
-	Param_Out_SwapChain = gcnew CarenDXGISwapChain1();
-
-	//Define o ponteiro de trabalho
-	Param_Out_SwapChain->AdicionarPonteiro(pSwapChain1);
-
-Done:;
-	//Libera a memoria para a estrutura
-	DeletarEstruturaSafe(&pDescSwapChain);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIFactory::CreateSwapChainForCoreWindow(PonteiroTrabalho,
+		Param_DispositivoDirect3D,
+		Param_CoreWindow,
+		Param_DescSwap,
+		Param_SaidaRestrita,
+		Param_Out_SwapChain
+	);
 }
 
 /// <summary>
@@ -513,47 +367,23 @@ Done:;
 /// <param name="Param_Out_Luid">Retorna uma variavel que recebe um identificador localmente único(LUID). Valor que identifica o adaptador. Um CA_LUID é um valor de 64 bits 
 /// que é garantido para ser único apenas no sistema operacional em que foi gerado. A singularidade de um LUID é garantida apenas até que o sistema operacional seja 
 /// reiniciado.</param>
-CarenResult CarenDXGIFactory2::GetSharedResourceAdapterLuid(IntPtr Param_HandleRecurso, [Out] CA_LUID^% Param_Out_Luid)
+CarenResult CarenDXGIFactory2::GetSharedResourceAdapterLuid(
+	IntPtr Param_HandleRecurso, 
+	[Out] CA_LUID^% Param_Out_Luid)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	LUID LuidData = { 0 };
-	HANDLE pHandle = Util.ConverterIntPtrToHandle(Param_HandleRecurso);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetSharedResourceAdapterLuid(pHandle, &LuidData);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Converte a estrutura do luid para uma gerenciada e define no parametro de saida.
-	Param_Out_Luid = Util.ConverterLUIDUnmanagedToManaged(&LuidData);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIFactory::GetSharedResourceAdapterLuid(PonteiroTrabalho,
+		Param_HandleRecurso,
+		Param_Out_Luid
+	);
 }
 
 /// <summary>
 /// (IsWindowedStereoEnabled) - Determina se deve usar o modo estéreo.
 /// </summary>
 /// <param name="Param_Out_ModoEstereoHabilitado">Retorna um valor que indica se deve usar o modo estéreo. TRUE indica que você pode usar o modo estéreo; se não, FALSO.</param>
-CarenResult CarenDXGIFactory2::IsWindowedStereoEnabled([Out] Boolean% Param_Out_ModoEstereoHabilitado)
+CarenResult CarenDXGIFactory2::IsWindowedStereoEnabled(
+	[Out] Boolean% Param_Out_ModoEstereoHabilitado)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -581,7 +411,9 @@ CarenResult CarenDXGIFactory2::IsWindowedStereoEnabled([Out] Boolean% Param_Out_
 /// A função CriarEvento ou AbrirEvento retorna essa alça.</param>
 /// <param name="Param_Out_Cookie">Retorna um valor-chave que um aplicativo pode passar para o método ICarenDXGIFactory2::UnregisterOcclusionStatus para cancelar o 
 /// registro do evento de notificação que (Param_Evento) especifica.</param>
-CarenResult CarenDXGIFactory2::RegisterOcclusionStatusEvent(ICarenEvent^ Param_Evento, [Out] UInt32% Param_Out_Cookie)
+CarenResult CarenDXGIFactory2::RegisterOcclusionStatusEvent(
+	ICarenEvent^ Param_Evento, 
+	[Out] UInt32% Param_Out_Cookie)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -636,40 +468,17 @@ Done:;
 /// <param name="Param_WinMensagemCode">Especifica a mensagem de notificação para enviar para a janela define em (Param_HandleJanela).</param>
 /// <param name="Param_Out_Cookie">Retorna um valor-chave que um aplicativo pode passar para o método ICarenDXGIFactory2::UnregisterOcclusionStatus para cancelar o registro da mensagem 
 /// de notificação que (Param_WinMensagemCode) especifica.</param>
-CarenResult CarenDXGIFactory2::RegisterOcclusionStatusWindow(IntPtr Param_HandleJanela, UInt32 Param_WinMensagemCode, [Out] UInt32% Param_Out_Cookie)
+CarenResult CarenDXGIFactory2::RegisterOcclusionStatusWindow(
+	IntPtr Param_HandleJanela, 
+	UInt32 Param_WinMensagemCode, 
+	[Out] UInt32% Param_Out_Cookie)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	HWND pHandleJanela = Util.ConverterIntPtrToHWND(Param_HandleJanela);
-	DWORD OutCookie = 0;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->RegisterOcclusionStatusWindow(pHandleJanela, Param_WinMensagemCode, &OutCookie);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Define o Cookie no parametro de saida
-	Param_Out_Cookie = static_cast<UInt32>(OutCookie);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIFactory::RegisterOcclusionStatusWindow(PonteiroTrabalho,
+		Param_HandleJanela,
+		Param_WinMensagemCode,
+		Param_Out_Cookie
+	);
 }
 
 /// <summary>
@@ -679,52 +488,15 @@ Done:;
 /// A função CriarEvento ou AbrirEvento retorna essa alça.</param>
 /// <param name="Param_Out_Cookie">Retorna um valor-chave que um aplicativo pode passar para o método ICarenDXGIFactory2::UnregisterStereoStatus para cancelar o 
 /// registro do evento de notificação que (Param_Evento) especifica.</param>
-CarenResult CarenDXGIFactory2::RegisterStereoStatusEvent(ICarenEvent^ Param_Evento, [Out] UInt32% Param_Out_Cookie)
+CarenResult CarenDXGIFactory2::RegisterStereoStatusEvent(
+	ICarenEvent^ Param_Evento, 
+	[Out] UInt32% Param_Out_Cookie)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	HANDLE HandleEvento = NULL;
-	DWORD OutCookie = 0;
-
-	//Recupera a handle do evento
-	Resultado = Param_Evento->RecuperarEvento((LPVOID*)&HandleEvento);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Ponteiro do evento é invalido
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->RegisterStereoStatusEvent(HandleEvento, &OutCookie);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Define o Cookie no parametro de saida
-	Param_Out_Cookie = static_cast<UInt32>(OutCookie);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIFactory::RegisterStereoStatusEvent(PonteiroTrabalho,
+		Param_Evento,
+		Param_Out_Cookie
+	);
 }
 
 /// <summary>
@@ -734,85 +506,48 @@ Done:;
 /// <param name="Param_WinMensagemCode">Especifica a mensagem de notificação para enviar para a janela define em (Param_HandleJanela).</param>
 /// <param name="Param_Out_Cookie">Retorna um valor-chave que um aplicativo pode passar para o método ICarenDXGIFactory2::UnregisterStereoStatus para cancelar o registro da mensagem 
 /// de notificação que (Param_WinMensagemCode) especifica.</param>
-CarenResult CarenDXGIFactory2::RegisterStereoStatusWindow(IntPtr Param_HandleJanela, UInt32 Param_WinMensagemCode, [Out] UInt32% Param_Out_Cookie)
+CarenResult CarenDXGIFactory2::RegisterStereoStatusWindow(
+	IntPtr Param_HandleJanela, 
+	UInt32 Param_WinMensagemCode, 
+	[Out] UInt32% Param_Out_Cookie)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	HWND pHandleJanela = Util.ConverterIntPtrToHWND(Param_HandleJanela);
-	DWORD OutCookie = 0;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->RegisterStereoStatusWindow(pHandleJanela, Param_WinMensagemCode, &OutCookie);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Define o Cookie no parametro de saida
-	Param_Out_Cookie = static_cast<UInt32>(OutCookie);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIFactory::RegisterStereoStatusWindow(PonteiroTrabalho,
+		Param_HandleJanela,
+		Param_WinMensagemCode,
+		Param_Out_Cookie
+	);
 }
 
 /// <summary>
-/// (UnregisterOcclusionStatus) - Desregistrar uma janela ou um evento para impedi-lo de receber notificação quando o status de oclusão muda.
+/// (UnregisterOcclusionStatus) - Remove o registro feito por uma chamada (RegisterOcclusionStatusWindow) para uma janela ou um evento para impedi-lo de receber notificação quando o status de oclusão muda.
 /// </summary>
 /// <param name="Param_Cookie">Um valor-chave para a janela ou evento para cancelar o registro. Esse valor é retornado nos métodos de registro de evento e janela desta interface.</param>
-CarenResult CarenDXGIFactory2::UnregisterOcclusionStatus(UInt32 Param_Cookie)
+CarenResult CarenDXGIFactory2::UnregisterOcclusionStatus(
+	UInt32 Param_Cookie)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->UnregisterOcclusionStatus(Param_Cookie);
-
-	//Define sucesso por default a operação.
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIFactory::UnregisterOcclusionStatus(PonteiroTrabalho,
+		Param_Cookie
+	);
 }
 
 /// <summary>
-/// (UnregisterStereoStatus) - Desregistrar uma janela ou um evento para impedi-lo de receber notificação quando o status estéreo muda.
+/// (UnregisterStereoStatus) - Remove o registro feito por uma chamada (RegisterOcclusionStatusWindow) para uma janela ou um evento para impedi-lo de receber notificação quando o status estéreo muda.
 /// </summary>
 /// <param name="Param_Cookie">Um valor-chave para a janela ou evento para cancelar o registro. Esse valor é retornado nos métodos de registro de evento e janela desta interface.</param>
-CarenResult CarenDXGIFactory2::UnregisterStereoStatus(UInt32 Param_Cookie)
+CarenResult CarenDXGIFactory2::UnregisterStereoStatus(
+	UInt32 Param_Cookie)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->UnregisterStereoStatus(Param_Cookie);
-
-	//Define sucesso por default a operação.
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIFactory::UnregisterStereoStatus(PonteiroTrabalho,
+		Param_Cookie
+	);
 }
 
 
 
-//
 // Métodos da interface ICarenDXGIFactory1
-//
 
 /// <summary>
 /// (EnumAdapters1) - Enumera ambos os adaptadores (cartões de vídeo) com ou sem saídas.
@@ -821,116 +556,48 @@ CarenResult CarenDXGIFactory2::UnregisterStereoStatus(UInt32 Param_Cookie)
 /// </summary>
 /// <param name="Param_IdAdaptador">O Indice para o adaptador a ser enumerado.</param>
 /// <param name="Param_Out_Adaptador">Recebe um ponteiro para a interface do adaptador no indice especificado. O chamador é responsável por liberar a interface.</param>
-CarenResult CarenDXGIFactory2::EnumAdapters1(UInt32 Param_IdAdaptador, [Out] ICarenDXGIAdapter1^% Param_Out_Adaptador)
+CarenResult CarenDXGIFactory2::EnumAdapters1(
+	UInt32 Param_IdAdaptador, 
+	[Out] ICarenDXGIAdapter1^% Param_Out_Adaptador)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	IDXGIAdapter1* pVideoCardAdaptador = NULL;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->EnumAdapters1(Param_IdAdaptador, &pVideoCardAdaptador);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria a interface que vai ser retornada
-	Param_Out_Adaptador = gcnew CarenDXGIAdapter1();
-
-	//Define o ponteiro de trabalho
-	Param_Out_Adaptador->AdicionarPonteiro(pVideoCardAdaptador);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIFactory::EnumAdapters1(PonteiroTrabalho,
+		Param_IdAdaptador,
+		Param_Out_Adaptador
+	);
 }
 
 /// <summary>
 /// (IsCurrent) - Informa uma aplicação da possível necessidade de reenumerar adaptadores.
 /// </summary>
 /// <param name="Param_Out_Atual">Retorna FALSO para informar o aplicativo de chamada para re-enumerar adaptadores.</param>
-CarenResult CarenDXGIFactory2::IsCurrent([Out] Boolean% Param_Out_Atual)
+CarenResult CarenDXGIFactory2::IsCurrent(
+	[Out] Boolean% Param_Out_Atual)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	BOOL Result = FALSE;
-
-	//Chama o método para realizar a operação.
-	Result = PonteiroTrabalho->IsCurrent();
-
-	//Define no parametro de saida.
-	Param_Out_Atual = Result ? TRUE : FALSE;
-
-	//Define sucesso por default a operação.
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIFactory::IsCurrent(PonteiroTrabalho,
+		Param_Out_Atual
+	);
 }
 
 
 
-//
 // Métodos da interface ICarenDXGIFactory
-//
 
 /// <summary>
 /// (CreateSoftwareAdapter) - Crie uma interface de adaptação que represente um adaptador de software.
 /// </summary>
 /// <param name="Param_ModuleHandle">Uma handle para a (.dll) do adaptador de software.</param>
 /// <param name="Param_Out_Adaptador">Recebe um ponteiro para o adaptador criado.</param>
-CarenResult CarenDXGIFactory2::CreateSoftwareAdapter(IntPtr Param_ModuleHandle, [Out] ICarenDXGIAdapter^% Param_Out_Adaptador)
+CarenResult CarenDXGIFactory2::CreateSoftwareAdapter(
+	IntPtr Param_ModuleHandle, 
+	[Out] ICarenDXGIAdapter^% Param_Out_Adaptador)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	IDXGIAdapter* pAdaptador = NULL;
-	HMODULE ModuleDll = static_cast<HMODULE>(Param_ModuleHandle.ToPointer());
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->CreateSoftwareAdapter(ModuleDll, &pAdaptador);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria a interface que vai ser retornada
-	Param_Out_Adaptador = gcnew CarenDXGIAdapter();
-
-	//Deifne o ponteiro de trabalho
-	Param_Out_Adaptador->AdicionarPonteiro(pAdaptador);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIFactory::CreateSoftwareAdapter(PonteiroTrabalho,
+		Param_ModuleHandle,
+		Param_Out_Adaptador
+	);
 }
 
 /// <summary>
@@ -942,62 +609,17 @@ Done:;
 /// um ponteiro para uma fila de comando direto(D3D12CommandQueue). Este parâmetro não pode ser NULO.</param>
 /// <param name="Param_Desc">Uma estrutura CA_DXGI_SWAP_CHAIN_DESC para a descrição da cadeia de swap. Este parâmetro não pode ser NULO.</param>
 /// <param name="Param_Out_SwapChain">Recebe um ponteiro para a interface do SwapChain.</param>
-CarenResult CarenDXGIFactory2::CreateSwapChain(ICaren^ Param_Dispositivo3D, CA_DXGI_SWAP_CHAIN_DESC^ Param_Desc, [Out] ICarenDXGISwapChain^% Param_Out_SwapChain)
+CarenResult CarenDXGIFactory2::CreateSwapChain(
+	ICaren^ Param_Dispositivo3D, 
+	CA_DXGI_SWAP_CHAIN_DESC^ Param_Desc, 
+	[Out] ICarenDXGISwapChain^% Param_Out_SwapChain)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	IUnknown* pDispositivoDirect3D = NULL;
-	DXGI_SWAP_CHAIN_DESC* pDescSwap = NULL;
-	IDXGISwapChain* pSwapChain = NULL;
-
-	//Recupera o ponteiro para o dispositivo.
-	Resultado = Param_Dispositivo3D->RecuperarPonteiro((LPVOID*)&pDispositivoDirect3D);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou..
-
-		//Sai do método
-		Sair;
-	}
-
-	//Converte a estrutura gerenciada
-	pDescSwap = Util.ConverterDXGI_SWAP_CHAIN_DESCManaged_ToUnManaged(Param_Desc);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->CreateSwapChain(pDispositivoDirect3D, pDescSwap, &pSwapChain);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria a interface que será retornada.
-	Param_Out_SwapChain = gcnew CarenDXGISwapChain();
-
-	//Define o ponteiro de trabalho
-	Param_Out_SwapChain->AdicionarPonteiro(pSwapChain);
-
-Done:;
-	//Libera a memoria para a estrutura.
-	DeletarEstruturaSafe(&pDescSwap);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIFactory::CreateSwapChain(PonteiroTrabalho,
+		Param_Dispositivo3D,
+		Param_Desc,
+		Param_Out_SwapChain
+	);
 }
 
 /// <summary>
@@ -1007,80 +629,28 @@ Done:;
 /// </summary>
 /// <param name="Param_IdAdaptador">O Indice para o adaptador a ser enumerado.</param>
 /// <param name="Param_Out_Adaptador">Recebe um ponteiro para a interface do adaptador no indice especificado. O chamador é responsável por liberar a interface.</param>
-CarenResult CarenDXGIFactory2::EnumAdapters(UInt32 Param_IdAdaptador, [Out] ICarenDXGIAdapter^% Param_Out_Adaptador)
+CarenResult CarenDXGIFactory2::EnumAdapters(
+	UInt32 Param_IdAdaptador, 
+	[Out] ICarenDXGIAdapter^% Param_Out_Adaptador)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	IDXGIAdapter* pVideoCardAdaptador = NULL;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->EnumAdapters(Param_IdAdaptador, &pVideoCardAdaptador);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria a interface que vai ser retornada
-	Param_Out_Adaptador = gcnew CarenDXGIAdapter();
-
-	//Define o ponteiro de trabalho
-	Param_Out_Adaptador->AdicionarPonteiro(pVideoCardAdaptador);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIFactory::EnumAdapters(PonteiroTrabalho,
+		Param_IdAdaptador,
+		Param_Out_Adaptador
+	);
 }
 
 /// <summary>
 /// (GetWindowAssociation) - Obtenha a janela através da qual o usuário controla a transição de e para a tela cheia.
 /// </summary>
 /// <param name="Param_HandleJanela">Retorna um ponteiro para a alça da janela.</param>
-CarenResult CarenDXGIFactory2::GetWindowAssociation([Out] IntPtr% Param_HandleJanela)
+CarenResult CarenDXGIFactory2::GetWindowAssociation(
+	[Out] IntPtr% Param_HandleJanela)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	HWND pWinAssociation = NULL;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetWindowAssociation(&pWinAssociation);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Converte e define a handle no parametro de saida.
-	Param_HandleJanela = Util.ConverterHWNDToIntPtr(pWinAssociation);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIFactory::GetWindowAssociation(PonteiroTrabalho,
+		Param_HandleJanela
+	);
 }
 
 /// <summary>
@@ -1089,41 +659,17 @@ Done:;
 /// </summary>
 /// <param name="Param_HandleJanela">A handle da janela que deve ser monitorada. Este parâmetro pode ser NULO; mas somente se as bandeiras também forem 0.</param>
 /// <param name="Param_Flags"></param>
-CarenResult CarenDXGIFactory2::MakeWindowAssociation(IntPtr Param_HandleJanela, CA_DXGI_MWA_FLAGS Param_Flags)
+CarenResult CarenDXGIFactory2::MakeWindowAssociation(
+	IntPtr Param_HandleJanela, 
+	CA_DXGI_MWA_FLAGS Param_Flags)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	HWND pWinAssociation = NULL;
-	UINT Flags = static_cast<UINT>(Param_Flags);
-
-	//Obtém a handle.
-	pWinAssociation = Util.ConverterIntPtrToHWND(Param_HandleJanela);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->MakeWindowAssociation(pWinAssociation, Flags);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIFactory::MakeWindowAssociation(PonteiroTrabalho,
+		Param_HandleJanela,
+		Param_Flags
+	);
 }
+
 
 
 // Métodos da interface ICarenDXGIObject

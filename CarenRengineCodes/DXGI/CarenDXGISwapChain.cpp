@@ -412,7 +412,6 @@ Done:;
 
 // Métodos da interface ICarenDXGIDeviceSubObject
 
-
 /// <summary>
 /// Recupera o dispositivo.
 /// </summary>

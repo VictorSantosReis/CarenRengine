@@ -750,7 +750,6 @@ CarenResult CarenDXGISwapChain3::SetFullscreenState(
 
 // Métodos da interface ICarenDXGIDeviceSubObject
 
-
 /// <summary>
 /// Recupera o dispositivo.
 /// </summary>

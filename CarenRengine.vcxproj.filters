@@ -2861,6 +2861,9 @@
     <ClCompile Include="CarenRengineCodes\SharedClass\Shared_DXGI_SwapChain.cpp">
       <Filter>Arquivos de Origem\Shared Classes\DXGI</Filter>
     </ClCompile>
+    <ClCompile Include="CarenRengineCodes\SharedClass\Shared_DXGI_Factory.cpp">
+      <Filter>Arquivos de Origem\Shared Classes\DXGI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CarenRengineCodes\app.rc">

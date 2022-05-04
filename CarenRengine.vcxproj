@@ -924,6 +924,7 @@
     <ClCompile Include="CarenRengineCodes\SharedClass\Shared_DXGI_Adapter.cpp" />
     <ClCompile Include="CarenRengineCodes\SharedClass\Shared_DXGI_Device.cpp" />
     <ClCompile Include="CarenRengineCodes\SharedClass\Shared_DXGI_DeviceSubObject.cpp" />
+    <ClCompile Include="CarenRengineCodes\SharedClass\Shared_DXGI_Factory.cpp" />
     <ClCompile Include="CarenRengineCodes\SharedClass\Shared_DXGI_Object.cpp" />
     <ClCompile Include="CarenRengineCodes\SharedClass\Shared_DXGI_Output.cpp" />
     <ClCompile Include="CarenRengineCodes\SharedClass\Shared_DXGI_Resource.cpp" />

@@ -185,16 +185,16 @@ void CarenDXGIFactory::Finalizar()
 
 
 
-//
-// Métodos da interface proprietária(ICarenDXGIFactory)
-//
+// Métodos da interface ICarenDXGIFactory
 
 /// <summary>
 /// (CreateSoftwareAdapter) - Crie uma interface de adaptação que represente um adaptador de software.
 /// </summary>
 /// <param name="Param_ModuleHandle">Uma handle para a (.dll) do adaptador de software.</param>
 /// <param name="Param_Out_Adaptador">Recebe um ponteiro para o adaptador criado.</param>
-CarenResult CarenDXGIFactory::CreateSoftwareAdapter(IntPtr Param_ModuleHandle, [Out] ICarenDXGIAdapter^% Param_Out_Adaptador)
+CarenResult CarenDXGIFactory::CreateSoftwareAdapter(
+	IntPtr Param_ModuleHandle, 
+	[Out] ICarenDXGIAdapter^% Param_Out_Adaptador)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -242,62 +242,17 @@ Done:;
 /// um ponteiro para uma fila de comando direto(D3D12CommandQueue). Este parâmetro não pode ser NULO.</param>
 /// <param name="Param_Desc">Uma estrutura CA_DXGI_SWAP_CHAIN_DESC para a descrição da cadeia de swap. Este parâmetro não pode ser NULO.</param>
 /// <param name="Param_Out_SwapChain">Recebe um ponteiro para a interface do SwapChain.</param>
-CarenResult CarenDXGIFactory::CreateSwapChain(ICaren^ Param_Dispositivo3D, CA_DXGI_SWAP_CHAIN_DESC^ Param_Desc, [Out] ICarenDXGISwapChain^% Param_Out_SwapChain)
+CarenResult CarenDXGIFactory::CreateSwapChain(
+	ICaren^ Param_Dispositivo3D, 
+	CA_DXGI_SWAP_CHAIN_DESC^ Param_Desc, 
+	[Out] ICarenDXGISwapChain^% Param_Out_SwapChain)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	IUnknown* pDispositivoDirect3D = NULL;
-	DXGI_SWAP_CHAIN_DESC* pDescSwap = NULL;
-	IDXGISwapChain* pSwapChain = NULL;
-
-	//Recupera o ponteiro para o dispositivo.
-	Resultado = Param_Dispositivo3D->RecuperarPonteiro((LPVOID*)&pDispositivoDirect3D);
-
-	//Verifica se não houve erro
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Falhou..
-
-		//Sai do método
-		Sair;
-	}
-
-	//Converte a estrutura gerenciada
-	pDescSwap = Util.ConverterDXGI_SWAP_CHAIN_DESCManaged_ToUnManaged(Param_Desc);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->CreateSwapChain(pDispositivoDirect3D, pDescSwap, &pSwapChain);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria a interface que será retornada.
-	Param_Out_SwapChain = gcnew CarenDXGISwapChain();
-
-	//Define o ponteiro de trabalho
-	Param_Out_SwapChain->AdicionarPonteiro(pSwapChain);
-
-Done:;
-	//Libera a memoria para a estrutura.
-	DeletarEstruturaSafe(&pDescSwap);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIFactory::CreateSwapChain(PonteiroTrabalho,
+		Param_Dispositivo3D,
+		Param_Desc,
+		Param_Out_SwapChain
+	);
 }
 
 /// <summary>
@@ -307,80 +262,28 @@ Done:;
 /// </summary>
 /// <param name="Param_IdAdaptador">O Indice para o adaptador a ser enumerado.</param>
 /// <param name="Param_Out_Adaptador">Recebe um ponteiro para a interface do adaptador no indice especificado. O chamador é responsável por liberar a interface.</param>
-CarenResult CarenDXGIFactory::EnumAdapters(UInt32 Param_IdAdaptador, [Out] ICarenDXGIAdapter^% Param_Out_Adaptador)
+CarenResult CarenDXGIFactory::EnumAdapters(
+	UInt32 Param_IdAdaptador, 
+	[Out] ICarenDXGIAdapter^% Param_Out_Adaptador)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	IDXGIAdapter* pVideoCardAdaptador = NULL;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->EnumAdapters(Param_IdAdaptador, &pVideoCardAdaptador);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria a interface que vai ser retornada
-	Param_Out_Adaptador = gcnew CarenDXGIAdapter();
-
-	//Define o ponteiro de trabalho
-	Param_Out_Adaptador->AdicionarPonteiro(pVideoCardAdaptador);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIFactory::EnumAdapters(PonteiroTrabalho,
+		Param_IdAdaptador,
+		Param_Out_Adaptador
+	);
 }
 
 /// <summary>
 /// (GetWindowAssociation) - Obtenha a janela através da qual o usuário controla a transição de e para a tela cheia.
 /// </summary>
 /// <param name="Param_HandleJanela">Retorna um ponteiro para a alça da janela.</param>
-CarenResult CarenDXGIFactory::GetWindowAssociation([Out] IntPtr% Param_HandleJanela)
+CarenResult CarenDXGIFactory::GetWindowAssociation(
+	[Out] IntPtr% Param_HandleJanela)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	HWND pWinAssociation = NULL;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetWindowAssociation(&pWinAssociation);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Converte e define a handle no parametro de saida.
-	Param_HandleJanela = Util.ConverterHWNDToIntPtr(pWinAssociation);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIFactory::GetWindowAssociation(PonteiroTrabalho,
+		Param_HandleJanela
+	);
 }
 
 /// <summary>
@@ -389,41 +292,17 @@ Done:;
 /// </summary>
 /// <param name="Param_HandleJanela">A handle da janela que deve ser monitorada. Este parâmetro pode ser NULO; mas somente se as bandeiras também forem 0.</param>
 /// <param name="Param_Flags"></param>
-CarenResult CarenDXGIFactory::MakeWindowAssociation(IntPtr Param_HandleJanela, CA_DXGI_MWA_FLAGS Param_Flags)
+CarenResult CarenDXGIFactory::MakeWindowAssociation(
+	IntPtr Param_HandleJanela, 
+	CA_DXGI_MWA_FLAGS Param_Flags)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	HWND pWinAssociation = NULL;
-	UINT Flags = static_cast<UINT>(Param_Flags);
-
-	//Obtém a handle.
-	pWinAssociation = Util.ConverterIntPtrToHWND(Param_HandleJanela);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->MakeWindowAssociation(pWinAssociation, Flags);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do DXGI.
+	return Shared_DXGIFactory::MakeWindowAssociation(PonteiroTrabalho,
+		Param_HandleJanela,
+		Param_Flags
+	);
 }
+
 
 
 // Métodos da interface ICarenDXGIObject

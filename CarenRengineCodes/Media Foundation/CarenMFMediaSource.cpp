@@ -320,7 +320,7 @@ Done:;
 /// mídia podem oferecer suporte o formato de hora adicional. Este parâmetro pode ser nulo. Se o valor for nulo, é equivalente a GUID_NULL.</param>
 /// <param name="Param_PosiçãoInicio">Especifica onde iniciar a reprodução. As unidades deste parâmetro são indicadas pelo formato tempo dado em Param_GuidTimeFormato. Se o formato de hora é GUID_NULL, o tipo de variante deve ser VT_I8 ou VT_EMPTY. Use VT_I8 
 /// para especificar uma nova posição inicial, em unidades de 100 nanossegundos. Use VT_EMPTY para começar a partir da posição atual. Outros formatos de hora podem usar outros tipos CA_PROPVARIANT.</param>
-CarenResult CarenMFMediaSource::Start(ICarenMFPresentationDescriptor^ Param_DescritorApresentação, String^ Param_GuidTimeFormato, Estruturas::CA_PROPVARIANT^ Param_PosiçãoInicio)
+CarenResult CarenMFMediaSource::Start(ICarenMFPresentationDescriptor^ Param_DescritorApresentação, String^ Param_GuidTimeFormato, CA_PROPVARIANT^ Param_PosiçãoInicio)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -616,7 +616,7 @@ CarenResult CarenMFMediaSource::QueueEvent(
 	Enumeracoes::CA_MediaEventType Param_TipoEvento,
 	String^ Param_GuidExtendedType,
 	Int32 Param_HResultCode,
-	Estruturas::CA_PROPVARIANT^ Param_Dados)
+	CA_PROPVARIANT^ Param_Dados)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

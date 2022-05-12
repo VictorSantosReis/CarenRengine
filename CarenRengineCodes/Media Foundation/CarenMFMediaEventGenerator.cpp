@@ -309,7 +309,7 @@ CarenResult CarenMFMediaEventGenerator::QueueEvent(
 	Enumeracoes::CA_MediaEventType Param_TipoEvento, 
 	String^ Param_GuidExtendedType, 
 	Int32 Param_HResultCode, 
-	Estruturas::CA_PROPVARIANT^ Param_Dados) 
+	CA_PROPVARIANT^ Param_Dados) 
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

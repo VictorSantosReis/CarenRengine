@@ -217,5 +217,6 @@ limitations under the License.
 //Arquivo de classes compartilhadas
 #include "SharedClass/Shared_Direct3D11.h"
 #include "SharedClass/Shared_DXGI.h"
+#include "SharedClass/Shared_MediaFoundation.h"
 
 #endif//PCH_H

@@ -443,46 +443,17 @@ Done:;
 /// <param name="Param_InterfaceCompare">A interface que vai ter todos os atributos comparado com a interface atual.</param>
 /// <param name="Param_TipoComparação">O tipo de comparação a ser realizada.</param>
 /// <param name="Param_Out_Resultado">O resultado da comparação segundo o parametro (Param_TipoComparação).</param>
-CarenResult CarenMFMediaTypeExtend::Compare(ICarenMFAttributes^ Param_InterfaceCompare, CA_MF_ATTRIBUTES_MATCH_TYPE Param_TipoComparação, [Out] Boolean% Param_Out_Resultado)
+CarenResult CarenMFMediaTypeExtend::Compare(
+		ICarenMFAttributes^ Param_InterfaceCompare, 
+		CA_MF_ATTRIBUTES_MATCH_TYPE Param_TipoComparação, 
+		[Out] Boolean% Param_Out_Resultado)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	IMFAttributes* vi_pAttributesCompare = Nulo;
-	MF_ATTRIBUTES_MATCH_TYPE vi_CompareType = static_cast<MF_ATTRIBUTES_MATCH_TYPE>(Param_TipoComparação);
-	BOOL vi_Resultado = FALSE;
-
-	//Chama o método para obter a interface(IMFAttributes) que será comparada a está.
-	CarenGetPointerFromICarenSafe(Param_InterfaceCompare, vi_pAttributesCompare);
-
-	//Chama o método para comparar os itens
-	Hr = PonteiroTrabalho->Compare(
-		vi_pAttributesCompare,
-		vi_CompareType,
-		&vi_Resultado);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Define o resultado da comparação.
-	Param_Out_Resultado = vi_Resultado ? true : false;
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas da Media Foundation.
+	return Shared_MFAttributes::Compare(PonteiroTrabalho,
+		Param_InterfaceCompare,
+		Param_TipoComparação,
+		Param_Out_Resultado
+	);
 }
 
 /// <summary>
@@ -494,53 +465,17 @@ Done:;
 /// <param name="Param_GuidChave">Define o Guid do atributo a ter seu valor comparado com o valor da PropVariant informada.</param>
 /// <param name="Param_Valor">O valor a ser comparado com o Atributo especificado.</param>
 /// <param name="Param_Out_Resultado">O resultado da comparação do atributo.</param>
-CarenResult CarenMFMediaTypeExtend::CompareItem(String^ Param_GuidChave, CA_PROPVARIANT^ Param_Valor, [Out] Boolean% Param_Out_Resultado)
+CarenResult CarenMFMediaTypeExtend::CompareItem(
+		String^ Param_GuidChave, 
+		CA_PROPVARIANT^ Param_Valor, 
+		[Out] Boolean% Param_Out_Resultado)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	PropVariantManager UtilVariant = PropVariantManager();
-	GUID vi_GuidChave = GUID_NULL;
-	LPPROPVARIANT vi_PropVar = Nulo;
-	BOOL vi_ResultadoCompare = FALSE;
-
-	//Chama o método para ciar o guid aparti da String gerenciada.
-	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
-
-	//Chama o método para tentar converter a CA_PROPVARIANT gerenciada para a nativa.
-	CarenConvertPropvariantToNativeSafe(Param_Valor, vi_PropVar);
-
-	//Chama o método para compar o item.
-	Hr = PonteiroTrabalho->CompareItem(
-		const_cast<GUID&>(vi_GuidChave),
-		const_cast<PROPVARIANT&>(*vi_PropVar),
-		&vi_ResultadoCompare);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Define o resultado da comparação
-	Param_Out_Resultado = vi_ResultadoCompare ? true : false;
-
-Done:;
-	//Libera a memória utilizada pela PropVariant.
-	DeletarPropVariantSafe(&vi_PropVar);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas da Media Foundation.
+	return Shared_MFAttributes::CompareItem(PonteiroTrabalho,
+		Param_GuidChave,
+		Param_Valor,
+		Param_Out_Resultado
+	);
 }
 
 /// <summary>
@@ -552,36 +487,10 @@ Done:;
 /// <param name="Param_Out_InterfaceDestino">A interface de destino que vai receber os itens dessa interface.</param>
 CarenResult CarenMFMediaTypeExtend::CopyAllItems(ICarenMFAttributes^ Param_Out_InterfaceDestino)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis que o método vai usar
-	IMFAttributes* vi_pInterfaceDest = Nulo;
-
-	//Tenta recuperar o ponteiro para a interface de destino que vai receber os atributos.
-	CarenGetPointerFromICarenSafe(Param_Out_InterfaceDestino, vi_pInterfaceDest);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->CopyAllItems(vi_pInterfaceDest);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas da Media Foundation.
+	return Shared_MFAttributes::CopyAllItems(PonteiroTrabalho,
+		Param_Out_InterfaceDestino
+	);
 }
 
 /// <summary>
@@ -589,30 +498,8 @@ Done:;
 /// </summary>
 CarenResult CarenMFMediaTypeExtend::DeleteAllItems()
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->DeleteAllItems();
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas da Media Foundation.
+	return Shared_MFAttributes::DeleteAllItems(PonteiroTrabalho);
 }
 
 /// <summary>
@@ -622,36 +509,10 @@ Done:;
 /// <param name="Param_GuidChave">O Guid da chave a ser deletada.</param>
 CarenResult CarenMFMediaTypeExtend::DeleteItem(String^ Param_GuidChave)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis utilizadas no método
-	GUID vi_GuidChave = GUID_NULL;
-
-	//Chama o método para ciar o guid aparti da String gerenciada.
-	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->DeleteItem(const_cast<GUID&>(vi_GuidChave));
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas da Media Foundation.
+	return Shared_MFAttributes::DeleteItem(PonteiroTrabalho,
+		Param_GuidChave
+	);
 }
 
 
@@ -664,56 +525,15 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para chave que contém o Blob a ser obtido.</param>
 /// <param name="Param_Out_Buffer">O buffer que contém os dados da matriz bytes do valor da chave solicitada.</param>
-CarenResult CarenMFMediaTypeExtend::GetAllocatedBlob(String^ Param_GuidChave, [Out] Estruturas::CA_BlobData% Param_Out_Buffer)
+CarenResult CarenMFMediaTypeExtend::GetAllocatedBlob(
+		String^ Param_GuidChave, 
+		[Out] CA_BlobData% Param_Out_Buffer)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variavel COM
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis utilizadas pelo método
-	PBYTE vi_pOutBuffer = NULL;
-	UINT32 vi_OutLarguraBlob = 0;
-	GUID vi_GuidChave = GUID_NULL;
-
-	//Chama o método para ciar o guid aparti da String gerenciada.
-	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetAllocatedBlob(const_cast<GUID&>(vi_GuidChave), &vi_pOutBuffer, &vi_OutLarguraBlob);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria a estrutura a ser retornada com os dados.
-	Param_Out_Buffer = CA_BlobData();
-
-	//Define a largura do buffer
-	Param_Out_Buffer.SizeData = vi_OutLarguraBlob;
-
-	//Cria a interface que vai conter os dados do buffer.
-	Param_Out_Buffer.BufferDados = gcnew CarenBuffer();
-
-	//Copia os dados para o buffer
-	static_cast<ICarenBuffer^>(Param_Out_Buffer.BufferDados)->CreateBuffer(IntPtr(vi_pOutBuffer), true, Param_Out_Buffer.SizeData, Param_Out_Buffer.SizeData);
-
-Done:;
-	//Libera a memória para o buffer se válido.
-	if (ObjetoValido(vi_pOutBuffer))
-		CoTaskMemFree(vi_pOutBuffer);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas da Media Foundation.
+	return Shared_MFAttributes::GetAllocatedBlob(PonteiroTrabalho,
+		Param_GuidChave,
+		Param_Out_Buffer
+	);
 }
 
 /// <summary>
@@ -723,47 +543,17 @@ Done:;
 /// <param name="Param_GuidChave">O GUID para chave que contém o Blob a ser obtido. O tipo de atributo deve ser MF_ATTRIBUTE_STRING.</param>
 /// <param name="Param_Out_String">Retorna a string com os dados do valor da chave solicitada.</param>
 /// <param name="Param_Out_LarguraString">Retorna a largura em bytes da matriz que continha a String.</param>
-CarenResult CarenMFMediaTypeExtend::GetAllocatedString(String^ Param_GuidChave, [Out] String^% Param_Out_String, [Out] UInt32% Param_Out_LarguraString)
+CarenResult CarenMFMediaTypeExtend::GetAllocatedString(
+		String^ Param_GuidChave, 
+		[Out] String^% Param_Out_String, 
+		[Out] UInt32% Param_Out_LarguraString)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variavel COM
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis utilizadas pelo método
-	LPWSTR vi_pOutString = NULL;
-	UINT32 vi_OutLarguraBuffer = 0;
-	GUID vi_GuidChave = GUID_NULL;
-
-	//Chama o método para ciar o guid aparti da String gerenciada.
-	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetAllocatedString(const_cast<GUID&>(vi_GuidChave), &vi_pOutString, &vi_OutLarguraBuffer);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Define os dados nos parametros de saida.
-	Param_Out_String = gcnew String(vi_pOutString);
-	Param_Out_LarguraString = vi_OutLarguraBuffer;
-
-Done:;
-	//Libera a memória utilizada pela String se válida.
-	DeletarStringCoTaskSafe(&vi_pOutString);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas da Media Foundation.
+	return Shared_MFAttributes::GetAllocatedString(PonteiroTrabalho,
+		Param_GuidChave,
+		Param_Out_String,
+		Param_Out_LarguraString
+	);
 }
 
 /// <summary>
@@ -773,57 +563,17 @@ Done:;
 /// <param name="Param_GuidChave">O GUID para chave que contém o Blob a ser obtido.</param>
 /// <param name="Param_Out_Buffer">O buffer que contém os dados da matriz bytes do valor da chave solicitada.</param>
 /// <param name="Param_TamanhoBuffer">Define o tamanho da matriz em bytes do valor da chave a ser obtido. Chame o método (GetBlobSize) para obter o valor para esse parametro.</param>
-CarenResult CarenMFMediaTypeExtend::GetBlob(String^ Param_GuidChave, UInt32 Param_TamanhoBuffer, [Out] Estruturas::CA_BlobData% Param_Out_Buffer)
+CarenResult CarenMFMediaTypeExtend::GetBlob(
+		String^ Param_GuidChave, 
+		UInt32 Param_TamanhoBuffer, 
+		[Out] CA_BlobData% Param_Out_Buffer)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variavel COM
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis utilizadas pelo método
-	PBYTE vi_pOutBuffer = NULL;
-	GUID vi_GuidChave = GUID_NULL;
-
-	//Chama o método para ciar o guid aparti da String gerenciada.
-	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
-
-	//Cria o buffer que vai conter os dados.
-	vi_pOutBuffer = CriarMatrizUnidimensional<BYTE>(static_cast<DWORD>(Param_TamanhoBuffer));
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetBlob(const_cast<GUID&>(vi_GuidChave), vi_pOutBuffer, Param_TamanhoBuffer, NULL);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria a estrutura que será retornada.
-	Param_Out_Buffer = CA_BlobData();
-
-	//Define a largura do buffer
-	Param_Out_Buffer.SizeData = Param_TamanhoBuffer;
-
-	//Cria a interface que vai conter os dados.
-	Param_Out_Buffer.BufferDados = gcnew CarenBuffer();
-
-	//Copia os dados para a interface do buffer.
-	static_cast<ICarenBuffer^>(Param_Out_Buffer.BufferDados)->CreateBuffer(IntPtr(vi_pOutBuffer), true, Param_Out_Buffer.SizeData, Param_Out_Buffer.SizeData);
-
-Done:;
-	//Libera a memória utilizada pela matriz.
-	DeletarMatrizUnidimensionalSafe(&vi_pOutBuffer);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas da Media Foundation.
+	return Shared_MFAttributes::GetBlob(PonteiroTrabalho,
+		Param_GuidChave,
+		Param_TamanhoBuffer,
+		Param_Out_Buffer
+	);
 }
 
 /// <summary>
@@ -831,42 +581,15 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para chave que contém o Blob a ser obtido. O tipo de atributo deve ser MF_ATTRIBUTE_BLOB.</param>
 /// <param name="Param_TamanhoBuffer">Recebe o tamanho da matriz que contem o valor da chave solicitada.</param>
-CarenResult CarenMFMediaTypeExtend::GetBlobSize(String^ Param_GuidChave, [Out] UInt32% Param_Out_TamanhoBuffer)
+CarenResult CarenMFMediaTypeExtend::GetBlobSize(
+	String^ Param_GuidChave, 
+	[Out] UInt32% Param_Out_TamanhoBuffer)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variavel COM
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis utilizadas pelo método
-	UINT32 vi_OutLargura = 0;
-	GUID vi_GuidChave = GUID_NULL;
-
-	//Chama o método para ciar o guid aparti da String gerenciada.
-	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetBlobSize(const_cast<GUID&>(vi_GuidChave), &vi_OutLargura);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Define o valor de retorno.
-	Param_Out_TamanhoBuffer = vi_OutLargura;
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas da Media Foundation.
+	return Shared_MFAttributes::GetBlobSize(PonteiroTrabalho,
+		Param_GuidChave,
+		Param_Out_TamanhoBuffer
+	);
 }
 
 /// <summary>
@@ -875,36 +598,10 @@ Done:;
 /// <param name="Param_QuantidadeAtributos">Recebe a quantidade de atributos na interface.</param>
 CarenResult CarenMFMediaTypeExtend::GetCount([Out] UInt32% Param_QuantidadeAtributos)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variavel COM
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variavel que vai conter a quantidade de atributos.
-	UINT32 vi_OutCountAttributes = 0;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetCount(&vi_OutCountAttributes);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Define o valor de retorno.
-	Param_QuantidadeAtributos = vi_OutCountAttributes;
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas da Media Foundation.
+	return Shared_MFAttributes::GetCount(PonteiroTrabalho,
+		Param_QuantidadeAtributos
+	);
 }
 
 /// <summary>
@@ -912,42 +609,15 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (Double) obtido.</param>
 /// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-CarenResult CarenMFMediaTypeExtend::GetDouble(String^ Param_GuidChave, [Out] Double% Param_Out_Valor)
+CarenResult CarenMFMediaTypeExtend::GetDouble(
+		String^ Param_GuidChave, 
+		[Out] Double% Param_Out_Valor)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variavel COM
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis utilizadas pelo método
-	GUID vi_GuidChave = GUID_NULL;
-	double vi_OutValue = 0;
-
-	//Chama o método para ciar o guid aparti da String gerenciada.
-	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetDouble(const_cast<GUID&>(vi_GuidChave), &vi_OutValue);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Define o valor de retorno para o usuário.
-	Param_Out_Valor = vi_OutValue;
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas da Media Foundation.
+	return Shared_MFAttributes::GetDouble(PonteiroTrabalho,
+		Param_GuidChave,
+		Param_Out_Valor
+	);
 }
 
 /// <summary>
@@ -955,43 +625,15 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (GUID) obtido.</param>
 /// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-CarenResult CarenMFMediaTypeExtend::GetGUID(String^ Param_GuidChave, [Out] String^% Param_Out_Valor)
+CarenResult CarenMFMediaTypeExtend::GetGUID(
+		String^ Param_GuidChave, 
+		[Out] String^% Param_Out_Valor)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variavel COM
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis utilizadas pelo método
-	Utilidades Util;
-	GUID vi_OutGuidValue = GUID_NULL;
-	GUID vi_GuidChave = GUID_NULL;
-
-	//Chama o método para ciar o guid aparti da String gerenciada.
-	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetGUID(const_cast<GUID&>(vi_GuidChave), &vi_OutGuidValue);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Define o valor de retorno para o usuário.
-	Param_Out_Valor = Util.ConverterGuidToString(vi_OutGuidValue);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas da Media Foundation.
+	return Shared_MFAttributes::GetGUID(PonteiroTrabalho,
+		Param_GuidChave,
+		Param_Out_Valor
+	);
 }
 
 /// <summary>
@@ -999,49 +641,15 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (CA_PROPVARIANT) obtido.</param>
 /// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-CarenResult CarenMFMediaTypeExtend::GetItem(String^ Param_GuidChave, [Out] CA_PROPVARIANT^% Param_Out_Valor)
+CarenResult CarenMFMediaTypeExtend::GetItem(
+		String^ Param_GuidChave, 
+		[Out] CA_PROPVARIANT^% Param_Out_Valor)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variavel COM
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variariveis utilizadas no método
-	PropVariantManager UtilVariant = PropVariantManager();
-	GUID vi_GuidChave = GUID_NULL;
-	LPPROPVARIANT vi_OutPropVar = Nulo;
-
-	//Chama o método para ciar o guid aparti da String gerenciada.
-	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
-
-	//Inicializa a PropVariant.
-	IniciarPropVariant(&vi_OutPropVar);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetItem(const_cast<GUID&>(vi_GuidChave), vi_OutPropVar);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Converte e define a estrutura no parametro de saida.
-	Param_Out_Valor = UtilVariant.ConverterPropVariantUnmanaged_ToManaged(vi_OutPropVar);
-
-Done:;
-	//Limpa a PropVariant.
-	DeletarPropVariantSafe(&vi_OutPropVar);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas da Media Foundation.
+	return Shared_MFAttributes::GetItem(PonteiroTrabalho,
+		Param_GuidChave,
+		Param_Out_Valor
+	);
 }
 
 /// <summary>
@@ -1050,50 +658,17 @@ Done:;
 /// <param name="Param_Out_GuidChave">Recebe o guid associado a chave obtida pelo id.</param>
 /// <param name="Param_IdItem">O Id do item a ter o seu valor obtido.</param>
 /// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-CarenResult CarenMFMediaTypeExtend::GetItemByIndex(UInt32 Param_IdItem, [Out] String^% Param_Out_GuidChave, [Out] CA_PROPVARIANT^% Param_Out_Valor)
+CarenResult CarenMFMediaTypeExtend::GetItemByIndex(
+		UInt32 Param_IdItem, 
+		[Out] String^% Param_Out_GuidChave, 
+		[Out] CA_PROPVARIANT^% Param_Out_Valor)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variavel COM
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variariveis utilizadas no método
-	Utilidades Util;
-	PropVariantManager UtilVariant = PropVariantManager();
-	GUID vi_OutGuidChave = GUID_NULL;
-	LPPROPVARIANT vi_OutPropVar = Nulo;
-
-	//Inicializa a PropVariant.
-	IniciarPropVariant(&vi_OutPropVar);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetItemByIndex(Param_IdItem, &vi_OutGuidChave, vi_OutPropVar);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Define a estrutura de retorno
-	Param_Out_Valor = UtilVariant.ConverterPropVariantUnmanaged_ToManaged(vi_OutPropVar);
-
-	//Define o guid do valor obtido.
-	Param_Out_GuidChave = Util.ConverterGuidToString(vi_OutGuidChave);
-
-Done:;
-	//Limpa a PropVariant.
-	DeletarPropVariantSafe(&vi_OutPropVar);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas da Media Foundation.
+	return Shared_MFAttributes::GetItemByIndex(PonteiroTrabalho,
+		Param_IdItem,
+		Param_Out_GuidChave,
+		Param_Out_Valor
+	);
 }
 
 /// <summary>
@@ -1101,42 +676,15 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave a ser verificado o tipo do valor.</param>
 /// <param name="Param_Out_TipoDado">O tipo do dado contido na chave solicitada.</param>
-CarenResult CarenMFMediaTypeExtend::GetItemType(String^ Param_GuidChave, [Out] CA_MF_ATTRIBUTE_TYPE% Param_Out_TipoDado)
+CarenResult CarenMFMediaTypeExtend::GetItemType(
+		String^ Param_GuidChave, 
+		[Out] CA_MF_ATTRIBUTE_TYPE% Param_Out_TipoDado)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variavel COM
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis utilizadas pelo método
-	MF_ATTRIBUTE_TYPE vi_OutItemType;
-	GUID vi_GuidChave = GUID_NULL;
-
-	//Chama o método para ciar o guid aparti da String gerenciada.
-	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetItemType(const_cast<GUID&>(vi_GuidChave), &vi_OutItemType);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Converte o valor e define no parametro de saida.
-	Param_Out_TipoDado = static_cast<CA_MF_ATTRIBUTE_TYPE>(vi_OutItemType);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas da Media Foundation.
+	return Shared_MFAttributes::GetItemType(PonteiroTrabalho,
+		Param_GuidChave,
+		Param_Out_TipoDado
+	);
 }
 
 /// <summary>
@@ -1145,48 +693,17 @@ Done:;
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (String) obtido. O tipo de atributo deve ser MF_ATTRIBUTE_STRING.</param>
 /// <param name="Param_Out_Valor">A largura da string a ser recebida. Some +1 a esse valor. Para obter esse valor, chame o método: GetStringLength</param>
 /// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada.</param>
-CarenResult CarenMFMediaTypeExtend::GetString(String^ Param_GuidChave, UInt32 Param_LagruraString, [Out] String^% Param_Out_Valor)
+CarenResult CarenMFMediaTypeExtend::GetString(
+		String^ Param_GuidChave, 
+		UInt32 Param_LagruraString, 
+		[Out] String^% Param_Out_Valor)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variavel COM
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis utilizadas pelo método
-	LPWSTR vi_pOutString = NULL;
-	GUID vi_GuidChave = GUID_NULL;
-
-	//Chama o método para ciar o guid aparti da String gerenciada.
-	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
-
-	//Inicializa a matriz que vai conter a string
-	vi_pOutString = CriarMatrizUnidimensional<WCHAR>(Param_LagruraString);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetString(const_cast<GUID&>(vi_GuidChave), vi_pOutString, Param_LagruraString, NULL);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Define o valor de retorno para o usuário.
-	Param_Out_Valor = gcnew String(vi_pOutString);
-
-Done:;
-	//Libera a memória utilizada para alocar os dados para a string nativa.
-	DeletarMatrizUnidimensionalSafe(&vi_pOutString);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas da Media Foundation.
+	return Shared_MFAttributes::GetString(PonteiroTrabalho,
+		Param_GuidChave,
+		Param_LagruraString,
+		Param_Out_Valor
+	);
 }
 
 /// <summary>
@@ -1195,42 +712,15 @@ Done:;
 /// <param name="Param_GuidChave">O GUID para a chave a ser consultada a largura da String. O tipo de atributo deve ser MF_ATTRIBUTE_STRING.</param>
 /// <param name="Param_Out_Largura">Se a chave for encontrada e o valor é um tipo de sequência de caracteres, esse parâmetro recebe o número de caracteres na 
 /// sequência de caracteres, não incluindo o caractere nulo de terminação</param>
-CarenResult CarenMFMediaTypeExtend::GetStringLength(String^ Param_GuidChave, [Out] UInt32% Param_Out_Largura)
+CarenResult CarenMFMediaTypeExtend::GetStringLength(
+		String^ Param_GuidChave, 
+		[Out] UInt32% Param_Out_Largura)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variavel COM
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis utilizadas pelo método
-	UINT32 vi_OutValue = 0;
-	GUID vi_GuidChave = GUID_NULL;
-
-	//Chama o método para ciar o guid aparti da String gerenciada.
-	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetStringLength(const_cast<GUID&>(vi_GuidChave), &vi_OutValue);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Define o valor de retorno.
-	Param_Out_Largura = vi_OutValue;
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas da Media Foundation.
+	return Shared_MFAttributes::GetStringLength(PonteiroTrabalho,
+		Param_GuidChave,
+		Param_Out_Largura
+	);
 }
 
 /// <summary>
@@ -1238,42 +728,15 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (UInt32) obtido.</param>
 /// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-CarenResult CarenMFMediaTypeExtend::GetUINT32(String^ Param_GuidChave, [Out] UInt32% Param_Out_Valor)
+CarenResult CarenMFMediaTypeExtend::GetUINT32(
+		String^ Param_GuidChave, 
+		[Out] UInt32% Param_Out_Valor)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variavel COM
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis utilizadas pelo método
-	UINT32 vi_OutValue = 0;
-	GUID vi_GuidChave = GUID_NULL;
-
-	//Chama o método para ciar o guid aparti da String gerenciada.
-	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetUINT32(const_cast<GUID&>(vi_GuidChave), &vi_OutValue);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Define o valor de retorno para o usuário.
-	Param_Out_Valor = vi_OutValue;
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas da Media Foundation.
+	return Shared_MFAttributes::GetUINT32(PonteiroTrabalho,
+		Param_GuidChave,
+		Param_Out_Valor
+	);
 }
 
 /// <summary>
@@ -1281,42 +744,15 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (UInt64) obtido.</param>
 /// <param name="Param_Out_Valor">Recebe o valor referente ao valor da chave solicitada</param>
-CarenResult CarenMFMediaTypeExtend::GetUINT64(String^ Param_GuidChave, [Out] UInt64% Param_Out_Valor)
+CarenResult CarenMFMediaTypeExtend::GetUINT64(
+		String^ Param_GuidChave, 
+		[Out] UInt64% Param_Out_Valor)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variavel COM
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis utilizadas pelo método
-	UINT64 vi_OutValue = 0;
-	GUID vi_GuidChave = GUID_NULL;
-
-	//Chama o método para ciar o guid aparti da String gerenciada.
-	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetUINT64(const_cast<GUID&>(vi_GuidChave), &vi_OutValue);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Define o valor de retorno para o usuário.
-	Param_Out_Valor = vi_OutValue;
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas da Media Foundation.
+	return Shared_MFAttributes::GetUINT64(PonteiroTrabalho,
+		Param_GuidChave,
+		Param_Out_Valor
+	);
 }
 
 /// <summary>
@@ -1327,44 +763,17 @@ Done:;
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (UINT64) obtido.</param>
 /// <param name="Param_Out_Numerador">Recebe o valor referente ao: Numerador</param>
 /// <param name="Param_Out_Denominador">Recebe o valor referente ao: Denominador</param>
-CarenResult CarenMFMediaTypeExtend::_MFGetAttributeRatio(String^ Param_GuidChave, [Out] UInt32% Param_Out_Numerador, [Out] UInt32% Param_Out_Denominador)
+CarenResult CarenMFMediaTypeExtend::_MFGetAttributeRatio(
+		String^ Param_GuidChave, 
+		[Out] UInt32% Param_Out_Numerador, 
+		[Out] UInt32% Param_Out_Denominador)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variavel COM
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis utilizadas pelo método
-	UINT32 vi_OutNumerador = 0;
-	UINT32 vi_OutDenominador = 0;
-	GUID vi_GuidChave = GUID_NULL;
-
-	//Chama o método para ciar o guid aparti da String gerenciada.
-	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
-
-	//Chama o método para realizar a operação.
-	Hr = MFGetAttributeRatio(PonteiroTrabalho, const_cast<GUID&>(vi_GuidChave), &vi_OutNumerador, &vi_OutDenominador);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Define os valores da razão
-	Param_Out_Numerador = vi_OutNumerador;
-	Param_Out_Denominador = vi_OutDenominador;
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas da Media Foundation.
+	return Shared_MFAttributes::_MFGetAttributeRatio(PonteiroTrabalho,
+		Param_GuidChave,
+		Param_Out_Numerador,
+		Param_Out_Denominador
+	);
 }
 
 /// <summary>
@@ -1373,45 +782,17 @@ Done:;
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor obtido. O atribute deve ser do tipo: UInt64</param>
 /// <param name="Param_Out_Largura">Recebe a largura em pixels.</param>
 /// <param name="Param_Out_Altura">Recebe a altura em pixels.</param>
-CarenResult CarenMFMediaTypeExtend::_MFGetAttributeSize(String^ Param_GuidChave, [Out] UInt32% Param_Out_Largura, [Out] UInt32% Param_Out_Altura)
+CarenResult CarenMFMediaTypeExtend::_MFGetAttributeSize(
+		String^ Param_GuidChave, 
+		[Out] UInt32% Param_Out_Largura, 
+		[Out] UInt32% Param_Out_Altura)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variavel COM
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis utilizadas pelo método
-	Utilidades Util;
-	UINT32 vi_OutLargura = 0;
-	UINT32 vi_OutAltura = 0;
-	GUID vi_GuidChave = GUID_NULL;
-
-	//Chama o método para ciar o guid aparti da String gerenciada.
-	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
-
-	//Chama o método para realizar a operação.
-	Hr = MFGetAttributeSize(PonteiroTrabalho, const_cast<GUID&>(vi_GuidChave), &vi_OutLargura, &vi_OutAltura);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Define os valores do Size.
-	Param_Out_Largura = vi_OutLargura;
-	Param_Out_Altura = vi_OutAltura;
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas da Media Foundation.
+	return Shared_MFAttributes::_MFGetAttributeSize(PonteiroTrabalho,
+		Param_GuidChave,
+		Param_Out_Largura,
+		Param_Out_Altura
+	);
 }
 
 /// <summary>
@@ -1420,45 +801,17 @@ Done:;
 /// <param name="Param_GuidChave">O GUID para a chave a ter o seu valor (Desconhecido) obtido.</param>
 /// <param name="Param_GuidInterfaceSolicitada">O GUID para a interface a ser obtida da chave. Este GUID é um (IID).</param>
 /// <param name="Param_Out_InterfaceDesconhecida">Recebe a interface com o ponteiro par ao objeto desconhecido. O usuário deve inicializar a interface antes de chamar este método.</param>
-CarenResult CarenMFMediaTypeExtend::GetUnknown(String^ Param_GuidChave, String^ Param_GuidInterfaceSolicitada, ICaren^ Param_Out_InterfaceDesconhecida)
+CarenResult CarenMFMediaTypeExtend::GetUnknown(
+		String^ Param_GuidChave, 
+		String^ Param_GuidInterfaceSolicitada, 
+		ICaren^ Param_Out_InterfaceDesconhecida)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variavel COM
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis que seram utilizadas pelo método.
-	Utilidades Util;
-	GUID vi_GuidChave = GUID_NULL;
-	GUID vi_RIIDInterface = GUID_NULL;
-	LPVOID vi_pOutInterface = NULL;
-
-	//Chama o método para criar os GUIDs aparti das Strings gerenciadas.
-	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
-	CarenCreateGuidFromStringSafe(Param_GuidInterfaceSolicitada, vi_RIIDInterface);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetUnknown(const_cast<GUID&>(vi_GuidChave), const_cast<IID&>(vi_RIIDInterface), &vi_pOutInterface);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Chama o método para definir o ponteiro desconhecido para a interface.
-	CarenSetPointerToICarenSafe(reinterpret_cast<IUnknown*>(vi_pOutInterface), Param_Out_InterfaceDesconhecida, true);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas da Media Foundation.
+	return Shared_MFAttributes::GetUnknown(PonteiroTrabalho,
+		Param_GuidChave,
+		Param_GuidInterfaceSolicitada,
+		Param_Out_InterfaceDesconhecida
+	);
 }
 
 /// <summary>
@@ -1466,26 +819,8 @@ Done:;
 /// </summary>
 CarenResult CarenMFMediaTypeExtend::LockStore()
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variavel COM
-	ResultadoCOM Hr = E_FAIL;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->LockStore();
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-	}
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas da Media Foundation.
+	return Shared_MFAttributes::LockStore(PonteiroTrabalho);
 }
 
 
@@ -1497,58 +832,15 @@ CarenResult CarenMFMediaTypeExtend::LockStore()
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 /// <param name="Param_Buffer">Uma interface (ICarenBuffer) que contém os dados a serem associados a chave especificada.</param>
-CarenResult CarenMFMediaTypeExtend::SetBlob(String^ Param_GuidChave, ICarenBuffer^ Param_Buffer)
+CarenResult CarenMFMediaTypeExtend::SetBlob(
+		String^ Param_GuidChave, 
+		ICarenBuffer^ Param_Buffer)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variavel COM
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis utilizadas pelo método
-	GenPointer vi_BufferBlob = DefaultGenPointer;
-	GUID vi_GuidChave = GUID_NULL;
-
-	//Chama o método para ciar o guid aparti da String gerenciada.
-	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
-
-	//Tenta recuperar o ponteiro para o buffer.
-	CarenGetPointerFromICarenBufferSafe(Param_Buffer, vi_BufferBlob);
-
-	//Verifica se o usuário informou o tamanho do buffer válido
-	if (Param_Buffer->TamanhoValido == 0)
-	{
-		//O tamanho do buffer especificado na interface é inválido.
-
-		//Define o erro.
-		Resultado.AdicionarCodigo(ResultCode::ER_CARENBUFFER_TAMANHO_INVALIDO, false);
-
-		//Sai do método
-		Sair;
-	}
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->SetBlob(
-		const_cast<GUID&>(vi_GuidChave),
-		reinterpret_cast<PBYTE>(vi_BufferBlob.ToPointer()),
-		Param_Buffer->TamanhoValido);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-
-	//Retorna o resultado
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas da Media Foundation.
+	return Shared_MFAttributes::SetBlob(PonteiroTrabalho,
+		Param_GuidChave,
+		Param_Buffer
+	);
 }
 
 /// <summary>
@@ -1556,38 +848,15 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 /// <param name="Param_Valor">O valor a ser definido na chave especificada.</param>
-CarenResult CarenMFMediaTypeExtend::SetDouble(String^ Param_GuidChave, Double Param_Valor)
+CarenResult CarenMFMediaTypeExtend::SetDouble(
+		String^ Param_GuidChave, 
+		Double Param_Valor)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variavel COM
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis utilizadas pelo método
-	GUID vi_GuidChave = GUID_NULL;
-
-	//Chama o método para ciar o guid aparti da String gerenciada.
-	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->SetDouble(const_cast<GUID&>(vi_GuidChave), Param_Valor);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas da Media Foundation.
+	return Shared_MFAttributes::SetDouble(PonteiroTrabalho,
+		Param_GuidChave,
+		Param_Valor
+	);
 }
 
 /// <summary>
@@ -1595,41 +864,15 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 /// <param name="Param_Valor">O valor a ser definido na chave especificada.</param>
-CarenResult CarenMFMediaTypeExtend::SetGUID(String^ Param_GuidChave, String^ Param_Valor)
+CarenResult CarenMFMediaTypeExtend::SetGUID(
+		String^ Param_GuidChave, 
+		String^ Param_Valor)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variavel COM
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis utilizadas no método
-	GUID vi_GuidChave = GUID_NULL;
-	GUID vi_GuidValue = GUID_NULL;
-
-	//Chama o método para converter as Strings gerenciadas para os GUIDs nativos.
-	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
-	CarenCreateGuidFromStringSafe(Param_Valor, vi_GuidValue);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->SetGUID(const_cast<GUID&>(vi_GuidChave), const_cast<GUID&>(vi_GuidValue));
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas da Media Foundation.
+	return Shared_MFAttributes::SetGUID(PonteiroTrabalho,
+		Param_GuidChave,
+		Param_Valor
+	);
 }
 
 /// <summary>
@@ -1637,46 +880,15 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 /// <param name="Param_PropVariantValor">A PropVariant que contém o valor a ser definido na chave especificada.</param>
-CarenResult CarenMFMediaTypeExtend::SetItem(String^ Param_GuidChave, Estruturas::CA_PROPVARIANT^ Param_PropVariantValor)
+CarenResult CarenMFMediaTypeExtend::SetItem(
+		String^ Param_GuidChave, 
+		CA_PROPVARIANT^ Param_PropVariantValor)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variavel COM
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variariveis utilizadas no método
-	PropVariantManager UtilVariant = PropVariantManager();
-	GUID vi_GuidChave = GUID_NULL;
-	LPPROPVARIANT vi_Propvar = Nulo;
-
-	//Chama o método para ciar o guid aparti da String gerenciada.
-	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
-
-	//Converte a PropVariant gerenciada para a nativa.
-	CarenConvertPropvariantToNativeSafe(Param_PropVariantValor, vi_Propvar);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->SetItem(const_cast<GUID&>(vi_GuidChave), const_cast<PROPVARIANT&>(*vi_Propvar));
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Libera a memória utilizada pela propvariant.
-	DeletarPropVariantSafe(&vi_Propvar);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas da Media Foundation.
+	return Shared_MFAttributes::SetItem(PonteiroTrabalho,
+		Param_GuidChave,
+		Param_PropVariantValor
+	);
 }
 
 /// <summary>
@@ -1684,46 +896,15 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 /// <param name="Param_Valor">O valor a ser definido na chave especificada.</param>
-CarenResult CarenMFMediaTypeExtend::SetString(String^ Param_GuidChave, String^ Param_Valor)
+CarenResult CarenMFMediaTypeExtend::SetString(
+		String^ Param_GuidChave, 
+		String^ Param_Valor)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variavel COM
-	HRESULT Hr = E_FAIL;
-
-	//Variaveis utilizadas pelo método.
-	Utilidades Util;
-	GUID vi_GuidChave = GUID_NULL;
-	LPWSTR vi_pBufferValor = Nulo;
-
-	//Chama o método para ciar o guid aparti da String gerenciada.
-	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
-
-	//Chama o método para converter a string gerenciada em nativa.
-	vi_pBufferValor = Util.ConverterStringToWCHAR(Param_Valor);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->SetString(const_cast<GUID&>(vi_GuidChave), vi_pBufferValor);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Libera a memória utilizada para alocar a string.
-	DeletarStringAllocatedSafe(&vi_pBufferValor);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas da Media Foundation.
+	return Shared_MFAttributes::SetString(PonteiroTrabalho,
+		Param_GuidChave,
+		Param_Valor
+	);
 }
 
 /// <summary>
@@ -1731,38 +912,15 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 /// <param name="Param_Valor">O valor a ser definido na chave especificada.</param>
-CarenResult CarenMFMediaTypeExtend::SetUINT32(String^ Param_GuidChave, UInt32 Param_Valor)
+CarenResult CarenMFMediaTypeExtend::SetUINT32(
+		String^ Param_GuidChave, 
+		UInt32 Param_Valor)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variavel COM
-	HRESULT Hr = E_FAIL;
-
-	//Variaveis utilizadas pelo método.
-	GUID vi_GuidChave = GUID_NULL;
-
-	//Chama o método para ciar o guid aparti da String gerenciada.
-	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->SetUINT32(const_cast<GUID&>(vi_GuidChave), Param_Valor);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas da Media Foundation.
+	return Shared_MFAttributes::SetUINT32(PonteiroTrabalho,
+		Param_GuidChave,
+		Param_Valor
+	);
 }
 
 /// <summary>
@@ -1770,38 +928,15 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 /// <param name="Param_Valor">O valor a ser definido na chave especificada.</param>
-CarenResult CarenMFMediaTypeExtend::SetUINT64(String^ Param_GuidChave, UInt64 Param_Valor)
+CarenResult CarenMFMediaTypeExtend::SetUINT64(
+		String^ Param_GuidChave, 
+		UInt64 Param_Valor)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variavel COM
-	HRESULT Hr = E_FAIL;
-
-	//Variaveis utilizadas pelo método.
-	GUID vi_GuidChave = GUID_NULL;
-
-	//Chama o método para ciar o guid aparti da String gerenciada.
-	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->SetUINT64(const_cast<GUID&>(vi_GuidChave), Param_Valor);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas da Media Foundation.
+	return Shared_MFAttributes::SetUINT64(PonteiroTrabalho,
+		Param_GuidChave,
+		Param_Valor
+	);
 }
 
 /// <summary>
@@ -1812,38 +947,17 @@ Done:;
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor. O tipo do atributo deve ser: UInt64</param>
 /// <param name="Param_Numerador">Define o valor do: Numerador</param>
 /// <param name="Param_Denominador">Define o valor do: Denominador</param>
-CarenResult CarenMFMediaTypeExtend::_MFSetAttributeRatio(String^ Param_GuidChave, UInt32 Param_Numerador, UInt32 Param_Denominador)
+CarenResult CarenMFMediaTypeExtend::_MFSetAttributeRatio(
+		String^ Param_GuidChave, 
+		UInt32 Param_Numerador, 
+		UInt32 Param_Denominador)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variavel COM
-	HRESULT Hr = E_FAIL;
-
-	//Variaveis utilizadas pelo método.
-	GUID vi_GuidChave = GUID_NULL;
-
-	//Chama o método para ciar o guid aparti da String gerenciada.
-	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
-
-	//Chama o método para realizar a operação.
-	Hr = MFSetAttributeRatio(PonteiroTrabalho, const_cast<GUID&>(vi_GuidChave), Param_Numerador, Param_Denominador);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas da Media Foundation.
+	return Shared_MFAttributes::_MFSetAttributeRatio(PonteiroTrabalho,
+		Param_GuidChave,
+		Param_Numerador,
+		Param_Denominador
+	);
 }
 
 /// <summary>
@@ -1854,38 +968,17 @@ Done:;
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor. O tipo do atributo deve ser: UInt64</param>
 /// <param name="Param_Largura">A Largura do vídeo em pixels.</param>
 /// <param name="Param_Altura">A Altura do vídeo em pixels.</param>
-CarenResult CarenMFMediaTypeExtend::_MFSetAttributeSize(String^ Param_GuidChave, UInt32 Param_Largura, UInt32 Param_Altura)
+CarenResult CarenMFMediaTypeExtend::_MFSetAttributeSize(
+		String^ Param_GuidChave, 
+		UInt32 Param_Largura, 
+		UInt32 Param_Altura)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variavel COM
-	HRESULT Hr = E_FAIL;
-
-	//Variaveis utilizadas pelo método.
-	GUID vi_GuidChave = GUID_NULL;
-
-	//Chama o método para ciar o guid aparti da String gerenciada.
-	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
-
-	//Chama o método para realizar a operação.
-	Hr = MFSetAttributeSize(PonteiroTrabalho, const_cast<GUID&>(vi_GuidChave), Param_Largura, Param_Altura);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas da Media Foundation.
+	return Shared_MFAttributes::_MFSetAttributeSize(PonteiroTrabalho,
+		Param_GuidChave,
+		Param_Largura,
+		Param_Altura
+	);
 }
 
 /// <summary>
@@ -1893,43 +986,15 @@ Done:;
 /// </summary>
 /// <param name="Param_GuidChave">O GUID para a chave que vai receber o valor.</param>
 /// <param name="Param_InterfaceDesconhecida">A interface desconhecida a ser definida no valor da chave solicitada.</param>
-CarenResult CarenMFMediaTypeExtend::SetUnknown(String^ Param_GuidChave, ICaren^ Param_InterfaceDesconhecida)
+CarenResult CarenMFMediaTypeExtend::SetUnknown(
+		String^ Param_GuidChave, 
+		ICaren^ Param_InterfaceDesconhecida)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variavel COM
-	HRESULT Hr = E_FAIL;
-
-	//Variaveis utilizadas pelo método.
-	Utilidades Util;
-	GUID vi_GuidChave = GUID_NULL;
-	LPVOID vi_pInterfaceSet = NULL;
-
-	//Chama o método para ciar o guid aparti da String gerenciada.
-	CarenCreateGuidFromStringSafe(Param_GuidChave, vi_GuidChave);
-
-	//Chama o método para tentar recuperar a interface.
-	CarenGetPointerFromICarenSafe(Param_InterfaceDesconhecida, vi_pInterfaceSet);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->SetUnknown(const_cast<GUID&>(vi_GuidChave), reinterpret_cast<IUnknown*>(vi_pInterfaceSet));
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas da Media Foundation.
+	return Shared_MFAttributes::SetUnknown(PonteiroTrabalho,
+		Param_GuidChave,
+		Param_InterfaceDesconhecida
+	);
 }
 
 /// <summary>
@@ -1938,28 +1003,6 @@ Done:;
 /// </summary>
 CarenResult CarenMFMediaTypeExtend::UnlockStore()
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Variavel COM
-	HRESULT Hr = E_FAIL;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->UnlockStore();
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas da Media Foundation.
+	return Shared_MFAttributes::UnlockStore(PonteiroTrabalho);
 }

@@ -333,7 +333,7 @@ Done:;
 /// <param name="Param_ValorAdicional">Um valor que contém informações adicionais relacionadas ao marcador. Esse parâmetro pode ser (NULO).</param>
 /// <param name="Param_DadosAnexoEvento">Valor que é anexado junto ao evento(MEStreamSinkMarker). Chame o método (GetValue) na interface 
 /// de evento para obter esse valor. Esse parâmetro pode ser (NULO).</param>
-CarenResult CarenMFStreamSink::PlaceMarker(Enumeracoes::CA_MFSTREAMSINK_MARKER_TYPE Param_Marcador, Estruturas::CA_PROPVARIANT^ Param_ValorAdicional, Estruturas::CA_PROPVARIANT^ Param_DadosAnexoEvento)
+CarenResult CarenMFStreamSink::PlaceMarker(Enumeracoes::CA_MFSTREAMSINK_MARKER_TYPE Param_Marcador, CA_PROPVARIANT^ Param_ValorAdicional, CA_PROPVARIANT^ Param_DadosAnexoEvento)
 {
 	//Variavel que vai retornar o resultado.
 	CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -568,7 +568,7 @@ CarenResult CarenMFStreamSink::QueueEvent(
 	Enumeracoes::CA_MediaEventType Param_TipoEvento,
 	String^ Param_GuidExtendedType,
 	Int32 Param_HResultCode,
-	Estruturas::CA_PROPVARIANT^ Param_Dados)
+	CA_PROPVARIANT^ Param_Dados)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

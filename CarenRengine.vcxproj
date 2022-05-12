@@ -480,6 +480,7 @@
     <ClInclude Include="CarenRengineCodes\Core Audio\CarenMMNotificationClient.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFGetService.h" />
     <ClInclude Include="CarenRengineCodes\SharedClass\Shared_Direct3D11.h" />
+    <ClInclude Include="CarenRengineCodes\SharedClass\Shared_MediaFoundation.h" />
     <ClInclude Include="CarenRengineCodes\version.h" />
     <ClInclude Include="CarenRengineCodes\WIC\CarenWICBitmap.h" />
     <ClInclude Include="CarenRengineCodes\WIC\CarenWICBitmapClipper.h" />
@@ -930,6 +931,7 @@
     <ClCompile Include="CarenRengineCodes\SharedClass\Shared_DXGI_Resource.cpp" />
     <ClCompile Include="CarenRengineCodes\SharedClass\Shared_DXGI_Surface.cpp" />
     <ClCompile Include="CarenRengineCodes\SharedClass\Shared_DXGI_SwapChain.cpp" />
+    <ClCompile Include="CarenRengineCodes\SharedClass\Shared_MediaFoundation_Attributes.cpp" />
     <ClCompile Include="CarenRengineCodes\WIC\CarenWICBitmap.cpp" />
     <ClCompile Include="CarenRengineCodes\WIC\CarenWICBitmapClipper.cpp" />
     <ClCompile Include="CarenRengineCodes\WIC\CarenWICBitmapCodecInfo.cpp" />

@@ -279,7 +279,7 @@ public:
 	/// Param_GuidAtributo pode especificar os atributos de: MFAtributos_DescritorApresentação, MF_SOURCE_READER_MEDIASOURCE_CHARACTERISTICS.
 	/// Se Param_IdFluxo espeficifica um Fluxo, Param_GuidAtributo deve especificar um atributo do Descritor de Fluxo(GUIDs_MFAttributes_StreamDescriptor) </param>
 	/// <param name="Param_Out_ValorAtributo">Retorna o valor do atributo solicitado</param>
-	virtual CarenResult GetPresentationAttribute(UInt32 Param_IdFluxo, String^ Param_GuidAtributo, [Out] Estruturas::CA_PROPVARIANT^% Param_Out_ValorAtributo);
+	virtual CarenResult GetPresentationAttribute(UInt32 Param_IdFluxo, String^ Param_GuidAtributo, [Out] CA_PROPVARIANT^% Param_Out_ValorAtributo);
 
 	/// <summary>
 	/// Consulta a fonte subjacente de mídia ou decodificador para uma interface.

@@ -170,7 +170,7 @@ void CarenMMDevice::Finalizar()
 /// de ponto de extremidade de áudio. </param>
 /// <param name="Param_Out_InterfaceRequisitada">Recebe a interface requisitada. Por meio desse método, o chamador obtém uma referência contada para a interface. O chamador é responsável por liberar a 
 /// interface, quando ele não é mais necessário, chamando o método de Release da interface.</param>
-CarenResult CarenMMDevice::Activate(String^ Param_GuidInterface, Enumeracoes::CA_CLSCTX Param_ContextoEx, Estruturas::CA_PROPVARIANT^ Param_ParmetrosActive, ICaren^ Param_Out_InterfaceRequisitada)
+CarenResult CarenMMDevice::Activate(String^ Param_GuidInterface, Enumeracoes::CA_CLSCTX Param_ContextoEx, CA_PROPVARIANT^ Param_ParmetrosActive, ICaren^ Param_Out_InterfaceRequisitada)
 {
 	//Variavel a ser retornada.
 	CarenResult Resultado = CarenResult(E_FAIL, false);

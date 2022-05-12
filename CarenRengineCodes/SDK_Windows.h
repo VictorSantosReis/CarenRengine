@@ -483,14 +483,14 @@ namespace CarenRengine
 			/// </summary>
 			/// <param name="Param_PropKey">TBD.</param>
 			/// <param name="Param_Out_Valor">Depois que o método retorna com êxito, este parâmetro retorna a estrutura CA_PROPVARIANT que contém dados sobre a propriedade.</param>
-			CarenResult GetValue(Estruturas::CA_PROPERTYKEY^% Param_PropKey, [Out] Estruturas::CA_PROPVARIANT^% Param_Out_Valor);
+			CarenResult GetValue(Estruturas::CA_PROPERTYKEY^% Param_PropKey, [Out] CA_PROPVARIANT^% Param_Out_Valor);
 
 			/// <summary>
 			/// (SetValue) - Este método define um valor de propriedade ou substitui ou remove um valor existente.
 			/// </summary>
 			/// <param name="Param_PropKey">TBD.</param>
 			/// <param name="Param_PropValor">TBD.</param>
-			CarenResult DefinirValor(Estruturas::CA_PROPERTYKEY^% Param_PropKey, Estruturas::CA_PROPVARIANT^ Param_PropValor);
+			CarenResult DefinirValor(Estruturas::CA_PROPERTYKEY^% Param_PropKey, CA_PROPVARIANT^ Param_PropValor);
 
 		};
 

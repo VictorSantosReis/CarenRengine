@@ -312,7 +312,7 @@ public:
 	/// a passar em GUID_NULL.</param>
 	/// <param name="Param_PosicaoInicio">Uma CA_PROPVARIANT que especifica a posição inicial para reprodução. O significado e o tipo de dados desse parâmetro são indicados pelo 
 	/// (Param_GuidFormatoTempo) parâmetro.</param>
-	virtual CarenResult Start(String^ Param_GuidFormatoTempo, Estruturas::CA_PROPVARIANT^ Param_PosicaoInicio);
+	virtual CarenResult Start(String^ Param_GuidFormatoTempo, CA_PROPVARIANT^ Param_PosicaoInicio);
 
 	/// <summary>
 	/// (Stop) - Interrompe a sessão de mídia.
@@ -356,6 +356,6 @@ public:
 	/// <param name="Param_GuidExtendedType">O tipo estendido. Se o evento não tiver um tipo estendido, defina como NULO. O tipo estendido é retornado pelo método (ICarenMFMediaEvent.GetExtendedType) do evento.</param>
 	/// <param name="Param_HResultCode">Um código de sucesso ou falha indicando o status do evento. Esse valor é retornado pelo método (ICarenMFMediaEvent.GetStatus) do evento.</param>
 	/// <param name="Param_Dados">uma CA_PROPVARIANT que contém o valor do evento. Este parâmetro pode ser NULO. Esse valor é retornado pelo método (ICarenMFMediaEvent.GetValue) do evento.</param>
-	virtual CarenResult QueueEvent(Enumeracoes::CA_MediaEventType Param_TipoEvento, String^ Param_GuidExtendedType, Int32 Param_HResultCode, Estruturas::CA_PROPVARIANT^ Param_Dados);
+	virtual CarenResult QueueEvent(Enumeracoes::CA_MediaEventType Param_TipoEvento, String^ Param_GuidExtendedType, Int32 Param_HResultCode, CA_PROPVARIANT^ Param_Dados);
 };
 

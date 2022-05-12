@@ -196,6 +196,9 @@
     <Filter Include="Arquivos de Origem\Shared Classes\DXGI">
       <UniqueIdentifier>{df581ae1-60ba-4886-bf6a-a86428c40199}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Arquivos de Origem\Shared Classes\Media Foundation">
+      <UniqueIdentifier>{0165794b-7765-4d95-a87d-ed99954610aa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CarenRengineCodes\pch.h">
@@ -1536,6 +1539,9 @@
     <ClInclude Include="CarenRengineCodes\SharedClass\Shared_DXGI.h">
       <Filter>Arquivos de Cabeçalho\Shared Classes</Filter>
     </ClInclude>
+    <ClInclude Include="CarenRengineCodes\SharedClass\Shared_MediaFoundation.h">
+      <Filter>Arquivos de Cabeçalho\Shared Classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D10Multithread.cpp">
@@ -2863,6 +2869,9 @@
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\SharedClass\Shared_DXGI_Factory.cpp">
       <Filter>Arquivos de Origem\Shared Classes\DXGI</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\SharedClass\Shared_MediaFoundation_Attributes.cpp">
+      <Filter>Arquivos de Origem\Shared Classes\Media Foundation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

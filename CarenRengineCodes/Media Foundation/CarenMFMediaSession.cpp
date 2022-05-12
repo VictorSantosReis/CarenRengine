@@ -540,7 +540,7 @@ Done:;
 /// a passar em GUID_NULL.</param>
 /// <param name="Param_PosicaoInicio">Uma CA_PROPVARIANT que especifica a posição inicial para reprodução. O significado e o tipo de dados desse parâmetro são indicados pelo 
 /// (Param_GuidFormatoTempo) parâmetro.</param>
- CarenResult CarenMFMediaSession::Start(String^ Param_GuidFormatoTempo, Estruturas::CA_PROPVARIANT^ Param_PosicaoInicio)
+ CarenResult CarenMFMediaSession::Start(String^ Param_GuidFormatoTempo, CA_PROPVARIANT^ Param_PosicaoInicio)
  {
 	 //Variavel a ser retornada.
 	 CarenResult Resultado = CarenResult(E_FAIL, false);
@@ -771,7 +771,7 @@ Done:;
 	 Enumeracoes::CA_MediaEventType Param_TipoEvento,
 	 String^ Param_GuidExtendedType,
 	 Int32 Param_HResultCode,
-	 Estruturas::CA_PROPVARIANT^ Param_Dados)
+	 CA_PROPVARIANT^ Param_Dados)
  {
 	 //Variavel a ser retornada.
 	 CarenResult Resultado = CarenResult(E_FAIL, false);

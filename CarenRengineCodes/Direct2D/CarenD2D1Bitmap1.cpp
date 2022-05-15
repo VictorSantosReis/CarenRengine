@@ -155,8 +155,7 @@ void CarenD2D1Bitmap1::Finalizar()
 
 
 
-// Métodos da interface proprietária(ICarenD2D1Bitmap1)
-
+// Métodos da interface (ICarenD2D1Bitmap1)
 
 /// <summary>
 /// Obtém as informações de contexto de cores associadas ao bitmap.
@@ -165,54 +164,10 @@ void CarenD2D1Bitmap1::Finalizar()
 CarenResult CarenD2D1Bitmap1::GetColorContext(
 [Out] ICarenD2D1ColorContext^% Param_Out_ColorContext)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	ID2D1ColorContext* pColorContext = NULL;
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->GetColorContext(&pColorContext);
-
-	//Verifica se a interface é valida
-	if (!ObjetoValido(pColorContext))
-	{
-		//Falhou ao obter um ponteiro para a interface.
-		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria a interface a ser retonada.
-	Param_Out_ColorContext = gcnew CarenD2D1ColorContext();
-
-	//Define um ponteiro para a interface.
-	Resultado = Param_Out_ColorContext->AdicionarPonteiro(pColorContext);
-
-	//Verifica se não houve erro.
-	if (!CarenSucesso(Resultado))
-	{
-		//Ocorreu uma falha ao definir o ponteiro.
-
-		//Libera a referência obtida.
-		pColorContext->Release();
-		pColorContext = NULL;
-
-		//Limpa a interface criada.
-		Param_Out_ColorContext->Finalizar();
-		Param_Out_ColorContext = nullptr;
-
-		//Deixa continuar.
-	}
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D2D1.
+	return Shared_D2D1Bitmap::GetColorContext(PonteiroTrabalho,
+		Param_Out_ColorContext
+	);
 }
 
 /// <summary>
@@ -222,14 +177,10 @@ Done:;
 void CarenD2D1Bitmap1::GetOptions(
 [Out] CA_D2D1_BITMAP_OPTIONS% Param_Out_BitmapOptions)
 {
-	//Variaveis a serem utilizadas.
-	D2D1_BITMAP_OPTIONS OutBitmapOption;
-
-	//Chama o método para realizar a operação.
-	OutBitmapOption = PonteiroTrabalho->GetOptions();
-
-	//Converte e define no parametro de saida.
-	Param_Out_BitmapOptions = ConverterPara<CA_D2D1_BITMAP_OPTIONS>(OutBitmapOption);
+	//Chama o método na classe de funções compartilhadas do D2D1.
+	Shared_D2D1Bitmap::GetOptions(PonteiroTrabalho,
+		Param_Out_BitmapOptions
+	);
 }
 
 /// <summary>
@@ -240,49 +191,10 @@ void CarenD2D1Bitmap1::GetOptions(
 /// <param name="Param_Out_DxgiSurface">Retorna a superfície DXGI subjacente para o bitmap. O usuário deve inicializar a interface antes de chamar este método.</param>
 CarenResult CarenD2D1Bitmap1::GetSurface(ICaren^ Param_Out_DxgiSurface)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	IDXGISurface* pSurface = NULL;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetSurface(&pSurface);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Define o ponteiro nativo na interface fornecida.
-	Resultado = Param_Out_DxgiSurface->AdicionarPonteiro(pSurface);
-
-	//Verifica se não ocorreu erro
-	if (!CarenSucesso(Resultado))
-	{
-		//Falhou ao definir o ponteiro.
-
-		//Libera a referência criada.
-		pSurface->Release();
-		pSurface = NULL;
-
-		//Deixa o método continuar.
-	}
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D2D1.
+	return Shared_D2D1Bitmap::GetSurface(PonteiroTrabalho,
+		Param_Out_DxgiSurface
+	);
 }
 
 /// <summary>
@@ -295,37 +207,11 @@ CarenResult CarenD2D1Bitmap1::Map(
 CA_D2D1_MAP_OPTIONS Param_Options,
 [Out] CA_D2D1_MAPPED_RECT^% Param_Out_MappedRect)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	D2D1_MAP_OPTIONS MapOptions = ConverterPara<D2D1_MAP_OPTIONS>(Param_Options);
-	D2D1_MAPPED_RECT OutMapped = { };
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->Map(MapOptions, &OutMapped);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Converte e define no parametro de saida.
-	Param_Out_MappedRect = Util.ConverterD2D1_MAPPED_RECTUnmanagedToManaged(&OutMapped);
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D2D1.
+	return Shared_D2D1Bitmap::Map(PonteiroTrabalho,
+		Param_Options,
+		Param_Out_MappedRect
+	);
 }
 
 /// <summary>
@@ -334,36 +220,15 @@ Done:;
 /// </summary>
 CarenResult CarenD2D1Bitmap1::Unmap()
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->Unmap();
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D2D1.
+	return Shared_D2D1Bitmap::Unmap(PonteiroTrabalho);
 }
 
 
 
-// Métodos da interface (ICarenD2D1Bitmap1)
 
+
+// Métodos da interface (ICarenD2D1Bitmap)
 
 /// <summary>
 /// Copia a região especificada do bitmap especificado no bitmap atual.
@@ -378,72 +243,12 @@ CarenResult CarenD2D1Bitmap1::CopyFromBitmap(
 	ICarenD2D1Bitmap^ Param_Bitmap,
 	CA_D2D1_RECT_U^ Param_SourceRect)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	D2D1_POINT_2U* pPointDestino = NULL;
-	D2D1_RECT_U* pSourceRect = NULL;
-	ID2D1Bitmap* pBitmapOrigem = NULL;
-
-	//Converte as estruturas.
-	pPointDestino = Util.ConverterD2D1_POINT_2UManagedToUnmanaged(Param_PointDestino);
-	pSourceRect = Util.ConverterD2D1_RECT_UManagedToUnmanaged(Param_SourceRect);
-
-	//Verifica se as estruturas  são validas
-	if (ObjetoValido(pPointDestino) && ObjetoValido(pSourceRect))
-	{
-		//Deixa o método continuar.
-	}
-	else
-	{
-		//Falhou.. Não foi possivel converter uma ou mais estruturas necessárias.
-
-		//Define o código de erro.
-		Resultado.AdicionarCodigo(ResultCode::ER_CONVERSAO_ESTRUTURA, false);
-
-		//Sai do método
-		Sair;
-	}
-
-	//Obtém um ponteiro para o bitmap a ser copiado.
-	Resultado = Param_Bitmap->RecuperarPonteiro((void**)&pBitmapOrigem);
-
-	//Verifica se obteve sucesso
-	if (!CarenSucesso(Resultado))
-	{
-		//Falhou ao recuperar o ponteiro.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->CopyFromBitmap(pPointDestino, pBitmapOrigem, pSourceRect);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Libera a memória para as estruturas.
-	DeletarEstruturaSafe(&pPointDestino);
-	DeletarEstruturaSafe(&pSourceRect);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D2D1.
+	return Shared_D2D1Bitmap::CopyFromBitmap(PonteiroTrabalho,
+		Param_PointDestino,
+		Param_Bitmap,
+		Param_SourceRect
+	);
 }
 
 /// <summary>
@@ -460,73 +265,12 @@ CarenResult CarenD2D1Bitmap1::CopyFromMemory(
 	ICarenBuffer^ Param_SourceData,
 	UInt32 Param_Pitch)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	D2D1_RECT_U* pDestRect = NULL;
-	IntPtr SourcePointerBuffer = IntPtr::Zero;
-	PVOID pBufferSourceCopy = NULL;
-
-	//Converte a estrutura.
-	pDestRect = Util.ConverterD2D1_RECT_UManagedToUnmanaged(Param_DestinoRect);
-
-	//Verifica se a estrutura é valida.
-	if (ObjetoValido(pDestRect))
-	{
-		//Deixa o método continuar.
-	}
-	else
-	{
-		//Falhou.. Não foi possivel converter uma ou mais estruturas necessárias.
-
-		//Define o código de erro.
-		SetCarenErro(Resultado, ResultCode::ER_CONVERSAO_ESTRUTURA);
-
-		//Sai do método
-		Sair;
-	}
-
-	//Obtém o ponteiro para os dados na memória.
-	Resultado = Param_SourceData->GetInternalPointer(SourcePointerBuffer);
-
-	//Verifica se obteve com sucesso o ponteiro
-	if (!CarenSucesso(Resultado))
-	{
-		//Falhou ao recuperar o ponteiro para a memoria a ser copiada.
-
-		//Sai do método.
-		Sair;
-	}
-
-	//Converte o intptr para o buffer.
-	pBufferSourceCopy = Util.ConverterIntPtrTo<PVOID>(SourcePointerBuffer);
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->CopyFromMemory(pDestRect, pBufferSourceCopy, Param_Pitch);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Libera a memoria dos dados utilizados.
-	DeletarEstruturaSafe(&pDestRect);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D2D1.
+	return Shared_D2D1Bitmap::CopyFromMemory(PonteiroTrabalho,
+		Param_DestinoRect,
+		Param_SourceData,
+		Param_Pitch
+	);
 }
 
 /// <summary>
@@ -540,71 +284,12 @@ CarenResult CarenD2D1Bitmap1::CopyFromRenderTarget(
 	ICaren^ Param_D2D1RenderTarget,
 	CA_D2D1_RECT_U^ Param_SourceRect)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	D2D1_POINT_2U* pPointDestino = NULL;
-	D2D1_RECT_U* pSourceRect = NULL;
-	ID2D1RenderTarget* pRenderTarget = NULL;
-
-	//Converte as estruturas.
-	pPointDestino = Util.ConverterD2D1_POINT_2UManagedToUnmanaged(Param_PointDestino);
-	pSourceRect = Util.ConverterD2D1_RECT_UManagedToUnmanaged(Param_SourceRect);
-
-	//Verifica se as estruturas  são validas
-	if (ObjetoValido(pPointDestino) && ObjetoValido(pSourceRect))
-	{
-		//Deixa o método continuar.
-	}
-	else
-	{
-		//Falhou.. Não foi possivel converter uma ou mais estruturas necessárias.
-
-		//Define o código de erro.
-		SetCarenErro(Resultado, ResultCode::ER_CONVERSAO_ESTRUTURA);
-
-		//Sai do método
-		Sair;
-	}
-
-	//Obtém um ponteiro para o render target.
-	Resultado = Param_D2D1RenderTarget->RecuperarPonteiro((void**)&pRenderTarget);
-
-	//Verifica se obteve sucesso
-	if (!CarenSucesso(Resultado))
-	{
-		//Falhou ao recuperar o ponteiro.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->CopyFromRenderTarget(pPointDestino, pRenderTarget, pSourceRect);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;	//Libera a memória para as estruturas.
-	DeletarEstruturaSafe(&pPointDestino);
-	DeletarEstruturaSafe(&pSourceRect);
-
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D2D1.
+	return Shared_D2D1Bitmap::CopyFromRenderTarget(PonteiroTrabalho,
+		Param_PointDestino,
+		Param_D2D1RenderTarget,
+		Param_SourceRect
+	);
 }
 
 /// <summary>
@@ -616,15 +301,11 @@ void CarenD2D1Bitmap1::GetDpi(
 	[Out] float% Param_Out_DpiX,
 	[Out] float% Param_Out_DpiY)
 {
-	//Variaveis.
-	FLOAT DpiX, DpiY = 0;
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->GetDpi(&DpiX, &DpiY);
-
-	//Define nos parametros de saida.
-	Param_Out_DpiX = DpiX;
-	Param_Out_DpiY = DpiY;
+	//Chama o método na classe de funções compartilhadas do D2D1.
+	Shared_D2D1Bitmap::GetDpi(PonteiroTrabalho,
+		Param_Out_DpiX,
+		Param_Out_DpiY
+	);
 }
 
 /// <summary>
@@ -634,15 +315,10 @@ void CarenD2D1Bitmap1::GetDpi(
 void CarenD2D1Bitmap1::GetPixelFormat(
 	[Out] CA_D2D1_PIXEL_FORMAT^% Param_Out_PixelFormat)
 {
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	D2D1_PIXEL_FORMAT OutPixelFormat = {  };
-
-	//Chama o método para realizar a operação.
-	OutPixelFormat = PonteiroTrabalho->GetPixelFormat();
-
-	//Converte e define no parametro de saida.
-	Param_Out_PixelFormat = Util.ConverterD2D1_PIXEL_FORMATUnmanagedToManaged(&OutPixelFormat);
+	//Chama o método na classe de funções compartilhadas do D2D1.
+	Shared_D2D1Bitmap::GetPixelFormat(PonteiroTrabalho,
+		Param_Out_PixelFormat
+	);
 }
 
 /// <summary>
@@ -652,15 +328,10 @@ void CarenD2D1Bitmap1::GetPixelFormat(
 void CarenD2D1Bitmap1::GetPixelSize(
 	[Out] CA_D2D1_SIZE_U^% Param_Out_PixelSize)
 {
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	D2D1_SIZE_U OutPixelSize = {};
-
-	//Chama o método para realizar a operação.
-	OutPixelSize = PonteiroTrabalho->GetPixelSize();
-
-	//Converte e define no parametro de saida.
-	Param_Out_PixelSize = Util.ConverterD2D1_SIZE_UUnmanagedToManaged(&OutPixelSize);
+	//Chama o método na classe de funções compartilhadas do D2D1.
+	Shared_D2D1Bitmap::GetPixelSize(PonteiroTrabalho,
+		Param_Out_PixelSize
+	);
 }
 
 /// <summary>
@@ -671,21 +342,17 @@ void CarenD2D1Bitmap1::GetPixelSize(
 void CarenD2D1Bitmap1::GetSize(
 	[Out] CA_D2D1_SIZE_F^% Param_Out_Size)
 {
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	D2D1_SIZE_F OutSize = {};
-
-	//Chama o método para realizar a operação.
-	OutSize = PonteiroTrabalho->GetSize();
-
-	//Converte e define no parametro de saida.
-	Param_Out_Size = Util.ConverterD2D1_SIZE_FUnmanagedToManaged(&OutSize);
+	//Chama o método na classe de funções compartilhadas do D2D1.
+	Shared_D2D1Bitmap::GetSize(PonteiroTrabalho,
+		Param_Out_Size
+	);
 }
 
 
 
-// Métodos da interface (ICarenD2D1Resource)
 
+
+// Métodos da interface (ICarenD2D1Resource)
 
 /// <summary>
 /// Recupera a fábrica associada a este recurso.
@@ -693,32 +360,8 @@ void CarenD2D1Bitmap1::GetSize(
 /// <param name="Param_Out_Factory">Retorna uma interface(ICarenD2D1Factory) que contém um ponteiro para a fabrica que criou esse recurso. O usuário deve inicializar a interface antes de chamar este método.</param>
 void CarenD2D1Bitmap1::GetFactory(ICaren^ Param_Out_Factory)
 {
-	//Variaveis a serem utilizadas.
-	ID2D1Factory* pFactory = NULL;
-
-	//Variavel de resultados
-	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->GetFactory(&pFactory);
-
-	//Verifica se o ponteiro é válido
-	if (!ObjetoValido(pFactory))
-		Sair;
-
-	//Adiciona o ponteiro na interface informada.
-	Resultado = Param_Out_Factory->AdicionarPonteiro(pFactory);
-
-	//Verifica o resultado da operação.
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Libera o ponteiro recuperado anteriormente.
-		pFactory->Release();
-		pFactory = NULL;
-
-		//Chama uma execeção para indicar o erro.
-		throw gcnew Exception(String::Format("Ocorreu uma falha ao definir o ponteiro nativo na interface gerenciada. Código de erro > {0}", Resultado.StatusCode));
-	}
-
-Done:;
+	//Chama o método na classe de funções compartilhadas do D2D1.
+	Shared_D2D1Resource::GetFactory(PonteiroTrabalho,
+		Param_Out_Factory
+	);
 }

@@ -18,7 +18,6 @@ limitations under the License.
 #include "../SDK_Direct2D.h"
 #include "../SDK_Caren.h"
 #include "../SDK_Utilidades.h"
-#include "CarenD2D1Bitmap.h"
 
 //Importa o namespace que contém as interfaces da API primária.
 using namespace CarenRengine::Direct2D;

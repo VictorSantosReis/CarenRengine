@@ -164,14 +164,10 @@ void CarenD2D1BitmapBrush1::Finalizar()
 /// <param name="Param_Out_InterpolationMode">Retorna o modo de interpolação atual.</param>
 void CarenD2D1BitmapBrush1::GetInterpolationMode1([Out] CA_D2D1_INTERPOLATION_MODE% Param_Out_InterpolationMode)
 {
-	//Variaveis a serem utilizadas.
-	D2D1_INTERPOLATION_MODE OutInterPolationMode;
-
-	//Chama o método para realizar a operação.
-	OutInterPolationMode = PonteiroTrabalho->GetInterpolationMode1();
-
-	//Converte e define no parametro de saida.
-	Param_Out_InterpolationMode = ConverterPara<CA_D2D1_INTERPOLATION_MODE>(OutInterPolationMode);
+	//Chama o método na classe de funções compartilhadas do D2D1.
+	Shared_D2D1BitmapBrush::GetInterpolationMode1(PonteiroTrabalho,
+		Param_Out_InterpolationMode
+	);
 }
 
 /// <summary>
@@ -180,8 +176,10 @@ void CarenD2D1BitmapBrush1::GetInterpolationMode1([Out] CA_D2D1_INTERPOLATION_MO
 /// <param name="Param_InterpolationMode">O modo de interpolação a ser usado.</param>
 void CarenD2D1BitmapBrush1::SetInterpolationMode1(CA_D2D1_INTERPOLATION_MODE Param_InterpolationMode)
 {
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->SetInterpolationMode1(ConverterPara<D2D1_INTERPOLATION_MODE>(Param_InterpolationMode));
+	//Chama o método na classe de funções compartilhadas do D2D1.
+	Shared_D2D1BitmapBrush::SetInterpolationMode1(PonteiroTrabalho,
+		Param_InterpolationMode
+	);
 }
 
 
@@ -195,53 +193,10 @@ void CarenD2D1BitmapBrush1::SetInterpolationMode1(CA_D2D1_INTERPOLATION_MODE Par
 /// <param name="Param_Out_Bitmap">Quando este método retorna, contém o endereço a um ponteiro para o bitmap com o qual este pincel pinta.</param>
 CarenResult CarenD2D1BitmapBrush1::GetBitmap([Out] ICarenD2D1Bitmap^% Param_Out_Bitmap)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	ID2D1Bitmap* pBitmapBrush = NULL;
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->GetBitmap(&pBitmapBrush);
-
-	//Verifica se a interface é valida
-	if (!ObjetoValido(pBitmapBrush))
-	{
-		//A interface não é valida.
-
-		//Define erro 
-		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria a interface que será retornada.
-	Param_Out_Bitmap = gcnew CarenD2D1Bitmap();
-
-	//Adiciona o ponteiro a interface de saida.
-	Resultado = Param_Out_Bitmap->AdicionarPonteiro(pBitmapBrush);
-
-	//Verifica se não houve erro
-	if (!CarenSucesso(Resultado))
-	{
-		//Não foi possivel definir o ponteiro.
-
-		//Libera o ponteiro para a interface
-		pBitmapBrush->Release();
-		pBitmapBrush = NULL;
-
-		//Libera a gerenciada
-		Param_Out_Bitmap->Finalizar();
-		Param_Out_Bitmap = nullptr;
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D2D1.
+	return Shared_D2D1BitmapBrush::GetBitmap(PonteiroTrabalho,
+		Param_Out_Bitmap
+	);
 }
 
 /// <summary>
@@ -251,14 +206,10 @@ Done:;
 /// <param name="Param_Out_ExtendModeX">Retorna um valor que especifica como a escova horizontalmente ladrilhos(Tile) as áreas que se estendem além de seu bitmap.</param>
 void CarenD2D1BitmapBrush1::GetExtendModeX([Out] CA_D2D1_EXTEND_MODE% Param_Out_ExtendModeX)
 {
-	//Variaveis a serem utilizadas.
-	D2D1_EXTEND_MODE OutExtendMode;
-
-	//Chama o método para realizar a operação.
-	OutExtendMode = PonteiroTrabalho->GetExtendModeX();
-
-	//Converte e define no parametro de saida.
-	Param_Out_ExtendModeX = ConverterPara<CA_D2D1_EXTEND_MODE>(OutExtendMode);
+	//Chama o método na classe de funções compartilhadas do D2D1.
+	Shared_D2D1BitmapBrush::GetExtendModeX(PonteiroTrabalho,
+		Param_Out_ExtendModeX
+	);
 }
 
 /// <summary>
@@ -268,14 +219,10 @@ void CarenD2D1BitmapBrush1::GetExtendModeX([Out] CA_D2D1_EXTEND_MODE% Param_Out_
 /// <param name="Param_Out_ExtendModeY">Retorna um valor que especifica como o pincel inclina verticalmente as áreas que se estendem além de seu bitmap.</param>
 void CarenD2D1BitmapBrush1::GetExtendModeY([Out] CA_D2D1_EXTEND_MODE% Param_Out_ExtendModeY)
 {
-	//Variaveis a serem utilizadas.
-	D2D1_EXTEND_MODE OutExtendMode;
-
-	//Chama o método para realizar a operação.
-	OutExtendMode = PonteiroTrabalho->GetExtendModeY();
-
-	//Converte e define no parametro de saida.
-	Param_Out_ExtendModeY = ConverterPara<CA_D2D1_EXTEND_MODE>(OutExtendMode);
+	//Chama o método na classe de funções compartilhadas do D2D1.
+	Shared_D2D1BitmapBrush::GetExtendModeY(PonteiroTrabalho,
+		Param_Out_ExtendModeY
+	);
 }
 
 /// <summary>
@@ -284,14 +231,10 @@ void CarenD2D1BitmapBrush1::GetExtendModeY([Out] CA_D2D1_EXTEND_MODE% Param_Out_
 /// <param name="Param_Out_InterpolationMode">Retorna o método de interpolação utilizado quando o bitmap da escova é dimensionado ou girado.</param>
 void CarenD2D1BitmapBrush1::GetInterpolationMode([Out] CA_D2D1_BITMAP_INTERPOLATION_MODE% Param_Out_InterpolationMode)
 {
-	//Variaveis a serem utilizadas.
-	D2D1_BITMAP_INTERPOLATION_MODE OutInterPolationMode;
-
-	//Chama o método para realizar a operação.
-	OutInterPolationMode = PonteiroTrabalho->GetInterpolationMode();
-
-	//Converte e define no parametro de saida.
-	Param_Out_InterpolationMode = ConverterPara<CA_D2D1_BITMAP_INTERPOLATION_MODE>(OutInterPolationMode);
+	//Chama o método na classe de funções compartilhadas do D2D1.
+	Shared_D2D1BitmapBrush::GetInterpolationMode(PonteiroTrabalho,
+		Param_Out_InterpolationMode
+	);
 }
 
 /// <summary>
@@ -304,33 +247,10 @@ void CarenD2D1BitmapBrush1::GetInterpolationMode([Out] CA_D2D1_BITMAP_INTERPOLAT
 /// <param name="Param_Bitmap">Retorna a fonte de bitmap usada pelo pincel.</param>
 CarenResult CarenD2D1BitmapBrush1::SetBitmap(ICarenD2D1Bitmap^ Param_Bitmap)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(ResultCode::ER_FAIL, false);
-
-	//Variaveis a serem utilizadas.
-	ID2D1Bitmap* pBitmap = NULL;
-
-	//Recupera o ponteiro para o bitmap a ser definido.
-	Resultado = Param_Bitmap->RecuperarPonteiro((LPVOID*)&pBitmap);
-
-	//Verifica se recuperou com sucesso
-	if (!CarenSucesso(Resultado))
-	{
-		//Falhou ao recupera o ponteiro para o bitmap.
-
-		//Saido método
-		Sair;
-	}
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->SetBitmap(pBitmap);
-
-	//Define sucesso na operação.
-	SetCarenSucesso(Resultado);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D2D1.
+	return Shared_D2D1BitmapBrush::SetBitmap(PonteiroTrabalho,
+		Param_Bitmap
+	);
 }
 
 /// <summary>
@@ -341,8 +261,10 @@ Done:;
 /// <param name="Param_ExtendModeX">Um valor que especifica como o pincel monitora horizontalmente as áreas que ultrapassam seu bitmap.</param>
 void CarenD2D1BitmapBrush1::SetExtendModeX(CA_D2D1_EXTEND_MODE Param_ExtendModeX)
 {
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->SetExtendModeX(ConverterPara<D2D1_EXTEND_MODE>(Param_ExtendModeX));
+	//Chama o método na classe de funções compartilhadas do D2D1.
+	Shared_D2D1BitmapBrush::SetExtendModeX(PonteiroTrabalho,
+		Param_ExtendModeX
+	);
 }
 
 /// <summary>
@@ -353,8 +275,10 @@ void CarenD2D1BitmapBrush1::SetExtendModeX(CA_D2D1_EXTEND_MODE Param_ExtendModeX
 /// <param name="Param_ExtendModeY">Um valor que especifica como o pincel inclina verticalmente as áreas que se estendem além de seu bitmap.</param>
 void CarenD2D1BitmapBrush1::SetExtendModeY(CA_D2D1_EXTEND_MODE Param_ExtendModeY)
 {
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->SetExtendModeY(ConverterPara<D2D1_EXTEND_MODE>(Param_ExtendModeY));
+	//Chama o método na classe de funções compartilhadas do D2D1.
+	Shared_D2D1BitmapBrush::SetExtendModeY(PonteiroTrabalho,
+		Param_ExtendModeY
+	);
 }
 
 /// <summary>
@@ -366,8 +290,10 @@ void CarenD2D1BitmapBrush1::SetExtendModeY(CA_D2D1_EXTEND_MODE Param_ExtendModeY
 /// <param name="Param_InterpolationMode">O modo de interpolação usado quando o bitmap do Brush é dimensionado ou girado.</param>
 void CarenD2D1BitmapBrush1::SetInterpolationMode(CA_D2D1_BITMAP_INTERPOLATION_MODE Param_InterpolationMode)
 {
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->SetInterpolationMode(ConverterPara<D2D1_BITMAP_INTERPOLATION_MODE>(Param_InterpolationMode));
+	//Chama o método na classe de funções compartilhadas do D2D1.
+	Shared_D2D1BitmapBrush::SetInterpolationMode(PonteiroTrabalho,
+		Param_InterpolationMode
+	);
 }
 
 
@@ -382,8 +308,10 @@ void CarenD2D1BitmapBrush1::SetInterpolationMode(CA_D2D1_BITMAP_INTERPOLATION_MO
 /// Os valores de opacidade são fixados na faixa 0-1 antes de serem múltiplos juntos.</param>
 void CarenD2D1BitmapBrush1::GetOpacity([Out] float% Param_Out_Opacidade)
 {
-	//Chama o método para realizar a operação e define no parametro de saida.
-	Param_Out_Opacidade = PonteiroTrabalho->GetOpacity();
+	//Chama o método na classe de funções compartilhadas do D2D1.
+	Shared_D2D1Brush::GetOpacity(PonteiroTrabalho,
+		Param_Out_Opacidade
+	);
 }
 
 /// <summary>
@@ -392,15 +320,10 @@ void CarenD2D1BitmapBrush1::GetOpacity([Out] float% Param_Out_Opacidade)
 /// <param name="Param_Out_Matrix">Retorna a transformação aplicada a este pincel.</param>
 void CarenD2D1BitmapBrush1::GetTransform([Out] CA_D2D1_MATRIX_3X2_F^% Param_Out_Matrix)
 {
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	D2D1_MATRIX_3X2_F OutTransform;
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->GetTransform(&OutTransform);
-
-	//Converte a estrutura nativa e define no parametro de saida.
-	Param_Out_Matrix = Util.ConverterD2D1_MATRIX_3X2_FUnmanagedToManaged(&OutTransform);
+	//Chama o método na classe de funções compartilhadas do D2D1.
+	Shared_D2D1Brush::GetTransform(PonteiroTrabalho,
+		Param_Out_Matrix
+	);
 }
 
 /// <summary>
@@ -410,8 +333,10 @@ void CarenD2D1BitmapBrush1::GetTransform([Out] CA_D2D1_MATRIX_3X2_F^% Param_Out_
 /// Os valores de opacidade são fixados na faixa 0-1 antes de serem múltiplos juntos.</param>
 void CarenD2D1BitmapBrush1::SetOpacity(float Param_Opacidade)
 {
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->SetOpacity(Param_Opacidade);
+	//Chama o método na classe de funções compartilhadas do D2D1.
+	Shared_D2D1Brush::SetOpacity(PonteiroTrabalho,
+		Param_Opacidade
+	);
 }
 
 /// <summary>
@@ -420,23 +345,17 @@ void CarenD2D1BitmapBrush1::SetOpacity(float Param_Opacidade)
 /// <param name="Param_Transform">A transformação a ser aplicada a este pincel.</param>
 void CarenD2D1BitmapBrush1::SetTransform(CA_D2D1_MATRIX_3X2_F^ Param_Transform)
 {
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	D2D1_MATRIX_3X2_F* pTransform = NULL;
-
-	//Converte a estrutura nativa para a gerenciada.
-	pTransform = Util.ConverterD2D1_MATRIX_3X2_FManagedToUnmanaged(Param_Transform);
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->SetTransform(pTransform);
-
-	//Libera a memória para a estrutura criada.
-	DeletarEstruturaSafe(&pTransform);
+	//Chama o método na classe de funções compartilhadas do D2D1.
+	Shared_D2D1Brush::SetTransform(PonteiroTrabalho,
+		Param_Transform
+	);
 }
 
 
-// Métodos da interface (ICarenD2D1Resource)
 
+
+
+// Métodos da interface (ICarenD2D1Resource)
 
 /// <summary>
 /// Recupera a fábrica associada a este recurso.
@@ -444,32 +363,8 @@ void CarenD2D1BitmapBrush1::SetTransform(CA_D2D1_MATRIX_3X2_F^ Param_Transform)
 /// <param name="Param_Out_Factory">Retorna uma interface(ICarenD2D1Factory) que contém um ponteiro para a fabrica que criou esse recurso. O usuário deve inicializar a interface antes de chamar este método.</param>
 void CarenD2D1BitmapBrush1::GetFactory(ICaren^ Param_Out_Factory)
 {
-	//Variaveis a serem utilizadas.
-	ID2D1Factory* pFactory = NULL;
-
-	//Variavel de resultados.
-	CarenResult Resultado;
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->GetFactory(&pFactory);
-
-	//Verifica se o ponteiro é válido
-	if (!ObjetoValido(pFactory))
-		Sair;
-
-	//Adiciona o ponteiro na interface informada.
-	Resultado = Param_Out_Factory->AdicionarPonteiro(pFactory);
-
-	//Verifica o resultado da operação.
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Libera o ponteiro recuperado anteriormente.
-		pFactory->Release();
-		pFactory = NULL;
-
-		//Chama uma execeção para indicar o erro.
-		throw gcnew Exception(String::Format("Ocorreu uma falha ao definir o ponteiro nativo na interface gerenciada. Código de erro > {0}", Resultado.StatusCode));
-	}
-
-Done:;
+	//Chama o método na classe de funções compartilhadas do D2D1.
+	Shared_D2D1Resource::GetFactory(PonteiroTrabalho,
+		Param_Out_Factory
+	);
 }

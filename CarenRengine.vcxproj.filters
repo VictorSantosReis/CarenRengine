@@ -199,6 +199,9 @@
     <Filter Include="Arquivos de Origem\Shared Classes\Media Foundation">
       <UniqueIdentifier>{0165794b-7765-4d95-a87d-ed99954610aa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Arquivos de Origem\Shared Classes\D2D1">
+      <UniqueIdentifier>{26556ab7-a4a5-4b19-a75e-a120f6e0002b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CarenRengineCodes\pch.h">
@@ -1542,6 +1545,9 @@
     <ClInclude Include="CarenRengineCodes\SharedClass\Shared_MediaFoundation.h">
       <Filter>Arquivos de Cabeçalho\Shared Classes</Filter>
     </ClInclude>
+    <ClInclude Include="CarenRengineCodes\SharedClass\Shared_Direct2D.h">
+      <Filter>Arquivos de Cabeçalho\Shared Classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CarenRengineCodes\Direct3D\CarenD3D10Multithread.cpp">
@@ -2872,6 +2878,24 @@
     </ClCompile>
     <ClCompile Include="CarenRengineCodes\SharedClass\Shared_MediaFoundation_Attributes.cpp">
       <Filter>Arquivos de Origem\Shared Classes\Media Foundation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\SharedClass\Shared_D2D1_Resource.cpp">
+      <Filter>Arquivos de Origem\Shared Classes\D2D1</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\SharedClass\Shared_D2D1_ImageSource.cpp">
+      <Filter>Arquivos de Origem\Shared Classes\D2D1</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\SharedClass\Shared_D2D1_Bitmap.cpp">
+      <Filter>Arquivos de Origem\Shared Classes\D2D1</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\SharedClass\Shared_D2D1_ColorContext.cpp">
+      <Filter>Arquivos de Origem\Shared Classes\D2D1</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\SharedClass\Shared_D2D1_Brush.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="CarenRengineCodes\SharedClass\Shared_D2D1_BitmapBrush.cpp">
+      <Filter>Arquivos de Origem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -102,35 +102,8 @@ CarenResult CarenD2D1ImageSource::RecuperarPonteiro(LPVOID* Param_Out_PonteiroNa
 /// <param name="Param_Out_Referencias">Variável que vai receber a quantidade de referências do objeto.</param>
 CarenResult CarenD2D1ImageSource::RecuperarReferencias([Out] UInt64% Param_Out_Referencias)
 {
-	//Variavel que vai retornar o resultado.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Verifica se o ponteiro é valido
-	if (!ObjetoValido(PonteiroTrabalho))
-	{
-		//O ponteiro de trabalho é invalido.
-		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Adiciona uma referência ao ponteiro
-	ULONG CountRefs = PonteiroTrabalho->AddRef();
-
-	//Libera a referência adicional
-	PonteiroTrabalho->Release();
-
-	//Decrementa o valor da quantidade de referência retornada em (-1) e define no parametro de saida.
-	Param_Out_Referencias = static_cast<UInt64>(CountRefs - 1);
-
-	//Define o resultado
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-
-	//Retorna o resultado
-	return Resultado;
+	//Chama o método para recuperar a quantidade de referencias atuais da interface.
+	return Caren::Shared_RecuperarReferencias(Param_Out_Referencias, PonteiroTrabalho);
 }
 
 /// <summary>
@@ -182,38 +155,15 @@ void CarenD2D1ImageSource::Finalizar()
 
 
 
-// Métodos da interface proprietária(ICarenD2D1ImageSource)
-
+// Métodos da interface (ICarenD2D1ImageSource)
 
 /// <summary>
 /// Permite que o sistema operacional livre a memória de vídeo dos recursos descartando seu conteúdo.
 /// </summary>
 CarenResult CarenD2D1ImageSource::OfferResources()
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->OfferResources();
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D2D1.
+	return Shared_D2D1ImageSource::OfferResources(PonteiroTrabalho);
 }
 
 /// <summary>
@@ -223,37 +173,10 @@ Done:;
 /// O chamador pode passar NULO, se o chamador pretende preencher os recursos com novos conteúdos, independentemente de o conteúdo antigo ter sido descartado.</param>
 CarenResult CarenD2D1ImageSource::TryReclaimResources([Out] Boolean% Param_Out_RecursoDescartado)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	BOOL OutBool = FALSE;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->TryReclaimResources(&OutBool);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Converte o bool e define no parametro de saida.
-	Param_Out_RecursoDescartado = static_cast<Boolean>(OutBool);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D2D1.
+	return Shared_D2D1ImageSource::TryReclaimResources(PonteiroTrabalho,
+		Param_Out_RecursoDescartado	
+	);
 }
 
 
@@ -262,39 +185,14 @@ Done:;
 
 // Métodos da interface (ICarenD2D1Resource)
 
-
 /// <summary>
 /// Recupera a fábrica associada a este recurso.
 /// </summary>
 /// <param name="Param_Out_Factory">Retorna uma interface(ICarenD2D1Factory) que contém um ponteiro para a fabrica que criou esse recurso. O usuário deve inicializar a interface antes de chamar este método.</param>
 void CarenD2D1ImageSource::GetFactory(ICaren^ Param_Out_Factory)
 {
-	//Variaveis a serem utilizadas.
-	ID2D1Factory* pFactory = NULL;
-
-       //Variavel de resultados.
-       CarenResult Resultado;
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->GetFactory(&pFactory);
-
-	//Verifica se o ponteiro é válido
-	if (!ObjetoValido(pFactory))
-		Sair;
-
-	//Adiciona o ponteiro na interface informada.
-	Resultado = Param_Out_Factory->AdicionarPonteiro(pFactory);
-
-	//Verifica o resultado da operação.
-	if(Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Libera o ponteiro recuperado anteriormente.
-		pFactory->Release();
-		pFactory = NULL;
-
-		//Chama uma execeção para indicar o erro.
-		throw gcnew Exception( String::Format("Ocorreu uma falha ao definir o ponteiro nativo na interface gerenciada. Código de erro > {0}", Resultado.StatusCode));
-	}
-
-Done:;
+	//Chama o método na classe de funções compartilhadas do D2D1.
+	Shared_D2D1Resource::GetFactory(PonteiroTrabalho,
+		Param_Out_Factory
+	);
 }

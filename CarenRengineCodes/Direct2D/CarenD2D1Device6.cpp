@@ -713,39 +713,14 @@ void CarenD2D1Device6::SetMaximumTextureMemory(UInt64 Param_MaxSizeMemory)
 
 // Métodos da interface (ICarenD2D1Resource)
 
-
 /// <summary>
 /// Recupera a fábrica associada a este recurso.
 /// </summary>
 /// <param name="Param_Out_Factory">Retorna uma interface(ICarenD2D1Factory) que contém um ponteiro para a fabrica que criou esse recurso. O usuário deve inicializar a interface antes de chamar este método.</param>
 void CarenD2D1Device6::GetFactory(ICaren^ Param_Out_Factory)
 {
-	//Variaveis a serem utilizadas.
-	ID2D1Factory* pFactory = NULL;
-
-	//Variavel de resultados.
-	CarenResult Resultado;
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->GetFactory(&pFactory);
-
-	//Verifica se o ponteiro é válido
-	if (!ObjetoValido(pFactory))
-		Sair;
-
-	//Adiciona o ponteiro na interface informada.
-	Resultado = Param_Out_Factory->AdicionarPonteiro(pFactory);
-
-	//Verifica o resultado da operação.
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Libera o ponteiro recuperado anteriormente.
-		pFactory->Release();
-		pFactory = NULL;
-
-		//Chama uma execeção para indicar o erro.
-		throw gcnew Exception(String::Format("Ocorreu uma falha ao definir o ponteiro nativo na interface gerenciada. Código de erro > {0}", Resultado.StatusCode));
-	}
-
-Done:;
+	//Chama o método na classe de funções compartilhadas do D2D1.
+	Shared_D2D1Resource::GetFactory(PonteiroTrabalho,
+		Param_Out_Factory
+	);
 }

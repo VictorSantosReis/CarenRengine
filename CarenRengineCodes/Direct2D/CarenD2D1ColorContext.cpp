@@ -102,35 +102,8 @@ CarenResult CarenD2D1ColorContext::RecuperarPonteiro(LPVOID* Param_Out_PonteiroN
 /// <param name="Param_Out_Referencias">Variável que vai receber a quantidade de referências do objeto.</param>
 CarenResult CarenD2D1ColorContext::RecuperarReferencias([Out] UInt64% Param_Out_Referencias)
 {
-	//Variavel que vai retornar o resultado.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Verifica se o ponteiro é valido
-	if (!ObjetoValido(PonteiroTrabalho))
-	{
-		//O ponteiro de trabalho é invalido.
-		Resultado.AdicionarCodigo(ResultCode::ER_E_POINTER, false);
-
-		//Sai do método
-		goto Done;
-	}
-
-	//Adiciona uma referência ao ponteiro
-	ULONG CountRefs = PonteiroTrabalho->AddRef();
-
-	//Libera a referência adicional
-	PonteiroTrabalho->Release();
-
-	//Decrementa o valor da quantidade de referência retornada em (-1) e define no parametro de saida.
-	Param_Out_Referencias = static_cast<UInt64>(CountRefs - 1);
-
-	//Define o resultado
-	Resultado.AdicionarCodigo(ResultCode::SS_OK, true);
-
-Done:;
-
-	//Retorna o resultado
-	return Resultado;
+	//Chama o método para recuperar a quantidade de referencias atuais da interface.
+	return Caren::Shared_RecuperarReferencias(Param_Out_Referencias, PonteiroTrabalho);
 }
 
 /// <summary>
@@ -191,14 +164,10 @@ void CarenD2D1ColorContext::Finalizar()
 /// <param name="Param_Out_EspacoCor">Retorna uma enumeração que contém o espaço de cores do contexto.</param>
 void CarenD2D1ColorContext::GetColorSpace([Out] CA_D2D1_COLOR_SPACE% Param_Out_EspacoCor)
 {
-	//Variaveis a serem utilizadas.
-	D2D1_COLOR_SPACE ColorSpace;
-
-	//Chama o método para realizar a operação.
-	ColorSpace = PonteiroTrabalho->GetColorSpace();
-
-	//Define o espaço de cor no parametro de saida.
-	Param_Out_EspacoCor = static_cast<CA_D2D1_COLOR_SPACE>(ColorSpace);
+	//Chama o método na classe de funções compartilhadas do D2D1.
+	Shared_D2D1ColorContext::GetColorSpace(PonteiroTrabalho,
+		Param_Out_EspacoCor
+	);
 }
 
 /// <summary>
@@ -210,40 +179,11 @@ CarenResult CarenD2D1ColorContext::GetProfile(
 	[Out] cli::array<Byte>^% Param_Out_ColorProfile,
 	UInt32 Param_ProfileSize)
 {
-	//Variavel a ser retornada.
-	CarenResult Resultado = CarenResult(E_FAIL, false);
-
-	//Resultado COM.
-	ResultadoCOM Hr = E_FAIL;
-
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	PBYTE pColorProfile = NULL;
-
-	//Chama o método para realizar a operação.
-	Hr = PonteiroTrabalho->GetProfile(pColorProfile, Param_ProfileSize);
-
-	//Processa o resultado da chamada.
-	Resultado.ProcessarCodigoOperacao(Hr);
-
-	//Verifica se obteve sucesso na operação.
-	if (!Sucesso(static_cast<HRESULT>(Resultado.HResult)))
-	{
-		//Falhou ao realizar a operação.
-
-		//Sai do método
-		Sair;
-	}
-
-	//Cria a matriz que vai ser retornada ao usuário.
-	Param_Out_ColorProfile = gcnew cli::array<Byte>(Param_ProfileSize);
-
-	//Copia os dados do buffer nativo para o gerenciado.
-	Util.CopiarBufferNativo_ToGerenciado(&pColorProfile, Param_Out_ColorProfile, Param_ProfileSize);
-
-Done:;
-	//Retorna o resultado.
-	return Resultado;
+	//Chama o método na classe de funções compartilhadas do D2D1.
+	return Shared_D2D1ColorContext::GetProfile(PonteiroTrabalho,
+		Param_Out_ColorProfile,
+		Param_ProfileSize
+	);
 }
 
 /// <summary>
@@ -252,14 +192,17 @@ Done:;
 /// <param name="Param_Out_ProfileSize">Retorna o tamanho do perfil em bytes.</param>
 void CarenD2D1ColorContext::GetProfileSize([Out] UInt32% Param_Out_ProfileSize)
 {
-	//Chama o método para realizar a operação.
-	Param_Out_ProfileSize = PonteiroTrabalho->GetProfileSize();
+	//Chama o método na classe de funções compartilhadas do D2D1.
+	Shared_D2D1ColorContext::GetProfileSize(PonteiroTrabalho,
+		Param_Out_ProfileSize
+	);
 }
 
 
 
-// Métodos da interface (ICarenD2D1Resource)
 
+
+// Métodos da interface (ICarenD2D1Resource)
 
 /// <summary>
 /// Recupera a fábrica associada a este recurso.
@@ -267,32 +210,8 @@ void CarenD2D1ColorContext::GetProfileSize([Out] UInt32% Param_Out_ProfileSize)
 /// <param name="Param_Out_Factory">Retorna uma interface(ICarenD2D1Factory) que contém um ponteiro para a fabrica que criou esse recurso. O usuário deve inicializar a interface antes de chamar este método.</param>
 void CarenD2D1ColorContext::GetFactory(ICaren^ Param_Out_Factory)
 {
-	//Variaveis a serem utilizadas.
-	ID2D1Factory* pFactory = NULL;
-
-       //Variavel de resultados.
-       CarenResult Resultado;
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->GetFactory(&pFactory);
-
-	//Verifica se o ponteiro é válido
-	if (!ObjetoValido(pFactory))
-		Sair;
-
-	//Adiciona o ponteiro na interface informada.
-	Resultado = Param_Out_Factory->AdicionarPonteiro(pFactory);
-
-	//Verifica o resultado da operação.
-	if(Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Libera o ponteiro recuperado anteriormente.
-		pFactory->Release();
-		pFactory = NULL;
-
-		//Chama uma execeção para indicar o erro.
-		throw gcnew Exception( String::Format("Ocorreu uma falha ao definir o ponteiro nativo na interface gerenciada. Código de erro > {0}", Resultado.StatusCode));
-	}
-
-Done:;
+	//Chama o método na classe de funções compartilhadas do D2D1.
+	Shared_D2D1Resource::GetFactory(PonteiroTrabalho,
+		Param_Out_Factory
+	);
 }

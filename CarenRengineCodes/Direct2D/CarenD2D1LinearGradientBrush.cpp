@@ -293,7 +293,6 @@ void CarenD2D1LinearGradientBrush::SetStartPoint(CA_D2D1_POINT_2F^ Param_StartPo
 
 // Métodos da interface proprietária(ICarenD2D1Brush)
 
-
 /// <summary>
 /// Obtém o grau de opacidade deste pincel.
 /// </summary>
@@ -301,8 +300,10 @@ void CarenD2D1LinearGradientBrush::SetStartPoint(CA_D2D1_POINT_2F^ Param_StartPo
 /// Os valores de opacidade são fixados na faixa 0-1 antes de serem múltiplos juntos.</param>
 void CarenD2D1LinearGradientBrush::GetOpacity([Out] float% Param_Out_Opacidade)
 {
-	//Chama o método para realizar a operação e define no parametro de saida.
-	Param_Out_Opacidade = PonteiroTrabalho->GetOpacity();
+	//Chama o método na classe de funções compartilhadas do D2D1.
+	Shared_D2D1Brush::GetOpacity(PonteiroTrabalho,
+		Param_Out_Opacidade
+	);
 }
 
 /// <summary>
@@ -311,15 +312,10 @@ void CarenD2D1LinearGradientBrush::GetOpacity([Out] float% Param_Out_Opacidade)
 /// <param name="Param_Out_Matrix">Retorna a transformação aplicada a este pincel.</param>
 void CarenD2D1LinearGradientBrush::GetTransform([Out] CA_D2D1_MATRIX_3X2_F^% Param_Out_Matrix)
 {
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	D2D1_MATRIX_3X2_F OutTransform;
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->GetTransform(&OutTransform);
-
-	//Converte a estrutura nativa e define no parametro de saida.
-	Param_Out_Matrix = Util.ConverterD2D1_MATRIX_3X2_FUnmanagedToManaged(&OutTransform);
+	//Chama o método na classe de funções compartilhadas do D2D1.
+	Shared_D2D1Brush::GetTransform(PonteiroTrabalho,
+		Param_Out_Matrix
+	);
 }
 
 /// <summary>
@@ -329,8 +325,10 @@ void CarenD2D1LinearGradientBrush::GetTransform([Out] CA_D2D1_MATRIX_3X2_F^% Par
 /// Os valores de opacidade são fixados na faixa 0-1 antes de serem múltiplos juntos.</param>
 void CarenD2D1LinearGradientBrush::SetOpacity(float Param_Opacidade)
 {
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->SetOpacity(Param_Opacidade);
+	//Chama o método na classe de funções compartilhadas do D2D1.
+	Shared_D2D1Brush::SetOpacity(PonteiroTrabalho,
+		Param_Opacidade
+	);
 }
 
 /// <summary>
@@ -339,23 +337,17 @@ void CarenD2D1LinearGradientBrush::SetOpacity(float Param_Opacidade)
 /// <param name="Param_Transform">A transformação a ser aplicada a este pincel.</param>
 void CarenD2D1LinearGradientBrush::SetTransform(CA_D2D1_MATRIX_3X2_F^ Param_Transform)
 {
-	//Variaveis a serem utilizadas.
-	Utilidades Util;
-	D2D1_MATRIX_3X2_F* pTransform = NULL;
-
-	//Converte a estrutura nativa para a gerenciada.
-	pTransform = Util.ConverterD2D1_MATRIX_3X2_FManagedToUnmanaged(Param_Transform);
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->SetTransform(pTransform);
-
-	//Libera a memória para a estrutura criada.
-	DeletarEstruturaSafe(&pTransform);
+	//Chama o método na classe de funções compartilhadas do D2D1.
+	Shared_D2D1Brush::SetTransform(PonteiroTrabalho,
+		Param_Transform
+	);
 }
 
 
-// Métodos da interface (ICarenD2D1Resource)
 
+
+
+// Métodos da interface (ICarenD2D1Resource)
 
 /// <summary>
 /// Recupera a fábrica associada a este recurso.
@@ -363,32 +355,8 @@ void CarenD2D1LinearGradientBrush::SetTransform(CA_D2D1_MATRIX_3X2_F^ Param_Tran
 /// <param name="Param_Out_Factory">Retorna uma interface(ICarenD2D1Factory) que contém um ponteiro para a fabrica que criou esse recurso. O usuário deve inicializar a interface antes de chamar este método.</param>
 void CarenD2D1LinearGradientBrush::GetFactory(ICaren^ Param_Out_Factory)
 {
-	//Variaveis a serem utilizadas.
-	ID2D1Factory* pFactory = NULL;
-
-	//Variavel de resultados.
-	CarenResult Resultado;
-
-	//Chama o método para realizar a operação.
-	PonteiroTrabalho->GetFactory(&pFactory);
-
-	//Verifica se o ponteiro é válido
-	if (!ObjetoValido(pFactory))
-		Sair;
-
-	//Adiciona o ponteiro na interface informada.
-	Resultado = Param_Out_Factory->AdicionarPonteiro(pFactory);
-
-	//Verifica o resultado da operação.
-	if (Resultado.StatusCode != ResultCode::SS_OK)
-	{
-		//Libera o ponteiro recuperado anteriormente.
-		pFactory->Release();
-		pFactory = NULL;
-
-		//Chama uma execeção para indicar o erro.
-		throw gcnew Exception(String::Format("Ocorreu uma falha ao definir o ponteiro nativo na interface gerenciada. Código de erro > {0}", Resultado.StatusCode));
-	}
-
-Done:;
+	//Chama o método na classe de funções compartilhadas do D2D1.
+	Shared_D2D1Resource::GetFactory(PonteiroTrabalho,
+		Param_Out_Factory
+	);
 }

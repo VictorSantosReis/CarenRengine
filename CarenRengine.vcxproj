@@ -479,6 +479,7 @@
     <ClInclude Include="CarenRengineCodes\Core Audio\CarenMMDeviceEnumerator.h" />
     <ClInclude Include="CarenRengineCodes\Core Audio\CarenMMNotificationClient.h" />
     <ClInclude Include="CarenRengineCodes\Media Foundation\CarenMFGetService.h" />
+    <ClInclude Include="CarenRengineCodes\SharedClass\Shared_Direct2D.h" />
     <ClInclude Include="CarenRengineCodes\SharedClass\Shared_Direct3D11.h" />
     <ClInclude Include="CarenRengineCodes\SharedClass\Shared_MediaFoundation.h" />
     <ClInclude Include="CarenRengineCodes\version.h" />
@@ -916,6 +917,11 @@
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFSourceOpenMonitor.cpp" />
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IWICDevelopRawNotificationCallback.cpp" />
     <ClCompile Include="CarenRengineCodes\PropVariantManager\PropVariantManager.cpp" />
+    <ClCompile Include="CarenRengineCodes\SharedClass\Shared_D2D1_BitmapBrush.cpp" />
+    <ClCompile Include="CarenRengineCodes\SharedClass\Shared_D2D1_Brush.cpp" />
+    <ClCompile Include="CarenRengineCodes\SharedClass\Shared_D2D1_Bitmap.cpp" />
+    <ClCompile Include="CarenRengineCodes\SharedClass\Shared_D2D1_ColorContext.cpp" />
+    <ClCompile Include="CarenRengineCodes\SharedClass\Shared_D2D1_ImageSource.cpp" />
     <ClCompile Include="CarenRengineCodes\SharedClass\Shared_Direct3D11_RasterizerState.cpp" />
     <ClCompile Include="CarenRengineCodes\SharedClass\Shared_Direct3D11_View.cpp" />
     <ClCompile Include="CarenRengineCodes\SharedClass\Shared_Direct3D11_Resource.cpp" />
@@ -1038,6 +1044,7 @@
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFSourceBufferNotify.cpp" />
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFMediaEngineNeedKeyNotify.cpp" />
     <ClCompile Include="CarenRengineCodes\NativeClassForEvents\CLN_IMFMediaEngineNotify.cpp" />
+    <ClCompile Include="CarenRengineCodes\SharedClass\Shared_D2D1_Resource.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CarenRengineCodes\app.rc" />
